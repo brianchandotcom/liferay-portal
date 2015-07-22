@@ -62,7 +62,7 @@ public abstract class SocialActivityInterpreterLocalServiceBaseImpl
 	 *
 	 * @return the social activity interpreter local service
 	 */
-	public com.liferay.portlet.social.service.SocialActivityInterpreterLocalService getSocialActivityInterpreterLocalService() {
+	public SocialActivityInterpreterLocalService getSocialActivityInterpreterLocalService() {
 		return socialActivityInterpreterLocalService;
 	}
 
@@ -72,7 +72,7 @@ public abstract class SocialActivityInterpreterLocalServiceBaseImpl
 	 * @param socialActivityInterpreterLocalService the social activity interpreter local service
 	 */
 	public void setSocialActivityInterpreterLocalService(
-		com.liferay.portlet.social.service.SocialActivityInterpreterLocalService socialActivityInterpreterLocalService) {
+		SocialActivityInterpreterLocalService socialActivityInterpreterLocalService) {
 		this.socialActivityInterpreterLocalService = socialActivityInterpreterLocalService;
 	}
 
@@ -279,7 +279,7 @@ public abstract class SocialActivityInterpreterLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.social.service.SocialActivityInterpreterLocalService.class)
-	protected com.liferay.portlet.social.service.SocialActivityInterpreterLocalService socialActivityInterpreterLocalService;
+	protected SocialActivityInterpreterLocalService socialActivityInterpreterLocalService;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portlet.social.service.SocialActivityLocalService.class)

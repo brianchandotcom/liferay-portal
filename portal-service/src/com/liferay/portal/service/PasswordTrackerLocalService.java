@@ -84,8 +84,7 @@ public interface PasswordTrackerLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.PasswordTracker deletePasswordTracker(
-		long passwordTrackerId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long passwordTrackerId) throws PortalException;
 
 	public void deletePasswordTrackers(long userId);
 
@@ -95,7 +94,7 @@ public interface PasswordTrackerLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -185,8 +184,7 @@ public interface PasswordTrackerLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordTracker getPasswordTracker(
-		long passwordTrackerId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long passwordTrackerId) throws PortalException;
 
 	/**
 	* Returns a range of all the password trackers.
@@ -214,17 +212,15 @@ public interface PasswordTrackerLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isSameAsCurrentPassword(long userId,
-		java.lang.String newClearTextPwd)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String newClearTextPwd) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isValidPassword(long userId, java.lang.String newClearTextPwd)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -234,7 +230,7 @@ public interface PasswordTrackerLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void trackPassword(long userId, java.lang.String encPassword)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the password tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

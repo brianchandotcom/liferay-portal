@@ -450,7 +450,7 @@ public abstract class SCProductEntryLocalServiceBaseImpl
 	 *
 	 * @return the s c product entry local service
 	 */
-	public com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalService getSCProductEntryLocalService() {
+	public SCProductEntryLocalService getSCProductEntryLocalService() {
 		return scProductEntryLocalService;
 	}
 
@@ -460,7 +460,7 @@ public abstract class SCProductEntryLocalServiceBaseImpl
 	 * @param scProductEntryLocalService the s c product entry local service
 	 */
 	public void setSCProductEntryLocalService(
-		com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalService scProductEntryLocalService) {
+		SCProductEntryLocalService scProductEntryLocalService) {
 		this.scProductEntryLocalService = scProductEntryLocalService;
 	}
 
@@ -1128,7 +1128,7 @@ public abstract class SCProductEntryLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalService.class)
-	protected com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalService scProductEntryLocalService;
+	protected SCProductEntryLocalService scProductEntryLocalService;
 	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductEntryService.class)
 	protected com.liferay.portlet.softwarecatalog.service.SCProductEntryService scProductEntryService;
 	@BeanReference(type = SCProductEntryPersistence.class)

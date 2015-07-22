@@ -35,7 +35,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see JournalFolderImpl
- * @see com.liferay.journal.model.JournalFolder
+ * @see JournalFolder
  * @generated
  */
 @ProviderType

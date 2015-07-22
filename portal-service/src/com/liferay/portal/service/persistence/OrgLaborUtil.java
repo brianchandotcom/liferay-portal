@@ -113,8 +113,7 @@ public class OrgLaborUtil {
 	* @param organizationId the organization ID
 	* @return the matching org labors
 	*/
-	public static java.util.List<com.liferay.portal.model.OrgLabor> findByOrganizationId(
-		long organizationId) {
+	public static List<OrgLabor> findByOrganizationId(long organizationId) {
 		return getPersistence().findByOrganizationId(organizationId);
 	}
 
@@ -122,7 +121,7 @@ public class OrgLaborUtil {
 	* Returns a range of all the org labors where organizationId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.OrgLaborModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrgLaborModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param organizationId the organization ID
@@ -130,8 +129,8 @@ public class OrgLaborUtil {
 	* @param end the upper bound of the range of org labors (not inclusive)
 	* @return the range of matching org labors
 	*/
-	public static java.util.List<com.liferay.portal.model.OrgLabor> findByOrganizationId(
-		long organizationId, int start, int end) {
+	public static List<OrgLabor> findByOrganizationId(long organizationId,
+		int start, int end) {
 		return getPersistence().findByOrganizationId(organizationId, start, end);
 	}
 
@@ -139,7 +138,7 @@ public class OrgLaborUtil {
 	* Returns an ordered range of all the org labors where organizationId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.OrgLaborModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrgLaborModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param organizationId the organization ID
@@ -148,9 +147,8 @@ public class OrgLaborUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching org labors
 	*/
-	public static java.util.List<com.liferay.portal.model.OrgLabor> findByOrganizationId(
-		long organizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator) {
+	public static List<OrgLabor> findByOrganizationId(long organizationId,
+		int start, int end, OrderByComparator<OrgLabor> orderByComparator) {
 		return getPersistence()
 				   .findByOrganizationId(organizationId, start, end,
 			orderByComparator);
@@ -162,11 +160,10 @@ public class OrgLaborUtil {
 	* @param organizationId the organization ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching org labor
-	* @throws com.liferay.portal.NoSuchOrgLaborException if a matching org labor could not be found
+	* @throws NoSuchOrgLaborException if a matching org labor could not be found
 	*/
-	public static com.liferay.portal.model.OrgLabor findByOrganizationId_First(
-		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator)
+	public static OrgLabor findByOrganizationId_First(long organizationId,
+		OrderByComparator<OrgLabor> orderByComparator)
 		throws com.liferay.portal.NoSuchOrgLaborException {
 		return getPersistence()
 				   .findByOrganizationId_First(organizationId, orderByComparator);
@@ -179,9 +176,8 @@ public class OrgLaborUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching org labor, or <code>null</code> if a matching org labor could not be found
 	*/
-	public static com.liferay.portal.model.OrgLabor fetchByOrganizationId_First(
-		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator) {
+	public static OrgLabor fetchByOrganizationId_First(long organizationId,
+		OrderByComparator<OrgLabor> orderByComparator) {
 		return getPersistence()
 				   .fetchByOrganizationId_First(organizationId,
 			orderByComparator);
@@ -193,11 +189,10 @@ public class OrgLaborUtil {
 	* @param organizationId the organization ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching org labor
-	* @throws com.liferay.portal.NoSuchOrgLaborException if a matching org labor could not be found
+	* @throws NoSuchOrgLaborException if a matching org labor could not be found
 	*/
-	public static com.liferay.portal.model.OrgLabor findByOrganizationId_Last(
-		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator)
+	public static OrgLabor findByOrganizationId_Last(long organizationId,
+		OrderByComparator<OrgLabor> orderByComparator)
 		throws com.liferay.portal.NoSuchOrgLaborException {
 		return getPersistence()
 				   .findByOrganizationId_Last(organizationId, orderByComparator);
@@ -210,9 +205,8 @@ public class OrgLaborUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching org labor, or <code>null</code> if a matching org labor could not be found
 	*/
-	public static com.liferay.portal.model.OrgLabor fetchByOrganizationId_Last(
-		long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator) {
+	public static OrgLabor fetchByOrganizationId_Last(long organizationId,
+		OrderByComparator<OrgLabor> orderByComparator) {
 		return getPersistence()
 				   .fetchByOrganizationId_Last(organizationId, orderByComparator);
 	}
@@ -224,11 +218,10 @@ public class OrgLaborUtil {
 	* @param organizationId the organization ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next org labor
-	* @throws com.liferay.portal.NoSuchOrgLaborException if a org labor with the primary key could not be found
+	* @throws NoSuchOrgLaborException if a org labor with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.OrgLabor[] findByOrganizationId_PrevAndNext(
-		long orgLaborId, long organizationId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator)
+	public static OrgLabor[] findByOrganizationId_PrevAndNext(long orgLaborId,
+		long organizationId, OrderByComparator<OrgLabor> orderByComparator)
 		throws com.liferay.portal.NoSuchOrgLaborException {
 		return getPersistence()
 				   .findByOrganizationId_PrevAndNext(orgLaborId,
@@ -259,7 +252,7 @@ public class OrgLaborUtil {
 	*
 	* @param orgLabor the org labor
 	*/
-	public static void cacheResult(com.liferay.portal.model.OrgLabor orgLabor) {
+	public static void cacheResult(OrgLabor orgLabor) {
 		getPersistence().cacheResult(orgLabor);
 	}
 
@@ -268,8 +261,7 @@ public class OrgLaborUtil {
 	*
 	* @param orgLabors the org labors
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portal.model.OrgLabor> orgLabors) {
+	public static void cacheResult(List<OrgLabor> orgLabors) {
 		getPersistence().cacheResult(orgLabors);
 	}
 
@@ -279,7 +271,7 @@ public class OrgLaborUtil {
 	* @param orgLaborId the primary key for the new org labor
 	* @return the new org labor
 	*/
-	public static com.liferay.portal.model.OrgLabor create(long orgLaborId) {
+	public static OrgLabor create(long orgLaborId) {
 		return getPersistence().create(orgLaborId);
 	}
 
@@ -288,27 +280,26 @@ public class OrgLaborUtil {
 	*
 	* @param orgLaborId the primary key of the org labor
 	* @return the org labor that was removed
-	* @throws com.liferay.portal.NoSuchOrgLaborException if a org labor with the primary key could not be found
+	* @throws NoSuchOrgLaborException if a org labor with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.OrgLabor remove(long orgLaborId)
+	public static OrgLabor remove(long orgLaborId)
 		throws com.liferay.portal.NoSuchOrgLaborException {
 		return getPersistence().remove(orgLaborId);
 	}
 
-	public static com.liferay.portal.model.OrgLabor updateImpl(
-		com.liferay.portal.model.OrgLabor orgLabor) {
+	public static OrgLabor updateImpl(OrgLabor orgLabor) {
 		return getPersistence().updateImpl(orgLabor);
 	}
 
 	/**
-	* Returns the org labor with the primary key or throws a {@link com.liferay.portal.NoSuchOrgLaborException} if it could not be found.
+	* Returns the org labor with the primary key or throws a {@link NoSuchOrgLaborException} if it could not be found.
 	*
 	* @param orgLaborId the primary key of the org labor
 	* @return the org labor
-	* @throws com.liferay.portal.NoSuchOrgLaborException if a org labor with the primary key could not be found
+	* @throws NoSuchOrgLaborException if a org labor with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.OrgLabor findByPrimaryKey(
-		long orgLaborId) throws com.liferay.portal.NoSuchOrgLaborException {
+	public static OrgLabor findByPrimaryKey(long orgLaborId)
+		throws com.liferay.portal.NoSuchOrgLaborException {
 		return getPersistence().findByPrimaryKey(orgLaborId);
 	}
 
@@ -318,12 +309,11 @@ public class OrgLaborUtil {
 	* @param orgLaborId the primary key of the org labor
 	* @return the org labor, or <code>null</code> if a org labor with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.OrgLabor fetchByPrimaryKey(
-		long orgLaborId) {
+	public static OrgLabor fetchByPrimaryKey(long orgLaborId) {
 		return getPersistence().fetchByPrimaryKey(orgLaborId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.OrgLabor> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, OrgLabor> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -333,7 +323,7 @@ public class OrgLaborUtil {
 	*
 	* @return the org labors
 	*/
-	public static java.util.List<com.liferay.portal.model.OrgLabor> findAll() {
+	public static List<OrgLabor> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -341,15 +331,14 @@ public class OrgLaborUtil {
 	* Returns a range of all the org labors.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.OrgLaborModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrgLaborModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of org labors
 	* @param end the upper bound of the range of org labors (not inclusive)
 	* @return the range of org labors
 	*/
-	public static java.util.List<com.liferay.portal.model.OrgLabor> findAll(
-		int start, int end) {
+	public static List<OrgLabor> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -357,7 +346,7 @@ public class OrgLaborUtil {
 	* Returns an ordered range of all the org labors.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.OrgLaborModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OrgLaborModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of org labors
@@ -365,9 +354,8 @@ public class OrgLaborUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of org labors
 	*/
-	public static java.util.List<com.liferay.portal.model.OrgLabor> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.OrgLabor> orderByComparator) {
+	public static List<OrgLabor> findAll(int start, int end,
+		OrderByComparator<OrgLabor> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

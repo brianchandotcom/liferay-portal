@@ -273,7 +273,7 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.service.CounterLocalService getCounterLocalService() {
+	public CounterLocalService getCounterLocalService() {
 		return counterLocalService;
 	}
 
@@ -282,8 +282,7 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param counterLocalService the counter local service
 	 */
-	public void setCounterLocalService(
-		com.liferay.counter.service.CounterLocalService counterLocalService) {
+	public void setCounterLocalService(CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -386,7 +385,7 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
-	protected com.liferay.counter.service.CounterLocalService counterLocalService;
+	protected CounterLocalService counterLocalService;
 	@BeanReference(type = CounterPersistence.class)
 	protected CounterPersistence counterPersistence;
 	@BeanReference(type = CounterFinder.class)

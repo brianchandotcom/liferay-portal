@@ -302,7 +302,7 @@ public abstract class AssetLinkLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the asset link local service
 	 */
-	public com.liferay.portlet.asset.service.AssetLinkLocalService getAssetLinkLocalService() {
+	public AssetLinkLocalService getAssetLinkLocalService() {
 		return assetLinkLocalService;
 	}
 
@@ -312,7 +312,7 @@ public abstract class AssetLinkLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param assetLinkLocalService the asset link local service
 	 */
 	public void setAssetLinkLocalService(
-		com.liferay.portlet.asset.service.AssetLinkLocalService assetLinkLocalService) {
+		AssetLinkLocalService assetLinkLocalService) {
 		this.assetLinkLocalService = assetLinkLocalService;
 	}
 
@@ -566,7 +566,7 @@ public abstract class AssetLinkLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.asset.service.AssetLinkLocalService.class)
-	protected com.liferay.portlet.asset.service.AssetLinkLocalService assetLinkLocalService;
+	protected AssetLinkLocalService assetLinkLocalService;
 	@BeanReference(type = AssetLinkPersistence.class)
 	protected AssetLinkPersistence assetLinkPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

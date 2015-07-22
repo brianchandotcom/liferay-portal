@@ -212,7 +212,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	* @return the create date of this workflow definition link
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _workflowDefinitionLink.getCreateDate();
 	}
 
@@ -237,7 +237,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	* @return the modified date of this workflow definition link
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _workflowDefinitionLink.getModifiedDate();
 	}
 
@@ -407,7 +407,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	* @param createDate the create date of this workflow definition link
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_workflowDefinitionLink.setCreateDate(createDate);
 	}
 
@@ -444,7 +444,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	* @param modifiedDate the modified date of this workflow definition link
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_workflowDefinitionLink.setModifiedDate(modifiedDate);
 	}
 

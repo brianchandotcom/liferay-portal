@@ -29,7 +29,7 @@ import java.util.Map;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupServiceUtil} service utility. The
+ * {@link MDRRuleGroupServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -64,7 +64,7 @@ import java.util.Map;
  * @author Edward C. Han
  * @see MDRRuleGroupServiceHttp
  * @see com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupSoap
- * @see com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupServiceUtil
+ * @see MDRRuleGroupServiceUtil
  * @generated
  */
 @ProviderType

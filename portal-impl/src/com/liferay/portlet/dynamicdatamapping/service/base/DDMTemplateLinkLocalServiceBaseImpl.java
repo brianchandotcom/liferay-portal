@@ -303,7 +303,7 @@ public abstract class DDMTemplateLinkLocalServiceBaseImpl
 	 *
 	 * @return the d d m template link local service
 	 */
-	public com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLinkLocalService getDDMTemplateLinkLocalService() {
+	public DDMTemplateLinkLocalService getDDMTemplateLinkLocalService() {
 		return ddmTemplateLinkLocalService;
 	}
 
@@ -313,7 +313,7 @@ public abstract class DDMTemplateLinkLocalServiceBaseImpl
 	 * @param ddmTemplateLinkLocalService the d d m template link local service
 	 */
 	public void setDDMTemplateLinkLocalService(
-		com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLinkLocalService ddmTemplateLinkLocalService) {
+		DDMTemplateLinkLocalService ddmTemplateLinkLocalService) {
 		this.ddmTemplateLinkLocalService = ddmTemplateLinkLocalService;
 	}
 
@@ -418,7 +418,7 @@ public abstract class DDMTemplateLinkLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLinkLocalService.class)
-	protected com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLinkLocalService ddmTemplateLinkLocalService;
+	protected DDMTemplateLinkLocalService ddmTemplateLinkLocalService;
 	@BeanReference(type = DDMTemplateLinkPersistence.class)
 	protected DDMTemplateLinkPersistence ddmTemplateLinkPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

@@ -400,7 +400,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @throws PortalException if a portal exception occurred
 	*/
 	@Override
-	public java.util.Date getBirthday()
+	public Date getBirthday()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _user.getBirthday();
 	}
@@ -466,7 +466,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @return the create date of this user
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _user.getCreateDate();
 	}
 
@@ -824,7 +824,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @return the last failed login date of this user
 	*/
 	@Override
-	public java.util.Date getLastFailedLoginDate() {
+	public Date getLastFailedLoginDate() {
 		return _user.getLastFailedLoginDate();
 	}
 
@@ -834,7 +834,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @return the last login date of this user
 	*/
 	@Override
-	public java.util.Date getLastLoginDate() {
+	public Date getLastLoginDate() {
 		return _user.getLastLoginDate();
 	}
 
@@ -889,7 +889,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @return the lockout date of this user
 	*/
 	@Override
-	public java.util.Date getLockoutDate() {
+	public Date getLockoutDate() {
 		return _user.getLockoutDate();
 	}
 
@@ -905,7 +905,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @return the login date of this user
 	*/
 	@Override
-	public java.util.Date getLoginDate() {
+	public Date getLoginDate() {
 		return _user.getLoginDate();
 	}
 
@@ -948,7 +948,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @return the modified date of this user
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _user.getModifiedDate();
 	}
 
@@ -1122,7 +1122,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @return the password modified date of this user
 	*/
 	@Override
-	public java.util.Date getPasswordModifiedDate() {
+	public Date getPasswordModifiedDate() {
 		return _user.getPasswordModifiedDate();
 	}
 
@@ -1302,13 +1302,13 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
-	public java.util.Date getUnlockDate()
+	public Date getUnlockDate()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _user.getUnlockDate();
 	}
 
 	@Override
-	public java.util.Date getUnlockDate(
+	public Date getUnlockDate(
 		com.liferay.portal.model.PasswordPolicy passwordPolicy) {
 		return _user.getUnlockDate(passwordPolicy);
 	}
@@ -1581,7 +1581,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @param createDate the create date of this user
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_user.setCreateDate(createDate);
 	}
 
@@ -1718,7 +1718,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @param lastFailedLoginDate the last failed login date of this user
 	*/
 	@Override
-	public void setLastFailedLoginDate(java.util.Date lastFailedLoginDate) {
+	public void setLastFailedLoginDate(Date lastFailedLoginDate) {
 		_user.setLastFailedLoginDate(lastFailedLoginDate);
 	}
 
@@ -1728,7 +1728,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @param lastLoginDate the last login date of this user
 	*/
 	@Override
-	public void setLastLoginDate(java.util.Date lastLoginDate) {
+	public void setLastLoginDate(Date lastLoginDate) {
 		_user.setLastLoginDate(lastLoginDate);
 	}
 
@@ -1778,7 +1778,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @param lockoutDate the lockout date of this user
 	*/
 	@Override
-	public void setLockoutDate(java.util.Date lockoutDate) {
+	public void setLockoutDate(Date lockoutDate) {
 		_user.setLockoutDate(lockoutDate);
 	}
 
@@ -1788,7 +1788,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @param loginDate the login date of this user
 	*/
 	@Override
-	public void setLoginDate(java.util.Date loginDate) {
+	public void setLoginDate(Date loginDate) {
 		_user.setLoginDate(loginDate);
 	}
 
@@ -1818,7 +1818,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @param modifiedDate the modified date of this user
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_user.setModifiedDate(modifiedDate);
 	}
 
@@ -1878,7 +1878,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @param passwordModifiedDate the password modified date of this user
 	*/
 	@Override
-	public void setPasswordModifiedDate(java.util.Date passwordModifiedDate) {
+	public void setPasswordModifiedDate(Date passwordModifiedDate) {
 		_user.setPasswordModifiedDate(passwordModifiedDate);
 	}
 

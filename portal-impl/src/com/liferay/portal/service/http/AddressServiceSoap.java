@@ -24,7 +24,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.portal.service.AddressServiceUtil} service utility. The
+ * {@link AddressServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -59,7 +59,7 @@ import java.rmi.RemoteException;
  * @author Brian Wing Shun Chan
  * @see AddressServiceHttp
  * @see com.liferay.portal.model.AddressSoap
- * @see com.liferay.portal.service.AddressServiceUtil
+ * @see AddressServiceUtil
  * @generated
  */
 @ProviderType

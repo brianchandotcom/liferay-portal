@@ -28,7 +28,7 @@ import com.liferay.portal.service.ImageLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ImageImpl
- * @see com.liferay.portal.model.Image
+ * @see Image
  * @generated
  */
 @ProviderType

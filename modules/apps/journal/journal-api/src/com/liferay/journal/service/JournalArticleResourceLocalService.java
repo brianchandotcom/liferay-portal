@@ -68,7 +68,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 		long resourcePrimKey);
 
 	public void deleteArticleResource(long groupId, java.lang.String articleId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the journal article resource from the database. Also notifies the appropriate model listeners.
@@ -89,8 +89,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.journal.model.JournalArticleResource deleteJournalArticleResource(
-		long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long resourcePrimKey) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -98,7 +97,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -193,8 +192,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalArticleResource getArticleResource(
-		long articleResourcePrimKey)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long articleResourcePrimKey) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getArticleResourcePrimKey(long groupId,
@@ -224,8 +222,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalArticleResource getJournalArticleResource(
-		long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long resourcePrimKey) throws PortalException;
 
 	/**
 	* Returns the journal article resource matching the UUID and group.
@@ -237,8 +234,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalArticleResource getJournalArticleResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the journal article resources.
@@ -266,8 +262,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.

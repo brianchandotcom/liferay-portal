@@ -303,7 +303,7 @@ public abstract class PortletItemLocalServiceBaseImpl
 	 *
 	 * @return the portlet item local service
 	 */
-	public com.liferay.portal.service.PortletItemLocalService getPortletItemLocalService() {
+	public PortletItemLocalService getPortletItemLocalService() {
 		return portletItemLocalService;
 	}
 
@@ -313,7 +313,7 @@ public abstract class PortletItemLocalServiceBaseImpl
 	 * @param portletItemLocalService the portlet item local service
 	 */
 	public void setPortletItemLocalService(
-		com.liferay.portal.service.PortletItemLocalService portletItemLocalService) {
+		PortletItemLocalService portletItemLocalService) {
 		this.portletItemLocalService = portletItemLocalService;
 	}
 
@@ -549,7 +549,7 @@ public abstract class PortletItemLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.PortletItemLocalService.class)
-	protected com.liferay.portal.service.PortletItemLocalService portletItemLocalService;
+	protected PortletItemLocalService portletItemLocalService;
 	@BeanReference(type = PortletItemPersistence.class)
 	protected PortletItemPersistence portletItemPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

@@ -209,7 +209,7 @@ public class SCProductEntryWrapper implements SCProductEntry,
 	* @return the create date of this s c product entry
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _scProductEntry.getCreateDate();
 	}
 
@@ -254,7 +254,7 @@ public class SCProductEntryWrapper implements SCProductEntry,
 	* @return the modified date of this s c product entry
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _scProductEntry.getModifiedDate();
 	}
 
@@ -444,7 +444,7 @@ public class SCProductEntryWrapper implements SCProductEntry,
 	* @param createDate the create date of this s c product entry
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_scProductEntry.setCreateDate(createDate);
 	}
 
@@ -492,7 +492,7 @@ public class SCProductEntryWrapper implements SCProductEntry,
 	* @param modifiedDate the modified date of this s c product entry
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_scProductEntry.setModifiedDate(modifiedDate);
 	}
 

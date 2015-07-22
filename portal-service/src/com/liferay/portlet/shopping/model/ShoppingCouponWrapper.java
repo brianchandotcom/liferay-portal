@@ -243,7 +243,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @return the create date of this shopping coupon
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _shoppingCoupon.getCreateDate();
 	}
 
@@ -283,7 +283,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @return the end date of this shopping coupon
 	*/
 	@Override
-	public java.util.Date getEndDate() {
+	public Date getEndDate() {
 		return _shoppingCoupon.getEndDate();
 	}
 
@@ -338,7 +338,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @return the modified date of this shopping coupon
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _shoppingCoupon.getModifiedDate();
 	}
 
@@ -373,7 +373,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @return the start date of this shopping coupon
 	*/
 	@Override
-	public java.util.Date getStartDate() {
+	public Date getStartDate() {
 		return _shoppingCoupon.getStartDate();
 	}
 
@@ -508,7 +508,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @param createDate the create date of this shopping coupon
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_shoppingCoupon.setCreateDate(createDate);
 	}
 
@@ -548,7 +548,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @param endDate the end date of this shopping coupon
 	*/
 	@Override
-	public void setEndDate(java.util.Date endDate) {
+	public void setEndDate(Date endDate) {
 		_shoppingCoupon.setEndDate(endDate);
 	}
 
@@ -616,7 +616,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @param modifiedDate the modified date of this shopping coupon
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_shoppingCoupon.setModifiedDate(modifiedDate);
 	}
 
@@ -656,7 +656,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* @param startDate the start date of this shopping coupon
 	*/
 	@Override
-	public void setStartDate(java.util.Date startDate) {
+	public void setStartDate(Date startDate) {
 		_shoppingCoupon.setStartDate(startDate);
 	}
 

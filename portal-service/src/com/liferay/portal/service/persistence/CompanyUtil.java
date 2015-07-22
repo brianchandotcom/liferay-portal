@@ -107,14 +107,13 @@ public class CompanyUtil {
 	}
 
 	/**
-	* Returns the company where webId = &#63; or throws a {@link com.liferay.portal.NoSuchCompanyException} if it could not be found.
+	* Returns the company where webId = &#63; or throws a {@link NoSuchCompanyException} if it could not be found.
 	*
 	* @param webId the web ID
 	* @return the matching company
-	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws NoSuchCompanyException if a matching company could not be found
 	*/
-	public static com.liferay.portal.model.Company findByWebId(
-		java.lang.String webId)
+	public static Company findByWebId(java.lang.String webId)
 		throws com.liferay.portal.NoSuchCompanyException {
 		return getPersistence().findByWebId(webId);
 	}
@@ -125,8 +124,7 @@ public class CompanyUtil {
 	* @param webId the web ID
 	* @return the matching company, or <code>null</code> if a matching company could not be found
 	*/
-	public static com.liferay.portal.model.Company fetchByWebId(
-		java.lang.String webId) {
+	public static Company fetchByWebId(java.lang.String webId) {
 		return getPersistence().fetchByWebId(webId);
 	}
 
@@ -137,8 +135,8 @@ public class CompanyUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching company, or <code>null</code> if a matching company could not be found
 	*/
-	public static com.liferay.portal.model.Company fetchByWebId(
-		java.lang.String webId, boolean retrieveFromCache) {
+	public static Company fetchByWebId(java.lang.String webId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByWebId(webId, retrieveFromCache);
 	}
 
@@ -148,8 +146,7 @@ public class CompanyUtil {
 	* @param webId the web ID
 	* @return the company that was removed
 	*/
-	public static com.liferay.portal.model.Company removeByWebId(
-		java.lang.String webId)
+	public static Company removeByWebId(java.lang.String webId)
 		throws com.liferay.portal.NoSuchCompanyException {
 		return getPersistence().removeByWebId(webId);
 	}
@@ -165,13 +162,13 @@ public class CompanyUtil {
 	}
 
 	/**
-	* Returns the company where mx = &#63; or throws a {@link com.liferay.portal.NoSuchCompanyException} if it could not be found.
+	* Returns the company where mx = &#63; or throws a {@link NoSuchCompanyException} if it could not be found.
 	*
 	* @param mx the mx
 	* @return the matching company
-	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws NoSuchCompanyException if a matching company could not be found
 	*/
-	public static com.liferay.portal.model.Company findByMx(java.lang.String mx)
+	public static Company findByMx(java.lang.String mx)
 		throws com.liferay.portal.NoSuchCompanyException {
 		return getPersistence().findByMx(mx);
 	}
@@ -182,8 +179,7 @@ public class CompanyUtil {
 	* @param mx the mx
 	* @return the matching company, or <code>null</code> if a matching company could not be found
 	*/
-	public static com.liferay.portal.model.Company fetchByMx(
-		java.lang.String mx) {
+	public static Company fetchByMx(java.lang.String mx) {
 		return getPersistence().fetchByMx(mx);
 	}
 
@@ -194,8 +190,8 @@ public class CompanyUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching company, or <code>null</code> if a matching company could not be found
 	*/
-	public static com.liferay.portal.model.Company fetchByMx(
-		java.lang.String mx, boolean retrieveFromCache) {
+	public static Company fetchByMx(java.lang.String mx,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByMx(mx, retrieveFromCache);
 	}
 
@@ -205,8 +201,8 @@ public class CompanyUtil {
 	* @param mx the mx
 	* @return the company that was removed
 	*/
-	public static com.liferay.portal.model.Company removeByMx(
-		java.lang.String mx) throws com.liferay.portal.NoSuchCompanyException {
+	public static Company removeByMx(java.lang.String mx)
+		throws com.liferay.portal.NoSuchCompanyException {
 		return getPersistence().removeByMx(mx);
 	}
 
@@ -221,13 +217,13 @@ public class CompanyUtil {
 	}
 
 	/**
-	* Returns the company where logoId = &#63; or throws a {@link com.liferay.portal.NoSuchCompanyException} if it could not be found.
+	* Returns the company where logoId = &#63; or throws a {@link NoSuchCompanyException} if it could not be found.
 	*
 	* @param logoId the logo ID
 	* @return the matching company
-	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws NoSuchCompanyException if a matching company could not be found
 	*/
-	public static com.liferay.portal.model.Company findByLogoId(long logoId)
+	public static Company findByLogoId(long logoId)
 		throws com.liferay.portal.NoSuchCompanyException {
 		return getPersistence().findByLogoId(logoId);
 	}
@@ -238,7 +234,7 @@ public class CompanyUtil {
 	* @param logoId the logo ID
 	* @return the matching company, or <code>null</code> if a matching company could not be found
 	*/
-	public static com.liferay.portal.model.Company fetchByLogoId(long logoId) {
+	public static Company fetchByLogoId(long logoId) {
 		return getPersistence().fetchByLogoId(logoId);
 	}
 
@@ -249,8 +245,7 @@ public class CompanyUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching company, or <code>null</code> if a matching company could not be found
 	*/
-	public static com.liferay.portal.model.Company fetchByLogoId(long logoId,
-		boolean retrieveFromCache) {
+	public static Company fetchByLogoId(long logoId, boolean retrieveFromCache) {
 		return getPersistence().fetchByLogoId(logoId, retrieveFromCache);
 	}
 
@@ -260,7 +255,7 @@ public class CompanyUtil {
 	* @param logoId the logo ID
 	* @return the company that was removed
 	*/
-	public static com.liferay.portal.model.Company removeByLogoId(long logoId)
+	public static Company removeByLogoId(long logoId)
 		throws com.liferay.portal.NoSuchCompanyException {
 		return getPersistence().removeByLogoId(logoId);
 	}
@@ -281,8 +276,7 @@ public class CompanyUtil {
 	* @param system the system
 	* @return the matching companies
 	*/
-	public static java.util.List<com.liferay.portal.model.Company> findBySystem(
-		boolean system) {
+	public static List<Company> findBySystem(boolean system) {
 		return getPersistence().findBySystem(system);
 	}
 
@@ -290,7 +284,7 @@ public class CompanyUtil {
 	* Returns a range of all the companies where system = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.CompanyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CompanyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param system the system
@@ -298,8 +292,7 @@ public class CompanyUtil {
 	* @param end the upper bound of the range of companies (not inclusive)
 	* @return the range of matching companies
 	*/
-	public static java.util.List<com.liferay.portal.model.Company> findBySystem(
-		boolean system, int start, int end) {
+	public static List<Company> findBySystem(boolean system, int start, int end) {
 		return getPersistence().findBySystem(system, start, end);
 	}
 
@@ -307,7 +300,7 @@ public class CompanyUtil {
 	* Returns an ordered range of all the companies where system = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.CompanyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CompanyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param system the system
@@ -316,9 +309,8 @@ public class CompanyUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching companies
 	*/
-	public static java.util.List<com.liferay.portal.model.Company> findBySystem(
-		boolean system, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator) {
+	public static List<Company> findBySystem(boolean system, int start,
+		int end, OrderByComparator<Company> orderByComparator) {
 		return getPersistence()
 				   .findBySystem(system, start, end, orderByComparator);
 	}
@@ -329,11 +321,10 @@ public class CompanyUtil {
 	* @param system the system
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching company
-	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws NoSuchCompanyException if a matching company could not be found
 	*/
-	public static com.liferay.portal.model.Company findBySystem_First(
-		boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator)
+	public static Company findBySystem_First(boolean system,
+		OrderByComparator<Company> orderByComparator)
 		throws com.liferay.portal.NoSuchCompanyException {
 		return getPersistence().findBySystem_First(system, orderByComparator);
 	}
@@ -345,9 +336,8 @@ public class CompanyUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching company, or <code>null</code> if a matching company could not be found
 	*/
-	public static com.liferay.portal.model.Company fetchBySystem_First(
-		boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator) {
+	public static Company fetchBySystem_First(boolean system,
+		OrderByComparator<Company> orderByComparator) {
 		return getPersistence().fetchBySystem_First(system, orderByComparator);
 	}
 
@@ -357,11 +347,10 @@ public class CompanyUtil {
 	* @param system the system
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching company
-	* @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
+	* @throws NoSuchCompanyException if a matching company could not be found
 	*/
-	public static com.liferay.portal.model.Company findBySystem_Last(
-		boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator)
+	public static Company findBySystem_Last(boolean system,
+		OrderByComparator<Company> orderByComparator)
 		throws com.liferay.portal.NoSuchCompanyException {
 		return getPersistence().findBySystem_Last(system, orderByComparator);
 	}
@@ -373,9 +362,8 @@ public class CompanyUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching company, or <code>null</code> if a matching company could not be found
 	*/
-	public static com.liferay.portal.model.Company fetchBySystem_Last(
-		boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator) {
+	public static Company fetchBySystem_Last(boolean system,
+		OrderByComparator<Company> orderByComparator) {
 		return getPersistence().fetchBySystem_Last(system, orderByComparator);
 	}
 
@@ -386,11 +374,10 @@ public class CompanyUtil {
 	* @param system the system
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next company
-	* @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
+	* @throws NoSuchCompanyException if a company with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.Company[] findBySystem_PrevAndNext(
-		long companyId, boolean system,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator)
+	public static Company[] findBySystem_PrevAndNext(long companyId,
+		boolean system, OrderByComparator<Company> orderByComparator)
 		throws com.liferay.portal.NoSuchCompanyException {
 		return getPersistence()
 				   .findBySystem_PrevAndNext(companyId, system,
@@ -421,7 +408,7 @@ public class CompanyUtil {
 	*
 	* @param company the company
 	*/
-	public static void cacheResult(com.liferay.portal.model.Company company) {
+	public static void cacheResult(Company company) {
 		getPersistence().cacheResult(company);
 	}
 
@@ -430,8 +417,7 @@ public class CompanyUtil {
 	*
 	* @param companies the companies
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portal.model.Company> companies) {
+	public static void cacheResult(List<Company> companies) {
 		getPersistence().cacheResult(companies);
 	}
 
@@ -441,7 +427,7 @@ public class CompanyUtil {
 	* @param companyId the primary key for the new company
 	* @return the new company
 	*/
-	public static com.liferay.portal.model.Company create(long companyId) {
+	public static Company create(long companyId) {
 		return getPersistence().create(companyId);
 	}
 
@@ -450,27 +436,26 @@ public class CompanyUtil {
 	*
 	* @param companyId the primary key of the company
 	* @return the company that was removed
-	* @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
+	* @throws NoSuchCompanyException if a company with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.Company remove(long companyId)
+	public static Company remove(long companyId)
 		throws com.liferay.portal.NoSuchCompanyException {
 		return getPersistence().remove(companyId);
 	}
 
-	public static com.liferay.portal.model.Company updateImpl(
-		com.liferay.portal.model.Company company) {
+	public static Company updateImpl(Company company) {
 		return getPersistence().updateImpl(company);
 	}
 
 	/**
-	* Returns the company with the primary key or throws a {@link com.liferay.portal.NoSuchCompanyException} if it could not be found.
+	* Returns the company with the primary key or throws a {@link NoSuchCompanyException} if it could not be found.
 	*
 	* @param companyId the primary key of the company
 	* @return the company
-	* @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
+	* @throws NoSuchCompanyException if a company with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.Company findByPrimaryKey(
-		long companyId) throws com.liferay.portal.NoSuchCompanyException {
+	public static Company findByPrimaryKey(long companyId)
+		throws com.liferay.portal.NoSuchCompanyException {
 		return getPersistence().findByPrimaryKey(companyId);
 	}
 
@@ -480,12 +465,11 @@ public class CompanyUtil {
 	* @param companyId the primary key of the company
 	* @return the company, or <code>null</code> if a company with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.Company fetchByPrimaryKey(
-		long companyId) {
+	public static Company fetchByPrimaryKey(long companyId) {
 		return getPersistence().fetchByPrimaryKey(companyId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.Company> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, Company> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -495,7 +479,7 @@ public class CompanyUtil {
 	*
 	* @return the companies
 	*/
-	public static java.util.List<com.liferay.portal.model.Company> findAll() {
+	public static List<Company> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -503,15 +487,14 @@ public class CompanyUtil {
 	* Returns a range of all the companies.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.CompanyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CompanyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of companies
 	* @param end the upper bound of the range of companies (not inclusive)
 	* @return the range of companies
 	*/
-	public static java.util.List<com.liferay.portal.model.Company> findAll(
-		int start, int end) {
+	public static List<Company> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -519,7 +502,7 @@ public class CompanyUtil {
 	* Returns an ordered range of all the companies.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.CompanyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CompanyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of companies
@@ -527,9 +510,8 @@ public class CompanyUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of companies
 	*/
-	public static java.util.List<com.liferay.portal.model.Company> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Company> orderByComparator) {
+	public static List<Company> findAll(int start, int end,
+		OrderByComparator<Company> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -111,7 +111,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	* @return the create date of this password tracker
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _passwordTracker.getCreateDate();
 	}
 
@@ -221,7 +221,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 	* @param createDate the create date of this password tracker
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_passwordTracker.setCreateDate(createDate);
 	}
 

@@ -28,7 +28,7 @@ import java.util.Map;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.portal.service.LayoutServiceUtil} service utility. The
+ * {@link LayoutServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -63,7 +63,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @see LayoutServiceHttp
  * @see com.liferay.portal.model.LayoutSoap
- * @see com.liferay.portal.service.LayoutServiceUtil
+ * @see LayoutServiceUtil
  * @generated
  */
 @ProviderType

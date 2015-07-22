@@ -115,8 +115,7 @@ public class MDRRuleGroupUtil {
 	* @param uuid the uuid
 	* @return the matching m d r rule groups
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByUuid(
-		java.lang.String uuid) {
+	public static List<MDRRuleGroup> findByUuid(java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -124,7 +123,7 @@ public class MDRRuleGroupUtil {
 	* Returns a range of all the m d r rule groups where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -132,8 +131,8 @@ public class MDRRuleGroupUtil {
 	* @param end the upper bound of the range of m d r rule groups (not inclusive)
 	* @return the range of matching m d r rule groups
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByUuid(
-		java.lang.String uuid, int start, int end) {
+	public static List<MDRRuleGroup> findByUuid(java.lang.String uuid,
+		int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -141,7 +140,7 @@ public class MDRRuleGroupUtil {
 	* Returns an ordered range of all the m d r rule groups where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -150,9 +149,8 @@ public class MDRRuleGroupUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching m d r rule groups
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByUuid(
-		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator) {
+	public static List<MDRRuleGroup> findByUuid(java.lang.String uuid,
+		int start, int end, OrderByComparator<MDRRuleGroup> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -162,11 +160,10 @@ public class MDRRuleGroupUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r rule group
-	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a matching m d r rule group could not be found
+	* @throws NoSuchRuleGroupException if a matching m d r rule group could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup findByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator)
+	public static MDRRuleGroup findByUuid_First(java.lang.String uuid,
+		OrderByComparator<MDRRuleGroup> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -178,9 +175,8 @@ public class MDRRuleGroupUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator) {
+	public static MDRRuleGroup fetchByUuid_First(java.lang.String uuid,
+		OrderByComparator<MDRRuleGroup> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -190,11 +186,10 @@ public class MDRRuleGroupUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r rule group
-	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a matching m d r rule group could not be found
+	* @throws NoSuchRuleGroupException if a matching m d r rule group could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup findByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator)
+	public static MDRRuleGroup findByUuid_Last(java.lang.String uuid,
+		OrderByComparator<MDRRuleGroup> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -206,9 +201,8 @@ public class MDRRuleGroupUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator) {
+	public static MDRRuleGroup fetchByUuid_Last(java.lang.String uuid,
+		OrderByComparator<MDRRuleGroup> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -219,11 +213,10 @@ public class MDRRuleGroupUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next m d r rule group
-	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
+	* @throws NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup[] findByUuid_PrevAndNext(
-		long ruleGroupId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator)
+	public static MDRRuleGroup[] findByUuid_PrevAndNext(long ruleGroupId,
+		java.lang.String uuid, OrderByComparator<MDRRuleGroup> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(ruleGroupId, uuid, orderByComparator);
@@ -249,15 +242,14 @@ public class MDRRuleGroupUtil {
 	}
 
 	/**
-	* Returns the m d r rule group where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException} if it could not be found.
+	* Returns the m d r rule group where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchRuleGroupException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching m d r rule group
-	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a matching m d r rule group could not be found
+	* @throws NoSuchRuleGroupException if a matching m d r rule group could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup findByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static MDRRuleGroup findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -269,8 +261,7 @@ public class MDRRuleGroupUtil {
 	* @param groupId the group ID
 	* @return the matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchByUUID_G(
-		java.lang.String uuid, long groupId) {
+	public static MDRRuleGroup fetchByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -282,8 +273,8 @@ public class MDRRuleGroupUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
+	public static MDRRuleGroup fetchByUUID_G(java.lang.String uuid,
+		long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -294,8 +285,8 @@ public class MDRRuleGroupUtil {
 	* @param groupId the group ID
 	* @return the m d r rule group that was removed
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static MDRRuleGroup removeByUUID_G(java.lang.String uuid,
+		long groupId)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -318,8 +309,8 @@ public class MDRRuleGroupUtil {
 	* @param companyId the company ID
 	* @return the matching m d r rule groups
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByUuid_C(
-		java.lang.String uuid, long companyId) {
+	public static List<MDRRuleGroup> findByUuid_C(java.lang.String uuid,
+		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -327,7 +318,7 @@ public class MDRRuleGroupUtil {
 	* Returns a range of all the m d r rule groups where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -336,8 +327,8 @@ public class MDRRuleGroupUtil {
 	* @param end the upper bound of the range of m d r rule groups (not inclusive)
 	* @return the range of matching m d r rule groups
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end) {
+	public static List<MDRRuleGroup> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -345,7 +336,7 @@ public class MDRRuleGroupUtil {
 	* Returns an ordered range of all the m d r rule groups where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -355,9 +346,9 @@ public class MDRRuleGroupUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching m d r rule groups
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator) {
+	public static List<MDRRuleGroup> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<MDRRuleGroup> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -369,11 +360,10 @@ public class MDRRuleGroupUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r rule group
-	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a matching m d r rule group could not be found
+	* @throws NoSuchRuleGroupException if a matching m d r rule group could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup findByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator)
+	public static MDRRuleGroup findByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<MDRRuleGroup> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -387,9 +377,8 @@ public class MDRRuleGroupUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator) {
+	public static MDRRuleGroup fetchByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<MDRRuleGroup> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -401,11 +390,10 @@ public class MDRRuleGroupUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r rule group
-	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a matching m d r rule group could not be found
+	* @throws NoSuchRuleGroupException if a matching m d r rule group could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator)
+	public static MDRRuleGroup findByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<MDRRuleGroup> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -419,9 +407,8 @@ public class MDRRuleGroupUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator) {
+	public static MDRRuleGroup fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<MDRRuleGroup> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -434,11 +421,11 @@ public class MDRRuleGroupUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next m d r rule group
-	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
+	* @throws NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup[] findByUuid_C_PrevAndNext(
-		long ruleGroupId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator)
+	public static MDRRuleGroup[] findByUuid_C_PrevAndNext(long ruleGroupId,
+		java.lang.String uuid, long companyId,
+		OrderByComparator<MDRRuleGroup> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(ruleGroupId, uuid, companyId,
@@ -472,8 +459,7 @@ public class MDRRuleGroupUtil {
 	* @param groupId the group ID
 	* @return the matching m d r rule groups
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByGroupId(
-		long groupId) {
+	public static List<MDRRuleGroup> findByGroupId(long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -481,7 +467,7 @@ public class MDRRuleGroupUtil {
 	* Returns a range of all the m d r rule groups where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -489,8 +475,8 @@ public class MDRRuleGroupUtil {
 	* @param end the upper bound of the range of m d r rule groups (not inclusive)
 	* @return the range of matching m d r rule groups
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByGroupId(
-		long groupId, int start, int end) {
+	public static List<MDRRuleGroup> findByGroupId(long groupId, int start,
+		int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -498,7 +484,7 @@ public class MDRRuleGroupUtil {
 	* Returns an ordered range of all the m d r rule groups where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -507,9 +493,8 @@ public class MDRRuleGroupUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching m d r rule groups
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator) {
+	public static List<MDRRuleGroup> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<MDRRuleGroup> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -520,11 +505,10 @@ public class MDRRuleGroupUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r rule group
-	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a matching m d r rule group could not be found
+	* @throws NoSuchRuleGroupException if a matching m d r rule group could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup findByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator)
+	public static MDRRuleGroup findByGroupId_First(long groupId,
+		OrderByComparator<MDRRuleGroup> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -536,9 +520,8 @@ public class MDRRuleGroupUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator) {
+	public static MDRRuleGroup fetchByGroupId_First(long groupId,
+		OrderByComparator<MDRRuleGroup> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -548,11 +531,10 @@ public class MDRRuleGroupUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r rule group
-	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a matching m d r rule group could not be found
+	* @throws NoSuchRuleGroupException if a matching m d r rule group could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup findByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator)
+	public static MDRRuleGroup findByGroupId_Last(long groupId,
+		OrderByComparator<MDRRuleGroup> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -564,9 +546,8 @@ public class MDRRuleGroupUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator) {
+	public static MDRRuleGroup fetchByGroupId_Last(long groupId,
+		OrderByComparator<MDRRuleGroup> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -577,11 +558,10 @@ public class MDRRuleGroupUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next m d r rule group
-	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
+	* @throws NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup[] findByGroupId_PrevAndNext(
-		long ruleGroupId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator)
+	public static MDRRuleGroup[] findByGroupId_PrevAndNext(long ruleGroupId,
+		long groupId, OrderByComparator<MDRRuleGroup> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(ruleGroupId, groupId,
@@ -594,8 +574,7 @@ public class MDRRuleGroupUtil {
 	* @param groupId the group ID
 	* @return the matching m d r rule groups that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> filterFindByGroupId(
-		long groupId) {
+	public static List<MDRRuleGroup> filterFindByGroupId(long groupId) {
 		return getPersistence().filterFindByGroupId(groupId);
 	}
 
@@ -603,7 +582,7 @@ public class MDRRuleGroupUtil {
 	* Returns a range of all the m d r rule groups that the user has permission to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -611,8 +590,8 @@ public class MDRRuleGroupUtil {
 	* @param end the upper bound of the range of m d r rule groups (not inclusive)
 	* @return the range of matching m d r rule groups that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> filterFindByGroupId(
-		long groupId, int start, int end) {
+	public static List<MDRRuleGroup> filterFindByGroupId(long groupId,
+		int start, int end) {
 		return getPersistence().filterFindByGroupId(groupId, start, end);
 	}
 
@@ -620,7 +599,7 @@ public class MDRRuleGroupUtil {
 	* Returns an ordered range of all the m d r rule groups that the user has permissions to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -629,9 +608,8 @@ public class MDRRuleGroupUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching m d r rule groups that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> filterFindByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator) {
+	public static List<MDRRuleGroup> filterFindByGroupId(long groupId,
+		int start, int end, OrderByComparator<MDRRuleGroup> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -643,11 +621,11 @@ public class MDRRuleGroupUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next m d r rule group
-	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
+	* @throws NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup[] filterFindByGroupId_PrevAndNext(
+	public static MDRRuleGroup[] filterFindByGroupId_PrevAndNext(
 		long ruleGroupId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator)
+		OrderByComparator<MDRRuleGroup> orderByComparator)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(ruleGroupId, groupId,
@@ -660,8 +638,7 @@ public class MDRRuleGroupUtil {
 	* @param groupIds the group IDs
 	* @return the matching m d r rule groups that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> filterFindByGroupId(
-		long[] groupIds) {
+	public static List<MDRRuleGroup> filterFindByGroupId(long[] groupIds) {
 		return getPersistence().filterFindByGroupId(groupIds);
 	}
 
@@ -669,7 +646,7 @@ public class MDRRuleGroupUtil {
 	* Returns a range of all the m d r rule groups that the user has permission to view where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
@@ -677,8 +654,8 @@ public class MDRRuleGroupUtil {
 	* @param end the upper bound of the range of m d r rule groups (not inclusive)
 	* @return the range of matching m d r rule groups that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> filterFindByGroupId(
-		long[] groupIds, int start, int end) {
+	public static List<MDRRuleGroup> filterFindByGroupId(long[] groupIds,
+		int start, int end) {
 		return getPersistence().filterFindByGroupId(groupIds, start, end);
 	}
 
@@ -686,7 +663,7 @@ public class MDRRuleGroupUtil {
 	* Returns an ordered range of all the m d r rule groups that the user has permission to view where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
@@ -695,9 +672,8 @@ public class MDRRuleGroupUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching m d r rule groups that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> filterFindByGroupId(
-		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator) {
+	public static List<MDRRuleGroup> filterFindByGroupId(long[] groupIds,
+		int start, int end, OrderByComparator<MDRRuleGroup> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupIds, start, end, orderByComparator);
 	}
@@ -706,14 +682,13 @@ public class MDRRuleGroupUtil {
 	* Returns all the m d r rule groups where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
 	* @return the matching m d r rule groups
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByGroupId(
-		long[] groupIds) {
+	public static List<MDRRuleGroup> findByGroupId(long[] groupIds) {
 		return getPersistence().findByGroupId(groupIds);
 	}
 
@@ -721,7 +696,7 @@ public class MDRRuleGroupUtil {
 	* Returns a range of all the m d r rule groups where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
@@ -729,8 +704,8 @@ public class MDRRuleGroupUtil {
 	* @param end the upper bound of the range of m d r rule groups (not inclusive)
 	* @return the range of matching m d r rule groups
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByGroupId(
-		long[] groupIds, int start, int end) {
+	public static List<MDRRuleGroup> findByGroupId(long[] groupIds, int start,
+		int end) {
 		return getPersistence().findByGroupId(groupIds, start, end);
 	}
 
@@ -738,7 +713,7 @@ public class MDRRuleGroupUtil {
 	* Returns an ordered range of all the m d r rule groups where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
@@ -747,9 +722,8 @@ public class MDRRuleGroupUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching m d r rule groups
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findByGroupId(
-		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator) {
+	public static List<MDRRuleGroup> findByGroupId(long[] groupIds, int start,
+		int end, OrderByComparator<MDRRuleGroup> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupIds, start, end, orderByComparator);
 	}
@@ -808,8 +782,7 @@ public class MDRRuleGroupUtil {
 	*
 	* @param mdrRuleGroup the m d r rule group
 	*/
-	public static void cacheResult(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup mdrRuleGroup) {
+	public static void cacheResult(MDRRuleGroup mdrRuleGroup) {
 		getPersistence().cacheResult(mdrRuleGroup);
 	}
 
@@ -818,8 +791,7 @@ public class MDRRuleGroupUtil {
 	*
 	* @param mdrRuleGroups the m d r rule groups
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> mdrRuleGroups) {
+	public static void cacheResult(List<MDRRuleGroup> mdrRuleGroups) {
 		getPersistence().cacheResult(mdrRuleGroups);
 	}
 
@@ -829,8 +801,7 @@ public class MDRRuleGroupUtil {
 	* @param ruleGroupId the primary key for the new m d r rule group
 	* @return the new m d r rule group
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup create(
-		long ruleGroupId) {
+	public static MDRRuleGroup create(long ruleGroupId) {
 		return getPersistence().create(ruleGroupId);
 	}
 
@@ -839,28 +810,25 @@ public class MDRRuleGroupUtil {
 	*
 	* @param ruleGroupId the primary key of the m d r rule group
 	* @return the m d r rule group that was removed
-	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
+	* @throws NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup remove(
-		long ruleGroupId)
+	public static MDRRuleGroup remove(long ruleGroupId)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException {
 		return getPersistence().remove(ruleGroupId);
 	}
 
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup updateImpl(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup mdrRuleGroup) {
+	public static MDRRuleGroup updateImpl(MDRRuleGroup mdrRuleGroup) {
 		return getPersistence().updateImpl(mdrRuleGroup);
 	}
 
 	/**
-	* Returns the m d r rule group with the primary key or throws a {@link com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException} if it could not be found.
+	* Returns the m d r rule group with the primary key or throws a {@link NoSuchRuleGroupException} if it could not be found.
 	*
 	* @param ruleGroupId the primary key of the m d r rule group
 	* @return the m d r rule group
-	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
+	* @throws NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup findByPrimaryKey(
-		long ruleGroupId)
+	public static MDRRuleGroup findByPrimaryKey(long ruleGroupId)
 		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException {
 		return getPersistence().findByPrimaryKey(ruleGroupId);
 	}
@@ -871,12 +839,11 @@ public class MDRRuleGroupUtil {
 	* @param ruleGroupId the primary key of the m d r rule group
 	* @return the m d r rule group, or <code>null</code> if a m d r rule group with the primary key could not be found
 	*/
-	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchByPrimaryKey(
-		long ruleGroupId) {
+	public static MDRRuleGroup fetchByPrimaryKey(long ruleGroupId) {
 		return getPersistence().fetchByPrimaryKey(ruleGroupId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, MDRRuleGroup> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -886,7 +853,7 @@ public class MDRRuleGroupUtil {
 	*
 	* @return the m d r rule groups
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findAll() {
+	public static List<MDRRuleGroup> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -894,15 +861,14 @@ public class MDRRuleGroupUtil {
 	* Returns a range of all the m d r rule groups.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of m d r rule groups
 	* @param end the upper bound of the range of m d r rule groups (not inclusive)
 	* @return the range of m d r rule groups
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findAll(
-		int start, int end) {
+	public static List<MDRRuleGroup> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -910,7 +876,7 @@ public class MDRRuleGroupUtil {
 	* Returns an ordered range of all the m d r rule groups.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRRuleGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of m d r rule groups
@@ -918,9 +884,8 @@ public class MDRRuleGroupUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of m d r rule groups
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> orderByComparator) {
+	public static List<MDRRuleGroup> findAll(int start, int end,
+		OrderByComparator<MDRRuleGroup> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

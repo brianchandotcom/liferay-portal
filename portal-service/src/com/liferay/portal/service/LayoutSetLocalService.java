@@ -46,8 +46,7 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link LayoutSetLocalServiceUtil} to access the layout set local service. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutSetLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.portal.model.LayoutSet addLayoutSet(long groupId,
-		boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean privateLayout) throws PortalException;
 
 	/**
 	* Adds the layout set to the database. Also notifies the appropriate model listeners.
@@ -69,7 +68,7 @@ public interface LayoutSetLocalService extends BaseLocalService,
 
 	public void deleteLayoutSet(long groupId, boolean privateLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the layout set from the database. Also notifies the appropriate model listeners.
@@ -90,7 +89,7 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.LayoutSet deleteLayoutSet(long layoutSetId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -98,7 +97,7 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -184,8 +183,7 @@ public interface LayoutSetLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSet getLayoutSet(long groupId,
-		boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean privateLayout) throws PortalException;
 
 	/**
 	* Returns the layout set with the primary key.
@@ -196,12 +194,11 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSet getLayoutSet(long layoutSetId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSet getLayoutSet(
-		java.lang.String virtualHostname)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String virtualHostname) throws PortalException;
 
 	/**
 	* Returns a range of all the layout sets.
@@ -233,8 +230,7 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -278,7 +274,7 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
 		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the state of the layout set prototype link.
@@ -293,44 +289,41 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	*/
 	public void updateLayoutSetPrototypeLinkEnabled(long groupId,
 		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
-		java.lang.String layoutSetPrototypeUuid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String layoutSetPrototypeUuid) throws PortalException;
 
 	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
 		boolean privateLayout, boolean logo, byte[] bytes)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
 		boolean privateLayout, boolean logo, java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
 		boolean privateLayout, boolean logo, java.io.InputStream is)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.model.LayoutSet updateLogo(long groupId,
 		boolean privateLayout, boolean logo, java.io.InputStream is,
-		boolean cleanUpStream)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean cleanUpStream) throws PortalException;
 
 	public com.liferay.portal.model.LayoutSet updateLookAndFeel(long groupId,
 		boolean privateLayout, java.lang.String themeId,
 		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void updateLookAndFeel(long groupId, java.lang.String themeId,
 		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.model.LayoutSet updatePageCount(long groupId,
-		boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean privateLayout) throws PortalException;
 
 	public com.liferay.portal.model.LayoutSet updateSettings(long groupId,
 		boolean privateLayout, java.lang.String settings)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.model.LayoutSet updateVirtualHost(long groupId,
 		boolean privateLayout, java.lang.String virtualHostname)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

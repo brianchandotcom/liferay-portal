@@ -28,7 +28,7 @@ import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see WorkflowDefinitionLinkImpl
- * @see com.liferay.portal.model.WorkflowDefinitionLink
+ * @see WorkflowDefinitionLink
  * @generated
  */
 @ProviderType

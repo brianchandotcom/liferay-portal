@@ -65,8 +65,7 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	public com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
 		long userId, long companyId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String description, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String description, boolean active) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(long,
@@ -78,14 +77,14 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
 		long userId, long companyId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new layout prototype with the primary key. Does not add the layout prototype to the database.
@@ -107,7 +106,7 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public com.liferay.portal.model.LayoutPrototype deleteLayoutPrototype(
 		com.liferay.portal.model.LayoutPrototype layoutPrototype)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the layout prototype with the primary key from the database. Also notifies the appropriate model listeners.
@@ -118,11 +117,10 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.LayoutPrototype deleteLayoutPrototype(
-		long layoutPrototypeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long layoutPrototypeId) throws PortalException;
 
 	public void deleteNondefaultLayoutPrototypes(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -130,7 +128,7 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -235,8 +233,7 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutPrototype getLayoutPrototype(
-		long layoutPrototypeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long layoutPrototypeId) throws PortalException;
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link
@@ -245,8 +242,7 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutPrototype getLayoutPrototypeByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid) throws PortalException;
 
 	/**
 	* Returns the layout prototype with the matching UUID and company.
@@ -258,8 +254,7 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutPrototype getLayoutPrototypeByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long companyId) throws PortalException;
 
 	/**
 	* Returns a range of all the layout prototypes.
@@ -287,8 +282,7 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> search(
@@ -323,8 +317,7 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	public com.liferay.portal.model.LayoutPrototype updateLayoutPrototype(
 		long layoutPrototypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.lang.String description, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String description, boolean active) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateLayoutPrototype(long,
@@ -336,12 +329,12 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.model.LayoutPrototype updateLayoutPrototype(
 		long layoutPrototypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

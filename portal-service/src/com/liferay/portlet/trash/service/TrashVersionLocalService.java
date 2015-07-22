@@ -77,7 +77,7 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.trash.model.TrashVersion deleteTrashVersion(
 		java.lang.String className, long classPK);
@@ -101,8 +101,7 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.trash.model.TrashVersion deleteTrashVersion(
-		long versionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long versionId) throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -198,8 +197,7 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns the trash version with the primary key.
@@ -210,8 +208,7 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.trash.model.TrashVersion getTrashVersion(
-		long versionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long versionId) throws PortalException;
 
 	/**
 	* Returns a range of all the trash versions.

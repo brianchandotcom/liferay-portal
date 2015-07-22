@@ -28,7 +28,7 @@ import com.liferay.portal.service.SubscriptionLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see SubscriptionImpl
- * @see com.liferay.portal.model.Subscription
+ * @see Subscription
  * @generated
  */
 @ProviderType

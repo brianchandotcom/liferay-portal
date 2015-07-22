@@ -46,7 +46,7 @@ public interface PortletPreferencesService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link PortletPreferencesServiceUtil} to access the portlet preferences remote service. Add custom service methods to {@link com.liferay.portal.service.impl.PortletPreferencesServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public void deleteArchivedPreferences(long portletItemId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -58,18 +58,16 @@ public interface PortletPreferencesService extends BaseService {
 	public void restoreArchivedPreferences(long groupId,
 		com.liferay.portal.model.Layout layout, java.lang.String portletId,
 		com.liferay.portal.model.PortletItem portletItem,
-		javax.portlet.PortletPreferences preferences)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		javax.portlet.PortletPreferences preferences) throws PortalException;
 
 	public void restoreArchivedPreferences(long groupId,
 		com.liferay.portal.model.Layout layout, java.lang.String portletId,
 		long portletItemId, javax.portlet.PortletPreferences preferences)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void restoreArchivedPreferences(long groupId, java.lang.String name,
 		com.liferay.portal.model.Layout layout, java.lang.String portletId,
-		javax.portlet.PortletPreferences preferences)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		javax.portlet.PortletPreferences preferences) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -80,6 +78,5 @@ public interface PortletPreferencesService extends BaseService {
 
 	public void updateArchivePreferences(long userId, long groupId,
 		java.lang.String name, java.lang.String portletId,
-		javax.portlet.PortletPreferences preferences)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		javax.portlet.PortletPreferences preferences) throws PortalException;
 }

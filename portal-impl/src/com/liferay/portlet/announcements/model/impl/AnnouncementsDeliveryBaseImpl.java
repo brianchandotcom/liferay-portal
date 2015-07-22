@@ -28,7 +28,7 @@ import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServi
  *
  * @author Brian Wing Shun Chan
  * @see AnnouncementsDeliveryImpl
- * @see com.liferay.portlet.announcements.model.AnnouncementsDelivery
+ * @see AnnouncementsDelivery
  * @generated
  */
 @ProviderType

@@ -173,7 +173,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	* @return the create date of this membership request
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _membershipRequest.getCreateDate();
 	}
 
@@ -263,7 +263,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	* @return the reply date of this membership request
 	*/
 	@Override
-	public java.util.Date getReplyDate() {
+	public Date getReplyDate() {
 		return _membershipRequest.getReplyDate();
 	}
 
@@ -353,7 +353,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	* @param createDate the create date of this membership request
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_membershipRequest.setCreateDate(createDate);
 	}
 
@@ -460,7 +460,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	* @param replyDate the reply date of this membership request
 	*/
 	@Override
-	public void setReplyDate(java.util.Date replyDate) {
+	public void setReplyDate(Date replyDate) {
 		_membershipRequest.setReplyDate(replyDate);
 	}
 

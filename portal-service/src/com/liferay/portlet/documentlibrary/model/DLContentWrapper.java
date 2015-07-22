@@ -153,7 +153,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	* @return the data of this document library content
 	*/
 	@Override
-	public java.sql.Blob getData() {
+	public Blob getData() {
 		return _dlContent.getData();
 	}
 
@@ -283,7 +283,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	* @param data the data of this document library content
 	*/
 	@Override
-	public void setData(java.sql.Blob data) {
+	public void setData(Blob data) {
 		_dlContent.setData(data);
 	}
 

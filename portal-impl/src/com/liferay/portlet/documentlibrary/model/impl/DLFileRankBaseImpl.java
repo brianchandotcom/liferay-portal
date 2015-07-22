@@ -28,7 +28,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see DLFileRankImpl
- * @see com.liferay.portlet.documentlibrary.model.DLFileRank
+ * @see DLFileRank
  * @generated
  */
 @ProviderType

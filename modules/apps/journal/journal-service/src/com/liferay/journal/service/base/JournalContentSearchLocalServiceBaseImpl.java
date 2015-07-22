@@ -308,7 +308,7 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	 *
 	 * @return the journal content search local service
 	 */
-	public com.liferay.journal.service.JournalContentSearchLocalService getJournalContentSearchLocalService() {
+	public JournalContentSearchLocalService getJournalContentSearchLocalService() {
 		return journalContentSearchLocalService;
 	}
 
@@ -318,7 +318,7 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	 * @param journalContentSearchLocalService the journal content search local service
 	 */
 	public void setJournalContentSearchLocalService(
-		com.liferay.journal.service.JournalContentSearchLocalService journalContentSearchLocalService) {
+		JournalContentSearchLocalService journalContentSearchLocalService) {
 		this.journalContentSearchLocalService = journalContentSearchLocalService;
 	}
 
@@ -592,7 +592,7 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.journal.service.JournalContentSearchLocalService.class)
-	protected com.liferay.journal.service.JournalContentSearchLocalService journalContentSearchLocalService;
+	protected JournalContentSearchLocalService journalContentSearchLocalService;
 	@BeanReference(type = JournalContentSearchPersistence.class)
 	protected JournalContentSearchPersistence journalContentSearchPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

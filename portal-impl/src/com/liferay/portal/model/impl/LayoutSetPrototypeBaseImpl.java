@@ -28,7 +28,7 @@ import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see LayoutSetPrototypeImpl
- * @see com.liferay.portal.model.LayoutSetPrototype
+ * @see LayoutSetPrototype
  * @generated
  */
 @ProviderType

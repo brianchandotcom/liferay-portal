@@ -401,7 +401,7 @@ public abstract class ExpandoTableLocalServiceBaseImpl
 	 *
 	 * @return the expando table local service
 	 */
-	public com.liferay.portlet.expando.service.ExpandoTableLocalService getExpandoTableLocalService() {
+	public ExpandoTableLocalService getExpandoTableLocalService() {
 		return expandoTableLocalService;
 	}
 
@@ -411,7 +411,7 @@ public abstract class ExpandoTableLocalServiceBaseImpl
 	 * @param expandoTableLocalService the expando table local service
 	 */
 	public void setExpandoTableLocalService(
-		com.liferay.portlet.expando.service.ExpandoTableLocalService expandoTableLocalService) {
+		ExpandoTableLocalService expandoTableLocalService) {
 		this.expandoTableLocalService = expandoTableLocalService;
 	}
 
@@ -733,7 +733,7 @@ public abstract class ExpandoTableLocalServiceBaseImpl
 	@BeanReference(type = ExpandoRowPersistence.class)
 	protected ExpandoRowPersistence expandoRowPersistence;
 	@BeanReference(type = com.liferay.portlet.expando.service.ExpandoTableLocalService.class)
-	protected com.liferay.portlet.expando.service.ExpandoTableLocalService expandoTableLocalService;
+	protected ExpandoTableLocalService expandoTableLocalService;
 	@BeanReference(type = ExpandoTablePersistence.class)
 	protected ExpandoTablePersistence expandoTablePersistence;
 	@BeanReference(type = com.liferay.portlet.expando.service.ExpandoValueLocalService.class)

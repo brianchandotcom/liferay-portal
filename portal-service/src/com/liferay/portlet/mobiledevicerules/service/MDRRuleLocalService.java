@@ -65,7 +65,7 @@ public interface MDRRuleLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule addRule(
 		long ruleGroupId,
@@ -74,18 +74,18 @@ public interface MDRRuleLocalService extends BaseLocalService,
 		java.lang.String type,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule copyRule(
 		com.liferay.portlet.mobiledevicerules.model.MDRRule rule,
 		long ruleGroupId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule copyRule(
 		long ruleId, long ruleGroupId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new m d r rule with the primary key. Does not add the m d r rule to the database.
@@ -115,7 +115,7 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule deleteMDRRule(
-		long ruleId) throws com.liferay.portal.kernel.exception.PortalException;
+		long ruleId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -123,7 +123,7 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.systemevent.SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteRule(
@@ -240,7 +240,7 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule getMDRRule(
-		long ruleId) throws com.liferay.portal.kernel.exception.PortalException;
+		long ruleId) throws PortalException;
 
 	/**
 	* Returns the m d r rule matching the UUID and group.
@@ -252,8 +252,7 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule getMDRRuleByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the m d r rules.
@@ -307,12 +306,11 @@ public interface MDRRuleLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule getRule(
-		long ruleId) throws com.liferay.portal.kernel.exception.PortalException;
+		long ruleId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> getRules(
@@ -347,7 +345,7 @@ public interface MDRRuleLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRRule updateRule(
 		long ruleId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -355,5 +353,5 @@ public interface MDRRuleLocalService extends BaseLocalService,
 		java.lang.String type,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

@@ -110,15 +110,14 @@ public class RatingsStatsUtil {
 	}
 
 	/**
-	* Returns the ratings stats where classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.portlet.ratings.NoSuchStatsException} if it could not be found.
+	* Returns the ratings stats where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchStatsException} if it could not be found.
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching ratings stats
-	* @throws com.liferay.portlet.ratings.NoSuchStatsException if a matching ratings stats could not be found
+	* @throws NoSuchStatsException if a matching ratings stats could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsStats findByC_C(
-		long classNameId, long classPK)
+	public static RatingsStats findByC_C(long classNameId, long classPK)
 		throws com.liferay.portlet.ratings.NoSuchStatsException {
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
@@ -130,8 +129,7 @@ public class RatingsStatsUtil {
 	* @param classPK the class p k
 	* @return the matching ratings stats, or <code>null</code> if a matching ratings stats could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsStats fetchByC_C(
-		long classNameId, long classPK) {
+	public static RatingsStats fetchByC_C(long classNameId, long classPK) {
 		return getPersistence().fetchByC_C(classNameId, classPK);
 	}
 
@@ -143,8 +141,8 @@ public class RatingsStatsUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching ratings stats, or <code>null</code> if a matching ratings stats could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsStats fetchByC_C(
-		long classNameId, long classPK, boolean retrieveFromCache) {
+	public static RatingsStats fetchByC_C(long classNameId, long classPK,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_C(classNameId, classPK, retrieveFromCache);
 	}
@@ -156,8 +154,7 @@ public class RatingsStatsUtil {
 	* @param classPK the class p k
 	* @return the ratings stats that was removed
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsStats removeByC_C(
-		long classNameId, long classPK)
+	public static RatingsStats removeByC_C(long classNameId, long classPK)
 		throws com.liferay.portlet.ratings.NoSuchStatsException {
 		return getPersistence().removeByC_C(classNameId, classPK);
 	}
@@ -178,8 +175,7 @@ public class RatingsStatsUtil {
 	*
 	* @param ratingsStats the ratings stats
 	*/
-	public static void cacheResult(
-		com.liferay.portlet.ratings.model.RatingsStats ratingsStats) {
+	public static void cacheResult(RatingsStats ratingsStats) {
 		getPersistence().cacheResult(ratingsStats);
 	}
 
@@ -188,8 +184,7 @@ public class RatingsStatsUtil {
 	*
 	* @param ratingsStatses the ratings statses
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.ratings.model.RatingsStats> ratingsStatses) {
+	public static void cacheResult(List<RatingsStats> ratingsStatses) {
 		getPersistence().cacheResult(ratingsStatses);
 	}
 
@@ -199,8 +194,7 @@ public class RatingsStatsUtil {
 	* @param statsId the primary key for the new ratings stats
 	* @return the new ratings stats
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsStats create(
-		long statsId) {
+	public static RatingsStats create(long statsId) {
 		return getPersistence().create(statsId);
 	}
 
@@ -209,27 +203,26 @@ public class RatingsStatsUtil {
 	*
 	* @param statsId the primary key of the ratings stats
 	* @return the ratings stats that was removed
-	* @throws com.liferay.portlet.ratings.NoSuchStatsException if a ratings stats with the primary key could not be found
+	* @throws NoSuchStatsException if a ratings stats with the primary key could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsStats remove(
-		long statsId) throws com.liferay.portlet.ratings.NoSuchStatsException {
+	public static RatingsStats remove(long statsId)
+		throws com.liferay.portlet.ratings.NoSuchStatsException {
 		return getPersistence().remove(statsId);
 	}
 
-	public static com.liferay.portlet.ratings.model.RatingsStats updateImpl(
-		com.liferay.portlet.ratings.model.RatingsStats ratingsStats) {
+	public static RatingsStats updateImpl(RatingsStats ratingsStats) {
 		return getPersistence().updateImpl(ratingsStats);
 	}
 
 	/**
-	* Returns the ratings stats with the primary key or throws a {@link com.liferay.portlet.ratings.NoSuchStatsException} if it could not be found.
+	* Returns the ratings stats with the primary key or throws a {@link NoSuchStatsException} if it could not be found.
 	*
 	* @param statsId the primary key of the ratings stats
 	* @return the ratings stats
-	* @throws com.liferay.portlet.ratings.NoSuchStatsException if a ratings stats with the primary key could not be found
+	* @throws NoSuchStatsException if a ratings stats with the primary key could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsStats findByPrimaryKey(
-		long statsId) throws com.liferay.portlet.ratings.NoSuchStatsException {
+	public static RatingsStats findByPrimaryKey(long statsId)
+		throws com.liferay.portlet.ratings.NoSuchStatsException {
 		return getPersistence().findByPrimaryKey(statsId);
 	}
 
@@ -239,12 +232,11 @@ public class RatingsStatsUtil {
 	* @param statsId the primary key of the ratings stats
 	* @return the ratings stats, or <code>null</code> if a ratings stats with the primary key could not be found
 	*/
-	public static com.liferay.portlet.ratings.model.RatingsStats fetchByPrimaryKey(
-		long statsId) {
+	public static RatingsStats fetchByPrimaryKey(long statsId) {
 		return getPersistence().fetchByPrimaryKey(statsId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.ratings.model.RatingsStats> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, RatingsStats> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -254,7 +246,7 @@ public class RatingsStatsUtil {
 	*
 	* @return the ratings statses
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsStats> findAll() {
+	public static List<RatingsStats> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -262,15 +254,14 @@ public class RatingsStatsUtil {
 	* Returns a range of all the ratings statses.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.ratings.model.impl.RatingsStatsModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsStatsModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of ratings statses
 	* @param end the upper bound of the range of ratings statses (not inclusive)
 	* @return the range of ratings statses
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsStats> findAll(
-		int start, int end) {
+	public static List<RatingsStats> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -278,7 +269,7 @@ public class RatingsStatsUtil {
 	* Returns an ordered range of all the ratings statses.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.ratings.model.impl.RatingsStatsModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RatingsStatsModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of ratings statses
@@ -286,9 +277,8 @@ public class RatingsStatsUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of ratings statses
 	*/
-	public static java.util.List<com.liferay.portlet.ratings.model.RatingsStats> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.ratings.model.RatingsStats> orderByComparator) {
+	public static List<RatingsStats> findAll(int start, int end,
+		OrderByComparator<RatingsStats> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

@@ -28,7 +28,7 @@ import com.liferay.portlet.shopping.service.ShoppingCouponLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ShoppingCouponImpl
- * @see com.liferay.portlet.shopping.model.ShoppingCoupon
+ * @see ShoppingCoupon
  * @generated
  */
 @ProviderType

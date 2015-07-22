@@ -93,7 +93,7 @@ public abstract class DLFolderServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the document library folder remote service
 	 */
-	public com.liferay.portlet.documentlibrary.service.DLFolderService getDLFolderService() {
+	public DLFolderService getDLFolderService() {
 		return dlFolderService;
 	}
 
@@ -102,8 +102,7 @@ public abstract class DLFolderServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param dlFolderService the document library folder remote service
 	 */
-	public void setDLFolderService(
-		com.liferay.portlet.documentlibrary.service.DLFolderService dlFolderService) {
+	public void setDLFolderService(DLFolderService dlFolderService) {
 		this.dlFolderService = dlFolderService;
 	}
 
@@ -1015,7 +1014,7 @@ public abstract class DLFolderServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFolderLocalService.class)
 	protected com.liferay.portlet.documentlibrary.service.DLFolderLocalService dlFolderLocalService;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFolderService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLFolderService dlFolderService;
+	protected DLFolderService dlFolderService;
 	@BeanReference(type = DLFolderPersistence.class)
 	protected DLFolderPersistence dlFolderPersistence;
 	@BeanReference(type = DLFolderFinder.class)

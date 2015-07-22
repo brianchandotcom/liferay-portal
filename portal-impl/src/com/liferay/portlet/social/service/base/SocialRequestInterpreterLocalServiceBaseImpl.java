@@ -58,7 +58,7 @@ public abstract class SocialRequestInterpreterLocalServiceBaseImpl
 	 *
 	 * @return the social request interpreter local service
 	 */
-	public com.liferay.portlet.social.service.SocialRequestInterpreterLocalService getSocialRequestInterpreterLocalService() {
+	public SocialRequestInterpreterLocalService getSocialRequestInterpreterLocalService() {
 		return socialRequestInterpreterLocalService;
 	}
 
@@ -68,7 +68,7 @@ public abstract class SocialRequestInterpreterLocalServiceBaseImpl
 	 * @param socialRequestInterpreterLocalService the social request interpreter local service
 	 */
 	public void setSocialRequestInterpreterLocalService(
-		com.liferay.portlet.social.service.SocialRequestInterpreterLocalService socialRequestInterpreterLocalService) {
+		SocialRequestInterpreterLocalService socialRequestInterpreterLocalService) {
 		this.socialRequestInterpreterLocalService = socialRequestInterpreterLocalService;
 	}
 
@@ -142,7 +142,7 @@ public abstract class SocialRequestInterpreterLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.social.service.SocialRequestInterpreterLocalService.class)
-	protected com.liferay.portlet.social.service.SocialRequestInterpreterLocalService socialRequestInterpreterLocalService;
+	protected SocialRequestInterpreterLocalService socialRequestInterpreterLocalService;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	private String _beanIdentifier;

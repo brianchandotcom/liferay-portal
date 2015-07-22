@@ -65,13 +65,13 @@ public interface PhoneLocalService extends BaseLocalService,
 	public com.liferay.portal.model.Phone addPhone(long userId,
 		java.lang.String className, long classPK, java.lang.String number,
 		java.lang.String extension, long typeId, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.model.Phone addPhone(long userId,
 		java.lang.String className, long classPK, java.lang.String number,
 		java.lang.String extension, long typeId, boolean primary,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new phone with the primary key. Does not add the phone to the database.
@@ -87,7 +87,7 @@ public interface PhoneLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the phone from the database. Also notifies the appropriate model listeners.
@@ -109,7 +109,7 @@ public interface PhoneLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.Phone deletePhone(long phoneId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deletePhones(long companyId, java.lang.String className,
 		long classPK);
@@ -210,8 +210,7 @@ public interface PhoneLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns the phone with the primary key.
@@ -222,7 +221,7 @@ public interface PhoneLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Phone getPhone(long phoneId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the phone with the matching UUID and company.
@@ -234,8 +233,7 @@ public interface PhoneLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Phone getPhoneByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long companyId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Phone> getPhones();
@@ -286,6 +284,5 @@ public interface PhoneLocalService extends BaseLocalService,
 
 	public com.liferay.portal.model.Phone updatePhone(long phoneId,
 		java.lang.String number, java.lang.String extension, long typeId,
-		boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean primary) throws PortalException;
 }

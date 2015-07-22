@@ -47,10 +47,10 @@ public interface StagingService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link StagingServiceUtil} to access the staging remote service. Add custom service methods to {@link com.liferay.portlet.exportimport.service.impl.StagingServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public void cleanUpStagingRequest(long stagingRequestId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public long createStagingRequest(long groupId, java.lang.String checksum)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -62,7 +62,7 @@ public interface StagingService extends BaseService {
 	public com.liferay.portlet.exportimport.lar.MissingReferences publishStagingRequest(
 		long stagingRequestId,
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
@@ -71,7 +71,7 @@ public interface StagingService extends BaseService {
 	public com.liferay.portlet.exportimport.lar.MissingReferences publishStagingRequest(
 		long stagingRequestId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -81,8 +81,7 @@ public interface StagingService extends BaseService {
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void updateStagingRequest(long stagingRequestId,
-		java.lang.String fileName, byte[] bytes)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String fileName, byte[] bytes) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
@@ -92,5 +91,5 @@ public interface StagingService extends BaseService {
 	public com.liferay.portlet.exportimport.lar.MissingReferences validateStagingRequest(
 		long stagingRequestId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

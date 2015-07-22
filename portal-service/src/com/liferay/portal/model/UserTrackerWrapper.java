@@ -173,7 +173,7 @@ public class UserTrackerWrapper implements UserTracker,
 	* @return the modified date of this user tracker
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _userTracker.getModifiedDate();
 	}
 
@@ -340,7 +340,7 @@ public class UserTrackerWrapper implements UserTracker,
 	* @param modifiedDate the modified date of this user tracker
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_userTracker.setModifiedDate(modifiedDate);
 	}
 

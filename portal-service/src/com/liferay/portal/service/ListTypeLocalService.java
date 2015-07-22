@@ -86,7 +86,7 @@ public interface ListTypeLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.ListType deleteListType(long listTypeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -94,7 +94,7 @@ public interface ListTypeLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -183,7 +183,7 @@ public interface ListTypeLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ListType getListType(long listTypeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns a range of all the list types.
@@ -215,8 +215,7 @@ public interface ListTypeLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -236,9 +235,8 @@ public interface ListTypeLocalService extends BaseLocalService,
 		com.liferay.portal.model.ListType listType);
 
 	public void validate(long listTypeId, long classNameId,
-		java.lang.String type)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String type) throws PortalException;
 
 	public void validate(long listTypeId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

@@ -52,7 +52,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 		java.lang.String title, java.lang.String content,
 		java.lang.String summary, boolean minorEdit,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.wiki.model.WikiPage addPage(long userId, long nodeId,
 		java.lang.String title, double version, java.lang.String content,
@@ -60,43 +60,42 @@ public interface WikiPageLocalService extends BaseLocalService,
 		boolean head, java.lang.String parentTitle,
 		java.lang.String redirectTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addPageAttachment(long userId, long nodeId,
 		java.lang.String title, java.lang.String fileName, java.io.File file,
-		java.lang.String mimeType)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String mimeType) throws PortalException;
 
 	public void addPageAttachment(long userId, long nodeId,
 		java.lang.String title, java.lang.String fileName,
 		java.io.InputStream inputStream, java.lang.String mimeType)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addPageAttachments(long userId, long nodeId,
 		java.lang.String title,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addPageResources(long nodeId, java.lang.String title,
 		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addPageResources(long nodeId, java.lang.String title,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addPageResources(com.liferay.wiki.model.WikiPage page,
 		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addPageResources(com.liferay.wiki.model.WikiPage page,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addTempFileEntry(long groupId, long userId,
 		java.lang.String folderName, java.lang.String fileName,
 		java.io.InputStream inputStream, java.lang.String mimeType)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0 replaced by {@link #addTempFileEntry(long, long,
@@ -106,7 +105,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public void addTempPageAttachment(long groupId, long userId,
 		java.lang.String fileName, java.lang.String tempFolderName,
 		java.io.InputStream inputStream, java.lang.String mimeType)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds the wiki page to the database. Also notifies the appropriate model listeners.
@@ -120,16 +119,16 @@ public interface WikiPageLocalService extends BaseLocalService,
 
 	public void changeNode(long userId, long nodeId, java.lang.String title,
 		long newNodeId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.wiki.model.WikiPage changeParent(long userId,
 		long nodeId, java.lang.String title, java.lang.String newParentTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void copyPageAttachments(long userId, long templateNodeId,
 		java.lang.String templateTitle, long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new wiki page with the primary key. Does not add the wiki page to the database.
@@ -140,7 +139,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public com.liferay.wiki.model.WikiPage createWikiPage(long pageId);
 
 	public void deletePage(long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 6.2.0 replaced by {@link #discardDraft(long, String,
@@ -148,21 +147,19 @@ public interface WikiPageLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	public void deletePage(long nodeId, java.lang.String title, double version)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, send = false, type = SystemEventConstants.TYPE_DELETE)
 	public void deletePage(com.liferay.wiki.model.WikiPage page)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deletePageAttachment(long nodeId, java.lang.String title,
-		java.lang.String fileName)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String fileName) throws PortalException;
 
 	public void deletePageAttachments(long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void deletePages(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deletePages(long nodeId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -170,14 +167,14 @@ public interface WikiPageLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteTempFileEntry(long groupId, long userId,
 		java.lang.String folderName, java.lang.String fileName)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteTrashPageAttachments(long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the wiki page with the primary key from the database. Also notifies the appropriate model listeners.
@@ -188,7 +185,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.wiki.model.WikiPage deleteWikiPage(long pageId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the wiki page from the database. Also notifies the appropriate model listeners.
@@ -201,7 +198,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 		com.liferay.wiki.model.WikiPage wikiPage);
 
 	public void discardDraft(long nodeId, java.lang.String title, double version)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -342,8 +339,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiPage getDraftPage(long nodeId,
-		java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String title) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -351,73 +347,65 @@ public interface WikiPageLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiPage> getIncomingLinks(
-		long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long nodeId, java.lang.String title) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiPage getLatestPage(long nodeId,
 		java.lang.String title, int status, boolean preferApproved)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiPage getLatestPage(long resourcePrimKey,
 		long nodeId, int status, boolean preferApproved)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiPage getLatestPage(long resourcePrimKey,
-		int status, boolean preferApproved)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		int status, boolean preferApproved) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiPage> getNoAssetPages();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiPage> getOrphans(
-		long nodeId) throws com.liferay.portal.kernel.exception.PortalException;
+		long nodeId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiPage> getOutgoingLinks(
-		long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long nodeId, java.lang.String title) throws PortalException;
 
 	public com.liferay.wiki.model.WikiPage getPage(long nodeId,
-		java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String title) throws PortalException;
 
 	public com.liferay.wiki.model.WikiPage getPage(long nodeId,
 		java.lang.String title, java.lang.Boolean head)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.wiki.model.WikiPage getPage(long nodeId,
-		java.lang.String title, double version)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String title, double version) throws PortalException;
 
 	public com.liferay.wiki.model.WikiPage getPage(long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.wiki.model.WikiPage getPage(long resourcePrimKey,
-		java.lang.Boolean head)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.Boolean head) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiPage getPageByPageId(long pageId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiPageDisplay getPageDisplay(long nodeId,
 		java.lang.String title, javax.portlet.PortletURL viewPageURL,
 		javax.portlet.PortletURL editPageURL,
-		java.lang.String attachmentURLPrefix)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String attachmentURLPrefix) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiPageDisplay getPageDisplay(
 		com.liferay.wiki.model.WikiPage page,
 		javax.portlet.PortletURL viewPageURL,
 		javax.portlet.PortletURL editPageURL,
-		java.lang.String attachmentURLPrefix)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String attachmentURLPrefix) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiPage> getPages(
@@ -498,13 +486,11 @@ public interface WikiPageLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiPage getPreviousVersionPage(
-		com.liferay.wiki.model.WikiPage page)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		com.liferay.wiki.model.WikiPage page) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiPage> getRecentChanges(
@@ -517,8 +503,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiPage> getRecentChanges(
-		long nodeId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long nodeId, int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRecentChangesCount(long groupId, long nodeId);
@@ -529,8 +514,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRecentChangesCount(long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public int getRecentChangesCount(long nodeId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.wiki.model.WikiPage> getRedirectorPages(
@@ -542,8 +526,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getTempFileNames(long groupId, long userId,
-		java.lang.String folderName)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String folderName) throws PortalException;
 
 	/**
 	* Returns the wiki page with the primary key.
@@ -554,7 +537,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiPage getWikiPage(long pageId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the wiki page matching the UUID and group.
@@ -566,8 +549,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.wiki.model.WikiPage getWikiPageByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the wiki pages.
@@ -622,8 +604,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public boolean hasDraftPage(long nodeId, java.lang.String title);
 
 	public void moveDependentToTrash(com.liferay.wiki.model.WikiPage page,
-		long trashEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long trashEntryId) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #renamePage(long, long,
@@ -633,7 +614,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public void movePage(long userId, long nodeId, java.lang.String title,
 		java.lang.String newTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #renamePage(long, long,
@@ -643,17 +624,15 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public void movePage(long userId, long nodeId, java.lang.String title,
 		java.lang.String newTitle, boolean strict,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.repository.model.FileEntry movePageAttachmentToTrash(
 		long userId, long nodeId, java.lang.String title,
-		java.lang.String fileName)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String fileName) throws PortalException;
 
 	public com.liferay.wiki.model.WikiPage movePageFromTrash(long userId,
 		long nodeId, java.lang.String title, long newNodeId,
-		java.lang.String newParentTitle)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String newParentTitle) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #movePageFromTrash(long,
@@ -663,42 +642,39 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public com.liferay.wiki.model.WikiPage movePageFromTrash(long userId,
 		long nodeId, java.lang.String title, java.lang.String newParentTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.wiki.model.WikiPage movePageToTrash(long userId,
-		long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long nodeId, java.lang.String title) throws PortalException;
 
 	public com.liferay.wiki.model.WikiPage movePageToTrash(long userId,
 		long nodeId, java.lang.String title, double version)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.wiki.model.WikiPage movePageToTrash(long userId,
-		com.liferay.wiki.model.WikiPage page)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		com.liferay.wiki.model.WikiPage page) throws PortalException;
 
 	public void renamePage(long userId, long nodeId, java.lang.String title,
 		java.lang.String newTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void renamePage(long userId, long nodeId, java.lang.String title,
 		java.lang.String newTitle, boolean strict,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void restorePageAttachmentFromTrash(long userId, long nodeId,
 		java.lang.String title, java.lang.String fileName)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void restorePageFromTrash(long userId,
-		com.liferay.wiki.model.WikiPage page)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		com.liferay.wiki.model.WikiPage page) throws PortalException;
 
 	public com.liferay.wiki.model.WikiPage revertPage(long userId, long nodeId,
 		java.lang.String title, double version,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -708,22 +684,21 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void subscribePage(long userId, long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void unsubscribePage(long userId, long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void updateAsset(long userId, com.liferay.wiki.model.WikiPage page,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long[] assetLinkEntryIds) throws PortalException;
 
 	public com.liferay.wiki.model.WikiPage updatePage(long userId, long nodeId,
 		java.lang.String title, double version, java.lang.String content,
 		java.lang.String summary, boolean minorEdit, java.lang.String format,
 		java.lang.String parentTitle, java.lang.String redirectTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, WikiPage,
@@ -733,18 +708,18 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public com.liferay.wiki.model.WikiPage updateStatus(long userId,
 		com.liferay.wiki.model.WikiPage page, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.wiki.model.WikiPage updateStatus(long userId,
 		com.liferay.wiki.model.WikiPage page, int status,
 		com.liferay.portal.service.ServiceContext serviceContext,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.wiki.model.WikiPage updateStatus(long userId,
 		long resourcePrimKey, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the wiki page in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -756,6 +731,5 @@ public interface WikiPageLocalService extends BaseLocalService,
 	public com.liferay.wiki.model.WikiPage updateWikiPage(
 		com.liferay.wiki.model.WikiPage wikiPage);
 
-	public void validateTitle(java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void validateTitle(java.lang.String title) throws PortalException;
 }

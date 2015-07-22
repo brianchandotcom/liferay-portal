@@ -144,7 +144,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	* @return the build date of this release
 	*/
 	@Override
-	public java.util.Date getBuildDate() {
+	public Date getBuildDate() {
 		return _release.getBuildDate();
 	}
 
@@ -164,7 +164,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	* @return the create date of this release
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _release.getCreateDate();
 	}
 
@@ -179,7 +179,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	* @return the modified date of this release
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _release.getModifiedDate();
 	}
 
@@ -299,7 +299,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	* @param buildDate the build date of this release
 	*/
 	@Override
-	public void setBuildDate(java.util.Date buildDate) {
+	public void setBuildDate(Date buildDate) {
 		_release.setBuildDate(buildDate);
 	}
 
@@ -324,7 +324,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	* @param createDate the create date of this release
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_release.setCreateDate(createDate);
 	}
 
@@ -351,7 +351,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	* @param modifiedDate the modified date of this release
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_release.setModifiedDate(modifiedDate);
 	}
 

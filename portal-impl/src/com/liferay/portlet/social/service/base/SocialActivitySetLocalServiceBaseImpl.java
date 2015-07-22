@@ -307,7 +307,7 @@ public abstract class SocialActivitySetLocalServiceBaseImpl
 	 *
 	 * @return the social activity set local service
 	 */
-	public com.liferay.portlet.social.service.SocialActivitySetLocalService getSocialActivitySetLocalService() {
+	public SocialActivitySetLocalService getSocialActivitySetLocalService() {
 		return socialActivitySetLocalService;
 	}
 
@@ -317,7 +317,7 @@ public abstract class SocialActivitySetLocalServiceBaseImpl
 	 * @param socialActivitySetLocalService the social activity set local service
 	 */
 	public void setSocialActivitySetLocalService(
-		com.liferay.portlet.social.service.SocialActivitySetLocalService socialActivitySetLocalService) {
+		SocialActivitySetLocalService socialActivitySetLocalService) {
 		this.socialActivitySetLocalService = socialActivitySetLocalService;
 	}
 
@@ -517,7 +517,7 @@ public abstract class SocialActivitySetLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.social.service.SocialActivitySetLocalService.class)
-	protected com.liferay.portlet.social.service.SocialActivitySetLocalService socialActivitySetLocalService;
+	protected SocialActivitySetLocalService socialActivitySetLocalService;
 	@BeanReference(type = SocialActivitySetPersistence.class)
 	protected SocialActivitySetPersistence socialActivitySetPersistence;
 	@BeanReference(type = SocialActivitySetFinder.class)

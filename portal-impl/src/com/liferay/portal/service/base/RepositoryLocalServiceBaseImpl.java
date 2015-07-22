@@ -450,7 +450,7 @@ public abstract class RepositoryLocalServiceBaseImpl
 	 *
 	 * @return the repository local service
 	 */
-	public com.liferay.portal.service.RepositoryLocalService getRepositoryLocalService() {
+	public RepositoryLocalService getRepositoryLocalService() {
 		return repositoryLocalService;
 	}
 
@@ -460,7 +460,7 @@ public abstract class RepositoryLocalServiceBaseImpl
 	 * @param repositoryLocalService the repository local service
 	 */
 	public void setRepositoryLocalService(
-		com.liferay.portal.service.RepositoryLocalService repositoryLocalService) {
+		RepositoryLocalService repositoryLocalService) {
 		this.repositoryLocalService = repositoryLocalService;
 	}
 
@@ -1430,7 +1430,7 @@ public abstract class RepositoryLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.RepositoryLocalService.class)
-	protected com.liferay.portal.service.RepositoryLocalService repositoryLocalService;
+	protected RepositoryLocalService repositoryLocalService;
 	@BeanReference(type = com.liferay.portal.service.RepositoryService.class)
 	protected com.liferay.portal.service.RepositoryService repositoryService;
 	@BeanReference(type = RepositoryPersistence.class)

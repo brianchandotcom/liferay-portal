@@ -116,8 +116,7 @@ public class SCFrameworkVersionUtil {
 	* @param groupId the group ID
 	* @return the matching s c framework versions
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findByGroupId(
-		long groupId) {
+	public static List<SCFrameworkVersion> findByGroupId(long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -125,7 +124,7 @@ public class SCFrameworkVersionUtil {
 	* Returns a range of all the s c framework versions where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -133,8 +132,8 @@ public class SCFrameworkVersionUtil {
 	* @param end the upper bound of the range of s c framework versions (not inclusive)
 	* @return the range of matching s c framework versions
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findByGroupId(
-		long groupId, int start, int end) {
+	public static List<SCFrameworkVersion> findByGroupId(long groupId,
+		int start, int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -142,7 +141,7 @@ public class SCFrameworkVersionUtil {
 	* Returns an ordered range of all the s c framework versions where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -151,9 +150,9 @@ public class SCFrameworkVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s c framework versions
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
+	public static List<SCFrameworkVersion> findByGroupId(long groupId,
+		int start, int end,
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -164,11 +163,10 @@ public class SCFrameworkVersionUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c framework version
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException if a matching s c framework version could not be found
+	* @throws NoSuchFrameworkVersionException if a matching s c framework version could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
+	public static SCFrameworkVersion findByGroupId_First(long groupId,
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
@@ -180,9 +178,8 @@ public class SCFrameworkVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c framework version, or <code>null</code> if a matching s c framework version could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
+	public static SCFrameworkVersion fetchByGroupId_First(long groupId,
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -192,11 +189,10 @@ public class SCFrameworkVersionUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c framework version
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException if a matching s c framework version could not be found
+	* @throws NoSuchFrameworkVersionException if a matching s c framework version could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
+	public static SCFrameworkVersion findByGroupId_Last(long groupId,
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
@@ -208,9 +204,8 @@ public class SCFrameworkVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c framework version, or <code>null</code> if a matching s c framework version could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
+	public static SCFrameworkVersion fetchByGroupId_Last(long groupId,
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -221,11 +216,11 @@ public class SCFrameworkVersionUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next s c framework version
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
+	* @throws NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion[] findByGroupId_PrevAndNext(
+	public static SCFrameworkVersion[] findByGroupId_PrevAndNext(
 		long frameworkVersionId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(frameworkVersionId, groupId,
@@ -238,8 +233,7 @@ public class SCFrameworkVersionUtil {
 	* @param groupId the group ID
 	* @return the matching s c framework versions that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> filterFindByGroupId(
-		long groupId) {
+	public static List<SCFrameworkVersion> filterFindByGroupId(long groupId) {
 		return getPersistence().filterFindByGroupId(groupId);
 	}
 
@@ -247,7 +241,7 @@ public class SCFrameworkVersionUtil {
 	* Returns a range of all the s c framework versions that the user has permission to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -255,8 +249,8 @@ public class SCFrameworkVersionUtil {
 	* @param end the upper bound of the range of s c framework versions (not inclusive)
 	* @return the range of matching s c framework versions that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> filterFindByGroupId(
-		long groupId, int start, int end) {
+	public static List<SCFrameworkVersion> filterFindByGroupId(long groupId,
+		int start, int end) {
 		return getPersistence().filterFindByGroupId(groupId, start, end);
 	}
 
@@ -264,7 +258,7 @@ public class SCFrameworkVersionUtil {
 	* Returns an ordered range of all the s c framework versions that the user has permissions to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -273,9 +267,9 @@ public class SCFrameworkVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s c framework versions that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> filterFindByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
+	public static List<SCFrameworkVersion> filterFindByGroupId(long groupId,
+		int start, int end,
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -287,11 +281,11 @@ public class SCFrameworkVersionUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next s c framework version
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
+	* @throws NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion[] filterFindByGroupId_PrevAndNext(
+	public static SCFrameworkVersion[] filterFindByGroupId_PrevAndNext(
 		long frameworkVersionId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(frameworkVersionId,
@@ -333,8 +327,7 @@ public class SCFrameworkVersionUtil {
 	* @param companyId the company ID
 	* @return the matching s c framework versions
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findByCompanyId(
-		long companyId) {
+	public static List<SCFrameworkVersion> findByCompanyId(long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
@@ -342,7 +335,7 @@ public class SCFrameworkVersionUtil {
 	* Returns a range of all the s c framework versions where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -350,8 +343,8 @@ public class SCFrameworkVersionUtil {
 	* @param end the upper bound of the range of s c framework versions (not inclusive)
 	* @return the range of matching s c framework versions
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findByCompanyId(
-		long companyId, int start, int end) {
+	public static List<SCFrameworkVersion> findByCompanyId(long companyId,
+		int start, int end) {
 		return getPersistence().findByCompanyId(companyId, start, end);
 	}
 
@@ -359,7 +352,7 @@ public class SCFrameworkVersionUtil {
 	* Returns an ordered range of all the s c framework versions where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -368,9 +361,9 @@ public class SCFrameworkVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s c framework versions
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
+	public static List<SCFrameworkVersion> findByCompanyId(long companyId,
+		int start, int end,
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -381,11 +374,10 @@ public class SCFrameworkVersionUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c framework version
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException if a matching s c framework version could not be found
+	* @throws NoSuchFrameworkVersionException if a matching s c framework version could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
+	public static SCFrameworkVersion findByCompanyId_First(long companyId,
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -398,9 +390,8 @@ public class SCFrameworkVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c framework version, or <code>null</code> if a matching s c framework version could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
+	public static SCFrameworkVersion fetchByCompanyId_First(long companyId,
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -411,11 +402,10 @@ public class SCFrameworkVersionUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c framework version
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException if a matching s c framework version could not be found
+	* @throws NoSuchFrameworkVersionException if a matching s c framework version could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
+	public static SCFrameworkVersion findByCompanyId_Last(long companyId,
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -428,9 +418,8 @@ public class SCFrameworkVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c framework version, or <code>null</code> if a matching s c framework version could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
+	public static SCFrameworkVersion fetchByCompanyId_Last(long companyId,
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -442,11 +431,11 @@ public class SCFrameworkVersionUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next s c framework version
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
+	* @throws NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion[] findByCompanyId_PrevAndNext(
+	public static SCFrameworkVersion[] findByCompanyId_PrevAndNext(
 		long frameworkVersionId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(frameworkVersionId, companyId,
@@ -479,8 +468,8 @@ public class SCFrameworkVersionUtil {
 	* @param active the active
 	* @return the matching s c framework versions
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findByG_A(
-		long groupId, boolean active) {
+	public static List<SCFrameworkVersion> findByG_A(long groupId,
+		boolean active) {
 		return getPersistence().findByG_A(groupId, active);
 	}
 
@@ -488,7 +477,7 @@ public class SCFrameworkVersionUtil {
 	* Returns a range of all the s c framework versions where groupId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -497,8 +486,8 @@ public class SCFrameworkVersionUtil {
 	* @param end the upper bound of the range of s c framework versions (not inclusive)
 	* @return the range of matching s c framework versions
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findByG_A(
-		long groupId, boolean active, int start, int end) {
+	public static List<SCFrameworkVersion> findByG_A(long groupId,
+		boolean active, int start, int end) {
 		return getPersistence().findByG_A(groupId, active, start, end);
 	}
 
@@ -506,7 +495,7 @@ public class SCFrameworkVersionUtil {
 	* Returns an ordered range of all the s c framework versions where groupId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -516,9 +505,9 @@ public class SCFrameworkVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s c framework versions
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findByG_A(
-		long groupId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
+	public static List<SCFrameworkVersion> findByG_A(long groupId,
+		boolean active, int start, int end,
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .findByG_A(groupId, active, start, end, orderByComparator);
 	}
@@ -530,11 +519,10 @@ public class SCFrameworkVersionUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c framework version
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException if a matching s c framework version could not be found
+	* @throws NoSuchFrameworkVersionException if a matching s c framework version could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByG_A_First(
-		long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
+	public static SCFrameworkVersion findByG_A_First(long groupId,
+		boolean active, OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .findByG_A_First(groupId, active, orderByComparator);
@@ -548,9 +536,8 @@ public class SCFrameworkVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c framework version, or <code>null</code> if a matching s c framework version could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByG_A_First(
-		long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
+	public static SCFrameworkVersion fetchByG_A_First(long groupId,
+		boolean active, OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_First(groupId, active, orderByComparator);
 	}
@@ -562,11 +549,10 @@ public class SCFrameworkVersionUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c framework version
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException if a matching s c framework version could not be found
+	* @throws NoSuchFrameworkVersionException if a matching s c framework version could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByG_A_Last(
-		long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
+	public static SCFrameworkVersion findByG_A_Last(long groupId,
+		boolean active, OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .findByG_A_Last(groupId, active, orderByComparator);
@@ -580,9 +566,8 @@ public class SCFrameworkVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c framework version, or <code>null</code> if a matching s c framework version could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByG_A_Last(
-		long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
+	public static SCFrameworkVersion fetchByG_A_Last(long groupId,
+		boolean active, OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_Last(groupId, active, orderByComparator);
 	}
@@ -595,11 +580,11 @@ public class SCFrameworkVersionUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next s c framework version
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
+	* @throws NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion[] findByG_A_PrevAndNext(
+	public static SCFrameworkVersion[] findByG_A_PrevAndNext(
 		long frameworkVersionId, long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .findByG_A_PrevAndNext(frameworkVersionId, groupId, active,
@@ -613,8 +598,8 @@ public class SCFrameworkVersionUtil {
 	* @param active the active
 	* @return the matching s c framework versions that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> filterFindByG_A(
-		long groupId, boolean active) {
+	public static List<SCFrameworkVersion> filterFindByG_A(long groupId,
+		boolean active) {
 		return getPersistence().filterFindByG_A(groupId, active);
 	}
 
@@ -622,7 +607,7 @@ public class SCFrameworkVersionUtil {
 	* Returns a range of all the s c framework versions that the user has permission to view where groupId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -631,8 +616,8 @@ public class SCFrameworkVersionUtil {
 	* @param end the upper bound of the range of s c framework versions (not inclusive)
 	* @return the range of matching s c framework versions that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> filterFindByG_A(
-		long groupId, boolean active, int start, int end) {
+	public static List<SCFrameworkVersion> filterFindByG_A(long groupId,
+		boolean active, int start, int end) {
 		return getPersistence().filterFindByG_A(groupId, active, start, end);
 	}
 
@@ -640,7 +625,7 @@ public class SCFrameworkVersionUtil {
 	* Returns an ordered range of all the s c framework versions that the user has permissions to view where groupId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -650,9 +635,9 @@ public class SCFrameworkVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s c framework versions that the user has permission to view
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> filterFindByG_A(
-		long groupId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
+	public static List<SCFrameworkVersion> filterFindByG_A(long groupId,
+		boolean active, int start, int end,
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_A(groupId, active, start, end,
 			orderByComparator);
@@ -666,11 +651,11 @@ public class SCFrameworkVersionUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next s c framework version
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
+	* @throws NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion[] filterFindByG_A_PrevAndNext(
+	public static SCFrameworkVersion[] filterFindByG_A_PrevAndNext(
 		long frameworkVersionId, long groupId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator)
+		OrderByComparator<SCFrameworkVersion> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence()
 				   .filterFindByG_A_PrevAndNext(frameworkVersionId, groupId,
@@ -714,8 +699,7 @@ public class SCFrameworkVersionUtil {
 	*
 	* @param scFrameworkVersion the s c framework version
 	*/
-	public static void cacheResult(
-		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion) {
+	public static void cacheResult(SCFrameworkVersion scFrameworkVersion) {
 		getPersistence().cacheResult(scFrameworkVersion);
 	}
 
@@ -724,8 +708,7 @@ public class SCFrameworkVersionUtil {
 	*
 	* @param scFrameworkVersions the s c framework versions
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> scFrameworkVersions) {
+	public static void cacheResult(List<SCFrameworkVersion> scFrameworkVersions) {
 		getPersistence().cacheResult(scFrameworkVersions);
 	}
 
@@ -735,8 +718,7 @@ public class SCFrameworkVersionUtil {
 	* @param frameworkVersionId the primary key for the new s c framework version
 	* @return the new s c framework version
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion create(
-		long frameworkVersionId) {
+	public static SCFrameworkVersion create(long frameworkVersionId) {
 		return getPersistence().create(frameworkVersionId);
 	}
 
@@ -745,28 +727,26 @@ public class SCFrameworkVersionUtil {
 	*
 	* @param frameworkVersionId the primary key of the s c framework version
 	* @return the s c framework version that was removed
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
+	* @throws NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion remove(
-		long frameworkVersionId)
+	public static SCFrameworkVersion remove(long frameworkVersionId)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence().remove(frameworkVersionId);
 	}
 
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion) {
+	public static SCFrameworkVersion updateImpl(
+		SCFrameworkVersion scFrameworkVersion) {
 		return getPersistence().updateImpl(scFrameworkVersion);
 	}
 
 	/**
-	* Returns the s c framework version with the primary key or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException} if it could not be found.
+	* Returns the s c framework version with the primary key or throws a {@link NoSuchFrameworkVersionException} if it could not be found.
 	*
 	* @param frameworkVersionId the primary key of the s c framework version
 	* @return the s c framework version
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
+	* @throws NoSuchFrameworkVersionException if a s c framework version with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion findByPrimaryKey(
-		long frameworkVersionId)
+	public static SCFrameworkVersion findByPrimaryKey(long frameworkVersionId)
 		throws com.liferay.portlet.softwarecatalog.NoSuchFrameworkVersionException {
 		return getPersistence().findByPrimaryKey(frameworkVersionId);
 	}
@@ -777,12 +757,11 @@ public class SCFrameworkVersionUtil {
 	* @param frameworkVersionId the primary key of the s c framework version
 	* @return the s c framework version, or <code>null</code> if a s c framework version with the primary key could not be found
 	*/
-	public static com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchByPrimaryKey(
-		long frameworkVersionId) {
+	public static SCFrameworkVersion fetchByPrimaryKey(long frameworkVersionId) {
 		return getPersistence().fetchByPrimaryKey(frameworkVersionId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, SCFrameworkVersion> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -792,7 +771,7 @@ public class SCFrameworkVersionUtil {
 	*
 	* @return the s c framework versions
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findAll() {
+	public static List<SCFrameworkVersion> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -800,15 +779,14 @@ public class SCFrameworkVersionUtil {
 	* Returns a range of all the s c framework versions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of s c framework versions
 	* @param end the upper bound of the range of s c framework versions (not inclusive)
 	* @return the range of s c framework versions
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findAll(
-		int start, int end) {
+	public static List<SCFrameworkVersion> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -816,7 +794,7 @@ public class SCFrameworkVersionUtil {
 	* Returns an ordered range of all the s c framework versions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of s c framework versions
@@ -824,9 +802,8 @@ public class SCFrameworkVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of s c framework versions
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> orderByComparator) {
+	public static List<SCFrameworkVersion> findAll(int start, int end,
+		OrderByComparator<SCFrameworkVersion> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
@@ -862,7 +839,7 @@ public class SCFrameworkVersionUtil {
 	* @param pk the primary key of the s c framework version
 	* @return the s c product versions associated with the s c framework version
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> getSCProductVersions(
+	public static List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> getSCProductVersions(
 		long pk) {
 		return getPersistence().getSCProductVersions(pk);
 	}
@@ -871,7 +848,7 @@ public class SCFrameworkVersionUtil {
 	* Returns a range of all the s c product versions associated with the s c framework version.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the s c framework version
@@ -879,7 +856,7 @@ public class SCFrameworkVersionUtil {
 	* @param end the upper bound of the range of s c framework versions (not inclusive)
 	* @return the range of s c product versions associated with the s c framework version
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> getSCProductVersions(
+	public static List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> getSCProductVersions(
 		long pk, int start, int end) {
 		return getPersistence().getSCProductVersions(pk, start, end);
 	}
@@ -888,7 +865,7 @@ public class SCFrameworkVersionUtil {
 	* Returns an ordered range of all the s c product versions associated with the s c framework version.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCFrameworkVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the s c framework version
@@ -897,9 +874,9 @@ public class SCFrameworkVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of s c product versions associated with the s c framework version
 	*/
-	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> getSCProductVersions(
+	public static List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> getSCProductVersions(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator) {
+		OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCProductVersion> orderByComparator) {
 		return getPersistence()
 				   .getSCProductVersions(pk, start, end, orderByComparator);
 	}
@@ -974,7 +951,7 @@ public class SCFrameworkVersionUtil {
 	* @param scProductVersions the s c product versions
 	*/
 	public static void addSCProductVersions(long pk,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> scProductVersions) {
+		List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> scProductVersions) {
 		getPersistence().addSCProductVersions(pk, scProductVersions);
 	}
 
@@ -1026,7 +1003,7 @@ public class SCFrameworkVersionUtil {
 	* @param scProductVersions the s c product versions
 	*/
 	public static void removeSCProductVersions(long pk,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> scProductVersions) {
+		List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> scProductVersions) {
 		getPersistence().removeSCProductVersions(pk, scProductVersions);
 	}
 
@@ -1047,7 +1024,7 @@ public class SCFrameworkVersionUtil {
 	* @param scProductVersions the s c product versions to be associated with the s c framework version
 	*/
 	public static void setSCProductVersions(long pk,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> scProductVersions) {
+		List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> scProductVersions) {
 		getPersistence().setSCProductVersions(pk, scProductVersions);
 	}
 

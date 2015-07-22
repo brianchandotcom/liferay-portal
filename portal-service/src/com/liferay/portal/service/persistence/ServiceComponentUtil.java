@@ -114,7 +114,7 @@ public class ServiceComponentUtil {
 	* @param buildNamespace the build namespace
 	* @return the matching service components
 	*/
-	public static java.util.List<com.liferay.portal.model.ServiceComponent> findByBuildNamespace(
+	public static List<ServiceComponent> findByBuildNamespace(
 		java.lang.String buildNamespace) {
 		return getPersistence().findByBuildNamespace(buildNamespace);
 	}
@@ -123,7 +123,7 @@ public class ServiceComponentUtil {
 	* Returns a range of all the service components where buildNamespace = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ServiceComponentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ServiceComponentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param buildNamespace the build namespace
@@ -131,7 +131,7 @@ public class ServiceComponentUtil {
 	* @param end the upper bound of the range of service components (not inclusive)
 	* @return the range of matching service components
 	*/
-	public static java.util.List<com.liferay.portal.model.ServiceComponent> findByBuildNamespace(
+	public static List<ServiceComponent> findByBuildNamespace(
 		java.lang.String buildNamespace, int start, int end) {
 		return getPersistence().findByBuildNamespace(buildNamespace, start, end);
 	}
@@ -140,7 +140,7 @@ public class ServiceComponentUtil {
 	* Returns an ordered range of all the service components where buildNamespace = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ServiceComponentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ServiceComponentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param buildNamespace the build namespace
@@ -149,9 +149,9 @@ public class ServiceComponentUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching service components
 	*/
-	public static java.util.List<com.liferay.portal.model.ServiceComponent> findByBuildNamespace(
+	public static List<ServiceComponent> findByBuildNamespace(
 		java.lang.String buildNamespace, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator) {
+		OrderByComparator<ServiceComponent> orderByComparator) {
 		return getPersistence()
 				   .findByBuildNamespace(buildNamespace, start, end,
 			orderByComparator);
@@ -163,11 +163,11 @@ public class ServiceComponentUtil {
 	* @param buildNamespace the build namespace
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching service component
-	* @throws com.liferay.portal.NoSuchServiceComponentException if a matching service component could not be found
+	* @throws NoSuchServiceComponentException if a matching service component could not be found
 	*/
-	public static com.liferay.portal.model.ServiceComponent findByBuildNamespace_First(
+	public static ServiceComponent findByBuildNamespace_First(
 		java.lang.String buildNamespace,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator)
+		OrderByComparator<ServiceComponent> orderByComparator)
 		throws com.liferay.portal.NoSuchServiceComponentException {
 		return getPersistence()
 				   .findByBuildNamespace_First(buildNamespace, orderByComparator);
@@ -180,9 +180,9 @@ public class ServiceComponentUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching service component, or <code>null</code> if a matching service component could not be found
 	*/
-	public static com.liferay.portal.model.ServiceComponent fetchByBuildNamespace_First(
+	public static ServiceComponent fetchByBuildNamespace_First(
 		java.lang.String buildNamespace,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator) {
+		OrderByComparator<ServiceComponent> orderByComparator) {
 		return getPersistence()
 				   .fetchByBuildNamespace_First(buildNamespace,
 			orderByComparator);
@@ -194,11 +194,11 @@ public class ServiceComponentUtil {
 	* @param buildNamespace the build namespace
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching service component
-	* @throws com.liferay.portal.NoSuchServiceComponentException if a matching service component could not be found
+	* @throws NoSuchServiceComponentException if a matching service component could not be found
 	*/
-	public static com.liferay.portal.model.ServiceComponent findByBuildNamespace_Last(
+	public static ServiceComponent findByBuildNamespace_Last(
 		java.lang.String buildNamespace,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator)
+		OrderByComparator<ServiceComponent> orderByComparator)
 		throws com.liferay.portal.NoSuchServiceComponentException {
 		return getPersistence()
 				   .findByBuildNamespace_Last(buildNamespace, orderByComparator);
@@ -211,9 +211,9 @@ public class ServiceComponentUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching service component, or <code>null</code> if a matching service component could not be found
 	*/
-	public static com.liferay.portal.model.ServiceComponent fetchByBuildNamespace_Last(
+	public static ServiceComponent fetchByBuildNamespace_Last(
 		java.lang.String buildNamespace,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator) {
+		OrderByComparator<ServiceComponent> orderByComparator) {
 		return getPersistence()
 				   .fetchByBuildNamespace_Last(buildNamespace, orderByComparator);
 	}
@@ -225,11 +225,11 @@ public class ServiceComponentUtil {
 	* @param buildNamespace the build namespace
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next service component
-	* @throws com.liferay.portal.NoSuchServiceComponentException if a service component with the primary key could not be found
+	* @throws NoSuchServiceComponentException if a service component with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ServiceComponent[] findByBuildNamespace_PrevAndNext(
+	public static ServiceComponent[] findByBuildNamespace_PrevAndNext(
 		long serviceComponentId, java.lang.String buildNamespace,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator)
+		OrderByComparator<ServiceComponent> orderByComparator)
 		throws com.liferay.portal.NoSuchServiceComponentException {
 		return getPersistence()
 				   .findByBuildNamespace_PrevAndNext(serviceComponentId,
@@ -256,14 +256,14 @@ public class ServiceComponentUtil {
 	}
 
 	/**
-	* Returns the service component where buildNamespace = &#63; and buildNumber = &#63; or throws a {@link com.liferay.portal.NoSuchServiceComponentException} if it could not be found.
+	* Returns the service component where buildNamespace = &#63; and buildNumber = &#63; or throws a {@link NoSuchServiceComponentException} if it could not be found.
 	*
 	* @param buildNamespace the build namespace
 	* @param buildNumber the build number
 	* @return the matching service component
-	* @throws com.liferay.portal.NoSuchServiceComponentException if a matching service component could not be found
+	* @throws NoSuchServiceComponentException if a matching service component could not be found
 	*/
-	public static com.liferay.portal.model.ServiceComponent findByBNS_BNU(
+	public static ServiceComponent findByBNS_BNU(
 		java.lang.String buildNamespace, long buildNumber)
 		throws com.liferay.portal.NoSuchServiceComponentException {
 		return getPersistence().findByBNS_BNU(buildNamespace, buildNumber);
@@ -276,7 +276,7 @@ public class ServiceComponentUtil {
 	* @param buildNumber the build number
 	* @return the matching service component, or <code>null</code> if a matching service component could not be found
 	*/
-	public static com.liferay.portal.model.ServiceComponent fetchByBNS_BNU(
+	public static ServiceComponent fetchByBNS_BNU(
 		java.lang.String buildNamespace, long buildNumber) {
 		return getPersistence().fetchByBNS_BNU(buildNamespace, buildNumber);
 	}
@@ -289,7 +289,7 @@ public class ServiceComponentUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching service component, or <code>null</code> if a matching service component could not be found
 	*/
-	public static com.liferay.portal.model.ServiceComponent fetchByBNS_BNU(
+	public static ServiceComponent fetchByBNS_BNU(
 		java.lang.String buildNamespace, long buildNumber,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -304,7 +304,7 @@ public class ServiceComponentUtil {
 	* @param buildNumber the build number
 	* @return the service component that was removed
 	*/
-	public static com.liferay.portal.model.ServiceComponent removeByBNS_BNU(
+	public static ServiceComponent removeByBNS_BNU(
 		java.lang.String buildNamespace, long buildNumber)
 		throws com.liferay.portal.NoSuchServiceComponentException {
 		return getPersistence().removeByBNS_BNU(buildNamespace, buildNumber);
@@ -327,8 +327,7 @@ public class ServiceComponentUtil {
 	*
 	* @param serviceComponent the service component
 	*/
-	public static void cacheResult(
-		com.liferay.portal.model.ServiceComponent serviceComponent) {
+	public static void cacheResult(ServiceComponent serviceComponent) {
 		getPersistence().cacheResult(serviceComponent);
 	}
 
@@ -337,8 +336,7 @@ public class ServiceComponentUtil {
 	*
 	* @param serviceComponents the service components
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portal.model.ServiceComponent> serviceComponents) {
+	public static void cacheResult(List<ServiceComponent> serviceComponents) {
 		getPersistence().cacheResult(serviceComponents);
 	}
 
@@ -348,8 +346,7 @@ public class ServiceComponentUtil {
 	* @param serviceComponentId the primary key for the new service component
 	* @return the new service component
 	*/
-	public static com.liferay.portal.model.ServiceComponent create(
-		long serviceComponentId) {
+	public static ServiceComponent create(long serviceComponentId) {
 		return getPersistence().create(serviceComponentId);
 	}
 
@@ -358,28 +355,25 @@ public class ServiceComponentUtil {
 	*
 	* @param serviceComponentId the primary key of the service component
 	* @return the service component that was removed
-	* @throws com.liferay.portal.NoSuchServiceComponentException if a service component with the primary key could not be found
+	* @throws NoSuchServiceComponentException if a service component with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ServiceComponent remove(
-		long serviceComponentId)
+	public static ServiceComponent remove(long serviceComponentId)
 		throws com.liferay.portal.NoSuchServiceComponentException {
 		return getPersistence().remove(serviceComponentId);
 	}
 
-	public static com.liferay.portal.model.ServiceComponent updateImpl(
-		com.liferay.portal.model.ServiceComponent serviceComponent) {
+	public static ServiceComponent updateImpl(ServiceComponent serviceComponent) {
 		return getPersistence().updateImpl(serviceComponent);
 	}
 
 	/**
-	* Returns the service component with the primary key or throws a {@link com.liferay.portal.NoSuchServiceComponentException} if it could not be found.
+	* Returns the service component with the primary key or throws a {@link NoSuchServiceComponentException} if it could not be found.
 	*
 	* @param serviceComponentId the primary key of the service component
 	* @return the service component
-	* @throws com.liferay.portal.NoSuchServiceComponentException if a service component with the primary key could not be found
+	* @throws NoSuchServiceComponentException if a service component with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ServiceComponent findByPrimaryKey(
-		long serviceComponentId)
+	public static ServiceComponent findByPrimaryKey(long serviceComponentId)
 		throws com.liferay.portal.NoSuchServiceComponentException {
 		return getPersistence().findByPrimaryKey(serviceComponentId);
 	}
@@ -390,12 +384,11 @@ public class ServiceComponentUtil {
 	* @param serviceComponentId the primary key of the service component
 	* @return the service component, or <code>null</code> if a service component with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ServiceComponent fetchByPrimaryKey(
-		long serviceComponentId) {
+	public static ServiceComponent fetchByPrimaryKey(long serviceComponentId) {
 		return getPersistence().fetchByPrimaryKey(serviceComponentId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.ServiceComponent> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, ServiceComponent> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -405,7 +398,7 @@ public class ServiceComponentUtil {
 	*
 	* @return the service components
 	*/
-	public static java.util.List<com.liferay.portal.model.ServiceComponent> findAll() {
+	public static List<ServiceComponent> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -413,15 +406,14 @@ public class ServiceComponentUtil {
 	* Returns a range of all the service components.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ServiceComponentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ServiceComponentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of service components
 	* @param end the upper bound of the range of service components (not inclusive)
 	* @return the range of service components
 	*/
-	public static java.util.List<com.liferay.portal.model.ServiceComponent> findAll(
-		int start, int end) {
+	public static List<ServiceComponent> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -429,7 +421,7 @@ public class ServiceComponentUtil {
 	* Returns an ordered range of all the service components.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ServiceComponentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ServiceComponentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of service components
@@ -437,9 +429,8 @@ public class ServiceComponentUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of service components
 	*/
-	public static java.util.List<com.liferay.portal.model.ServiceComponent> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ServiceComponent> orderByComparator) {
+	public static List<ServiceComponent> findAll(int start, int end,
+		OrderByComparator<ServiceComponent> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

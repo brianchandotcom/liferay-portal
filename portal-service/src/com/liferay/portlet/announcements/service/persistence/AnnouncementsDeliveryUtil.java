@@ -117,8 +117,7 @@ public class AnnouncementsDeliveryUtil {
 	* @param userId the user ID
 	* @return the matching announcements deliveries
 	*/
-	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findByUserId(
-		long userId) {
+	public static List<AnnouncementsDelivery> findByUserId(long userId) {
 		return getPersistence().findByUserId(userId);
 	}
 
@@ -126,7 +125,7 @@ public class AnnouncementsDeliveryUtil {
 	* Returns a range of all the announcements deliveries where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -134,8 +133,8 @@ public class AnnouncementsDeliveryUtil {
 	* @param end the upper bound of the range of announcements deliveries (not inclusive)
 	* @return the range of matching announcements deliveries
 	*/
-	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findByUserId(
-		long userId, int start, int end) {
+	public static List<AnnouncementsDelivery> findByUserId(long userId,
+		int start, int end) {
 		return getPersistence().findByUserId(userId, start, end);
 	}
 
@@ -143,7 +142,7 @@ public class AnnouncementsDeliveryUtil {
 	* Returns an ordered range of all the announcements deliveries where userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userId the user ID
@@ -152,9 +151,9 @@ public class AnnouncementsDeliveryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements deliveries
 	*/
-	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findByUserId(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator) {
+	public static List<AnnouncementsDelivery> findByUserId(long userId,
+		int start, int end,
+		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -165,11 +164,10 @@ public class AnnouncementsDeliveryUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements delivery
-	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a matching announcements delivery could not be found
+	* @throws NoSuchDeliveryException if a matching announcements delivery could not be found
 	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery findByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator)
+	public static AnnouncementsDelivery findByUserId_First(long userId,
+		OrderByComparator<AnnouncementsDelivery> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
@@ -181,9 +179,8 @@ public class AnnouncementsDeliveryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
 	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByUserId_First(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator) {
+	public static AnnouncementsDelivery fetchByUserId_First(long userId,
+		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -193,11 +190,10 @@ public class AnnouncementsDeliveryUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements delivery
-	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a matching announcements delivery could not be found
+	* @throws NoSuchDeliveryException if a matching announcements delivery could not be found
 	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery findByUserId_Last(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator)
+	public static AnnouncementsDelivery findByUserId_Last(long userId,
+		OrderByComparator<AnnouncementsDelivery> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
@@ -209,9 +205,8 @@ public class AnnouncementsDeliveryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
 	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByUserId_Last(
-		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator) {
+	public static AnnouncementsDelivery fetchByUserId_Last(long userId,
+		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -222,11 +217,11 @@ public class AnnouncementsDeliveryUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements delivery
-	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a announcements delivery with the primary key could not be found
+	* @throws NoSuchDeliveryException if a announcements delivery with the primary key could not be found
 	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery[] findByUserId_PrevAndNext(
+	public static AnnouncementsDelivery[] findByUserId_PrevAndNext(
 		long deliveryId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator)
+		OrderByComparator<AnnouncementsDelivery> orderByComparator)
 		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(deliveryId, userId,
@@ -253,15 +248,15 @@ public class AnnouncementsDeliveryUtil {
 	}
 
 	/**
-	* Returns the announcements delivery where userId = &#63; and type = &#63; or throws a {@link com.liferay.portlet.announcements.NoSuchDeliveryException} if it could not be found.
+	* Returns the announcements delivery where userId = &#63; and type = &#63; or throws a {@link NoSuchDeliveryException} if it could not be found.
 	*
 	* @param userId the user ID
 	* @param type the type
 	* @return the matching announcements delivery
-	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a matching announcements delivery could not be found
+	* @throws NoSuchDeliveryException if a matching announcements delivery could not be found
 	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery findByU_T(
-		long userId, java.lang.String type)
+	public static AnnouncementsDelivery findByU_T(long userId,
+		java.lang.String type)
 		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence().findByU_T(userId, type);
 	}
@@ -273,8 +268,8 @@ public class AnnouncementsDeliveryUtil {
 	* @param type the type
 	* @return the matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
 	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByU_T(
-		long userId, java.lang.String type) {
+	public static AnnouncementsDelivery fetchByU_T(long userId,
+		java.lang.String type) {
 		return getPersistence().fetchByU_T(userId, type);
 	}
 
@@ -286,8 +281,8 @@ public class AnnouncementsDeliveryUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
 	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByU_T(
-		long userId, java.lang.String type, boolean retrieveFromCache) {
+	public static AnnouncementsDelivery fetchByU_T(long userId,
+		java.lang.String type, boolean retrieveFromCache) {
 		return getPersistence().fetchByU_T(userId, type, retrieveFromCache);
 	}
 
@@ -298,8 +293,8 @@ public class AnnouncementsDeliveryUtil {
 	* @param type the type
 	* @return the announcements delivery that was removed
 	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery removeByU_T(
-		long userId, java.lang.String type)
+	public static AnnouncementsDelivery removeByU_T(long userId,
+		java.lang.String type)
 		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence().removeByU_T(userId, type);
 	}
@@ -320,8 +315,7 @@ public class AnnouncementsDeliveryUtil {
 	*
 	* @param announcementsDelivery the announcements delivery
 	*/
-	public static void cacheResult(
-		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery) {
+	public static void cacheResult(AnnouncementsDelivery announcementsDelivery) {
 		getPersistence().cacheResult(announcementsDelivery);
 	}
 
@@ -331,7 +325,7 @@ public class AnnouncementsDeliveryUtil {
 	* @param announcementsDeliveries the announcements deliveries
 	*/
 	public static void cacheResult(
-		java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> announcementsDeliveries) {
+		List<AnnouncementsDelivery> announcementsDeliveries) {
 		getPersistence().cacheResult(announcementsDeliveries);
 	}
 
@@ -341,8 +335,7 @@ public class AnnouncementsDeliveryUtil {
 	* @param deliveryId the primary key for the new announcements delivery
 	* @return the new announcements delivery
 	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery create(
-		long deliveryId) {
+	public static AnnouncementsDelivery create(long deliveryId) {
 		return getPersistence().create(deliveryId);
 	}
 
@@ -351,28 +344,26 @@ public class AnnouncementsDeliveryUtil {
 	*
 	* @param deliveryId the primary key of the announcements delivery
 	* @return the announcements delivery that was removed
-	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a announcements delivery with the primary key could not be found
+	* @throws NoSuchDeliveryException if a announcements delivery with the primary key could not be found
 	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery remove(
-		long deliveryId)
+	public static AnnouncementsDelivery remove(long deliveryId)
 		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence().remove(deliveryId);
 	}
 
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery updateImpl(
-		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery) {
+	public static AnnouncementsDelivery updateImpl(
+		AnnouncementsDelivery announcementsDelivery) {
 		return getPersistence().updateImpl(announcementsDelivery);
 	}
 
 	/**
-	* Returns the announcements delivery with the primary key or throws a {@link com.liferay.portlet.announcements.NoSuchDeliveryException} if it could not be found.
+	* Returns the announcements delivery with the primary key or throws a {@link NoSuchDeliveryException} if it could not be found.
 	*
 	* @param deliveryId the primary key of the announcements delivery
 	* @return the announcements delivery
-	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a announcements delivery with the primary key could not be found
+	* @throws NoSuchDeliveryException if a announcements delivery with the primary key could not be found
 	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery findByPrimaryKey(
-		long deliveryId)
+	public static AnnouncementsDelivery findByPrimaryKey(long deliveryId)
 		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence().findByPrimaryKey(deliveryId);
 	}
@@ -383,12 +374,11 @@ public class AnnouncementsDeliveryUtil {
 	* @param deliveryId the primary key of the announcements delivery
 	* @return the announcements delivery, or <code>null</code> if a announcements delivery with the primary key could not be found
 	*/
-	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByPrimaryKey(
-		long deliveryId) {
+	public static AnnouncementsDelivery fetchByPrimaryKey(long deliveryId) {
 		return getPersistence().fetchByPrimaryKey(deliveryId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portlet.announcements.model.AnnouncementsDelivery> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, AnnouncementsDelivery> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -398,7 +388,7 @@ public class AnnouncementsDeliveryUtil {
 	*
 	* @return the announcements deliveries
 	*/
-	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findAll() {
+	public static List<AnnouncementsDelivery> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -406,15 +396,14 @@ public class AnnouncementsDeliveryUtil {
 	* Returns a range of all the announcements deliveries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of announcements deliveries
 	* @param end the upper bound of the range of announcements deliveries (not inclusive)
 	* @return the range of announcements deliveries
 	*/
-	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findAll(
-		int start, int end) {
+	public static List<AnnouncementsDelivery> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -422,7 +411,7 @@ public class AnnouncementsDeliveryUtil {
 	* Returns an ordered range of all the announcements deliveries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsDeliveryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of announcements deliveries
@@ -430,9 +419,8 @@ public class AnnouncementsDeliveryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of announcements deliveries
 	*/
-	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.announcements.model.AnnouncementsDelivery> orderByComparator) {
+	public static List<AnnouncementsDelivery> findAll(int start, int end,
+		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

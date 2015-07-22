@@ -28,7 +28,7 @@ import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see MembershipRequestImpl
- * @see com.liferay.portal.model.MembershipRequest
+ * @see MembershipRequest
  * @generated
  */
 @ProviderType

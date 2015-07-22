@@ -499,7 +499,7 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	 *
 	 * @return the journal article local service
 	 */
-	public com.liferay.journal.service.JournalArticleLocalService getJournalArticleLocalService() {
+	public JournalArticleLocalService getJournalArticleLocalService() {
 		return journalArticleLocalService;
 	}
 
@@ -509,7 +509,7 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	 * @param journalArticleLocalService the journal article local service
 	 */
 	public void setJournalArticleLocalService(
-		com.liferay.journal.service.JournalArticleLocalService journalArticleLocalService) {
+		JournalArticleLocalService journalArticleLocalService) {
 		this.journalArticleLocalService = journalArticleLocalService;
 	}
 
@@ -1975,7 +1975,7 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.journal.service.JournalArticleLocalService.class)
-	protected com.liferay.journal.service.JournalArticleLocalService journalArticleLocalService;
+	protected JournalArticleLocalService journalArticleLocalService;
 	@BeanReference(type = com.liferay.journal.service.JournalArticleService.class)
 	protected com.liferay.journal.service.JournalArticleService journalArticleService;
 	@BeanReference(type = JournalArticlePersistence.class)

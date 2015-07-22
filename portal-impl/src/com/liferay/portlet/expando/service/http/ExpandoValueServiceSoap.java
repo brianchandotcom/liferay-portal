@@ -25,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.portlet.expando.service.ExpandoValueServiceUtil} service utility. The
+ * {@link ExpandoValueServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -60,7 +60,7 @@ import java.rmi.RemoteException;
  * @author Brian Wing Shun Chan
  * @see ExpandoValueServiceHttp
  * @see com.liferay.portlet.expando.model.ExpandoValueSoap
- * @see com.liferay.portlet.expando.service.ExpandoValueServiceUtil
+ * @see ExpandoValueServiceUtil
  * @generated
  */
 @ProviderType

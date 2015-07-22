@@ -28,7 +28,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLayoutLocalSer
  *
  * @author Brian Wing Shun Chan
  * @see DDMStructureLayoutImpl
- * @see com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout
+ * @see DDMStructureLayout
  * @generated
  */
 @ProviderType

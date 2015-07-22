@@ -135,7 +135,7 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the group remote service
 	 */
-	public com.liferay.portal.service.GroupService getGroupService() {
+	public GroupService getGroupService() {
 		return groupService;
 	}
 
@@ -144,8 +144,7 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param groupService the group remote service
 	 */
-	public void setGroupService(
-		com.liferay.portal.service.GroupService groupService) {
+	public void setGroupService(GroupService groupService) {
 		this.groupService = groupService;
 	}
 
@@ -2962,7 +2961,7 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portal.service.GroupLocalService.class)
 	protected com.liferay.portal.service.GroupLocalService groupLocalService;
 	@BeanReference(type = com.liferay.portal.service.GroupService.class)
-	protected com.liferay.portal.service.GroupService groupService;
+	protected GroupService groupService;
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
 	@BeanReference(type = GroupFinder.class)

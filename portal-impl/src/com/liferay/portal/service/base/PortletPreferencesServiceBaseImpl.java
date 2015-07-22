@@ -76,7 +76,7 @@ public abstract class PortletPreferencesServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the portlet preferences remote service
 	 */
-	public com.liferay.portal.service.PortletPreferencesService getPortletPreferencesService() {
+	public PortletPreferencesService getPortletPreferencesService() {
 		return portletPreferencesService;
 	}
 
@@ -86,7 +86,7 @@ public abstract class PortletPreferencesServiceBaseImpl extends BaseServiceImpl
 	 * @param portletPreferencesService the portlet preferences remote service
 	 */
 	public void setPortletPreferencesService(
-		com.liferay.portal.service.PortletPreferencesService portletPreferencesService) {
+		PortletPreferencesService portletPreferencesService) {
 		this.portletPreferencesService = portletPreferencesService;
 	}
 
@@ -302,7 +302,7 @@ public abstract class PortletPreferencesServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portal.service.PortletPreferencesLocalService.class)
 	protected com.liferay.portal.service.PortletPreferencesLocalService portletPreferencesLocalService;
 	@BeanReference(type = com.liferay.portal.service.PortletPreferencesService.class)
-	protected com.liferay.portal.service.PortletPreferencesService portletPreferencesService;
+	protected PortletPreferencesService portletPreferencesService;
 	@BeanReference(type = PortletPreferencesPersistence.class)
 	protected PortletPreferencesPersistence portletPreferencesPersistence;
 	@BeanReference(type = PortletPreferencesFinder.class)

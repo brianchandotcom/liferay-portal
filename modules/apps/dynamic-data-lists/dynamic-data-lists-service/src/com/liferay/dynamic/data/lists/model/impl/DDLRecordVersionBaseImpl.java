@@ -28,7 +28,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see DDLRecordVersionImpl
- * @see com.liferay.dynamic.data.lists.model.DDLRecordVersion
+ * @see DDLRecordVersion
  * @generated
  */
 @ProviderType

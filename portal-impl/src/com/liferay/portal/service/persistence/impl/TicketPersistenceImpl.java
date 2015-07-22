@@ -94,11 +94,11 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 			new String[] { String.class.getName() });
 
 	/**
-	 * Returns the ticket where key = &#63; or throws a {@link com.liferay.portal.NoSuchTicketException} if it could not be found.
+	 * Returns the ticket where key = &#63; or throws a {@link NoSuchTicketException} if it could not be found.
 	 *
 	 * @param key the key
 	 * @return the matching ticket
-	 * @throws com.liferay.portal.NoSuchTicketException if a matching ticket could not be found
+	 * @throws NoSuchTicketException if a matching ticket could not be found
 	 */
 	@Override
 	public Ticket findByKey(String key) throws NoSuchTicketException {
@@ -369,7 +369,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 * Returns a range of all the tickets where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TicketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TicketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param classNameId the class name ID
@@ -389,7 +389,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 * Returns an ordered range of all the tickets where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TicketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TicketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param classNameId the class name ID
@@ -520,7 +520,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching ticket
-	 * @throws com.liferay.portal.NoSuchTicketException if a matching ticket could not be found
+	 * @throws NoSuchTicketException if a matching ticket could not be found
 	 */
 	@Override
 	public Ticket findByC_C_T_First(long classNameId, long classPK, int type,
@@ -581,7 +581,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching ticket
-	 * @throws com.liferay.portal.NoSuchTicketException if a matching ticket could not be found
+	 * @throws NoSuchTicketException if a matching ticket could not be found
 	 */
 	@Override
 	public Ticket findByC_C_T_Last(long classNameId, long classPK, int type,
@@ -649,7 +649,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next ticket
-	 * @throws com.liferay.portal.NoSuchTicketException if a ticket with the primary key could not be found
+	 * @throws NoSuchTicketException if a ticket with the primary key could not be found
 	 */
 	@Override
 	public Ticket[] findByC_C_T_PrevAndNext(long ticketId, long classNameId,
@@ -1022,7 +1022,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 *
 	 * @param ticketId the primary key of the ticket
 	 * @return the ticket that was removed
-	 * @throws com.liferay.portal.NoSuchTicketException if a ticket with the primary key could not be found
+	 * @throws NoSuchTicketException if a ticket with the primary key could not be found
 	 */
 	@Override
 	public Ticket remove(long ticketId) throws NoSuchTicketException {
@@ -1034,7 +1034,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 *
 	 * @param primaryKey the primary key of the ticket
 	 * @return the ticket that was removed
-	 * @throws com.liferay.portal.NoSuchTicketException if a ticket with the primary key could not be found
+	 * @throws NoSuchTicketException if a ticket with the primary key could not be found
 	 */
 	@Override
 	public Ticket remove(Serializable primaryKey) throws NoSuchTicketException {
@@ -1100,7 +1100,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	}
 
 	@Override
-	public Ticket updateImpl(com.liferay.portal.model.Ticket ticket) {
+	public Ticket updateImpl(Ticket ticket) {
 		ticket = toUnwrappedModel(ticket);
 
 		boolean isNew = ticket.isNew();
@@ -1198,7 +1198,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 *
 	 * @param primaryKey the primary key of the ticket
 	 * @return the ticket
-	 * @throws com.liferay.portal.NoSuchTicketException if a ticket with the primary key could not be found
+	 * @throws NoSuchTicketException if a ticket with the primary key could not be found
 	 */
 	@Override
 	public Ticket findByPrimaryKey(Serializable primaryKey)
@@ -1218,11 +1218,11 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	}
 
 	/**
-	 * Returns the ticket with the primary key or throws a {@link com.liferay.portal.NoSuchTicketException} if it could not be found.
+	 * Returns the ticket with the primary key or throws a {@link NoSuchTicketException} if it could not be found.
 	 *
 	 * @param ticketId the primary key of the ticket
 	 * @return the ticket
-	 * @throws com.liferay.portal.NoSuchTicketException if a ticket with the primary key could not be found
+	 * @throws NoSuchTicketException if a ticket with the primary key could not be found
 	 */
 	@Override
 	public Ticket findByPrimaryKey(long ticketId) throws NoSuchTicketException {
@@ -1391,7 +1391,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 * Returns a range of all the tickets.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TicketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TicketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of tickets
@@ -1407,7 +1407,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	 * Returns an ordered range of all the tickets.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.TicketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TicketModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of tickets

@@ -28,7 +28,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServi
  *
  * @author Brian Wing Shun Chan
  * @see DLFileEntryMetadataImpl
- * @see com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata
+ * @see DLFileEntryMetadata
  * @generated
  */
 @ProviderType

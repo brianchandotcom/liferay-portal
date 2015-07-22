@@ -76,7 +76,7 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Deletes the user tracker from the database. Also notifies the appropriate model listeners.
@@ -97,8 +97,7 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.UserTracker deleteUserTracker(
-		long userTrackerId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long userTrackerId) throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -182,8 +181,7 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns the user tracker with the primary key.
@@ -194,8 +192,7 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserTracker getUserTracker(
-		long userTrackerId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long userTrackerId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserTracker> getUserTrackers(

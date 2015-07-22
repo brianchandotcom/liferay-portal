@@ -86,8 +86,7 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.social.networking.model.MeetupsRegistration deleteMeetupsRegistration(
-		long meetupsRegistrationId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long meetupsRegistrationId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -95,7 +94,7 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -185,13 +184,11 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.social.networking.model.MeetupsRegistration getMeetupsRegistration(
-		long meetupsRegistrationId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long meetupsRegistrationId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.social.networking.model.MeetupsRegistration getMeetupsRegistration(
-		long userId, long meetupsEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long userId, long meetupsEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.social.networking.model.MeetupsRegistration> getMeetupsRegistrations(
@@ -226,8 +223,7 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -248,5 +244,5 @@ public interface MeetupsRegistrationLocalService extends BaseLocalService,
 
 	public com.liferay.social.networking.model.MeetupsRegistration updateMeetupsRegistration(
 		long userId, long meetupsEntryId, int status, java.lang.String comments)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

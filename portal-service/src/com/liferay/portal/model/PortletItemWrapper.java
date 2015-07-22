@@ -182,7 +182,7 @@ public class PortletItemWrapper implements PortletItem,
 	* @return the create date of this portlet item
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _portletItem.getCreateDate();
 	}
 
@@ -207,7 +207,7 @@ public class PortletItemWrapper implements PortletItem,
 	* @return the modified date of this portlet item
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _portletItem.getModifiedDate();
 	}
 
@@ -357,7 +357,7 @@ public class PortletItemWrapper implements PortletItem,
 	* @param createDate the create date of this portlet item
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_portletItem.setCreateDate(createDate);
 	}
 
@@ -394,7 +394,7 @@ public class PortletItemWrapper implements PortletItem,
 	* @param modifiedDate the modified date of this portlet item
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_portletItem.setModifiedDate(modifiedDate);
 	}
 

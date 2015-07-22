@@ -28,7 +28,7 @@ import com.liferay.portal.service.PasswordTrackerLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see PasswordTrackerImpl
- * @see com.liferay.portal.model.PasswordTracker
+ * @see PasswordTracker
  * @generated
  */
 @ProviderType

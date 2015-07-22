@@ -211,7 +211,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @return the create date of this repository
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _repository.getCreateDate();
 	}
 
@@ -256,7 +256,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @return the modified date of this repository
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _repository.getModifiedDate();
 	}
 
@@ -431,7 +431,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @param createDate the create date of this repository
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_repository.setCreateDate(createDate);
 	}
 
@@ -488,7 +488,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	* @param modifiedDate the modified date of this repository
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_repository.setModifiedDate(modifiedDate);
 	}
 

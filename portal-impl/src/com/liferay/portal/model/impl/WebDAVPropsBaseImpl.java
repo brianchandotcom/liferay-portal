@@ -28,7 +28,7 @@ import com.liferay.portal.service.WebDAVPropsLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see WebDAVPropsImpl
- * @see com.liferay.portal.model.WebDAVProps
+ * @see WebDAVProps
  * @generated
  */
 @ProviderType

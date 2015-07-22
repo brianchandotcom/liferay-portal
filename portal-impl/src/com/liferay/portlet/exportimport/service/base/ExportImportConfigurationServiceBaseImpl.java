@@ -117,7 +117,7 @@ public abstract class ExportImportConfigurationServiceBaseImpl
 	 *
 	 * @return the export import configuration remote service
 	 */
-	public com.liferay.portlet.exportimport.service.ExportImportConfigurationService getExportImportConfigurationService() {
+	public ExportImportConfigurationService getExportImportConfigurationService() {
 		return exportImportConfigurationService;
 	}
 
@@ -127,7 +127,7 @@ public abstract class ExportImportConfigurationServiceBaseImpl
 	 * @param exportImportConfigurationService the export import configuration remote service
 	 */
 	public void setExportImportConfigurationService(
-		com.liferay.portlet.exportimport.service.ExportImportConfigurationService exportImportConfigurationService) {
+		ExportImportConfigurationService exportImportConfigurationService) {
 		this.exportImportConfigurationService = exportImportConfigurationService;
 	}
 
@@ -479,7 +479,7 @@ public abstract class ExportImportConfigurationServiceBaseImpl
 	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService.class)
 	protected com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService exportImportConfigurationLocalService;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportConfigurationService.class)
-	protected com.liferay.portlet.exportimport.service.ExportImportConfigurationService exportImportConfigurationService;
+	protected ExportImportConfigurationService exportImportConfigurationService;
 	@BeanReference(type = ExportImportConfigurationPersistence.class)
 	protected ExportImportConfigurationPersistence exportImportConfigurationPersistence;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.StagingLocalService.class)

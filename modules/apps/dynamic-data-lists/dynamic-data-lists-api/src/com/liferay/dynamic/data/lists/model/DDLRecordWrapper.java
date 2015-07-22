@@ -186,7 +186,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @return the create date of this d d l record
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _ddlRecord.getCreateDate();
 	}
 
@@ -262,7 +262,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @return the modified date of this d d l record
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _ddlRecord.getModifiedDate();
 	}
 
@@ -452,7 +452,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @param createDate the create date of this d d l record
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_ddlRecord.setCreateDate(createDate);
 	}
 
@@ -510,7 +510,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* @param modifiedDate the modified date of this d d l record
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_ddlRecord.setModifiedDate(modifiedDate);
 	}
 

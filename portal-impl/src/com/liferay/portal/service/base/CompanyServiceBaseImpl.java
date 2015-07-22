@@ -94,7 +94,7 @@ public abstract class CompanyServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the company remote service
 	 */
-	public com.liferay.portal.service.CompanyService getCompanyService() {
+	public CompanyService getCompanyService() {
 		return companyService;
 	}
 
@@ -103,8 +103,7 @@ public abstract class CompanyServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param companyService the company remote service
 	 */
-	public void setCompanyService(
-		com.liferay.portal.service.CompanyService companyService) {
+	public void setCompanyService(CompanyService companyService) {
 		this.companyService = companyService;
 	}
 
@@ -1145,7 +1144,7 @@ public abstract class CompanyServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portal.service.CompanyLocalService.class)
 	protected com.liferay.portal.service.CompanyLocalService companyLocalService;
 	@BeanReference(type = com.liferay.portal.service.CompanyService.class)
-	protected com.liferay.portal.service.CompanyService companyService;
+	protected CompanyService companyService;
 	@BeanReference(type = CompanyPersistence.class)
 	protected CompanyPersistence companyPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

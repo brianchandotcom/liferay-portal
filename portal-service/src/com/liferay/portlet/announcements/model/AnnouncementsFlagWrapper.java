@@ -112,7 +112,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	* @return the create date of this announcements flag
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _announcementsFlag.getCreateDate();
 	}
 
@@ -222,7 +222,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	* @param createDate the create date of this announcements flag
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_announcementsFlag.setCreateDate(createDate);
 	}
 

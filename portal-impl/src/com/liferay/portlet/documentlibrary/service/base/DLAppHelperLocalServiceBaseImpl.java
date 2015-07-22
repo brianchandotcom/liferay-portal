@@ -94,7 +94,7 @@ public abstract class DLAppHelperLocalServiceBaseImpl
 	 *
 	 * @return the d l app helper local service
 	 */
-	public com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService getDLAppHelperLocalService() {
+	public DLAppHelperLocalService getDLAppHelperLocalService() {
 		return dlAppHelperLocalService;
 	}
 
@@ -104,7 +104,7 @@ public abstract class DLAppHelperLocalServiceBaseImpl
 	 * @param dlAppHelperLocalService the d l app helper local service
 	 */
 	public void setDLAppHelperLocalService(
-		com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService dlAppHelperLocalService) {
+		DLAppHelperLocalService dlAppHelperLocalService) {
 		this.dlAppHelperLocalService = dlAppHelperLocalService;
 	}
 
@@ -1645,7 +1645,7 @@ public abstract class DLAppHelperLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService dlAppHelperLocalService;
+	protected DLAppHelperLocalService dlAppHelperLocalService;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.GroupLocalService.class)

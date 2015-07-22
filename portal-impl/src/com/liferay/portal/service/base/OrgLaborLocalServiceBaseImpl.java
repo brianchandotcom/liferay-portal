@@ -297,7 +297,7 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the org labor local service
 	 */
-	public com.liferay.portal.service.OrgLaborLocalService getOrgLaborLocalService() {
+	public OrgLaborLocalService getOrgLaborLocalService() {
 		return orgLaborLocalService;
 	}
 
@@ -307,7 +307,7 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param orgLaborLocalService the org labor local service
 	 */
 	public void setOrgLaborLocalService(
-		com.liferay.portal.service.OrgLaborLocalService orgLaborLocalService) {
+		OrgLaborLocalService orgLaborLocalService) {
 		this.orgLaborLocalService = orgLaborLocalService;
 	}
 
@@ -486,7 +486,7 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.OrgLaborLocalService.class)
-	protected com.liferay.portal.service.OrgLaborLocalService orgLaborLocalService;
+	protected OrgLaborLocalService orgLaborLocalService;
 	@BeanReference(type = com.liferay.portal.service.OrgLaborService.class)
 	protected com.liferay.portal.service.OrgLaborService orgLaborService;
 	@BeanReference(type = OrgLaborPersistence.class)

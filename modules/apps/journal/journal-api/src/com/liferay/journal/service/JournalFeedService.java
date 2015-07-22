@@ -61,21 +61,19 @@ public interface JournalFeedService extends BaseService {
 		java.lang.String targetPortletId, java.lang.String contentField,
 		java.lang.String feedType, double feedVersion,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void deleteFeed(long feedId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteFeed(long feedId) throws PortalException;
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #deleteFeed(long, String)}
 	*/
 	@java.lang.Deprecated
-	@com.liferay.portal.kernel.jsonwebservice.JSONWebService(mode = JSONWebServiceMode.IGNORE)
-	public void deleteFeed(long groupId, long feedId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	public void deleteFeed(long groupId, long feedId) throws PortalException;
 
 	public void deleteFeed(long groupId, java.lang.String feedId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -86,21 +84,20 @@ public interface JournalFeedService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalFeed getFeed(long feedId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalFeed getFeed(long groupId,
-		java.lang.String feedId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String feedId) throws PortalException;
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getFeed(long, String)}
 	*/
 	@java.lang.Deprecated
-	@com.liferay.portal.kernel.jsonwebservice.JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalFeed getFeed(long groupId,
-		long feedId) throws com.liferay.portal.kernel.exception.PortalException;
+		long feedId) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -119,5 +116,5 @@ public interface JournalFeedService extends BaseService {
 		java.lang.String targetPortletId, java.lang.String contentField,
 		java.lang.String feedType, double feedVersion,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

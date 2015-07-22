@@ -98,7 +98,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	public com.liferay.portal.model.UserGroup addUserGroup(long userId,
 		long companyId, java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Adds a user group.
@@ -123,7 +123,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	public com.liferay.portal.model.UserGroup addUserGroup(long userId,
 		long companyId, java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void addUserUserGroup(long userId,
 		com.liferay.portal.model.UserGroup userGroup);
@@ -152,7 +152,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	public void copyUserGroupLayouts(long userGroupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Copies the user group's layouts to the users who are not already members
@@ -166,7 +166,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	public void copyUserGroupLayouts(long userGroupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Copies the user groups' layouts to the user.
@@ -179,7 +179,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	*/
 	@java.lang.Deprecated
 	public void copyUserGroupLayouts(long[] userGroupIds, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new user group with the primary key. Does not add the user group to the database.
@@ -205,7 +205,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteTeamUserGroup(long teamId,
 		com.liferay.portal.model.UserGroup userGroup);
@@ -227,8 +227,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	@com.liferay.portal.kernel.systemevent.SystemEvent(action = SystemEventConstants.ACTION_SKIP, type = SystemEventConstants.TYPE_DELETE)
 	public com.liferay.portal.model.UserGroup deleteUserGroup(
-		com.liferay.portal.model.UserGroup userGroup)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		com.liferay.portal.model.UserGroup userGroup) throws PortalException;
 
 	/**
 	* Deletes the user group with the primary key from the database. Also notifies the appropriate model listeners.
@@ -239,10 +238,9 @@ public interface UserGroupLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.UserGroup deleteUserGroup(long userGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
-	public void deleteUserGroups(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void deleteUserGroups(long companyId) throws PortalException;
 
 	public void deleteUserUserGroup(long userId,
 		com.liferay.portal.model.UserGroup userGroup);
@@ -378,14 +376,12 @@ public interface UserGroupLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserGroup> getGroupUserUserGroups(
-		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long groupId, long userId) throws PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns the teamIds of the teams associated with the user group.
@@ -422,8 +418,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserGroup getUserGroup(long companyId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String name) throws PortalException;
 
 	/**
 	* Returns the user group with the primary key.
@@ -434,7 +429,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserGroup getUserGroup(long userGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the user group with the matching UUID and company.
@@ -446,8 +441,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserGroup getUserGroupByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long companyId) throws PortalException;
 
 	/**
 	* Returns all the user groups belonging to the company.
@@ -483,8 +477,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserGroup> getUserGroups(
-		long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long[] userGroupIds) throws PortalException;
 
 	/**
 	* Returns the number of user groups.
@@ -721,15 +714,14 @@ public interface UserGroupLocalService extends BaseLocalService,
 		long companyId, java.lang.String keywords,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		int start, int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.model.UserGroup> searchUserGroups(
 		long companyId, java.lang.String name, java.lang.String description,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andSearch, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		com.liferay.portal.kernel.search.Sort sort) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -746,7 +738,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @throws PortalException
 	*/
 	public void setUserUserGroups(long userId, long[] userGroupIds)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Removes the user groups from the group.
@@ -780,7 +772,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	public com.liferay.portal.model.UserGroup updateUserGroup(long companyId,
 		long userGroupId, java.lang.String name, java.lang.String description)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the user group.
@@ -799,7 +791,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	public com.liferay.portal.model.UserGroup updateUserGroup(long companyId,
 		long userGroupId, java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the user group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

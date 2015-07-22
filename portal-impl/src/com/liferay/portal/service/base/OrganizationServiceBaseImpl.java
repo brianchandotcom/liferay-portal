@@ -101,7 +101,7 @@ public abstract class OrganizationServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the organization remote service
 	 */
-	public com.liferay.portal.service.OrganizationService getOrganizationService() {
+	public OrganizationService getOrganizationService() {
 		return organizationService;
 	}
 
@@ -110,8 +110,7 @@ public abstract class OrganizationServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param organizationService the organization remote service
 	 */
-	public void setOrganizationService(
-		com.liferay.portal.service.OrganizationService organizationService) {
+	public void setOrganizationService(OrganizationService organizationService) {
 		this.organizationService = organizationService;
 	}
 
@@ -1335,7 +1334,7 @@ public abstract class OrganizationServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portal.service.OrganizationLocalService.class)
 	protected com.liferay.portal.service.OrganizationLocalService organizationLocalService;
 	@BeanReference(type = com.liferay.portal.service.OrganizationService.class)
-	protected com.liferay.portal.service.OrganizationService organizationService;
+	protected OrganizationService organizationService;
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
 	@BeanReference(type = OrganizationFinder.class)

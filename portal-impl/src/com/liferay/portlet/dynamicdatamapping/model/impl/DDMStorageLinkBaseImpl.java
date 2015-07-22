@@ -28,7 +28,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService
  *
  * @author Brian Wing Shun Chan
  * @see DDMStorageLinkImpl
- * @see com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink
+ * @see DDMStorageLink
  * @generated
  */
 @ProviderType

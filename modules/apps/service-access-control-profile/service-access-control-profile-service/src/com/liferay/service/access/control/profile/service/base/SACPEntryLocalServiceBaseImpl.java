@@ -392,7 +392,7 @@ public abstract class SACPEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the s a c p entry local service
 	 */
-	public com.liferay.service.access.control.profile.service.SACPEntryLocalService getSACPEntryLocalService() {
+	public SACPEntryLocalService getSACPEntryLocalService() {
 		return sacpEntryLocalService;
 	}
 
@@ -402,7 +402,7 @@ public abstract class SACPEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param sacpEntryLocalService the s a c p entry local service
 	 */
 	public void setSACPEntryLocalService(
-		com.liferay.service.access.control.profile.service.SACPEntryLocalService sacpEntryLocalService) {
+		SACPEntryLocalService sacpEntryLocalService) {
 		this.sacpEntryLocalService = sacpEntryLocalService;
 	}
 
@@ -771,7 +771,7 @@ public abstract class SACPEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@BeanReference(type = com.liferay.service.access.control.profile.service.SACPEntryLocalService.class)
-	protected com.liferay.service.access.control.profile.service.SACPEntryLocalService sacpEntryLocalService;
+	protected SACPEntryLocalService sacpEntryLocalService;
 	@BeanReference(type = com.liferay.service.access.control.profile.service.SACPEntryService.class)
 	protected com.liferay.service.access.control.profile.service.SACPEntryService sacpEntryService;
 	@BeanReference(type = SACPEntryPersistence.class)

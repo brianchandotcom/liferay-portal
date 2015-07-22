@@ -61,7 +61,7 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 		java.lang.String name, java.lang.String description, boolean master,
 		long copyLayoutSetBranchId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Creates a new layout set branch with the primary key. Does not add the layout set branch to the database.
@@ -82,12 +82,11 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.LayoutSetBranch deleteLayoutSetBranch(
 		com.liferay.portal.model.LayoutSetBranch layoutSetBranch)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.model.LayoutSetBranch deleteLayoutSetBranch(
 		com.liferay.portal.model.LayoutSetBranch layoutSetBranch,
-		boolean includeMaster)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean includeMaster) throws PortalException;
 
 	/**
 	* Deletes the layout set branch with the primary key from the database. Also notifies the appropriate model listeners.
@@ -98,15 +97,13 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portal.model.LayoutSetBranch deleteLayoutSetBranch(
-		long layoutSetBranchId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long layoutSetBranchId) throws PortalException;
 
 	public void deleteLayoutSetBranches(long groupId, boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public void deleteLayoutSetBranches(long groupId, boolean privateLayout,
-		boolean includeMaster)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean includeMaster) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -114,7 +111,7 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -202,7 +199,7 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetBranch getLayoutSetBranch(
 		long groupId, boolean privateLayout, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the layout set branch with the primary key.
@@ -213,8 +210,7 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetBranch getLayoutSetBranch(
-		long layoutSetBranchId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long layoutSetBranchId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.LayoutSetBranch> getLayoutSetBranches(
@@ -245,14 +241,12 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetBranch getMasterLayoutSetBranch(
-		long groupId, boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long groupId, boolean privateLayout) throws PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getUserLayoutSetBranch(long,
@@ -262,18 +256,17 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetBranch getUserLayoutSetBranch(
 		long userId, long groupId, boolean privateLayout, long layoutSetBranchId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetBranch getUserLayoutSetBranch(
 		long userId, long groupId, boolean privateLayout, long layoutSetId,
-		long layoutSetBranchId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long layoutSetBranchId) throws PortalException;
 
 	public com.liferay.portal.model.LayoutSetBranch mergeLayoutSetBranch(
 		long layoutSetBranchId, long mergeLayoutSetBranchId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -296,5 +289,5 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 		long layoutSetBranchId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 }

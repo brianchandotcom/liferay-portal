@@ -28,7 +28,7 @@ import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see CalEventImpl
- * @see com.liferay.portlet.calendar.model.CalEvent
+ * @see CalEvent
  * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */

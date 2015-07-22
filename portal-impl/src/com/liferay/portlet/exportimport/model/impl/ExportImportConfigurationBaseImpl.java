@@ -28,7 +28,7 @@ import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalSe
  *
  * @author Brian Wing Shun Chan
  * @see ExportImportConfigurationImpl
- * @see com.liferay.portlet.exportimport.model.ExportImportConfiguration
+ * @see ExportImportConfiguration
  * @generated
  */
 @ProviderType

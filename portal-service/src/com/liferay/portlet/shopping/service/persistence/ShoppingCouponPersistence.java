@@ -46,14 +46,13 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param groupId the group ID
 	* @return the matching shopping coupons
 	*/
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCoupon> findByGroupId(
-		long groupId);
+	public java.util.List<ShoppingCoupon> findByGroupId(long groupId);
 
 	/**
 	* Returns a range of all the shopping coupons where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCouponModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCouponModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -61,14 +60,14 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param end the upper bound of the range of shopping coupons (not inclusive)
 	* @return the range of matching shopping coupons
 	*/
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCoupon> findByGroupId(
-		long groupId, int start, int end);
+	public java.util.List<ShoppingCoupon> findByGroupId(long groupId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the shopping coupons where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCouponModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCouponModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -77,9 +76,9 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching shopping coupons
 	*/
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCoupon> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator);
+	public java.util.List<ShoppingCoupon> findByGroupId(long groupId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCoupon> orderByComparator);
 
 	/**
 	* Returns the first shopping coupon in the ordered set where groupId = &#63;.
@@ -87,11 +86,10 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping coupon
-	* @throws com.liferay.portlet.shopping.NoSuchCouponException if a matching shopping coupon could not be found
+	* @throws NoSuchCouponException if a matching shopping coupon could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingCoupon findByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator)
+	public ShoppingCoupon findByGroupId_First(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCoupon> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCouponException;
 
 	/**
@@ -101,9 +99,8 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping coupon, or <code>null</code> if a matching shopping coupon could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingCoupon fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator);
+	public ShoppingCoupon fetchByGroupId_First(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCoupon> orderByComparator);
 
 	/**
 	* Returns the last shopping coupon in the ordered set where groupId = &#63;.
@@ -111,11 +108,10 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping coupon
-	* @throws com.liferay.portlet.shopping.NoSuchCouponException if a matching shopping coupon could not be found
+	* @throws NoSuchCouponException if a matching shopping coupon could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingCoupon findByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator)
+	public ShoppingCoupon findByGroupId_Last(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCoupon> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCouponException;
 
 	/**
@@ -125,9 +121,8 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping coupon, or <code>null</code> if a matching shopping coupon could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingCoupon fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator);
+	public ShoppingCoupon fetchByGroupId_Last(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCoupon> orderByComparator);
 
 	/**
 	* Returns the shopping coupons before and after the current shopping coupon in the ordered set where groupId = &#63;.
@@ -136,11 +131,11 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next shopping coupon
-	* @throws com.liferay.portlet.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
+	* @throws NoSuchCouponException if a shopping coupon with the primary key could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingCoupon[] findByGroupId_PrevAndNext(
-		long couponId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator)
+	public ShoppingCoupon[] findByGroupId_PrevAndNext(long couponId,
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCoupon> orderByComparator)
 		throws com.liferay.portlet.shopping.NoSuchCouponException;
 
 	/**
@@ -159,14 +154,13 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	public int countByGroupId(long groupId);
 
 	/**
-	* Returns the shopping coupon where code = &#63; or throws a {@link com.liferay.portlet.shopping.NoSuchCouponException} if it could not be found.
+	* Returns the shopping coupon where code = &#63; or throws a {@link NoSuchCouponException} if it could not be found.
 	*
 	* @param code the code
 	* @return the matching shopping coupon
-	* @throws com.liferay.portlet.shopping.NoSuchCouponException if a matching shopping coupon could not be found
+	* @throws NoSuchCouponException if a matching shopping coupon could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingCoupon findByCode(
-		java.lang.String code)
+	public ShoppingCoupon findByCode(java.lang.String code)
 		throws com.liferay.portlet.shopping.NoSuchCouponException;
 
 	/**
@@ -175,8 +169,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param code the code
 	* @return the matching shopping coupon, or <code>null</code> if a matching shopping coupon could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingCoupon fetchByCode(
-		java.lang.String code);
+	public ShoppingCoupon fetchByCode(java.lang.String code);
 
 	/**
 	* Returns the shopping coupon where code = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -185,8 +178,8 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching shopping coupon, or <code>null</code> if a matching shopping coupon could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingCoupon fetchByCode(
-		java.lang.String code, boolean retrieveFromCache);
+	public ShoppingCoupon fetchByCode(java.lang.String code,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the shopping coupon where code = &#63; from the database.
@@ -194,8 +187,7 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param code the code
 	* @return the shopping coupon that was removed
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingCoupon removeByCode(
-		java.lang.String code)
+	public ShoppingCoupon removeByCode(java.lang.String code)
 		throws com.liferay.portlet.shopping.NoSuchCouponException;
 
 	/**
@@ -211,16 +203,14 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	*
 	* @param shoppingCoupon the shopping coupon
 	*/
-	public void cacheResult(
-		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon);
+	public void cacheResult(ShoppingCoupon shoppingCoupon);
 
 	/**
 	* Caches the shopping coupons in the entity cache if it is enabled.
 	*
 	* @param shoppingCoupons the shopping coupons
 	*/
-	public void cacheResult(
-		java.util.List<com.liferay.portlet.shopping.model.ShoppingCoupon> shoppingCoupons);
+	public void cacheResult(java.util.List<ShoppingCoupon> shoppingCoupons);
 
 	/**
 	* Creates a new shopping coupon with the primary key. Does not add the shopping coupon to the database.
@@ -228,32 +218,28 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param couponId the primary key for the new shopping coupon
 	* @return the new shopping coupon
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingCoupon create(
-		long couponId);
+	public ShoppingCoupon create(long couponId);
 
 	/**
 	* Removes the shopping coupon with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param couponId the primary key of the shopping coupon
 	* @return the shopping coupon that was removed
-	* @throws com.liferay.portlet.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
+	* @throws NoSuchCouponException if a shopping coupon with the primary key could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingCoupon remove(
-		long couponId)
+	public ShoppingCoupon remove(long couponId)
 		throws com.liferay.portlet.shopping.NoSuchCouponException;
 
-	public com.liferay.portlet.shopping.model.ShoppingCoupon updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon);
+	public ShoppingCoupon updateImpl(ShoppingCoupon shoppingCoupon);
 
 	/**
-	* Returns the shopping coupon with the primary key or throws a {@link com.liferay.portlet.shopping.NoSuchCouponException} if it could not be found.
+	* Returns the shopping coupon with the primary key or throws a {@link NoSuchCouponException} if it could not be found.
 	*
 	* @param couponId the primary key of the shopping coupon
 	* @return the shopping coupon
-	* @throws com.liferay.portlet.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
+	* @throws NoSuchCouponException if a shopping coupon with the primary key could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingCoupon findByPrimaryKey(
-		long couponId)
+	public ShoppingCoupon findByPrimaryKey(long couponId)
 		throws com.liferay.portlet.shopping.NoSuchCouponException;
 
 	/**
@@ -262,11 +248,10 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param couponId the primary key of the shopping coupon
 	* @return the shopping coupon, or <code>null</code> if a shopping coupon with the primary key could not be found
 	*/
-	public com.liferay.portlet.shopping.model.ShoppingCoupon fetchByPrimaryKey(
-		long couponId);
+	public ShoppingCoupon fetchByPrimaryKey(long couponId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.shopping.model.ShoppingCoupon> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, ShoppingCoupon> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -274,27 +259,26 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	*
 	* @return the shopping coupons
 	*/
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCoupon> findAll();
+	public java.util.List<ShoppingCoupon> findAll();
 
 	/**
 	* Returns a range of all the shopping coupons.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCouponModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCouponModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shopping coupons
 	* @param end the upper bound of the range of shopping coupons (not inclusive)
 	* @return the range of shopping coupons
 	*/
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCoupon> findAll(
-		int start, int end);
+	public java.util.List<ShoppingCoupon> findAll(int start, int end);
 
 	/**
 	* Returns an ordered range of all the shopping coupons.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.shopping.model.impl.ShoppingCouponModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ShoppingCouponModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of shopping coupons
@@ -302,9 +286,8 @@ public interface ShoppingCouponPersistence extends BasePersistence<ShoppingCoupo
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of shopping coupons
 	*/
-	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCoupon> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.shopping.model.ShoppingCoupon> orderByComparator);
+	public java.util.List<ShoppingCoupon> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ShoppingCoupon> orderByComparator);
 
 	/**
 	* Removes all the shopping coupons from the database.

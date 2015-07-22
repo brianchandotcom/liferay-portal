@@ -48,23 +48,22 @@ public interface ExportImportService extends BaseService {
 	 */
 	public java.io.File exportLayoutsAsFile(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public long exportLayoutsAsFileInBackground(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public long exportLayoutsAsFileInBackground(
-		long exportImportConfigurationId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long exportImportConfigurationId) throws PortalException;
 
 	public java.io.File exportPortletInfoAsFile(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public long exportPortletInfoAsFileInBackground(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -75,43 +74,35 @@ public interface ExportImportService extends BaseService {
 
 	public void importLayouts(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
-		java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.File file) throws PortalException;
 
 	public void importLayouts(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
-		java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.InputStream inputStream) throws PortalException;
 
 	public long importLayoutsInBackground(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
-		java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.File file) throws PortalException;
 
 	public long importLayoutsInBackground(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
-		java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.InputStream inputStream) throws PortalException;
 
 	public void importPortletInfo(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
-		java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.File file) throws PortalException;
 
 	public void importPortletInfo(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
-		java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.InputStream inputStream) throws PortalException;
 
 	public long importPortletInfoInBackground(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
-		java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.File file) throws PortalException;
 
 	public long importPortletInfoInBackground(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
-		java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.InputStream inputStream) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -122,21 +113,17 @@ public interface ExportImportService extends BaseService {
 
 	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportLayoutsFile(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
-		java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.File file) throws PortalException;
 
 	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportLayoutsFile(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
-		java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.InputStream inputStream) throws PortalException;
 
 	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportPortletInfo(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
-		java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.File file) throws PortalException;
 
 	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportPortletInfo(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
-		java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.InputStream inputStream) throws PortalException;
 }

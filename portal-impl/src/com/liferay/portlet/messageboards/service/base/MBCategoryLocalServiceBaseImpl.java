@@ -471,7 +471,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	 *
 	 * @return the message boards category local service
 	 */
-	public com.liferay.portlet.messageboards.service.MBCategoryLocalService getMBCategoryLocalService() {
+	public MBCategoryLocalService getMBCategoryLocalService() {
 		return mbCategoryLocalService;
 	}
 
@@ -481,7 +481,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	 * @param mbCategoryLocalService the message boards category local service
 	 */
 	public void setMBCategoryLocalService(
-		com.liferay.portlet.messageboards.service.MBCategoryLocalService mbCategoryLocalService) {
+		MBCategoryLocalService mbCategoryLocalService) {
 		this.mbCategoryLocalService = mbCategoryLocalService;
 	}
 
@@ -1335,7 +1335,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.messageboards.service.MBCategoryLocalService.class)
-	protected com.liferay.portlet.messageboards.service.MBCategoryLocalService mbCategoryLocalService;
+	protected MBCategoryLocalService mbCategoryLocalService;
 	@BeanReference(type = com.liferay.portlet.messageboards.service.MBCategoryService.class)
 	protected com.liferay.portlet.messageboards.service.MBCategoryService mbCategoryService;
 	@BeanReference(type = MBCategoryPersistence.class)

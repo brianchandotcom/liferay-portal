@@ -75,7 +75,7 @@ public abstract class BackgroundTaskServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the background task remote service
 	 */
-	public com.liferay.portal.service.BackgroundTaskService getBackgroundTaskService() {
+	public BackgroundTaskService getBackgroundTaskService() {
 		return backgroundTaskService;
 	}
 
@@ -85,7 +85,7 @@ public abstract class BackgroundTaskServiceBaseImpl extends BaseServiceImpl
 	 * @param backgroundTaskService the background task remote service
 	 */
 	public void setBackgroundTaskService(
-		com.liferay.portal.service.BackgroundTaskService backgroundTaskService) {
+		BackgroundTaskService backgroundTaskService) {
 		this.backgroundTaskService = backgroundTaskService;
 	}
 
@@ -262,7 +262,7 @@ public abstract class BackgroundTaskServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portal.service.BackgroundTaskLocalService.class)
 	protected com.liferay.portal.service.BackgroundTaskLocalService backgroundTaskLocalService;
 	@BeanReference(type = com.liferay.portal.service.BackgroundTaskService.class)
-	protected com.liferay.portal.service.BackgroundTaskService backgroundTaskService;
+	protected BackgroundTaskService backgroundTaskService;
 	@BeanReference(type = BackgroundTaskPersistence.class)
 	protected BackgroundTaskPersistence backgroundTaskPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

@@ -28,7 +28,7 @@ import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see LayoutRevisionImpl
- * @see com.liferay.portal.model.LayoutRevision
+ * @see LayoutRevision
  * @generated
  */
 @ProviderType

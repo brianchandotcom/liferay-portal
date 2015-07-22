@@ -46,14 +46,13 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param active the active
 	* @return the matching s c licenses
 	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> findByActive(
-		boolean active);
+	public java.util.List<SCLicense> findByActive(boolean active);
 
 	/**
 	* Returns a range of all the s c licenses where active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param active the active
@@ -61,14 +60,14 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param end the upper bound of the range of s c licenses (not inclusive)
 	* @return the range of matching s c licenses
 	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> findByActive(
-		boolean active, int start, int end);
+	public java.util.List<SCLicense> findByActive(boolean active, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the s c licenses where active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param active the active
@@ -77,9 +76,9 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s c licenses
 	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> findByActive(
-		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
+	public java.util.List<SCLicense> findByActive(boolean active, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator);
 
 	/**
 	* Returns the first s c license in the ordered set where active = &#63;.
@@ -87,11 +86,10 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c license
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a matching s c license could not be found
+	* @throws NoSuchLicenseException if a matching s c license could not be found
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCLicense findByActive_First(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
+	public SCLicense findByActive_First(boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -101,9 +99,8 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c license, or <code>null</code> if a matching s c license could not be found
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCLicense fetchByActive_First(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
+	public SCLicense fetchByActive_First(boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator);
 
 	/**
 	* Returns the last s c license in the ordered set where active = &#63;.
@@ -111,11 +108,10 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c license
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a matching s c license could not be found
+	* @throws NoSuchLicenseException if a matching s c license could not be found
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCLicense findByActive_Last(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
+	public SCLicense findByActive_Last(boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -125,9 +121,8 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c license, or <code>null</code> if a matching s c license could not be found
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCLicense fetchByActive_Last(
-		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
+	public SCLicense fetchByActive_Last(boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator);
 
 	/**
 	* Returns the s c licenses before and after the current s c license in the ordered set where active = &#63;.
@@ -136,11 +131,10 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next s c license
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
+	* @throws NoSuchLicenseException if a s c license with the primary key could not be found
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCLicense[] findByActive_PrevAndNext(
-		long licenseId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
+	public SCLicense[] findByActive_PrevAndNext(long licenseId, boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -149,14 +143,13 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param active the active
 	* @return the matching s c licenses that the user has permission to view
 	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> filterFindByActive(
-		boolean active);
+	public java.util.List<SCLicense> filterFindByActive(boolean active);
 
 	/**
 	* Returns a range of all the s c licenses that the user has permission to view where active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param active the active
@@ -164,14 +157,14 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param end the upper bound of the range of s c licenses (not inclusive)
 	* @return the range of matching s c licenses that the user has permission to view
 	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> filterFindByActive(
-		boolean active, int start, int end);
+	public java.util.List<SCLicense> filterFindByActive(boolean active,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the s c licenses that the user has permissions to view where active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param active the active
@@ -180,9 +173,9 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s c licenses that the user has permission to view
 	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> filterFindByActive(
-		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
+	public java.util.List<SCLicense> filterFindByActive(boolean active,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator);
 
 	/**
 	* Returns the s c licenses before and after the current s c license in the ordered set of s c licenses that the user has permission to view where active = &#63;.
@@ -191,11 +184,11 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next s c license
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
+	* @throws NoSuchLicenseException if a s c license with the primary key could not be found
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCLicense[] filterFindByActive_PrevAndNext(
-		long licenseId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
+	public SCLicense[] filterFindByActive_PrevAndNext(long licenseId,
+		boolean active,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -228,14 +221,14 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param recommended the recommended
 	* @return the matching s c licenses
 	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> findByA_R(
-		boolean active, boolean recommended);
+	public java.util.List<SCLicense> findByA_R(boolean active,
+		boolean recommended);
 
 	/**
 	* Returns a range of all the s c licenses where active = &#63; and recommended = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param active the active
@@ -244,14 +237,14 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param end the upper bound of the range of s c licenses (not inclusive)
 	* @return the range of matching s c licenses
 	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> findByA_R(
-		boolean active, boolean recommended, int start, int end);
+	public java.util.List<SCLicense> findByA_R(boolean active,
+		boolean recommended, int start, int end);
 
 	/**
 	* Returns an ordered range of all the s c licenses where active = &#63; and recommended = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param active the active
@@ -261,9 +254,9 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s c licenses
 	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> findByA_R(
-		boolean active, boolean recommended, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
+	public java.util.List<SCLicense> findByA_R(boolean active,
+		boolean recommended, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator);
 
 	/**
 	* Returns the first s c license in the ordered set where active = &#63; and recommended = &#63;.
@@ -272,11 +265,10 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param recommended the recommended
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c license
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a matching s c license could not be found
+	* @throws NoSuchLicenseException if a matching s c license could not be found
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCLicense findByA_R_First(
-		boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
+	public SCLicense findByA_R_First(boolean active, boolean recommended,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -287,9 +279,8 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching s c license, or <code>null</code> if a matching s c license could not be found
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCLicense fetchByA_R_First(
-		boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
+	public SCLicense fetchByA_R_First(boolean active, boolean recommended,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator);
 
 	/**
 	* Returns the last s c license in the ordered set where active = &#63; and recommended = &#63;.
@@ -298,11 +289,10 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param recommended the recommended
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c license
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a matching s c license could not be found
+	* @throws NoSuchLicenseException if a matching s c license could not be found
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCLicense findByA_R_Last(
-		boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
+	public SCLicense findByA_R_Last(boolean active, boolean recommended,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -313,9 +303,8 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching s c license, or <code>null</code> if a matching s c license could not be found
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCLicense fetchByA_R_Last(
-		boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
+	public SCLicense fetchByA_R_Last(boolean active, boolean recommended,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator);
 
 	/**
 	* Returns the s c licenses before and after the current s c license in the ordered set where active = &#63; and recommended = &#63;.
@@ -325,11 +314,11 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param recommended the recommended
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next s c license
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
+	* @throws NoSuchLicenseException if a s c license with the primary key could not be found
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCLicense[] findByA_R_PrevAndNext(
-		long licenseId, boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
+	public SCLicense[] findByA_R_PrevAndNext(long licenseId, boolean active,
+		boolean recommended,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -339,14 +328,14 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param recommended the recommended
 	* @return the matching s c licenses that the user has permission to view
 	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> filterFindByA_R(
-		boolean active, boolean recommended);
+	public java.util.List<SCLicense> filterFindByA_R(boolean active,
+		boolean recommended);
 
 	/**
 	* Returns a range of all the s c licenses that the user has permission to view where active = &#63; and recommended = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param active the active
@@ -355,14 +344,14 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param end the upper bound of the range of s c licenses (not inclusive)
 	* @return the range of matching s c licenses that the user has permission to view
 	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> filterFindByA_R(
-		boolean active, boolean recommended, int start, int end);
+	public java.util.List<SCLicense> filterFindByA_R(boolean active,
+		boolean recommended, int start, int end);
 
 	/**
 	* Returns an ordered range of all the s c licenses that the user has permissions to view where active = &#63; and recommended = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param active the active
@@ -372,9 +361,9 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching s c licenses that the user has permission to view
 	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> filterFindByA_R(
-		boolean active, boolean recommended, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
+	public java.util.List<SCLicense> filterFindByA_R(boolean active,
+		boolean recommended, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator);
 
 	/**
 	* Returns the s c licenses before and after the current s c license in the ordered set of s c licenses that the user has permission to view where active = &#63; and recommended = &#63;.
@@ -384,11 +373,11 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param recommended the recommended
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next s c license
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
+	* @throws NoSuchLicenseException if a s c license with the primary key could not be found
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCLicense[] filterFindByA_R_PrevAndNext(
-		long licenseId, boolean active, boolean recommended,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator)
+	public SCLicense[] filterFindByA_R_PrevAndNext(long licenseId,
+		boolean active, boolean recommended,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -422,16 +411,14 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*
 	* @param scLicense the s c license
 	*/
-	public void cacheResult(
-		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense);
+	public void cacheResult(SCLicense scLicense);
 
 	/**
 	* Caches the s c licenses in the entity cache if it is enabled.
 	*
 	* @param scLicenses the s c licenses
 	*/
-	public void cacheResult(
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> scLicenses);
+	public void cacheResult(java.util.List<SCLicense> scLicenses);
 
 	/**
 	* Creates a new s c license with the primary key. Does not add the s c license to the database.
@@ -439,32 +426,28 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param licenseId the primary key for the new s c license
 	* @return the new s c license
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCLicense create(
-		long licenseId);
+	public SCLicense create(long licenseId);
 
 	/**
 	* Removes the s c license with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param licenseId the primary key of the s c license
 	* @return the s c license that was removed
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
+	* @throws NoSuchLicenseException if a s c license with the primary key could not be found
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCLicense remove(
-		long licenseId)
+	public SCLicense remove(long licenseId)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
-	public com.liferay.portlet.softwarecatalog.model.SCLicense updateImpl(
-		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense);
+	public SCLicense updateImpl(SCLicense scLicense);
 
 	/**
-	* Returns the s c license with the primary key or throws a {@link com.liferay.portlet.softwarecatalog.NoSuchLicenseException} if it could not be found.
+	* Returns the s c license with the primary key or throws a {@link NoSuchLicenseException} if it could not be found.
 	*
 	* @param licenseId the primary key of the s c license
 	* @return the s c license
-	* @throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException if a s c license with the primary key could not be found
+	* @throws NoSuchLicenseException if a s c license with the primary key could not be found
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCLicense findByPrimaryKey(
-		long licenseId)
+	public SCLicense findByPrimaryKey(long licenseId)
 		throws com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 
 	/**
@@ -473,11 +456,10 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param licenseId the primary key of the s c license
 	* @return the s c license, or <code>null</code> if a s c license with the primary key could not be found
 	*/
-	public com.liferay.portlet.softwarecatalog.model.SCLicense fetchByPrimaryKey(
-		long licenseId);
+	public SCLicense fetchByPrimaryKey(long licenseId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.softwarecatalog.model.SCLicense> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, SCLicense> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -485,27 +467,26 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	*
 	* @return the s c licenses
 	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> findAll();
+	public java.util.List<SCLicense> findAll();
 
 	/**
 	* Returns a range of all the s c licenses.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of s c licenses
 	* @param end the upper bound of the range of s c licenses (not inclusive)
 	* @return the range of s c licenses
 	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> findAll(
-		int start, int end);
+	public java.util.List<SCLicense> findAll(int start, int end);
 
 	/**
 	* Returns an ordered range of all the s c licenses.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of s c licenses
@@ -513,9 +494,8 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of s c licenses
 	*/
-	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.softwarecatalog.model.SCLicense> orderByComparator);
+	public java.util.List<SCLicense> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SCLicense> orderByComparator);
 
 	/**
 	* Removes all the s c licenses from the database.
@@ -550,7 +530,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* Returns a range of all the s c product entries associated with the s c license.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the s c license
@@ -565,7 +545,7 @@ public interface SCLicensePersistence extends BasePersistence<SCLicense> {
 	* Returns an ordered range of all the s c product entries associated with the s c license.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.softwarecatalog.model.impl.SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SCLicenseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the s c license

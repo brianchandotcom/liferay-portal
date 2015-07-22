@@ -120,7 +120,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 * Returns a range of all the resource actions where name = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourceActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param name the name
@@ -137,7 +137,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 * Returns an ordered range of all the resource actions where name = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourceActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param name the name
@@ -264,7 +264,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching resource action
-	 * @throws com.liferay.portal.NoSuchResourceActionException if a matching resource action could not be found
+	 * @throws NoSuchResourceActionException if a matching resource action could not be found
 	 */
 	@Override
 	public ResourceAction findByName_First(String name,
@@ -314,7 +314,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching resource action
-	 * @throws com.liferay.portal.NoSuchResourceActionException if a matching resource action could not be found
+	 * @throws NoSuchResourceActionException if a matching resource action could not be found
 	 */
 	@Override
 	public ResourceAction findByName_Last(String name,
@@ -371,7 +371,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next resource action
-	 * @throws com.liferay.portal.NoSuchResourceActionException if a resource action with the primary key could not be found
+	 * @throws NoSuchResourceActionException if a resource action with the primary key could not be found
 	 */
 	@Override
 	public ResourceAction[] findByName_PrevAndNext(long resourceActionId,
@@ -617,12 +617,12 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			new String[] { String.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the resource action where name = &#63; and actionId = &#63; or throws a {@link com.liferay.portal.NoSuchResourceActionException} if it could not be found.
+	 * Returns the resource action where name = &#63; and actionId = &#63; or throws a {@link NoSuchResourceActionException} if it could not be found.
 	 *
 	 * @param name the name
 	 * @param actionId the action ID
 	 * @return the matching resource action
-	 * @throws com.liferay.portal.NoSuchResourceActionException if a matching resource action could not be found
+	 * @throws NoSuchResourceActionException if a matching resource action could not be found
 	 */
 	@Override
 	public ResourceAction findByN_A(String name, String actionId)
@@ -1053,7 +1053,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 *
 	 * @param resourceActionId the primary key of the resource action
 	 * @return the resource action that was removed
-	 * @throws com.liferay.portal.NoSuchResourceActionException if a resource action with the primary key could not be found
+	 * @throws NoSuchResourceActionException if a resource action with the primary key could not be found
 	 */
 	@Override
 	public ResourceAction remove(long resourceActionId)
@@ -1066,7 +1066,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 *
 	 * @param primaryKey the primary key of the resource action
 	 * @return the resource action that was removed
-	 * @throws com.liferay.portal.NoSuchResourceActionException if a resource action with the primary key could not be found
+	 * @throws NoSuchResourceActionException if a resource action with the primary key could not be found
 	 */
 	@Override
 	public ResourceAction remove(Serializable primaryKey)
@@ -1134,8 +1134,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	}
 
 	@Override
-	public ResourceAction updateImpl(
-		com.liferay.portal.model.ResourceAction resourceAction) {
+	public ResourceAction updateImpl(ResourceAction resourceAction) {
 		resourceAction = toUnwrappedModel(resourceAction);
 
 		boolean isNew = resourceAction.isNew();
@@ -1224,7 +1223,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 *
 	 * @param primaryKey the primary key of the resource action
 	 * @return the resource action
-	 * @throws com.liferay.portal.NoSuchResourceActionException if a resource action with the primary key could not be found
+	 * @throws NoSuchResourceActionException if a resource action with the primary key could not be found
 	 */
 	@Override
 	public ResourceAction findByPrimaryKey(Serializable primaryKey)
@@ -1244,11 +1243,11 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	}
 
 	/**
-	 * Returns the resource action with the primary key or throws a {@link com.liferay.portal.NoSuchResourceActionException} if it could not be found.
+	 * Returns the resource action with the primary key or throws a {@link NoSuchResourceActionException} if it could not be found.
 	 *
 	 * @param resourceActionId the primary key of the resource action
 	 * @return the resource action
-	 * @throws com.liferay.portal.NoSuchResourceActionException if a resource action with the primary key could not be found
+	 * @throws NoSuchResourceActionException if a resource action with the primary key could not be found
 	 */
 	@Override
 	public ResourceAction findByPrimaryKey(long resourceActionId)
@@ -1420,7 +1419,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 * Returns a range of all the resource actions.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourceActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of resource actions
@@ -1436,7 +1435,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	 * Returns an ordered range of all the resource actions.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourceActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of resource actions

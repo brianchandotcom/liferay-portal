@@ -313,7 +313,7 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	 *
 	 * @return the layout revision local service
 	 */
-	public com.liferay.portal.service.LayoutRevisionLocalService getLayoutRevisionLocalService() {
+	public LayoutRevisionLocalService getLayoutRevisionLocalService() {
 		return layoutRevisionLocalService;
 	}
 
@@ -323,7 +323,7 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	 * @param layoutRevisionLocalService the layout revision local service
 	 */
 	public void setLayoutRevisionLocalService(
-		com.liferay.portal.service.LayoutRevisionLocalService layoutRevisionLocalService) {
+		LayoutRevisionLocalService layoutRevisionLocalService) {
 		this.layoutRevisionLocalService = layoutRevisionLocalService;
 	}
 
@@ -955,7 +955,7 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.LayoutRevisionLocalService.class)
-	protected com.liferay.portal.service.LayoutRevisionLocalService layoutRevisionLocalService;
+	protected LayoutRevisionLocalService layoutRevisionLocalService;
 	@BeanReference(type = com.liferay.portal.service.LayoutRevisionService.class)
 	protected com.liferay.portal.service.LayoutRevisionService layoutRevisionService;
 	@BeanReference(type = LayoutRevisionPersistence.class)

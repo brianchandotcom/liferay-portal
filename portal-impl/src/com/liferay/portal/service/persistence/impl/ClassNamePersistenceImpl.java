@@ -92,11 +92,11 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 			new String[] { String.class.getName() });
 
 	/**
-	 * Returns the class name where value = &#63; or throws a {@link com.liferay.portal.NoSuchClassNameException} if it could not be found.
+	 * Returns the class name where value = &#63; or throws a {@link NoSuchClassNameException} if it could not be found.
 	 *
 	 * @param value the value
 	 * @return the matching class name
-	 * @throws com.liferay.portal.NoSuchClassNameException if a matching class name could not be found
+	 * @throws NoSuchClassNameException if a matching class name could not be found
 	 */
 	@Override
 	public ClassName findByValue(String value) throws NoSuchClassNameException {
@@ -464,7 +464,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 *
 	 * @param classNameId the primary key of the class name
 	 * @return the class name that was removed
-	 * @throws com.liferay.portal.NoSuchClassNameException if a class name with the primary key could not be found
+	 * @throws NoSuchClassNameException if a class name with the primary key could not be found
 	 */
 	@Override
 	public ClassName remove(long classNameId) throws NoSuchClassNameException {
@@ -476,7 +476,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 *
 	 * @param primaryKey the primary key of the class name
 	 * @return the class name that was removed
-	 * @throws com.liferay.portal.NoSuchClassNameException if a class name with the primary key could not be found
+	 * @throws NoSuchClassNameException if a class name with the primary key could not be found
 	 */
 	@Override
 	public ClassName remove(Serializable primaryKey)
@@ -544,7 +544,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	}
 
 	@Override
-	public ClassName updateImpl(com.liferay.portal.model.ClassName className) {
+	public ClassName updateImpl(ClassName className) {
 		className = toUnwrappedModel(className);
 
 		boolean isNew = className.isNew();
@@ -609,7 +609,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 *
 	 * @param primaryKey the primary key of the class name
 	 * @return the class name
-	 * @throws com.liferay.portal.NoSuchClassNameException if a class name with the primary key could not be found
+	 * @throws NoSuchClassNameException if a class name with the primary key could not be found
 	 */
 	@Override
 	public ClassName findByPrimaryKey(Serializable primaryKey)
@@ -629,11 +629,11 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	}
 
 	/**
-	 * Returns the class name with the primary key or throws a {@link com.liferay.portal.NoSuchClassNameException} if it could not be found.
+	 * Returns the class name with the primary key or throws a {@link NoSuchClassNameException} if it could not be found.
 	 *
 	 * @param classNameId the primary key of the class name
 	 * @return the class name
-	 * @throws com.liferay.portal.NoSuchClassNameException if a class name with the primary key could not be found
+	 * @throws NoSuchClassNameException if a class name with the primary key could not be found
 	 */
 	@Override
 	public ClassName findByPrimaryKey(long classNameId)
@@ -804,7 +804,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 * Returns a range of all the class names.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ClassNameModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ClassNameModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of class names
@@ -820,7 +820,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 * Returns an ordered range of all the class names.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ClassNameModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ClassNameModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of class names

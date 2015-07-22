@@ -28,7 +28,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see DLFileEntryImpl
- * @see com.liferay.portlet.documentlibrary.model.DLFileEntry
+ * @see DLFileEntry
  * @generated
  */
 @ProviderType

@@ -28,7 +28,7 @@ import com.liferay.portal.service.PluginSettingLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see PluginSettingImpl
- * @see com.liferay.portal.model.PluginSetting
+ * @see PluginSetting
  * @generated
  */
 @ProviderType

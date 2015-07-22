@@ -118,8 +118,7 @@ public class DDLRecordVersionUtil {
 	* @param recordId the record ID
 	* @return the matching d d l record versions
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> findByRecordId(
-		long recordId) {
+	public static List<DDLRecordVersion> findByRecordId(long recordId) {
 		return getPersistence().findByRecordId(recordId);
 	}
 
@@ -127,7 +126,7 @@ public class DDLRecordVersionUtil {
 	* Returns a range of all the d d l record versions where recordId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param recordId the record ID
@@ -135,8 +134,8 @@ public class DDLRecordVersionUtil {
 	* @param end the upper bound of the range of d d l record versions (not inclusive)
 	* @return the range of matching d d l record versions
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> findByRecordId(
-		long recordId, int start, int end) {
+	public static List<DDLRecordVersion> findByRecordId(long recordId,
+		int start, int end) {
 		return getPersistence().findByRecordId(recordId, start, end);
 	}
 
@@ -144,7 +143,7 @@ public class DDLRecordVersionUtil {
 	* Returns an ordered range of all the d d l record versions where recordId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param recordId the record ID
@@ -153,9 +152,9 @@ public class DDLRecordVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d l record versions
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> findByRecordId(
-		long recordId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator) {
+	public static List<DDLRecordVersion> findByRecordId(long recordId,
+		int start, int end,
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
 		return getPersistence()
 				   .findByRecordId(recordId, start, end, orderByComparator);
 	}
@@ -168,9 +167,8 @@ public class DDLRecordVersionUtil {
 	* @return the first matching d d l record version
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a matching d d l record version could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion findByRecordId_First(
-		long recordId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator)
+	public static DDLRecordVersion findByRecordId_First(long recordId,
+		OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException {
 		return getPersistence().findByRecordId_First(recordId, orderByComparator);
 	}
@@ -182,9 +180,8 @@ public class DDLRecordVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion fetchByRecordId_First(
-		long recordId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator) {
+	public static DDLRecordVersion fetchByRecordId_First(long recordId,
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByRecordId_First(recordId, orderByComparator);
 	}
@@ -197,9 +194,8 @@ public class DDLRecordVersionUtil {
 	* @return the last matching d d l record version
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a matching d d l record version could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion findByRecordId_Last(
-		long recordId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator)
+	public static DDLRecordVersion findByRecordId_Last(long recordId,
+		OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException {
 		return getPersistence().findByRecordId_Last(recordId, orderByComparator);
 	}
@@ -211,9 +207,8 @@ public class DDLRecordVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion fetchByRecordId_Last(
-		long recordId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator) {
+	public static DDLRecordVersion fetchByRecordId_Last(long recordId,
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
 		return getPersistence().fetchByRecordId_Last(recordId, orderByComparator);
 	}
 
@@ -226,9 +221,9 @@ public class DDLRecordVersionUtil {
 	* @return the previous, current, and next d d l record version
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion[] findByRecordId_PrevAndNext(
+	public static DDLRecordVersion[] findByRecordId_PrevAndNext(
 		long recordVersionId, long recordId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator)
+		OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException {
 		return getPersistence()
 				   .findByRecordId_PrevAndNext(recordVersionId, recordId,
@@ -262,8 +257,8 @@ public class DDLRecordVersionUtil {
 	* @return the matching d d l record version
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a matching d d l record version could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion findByR_V(
-		long recordId, java.lang.String version)
+	public static DDLRecordVersion findByR_V(long recordId,
+		java.lang.String version)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException {
 		return getPersistence().findByR_V(recordId, version);
 	}
@@ -275,8 +270,8 @@ public class DDLRecordVersionUtil {
 	* @param version the version
 	* @return the matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion fetchByR_V(
-		long recordId, java.lang.String version) {
+	public static DDLRecordVersion fetchByR_V(long recordId,
+		java.lang.String version) {
 		return getPersistence().fetchByR_V(recordId, version);
 	}
 
@@ -288,8 +283,8 @@ public class DDLRecordVersionUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion fetchByR_V(
-		long recordId, java.lang.String version, boolean retrieveFromCache) {
+	public static DDLRecordVersion fetchByR_V(long recordId,
+		java.lang.String version, boolean retrieveFromCache) {
 		return getPersistence().fetchByR_V(recordId, version, retrieveFromCache);
 	}
 
@@ -300,8 +295,8 @@ public class DDLRecordVersionUtil {
 	* @param version the version
 	* @return the d d l record version that was removed
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion removeByR_V(
-		long recordId, java.lang.String version)
+	public static DDLRecordVersion removeByR_V(long recordId,
+		java.lang.String version)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException {
 		return getPersistence().removeByR_V(recordId, version);
 	}
@@ -324,8 +319,7 @@ public class DDLRecordVersionUtil {
 	* @param status the status
 	* @return the matching d d l record versions
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> findByR_S(
-		long recordId, int status) {
+	public static List<DDLRecordVersion> findByR_S(long recordId, int status) {
 		return getPersistence().findByR_S(recordId, status);
 	}
 
@@ -333,7 +327,7 @@ public class DDLRecordVersionUtil {
 	* Returns a range of all the d d l record versions where recordId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param recordId the record ID
@@ -342,8 +336,8 @@ public class DDLRecordVersionUtil {
 	* @param end the upper bound of the range of d d l record versions (not inclusive)
 	* @return the range of matching d d l record versions
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> findByR_S(
-		long recordId, int status, int start, int end) {
+	public static List<DDLRecordVersion> findByR_S(long recordId, int status,
+		int start, int end) {
 		return getPersistence().findByR_S(recordId, status, start, end);
 	}
 
@@ -351,7 +345,7 @@ public class DDLRecordVersionUtil {
 	* Returns an ordered range of all the d d l record versions where recordId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param recordId the record ID
@@ -361,9 +355,9 @@ public class DDLRecordVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d l record versions
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> findByR_S(
-		long recordId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator) {
+	public static List<DDLRecordVersion> findByR_S(long recordId, int status,
+		int start, int end,
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
 		return getPersistence()
 				   .findByR_S(recordId, status, start, end, orderByComparator);
 	}
@@ -377,9 +371,8 @@ public class DDLRecordVersionUtil {
 	* @return the first matching d d l record version
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a matching d d l record version could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion findByR_S_First(
-		long recordId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator)
+	public static DDLRecordVersion findByR_S_First(long recordId, int status,
+		OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException {
 		return getPersistence()
 				   .findByR_S_First(recordId, status, orderByComparator);
@@ -393,9 +386,8 @@ public class DDLRecordVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion fetchByR_S_First(
-		long recordId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator) {
+	public static DDLRecordVersion fetchByR_S_First(long recordId, int status,
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_S_First(recordId, status, orderByComparator);
 	}
@@ -409,9 +401,8 @@ public class DDLRecordVersionUtil {
 	* @return the last matching d d l record version
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a matching d d l record version could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion findByR_S_Last(
-		long recordId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator)
+	public static DDLRecordVersion findByR_S_Last(long recordId, int status,
+		OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException {
 		return getPersistence()
 				   .findByR_S_Last(recordId, status, orderByComparator);
@@ -425,9 +416,8 @@ public class DDLRecordVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion fetchByR_S_Last(
-		long recordId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator) {
+	public static DDLRecordVersion fetchByR_S_Last(long recordId, int status,
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_S_Last(recordId, status, orderByComparator);
 	}
@@ -442,9 +432,9 @@ public class DDLRecordVersionUtil {
 	* @return the previous, current, and next d d l record version
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion[] findByR_S_PrevAndNext(
+	public static DDLRecordVersion[] findByR_S_PrevAndNext(
 		long recordVersionId, long recordId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator)
+		OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException {
 		return getPersistence()
 				   .findByR_S_PrevAndNext(recordVersionId, recordId, status,
@@ -477,8 +467,7 @@ public class DDLRecordVersionUtil {
 	*
 	* @param ddlRecordVersion the d d l record version
 	*/
-	public static void cacheResult(
-		com.liferay.dynamic.data.lists.model.DDLRecordVersion ddlRecordVersion) {
+	public static void cacheResult(DDLRecordVersion ddlRecordVersion) {
 		getPersistence().cacheResult(ddlRecordVersion);
 	}
 
@@ -487,8 +476,7 @@ public class DDLRecordVersionUtil {
 	*
 	* @param ddlRecordVersions the d d l record versions
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> ddlRecordVersions) {
+	public static void cacheResult(List<DDLRecordVersion> ddlRecordVersions) {
 		getPersistence().cacheResult(ddlRecordVersions);
 	}
 
@@ -498,8 +486,7 @@ public class DDLRecordVersionUtil {
 	* @param recordVersionId the primary key for the new d d l record version
 	* @return the new d d l record version
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion create(
-		long recordVersionId) {
+	public static DDLRecordVersion create(long recordVersionId) {
 		return getPersistence().create(recordVersionId);
 	}
 
@@ -510,14 +497,12 @@ public class DDLRecordVersionUtil {
 	* @return the d d l record version that was removed
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion remove(
-		long recordVersionId)
+	public static DDLRecordVersion remove(long recordVersionId)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException {
 		return getPersistence().remove(recordVersionId);
 	}
 
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion updateImpl(
-		com.liferay.dynamic.data.lists.model.DDLRecordVersion ddlRecordVersion) {
+	public static DDLRecordVersion updateImpl(DDLRecordVersion ddlRecordVersion) {
 		return getPersistence().updateImpl(ddlRecordVersion);
 	}
 
@@ -528,8 +513,7 @@ public class DDLRecordVersionUtil {
 	* @return the d d l record version
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion findByPrimaryKey(
-		long recordVersionId)
+	public static DDLRecordVersion findByPrimaryKey(long recordVersionId)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException {
 		return getPersistence().findByPrimaryKey(recordVersionId);
 	}
@@ -540,12 +524,11 @@ public class DDLRecordVersionUtil {
 	* @param recordVersionId the primary key of the d d l record version
 	* @return the d d l record version, or <code>null</code> if a d d l record version with the primary key could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion fetchByPrimaryKey(
-		long recordVersionId) {
+	public static DDLRecordVersion fetchByPrimaryKey(long recordVersionId) {
 		return getPersistence().fetchByPrimaryKey(recordVersionId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.dynamic.data.lists.model.DDLRecordVersion> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, DDLRecordVersion> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -555,7 +538,7 @@ public class DDLRecordVersionUtil {
 	*
 	* @return the d d l record versions
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> findAll() {
+	public static List<DDLRecordVersion> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -563,15 +546,14 @@ public class DDLRecordVersionUtil {
 	* Returns a range of all the d d l record versions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d l record versions
 	* @param end the upper bound of the range of d d l record versions (not inclusive)
 	* @return the range of d d l record versions
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> findAll(
-		int start, int end) {
+	public static List<DDLRecordVersion> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -579,7 +561,7 @@ public class DDLRecordVersionUtil {
 	* Returns an ordered range of all the d d l record versions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d l record versions
@@ -587,9 +569,8 @@ public class DDLRecordVersionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of d d l record versions
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator) {
+	public static List<DDLRecordVersion> findAll(int start, int end,
+		OrderByComparator<DDLRecordVersion> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

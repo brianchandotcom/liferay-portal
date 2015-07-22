@@ -115,8 +115,8 @@ public class ResourceBlockUtil {
 	* @param name the name
 	* @return the matching resource blocks
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourceBlock> findByC_N(
-		long companyId, java.lang.String name) {
+	public static List<ResourceBlock> findByC_N(long companyId,
+		java.lang.String name) {
 		return getPersistence().findByC_N(companyId, name);
 	}
 
@@ -124,7 +124,7 @@ public class ResourceBlockUtil {
 	* Returns a range of all the resource blocks where companyId = &#63; and name = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -133,8 +133,8 @@ public class ResourceBlockUtil {
 	* @param end the upper bound of the range of resource blocks (not inclusive)
 	* @return the range of matching resource blocks
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourceBlock> findByC_N(
-		long companyId, java.lang.String name, int start, int end) {
+	public static List<ResourceBlock> findByC_N(long companyId,
+		java.lang.String name, int start, int end) {
 		return getPersistence().findByC_N(companyId, name, start, end);
 	}
 
@@ -142,7 +142,7 @@ public class ResourceBlockUtil {
 	* Returns an ordered range of all the resource blocks where companyId = &#63; and name = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -152,9 +152,9 @@ public class ResourceBlockUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching resource blocks
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourceBlock> findByC_N(
-		long companyId, java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator) {
+	public static List<ResourceBlock> findByC_N(long companyId,
+		java.lang.String name, int start, int end,
+		OrderByComparator<ResourceBlock> orderByComparator) {
 		return getPersistence()
 				   .findByC_N(companyId, name, start, end, orderByComparator);
 	}
@@ -166,11 +166,11 @@ public class ResourceBlockUtil {
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource block
-	* @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
+	* @throws NoSuchResourceBlockException if a matching resource block could not be found
 	*/
-	public static com.liferay.portal.model.ResourceBlock findByC_N_First(
-		long companyId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+	public static ResourceBlock findByC_N_First(long companyId,
+		java.lang.String name,
+		OrderByComparator<ResourceBlock> orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_N_First(companyId, name, orderByComparator);
@@ -184,9 +184,9 @@ public class ResourceBlockUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource block, or <code>null</code> if a matching resource block could not be found
 	*/
-	public static com.liferay.portal.model.ResourceBlock fetchByC_N_First(
-		long companyId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator) {
+	public static ResourceBlock fetchByC_N_First(long companyId,
+		java.lang.String name,
+		OrderByComparator<ResourceBlock> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_N_First(companyId, name, orderByComparator);
 	}
@@ -198,11 +198,11 @@ public class ResourceBlockUtil {
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource block
-	* @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
+	* @throws NoSuchResourceBlockException if a matching resource block could not be found
 	*/
-	public static com.liferay.portal.model.ResourceBlock findByC_N_Last(
-		long companyId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+	public static ResourceBlock findByC_N_Last(long companyId,
+		java.lang.String name,
+		OrderByComparator<ResourceBlock> orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_N_Last(companyId, name, orderByComparator);
@@ -216,9 +216,9 @@ public class ResourceBlockUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource block, or <code>null</code> if a matching resource block could not be found
 	*/
-	public static com.liferay.portal.model.ResourceBlock fetchByC_N_Last(
-		long companyId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator) {
+	public static ResourceBlock fetchByC_N_Last(long companyId,
+		java.lang.String name,
+		OrderByComparator<ResourceBlock> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_N_Last(companyId, name, orderByComparator);
 	}
@@ -231,11 +231,11 @@ public class ResourceBlockUtil {
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next resource block
-	* @throws com.liferay.portal.NoSuchResourceBlockException if a resource block with the primary key could not be found
+	* @throws NoSuchResourceBlockException if a resource block with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ResourceBlock[] findByC_N_PrevAndNext(
-		long resourceBlockId, long companyId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+	public static ResourceBlock[] findByC_N_PrevAndNext(long resourceBlockId,
+		long companyId, java.lang.String name,
+		OrderByComparator<ResourceBlock> orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_N_PrevAndNext(resourceBlockId, companyId, name,
@@ -271,8 +271,8 @@ public class ResourceBlockUtil {
 	* @param name the name
 	* @return the matching resource blocks
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourceBlock> findByC_G_N(
-		long companyId, long groupId, java.lang.String name) {
+	public static List<ResourceBlock> findByC_G_N(long companyId, long groupId,
+		java.lang.String name) {
 		return getPersistence().findByC_G_N(companyId, groupId, name);
 	}
 
@@ -280,7 +280,7 @@ public class ResourceBlockUtil {
 	* Returns a range of all the resource blocks where companyId = &#63; and groupId = &#63; and name = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -290,8 +290,8 @@ public class ResourceBlockUtil {
 	* @param end the upper bound of the range of resource blocks (not inclusive)
 	* @return the range of matching resource blocks
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourceBlock> findByC_G_N(
-		long companyId, long groupId, java.lang.String name, int start, int end) {
+	public static List<ResourceBlock> findByC_G_N(long companyId, long groupId,
+		java.lang.String name, int start, int end) {
 		return getPersistence().findByC_G_N(companyId, groupId, name, start, end);
 	}
 
@@ -299,7 +299,7 @@ public class ResourceBlockUtil {
 	* Returns an ordered range of all the resource blocks where companyId = &#63; and groupId = &#63; and name = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -310,10 +310,9 @@ public class ResourceBlockUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching resource blocks
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourceBlock> findByC_G_N(
-		long companyId, long groupId, java.lang.String name, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator) {
+	public static List<ResourceBlock> findByC_G_N(long companyId, long groupId,
+		java.lang.String name, int start, int end,
+		OrderByComparator<ResourceBlock> orderByComparator) {
 		return getPersistence()
 				   .findByC_G_N(companyId, groupId, name, start, end,
 			orderByComparator);
@@ -327,11 +326,11 @@ public class ResourceBlockUtil {
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource block
-	* @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
+	* @throws NoSuchResourceBlockException if a matching resource block could not be found
 	*/
-	public static com.liferay.portal.model.ResourceBlock findByC_G_N_First(
-		long companyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+	public static ResourceBlock findByC_G_N_First(long companyId, long groupId,
+		java.lang.String name,
+		OrderByComparator<ResourceBlock> orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_G_N_First(companyId, groupId, name,
@@ -347,9 +346,9 @@ public class ResourceBlockUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource block, or <code>null</code> if a matching resource block could not be found
 	*/
-	public static com.liferay.portal.model.ResourceBlock fetchByC_G_N_First(
-		long companyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator) {
+	public static ResourceBlock fetchByC_G_N_First(long companyId,
+		long groupId, java.lang.String name,
+		OrderByComparator<ResourceBlock> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_G_N_First(companyId, groupId, name,
 			orderByComparator);
@@ -363,11 +362,11 @@ public class ResourceBlockUtil {
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource block
-	* @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
+	* @throws NoSuchResourceBlockException if a matching resource block could not be found
 	*/
-	public static com.liferay.portal.model.ResourceBlock findByC_G_N_Last(
-		long companyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+	public static ResourceBlock findByC_G_N_Last(long companyId, long groupId,
+		java.lang.String name,
+		OrderByComparator<ResourceBlock> orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_G_N_Last(companyId, groupId, name, orderByComparator);
@@ -382,9 +381,9 @@ public class ResourceBlockUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource block, or <code>null</code> if a matching resource block could not be found
 	*/
-	public static com.liferay.portal.model.ResourceBlock fetchByC_G_N_Last(
-		long companyId, long groupId, java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator) {
+	public static ResourceBlock fetchByC_G_N_Last(long companyId, long groupId,
+		java.lang.String name,
+		OrderByComparator<ResourceBlock> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_G_N_Last(companyId, groupId, name,
 			orderByComparator);
@@ -399,12 +398,12 @@ public class ResourceBlockUtil {
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next resource block
-	* @throws com.liferay.portal.NoSuchResourceBlockException if a resource block with the primary key could not be found
+	* @throws NoSuchResourceBlockException if a resource block with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ResourceBlock[] findByC_G_N_PrevAndNext(
+	public static ResourceBlock[] findByC_G_N_PrevAndNext(
 		long resourceBlockId, long companyId, long groupId,
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator)
+		OrderByComparator<ResourceBlock> orderByComparator)
 		throws com.liferay.portal.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_G_N_PrevAndNext(resourceBlockId, companyId,
@@ -437,18 +436,17 @@ public class ResourceBlockUtil {
 	}
 
 	/**
-	* Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or throws a {@link com.liferay.portal.NoSuchResourceBlockException} if it could not be found.
+	* Returns the resource block where companyId = &#63; and groupId = &#63; and name = &#63; and permissionsHash = &#63; or throws a {@link NoSuchResourceBlockException} if it could not be found.
 	*
 	* @param companyId the company ID
 	* @param groupId the group ID
 	* @param name the name
 	* @param permissionsHash the permissions hash
 	* @return the matching resource block
-	* @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
+	* @throws NoSuchResourceBlockException if a matching resource block could not be found
 	*/
-	public static com.liferay.portal.model.ResourceBlock findByC_G_N_P(
-		long companyId, long groupId, java.lang.String name,
-		java.lang.String permissionsHash)
+	public static ResourceBlock findByC_G_N_P(long companyId, long groupId,
+		java.lang.String name, java.lang.String permissionsHash)
 		throws com.liferay.portal.NoSuchResourceBlockException {
 		return getPersistence()
 				   .findByC_G_N_P(companyId, groupId, name, permissionsHash);
@@ -463,9 +461,8 @@ public class ResourceBlockUtil {
 	* @param permissionsHash the permissions hash
 	* @return the matching resource block, or <code>null</code> if a matching resource block could not be found
 	*/
-	public static com.liferay.portal.model.ResourceBlock fetchByC_G_N_P(
-		long companyId, long groupId, java.lang.String name,
-		java.lang.String permissionsHash) {
+	public static ResourceBlock fetchByC_G_N_P(long companyId, long groupId,
+		java.lang.String name, java.lang.String permissionsHash) {
 		return getPersistence()
 				   .fetchByC_G_N_P(companyId, groupId, name, permissionsHash);
 	}
@@ -480,9 +477,9 @@ public class ResourceBlockUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching resource block, or <code>null</code> if a matching resource block could not be found
 	*/
-	public static com.liferay.portal.model.ResourceBlock fetchByC_G_N_P(
-		long companyId, long groupId, java.lang.String name,
-		java.lang.String permissionsHash, boolean retrieveFromCache) {
+	public static ResourceBlock fetchByC_G_N_P(long companyId, long groupId,
+		java.lang.String name, java.lang.String permissionsHash,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_G_N_P(companyId, groupId, name, permissionsHash,
 			retrieveFromCache);
@@ -497,9 +494,8 @@ public class ResourceBlockUtil {
 	* @param permissionsHash the permissions hash
 	* @return the resource block that was removed
 	*/
-	public static com.liferay.portal.model.ResourceBlock removeByC_G_N_P(
-		long companyId, long groupId, java.lang.String name,
-		java.lang.String permissionsHash)
+	public static ResourceBlock removeByC_G_N_P(long companyId, long groupId,
+		java.lang.String name, java.lang.String permissionsHash)
 		throws com.liferay.portal.NoSuchResourceBlockException {
 		return getPersistence()
 				   .removeByC_G_N_P(companyId, groupId, name, permissionsHash);
@@ -525,8 +521,7 @@ public class ResourceBlockUtil {
 	*
 	* @param resourceBlock the resource block
 	*/
-	public static void cacheResult(
-		com.liferay.portal.model.ResourceBlock resourceBlock) {
+	public static void cacheResult(ResourceBlock resourceBlock) {
 		getPersistence().cacheResult(resourceBlock);
 	}
 
@@ -535,8 +530,7 @@ public class ResourceBlockUtil {
 	*
 	* @param resourceBlocks the resource blocks
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portal.model.ResourceBlock> resourceBlocks) {
+	public static void cacheResult(List<ResourceBlock> resourceBlocks) {
 		getPersistence().cacheResult(resourceBlocks);
 	}
 
@@ -546,8 +540,7 @@ public class ResourceBlockUtil {
 	* @param resourceBlockId the primary key for the new resource block
 	* @return the new resource block
 	*/
-	public static com.liferay.portal.model.ResourceBlock create(
-		long resourceBlockId) {
+	public static ResourceBlock create(long resourceBlockId) {
 		return getPersistence().create(resourceBlockId);
 	}
 
@@ -556,28 +549,25 @@ public class ResourceBlockUtil {
 	*
 	* @param resourceBlockId the primary key of the resource block
 	* @return the resource block that was removed
-	* @throws com.liferay.portal.NoSuchResourceBlockException if a resource block with the primary key could not be found
+	* @throws NoSuchResourceBlockException if a resource block with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ResourceBlock remove(
-		long resourceBlockId)
+	public static ResourceBlock remove(long resourceBlockId)
 		throws com.liferay.portal.NoSuchResourceBlockException {
 		return getPersistence().remove(resourceBlockId);
 	}
 
-	public static com.liferay.portal.model.ResourceBlock updateImpl(
-		com.liferay.portal.model.ResourceBlock resourceBlock) {
+	public static ResourceBlock updateImpl(ResourceBlock resourceBlock) {
 		return getPersistence().updateImpl(resourceBlock);
 	}
 
 	/**
-	* Returns the resource block with the primary key or throws a {@link com.liferay.portal.NoSuchResourceBlockException} if it could not be found.
+	* Returns the resource block with the primary key or throws a {@link NoSuchResourceBlockException} if it could not be found.
 	*
 	* @param resourceBlockId the primary key of the resource block
 	* @return the resource block
-	* @throws com.liferay.portal.NoSuchResourceBlockException if a resource block with the primary key could not be found
+	* @throws NoSuchResourceBlockException if a resource block with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ResourceBlock findByPrimaryKey(
-		long resourceBlockId)
+	public static ResourceBlock findByPrimaryKey(long resourceBlockId)
 		throws com.liferay.portal.NoSuchResourceBlockException {
 		return getPersistence().findByPrimaryKey(resourceBlockId);
 	}
@@ -588,12 +578,11 @@ public class ResourceBlockUtil {
 	* @param resourceBlockId the primary key of the resource block
 	* @return the resource block, or <code>null</code> if a resource block with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ResourceBlock fetchByPrimaryKey(
-		long resourceBlockId) {
+	public static ResourceBlock fetchByPrimaryKey(long resourceBlockId) {
 		return getPersistence().fetchByPrimaryKey(resourceBlockId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.ResourceBlock> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, ResourceBlock> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -603,7 +592,7 @@ public class ResourceBlockUtil {
 	*
 	* @return the resource blocks
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourceBlock> findAll() {
+	public static List<ResourceBlock> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -611,15 +600,14 @@ public class ResourceBlockUtil {
 	* Returns a range of all the resource blocks.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of resource blocks
 	* @param end the upper bound of the range of resource blocks (not inclusive)
 	* @return the range of resource blocks
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourceBlock> findAll(
-		int start, int end) {
+	public static List<ResourceBlock> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -627,7 +615,7 @@ public class ResourceBlockUtil {
 	* Returns an ordered range of all the resource blocks.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourceBlockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of resource blocks
@@ -635,9 +623,8 @@ public class ResourceBlockUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of resource blocks
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourceBlock> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourceBlock> orderByComparator) {
+	public static List<ResourceBlock> findAll(int start, int end,
+		OrderByComparator<ResourceBlock> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

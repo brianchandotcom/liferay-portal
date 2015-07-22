@@ -28,7 +28,7 @@ import com.liferay.portlet.shopping.service.ShoppingItemPriceLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ShoppingItemPriceImpl
- * @see com.liferay.portlet.shopping.model.ShoppingItemPrice
+ * @see ShoppingItemPrice
  * @generated
  */
 @ProviderType

@@ -425,7 +425,7 @@ public abstract class DDMStructureLayoutLocalServiceBaseImpl
 	 *
 	 * @return the d d m structure layout local service
 	 */
-	public com.liferay.portlet.dynamicdatamapping.service.DDMStructureLayoutLocalService getDDMStructureLayoutLocalService() {
+	public DDMStructureLayoutLocalService getDDMStructureLayoutLocalService() {
 		return ddmStructureLayoutLocalService;
 	}
 
@@ -435,7 +435,7 @@ public abstract class DDMStructureLayoutLocalServiceBaseImpl
 	 * @param ddmStructureLayoutLocalService the d d m structure layout local service
 	 */
 	public void setDDMStructureLayoutLocalService(
-		com.liferay.portlet.dynamicdatamapping.service.DDMStructureLayoutLocalService ddmStructureLayoutLocalService) {
+		DDMStructureLayoutLocalService ddmStructureLayoutLocalService) {
 		this.ddmStructureLayoutLocalService = ddmStructureLayoutLocalService;
 	}
 
@@ -614,7 +614,7 @@ public abstract class DDMStructureLayoutLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureLayoutLocalService.class)
-	protected com.liferay.portlet.dynamicdatamapping.service.DDMStructureLayoutLocalService ddmStructureLayoutLocalService;
+	protected DDMStructureLayoutLocalService ddmStructureLayoutLocalService;
 	@BeanReference(type = DDMStructureLayoutPersistence.class)
 	protected DDMStructureLayoutPersistence ddmStructureLayoutPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

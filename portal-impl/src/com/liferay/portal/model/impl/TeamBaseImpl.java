@@ -28,7 +28,7 @@ import com.liferay.portal.service.TeamLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see TeamImpl
- * @see com.liferay.portal.model.Team
+ * @see Team
  * @generated
  */
 @ProviderType

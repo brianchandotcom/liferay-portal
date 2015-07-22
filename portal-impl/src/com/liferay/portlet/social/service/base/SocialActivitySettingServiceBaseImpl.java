@@ -78,7 +78,7 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 *
 	 * @return the social activity setting remote service
 	 */
-	public com.liferay.portlet.social.service.SocialActivitySettingService getSocialActivitySettingService() {
+	public SocialActivitySettingService getSocialActivitySettingService() {
 		return socialActivitySettingService;
 	}
 
@@ -88,7 +88,7 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	 * @param socialActivitySettingService the social activity setting remote service
 	 */
 	public void setSocialActivitySettingService(
-		com.liferay.portlet.social.service.SocialActivitySettingService socialActivitySettingService) {
+		SocialActivitySettingService socialActivitySettingService) {
 		this.socialActivitySettingService = socialActivitySettingService;
 	}
 
@@ -322,7 +322,7 @@ public abstract class SocialActivitySettingServiceBaseImpl
 	@BeanReference(type = com.liferay.portlet.social.service.SocialActivitySettingLocalService.class)
 	protected com.liferay.portlet.social.service.SocialActivitySettingLocalService socialActivitySettingLocalService;
 	@BeanReference(type = com.liferay.portlet.social.service.SocialActivitySettingService.class)
-	protected com.liferay.portlet.social.service.SocialActivitySettingService socialActivitySettingService;
+	protected SocialActivitySettingService socialActivitySettingService;
 	@BeanReference(type = SocialActivitySettingPersistence.class)
 	protected SocialActivitySettingPersistence socialActivitySettingPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

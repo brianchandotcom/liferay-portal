@@ -35,7 +35,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see DLFolderImpl
- * @see com.liferay.portlet.documentlibrary.model.DLFolder
+ * @see DLFolder
  * @generated
  */
 @ProviderType

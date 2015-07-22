@@ -27,10 +27,10 @@ import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 
 /**
  * Provides the HTTP utility for the
- * {@link com.liferay.portlet.asset.service.AssetEntryServiceUtil} service utility. The
+ * {@link AssetEntryServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link com.liferay.portal.security.auth.HttpPrincipal} parameter.
+ * {@link HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -49,8 +49,8 @@ import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see AssetEntryServiceSoap
- * @see com.liferay.portal.security.auth.HttpPrincipal
- * @see com.liferay.portlet.asset.service.AssetEntryServiceUtil
+ * @see HttpPrincipal
+ * @see AssetEntryServiceUtil
  * @generated
  */
 @ProviderType

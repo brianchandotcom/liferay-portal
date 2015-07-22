@@ -24,7 +24,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.portal.service.BackgroundTaskServiceUtil} service utility. The
+ * {@link BackgroundTaskServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -59,7 +59,7 @@ import java.rmi.RemoteException;
  * @author Brian Wing Shun Chan
  * @see BackgroundTaskServiceHttp
  * @see com.liferay.portal.model.BackgroundTaskSoap
- * @see com.liferay.portal.service.BackgroundTaskServiceUtil
+ * @see BackgroundTaskServiceUtil
  * @generated
  */
 @ProviderType

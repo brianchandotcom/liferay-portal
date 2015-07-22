@@ -78,7 +78,7 @@ public abstract class DLFileVersionServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the document library file version remote service
 	 */
-	public com.liferay.portlet.documentlibrary.service.DLFileVersionService getDLFileVersionService() {
+	public DLFileVersionService getDLFileVersionService() {
 		return dlFileVersionService;
 	}
 
@@ -88,7 +88,7 @@ public abstract class DLFileVersionServiceBaseImpl extends BaseServiceImpl
 	 * @param dlFileVersionService the document library file version remote service
 	 */
 	public void setDLFileVersionService(
-		com.liferay.portlet.documentlibrary.service.DLFileVersionService dlFileVersionService) {
+		DLFileVersionService dlFileVersionService) {
 		this.dlFileVersionService = dlFileVersionService;
 	}
 
@@ -340,7 +340,7 @@ public abstract class DLFileVersionServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService.class)
 	protected com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService dlFileVersionLocalService;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileVersionService.class)
-	protected com.liferay.portlet.documentlibrary.service.DLFileVersionService dlFileVersionService;
+	protected DLFileVersionService dlFileVersionService;
 	@BeanReference(type = DLFileVersionPersistence.class)
 	protected DLFileVersionPersistence dlFileVersionPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

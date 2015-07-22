@@ -309,7 +309,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	* @return the create date of this d d m template
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _ddmTemplate.getCreateDate();
 	}
 
@@ -392,7 +392,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	* @return the locales and localized descriptions of this d d m template
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
 		return _ddmTemplate.getDescriptionMap();
 	}
 
@@ -437,7 +437,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	* @return the modified date of this d d m template
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _ddmTemplate.getModifiedDate();
 	}
 
@@ -514,7 +514,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	* @return the locales and localized names of this d d m template
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
 		return _ddmTemplate.getNameMap();
 	}
 
@@ -841,7 +841,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	* @param createDate the create date of this d d m template
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_ddmTemplate.setCreateDate(createDate);
 	}
 
@@ -892,7 +892,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
+		Map<java.util.Locale, java.lang.String> descriptionMap) {
 		_ddmTemplate.setDescriptionMap(descriptionMap);
 	}
 
@@ -904,7 +904,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_ddmTemplate.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -963,7 +963,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	* @param modifiedDate the modified date of this d d m template
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_ddmTemplate.setModifiedDate(modifiedDate);
 	}
 
@@ -1012,8 +1012,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	* @param nameMap the locales and localized names of this d d m template
 	*/
 	@Override
-	public void setNameMap(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
 		_ddmTemplate.setNameMap(nameMap);
 	}
 
@@ -1024,8 +1023,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Locale defaultLocale) {
 		_ddmTemplate.setNameMap(nameMap, defaultLocale);
 	}

@@ -125,7 +125,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 * Returns a range of all the d d m structure layouts where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -142,7 +142,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 * Returns an ordered range of all the d d m structure layouts where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -269,7 +269,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m structure layout
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException if a matching d d m structure layout could not be found
+	 * @throws NoSuchStructureLayoutException if a matching d d m structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout findByUuid_First(String uuid,
@@ -319,7 +319,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m structure layout
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException if a matching d d m structure layout could not be found
+	 * @throws NoSuchStructureLayoutException if a matching d d m structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout findByUuid_Last(String uuid,
@@ -377,7 +377,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m structure layout
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
+	 * @throws NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureLayout[] findByUuid_PrevAndNext(long structureLayoutId,
@@ -625,12 +625,12 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the d d m structure layout where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException} if it could not be found.
+	 * Returns the d d m structure layout where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchStructureLayoutException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the matching d d m structure layout
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException if a matching d d m structure layout could not be found
+	 * @throws NoSuchStructureLayoutException if a matching d d m structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout findByUUID_G(String uuid, long groupId)
@@ -909,7 +909,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 * Returns a range of all the d d m structure layouts where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -928,7 +928,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 * Returns an ordered range of all the d d m structure layouts where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -1067,7 +1067,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m structure layout
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException if a matching d d m structure layout could not be found
+	 * @throws NoSuchStructureLayoutException if a matching d d m structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout findByUuid_C_First(String uuid, long companyId,
@@ -1123,7 +1123,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m structure layout
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException if a matching d d m structure layout could not be found
+	 * @throws NoSuchStructureLayoutException if a matching d d m structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout findByUuid_C_Last(String uuid, long companyId,
@@ -1186,7 +1186,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m structure layout
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
+	 * @throws NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureLayout[] findByUuid_C_PrevAndNext(
@@ -1444,11 +1444,11 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 			"countByStructureVersionId", new String[] { Long.class.getName() });
 
 	/**
-	 * Returns the d d m structure layout where structureVersionId = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException} if it could not be found.
+	 * Returns the d d m structure layout where structureVersionId = &#63; or throws a {@link NoSuchStructureLayoutException} if it could not be found.
 	 *
 	 * @param structureVersionId the structure version ID
 	 * @return the matching d d m structure layout
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException if a matching d d m structure layout could not be found
+	 * @throws NoSuchStructureLayoutException if a matching d d m structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout findByStructureVersionId(long structureVersionId)
@@ -1851,7 +1851,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 *
 	 * @param structureLayoutId the primary key of the d d m structure layout
 	 * @return the d d m structure layout that was removed
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
+	 * @throws NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureLayout remove(long structureLayoutId)
@@ -1864,7 +1864,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 *
 	 * @param primaryKey the primary key of the d d m structure layout
 	 * @return the d d m structure layout that was removed
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
+	 * @throws NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureLayout remove(Serializable primaryKey)
@@ -1933,8 +1933,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	@Override
-	public DDMStructureLayout updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout ddmStructureLayout) {
+	public DDMStructureLayout updateImpl(DDMStructureLayout ddmStructureLayout) {
 		ddmStructureLayout = toUnwrappedModel(ddmStructureLayout);
 
 		boolean isNew = ddmStructureLayout.isNew();
@@ -2080,7 +2079,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 *
 	 * @param primaryKey the primary key of the d d m structure layout
 	 * @return the d d m structure layout
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
+	 * @throws NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureLayout findByPrimaryKey(Serializable primaryKey)
@@ -2100,11 +2099,11 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the d d m structure layout with the primary key or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException} if it could not be found.
+	 * Returns the d d m structure layout with the primary key or throws a {@link NoSuchStructureLayoutException} if it could not be found.
 	 *
 	 * @param structureLayoutId the primary key of the d d m structure layout
 	 * @return the d d m structure layout
-	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
+	 * @throws NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureLayout findByPrimaryKey(long structureLayoutId)
@@ -2278,7 +2277,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 * Returns a range of all the d d m structure layouts.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of d d m structure layouts
@@ -2294,7 +2293,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 * Returns an ordered range of all the d d m structure layouts.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of d d m structure layouts

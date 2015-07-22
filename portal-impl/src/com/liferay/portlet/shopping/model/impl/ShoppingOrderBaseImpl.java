@@ -28,7 +28,7 @@ import com.liferay.portlet.shopping.service.ShoppingOrderLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see ShoppingOrderImpl
- * @see com.liferay.portlet.shopping.model.ShoppingOrder
+ * @see ShoppingOrder
  * @generated
  */
 @ProviderType

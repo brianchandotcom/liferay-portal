@@ -77,7 +77,7 @@ public abstract class PluginSettingServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the plugin setting remote service
 	 */
-	public com.liferay.portal.service.PluginSettingService getPluginSettingService() {
+	public PluginSettingService getPluginSettingService() {
 		return pluginSettingService;
 	}
 
@@ -87,7 +87,7 @@ public abstract class PluginSettingServiceBaseImpl extends BaseServiceImpl
 	 * @param pluginSettingService the plugin setting remote service
 	 */
 	public void setPluginSettingService(
-		com.liferay.portal.service.PluginSettingService pluginSettingService) {
+		PluginSettingService pluginSettingService) {
 		this.pluginSettingService = pluginSettingService;
 	}
 
@@ -395,7 +395,7 @@ public abstract class PluginSettingServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portal.service.PluginSettingLocalService.class)
 	protected com.liferay.portal.service.PluginSettingLocalService pluginSettingLocalService;
 	@BeanReference(type = com.liferay.portal.service.PluginSettingService.class)
-	protected com.liferay.portal.service.PluginSettingService pluginSettingService;
+	protected PluginSettingService pluginSettingService;
 	@BeanReference(type = PluginSettingPersistence.class)
 	protected PluginSettingPersistence pluginSettingPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

@@ -86,8 +86,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion deleteDLFileVersion(
-		long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fileVersionId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -95,7 +94,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	@Override
 	public com.liferay.portal.model.PersistedModel deletePersistedModel(
 		com.liferay.portal.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -200,8 +199,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getDLFileVersion(
-		long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fileVersionId) throws PortalException;
 
 	/**
 	* Returns the document library file version matching the UUID and group.
@@ -213,8 +211,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getDLFileVersionByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the document library file versions.
@@ -271,13 +268,11 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion(
-		long fileEntryId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fileEntryId, java.lang.String version) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion(
-		long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fileVersionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersionByUuidAndGroupId(
@@ -292,22 +287,18 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
-		long fileEntryId, boolean excludeWorkingCopy)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long fileEntryId, boolean excludeWorkingCopy) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
-		long userId, long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		long userId, long fileEntryId) throws PortalException;
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
-	public void rebuildTree(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public void rebuildTree(long companyId) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -317,7 +308,7 @@ public interface DLFileVersionLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void setTreePaths(long folderId, java.lang.String treePath)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates the document library file version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

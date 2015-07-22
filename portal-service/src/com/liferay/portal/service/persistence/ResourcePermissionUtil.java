@@ -115,8 +115,7 @@ public class ResourcePermissionUtil {
 	* @param scope the scope
 	* @return the matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByScope(
-		int scope) {
+	public static List<ResourcePermission> findByScope(int scope) {
 		return getPersistence().findByScope(scope);
 	}
 
@@ -124,7 +123,7 @@ public class ResourcePermissionUtil {
 	* Returns a range of all the resource permissions where scope = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param scope the scope
@@ -132,8 +131,8 @@ public class ResourcePermissionUtil {
 	* @param end the upper bound of the range of resource permissions (not inclusive)
 	* @return the range of matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByScope(
-		int scope, int start, int end) {
+	public static List<ResourcePermission> findByScope(int scope, int start,
+		int end) {
 		return getPersistence().findByScope(scope, start, end);
 	}
 
@@ -141,7 +140,7 @@ public class ResourcePermissionUtil {
 	* Returns an ordered range of all the resource permissions where scope = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param scope the scope
@@ -150,9 +149,8 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByScope(
-		int scope, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static List<ResourcePermission> findByScope(int scope, int start,
+		int end, OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence().findByScope(scope, start, end, orderByComparator);
 	}
 
@@ -162,11 +160,10 @@ public class ResourcePermissionUtil {
 	* @param scope the scope
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a matching resource permission could not be found
+	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission findByScope_First(
-		int scope,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator)
+	public static ResourcePermission findByScope_First(int scope,
+		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence().findByScope_First(scope, orderByComparator);
 	}
@@ -178,9 +175,8 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission fetchByScope_First(
-		int scope,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static ResourcePermission fetchByScope_First(int scope,
+		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence().fetchByScope_First(scope, orderByComparator);
 	}
 
@@ -190,11 +186,10 @@ public class ResourcePermissionUtil {
 	* @param scope the scope
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a matching resource permission could not be found
+	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission findByScope_Last(
-		int scope,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator)
+	public static ResourcePermission findByScope_Last(int scope,
+		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence().findByScope_Last(scope, orderByComparator);
 	}
@@ -206,9 +201,8 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission fetchByScope_Last(
-		int scope,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static ResourcePermission fetchByScope_Last(int scope,
+		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence().fetchByScope_Last(scope, orderByComparator);
 	}
 
@@ -219,11 +213,11 @@ public class ResourcePermissionUtil {
 	* @param scope the scope
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a resource permission with the primary key could not be found
+	* @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission[] findByScope_PrevAndNext(
+	public static ResourcePermission[] findByScope_PrevAndNext(
 		long resourcePermissionId, int scope,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator)
+		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByScope_PrevAndNext(resourcePermissionId, scope,
@@ -234,14 +228,13 @@ public class ResourcePermissionUtil {
 	* Returns all the resource permissions where scope = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param scopes the scopes
 	* @return the matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByScope(
-		int[] scopes) {
+	public static List<ResourcePermission> findByScope(int[] scopes) {
 		return getPersistence().findByScope(scopes);
 	}
 
@@ -249,7 +242,7 @@ public class ResourcePermissionUtil {
 	* Returns a range of all the resource permissions where scope = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param scopes the scopes
@@ -257,8 +250,8 @@ public class ResourcePermissionUtil {
 	* @param end the upper bound of the range of resource permissions (not inclusive)
 	* @return the range of matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByScope(
-		int[] scopes, int start, int end) {
+	public static List<ResourcePermission> findByScope(int[] scopes, int start,
+		int end) {
 		return getPersistence().findByScope(scopes, start, end);
 	}
 
@@ -266,7 +259,7 @@ public class ResourcePermissionUtil {
 	* Returns an ordered range of all the resource permissions where scope = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param scopes the scopes
@@ -275,9 +268,8 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByScope(
-		int[] scopes, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static List<ResourcePermission> findByScope(int[] scopes, int start,
+		int end, OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .findByScope(scopes, start, end, orderByComparator);
 	}
@@ -317,8 +309,7 @@ public class ResourcePermissionUtil {
 	* @param roleId the role ID
 	* @return the matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByRoleId(
-		long roleId) {
+	public static List<ResourcePermission> findByRoleId(long roleId) {
 		return getPersistence().findByRoleId(roleId);
 	}
 
@@ -326,7 +317,7 @@ public class ResourcePermissionUtil {
 	* Returns a range of all the resource permissions where roleId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param roleId the role ID
@@ -334,8 +325,8 @@ public class ResourcePermissionUtil {
 	* @param end the upper bound of the range of resource permissions (not inclusive)
 	* @return the range of matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByRoleId(
-		long roleId, int start, int end) {
+	public static List<ResourcePermission> findByRoleId(long roleId, int start,
+		int end) {
 		return getPersistence().findByRoleId(roleId, start, end);
 	}
 
@@ -343,7 +334,7 @@ public class ResourcePermissionUtil {
 	* Returns an ordered range of all the resource permissions where roleId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param roleId the role ID
@@ -352,9 +343,8 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByRoleId(
-		long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static List<ResourcePermission> findByRoleId(long roleId, int start,
+		int end, OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .findByRoleId(roleId, start, end, orderByComparator);
 	}
@@ -365,11 +355,10 @@ public class ResourcePermissionUtil {
 	* @param roleId the role ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a matching resource permission could not be found
+	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission findByRoleId_First(
-		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator)
+	public static ResourcePermission findByRoleId_First(long roleId,
+		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence().findByRoleId_First(roleId, orderByComparator);
 	}
@@ -381,9 +370,8 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission fetchByRoleId_First(
-		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static ResourcePermission fetchByRoleId_First(long roleId,
+		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence().fetchByRoleId_First(roleId, orderByComparator);
 	}
 
@@ -393,11 +381,10 @@ public class ResourcePermissionUtil {
 	* @param roleId the role ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a matching resource permission could not be found
+	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission findByRoleId_Last(
-		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator)
+	public static ResourcePermission findByRoleId_Last(long roleId,
+		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence().findByRoleId_Last(roleId, orderByComparator);
 	}
@@ -409,9 +396,8 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission fetchByRoleId_Last(
-		long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static ResourcePermission fetchByRoleId_Last(long roleId,
+		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence().fetchByRoleId_Last(roleId, orderByComparator);
 	}
 
@@ -422,11 +408,11 @@ public class ResourcePermissionUtil {
 	* @param roleId the role ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a resource permission with the primary key could not be found
+	* @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission[] findByRoleId_PrevAndNext(
+	public static ResourcePermission[] findByRoleId_PrevAndNext(
 		long resourcePermissionId, long roleId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator)
+		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByRoleId_PrevAndNext(resourcePermissionId, roleId,
@@ -459,8 +445,8 @@ public class ResourcePermissionUtil {
 	* @param primKey the prim key
 	* @return the matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByC_LikeP(
-		long companyId, java.lang.String primKey) {
+	public static List<ResourcePermission> findByC_LikeP(long companyId,
+		java.lang.String primKey) {
 		return getPersistence().findByC_LikeP(companyId, primKey);
 	}
 
@@ -468,7 +454,7 @@ public class ResourcePermissionUtil {
 	* Returns a range of all the resource permissions where companyId = &#63; and primKey LIKE &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -477,8 +463,8 @@ public class ResourcePermissionUtil {
 	* @param end the upper bound of the range of resource permissions (not inclusive)
 	* @return the range of matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByC_LikeP(
-		long companyId, java.lang.String primKey, int start, int end) {
+	public static List<ResourcePermission> findByC_LikeP(long companyId,
+		java.lang.String primKey, int start, int end) {
 		return getPersistence().findByC_LikeP(companyId, primKey, start, end);
 	}
 
@@ -486,7 +472,7 @@ public class ResourcePermissionUtil {
 	* Returns an ordered range of all the resource permissions where companyId = &#63; and primKey LIKE &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -496,9 +482,9 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByC_LikeP(
-		long companyId, java.lang.String primKey, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static List<ResourcePermission> findByC_LikeP(long companyId,
+		java.lang.String primKey, int start, int end,
+		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .findByC_LikeP(companyId, primKey, start, end,
 			orderByComparator);
@@ -511,11 +497,11 @@ public class ResourcePermissionUtil {
 	* @param primKey the prim key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a matching resource permission could not be found
+	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission findByC_LikeP_First(
-		long companyId, java.lang.String primKey,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator)
+	public static ResourcePermission findByC_LikeP_First(long companyId,
+		java.lang.String primKey,
+		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByC_LikeP_First(companyId, primKey, orderByComparator);
@@ -529,9 +515,9 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission fetchByC_LikeP_First(
-		long companyId, java.lang.String primKey,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static ResourcePermission fetchByC_LikeP_First(long companyId,
+		java.lang.String primKey,
+		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LikeP_First(companyId, primKey, orderByComparator);
 	}
@@ -543,11 +529,11 @@ public class ResourcePermissionUtil {
 	* @param primKey the prim key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a matching resource permission could not be found
+	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission findByC_LikeP_Last(
-		long companyId, java.lang.String primKey,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator)
+	public static ResourcePermission findByC_LikeP_Last(long companyId,
+		java.lang.String primKey,
+		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByC_LikeP_Last(companyId, primKey, orderByComparator);
@@ -561,9 +547,9 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission fetchByC_LikeP_Last(
-		long companyId, java.lang.String primKey,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static ResourcePermission fetchByC_LikeP_Last(long companyId,
+		java.lang.String primKey,
+		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_LikeP_Last(companyId, primKey, orderByComparator);
 	}
@@ -576,11 +562,11 @@ public class ResourcePermissionUtil {
 	* @param primKey the prim key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a resource permission with the primary key could not be found
+	* @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission[] findByC_LikeP_PrevAndNext(
+	public static ResourcePermission[] findByC_LikeP_PrevAndNext(
 		long resourcePermissionId, long companyId, java.lang.String primKey,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator)
+		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByC_LikeP_PrevAndNext(resourcePermissionId, companyId,
@@ -616,8 +602,8 @@ public class ResourcePermissionUtil {
 	* @param scope the scope
 	* @return the matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByC_N_S(
-		long companyId, java.lang.String name, int scope) {
+	public static List<ResourcePermission> findByC_N_S(long companyId,
+		java.lang.String name, int scope) {
 		return getPersistence().findByC_N_S(companyId, name, scope);
 	}
 
@@ -625,7 +611,7 @@ public class ResourcePermissionUtil {
 	* Returns a range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -635,8 +621,8 @@ public class ResourcePermissionUtil {
 	* @param end the upper bound of the range of resource permissions (not inclusive)
 	* @return the range of matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByC_N_S(
-		long companyId, java.lang.String name, int scope, int start, int end) {
+	public static List<ResourcePermission> findByC_N_S(long companyId,
+		java.lang.String name, int scope, int start, int end) {
 		return getPersistence().findByC_N_S(companyId, name, scope, start, end);
 	}
 
@@ -644,7 +630,7 @@ public class ResourcePermissionUtil {
 	* Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -655,9 +641,9 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByC_N_S(
-		long companyId, java.lang.String name, int scope, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static List<ResourcePermission> findByC_N_S(long companyId,
+		java.lang.String name, int scope, int start, int end,
+		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .findByC_N_S(companyId, name, scope, start, end,
 			orderByComparator);
@@ -671,11 +657,11 @@ public class ResourcePermissionUtil {
 	* @param scope the scope
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a matching resource permission could not be found
+	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission findByC_N_S_First(
-		long companyId, java.lang.String name, int scope,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator)
+	public static ResourcePermission findByC_N_S_First(long companyId,
+		java.lang.String name, int scope,
+		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByC_N_S_First(companyId, name, scope, orderByComparator);
@@ -690,9 +676,9 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission fetchByC_N_S_First(
-		long companyId, java.lang.String name, int scope,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static ResourcePermission fetchByC_N_S_First(long companyId,
+		java.lang.String name, int scope,
+		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_N_S_First(companyId, name, scope, orderByComparator);
 	}
@@ -705,11 +691,11 @@ public class ResourcePermissionUtil {
 	* @param scope the scope
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a matching resource permission could not be found
+	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission findByC_N_S_Last(
-		long companyId, java.lang.String name, int scope,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator)
+	public static ResourcePermission findByC_N_S_Last(long companyId,
+		java.lang.String name, int scope,
+		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByC_N_S_Last(companyId, name, scope, orderByComparator);
@@ -724,9 +710,9 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission fetchByC_N_S_Last(
-		long companyId, java.lang.String name, int scope,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static ResourcePermission fetchByC_N_S_Last(long companyId,
+		java.lang.String name, int scope,
+		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_N_S_Last(companyId, name, scope, orderByComparator);
 	}
@@ -740,12 +726,11 @@ public class ResourcePermissionUtil {
 	* @param scope the scope
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a resource permission with the primary key could not be found
+	* @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission[] findByC_N_S_PrevAndNext(
+	public static ResourcePermission[] findByC_N_S_PrevAndNext(
 		long resourcePermissionId, long companyId, java.lang.String name,
-		int scope,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator)
+		int scope, OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByC_N_S_PrevAndNext(resourcePermissionId, companyId,
@@ -786,9 +771,8 @@ public class ResourcePermissionUtil {
 	* @param primKey the prim key
 	* @return the matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByC_N_S_P(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey) {
+	public static List<ResourcePermission> findByC_N_S_P(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey) {
 		return getPersistence().findByC_N_S_P(companyId, name, scope, primKey);
 	}
 
@@ -796,7 +780,7 @@ public class ResourcePermissionUtil {
 	* Returns a range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -807,9 +791,9 @@ public class ResourcePermissionUtil {
 	* @param end the upper bound of the range of resource permissions (not inclusive)
 	* @return the range of matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByC_N_S_P(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, int start, int end) {
+	public static List<ResourcePermission> findByC_N_S_P(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey, int start,
+		int end) {
 		return getPersistence()
 				   .findByC_N_S_P(companyId, name, scope, primKey, start, end);
 	}
@@ -818,7 +802,7 @@ public class ResourcePermissionUtil {
 	* Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -830,10 +814,9 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByC_N_S_P(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static List<ResourcePermission> findByC_N_S_P(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey, int start,
+		int end, OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .findByC_N_S_P(companyId, name, scope, primKey, start, end,
 			orderByComparator);
@@ -848,12 +831,11 @@ public class ResourcePermissionUtil {
 	* @param primKey the prim key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a matching resource permission could not be found
+	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission findByC_N_S_P_First(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator)
+	public static ResourcePermission findByC_N_S_P_First(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey,
+		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByC_N_S_P_First(companyId, name, scope, primKey,
@@ -870,10 +852,9 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission fetchByC_N_S_P_First(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static ResourcePermission fetchByC_N_S_P_First(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey,
+		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_N_S_P_First(companyId, name, scope, primKey,
 			orderByComparator);
@@ -888,12 +869,11 @@ public class ResourcePermissionUtil {
 	* @param primKey the prim key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a matching resource permission could not be found
+	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission findByC_N_S_P_Last(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator)
+	public static ResourcePermission findByC_N_S_P_Last(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey,
+		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByC_N_S_P_Last(companyId, name, scope, primKey,
@@ -910,10 +890,9 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission fetchByC_N_S_P_Last(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static ResourcePermission fetchByC_N_S_P_Last(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey,
+		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_N_S_P_Last(companyId, name, scope, primKey,
 			orderByComparator);
@@ -929,12 +908,12 @@ public class ResourcePermissionUtil {
 	* @param primKey the prim key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a resource permission with the primary key could not be found
+	* @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission[] findByC_N_S_P_PrevAndNext(
+	public static ResourcePermission[] findByC_N_S_P_PrevAndNext(
 		long resourcePermissionId, long companyId, java.lang.String name,
 		int scope, java.lang.String primKey,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator)
+		OrderByComparator<ResourcePermission> orderByComparator)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByC_N_S_P_PrevAndNext(resourcePermissionId, companyId,
@@ -972,7 +951,7 @@ public class ResourcePermissionUtil {
 	* Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -982,9 +961,9 @@ public class ResourcePermissionUtil {
 	* @param roleIds the role IDs
 	* @return the matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByC_N_S_P_R(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long[] roleIds) {
+	public static List<ResourcePermission> findByC_N_S_P_R(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey,
+		long[] roleIds) {
 		return getPersistence()
 				   .findByC_N_S_P_R(companyId, name, scope, primKey, roleIds);
 	}
@@ -993,7 +972,7 @@ public class ResourcePermissionUtil {
 	* Returns a range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -1005,9 +984,9 @@ public class ResourcePermissionUtil {
 	* @param end the upper bound of the range of resource permissions (not inclusive)
 	* @return the range of matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByC_N_S_P_R(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long[] roleIds, int start, int end) {
+	public static List<ResourcePermission> findByC_N_S_P_R(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey,
+		long[] roleIds, int start, int end) {
 		return getPersistence()
 				   .findByC_N_S_P_R(companyId, name, scope, primKey, roleIds,
 			start, end);
@@ -1017,7 +996,7 @@ public class ResourcePermissionUtil {
 	* Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -1030,17 +1009,17 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findByC_N_S_P_R(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long[] roleIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static List<ResourcePermission> findByC_N_S_P_R(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey,
+		long[] roleIds, int start, int end,
+		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence()
 				   .findByC_N_S_P_R(companyId, name, scope, primKey, roleIds,
 			start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the resource permission where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; or throws a {@link com.liferay.portal.NoSuchResourcePermissionException} if it could not be found.
+	* Returns the resource permission where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; or throws a {@link NoSuchResourcePermissionException} if it could not be found.
 	*
 	* @param companyId the company ID
 	* @param name the name
@@ -1048,11 +1027,10 @@ public class ResourcePermissionUtil {
 	* @param primKey the prim key
 	* @param roleId the role ID
 	* @return the matching resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a matching resource permission could not be found
+	* @throws NoSuchResourcePermissionException if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission findByC_N_S_P_R(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long roleId)
+	public static ResourcePermission findByC_N_S_P_R(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey, long roleId)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .findByC_N_S_P_R(companyId, name, scope, primKey, roleId);
@@ -1068,9 +1046,8 @@ public class ResourcePermissionUtil {
 	* @param roleId the role ID
 	* @return the matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission fetchByC_N_S_P_R(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long roleId) {
+	public static ResourcePermission fetchByC_N_S_P_R(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey, long roleId) {
 		return getPersistence()
 				   .fetchByC_N_S_P_R(companyId, name, scope, primKey, roleId);
 	}
@@ -1086,9 +1063,9 @@ public class ResourcePermissionUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching resource permission, or <code>null</code> if a matching resource permission could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission fetchByC_N_S_P_R(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long roleId, boolean retrieveFromCache) {
+	public static ResourcePermission fetchByC_N_S_P_R(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey,
+		long roleId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_N_S_P_R(companyId, name, scope, primKey, roleId,
 			retrieveFromCache);
@@ -1104,9 +1081,8 @@ public class ResourcePermissionUtil {
 	* @param roleId the role ID
 	* @return the resource permission that was removed
 	*/
-	public static com.liferay.portal.model.ResourcePermission removeByC_N_S_P_R(
-		long companyId, java.lang.String name, int scope,
-		java.lang.String primKey, long roleId)
+	public static ResourcePermission removeByC_N_S_P_R(long companyId,
+		java.lang.String name, int scope, java.lang.String primKey, long roleId)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence()
 				   .removeByC_N_S_P_R(companyId, name, scope, primKey, roleId);
@@ -1149,8 +1125,7 @@ public class ResourcePermissionUtil {
 	*
 	* @param resourcePermission the resource permission
 	*/
-	public static void cacheResult(
-		com.liferay.portal.model.ResourcePermission resourcePermission) {
+	public static void cacheResult(ResourcePermission resourcePermission) {
 		getPersistence().cacheResult(resourcePermission);
 	}
 
@@ -1159,8 +1134,7 @@ public class ResourcePermissionUtil {
 	*
 	* @param resourcePermissions the resource permissions
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.portal.model.ResourcePermission> resourcePermissions) {
+	public static void cacheResult(List<ResourcePermission> resourcePermissions) {
 		getPersistence().cacheResult(resourcePermissions);
 	}
 
@@ -1170,8 +1144,7 @@ public class ResourcePermissionUtil {
 	* @param resourcePermissionId the primary key for the new resource permission
 	* @return the new resource permission
 	*/
-	public static com.liferay.portal.model.ResourcePermission create(
-		long resourcePermissionId) {
+	public static ResourcePermission create(long resourcePermissionId) {
 		return getPersistence().create(resourcePermissionId);
 	}
 
@@ -1180,28 +1153,26 @@ public class ResourcePermissionUtil {
 	*
 	* @param resourcePermissionId the primary key of the resource permission
 	* @return the resource permission that was removed
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a resource permission with the primary key could not be found
+	* @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission remove(
-		long resourcePermissionId)
+	public static ResourcePermission remove(long resourcePermissionId)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence().remove(resourcePermissionId);
 	}
 
-	public static com.liferay.portal.model.ResourcePermission updateImpl(
-		com.liferay.portal.model.ResourcePermission resourcePermission) {
+	public static ResourcePermission updateImpl(
+		ResourcePermission resourcePermission) {
 		return getPersistence().updateImpl(resourcePermission);
 	}
 
 	/**
-	* Returns the resource permission with the primary key or throws a {@link com.liferay.portal.NoSuchResourcePermissionException} if it could not be found.
+	* Returns the resource permission with the primary key or throws a {@link NoSuchResourcePermissionException} if it could not be found.
 	*
 	* @param resourcePermissionId the primary key of the resource permission
 	* @return the resource permission
-	* @throws com.liferay.portal.NoSuchResourcePermissionException if a resource permission with the primary key could not be found
+	* @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission findByPrimaryKey(
-		long resourcePermissionId)
+	public static ResourcePermission findByPrimaryKey(long resourcePermissionId)
 		throws com.liferay.portal.NoSuchResourcePermissionException {
 		return getPersistence().findByPrimaryKey(resourcePermissionId);
 	}
@@ -1212,12 +1183,12 @@ public class ResourcePermissionUtil {
 	* @param resourcePermissionId the primary key of the resource permission
 	* @return the resource permission, or <code>null</code> if a resource permission with the primary key could not be found
 	*/
-	public static com.liferay.portal.model.ResourcePermission fetchByPrimaryKey(
+	public static ResourcePermission fetchByPrimaryKey(
 		long resourcePermissionId) {
 		return getPersistence().fetchByPrimaryKey(resourcePermissionId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.portal.model.ResourcePermission> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, ResourcePermission> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -1227,7 +1198,7 @@ public class ResourcePermissionUtil {
 	*
 	* @return the resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findAll() {
+	public static List<ResourcePermission> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -1235,15 +1206,14 @@ public class ResourcePermissionUtil {
 	* Returns a range of all the resource permissions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of resource permissions
 	* @param end the upper bound of the range of resource permissions (not inclusive)
 	* @return the range of resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findAll(
-		int start, int end) {
+	public static List<ResourcePermission> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -1251,7 +1221,7 @@ public class ResourcePermissionUtil {
 	* Returns an ordered range of all the resource permissions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ResourcePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of resource permissions
@@ -1259,9 +1229,8 @@ public class ResourcePermissionUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of resource permissions
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourcePermission> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.ResourcePermission> orderByComparator) {
+	public static List<ResourcePermission> findAll(int start, int end,
+		OrderByComparator<ResourcePermission> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

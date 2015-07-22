@@ -291,7 +291,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @return the create date of this address
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _address.getCreateDate();
 	}
 
@@ -316,7 +316,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @return the modified date of this address
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _address.getModifiedDate();
 	}
 
@@ -586,7 +586,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @param createDate the create date of this address
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_address.setCreateDate(createDate);
 	}
 
@@ -623,7 +623,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	* @param modifiedDate the modified date of this address
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_address.setModifiedDate(modifiedDate);
 	}
 

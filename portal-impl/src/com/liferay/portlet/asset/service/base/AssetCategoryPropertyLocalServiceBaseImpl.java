@@ -310,7 +310,7 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	 *
 	 * @return the asset category property local service
 	 */
-	public com.liferay.portlet.asset.service.AssetCategoryPropertyLocalService getAssetCategoryPropertyLocalService() {
+	public AssetCategoryPropertyLocalService getAssetCategoryPropertyLocalService() {
 		return assetCategoryPropertyLocalService;
 	}
 
@@ -320,7 +320,7 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	 * @param assetCategoryPropertyLocalService the asset category property local service
 	 */
 	public void setAssetCategoryPropertyLocalService(
-		com.liferay.portlet.asset.service.AssetCategoryPropertyLocalService assetCategoryPropertyLocalService) {
+		AssetCategoryPropertyLocalService assetCategoryPropertyLocalService) {
 		this.assetCategoryPropertyLocalService = assetCategoryPropertyLocalService;
 	}
 
@@ -537,7 +537,7 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.asset.service.AssetCategoryPropertyLocalService.class)
-	protected com.liferay.portlet.asset.service.AssetCategoryPropertyLocalService assetCategoryPropertyLocalService;
+	protected AssetCategoryPropertyLocalService assetCategoryPropertyLocalService;
 	@BeanReference(type = com.liferay.portlet.asset.service.AssetCategoryPropertyService.class)
 	protected com.liferay.portlet.asset.service.AssetCategoryPropertyService assetCategoryPropertyService;
 	@BeanReference(type = AssetCategoryPropertyPersistence.class)

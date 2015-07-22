@@ -122,7 +122,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * Returns a range of all the announcements flags where entryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param entryId the entry ID
@@ -140,7 +140,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * Returns an ordered range of all the announcements flags where entryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param entryId the entry ID
@@ -253,7 +253,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @param entryId the entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements flag
-	 * @throws com.liferay.portlet.announcements.NoSuchFlagException if a matching announcements flag could not be found
+	 * @throws NoSuchFlagException if a matching announcements flag could not be found
 	 */
 	@Override
 	public AnnouncementsFlag findByEntryId_First(long entryId,
@@ -304,7 +304,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @param entryId the entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements flag
-	 * @throws com.liferay.portlet.announcements.NoSuchFlagException if a matching announcements flag could not be found
+	 * @throws NoSuchFlagException if a matching announcements flag could not be found
 	 */
 	@Override
 	public AnnouncementsFlag findByEntryId_Last(long entryId,
@@ -362,7 +362,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * @param entryId the entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements flag
-	 * @throws com.liferay.portlet.announcements.NoSuchFlagException if a announcements flag with the primary key could not be found
+	 * @throws NoSuchFlagException if a announcements flag with the primary key could not be found
 	 */
 	@Override
 	public AnnouncementsFlag[] findByEntryId_PrevAndNext(long flagId,
@@ -586,13 +586,13 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			});
 
 	/**
-	 * Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or throws a {@link com.liferay.portlet.announcements.NoSuchFlagException} if it could not be found.
+	 * Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or throws a {@link NoSuchFlagException} if it could not be found.
 	 *
 	 * @param userId the user ID
 	 * @param entryId the entry ID
 	 * @param value the value
 	 * @return the matching announcements flag
-	 * @throws com.liferay.portlet.announcements.NoSuchFlagException if a matching announcements flag could not be found
+	 * @throws NoSuchFlagException if a matching announcements flag could not be found
 	 */
 	@Override
 	public AnnouncementsFlag findByU_E_V(long userId, long entryId, int value)
@@ -988,7 +988,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 *
 	 * @param flagId the primary key of the announcements flag
 	 * @return the announcements flag that was removed
-	 * @throws com.liferay.portlet.announcements.NoSuchFlagException if a announcements flag with the primary key could not be found
+	 * @throws NoSuchFlagException if a announcements flag with the primary key could not be found
 	 */
 	@Override
 	public AnnouncementsFlag remove(long flagId) throws NoSuchFlagException {
@@ -1000,7 +1000,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 *
 	 * @param primaryKey the primary key of the announcements flag
 	 * @return the announcements flag that was removed
-	 * @throws com.liferay.portlet.announcements.NoSuchFlagException if a announcements flag with the primary key could not be found
+	 * @throws NoSuchFlagException if a announcements flag with the primary key could not be found
 	 */
 	@Override
 	public AnnouncementsFlag remove(Serializable primaryKey)
@@ -1068,8 +1068,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	}
 
 	@Override
-	public AnnouncementsFlag updateImpl(
-		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag) {
+	public AnnouncementsFlag updateImpl(AnnouncementsFlag announcementsFlag) {
 		announcementsFlag = toUnwrappedModel(announcementsFlag);
 
 		boolean isNew = announcementsFlag.isNew();
@@ -1159,7 +1158,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 *
 	 * @param primaryKey the primary key of the announcements flag
 	 * @return the announcements flag
-	 * @throws com.liferay.portlet.announcements.NoSuchFlagException if a announcements flag with the primary key could not be found
+	 * @throws NoSuchFlagException if a announcements flag with the primary key could not be found
 	 */
 	@Override
 	public AnnouncementsFlag findByPrimaryKey(Serializable primaryKey)
@@ -1179,11 +1178,11 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	}
 
 	/**
-	 * Returns the announcements flag with the primary key or throws a {@link com.liferay.portlet.announcements.NoSuchFlagException} if it could not be found.
+	 * Returns the announcements flag with the primary key or throws a {@link NoSuchFlagException} if it could not be found.
 	 *
 	 * @param flagId the primary key of the announcements flag
 	 * @return the announcements flag
-	 * @throws com.liferay.portlet.announcements.NoSuchFlagException if a announcements flag with the primary key could not be found
+	 * @throws NoSuchFlagException if a announcements flag with the primary key could not be found
 	 */
 	@Override
 	public AnnouncementsFlag findByPrimaryKey(long flagId)
@@ -1356,7 +1355,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * Returns a range of all the announcements flags.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of announcements flags
@@ -1372,7 +1371,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 * Returns an ordered range of all the announcements flags.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of announcements flags

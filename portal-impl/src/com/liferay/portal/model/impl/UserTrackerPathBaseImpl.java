@@ -28,7 +28,7 @@ import com.liferay.portal.service.UserTrackerPathLocalServiceUtil;
  *
  * @author Brian Wing Shun Chan
  * @see UserTrackerPathImpl
- * @see com.liferay.portal.model.UserTrackerPath
+ * @see UserTrackerPath
  * @generated
  */
 @ProviderType

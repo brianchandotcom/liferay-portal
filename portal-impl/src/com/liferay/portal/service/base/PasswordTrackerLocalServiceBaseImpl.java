@@ -306,7 +306,7 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	 *
 	 * @return the password tracker local service
 	 */
-	public com.liferay.portal.service.PasswordTrackerLocalService getPasswordTrackerLocalService() {
+	public PasswordTrackerLocalService getPasswordTrackerLocalService() {
 		return passwordTrackerLocalService;
 	}
 
@@ -316,7 +316,7 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	 * @param passwordTrackerLocalService the password tracker local service
 	 */
 	public void setPasswordTrackerLocalService(
-		com.liferay.portal.service.PasswordTrackerLocalService passwordTrackerLocalService) {
+		PasswordTrackerLocalService passwordTrackerLocalService) {
 		this.passwordTrackerLocalService = passwordTrackerLocalService;
 	}
 
@@ -571,7 +571,7 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.PasswordTrackerLocalService.class)
-	protected com.liferay.portal.service.PasswordTrackerLocalService passwordTrackerLocalService;
+	protected PasswordTrackerLocalService passwordTrackerLocalService;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

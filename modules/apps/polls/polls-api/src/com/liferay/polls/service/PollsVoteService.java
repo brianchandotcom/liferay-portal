@@ -51,7 +51,7 @@ public interface PollsVoteService extends BaseService {
 	 */
 	public com.liferay.polls.model.PollsVote addVote(long questionId,
 		long choiceId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.

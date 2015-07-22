@@ -73,7 +73,7 @@ public abstract class AccountServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the account remote service
 	 */
-	public com.liferay.portal.service.AccountService getAccountService() {
+	public AccountService getAccountService() {
 		return accountService;
 	}
 
@@ -82,8 +82,7 @@ public abstract class AccountServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param accountService the account remote service
 	 */
-	public void setAccountService(
-		com.liferay.portal.service.AccountService accountService) {
+	public void setAccountService(AccountService accountService) {
 		this.accountService = accountService;
 	}
 
@@ -185,7 +184,7 @@ public abstract class AccountServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portal.service.AccountLocalService.class)
 	protected com.liferay.portal.service.AccountLocalService accountLocalService;
 	@BeanReference(type = com.liferay.portal.service.AccountService.class)
-	protected com.liferay.portal.service.AccountService accountService;
+	protected AccountService accountService;
 	@BeanReference(type = AccountPersistence.class)
 	protected AccountPersistence accountPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

@@ -46,14 +46,13 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param templateId the template ID
 	* @return the matching d d m template versions
 	*/
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> findByTemplateId(
-		long templateId);
+	public java.util.List<DDMTemplateVersion> findByTemplateId(long templateId);
 
 	/**
 	* Returns a range of all the d d m template versions where templateId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param templateId the template ID
@@ -61,14 +60,14 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param end the upper bound of the range of d d m template versions (not inclusive)
 	* @return the range of matching d d m template versions
 	*/
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> findByTemplateId(
+	public java.util.List<DDMTemplateVersion> findByTemplateId(
 		long templateId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the d d m template versions where templateId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param templateId the template ID
@@ -77,9 +76,9 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m template versions
 	*/
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> findByTemplateId(
+	public java.util.List<DDMTemplateVersion> findByTemplateId(
 		long templateId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion> orderByComparator);
 
 	/**
 	* Returns the first d d m template version in the ordered set where templateId = &#63;.
@@ -87,11 +86,10 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param templateId the template ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template version
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException if a matching d d m template version could not be found
+	* @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion findByTemplateId_First(
-		long templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator)
+	public DDMTemplateVersion findByTemplateId_First(long templateId,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException;
 
 	/**
@@ -101,9 +99,8 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion fetchByTemplateId_First(
-		long templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator);
+	public DDMTemplateVersion fetchByTemplateId_First(long templateId,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion> orderByComparator);
 
 	/**
 	* Returns the last d d m template version in the ordered set where templateId = &#63;.
@@ -111,11 +108,10 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param templateId the template ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template version
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException if a matching d d m template version could not be found
+	* @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion findByTemplateId_Last(
-		long templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator)
+	public DDMTemplateVersion findByTemplateId_Last(long templateId,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException;
 
 	/**
@@ -125,9 +121,8 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion fetchByTemplateId_Last(
-		long templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator);
+	public DDMTemplateVersion fetchByTemplateId_Last(long templateId,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion> orderByComparator);
 
 	/**
 	* Returns the d d m template versions before and after the current d d m template version in the ordered set where templateId = &#63;.
@@ -136,11 +131,11 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param templateId the template ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template version
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
+	* @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion[] findByTemplateId_PrevAndNext(
+	public DDMTemplateVersion[] findByTemplateId_PrevAndNext(
 		long templateVersionId, long templateId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException;
 
 	/**
@@ -159,15 +154,15 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	public int countByTemplateId(long templateId);
 
 	/**
-	* Returns the d d m template version where templateId = &#63; and version = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException} if it could not be found.
+	* Returns the d d m template version where templateId = &#63; and version = &#63; or throws a {@link NoSuchTemplateVersionException} if it could not be found.
 	*
 	* @param templateId the template ID
 	* @param version the version
 	* @return the matching d d m template version
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException if a matching d d m template version could not be found
+	* @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion findByT_V(
-		long templateId, java.lang.String version)
+	public DDMTemplateVersion findByT_V(long templateId,
+		java.lang.String version)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException;
 
 	/**
@@ -177,8 +172,8 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param version the version
 	* @return the matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion fetchByT_V(
-		long templateId, java.lang.String version);
+	public DDMTemplateVersion fetchByT_V(long templateId,
+		java.lang.String version);
 
 	/**
 	* Returns the d d m template version where templateId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -188,8 +183,8 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion fetchByT_V(
-		long templateId, java.lang.String version, boolean retrieveFromCache);
+	public DDMTemplateVersion fetchByT_V(long templateId,
+		java.lang.String version, boolean retrieveFromCache);
 
 	/**
 	* Removes the d d m template version where templateId = &#63; and version = &#63; from the database.
@@ -198,8 +193,8 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param version the version
 	* @return the d d m template version that was removed
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion removeByT_V(
-		long templateId, java.lang.String version)
+	public DDMTemplateVersion removeByT_V(long templateId,
+		java.lang.String version)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException;
 
 	/**
@@ -218,14 +213,14 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param status the status
 	* @return the matching d d m template versions
 	*/
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> findByT_S(
-		long templateId, int status);
+	public java.util.List<DDMTemplateVersion> findByT_S(long templateId,
+		int status);
 
 	/**
 	* Returns a range of all the d d m template versions where templateId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param templateId the template ID
@@ -234,14 +229,14 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param end the upper bound of the range of d d m template versions (not inclusive)
 	* @return the range of matching d d m template versions
 	*/
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> findByT_S(
-		long templateId, int status, int start, int end);
+	public java.util.List<DDMTemplateVersion> findByT_S(long templateId,
+		int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the d d m template versions where templateId = &#63; and status = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param templateId the template ID
@@ -251,9 +246,9 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m template versions
 	*/
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> findByT_S(
-		long templateId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator);
+	public java.util.List<DDMTemplateVersion> findByT_S(long templateId,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion> orderByComparator);
 
 	/**
 	* Returns the first d d m template version in the ordered set where templateId = &#63; and status = &#63;.
@@ -262,11 +257,10 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template version
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException if a matching d d m template version could not be found
+	* @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion findByT_S_First(
-		long templateId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator)
+	public DDMTemplateVersion findByT_S_First(long templateId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException;
 
 	/**
@@ -277,9 +271,8 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion fetchByT_S_First(
-		long templateId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator);
+	public DDMTemplateVersion fetchByT_S_First(long templateId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion> orderByComparator);
 
 	/**
 	* Returns the last d d m template version in the ordered set where templateId = &#63; and status = &#63;.
@@ -288,11 +281,10 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template version
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException if a matching d d m template version could not be found
+	* @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion findByT_S_Last(
-		long templateId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator)
+	public DDMTemplateVersion findByT_S_Last(long templateId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException;
 
 	/**
@@ -303,9 +295,8 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion fetchByT_S_Last(
-		long templateId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator);
+	public DDMTemplateVersion fetchByT_S_Last(long templateId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion> orderByComparator);
 
 	/**
 	* Returns the d d m template versions before and after the current d d m template version in the ordered set where templateId = &#63; and status = &#63;.
@@ -315,11 +306,11 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template version
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
+	* @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion[] findByT_S_PrevAndNext(
-		long templateVersionId, long templateId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator)
+	public DDMTemplateVersion[] findByT_S_PrevAndNext(long templateVersionId,
+		long templateId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion> orderByComparator)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException;
 
 	/**
@@ -344,8 +335,7 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	*
 	* @param ddmTemplateVersion the d d m template version
 	*/
-	public void cacheResult(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion ddmTemplateVersion);
+	public void cacheResult(DDMTemplateVersion ddmTemplateVersion);
 
 	/**
 	* Caches the d d m template versions in the entity cache if it is enabled.
@@ -353,7 +343,7 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param ddmTemplateVersions the d d m template versions
 	*/
 	public void cacheResult(
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> ddmTemplateVersions);
+		java.util.List<DDMTemplateVersion> ddmTemplateVersions);
 
 	/**
 	* Creates a new d d m template version with the primary key. Does not add the d d m template version to the database.
@@ -361,32 +351,28 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param templateVersionId the primary key for the new d d m template version
 	* @return the new d d m template version
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion create(
-		long templateVersionId);
+	public DDMTemplateVersion create(long templateVersionId);
 
 	/**
 	* Removes the d d m template version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param templateVersionId the primary key of the d d m template version
 	* @return the d d m template version that was removed
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
+	* @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion remove(
-		long templateVersionId)
+	public DDMTemplateVersion remove(long templateVersionId)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException;
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion ddmTemplateVersion);
+	public DDMTemplateVersion updateImpl(DDMTemplateVersion ddmTemplateVersion);
 
 	/**
-	* Returns the d d m template version with the primary key or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException} if it could not be found.
+	* Returns the d d m template version with the primary key or throws a {@link NoSuchTemplateVersionException} if it could not be found.
 	*
 	* @param templateVersionId the primary key of the d d m template version
 	* @return the d d m template version
-	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
+	* @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion findByPrimaryKey(
-		long templateVersionId)
+	public DDMTemplateVersion findByPrimaryKey(long templateVersionId)
 		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException;
 
 	/**
@@ -395,11 +381,10 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param templateVersionId the primary key of the d d m template version
 	* @return the d d m template version, or <code>null</code> if a d d m template version with the primary key could not be found
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion fetchByPrimaryKey(
-		long templateVersionId);
+	public DDMTemplateVersion fetchByPrimaryKey(long templateVersionId);
 
 	@Override
-	public java.util.Map<java.io.Serializable, com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> fetchByPrimaryKeys(
+	public java.util.Map<java.io.Serializable, DDMTemplateVersion> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
@@ -407,27 +392,26 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	*
 	* @return the d d m template versions
 	*/
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> findAll();
+	public java.util.List<DDMTemplateVersion> findAll();
 
 	/**
 	* Returns a range of all the d d m template versions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d m template versions
 	* @param end the upper bound of the range of d d m template versions (not inclusive)
 	* @return the range of d d m template versions
 	*/
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> findAll(
-		int start, int end);
+	public java.util.List<DDMTemplateVersion> findAll(int start, int end);
 
 	/**
 	* Returns an ordered range of all the d d m template versions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d m template versions
@@ -435,9 +419,8 @@ public interface DDMTemplateVersionPersistence extends BasePersistence<DDMTempla
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of d d m template versions
 	*/
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator);
+	public java.util.List<DDMTemplateVersion> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateVersion> orderByComparator);
 
 	/**
 	* Removes all the d d m template versions from the database.

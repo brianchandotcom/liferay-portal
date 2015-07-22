@@ -73,7 +73,7 @@ public abstract class ClassNameServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the class name remote service
 	 */
-	public com.liferay.portal.service.ClassNameService getClassNameService() {
+	public ClassNameService getClassNameService() {
 		return classNameService;
 	}
 
@@ -82,8 +82,7 @@ public abstract class ClassNameServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param classNameService the class name remote service
 	 */
-	public void setClassNameService(
-		com.liferay.portal.service.ClassNameService classNameService) {
+	public void setClassNameService(ClassNameService classNameService) {
 		this.classNameService = classNameService;
 	}
 
@@ -186,7 +185,7 @@ public abstract class ClassNameServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
 	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
 	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
-	protected com.liferay.portal.service.ClassNameService classNameService;
+	protected ClassNameService classNameService;
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

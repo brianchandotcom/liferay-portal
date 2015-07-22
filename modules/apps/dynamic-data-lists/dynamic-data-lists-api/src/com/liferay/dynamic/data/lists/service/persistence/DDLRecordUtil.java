@@ -118,8 +118,7 @@ public class DDLRecordUtil {
 	* @param uuid the uuid
 	* @return the matching d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByUuid(
-		java.lang.String uuid) {
+	public static List<DDLRecord> findByUuid(java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -127,7 +126,7 @@ public class DDLRecordUtil {
 	* Returns a range of all the d d l records where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -135,8 +134,8 @@ public class DDLRecordUtil {
 	* @param end the upper bound of the range of d d l records (not inclusive)
 	* @return the range of matching d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByUuid(
-		java.lang.String uuid, int start, int end) {
+	public static List<DDLRecord> findByUuid(java.lang.String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -144,7 +143,7 @@ public class DDLRecordUtil {
 	* Returns an ordered range of all the d d l records where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -153,9 +152,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByUuid(
-		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+	public static List<DDLRecord> findByUuid(java.lang.String uuid, int start,
+		int end, OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -167,9 +165,8 @@ public class DDLRecordUtil {
 	* @return the first matching d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord findByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator)
+	public static DDLRecord findByUuid_First(java.lang.String uuid,
+		OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
@@ -181,9 +178,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record, or <code>null</code> if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord fetchByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+	public static DDLRecord fetchByUuid_First(java.lang.String uuid,
+		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -195,9 +191,8 @@ public class DDLRecordUtil {
 	* @return the last matching d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord findByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator)
+	public static DDLRecord findByUuid_Last(java.lang.String uuid,
+		OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
@@ -209,9 +204,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record, or <code>null</code> if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord fetchByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+	public static DDLRecord fetchByUuid_Last(java.lang.String uuid,
+		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -224,9 +218,8 @@ public class DDLRecordUtil {
 	* @return the previous, current, and next d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a d d l record with the primary key could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord[] findByUuid_PrevAndNext(
-		long recordId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator)
+	public static DDLRecord[] findByUuid_PrevAndNext(long recordId,
+		java.lang.String uuid, OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(recordId, uuid, orderByComparator);
@@ -259,8 +252,7 @@ public class DDLRecordUtil {
 	* @return the matching d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord findByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static DDLRecord findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -272,8 +264,7 @@ public class DDLRecordUtil {
 	* @param groupId the group ID
 	* @return the matching d d l record, or <code>null</code> if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord fetchByUUID_G(
-		java.lang.String uuid, long groupId) {
+	public static DDLRecord fetchByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -285,8 +276,8 @@ public class DDLRecordUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d d l record, or <code>null</code> if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
+	public static DDLRecord fetchByUUID_G(java.lang.String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -297,8 +288,7 @@ public class DDLRecordUtil {
 	* @param groupId the group ID
 	* @return the d d l record that was removed
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord removeByUUID_G(
-		java.lang.String uuid, long groupId)
+	public static DDLRecord removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -321,8 +311,8 @@ public class DDLRecordUtil {
 	* @param companyId the company ID
 	* @return the matching d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByUuid_C(
-		java.lang.String uuid, long companyId) {
+	public static List<DDLRecord> findByUuid_C(java.lang.String uuid,
+		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -330,7 +320,7 @@ public class DDLRecordUtil {
 	* Returns a range of all the d d l records where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -339,8 +329,8 @@ public class DDLRecordUtil {
 	* @param end the upper bound of the range of d d l records (not inclusive)
 	* @return the range of matching d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end) {
+	public static List<DDLRecord> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -348,7 +338,7 @@ public class DDLRecordUtil {
 	* Returns an ordered range of all the d d l records where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -358,9 +348,9 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+	public static List<DDLRecord> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -374,9 +364,8 @@ public class DDLRecordUtil {
 	* @return the first matching d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord findByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator)
+	public static DDLRecord findByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -390,9 +379,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record, or <code>null</code> if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+	public static DDLRecord fetchByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -406,9 +394,8 @@ public class DDLRecordUtil {
 	* @return the last matching d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator)
+	public static DDLRecord findByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -422,9 +409,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record, or <code>null</code> if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+	public static DDLRecord fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -439,9 +425,9 @@ public class DDLRecordUtil {
 	* @return the previous, current, and next d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a d d l record with the primary key could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord[] findByUuid_C_PrevAndNext(
-		long recordId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator)
+	public static DDLRecord[] findByUuid_C_PrevAndNext(long recordId,
+		java.lang.String uuid, long companyId,
+		OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(recordId, uuid, companyId,
@@ -475,8 +461,7 @@ public class DDLRecordUtil {
 	* @param companyId the company ID
 	* @return the matching d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByCompanyId(
-		long companyId) {
+	public static List<DDLRecord> findByCompanyId(long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
@@ -484,7 +469,7 @@ public class DDLRecordUtil {
 	* Returns a range of all the d d l records where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -492,8 +477,8 @@ public class DDLRecordUtil {
 	* @param end the upper bound of the range of d d l records (not inclusive)
 	* @return the range of matching d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByCompanyId(
-		long companyId, int start, int end) {
+	public static List<DDLRecord> findByCompanyId(long companyId, int start,
+		int end) {
 		return getPersistence().findByCompanyId(companyId, start, end);
 	}
 
@@ -501,7 +486,7 @@ public class DDLRecordUtil {
 	* Returns an ordered range of all the d d l records where companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -510,9 +495,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+	public static List<DDLRecord> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -525,9 +509,8 @@ public class DDLRecordUtil {
 	* @return the first matching d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord findByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator)
+	public static DDLRecord findByCompanyId_First(long companyId,
+		OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
@@ -540,9 +523,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record, or <code>null</code> if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+	public static DDLRecord fetchByCompanyId_First(long companyId,
+		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -555,9 +537,8 @@ public class DDLRecordUtil {
 	* @return the last matching d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord findByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator)
+	public static DDLRecord findByCompanyId_Last(long companyId,
+		OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
@@ -570,9 +551,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record, or <code>null</code> if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+	public static DDLRecord fetchByCompanyId_Last(long companyId,
+		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -586,9 +566,8 @@ public class DDLRecordUtil {
 	* @return the previous, current, and next d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a d d l record with the primary key could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord[] findByCompanyId_PrevAndNext(
-		long recordId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator)
+	public static DDLRecord[] findByCompanyId_PrevAndNext(long recordId,
+		long companyId, OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(recordId, companyId,
@@ -620,8 +599,7 @@ public class DDLRecordUtil {
 	* @param recordSetId the record set ID
 	* @return the matching d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByRecordSetId(
-		long recordSetId) {
+	public static List<DDLRecord> findByRecordSetId(long recordSetId) {
 		return getPersistence().findByRecordSetId(recordSetId);
 	}
 
@@ -629,7 +607,7 @@ public class DDLRecordUtil {
 	* Returns a range of all the d d l records where recordSetId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param recordSetId the record set ID
@@ -637,8 +615,8 @@ public class DDLRecordUtil {
 	* @param end the upper bound of the range of d d l records (not inclusive)
 	* @return the range of matching d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByRecordSetId(
-		long recordSetId, int start, int end) {
+	public static List<DDLRecord> findByRecordSetId(long recordSetId,
+		int start, int end) {
 		return getPersistence().findByRecordSetId(recordSetId, start, end);
 	}
 
@@ -646,7 +624,7 @@ public class DDLRecordUtil {
 	* Returns an ordered range of all the d d l records where recordSetId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param recordSetId the record set ID
@@ -655,9 +633,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByRecordSetId(
-		long recordSetId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+	public static List<DDLRecord> findByRecordSetId(long recordSetId,
+		int start, int end, OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .findByRecordSetId(recordSetId, start, end, orderByComparator);
 	}
@@ -670,9 +647,8 @@ public class DDLRecordUtil {
 	* @return the first matching d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord findByRecordSetId_First(
-		long recordSetId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator)
+	public static DDLRecord findByRecordSetId_First(long recordSetId,
+		OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByRecordSetId_First(recordSetId, orderByComparator);
@@ -685,9 +661,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record, or <code>null</code> if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord fetchByRecordSetId_First(
-		long recordSetId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+	public static DDLRecord fetchByRecordSetId_First(long recordSetId,
+		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByRecordSetId_First(recordSetId, orderByComparator);
 	}
@@ -700,9 +675,8 @@ public class DDLRecordUtil {
 	* @return the last matching d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord findByRecordSetId_Last(
-		long recordSetId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator)
+	public static DDLRecord findByRecordSetId_Last(long recordSetId,
+		OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByRecordSetId_Last(recordSetId, orderByComparator);
@@ -715,9 +689,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record, or <code>null</code> if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord fetchByRecordSetId_Last(
-		long recordSetId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+	public static DDLRecord fetchByRecordSetId_Last(long recordSetId,
+		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByRecordSetId_Last(recordSetId, orderByComparator);
 	}
@@ -731,9 +704,8 @@ public class DDLRecordUtil {
 	* @return the previous, current, and next d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a d d l record with the primary key could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord[] findByRecordSetId_PrevAndNext(
-		long recordId, long recordSetId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator)
+	public static DDLRecord[] findByRecordSetId_PrevAndNext(long recordId,
+		long recordSetId, OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByRecordSetId_PrevAndNext(recordId, recordSetId,
@@ -766,8 +738,7 @@ public class DDLRecordUtil {
 	* @param userId the user ID
 	* @return the matching d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByR_U(
-		long recordSetId, long userId) {
+	public static List<DDLRecord> findByR_U(long recordSetId, long userId) {
 		return getPersistence().findByR_U(recordSetId, userId);
 	}
 
@@ -775,7 +746,7 @@ public class DDLRecordUtil {
 	* Returns a range of all the d d l records where recordSetId = &#63; and userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param recordSetId the record set ID
@@ -784,8 +755,8 @@ public class DDLRecordUtil {
 	* @param end the upper bound of the range of d d l records (not inclusive)
 	* @return the range of matching d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByR_U(
-		long recordSetId, long userId, int start, int end) {
+	public static List<DDLRecord> findByR_U(long recordSetId, long userId,
+		int start, int end) {
 		return getPersistence().findByR_U(recordSetId, userId, start, end);
 	}
 
@@ -793,7 +764,7 @@ public class DDLRecordUtil {
 	* Returns an ordered range of all the d d l records where recordSetId = &#63; and userId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param recordSetId the record set ID
@@ -803,9 +774,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByR_U(
-		long recordSetId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+	public static List<DDLRecord> findByR_U(long recordSetId, long userId,
+		int start, int end, OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .findByR_U(recordSetId, userId, start, end, orderByComparator);
 	}
@@ -819,9 +789,8 @@ public class DDLRecordUtil {
 	* @return the first matching d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord findByR_U_First(
-		long recordSetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator)
+	public static DDLRecord findByR_U_First(long recordSetId, long userId,
+		OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByR_U_First(recordSetId, userId, orderByComparator);
@@ -835,9 +804,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record, or <code>null</code> if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord fetchByR_U_First(
-		long recordSetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+	public static DDLRecord fetchByR_U_First(long recordSetId, long userId,
+		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_U_First(recordSetId, userId, orderByComparator);
 	}
@@ -851,9 +819,8 @@ public class DDLRecordUtil {
 	* @return the last matching d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord findByR_U_Last(
-		long recordSetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator)
+	public static DDLRecord findByR_U_Last(long recordSetId, long userId,
+		OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByR_U_Last(recordSetId, userId, orderByComparator);
@@ -867,9 +834,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record, or <code>null</code> if a matching d d l record could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord fetchByR_U_Last(
-		long recordSetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+	public static DDLRecord fetchByR_U_Last(long recordSetId, long userId,
+		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence()
 				   .fetchByR_U_Last(recordSetId, userId, orderByComparator);
 	}
@@ -884,9 +850,9 @@ public class DDLRecordUtil {
 	* @return the previous, current, and next d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a d d l record with the primary key could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord[] findByR_U_PrevAndNext(
-		long recordId, long recordSetId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator)
+	public static DDLRecord[] findByR_U_PrevAndNext(long recordId,
+		long recordSetId, long userId,
+		OrderByComparator<DDLRecord> orderByComparator)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence()
 				   .findByR_U_PrevAndNext(recordId, recordSetId, userId,
@@ -919,8 +885,7 @@ public class DDLRecordUtil {
 	*
 	* @param ddlRecord the d d l record
 	*/
-	public static void cacheResult(
-		com.liferay.dynamic.data.lists.model.DDLRecord ddlRecord) {
+	public static void cacheResult(DDLRecord ddlRecord) {
 		getPersistence().cacheResult(ddlRecord);
 	}
 
@@ -929,8 +894,7 @@ public class DDLRecordUtil {
 	*
 	* @param ddlRecords the d d l records
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> ddlRecords) {
+	public static void cacheResult(List<DDLRecord> ddlRecords) {
 		getPersistence().cacheResult(ddlRecords);
 	}
 
@@ -940,8 +904,7 @@ public class DDLRecordUtil {
 	* @param recordId the primary key for the new d d l record
 	* @return the new d d l record
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord create(
-		long recordId) {
+	public static DDLRecord create(long recordId) {
 		return getPersistence().create(recordId);
 	}
 
@@ -952,14 +915,12 @@ public class DDLRecordUtil {
 	* @return the d d l record that was removed
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a d d l record with the primary key could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord remove(
-		long recordId)
+	public static DDLRecord remove(long recordId)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence().remove(recordId);
 	}
 
-	public static com.liferay.dynamic.data.lists.model.DDLRecord updateImpl(
-		com.liferay.dynamic.data.lists.model.DDLRecord ddlRecord) {
+	public static DDLRecord updateImpl(DDLRecord ddlRecord) {
 		return getPersistence().updateImpl(ddlRecord);
 	}
 
@@ -970,8 +931,7 @@ public class DDLRecordUtil {
 	* @return the d d l record
 	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a d d l record with the primary key could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord findByPrimaryKey(
-		long recordId)
+	public static DDLRecord findByPrimaryKey(long recordId)
 		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
 		return getPersistence().findByPrimaryKey(recordId);
 	}
@@ -982,12 +942,11 @@ public class DDLRecordUtil {
 	* @param recordId the primary key of the d d l record
 	* @return the d d l record, or <code>null</code> if a d d l record with the primary key could not be found
 	*/
-	public static com.liferay.dynamic.data.lists.model.DDLRecord fetchByPrimaryKey(
-		long recordId) {
+	public static DDLRecord fetchByPrimaryKey(long recordId) {
 		return getPersistence().fetchByPrimaryKey(recordId);
 	}
 
-	public static java.util.Map<java.io.Serializable, com.liferay.dynamic.data.lists.model.DDLRecord> fetchByPrimaryKeys(
+	public static java.util.Map<java.io.Serializable, DDLRecord> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
@@ -997,7 +956,7 @@ public class DDLRecordUtil {
 	*
 	* @return the d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findAll() {
+	public static List<DDLRecord> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -1005,15 +964,14 @@ public class DDLRecordUtil {
 	* Returns a range of all the d d l records.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d l records
 	* @param end the upper bound of the range of d d l records (not inclusive)
 	* @return the range of d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findAll(
-		int start, int end) {
+	public static List<DDLRecord> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -1021,7 +979,7 @@ public class DDLRecordUtil {
 	* Returns an ordered range of all the d d l records.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d l records
@@ -1029,9 +987,8 @@ public class DDLRecordUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of d d l records
 	*/
-	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator) {
+	public static List<DDLRecord> findAll(int start, int end,
+		OrderByComparator<DDLRecord> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 

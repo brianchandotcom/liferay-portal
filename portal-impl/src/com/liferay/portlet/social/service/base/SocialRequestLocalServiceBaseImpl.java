@@ -362,7 +362,7 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	 *
 	 * @return the social request local service
 	 */
-	public com.liferay.portlet.social.service.SocialRequestLocalService getSocialRequestLocalService() {
+	public SocialRequestLocalService getSocialRequestLocalService() {
 		return socialRequestLocalService;
 	}
 
@@ -372,7 +372,7 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	 * @param socialRequestLocalService the social request local service
 	 */
 	public void setSocialRequestLocalService(
-		com.liferay.portlet.social.service.SocialRequestLocalService socialRequestLocalService) {
+		SocialRequestLocalService socialRequestLocalService) {
 		this.socialRequestLocalService = socialRequestLocalService;
 	}
 
@@ -646,7 +646,7 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.social.service.SocialRequestLocalService.class)
-	protected com.liferay.portlet.social.service.SocialRequestLocalService socialRequestLocalService;
+	protected SocialRequestLocalService socialRequestLocalService;
 	@BeanReference(type = com.liferay.portlet.social.service.SocialRequestService.class)
 	protected com.liferay.portlet.social.service.SocialRequestService socialRequestService;
 	@BeanReference(type = SocialRequestPersistence.class)

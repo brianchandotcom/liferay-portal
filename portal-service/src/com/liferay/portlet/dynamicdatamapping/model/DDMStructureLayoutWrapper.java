@@ -159,7 +159,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	* @return the create date of this d d m structure layout
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _ddmStructureLayout.getCreateDate();
 	}
 
@@ -199,7 +199,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	* @return the modified date of this d d m structure layout
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _ddmStructureLayout.getModifiedDate();
 	}
 
@@ -324,7 +324,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	* @param createDate the create date of this d d m structure layout
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_ddmStructureLayout.setCreateDate(createDate);
 	}
 
@@ -372,7 +372,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	* @param modifiedDate the modified date of this d d m structure layout
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
+	public void setModifiedDate(Date modifiedDate) {
 		_ddmStructureLayout.setModifiedDate(modifiedDate);
 	}
 

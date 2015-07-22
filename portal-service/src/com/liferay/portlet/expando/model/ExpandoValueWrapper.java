@@ -361,13 +361,13 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String[]> getStringArrayMap()
+	public Map<java.util.Locale, java.lang.String[]> getStringArrayMap()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValue.getStringArrayMap();
 	}
 
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getStringMap()
+	public Map<java.util.Locale, java.lang.String> getStringMap()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValue.getStringMap();
 	}
@@ -654,15 +654,14 @@ public class ExpandoValueWrapper implements ExpandoValue,
 
 	@Override
 	public void setStringArrayMap(
-		java.util.Map<java.util.Locale, java.lang.String[]> dataMap,
+		Map<java.util.Locale, java.lang.String[]> dataMap,
 		java.util.Locale defaultLocale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoValue.setStringArrayMap(dataMap, defaultLocale);
 	}
 
 	@Override
-	public void setStringMap(
-		java.util.Map<java.util.Locale, java.lang.String> dataMap,
+	public void setStringMap(Map<java.util.Locale, java.lang.String> dataMap,
 		java.util.Locale defaultLocale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoValue.setStringMap(dataMap, defaultLocale);

@@ -317,7 +317,7 @@ public abstract class CompanyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the company local service
 	 */
-	public com.liferay.portal.service.CompanyLocalService getCompanyLocalService() {
+	public CompanyLocalService getCompanyLocalService() {
 		return companyLocalService;
 	}
 
@@ -326,8 +326,7 @@ public abstract class CompanyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param companyLocalService the company local service
 	 */
-	public void setCompanyLocalService(
-		com.liferay.portal.service.CompanyLocalService companyLocalService) {
+	public void setCompanyLocalService(CompanyLocalService companyLocalService) {
 		this.companyLocalService = companyLocalService;
 	}
 
@@ -1389,7 +1388,7 @@ public abstract class CompanyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.CompanyLocalService.class)
-	protected com.liferay.portal.service.CompanyLocalService companyLocalService;
+	protected CompanyLocalService companyLocalService;
 	@BeanReference(type = com.liferay.portal.service.CompanyService.class)
 	protected com.liferay.portal.service.CompanyService companyService;
 	@BeanReference(type = CompanyPersistence.class)

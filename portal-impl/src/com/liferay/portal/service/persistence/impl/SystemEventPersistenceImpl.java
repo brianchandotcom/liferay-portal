@@ -117,7 +117,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * Returns a range of all the system events where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -134,7 +134,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * Returns an ordered range of all the system events where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -247,7 +247,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching system event
-	 * @throws com.liferay.portal.NoSuchSystemEventException if a matching system event could not be found
+	 * @throws NoSuchSystemEventException if a matching system event could not be found
 	 */
 	@Override
 	public SystemEvent findByGroupId_First(long groupId,
@@ -297,7 +297,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching system event
-	 * @throws com.liferay.portal.NoSuchSystemEventException if a matching system event could not be found
+	 * @throws NoSuchSystemEventException if a matching system event could not be found
 	 */
 	@Override
 	public SystemEvent findByGroupId_Last(long groupId,
@@ -354,7 +354,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next system event
-	 * @throws com.liferay.portal.NoSuchSystemEventException if a system event with the primary key could not be found
+	 * @throws NoSuchSystemEventException if a system event with the primary key could not be found
 	 */
 	@Override
 	public SystemEvent[] findByGroupId_PrevAndNext(long systemEventId,
@@ -596,7 +596,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * Returns a range of all the system events where groupId = &#63; and systemEventSetKey = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -615,7 +615,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * Returns an ordered range of all the system events where groupId = &#63; and systemEventSetKey = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -739,7 +739,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param systemEventSetKey the system event set key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching system event
-	 * @throws com.liferay.portal.NoSuchSystemEventException if a matching system event could not be found
+	 * @throws NoSuchSystemEventException if a matching system event could not be found
 	 */
 	@Override
 	public SystemEvent findByG_S_First(long groupId, long systemEventSetKey,
@@ -795,7 +795,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param systemEventSetKey the system event set key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching system event
-	 * @throws com.liferay.portal.NoSuchSystemEventException if a matching system event could not be found
+	 * @throws NoSuchSystemEventException if a matching system event could not be found
 	 */
 	@Override
 	public SystemEvent findByG_S_Last(long groupId, long systemEventSetKey,
@@ -858,7 +858,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param systemEventSetKey the system event set key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next system event
-	 * @throws com.liferay.portal.NoSuchSystemEventException if a system event with the primary key could not be found
+	 * @throws NoSuchSystemEventException if a system event with the primary key could not be found
 	 */
 	@Override
 	public SystemEvent[] findByG_S_PrevAndNext(long systemEventId,
@@ -1119,7 +1119,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * Returns a range of all the system events where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1139,7 +1139,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * Returns an ordered range of all the system events where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1271,7 +1271,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching system event
-	 * @throws com.liferay.portal.NoSuchSystemEventException if a matching system event could not be found
+	 * @throws NoSuchSystemEventException if a matching system event could not be found
 	 */
 	@Override
 	public SystemEvent findByG_C_C_First(long groupId, long classNameId,
@@ -1332,7 +1332,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching system event
-	 * @throws com.liferay.portal.NoSuchSystemEventException if a matching system event could not be found
+	 * @throws NoSuchSystemEventException if a matching system event could not be found
 	 */
 	@Override
 	public SystemEvent findByG_C_C_Last(long groupId, long classNameId,
@@ -1400,7 +1400,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next system event
-	 * @throws com.liferay.portal.NoSuchSystemEventException if a system event with the primary key could not be found
+	 * @throws NoSuchSystemEventException if a system event with the primary key could not be found
 	 */
 	@Override
 	public SystemEvent[] findByG_C_C_PrevAndNext(long systemEventId,
@@ -1678,7 +1678,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * Returns a range of all the system events where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1700,7 +1700,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * Returns an ordered range of all the system events where groupId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1839,7 +1839,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching system event
-	 * @throws com.liferay.portal.NoSuchSystemEventException if a matching system event could not be found
+	 * @throws NoSuchSystemEventException if a matching system event could not be found
 	 */
 	@Override
 	public SystemEvent findByG_C_C_T_First(long groupId, long classNameId,
@@ -1905,7 +1905,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching system event
-	 * @throws com.liferay.portal.NoSuchSystemEventException if a matching system event could not be found
+	 * @throws NoSuchSystemEventException if a matching system event could not be found
 	 */
 	@Override
 	public SystemEvent findByG_C_C_T_Last(long groupId, long classNameId,
@@ -1978,7 +1978,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next system event
-	 * @throws com.liferay.portal.NoSuchSystemEventException if a system event with the primary key could not be found
+	 * @throws NoSuchSystemEventException if a system event with the primary key could not be found
 	 */
 	@Override
 	public SystemEvent[] findByG_C_C_T_PrevAndNext(long systemEventId,
@@ -2320,7 +2320,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 *
 	 * @param systemEventId the primary key of the system event
 	 * @return the system event that was removed
-	 * @throws com.liferay.portal.NoSuchSystemEventException if a system event with the primary key could not be found
+	 * @throws NoSuchSystemEventException if a system event with the primary key could not be found
 	 */
 	@Override
 	public SystemEvent remove(long systemEventId)
@@ -2333,7 +2333,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 *
 	 * @param primaryKey the primary key of the system event
 	 * @return the system event that was removed
-	 * @throws com.liferay.portal.NoSuchSystemEventException if a system event with the primary key could not be found
+	 * @throws NoSuchSystemEventException if a system event with the primary key could not be found
 	 */
 	@Override
 	public SystemEvent remove(Serializable primaryKey)
@@ -2401,8 +2401,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	}
 
 	@Override
-	public SystemEvent updateImpl(
-		com.liferay.portal.model.SystemEvent systemEvent) {
+	public SystemEvent updateImpl(SystemEvent systemEvent) {
 		systemEvent = toUnwrappedModel(systemEvent);
 
 		boolean isNew = systemEvent.isNew();
@@ -2567,7 +2566,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 *
 	 * @param primaryKey the primary key of the system event
 	 * @return the system event
-	 * @throws com.liferay.portal.NoSuchSystemEventException if a system event with the primary key could not be found
+	 * @throws NoSuchSystemEventException if a system event with the primary key could not be found
 	 */
 	@Override
 	public SystemEvent findByPrimaryKey(Serializable primaryKey)
@@ -2587,11 +2586,11 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	}
 
 	/**
-	 * Returns the system event with the primary key or throws a {@link com.liferay.portal.NoSuchSystemEventException} if it could not be found.
+	 * Returns the system event with the primary key or throws a {@link NoSuchSystemEventException} if it could not be found.
 	 *
 	 * @param systemEventId the primary key of the system event
 	 * @return the system event
-	 * @throws com.liferay.portal.NoSuchSystemEventException if a system event with the primary key could not be found
+	 * @throws NoSuchSystemEventException if a system event with the primary key could not be found
 	 */
 	@Override
 	public SystemEvent findByPrimaryKey(long systemEventId)
@@ -2762,7 +2761,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * Returns a range of all the system events.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of system events
@@ -2778,7 +2777,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * Returns an ordered range of all the system events.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SystemEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of system events

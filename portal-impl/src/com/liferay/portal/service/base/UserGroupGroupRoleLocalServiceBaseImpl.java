@@ -317,7 +317,7 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 	 *
 	 * @return the user group group role local service
 	 */
-	public com.liferay.portal.service.UserGroupGroupRoleLocalService getUserGroupGroupRoleLocalService() {
+	public UserGroupGroupRoleLocalService getUserGroupGroupRoleLocalService() {
 		return userGroupGroupRoleLocalService;
 	}
 
@@ -327,7 +327,7 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 	 * @param userGroupGroupRoleLocalService the user group group role local service
 	 */
 	public void setUserGroupGroupRoleLocalService(
-		com.liferay.portal.service.UserGroupGroupRoleLocalService userGroupGroupRoleLocalService) {
+		UserGroupGroupRoleLocalService userGroupGroupRoleLocalService) {
 		this.userGroupGroupRoleLocalService = userGroupGroupRoleLocalService;
 	}
 
@@ -619,7 +619,7 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portal.service.UserGroupGroupRoleLocalService.class)
-	protected com.liferay.portal.service.UserGroupGroupRoleLocalService userGroupGroupRoleLocalService;
+	protected UserGroupGroupRoleLocalService userGroupGroupRoleLocalService;
 	@BeanReference(type = com.liferay.portal.service.UserGroupGroupRoleService.class)
 	protected com.liferay.portal.service.UserGroupGroupRoleService userGroupGroupRoleService;
 	@BeanReference(type = UserGroupGroupRolePersistence.class)

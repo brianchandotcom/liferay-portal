@@ -308,7 +308,7 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 	 *
 	 * @return the social activity limit local service
 	 */
-	public com.liferay.portlet.social.service.SocialActivityLimitLocalService getSocialActivityLimitLocalService() {
+	public SocialActivityLimitLocalService getSocialActivityLimitLocalService() {
 		return socialActivityLimitLocalService;
 	}
 
@@ -318,7 +318,7 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 	 * @param socialActivityLimitLocalService the social activity limit local service
 	 */
 	public void setSocialActivityLimitLocalService(
-		com.liferay.portlet.social.service.SocialActivityLimitLocalService socialActivityLimitLocalService) {
+		SocialActivityLimitLocalService socialActivityLimitLocalService) {
 		this.socialActivityLimitLocalService = socialActivityLimitLocalService;
 	}
 
@@ -571,7 +571,7 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.social.service.SocialActivityLimitLocalService.class)
-	protected com.liferay.portlet.social.service.SocialActivityLimitLocalService socialActivityLimitLocalService;
+	protected SocialActivityLimitLocalService socialActivityLimitLocalService;
 	@BeanReference(type = SocialActivityLimitPersistence.class)
 	protected SocialActivityLimitPersistence socialActivityLimitPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)

@@ -257,7 +257,7 @@ public class DDMTemplateVersionWrapper implements DDMTemplateVersion,
 	* @return the create date of this d d m template version
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _ddmTemplateVersion.getCreateDate();
 	}
 
@@ -340,7 +340,7 @@ public class DDMTemplateVersionWrapper implements DDMTemplateVersion,
 	* @return the locales and localized descriptions of this d d m template version
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
 		return _ddmTemplateVersion.getDescriptionMap();
 	}
 
@@ -442,7 +442,7 @@ public class DDMTemplateVersionWrapper implements DDMTemplateVersion,
 	* @return the locales and localized names of this d d m template version
 	*/
 	@Override
-	public java.util.Map<java.util.Locale, java.lang.String> getNameMap() {
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
 		return _ddmTemplateVersion.getNameMap();
 	}
 
@@ -517,7 +517,7 @@ public class DDMTemplateVersionWrapper implements DDMTemplateVersion,
 	* @return the status date of this d d m template version
 	*/
 	@Override
-	public java.util.Date getStatusDate() {
+	public Date getStatusDate() {
 		return _ddmTemplateVersion.getStatusDate();
 	}
 
@@ -751,7 +751,7 @@ public class DDMTemplateVersionWrapper implements DDMTemplateVersion,
 	* @param createDate the create date of this d d m template version
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_ddmTemplateVersion.setCreateDate(createDate);
 	}
 
@@ -802,7 +802,7 @@ public class DDMTemplateVersionWrapper implements DDMTemplateVersion,
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
+		Map<java.util.Locale, java.lang.String> descriptionMap) {
 		_ddmTemplateVersion.setDescriptionMap(descriptionMap);
 	}
 
@@ -814,7 +814,7 @@ public class DDMTemplateVersionWrapper implements DDMTemplateVersion,
 	*/
 	@Override
 	public void setDescriptionMap(
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Locale defaultLocale) {
 		_ddmTemplateVersion.setDescriptionMap(descriptionMap, defaultLocale);
 	}
@@ -902,8 +902,7 @@ public class DDMTemplateVersionWrapper implements DDMTemplateVersion,
 	* @param nameMap the locales and localized names of this d d m template version
 	*/
 	@Override
-	public void setNameMap(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap) {
+	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
 		_ddmTemplateVersion.setNameMap(nameMap);
 	}
 
@@ -914,8 +913,7 @@ public class DDMTemplateVersionWrapper implements DDMTemplateVersion,
 	* @param defaultLocale the default locale
 	*/
 	@Override
-	public void setNameMap(
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Locale defaultLocale) {
 		_ddmTemplateVersion.setNameMap(nameMap, defaultLocale);
 	}
@@ -996,7 +994,7 @@ public class DDMTemplateVersionWrapper implements DDMTemplateVersion,
 	* @param statusDate the status date of this d d m template version
 	*/
 	@Override
-	public void setStatusDate(java.util.Date statusDate) {
+	public void setStatusDate(Date statusDate) {
 		_ddmTemplateVersion.setStatusDate(statusDate);
 	}
 

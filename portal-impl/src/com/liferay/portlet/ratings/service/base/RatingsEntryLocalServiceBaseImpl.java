@@ -410,7 +410,7 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	 *
 	 * @return the ratings entry local service
 	 */
-	public com.liferay.portlet.ratings.service.RatingsEntryLocalService getRatingsEntryLocalService() {
+	public RatingsEntryLocalService getRatingsEntryLocalService() {
 		return ratingsEntryLocalService;
 	}
 
@@ -420,7 +420,7 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	 * @param ratingsEntryLocalService the ratings entry local service
 	 */
 	public void setRatingsEntryLocalService(
-		com.liferay.portlet.ratings.service.RatingsEntryLocalService ratingsEntryLocalService) {
+		RatingsEntryLocalService ratingsEntryLocalService) {
 		this.ratingsEntryLocalService = ratingsEntryLocalService;
 	}
 
@@ -975,7 +975,7 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsEntryLocalService.class)
-	protected com.liferay.portlet.ratings.service.RatingsEntryLocalService ratingsEntryLocalService;
+	protected RatingsEntryLocalService ratingsEntryLocalService;
 	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsEntryService.class)
 	protected com.liferay.portlet.ratings.service.RatingsEntryService ratingsEntryService;
 	@BeanReference(type = RatingsEntryPersistence.class)

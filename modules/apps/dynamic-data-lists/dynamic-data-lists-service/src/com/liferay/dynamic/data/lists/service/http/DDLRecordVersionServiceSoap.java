@@ -25,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.dynamic.data.lists.service.DDLRecordVersionServiceUtil} service utility. The
+ * {@link DDLRecordVersionServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -60,7 +60,7 @@ import java.rmi.RemoteException;
  * @author Brian Wing Shun Chan
  * @see DDLRecordVersionServiceHttp
  * @see com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap
- * @see com.liferay.dynamic.data.lists.service.DDLRecordVersionServiceUtil
+ * @see DDLRecordVersionServiceUtil
  * @generated
  */
 @ProviderType

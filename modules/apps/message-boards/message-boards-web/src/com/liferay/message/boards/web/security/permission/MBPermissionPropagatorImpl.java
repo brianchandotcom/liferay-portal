@@ -27,14 +27,16 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalService;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Kenneth Chang
@@ -63,7 +65,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		else if (className.equals(MBMessage.class.getName())) {
 			long messageId = GetterUtil.getLong(primKey);
 
-			MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
+			MBMessage message = _mbMessageLocalService.getMessage(messageId);
 
 			if (message.isRoot()) {
 				propagateThreadRolePermissions(
@@ -96,11 +98,10 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 
 		final long categoryId = GetterUtil.getLong(primKey);
 
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(
-			categoryId);
+		MBCategory category = _mbCategoryLocalService.getCategory(categoryId);
 
 		List<Object> categoriesAndThreads =
-			MBCategoryLocalServiceUtil.getCategoriesAndThreads(
+			_mbCategoryLocalService.getCategoriesAndThreads(
 				category.getGroupId(), categoryId);
 
 		for (Object categoryOrThread : categoriesAndThreads) {
@@ -108,7 +109,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 				MBThread thread = (MBThread)categoryOrThread;
 
 				List<MBMessage> messages =
-					MBMessageLocalServiceUtil.getThreadMessages(
+					_mbMessageLocalService.getThreadMessages(
 						thread.getThreadId(), WorkflowConstants.STATUS_ANY);
 
 				for (MBMessage message : messages) {
@@ -124,7 +125,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 
 				categoryIds.add(category.getCategoryId());
 
-				categoryIds = MBCategoryLocalServiceUtil.getSubcategoryIds(
+				categoryIds = _mbCategoryLocalService.getSubcategoryIds(
 					categoryIds, category.getGroupId(),
 					category.getCategoryId());
 
@@ -134,7 +135,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 						roleIds);
 
 					ActionableDynamicQuery actionableDynamicQuery =
-						MBMessageLocalServiceUtil.getActionableDynamicQuery();
+						_mbMessageLocalService.getActionableDynamicQuery();
 
 					actionableDynamicQuery.setAddCriteriaMethod(
 						new ActionableDynamicQuery.AddCriteriaMethod() {
@@ -179,7 +180,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 
 		final long groupId = GetterUtil.getLong(primKey);
 
-		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
+		List<MBCategory> categories = _mbCategoryLocalService.getCategories(
 			groupId);
 
 		for (MBCategory category : categories) {
@@ -189,7 +190,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 		}
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			MBMessageLocalServiceUtil.getActionableDynamicQuery();
+			_mbMessageLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setGroupId(groupId);
 		actionableDynamicQuery.setPerformActionMethod(
@@ -228,7 +229,7 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 			long threadId, long[] roleIds)
 		throws PortalException {
 
-		List<MBMessage> messages = MBMessageLocalServiceUtil.getThreadMessages(
+		List<MBMessage> messages = _mbMessageLocalService.getThreadMessages(
 			threadId, WorkflowConstants.STATUS_ANY);
 
 		for (MBMessage message : messages) {
@@ -237,5 +238,22 @@ public class MBPermissionPropagatorImpl extends BasePermissionPropagator {
 				roleIds);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBCategoryLocalService(
+		MBCategoryLocalService mbCategoryLocalService) {
+
+		_mbCategoryLocalService = mbCategoryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	private MBCategoryLocalService _mbCategoryLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
 
 }

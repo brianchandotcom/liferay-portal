@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.lists.upgrade.v1_0_0;
 
+import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
+
 /**
  * @author Levente Hudak
  */

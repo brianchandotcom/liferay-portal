@@ -22,6 +22,7 @@
 		<property name="recordSetId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="displayIndex" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.dynamic.data.lists.model.impl.DDLRecordSetImpl" table="DDLRecordSet">
 		<id name="recordSetId" type="long">
@@ -40,6 +41,7 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="minDisplayRows" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="scope" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionImpl" table="DDLRecordVersion">
 		<id name="recordVersionId" type="long">

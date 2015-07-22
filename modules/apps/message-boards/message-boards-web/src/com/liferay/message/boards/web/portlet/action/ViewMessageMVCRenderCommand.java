@@ -121,12 +121,12 @@ public class ViewMessageMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WebKeys.MESSAGE_BOARDS_MESSAGE, messageDisplay);
 
-			return "/html/portlet/message_boards/view_message.jsp";
+			return "/message_boards/view_message.jsp";
 		}
 		catch (NoSuchMessageException | PrincipalException e) {
 			SessionErrors.add(renderRequest, e.getClass());
 
-			return "/html/portlet/message_board/error.jsp";
+			return "/message_boards/error.jsp";
 		}
 		catch (RuntimeException re) {
 			throw re;

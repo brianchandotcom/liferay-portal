@@ -34,7 +34,7 @@ public class EditMessageMVCRenderCommand extends GetMessageMVCRenderCommand {
 
 	@Override
 	protected String getPath() {
-		return "/html/portlet/message_boards/edit_message.jsp";
+		return "/message_boards/edit_message.jsp";
 	}
 
 }

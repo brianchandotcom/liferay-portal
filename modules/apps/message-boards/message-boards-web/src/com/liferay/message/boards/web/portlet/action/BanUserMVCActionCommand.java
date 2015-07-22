@@ -73,7 +73,7 @@ public class BanUserMVCActionCommand extends BaseMVCActionCommand {
 			SessionErrors.add(actionRequest, pe.getClass());
 
 			actionResponse.setRenderParameter(
-				"mvcPath", "/html/portlet/message_boards/error.jsp");
+				"mvcPath", "/message_boards/error.jsp");
 		}
 	}
 

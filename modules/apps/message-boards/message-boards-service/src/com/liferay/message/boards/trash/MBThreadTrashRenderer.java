@@ -73,7 +73,7 @@ public class MBThreadTrashRenderer extends BaseJSPTrashRenderer {
 
 	@Override
 	public String getJspPath(HttpServletRequest request, String template) {
-		return "/html/portlet/message_boards/view_thread_tree.jsp";
+		return "/message_boards/view_thread_tree.jsp";
 	}
 
 	@Override

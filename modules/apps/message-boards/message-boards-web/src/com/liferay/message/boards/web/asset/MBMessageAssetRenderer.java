@@ -79,7 +79,7 @@ public class MBMessageAssetRenderer
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
-			return "/html/portlet/message_boards/asset/" + template + ".jsp";
+			return "/message_boards/asset/" + template + ".jsp";
 		}
 		else {
 			return null;

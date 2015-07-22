@@ -53,6 +53,7 @@ public class WikiPageSoap implements Serializable {
 		soapModel.setHead(model.getHead());
 		soapModel.setParentTitle(model.getParentTitle());
 		soapModel.setRedirectTitle(model.getRedirectTitle());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -269,6 +270,14 @@ public class WikiPageSoap implements Serializable {
 		_redirectTitle = redirectTitle;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -320,6 +329,7 @@ public class WikiPageSoap implements Serializable {
 	private boolean _head;
 	private String _parentTitle;
 	private String _redirectTitle;
+	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

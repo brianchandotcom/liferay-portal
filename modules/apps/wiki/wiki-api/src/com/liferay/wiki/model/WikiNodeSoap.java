@@ -45,6 +45,7 @@ public class WikiNodeSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setLastPostDate(model.getLastPostDate());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -189,6 +190,14 @@ public class WikiNodeSoap implements Serializable {
 		_lastPostDate = lastPostDate;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -232,6 +241,7 @@ public class WikiNodeSoap implements Serializable {
 	private String _name;
 	private String _description;
 	private Date _lastPostDate;
+	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

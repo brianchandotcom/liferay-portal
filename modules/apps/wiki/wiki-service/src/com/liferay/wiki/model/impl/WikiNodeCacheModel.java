@@ -65,7 +65,7 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -89,6 +89,8 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Externalizable 
 		sb.append(description);
 		sb.append(", lastPostDate=");
 		sb.append(lastPostDate);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -160,6 +162,13 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Externalizable 
 			wikiNodeImpl.setLastPostDate(new Date(lastPostDate));
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			wikiNodeImpl.setLastPublishDate(null);
+		}
+		else {
+			wikiNodeImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		wikiNodeImpl.setStatus(status);
 		wikiNodeImpl.setStatusByUserId(statusByUserId);
 
@@ -195,6 +204,7 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Externalizable 
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		lastPostDate = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 		status = objectInput.readInt();
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
@@ -241,6 +251,7 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Externalizable 
 		}
 
 		objectOutput.writeLong(lastPostDate);
+		objectOutput.writeLong(lastPublishDate);
 		objectOutput.writeInt(status);
 		objectOutput.writeLong(statusByUserId);
 
@@ -265,6 +276,7 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Externalizable 
 	public String name;
 	public String description;
 	public long lastPostDate;
+	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

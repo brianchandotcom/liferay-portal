@@ -259,6 +259,20 @@ public interface WikiNodeModel extends BaseModel<WikiNode>, ContainerModel,
 	public void setLastPostDate(Date lastPostDate);
 
 	/**
+	 * Returns the last publish date of this wiki node.
+	 *
+	 * @return the last publish date of this wiki node
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this wiki node.
+	 *
+	 * @param lastPublishDate the last publish date of this wiki node
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the status of this wiki node.
 	 *
 	 * @return the status of this wiki node

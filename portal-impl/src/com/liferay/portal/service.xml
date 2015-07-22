@@ -122,7 +122,7 @@
 			<finder-column name="userId" />
 		</finder>
 	</entity>
-	<entity name="ClassName" local-service="true" remote-service="true">
+	<entity name="ClassName" local-service="true" remote-service="true" partitionable="false">
 
 		<!-- PK fields -->
 
@@ -138,7 +138,7 @@
 			<finder-column name="value" />
 		</finder>
 	</entity>
-	<entity name="ClusterGroup" local-service="true" remote-service="false">
+	<entity name="ClusterGroup" local-service="true" remote-service="false" partitionable="false">
 
 		<!-- PK fields -->
 
@@ -267,7 +267,7 @@
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portal" entity="Website" />
 	</entity>
-	<entity name="Country" local-service="false" remote-service="true">
+	<entity name="Country" local-service="false" remote-service="true" partitionable="false" >
 
 		<!-- PK fields -->
 
@@ -1568,7 +1568,7 @@
 
 		<reference package-path="com.liferay.portal" entity="ClassName" />
 	</entity>
-	<entity name="PortalPreferences" local-service="true" remote-service="false">
+	<entity name="PortalPreferences" local-service="true" remote-service="false" partitionable="false">
 
 		<!-- PK fields -->
 
@@ -1726,7 +1726,7 @@
 		<reference package-path="com.liferay.portal" entity="Portlet" />
 		<reference package-path="com.liferay.portal" entity="PortletItem" />
 	</entity>
-	<entity name="Region" local-service="false" remote-service="true">
+	<entity name="Region" local-service="false" remote-service="true" partitionable="false" >
 
 		<!-- PK fields -->
 
@@ -1766,7 +1766,7 @@
 
 		<reference package-path="com.liferay.portal" entity="Country" />
 	</entity>
-	<entity name="Release" local-service="true" remote-service="false">
+	<entity name="Release" local-service="true" remote-service="false" partitionable="false">
 
 		<!-- PK fields -->
 
@@ -1897,7 +1897,7 @@
 		<reference package-path="com.liferay.portal" entity="ResourcePermission" />
 		<reference package-path="com.liferay.portal" entity="Role" />
 	</entity>
-	<entity name="ResourceAction" local-service="true" remote-service="false">
+	<entity name="ResourceAction" local-service="true" remote-service="false" partitionable="false">
 
 		<!-- PK fields -->
 
@@ -2918,7 +2918,7 @@
 			<finder-column name="userTrackerId" />
 		</finder>
 	</entity>
-	<entity name="VirtualHost" local-service="true" remote-service="false">
+	<entity name="VirtualHost" local-service="true" remote-service="false" partitionable="false">
 
 		<!-- PK fields -->
 

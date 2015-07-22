@@ -12,76 +12,69 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.action;
+package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.messageboards.model.MBBan;
-import com.liferay.portlet.messageboards.service.MBBanServiceUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 /**
- * @author Michael Young
+ * @author Eduardo Garcia
  */
 @OSGiBeanProperties(
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
-		"mvc.command.name=/message_boards/ban_user"
+		"mvc.command.name=/message_boards/move_category"
 	},
 	service = MVCActionCommand.class
 )
-public class BanUserMVCActionCommand extends BaseMVCActionCommand {
-
-	protected void banUser(ActionRequest actionRequest) throws Exception {
-		long banUserId = ParamUtil.getLong(actionRequest, "banUserId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			MBBan.class.getName(), actionRequest);
-
-		MBBanServiceUtil.addBan(banUserId, serviceContext);
-	}
+public class MoveCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
 		try {
-			if (cmd.equals("ban")) {
-				banUser(actionRequest);
-			}
-			else if (cmd.equals("unban")) {
-				unbanUser(actionRequest);
+			moveCategory(actionRequest, actionResponse);
+
+			String redirect = PortalUtil.escapeRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
+
+			if (Validator.isNotNull(redirect)) {
+				actionResponse.sendRedirect(redirect);
 			}
 		}
 		catch (PrincipalException pe) {
 			SessionErrors.add(actionRequest, pe.getClass());
-
-			actionResponse.setRenderParameter(
-				"mvcPath", "/html/portlet/message_boards/error.jsp");
 		}
 	}
 
-	protected void unbanUser(ActionRequest actionRequest) throws Exception {
-		long banUserId = ParamUtil.getLong(actionRequest, "banUserId");
+	protected void moveCategory(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			MBBan.class.getName(), actionRequest);
+		long categoryId = ParamUtil.getLong(actionRequest, "mbCategoryId");
 
-		MBBanServiceUtil.deleteBan(banUserId, serviceContext);
+		long parentCategoryId = ParamUtil.getLong(
+			actionRequest, "parentCategoryId");
+
+		boolean mergeWithParentCategory = ParamUtil.getBoolean(
+			actionRequest, "mergeWithParentCategory");
+
+		MBCategoryServiceUtil.moveCategory(
+			categoryId, parentCategoryId, mergeWithParentCategory);
 	}
 
 }

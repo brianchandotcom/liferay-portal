@@ -12,13 +12,20 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.action;
+package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.struts.FindActionHelper;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.PortletURLImpl;
+
+import javax.portlet.PortletMode;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,23 +37,39 @@ import javax.servlet.http.HttpServletResponse;
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
-		"path=/message_boards/find_message"
+		"path=/message_boards/find_recent_posts"
 	},
 	service = StrutsAction.class
 )
-public class FindMessageAction extends BaseStrutsAction {
+public class FindRecentPostsAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		_findActionHelper.execute(request, response);
+		try {
+			long plid = ParamUtil.getLong(request, "p_l_id");
 
-		return null;
+			PortletURL portletURL = new PortletURLImpl(
+				request, PortletKeys.MESSAGE_BOARDS, plid,
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/message_boards/view");
+			portletURL.setParameter("tabs2", "recent-posts");
+			portletURL.setPortletMode(PortletMode.VIEW);
+			portletURL.setWindowState(WindowState.NORMAL);
+
+			response.sendRedirect(portletURL.toString());
+
+			return null;
+		}
+		catch (Exception e) {
+			PortalUtil.sendError(e, request, response);
+
+			return null;
+		}
 	}
-
-	private final FindActionHelper _findActionHelper =
-		new MessageFindActionHelper();
 
 }

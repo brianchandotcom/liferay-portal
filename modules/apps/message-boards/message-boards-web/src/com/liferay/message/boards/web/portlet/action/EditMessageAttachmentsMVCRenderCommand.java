@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.action;
+package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PortletKeys;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 /**
  * @author Adolfo Pérez
@@ -28,17 +25,17 @@ import javax.portlet.RenderResponse;
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
-		"mvc.command.name=/message_boards/select_category"
+		"mvc.command.name=/message_boards/view_deleted_message_attachments"
 	},
 	service = MVCRenderCommand.class
 )
-public class SelectCategoryMVCRenderCommand implements MVCRenderCommand {
+public class EditMessageAttachmentsMVCRenderCommand
+	extends GetMessageMVCRenderCommand {
 
 	@Override
-	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		return "/portlet/message_boards/select_category.jsp";
+	protected String getPath() {
+		return
+			"/html/portlet/message_boards/view_deleted_message_attachments.jsp";
 	}
 
 }

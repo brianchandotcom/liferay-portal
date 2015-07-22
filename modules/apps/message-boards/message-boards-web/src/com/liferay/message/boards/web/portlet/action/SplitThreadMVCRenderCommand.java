@@ -12,17 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.action;
+package com.liferay.message.boards.web.portlet.action;
 
-import com.liferay.portal.kernel.captcha.CaptchaUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PortletKeys;
-
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
 /**
  * @author Adolfo Pérez
@@ -31,29 +25,15 @@ import javax.portlet.ResourceResponse;
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
-		"mvc.command.name=/message_boards/captcha"
+		"mvc.command.name=/message_boards/split_thread"
 	},
-	service = MVCResourceCommand.class
+	service = MVCRenderCommand.class
 )
-public class CaptchaMVCResourceCommand implements MVCResourceCommand {
+public class SplitThreadMVCRenderCommand extends GetMessageMVCRenderCommand {
 
 	@Override
-	public boolean serveResource(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
-
-		try {
-			CaptchaUtil.serveImage(resourceRequest, resourceResponse);
-
-			return false;
-		}
-		catch (Exception e) {
-			_log.error(e);
-
-			return true;
-		}
+	protected String getPath() {
+		return "/html/portlet/message_boards/split_thread.jsp";
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CaptchaMVCResourceCommand.class);
 
 }

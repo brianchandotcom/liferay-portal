@@ -104,7 +104,8 @@ public class FolderStagedModelDataHandlerTest
 			companyGroup.getGroupId(), DLFileEntryType.class.getName());
 
 		addDependentStagedModel(
-			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
+			dependentStagedModelsMap,
+			DDMStructureManagerUtil.getDDMStructureModelClass(), ddmStructure);
 
 		DLFileEntryType dlFileEntryType = addDLFileEntryType(
 			companyGroup.getGroupId(), ddmStructure.getStructureId());
@@ -140,7 +141,8 @@ public class FolderStagedModelDataHandlerTest
 			group.getGroupId(), DLFileEntryType.class.getName());
 
 		addDependentStagedModel(
-			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
+			dependentStagedModelsMap,
+			DDMStructureManagerUtil.getDDMStructureModelClass(), ddmStructure);
 
 		DLFileEntryType dlFileEntryType = addDLFileEntryType(
 			group.getGroupId(), ddmStructure.getStructureId());
@@ -247,8 +249,11 @@ public class FolderStagedModelDataHandlerTest
 			Group group)
 		throws Exception {
 
+		Class<?> ddmStructureClass =
+			DDMStructureManagerUtil.getDDMStructureModelClass();
+
 		List<StagedModel> ddmStructureDependentStagedModels =
-			dependentStagedModelsMap.get(DDMStructure.class.getSimpleName());
+			dependentStagedModelsMap.get(ddmStructureClass.getSimpleName());
 
 		Assert.assertEquals(1, ddmStructureDependentStagedModels.size());
 
@@ -281,8 +286,11 @@ public class FolderStagedModelDataHandlerTest
 			Group group)
 		throws Exception {
 
+		Class<?> ddmStructureClass =
+			DDMStructureManagerUtil.getDDMStructureModelClass();
+
 		List<StagedModel> ddmStructureDependentStagedModels =
-			dependentStagedModelsMap.get(DDMStructure.class.getSimpleName());
+			dependentStagedModelsMap.get(ddmStructureClass.getSimpleName());
 
 		Assert.assertEquals(1, ddmStructureDependentStagedModels.size());
 

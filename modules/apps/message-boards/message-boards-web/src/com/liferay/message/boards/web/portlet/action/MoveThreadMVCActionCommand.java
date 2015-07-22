@@ -17,7 +17,6 @@ package com.liferay.message.boards.web.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -36,9 +35,9 @@ import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadConstants;
-import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageService;
+import com.liferay.portlet.messageboards.service.MBThreadLocalService;
+import com.liferay.portlet.messageboards.service.MBThreadService;
 
 import java.io.InputStream;
 
@@ -48,10 +47,13 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jorge Ferrer
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
@@ -94,9 +96,9 @@ public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
 		long categoryId = ParamUtil.getLong(actionRequest, "mbCategoryId");
 		long threadId = ParamUtil.getLong(actionRequest, "threadId");
 
-		MBThread thread = MBThreadLocalServiceUtil.getThread(threadId);
+		MBThread thread = _mbThreadLocalService.getThread(threadId);
 
-		MBThreadServiceUtil.moveThread(categoryId, threadId);
+		_mbThreadService.moveThread(categoryId, threadId);
 
 		boolean addExplanationPost = ParamUtil.getBoolean(
 			actionRequest, "addExplanationPost");
@@ -112,7 +114,7 @@ public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				MBMessage.class.getName(), actionRequest);
 
-			MBMessageServiceUtil.addMessage(
+			_mbMessageService.addMessage(
 				thread.getRootMessageId(), subject, body,
 				mbGroupServiceSettings.getMessageFormat(),
 				Collections.<ObjectValuePair<String, InputStream>>emptyList(),
@@ -130,5 +132,26 @@ public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
 
 		actionResponse.sendRedirect(portletURL.toString());
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageService(MBMessageService mbMessageService) {
+		_mbMessageService = mbMessageService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadLocalService(
+		MBThreadLocalService mbThreadLocalService) {
+
+		_mbThreadLocalService = mbThreadLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadService(MBThreadService mbThreadService) {
+		_mbThreadService = mbThreadService;
+	}
+
+	private MBMessageService _mbMessageService;
+	private MBThreadLocalService _mbThreadLocalService;
+	private MBThreadService _mbThreadService;
 
 }

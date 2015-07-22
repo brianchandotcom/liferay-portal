@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -42,8 +41,8 @@ import com.liferay.portlet.messageboards.MailingListOutServerNameException;
 import com.liferay.portlet.messageboards.MailingListOutUserNameException;
 import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
-import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryService;
+import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.ArrayList;
@@ -52,11 +51,14 @@ import java.util.List;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Daniel Sanz
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
@@ -89,13 +91,13 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long deleteCategoryId : deleteCategoryIds) {
 			if (moveToTrash) {
-				MBCategory category = MBCategoryServiceUtil.moveCategoryToTrash(
+				MBCategory category = _mbCategoryService.moveCategoryToTrash(
 					deleteCategoryId);
 
 				trashedModels.add(category);
 			}
 			else {
-				MBCategoryServiceUtil.deleteCategory(
+				_mbCategoryService.deleteCategory(
 					themeDisplay.getScopeGroupId(), deleteCategoryId);
 			}
 		}
@@ -160,8 +162,18 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
 		for (long restoreTrashEntryId : restoreTrashEntryIds) {
-			TrashEntryServiceUtil.restoreEntry(restoreTrashEntryId);
+			_trashEntryService.restoreEntry(restoreTrashEntryId);
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBCategoryService(MBCategoryService mbCategoryService) {
+		_mbCategoryService = mbCategoryService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTrashEntryService(TrashEntryService trashEntryService) {
+		_trashEntryService = trashEntryService;
 	}
 
 	protected void subscribeCategory(ActionRequest actionRequest)
@@ -172,7 +184,7 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 		long categoryId = ParamUtil.getLong(actionRequest, "mbCategoryId");
 
-		MBCategoryServiceUtil.subscribeCategory(
+		_mbCategoryService.subscribeCategory(
 			themeDisplay.getScopeGroupId(), categoryId);
 	}
 
@@ -184,7 +196,7 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 		long categoryId = ParamUtil.getLong(actionRequest, "mbCategoryId");
 
-		MBCategoryServiceUtil.unsubscribeCategory(
+		_mbCategoryService.unsubscribeCategory(
 			themeDisplay.getScopeGroupId(), categoryId);
 	}
 
@@ -241,7 +253,7 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 			// Add category
 
-			MBCategoryServiceUtil.addCategory(
+			_mbCategoryService.addCategory(
 				parentCategoryId, name, description, displayStyle, emailAddress,
 				inProtocol, inServerName, inServerPort, inUseSSL, inUserName,
 				inPassword, inReadInterval, outEmailAddress, outCustom,
@@ -252,7 +264,7 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 			// Update category
 
-			MBCategoryServiceUtil.updateCategory(
+			_mbCategoryService.updateCategory(
 				categoryId, parentCategoryId, name, description, displayStyle,
 				emailAddress, inProtocol, inServerName, inServerPort, inUseSSL,
 				inUserName, inPassword, inReadInterval, outEmailAddress,
@@ -261,5 +273,8 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 				mergeWithParentCategory, serviceContext);
 		}
 	}
+
+	private MBCategoryService _mbCategoryService;
+	private TrashEntryService _trashEntryService;
 
 }

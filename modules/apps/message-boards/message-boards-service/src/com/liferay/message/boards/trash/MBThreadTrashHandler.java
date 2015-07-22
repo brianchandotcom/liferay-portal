@@ -30,8 +30,8 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalService;
+import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.util.MBUtil;
@@ -44,6 +44,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Implements trash handling for message boards thread entity.
@@ -58,7 +59,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public void deleteTrashEntry(long classPK) throws PortalException {
-		MBThreadLocalServiceUtil.deleteThread(classPK);
+		_mbThreadLocalService.deleteThread(classPK);
 	}
 
 	@Override
@@ -70,7 +71,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	public ContainerModel getContainerModel(long containerModelId)
 		throws PortalException {
 
-		return MBCategoryLocalServiceUtil.getCategory(containerModelId);
+		return _mbCategoryLocalService.getCategory(containerModelId);
 	}
 
 	@Override
@@ -90,9 +91,9 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 		List<ContainerModel> containerModels = new ArrayList<>();
 
-		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
-		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
+		List<MBCategory> categories = _mbCategoryLocalService.getCategories(
 			thread.getGroupId(), parentContainerModelId,
 			WorkflowConstants.STATUS_APPROVED, start, end);
 
@@ -108,9 +109,9 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			long classPK, long parentContainerModelId)
 		throws PortalException {
 
-		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
-		return MBCategoryLocalServiceUtil.getCategoriesCount(
+		return _mbCategoryLocalService.getCategoriesCount(
 			thread.getGroupId(), parentContainerModelId,
 			WorkflowConstants.STATUS_APPROVED);
 	}
@@ -120,7 +121,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
 		PortletURL portletURL = getRestoreURL(portletRequest, classPK, false);
 
@@ -137,7 +138,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
 		PortletURL portletURL = getRestoreURL(portletRequest, classPK, true);
 
@@ -151,21 +152,21 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
 		return MBUtil.getAbsolutePath(portletRequest, thread.getCategoryId());
 	}
 
 	@Override
 	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
 		return thread.getTrashEntry();
 	}
 
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
-		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
 		return new MBThreadTrashRenderer(thread);
 	}
@@ -187,14 +188,14 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public boolean isInTrash(long classPK) throws PortalException {
-		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
 		return thread.isInTrash();
 	}
 
 	@Override
 	public boolean isInTrashContainer(long classPK) throws PortalException {
-		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
 		return thread.isInTrashContainer();
 	}
@@ -206,10 +207,10 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public boolean isRestorable(long classPK) throws PortalException {
-		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
 		if ((thread.getCategoryId() > 0) &&
-			(MBCategoryLocalServiceUtil.fetchMBCategory(
+			(_mbCategoryLocalService.fetchMBCategory(
 				thread.getCategoryId()) == null)) {
 
 			return false;
@@ -224,7 +225,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MBThreadLocalServiceUtil.moveThread(userId, containerModelId, classPK);
+		_mbThreadLocalService.moveThread(userId, containerModelId, classPK);
 	}
 
 	@Override
@@ -233,7 +234,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MBThreadLocalServiceUtil.moveThreadFromTrash(
+		_mbThreadLocalService.moveThreadFromTrash(
 			userId, containerModelId, classPK);
 	}
 
@@ -241,7 +242,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException {
 
-		MBThreadLocalServiceUtil.restoreThreadFromTrash(userId, classPK);
+		_mbThreadLocalService.restoreThreadFromTrash(userId, classPK);
 	}
 
 	protected PortletURL getRestoreURL(
@@ -251,7 +252,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 		String portletId = PortletKeys.MESSAGE_BOARDS;
 
-		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
 		long plid = PortalUtil.getPlidFromPortletId(
 			thread.getGroupId(), PortletKeys.MESSAGE_BOARDS);
@@ -282,10 +283,27 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
 		return MBMessagePermission.contains(
 			permissionChecker, thread.getRootMessageId(), actionId);
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBCategoryLocalService(
+		MBCategoryLocalService mbCategoryLocalService) {
+
+		_mbCategoryLocalService = mbCategoryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadLocalService(
+		MBThreadLocalService mbThreadLocalService) {
+
+		_mbThreadLocalService = mbThreadLocalService;
+	}
+
+	private MBCategoryLocalService _mbCategoryLocalService;
+	private MBThreadLocalService _mbThreadLocalService;
 
 }

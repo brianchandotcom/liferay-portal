@@ -25,14 +25,15 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
+import com.liferay.portlet.messageboards.service.MBMessageService;
+import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Implements trash handling for message boards message entity.
@@ -58,7 +59,7 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 	public ContainerModel getContainerModel(long containerModelId)
 		throws PortalException {
 
-		return MBThreadLocalServiceUtil.getThread(containerModelId);
+		return _mbThreadLocalService.getThread(containerModelId);
 	}
 
 	@Override
@@ -77,7 +78,7 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
+		MBMessage message = _mbMessageLocalService.getMessage(classPK);
 
 		return message.getTrashEntry();
 	}
@@ -89,14 +90,14 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public boolean isInTrash(long classPK) throws PortalException {
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
+		MBMessage message = _mbMessageLocalService.getMessage(classPK);
 
 		return message.isInTrash();
 	}
 
 	@Override
 	public boolean isInTrashContainer(long classPK) throws PortalException {
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
+		MBMessage message = _mbMessageLocalService.getMessage(classPK);
 
 		return message.isInTrashContainer();
 	}
@@ -114,7 +115,7 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 
 		MBMessage message = MBMessageAttachmentsUtil.getMessage(classPK);
 
-		MBMessageServiceUtil.restoreMessageAttachmentFromTrash(
+		_mbMessageService.restoreMessageAttachmentFromTrash(
 			message.getMessageId(), fileEntry.getTitle());
 	}
 
@@ -130,5 +131,28 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 		return MBMessagePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageService(MBMessageService mbMessageService) {
+		_mbMessageService = mbMessageService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadLocalService(
+		MBThreadLocalService mbThreadLocalService) {
+
+		_mbThreadLocalService = mbThreadLocalService;
+	}
+
+	private MBMessageLocalService _mbMessageLocalService;
+	private MBMessageService _mbMessageService;
+	private MBThreadLocalService _mbThreadLocalService;
 
 }

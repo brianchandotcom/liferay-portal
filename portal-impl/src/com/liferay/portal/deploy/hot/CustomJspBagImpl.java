@@ -14,44 +14,44 @@
 
 package com.liferay.portal.deploy.hot;
 
+import com.liferay.portal.kernel.url.URLContainer;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletContext;
+/**
+ * @author Peter Fellwock
+ * @author Raymond Augé
+ */
 public class CustomJspBagImpl implements CustomJspBag {
 
 	public CustomJspBagImpl(
-		ServletContext servletContext, String customJspDir,
-		boolean customJspGlobal, String pluginPackageName) {
+		URLContainer urlContainer, String customJspDir,
+		boolean customJspGlobal) {
 
-		_servletContext = servletContext;
+		_urlContainer = urlContainer;
 		_customJspDir = customJspDir;
 		_customJspGlobal = customJspGlobal;
-		_pluginPackageName = pluginPackageName;
 
 		_customJsps = new ArrayList<>();
 	}
 
+	@Override
 	public String getCustomJspDir() {
 		return _customJspDir;
 	}
 
+	@Override
 	public List<String> getCustomJsps() {
 		return _customJsps;
 	}
 
-	public String getPluginPackageName() {
-		return _pluginPackageName;
+	@Override
+	public URLContainer getURLContainer() {
+		return _urlContainer;
 	}
 
-	public ServletContext getServletContext() {
-		return _servletContext;
-	}
-
-	public String getServletContextName() {
-		return _servletContext.getServletContextName();
-	}
-
+	@Override
 	public boolean isCustomJspGlobal() {
 		return _customJspGlobal;
 	}
@@ -59,7 +59,6 @@ public class CustomJspBagImpl implements CustomJspBag {
 	private final String _customJspDir;
 	private final boolean _customJspGlobal;
 	private final List<String> _customJsps;
-	private final String _pluginPackageName;
-	private final ServletContext _servletContext;
+	private final URLContainer _urlContainer;
 
 }

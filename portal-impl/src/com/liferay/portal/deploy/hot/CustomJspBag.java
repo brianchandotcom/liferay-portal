@@ -14,20 +14,21 @@
 
 package com.liferay.portal.deploy.hot;
 
+import com.liferay.portal.kernel.url.URLContainer;
+
 import java.util.List;
 
-import javax.servlet.ServletContext;
+/**
+ * @author Peter Fellwock
+ * @author Raymond Augé
+ */
 public interface CustomJspBag {
 
 	public String getCustomJspDir();
 
 	public List<String> getCustomJsps();
 
-	public String getPluginPackageName();
-
-	public ServletContext getServletContext();
-
-	public String getServletContextName();
+	public URLContainer getURLContainer();
 
 	public boolean isCustomJspGlobal();
 

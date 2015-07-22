@@ -19,3 +19,5 @@ Include-Resource:\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
 Web-ContextPath: /journal-web
+Require-Capability:\
+	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/ddm";version:Version="1.0.0"

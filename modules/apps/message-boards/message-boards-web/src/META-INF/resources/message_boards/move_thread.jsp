@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/message_boards/init.jsp" %>
+<%@ include file="/message_boards/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -77,7 +77,7 @@ boolean splitThread = false;
 			</aui:input>
 
 			<aui:field-wrapper label="body">
-				<%@ include file="/META-INF/resources/message_boards/bbcode_editor.jspf" %>
+				<%@ include file="/message_boards/bbcode_editor.jspf" %>
 
 				<aui:input name="body" type="hidden" />
 			</aui:field-wrapper>

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/message_boards/init.jsp" %>
+<%@ include file="/message_boards/init.jsp" %>
 
 <%
 String topLink = ParamUtil.getString(request, "topLink", "message-boards-home");
@@ -46,7 +46,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<liferay-util:include page="/html/portlet/message_boards/top_links.jsp" />
+<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
 
 <c:choose>
 	<c:when test='<%= topLink.equals("message-boards-home") %>'>
@@ -176,7 +176,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 									<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 								</liferay-portlet:renderURL>
 
-								<%@ include file="/META-INF/resources/message_boards/category_columns.jspf" %>
+								<%@ include file="/message_boards/category_columns.jspf" %>
 							</liferay-ui:search-container-row>
 
 							<br>
@@ -247,7 +247,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 								<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 							</liferay-portlet:renderURL>
 
-							<%@ include file="/META-INF/resources/message_boards/thread_priority.jspf" %>
+							<%@ include file="/message_boards/thread_priority.jspf" %>
 
 							<liferay-ui:search-container-column-text
 								href="<%= rowURL %>"
@@ -300,7 +300,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 							<liferay-ui:search-container-column-jsp
 								align="right"
 								cssClass="entry-action"
-								path="/html/portlet/message_boards/message_action.jsp"
+								path="/message_boards/message_action.jsp"
 							/>
 						</liferay-ui:search-container-row>
 
@@ -412,7 +412,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 						<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
 					</liferay-portlet:renderURL>
 
-					<%@ include file="/META-INF/resources/message_boards/thread_priority.jspf" %>
+					<%@ include file="/message_boards/thread_priority.jspf" %>
 
 					<liferay-ui:search-container-column-text
 						href="<%= rowURL %>"
@@ -441,7 +441,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 					<liferay-ui:search-container-column-jsp
 						align="right"
 						cssClass="entry-action"
-						path="/html/portlet/message_boards/message_action.jsp"
+						path="/message_boards/message_action.jsp"
 					/>
 				</liferay-ui:search-container-row>
 
@@ -508,7 +508,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 						modelVar="statsUser"
 					>
 						<liferay-ui:search-container-column-jsp
-							path="/html/portlet/message_boards/top_posters_user_display.jsp"
+							path="/message_boards/top_posters_user_display.jsp"
 						/>
 					</liferay-ui:search-container-row>
 
@@ -564,7 +564,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 				<liferay-ui:search-container-column-jsp
 					align="right"
 					cssClass="entry-action"
-					path="/html/portlet/message_boards/ban_user_action.jsp"
+					path="/message_boards/ban_user_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

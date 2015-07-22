@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/message_boards/init.jsp" %>
+<%@ include file="/message_boards/init.jsp" %>
 
 <%
 boolean editable = true;
@@ -156,7 +156,7 @@ for (int i = range[0]; i < range[1]; i++) {
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD_FLAG, threadFlag);
 %>
 
-	<liferay-util:include page="/html/portlet/message_boards/view_thread_shortcut.jsp" />
+	<liferay-util:include page="/message_boards/view_thread_shortcut.jsp" servletContext="<%= application %>" />
 
 <%
 }

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/message_boards/thread_priority.jspf" %>
+<%@ include file="/message_boards/thread_priority.jspf" %>
 
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
@@ -48,6 +48,6 @@
 	value="<%= String.valueOf(thread.getViewCount()) %>"
 />
 
-<%@ include file="/META-INF/resources/message_boards/thread_columns_last_post.jspf" %>
+<%@ include file="/message_boards/thread_columns_last_post.jspf" %>
 
-<%@ include file="/META-INF/resources/message_boards/thread_columns_action.jspf" %>
+<%@ include file="/message_boards/thread_columns_action.jspf" %>

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/message_boards/init.jsp" %>
+<%@ include file="/message_boards/init.jsp" %>
 
 <%
 MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
@@ -34,8 +34,8 @@ if ((message != null) && layout.isTypeControlPanel()) {
 }
 %>
 
-<liferay-util:include page="/html/portlet/message_boards/top_links.jsp" />
+<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
 
 <div class="displayStyle-<%= displayStyle %>">
-	<liferay-util:include page='<%= "/META-INF/resources/message_boards/view_message_" + displayStyle + ".jsp" %>' />
+	<liferay-util:include page='<%= "/message_boards/view_message_" + displayStyle + ".jsp" %>' servletContext="<%= application %>" />
 </div>

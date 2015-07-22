@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/message_boards/init.jsp" %>
+<%@ include file="/message_boards/init.jsp" %>
 
 <%
 MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
@@ -64,17 +64,17 @@ MBThread thread = messageDisplay.getThread();
 			<aui:input name="breadcrumbsMessageId" type="hidden" value="<%= message.getMessageId() %>" />
 			<aui:input name="threadId" type="hidden" value="<%= message.getThreadId() %>" />
 
-			<liferay-util:include page="/html/portlet/message_boards/view_message_content.jsp" />
+			<liferay-util:include page="/message_boards/view_message_content.jsp" servletContext="<%= application %>" />
 		</aui:form>
 	</c:when>
 	<c:otherwise>
-		<liferay-util:include page="/html/portlet/message_boards/view_message_content.jsp" />
+		<liferay-util:include page="/message_boards/view_message_content.jsp" servletContext="<%= application %>" />
 	</c:otherwise>
 </c:choose>
 
 <c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) && !thread.isLocked() %>">
 	<div class="hide" id="<portlet:namespace />addQuickReplyDiv">
-		<%@ include file="/META-INF/resources/message_boards/edit_message_quick.jspf" %>
+		<%@ include file="/message_boards/edit_message_quick.jspf" %>
 	</div>
 </c:if>
 

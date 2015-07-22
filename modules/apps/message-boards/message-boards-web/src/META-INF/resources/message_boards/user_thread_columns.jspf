@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/message_boards/thread_priority.jspf" %>
+<%@ include file="/message_boards/thread_priority.jspf" %>
 
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
@@ -34,7 +34,7 @@
 	value="<%= String.valueOf(thread.getViewCount()) %>"
 />
 
-<%@ include file="/META-INF/resources/message_boards/thread_columns_last_post.jspf" %>
+<%@ include file="/message_boards/thread_columns_last_post.jspf" %>
 
 <c:if test='<%= topLink.equals("my-posts") %>'>
 	<liferay-ui:search-container-column-status
@@ -47,4 +47,4 @@
 row.setObject(new Object[] {message, threadSubscriptionClassPKs});
 %>
 
-<%@ include file="/META-INF/resources/message_boards/user_thread_columns_action.jspf" %>
+<%@ include file="/message_boards/user_thread_columns_action.jspf" %>

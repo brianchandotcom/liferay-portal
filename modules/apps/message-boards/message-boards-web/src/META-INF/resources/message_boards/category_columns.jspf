@@ -84,4 +84,4 @@
 	value="<%= String.valueOf(categoryDisplay.getSubcategoriesMessagesCount(curCategory)) %>"
 />
 
-<%@ include file="/META-INF/resources/message_boards/category_columns_action.jspf" %>
+<%@ include file="/message_boards/category_columns_action.jspf" %>

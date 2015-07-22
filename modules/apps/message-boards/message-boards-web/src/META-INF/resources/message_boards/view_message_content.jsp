@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/message_boards/init.jsp" %>
+<%@ include file="/message_boards/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -341,7 +341,7 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD_FLAG, threadFlag);
 			%>
 
-			<liferay-util:include page="/html/portlet/message_boards/view_thread_shortcut.jsp" />
+			<liferay-util:include page="/message_boards/view_thread_shortcut.jsp" servletContext="<%= application %>" />
 
 			</table>
 		</liferay-ui:toggle-area>
@@ -365,7 +365,7 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD, Boolean.FALSE.toString());
 			%>
 
-			<liferay-util:include page="/html/portlet/message_boards/view_thread_tree.jsp" />
+			<liferay-util:include page="/message_boards/view_thread_tree.jsp" servletContext="<%= application %>" />
 
 			<%
 			viewableThread = GetterUtil.getBoolean((String)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD));
@@ -373,7 +373,7 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 
 		</c:when>
 		<c:otherwise>
-			<%@ include file="/META-INF/resources/message_boards/view_thread_flat.jspf" %>
+			<%@ include file="/message_boards/view_thread_flat.jspf" %>
 		</c:otherwise>
 	</c:choose>
 

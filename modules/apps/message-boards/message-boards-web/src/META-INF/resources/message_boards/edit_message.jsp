@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/message_boards/init.jsp" %>
+<%@ include file="/message_boards/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -103,7 +103,7 @@ else {
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">
-	<liferay-util:include page="/html/portlet/message_boards/top_links.jsp" />
+	<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
 </c:if>
 
 <liferay-ui:header
@@ -150,7 +150,7 @@ else {
 	request.setAttribute("edit_message.jsp-thread", thread);
 	%>
 
-	<liferay-util:include page="/html/portlet/message_boards/view_thread_message.jsp" />
+	<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
 
 	<%
 	request.removeAttribute("edit_message.jsp-assetTagNames");
@@ -230,10 +230,10 @@ else {
 		<aui:field-wrapper label="body">
 			<c:choose>
 				<c:when test='<%= ((messageId != 0) && message.isFormatBBCode()) || ((messageId == 0) && messageFormat.equals("bbcode")) %>'>
-					<%@ include file="/META-INF/resources/message_boards/bbcode_editor.jspf" %>
+					<%@ include file="/message_boards/bbcode_editor.jspf" %>
 				</c:when>
 				<c:otherwise>
-					<%@ include file="/META-INF/resources/message_boards/html_editor.jspf" %>
+					<%@ include file="/message_boards/html_editor.jspf" %>
 				</c:otherwise>
 			</c:choose>
 			<aui:input name="body" type="hidden" />
@@ -506,7 +506,7 @@ else {
 		request.setAttribute("edit_message.jsp-thread", thread);
 		%>
 
-		<liferay-util:include page="/html/portlet/message_boards/view_thread_message.jsp" />
+		<liferay-util:include page="/message_boards/view_thread_message.jsp" servletContext="<%= application %>" />
 	</c:if>
 </aui:form>
 

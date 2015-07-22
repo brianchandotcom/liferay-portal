@@ -32,8 +32,8 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalService;
+import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -46,6 +46,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Implements trash handling for the message boards category entity.
@@ -60,9 +61,9 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public void deleteTrashEntry(long classPK) throws PortalException {
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
-		MBCategoryLocalServiceUtil.deleteCategory(category, false);
+		_mbCategoryLocalService.deleteCategory(category, false);
 	}
 
 	@Override
@@ -74,7 +75,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	public ContainerModel getContainerModel(long containerModelId)
 		throws PortalException {
 
-		return MBCategoryLocalServiceUtil.getCategory(containerModelId);
+		return _mbCategoryLocalService.getCategory(containerModelId);
 	}
 
 	@Override
@@ -92,9 +93,9 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			long classPK, long parentContainerModelId, int start, int end)
 		throws PortalException {
 
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
-		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
+		List<MBCategory> categories = _mbCategoryLocalService.getCategories(
 			category.getGroupId(), parentContainerModelId,
 			WorkflowConstants.STATUS_APPROVED, start, end);
 
@@ -112,9 +113,9 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			long classPK, long parentContainerModelId)
 		throws PortalException {
 
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
-		return MBCategoryLocalServiceUtil.getCategoriesCount(
+		return _mbCategoryLocalService.getCategoriesCount(
 			category.getGroupId(), parentContainerModelId,
 			WorkflowConstants.STATUS_APPROVED);
 	}
@@ -151,7 +152,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
 		PortletURL portletURL = getRestoreURL(portletRequest, classPK);
 
@@ -166,7 +167,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
 		PortletURL portletURL = getRestoreURL(portletRequest, classPK);
 
@@ -180,7 +181,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
 		return MBUtil.getAbsolutePath(
 			portletRequest, category.getParentCategoryId());
@@ -212,9 +213,9 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	public int getTrashContainedModelsCount(long classPK)
 		throws PortalException {
 
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
-		return MBThreadLocalServiceUtil.getThreadsCount(
+		return _mbThreadLocalService.getThreadsCount(
 			category.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH);
 	}
 
@@ -225,9 +226,9 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		List<TrashRenderer> trashRenderers = new ArrayList<>();
 
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
-		List<MBThread> threads = MBThreadLocalServiceUtil.getThreads(
+		List<MBThread> threads = _mbThreadLocalService.getThreads(
 			category.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
 			start, end);
 
@@ -254,9 +255,9 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	public int getTrashContainerModelsCount(long classPK)
 		throws PortalException {
 
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
-		return MBCategoryLocalServiceUtil.getCategoriesCount(
+		return _mbCategoryLocalService.getCategoriesCount(
 			category.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH);
 	}
 
@@ -267,9 +268,9 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		List<TrashRenderer> trashRenderers = new ArrayList<>();
 
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
-		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
+		List<MBCategory> categories = _mbCategoryLocalService.getCategories(
 			category.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
 			start, end);
 
@@ -289,14 +290,14 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
 		return category.getTrashEntry();
 	}
 
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
 		return new MBCategoryTrashRenderer(category);
 	}
@@ -323,14 +324,14 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public boolean isInTrash(long classPK) throws PortalException {
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
 		return category.isInTrash();
 	}
 
 	@Override
 	public boolean isInTrashContainer(long classPK) throws PortalException {
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
 		return category.isInTrashContainer();
 	}
@@ -342,10 +343,10 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public boolean isRestorable(long classPK) throws PortalException {
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
 		if ((category.getParentCategoryId() > 0) &&
-			(MBCategoryLocalServiceUtil.fetchMBCategory(
+			(_mbCategoryLocalService.fetchMBCategory(
 				category.getParentCategoryId()) == null)) {
 
 			return false;
@@ -360,8 +361,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MBCategoryLocalServiceUtil.moveCategory(
-			classPK, containerModelId, false);
+		_mbCategoryLocalService.moveCategory(classPK, containerModelId, false);
 	}
 
 	@Override
@@ -370,7 +370,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MBCategoryLocalServiceUtil.moveCategoryFromTrash(
+		_mbCategoryLocalService.moveCategoryFromTrash(
 			userId, classPK, containerModelId);
 	}
 
@@ -378,16 +378,16 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException {
 
-		MBCategoryLocalServiceUtil.restoreCategoryFromTrash(userId, classPK);
+		_mbCategoryLocalService.restoreCategoryFromTrash(userId, classPK);
 	}
 
 	@Override
 	public void updateTitle(long classPK, String name) throws PortalException {
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
 		category.setName(name);
 
-		MBCategoryLocalServiceUtil.updateMBCategory(category);
+		_mbCategoryLocalService.updateMBCategory(category);
 	}
 
 	protected PortletURL getRestoreURL(
@@ -396,7 +396,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		String portletId = PortletKeys.MESSAGE_BOARDS;
 
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
 		long plid = PortalUtil.getPlidFromPortletId(
 			category.getGroupId(), PortletKeys.MESSAGE_BOARDS);
@@ -420,10 +420,27 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
 		return MBCategoryPermission.contains(
 			permissionChecker, category, actionId);
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBCategoryLocalService(
+		MBCategoryLocalService mbCategoryLocalService) {
+
+		_mbCategoryLocalService = mbCategoryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadLocalService(
+		MBThreadLocalService mbThreadLocalService) {
+
+		_mbThreadLocalService = mbThreadLocalService;
+	}
+
+	private MBCategoryLocalService _mbCategoryLocalService;
+	private MBThreadLocalService _mbThreadLocalService;
 
 }

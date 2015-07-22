@@ -65,7 +65,7 @@ Group group = GroupLocalServiceUtil.getGroup(groupId);
 				assignUserRolesURL.setWindowState(LiferayWindowState.POP_UP);
 				%>
 
-				<aui:nav-item href="<%= assignUserRolesURL %>" iconCssClass="icon-user" label="users" useDialog="<%= true %>" />
+				<aui:nav-item href="<%= assignUserRolesURL.toString() %>" iconCssClass="icon-user" label="users" useDialog="<%= true %>" />
 
 				<%
 				PortletURL assignUserGroupRolesURL = PortletProviderUtil.getPortletURL(request, UserGroupRole.class.getName(), PortletProvider.Action.EDIT);
@@ -74,7 +74,7 @@ Group group = GroupLocalServiceUtil.getGroup(groupId);
 				assignUserGroupRolesURL.setWindowState(LiferayWindowState.POP_UP);
 				%>
 
-				<aui:nav-item href="<%= assignUserGroupRolesURL %>" iconCssClass="icon-globe" label="user-groups" useDialog="<%= true %>" />
+				<aui:nav-item href="<%= assignUserGroupRolesURL.toString() %>" iconCssClass="icon-globe" label="user-groups" useDialog="<%= true %>" />
 			</aui:nav-item>
 		</c:if>
 

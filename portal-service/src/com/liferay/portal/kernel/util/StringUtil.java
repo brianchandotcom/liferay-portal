@@ -3888,8 +3888,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns the original string without an appended the parenthetical suffix.
-	 * If the parenthetical suffix is preceded with a space it is also removed.
+	 * Returns the original string without an appended parenthetical suffix.
 	 *
 	 * <p>
 	 * Example:
@@ -3899,8 +3898,9 @@ public class StringUtil {
 	 * <pre>
 	 * <code>
 	 * stripParentheticalSuffix("file") returns "file"
-	 * stripParentheticalSuffix("file(0)") returns "file"
 	 * stripParentheticalSuffix("file (0)") returns "file"
+	 * stripParentheticalSuffix("file (0 0)") returns "file"
+	 * stripParentheticalSuffix("file(0)") returns "file(0)"
 	 * </code>
 	 * </pre>
 	 * </p>

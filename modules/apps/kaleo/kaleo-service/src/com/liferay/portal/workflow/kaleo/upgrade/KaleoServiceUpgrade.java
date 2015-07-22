@@ -25,11 +25,11 @@ import com.liferay.portal.workflow.kaleo.upgrade.v1_2_0.UpgradeKaleoNotification
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import org.springframework.context.ApplicationContext;
 
 /**
  * @author Marcellus Tavares
@@ -37,19 +37,15 @@ import org.springframework.context.ApplicationContext;
 @Component(immediate = true, service = KaleoServiceUpgrade.class)
 public class KaleoServiceUpgrade {
 
-	@Reference(
-		target = "(org.springframework.context.service.name=com.liferay.portal.workflow.kaleo.service)",
-		unbind = "-"
-	)
-	protected void setApplicationContext(
-		ApplicationContext applicationContext) {
-	}
-
 	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	@Activate

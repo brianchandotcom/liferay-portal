@@ -1,4 +1,11 @@
 Bundle-Name: Liferay Mobile Device Rules Web
 Bundle-SymbolicName: com.liferay.mobile.device.rules.web
 Bundle-Version: 1.0.0
-Include-Resource: classes
+Import-Package:\
+	javax.servlet;version='[2.3.0,4.0.0)',\
+	*
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources,\
+	@lib/javax.servlet.jsp.jstl.jar!/META-INF/*.tld
+Web-ContextPath: /mdr-web

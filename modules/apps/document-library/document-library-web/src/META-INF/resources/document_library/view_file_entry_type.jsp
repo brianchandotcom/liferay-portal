@@ -22,7 +22,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/document_library/view_file_entry_type.jsp");
 %>
 
-<liferay-util:include page="/document_library/file_entry_type_toolbar.jsp">
+<liferay-util:include page="/document_library/file_entry_type_toolbar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="includeBasicFileEntryType" value="<%= Boolean.FALSE.toString() %>" />
 </liferay-util:include>
 

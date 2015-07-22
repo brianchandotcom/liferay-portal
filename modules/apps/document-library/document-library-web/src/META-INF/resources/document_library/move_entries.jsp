@@ -86,7 +86,7 @@ for (FileShortcut curFileShortcut : fileShortcuts) {
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">
-	<liferay-util:include page="/document_library/top_links.jsp" />
+	<liferay-util:include page="/document_library/top_links.jsp" servletContext="<%= application %>" />
 </c:if>
 
 <portlet:actionURL name="/document_library/move_entry" var="moveFileEntryURL" />

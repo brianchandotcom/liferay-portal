@@ -26,6 +26,7 @@ PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempR
 
 <liferay-ui:app-view-entry
 	actionJsp="/document_library/folder_action.jsp"
+	actionJspServletContext="<%= application %>"
 	author="<%= folder.getUserName() %>"
 	createDate="<%= folder.getCreateDate() %>"
 	description="<%= folder.getDescription() %>"

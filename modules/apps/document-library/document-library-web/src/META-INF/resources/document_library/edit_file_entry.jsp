@@ -121,7 +121,7 @@ else {
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">
-	<liferay-util:include page="/document_library/top_links.jsp" />
+	<liferay-util:include page="/document_library/top_links.jsp" servletContext="<%= application %>" />
 </c:if>
 
 <c:if test="<%= checkedOut %>">

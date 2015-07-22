@@ -52,7 +52,7 @@ if (workflowEnabled) {
 }
 %>
 
-<liferay-util:include page="/document_library/top_links.jsp" />
+<liferay-util:include page="/document_library/top_links.jsp" servletContext="<%= application %>" />
 
 <liferay-util:buffer var="removeFileEntryTypeIcon">
 	<liferay-ui:icon

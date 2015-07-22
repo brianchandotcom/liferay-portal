@@ -34,7 +34,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">
-	<liferay-util:include page="/document_library/top_links.jsp" />
+	<liferay-util:include page="/document_library/top_links.jsp" servletContext="<%= application %>" />
 </c:if>
 
 <liferay-ui:header
@@ -91,7 +91,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 			</aui:col>
 			<aui:col width="<%= 50 %>">
 				<div class="common-file-metadata-container hide selected" id="<portlet:namespace />commonFileMetadataContainer">
-					<liferay-util:include page="/document_library/upload_multiple_file_entries_resources.jsp" />
+					<liferay-util:include page="/document_library/upload_multiple_file_entries_resources.jsp" servletContext="<%= application %>" />
 				</div>
 
 				<%

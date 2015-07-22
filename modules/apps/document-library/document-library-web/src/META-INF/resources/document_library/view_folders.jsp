@@ -140,7 +140,7 @@ else {
 						request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 						%>
 
-						<liferay-util:include page="/document_library/folder_action.jsp" />
+						<liferay-util:include page="/document_library/folder_action.jsp" servletContext="<%= application %>" />
 					</aui:nav-item>
 
 					<portlet:renderURL var="viewRecentDocumentsURL">
@@ -222,7 +222,7 @@ else {
 								request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 								%>
 
-								<liferay-util:include page="/document_library/folder_action.jsp" />
+								<liferay-util:include page="/document_library/folder_action.jsp" servletContext="<%= application %>" />
 							</aui:nav-item>
 
 						<%
@@ -245,7 +245,7 @@ else {
 									request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 									%>
 
-									<liferay-util:include page="/document_library/folder_action.jsp" />
+									<liferay-util:include page="/document_library/folder_action.jsp" servletContext="<%= application %>" />
 
 									<span class="browse-folder">
 										<liferay-ui:icon alt="drive-error" cssClass="drive-error" iconCssClass="icon-hdd" />
@@ -375,7 +375,7 @@ else {
 							request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 							%>
 
-							<liferay-util:include page="/document_library/folder_action.jsp" />
+							<liferay-util:include page="/document_library/folder_action.jsp" servletContext="<%= application %>" />
 						</aui:nav-item>
 
 					<%

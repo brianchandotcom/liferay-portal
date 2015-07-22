@@ -40,6 +40,7 @@ if (fileShortcut != null) {
 
 <liferay-ui:app-view-entry
 	actionJsp="/document_library/file_entry_action.jsp"
+	actionJspServletContext="<%= application %>"
 	description="<%= latestFileVersion.getDescription() %>"
 	displayStyle="icon"
 	locked="<%= fileEntry.isCheckedOut() %>"

@@ -51,6 +51,7 @@ if (fileShortcut != null) {
 
 <liferay-ui:app-view-entry
 	actionJsp="/document_library/file_entry_action.jsp"
+	actionJspServletContext="<%= application %>"
 	assetCategoryClassName="<%= DLFileEntryConstants.getClassName() %>"
 	assetCategoryClassPK="<%= assetClassPK %>"
 	assetTagClassName="<%= DLFileEntryConstants.getClassName() %>"

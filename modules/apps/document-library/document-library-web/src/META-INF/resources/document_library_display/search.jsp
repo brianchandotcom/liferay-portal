@@ -167,6 +167,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 					<liferay-ui:app-view-search-entry
 						actionJsp='<%= (dlPortletInstanceSettingsHelper.isShowActions()) ? "/document_library/file_entry_action.jsp" : StringPool.BLANK %>'
+						actionJspServletContext="<%= application %>"
 						commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
 						containerName="<%= DLUtil.getAbsolutePath(renderRequest, fileEntry.getFolderId()) %>"
 						cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
@@ -199,6 +200,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 					<liferay-ui:app-view-search-entry
 						actionJsp='<%= (dlPortletInstanceSettingsHelper.isShowActions()) ? "/document_library/folder_action.jsp" : StringPool.BLANK %>'
+						actionJspServletContext="<%= application %>"
 						containerName="<%= DLUtil.getAbsolutePath(renderRequest, folder.getParentFolderId()) %>"
 						cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 						description="<%= (summary != null) ? summary.getContent() : folder.getDescription() %>"

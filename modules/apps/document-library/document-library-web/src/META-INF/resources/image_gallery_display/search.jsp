@@ -108,7 +108,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 		request.setAttribute("view.jsp-searchContainer", searchContainer);
 		%>
 
-		<liferay-util:include page="/image_gallery_display/view_images.jsp" />
+		<liferay-util:include page="/image_gallery_display/view_images.jsp" servletContext="<%= application %>" />
 	</div>
 
 	<%

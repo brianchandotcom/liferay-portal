@@ -110,7 +110,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 <div id="<portlet:namespace />documentLibraryContainer">
 	<aui:row cssClass="lfr-app-column-view">
 		<aui:col cssClass="navigation-pane" width="<%= 25 %>">
-			<liferay-util:include page="/document_library/view_folders.jsp" />
+			<liferay-util:include page="/document_library/view_folders.jsp" servletContext="<%= application %>" />
 		</aui:col>
 
 		<aui:col cssClass="context-pane" width="<%= dlPortletInstanceSettingsHelper.isFolderMenuVisible() ? 75 : 100 %>">
@@ -118,12 +118,12 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 				includeDisplayStyle="<%= true %>"
 				includeSelectAll="<%= showSelectAll %>"
 			>
-				<liferay-util:include page="/document_library/toolbar.jsp" />
+				<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>" />
 			</liferay-ui:app-view-toolbar>
 
 			<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 				<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
-					<liferay-util:include page="/document_library/breadcrumb.jsp" />
+					<liferay-util:include page="/document_library/breadcrumb.jsp" servletContext="<%= application %>" />
 				</c:if>
 			</div>
 
@@ -147,10 +147,10 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 				<div class="document-container">
 					<c:choose>
 						<c:when test='<%= mvcRenderCommandName.equals("/document_library/search") %>'>
-							<liferay-util:include page="/document_library/search_resources.jsp" />
+							<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>" />
 						</c:when>
 						<c:otherwise>
-							<liferay-util:include page="/document_library/view_entries.jsp" />
+							<liferay-util:include page="/document_library/view_entries.jsp" servletContext="<%= application %>" />
 						</c:otherwise>
 					</c:choose>
 

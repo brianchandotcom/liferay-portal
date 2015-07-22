@@ -72,4 +72,4 @@ request.setAttribute("view_file_entry.jsp-videoThumbnailURL", videoThumbnailURL)
 	</c:when>
 </c:choose>
 
-<liferay-util:include page="/document_library/player.jsp" />
+<liferay-util:include page="/document_library/player.jsp" servletContext="<%= application %>" />

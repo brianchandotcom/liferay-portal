@@ -33,7 +33,7 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 <aui:nav-bar>
 	<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
 		<c:if test="<%= !search %>">
-			<liferay-util:include page="/document_library/display_style_buttons.jsp" />
+			<liferay-util:include page="/document_library/display_style_buttons.jsp" servletContext="<%= application %>" />
 		</c:if>
 	</aui:nav>
 
@@ -84,10 +84,10 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 			<aui:nav-item cssClass="item-remove" href="<%= taglibURL %>" iconCssClass="icon-remove" id="deleteAction" label="delete" />
 		</aui:nav-item>
 
-		<liferay-util:include page="/document_library/add_button.jsp" />
+		<liferay-util:include page="/document_library/add_button.jsp" servletContext="<%= application %>" />
 
 		<c:if test="<%= !search %>">
-			<liferay-util:include page="/document_library/sort_button.jsp" />
+			<liferay-util:include page="/document_library/sort_button.jsp" servletContext="<%= application %>" />
 		</c:if>
 
 		<c:if test="<%= !user.isDefaultUser() %>">

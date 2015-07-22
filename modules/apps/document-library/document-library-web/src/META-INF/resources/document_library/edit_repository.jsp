@@ -26,7 +26,7 @@ long repositoryId = BeanParamUtil.getLong(repository, request, "repositoryId");
 long folderId = ParamUtil.getLong(request, "folderId");
 %>
 
-<liferay-util:include page="/document_library/top_links.jsp" />
+<liferay-util:include page="/document_library/top_links.jsp" servletContext="<%= application %>" />
 
 <portlet:actionURL name="/document_library/edit_repository" var="editRepositoryURL" />
 

@@ -301,10 +301,10 @@ dlSearchContainer.setResults(results);
 
 								<c:choose>
 									<c:when test='<%= displayStyle.equals("icon") %>'>
-										<liferay-util:include page="/document_library/view_file_entry_icon.jsp" />
+										<liferay-util:include page="/document_library/view_file_entry_icon.jsp" servletContext="<%= application %>" />
 									</c:when>
 									<c:otherwise>
-										<liferay-util:include page="/document_library/view_file_entry_descriptive.jsp" />
+										<liferay-util:include page="/document_library/view_file_entry_descriptive.jsp" servletContext="<%= application %>" />
 									</c:otherwise>
 								</c:choose>
 							</c:when>
@@ -342,11 +342,11 @@ dlSearchContainer.setResults(results);
 
 						<c:choose>
 							<c:when test='<%= displayStyle.equals("icon") %>'>
-								<liferay-util:include page="/document_library/view_folder_icon.jsp" />
+								<liferay-util:include page="/document_library/view_folder_icon.jsp" servletContext="<%= application %>" />
 							</c:when>
 
 							<c:otherwise>
-								<liferay-util:include page="/document_library/view_folder_descriptive.jsp" />
+								<liferay-util:include page="/document_library/view_folder_descriptive.jsp" servletContext="<%= application %>" />
 							</c:otherwise>
 						</c:choose>
 					</c:when>

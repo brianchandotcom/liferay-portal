@@ -66,7 +66,7 @@ portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 %>
 
-<liferay-util:include page="/document_library/top_links.jsp" />
+<liferay-util:include page="/document_library/top_links.jsp"  servletContext="<%= application %>" />
 
 <portlet:actionURL name="/document_library/edit_file_shortcut" var="editFileShortcutURL" />
 

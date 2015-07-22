@@ -22,10 +22,10 @@ boolean showExtraInfo = ParamUtil.getBoolean(request, "showExtraInfo");
 
 <c:choose>
 	<c:when test="<%= PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED && !showExtraInfo %>">
-		<liferay-util:include page="/document_library/view_file_entry_simple_view.jsp" />
+		<liferay-util:include page="/document_library/view_file_entry_simple_view.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
-		<liferay-util:include page="/document_library/view_file_entry.jsp">
+		<liferay-util:include page="/document_library/view_file_entry.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="addPortletBreadcrumbEntries" value="<%= Boolean.FALSE.toString() %>" />
 		</liferay-util:include>
 	</c:otherwise>

@@ -94,7 +94,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<liferay-util:include page="/document_library/top_links.jsp" />
+<liferay-util:include page="/document_library/top_links.jsp" servletContext="<%= application %>" />
 
 <c:choose>
 	<c:when test="<%= useAssetEntryQuery %>">
@@ -215,7 +215,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 					request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 					%>
 
-					<liferay-util:include page="/document_library/folder_action.jsp" />
+					<liferay-util:include page="/document_library/folder_action.jsp" servletContext="<%= application %>" />
 				</aui:col>
 			</c:if>
 		</aui:row>

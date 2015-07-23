@@ -4,6 +4,8 @@ AUI.add(
 		var AArray = A.Array;
 		var Lang = A.Lang;
 
+		var Language = Liferay.Language;
+
 		var CSS_DROP_ACTIVE = 'drop-active';
 
 		var STR_DRAG_LEAVE = 'dragleave';
@@ -18,8 +20,6 @@ AUI.add(
 
 		var STR_SELECTED_ITEM = 'selectedItem';
 
-		var STR_UPLOADABLE_FILE_RETURN_TYPE = 'com.liferay.item.selector.criteria.UploadableFileReturnType';
-
 		var STR_VISIBLE_CHANGE = 'visibleChange';
 
 		var UPLOAD_ITEM_LINK_TPL = '<a data-returnType="{returnType}" data-value="{value}" href="{preview}" title="{title}"></a>';
@@ -33,7 +33,7 @@ AUI.add(
 					}
 				},
 
-				AUGMENTS: [Liferay.PortletBase],
+				AUGMENTS: [Liferay.PortletBase, Liferay.StorageFormatter],
 
 				EXTENDS: A.Base,
 
@@ -152,6 +152,32 @@ AUI.add(
 						}
 					},
 
+					_getUploadFileMetadata: function(file) {
+						var instance = this;
+
+						return {
+							'groups': [
+								{
+									'data': [
+										{
+											'key': Language.get('format'),
+											'value': file.type
+										},
+										{
+											'key': Language.get('size'),
+											'value': instance.formatStorage(file.size)
+										},
+										{
+											'key': Language.get('name'),
+											'value': file.name
+										}
+									],
+									'title': Language.get('file-info')
+								}
+							]
+						};
+					},
+
 					_onInputFileChanged: function(event) {
 						var instance = this;
 
@@ -252,29 +278,19 @@ AUI.add(
 
 						var returnType = dropArea.getData('returntype');
 
-						var value = preview;
-
-						if (returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
-							value = {
-								base64: preview,
-								file: file,
-								id: A.guid(),
-								uploadURL: dropArea.getData('uploadurl')
-							};
-						}
-
 						var linkNode = A.Node.create(
 							Lang.sub(
 								UPLOAD_ITEM_LINK_TPL,
 								{
 									preview: preview,
 									returnType: returnType,
-									title: file.name
+									title: file.name,
+									value: preview
 								}
 							)
 						);
 
-						linkNode.setData('value', value);
+						linkNode.setData('metadata', JSON.stringify(instance._getUploadFileMetadata(file)));
 
 						instance._uploadItemViewer.set(STR_LINKS, new A.NodeList(linkNode));
 						instance._uploadItemViewer.show();
@@ -289,6 +305,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-item-selector-uploader', 'liferay-item-viewer', 'liferay-notice', 'liferay-portlet-base']
+		requires: ['liferay-item-selector-uploader', 'liferay-item-viewer', 'liferay-notice', 'liferay-portlet-base', 'liferay-storage-formatter']
 	}
 );

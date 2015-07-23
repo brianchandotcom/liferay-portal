@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-item-viewer',
 	function(A) {
+		var boostrapColumns = 12;
+
 		var Do = A.Do;
 
 		var Lang = A.Lang;
@@ -53,7 +55,7 @@ AUI.add(
 
 		var TPL_INFO_TAB_BODY_CONTENT = '<h5>{h5}</h5><p>{p}</p>';
 
-		var TPL_INFO_TAB_TITLE = '<li class="{className} col-xs-6"><a aria-expanded="false" data-toggle="tab" href="#{tabId}">{tabTitle}</a></li>';
+		var TPL_INFO_TAB_TITLE = '<li class="{className} col-xs-{columnSize}"><a aria-expanded="false" data-toggle="tab" href="#{tabId}">{tabTitle}</a></li>';
 
 		var LiferayItemViewer = A.Component.create(
 			{
@@ -127,6 +129,7 @@ AUI.add(
 						instance._displacedMethodHandles = [
 							Do.after('_afterBindUI', instance, 'bindUI', instance),
 							Do.after('_afterShowCurrentImage', instance, '_showCurrentImage', instance),
+							Do.after('_bindSidebarEvents', instance, '_afterLinksChange', instance),
 							Do.before('_beforeOnClickControl', instance, '_onClickControl', instance),
 							Do.before('_beforeSyncInfoUI', instance, '_syncInfoUI', instance)
 						];
@@ -151,18 +154,7 @@ AUI.add(
 
 						instance._eventHandles = instance._eventHandles.concat(instance._displacedMethodHandles);
 
-						var infoIconNode = AUI.$(instance._infoIconEl.getDOMNode());
-
-						var sidebarNode = AUI.$(STR_DOT + CSS_SIDENAV_CONTAINER);
-
-						sidebarNode.sideNavigation(
-							{
-								content: sidebarNode.find('.image-viewer-base-image'),
-								equalHeight: false,
-								toggler: infoIconNode,
-								width: '300px'
-							}
-						);
+						instance._bindSidebarEvents();
 					},
 
 					_afterShowCurrentImage: function() {
@@ -193,6 +185,23 @@ AUI.add(
 						}
 					},
 
+					_bindSidebarEvents: function() {
+						var instance = this;
+
+						var infoIconNode = AUI.$(instance._infoIconEl.getDOMNode());
+
+						var sidebarNode = AUI.$(STR_DOT + CSS_SIDENAV_CONTAINER);
+
+						sidebarNode.sideNavigation(
+							{
+								content: sidebarNode.find('.image-viewer-base-image'),
+								equalHeight: false,
+								toggler: infoIconNode,
+								width: '300px'
+							}
+						);
+					},
+
 					_getImageInfoNodes: function() {
 						var instance = this;
 
@@ -219,6 +228,8 @@ AUI.add(
 
 						metadata = JSON.parse(metadata);
 
+						var tabsCount = metadata.groups.length;
+
 						metadata.groups.forEach(
 							function(group, index) {
 								var groupId = A.guid();
@@ -228,6 +239,7 @@ AUI.add(
 										TPL_INFO_TAB_TITLE,
 										{
 											className: index === 0 ? CSS_ACTIVE : STR_BLANK,
+											columnSize: boostrapColumns / tabsCount,
 											tabId: groupId,
 											tabTitle: group.title
 										}

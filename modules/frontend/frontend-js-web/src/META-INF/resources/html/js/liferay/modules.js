@@ -432,7 +432,8 @@
 							'liferay-item-selector-uploader',
 							'liferay-item-viewer',
 							'liferay-notice',
-							'liferay-portlet-base'
+							'liferay-portlet-base',
+							'liferay-storage-formatter'
 						]
 					},
 					'liferay-item-selector-dialog': {

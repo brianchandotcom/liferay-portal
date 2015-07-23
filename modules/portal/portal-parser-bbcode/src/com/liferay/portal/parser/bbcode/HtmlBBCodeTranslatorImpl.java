@@ -272,14 +272,12 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 		for (int i = 0; i < lines.length; i++) {
 			sb.append("<tr>");
-			sb.append("<td class=\"line-numbers\">");
-			sb.append("<span class=\"number\">");
+			sb.append("<td class=\"line-numbers\" data-line-number=\"");
 
 			String index = String.valueOf(i + 1);
 
 			sb.append(index);
-			sb.append("</span>");
-			sb.append("</td>");
+			sb.append("\"></td>");
 			sb.append("<td class=\"lines\">");
 
 			String line = lines[i];

@@ -18,6 +18,6 @@
 	],
 	"license": "LGPL",
 	"name": "liferay-theme-mixins",
-	"repository": "https://github.com/liferay/liferay-portal/tree/master/portal-web/docroot/html/css/common",
+	"repository": "https://github.com/liferay/liferay-portal/tree/master/modules/frontend/frontend-common-css/src/META-INF/resources/html/css/common",
 	"version": "7.0.2"
 }

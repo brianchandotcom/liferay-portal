@@ -30,28 +30,31 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 
-	public TemplateSelectorTag() {
-		setDefaultDisplayStyle(StringPool.BLANK);
+	@Override
+	public String getDefaultDisplayStyle() {
+		String defaultDisplayStyle = super.getDefaultDisplayStyle();
+
+		if (defaultDisplayStyle != null) {
+			return defaultDisplayStyle;
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override
 	public String getDisplayStyle() {
-		String displayStyle = super.getDisplayStyle();
-
-		if (Validator.isNull(displayStyle)) {
-			displayStyle = getDefaultDisplayStyle();
-		}
-
 		DDMTemplate portletDisplayDDMTemplate = getPortletDisplayDDMTemplate();
 
-		if (Validator.isNull(displayStyle) &&
-			(portletDisplayDDMTemplate != null)) {
-
-			displayStyle = PortletDisplayTemplateManagerUtil.getDisplayStyle(
+		if (portletDisplayDDMTemplate != null) {
+			return PortletDisplayTemplateManagerUtil.getDisplayStyle(
 				portletDisplayDDMTemplate.getTemplateKey());
 		}
 
-		return displayStyle;
+		if (Validator.isNull(getDisplayStyle())) {
+			return getDefaultDisplayStyle();
+		}
+
+		return getDisplayStyle();
 	}
 
 	@Override
@@ -68,13 +71,6 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 		return themeDisplay.getScopeGroupId();
 	}
 
-	@Override
-	protected void cleanUp() {
-		super.cleanUp();
-
-		setDefaultDisplayStyle(StringPool.BLANK);
-	}
-
 	protected DDMTemplate getPortletDisplayDDMTemplate() {
 		String displayStyle = super.getDisplayStyle();
 
@@ -82,12 +78,9 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 			displayStyle = getDefaultDisplayStyle();
 		}
 
-		DDMTemplate portletDisplayDDMTemplate =
-			PortletDisplayTemplateManagerUtil.getDDMTemplate(
-				getDisplayStyleGroupId(),
-				PortalUtil.getClassNameId(getClassName()), displayStyle, true);
-
-		return portletDisplayDDMTemplate;
+		return PortletDisplayTemplateManagerUtil.getDDMTemplate(
+			getDisplayStyleGroupId(), PortalUtil.getClassNameId(getClassName()),
+			displayStyle, true);
 	}
 
 	@Override

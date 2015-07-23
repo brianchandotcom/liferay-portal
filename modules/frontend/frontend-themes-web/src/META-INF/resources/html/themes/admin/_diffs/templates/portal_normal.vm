@@ -28,9 +28,9 @@ $theme.include($body_top_include)
 
 <div id="wrapper">
 	#if ($show_dockbar)
-		<div class="list-unstyled pull-right user-personal-bar">
+		<ul class="list-unstyled pull-right user-personal-bar">
 			#user_personal_bar()
-		</div>
+		</ul>
 	#end
 
 	<div id="content-wrapper">

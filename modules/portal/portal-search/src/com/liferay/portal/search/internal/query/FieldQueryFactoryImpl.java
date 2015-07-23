@@ -24,9 +24,11 @@ import com.liferay.portal.kernel.search.query.FieldQueryFactory;
 import com.liferay.portal.kernel.search.query.QueryPreProcessConfiguration;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.analysis.KeywordTokenizer;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,12 +46,14 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 	public Query createQuery(
 		String field, String value, boolean like, boolean splitKeywords) {
 
-		if (!splitKeywords) {
-			splitKeywords = _keywordTokenizer.requiresTokenization(value);
+		KeywordTokenizer keywordTokenizer = getKeywordTokenizer();
+
+		if (!splitKeywords && (keywordTokenizer != null)) {
+			splitKeywords = keywordTokenizer.requiresTokenization(value);
 		}
 
-		if (splitKeywords) {
-			List<String> tokens = _keywordTokenizer.tokenize(value);
+		if (splitKeywords && (keywordTokenizer != null)) {
+			List<String> tokens = keywordTokenizer.tokenize(value);
 
 			if (tokens.size() == 1) {
 				return createQuery(field, tokens.get(0), like, false);
@@ -126,9 +130,30 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		return query;
 	}
 
-	@Reference(unbind = "-")
-	protected void setKeywordTokenizer(KeywordTokenizer keywordTokenizer) {
-		_keywordTokenizer = keywordTokenizer;
+	protected KeywordTokenizer getKeywordTokenizer() {
+		if (_keywordTokenizer != null) {
+			return _keywordTokenizer;
+		}
+
+		return _defaultKeywordTokenizer;
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setKeywordTokenizer(
+		KeywordTokenizer keywordTokenizer, Map<String, Object> properties) {
+
+		String mode = (String)properties.get("mode");
+
+		if (Validator.isNotNull(mode) && mode.equals("default")) {
+			_defaultKeywordTokenizer = keywordTokenizer;
+		}
+		else {
+			_keywordTokenizer = keywordTokenizer;
+		}
 	}
 
 	@Reference(
@@ -142,12 +167,26 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		_queryPreProcessConfiguration = queryPreProcessConfiguration;
 	}
 
+	protected void unsetKeywordTokenizer(
+		KeywordTokenizer keywordTokenizer, Map<String, Object> properties) {
+
+		String mode = (String)properties.get("mode");
+
+		if (Validator.isNotNull(mode) && mode.equals("default")) {
+			_defaultKeywordTokenizer = null;
+		}
+		else {
+			_keywordTokenizer = null;
+		}
+	}
+
 	protected void unsetQueryPreProcessConfiguration(
 		QueryPreProcessConfiguration queryPreProcessConfiguration) {
 
 		_queryPreProcessConfiguration = null;
 	}
 
+	private KeywordTokenizer _defaultKeywordTokenizer;
 	private KeywordTokenizer _keywordTokenizer;
 	private QueryPreProcessConfiguration _queryPreProcessConfiguration;
 

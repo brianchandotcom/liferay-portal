@@ -42,7 +42,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 		<li class="left pull-left">
 			<ul>
 				<li>
-					<a class="control-menu-icon sidenav-toggler" href="#1" id="<portlet:namespace />sidenavToggle"><span class="icon-align-justify icon-monospaced"></span></a>
+					<a class="control-menu-icon sidenav-toggler" href="javascript:;" id="<portlet:namespace />sidenavToggle"><span class="icon-align-justify icon-monospaced"></span></a>
 				</li>
 			</ul>
 		</li>

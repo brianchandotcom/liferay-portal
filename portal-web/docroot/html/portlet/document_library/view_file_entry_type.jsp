@@ -31,7 +31,7 @@ portletURL.setParameter("mvcPath", "/html/portlet/document_library/view_file_ent
 <div class="separator"></div>
 
 <liferay-ui:search-container
-	searchContainer="<%= new StructureSearch(renderRequest, portletURL) %>"
+	searchContainer='<%= new SearchContainer(renderRequest, new DisplayTerms(request), new DisplayTerms(request), SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, LanguageUtil.get(request, "there-are-no-results")) %>'
 >
 	<liferay-ui:search-container-results>
 		<%@ include file="/html/portlet/document_library/file_entry_type_search_results.jspf" %>

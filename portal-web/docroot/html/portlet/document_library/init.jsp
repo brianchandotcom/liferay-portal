@@ -80,8 +80,6 @@ page import="com.liferay.portlet.dynamicdatamapping.StorageEngineManagerUtil" %>
 page import="com.liferay.portlet.dynamicdatamapping.StructureDefinitionException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.StructureNameException" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.search.StructureSearch" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.search.StructureSearchTerms" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues" %>
 

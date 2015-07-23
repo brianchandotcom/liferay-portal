@@ -218,7 +218,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 		throws PortalException {
 
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure =
-			_ddmStructureLocalService.getStructure(structureId);
+			_ddmStructureLocalService.fetchDDMStructure(structureId);
 
 		return DDMUtil.getDDMFormFieldsJSONArray(ddmStructure, script);
 	}

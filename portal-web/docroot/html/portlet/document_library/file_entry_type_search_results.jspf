@@ -15,7 +15,7 @@
 --%>
 
 <%
-StructureSearchTerms searchTerms = (StructureSearchTerms)searchContainer.getSearchTerms();
+DisplayTerms searchTerms = searchContainer.getSearchTerms();
 
 boolean includeBasicFileEntryType = ParamUtil.getBoolean(renderRequest, "includeBasicFileEntryType");
 

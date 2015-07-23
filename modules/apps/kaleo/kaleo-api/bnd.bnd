@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Kaleo Workflow API
+Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.workflow.kaleo.*
+Include-Resource: classes

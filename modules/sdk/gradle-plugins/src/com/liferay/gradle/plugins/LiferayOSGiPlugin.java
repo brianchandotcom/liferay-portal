@@ -668,15 +668,19 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 		Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
 
-		configureTaskDeployFrom(copy);
 		configureTaskDeployRename(copy);
 	}
 
+	@Override
 	protected void configureTaskDeployFrom(Copy copy) {
+		super.configureTaskDeployFrom(copy);
+
 		File wsddJarFile = getWSDDJarFile(copy.getProject());
 
 		if (wsddJarFile.exists()) {
 			copy.from(wsddJarFile);
+
+			addCleanDeployedFile(copy.getProject(), wsddJarFile);
 		}
 	}
 
@@ -687,9 +691,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 			@SuppressWarnings("unused")
 			public String doCall(String fileName) {
-				return fileName.replace(
-					"-" + project.getVersion() + "." + Jar.DEFAULT_EXTENSION,
-					"." + Jar.DEFAULT_EXTENSION);
+				return getDeployedFileName(project, fileName);
 			}
 
 		};
@@ -739,6 +741,19 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			project, BundleExtension.class);
 
 		return (Map<String, String>)bundleExtension.getInstructions();
+	}
+
+	@Override
+	protected String getDeployedFileName(Project project, File sourceFile) {
+		return getDeployedFileName(project, sourceFile.getName());
+	}
+
+	protected String getDeployedFileName(
+		Project project, String sourceFileName) {
+
+		return sourceFileName.replace(
+			"-" + project.getVersion() + "." + Jar.DEFAULT_EXTENSION,
+			"." + Jar.DEFAULT_EXTENSION);
 	}
 
 	protected FileTree getJarsFileTree(Project project, File dir) {

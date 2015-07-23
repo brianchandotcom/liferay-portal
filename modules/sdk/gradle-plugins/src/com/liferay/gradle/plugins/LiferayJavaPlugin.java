@@ -110,6 +110,7 @@ import org.gradle.api.plugins.MavenPluginConvention;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.StopExecutionException;
@@ -204,6 +205,20 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	protected File addCleanDeployedFile(Project project, File sourceFile) {
+		Delete delete = (Delete)GradleUtil.getTask(
+			project, BasePlugin.CLEAN_TASK_NAME);
+
+		Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
+
+		File deployedFile = new File(
+			copy.getDestinationDir(), getDeployedFileName(project, sourceFile));
+
+		delete.delete(deployedFile);
+
+		return deployedFile;
 	}
 
 	protected Configuration addConfigurationPortalWeb(final Project project) {
@@ -301,11 +316,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		copy.setDescription("Assembles the project and deploys it to Liferay.");
 
 		GradleUtil.setProperty(copy, AUTO_CLEAN_PROPERTY_NAME, false);
-
-		Jar jar = (Jar)GradleUtil.getTask(
-			copy.getProject(), JavaPlugin.JAR_TASK_NAME);
-
-		copy.from(jar);
 
 		return copy;
 	}
@@ -1474,6 +1484,18 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
 
 		configureTaskDeployInto(copy, liferayExtension);
+
+		configureTaskDeployFrom(copy);
+	}
+
+	protected void configureTaskDeployFrom(Copy copy) {
+		Project project = copy.getProject();
+
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+
+		copy.from(jar);
+
+		addCleanDeployedFile(project, jar.getArchivePath());
 	}
 
 	protected void configureTaskDeployInto(
@@ -1908,6 +1930,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		project.setVersion(
 			liferayExtension.getVersionPrefix() + "." + project.getVersion());
+	}
+
+	protected String getDeployedFileName(Project project, File sourceFile) {
+		return sourceFile.getName();
 	}
 
 	protected File getJavaDir(Project project) {

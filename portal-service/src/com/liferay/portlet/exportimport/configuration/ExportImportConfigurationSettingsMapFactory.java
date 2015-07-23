@@ -55,7 +55,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 			null, locale, timeZone, fileName);
 	}
 
-	public static Map<String, Serializable> buildImportSettingsMap(
+	public static Map<String, Serializable> buildImportLayoutSettingsMap(
 		long userId, long targetGroupId, boolean privateLayout,
 		long[] layoutIds, Map<String, String[]> parameterMap, Locale locale,
 		TimeZone timeZone) {

@@ -872,6 +872,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<arg value="-DappServerParentDir=${app.server.parent.dir}" />
 				<arg value="-DliferayHome=${liferay.home}" />
 				<arg value="@{task}" />
+				<env key="GRADLE_OPTS" value="${env.ANT_OPTS}" />
 			</exec>
 		</sequential>
 	</macrodef>

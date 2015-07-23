@@ -714,11 +714,12 @@ public class AssetPublisherExportImportTest
 
 		// Import site LAR
 
-		Map<String, Serializable> importSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
-				user.getUserId(), importedGroup.getGroupId(),
-				layout.isPrivateLayout(), null, getImportParameterMap(),
-				user.getLocale(), user.getTimeZone());
+		Map<String, Serializable> importLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportLayoutSettingsMap(
+					user.getUserId(), importedGroup.getGroupId(),
+					layout.isPrivateLayout(), null, getImportParameterMap(),
+					user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration importConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -726,7 +727,7 @@ public class AssetPublisherExportImportTest
 					user.getUserId(), importedGroup.getGroupId(),
 					StringPool.BLANK, StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
+					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
 		ExportImportLocalServiceUtil.importLayouts(

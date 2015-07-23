@@ -1122,9 +1122,9 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		long groupId = user.getGroupId();
 
 		if (privateLayoutsFile != null) {
-			Map<String, Serializable> settingsMap =
+			Map<String, Serializable> importLayoutSettingsMap =
 				ExportImportConfigurationSettingsMapFactory.
-					buildImportSettingsMap(
+					buildImportLayoutSettingsMap(
 						user.getUserId(), groupId, true, null, parameterMap,
 						user.getLocale(), user.getTimeZone());
 
@@ -1134,7 +1134,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 						user.getUserId(), groupId, StringPool.BLANK,
 						StringPool.BLANK,
 						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-						settingsMap, WorkflowConstants.STATUS_DRAFT,
+						importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 						new ServiceContext());
 
 			exportImportLocalService.importLayouts(
@@ -1142,9 +1142,9 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		}
 
 		if (publicLayoutsFile != null) {
-			Map<String, Serializable> settingsMap =
+			Map<String, Serializable> importLayoutSettingsMap =
 				ExportImportConfigurationSettingsMapFactory.
-					buildImportSettingsMap(
+					buildImportLayoutSettingsMap(
 						user.getUserId(), groupId, false, null, parameterMap,
 						user.getLocale(), user.getTimeZone());
 
@@ -1154,7 +1154,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 						user.getUserId(), groupId, StringPool.BLANK,
 						StringPool.BLANK,
 						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-						settingsMap, WorkflowConstants.STATUS_DRAFT,
+						importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 						new ServiceContext());
 
 			exportImportLocalService.importLayouts(

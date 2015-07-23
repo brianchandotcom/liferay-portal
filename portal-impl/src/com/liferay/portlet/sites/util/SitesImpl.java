@@ -315,9 +315,9 @@ public class SitesImpl implements Sites {
 			exportConfiguration);
 
 		try {
-			Map<String, Serializable> importSettingsMap =
+			Map<String, Serializable> importLayoutSettingsMap =
 				ExportImportConfigurationSettingsMapFactory.
-					buildImportSettingsMap(
+					buildImportLayoutSettingsMap(
 						userId, targetLayout.getGroupId(),
 						targetLayout.isPrivateLayout(), null, parameterMap,
 						user.getLocale(), user.getTimeZone());
@@ -328,7 +328,7 @@ public class SitesImpl implements Sites {
 						userId, targetLayout.getGroupId(), StringPool.BLANK,
 						StringPool.BLANK,
 						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-						importSettingsMap, WorkflowConstants.STATUS_DRAFT,
+						importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 						new ServiceContext());
 
 			ExportImportLocalServiceUtil.importLayouts(
@@ -889,11 +889,12 @@ public class SitesImpl implements Sites {
 				GetterUtil.getLong(PrincipalThreadLocal.getName()));
 		}
 
-		Map<String, Serializable> importSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
-				user.getUserId(), layoutSet.getGroupId(),
-				layoutSet.isPrivateLayout(), null, parameterMap,
-				user.getLocale(), user.getTimeZone());
+		Map<String, Serializable> importLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportLayoutSettingsMap(
+					user.getUserId(), layoutSet.getGroupId(),
+					layoutSet.isPrivateLayout(), null, parameterMap,
+					user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -901,7 +902,7 @@ public class SitesImpl implements Sites {
 					user.getUserId(), layoutSet.getGroupId(), StringPool.BLANK,
 					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
+					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					serviceContext);
 
 		ExportImportServiceUtil.importLayouts(
@@ -1914,10 +1915,11 @@ public class SitesImpl implements Sites {
 			newFile = true;
 		}
 
-		Map<String, Serializable> importSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
-				user.getUserId(), groupId, privateLayout, null, parameterMap,
-				user.getLocale(), user.getTimeZone());
+		Map<String, Serializable> importLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportLayoutSettingsMap(
+					user.getUserId(), groupId, privateLayout, null,
+					parameterMap, user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -1925,7 +1927,7 @@ public class SitesImpl implements Sites {
 					user.getUserId(), groupId, StringPool.BLANK,
 					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
+					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
 		ExportImportLocalServiceUtil.importLayouts(

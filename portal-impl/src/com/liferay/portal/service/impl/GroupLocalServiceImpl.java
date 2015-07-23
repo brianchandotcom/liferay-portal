@@ -3628,18 +3628,19 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
 			new String[] {Boolean.TRUE.toString()});
 
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
-				defaultUser.getUserId(), group.getGroupId(), false, null,
-				parameterMap, defaultUser.getLocale(),
-				defaultUser.getTimeZone());
+		Map<String, Serializable> importLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportLayoutSettingsMap(
+					defaultUser.getUserId(), group.getGroupId(), false, null,
+					parameterMap, defaultUser.getLocale(),
+					defaultUser.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationLocalService.addExportImportConfiguration(
 				defaultUser.getUserId(), group.getGroupId(), StringPool.BLANK,
 				StringPool.BLANK,
 				ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-				settingsMap, WorkflowConstants.STATUS_DRAFT,
+				importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 				new ServiceContext());
 
 		exportImportLocalService.importLayouts(

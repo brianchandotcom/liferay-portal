@@ -320,11 +320,12 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
 
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
-				themeDisplay.getUserId(), groupId, privateLayout, null,
-				actionRequest.getParameterMap(), themeDisplay.getLocale(),
-				themeDisplay.getTimeZone());
+		Map<String, Serializable> importLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportLayoutSettingsMap(
+					themeDisplay.getUserId(), groupId, privateLayout, null,
+					actionRequest.getParameterMap(), themeDisplay.getLocale(),
+					themeDisplay.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -332,7 +333,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getUserId(), groupId, StringPool.BLANK,
 					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
 		ExportImportServiceUtil.importLayoutsInBackground(
@@ -398,11 +399,12 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
 
-		Map<String, Serializable> importSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
-				themeDisplay.getUserId(), groupId, privateLayout, null,
-				actionRequest.getParameterMap(), themeDisplay.getLocale(),
-				themeDisplay.getTimeZone());
+		Map<String, Serializable> importLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportLayoutSettingsMap(
+					themeDisplay.getUserId(), groupId, privateLayout, null,
+					actionRequest.getParameterMap(), themeDisplay.getLocale(),
+					themeDisplay.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -410,7 +412,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getUserId(), groupId, StringPool.BLANK,
 					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
+					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
 		return ExportImportServiceUtil.validateImportLayoutsFile(

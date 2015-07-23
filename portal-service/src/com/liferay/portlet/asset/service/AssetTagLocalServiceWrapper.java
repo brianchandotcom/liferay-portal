@@ -109,17 +109,15 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	* Adds resources for the asset tag using the group and guest permissions.
 	*
 	* @param tag the asset tag for which to add resources
-	* @param groupPermissions the group permissions to be applied
-	* @param guestPermissions the guest permissions to be applied
+	* @param modelPermissions the permissions to be applied
 	* @throws PortalException if resources could not be added for the asset tag
 	or if a portal exception occurred
 	*/
 	@Override
 	public void addTagResources(com.liferay.portlet.asset.model.AssetTag tag,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_assetTagLocalService.addTagResources(tag, groupPermissions,
-			guestPermissions);
+		_assetTagLocalService.addTagResources(tag, modelPermissions);
 	}
 
 	/**

@@ -156,13 +156,12 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	* Adds the model resources with the permissions to the template.
 	*
 	* @param template the template to add resources to
-	* @param groupPermissions the group permissions to be added
-	* @param guestPermissions the guest permissions to be added
+	* @param modelPermissions the permissions to be added
 	* @throws PortalException if a portal exception occurred
 	*/
 	public void addTemplateResources(
 		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate template,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws PortalException;
 
 	/**

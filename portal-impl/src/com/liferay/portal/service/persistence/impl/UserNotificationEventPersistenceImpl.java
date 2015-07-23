@@ -38,6 +38,7 @@ import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.model.impl.UserNotificationEventImpl;
 import com.liferay.portal.model.impl.UserNotificationEventModelImpl;
 import com.liferay.portal.service.persistence.UserNotificationEventPersistence;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
 

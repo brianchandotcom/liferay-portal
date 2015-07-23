@@ -66,11 +66,9 @@ public class SCProductEntryLocalServiceUtil {
 
 	public static void addProductEntryResources(
 		com.liferay.portlet.softwarecatalog.model.SCProductEntry productEntry,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addProductEntryResources(productEntry, groupPermissions,
-			guestPermissions);
+		getService().addProductEntryResources(productEntry, modelPermissions);
 	}
 
 	public static void addProductEntryResources(long productEntryId,
@@ -82,11 +80,9 @@ public class SCProductEntryLocalServiceUtil {
 	}
 
 	public static void addProductEntryResources(long productEntryId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addProductEntryResources(productEntryId, groupPermissions,
-			guestPermissions);
+		getService().addProductEntryResources(productEntryId, modelPermissions);
 	}
 
 	public static void addSCLicenseSCProductEntries(long licenseId,

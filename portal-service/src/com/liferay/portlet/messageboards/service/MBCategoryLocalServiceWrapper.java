@@ -77,10 +77,9 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	@Override
 	public void addCategoryResources(
 		com.liferay.portlet.messageboards.model.MBCategory category,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbCategoryLocalService.addCategoryResources(category,
-			groupPermissions, guestPermissions);
+		_mbCategoryLocalService.addCategoryResources(category, modelPermissions);
 	}
 
 	@Override
@@ -93,10 +92,10 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 
 	@Override
 	public void addCategoryResources(long categoryId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_mbCategoryLocalService.addCategoryResources(categoryId,
-			groupPermissions, guestPermissions);
+			modelPermissions);
 	}
 
 	/**

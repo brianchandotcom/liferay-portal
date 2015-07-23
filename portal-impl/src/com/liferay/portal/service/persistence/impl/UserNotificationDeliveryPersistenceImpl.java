@@ -36,6 +36,7 @@ import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.model.impl.UserNotificationDeliveryImpl;
 import com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl;
 import com.liferay.portal.service.persistence.UserNotificationDeliveryPersistence;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
 

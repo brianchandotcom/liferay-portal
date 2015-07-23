@@ -63,6 +63,7 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.util.LayoutURLUtil;
@@ -263,9 +264,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				serviceContext.isAddGuestPermissions());
 		}
 		else {
-			addEntryResources(
-				entry, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
+			addEntryResources(entry, serviceContext.getModelPermissions());
 		}
 
 		// Asset
@@ -393,14 +392,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@Override
 	public void addEntryResources(
-			BlogsEntry entry, String[] groupPermissions,
-			String[] guestPermissions)
+			BlogsEntry entry, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			entry.getCompanyId(), entry.getGroupId(), entry.getUserId(),
-			BlogsEntry.class.getName(), entry.getEntryId(), groupPermissions,
-			guestPermissions);
+			BlogsEntry.class.getName(), entry.getEntryId(), modelPermissions);
 	}
 
 	@Override
@@ -416,12 +413,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@Override
 	public void addEntryResources(
-			long entryId, String[] groupPermissions, String[] guestPermissions)
+			long entryId, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		addEntryResources(entry, groupPermissions, guestPermissions);
+		addEntryResources(entry, modelPermissions);
 	}
 
 	@Override

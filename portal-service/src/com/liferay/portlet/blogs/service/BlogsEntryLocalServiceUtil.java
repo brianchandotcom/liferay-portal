@@ -144,9 +144,9 @@ public class BlogsEntryLocalServiceUtil {
 
 	public static void addEntryResources(
 		com.liferay.portlet.blogs.model.BlogsEntry entry,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addEntryResources(entry, groupPermissions, guestPermissions);
+		getService().addEntryResources(entry, modelPermissions);
 	}
 
 	public static void addEntryResources(long entryId,
@@ -157,10 +157,9 @@ public class BlogsEntryLocalServiceUtil {
 	}
 
 	public static void addEntryResources(long entryId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addEntryResources(entryId, groupPermissions, guestPermissions);
+		getService().addEntryResources(entryId, modelPermissions);
 	}
 
 	public static void checkEntries()

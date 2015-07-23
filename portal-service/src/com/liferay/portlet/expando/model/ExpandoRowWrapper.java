@@ -126,7 +126,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	@Override
-	public ExpandoBridge getExpandoBridge() {
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
 		return _expandoRow.getExpandoBridge();
 	}
 
@@ -232,7 +232,8 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
 		_expandoRow.setExpandoBridgeAttributes(expandoBridge);
 	}
 

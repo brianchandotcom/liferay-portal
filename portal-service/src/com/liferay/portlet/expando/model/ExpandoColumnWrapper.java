@@ -160,7 +160,7 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 	}
 
 	@Override
-	public ExpandoBridge getExpandoBridge() {
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
 		return _expandoColumn.getExpandoBridge();
 	}
 
@@ -291,7 +291,8 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+	public void setExpandoBridgeAttributes(
+		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
 		_expandoColumn.setExpandoBridgeAttributes(expandoBridge);
 	}
 

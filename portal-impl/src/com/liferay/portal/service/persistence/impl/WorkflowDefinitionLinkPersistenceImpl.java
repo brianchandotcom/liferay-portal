@@ -39,6 +39,7 @@ import com.liferay.portal.model.impl.WorkflowDefinitionLinkModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistence;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
 

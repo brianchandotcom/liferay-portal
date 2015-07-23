@@ -27,6 +27,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
@@ -89,8 +90,7 @@ public class DLFileShortcutLocalServiceImpl
 		}
 		else {
 			addFileShortcutResources(
-				fileShortcut, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
+				fileShortcut, serviceContext.getModelPermissions());
 		}
 
 		// Folder
@@ -128,15 +128,13 @@ public class DLFileShortcutLocalServiceImpl
 
 	@Override
 	public void addFileShortcutResources(
-			DLFileShortcut fileShortcut, String[] groupPermissions,
-			String[] guestPermissions)
+			DLFileShortcut fileShortcut, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			fileShortcut.getCompanyId(), fileShortcut.getGroupId(),
 			fileShortcut.getUserId(), DLFileShortcutConstants.getClassName(),
-			fileShortcut.getFileShortcutId(), groupPermissions,
-			guestPermissions);
+			fileShortcut.getFileShortcutId(), modelPermissions);
 	}
 
 	@Override
@@ -154,15 +152,13 @@ public class DLFileShortcutLocalServiceImpl
 
 	@Override
 	public void addFileShortcutResources(
-			long fileShortcutId, String[] groupPermissions,
-			String[] guestPermissions)
+			long fileShortcutId, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		DLFileShortcut fileShortcut =
 			dlFileShortcutPersistence.findByPrimaryKey(fileShortcutId);
 
-		addFileShortcutResources(
-			fileShortcut, groupPermissions, guestPermissions);
+		addFileShortcutResources(fileShortcut, modelPermissions);
 	}
 
 	@Override

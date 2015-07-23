@@ -130,8 +130,7 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
 				dlFileEntry.getUserId(), DLFileEntry.class.getName(),
 				dlFileEntry.getFileEntryId(),
-				serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
+				serviceContext.getModelPermissions());
 		}
 	}
 

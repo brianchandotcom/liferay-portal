@@ -26,6 +26,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.model.RegionModel;
 import com.liferay.portal.model.RegionSoap;
+import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;

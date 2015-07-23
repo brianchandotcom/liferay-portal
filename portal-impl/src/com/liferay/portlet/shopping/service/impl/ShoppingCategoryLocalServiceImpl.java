@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portlet.shopping.CategoryNameException;
 import com.liferay.portlet.shopping.model.ShoppingCategory;
 import com.liferay.portlet.shopping.model.ShoppingCategoryConstants;
@@ -75,8 +76,7 @@ public class ShoppingCategoryLocalServiceImpl
 		}
 		else {
 			addCategoryResources(
-				category, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
+				category, serviceContext.getModelPermissions());
 		}
 
 		return category;
@@ -97,14 +97,13 @@ public class ShoppingCategoryLocalServiceImpl
 
 	@Override
 	public void addCategoryResources(
-			long categoryId, String[] groupPermissions,
-			String[] guestPermissions)
+			long categoryId, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		ShoppingCategory category =
 			shoppingCategoryPersistence.findByPrimaryKey(categoryId);
 
-		addCategoryResources(category, groupPermissions, guestPermissions);
+		addCategoryResources(category, modelPermissions);
 	}
 
 	@Override
@@ -122,14 +121,13 @@ public class ShoppingCategoryLocalServiceImpl
 
 	@Override
 	public void addCategoryResources(
-			ShoppingCategory category, String[] groupPermissions,
-			String[] guestPermissions)
+			ShoppingCategory category, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			category.getCompanyId(), category.getGroupId(),
 			category.getUserId(), ShoppingCategory.class.getName(),
-			category.getCategoryId(), groupPermissions, guestPermissions);
+			category.getCategoryId(), modelPermissions);
 	}
 
 	@Override

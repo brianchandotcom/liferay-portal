@@ -31,6 +31,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -146,8 +147,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 		else {
 			addFileEntryTypeResources(
-				dlFileEntryType, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
+				dlFileEntryType, serviceContext.getModelPermissions());
 		}
 
 		return dlFileEntryType;
@@ -550,15 +550,13 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	protected void addFileEntryTypeResources(
-			DLFileEntryType dlFileEntryType, String[] groupPermissions,
-			String[] guestPermissions)
+			DLFileEntryType dlFileEntryType, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			dlFileEntryType.getCompanyId(), dlFileEntryType.getGroupId(),
 			dlFileEntryType.getUserId(), DLFileEntryType.class.getName(),
-			dlFileEntryType.getFileEntryTypeId(), groupPermissions,
-			guestPermissions);
+			dlFileEntryType.getFileEntryTypeId(), modelPermissions);
 	}
 
 	protected void cascadeFileEntryTypes(

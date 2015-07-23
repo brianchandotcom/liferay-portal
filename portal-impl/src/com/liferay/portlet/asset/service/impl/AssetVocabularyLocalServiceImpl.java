@@ -37,6 +37,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.DuplicateVocabularyException;
 import com.liferay.portlet.asset.VocabularyNameException;
@@ -136,8 +137,7 @@ public class AssetVocabularyLocalServiceImpl
 		}
 		else {
 			addVocabularyResources(
-				vocabulary, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
+				vocabulary, serviceContext.getModelPermissions());
 		}
 
 		return vocabulary;
@@ -179,14 +179,13 @@ public class AssetVocabularyLocalServiceImpl
 
 	@Override
 	public void addVocabularyResources(
-			AssetVocabulary vocabulary, String[] groupPermissions,
-			String[] guestPermissions)
+			AssetVocabulary vocabulary, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			vocabulary.getCompanyId(), vocabulary.getGroupId(),
 			vocabulary.getUserId(), AssetVocabulary.class.getName(),
-			vocabulary.getVocabularyId(), groupPermissions, guestPermissions);
+			vocabulary.getVocabularyId(), modelPermissions);
 	}
 
 	@Override

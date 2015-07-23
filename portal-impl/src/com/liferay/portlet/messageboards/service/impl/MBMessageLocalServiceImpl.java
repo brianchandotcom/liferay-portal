@@ -62,6 +62,7 @@ import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.Portal;
@@ -403,8 +404,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 			else {
 				addMessageResources(
-					message, serviceContext.getGroupPermissions(),
-					serviceContext.getGuestPermissions());
+					message, serviceContext.getModelPermissions());
 			}
 		}
 
@@ -534,13 +534,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public void addMessageResources(
-			long messageId, String[] groupPermissions,
-			String[] guestPermissions)
+			long messageId, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
 
-		addMessageResources(message, groupPermissions, guestPermissions);
+		addMessageResources(message, modelPermissions);
 	}
 
 	@Override
@@ -557,14 +556,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public void addMessageResources(
-			MBMessage message, String[] groupPermissions,
-			String[] guestPermissions)
+			MBMessage message, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			message.getCompanyId(), message.getGroupId(), message.getUserId(),
-			MBMessage.class.getName(), message.getMessageId(), groupPermissions,
-			guestPermissions);
+			MBMessage.class.getName(), message.getMessageId(),
+			modelPermissions);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

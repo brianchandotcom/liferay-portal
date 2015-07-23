@@ -44,6 +44,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portlet.asset.AssetCategoryNameException;
 import com.liferay.portlet.asset.DuplicateCategoryException;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -134,8 +135,7 @@ public class AssetCategoryLocalServiceImpl
 		}
 		else {
 			addCategoryResources(
-				category, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
+				category, serviceContext.getModelPermissions());
 		}
 
 		// Properties
@@ -203,14 +203,13 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public void addCategoryResources(
-			AssetCategory category, String[] groupPermissions,
-			String[] guestPermissions)
+			AssetCategory category, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			category.getCompanyId(), category.getGroupId(),
 			category.getUserId(), AssetCategory.class.getName(),
-			category.getCategoryId(), groupPermissions, guestPermissions);
+			category.getCategoryId(), modelPermissions);
 	}
 
 	@Override

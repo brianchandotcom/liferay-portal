@@ -49,6 +49,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
@@ -137,9 +138,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 					repositoryId, DLFolderConstants.getClassName());
 			}
 
-			addFolderResources(
-				dlFolder, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
+			addFolderResources(dlFolder, serviceContext.getModelPermissions());
 		}
 
 		// Parent folder
@@ -1283,14 +1282,13 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	protected void addFolderResources(
-			DLFolder dlFolder, String[] groupPermissions,
-			String[] guestPermissions)
+			DLFolder dlFolder, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			dlFolder.getCompanyId(), dlFolder.getGroupId(),
 			dlFolder.getUserId(), DLFolder.class.getName(),
-			dlFolder.getFolderId(), groupPermissions, guestPermissions);
+			dlFolder.getFolderId(), modelPermissions);
 	}
 
 	protected void addFolderResources(
@@ -1304,12 +1302,12 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	protected void addFolderResources(
-			long folderId, String[] groupPermissions, String[] guestPermissions)
+			long folderId, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
 
-		addFolderResources(dlFolder, groupPermissions, guestPermissions);
+		addFolderResources(dlFolder, modelPermissions);
 	}
 
 	protected void deleteFolderDependencies(

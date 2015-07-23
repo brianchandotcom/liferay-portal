@@ -222,13 +222,12 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* Adds the model resources with the permissions to the structure.
 	*
 	* @param structure the structure to add resources to
-	* @param groupPermissions the group permissions to be added
-	* @param guestPermissions the guest permissions to be added
+	* @param modelPermissions the permissions to be added
 	* @throws PortalException if a portal exception occurred
 	*/
 	public void addStructureResources(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure structure,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws PortalException;
 
 	/**

@@ -37,6 +37,7 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.InvalidStructureVersionException;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
@@ -156,8 +157,7 @@ public class DDMStructureLocalServiceImpl
 		}
 		else {
 			addStructureResources(
-				structure, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
+				structure, serviceContext.getModelPermissions());
 		}
 
 		// Structure version
@@ -381,20 +381,18 @@ public class DDMStructureLocalServiceImpl
 	 * Adds the model resources with the permissions to the structure.
 	 *
 	 * @param  structure the structure to add resources to
-	 * @param  groupPermissions the group permissions to be added
-	 * @param  guestPermissions the guest permissions to be added
+	 * @param  modelPermissions the permissions to be added
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void addStructureResources(
-			DDMStructure structure, String[] groupPermissions,
-			String[] guestPermissions)
+			DDMStructure structure, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			structure.getCompanyId(), structure.getGroupId(),
 			structure.getUserId(), DDMStructure.class.getName(),
-			structure.getStructureId(), groupPermissions, guestPermissions);
+			structure.getStructureId(), modelPermissions);
 	}
 
 	/**

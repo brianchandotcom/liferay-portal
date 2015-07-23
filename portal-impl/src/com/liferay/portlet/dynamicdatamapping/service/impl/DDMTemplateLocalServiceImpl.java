@@ -34,6 +34,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.service.persistence.ImageUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -240,8 +241,7 @@ public class DDMTemplateLocalServiceImpl
 		}
 		else {
 			addTemplateResources(
-				template, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
+				template, serviceContext.getModelPermissions());
 		}
 
 		// Small image
@@ -284,20 +284,18 @@ public class DDMTemplateLocalServiceImpl
 	 * Adds the model resources with the permissions to the template.
 	 *
 	 * @param  template the template to add resources to
-	 * @param  groupPermissions the group permissions to be added
-	 * @param  guestPermissions the guest permissions to be added
+	 * @param  modelPermissions the permissions to be added
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void addTemplateResources(
-			DDMTemplate template, String[] groupPermissions,
-			String[] guestPermissions)
+			DDMTemplate template, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			template.getCompanyId(), template.getGroupId(),
 			template.getUserId(), DDMTemplate.class.getName(),
-			template.getTemplateId(), groupPermissions, guestPermissions);
+			template.getTemplateId(), modelPermissions);
 	}
 
 	/**

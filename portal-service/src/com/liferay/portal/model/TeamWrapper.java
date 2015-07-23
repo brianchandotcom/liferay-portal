@@ -17,6 +17,7 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ModelWrapper;
 
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 
@@ -354,7 +355,8 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
 		_team.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -481,7 +483,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.model.Team> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Team> toCacheModel() {
 		return _team.toCacheModel();
 	}
 

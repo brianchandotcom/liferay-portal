@@ -68,10 +68,9 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	@Override
 	public void addItemResources(
 		com.liferay.portlet.shopping.model.ShoppingItem item,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingItemLocalService.addItemResources(item, groupPermissions,
-			guestPermissions);
+		_shoppingItemLocalService.addItemResources(item, modelPermissions);
 	}
 
 	@Override
@@ -84,10 +83,9 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 
 	@Override
 	public void addItemResources(long itemId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingItemLocalService.addItemResources(itemId, groupPermissions,
-			guestPermissions);
+		_shoppingItemLocalService.addItemResources(itemId, modelPermissions);
 	}
 
 	/**

@@ -75,7 +75,7 @@ public interface MBCategoryLocalService extends BaseLocalService,
 
 	public void addCategoryResources(
 		com.liferay.portlet.messageboards.model.MBCategory category,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws PortalException;
 
 	public void addCategoryResources(long categoryId,
@@ -83,7 +83,7 @@ public interface MBCategoryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void addCategoryResources(long categoryId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws PortalException;
 
 	/**

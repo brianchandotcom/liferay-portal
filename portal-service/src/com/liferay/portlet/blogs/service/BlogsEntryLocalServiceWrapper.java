@@ -144,10 +144,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	@Override
 	public void addEntryResources(
 		com.liferay.portlet.blogs.model.BlogsEntry entry,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.addEntryResources(entry, groupPermissions,
-			guestPermissions);
+		_blogsEntryLocalService.addEntryResources(entry, modelPermissions);
 	}
 
 	@Override
@@ -160,10 +159,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 
 	@Override
 	public void addEntryResources(long entryId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_blogsEntryLocalService.addEntryResources(entryId, groupPermissions,
-			guestPermissions);
+		_blogsEntryLocalService.addEntryResources(entryId, modelPermissions);
 	}
 
 	@Override

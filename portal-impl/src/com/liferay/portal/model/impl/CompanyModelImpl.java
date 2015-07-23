@@ -26,6 +26,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyModel;
 import com.liferay.portal.model.CompanySoap;
+import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;

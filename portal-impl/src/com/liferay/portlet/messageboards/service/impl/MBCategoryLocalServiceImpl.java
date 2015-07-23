@@ -26,6 +26,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portlet.messageboards.CategoryNameException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -108,8 +109,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		}
 		else {
 			addCategoryResources(
-				category, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
+				category, serviceContext.getModelPermissions());
 		}
 
 		// Mailing list
@@ -145,8 +145,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
 	public void addCategoryResources(
-			long categoryId, String[] groupPermissions,
-			String[] guestPermissions)
+			long categoryId, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		if ((categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
@@ -158,7 +157,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
-		addCategoryResources(category, groupPermissions, guestPermissions);
+		addCategoryResources(category, modelPermissions);
 	}
 
 	@Override
@@ -176,14 +175,13 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
 	public void addCategoryResources(
-			MBCategory category, String[] groupPermissions,
-			String[] guestPermissions)
+			MBCategory category, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			category.getCompanyId(), category.getGroupId(),
 			category.getUserId(), MBCategory.class.getName(),
-			category.getCategoryId(), groupPermissions, guestPermissions);
+			category.getCategoryId(), modelPermissions);
 	}
 
 	@Override

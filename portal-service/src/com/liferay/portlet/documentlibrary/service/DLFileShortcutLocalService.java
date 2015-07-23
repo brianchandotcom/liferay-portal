@@ -72,7 +72,7 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 
 	public void addFileShortcutResources(
 		com.liferay.portlet.documentlibrary.model.DLFileShortcut fileShortcut,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws PortalException;
 
 	public void addFileShortcutResources(long fileShortcutId,
@@ -80,7 +80,7 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void addFileShortcutResources(long fileShortcutId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws PortalException;
 
 	/**

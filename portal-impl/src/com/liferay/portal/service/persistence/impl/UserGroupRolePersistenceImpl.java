@@ -36,6 +36,7 @@ import com.liferay.portal.model.impl.UserGroupRoleImpl;
 import com.liferay.portal.model.impl.UserGroupRoleModelImpl;
 import com.liferay.portal.service.persistence.UserGroupRolePK;
 import com.liferay.portal.service.persistence.UserGroupRolePersistence;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
 

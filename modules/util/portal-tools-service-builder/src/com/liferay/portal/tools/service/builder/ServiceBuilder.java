@@ -3892,7 +3892,6 @@ public class ServiceBuilder {
 			for (int i = 0; i < pkList.size(); i++) {
 				EntityColumn col = pkList.get(i);
 
-				String colName = col.getName();
 				String colType = col.getType();
 
 				sb.append("\t");

@@ -45,16 +45,21 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.store.BaseStore;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
@@ -68,7 +73,13 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.List;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
+
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -468,12 +479,40 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)baseModel;
 
-		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
-			dlFileEntry.getFileEntryId(), null, dlFileEntry.getMimeType(),
-			keywords, StringPool.BLANK, StringPool.BLANK, true, (byte[])null,
-			serviceContext);
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					BaseStore.class.getName(), Level.WARN)) {
 
-		return (DLFileEntry)fileEntry.getModel();
+			DLFileVersion dlFileVersion =
+				DLFileVersionLocalServiceUtil.fetchLatestFileVersion(
+					dlFileEntry.getFileEntryId(), !dlFileEntry.isCheckedOut());
+
+			FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
+				dlFileEntry.getFileEntryId(), null, dlFileEntry.getMimeType(),
+				keywords, StringPool.BLANK, StringPool.BLANK, true,
+				(byte[])null, serviceContext);
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			if (dlFileVersion.isApproved()) {
+				Assert.assertEquals(1, loggingEvents.size());
+
+				LoggingEvent loggingEvent = loggingEvents.get(0);
+
+				String message = (String)loggingEvent.getMessage();
+
+				Assert.assertTrue(
+					message.startsWith(
+						"Unable to delete file {companyId=" +
+							fileEntry.getCompanyId()));
+				Assert.assertTrue(
+					message.endsWith(
+						"versionLabel=PWC} because it does not exist"));
+			}
+
+			return (DLFileEntry)fileEntry.getModel();
+		}
 	}
 
 	@Override

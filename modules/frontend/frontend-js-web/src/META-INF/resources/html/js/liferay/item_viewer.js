@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-item-viewer',
 	function(A) {
-		var boostrapColumns = 12;
-
 		var Do = A.Do;
 
 		var Lang = A.Lang;
@@ -56,6 +54,8 @@ AUI.add(
 		var TPL_INFO_TAB_BODY_CONTENT = '<h5>{h5}</h5><p>{p}</p>';
 
 		var TPL_INFO_TAB_TITLE = '<li class="{className} col-xs-{columnSize}"><a aria-expanded="false" data-toggle="tab" href="#{tabId}">{tabTitle}</a></li>';
+
+		var bootstrapColumns = 12;
 
 		var LiferayItemViewer = A.Component.create(
 			{
@@ -239,7 +239,7 @@ AUI.add(
 										TPL_INFO_TAB_TITLE,
 										{
 											className: index === 0 ? CSS_ACTIVE : STR_BLANK,
-											columnSize: boostrapColumns / tabsCount,
+											columnSize: bootstrapColumns / tabsCount,
 											tabId: groupId,
 											tabTitle: group.title
 										}

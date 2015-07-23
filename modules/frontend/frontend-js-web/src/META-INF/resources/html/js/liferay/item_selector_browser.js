@@ -4,8 +4,6 @@ AUI.add(
 		var AArray = A.Array;
 		var Lang = A.Lang;
 
-		var Language = Liferay.Language;
-
 		var CSS_DROP_ACTIVE = 'drop-active';
 
 		var STR_DRAG_LEAVE = 'dragleave';
@@ -152,6 +150,31 @@ AUI.add(
 						}
 					},
 
+					_getUploadErrorMessage: function() {
+						var instance = this;
+
+						var notice = instance._notice;
+
+						if (!notice) {
+							var message = Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
+
+							notice = new Liferay.Notice(
+								{
+									closeText: false,
+									content: message + '<button class="close" type="button">&times;</button>',
+									noticeClass: 'hide',
+									toggleText: false,
+									type: 'warning',
+									useAnimation: false
+								}
+							);
+
+							instance._notice = notice;
+						}
+
+						return notice;
+					},
+
 					_getUploadFileMetadata: function(file) {
 						var instance = this;
 
@@ -160,19 +183,19 @@ AUI.add(
 								{
 									'data': [
 										{
-											'key': Language.get('format'),
+											'key': Liferay.Language.get('format'),
 											'value': file.type
 										},
 										{
-											'key': Language.get('size'),
+											'key': Liferay.Language.get('size'),
 											'value': instance.formatStorage(file.size)
 										},
 										{
-											'key': Language.get('name'),
+											'key': Liferay.Language.get('name'),
 											'value': file.name
 										}
 									],
-									'title': Language.get('file-info')
+									'title': Liferay.Language.get('file-info')
 								}
 							]
 						};
@@ -231,18 +254,7 @@ AUI.add(
 							uploadItemViewer.hide();
 						}
 
-						var message = Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
-
-						new Liferay.Notice(
-							{
-								closeText: false,
-								content: message + '<button class="close" type="button">&times;</button>',
-								noticeClass: 'hide',
-								toggleText: false,
-								type: 'warning',
-								useAnimation: false
-							}
-						).show();
+						instance._getUploadErrorMessage().show();
 					},
 
 					_previewFile: function(file) {

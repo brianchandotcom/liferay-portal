@@ -51,6 +51,10 @@ AUI.add(
 							instance._uploader.destroy();
 						}
 
+						if (instance._progressbar) {
+							instance._progressbar.destroy();
+						}
+
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 

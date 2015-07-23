@@ -134,9 +134,9 @@ public class ExportImportLifecycleEventTest {
 
 	@Test
 	public void testFailedLayoutImport() throws Exception {
-		Map<String, Serializable> exportLayoutSettingsMap =
+		Map<String, Serializable> importLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.
-				buildExportLayoutSettingsMap(
+				buildImportLayoutSettingsMap(
 					TestPropsValues.getUserId(), 0, false, new long[0],
 					_parameterMap, Locale.US, TimeZoneUtil.GMT);
 
@@ -146,7 +146,7 @@ public class ExportImportLifecycleEventTest {
 					TestPropsValues.getUserId(), 0,
 					RandomTestUtil.randomString(), StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					exportLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
+					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					ServiceContextTestUtil.getServiceContext());
 
 		try {

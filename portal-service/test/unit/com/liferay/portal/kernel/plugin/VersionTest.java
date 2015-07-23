@@ -74,6 +74,34 @@ public class VersionTest {
 	}
 
 	@Test
+	public void testSnapshot() {
+		Version version = Version.getInstance("1-SNAPSHOT");
+
+		Assert.assertEquals("1", version.toString());
+
+		version = Version.getInstance("1.1-SNAPSHOT");
+
+		Assert.assertEquals("1.1", version.toString());
+
+		version = Version.getInstance("1.1.1-SNAPSHOT");
+
+		Assert.assertEquals("1.1.1", version.toString());
+
+		version = Version.getInstance("1.1.1.1-SNAPSHOT");
+
+		Assert.assertEquals("1.1.1.1", version.toString());
+
+		assertPrevious("1", "2-SNAPSHOT");
+		assertPrevious("1.0", "1.1-SNAPSHOT");
+		assertPrevious("1.1.0", "1.1.1-SNAPSHOT");
+		assertPrevious("1.1.1.0", "1.1.1.1-SNAPSHOT");
+		assertLater("2-SNAPSHOT", "1");
+		assertLater("1.1-SNAPSHOT", "1.0");
+		assertLater("1.1.1-SNAPSHOT", "1.1.0");
+		assertLater("1.1.1.1-SNAPSHOT", "1.1.1.0");
+	}
+
+	@Test
 	public void testStar() {
 		assertIncludes("1.1.*", "1.1.0");
 		assertIncludes("1.*", "1.1");

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.plugin;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -275,6 +276,12 @@ public class Version implements Comparable<Version>, Serializable {
 	}
 
 	protected Version(String version) {
+		int pos = version.indexOf(CharPool.DASH);
+
+		if (pos != -1) {
+			version = version.substring(0, pos);
+		}
+
 		StringTokenizer st = new StringTokenizer(version, _SEPARATOR);
 
 		_major = st.nextToken();

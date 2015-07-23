@@ -324,7 +324,7 @@ public class ConfigurationImpl
 				MapConfiguration mapConfiguration =
 					(MapConfiguration)configuration;
 
-				if (mapConfiguration.getMap() == properties) {
+				if (mapConfiguration.getMap() == (Map)properties) {
 					itr.remove();
 
 					classLoaderAggregateProperties.removeConfiguration(

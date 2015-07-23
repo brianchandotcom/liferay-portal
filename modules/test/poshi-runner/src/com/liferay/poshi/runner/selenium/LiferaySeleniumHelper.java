@@ -750,49 +750,8 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static boolean isIgnorableErrorLine(String line) throws Exception {
-		if (Validator.isNotNull(PropsValues.IGNORE_ERRORS_FILE_NAME)) {
-			SAXReader saxReader = new SAXReader();
-
-			String content = FileUtil.read(PropsValues.IGNORE_ERRORS_FILE_NAME);
-
-			InputStream inputStream = new ByteArrayInputStream(
-				content.getBytes("UTF-8"));
-
-			Document document = saxReader.read(inputStream);
-
-			Element rootElement = document.getRootElement();
-
-			List<Element> ignoreErrorElements = rootElement.elements(
-				"ignore-error");
-
-			for (Element ignoreErrorElement : ignoreErrorElements) {
-				Element containsElement = ignoreErrorElement.element(
-					"contains");
-				Element matchesElement = ignoreErrorElement.element("matches");
-
-				String containsText = containsElement.getText();
-				String matchesText = matchesElement.getText();
-
-				if (Validator.isNotNull(containsText) &&
-					Validator.isNotNull(matchesText)) {
-
-					if (line.contains(containsText) &&
-						line.matches(matchesText)) {
-
-						return true;
-					}
-				}
-				else if (Validator.isNotNull(containsText)) {
-					if (line.contains(containsText)) {
-						return true;
-					}
-				}
-				else if (Validator.isNotNull(matchesText)) {
-					if (line.matches(matchesText)) {
-						return true;
-					}
-				}
-			}
+		if (isInIgnoreErrorsFile(line, "log")) {
+			return true;
 		}
 
 		if (Validator.equals(PropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.1") ||
@@ -835,6 +794,63 @@ public class LiferaySeleniumHelper {
 			}
 			else if (line.contains(PropsValues.IGNORE_ERRORS)) {
 				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isInIgnoreErrorsFile(String line, String errorType)
+		throws Exception {
+
+		if (Validator.isNotNull(PropsValues.IGNORE_ERRORS_FILE_NAME)) {
+			SAXReader saxReader = new SAXReader();
+
+			String content = FileUtil.read(PropsValues.IGNORE_ERRORS_FILE_NAME);
+
+			InputStream inputStream = new ByteArrayInputStream(
+				content.getBytes("UTF-8"));
+
+			Document document = saxReader.read(inputStream);
+
+			Element rootElement = document.getRootElement();
+
+			Element errorTypeElement = rootElement.element(errorType);
+
+			if (errorTypeElement == null) {
+				return false;
+			}
+
+			List<Element> ignoreErrorElements = errorTypeElement.elements(
+				"ignore-error");
+
+			for (Element ignoreErrorElement : ignoreErrorElements) {
+				Element containsElement = ignoreErrorElement.element(
+					"contains");
+				Element matchesElement = ignoreErrorElement.element("matches");
+
+				String containsText = containsElement.getText();
+				String matchesText = matchesElement.getText();
+
+				if (Validator.isNotNull(containsText) &&
+					Validator.isNotNull(matchesText)) {
+
+					if (line.contains(containsText) &&
+						line.matches(matchesText)) {
+
+						return true;
+					}
+				}
+				else if (Validator.isNotNull(containsText)) {
+					if (line.contains(containsText)) {
+						return true;
+					}
+				}
+				else if (Validator.isNotNull(matchesText)) {
+					if (line.matches(matchesText)) {
+						return true;
+					}
+				}
 			}
 		}
 

@@ -1,255 +1,264 @@
 <?xml version="1.0"?>
 
 <ignore-errors>
-	<ignore-error>
-		<description>LRQA-6421</description>
-		<matches></matches>
-		<contains>[antelope:post]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LRQA-6421</description>
-		<matches></matches>
-		<contains>[junit]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LRQA-6421</description>
-		<matches></matches>
-		<contains>BasicResourcePool</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LRQA-6421</description>
-		<matches></matches>
-		<contains>Caused by:</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LRQA-6421</description>
-		<matches></matches>
-		<contains>INFO:</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LRQA-6421</description>
-		<matches>.*The web application \[.*\] appears to have started a thread.*</matches>
-		<contains>[AWT-Windows]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LRQA-6421</description>
-		<matches>.*The web application \[.*\] appears to have started a thread.*</matches>
-		<contains>[com.google.inject.internal.Finalizer]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LRQA-6421</description>
-		<matches>.*The web application \[.*\] appears to have started a thread.*</matches>
-		<contains>[MultiThreadedHttpConnectionManager cleanup]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LRQA-6421</description>
-		<matches>.*The web application \[.*\] appears to have started a thread.*</matches>
-		<contains>[org.python.google.common.base.internal.Finalizer]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LRQA-6421</description>
-		<matches>.*The web application \[.*\] appears to have started a thread.*\[Thread-[0-9]+\].*</matches>
-		<contains></contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LRQA-6421</description>
-		<matches>.*The web application \[.*\] appears to have started a thread.*\[TrueZIP InputStream Reader\].*</matches>
-		<contains></contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-17639</description>
-		<matches></matches>
-		<contains>Table 'lportal.lock_' doesn't exist</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-22821</description>
-		<matches></matches>
-		<contains>Exception sending context destroyed event to listener instance of class com.liferay.portal.spring.context.PortalContextLoaderListener</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-23351</description>
-		<matches></matches>
-		<contains>user lacks privilege or object not found: LOCK_</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-23498</description>
-		<matches></matches>
-		<contains>JBREM00200:</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-28734</description>
-		<matches></matches>
-		<contains>java.nio.channels.ClosedChannelException</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-28954</description>
-		<matches>.*The web application \[/wsrp-portlet\] created a ThreadLocal with key of type.*</matches>
-		<contains>[org.apache.axis.utils.XMLUtils.ThreadLocalDocumentBuilder]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-28954</description>
-		<matches>.*The web application \[/wsrp-portlet\] created a ThreadLocal with key of type.*</matches>
-		<contains>[org.apache.xml.security.utils.UnsyncByteArrayOutputStream$1]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-37574</description>
-		<matches></matches>
-		<contains>java.util.zip.ZipException: ZipFile closed</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-41257</description>
-		<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		<contains>[de.schlichtherle</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-41776</description>
-		<matches></matches>
-		<contains>SEC5054: Certificate has expired</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-41863</description>
-		<matches>.*\[org.hibernate.engine.jdbc.JdbcSupportLoader\] \(MSC service thread .*\) Disabling contextual LOB .*</matches>
-		<contains></contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-46161</description>
-		<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		<contains>[com.google.javascript.jscomp.Tracer.ThreadTrace]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-49204</description>
-		<matches>.*The web application \[\] appears to have started a thread named \[elasticsearch\[.*</matches>
-		<contains></contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-49204</description>
-		<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		<contains>[org.elasticsearch.common.inject]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-49204</description>
-		<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		<contains>[org.elasticsearch.index.mapper]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-49228</description>
-		<matches>.*The web application \[/sharepoint-hook\] created a ThreadLocal with key of type.*</matches>
-		<contains>[org.apache.axis.utils.XMLUtils.ThreadLocalDocumentBuilder]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-49229</description>
-		<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		<contains>[org.apache.xmlbeans.impl.schema.SchemaTypeLoaderImpl$1]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-49229</description>
-		<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		<contains>[org.apache.xmlbeans.impl.store.CharUtil$1]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-49229</description>
-		<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		<contains>[org.apache.xmlbeans.impl.store.Locale$1]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-49505</description>
-		<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		<contains>[org.jruby.RubyEncoding$2]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-49506</description>
-		<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		<contains>[org.joni.StackMachine$1]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-49628</description>
-		<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		<contains>[org.apache.poi.extractor.ExtractorFactory$1]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-49629</description>
-		<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		<contains>[org.apache.xmlbeans.XmlBeans$1]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-50047</description>
-		<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		<contains>[com.sun.syndication.feed.impl.ToStringBean$1]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-50936</description>
-		<matches></matches>
-		<contains>Liferay does not have the Xuggler native libraries installed.</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-51371</description>
-		<matches>.*The web application \[/jasperreports-web\] created a ThreadLocal with key of type.*</matches>
-		<contains>[net.sf.jasperreports.engine.fonts.FontUtil$1]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-52346</description>
-		<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		<contains>[org.apache.jasper.runtime.JspWriterImpl.CharBufferThreadLocalPool]</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-52699</description>
-		<matches>.*The web application \[/saml-portlet\] created a ThreadLocal with key of type.*\[org.apache.xml.security.algorithms.MessageDigestAlgorithm\$[0-9]+\].*</matches>
-		<contains></contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-52699</description>
-		<matches>.*The web application \[/saml-portlet\] created a ThreadLocal with key of type.*\[org.apache.xml.security.algorithms.SignatureAlgorithm\$[0-9]+\].*</matches>
-		<contains></contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-52699</description>
-		<matches>.*The web application \[/saml-portlet\] created a ThreadLocal with key of type.*\[org.apache.xml.security.utils.UnsyncBufferedOutputStream\$[0-9]+\].*</matches>
-		<contains></contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-52699</description>
-		<matches>.*The web application \[/saml-portlet\] created a ThreadLocal with key of type.*\[org.apache.xml.security.utils.UnsyncByteArrayOutputStream\$[0-9]+\].*</matches>
-		<contains></contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-54539</description>
-		<matches>.*The web application \[/agent\] appears to have started a thread.*\[http-bio.*\].*</matches>
-		<contains></contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-54539</description>
-		<matches>.*The web application \[/agent\] appears to have started a thread.*\[scheduler_Worker-[0-9]+\].*</matches>
-		<contains></contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-54539</description>
-		<matches>.*The web application \[/agent\] appears to have started a thread.*\[SocketListener.*\].*</matches>
-		<contains></contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LPS-54680</description>
-		<matches></matches>
-		<contains>The web application [/reports-portlet] appears to have started a thread named [C3P0PooledConnectionPool</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>LRQA-14442, temporary workaround until Kiyoshi Lee fixes it</description>
-		<matches></matches>
-		<contains>Framework Event Dispatcher: Equinox Container:</contains>
-		<contains>[org_eclipse_equinox_http_servlet</contains>
-	</ignore-error>
-	<ignore-error>
-		<description>WCM-202</description>
-		<matches></matches>
-		<contains>No score point assigners available</contains>
-	</ignore-error>
-	<ignore-error>
-		<description></description>
-		<matches></matches>
-		<contains>com.liferay.portal.kernel.search.SearchException: java.nio.channels.ClosedByInterruptException</contains>
-	</ignore-error>
-	<ignore-error>
-		<description></description>
-		<matches></matches>
-		<contains>org.apache.lucene.store.AlreadyClosedException</contains>
-	</ignore-error>
+	<log>
+		<ignore-error>
+			<description>LRQA-6421</description>
+			<matches></matches>
+			<contains>[antelope:post]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LRQA-6421</description>
+			<matches></matches>
+			<contains>[junit]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LRQA-6421</description>
+			<matches></matches>
+			<contains>BasicResourcePool</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LRQA-6421</description>
+			<matches></matches>
+			<contains>Caused by:</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LRQA-6421</description>
+			<matches></matches>
+			<contains>INFO:</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LRQA-6421</description>
+			<matches>.*The web application \[.*\] appears to have started a thread.*</matches>
+			<contains>[AWT-Windows]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LRQA-6421</description>
+			<matches>.*The web application \[.*\] appears to have started a thread.*</matches>
+			<contains>[com.google.inject.internal.Finalizer]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LRQA-6421</description>
+			<matches>.*The web application \[.*\] appears to have started a thread.*</matches>
+			<contains>[MultiThreadedHttpConnectionManager cleanup]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LRQA-6421</description>
+			<matches>.*The web application \[.*\] appears to have started a thread.*</matches>
+			<contains>[org.python.google.common.base.internal.Finalizer]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LRQA-6421</description>
+			<matches>.*The web application \[.*\] appears to have started a thread.*\[Thread-[0-9]+\].*</matches>
+			<contains></contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LRQA-6421</description>
+			<matches>.*The web application \[.*\] appears to have started a thread.*\[TrueZIP InputStream Reader\].*</matches>
+			<contains></contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-17639</description>
+			<matches></matches>
+			<contains>Table 'lportal.lock_' doesn't exist</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-22821</description>
+			<matches></matches>
+			<contains>Exception sending context destroyed event to listener instance of class com.liferay.portal.spring.context.PortalContextLoaderListener</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-23351</description>
+			<matches></matches>
+			<contains>user lacks privilege or object not found: LOCK_</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-23498</description>
+			<matches></matches>
+			<contains>JBREM00200:</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-28734</description>
+			<matches></matches>
+			<contains>java.nio.channels.ClosedChannelException</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-28954</description>
+			<matches>.*The web application \[/wsrp-portlet\] created a ThreadLocal with key of type.*</matches>
+			<contains>[org.apache.axis.utils.XMLUtils.ThreadLocalDocumentBuilder]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-28954</description>
+			<matches>.*The web application \[/wsrp-portlet\] created a ThreadLocal with key of type.*</matches>
+			<contains>[org.apache.xml.security.utils.UnsyncByteArrayOutputStream$1]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-37574</description>
+			<matches></matches>
+			<contains>java.util.zip.ZipException: ZipFile closed</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-41257</description>
+			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
+			<contains>[de.schlichtherle</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-41776</description>
+			<matches></matches>
+			<contains>SEC5054: Certificate has expired</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-41863</description>
+			<matches>.*\[org.hibernate.engine.jdbc.JdbcSupportLoader\] \(MSC service thread .*\) Disabling contextual LOB .*</matches>
+			<contains></contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-46161</description>
+			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
+			<contains>[com.google.javascript.jscomp.Tracer.ThreadTrace]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-49204</description>
+			<matches>.*The web application \[\] appears to have started a thread named \[elasticsearch\[.*</matches>
+			<contains></contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-49204</description>
+			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
+			<contains>[org.elasticsearch.common.inject]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-49204</description>
+			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
+			<contains>[org.elasticsearch.index.mapper]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-49228</description>
+			<matches>.*The web application \[/sharepoint-hook\] created a ThreadLocal with key of type.*</matches>
+			<contains>[org.apache.axis.utils.XMLUtils.ThreadLocalDocumentBuilder]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-49229</description>
+			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
+			<contains>[org.apache.xmlbeans.impl.schema.SchemaTypeLoaderImpl$1]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-49229</description>
+			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
+			<contains>[org.apache.xmlbeans.impl.store.CharUtil$1]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-49229</description>
+			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
+			<contains>[org.apache.xmlbeans.impl.store.Locale$1]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-49505</description>
+			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
+			<contains>[org.jruby.RubyEncoding$2]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-49506</description>
+			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
+			<contains>[org.joni.StackMachine$1]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-49628</description>
+			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
+			<contains>[org.apache.poi.extractor.ExtractorFactory$1]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-49629</description>
+			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
+			<contains>[org.apache.xmlbeans.XmlBeans$1]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-50047</description>
+			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
+			<contains>[com.sun.syndication.feed.impl.ToStringBean$1]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-50936</description>
+			<matches></matches>
+			<contains>Liferay does not have the Xuggler native libraries installed.</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-51371</description>
+			<matches>.*The web application \[/jasperreports-web\] created a ThreadLocal with key of type.*</matches>
+			<contains>[net.sf.jasperreports.engine.fonts.FontUtil$1]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-52346</description>
+			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
+			<contains>[org.apache.jasper.runtime.JspWriterImpl.CharBufferThreadLocalPool]</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-52699</description>
+			<matches>.*The web application \[/saml-portlet\] created a ThreadLocal with key of type.*\[org.apache.xml.security.algorithms.MessageDigestAlgorithm\$[0-9]+\].*</matches>
+			<contains></contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-52699</description>
+			<matches>.*The web application \[/saml-portlet\] created a ThreadLocal with key of type.*\[org.apache.xml.security.algorithms.SignatureAlgorithm\$[0-9]+\].*</matches>
+			<contains></contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-52699</description>
+			<matches>.*The web application \[/saml-portlet\] created a ThreadLocal with key of type.*\[org.apache.xml.security.utils.UnsyncBufferedOutputStream\$[0-9]+\].*</matches>
+			<contains></contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-52699</description>
+			<matches>.*The web application \[/saml-portlet\] created a ThreadLocal with key of type.*\[org.apache.xml.security.utils.UnsyncByteArrayOutputStream\$[0-9]+\].*</matches>
+			<contains></contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-54539</description>
+			<matches>.*The web application \[/agent\] appears to have started a thread.*\[http-bio.*\].*</matches>
+			<contains></contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-54539</description>
+			<matches>.*The web application \[/agent\] appears to have started a thread.*\[scheduler_Worker-[0-9]+\].*</matches>
+			<contains></contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-54539</description>
+			<matches>.*The web application \[/agent\] appears to have started a thread.*\[SocketListener.*\].*</matches>
+			<contains></contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-54680</description>
+			<matches></matches>
+			<contains>The web application [/reports-portlet] appears to have started a thread named [C3P0PooledConnectionPool</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LRQA-14442, temporary workaround until Kiyoshi Lee fixes it</description>
+			<matches></matches>
+			<contains>Framework Event Dispatcher: Equinox Container:</contains>
+			<contains>[org_eclipse_equinox_http_servlet</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>WCM-202</description>
+			<matches></matches>
+			<contains>No score point assigners available</contains>
+		</ignore-error>
+	</log>
+	<javascript>
+		<ignore-error>
+			<description>LPS-41634</description>
+			<matches></matches>
+			<contains>TypeError: d.config.doc.defaultView is null</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-41634</description>
+			<matches></matches>
+			<contains>NS_ERROR_NOT_INITIALIZED:</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-41634</description>
+			<matches></matches>
+			<contains>Permission denied to access property 'type'</contains>
+		</ignore-error>
+	</javascript>
 </ignore-errors>

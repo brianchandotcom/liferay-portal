@@ -437,7 +437,7 @@ public abstract class BasePortletExportImportTestCase
 
 			settingsMap =
 				ExportImportConfigurationSettingsMapFactory.
-					buildImportSettingsMap(
+					buildImportPortletSettingsMap(
 						user.getUserId(), importedLayout.getPlid(),
 						importedGroup.getGroupId(), portletId,
 						importParameterMap, user.getLocale(),

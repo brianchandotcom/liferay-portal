@@ -236,10 +236,12 @@ public class ExportImportLifecycleEventTest {
 
 	@Test
 	public void testFailedPortletImport() throws Exception {
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
-				TestPropsValues.getUserId(), 0, _group.getGroupId(),
-				StringPool.BLANK, _parameterMap, Locale.US, TimeZoneUtil.GMT);
+		Map<String, Serializable> importPortletSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportPortletSettingsMap(
+					TestPropsValues.getUserId(), 0, _group.getGroupId(),
+					StringPool.BLANK, _parameterMap, Locale.US,
+					TimeZoneUtil.GMT);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -247,7 +249,7 @@ public class ExportImportLifecycleEventTest {
 					TestPropsValues.getUserId(), 0,
 					RandomTestUtil.randomString(), StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					importPortletSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					ServiceContextTestUtil.getServiceContext());
 
 		try {

@@ -1438,6 +1438,16 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@Override
 	public void updateEntryResources(
+			BlogsEntry entry, ModelPermissions modelPermissions)
+		throws PortalException {
+
+		resourceLocalService.updateResources(
+			entry.getCompanyId(), entry.getGroupId(),
+			BlogsEntry.class.getName(), entry.getEntryId(), modelPermissions);
+	}
+
+	@Override
+	public void updateEntryResources(
 			BlogsEntry entry, String[] groupPermissions,
 			String[] guestPermissions)
 		throws PortalException {
@@ -1446,16 +1456,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			entry.getCompanyId(), entry.getGroupId(),
 			BlogsEntry.class.getName(), entry.getEntryId(), groupPermissions,
 			guestPermissions);
-	}
-
-	@Override
-	public void updateEntryResources(
-			BlogsEntry entry, ModelPermissions modelPermissions)
-		throws PortalException {
-
-		resourceLocalService.updateResources(
-			entry.getCompanyId(), entry.getGroupId(),
-			BlogsEntry.class.getName(), entry.getEntryId(), modelPermissions);
 	}
 
 	/**

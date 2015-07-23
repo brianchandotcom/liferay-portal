@@ -181,22 +181,19 @@ public class ServiceContext implements Cloneable, Serializable {
 			}
 		}
 
-		String[] groupPermissionsArray =
-			groupPermissions.toArray(new String[groupPermissions.size()]);
-		String[] guestPermissionsArray =
-			guestPermissions.toArray(new String[guestPermissions.size()]);
+		String[] groupPermissionsArray = groupPermissions.toArray(
+			new String[groupPermissions.size()]);
+		String[] guestPermissionsArray = guestPermissions.toArray(
+			new String[guestPermissions.size()]);
 
 		setGroupPermissions(groupPermissionsArray);
-		setGuestPermissions(
+		setGuestPermissions(guestPermissionsArray);
+
+		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+			siteGroup.getCompanyId(), siteGroupId, groupPermissionsArray,
 			guestPermissionsArray);
 
-		ModelPermissions modelPermissions =
-			ModelPermissionsFactory.create(
-				siteGroup.getCompanyId(), siteGroupId, groupPermissionsArray,
-				guestPermissionsArray);
-
 		setModelPermissions(modelPermissions);
-
 	}
 
 	/**

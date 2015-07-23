@@ -493,6 +493,29 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 	/**
 	 * Updates resources matching the group, name, and primary key at the
+	 * individual scope, setting new permissions.
+	 *
+	 * @param  companyId the primary key of the portal instance
+	 * @param  groupId the primary key of the group
+	 * @param  name the resource's name, which should be a portlet ID if the
+	 *         resource is a portlet or the resource's class name otherwise
+	 * @param  primKey the primary key of the resource instance
+	 * @param  modelPermissions the permissions to be applied
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public void updateResources(
+			long companyId, long groupId, String name, long primKey,
+			ModelPermissions modelPermissions)
+		throws PortalException {
+
+		updateResources(
+			companyId, groupId, name, String.valueOf(primKey), modelPermissions,
+			null);
+	}
+
+	/**
+	 * Updates resources matching the group, name, and primary key at the
 	 * individual scope, setting new group and guest permissions.
 	 *
 	 * @param  companyId the primary key of the portal instance
@@ -516,26 +539,25 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Updates resources matching the group, name, and primary key at the
+	 * Updates resources matching the group, name, and primary key string at the
 	 * individual scope, setting new permissions.
 	 *
 	 * @param  companyId the primary key of the portal instance
 	 * @param  groupId the primary key of the group
 	 * @param  name the resource's name, which should be a portlet ID if the
 	 *         resource is a portlet or the resource's class name otherwise
-	 * @param  primKey the primary key of the resource instance
+	 * @param  primKey the primary key string of the resource instance
 	 * @param  modelPermissions the permissions to be applied
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void updateResources(
-			long companyId, long groupId, String name, long primKey,
+			long companyId, long groupId, String name, String primKey,
 			ModelPermissions modelPermissions)
 		throws PortalException {
 
 		updateResources(
-			companyId, groupId, name, String.valueOf(primKey), modelPermissions,
-			null);
+			companyId, groupId, name, primKey, modelPermissions, null);
 	}
 
 	/**
@@ -559,28 +581,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			companyId, groupId, groupPermissions, guestPermissions);
-
-		updateResources(
-			companyId, groupId, name, primKey, modelPermissions, null);
-	}
-
-	/**
-	 * Updates resources matching the group, name, and primary key string at the
-	 * individual scope, setting new permissions.
-	 *
-	 * @param  companyId the primary key of the portal instance
-	 * @param  groupId the primary key of the group
-	 * @param  name the resource's name, which should be a portlet ID if the
-	 *         resource is a portlet or the resource's class name otherwise
-	 * @param  primKey the primary key string of the resource instance
-	 * @param  modelPermissions the permissions to be applied
-	 * @throws PortalException if a portal exception occurred
-	 */
-	@Override
-	public void updateResources(
-			long companyId, long groupId, String name, String primKey,
-			ModelPermissions modelPermissions)
-		throws PortalException {
 
 		updateResources(
 			companyId, groupId, name, primKey, modelPermissions, null);

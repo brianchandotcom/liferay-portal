@@ -62,11 +62,11 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 
 						<aui:input name="selectedTab" type="hidden" value="<%= selectedTab %>" />
 
-						<input class="form-control" name="<portlet:namespace />keywords" placeholder=" Search..." type="text" value="<%= keywords %>" />
+						<aui:input cssClass="form-control" label="" name="keywords" placeholder="search" type="text" />
 					</div>
 				</div>
 				<div class="input-group-btn">
-					<button class="btn btn-default" type="submit"><span class="icon-search"></span></button>
+					<aui:button cssClass="btn btn-default" icon="icon-search" type="submit" />
 				</div>
 			</aui:form>
 		</div>

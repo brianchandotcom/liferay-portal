@@ -12,60 +12,51 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.hits;
+package com.liferay.portal.search.internal.hits;
 
-import com.liferay.portal.kernel.search.FacetedSearcher;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.hits.HitsProcessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
-import java.util.List;
-import java.util.Map;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
+ * @author Josef Sustacek
  */
-public class AlternateKeywordQueryHitsProcessor implements HitsProcessor {
+@Component(
+	immediate = true, property = {"sort.order=3"},
+	service = HitsProcessor.class
+)
+public class QuerySuggestionHitsProcessor implements HitsProcessor {
 
 	@Override
 	public boolean process(SearchContext searchContext, Hits hits)
 		throws SearchException {
 
-		if (hits.getLength() > 0) {
-			return true;
-		}
-
-		Map<String, List<String>> spellCheckResults =
-			hits.getSpellCheckResults();
-
-		if (spellCheckResults == null) {
-			return true;
-		}
-
-		String spellCheckedKeywords = hits.getCollatedSpellCheckResult();
-
-		searchContext.overrideKeywords(spellCheckedKeywords);
-
-		String[] querySuggestions = SearchEngineUtil.suggestKeywordQueries(
-			searchContext, 5);
-
-		if (ArrayUtil.isNotEmpty(querySuggestions)) {
-			searchContext.setKeywords(querySuggestions[0]);
-		}
-
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
-		queryConfig.setHitsProcessingEnabled(false);
+		if (!queryConfig.isQuerySuggestionEnabled()) {
+			return true;
+		}
 
-		Indexer<?> indexer = FacetedSearcher.getInstance();
+		if (hits.getLength() >=
+				queryConfig.getQuerySuggestionScoresThreshold()) {
 
-		Hits alternateResults = indexer.search(searchContext);
+			return true;
+		}
 
-		hits.copy(alternateResults);
+		String[] querySuggestions = SearchEngineUtil.suggestKeywordQueries(
+			searchContext, queryConfig.getQuerySuggestionMax());
+
+		querySuggestions = ArrayUtil.remove(
+			querySuggestions, searchContext.getKeywords());
+
+		hits.setQuerySuggestions(querySuggestions);
 
 		return true;
 	}

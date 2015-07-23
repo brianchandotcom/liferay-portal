@@ -15,45 +15,15 @@
 package com.liferay.portal.kernel.search.hits;
 
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.util.List;
 
 /**
  * @author Michael C. Han
  */
-public class CompositeHitsProcessor implements HitsProcessor {
+public interface HitsProcessorRegistry {
 
-	@Override
 	public boolean process(SearchContext searchContext, Hits hits)
-		throws SearchException {
-
-		if (Validator.isNull(searchContext.getKeywords())) {
-			return false;
-		}
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		if (!queryConfig.isHitsProcessingEnabled()) {
-			return false;
-		}
-
-		for (HitsProcessor hitsProcessor : _hitsProcessors) {
-			if (!hitsProcessor.process(searchContext, hits)) {
-				break;
-			}
-		}
-
-		return true;
-	}
-
-	public void setHitsProcessors(List<HitsProcessor> hitsProcessors) {
-		_hitsProcessors = hitsProcessors;
-	}
-
-	private List<HitsProcessor> _hitsProcessors;
+		throws SearchException;
 
 }

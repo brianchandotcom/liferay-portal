@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
-import com.liferay.portal.kernel.search.hits.HitsProcessor;
 import com.liferay.portal.kernel.search.hits.HitsProcessorRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -1813,12 +1812,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	protected void processHits(SearchContext searchContext, Hits hits)
 		throws SearchException {
 
-		HitsProcessor hitsProcessor =
-			HitsProcessorRegistryUtil.getDefaultHitsProcessor();
-
-		if (hitsProcessor != null) {
-			hitsProcessor.process(searchContext, hits);
-		}
+		HitsProcessorRegistryUtil.process(searchContext, hits);
 	}
 
 	protected void resetFullQuery(SearchContext searchContext) {

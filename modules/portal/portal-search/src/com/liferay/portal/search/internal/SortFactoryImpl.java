@@ -12,18 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.search.internal;
 
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Hugo Huijser
  */
+@Component(immediate = true, service = SortFactory.class)
 public class SortFactoryImpl implements SortFactory {
 
 	@Override
@@ -88,14 +97,21 @@ public class SortFactoryImpl implements SortFactory {
 	}
 
 	protected String getSortField(String orderByCol, int type, Class<?> clazz) {
-		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(clazz);
+		Indexer<?> indexer = _indexerRegistry.getIndexer(clazz);
 
 		return indexer.getSortField(orderByCol, type);
+	}
+
+	@Reference(unbind = "-")
+	protected void setIndexerRegistry(IndexerRegistry indexerRegistry) {
+		_indexerRegistry = indexerRegistry;
 	}
 
 	private static final Sort[] _DEFAULT_SORTS = new Sort[] {
 		new Sort(null, Sort.SCORE_TYPE, false),
 		new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, true)
 	};
+
+	private IndexerRegistry _indexerRegistry;
 
 }

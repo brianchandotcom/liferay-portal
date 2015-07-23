@@ -12,20 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.hits;
+package com.liferay.portal.search.internal.hits;
 
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.search.hits.HitsProcessor;
+import com.liferay.portal.kernel.search.suggest.SuggestionConstants;
+
+import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
  * @author Josef Sustacek
  */
-public class CollatedSpellCheckHitsProcessor implements HitsProcessor {
+@Component(
+	immediate = true, property = {"sort.order=2"},
+	service = HitsProcessor.class
+)
+public class QueryIndexingHitsProcessor implements HitsProcessor {
 
 	@Override
 	public boolean process(SearchContext searchContext, Hits hits)
@@ -33,27 +42,25 @@ public class CollatedSpellCheckHitsProcessor implements HitsProcessor {
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
-		if (!queryConfig.isCollatedSpellCheckResultEnabled()) {
+		if (!queryConfig.isQueryIndexingEnabled()) {
 			return true;
 		}
 
-		int collatedSpellCheckResultScoresThreshold =
-			queryConfig.getCollatedSpellCheckResultScoresThreshold();
-
-		if (hits.getLength() >= collatedSpellCheckResultScoresThreshold) {
-			return true;
+		if (hits.getLength() >= queryConfig.getQueryIndexingThreshold()) {
+			addDocument(
+				searchContext.getCompanyId(), searchContext.getKeywords(),
+				searchContext.getLocale());
 		}
-
-		String collatedKeywords = SearchEngineUtil.spellCheckKeywords(
-			searchContext);
-
-		if (collatedKeywords.equals(searchContext.getKeywords())) {
-			collatedKeywords = StringPool.BLANK;
-		}
-
-		hits.setCollatedSpellCheckResult(collatedKeywords);
 
 		return true;
+	}
+
+	protected void addDocument(long companyId, String keywords, Locale locale)
+		throws SearchException {
+
+		SearchEngineUtil.indexKeyword(
+			companyId, keywords, 0, SuggestionConstants.TYPE_QUERY_SUGGESTION,
+			locale);
 	}
 
 }

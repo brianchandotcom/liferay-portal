@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search;
+package com.liferay.portal.search.internal;
 
 import com.liferay.portal.kernel.search.suggest.Collator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -22,10 +22,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Daniela Zapata
  * @author David Gonzalez
  */
+@Component(immediate = true, service = Collator.class)
 public class DefaultCollatorImpl implements Collator {
 
 	@Override

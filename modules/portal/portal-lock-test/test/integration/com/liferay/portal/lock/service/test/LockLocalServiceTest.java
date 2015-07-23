@@ -67,6 +67,18 @@ public class LockLocalServiceTest {
 	@ExpectedLogs(
 		expectedLogs = {
 			@ExpectedLog(
+				dbType = DB.TYPE_DB2,
+				expectedLog =
+					"Error for batch element #0: DB2 SQL error: SQLCODE: " +
+						"-803, SQLSTATE: 23505",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				dbType = DB.TYPE_DB2,
+				expectedLog = "Non-atomic batch failure.",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
 				dbType = DB.TYPE_MYSQL,
 				expectedLog =
 					"Deadlock found when trying to get lock; try restarting " +

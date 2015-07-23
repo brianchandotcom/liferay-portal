@@ -86,7 +86,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 			null, locale, timeZone, StringPool.BLANK);
 	}
 
-	public static Map<String, Serializable> buildSettingsMap(
+	public static Map<String, Serializable> buildPublishLayoutRemoteSettingsMap(
 		long userId, long sourceGroupId, boolean privateLayout,
 		Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
 		String remoteAddress, int remotePort, String remotePathContext,
@@ -195,7 +195,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 			groupId, remoteAddress, remotePort, remotePathContext,
 			secureConnection, remoteGroupId);
 
-		return buildSettingsMap(
+		return buildPublishLayoutRemoteSettingsMap(
 			themeDisplay.getUserId(), groupId, privateLayout, layoutIdMap,
 			parameterMap, remoteAddress, remotePort, remotePathContext,
 			secureConnection, remoteGroupId, remotePrivateLayout,

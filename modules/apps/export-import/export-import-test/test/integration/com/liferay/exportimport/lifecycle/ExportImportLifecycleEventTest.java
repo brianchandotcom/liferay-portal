@@ -101,10 +101,11 @@ public class ExportImportLifecycleEventTest {
 
 	@Test
 	public void testFailedLayoutExport() throws Exception {
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				TestPropsValues.getUserId(), 0, false, new long[0],
-				_parameterMap, Locale.US, TimeZoneUtil.GMT);
+		Map<String, Serializable> exportLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildExportLayoutSettingsMap(
+					TestPropsValues.getUserId(), 0, false, new long[0],
+					_parameterMap, Locale.US, TimeZoneUtil.GMT);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -112,7 +113,7 @@ public class ExportImportLifecycleEventTest {
 					TestPropsValues.getUserId(), 0,
 					RandomTestUtil.randomString(), StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					exportLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					ServiceContextTestUtil.getServiceContext());
 
 		try {
@@ -133,10 +134,11 @@ public class ExportImportLifecycleEventTest {
 
 	@Test
 	public void testFailedLayoutImport() throws Exception {
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				TestPropsValues.getUserId(), 0, false, new long[0],
-				_parameterMap, Locale.US, TimeZoneUtil.GMT);
+		Map<String, Serializable> exportLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildExportLayoutSettingsMap(
+					TestPropsValues.getUserId(), 0, false, new long[0],
+					_parameterMap, Locale.US, TimeZoneUtil.GMT);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -144,7 +146,7 @@ public class ExportImportLifecycleEventTest {
 					TestPropsValues.getUserId(), 0,
 					RandomTestUtil.randomString(), StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					exportLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					ServiceContextTestUtil.getServiceContext());
 
 		try {

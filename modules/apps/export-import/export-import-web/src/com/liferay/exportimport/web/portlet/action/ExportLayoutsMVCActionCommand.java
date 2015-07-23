@@ -99,11 +99,12 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest.getLocale(), "public-pages");
 			}
 
-			Map<String, Serializable> settingsMap =
-				ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-					themeDisplay.getUserId(), groupId, privateLayout, layoutIds,
-					actionRequest.getParameterMap(), themeDisplay.getLocale(),
-					themeDisplay.getTimeZone());
+			Map<String, Serializable> exportLayoutSettingsMap =
+				ExportImportConfigurationSettingsMapFactory.
+					buildExportLayoutSettingsMap(
+						themeDisplay.getUserId(), groupId, privateLayout,
+						layoutIds, actionRequest.getParameterMap(),
+						themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
 			ServiceContext serviceContext = new ServiceContext();
 
@@ -113,7 +114,7 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 						themeDisplay.getUserId(), groupId, taskName,
 						StringPool.BLANK,
 						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-						settingsMap, WorkflowConstants.STATUS_DRAFT,
+						exportLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 						serviceContext);
 
 			ExportImportServiceUtil.exportLayoutsAsFileInBackground(

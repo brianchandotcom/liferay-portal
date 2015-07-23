@@ -472,10 +472,12 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		User user = TestPropsValues.getUser();
 
-		Map<String, Serializable> exportSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				user.getUserId(), group.getGroupId(), false, layoutIds,
-				getExportParameterMap(), user.getLocale(), user.getTimeZone());
+		Map<String, Serializable> exportLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildExportLayoutSettingsMap(
+					user.getUserId(), group.getGroupId(), false, layoutIds,
+					getExportParameterMap(), user.getLocale(),
+					user.getTimeZone());
 
 		ExportImportConfiguration exportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -483,7 +485,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 					user.getUserId(), group.getGroupId(), StringPool.BLANK,
 					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					exportSettingsMap, WorkflowConstants.STATUS_DRAFT,
+					exportLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
 		larFile = ExportImportServiceUtil.exportLayoutsAsFile(

@@ -84,7 +84,8 @@ public class PortletKeys {
 
 	public static final String MONITORING = "131";
 
-	public static final String MY_ACCOUNT = "2";
+	public static final String MY_ACCOUNT =
+		"com_liferay_my_account_web_portlet_MyAccountPortlet";
 
 	public static final String MY_PAGES =
 		"com_liferay_layout_admin_web_portlet_MyPagesPortlet";

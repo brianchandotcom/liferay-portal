@@ -1,18 +1,11 @@
-@import "mixins";
-
-@mixin user-avatar-circle() {
-	border-radius: 50%;
-}
-
 .portlet-user-personal-bar {
 	.user-avatar-image {
 		background-size: auto 26px;
+		border-radius: 50%;
 		display: inline-block;
 		height: 26px;
 		margin: 0;
 		vertical-align: bottom;
 		width: 26px;
-
-		@include user-avatar-circle();
 	}
 }

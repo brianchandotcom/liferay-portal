@@ -23,6 +23,7 @@ import com.liferay.taglib.FileAvailabilityUtil;
 import com.liferay.taglib.ddm.base.BaseTemplateRendererTag;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -31,10 +32,6 @@ import javax.servlet.jsp.JspException;
  * @author Eduardo Garcia
  */
 public class TemplateRendererTag extends BaseTemplateRendererTag {
-
-	public TemplateRendererTag() {
-		setContextObjects(new HashMap<String, Object>());
-	}
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -72,7 +69,6 @@ public class TemplateRendererTag extends BaseTemplateRendererTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		setContextObjects(new HashMap<String, Object>());
 		_portletDisplayDDMTemplate = null;
 	}
 
@@ -80,25 +76,32 @@ public class TemplateRendererTag extends BaseTemplateRendererTag {
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
 
-		setPortletDisplayDDMTemplate();
+		Map<String, Object> contextObjects = getContextObjects();
 
-		setNamespacedAttribute(
-			request, "portletDisplayDDMTemplate", _portletDisplayDDMTemplate);
-	}
+		if (contextObjects == null) {
+			setNamespacedAttribute(
+				request, "contextObjects", new HashMap<String, Object>());
+		}
 
-	protected void setPortletDisplayDDMTemplate() {
-		if (getDisplayStyleGroupId() == 0) {
+		long displaStyleGroupId = getDisplayStyleGroupId();
+
+		if (displaStyleGroupId == 0) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			setDisplayStyleGroupId(themeDisplay.getScopeGroupId());
+			displaStyleGroupId = themeDisplay.getScopeGroupId();
+
+			setNamespacedAttribute(
+				request, "displayStyleGroupId", displaStyleGroupId);
 		}
 
 		_portletDisplayDDMTemplate =
 			PortletDisplayTemplateManagerUtil.getDDMTemplate(
-				getDisplayStyleGroupId(),
-				PortalUtil.getClassNameId(getClassName()), getDisplayStyle(),
-				true);
+				displaStyleGroupId, PortalUtil.getClassNameId(getClassName()),
+				getDisplayStyle(), true);
+
+		setNamespacedAttribute(
+			request, "portletDisplayDDMTemplate", _portletDisplayDDMTemplate);
 	}
 
 	private DDMTemplate _portletDisplayDDMTemplate;

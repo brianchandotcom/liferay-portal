@@ -1723,6 +1723,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		assetEntryLocalService.updateVisible(
 			WikiPage.class.getName(), page.getResourcePrimKey(), false);
 
+		// Attachments
+
+		for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
+			PortletFileRepositoryUtil.movePortletFileEntryToTrash(
+				userId, fileEntry.getFileEntryId());
+		}
+
 		// Comment
 
 		CommentManagerUtil.moveDiscussionToTrash(
@@ -2743,6 +2750,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				WikiPage.class.getName(), page.getResourcePrimKey(), true);
 		}
 
+		// Attachments
+
+		WikiNode node = page.getNode();
+
+		for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
+			PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
+				node.getStatusByUserId(), fileEntry.getFileEntryId());
+		}
+
 		// Index
 
 		Indexer<WikiPage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -2886,6 +2902,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				WikiPage.class.getName(), page.getResourcePrimKey(), false);
 		}
 
+		// Attachments
+
+		WikiNode node = page.getNode();
+
+		for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
+			PortletFileRepositoryUtil.movePortletFileEntryToTrash(
+				node.getStatusByUserId(), fileEntry.getFileEntryId());
+		}
+
 		// Indexer
 
 		Indexer<WikiPage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -2987,6 +3012,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		updateStatus(
 			userId, page, trashEntry.getStatus(), new ServiceContext(),
 			new HashMap<String, Serializable>());
+
+		// Attachments
+
+		for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
+			PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
+				userId, fileEntry.getFileEntryId());
+		}
 
 		// Child pages
 

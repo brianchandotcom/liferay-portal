@@ -25,10 +25,17 @@ contextObjects.put("name", name);
 contextObjects.put("namespace", namespace);
 %>
 
-<liferay-ddm:template-renderer
-	className="<%= LanguageEntry.class.getName() %>"
-	contextObjects="<%= contextObjects %>"
-	displayStyle="<%= displayStyle %>"
-	displayStyleGroupId="<%= displayStyleGroupId %>"
-	entries="<%= languageEntries %>"
-/>
+<c:if test="<%= !languageEntries.isEmpty() %>">
+
+	<%
+	String renderedDDMTemplate = StringPool.BLANK;
+
+	DDMTemplate portletDisplayDDMTemplate = PortletDisplayTemplateManagerUtil.getDDMTemplate(displayStyleGroupId, PortalUtil.getClassNameId(LanguageEntry.class), displayStyle, true);
+
+	if (portletDisplayDDMTemplate != null) {
+		renderedDDMTemplate = PortletDisplayTemplateManagerUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplate.getTemplateId(), languageEntries, contextObjects);
+	}
+	%>
+
+	<%= renderedDDMTemplate %>
+</c:if>

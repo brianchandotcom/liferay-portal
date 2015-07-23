@@ -20,11 +20,17 @@
 	<h1 class="hide-accessible"><liferay-ui:message key="breadcrumbs" /></h1>
 
 	<c:if test="<%= !breadcrumbEntries.isEmpty() %>">
-		<liferay-ddm:template-renderer
-			className="<%= BreadcrumbEntry.class.getName() %>"
-			displayStyle="<%= displayStyle %>"
-			displayStyleGroupId="<%= displayStyleGroupId %>"
-			entries="<%= breadcrumbEntries %>"
-		/>
+
+		<%
+		String renderedDDMTemplate = StringPool.BLANK;
+
+		DDMTemplate portletDisplayDDMTemplate = PortletDisplayTemplateManagerUtil.getDDMTemplate(displayStyleGroupId, PortalUtil.getClassNameId(BreadcrumbEntry.class), displayStyle, true);
+
+		if (portletDisplayDDMTemplate != null) {
+			renderedDDMTemplate = PortletDisplayTemplateManagerUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplate.getTemplateId(), breadcrumbEntries, new HashMap<String, Object>());
+		}
+		%>
+
+		<%= renderedDDMTemplate %>
 	</c:if>
 </div>

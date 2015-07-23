@@ -18,7 +18,6 @@ import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.blogs.item.selector.web.BlogsItemSelectorView;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;

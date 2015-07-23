@@ -20,11 +20,11 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS;
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
 
+import com.liferay.exportimport.api.preferencesprocessor.ExportImportPreferencesProcessor;
+import com.liferay.exportimport.api.preferencesprocessor.ExportImportPreferencesProcessorCapability;
+import com.liferay.exportimport.api.preferencesprocessor.ExportImportPreferencesProcessorRegistryUtil;
 import com.liferay.exportimport.lar.DeletionSystemEventExporter;
 import com.liferay.exportimport.lar.PermissionExporter;
-import com.liferay.exportimport.preferencesprocessor.ExportImportPreferencesProcessor;
-import com.liferay.exportimport.preferencesprocessor.ExportImportPreferencesProcessorCapability;
-import com.liferay.exportimport.preferencesprocessor.ExportImportPreferencesProcessorRegistryUtil;
 import com.liferay.portal.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;

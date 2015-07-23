@@ -15,8 +15,8 @@
 package com.liferay.blogs.web.lar.preferencesprocessor;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.exportimport.preferencesprocessor.ExportImportPreferencesProcessor;
-import com.liferay.exportimport.preferencesprocessor.ExportImportPreferencesProcessorCapability;
+import com.liferay.exportimport.api.preferencesprocessor.ExportImportPreferencesProcessor;
+import com.liferay.exportimport.api.preferencesprocessor.ExportImportPreferencesProcessorCapability;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;

@@ -680,6 +680,7 @@ public class DataFactory {
 			for (int j = 0; j < _maxAssetTagCount; j++) {
 				AssetTagModel assetTagModel = new AssetTagModelImpl();
 
+				assetTagModel.setUuid(SequentialUUID.generate());
 				assetTagModel.setTagId(_counter.get());
 				assetTagModel.setGroupId(i);
 				assetTagModel.setCompanyId(_companyId);

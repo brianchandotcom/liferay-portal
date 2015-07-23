@@ -1,13 +1,6 @@
-import com.liferay.gradle.util.FileUtil
-import com.liferay.gradle.util.copy.StripPathSegmentsAction
-
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-}
-
-ext {
-	bourbonVersion = "3.2.3"
 }
 
 liferay {
@@ -15,10 +8,10 @@ liferay {
 }
 
 task buildAlloyTheme(type: Copy)
-task buildBourbon(type: Copy)
 
 buildAlloyTheme {
 	dependsOn ":frontend:frontend-js-web:buildAlloy"
+	dependsOn ":frontend:frontend-common-css:build-bourbon"
 
 	ext {
 		autoClean = false
@@ -28,27 +21,6 @@ buildAlloyTheme {
 	into "src/META-INF/resources/html/css/portal"
 }
 
-buildBourbon {
-	File bourbonDestinationFile = file("../../../portal-web/docroot/html/css/common/bourbon")
-	File bourbonZipFile = file("../../../portal-web/third-party/bourbon-${bourbonVersion}.zip")
-
-	eachFile new StripPathSegmentsAction(4)
-
-	ext {
-		autoClean = false
-	}
-
-	from zipTree(bourbonZipFile)
-	include "bourbon-${bourbonVersion}/app/assets/stylesheets/**/*"
-	includeEmptyDirs = false
-	into bourbonDestinationFile
-
-	onlyIf {
-		!FileUtil.isUpToDate(project, bourbonZipFile, bourbonDestinationFile)
-	}
-}
-
 classes {
 	dependsOn buildAlloyTheme
-	dependsOn buildBourbon
 }

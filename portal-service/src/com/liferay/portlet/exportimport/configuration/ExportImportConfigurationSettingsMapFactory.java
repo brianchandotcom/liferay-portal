@@ -48,7 +48,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 		long userId, long groupId, boolean privateLayout, long[] layoutIds,
 		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone) {
 
-		return buildSettingsMap(
+		return buildPublishLayoutLocalSettingsMap(
 			userId, groupId, 0, privateLayout, layoutIds, parameterMap, locale,
 			timeZone);
 	}
@@ -86,6 +86,18 @@ public class ExportImportConfigurationSettingsMapFactory {
 			null, locale, timeZone, StringPool.BLANK);
 	}
 
+	public static Map<String, Serializable> buildPublishLayoutLocalSettingsMap(
+		long userId, long sourceGroupId, long targetGroupId,
+		boolean privateLayout, long[] layoutIds,
+		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone) {
+
+		return buildSettingsMap(
+			userId, sourceGroupId, 0, targetGroupId, 0, StringPool.BLANK,
+			privateLayout, null, layoutIds, parameterMap, StringPool.BLANK, 0,
+			StringPool.BLANK, null, 0, null, locale, timeZone,
+			StringPool.BLANK);
+	}
+
 	public static Map<String, Serializable> buildPublishLayoutRemoteSettingsMap(
 		long userId, long sourceGroupId, boolean privateLayout,
 		Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
@@ -98,18 +110,6 @@ public class ExportImportConfigurationSettingsMapFactory {
 			layoutIdMap, null, parameterMap, remoteAddress, remotePort,
 			remotePathContext, secureConnection, remoteGroupId,
 			remotePrivateLayout, locale, timeZone, StringPool.BLANK);
-	}
-
-	public static Map<String, Serializable> buildSettingsMap(
-		long userId, long sourceGroupId, long targetGroupId,
-		boolean privateLayout, long[] layoutIds,
-		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone) {
-
-		return buildSettingsMap(
-			userId, sourceGroupId, 0, targetGroupId, 0, StringPool.BLANK,
-			privateLayout, null, layoutIds, parameterMap, StringPool.BLANK, 0,
-			StringPool.BLANK, null, 0, null, locale, timeZone,
-			StringPool.BLANK);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(
@@ -157,7 +157,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 			long[] layoutIds = ExportImportHelperUtil.getLayoutIds(
 				layoutIdMap, liveGroup.getGroupId());
 
-			return buildSettingsMap(
+			return buildPublishLayoutLocalSettingsMap(
 				themeDisplay.getUserId(), stagingGroup.getGroupId(),
 				liveGroup.getGroupId(), privateLayout, layoutIds, parameterMap,
 				themeDisplay.getLocale(), themeDisplay.getTimeZone());

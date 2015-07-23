@@ -204,7 +204,7 @@ public class AssetVocabularyLocalServiceImpl
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE
 	)
-	public void deleteVocabulary(AssetVocabulary vocabulary)
+	public AssetVocabulary deleteVocabulary(AssetVocabulary vocabulary)
 		throws PortalException {
 
 		// Vocabulary
@@ -221,6 +221,8 @@ public class AssetVocabularyLocalServiceImpl
 
 		assetCategoryLocalService.deleteVocabularyCategories(
 			vocabulary.getVocabularyId());
+
+		return vocabulary;
 	}
 
 	@Override

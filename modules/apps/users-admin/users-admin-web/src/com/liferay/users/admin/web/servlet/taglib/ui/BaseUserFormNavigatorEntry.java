@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.users.admin.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;

@@ -12,15 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.users.admin.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Pei-Jung Lan
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=80"})
+@Component(
+	property = {"service.ranking:Integer=80"},
+	service = FormNavigatorEntry.class
+)
 public class UserDetailsFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 
 	@Override

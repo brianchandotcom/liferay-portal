@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.users.admin.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
@@ -23,10 +23,15 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Pei-Jung Lan
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=20"})
+@Component(
+	property = {"service.ranking:Integer=20"},
+	service = FormNavigatorEntry.class
+)
 public class UserPersonalSiteFormNavigatorEntry
 	extends BaseUserFormNavigatorEntry {
 

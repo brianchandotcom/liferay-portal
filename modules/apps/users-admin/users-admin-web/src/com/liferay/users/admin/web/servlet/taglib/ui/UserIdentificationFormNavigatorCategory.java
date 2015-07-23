@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.users.admin.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=20"})
+@Component(
+	property = {"service.ranking:Integer=20"},
+	service = FormNavigatorCategory.class
+)
 public class UserIdentificationFormNavigatorCategory
 	implements FormNavigatorCategory {
 

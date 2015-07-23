@@ -16,6 +16,8 @@ package com.liferay.portal.search.elasticsearch.connection;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 
@@ -60,8 +62,7 @@ public class ElasticsearchConnectionManager {
 			getElasticsearchConnection();
 
 		if (elasticsearchConnection == null) {
-			throw new IllegalStateException(
-				"Elasticsearch connection not initialized");
+			throw new ElasticsearchConnectionNotInitializedException();
 		}
 
 		return elasticsearchConnection.getClient();
@@ -89,7 +90,8 @@ public class ElasticsearchConnectionManager {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MANDATORY,
-		target = "(operation.mode=EMBEDDED)"
+		target = "(operation.mode=EMBEDDED)",
+		unbind = "unsetElasticsearchConnection"
 	)
 	public void setEmbeddedElasticsearchConnection(
 		ElasticsearchConnection elasticsearchConnection) {
@@ -101,7 +103,8 @@ public class ElasticsearchConnectionManager {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MANDATORY,
-		target = "(operation.mode=REMOTE)"
+		target = "(operation.mode=REMOTE)",
+		unbind = "unsetElasticsearchConnection"
 	)
 	public void setRemoteElasticsearchConnection(
 		ElasticsearchConnection elasticsearchConnection) {
@@ -125,14 +128,13 @@ public class ElasticsearchConnectionManager {
 		_elasticsearchConfiguration = Configurable.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
 
-		_clusterName = _elasticsearchConfiguration.clusterName();
+		activate(_elasticsearchConfiguration.operationMode());
+	}
 
-		_operationMode = _elasticsearchConfiguration.operationMode();
+	protected void activate(OperationMode operationMode) {
+		requirePresent(operationMode);
 
-		if (!_elasticsearchConnections.containsKey(_operationMode)) {
-			throw new IllegalArgumentException(
-				"No connection available for: " + _operationMode);
-		}
+		_operationMode = operationMode;
 	}
 
 	@Modified
@@ -140,36 +142,48 @@ public class ElasticsearchConnectionManager {
 		_elasticsearchConfiguration = Configurable.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
 
-		OperationMode newOperationMode =
-			_elasticsearchConfiguration.operationMode();
+		modify(_elasticsearchConfiguration.operationMode());
+	}
 
-		if (Validator.equals(
-				_elasticsearchConfiguration.clusterName(), _clusterName) &&
-			Validator.equals(
-				_elasticsearchConfiguration.operationMode(), _operationMode)) {
-
+	protected void modify(OperationMode operationMode) {
+		if (Validator.equals(operationMode, _operationMode)) {
 			return;
 		}
 
-		if (!_elasticsearchConnections.containsKey(newOperationMode)) {
-			throw new IllegalArgumentException(
-				"No connection available for: " + newOperationMode);
+		requirePresent(operationMode);
+
+		ElasticsearchConnection newElasticsearchConnection =
+			_elasticsearchConnections.get(operationMode);
+
+		newElasticsearchConnection.connect();
+
+		if (_operationMode != null) {
+			ElasticsearchConnection oldElasticsearchConnection =
+				_elasticsearchConnections.get(_operationMode);
+
+			try {
+				oldElasticsearchConnection.close();
+			}
+			catch (Exception e) {
+				if (_log.isErrorEnabled()) {
+					_log.error(
+						"Unable to close: " + oldElasticsearchConnection, e);
+				}
+			}
 		}
 
-		ElasticsearchConnection elasticsearchConnection =
-			_elasticsearchConnections.get(_operationMode);
+		_operationMode = operationMode;
+	}
 
-		boolean closed = elasticsearchConnection.close();
-
-		_clusterName = _elasticsearchConfiguration.clusterName();
-		_operationMode = newOperationMode;
-
-		if (closed) {
-			getClient();
+	protected void requirePresent(OperationMode operationMode) {
+		if (!_elasticsearchConnections.containsKey(operationMode)) {
+			throw new MissingOperationModeException(operationMode);
 		}
 	}
 
-	private String _clusterName;
+	private static final Log _log = LogFactoryUtil.getLog(
+		ElasticsearchConnectionManager.class);
+
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private final Map<OperationMode, ElasticsearchConnection>
 		_elasticsearchConnections = new HashMap<>();

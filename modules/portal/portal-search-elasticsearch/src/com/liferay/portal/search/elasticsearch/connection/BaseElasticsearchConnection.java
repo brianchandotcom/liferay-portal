@@ -42,16 +42,14 @@ public abstract class BaseElasticsearchConnection
 	implements ElasticsearchConnection {
 
 	@Override
-	public boolean close() {
+	public void close() {
 		if (_client == null) {
-			return false;
+			return;
 		}
 
 		_client.close();
 
 		_client = null;
-
-		return true;
 	}
 
 	@Override

@@ -39,9 +39,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sergio González
  */
 @Component(
-	immediate = true, service = AddDefaultLayoutSetPrototypesAction.class
+	immediate = true, service = AddCommunitySiteLayoutSetPrototypeAction.class
 )
-public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
+public class AddCommunitySiteLayoutSetPrototypeAction extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {

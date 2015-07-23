@@ -510,6 +510,9 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 					message.endsWith(
 						"versionLabel=PWC} because it does not exist"));
 			}
+			else {
+				Assert.assertTrue(loggingEvents.isEmpty());
+			}
 
 			return (DLFileEntry)fileEntry.getModel();
 		}

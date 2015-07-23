@@ -786,7 +786,9 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<antcall target="build-service-portal" />
 		<antcall target="build-service-portlets" />
 
-		<ant dir="../modules" target="build-service" />
+		<gradle-execute dir="../modules" task="buildService">
+			<arg value="-Dportal.build=true" />
+		</gradle-execute>
 	</target>
 
 	<target name="build-themes">

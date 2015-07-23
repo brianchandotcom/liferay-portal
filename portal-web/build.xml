@@ -67,7 +67,7 @@
 				/>
 			</not>
 			<then>
-				<ant dir="../modules/frontend/frontend-common-css" target="deploy" inheritAll="false" />
+				<gradle-execute dir="../modules/frontend/frontend-css-web" task="buildBourbon" />
 			</then>
 		</if>
 	</target>

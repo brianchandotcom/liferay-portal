@@ -303,6 +303,36 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkIndexableAnnotations(
+		String newContent, String fileName) {
+
+		if (!fileName.endsWith("LocalServiceImpl.java")) {
+			return;
+		}
+
+		int i = newContent.indexOf("@Indexable");
+
+		while (i > 0) {
+			int j = newContent.indexOf(StringPool.OPEN_CURLY_BRACE, i);
+
+			String methodSignature = newContent.substring(i, j);
+
+			if (methodSignature.contains(" void ")) {
+				int k = newContent.indexOf(" void ", i);
+
+				int lineCount = StringUtil.count(
+					newContent.substring(0, k), "\n");
+
+				processErrorMessage(
+					fileName,
+					"Missing return value for Indexable annotation: " +
+						fileName + " " + lineCount);
+			}
+
+			i = newContent.indexOf("@Indexable", j);
+		}
+	}
+
 	protected void checkSystemEventAnnotations(String content, String fileName)
 		throws Exception {
 
@@ -778,6 +808,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-41315
 
 		checkLogLevel(newContent, fileName);
+
+		checkIndexableAnnotations(newContent, fileName);
 
 		// LPS-46632
 

@@ -38,6 +38,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.scopeable=true",
+		"com.liferay.portlet.struts-path=document_library",
 		"com.liferay.portlet.use-default-template=true",
 		"com.liferay.portlet.webdav-storage-token=document_library",
 		"javax.portlet.display-name=Media Gallery",

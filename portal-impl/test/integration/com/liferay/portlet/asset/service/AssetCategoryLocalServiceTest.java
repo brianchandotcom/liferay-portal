@@ -67,9 +67,9 @@ public class AssetCategoryLocalServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		IndexerRegistryUtil.register(_organizationIndexer);
-
-		OrganizationLocalServiceUtil.deleteOrganization(_organization);
+		if (_organizationIndexer != null) {
+			IndexerRegistryUtil.register(_organizationIndexer);
+		}
 	}
 
 	@Test
@@ -109,6 +109,11 @@ public class AssetCategoryLocalServiceTest {
 		testAssetIndexer.setExpectedValues(
 			Organization.class.getName(), _organization.getOrganizationId());
 
+		if (_organizationIndexer == null) {
+			_organizationIndexer = IndexerRegistryUtil.getIndexer(
+				Organization.class);
+		}
+
 		IndexerRegistryUtil.register(testAssetIndexer);
 
 		AssetCategoryLocalServiceUtil.deleteCategory(assetCategory, true);
@@ -117,7 +122,9 @@ public class AssetCategoryLocalServiceTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@DeleteAfterTestRun
 	private Organization _organization;
+
 	private Indexer<Organization> _organizationIndexer;
 
 }

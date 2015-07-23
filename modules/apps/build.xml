@@ -49,7 +49,7 @@
 		<dirset dir="roles" includes="*" />
 		<dirset dir="rss" includes="*" />
 		<dirset dir="search" includes="*" />
-		<dirset dir="service-access-control-profile" includes="*" />
+		<dirset dir="service-access-policy" includes="*" />
 		<dirset dir="site" includes="*" />
 		<dirset dir="site-navigation" includes="*" />
 		<dirset dir="social" includes="*" />

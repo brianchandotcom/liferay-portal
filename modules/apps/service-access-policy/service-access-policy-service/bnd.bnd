@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Service Access Policy Service
+Bundle-SymbolicName: com.liferay.service.access.policy.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.service.access.policy.service.permission
+Include-Resource: classes
+Liferay-Service: true
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+Spring-Context: META-INF/spring
+-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

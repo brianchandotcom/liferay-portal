@@ -48,6 +48,7 @@
 		transform: translateY(-50%);
 		visibility: hidden;
 		width: 80%;
+		z-index: 1000;
 
 		a {
 			position: absolute;
@@ -73,7 +74,6 @@
 
 	&.uploading > .progress-container {
 		visibility: visible;
-		z-index: 1000;
 	}
 }
 

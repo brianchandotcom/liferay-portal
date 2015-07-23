@@ -188,15 +188,13 @@ AUI.add(
 					_bindSidebarEvents: function() {
 						var instance = this;
 
-						var infoIconNode = AUI.$(instance._infoIconEl.getDOMNode());
-
 						var sidebarNode = AUI.$(STR_DOT + CSS_SIDENAV_CONTAINER);
 
 						sidebarNode.sideNavigation(
 							{
 								content: sidebarNode.find('.image-viewer-base-image'),
 								equalHeight: false,
-								toggler: infoIconNode,
+								toggler: instance._infoIconEl.getDOMNode(),
 								width: '300px'
 							}
 						);

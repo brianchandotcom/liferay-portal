@@ -2207,8 +2207,8 @@ create database lportal${database.index} character set utf8;</echo>
 					<equals arg1="${database.type}" arg2="db2" />
 					<then>
 						<replace file="create.sql">
-							<replacetoken>create database lportal;</replacetoken>
-							<replacevalue>create database lportal pagesize 8192;</replacevalue>
+							<replacetoken>create database lportal pagesize 8192;</replacetoken>
+							<replacevalue>create database lportal pagesize 32768 temporary tablespace managed by automatic storage;</replacevalue>
 						</replace>
 
 						<replace file="create.sql">

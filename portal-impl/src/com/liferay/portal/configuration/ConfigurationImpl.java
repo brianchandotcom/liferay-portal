@@ -98,7 +98,7 @@ public class ConfigurationImpl
 				(List<Configuration>)field1.get(classLoaderAggregateProperties);
 
 			MapConfiguration newConfiguration = new MapConfiguration(
-				properties);
+				(Map)properties);
 
 			configurations.add(0, newConfiguration);
 

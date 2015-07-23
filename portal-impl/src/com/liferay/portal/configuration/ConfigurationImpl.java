@@ -100,6 +100,8 @@ public class ConfigurationImpl
 			MapConfiguration newConfiguration = new MapConfiguration(
 				(Map)properties);
 
+			newConfiguration.setTrimmingDisabled(true);
+
 			configurations.add(0, newConfiguration);
 
 			// Add to configList of AggregatedProperties itself

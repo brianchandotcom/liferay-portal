@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.display.template.preferencesprocessor;
 
-import com.liferay.exportimport.preferencesprocessor.ExportImportPreferencesProcessorCapability;
+import com.liferay.exportimport.api.preferencesprocessor.ExportImportPreferencesProcessorCapability;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.preferencesprocessor;
+package com.liferay.exportimport.api.preferencesprocessor;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;

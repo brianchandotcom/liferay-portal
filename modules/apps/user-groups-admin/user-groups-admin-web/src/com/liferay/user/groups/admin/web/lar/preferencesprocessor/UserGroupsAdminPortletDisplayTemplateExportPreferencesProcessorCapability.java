@@ -14,7 +14,7 @@
 
 package com.liferay.user.groups.admin.web.lar.preferencesprocessor;
 
-import com.liferay.exportimport.preferencesprocessor.ExportImportPreferencesProcessorCapability;
+import com.liferay.exportimport.api.preferencesprocessor.ExportImportPreferencesProcessorCapability;
 import com.liferay.portlet.display.template.preferencesprocessor.PortletDisplayTemplateExportPreferencesProcessorCapability;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 

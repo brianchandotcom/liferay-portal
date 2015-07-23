@@ -16,9 +16,9 @@ package com.liferay.asset.publisher.web.lar.preferencesprocessor;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.exportimport.api.preferencesprocessor.ExportImportPreferencesProcessor;
+import com.liferay.exportimport.api.preferencesprocessor.ExportImportPreferencesProcessorCapability;
 import com.liferay.exportimport.preferencesprocessor.DefaultExportImportPreferencesProcessor;
-import com.liferay.exportimport.preferencesprocessor.ExportImportPreferencesProcessor;
-import com.liferay.exportimport.preferencesprocessor.ExportImportPreferencesProcessorCapability;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;

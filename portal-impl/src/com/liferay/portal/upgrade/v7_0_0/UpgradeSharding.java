@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -280,6 +294,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	}
 
 	private void _updateDLSyncEvent() throws Exception {
+
 		// DLFileEntries
 
 		String select =
@@ -306,8 +321,7 @@ public class UpgradeSharding extends UpgradeProcess {
 				"dlse.syncEventId from DLSyncEvent dlse, RepositoryEntry re " +
 				"where dlse.type_='folder' and dlse.typePK=re.repositoryId)";
 
-		update =
-			"update DLSyncEvent set companyId = ? where syncEventId = ?";
+		update = "update DLSyncEvent set companyId = ? where syncEventId = ?";
 
 		columnNames = new String[] {"companyId", "syncEventId"};
 
@@ -352,7 +366,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select g.companyId, gug.groupId, gug.userGroupId from " +
 				"Group_ g, Groups_UserGroups gug, UserGroup ug " +
-				"where g.groupId=gug.groupId and gug.userGroupId=ug.userGroupId";
+				"where g.groupId=gug.groupId " +
+				"and gug.userGroupId=ug.userGroupId";
 
 		String update =
 			"update Groups_UserGroups set companyId = ? " +
@@ -436,7 +451,8 @@ public class UpgradeSharding extends UpgradeProcess {
 				"where organizationId = ? and groupId = ? and roleId = ?";
 
 		String[] columnNames = {
-			"companyId", "organizationId", "groupId", "roleId"};
+			"companyId", "organizationId", "groupId", "roleId"
+		};
 
 		_batchUpdateCompanyIdOnTable(
 			"OrgGroupRole", select, update, columnNames);
@@ -452,8 +468,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		String[] columnNames = {"companyId", "orgLaborId"};
 
-		_batchUpdateCompanyIdOnTable(
-			"OrgLabor", select, update, columnNames);
+		_batchUpdateCompanyIdOnTable("OrgLabor", select, update, columnNames);
 	}
 
 	private void _updatePasswordPolicyRel() throws Exception {
@@ -636,7 +651,8 @@ public class UpgradeSharding extends UpgradeProcess {
 				"where frameworkVersionId = ? and productVersionId = ?";
 
 		String[] columnNames = {
-			"companyId", "frameworkVersionId", "productVersionId"};
+			"companyId", "frameworkVersionId", "productVersionId"
+		};
 
 		_batchUpdateCompanyIdOnTable(
 			"SCFrameworkVersi_SCProductVers", select, update, columnNames);
@@ -661,13 +677,11 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		// SCLicense
 
-		update =
-			"update SCLicense set companyId = ? where licenseId = ?";
+		update = "update SCLicense set companyId = ? where licenseId = ?";
 
 		columnNames = new String[] {"companyId", "licenseId"};
 
-		_batchUpdateCompanyIdOnTable(
-			"SCLicense", select, update, columnNames);
+		_batchUpdateCompanyIdOnTable("SCLicense", select, update, columnNames);
 	}
 
 	private void _updateShoppingItemField() throws Exception {
@@ -738,7 +752,8 @@ public class UpgradeSharding extends UpgradeProcess {
 				"where userGroupId = ? and groupId = ? and roleId = ?";
 
 		String[] columnNames = {
-			"companyId", "userGroupId", "groupId", "roleId"};
+			"companyId", "userGroupId", "groupId", "roleId"
+		};
 
 		_batchUpdateCompanyIdOnTable(
 			"UserGroupGroupRole", select, update, columnNames);
@@ -819,8 +834,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		String[] columnNames = {"companyId", "userId", "organizationId"};
 
-		_batchUpdateCompanyIdOnTable(
-			"Users_Orgs", select, update, columnNames);
+		_batchUpdateCompanyIdOnTable("Users_Orgs", select, update, columnNames);
 	}
 
 	private void _updateUsers_Roles() throws Exception {

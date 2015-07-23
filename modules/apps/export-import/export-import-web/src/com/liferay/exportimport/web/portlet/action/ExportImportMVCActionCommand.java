@@ -195,9 +195,9 @@ public class ExportImportMVCActionCommand
 			String fileName = ParamUtil.getString(
 				actionRequest, "exportFileName");
 
-			Map<String, Serializable> settingsMap =
+			Map<String, Serializable> exportPortletSettingsMap =
 				ExportImportConfigurationSettingsMapFactory.
-					buildExportSettingsMap(
+					buildExportPortletSettingsMap(
 						themeDisplay.getUserId(), plid, groupId,
 						portlet.getPortletId(), actionRequest.getParameterMap(),
 						themeDisplay.getLocale(), themeDisplay.getTimeZone(),
@@ -209,8 +209,8 @@ public class ExportImportMVCActionCommand
 						themeDisplay.getUserId(), groupId,
 						portlet.getPortletId(), StringPool.BLANK,
 						ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
-						settingsMap, WorkflowConstants.STATUS_DRAFT,
-						new ServiceContext());
+						exportPortletSettingsMap,
+						WorkflowConstants.STATUS_DRAFT, new ServiceContext());
 
 			ExportImportServiceUtil.exportPortletInfoAsFileInBackground(
 				exportImportConfiguration);

@@ -201,11 +201,12 @@ public class ExportImportLifecycleEventTest {
 	public void testFailedPortletExport() throws Exception {
 		long plid = RandomTestUtil.nextLong();
 
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildExportSettingsMap(
-				TestPropsValues.getUserId(), plid, _group.getGroupId(),
-				StringPool.BLANK, _parameterMap, Locale.US, TimeZoneUtil.GMT,
-				StringPool.BLANK);
+		Map<String, Serializable> exportPortletSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildExportPortletSettingsMap(
+					TestPropsValues.getUserId(), plid, _group.getGroupId(),
+					StringPool.BLANK, _parameterMap, Locale.US,
+					TimeZoneUtil.GMT, StringPool.BLANK);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -213,7 +214,7 @@ public class ExportImportLifecycleEventTest {
 					TestPropsValues.getUserId(), 0,
 					RandomTestUtil.randomString(), StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					exportPortletSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					ServiceContextTestUtil.getServiceContext());
 
 		try {

@@ -410,10 +410,11 @@ public abstract class BasePortletExportImportTestCase
 		MapUtil.merge(getExportParameterMap(), exportParameterMap);
 
 		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildExportSettingsMap(
-				user.getUserId(), layout.getPlid(), layout.getGroupId(),
-				portletId, exportParameterMap, user.getLocale(),
-				user.getTimeZone(), StringPool.BLANK);
+			ExportImportConfigurationSettingsMapFactory.
+				buildExportPortletSettingsMap(
+					user.getUserId(), layout.getPlid(), layout.getGroupId(),
+					portletId, exportParameterMap, user.getLocale(),
+					user.getTimeZone(), StringPool.BLANK);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

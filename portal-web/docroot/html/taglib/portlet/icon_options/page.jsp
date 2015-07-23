@@ -59,7 +59,6 @@
 				toolTip="<%= portletConfigurationIcon.isToolTip() %>"
 				url="<%= portletConfigurationIcon.getURL() %>"
 				useDialog="<%= portletConfigurationIcon.isUseDialog() %>"
-				view="<%= view %>"
 			/>
 		</c:if>
 

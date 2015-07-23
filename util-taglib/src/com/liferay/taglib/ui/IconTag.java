@@ -428,10 +428,6 @@ public class IconTag extends IncludeTag {
 
 	@Override
 	protected String getPage() {
-		if (Validator.isNotNull(_view)) {
-			return "/html/taglib/ui/icon/" + _view + "/page.jsp";
-		}
-
 		return "/html/taglib/ui/icon/page.jsp";
 	}
 

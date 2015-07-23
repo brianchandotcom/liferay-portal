@@ -18,7 +18,7 @@ FileTree fileTree = fileTree(rootDir) {
 		include "apps/blogs/*/build.gradle"
 		include "apps/bookmarks/*/build.gradle"
 		include "apps/calendar/*/build.gradle"
-		include "apps/comments/*/build.gradle"
+		include "apps/comment/*/build.gradle"
 		include "apps/configuration-admin/*/build.gradle"
 		include "apps/control-menu/*/build.gradle"
 		include "apps/control-panel/*/build.gradle"

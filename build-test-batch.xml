@@ -312,10 +312,10 @@
 
 							<antcall target="prepare-system-ext-properties" inheritAll="false" />
 
-							<ant dir="modules" target="test-class-group" inheritAll="false">
-								<property name="test.class.group.index" value="@{test.class.group.index}" />
-								<property name="test.type" value="integration" />
-							</ant>
+							<gradle-execute dir="modules" task="testIntegration">
+								<arg value="-Dportal.build=true" />
+								<arg value="-Dtest.class.group.index=@{test.class.group.index}" />
+							</gradle-execute>
 
 							<ant dir="portal-service" target="test-class" inheritAll="false">
 								<property name="test.class" value="PortalLogAssertorTest" />
@@ -374,10 +374,19 @@
 	<target name="modules-unit">
 		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
 			<test-action>
-				<ant dir="modules" target="test-class-group" inheritAll="false">
-					<property name="test.class.group.index" value="@{test.class.group.index}" />
-					<property name="test.type" value="unit" />
-				</ant>
+				<gradle-execute dir="modules" task="test">
+					<arg value="-Dportal.build=true" />
+					<arg value="-Dtest.class.group.index=@{test.class.group.index}" />
+				</gradle-execute>
+
+				<if>
+					<equals arg1="${jenkins.axis.variable}" arg2="0" />
+					<then>
+						<gradle-execute dir="modules" task="compileJSP">
+							<arg value="-Dportal.build=true" />
+						</gradle-execute>
+					</then>
+				</if>
 			</test-action>
 		</run-batch-test>
 	</target>
@@ -414,9 +423,9 @@
 	<target name="service-builder">
 		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
 			<test-action>
-				<ant dir="modules/util/portal-tools-service-builder" target="clean" />
+				<gradle-execute dir="modules/util/portal-tools-service-builder" task="clean" />
 
-				<ant dir="modules/util/portal-tools-service-builder" target="deploy" />
+				<gradle-execute dir="modules/util/portal-tools-service-builder" task="deploy" />
 
 				<ant dir="portal-impl" target="build-services" />
 			</test-action>

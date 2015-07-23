@@ -42,24 +42,6 @@
 				);
 			},
 
-			_createEl: function(imageSrc) {
-				var instance = this;
-
-				var editor = instance.props.editor.get('nativeEditor');
-
-				var el = CKEDITOR.dom.element.createFromHtml(
-					instance.props.imageTPL.output(
-						{
-							src: imageSrc
-						}
-					)
-				);
-
-				editor.insertElement(el);
-
-				return el;
-			},
-
 			_destroyItemSelectorDialog: function() {
 				var instance = this;
 
@@ -86,18 +68,13 @@
 				else {
 					AUI().use(
 						'liferay-item-selector-dialog',
-						'liferay-item-selector-uploader',
 						function(A) {
 							var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 								{
 									after: {
-										selectedItemChange: A.bind('_onSelectedItemChange', instance),
-										selectedItemUploadComplete: A.bind('_destroyItemSelectorDialog', instance),
-										selectedItemUploadError: A.bind('_destroyItemSelectorDialog', instance),
-										selectedItemUploadStart: A.bind('_onSelectedItemUploadStart', instance)
+										selectedItemChange: A.bind('_onSelectedItemChange', instance)
 									},
 									eventName: eventName,
-									plugins: [A.Plugin.LiferayItemSelectorUploader],
 									url: editor.config.filebrowserImageBrowseUrl
 								}
 							);
@@ -123,41 +100,20 @@
 					Util.getWindow(eventName).onceAfter(
 						'visibleChange',
 						function() {
-							instance._createEl(selectedItem.value);
+							var el = CKEDITOR.dom.element.createFromHtml(
+								instance.props.imageTPL.output(
+									{
+										src: selectedItem.value
+									}
+								)
+							);
+
+							editor.insertElement(el);
 						}
 					);
 				}
 
 				instance._destroyItemSelectorDialog();
-			},
-
-			_onSelectedItemUploadStart: function(event) {
-				var instance = this;
-
-				var editor = instance.props.editor.get('nativeEditor');
-
-				var eventName = editor.name + 'selectDocument';
-
-				var uploadableItem = event.data;
-
-				var uploadableItemValue = uploadableItem.value;
-
-				Util.getWindow(eventName).onceAfter(
-					'visibleChange',
-					function() {
-						var el = instance._createEl(uploadableItemValue.base64);
-
-						editor.fire(
-							'imagedrop',
-							{
-								el: el,
-								file: uploadableItemValue.file,
-								randomId: uploadableItemValue.id,
-								uploader: uploadableItem.uploader
-							}
-						);
-					}
-				);
 			}
 		}
 	);

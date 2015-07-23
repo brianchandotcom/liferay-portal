@@ -53,7 +53,9 @@ AUI.add(
 
 		var TPL_INFO_TAB_BODY_CONTENT = '<h5>{h5}</h5><p>{p}</p>';
 
-		var TPL_INFO_TAB_TITLE = '<li class="{className} col-xs-6"><a aria-expanded="false" data-toggle="tab" href="#{tabId}">{tabTitle}</a></li>';
+		var TPL_INFO_TAB_TITLE = '<li class="{className} col-xs-{columnSize}"><a aria-expanded="false" data-toggle="tab" href="#{tabId}">{tabTitle}</a></li>';
+
+		var bootstrapColumns = 12;
 
 		var LiferayItemViewer = A.Component.create(
 			{
@@ -127,9 +129,24 @@ AUI.add(
 						instance._displacedMethodHandles = [
 							Do.after('_afterBindUI', instance, 'bindUI', instance),
 							Do.after('_afterShowCurrentImage', instance, '_showCurrentImage', instance),
+							Do.after('_bindSidebarEvents', instance, '_afterLinksChange', instance),
 							Do.before('_beforeOnClickControl', instance, '_onClickControl', instance),
 							Do.before('_beforeSyncInfoUI', instance, '_syncInfoUI', instance)
 						];
+					},
+
+					updateCurrentImage: function(imageData) {
+						var instance = this;
+
+						var imageUrl = imageData.image.url;
+
+						var image = instance._getCurrentImage();
+
+						image.attr('src', imageUrl);
+
+						var link = instance.get('links').item(instance.get('currentIndex'));
+
+						link.setData('value', imageUrl);
 					},
 
 					_afterBindUI: function() {
@@ -137,18 +154,7 @@ AUI.add(
 
 						instance._eventHandles = instance._eventHandles.concat(instance._displacedMethodHandles);
 
-						var infoIconNode = AUI.$(instance._infoIconEl.getDOMNode());
-
-						var sidebarNode = AUI.$(STR_DOT + CSS_SIDENAV_CONTAINER);
-
-						sidebarNode.sideNavigation(
-							{
-								content: sidebarNode.find('.image-viewer-base-image'),
-								equalHeight: false,
-								toggler: infoIconNode,
-								width: '300px'
-							}
-						);
+						instance._bindSidebarEvents();
 					},
 
 					_afterShowCurrentImage: function() {
@@ -158,7 +164,7 @@ AUI.add(
 
 						var metadata = link.getData('metadata');
 
-						var image = this._getCurrentImage();
+						var image = instance._getCurrentImage();
 
 						if (metadata && !image.attr(STR_DATA_METADATA_RENDERED)) {
 							instance._populateImageMetadata(image, metadata);
@@ -177,6 +183,21 @@ AUI.add(
 						if (!instance.get(STR_RENDER_CONTROLS)) {
 							return new Do.Halt();
 						}
+					},
+
+					_bindSidebarEvents: function() {
+						var instance = this;
+
+						var sidebarNode = AUI.$(STR_DOT + CSS_SIDENAV_CONTAINER);
+
+						sidebarNode.sideNavigation(
+							{
+								content: sidebarNode.find('.image-viewer-base-image'),
+								equalHeight: false,
+								toggler: instance._infoIconEl.getDOMNode(),
+								width: '300px'
+							}
+						);
 					},
 
 					_getImageInfoNodes: function() {
@@ -205,6 +226,8 @@ AUI.add(
 
 						metadata = JSON.parse(metadata);
 
+						var tabsCount = metadata.groups.length;
+
 						metadata.groups.forEach(
 							function(group, index) {
 								var groupId = A.guid();
@@ -214,6 +237,7 @@ AUI.add(
 										TPL_INFO_TAB_TITLE,
 										{
 											className: index === 0 ? CSS_ACTIVE : STR_BLANK,
+											columnSize: bootstrapColumns / tabsCount,
 											tabId: groupId,
 											tabTitle: group.title
 										}

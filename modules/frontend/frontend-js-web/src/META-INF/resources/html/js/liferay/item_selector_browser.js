@@ -18,8 +18,6 @@ AUI.add(
 
 		var STR_SELECTED_ITEM = 'selectedItem';
 
-		var STR_UPLOADABLE_FILE_RETURN_TYPE = 'com.liferay.item.selector.criteria.UploadableFileReturnType';
-
 		var STR_VISIBLE_CHANGE = 'visibleChange';
 
 		var UPLOAD_ITEM_LINK_TPL = '<a data-returnType="{returnType}" data-value="{value}" href="{preview}" title="{title}"></a>';
@@ -33,7 +31,7 @@ AUI.add(
 					}
 				},
 
-				AUGMENTS: [Liferay.PortletBase],
+				AUGMENTS: [Liferay.PortletBase, Liferay.StorageFormatter],
 
 				EXTENDS: A.Base,
 
@@ -58,6 +56,12 @@ AUI.add(
 							}
 						);
 
+						instance._itemSelectorUploader = new A.LiferayItemSelectorUploader(
+							{
+								rootNode: instance.rootNode
+							}
+						);
+
 						instance._dropArea = A.one('.drop-zone');
 
 						instance._bindUI();
@@ -69,6 +73,7 @@ AUI.add(
 
 						instance._itemViewer.destroy();
 						instance._uploadItemViewer.destroy();
+						instance._itemSelectorUploader.destroy();
 
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
@@ -88,14 +93,18 @@ AUI.add(
 
 						var uploadItemViewer = instance._uploadItemViewer;
 
+						var itemSelectorUploader = instance._itemSelectorUploader;
+
 						var rootNode = instance.rootNode;
 
 						instance._eventHandles = [
 							itemViewer.get(STR_LINKS).on('click', A.bind(STR_ITEM_SELECTED, instance, itemViewer)),
 							itemViewer.after('currentIndexChange', A.bind(STR_ITEM_SELECTED, instance, itemViewer)),
 							itemViewer.after(STR_VISIBLE_CHANGE, instance._afterVisibleChange, instance),
-							uploadItemViewer.after('linksChange', A.bind(STR_ITEM_SELECTED, instance, uploadItemViewer)),
 							uploadItemViewer.after(STR_VISIBLE_CHANGE, instance._afterVisibleChange, instance),
+							itemSelectorUploader.after('itemUploadCancel', instance._onItemUploadCancel, instance),
+							itemSelectorUploader.after('itemUploadComplete', instance._onItemUploadComplete, instance),
+							itemSelectorUploader.after('itemUploadError', instance._onItemUploadError, instance),
 							rootNode.on(STR_DRAG_OVER, instance._ddEventHandler, instance),
 							rootNode.on(STR_DRAG_LEAVE, instance._ddEventHandler, instance),
 							rootNode.on(STR_DROP, instance._ddEventHandler, instance)
@@ -141,6 +150,57 @@ AUI.add(
 						}
 					},
 
+					_getUploadErrorMessage: function() {
+						var instance = this;
+
+						var notice = instance._notice;
+
+						if (!notice) {
+							var message = Liferay.Language.get('an-unexpected-error-occurred-while-uploading-your-file');
+
+							notice = new Liferay.Notice(
+								{
+									closeText: false,
+									content: message + '<button class="close" type="button">&times;</button>',
+									noticeClass: 'hide',
+									toggleText: false,
+									type: 'warning',
+									useAnimation: false
+								}
+							);
+
+							instance._notice = notice;
+						}
+
+						return notice;
+					},
+
+					_getUploadFileMetadata: function(file) {
+						var instance = this;
+
+						return {
+							'groups': [
+								{
+									'data': [
+										{
+											'key': Liferay.Language.get('format'),
+											'value': file.type
+										},
+										{
+											'key': Liferay.Language.get('size'),
+											'value': instance.formatStorage(file.size)
+										},
+										{
+											'key': Liferay.Language.get('name'),
+											'value': file.name
+										}
+									],
+									'title': Liferay.Language.get('file-info')
+								}
+							]
+						};
+					},
+
 					_onInputFileChanged: function(event) {
 						var instance = this;
 
@@ -161,6 +221,40 @@ AUI.add(
 								}
 							}
 						);
+					},
+
+					_onItemUploadCancel: function(event) {
+						var instance = this;
+
+						var uploadItemViewer = instance._uploadItemViewer;
+
+						if (uploadItemViewer) {
+							uploadItemViewer.hide();
+						}
+					},
+
+					_onItemUploadComplete: function(itemData) {
+						var instance = this;
+
+						var uploadItemViewer = instance._uploadItemViewer;
+
+						if (uploadItemViewer) {
+							uploadItemViewer.updateCurrentImage(itemData);
+						}
+
+						instance._onItemSelected(uploadItemViewer);
+					},
+
+					_onItemUploadError: function() {
+						var instance = this;
+
+						var uploadItemViewer = instance._uploadItemViewer;
+
+						if (uploadItemViewer) {
+							uploadItemViewer.hide();
+						}
+
+						instance._getUploadErrorMessage().show();
 					},
 
 					_previewFile: function(file) {
@@ -196,32 +290,24 @@ AUI.add(
 
 						var returnType = dropArea.getData('returntype');
 
-						var value = preview;
-
-						if (returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
-							value = {
-								base64: preview,
-								file: file,
-								id: A.guid(),
-								uploadURL: dropArea.getData('uploadurl')
-							};
-						}
-
 						var linkNode = A.Node.create(
 							Lang.sub(
 								UPLOAD_ITEM_LINK_TPL,
 								{
 									preview: preview,
 									returnType: returnType,
-									title: file.name
+									title: file.name,
+									value: preview
 								}
 							)
 						);
 
-						linkNode.setData('value', value);
+						linkNode.setData('metadata', JSON.stringify(instance._getUploadFileMetadata(file)));
 
 						instance._uploadItemViewer.set(STR_LINKS, new A.NodeList(linkNode));
 						instance._uploadItemViewer.show();
+
+						instance._itemSelectorUploader.startUpload(file, dropArea.getData('uploadurl'));
 					}
 				}
 			}
@@ -231,6 +317,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-item-viewer', 'liferay-portlet-base']
+		requires: ['liferay-item-selector-uploader', 'liferay-item-viewer', 'liferay-notice', 'liferay-portlet-base', 'liferay-storage-formatter']
 	}
 );

@@ -30,6 +30,14 @@
 			font-weight: normal;
 		}
 	}
+
+	.progress-container {
+		background-color: #FFF;
+	}
+
+	&.uploading > div:not(.progress-container) {
+		opacity: 0.3;
+	}
 }
 
 .lfr-item-viewer-close {

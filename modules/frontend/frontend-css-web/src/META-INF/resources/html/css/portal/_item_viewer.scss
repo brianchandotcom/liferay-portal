@@ -37,6 +37,29 @@
 		}
 	}
 
+	.progress-container {
+		left: 0;
+		margin: 0 auto;
+		padding: 20px 30px;
+		position: absolute;
+		right: 0;
+		text-align: center;
+		top: 50%;
+		transform: translateY(-50%);
+		visibility: hidden;
+		width: 80%;
+		z-index: 1000;
+
+		a {
+			position: absolute;
+			right: 30px;
+		}
+
+		.progress {
+			margin-top: 10px;
+		}
+	}
+
 	.sidenav-menu-slider {
 		top: 0;
 	}
@@ -47,6 +70,10 @@
 
 	.url-view {
 		margin: 15px;
+	}
+
+	&.uploading > .progress-container {
+		visibility: visible;
 	}
 }
 

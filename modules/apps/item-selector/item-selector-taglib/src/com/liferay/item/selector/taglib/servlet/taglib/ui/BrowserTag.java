@@ -19,7 +19,6 @@ import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.taglib.ItemSelectorBrowserReturnTypeUtil;
 import com.liferay.item.selector.taglib.util.ServletContextUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
@@ -77,10 +76,6 @@ public class BrowserTag extends IncludeTag {
 		_tabName = tabName;
 	}
 
-	public void setUploadMessage(String uploadMessage) {
-		_uploadMessage = uploadMessage;
-	}
-
 	public void setUploadURL(PortletURL uploadURL) {
 		_uploadURL = uploadURL;
 	}
@@ -97,7 +92,6 @@ public class BrowserTag extends IncludeTag {
 		_searchURL = null;
 		_showBreadcrumb = false;
 		_tabName = null;
-		_uploadMessage = null;
 		_uploadURL = null;
 	}
 
@@ -131,17 +125,6 @@ public class BrowserTag extends IncludeTag {
 		return _PAGE;
 	}
 
-	protected String getUploadMessage() {
-		if (Validator.isNotNull(_uploadMessage)) {
-			return _uploadMessage;
-		}
-
-		return LanguageUtil.get(
-			request,
-			"upload-a-document-by-dropping-it-right-here-or-by-pressing-plus-" +
-				"icon");
-	}
-
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
@@ -170,9 +153,6 @@ public class BrowserTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:tabName", _tabName);
 		request.setAttribute(
-			"liferay-ui:item-selector-browser:uploadMessage",
-			getUploadMessage());
-		request.setAttribute(
 			"liferay-ui:item-selector-browser:uploadURL", _uploadURL);
 	}
 
@@ -188,7 +168,6 @@ public class BrowserTag extends IncludeTag {
 	private PortletURL _searchURL;
 	private boolean _showBreadcrumb;
 	private String _tabName;
-	private String _uploadMessage;
 	private PortletURL _uploadURL;
 
 }

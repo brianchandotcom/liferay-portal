@@ -346,12 +346,13 @@ public class StagingImpl implements Staging {
 
 		User user = permissionChecker.getUser();
 
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				user.getUserId(), sourceGroupId, privateLayout, layoutIdMap,
-				parameterMap, remoteAddress, remotePort, remotePathContext,
-				secureConnection, remoteGroupId, remotePrivateLayout,
-				user.getLocale(), user.getTimeZone());
+		Map<String, Serializable> publishLayoutRemoteSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildPublishLayoutRemoteSettingsMap(
+					user.getUserId(), sourceGroupId, privateLayout, layoutIdMap,
+					parameterMap, remoteAddress, remotePort, remotePathContext,
+					secureConnection, remoteGroupId, remotePrivateLayout,
+					user.getLocale(), user.getTimeZone());
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -361,8 +362,8 @@ public class StagingImpl implements Staging {
 					user.getUserId(), sourceGroupId, StringPool.BLANK,
 					StringPool.BLANK, ExportImportConfigurationConstants.
 						TYPE_PUBLISH_LAYOUT_REMOTE,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
-					serviceContext);
+					publishLayoutRemoteSettingsMap,
+					WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		doCopyRemoteLayouts(
 			exportImportConfiguration, remoteAddress, remotePort,

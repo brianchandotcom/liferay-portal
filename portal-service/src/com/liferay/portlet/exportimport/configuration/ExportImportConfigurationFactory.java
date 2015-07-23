@@ -191,21 +191,22 @@ public class ExportImportConfigurationFactory {
 				Map<String, String[]> parameterMap)
 		throws PortalException {
 
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				user.getUserId(), sourceGroupId, privateLayout,
-				ExportImportHelperUtil.getAllLayoutIdsMap(
-					sourceGroupId, privateLayout),
-				parameterMap, remoteAddress, remotePort, remotePathContext,
-				secureConnection, remoteGroupId, privateLayout,
-				user.getLocale(), user.getTimeZone());
+		Map<String, Serializable> publishLayoutRemoteSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildPublishLayoutRemoteSettingsMap(
+					user.getUserId(), sourceGroupId, privateLayout,
+					ExportImportHelperUtil.getAllLayoutIdsMap(
+						sourceGroupId, privateLayout),
+					parameterMap, remoteAddress, remotePort, remotePathContext,
+					secureConnection, remoteGroupId, privateLayout,
+					user.getLocale(), user.getTimeZone());
 
 		return ExportImportConfigurationLocalServiceUtil.
 			addExportImportConfiguration(
 				user.getUserId(), sourceGroupId, StringPool.BLANK,
 				StringPool.BLANK, ExportImportConfigurationConstants.
 					TYPE_PUBLISH_LAYOUT_REMOTE,
-				settingsMap, WorkflowConstants.STATUS_DRAFT,
+				publishLayoutRemoteSettingsMap, WorkflowConstants.STATUS_DRAFT,
 				new ServiceContext());
 	}
 

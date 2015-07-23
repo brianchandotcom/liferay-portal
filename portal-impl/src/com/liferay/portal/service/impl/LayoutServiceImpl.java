@@ -1453,17 +1453,19 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(getUserId());
 
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				getUserId(), sourceGroupId, targetGroupId, privateLayout,
-				layoutIds, parameterMap, user.getLocale(), user.getTimeZone());
+		Map<String, Serializable> publishLayoutLocalSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildPublishLayoutLocalSettingsMap(
+					getUserId(), sourceGroupId, targetGroupId, privateLayout,
+					layoutIds, parameterMap, user.getLocale(),
+					user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationLocalService.addExportImportConfiguration(
 				getUserId(), sourceGroupId, trigger.getJobName(), description,
 				ExportImportConfigurationConstants.
 					TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL,
-				settingsMap, WorkflowConstants.STATUS_DRAFT,
+				publishLayoutLocalSettingsMap, WorkflowConstants.STATUS_DRAFT,
 				new ServiceContext());
 
 		SchedulerEngineHelperUtil.schedule(

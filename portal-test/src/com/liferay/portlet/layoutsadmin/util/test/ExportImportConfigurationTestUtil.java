@@ -63,9 +63,10 @@ public class ExportImportConfigurationTestUtil {
 
 		User user = UserLocalServiceUtil.getUser(userId);
 
-		return ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-			userId, groupId, groupId, false, null, null, user.getLocale(),
-			user.getTimeZone());
+		return ExportImportConfigurationSettingsMapFactory.
+			buildPublishLayoutLocalSettingsMap(
+				userId, groupId, groupId, false, null, null, user.getLocale(),
+				user.getTimeZone());
 	}
 
 }

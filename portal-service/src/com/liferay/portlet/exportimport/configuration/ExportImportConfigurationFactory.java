@@ -77,12 +77,13 @@ public class ExportImportConfigurationFactory {
 				boolean privateLayout, Map<String, String[]> parameterMap)
 		throws PortalException {
 
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+		Map<String, Serializable> publishLayoutLocalSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildPublishLayoutLocalSettingsMap(
 					user.getUserId(), sourceGroupId, targetGroupId,
 					privateLayout,
 					ExportImportHelperUtil.getAllLayoutIds(
-							sourceGroupId, privateLayout),
+						sourceGroupId, privateLayout),
 					parameterMap, user.getLocale(), user.getTimeZone());
 
 		return ExportImportConfigurationLocalServiceUtil.
@@ -90,7 +91,7 @@ public class ExportImportConfigurationFactory {
 				user.getUserId(), sourceGroupId, StringPool.BLANK,
 				StringPool.BLANK, ExportImportConfigurationConstants.
 					TYPE_PUBLISH_LAYOUT_LOCAL,
-				settingsMap, WorkflowConstants.STATUS_DRAFT,
+				publishLayoutLocalSettingsMap, WorkflowConstants.STATUS_DRAFT,
 				new ServiceContext());
 	}
 

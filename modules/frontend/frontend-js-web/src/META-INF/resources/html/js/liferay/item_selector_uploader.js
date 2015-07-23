@@ -12,7 +12,10 @@ AUI.add(
 		var STR_VALUE = 'value';
 
 		var TPL_PROGRESS_BAR = '<div class="progress-container">' +
-				'<div><strong id="itemName"></strong> <a href="#" id="cancel">' + Liferay.Language.get('cancel') + '</a></div>' +
+				'<div class="upload-details">' +
+					'<strong id="{0}itemName"></strong>' +
+					'<a href="javascript:;" id="{0}cancel">' + Liferay.Language.get('cancel') + '</a>' +
+				'</div>' +
 				'<div class="' + CSS_PROGRESS + '"></div>' +
 			'</div>';
 
@@ -34,7 +37,7 @@ AUI.add(
 
 						instance._createProgressBar();
 
-						var cancelBtn = instance._progressbarNode.one('#cancel');
+						var cancelBtn = instance._progressBarNode.oneNS(instance.NS, '#cancel');
 
 						instance._eventHandles = [
 							uploader.on('uploadcomplete', instance._onUploadComplete, instance),
@@ -51,8 +54,8 @@ AUI.add(
 							instance._uploader.destroy();
 						}
 
-						if (instance._progressbar) {
-							instance._progressbar.destroy();
+						if (instance._progressBar) {
+							instance._progressBar.destroy();
 						}
 
 						(new A.EventHandle(instance._eventHandles)).detach();
@@ -69,7 +72,7 @@ AUI.add(
 
 						instance._currentFile = file;
 
-						instance._progressbarNode.one('#itemName').html(file.get('name'));
+						instance._progressBarNode.oneNS(instance.NS, '#itemName').html(file.get('name'));
 
 						instance.rootNode.addClass(CSS_UPLOADING);
 					},
@@ -79,11 +82,11 @@ AUI.add(
 
 						var rootNode = instance.rootNode;
 
-						var progressbarNode = A.Node.create(TPL_PROGRESS_BAR);
+						var progressbarNode = A.Node.create(A.Lang.sub(TPL_PROGRESS_BAR, [instance.NS]));
 
 						rootNode.append(progressbarNode);
 
-						instance._progressbarNode = progressbarNode;
+						instance._progressBarNode = progressbarNode;
 
 						var progressbar = new A.ProgressBar(
 							{
@@ -92,7 +95,7 @@ AUI.add(
 							}
 						).render();
 
-						instance._progressbar = progressbar;
+						instance._progressBar = progressbar;
 					},
 
 					_getUploader: function() {
@@ -150,13 +153,13 @@ AUI.add(
 
 						var percentLoaded = Math.round(event.percentLoaded);
 
-						instance._progressbar.set(STR_VALUE, Math.ceil(percentLoaded));
+						instance._progressBar.set(STR_VALUE, Math.ceil(percentLoaded));
 					},
 
 					_stopProgress: function() {
 						var instance = this;
 
-						instance._progressbar.set(STR_VALUE, 0);
+						instance._progressBar.set(STR_VALUE, 0);
 
 						instance.rootNode.removeClass(CSS_UPLOADING);
 					}

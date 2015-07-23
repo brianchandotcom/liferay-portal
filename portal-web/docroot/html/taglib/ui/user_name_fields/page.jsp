@@ -14,6 +14,77 @@
  */
 --%>
 
+<%@ include file="/html/taglib/ui/user_name_fields/init.jsp" %>
+
+<aui:select label="language" name="languageId">
+
+	<%
+	for (Locale curLocale : LanguageUtil.getAvailableLocales()) {
+	%>
+
+		<aui:option label="<%= curLocale.getDisplayName(curLocale) %>" lang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" selected="<%= (userLocale.getLanguage().equals(curLocale.getLanguage()) && userLocale.getCountry().equals(curLocale.getCountry())) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
+
+	<%
+	}
+	%>
+
+</aui:select>
+
+<aui:script sandbox="<%= true %>" use="liferay-portlet-url">
+	var formData = {};
+
+	var select = $('#<portlet:namespace />languageId');
+
+	var userDetailsURL = Liferay.PortletURL.createURL('<%= themeDisplay.getURLCurrent() %>');
+
+	var userNameFields = $('#<portlet:namespace />userNameFields');
+
+	select.on(
+		'change',
+		function(event) {
+			_.forEach(
+				$('#<portlet:namespace />fm').formToArray(),
+				function(item, index) {
+					if (userNameFields.find('#' + item.name).length) {
+						formData[item.name] = item.value;
+					}
+				}
+			);
+
+			userDetailsURL.setParameter('languageId', select.val());
+
+			$.ajax(
+				userDetailsURL.toString(),
+				{
+					beforeSend: function() {
+						userNameFields.before('<div class="loading-animation" id="<portlet:namespace />loadingUserNameFields"></div>');
+
+						userNameFields.hide();
+					},
+					complete: function() {
+						$('#<portlet:namespace />loadingUserNameFields').remove();
+
+						userNameFields.show();
+
+						_.forEach(
+							formData,
+							function(item, index) {
+								userNameFields.find('#' + index).val(item);
+							}
+						);
+					},
+					success: function(responseData) {
+						var responseUserNameFields = $(responseData).find('#<portlet:namespace />userNameFields').html();
+
+						userNameFields.html(responseUserNameFields);
+					},
+					timeout: 5000
+				}
+			);
+		}
+	);
+</aui:script>
+
 <%
 FullNameDefinition fullNameDefinition = FullNameDefinitionFactory.getInstance(userLocale);
 %>
@@ -30,7 +101,7 @@ FullNameDefinition fullNameDefinition = FullNameDefinitionFactory.getInstance(us
 
 		<c:choose>
 			<c:when test="<%= fullNameField.isFreeText() %>">
-				<aui:input disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" model="<%= User.class %>" name="<%= fieldName %>">
+				<aui:input bean="<%= bean %>" disabled="<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, fieldName) %>" model="<%= User.class %>" name="<%= fieldName %>">
 					<c:if test="<%= fullNameField.isRequired() %>">
 						<aui:validator name="required" />
 					</c:if>

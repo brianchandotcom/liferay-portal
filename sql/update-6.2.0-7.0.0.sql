@@ -37,6 +37,7 @@ alter table DLFileEntryMetadata add companyId LONG;
 alter table DLFileEntryMetadata drop column fileEntryTypeId;
 
 create index IX_E69431B7 on DLFileEntryMetadata (uuid_, companyId);
+
 drop index IX_F8E90438 on DLFileEntryMetadata;
 
 alter table DLFileEntryTypes_DLFolders add companyId LONG;

@@ -66,7 +66,7 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 					</div>
 				</div>
 				<div class="input-group-btn">
-					<aui:button cssClass="btn btn-default" icon="icon-search" type="submit" />
+					<aui:button cssClass="btn btn-default" icon="icon-search" type="submit" value="" />
 				</div>
 			</aui:form>
 		</div>

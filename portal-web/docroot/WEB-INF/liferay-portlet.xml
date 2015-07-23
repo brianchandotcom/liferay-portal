@@ -3,23 +3,6 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>2</portlet-name>
-		<icon>/html/icons/my_account.png</icon>
-		<struts-path>my_account</struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<control-panel-entry-category>my</control-panel-entry-category>
-		<control-panel-entry-weight>1.0</control-panel-entry-weight>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/users_admin/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-users-admin</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
-		<system>true</system>
-	</portlet>
-	<portlet>
 		<portlet-name>9</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>admin</struts-path>

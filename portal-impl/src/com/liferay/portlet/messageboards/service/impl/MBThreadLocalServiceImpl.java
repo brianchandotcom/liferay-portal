@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -36,6 +37,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -700,6 +702,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 					MBMessage.class.getName(), message.getMessageId(), false);
 			}
 
+			// Attachments
+
+			for (FileEntry fileEntry : message.getAttachmentsFileEntries()) {
+				PortletFileRepositoryUtil.movePortletFileEntryToTrash(
+					PrincipalThreadLocal.getUserId(),
+					fileEntry.getFileEntryId());
+			}
+
 			// Indexer
 
 			Indexer<MBMessage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -944,6 +954,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			if (oldStatus == WorkflowConstants.STATUS_APPROVED) {
 				assetEntryLocalService.updateVisible(
 					MBMessage.class.getName(), message.getMessageId(), true);
+			}
+
+			// Attachments
+
+			for (FileEntry fileEntry : message.getAttachmentsFileEntries()) {
+				PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
+					PrincipalThreadLocal.getUserId(),
+					fileEntry.getFileEntryId());
 			}
 
 			// Indexer

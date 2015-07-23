@@ -15,11 +15,10 @@
 package com.liferay.portlet.messageboards.model;
 
 import com.liferay.portal.ModelListenerException;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 /**
  * @author Eduardo Garcia
@@ -30,10 +29,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	public void onAfterCreate(Layout layout) throws ModelListenerException {
 		if (PropsValues.LAYOUT_COMMENTS_ENABLED) {
 			try {
-				MBMessageLocalServiceUtil.addDiscussionMessage(
-					layout.getUserId(), layout.getUserName(),
-					layout.getGroupId(), Layout.class.getName(),
-					layout.getPlid(), WorkflowConstants.ACTION_PUBLISH);
+				CommentManagerUtil.addDiscussion(
+					layout.getUserId(), layout.getGroupId(),
+					Layout.class.getName(), layout.getPlid(),
+					layout.getUserName());
 			}
 			catch (Exception e) {
 				throw new ModelListenerException(e);
@@ -44,7 +43,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	@Override
 	public void onBeforeRemove(Layout layout) throws ModelListenerException {
 		try {
-			MBMessageLocalServiceUtil.deleteDiscussionMessages(
+			CommentManagerUtil.deleteDiscussion(
 				Layout.class.getName(), layout.getPlid());
 		}
 		catch (Exception e) {

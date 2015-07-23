@@ -2,9 +2,9 @@
 <ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
 	<info organisation="org.apache.felix"
 		module="org.apache.felix.eventadmin"
-		revision="1.4.2"
-		status="release"
-		publication="20140911011143"
+		revision="1.4.3-SNAPSHOT"
+		status="integration"
+		publication="20150722232028"
 	>
 		<description homepage="">
 		This bundle provides an implementation of the OSGi R4 EventAdmin service.
@@ -16,12 +16,23 @@
             ${bundle.build.name}/${project.build.finalName}.jar
         </m:properties__bundle.file.name>
 		<m:properties__additional.ittests>NONE</m:properties__additional.ittests>
+		<m:properties__felix.java.version>6</m:properties__felix.java.version>
+		<m:properties__site.javadoc.exclude>*.impl:*.internal:</m:properties__site.javadoc.exclude>
 		<m:properties__sourceReleaseAssemblyDescriptor>source-release-zip-tar</m:properties__sourceReleaseAssemblyDescriptor>
+		<m:properties__felix.java.signature.groupId>org.codehaus.mojo.signature</m:properties__felix.java.signature.groupId>
+		<m:properties__maven.compiler.source>1.5</m:properties__maven.compiler.source>
+		<m:properties__gpg.useagent>true</m:properties__gpg.useagent>
 		<m:properties__distMgmtSnapshotsUrl>https://repository.apache.org/content/repositories/snapshots</m:properties__distMgmtSnapshotsUrl>
+		<m:properties__maven.compiler.target>1.5</m:properties__maven.compiler.target>
+		<m:properties__arguments/>
+		<m:properties__project.reporting.outputEncoding>UTF-8</m:properties__project.reporting.outputEncoding>
 		<m:properties__distMgmtSnapshotsName>Apache Development Snapshot Repository</m:properties__distMgmtSnapshotsName>
 		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>
 		<m:properties__organization.logo>http://www.apache.org/images/asf_logo_wide.gif</m:properties__organization.logo>
-		<m:maven.plugins>org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__null|org.apache.rat__apache-rat-plugin__null|org.apache.maven.plugins__maven-release-plugin__null|org.codehaus.mojo__ianal-maven-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__null|org.apache.rat__apache-rat-plugin__null|org.apache.maven.plugins__maven-release-plugin__null|org.codehaus.mojo__ianal-maven-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__null|org.apache.felix__maven-bundle-plugin__2.5.0|null__maven-failsafe-plugin__2.12</m:maven.plugins>
+		<m:maven.plugins>org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-site-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-site-plugin__null|org.apache.maven.plugins__maven-antrun-plugin__null|org.apache.maven.plugins__maven-javadoc-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__null|org.apache.rat__apache-rat-plugin__null|org.codehaus.mojo__animal-sniffer-maven-plugin__null|org.apache.maven.plugins__maven-release-plugin__null|org.codehaus.mojo__ianal-maven-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-site-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-site-plugin__null|org.apache.maven.plugins__maven-antrun-plugin__null|org.apache.maven.plugins__maven-javadoc-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__null|org.apache.rat__apache-rat-plugin__null|org.codehaus.mojo__animal-sniffer-maven-plugin__null|org.apache.maven.plugins__maven-release-plugin__null|org.codehaus.mojo__ianal-maven-plugin__null|org.apache.felix__maven-bundle-plugin__2.5.0|null__maven-failsafe-plugin__2.12</m:maven.plugins>
+		<m:dependency.management__junit__junit__version>4.11</m:dependency.management__junit__junit__version>
+		<m:dependency.management__org.easymock__easymock__version>2.5.2</m:dependency.management__org.easymock__easymock__version>
+		<m:dependency.management__org.mockito__mockito-all__version>1.10.19</m:dependency.management__org.mockito__mockito-all__version>
 	</info>
 	<configurations>
 		<conf name="default" visibility="public" description="runtime dependencies and master artifact can be used with this conf" extends="runtime,master"/>
@@ -37,8 +48,6 @@
 	</configurations>
 	<publications>
 		<artifact name="org.apache.felix.eventadmin" type="bundle" ext="jar" conf="master"/>
-		<artifact name="org.apache.felix.eventadmin" type="source" ext="jar" conf="sources" m:classifier="sources"/>
-		<artifact name="org.apache.felix.eventadmin" type="javadoc" ext="jar" conf="javadoc" m:classifier="javadoc"/>
 	</publications>
 	<dependencies>
 		<dependency org="org.osgi" name="org.osgi.core" rev="5.0.0" force="true" conf="provided->compile(*),provided(*),runtime(*),master(*)"/>
@@ -53,8 +62,11 @@
 		<dependency org="org.ops4j.pax.url" name="pax-url-wrap" rev="2.1.0" force="true" conf="test->runtime(*),master(*)"/>
 		<dependency org="org.apache.geronimo.specs" name="geronimo-atinject_1.0_spec" rev="1.0" force="true" conf="test->runtime(*),master(*)"/>
 		<dependency org="org.apache.felix" name="org.apache.felix.framework" rev="4.4.1" force="true" conf="test->runtime(*),master(*)"/>
-		<dependency org="junit" name="junit" rev="4.0" force="true" conf="test->runtime(*),master(*)"/>
-		<dependency org="org.easymock" name="easymock" rev="2.4" force="true" conf="test->runtime(*),master(*)"/>
-		<dependency org="org.mockito" name="mockito-all" rev="1.7" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="junit" name="junit" rev="4.11" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.easymock" name="easymock" rev="2.5.2" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.mockito" name="mockito-all" rev="1.10.19" force="true" conf="test->runtime(*),master(*)"/>
+		<override org="junit" module="junit" matcher="exact" rev="4.11"/>
+		<override org="org.easymock" module="easymock" matcher="exact" rev="2.5.2"/>
+		<override org="org.mockito" module="mockito-all" matcher="exact" rev="1.10.19"/>
 	</dependencies>
 </ivy-module>

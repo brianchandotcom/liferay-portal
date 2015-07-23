@@ -53,7 +53,7 @@
 		<sequential>
 			<database-test-action database.type="@{database.type}">
 				<action>
-					<exec executable="${database.service.executable}" failonerror="true">
+					<exec executable="${database.service.executable}">
 						<arg line="${database.service.cmd.stop}" />
 					</exec>
 				</action>

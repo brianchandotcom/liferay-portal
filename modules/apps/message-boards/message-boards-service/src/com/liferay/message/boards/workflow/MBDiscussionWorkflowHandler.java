@@ -16,13 +16,13 @@ package com.liferay.message.boards.workflow;
 
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -31,13 +31,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {"model.class.name=com.liferay.portlet.messageboards.model.MBDiscussion"},
 	service = WorkflowHandler.class
 )
-public class MBDiscussionWorkflowHandler extends MBMessageWorkflowHandler {
-
-	@Override
-	public AssetRendererFactory getAssetRendererFactory() {
-		return AssetRendererFactoryRegistryUtil.
-			getAssetRendererFactoryByClassName(getClassName());
-	}
+public class MBDiscussionWorkflowHandler
+	extends BaseMessageBoardsWorkflowHandler {
 
 	@Override
 	public String getClassName() {
@@ -48,5 +43,19 @@ public class MBDiscussionWorkflowHandler extends MBMessageWorkflowHandler {
 	public String getType(Locale locale) {
 		return ResourceActionsUtil.getModelResource(locale, getClassName());
 	}
+
+	@Override
+	protected MBMessageLocalService getMBMessageLocalService() {
+		return _mbMessageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	private MBMessageLocalService _mbMessageLocalService;
 
 }

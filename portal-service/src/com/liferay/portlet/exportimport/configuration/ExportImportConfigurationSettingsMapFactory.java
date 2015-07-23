@@ -67,7 +67,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 			StringPool.BLANK);
 	}
 
-	public static Map<String, Serializable> buildImportSettingsMap(
+	public static Map<String, Serializable> buildImportPortletSettingsMap(
 		long userId, long targetPlid, long targetGroupId, String portletId,
 		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone) {
 

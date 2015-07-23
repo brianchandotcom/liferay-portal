@@ -500,7 +500,7 @@ public class BookmarksFolderLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public void restoreFolderFromTrash(long userId, long folderId)
+	public BookmarksFolder restoreFolderFromTrash(long userId, long folderId)
 		throws PortalException {
 
 		// Folder
@@ -537,6 +537,8 @@ public class BookmarksFolderLocalServiceImpl
 			folder.getFolderId(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
+
+		return folder;
 	}
 
 	@Override

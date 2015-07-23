@@ -53,19 +53,9 @@
 		<sequential>
 			<database-test-action database.type="@{database.type}">
 				<action>
-					<if>
-						<equals arg1="@{database.type}" arg2="db2" />
-						<then>
-							<exec dir="/opt/ibm/db2/V10.5/bin" executable="${database.service.executable}" failonerror="true">
-								<arg line="${database.service.cmd.stop}" />
-							</exec>
-						</then>
-						<else>
-							<exec executable="${database.service.executable}" failonerror="true">
-								<arg line="${database.service.cmd.stop}" />
-							</exec>
-						</else>
-					</if>
+					<exec executable="${database.service.executable}" failonerror="true">
+						<arg line="${database.service.cmd.stop}" />
+					</exec>
 				</action>
 			</database-test-action>
 
@@ -77,19 +67,9 @@
 
 					<set-portal-impl-system-ext-properties />
 
-					<if>
-						<equals arg1="@{database.type}" arg2="db2" />
-						<then>
-							<exec dir="/opt/ibm/db2/V10.5/bin" executable="${database.service.executable}" failonerror="true">
-								<arg line="${database.service.cmd.start}" />
-							</exec>
-						</then>
-						<else>
-							<exec executable="${database.service.executable}" failonerror="true">
-								<arg line="${database.service.cmd.start}" />
-							</exec>
-						</else>
-					</if>
+					<exec executable="${database.service.executable}" failonerror="true">
+						<arg line="${database.service.cmd.start}" />
+					</exec>
 
 					<antcall target="copy-optional-jars" inheritall="false" >
 						<param name="database.type" value="@{database.type}" />
@@ -107,19 +87,9 @@
 
 					<test-action />
 
-					<if>
-						<equals arg1="@{database.type}" arg2="db2" />
-						<then>
-							<exec dir="/opt/ibm/db2/V10.5/bin" executable="${database.service.executable}" failonerror="true">
-								<arg line="${database.service.cmd.stop}" />
-							</exec>
-						</then>
-						<else>
-							<exec executable="${database.service.executable}" failonerror="true">
-								<arg line="${database.service.cmd.stop}" />
-							</exec>
-						</else>
-					</if>
+					<exec executable="${database.service.executable}" failonerror="true">
+						<arg line="${database.service.cmd.stop}" />
+					</exec>
 				</action>
 			</database-test-action>
 		</sequential>

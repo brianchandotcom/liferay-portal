@@ -5015,7 +5015,7 @@ public class ServiceBuilder {
 				jsonEnabled, mvccEnabled, trashEnabled, deprecated, pkList,
 				regularColList, blobList, collectionList, columnList, order,
 				finderList, referenceList, unresolvedReferenceList,
-				txRequiredList, resourceActionModel));
+				txRequiredList, resourceActionModel, partitionable));
 	}
 
 	private String _processTemplate(String name, Map<String, Object> context)

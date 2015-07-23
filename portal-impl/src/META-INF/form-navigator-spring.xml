@@ -42,27 +42,4 @@
 	<bean id="com.liferay.portal.servlet.taglib.ui.OrganizationReminderQueriesFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.OrganizationReminderQueriesFormNavigatorEntry" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.OrganizationServicesFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.OrganizationServicesFormNavigatorEntry" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.OrganizationWebsitesFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.OrganizationWebsitesFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserAdditionalEmailAddressesFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserAdditionalEmailAddressesFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserAddressesFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserAddressesFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserAnnouncementsFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserAnnouncementsFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserCategorizationFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserCategorizationFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserCommentsFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserCommentsFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserCustomFieldsFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserCustomFieldsFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserDetailsFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserDetailsFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserDisplaySettingsFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserDisplaySettingsFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserIdentificationFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.UserIdentificationFormNavigatorCategory" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserInstantMessengerFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserInstantMessengerFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserMiscellaneousFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.UserMiscellaneousFormNavigatorCategory" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserOpenIdFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserOpenIdFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserOrganizationsFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserOrganizationsFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserPasswordFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserPasswordFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserPersonalSiteFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserPersonalSiteFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserPhoneNumbersFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserPhoneNumbersFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserRolesFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserRolesFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserSitesFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserSitesFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserSmsFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserSmsFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserSocialNetworkFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserSocialNetworkFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserUserGroupsFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserUserGroupsFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserUserInformationFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.UserUserInformationFormNavigatorCategory" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.UserWebsitesFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.UserWebsitesFormNavigatorEntry" />
 </beans>

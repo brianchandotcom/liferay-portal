@@ -93,8 +93,6 @@ public class DDLRecordSearchTest {
 
 	@Test
 	public void testExactPhrase() throws Exception {
-		Assume.assumeTrue(isExactPhraseQueryImplementedForSearchEngine());
-
 		addRecord("Joe Bloggs", "Simple description");
 		addRecord("Bloggs", "Another description example");
 		addRecord(RandomTestUtil.randomString(), RandomTestUtil.randomString());
@@ -124,8 +122,6 @@ public class DDLRecordSearchTest {
 
 	@Test
 	public void testPunctuationInExactPhrase() throws Exception {
-		Assume.assumeTrue(isExactPhraseQueryImplementedForSearchEngine());
-
 		addRecord("Joe? Bloggs!");
 		addRecord("Joe! Bloggs?");
 		addRecord("Joe Bloggs");
@@ -137,8 +133,6 @@ public class DDLRecordSearchTest {
 
 	@Test
 	public void testQuestionMarksVersusStopwords1() throws Exception {
-		Assume.assumeTrue(isExactPhraseQueryImplementedForSearchEngine());
-
 		addRecord(RandomTestUtil.randomString());
 		addRecord("how ? create ? coupon");
 
@@ -173,8 +167,6 @@ public class DDLRecordSearchTest {
 
 	@Test
 	public void testQuestionMarksVersusStopwords4() throws Exception {
-		Assume.assumeTrue(isExactPhraseQueryImplementedForSearchEngine());
-
 		addRecord(RandomTestUtil.randomString());
 		addRecord("how ! create ! coupon");
 
@@ -327,11 +319,11 @@ public class DDLRecordSearchTest {
 
 		String vendor = searchEngine.getVendor();
 
-		if (vendor.equals("SOLR")) {
-			return true;
+		if (vendor.equals("Elasticsearch") || vendor.equals("SOLR")) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	@DeleteAfterTestRun

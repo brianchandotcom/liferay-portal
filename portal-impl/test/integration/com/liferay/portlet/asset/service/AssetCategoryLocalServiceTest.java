@@ -39,7 +39,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -60,16 +59,6 @@ public class AssetCategoryLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_organizationIndexer = IndexerRegistryUtil.getIndexer(
-			Organization.class);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		IndexerRegistryUtil.register(_organizationIndexer);
-
-		OrganizationLocalServiceUtil.deleteOrganization(_organization);
 	}
 
 	@Test
@@ -96,28 +85,32 @@ public class AssetCategoryLocalServiceTest {
 		serviceContext.setAssetCategoryIds(
 			new long[] {assetCategory.getCategoryId()});
 
-		_organization = OrganizationLocalServiceUtil.addOrganization(
-			TestPropsValues.getUserId(),
-			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-			RandomTestUtil.randomString(),
-			OrganizationConstants.TYPE_REGULAR_ORGANIZATION, 0, 0,
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-			RandomTestUtil.randomString(), true, serviceContext);
+		Organization organization =
+			OrganizationLocalServiceUtil.addOrganization(
+				TestPropsValues.getUserId(),
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+				RandomTestUtil.randomString(),
+				OrganizationConstants.TYPE_REGULAR_ORGANIZATION, 0, 0,
+				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+				RandomTestUtil.randomString(), true, serviceContext);
 
 		TestAssetIndexer testAssetIndexer = new TestAssetIndexer();
 
 		testAssetIndexer.setExpectedValues(
-			Organization.class.getName(), _organization.getOrganizationId());
+			Organization.class.getName(), organization.getOrganizationId());
 
 		IndexerRegistryUtil.register(testAssetIndexer);
 
+		Indexer<Organization> organizationIndexer =
+			IndexerRegistryUtil.getIndexer(Organization.class);
+
+		IndexerRegistryUtil.register(organizationIndexer);
+
 		AssetCategoryLocalServiceUtil.deleteCategory(assetCategory, true);
+		OrganizationLocalServiceUtil.deleteOrganization(organization);
 	}
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	private Organization _organization;
-	private Indexer<Organization> _organizationIndexer;
 
 }

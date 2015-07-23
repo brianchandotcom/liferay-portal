@@ -44,7 +44,7 @@ import javax.portlet.PortletRequest;
  */
 public class ExportImportConfigurationSettingsMapFactory {
 
-	public static Map<String, Serializable> buildExportSettingsMap(
+	public static Map<String, Serializable> buildExportPortletSettingsMap(
 		long userId, long sourcePlid, long sourceGroupId, String portletId,
 		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone,
 		String fileName) {

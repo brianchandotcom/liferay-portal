@@ -93,7 +93,7 @@ public class Entity {
 			null, null, null, name, null, null, null, false, false, false, true,
 			null, null, null, null, null, true, false, false, false, false,
 			false, null, null, null, null, null, null, null, null, null, null,
-			false);
+			false, true);
 	}
 
 	public Entity(
@@ -108,7 +108,8 @@ public class Entity {
 		List<EntityColumn> collectionList, List<EntityColumn> columnList,
 		EntityOrder order, List<EntityFinder> finderList,
 		List<Entity> referenceList, List<String> unresolvedReferenceList,
-		List<String> txRequiredList, boolean resourceActionModel) {
+		List<String> txRequiredList, boolean resourceActionModel,
+		boolean partionable) {
 
 		_packagePath = packagePath;
 		_portletName = portletName;
@@ -144,6 +145,7 @@ public class Entity {
 		_unresolvedReferenceList = unresolvedReferenceList;
 		_txRequiredList = txRequiredList;
 		_resourceActionModel = resourceActionModel;
+		_partitionable = partionable;
 
 		if (_finderList != null) {
 			Set<EntityColumn> finderColumns = new HashSet<>();
@@ -723,6 +725,10 @@ public class Entity {
 		}
 	}
 
+	public boolean isPartitionableModel() {
+		return _partitionable;
+	}
+
 	public boolean isPermissionCheckEnabled() {
 		for (EntityFinder finder : _finderList) {
 			if (isPermissionCheckEnabled(finder)) {
@@ -904,6 +910,7 @@ public class Entity {
 	private final EntityOrder _order;
 	private final String _packagePath;
 	private List<String> _parentTransients;
+	private final boolean _partitionable;
 	private final String _persistenceClass;
 	private final List<EntityColumn> _pkList;
 	private boolean _portalReference;

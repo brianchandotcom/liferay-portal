@@ -18,6 +18,7 @@ import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.LocalizedModel;
 import com.liferay.portal.model.MVCCModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.TypedModel;
@@ -95,6 +96,12 @@ public interface ${entity.name}Model extends
 		, MVCCModel
 
 		<#assign overrideColumnNames = overrideColumnNames + ["mvccVersion"]>
+	</#if>
+
+	<#if entity.isPartitionableModel()>
+		, PartitionableModel
+
+		<#assign overrideColumnNames = overrideColumnNames + ["companyId"]>
 	</#if>
 
 	<#if entity.isResourcedModel()>

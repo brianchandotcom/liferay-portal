@@ -193,7 +193,8 @@ public class JournalArticleIndexer
 				ddmStructureFieldName,
 				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 
-			contextBooleanFilter.add(new QueryFilter(booleanQuery));
+			contextBooleanFilter.add(
+				new QueryFilter(booleanQuery), BooleanClauseOccur.MUST);
 		}
 
 		String articleType = (String)searchContext.getAttribute("articleType");

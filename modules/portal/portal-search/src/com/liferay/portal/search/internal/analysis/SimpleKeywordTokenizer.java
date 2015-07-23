@@ -26,7 +26,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = KeywordTokenizer.class)
+@Component(
+	immediate = true, property = {"mode=default"},
+	service = KeywordTokenizer.class
+)
 public class SimpleKeywordTokenizer implements KeywordTokenizer {
 
 	@Override
@@ -38,7 +41,10 @@ public class SimpleKeywordTokenizer implements KeywordTokenizer {
 		if (!((keyword.indexOf(CharPool.QUOTE) == 0) &&
 			(keyword.lastIndexOf(CharPool.QUOTE) == (keyword.length() -1)))) {
 
-			if ((start > -1) && (end > start)) {
+			if (((start > -1) && (end > start)) ||
+				((start == -1) && (end == -1) &&
+				 (keyword.indexOf(CharPool.SPACE) != -1))) {
+
 				return true;
 			}
 		}

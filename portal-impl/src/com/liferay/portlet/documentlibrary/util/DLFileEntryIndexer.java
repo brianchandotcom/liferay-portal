@@ -254,7 +254,8 @@ public class DLFileEntryIndexer
 				ddmStructureFieldName,
 				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 
-			contextBooleanFilter.add(new QueryFilter(booleanQuery));
+			contextBooleanFilter.add(
+				new QueryFilter(booleanQuery), BooleanClauseOccur.MUST);
 		}
 
 		String[] mimeTypes = (String[])searchContext.getAttribute("mimeTypes");

@@ -23,6 +23,12 @@ liferay {
 	if (deployDir == new File(appServerParentDir, "deploy")) {
 		deployDir = new File(liferayHome, "osgi/apps")
 	}
+
+	String liferayHomeSystemProperty = System.properties["liferayHome"]
+
+	if (liferayHomeSystemProperty) {
+		liferayHome = liferayHomeSystemProperty
+	}
 }
 
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")

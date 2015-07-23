@@ -223,14 +223,14 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 								commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
 								containerName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, article.getFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
-								description="<%= ((summary != null) && Validator.isNotNull(summary.getContent())) ? summary.getContent() : article.getDescription(locale) %>"
+								description="<%= article.getDescription(locale) %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
 								rowCheckerId="<%= HtmlUtil.escape(article.getArticleId()) %>"
 								rowCheckerName="<%= JournalArticle.class.getSimpleName() %>"
 								showCheckbox="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>"
 								status="<%= article.getStatus() %>"
 								thumbnailSrc='<%= Validator.isNotNull(article.getArticleImageURL(themeDisplay)) ? article.getArticleImageURL(themeDisplay) : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
-								title="<%= ((summary != null) && Validator.isNotNull(summary.getTitle())) ? summary.getTitle() : article.getTitle(locale) %>"
+								title="<%= article.getTitle(locale) %>"
 								url="<%= rowURL.toString() %>"
 								versions="<%= versions %>"
 							/>

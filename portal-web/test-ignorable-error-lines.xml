@@ -1,6 +1,23 @@
 <?xml version="1.0"?>
 
 <ignore-errors>
+	<javascript>
+		<ignore-error>
+			<description>LPS-41634</description>
+			<matches></matches>
+			<contains>TypeError: d.config.doc.defaultView is null</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-41634</description>
+			<matches></matches>
+			<contains>NS_ERROR_NOT_INITIALIZED:</contains>
+		</ignore-error>
+		<ignore-error>
+			<description>LPS-42469</description>
+			<matches></matches>
+			<contains>Permission denied to access property 'type'</contains>
+		</ignore-error>
+	</javascript>
 	<log>
 		<ignore-error>
 			<description>LRQA-6421</description>
@@ -244,21 +261,4 @@
 			<contains>No score point assigners available</contains>
 		</ignore-error>
 	</log>
-	<javascript>
-		<ignore-error>
-			<description>LPS-41634</description>
-			<matches></matches>
-			<contains>TypeError: d.config.doc.defaultView is null</contains>
-		</ignore-error>
-		<ignore-error>
-			<description>LPS-41634</description>
-			<matches></matches>
-			<contains>NS_ERROR_NOT_INITIALIZED:</contains>
-		</ignore-error>
-		<ignore-error>
-			<description>LPS-41634</description>
-			<matches></matches>
-			<contains>Permission denied to access property 'type'</contains>
-		</ignore-error>
-	</javascript>
 </ignore-errors>

@@ -18,7 +18,7 @@ import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Fi
 import com.liferay.sass.compiler.jni.internal.util.test.JniSassCompilerTestUtil;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -26,8 +26,10 @@ import org.junit.Test;
  */
 public class LiferaysassLibraryTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		System.setProperty("jna.nosys", Boolean.toString(true));
+
 		JniSassCompilerTestUtil.addSearchPath();
 	}
 

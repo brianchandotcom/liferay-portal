@@ -38,7 +38,6 @@
 	</category>
 	<category name="category.social" />
 	<category name="category.tools">
-		<portlet id="2" />
 		<portlet id="58" />
 		<portlet id="98" />
 	</category>

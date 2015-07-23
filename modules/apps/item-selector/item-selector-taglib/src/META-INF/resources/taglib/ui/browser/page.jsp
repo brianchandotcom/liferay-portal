@@ -28,7 +28,6 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay
 boolean showBreadcrumb = GetterUtil.getBoolean(request.getAttribute("liferay-ui:item-selector-browser:showBreadcrumb"));
 PortletURL searchURL = (PortletURL)request.getAttribute("liferay-ui:item-selector-browser:searchURL");
 String tabName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:tabName"));
-String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:uploadMessage"));
 PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selector-browser:uploadURL");
 %>
 

@@ -54,11 +54,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>uploadMessage</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>uploadURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -37,6 +37,15 @@ AUI.add(
 					instance._namespace = namespace;
 
 					Liferay.Util.toggleControls(controlMenu);
+
+					var eventHandle = controlMenu.on(
+						['focus', 'mousemove', 'touchstart'],
+						function(event) {
+							Liferay.fire('initLayout');
+
+							eventHandle.detach();
+						}
+					);
 				}
 
 				instance._registerPanels();

@@ -44,6 +44,15 @@ import javax.portlet.PortletRequest;
  */
 public class ExportImportConfigurationSettingsMapFactory {
 
+	public static Map<String, Serializable> buildExportLayoutSettingsMap(
+		long userId, long groupId, boolean privateLayout, long[] layoutIds,
+		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone) {
+
+		return buildSettingsMap(
+			userId, groupId, 0, privateLayout, layoutIds, parameterMap, locale,
+			timeZone);
+	}
+
 	public static Map<String, Serializable> buildExportPortletSettingsMap(
 		long userId, long sourcePlid, long sourceGroupId, String portletId,
 		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone,
@@ -75,15 +84,6 @@ public class ExportImportConfigurationSettingsMapFactory {
 			userId, 0, 0, targetGroupId, targetPlid, portletId, null, null,
 			null, parameterMap, StringPool.BLANK, 0, StringPool.BLANK, null, 0,
 			null, locale, timeZone, StringPool.BLANK);
-	}
-
-	public static Map<String, Serializable> buildSettingsMap(
-		long userId, long groupId, boolean privateLayout, long[] layoutIds,
-		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone) {
-
-		return buildSettingsMap(
-			userId, groupId, 0, privateLayout, layoutIds, parameterMap, locale,
-			timeZone);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(
@@ -139,7 +139,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 		if (type == ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT) {
 			long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layoutIdMap);
 
-			return buildSettingsMap(
+			return buildExportLayoutSettingsMap(
 				themeDisplay.getUserId(), groupId, privateLayout, layoutIds,
 				portletRequest.getParameterMap(), themeDisplay.getLocale(),
 				themeDisplay.getTimeZone());

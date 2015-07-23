@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
+	<info organisation="org.apache.felix"
+		module="felix-parent"
+		revision="3"
+		status="release"
+		publication="20150716123729"
+	>
+		<description homepage="http://felix.apache.org/">
+		Apache Felix is a community effort to implement the OSGi Framework and Service platform and other interesting OSGi-related technologies.
+		</description>
+		<m:properties__site.javadoc.exclude>*.impl:*.internal:</m:properties__site.javadoc.exclude>
+		<m:properties__sourceReleaseAssemblyDescriptor>source-release-zip-tar</m:properties__sourceReleaseAssemblyDescriptor>
+		<m:properties__felix.java.signature.groupId>org.codehaus.mojo.signature</m:properties__felix.java.signature.groupId>
+		<m:properties__felix.java.version>5</m:properties__felix.java.version>
+		<m:properties__maven.compiler.source>1.5</m:properties__maven.compiler.source>
+		<m:properties__gpg.useagent>true</m:properties__gpg.useagent>
+		<m:properties__distMgmtSnapshotsUrl>https://repository.apache.org/content/repositories/snapshots</m:properties__distMgmtSnapshotsUrl>
+		<m:properties__maven.compiler.target>1.5</m:properties__maven.compiler.target>
+		<m:properties__arguments/>
+		<m:properties__project.reporting.outputEncoding>UTF-8</m:properties__project.reporting.outputEncoding>
+		<m:properties__distMgmtSnapshotsName>Apache Development Snapshot Repository</m:properties__distMgmtSnapshotsName>
+		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>
+		<m:properties__organization.logo>http://www.apache.org/images/asf_logo_wide.gif</m:properties__organization.logo>
+		<m:maven.plugins>org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-site-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-site-plugin__null|org.apache.maven.plugins__maven-antrun-plugin__null|org.apache.maven.plugins__maven-javadoc-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__null|org.apache.rat__apache-rat-plugin__null|org.codehaus.mojo__animal-sniffer-maven-plugin__null|org.apache.maven.plugins__maven-release-plugin__null|org.codehaus.mojo__ianal-maven-plugin__null</m:maven.plugins>
+		<m:dependency.management__junit__junit__version>4.11</m:dependency.management__junit__junit__version>
+		<m:dependency.management__org.easymock__easymock__version>2.5.2</m:dependency.management__org.easymock__easymock__version>
+		<m:dependency.management__org.mockito__mockito-all__version>1.10.19</m:dependency.management__org.mockito__mockito-all__version>
+	</info>
+	<configurations>
+		<conf name="default" visibility="public" description="runtime dependencies and master artifact can be used with this conf" extends="runtime,master"/>
+		<conf name="master" visibility="public" description="contains only the artifact published by this module itself, with no transitive dependencies"/>
+		<conf name="compile" visibility="public" description="this is the default scope, used if none is specified. Compile dependencies are available in all classpaths."/>
+		<conf name="provided" visibility="public" description="this is much like compile, but indicates you expect the JDK or a container to provide it. It is only available on the compilation classpath, and is not transitive."/>
+		<conf name="runtime" visibility="public" description="this scope indicates that the dependency is not required for compilation, but is for execution. It is in the runtime and test classpaths, but not the compile classpath." extends="compile"/>
+		<conf name="test" visibility="private" description="this scope indicates that the dependency is not required for normal use of the application, and is only available for the test compilation and execution phases." extends="runtime"/>
+		<conf name="system" visibility="public" description="this scope is similar to provided except that you have to provide the JAR which contains it explicitly. The artifact is always available and is not looked up in a repository."/>
+		<conf name="sources" visibility="public" description="this configuration contains the source artifact of this module, if any."/>
+		<conf name="javadoc" visibility="public" description="this configuration contains the javadoc artifact of this module, if any."/>
+		<conf name="optional" visibility="public" description="contains all optional dependencies"/>
+	</configurations>
+	<publications>
+	</publications>
+	<dependencies>
+		<dependency org="junit" name="junit" rev="4.11" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.easymock" name="easymock" rev="2.5.2" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.mockito" name="mockito-all" rev="1.10.19" force="true" conf="test->runtime(*),master(*)"/>
+		<override org="junit" module="junit" matcher="exact" rev="4.11"/>
+		<override org="org.easymock" module="easymock" matcher="exact" rev="2.5.2"/>
+		<override org="org.mockito" module="mockito-all" matcher="exact" rev="1.10.19"/>
+	</dependencies>
+</ivy-module>

@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.apache.felix</groupId>
         <artifactId>felix-parent</artifactId>
-        <version>2.1</version>
+        <version>3</version>
         <relativePath>../../pom/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -29,12 +29,12 @@
     <description>
 	    This bundle provides an implementation of the OSGi R4 EventAdmin service.
     </description>
-    <version>1.4.2</version>
+    <version>1.4.3-SNAPSHOT</version>
     <artifactId>org.apache.felix.eventadmin</artifactId>
     <scm>
-      <connection>scm:svn:http://svn.apache.org/repos/asf/felix/releases/org.apache.felix.eventadmin-1.4.2</connection>
-      <developerConnection>scm:svn:https://svn.apache.org/repos/asf/felix/releases/org.apache.felix.eventadmin-1.4.2</developerConnection>
-      <url>scm:svn:https://svn.apache.org/repos/asf/felix/releases/org.apache.felix.eventadmin-1.4.2</url>
+      <connection>scm:svn:http://svn.apache.org/repos/asf/felix/trunk/eventadmin/impl</connection>
+      <developerConnection>scm:svn:https://svn.apache.org/repos/asf/felix/trunk/eventadmin/impl</developerConnection>
+      <url>http://svn.apache.org/repos/asf/felix/eventadmin/impl</url>
     </scm>
     
     <properties>
@@ -44,6 +44,7 @@
         <bundle.file.name>
             ${bundle.build.name}/${project.build.finalName}.jar
         </bundle.file.name>
+        <felix.java.version>6</felix.java.version>
         <!-- This is a placeholder to enable perf tests with the perftest profile -->
         <additional.ittests>NONE</additional.ittests>
     </properties>
@@ -131,14 +132,6 @@
             </resource>
         </resources>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>

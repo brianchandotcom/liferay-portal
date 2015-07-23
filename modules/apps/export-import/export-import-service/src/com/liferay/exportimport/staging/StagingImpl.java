@@ -1463,10 +1463,12 @@ public class StagingImpl implements Staging {
 
 		User user = UserLocalServiceUtil.getUser(userId);
 
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				userId, sourceGroupId, sourcePlid, targetGroupId, targetPlid,
-				portletId, parameterMap, user.getLocale(), user.getTimeZone());
+		Map<String, Serializable> publishPortletSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildPublishPortletSettingsMap(
+					userId, sourceGroupId, sourcePlid, targetGroupId,
+					targetPlid, portletId, parameterMap, user.getLocale(),
+					user.getTimeZone());
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -1475,7 +1477,7 @@ public class StagingImpl implements Staging {
 				addExportImportConfiguration(
 					userId, sourceGroupId, portletId, StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					publishPortletSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					serviceContext);
 
 		publishPortlet(userId, exportImportConfiguration);

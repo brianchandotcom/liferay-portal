@@ -58,7 +58,9 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 
 		<antcall target="delete-elasticseach-osgi-bundle" />
 
-		<ant dir="modules/portal/portal-search-solr" target="all" />
+		<gradle-execute dir="modules/portal/portal-search-solr" task="deploy">
+			<arg value="clean" />
+		</gradle-execute>
 
 		<antcall target="configure-solr-osgi-bundle-properties" />
 

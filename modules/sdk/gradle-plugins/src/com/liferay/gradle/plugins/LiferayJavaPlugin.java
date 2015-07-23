@@ -2098,7 +2098,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		"org.powermock:powermock-module-junit4:1.6.1",
 		"org.powermock:powermock-module-junit4-common:1.6.1",
 		"org.powermock:powermock-reflect:1.6.1",
-		"org.springframework:spring-test:3.0.7.RELEASE"
+		"org.springframework:spring-test:3.2.10.RELEASE"
 	};
 
 	private static final String _REPOSITORY_URL =

@@ -1,7 +1,7 @@
 @import "bourbon";
 
 .drop-zone.drop-enabled:not(.no-border) {
-	outline-color: rgba(176, 180, 187, 0.5);
+	outline-color: transparentize(#B0B4BB, 0.5);
 }
 
 .drop-here-info {
@@ -23,5 +23,5 @@
 }
 
 .drop-active .drop-here-info {
-	background-color: rgba(0, 0, 0, 0.4);
+	background-color: transparentize(#000, 0.4);
 }

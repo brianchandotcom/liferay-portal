@@ -112,7 +112,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 			remotePrivateLayout, locale, timeZone, StringPool.BLANK);
 	}
 
-	public static Map<String, Serializable> buildSettingsMap(
+	public static Map<String, Serializable> buildPublishPortletSettingsMap(
 		long userId, long sourceGroupId, long sourcePlid, long targetGroupId,
 		long targetPlid, String portletId, Map<String, String[]> parameterMap,
 		Locale locale, TimeZone timeZone) {

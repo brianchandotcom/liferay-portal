@@ -28,7 +28,7 @@
 
 </aui:select>
 
-<<aui:script sandbox="<%= true %>" use="liferay-portlet-url">
+<aui:script sandbox="<%= true %>" use="liferay-portlet-url">
 	var formData = {};
 
 	var select = $('#<portlet:namespace />languageId');

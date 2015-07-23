@@ -14,13 +14,18 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
+import com.liferay.portal.service.persistence.PortalPreferencesUtil;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -41,6 +46,20 @@ import org.hibernate.StaleObjectStateException;
 public class PortalPreferencesImpl
 	extends BasePreferencesImpl
 	implements Cloneable, PortalPreferences, Serializable {
+
+	public static final TransactionAttribute SUPPORTS_TRANSACTION_ATTRIBUTE;
+
+	static {
+		TransactionAttribute.Builder builder =
+			new TransactionAttribute.Builder();
+
+		builder.setPropagation(Propagation.SUPPORTS);
+		builder.setReadOnly(true);
+		builder.setRollbackForClasses(
+			PortalException.class, SystemException.class);
+
+		SUPPORTS_TRANSACTION_ATTRIBUTE = builder.build();
+	}
 
 	public PortalPreferencesImpl() {
 		this(0, 0, null, Collections.<String, Preference>emptyMap(), false);
@@ -166,8 +185,8 @@ public class PortalPreferencesImpl
 
 			});
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Throwable t) {
+			_log.error(t, t);
 		}
 	}
 
@@ -215,8 +234,8 @@ public class PortalPreferencesImpl
 				callable.call();
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Throwable t) {
+			_log.error(t, t);
 		}
 	}
 
@@ -255,8 +274,8 @@ public class PortalPreferencesImpl
 				callable.call();
 			}
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Throwable t) {
+			_log.error(t, t);
 		}
 	}
 
@@ -291,7 +310,7 @@ public class PortalPreferencesImpl
 		return false;
 	}
 
-	protected void retryableStore(Callable<?> callable) throws Exception {
+	protected void retryableStore(Callable<?> callable) throws Throwable {
 		while (true) {
 			try {
 				callable.call();
@@ -302,17 +321,29 @@ public class PortalPreferencesImpl
 			}
 			catch (Exception e) {
 				if (isCausedByStaleObjectException(e)) {
+					long ownerId = getOwnerId();
+					int ownerType = getOwnerType();
+
+					com.liferay.portal.model.PortalPreferences
+						portalPreferences = reload(ownerId, ownerType);
+
+					if (portalPreferences == null) {
+						continue;
+					}
+
+					String preferencesXML = portalPreferences.getPreferences();
+
 					PortalPreferencesImpl portalPreferencesImpl =
 						(PortalPreferencesImpl)
-							PortletPreferencesFactoryUtil.getPortalPreferences(
-								getOwnerId(), isSignedIn());
+							PortletPreferencesFactoryUtil.fromXML(
+								ownerId, ownerType, preferencesXML);
 
 					reset();
 
 					setOriginalPreferences(
 						portalPreferencesImpl.getOriginalPreferences());
 
-					setOriginalXML(portalPreferencesImpl.getOriginalXML());
+					setOriginalXML(preferencesXML);
 				}
 				else {
 					throw e;
@@ -328,6 +359,23 @@ public class PortalPreferencesImpl
 		else {
 			return namespace.concat(StringPool.POUND).concat(key);
 		}
+	}
+
+	private com.liferay.portal.model.PortalPreferences reload(
+			final long ownerId, final int ownerType)
+		throws Throwable {
+
+		return TransactionInvokerUtil.invoke(
+			SUPPORTS_TRANSACTION_ATTRIBUTE,
+			new Callable<com.liferay.portal.model.PortalPreferences>() {
+
+				@Override
+				public com.liferay.portal.model.PortalPreferences call() {
+					return PortalPreferencesUtil.fetchByO_O(
+						ownerId, ownerType, false);
+				}
+
+			});
 	}
 
 	private static final String _RANDOM_KEY = "r";

@@ -29,13 +29,17 @@ public class SimpleKeywordTokenizerTest {
 		SimpleKeywordTokenizer simpleKeywordTokenizer =
 			new SimpleKeywordTokenizer();
 
-		Assert.assertFalse(
+		Assert.assertTrue(
 			simpleKeywordTokenizer.requiresTokenization(
 				"This is a simple test"));
 
+		Assert.assertTrue(
+			simpleKeywordTokenizer.requiresTokenization(
+				"This \"is a simple\" test"));
+
 		Assert.assertFalse(
 			simpleKeywordTokenizer.requiresTokenization(
-				"This is a simple test"));
+				"\"is a simple\""));
 	}
 
 	@Test

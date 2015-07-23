@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.service;
+package com.liferay.mobile.device.rules.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.mobile.device.rules.util.test.MDRTestUtil;

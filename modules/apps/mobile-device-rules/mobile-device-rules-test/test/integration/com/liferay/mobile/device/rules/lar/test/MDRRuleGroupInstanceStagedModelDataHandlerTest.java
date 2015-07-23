@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.lar;
+package com.liferay.mobile.device.rules.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.mobile.device.rules.util.test.MDRTestUtil;
@@ -20,14 +20,19 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.mobiledevicerules.model.MDRRule;
+import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
+import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +48,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class MDRRuleStagedModelDataHandlerTest
+public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
@@ -53,6 +58,24 @@ public class MDRRuleStagedModelDataHandlerTest
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE,
 			TransactionalTestRule.INSTANCE);
+
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		layout = LayoutTestUtil.addLayout(stagingGroup);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setUuid(layout.getUuid());
+
+		LayoutLocalServiceUtil.addLayout(
+			TestPropsValues.getUserId(), liveGroup.getGroupId(),
+			layout.getPrivateLayout(), layout.getParentLayoutId(),
+			layout.getName(), layout.getTitle(), layout.getDescription(),
+			layout.getType(), layout.getHidden(), layout.getFriendlyURL(),
+			serviceContext);
+	}
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
@@ -72,8 +95,8 @@ public class MDRRuleStagedModelDataHandlerTest
 
 	@Override
 	protected StagedModel addStagedModel(
-			Group group, Map<String,
-			List<StagedModel>> dependentStagedModelsMap)
+			Group group,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
@@ -81,14 +104,17 @@ public class MDRRuleStagedModelDataHandlerTest
 
 		MDRRuleGroup ruleGroup = (MDRRuleGroup)dependentStagedModels.get(0);
 
-		return MDRTestUtil.addRule(ruleGroup.getRuleGroupId());
+		return MDRTestUtil.addRuleGroupInstance(
+			group.getGroupId(), Layout.class.getName(), layout.getPlid(),
+			ruleGroup.getRuleGroupId());
 	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
-			return MDRRuleLocalServiceUtil.getMDRRuleByUuidAndGroupId(
-				uuid, group.getGroupId());
+			return MDRRuleGroupInstanceLocalServiceUtil.
+				getMDRRuleGroupInstanceByUuidAndGroupId(
+					uuid, group.getGroupId());
 		}
 		catch (Exception e) {
 			return null;
@@ -97,7 +123,7 @@ public class MDRRuleStagedModelDataHandlerTest
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
-		return MDRRule.class;
+		return MDRRuleGroupInstance.class;
 	}
 
 	@Override
@@ -116,5 +142,7 @@ public class MDRRuleStagedModelDataHandlerTest
 		MDRRuleGroupLocalServiceUtil.getMDRRuleGroupByUuidAndGroupId(
 			ruleGroup.getUuid(), group.getGroupId());
 	}
+
+	protected Layout layout;
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.lar;
+package com.liferay.mobile.device.rules.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.mobile.device.rules.util.test.MDRTestUtil;
@@ -24,12 +24,16 @@ import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -39,7 +43,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class MDRRuleGroupStagedModelDataHandlerTest
+public class MDRRuleStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
@@ -51,18 +55,39 @@ public class MDRRuleGroupStagedModelDataHandlerTest
 			TransactionalTestRule.INSTANCE);
 
 	@Override
-	protected StagedModel addStagedModel(
-			Group group,
-			Map<String, List<StagedModel>> dependentStagedModelsMap)
+	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
+			Group group)
 		throws Exception {
 
-		return MDRTestUtil.addRuleGroup(group.getGroupId());
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			new HashMap<>();
+
+		MDRRuleGroup ruleGroup = MDRTestUtil.addRuleGroup(group.getGroupId());
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, MDRRuleGroup.class, ruleGroup);
+
+		return dependentStagedModelsMap;
+	}
+
+	@Override
+	protected StagedModel addStagedModel(
+			Group group, Map<String,
+			List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			MDRRuleGroup.class.getSimpleName());
+
+		MDRRuleGroup ruleGroup = (MDRRuleGroup)dependentStagedModels.get(0);
+
+		return MDRTestUtil.addRule(ruleGroup.getRuleGroupId());
 	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
-			return MDRRuleGroupLocalServiceUtil.getMDRRuleGroupByUuidAndGroupId(
+			return MDRRuleLocalServiceUtil.getMDRRuleByUuidAndGroupId(
 				uuid, group.getGroupId());
 		}
 		catch (Exception e) {
@@ -72,7 +97,24 @@ public class MDRRuleGroupStagedModelDataHandlerTest
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
-		return MDRRuleGroup.class;
+		return MDRRule.class;
+	}
+
+	@Override
+	protected void validateImport(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			MDRRuleGroup.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		MDRRuleGroup ruleGroup = (MDRRuleGroup)dependentStagedModels.get(0);
+
+		MDRRuleGroupLocalServiceUtil.getMDRRuleGroupByUuidAndGroupId(
+			ruleGroup.getUuid(), group.getGroupId());
 	}
 
 }

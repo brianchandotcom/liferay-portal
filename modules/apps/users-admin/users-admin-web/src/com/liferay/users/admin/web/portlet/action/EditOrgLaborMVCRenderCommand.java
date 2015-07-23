@@ -17,7 +17,6 @@ package com.liferay.users.admin.web.portlet.action;
 import com.liferay.portal.NoSuchOrgLaborException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortletKeys;
 
@@ -25,10 +24,13 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Pei-Jung Lan
  */
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + PortletKeys.USERS_ADMIN,
 		"mvc.command.name=/users_admin/edit_org_labor"

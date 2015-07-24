@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>TestEventConsumer</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TestEventConsumer</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>EVENT_CONSUMER_PORTLET_BODY</td>
+	<td>//section[contains(@id,'portlet_2')]//div[@class='portlet-body']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

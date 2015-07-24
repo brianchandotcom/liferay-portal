@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>Polls</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Polls</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ADD_QUESTION</td>
+	<td>//div[contains(@class,'lfr-icon-actions')]/span[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLL_QUESTION</td>
+	<td>//form[contains(@id,'INSTANCE') and contains(.,'${key_pollsQuestion}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLL_QUESTION_CHOICE</td>
+	<td>//label[contains(@for,'pollsweb') and contains(.,'${key_pollsQuestionChoice}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_QUESTION</td>
+	<td>//span[contains(@class,'taglib-text') and contains(.,'Select Poll')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_DROPDOWN_SELECT</td>
+	<td>//select[contains(@id,'questionId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--POLLS_TABLE-->
+<tr>
+	<td>POLLS_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_pollsQuestionTitle}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLLS_TABLE_ACTION</td>
+	<td>//tr[contains(.,'${key_pollsQuestionTitle}')]/td[5]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POLLS_TABLE_ACTIONS_GENERIC</td>
+	<td>//tr/td[5]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VOTES-->
+<tr>
+	<td>VOTES_PERCENTAGE</td>
+	<td>//tr[contains(.,'${key_pollsQuestionChoice}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOTES_NUMBER</td>
+	<td>//tr[contains(.,'${key_pollsQuestionChoice}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOTES_TOTAL</td>
+	<td>//form[contains(@id,'pollsweb')]/div</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

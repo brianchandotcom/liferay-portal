@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_ORGANIZATION</td>
+	<td>//iframe[contains(@id,'selectOrganization_iframe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_SITES</td>
 	<td>//iframe[contains(@src,'selectSite')]</td>
 	<td></td>

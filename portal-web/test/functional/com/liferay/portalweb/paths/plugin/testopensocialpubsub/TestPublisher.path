@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>TestPublisher</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TestPublisher</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PUBLISHER_PORTLET_PUBLISH_BUTTON</td>
+	<td>//section[contains(@id,'portlet_1')]//button[contains(.,'Publish a Random Number')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISHER_PORTLET_MESSAGE</td>
+	<td>//section[contains(@id,'portlet_1')]//div[contains(@id,'message')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

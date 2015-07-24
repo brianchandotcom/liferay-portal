@@ -2,7 +2,9 @@
 	<var name="orgName" value="Organization Name" />
 
 	<command name="addAdditionalEmailAddressesCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -18,7 +20,9 @@
 	</command>
 
 	<command name="addAddressCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -39,7 +43,9 @@
 	</command>
 
 	<command name="addCategorizationCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -61,7 +67,9 @@
 	</command>
 
 	<command name="addCommentCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -81,6 +89,24 @@
 
 		<execute function="Type" locator1="CPUsersandorganizationsAddorganization#DETAILS_NAME_FIELD" value1="${orgName}" />
 		<execute function="Select" locator1="CPUsersandorganizationsAddorganization#DETAILS_TYPE_SELECT" value1="${orgType}" />
+
+		<if>
+			<equals arg1="${orgType}" arg2="Location" />
+			<then>
+				<execute function="Select" locator1="CPUsersandorganizationsAddorganization#DETAILS_COUNTRY_SELECT" value1="${orgCountry}" />
+
+				<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+
+				<execute function="SelectFrame" locator1="IFrame#SELECT_ORGANIZATION" />
+
+				<var name="key_orgName" value="${orgParent}" />
+
+				<execute function="AssertClick" locator1="UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_CHOOSE_BUTTON" value1="Choose" />
+
+				<execute function="SelectFrame" value1="relative=top" />
+			</then>
+		</if>
+
 		<execute function="AssertClick" locator1="CPUsersandorganizationsAddorganization#SAVE_BUTTON" value1="Save" />
 
 		<if>
@@ -100,7 +126,9 @@
 	</command>
 
 	<command name="addMemberCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -133,7 +161,9 @@
 	</command>
 
 	<command name="addPhoneNumbersCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -169,7 +199,9 @@
 	</command>
 
 	<command name="addReminderQueriesCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -188,7 +220,9 @@
 	</command>
 
 	<command name="addServicesCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -205,7 +239,9 @@
 	</command>
 
 	<command name="addSiteCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -246,7 +282,9 @@
 	</command>
 
 	<command name="addWebsitesCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -328,7 +366,9 @@
 	</command>
 
 	<command name="assignOrgRoleCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -368,7 +408,9 @@
 	</command>
 
 	<command name="editSiteCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -401,7 +443,9 @@
 	</command>
 
 	<command name="manageMembershipOptionsInSites">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -427,7 +471,9 @@
 	</command>
 
 	<command name="removeMemberCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -510,7 +556,9 @@
 	</command>
 
 	<command name="viewAddressCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -534,7 +582,9 @@
 	</command>
 
 	<command name="viewCommentCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -587,7 +637,9 @@
 	</command>
 
 	<command name="viewParentOrganizationCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 

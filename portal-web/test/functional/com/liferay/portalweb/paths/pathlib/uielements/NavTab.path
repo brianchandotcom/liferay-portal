@@ -39,8 +39,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONSUMERS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Consumers')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CURRENT</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'AVAILABLE')]</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Current')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -141,6 +146,11 @@
 <tr>
 	<td>PORTAL_PROPERTIES</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Portal Properties')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCERS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Producers')]</td>
 	<td></td>
 </tr>
 <tr>

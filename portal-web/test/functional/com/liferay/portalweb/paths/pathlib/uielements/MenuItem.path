@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_POLL</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Poll')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_REGULAR_ORGANIZATION</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Regular Organization')]</td>
 	<td></td>
@@ -184,11 +189,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_STYLE_ICON</td>
-	<td>//a[@role='menuitem' and contains(.,'Icon')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DISPLAY_STYLE_DESCRIPTIVE</td>
 	<td>//a[@role='menuitem' and contains(.,'Descriptive')]</td>
 	<td></td>
@@ -196,6 +196,11 @@
 <tr>
 	<td>DISPLAY_STYLE_LIST</td>
 	<td>//a[@role='menuitem' and @title='List']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_ICON</td>
+	<td>//a[@role='menuitem' and contains(.,'Icon')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -306,6 +311,11 @@
 <tr>
 	<td>MANAGE_PAGES</td>
 	<td>//a[@role='menuitem' and contains(.,'Manage Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_PORTLETS</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage Portlets')]</td>
 	<td></td>
 </tr>
 <tr>

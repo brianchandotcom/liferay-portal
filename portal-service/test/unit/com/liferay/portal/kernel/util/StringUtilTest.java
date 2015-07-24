@@ -461,6 +461,9 @@ public class StringUtilTest {
 		Assert.assertEquals(
 			"Hello", StringUtil.stripParentheticalSuffix("Hello (World)"));
 		Assert.assertEquals(
+			"Hello (World)(Liferay)",
+			StringUtil.stripParentheticalSuffix("Hello (World)(Liferay)"));
+		Assert.assertEquals(
 			"Hello (World)",
 			StringUtil.stripParentheticalSuffix("Hello (World) (Liferay)"));
 		Assert.assertEquals(

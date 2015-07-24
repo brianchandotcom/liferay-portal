@@ -54,11 +54,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_SUBFOLDER</td>
-	<td>//a[contains(.,'Add Subfolder')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_PORTLET</td>
 	<td>//button[contains(.,'Add Portlet')]</td>
 	<td></td>
@@ -66,6 +61,11 @@
 <tr>
 	<td>ADD_PAGE_VARIATION</td>
 	<td>//button[contains(.,'Add Page Variation')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_SUBFOLDER</td>
+	<td>//a[contains(.,'Add Subfolder')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -104,23 +104,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHECKIN</td>
-	<td>//button[contains(.,'Checkin')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CANCEL_CHECKOUT</td>
 	<td>//button[contains(.,'Cancel Checkout')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CHECKOUT</td>
-	<td>//button[contains(.,'Checkout')]</td>
+	<td>CHANGE</td>
+	<td>//button[contains(.,'Change')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CHANGE</td>
-	<td>//button[contains(.,'Change')]</td>
+	<td>CHECKIN</td>
+	<td>//button[contains(.,'Checkin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT</td>
+	<td>//button[contains(.,'Checkout')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -244,8 +244,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MOVE_TO_RECYCLE_BIN</td>
-	<td>//button[contains(.,'Move to the Recycle Bin')]</td>
+	<td>MOVE_AVAILABLE_TO_CURRENT</td>
+	<td>//button[@title='Move selected items from Available to Current.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_CURRENT_TO_AVAILABLE</td>
+	<td>//button[@title='Move selected items from Current to Available.']</td>
 	<td></td>
 </tr>
 <tr>
@@ -254,13 +259,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MOVE_AVAILABLE_TO_CURRENT</td>
-	<td>//button[@title='Move selected items from Available to Current.']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MOVE_CURRENT_TO_AVAILABLE</td>
-	<td>//button[@title='Move selected items from Current to Available.']</td>
+	<td>MOVE_TO_RECYCLE_BIN</td>
+	<td>//button[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -339,11 +339,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REPLY_BUTTON</td>
-	<td>//button[contains(.,'Reply')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RESET_CHANGES</td>
 	<td>//button[contains(.,'Reset Changes')]</td>
 	<td></td>
@@ -384,6 +379,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_CATEGORIES</td>
+	<td>//button[contains(.,'Select Categories')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_FILE</td>
 	<td>//button[contains(.,'Select File')]</td>
 	<td></td>
@@ -391,11 +391,6 @@
 <tr>
 	<td>SELECT_PAGES</td>
 	<td>//button[contains(.,'Select Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_CATEGORIES</td>
-	<td>//button[contains(.,'Select Categories')]</td>
 	<td></td>
 </tr>
 <tr>

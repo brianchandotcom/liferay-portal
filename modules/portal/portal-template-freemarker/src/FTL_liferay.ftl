@@ -89,6 +89,10 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 	${theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry", portletProviderAction.VIEW)}
 </#macro>
 
+<#macro navigation_menu>
+${theme.runtime("com.liferay.portal.theme.NavItem", portletProviderAction.VIEW)}
+</#macro>
+
 <#macro product_menu>
 	<#if $is_setup_complete && $is_signed_in>
 		${theme.runtime("com.liferay.portlet.admin.util.PortalProductMenuApplicationType$ProductMenu", portletProviderAction.VIEW)}

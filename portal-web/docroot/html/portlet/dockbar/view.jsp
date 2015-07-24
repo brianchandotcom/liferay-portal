@@ -24,8 +24,6 @@ if (layout != null) {
 	group = layout.getGroup();
 	layoutSet = layout.getLayoutSet();
 }
-
-boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE);
 %>
 
 <aui:nav-bar cssClass="dockbar navbar-static-top" data-namespace="<%= renderResponse.getNamespace() %>" id="dockbar">
@@ -171,16 +169,12 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 	</c:if>
 
 	<%
-	boolean userSetupComplete = false;
-
-	if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
-		userSetupComplete = true;
-	}
-
 	boolean portalMessageUseAnimation = GetterUtil.getBoolean(PortalMessages.get(request, PortalMessages.KEY_ANIMATION), true);
 	%>
 
-	<%@ include file="/html/portlet/dockbar/view_user_panel.jspf" %>
+	<c:if test="<%= user.isSetupComplete() || themeDisplay.isImpersonated() %>">
+		<%@ include file="/html/portlet/dockbar/view_user_panel.jspf" %>
+	</c:if>
 </aui:nav-bar>
 
 <div class="dockbar-messages" id="<portlet:namespace />dockbarMessages">

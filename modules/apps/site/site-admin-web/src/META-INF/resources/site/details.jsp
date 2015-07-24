@@ -277,7 +277,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 												request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 												%>
 
-												<liferay-util:include page="/layout_set_merge_alert.jsp" />
+												<liferay-util:include page="/layout_set_merge_alert.jsp" servletContext="<%= application %>" />
 											</div>
 										</c:when>
 										<c:when test="<%= publicLayoutSetPrototype != null %>">
@@ -373,7 +373,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 												request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 												%>
 
-												<liferay-util:include page="/layout_set_merge_alert.jsp" />
+												<liferay-util:include page="/layout_set_merge_alert.jsp" servletContext="<%= application %>" />
 											</div>
 										</c:when>
 										<c:when test="<%= privateLayoutSetPrototype != null %>">

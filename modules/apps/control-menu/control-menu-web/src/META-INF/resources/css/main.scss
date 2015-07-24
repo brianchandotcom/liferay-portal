@@ -1,4 +1,8 @@
 .portlet-control-menu {
+	ul {
+		padding-left: 0;
+	}
+
 	.control-menu {
 		background-color: #1F282E;
 		bottom: 0;
@@ -12,13 +16,18 @@
 		li {
 			display: inline-block;
 			padding: 0 20px;
+		}
 
-			a {
-				color: #FFF;
-				display: block;
-				font-size: 20px;
-				padding-top: 5px;
-			}
+		.control-menu-icon {
+			color: #FFF;
+			display: block;
+			font-size: 20px;
+			padding-top: 5px;
+		}
+
+		.no-info-messages a {
+			color: #000;
+			cursor: default;
 		}
 	}
 }

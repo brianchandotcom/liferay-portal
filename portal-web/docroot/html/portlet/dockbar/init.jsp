@@ -16,6 +16,4 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType" %>
-
 <%@ include file="/html/portlet/dockbar/init-ext.jsp" %>

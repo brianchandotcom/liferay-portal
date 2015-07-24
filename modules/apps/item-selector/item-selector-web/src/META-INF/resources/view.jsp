@@ -54,7 +54,7 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		String keywords = ParamUtil.getString(request, "keywords");
 		%>
 
-		<div class="form-search">
+		<div class="form-search" id="<portlet:namespace />formSearch">
 			<aui:form action="<%= currentURL %>" cssClass="basic-search input-group"  name="searchFm">
 				<div class="input-group-input">
 					<div class="basic-search-slider">
@@ -102,20 +102,24 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 	</c:otherwise>
 </c:choose>
 
-<aui:script sandbox="<%= true %>">
+<aui:script use="aui-base">
 	Liferay.on(
 		'showTab',
 		function(event) {
-			var searchForm = $('#<portlet:namespace />searchFm');
+			var searchForm = A.one('#<portlet:namespace />searchFm');
 
 			if (searchForm) {
-				searchForm.find('#<portlet:namespace />selectedTab').val(event.id);
+				A.one('#<portlet:namespace />selectedTab').val(event.id);
 
 				var tabSection = event.tabSection;
 
-				var showSearch = tabSection.attr('data-showSearch');
+				var showSearch = tabSection.getData('showSearch');
 
-				$('.form-search').toggle(showSearch === 'true');
+				var formSearch = A.one('#<portlet:namespace />formSearch');
+
+				if (formSearch) {
+					formSearch.toggle(showSearch === 'true');
+				}
 			}
 		}
 	);

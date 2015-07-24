@@ -16,6 +16,9 @@ package com.liferay.dynamic.data.mapping.taglib.ui.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
+
+import com.liferay.dynamic.data.mapping.taglib.util.ServletContextUtil;
 
 /**
  * @author Bruno Basto
@@ -119,6 +122,19 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 
 		setScopedAttribute("showEmptyOption", showEmptyOption);
 	}
+	
+	public void setServletContext(java.lang.Object servletContext) {
+		_servletContext = servletContext;
+
+		setScopedAttribute("servletContext", servletContext);
+	}
+	
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
+	}
 
 	@Override
 	protected void cleanUp() {
@@ -133,6 +149,7 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 		_label = "display-template";
 		_refreshURL = null;
 		_showEmptyOption = false;
+		_servletContext = null;
 	}
 
 	@Override
@@ -151,6 +168,7 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 		setNamespacedAttribute(request, "label", _label);
 		setNamespacedAttribute(request, "refreshURL", _refreshURL);
 		setNamespacedAttribute(request, "showEmptyOption", _showEmptyOption);
+		setNamespacedAttribute(request, "servletContext", _servletContext);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "ddm:template-selector:";
@@ -167,5 +185,6 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 	private java.lang.String _label = "display-template";
 	private java.lang.String _refreshURL = null;
 	private boolean _showEmptyOption = false;
+	private java.lang.Object _servletContext = null;
 
 }

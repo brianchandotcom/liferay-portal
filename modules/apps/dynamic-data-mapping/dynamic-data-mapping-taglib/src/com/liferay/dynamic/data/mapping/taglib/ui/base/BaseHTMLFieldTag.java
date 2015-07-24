@@ -16,6 +16,9 @@ package com.liferay.dynamic.data.mapping.taglib.ui.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
+
+import com.liferay.dynamic.data.mapping.taglib.util.ServletContextUtil;
 
 /**
  * @author Bruno Basto
@@ -60,6 +63,10 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 
 	public boolean getShowEmptyFieldLabel() {
 		return _showEmptyFieldLabel;
+	}
+	
+	public java.lang.Object getServletContext() {
+		return _servletContext;
 	}
 
 	public void setClassNameId(long classNameId) {
@@ -109,6 +116,19 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 
 		setScopedAttribute("showEmptyFieldLabel", showEmptyFieldLabel);
 	}
+	
+	public void setServletContext(java.lang.Object servletContext) {
+		_servletContext = servletContext;
+
+		setScopedAttribute("servletContext", servletContext);
+	}
+	
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
+	}
 
 	@Override
 	protected void cleanUp() {
@@ -122,6 +142,7 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 		_repeatable = true;
 		_requestedLocale = null;
 		_showEmptyFieldLabel = true;
+		_servletContext = null;
 	}
 
 	@Override
@@ -144,15 +165,16 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 		setNamespacedAttribute(request, "repeatable", _repeatable);
 		setNamespacedAttribute(request, "requestedLocale", _requestedLocale);
 		setNamespacedAttribute(request, "showEmptyFieldLabel", _showEmptyFieldLabel);
+		setNamespacedAttribute(request, "servletContext", _servletContext);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "ddm:html-field:";
 
 	private static final String _END_PAGE =
-		"/html/taglib/ddm/html_field/end.jsp";
+		"/taglib/ui/html_field/end.jsp";
 
 	private static final String _START_PAGE =
-		"/html/taglib/ddm/html_field/start.jsp";
+		"/taglib/ui/html_field/start.jsp";
 
 	private long _classNameId = 0;
 	private long _classPK = 0;
@@ -162,5 +184,6 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 	private boolean _repeatable = true;
 	private java.util.Locale _requestedLocale = null;
 	private boolean _showEmptyFieldLabel = true;
+	private java.lang.Object _servletContext = null;
 
 }

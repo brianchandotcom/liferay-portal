@@ -113,7 +113,8 @@ AUI.add(
 
 				instance._updateSettingsFormValues();
 
-				settingsForm.clearErrorMessages();
+				settingsForm.clearValidationMessages();
+				settingsForm.clearValidationStatus();
 			},
 
 			saveSettings: function() {
@@ -148,19 +149,25 @@ AUI.add(
 
 				instance.showSettingsLoader();
 
+				settingsForm.clearValidationMessages();
+				settingsForm.clearValidationStatus();
+
 				settingsForm.validate(
-					function(valid) {
+					function(hasErrors) {
 						var nameSettingsField = settingsForm.getField('name');
 
 						var field = builder.getField(nameSettingsField.getValue());
 
 						if (!!field && field !== instance) {
-							nameSettingsField.addErrorMessage('Field name already in use.');
+							nameSettingsField.addValidationMessage('Field name already in use.');
+							nameSettingsField.showValidationStatus();
 
-							valid = false;
+							nameSettingsField.focus();
+
+							hasErrors = true;
 						}
 
-						if (valid) {
+						if (!hasErrors) {
 							instance.saveSettings();
 
 							settingsModal.fire(
@@ -176,7 +183,7 @@ AUI.add(
 						instance.hideSettingsLoader();
 
 						if (callback) {
-							callback.call(instance, valid);
+							callback.call(instance, hasErrors);
 						}
 					}
 				);

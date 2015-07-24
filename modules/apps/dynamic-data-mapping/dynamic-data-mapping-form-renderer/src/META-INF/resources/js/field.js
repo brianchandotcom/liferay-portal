@@ -138,9 +138,15 @@ AUI.add(
 					getInputNode: function() {
 						var instance = this;
 
+						return instance.get('container').one(instance.getInputSelector());
+					},
+
+					getInputSelector: function() {
+						var instance = this;
+
 						var qualifiedName = instance.getQualifiedName().replace(/\$/ig, '\\$');
 
-						return instance.get('container').one('[name=' + qualifiedName + ']');
+						return '[name=' + qualifiedName + ']';
 					},
 
 					getLabel: function() {

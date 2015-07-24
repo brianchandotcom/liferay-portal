@@ -3,18 +3,20 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var TPL_ERROR_MESSAGE = '<div class="validation-message">{message}</div>';
+		var TPL_FEEDBACK = '<span class="form-control-feedback" aria-hidden="true"><span class="icon-{icon}"></span></span>';
+
+		var TPL_VALIDATION_MESSAGE = '<div class="validation-message">{message}</div>';
 
 		var FieldValidationSupport = function() {
 		};
 
 		FieldValidationSupport.ATTRS = {
-			errorMessages: {
+			validationMessages: {
 				value: []
 			},
 
 			validationExpression: {
-				value: 'true'
+				value: ''
 			}
 		};
 
@@ -23,17 +25,112 @@ AUI.add(
 				var instance = this;
 
 				instance._eventHandlers.push(
-					instance.after('errorMessagesChange', instance._afterErrorMessagesChange),
-					instance.after(instance.renderErrorMessages, instance, 'render')
+					instance.after('validationMessagesChange', instance._afterValidationMessagesChange),
+					instance.after(instance._renderValidationMessages, instance, 'render')
 				);
+
+				instance._renderValidationMessages();
 			},
 
-			addErrorMessage: function(message) {
+			addValidationMessage: function(message) {
+				var instance = this;
+
+				var validationMessages = instance.get('validationMessages');
+
+				validationMessages.push(message);
+
+				instance.set('validationMessages', validationMessages);
+			},
+
+			clearValidationMessages: function() {
+				var instance = this;
+
+				instance.set('validationMessages', []);
+			},
+
+			clearValidationStatus: function() {
+				var instance = this;
+
+				var container = instance.get('container');
+
+				container.removeClass('has-error');
+				container.removeClass('has-success');
+
+				instance.hideFeedback();
+			},
+
+			hasErrors: function() {
+				var instance = this;
+
+				return instance.get('validationMessages').length > 0;
+			},
+
+			hasValidation: function() {
+				var instance = this;
+
+				var validationExpression = instance.get('validationExpression');
+
+				return !!validationExpression && validationExpression !== 'true';
+			},
+
+			hideFeedback: function() {
+				var instance = this;
+
+				var container = instance.get('container');
+
+				container.removeClass('has-feedback');
+
+				container.all('.form-control-feedback').remove();
+			},
+
+			showErrorFeedback: function() {
+				var instance = this;
+
+				instance._showFeedback('remove');
+			},
+
+			showLoadingFeedback: function() {
+				var instance = this;
+
+				instance._showFeedback('spinner');
+			},
+
+			showSuccessFeedback: function() {
+				var instance = this;
+
+				instance._showFeedback('ok');
+			},
+
+			showValidationStatus: function() {
+				var instance = this;
+
+				var container = instance.get('container');
+
+				var hasErrors = instance.hasErrors();
+
+				container.toggleClass('has-error', hasErrors);
+				container.toggleClass('has-success', !hasErrors);
+
+				if (hasErrors) {
+					instance.showErrorFeedback();
+				}
+				else {
+					instance.showSuccessFeedback();
+				}
+			},
+
+			_afterValidationMessagesChange: function() {
+				var instance = this;
+
+				instance._renderValidationMessages();
+			},
+
+			_appendValidationMessage: function(message) {
 				var instance = this;
 
 				instance.getInputNode().insert(
 					Lang.sub(
-						TPL_ERROR_MESSAGE,
+						TPL_VALIDATION_MESSAGE,
 						{
 							message: message
 						}
@@ -42,32 +139,36 @@ AUI.add(
 				);
 			},
 
-			clearErrorMessages: function() {
+			_renderValidationMessages: function() {
 				var instance = this;
 
 				var container = instance.get('container');
 
 				container.all('.validation-message').remove();
 
-				container.removeClass('has-error');
+				var messages = instance.get('validationMessages');
+
+				messages.forEach(A.bind('_appendValidationMessage', instance));
 			},
 
-			renderErrorMessages: function() {
+			_showFeedback: function(icon) {
 				var instance = this;
 
-				instance.clearErrorMessages();
+				instance.hideFeedback();
 
-				var messages = instance.get('errorMessages');
+				var container = instance.get('container');
 
-				instance.get('container').toggleClass('has-error', messages.length > 0);
+				container.addClass('has-feedback');
 
-				messages.forEach(A.bind('addErrorMessage', instance));
-			},
-
-			_afterErrorMessagesChange: function(event) {
-				var instance = this;
-
-				instance.renderErrorMessages();
+				instance.getInputNode().insert(
+					Lang.sub(
+						TPL_FEEDBACK,
+						{
+							icon: icon
+						}
+					),
+					'after'
+				);
 			}
 		};
 

@@ -3921,13 +3921,11 @@ public class StringUtil {
 			return s;
 		}
 
-		int z = x - 1;
-
-		if (!s.substring(z, x).equals(StringPool.SPACE)) {
+		if (s.charAt(x - 1) != CharPool.SPACE) {
 			return s;
 		}
 
-		return s.substring(0, z).concat(s.substring(y + 1, s.length()));
+		return s.substring(0, x - 1).concat(s.substring(y + 1, s.length()));
 	}
 
 	/**

@@ -314,6 +314,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MANAGE_PORTLETS</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage Portlets')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MANAGE_SITE</td>
 	<td>//a[@role='menuitem' and contains(.,'Manage Site')]</td>
 	<td></td>

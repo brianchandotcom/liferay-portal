@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_SAMPLE_DATA</td>
+	<td>//label[contains(.,'Add Sample Data')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ALLOW_DICTIONARY_WORDS</td>
 	<td>//label[contains(.,'Allow Dictionary Words')]/input[@type='checkbox']</td>
 	<td></td>

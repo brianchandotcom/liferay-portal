@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_CONSUMER</td>
+	<td>//a[contains(.,'Add Consumer')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_CUSTOM_FIELD</td>
 	<td>//button[contains(.,'Add Custom Field')]</td>
 	<td></td>
@@ -44,8 +49,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_PRODUCER</td>
+	<td>//button[contains(.,'Add Producer')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_SUBFOLDER</td>
 	<td>//a[contains(.,'Add Subfolder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PORTLET</td>
+	<td>//button[contains(.,'Add Portlet')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -191,6 +206,11 @@
 <tr>
 	<td>FIND</td>
 	<td>//button[contains(.,'Find')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FINISH_CONFIGURATION</td>
+	<td>//button[contains(.,'Finish Configuration')]</td>
 	<td></td>
 </tr>
 <tr>

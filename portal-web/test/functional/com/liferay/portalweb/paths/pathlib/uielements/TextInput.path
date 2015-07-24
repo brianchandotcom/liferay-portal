@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMAIL</td>
+	<td>//div[label[contains(.,'Email')]]/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMAIL_ADDRESS</td>
 	<td>//div[label[contains(.,'Email Address')]]/input[@type='text']</td>
 	<td></td>
@@ -131,6 +136,11 @@
 <tr>
 	<td>ICQ</td>
 	<td>//div[label[contains(.,'ICQ')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INITIAL_URL</td>
+	<td>//input[contains(@id,'_initUrl')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -274,6 +284,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTAL_NAME</td>
+	<td>//div[label[contains(.,'Portal Name')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>POSTAL_CODE</td>
 	<td>//div[label[contains(.,'Postal Code')]]//input[@type='text']</td>
 	<td></td>
@@ -321,6 +336,11 @@
 <tr>
 	<td>SKYPE</td>
 	<td>//div[label[contains(.,'Skype')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_URL</td>
+	<td>//input[contains(@id,'_src')]</td>
 	<td></td>
 </tr>
 <tr>

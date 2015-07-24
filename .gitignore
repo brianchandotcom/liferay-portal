@@ -12,6 +12,7 @@
 _sass_cache_*.css
 cobertura.ser
 
+**/.gradle
 **/.sonar
 **/pmd-reports
 

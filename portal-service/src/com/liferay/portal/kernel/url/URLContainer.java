@@ -24,33 +24,35 @@ import java.util.Set;
 public interface URLContainer {
 
 	/**
-	 * Finds the resource with the given name. A resource is some data that can
-	 * be accessed in a way that is independent of the location or storage.
+	 * Returns the resource with the given name. A resource is data that can be
+	 * accessed in a way that is independent of the location or storage.
 	 *
-	 * <p> The name of a resource is a '<tt>/</tt>'-separated path name that
-	 * identifies the resource.
+	 * <p>
+	 * The name is a slash (<code>/</code>) separated path that identifies the
+	 * resource.
+	 * </p>
 	 *
-	 * @param   name The resource name
-	 * @return  A <tt>URL</tt> object for reading the resource, or <tt>null</tt>
-	 *          if the resource could not be found or the invoker doesn't have
-	 *          adequate  privileges to get the resource.
+	 * @param  name the resource name
+	 * @return the URL used for reading the resource, or <code>null</code> if
+	 *         the resource is not found or if the invoker does not have
+	 *         adequate privileges to get the resource
 	 */
 	public URL getResource(String name);
 
 	/**
-	 * Returns a directory-like listing of all the paths to resources within the
-	 * container whose longest sub-path matches the supplied path argument.
-	 * <p>
-	 * Paths indicating sub-directory paths end with a '<tt>/</tt>'.
-	 * <p>
-	 * A path can be passed to the {{@link #getResource(String)} method to
-	 * return a resource URL.
+	 * Returns the directory-like listing of all the paths to resources within
+	 * the container whose longest sub-path matches the given path. Resources
+	 * that the invoker does not have access to are included. If no resources
+	 * are found, an empty string is returned.
 	 *
-	 * @param   name The resource name
-	 * @return  A set of {@link String <tt>String</tt>} objects representing
-	 *          individual resources in the container. If no resources could be
-	 *          found, the set will be empty. Resources that the invoker doesn't
-	 *          have access to will not be included.
+	 * <p>
+	 * Paths indicating sub-directory paths end with a slash (<code>/</code>). A
+	 * path can be passed to the {@link #getResource(String)} method to return a
+	 * resource URL.
+	 * </p>
+	 *
+	 * @param  path the resource path
+	 * @return the paths representing individual resources in the container
 	 */
 	public Set<String> getResources(String path);
 

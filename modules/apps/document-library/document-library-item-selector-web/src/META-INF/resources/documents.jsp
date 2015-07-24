@@ -31,9 +31,9 @@ long folderId = dlItemSelectorViewDisplayContext.getFolderId(request);
 String[] mimeTypes = dlItemSelectorViewDisplayContext.getMimeTypes();
 
 String keywords = ParamUtil.getString(request, "keywords");
-String tabName = ParamUtil.getString(request, "tabName");
+String selectedTab = ParamUtil.getString(request, "selectedTab");
 
-if (Validator.isNotNull(keywords) && tabName.equals(dlItemSelectorViewDisplayContext.getTitle(locale))) {
+if (Validator.isNotNull(keywords) && selectedTab.equals(dlItemSelectorViewDisplayContext.getTitle(locale))) {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 	searchContext.setAttribute("mimeTypes", mimeTypes);
@@ -81,11 +81,9 @@ searchContainer.setResults(results);
 
 <item-selector-ui:browser
 	desiredItemSelectorReturnTypes="<%= itemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
-	displayStyle="<%= dlItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
-	displayStyleURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	itemSelectedEventName="<%= dlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
+	portletURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	searchContainer="<%= searchContainer %>"
-	searchURL="<%= dlItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	showBreadcrumb="<%= true %>"
 	tabName="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
 />

@@ -43,14 +43,48 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		</div>
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:tabs names="<%= StringUtil.merge(titles) %>" refresh="<%= false %>" type="pills" value="<%= localizedItemSelectorRendering.getSelectedTab() %>">
+
+		<%
+		String selectedTab = localizedItemSelectorRendering.getSelectedTab();
+
+		if (Validator.isNull(selectedTab)) {
+			selectedTab = titles.get(0);
+		}
+
+		String keywords = ParamUtil.getString(request, "keywords");
+		%>
+
+		<div class="form-search">
+			<aui:form action="<%= currentURL %>" cssClass="basic-search input-group"  name="searchFm">
+				<div class="input-group-input">
+					<div class="basic-search-slider">
+						<button class="basic-search-close btn btn-default" type="button"><span class="icon-remove"></span></button>
+
+						<aui:input name="selectedTab" type="hidden" value="<%= selectedTab %>" />
+
+						<aui:input cssClass="form-control" label="" name="keywords" placeholder="search" type="text" />
+					</div>
+				</div>
+				<div class="input-group-btn">
+					<aui:button cssClass="btn btn-default" icon="icon-search" type="submit" value="" />
+				</div>
+			</aui:form>
+		</div>
+
+		<liferay-ui:tabs names="<%= StringUtil.merge(titles) %>" param="selectedTab" refresh="<%= false %>" type="pills" value="<%= selectedTab %>">
 
 			<%
 			for (String title : titles) {
 				ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
+
+				Map<String, Object> data = new HashMap<String, Object>();
+
+				ItemSelectorView<ItemSelectorCriterion> itemSelectorView = itemSelectorViewRenderer.getItemSelectorView();
+
+				data.put("showSearch", itemSelectorView.supportsSearch());
 			%>
 
-				<liferay-ui:section>
+				<liferay-ui:section data="<%= data %>">
 					<div>
 
 						<%
@@ -67,6 +101,25 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		</liferay-ui:tabs>
 	</c:otherwise>
 </c:choose>
+
+<aui:script sandbox="<%= true %>">
+	Liferay.on(
+		'showTab',
+		function(event) {
+			var searchForm = $('#<portlet:namespace />searchFm');
+
+			if (searchForm) {
+				searchForm.find('#<portlet:namespace />selectedTab').val(event.id);
+
+				var tabSection = event.tabSection;
+
+				var showSearch = tabSection.attr('data-showSearch');
+
+				$('.form-search').toggle(showSearch === 'true');
+			}
+		}
+	);
+</aui:script>
 
 <%!
 private static Log _log = LogFactoryUtil.getLog("com_liferay_item_selector_web.view_jsp");

@@ -16,7 +16,7 @@
 @generated
 --%>
 
-<%@ include file="/html/taglib/taglib-init.jsp" %>
+<%@ include file="/taglib/common/taglib-init.jsp" %>
 
 <%
 java.lang.String className = GetterUtil.getString((java.lang.String)request.getAttribute("ddm:template-selector:className"));
@@ -32,4 +32,4 @@ Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribut
 Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("ddm:template-selector:scopedAttributes");
 %>
 
-<%@ include file="/html/taglib/ddm/template_selector/init-ext.jspf" %>
+<%@ include file="/taglib/ui/template_selector/init-ext.jspf" %>

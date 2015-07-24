@@ -18,10 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
@@ -81,111 +77,6 @@ public class NavigationTag extends IncludeTag {
 		_rootLayoutType = rootLayoutType;
 	}
 
-	protected void buildNavigation(
-			NavItem rootNavItem, NavItem selNavItem,
-			List<NavItem> branchNavItems, ThemeDisplay themeDisplay,
-			int layoutLevel, String includedLayouts, boolean nestedChildren,
-			StringBundler sb)
-		throws Exception {
-
-		List<NavItem> childNavItems;
-
-		if (rootNavItem != null) {
-			childNavItems = rootNavItem.getChildren();
-		}
-		else {
-			childNavItems = NavItem.fromLayouts(
-				request, themeDisplay.getLayouts(), null);
-		}
-
-		if (childNavItems.isEmpty()) {
-			return;
-		}
-
-		StringBundler tailSB = null;
-
-		if (!nestedChildren) {
-			tailSB = new StringBundler();
-		}
-
-		sb.append("<ul class=\"layouts level-");
-		sb.append(layoutLevel);
-		sb.append("\">");
-
-		for (NavItem childNavItem : childNavItems) {
-			boolean open = false;
-
-			if (includedLayouts.equals("auto") &&
-				branchNavItems.contains(childNavItem) &&
-				!childNavItem.getChildren().isEmpty()) {
-
-				open = true;
-			}
-
-			if (includedLayouts.equals("all")) {
-				open = true;
-			}
-
-			String className = StringPool.BLANK;
-
-			if (open) {
-				className += "open ";
-			}
-
-			if (selNavItem.equals(childNavItem)) {
-				className += "selected ";
-			}
-
-			sb.append("<li ");
-
-			if (Validator.isNotNull(className)) {
-				sb.append("class=\"");
-				sb.append(className);
-				sb.append("\" ");
-			}
-
-			sb.append("><a ");
-
-			if (Validator.isNotNull(className)) {
-				sb.append("class=\"");
-				sb.append(className);
-				sb.append("\" ");
-			}
-
-			sb.append("href=\"");
-			sb.append(HtmlUtil.escapeHREF(childNavItem.getRegularURL()));
-			sb.append("\" ");
-			sb.append(childNavItem.getTarget());
-			sb.append("> ");
-			sb.append(HtmlUtil.escape(childNavItem.getName()));
-			sb.append("</a>");
-
-			if (open) {
-				StringBundler childLayoutSB = null;
-
-				if (nestedChildren) {
-					childLayoutSB = sb;
-				}
-				else {
-					childLayoutSB = tailSB;
-				}
-
-				buildNavigation(
-					childNavItem, selNavItem, branchNavItems, themeDisplay,
-					layoutLevel + 1, includedLayouts, nestedChildren,
-					childLayoutSB);
-			}
-
-			sb.append("</li>");
-		}
-
-		sb.append("</ul>");
-
-		if (!nestedChildren) {
-			sb.append(tailSB);
-		}
-	}
-
 	@Override
 	protected void cleanUp() {
 		_bulletStyle = "1";
@@ -230,129 +121,9 @@ public class NavigationTag extends IncludeTag {
 		return null;
 	}
 
-	protected String getHeaderType() {
-		String headerType = _headerType;
-
-		if ((_displayStyleDefinition != null) &&
-			(_displayStyleDefinition.length != 0)) {
-
-			headerType = _displayStyleDefinition[0];
-		}
-
-		return headerType;
-	}
-
-	protected String getIncludedLayouts() {
-		String includedLayouts = _includedLayouts;
-
-		if ((_displayStyleDefinition != null) &&
-			(_displayStyleDefinition.length != 0)) {
-
-			includedLayouts = _displayStyleDefinition[3];
-		}
-
-		return includedLayouts;
-	}
-
-	protected String getNavigationString(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		NavItem navItem = new NavItem(request, themeDisplay.getLayout(), null);
-
-		StringBundler sb = new StringBundler();
-
-		try {
-			List<NavItem> branchNavItems = getBranchNavItems(request);
-
-			NavItem rootNavItem = getRootNavItem(branchNavItems);
-
-			if ((branchNavItems.size() - getRootLayoutLevel()) > 0) {
-				buildNavigation(
-					rootNavItem, navItem, branchNavItems, themeDisplay, 1,
-					getIncludedLayouts(), getNestedChildren(), sb);
-			}
-		}
-		catch (Exception e) {
-			_log.error(e);
-		}
-
-		return sb.toString();
-	}
-
-	protected boolean getNestedChildren() {
-		boolean nestedChildren = _nestedChildren;
-
-		if ((_displayStyleDefinition != null) &&
-			(_displayStyleDefinition.length > 4)) {
-
-			nestedChildren = GetterUtil.getBoolean(_displayStyleDefinition[4]);
-		}
-
-		return nestedChildren;
-	}
-
 	@Override
 	protected String getPage() {
 		return _PAGE;
-	}
-
-	protected int getRootLayoutLevel() {
-		int rootLayoutLevel = _rootLayoutLevel;
-
-		if ((_displayStyleDefinition != null) &&
-			(_displayStyleDefinition.length > 0)) {
-
-			rootLayoutLevel = GetterUtil.getInteger(_displayStyleDefinition[2]);
-		}
-
-		return rootLayoutLevel;
-	}
-
-	protected String getRootLayoutType() {
-		String rootLayoutType = _rootLayoutType;
-
-		if ((_displayStyleDefinition != null) &&
-			(_displayStyleDefinition.length > 0)) {
-
-			rootLayoutType = _displayStyleDefinition[1];
-		}
-
-		return rootLayoutType;
-	}
-
-	protected NavItem getRootNavItem(List<NavItem> branchNavItems)
-		throws PortalException {
-
-		NavItem rootNavItem = null;
-
-		String rootLayoutType = getRootLayoutType();
-		int rootLayoutLevel = getRootLayoutLevel();
-
-		if (rootLayoutType.equals("relative")) {
-			if ((rootLayoutLevel >= 0) &&
-				(rootLayoutLevel < branchNavItems.size())) {
-
-				rootNavItem = branchNavItems.get(rootLayoutLevel);
-			}
-			else {
-				rootNavItem = null;
-			}
-		}
-		else if (rootLayoutType.equals("absolute")) {
-			int ancestorIndex = branchNavItems.size() - rootLayoutLevel;
-
-			if ((ancestorIndex >= 0) &&
-				(ancestorIndex < branchNavItems.size())) {
-
-				rootNavItem = branchNavItems.get(ancestorIndex);
-			}
-			else if (ancestorIndex == branchNavItems.size()) {
-				rootNavItem = null;
-			}
-		}
-
-		return rootNavItem;
 	}
 
 	@Override
@@ -364,12 +135,7 @@ public class NavigationTag extends IncludeTag {
 			"liferay-ui:navigation:displayStyleGroupId", _ddmTemplateGroupId);
 		request.setAttribute("liferay-ui:navigation:headerType", _headerType);
 		request.setAttribute(
-			"liferay-ui:navigation:headerType", getHeaderType());
-		request.setAttribute(
 			"liferay-ui:navigation:includedLayouts", _includedLayouts);
-		request.setAttribute(
-			"liferay-ui:navigation:navigationString",
-			getNavigationString(request));
 		request.setAttribute(
 			"liferay-ui:navigation:nestedChildren",
 			String.valueOf(_nestedChildren));
@@ -385,9 +151,6 @@ public class NavigationTag extends IncludeTag {
 
 			request.setAttribute(
 				"liferay-ui:navigation:navItems", branchNavItems);
-			request.setAttribute(
-				"liferay-ui:navigation:rootNavItem",
-				getRootNavItem(branchNavItems));
 		}
 		catch (PortalException e) {
 			_log.error(e);

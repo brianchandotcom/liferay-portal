@@ -26,11 +26,11 @@ portletURL.setParameter("struts_action", "/social_activity/view");
 
 <liferay-ui:error-principal />
 
-<portlet:actionURL var="saveActivitySettingsURL">
-	<portlet:param name="struts_action" value="/social_activity/view" />
+<portlet:actionURL name="/social_activity/edit_activity_settings" var="editURL">
+	<portlet:param name="mvcRenderCommandName" value="/social_activity/edit_activity_settings" />
 </portlet:actionURL>
 
-<aui:form action="<%= saveActivitySettingsURL.toString() %>" cssClass="update-socialactivity-form" method="post" name="fm">
+<aui:form action="<%= editURL.toString() %>" cssClass="update-socialactivity-form" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input id="settingsJSON" name="settingsJSON" type="hidden" />

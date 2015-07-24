@@ -60,45 +60,75 @@ public class SessionTreeJSClicks {
 	public static void closeNode(
 		HttpServletRequest request, String treeId, String nodeId) {
 
-		try {
-			String openNodesString = get(request, treeId);
+		while (true) {
+			try {
+				String openNodesString = get(request, treeId);
 
-			openNodesString = StringUtil.removeFromList(
-				openNodesString, nodeId);
+				openNodesString = StringUtil.removeFromList(
+					openNodesString, nodeId);
 
-			put(request, treeId, openNodesString);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+				put(request, treeId, openNodesString);
+
+				return;
+			}
+			catch (Exception e) {
+				if (e instanceof IllegalStateException) {
+					continue;
+				}
+
+				_log.error(e, e);
+
+				return;
+			}
 		}
 	}
 
 	public static void closeNodes(HttpServletRequest request, String treeId) {
-		try {
-			String openNodesString = StringPool.BLANK;
+		while (true) {
+			try {
+				String openNodesString = StringPool.BLANK;
 
-			put(request, treeId, openNodesString);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+				put(request, treeId, openNodesString);
+
+				return;
+			}
+			catch (Exception e) {
+				if (e instanceof IllegalStateException) {
+					continue;
+				}
+
+				_log.error(e, e);
+
+				return;
+			}
 		}
 	}
 
 	public static void closeNodes(
 		HttpServletRequest request, String treeId, String[] nodeIds) {
 
-		try {
-			String openNodesString = get(request, treeId);
+		while (true) {
+			try {
+				String openNodesString = get(request, treeId);
 
-			for (String nodeId : nodeIds) {
-				openNodesString = StringUtil.removeFromList(
-					openNodesString, nodeId);
+				for (String nodeId : nodeIds) {
+					openNodesString = StringUtil.removeFromList(
+						openNodesString, nodeId);
+				}
+
+				put(request, treeId, openNodesString);
+
+				return;
 			}
+			catch (Exception e) {
+				if (e instanceof IllegalStateException) {
+					continue;
+				}
 
-			put(request, treeId, openNodesString);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+				_log.error(e, e);
+
+				return;
+			}
 		}
 	}
 
@@ -140,32 +170,52 @@ public class SessionTreeJSClicks {
 	public static void openNode(
 		HttpServletRequest request, String treeId, String nodeId) {
 
-		try {
-			String openNodesString = get(request, treeId);
+		while (true) {
+			try {
+				String openNodesString = get(request, treeId);
 
-			openNodesString = StringUtil.add(openNodesString, nodeId);
+				openNodesString = StringUtil.add(openNodesString, nodeId);
 
-			put(request, treeId, openNodesString);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+				put(request, treeId, openNodesString);
+
+				return;
+			}
+			catch (Exception e) {
+				if (e instanceof IllegalStateException) {
+					continue;
+				}
+
+				_log.error(e, e);
+
+				return;
+			}
 		}
 	}
 
 	public static void openNodes(
 		HttpServletRequest request, String treeId, String[] nodeIds) {
 
-		try {
-			String openNodesString = get(request, treeId);
+		while (true) {
+			try {
+				String openNodesString = get(request, treeId);
 
-			for (String nodeId : nodeIds) {
-				openNodesString = StringUtil.add(openNodesString, nodeId);
+				for (String nodeId : nodeIds) {
+					openNodesString = StringUtil.add(openNodesString, nodeId);
+				}
+
+				put(request, treeId, openNodesString);
+
+				return;
 			}
+			catch (Exception e) {
+				if (e instanceof IllegalStateException) {
+					continue;
+				}
 
-			put(request, treeId, openNodesString);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+				_log.error(e, e);
+
+				return;
+			}
 		}
 	}
 
@@ -215,6 +265,10 @@ public class SessionTreeJSClicks {
 				SessionTreeJSClicks.class.getName(), key, value);
 		}
 		catch (Exception e) {
+			if (e instanceof IllegalStateException) {
+				throw (IllegalStateException)e;
+			}
+
 			_log.error(e, e);
 		}
 	}

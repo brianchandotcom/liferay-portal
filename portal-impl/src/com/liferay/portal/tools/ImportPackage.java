@@ -21,6 +21,12 @@ import com.liferay.portal.kernel.util.StringPool;
  */
 public class ImportPackage implements Comparable<ImportPackage> {
 
+	public ImportPackage(String importString, boolean isStatic, String line) {
+		_importString = importString;
+		_isStatic = isStatic;
+		_line = line;
+	}
+
 	@Override
 	public int compareTo(ImportPackage importPackage) {
 		if (_isStatic != importPackage.isStatic()) {
@@ -109,12 +115,6 @@ public class ImportPackage implements Comparable<ImportPackage> {
 
 	public boolean isStatic() {
 		return _isStatic;
-	}
-
-	public ImportPackage(String importString, boolean isStatic, String line) {
-		_importString = importString;
-		_isStatic = isStatic;
-		_line = line;
 	}
 
 	private final String _importString;

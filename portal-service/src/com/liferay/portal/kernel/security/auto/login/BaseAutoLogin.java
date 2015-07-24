@@ -78,6 +78,17 @@ public abstract class BaseAutoLogin implements AutoLogin {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception;
 
+	protected String getPortalLoginRedirect(HttpServletRequest request) {
+		String redirect = ParamUtil.getString(request, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			return PortalUtil.escapeRedirect(redirect);
+		}
+		else {
+			return PortalUtil.getPathMain();
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(BaseAutoLogin.class);
 
 }

@@ -154,7 +154,13 @@ public class CASAutoLogin extends BaseAutoLogin {
 			}
 		}
 
-		addRedirect(request);
+		String currentURL = PortalUtil.getCurrentURL(request);
+
+		if (currentURL.contains("/portal/login")) {
+			request.setAttribute(
+				AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE,
+				getPortalLoginRedirect(request));
+		}
 
 		String[] credentials = new String[3];
 

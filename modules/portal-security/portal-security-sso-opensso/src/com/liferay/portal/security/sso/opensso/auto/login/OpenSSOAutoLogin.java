@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.security.sso.OpenSSO;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PwdGenerator;
@@ -204,16 +203,8 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		String currentURL = PortalUtil.getCurrentURL(request);
 
 		if (currentURL.contains("/portal/login")) {
-			String redirect = ParamUtil.getString(request, "redirect");
-
-			if (Validator.isNotNull(redirect)) {
-				redirect = PortalUtil.escapeRedirect(redirect);
-			}
-			else {
-				redirect = PortalUtil.getPathMain();
-			}
-
-			request.setAttribute(AutoLogin.AUTO_LOGIN_REDIRECT, redirect);
+			request.setAttribute(
+				AutoLogin.AUTO_LOGIN_REDIRECT, getPortalLoginRedirect(request));
 		}
 
 		String[] credentials = new String[3];

@@ -368,13 +368,6 @@
 
 		<action path="/sites_directory/view" forward="portlet.sites_directory.view" />
 
-		<!-- Social Activity -->
-
-		<action path="/social_activity/view" type="com.liferay.portlet.socialactivity.action.ViewAction">
-			<forward name="portlet.social_activity.error" path="portlet.social_activity.error" />
-			<forward name="portlet.social_activity.view" path="portlet.social_activity.view" />
-		</action>
-
 		<!-- Software Catalog -->
 
 		<action path="/software_catalog/edit_framework_version" type="com.liferay.portlet.softwarecatalog.action.EditFrameworkVersionAction">

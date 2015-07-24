@@ -100,7 +100,7 @@ AUI.add(
 					}
 				);
 
-				parent.insert(parent.indexOf(instance), field);
+				parent.insert(parent.indexOf(instance) + 1, field);
 
 				instance.get('container').insert(field.get('container'), 'after');
 

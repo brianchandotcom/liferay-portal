@@ -14,6 +14,10 @@ AUI.add(
 				value: {}
 			},
 
+			fields: {
+				valueFn: '_valueFields'
+			},
+
 			values: {
 				value: {}
 			}
@@ -22,20 +26,6 @@ AUI.add(
 		DefinitionSupport.prototype = {
 			initializer: function() {
 				var instance = this;
-
-				var definition = instance.get('definition');
-
-				var fields = instance.get('fields');
-				var values = instance.get('values');
-
-				if (values.fieldValues) {
-					fields = instance._createFieldsFromValues(values);
-				}
-				else if (definition.fields) {
-					fields = instance._createFieldsFromDefinition(definition);
-				}
-
-				instance.set('fields', fields);
 
 				instance.after('definitionChange', instance._afterDefinitionChange);
 				instance.after('valuesChange', instance._afterValuesChange);
@@ -105,6 +95,22 @@ AUI.add(
 						return new fieldClass(A.merge(config, item));
 					}
 				);
+			},
+
+			_valueFields: function(val) {
+				var instance = this;
+
+				var definition = instance.get('definition');
+				var values = instance.get('values');
+
+				if (values.fieldValues) {
+					val = instance._createFieldsFromValues(values);
+				}
+				else if (definition.fields) {
+					val = instance._createFieldsFromDefinition(definition);
+				}
+
+				return val;
 			}
 		};
 

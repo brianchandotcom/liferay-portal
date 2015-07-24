@@ -42,8 +42,8 @@ public interface URLContainer {
 	/**
 	 * Returns the directory-like listing of all the paths to resources within
 	 * the container whose longest sub-path matches the given path. Resources
-	 * that the invoker does not have access to are included. If no resources
-	 * are found, an empty string is returned.
+	 * that the invoker does not have access to are not included. If no
+	 * resources are found, an empty set is returned.
 	 *
 	 * <p>
 	 * Paths indicating sub-directory paths end with a slash (<code>/</code>). A

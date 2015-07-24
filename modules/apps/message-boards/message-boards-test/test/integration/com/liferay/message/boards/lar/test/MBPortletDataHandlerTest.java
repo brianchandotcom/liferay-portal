@@ -30,6 +30,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.exportimport.lar.ManifestSummary;
@@ -43,11 +44,16 @@ import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,7 +68,14 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(new LiferayIntegrationTestRule());
+		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+	}
 
 	@Test
 	public void testDeleteAllFolders() throws Exception {
@@ -149,7 +162,20 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected PortletDataHandler createPortletDataHandler() {
-		return new MBPortletDataHandler();
+		try {
+			Registry registry = RegistryUtil.getRegistry();
+
+			Collection<PortletDataHandler> services = registry.getServices(
+				PortletDataHandler.class,
+				"(javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS + ")");
+
+			Iterator<PortletDataHandler> iterator = services.iterator();
+
+			return iterator.next();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override

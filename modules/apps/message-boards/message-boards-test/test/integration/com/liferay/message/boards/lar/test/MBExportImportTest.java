@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.lar.test.BasePortletExportImportTestCase;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
@@ -40,6 +41,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -67,6 +69,13 @@ public class MBExportImportTest extends BasePortletExportImportTestCase {
 	@Override
 	public String getPortletId() {
 		return PortletKeys.MESSAGE_BOARDS;
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
 	}
 
 	@Test

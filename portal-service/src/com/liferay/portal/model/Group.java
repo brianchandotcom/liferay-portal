@@ -191,8 +191,6 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public boolean isUserGroup();
 
-	public boolean isUserPersonalPanel();
-
 	public boolean isUserPersonalSite();
 
 	public void setTypeSettingsProperties(

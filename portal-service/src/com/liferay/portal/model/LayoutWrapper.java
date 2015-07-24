@@ -1600,11 +1600,6 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
-	public boolean isTypeUserPersonalPanel() {
-		return _layout.isTypeUserPersonalPanel();
-	}
-
-	@Override
 	public boolean matches(javax.servlet.http.HttpServletRequest request,
 		java.lang.String friendlyURL) {
 		return _layout.matches(request, friendlyURL);

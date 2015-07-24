@@ -1006,7 +1006,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource && !absolutePath.contains("/modules/")) {
 			if (_tablesContent == null) {
-				_tablesContent = getContent("sql/portal-tables.sql", 4);
+				_tablesContent = getContent(
+					"sql/portal-tables.sql",
+					BaseSourceProcessor.PORTAL_MAX_DIR_LEVEL);
 			}
 
 			return _tablesContent;

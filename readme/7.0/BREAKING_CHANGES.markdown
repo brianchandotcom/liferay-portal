@@ -571,11 +571,16 @@ Old classes:
 
 New classes:
 
-    com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand
-    com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand
+    com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand
+    com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand
 
 In addition, `com.liferay.util.bridges.mvc.MVCPortlet` is deprecated, but was
 made to extend `com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet`.
+
+The classes in the `com.liferay.portal.kernel.portlet.bridges.mvc` package have
+been renamed to add the `MVC` prefix. These modifications were made after this
+breaking change, and can be referenced in
+[LPS-56372](https://issues.liferay.com/browse/LPS-56372).
 
 #### Who is affected?
 

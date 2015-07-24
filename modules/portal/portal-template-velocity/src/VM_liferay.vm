@@ -47,6 +47,10 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 	$menu_tag.runTag()
 #end
 
+#macro (navigation_menu)
+	$theme.runtime("com.liferay.portal.theme.NavItem", $portletProviderAction.VIEW)
+#end
+
 #macro (product_menu)
 	$theme.runtime("com.liferay.portlet.admin.util.PortalProductMenuApplicationType$ProductMenu", $portletProviderAction.VIEW)
 #end

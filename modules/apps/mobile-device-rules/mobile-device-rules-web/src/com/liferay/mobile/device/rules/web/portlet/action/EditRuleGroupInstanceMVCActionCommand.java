@@ -14,7 +14,7 @@
 
 package com.liferay.mobile.device.rules.web.portlet.action;
 
-import com.liferay.mobile.device.rules.constants.MobileDeviceRulesPortletKeys;
+import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + MobileDeviceRulesPortletKeys.MOBILE_DEVICE_SITE_ADMIN,
+		"javax.portlet.name=" + MDRPortletKeys.MOBILE_DEVICE_SITE_ADMIN,
 		"mvc.command.name=/mobile_device_rules/edit_rule_group_instance"
 	},
 	service = MVCActionCommand.class

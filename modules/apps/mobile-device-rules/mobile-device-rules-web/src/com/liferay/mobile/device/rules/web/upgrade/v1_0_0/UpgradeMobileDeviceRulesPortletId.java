@@ -14,7 +14,7 @@
 
 package com.liferay.mobile.device.rules.web.upgrade.v1_0_0;
 
-import com.liferay.mobile.device.rules.constants.MobileDeviceRulesPortletKeys;
+import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 
 /**
@@ -26,7 +26,7 @@ public class UpgradeMobileDeviceRulesPortletId extends UpgradePortletId {
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
 			new String[] {
-				"178", MobileDeviceRulesPortletKeys.MOBILE_DEVICE_SITE_ADMIN
+				"178", MDRPortletKeys.MOBILE_DEVICE_SITE_ADMIN
 			}
 		};
 	}

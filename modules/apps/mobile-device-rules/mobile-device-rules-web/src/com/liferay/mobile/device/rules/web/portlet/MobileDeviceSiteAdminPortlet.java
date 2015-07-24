@@ -14,7 +14,7 @@
 
 package com.liferay.mobile.device.rules.web.portlet;
 
-import com.liferay.mobile.device.rules.constants.MobileDeviceRulesPortletKeys;
+import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.mvc-action-command-package-prefix=com.liferay.mobile.device.rules.web.portlet.action",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + MobileDeviceRulesPortletKeys.MOBILE_DEVICE_SITE_ADMIN,
+		"javax.portlet.name=" + MDRPortletKeys.MOBILE_DEVICE_SITE_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

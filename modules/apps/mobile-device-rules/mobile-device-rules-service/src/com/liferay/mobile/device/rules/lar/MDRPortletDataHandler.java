@@ -14,7 +14,7 @@
 
 package com.liferay.mobile.device.rules.lar;
 
-import com.liferay.mobile.device.rules.constants.MobileDeviceRulesPortletKeys;
+import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.xml.Element;
@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + MobileDeviceRulesPortletKeys.MOBILE_DEVICE_SITE_ADMIN
+		"javax.portlet.name=" + MDRPortletKeys.MOBILE_DEVICE_SITE_ADMIN
 	},
 	service = PortletDataHandler.class
 )

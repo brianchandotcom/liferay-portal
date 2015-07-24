@@ -16,7 +16,7 @@
 @generated
 --%>
 
-<%@ include file="/html/taglib/taglib-init.jsp" %>
+<%@ include file="/taglib/common/taglib-init.jsp" %>
 
 <%
 long classNameId = GetterUtil.getLong(String.valueOf(request.getAttribute("ddm:html-field:classNameId")));
@@ -31,4 +31,4 @@ Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribut
 Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("ddm:html-field:scopedAttributes");
 %>
 
-<%@ include file="/html/taglib/ddm/html_field/init-ext.jspf" %>
+<%@ include file="/taglib/ui/html_field/init-ext.jspf" %>

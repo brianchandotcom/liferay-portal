@@ -14,6 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ddm/html_field/init.jsp" %>
+<%@ include file="/taglib/ui/html_field/init.jsp" %>
 
 </div>

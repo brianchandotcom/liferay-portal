@@ -16,7 +16,7 @@
 @generated
 --%>
 
-<%@ include file="/html/taglib/taglib-init.jsp" %>
+<%@ include file="/taglib/common/taglib-init.jsp" %>
 
 <%
 boolean checkRequired = GetterUtil.getBoolean(String.valueOf(request.getAttribute("ddm:html:checkRequired")), true);
@@ -32,4 +32,4 @@ Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribut
 Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("ddm:html:scopedAttributes");
 %>
 
-<%@ include file="/html/taglib/ddm/html/init-ext.jspf" %>
+<%@ include file="/taglib/ui/html/init-ext.jspf" %>

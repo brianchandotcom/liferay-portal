@@ -14,7 +14,19 @@
  */
 --%>
 
-<%@ include file="/html/portlet/directory/user/search_columns_user_name.jspf" %>
+<liferay-ui:search-container-column-text
+	href="<%= rowURL %>"
+	name="first-name"
+	orderable="<%= true %>"
+	property="firstName"
+/>
+
+<liferay-ui:search-container-column-text
+	href="<%= rowURL %>"
+	name="last-name"
+	orderable="<%= true %>"
+	property="lastName"
+/>
 
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"

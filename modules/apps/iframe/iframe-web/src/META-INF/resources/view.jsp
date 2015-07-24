@@ -56,7 +56,7 @@
 			var baseSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
 			var iframeSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeSrc()) %>';
 
-			if (url == iframeSrc || url == iframeSrc + '/') {
+			if ((url == iframeSrc) || (url == (iframeSrc + '/'))) {
 			}
 			else if (A.Lang.String.startsWith(url, baseSrc)) {
 				url = url.substring(baseSrc.length);
@@ -93,7 +93,7 @@
 
 					var baseSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
 
-					if (!/^https?\:\/\//.test(hash) || !A.Lang.String.startsWith(hash, baseSrc)) {
+					if (!(/^https?\:\/\//.test(hash)) || !A.Lang.String.startsWith(hash, baseSrc)) {
 						src = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
 					}
 

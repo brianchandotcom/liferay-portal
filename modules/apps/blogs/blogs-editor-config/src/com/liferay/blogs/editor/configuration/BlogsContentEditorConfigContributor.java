@@ -66,7 +66,7 @@ public class BlogsContentEditorConfigContributor
 
 		populateFileBrowserURL(
 			jsonObject, requestBackedPortletURLFactory,
-			namespace + name + "selectDocument");
+			namespace + name + "selectItem");
 	}
 
 	@Reference(unbind = "-")

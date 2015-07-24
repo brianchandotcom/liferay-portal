@@ -60,7 +60,7 @@
 
 				var editor = this.props.editor.get('nativeEditor');
 
-				var eventName = editor.name + 'selectDocument';
+				var eventName = editor.name + 'selectItem';
 
 				if (instance._itemSelectorDialog) {
 					instance._itemSelectorDialog.open();
@@ -92,7 +92,7 @@
 
 				var editor = instance.props.editor.get('nativeEditor');
 
-				var eventName = editor.name + 'selectDocument';
+				var eventName = editor.name + 'selectItem';
 
 				var selectedItem = event.newVal;
 

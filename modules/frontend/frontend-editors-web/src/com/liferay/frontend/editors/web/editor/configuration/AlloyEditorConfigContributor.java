@@ -95,8 +95,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 						"liferay-ui:input-editor:name"));
 
 		populateFileBrowserURL(
-			jsonObject, requestBackedPortletURLFactory,
-			name + "selectDocument");
+			jsonObject, requestBackedPortletURLFactory, name + "selectItem");
 
 		jsonObject.put("srcNode", name);
 

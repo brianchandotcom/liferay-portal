@@ -104,7 +104,7 @@ public class PanelAppContentHelper {
 	protected String getPortletId() {
 		if (_portletId == null) {
 			_portletId = (String)_request.getAttribute(
-				"application-list-ui:panel-content:portletId");
+				"application-list-ui:application-content:portletId");
 		}
 
 		return _portletId;

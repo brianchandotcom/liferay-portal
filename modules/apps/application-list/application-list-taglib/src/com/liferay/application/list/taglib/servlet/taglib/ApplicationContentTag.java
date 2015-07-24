@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Adolfo Pérez
  */
-public class PanelContentTag extends BasePanelTag {
+public class ApplicationContentTag extends BasePanelTag {
 
 	@Override
 	public void setPortletId(String portletId) {
@@ -35,14 +35,16 @@ public class PanelContentTag extends BasePanelTag {
 
 	@Override
 	protected String getPage() {
-		return "/panel_content/page.jsp";
+		return _PAGE;
 	}
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"application-list-ui:panel-content:portletId", _portletId);
+			"application-list-ui:application-content:portletId", _portletId);
 	}
+
+	private static final String _PAGE = "/application_content/page.jsp";
 
 	private String _portletId;
 

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/panel_content/init.jsp" %>
+<%@ include file="/application_content/init.jsp" %>
 
 <%
 PanelAppContentHelper panelAppContentHelper = new PanelAppContentHelper(request, response);

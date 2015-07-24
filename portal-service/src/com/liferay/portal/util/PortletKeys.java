@@ -76,9 +76,6 @@ public class PortletKeys {
 	public static final String ITEM_SELECTOR =
 		"com_liferay_item_selector_web_portlet_ItemSelectorPortlet";
 
-	public static final String JOURNAL =
-		"com_liferay_journal_web_portlet_JournalPortlet";
-
 	public static final String LAYOUTS_ADMIN =
 		"com_liferay_layout_admin_web_portlet_LayoutAdminPortlet";
 

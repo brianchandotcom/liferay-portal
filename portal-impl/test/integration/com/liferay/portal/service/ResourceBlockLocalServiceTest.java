@@ -86,8 +86,7 @@ public class ResourceBlockLocalServiceTest {
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
-				dbType = DB.TYPE_DB2,
-				expectedLog = "Non-atomic batch failure.",
+				dbType = DB.TYPE_DB2, expectedLog = "Non-atomic batch failure.",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
@@ -205,8 +204,7 @@ public class ResourceBlockLocalServiceTest {
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
-				dbType = DB.TYPE_DB2,
-				expectedLog = "Non-atomic batch failure.",
+				dbType = DB.TYPE_DB2, expectedLog = "Non-atomic batch failure.",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(

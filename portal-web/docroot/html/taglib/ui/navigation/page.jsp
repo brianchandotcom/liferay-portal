@@ -16,8 +16,19 @@
 
 <%@ include file="/html/taglib/ui/navigation/init.jsp" %>
 
+<%
+Map<String, Object> contextObjects = new HashMap<String, Object>();
+
+contextObjects.put("bulletStyle", bulletStyle);
+contextObjects.put("headerType", headerType);
+contextObjects.put("includedLayouts", includedLayouts);
+contextObjects.put("nestedChildren", nestedChildren);
+contextObjects.put("rootLayoutLevel", rootLayoutLevel);
+contextObjects.put("rootLayoutType", rootLayoutType);
+%>
+
 <c:if test="<%= layout != null %>">
-	<liferay-ui:ddm-template-renderer className="<%= NavItem.class.getName() %>" displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= navItems %>">
+	<liferay-ui:ddm-template-renderer className="<%= NavItem.class.getName() %>" contextObjects="<%= contextObjects%>" displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= navItems %>">
 		<div class="nav-menu nav-menu-style-<%= bulletStyle %>">
 			<c:choose>
 				<c:when test='<%= headerType.equals("root-layout") && (rootNavItem != null) %>'>

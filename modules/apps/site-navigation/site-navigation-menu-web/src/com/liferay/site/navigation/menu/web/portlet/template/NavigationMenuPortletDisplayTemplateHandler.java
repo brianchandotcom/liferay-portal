@@ -62,12 +62,7 @@ public class NavigationMenuPortletDisplayTemplateHandler
 	public Map<String, Object> getCustomContextObjects() {
 		Map<String, Object> contextObjects = new HashMap<>();
 
-		try {
-			contextObjects.put("navItem", NavItem.class);
-		}
-		catch (SecurityException se) {
-			_log.error(se, se);
-		}
+		contextObjects.put("navItem", NavItem.class);
 
 		return contextObjects;
 	}
@@ -107,6 +102,18 @@ public class NavigationMenuPortletDisplayTemplateHandler
 
 		templateVariableGroup.empty();
 
+		templateVariableGroup.addVariable(
+			"bullet-style", String.class, "bulletStyle");
+		templateVariableGroup.addVariable(
+			"header-type", String.class, "headerType");
+		templateVariableGroup.addVariable(
+			"included-layouts", String.class, "includedLayouts");
+		templateVariableGroup.addVariable(
+			"nested-children", String.class, "nestedChildren");
+		templateVariableGroup.addVariable(
+			"root-layout-level", String.class, "rootLayoutLevel");
+		templateVariableGroup.addVariable(
+			"root-layout-type", String.class, "rootLayoutType");
 		templateVariableGroup.addCollectionVariable(
 			"navigation-items", List.class,
 			PortletDisplayTemplateConstants.ENTRIES, "navigation-item",

@@ -2,7 +2,9 @@
 	<var name="orgName" value="Organization Name" />
 
 	<command name="addAdditionalEmailAddressesCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -18,7 +20,9 @@
 	</command>
 
 	<command name="addAddressCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -39,7 +43,9 @@
 	</command>
 
 	<command name="addCategorizationCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -61,7 +67,9 @@
 	</command>
 
 	<command name="addCommentCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -118,7 +126,9 @@
 	</command>
 
 	<command name="addMemberCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -151,7 +161,9 @@
 	</command>
 
 	<command name="addPhoneNumbersCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -187,7 +199,9 @@
 	</command>
 
 	<command name="addReminderQueriesCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -206,7 +220,9 @@
 	</command>
 
 	<command name="addServicesCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -223,7 +239,9 @@
 	</command>
 
 	<command name="addSiteCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -264,7 +282,9 @@
 	</command>
 
 	<command name="addWebsitesCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -346,7 +366,9 @@
 	</command>
 
 	<command name="assignOrgRoleCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -386,7 +408,9 @@
 	</command>
 
 	<command name="editSiteCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -419,7 +443,9 @@
 	</command>
 
 	<command name="manageMembershipOptionsInSites">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -445,7 +471,9 @@
 	</command>
 
 	<command name="removeMemberCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -528,7 +556,9 @@
 	</command>
 
 	<command name="viewAddressCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -552,7 +582,9 @@
 	</command>
 
 	<command name="viewCommentCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -605,7 +637,9 @@
 	</command>
 
 	<command name="viewParentOrganizationCP">
-		<execute macro="Organization#gotoActionsCmd" />
+		<execute macro="Organization#gotoActionsCmd">
+			<var name="orgName" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 

@@ -53,14 +53,14 @@ public class EditOrgLaborMVCRenderCommand implements MVCRenderCommand {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return "/html/portlet/users_admin/error.jsp";
+				return "/error.jsp";
 			}
 			else {
 				throw new PortletException(e);
 			}
 		}
 
-		return "/html/portlet/users_admin/edit_org_labor.jsp";
+		return "/edit_org_labor.jsp";
 	}
 
 }

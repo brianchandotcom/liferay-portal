@@ -51,7 +51,7 @@ public class UserInstantMessengerFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/instant_messenger.jsp";
+		return "/user/instant_messenger.jsp";
 	}
 
 }

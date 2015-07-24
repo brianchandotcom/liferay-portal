@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
@@ -25,7 +25,7 @@ User selUser = PortalUtil.getSelectedUser(request);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/html/portlet/users_admin/select_organization.jsp");
+portletURL.setParameter("mvcPath", "/select_organization.jsp");
 
 if (selUser != null) {
 	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
@@ -64,10 +64,10 @@ if (Validator.isNotNull(target)) {
 		<liferay-ui:search-container-results>
 			<c:choose>
 				<c:when test="<%= PropsValues.ORGANIZATIONS_INDEXER_ENABLED && PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX %>">
-					<%@ include file="/html/portlet/users_admin/organization_search_results_index.jspf" %>
+					<%@ include file="/organization_search_results_index.jspf" %>
 				</c:when>
 				<c:otherwise>
-					<%@ include file="/html/portlet/users_admin/organization_search_results_database.jspf" %>
+					<%@ include file="/organization_search_results_database.jspf" %>
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-results>

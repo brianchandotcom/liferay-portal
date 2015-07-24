@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -152,7 +152,7 @@ if (selUser != null) {
 
 <c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
 	<aui:nav-bar>
-		<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp">
+		<liferay-util:include page="/toolbar.jsp">
 			<liferay-util:param name="toolbarItem" value='<%= (selUser == null) ? "add" : "view" %>' />
 		</liferay-util:include>
 	</aui:nav-bar>

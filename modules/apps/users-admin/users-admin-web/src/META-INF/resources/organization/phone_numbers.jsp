@@ -14,4 +14,4 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/common/phone_numbers.jsp" %>
+<%@ include file="/common/phone_numbers.jsp" %>

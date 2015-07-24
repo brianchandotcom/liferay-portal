@@ -52,8 +52,7 @@ public class OrganizationAdditionalEmailAddressesFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/organization" +
-			"/additional_email_addresses.jsp";
+		return "/organization/additional_email_addresses.jsp";
 	}
 
 }

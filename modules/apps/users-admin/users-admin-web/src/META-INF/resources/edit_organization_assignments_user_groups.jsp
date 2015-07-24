@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs3 = (String)request.getAttribute("edit_organization_assignments.jsp-tabs3");

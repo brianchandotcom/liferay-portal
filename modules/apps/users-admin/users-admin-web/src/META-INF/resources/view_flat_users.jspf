@@ -159,7 +159,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 			request.setAttribute(WebKeys.SEARCH_CONTAINER, userSearchContainer);
 			%>
 
-			<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp" />
+			<liferay-util:include page="/toolbar.jsp" />
 
 			<c:if test="<%= userOrganization == null %>">
 				<aui:nav-bar-search>
@@ -229,10 +229,10 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	<liferay-ui:search-container-results>
 		<c:choose>
 			<c:when test="<%= PropsValues.USERS_INDEXER_ENABLED && PropsValues.USERS_SEARCH_WITH_INDEX %>">
-				<%@ include file="/html/portlet/users_admin/user_search_results_index.jspf" %>
+				<%@ include file="/user_search_results_index.jspf" %>
 			</c:when>
 			<c:otherwise>
-				<%@ include file="/html/portlet/users_admin/user_search_results_database.jspf" %>
+				<%@ include file="/user_search_results_database.jspf" %>
 			</c:otherwise>
 		</c:choose>
 	</liferay-ui:search-container-results>
@@ -256,12 +256,12 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 		}
 		%>
 
-		<%@ include file="/html/portlet/users_admin/user/search_columns.jspf" %>
+		<%@ include file="/user/search_columns.jspf" %>
 
 		<liferay-ui:search-container-column-jsp
 			align="right"
 			cssClass="entry-action"
-			path="/html/portlet/users_admin/user_action.jsp"
+			path="/user_action.jsp"
 		/>
 	</liferay-ui:search-container-row>
 

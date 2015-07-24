@@ -50,7 +50,7 @@ public class UserRolesFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/roles.jsp";
+		return "/user/roles.jsp";
 	}
 
 }

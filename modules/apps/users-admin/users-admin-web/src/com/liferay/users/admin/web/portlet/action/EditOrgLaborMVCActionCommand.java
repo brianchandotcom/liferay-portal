@@ -72,8 +72,7 @@ public class EditOrgLaborMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				actionResponse.setRenderParameter(
-					"mvcPath", "/html/portlet/users_admin/error.jsp");
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (e instanceof NoSuchListTypeException) {
 				SessionErrors.add(actionRequest, e.getClass());

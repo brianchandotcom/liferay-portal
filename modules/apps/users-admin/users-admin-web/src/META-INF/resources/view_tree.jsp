@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String backURL = GetterUtil.getString(request.getAttribute("view.jsp-backURL"));
@@ -91,7 +91,7 @@ if (organization != null) {
 	</aui:nav>
 
 	<aui:nav-bar>
-		<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp" />
+		<liferay-util:include page="/toolbar.jsp" />
 
 		<aui:nav-bar-search>
 			<div class="form-search">
@@ -337,10 +337,10 @@ if (organization != null) {
 
 											<c:choose>
 												<c:when test="<%= PropsValues.ORGANIZATIONS_INDEXER_ENABLED && PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX %>">
-													<%@ include file="/html/portlet/users_admin/organization_search_results_index.jspf" %>
+													<%@ include file="/organization_search_results_index.jspf" %>
 												</c:when>
 												<c:otherwise>
-													<%@ include file="/html/portlet/users_admin/organization_search_results_database.jspf" %>
+													<%@ include file="/organization_search_results_database.jspf" %>
 												</c:otherwise>
 											</c:choose>
 										</c:otherwise>
@@ -370,7 +370,7 @@ if (organization != null) {
 									}
 									%>
 
-									<%@ include file="/html/portlet/users_admin/organization/organization_columns.jspf" %>
+									<%@ include file="/organization/organization_columns.jspf" %>
 								</liferay-ui:search-container-row>
 
 								<liferay-ui:search-iterator />
@@ -419,7 +419,7 @@ if (organization != null) {
 							%>
 
 							<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminUsersPanel" persistState="<%= true %>" title="<%= usersPanelTitle %>">
-								<%@ include file="/html/portlet/users_admin/view_flat_users.jspf" %>
+								<%@ include file="/view_flat_users.jspf" %>
 							</liferay-ui:panel>
 						</c:if>
 					</c:if>
@@ -442,7 +442,7 @@ if (organization != null) {
 					request.setAttribute("view_organizations_tree.jsp-organization", organization);
 					%>
 
-					<liferay-util:include page="/html/portlet/users_admin/organization_action.jsp" />
+					<liferay-util:include page="/organization_action.jsp" />
 				</aui:col>
 
 			</c:if>

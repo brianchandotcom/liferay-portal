@@ -41,7 +41,7 @@ public class UserOrganizationsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/organizations.jsp";
+		return "/user/organizations.jsp";
 	}
 
 }

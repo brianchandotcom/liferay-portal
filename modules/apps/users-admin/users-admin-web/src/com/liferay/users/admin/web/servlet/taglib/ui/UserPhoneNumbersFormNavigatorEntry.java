@@ -51,7 +51,7 @@ public class UserPhoneNumbersFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/phone_numbers.jsp";
+		return "/user/phone_numbers.jsp";
 	}
 
 }

@@ -398,8 +398,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				actionResponse.setRenderParameter(
-					"mvcPath", "/html/portlet/users_admin/error.jsp");
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (e instanceof AddressCityException ||
 					 e instanceof AddressStreetException ||

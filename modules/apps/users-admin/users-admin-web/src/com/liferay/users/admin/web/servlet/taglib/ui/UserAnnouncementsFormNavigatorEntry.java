@@ -51,7 +51,7 @@ public class UserAnnouncementsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/announcements.jsp";
+		return "/user/announcements.jsp";
 	}
 
 }

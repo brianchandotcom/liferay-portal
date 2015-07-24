@@ -50,7 +50,7 @@ public class UserCommentsFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/comments.jsp";
+		return "/user/comments.jsp";
 	}
 
 }

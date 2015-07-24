@@ -86,4 +86,4 @@ else if (permissionChecker.isCompanyAdmin()) {
 }
 %>
 
-<%@ include file="/html/portlet/users_admin/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

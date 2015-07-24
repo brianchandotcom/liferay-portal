@@ -50,7 +50,7 @@ public class UserOpenIdFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/open_id.jsp";
+		return "/user/open_id.jsp";
 	}
 
 }

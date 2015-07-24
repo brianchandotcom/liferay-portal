@@ -50,7 +50,7 @@ public class UserSmsFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/sms.jsp";
+		return "/user/sms.jsp";
 	}
 
 }

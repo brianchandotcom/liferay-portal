@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String usersListView = (String)request.getAttribute("view.jsp-usersListView");
@@ -93,7 +93,7 @@ if (filterManageableOrganizations) {
 					request.setAttribute(WebKeys.SEARCH_CONTAINER, organizationSearchContainer);
 					%>
 
-					<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp" />
+					<liferay-util:include page="/toolbar.jsp" />
 
 					<aui:nav-bar-search>
 						<liferay-ui:organization-search-form />
@@ -118,10 +118,10 @@ if (filterManageableOrganizations) {
 			<liferay-ui:search-container-results>
 				<c:choose>
 					<c:when test="<%= PropsValues.ORGANIZATIONS_INDEXER_ENABLED && PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX %>">
-						<%@ include file="/html/portlet/users_admin/organization_search_results_index.jspf" %>
+						<%@ include file="/organization_search_results_index.jspf" %>
 					</c:when>
 					<c:otherwise>
-						<%@ include file="/html/portlet/users_admin/organization_search_results_database.jspf" %>
+						<%@ include file="/organization_search_results_database.jspf" %>
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-results>
@@ -146,12 +146,12 @@ if (filterManageableOrganizations) {
 				}
 				%>
 
-				<%@ include file="/html/portlet/users_admin/organization/search_columns.jspf" %>
+				<%@ include file="/organization/search_columns.jspf" %>
 
 				<liferay-ui:search-container-column-jsp
 					align="right"
 					cssClass="entry-action"
-					path="/html/portlet/users_admin/organization_action.jsp"
+					path="/organization_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

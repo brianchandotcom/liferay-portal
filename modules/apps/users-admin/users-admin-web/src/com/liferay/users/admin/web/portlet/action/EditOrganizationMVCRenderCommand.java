@@ -35,7 +35,7 @@ public class EditOrganizationMVCRenderCommand
 
 	@Override
 	protected String getPath() {
-		return "/html/portlet/users_admin/edit_organization.jsp";
+		return "/edit_organization.jsp";
 	}
 
 }

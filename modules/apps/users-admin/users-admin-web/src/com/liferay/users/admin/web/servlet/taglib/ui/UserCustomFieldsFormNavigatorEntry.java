@@ -51,7 +51,7 @@ public class UserCustomFieldsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/custom_fields.jsp";
+		return "/user/custom_fields.jsp";
 	}
 
 }

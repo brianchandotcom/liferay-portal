@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 UserSearch searchContainer = (UserSearch)request.getAttribute("liferay-ui:search:searchContainer");

@@ -65,7 +65,7 @@ public class UserPersonalSiteFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/personal_site.jsp";
+		return "/user/personal_site.jsp";
 	}
 
 }

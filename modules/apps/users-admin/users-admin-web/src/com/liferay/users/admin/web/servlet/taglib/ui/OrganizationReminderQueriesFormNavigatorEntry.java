@@ -52,7 +52,7 @@ public class OrganizationReminderQueriesFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/organization/reminder_queries.jsp";
+		return "/organization/reminder_queries.jsp";
 	}
 
 }

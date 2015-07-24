@@ -52,7 +52,7 @@ public class OrganizationCustomFieldsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/organization/custom_fields.jsp";
+		return "/organization/custom_fields.jsp";
 	}
 
 }

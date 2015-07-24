@@ -53,7 +53,7 @@ public class OrganizationCategorizationFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/organization/categorization.jsp";
+		return "/organization/categorization.jsp";
 	}
 
 }

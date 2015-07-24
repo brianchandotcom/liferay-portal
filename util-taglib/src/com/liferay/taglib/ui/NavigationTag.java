@@ -359,16 +359,26 @@ public class NavigationTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:navigation:bulletStyle", _bulletStyle);
 		request.setAttribute(
+			"liferay-ui:navigation:displayStyle", getDisplayStyle());
+		request.setAttribute(
+			"liferay-ui:navigation:displayStyleGroupId", _ddmTemplateGroupId);
+		request.setAttribute("liferay-ui:navigation:headerType", _headerType);
+		request.setAttribute(
 			"liferay-ui:navigation:headerType", getHeaderType());
 		request.setAttribute(
-			"liferay-ui:navigation:preview", String.valueOf(_preview));
+			"liferay-ui:navigation:includedLayouts", _includedLayouts);
 		request.setAttribute(
 			"liferay-ui:navigation:navigationString",
 			getNavigationString(request));
 		request.setAttribute(
-			"liferay-ui:navigation:displayStyle", getDisplayStyle());
+			"liferay-ui:navigation:nestedChildren",
+			String.valueOf(_nestedChildren));
 		request.setAttribute(
-			"liferay-ui:navigation:displayStyleGroupId", _ddmTemplateGroupId);
+			"liferay-ui:navigation:preview", String.valueOf(_preview));
+		request.setAttribute(
+			"liferay-ui:navigation:rootLayoutLevel", _rootLayoutLevel);
+		request.setAttribute(
+			"liferay-ui:navigation:rootLayoutType", _rootLayoutType);
 
 		try {
 			List<NavItem> branchNavItems = getBranchNavItems(request);

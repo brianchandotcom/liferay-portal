@@ -141,7 +141,7 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 		List<String> args = new ArrayList<>();
 
 		args.add("install");
-		args.add(moduleName + "@\"" + moduleVersion + "\"");
+		args.add(moduleName + "@" + moduleVersion);
 
 		npmTask.setArgs(args);
 

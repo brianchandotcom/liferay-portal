@@ -88,10 +88,8 @@ import org.gradle.api.artifacts.ResolvedArtifact;
 import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.ResolvedModuleVersion;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
-import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
-import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
@@ -173,7 +171,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureConfigurations(project);
 		configureDependencies(project);
 		configureProperties(project);
-		configureRepositories(project);
 		configureSourceSets(project);
 
 		addConfigurations(project);
@@ -1046,22 +1043,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected void configureProperties(Project project) {
 		configureTestResultsDir(project);
-	}
-
-	protected void configureRepositories(Project project) {
-		RepositoryHandler repositoryHandler = project.getRepositories();
-
-		repositoryHandler.maven(
-			new Action<MavenArtifactRepository>() {
-
-				@Override
-				public void execute(
-					MavenArtifactRepository mavenArtifactRepository) {
-
-					mavenArtifactRepository.setUrl(_REPOSITORY_URL);
-				}
-
-			});
 	}
 
 	protected void configureSourceSet(
@@ -2126,9 +2107,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		"org.powermock:powermock-reflect:1.6.1",
 		"org.springframework:spring-test:3.2.10.RELEASE"
 	};
-
-	private static final String _REPOSITORY_URL =
-		"http://cdn.repository.liferay.com/nexus/content/groups/public";
 
 	private static final String _SKIP_MANAGED_APP_SERVER_FILE_NAME =
 		"skip.managed.app.server";

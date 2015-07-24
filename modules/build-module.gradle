@@ -79,6 +79,10 @@ eclipseProject {
 
 repositories {
 	mavenLocal()
+
+	maven {
+		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+	}
 }
 
 sourceSets {
@@ -87,8 +91,8 @@ sourceSets {
 	}
 
 	test {
-		compileClasspath = configurations.portal + compileClasspath + configurations.portalTest
-		runtimeClasspath = configurations.portal + runtimeClasspath + configurations.portalTest
+		compileClasspath += configurations.portal + configurations.portalTest
+		runtimeClasspath += configurations.portal + configurations.portalTest
 	}
 
 	testIntegration {

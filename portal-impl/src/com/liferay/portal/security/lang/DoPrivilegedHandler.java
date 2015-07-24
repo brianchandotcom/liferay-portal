@@ -113,17 +113,25 @@ public class DoPrivilegedHandler
 
 		Class<?> beanClass = _bean.getClass();
 
-		Method[] methods = beanClass.getMethods();
+		try {
+			Method[] methods = beanClass.getMethods();
 
-		for (Method method : methods) {
-			NotPrivileged notPrivileged = method.getAnnotation(
-				NotPrivileged.class);
+			for (Method method : methods) {
+				NotPrivileged notPrivileged = method.getAnnotation(
+					NotPrivileged.class);
 
-			if (notPrivileged == null) {
-				continue;
+				if (notPrivileged == null) {
+					continue;
+				}
+
+				_notPrivilegedMethods.add(new MethodKey(method));
 			}
+		}
+		catch (Throwable t) {
+			System.out.println(
+				"Failed to load methods for beanClass: " + beanClass.getName());
 
-			_notPrivilegedMethods.add(new MethodKey(method));
+			throw t;
 		}
 
 		_notPrivilegedMethods = Collections.unmodifiableList(

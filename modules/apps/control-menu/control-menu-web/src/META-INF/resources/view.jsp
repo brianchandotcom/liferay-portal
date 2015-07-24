@@ -37,7 +37,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 }
 %>
 
-<c:if test="<%= !group.isControlPanel() && !group.isUserPersonalPanel() && !layout.isTypeControlPanel() && !layout.isTypeUserPersonalPanel() && userSetupComplete %>">
+<c:if test="<%= !layout.isTypeControlPanel() && !group.isControlPanel() && userSetupComplete %>">
 	<ul class="control-menu" data-namespace="<portlet:namespace />" id="<portlet:namespace />controlMenu">
 		<li class="left pull-left">
 			<ul>
@@ -61,7 +61,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 				}
 				%>
 
-				<c:if test="<%= !group.isControlPanel() && !group.isUserPersonalPanel() && userSetupComplete && (hasLayoutAddPermission || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
+				<c:if test="<%= !group.isControlPanel() && userSetupComplete && (hasLayoutAddPermission || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
 					<portlet:renderURL var="addURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 						<portlet:param name="mvcPath" value="/add_panel.jsp" />
 						<portlet:param name="stateMaximized" value="<%= String.valueOf(themeDisplay.isStateMaximized()) %>" />
@@ -86,7 +86,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 					</li>
 				</c:if>
 
-				<c:if test="<%= !group.isControlPanel() && !group.isUserPersonalPanel() && userSetupComplete && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon()) %>">
+				<c:if test="<%= !group.isControlPanel() && userSetupComplete && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon()) %>">
 
 					<%
 					PortletURL editPageURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.EDIT);
@@ -173,7 +173,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 					</li>
 				</c:if>
 
-				<c:if test="<%= !group.isControlPanel() && !group.isUserPersonalPanel() && userSetupComplete && (!group.hasStagingGroup() || group.isStagingGroup()) && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) || PortletPermissionUtil.hasConfigurationPermission(permissionChecker, themeDisplay.getSiteGroupId(), layout, ActionKeys.CONFIGURATION)) %>">
+				<c:if test="<%= !group.isControlPanel() && userSetupComplete && (!group.hasStagingGroup() || group.isStagingGroup()) && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) || PortletPermissionUtil.hasConfigurationPermission(permissionChecker, themeDisplay.getSiteGroupId(), layout, ActionKeys.CONFIGURATION)) %>">
 					<li id="<portlet:namespace />toggleControls">
 						<liferay-ui:icon
 							cssClass="toggle-controls"
@@ -189,7 +189,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 
 		<li class="pull-right right">
 			<ul>
-				<c:if test="<%= !group.isControlPanel() && !group.isUserPersonalPanel() && userSetupComplete && (hasLayoutUpdatePermission || GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.PREVIEW_IN_DEVICE)) %>">
+				<c:if test="<%= !group.isControlPanel() && userSetupComplete && (hasLayoutUpdatePermission || GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.PREVIEW_IN_DEVICE)) %>">
 					<portlet:renderURL var="previewContentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 						<portlet:param name="mvcPath" value="/preview_panel.jsp" />
 					</portlet:renderURL>

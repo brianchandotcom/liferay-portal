@@ -85,7 +85,7 @@ if (layout != null) {
 			}
 		}
 	}
-	else if ((layout.isTypeControlPanel() || layout.isTypePanel() || layout.isTypeUserPersonalPanel()) && Validator.isNotNull(ppid)) {
+	else if ((layout.isTypeControlPanel() || layout.isTypePanel()) && Validator.isNotNull(ppid)) {
 		portlets = new ArrayList<Portlet>();
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), ppid);

@@ -15,11 +15,13 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.util.AddMenuItem;
+import com.liferay.frontend.taglib.util.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Ambrin Chaudhary
@@ -45,12 +47,6 @@ public class AddMenuItemTag extends IncludeTag {
 		_url = null;
 	}
 
-	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		List<AddMenuItem> addMenuItems =
 			(List<AddMenuItem>)request.getAttribute(
@@ -62,8 +58,6 @@ public class AddMenuItemTag extends IncludeTag {
 			addMenuItems.add(addMenuItem);
 		}
 	}
-
-	private static final String _PAGE = "/taglib/add_menu_item/page.jsp";
 
 	private String _title;
 	private String _url;

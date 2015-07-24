@@ -263,6 +263,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewPGviaStagingLocalLive">
+			<var name="dmDocumentTitle" value="Document_1.docx" />
 			<var name="documentAdded" value="true" />
 			<var name="pageName" value="Staging Test Page" />
 			<var name="pageStaging" value="true" />
@@ -1362,6 +1363,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Staging Test Page" />
 			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />

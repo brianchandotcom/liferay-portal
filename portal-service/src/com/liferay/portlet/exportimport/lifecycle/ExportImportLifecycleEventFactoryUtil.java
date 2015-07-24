@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.exportimport.lifecycle;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.io.Serializable;
 
@@ -26,28 +26,13 @@ public class ExportImportLifecycleEventFactoryUtil {
 	public static ExportImportLifecycleEvent create(
 		int code, int processFlag, Serializable... attributes) {
 
-		return getExportImportLifecycleEventFactory().create(
+		return _exportImportLifecycleEventFactory.create(
 			code, processFlag, attributes);
 	}
 
-	public static ExportImportLifecycleEventFactory
-		getExportImportLifecycleEventFactory() {
-
-		PortalRuntimePermission.checkGetBeanProperty(
-			ExportImportLifecycleEventFactoryUtil.class);
-
-		return _exportImportLifecycleEventFactory;
-	}
-
-	public void setExportImportLifecycleEventFactory(
-		ExportImportLifecycleEventFactory exportImportLifecycleEventFactory) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_exportImportLifecycleEventFactory = exportImportLifecycleEventFactory;
-	}
-
-	private static ExportImportLifecycleEventFactory
-		_exportImportLifecycleEventFactory;
+	private static final ExportImportLifecycleEventFactory
+		_exportImportLifecycleEventFactory =
+			ProxyFactory.newServiceTrackedInstance(
+				ExportImportLifecycleEventFactory.class);
 
 }

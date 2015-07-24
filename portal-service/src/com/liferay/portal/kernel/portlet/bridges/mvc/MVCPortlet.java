@@ -274,7 +274,7 @@ public class MVCPortlet extends LiferayPortlet {
 			}
 
 			renderRequest.setAttribute(
-				getMVCPathAttributeName(PortalUtil.getPortletId(renderRequest)),
+				getMVCPathAttributeName(renderResponse.getNamespace()),
 				mvcPath);
 		}
 
@@ -286,7 +286,7 @@ public class MVCPortlet extends LiferayPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		String path = getPath(resourceRequest);
+		String path = getPath(resourceRequest, resourceResponse);
 
 		if (path != null) {
 			include(
@@ -419,7 +419,7 @@ public class MVCPortlet extends LiferayPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		String path = getPath(renderRequest);
+		String path = getPath(renderRequest, renderResponse);
 
 		if (path != null) {
 			if (!isProcessRenderRequest(renderRequest)) {
@@ -446,13 +446,14 @@ public class MVCPortlet extends LiferayPortlet {
 		return namespace.concat(StringPool.PERIOD).concat(_MVC_PATH);
 	}
 
-	protected String getPath(PortletRequest portletRequest) {
+	protected String getPath(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		String mvcPath = portletRequest.getParameter("mvcPath");
 
 		if (mvcPath == null) {
 			mvcPath = (String)portletRequest.getAttribute(
-				getMVCPathAttributeName(
-					PortalUtil.getPortletId(portletRequest)));
+				getMVCPathAttributeName(portletResponse.getNamespace()));
 		}
 
 		// Check deprecated parameter

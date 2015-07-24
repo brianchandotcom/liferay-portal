@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ddm/template_selector/init.jsp" %>
+<%@ include file="/taglib/ui/template_selector/init.jsp" %>
 
 <%
 long classNameId = GetterUtil.getLong((String)request.getAttribute("ddm:template-selector:classNameId"));

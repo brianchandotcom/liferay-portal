@@ -111,9 +111,7 @@ public class ImportPackage implements Comparable<ImportPackage> {
 		return _isStatic;
 	}
 
-	protected ImportPackage(
-		String importString, boolean isStatic, String line) {
-
+	public ImportPackage(String importString, boolean isStatic, String line) {
 		_importString = importString;
 		_isStatic = isStatic;
 		_line = line;

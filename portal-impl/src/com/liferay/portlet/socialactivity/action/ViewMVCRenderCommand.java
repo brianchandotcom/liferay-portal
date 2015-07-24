@@ -44,8 +44,7 @@ import javax.portlet.RenderResponse;
 @OSGiBeanProperties(
 	property = {
 		"javax.portlet.name=" + PortletKeys.SOCIAL_ACTIVITY,
-		"javax.portlet.name=" + PortletKeys.SOCIAL_ACTIVITY,
-		"mvc.command.name=/social_activity/view"
+		"mvc.command.name=/", "mvc.command.name=/social_activity/view"
 	},
 	service = MVCRenderCommand.class
 )
@@ -68,15 +67,14 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward(
-					"portlet.social_activity.error");
+				return "/html/portlet/social_activity/error.jsp";
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
 
-		return actionMapping.findForward("portlet.social_activity.view");
+		return "/html/portlet/social_activity/view.jsp";
 	}
 
 	protected Map<String, Boolean> getActivitySettingsMap(

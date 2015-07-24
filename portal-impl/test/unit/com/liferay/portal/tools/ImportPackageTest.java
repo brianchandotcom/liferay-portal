@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.source.formatter;
+package com.liferay.portal.tools;
 
 import java.util.ArrayList;
 import java.util.List;

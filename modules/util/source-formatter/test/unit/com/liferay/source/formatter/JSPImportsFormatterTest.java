@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.tools.ImportsFormatter;
+
 import org.junit.Assert;
 import org.junit.Test;
 

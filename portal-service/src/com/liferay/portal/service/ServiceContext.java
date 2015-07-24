@@ -35,6 +35,7 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.permission.ModelPermissions;
+import com.liferay.portal.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
@@ -180,10 +181,19 @@ public class ServiceContext implements Cloneable, Serializable {
 			}
 		}
 
-		setGroupPermissions(
-			groupPermissions.toArray(new String[groupPermissions.size()]));
-		setGuestPermissions(
-			guestPermissions.toArray(new String[guestPermissions.size()]));
+		String[] groupPermissionsArray = groupPermissions.toArray(
+			new String[groupPermissions.size()]);
+		String[] guestPermissionsArray = guestPermissions.toArray(
+			new String[guestPermissions.size()]);
+
+		setGroupPermissions(groupPermissionsArray);
+		setGuestPermissions(guestPermissionsArray);
+
+		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+			siteGroup.getCompanyId(), siteGroupId, groupPermissionsArray,
+			guestPermissionsArray);
+
+		setModelPermissions(modelPermissions);
 	}
 
 	/**

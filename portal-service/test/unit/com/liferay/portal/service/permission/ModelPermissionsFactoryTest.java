@@ -20,6 +20,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,7 +92,7 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			_COMPANY_ID, 0, groupPermissions, guestPermissions);
 
-		List<Role> roles = modelPermissions.getRoles();
+		Collection<Role> roles = modelPermissions.getRoles();
 
 		Assert.assertEquals(0, roles.size());
 	}
@@ -104,11 +105,11 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			_COMPANY_ID, 1, groupPermissions, guestPermissions);
 
-		List<Role> roles = modelPermissions.getRoles();
+		Collection<Role> roles = modelPermissions.getRoles();
 
 		Assert.assertEquals(1, roles.size());
 
-		Role role = roles.get(0);
+		Role role = roles.iterator().next();
 
 		Assert.assertEquals(RoleConstants.SITE_MEMBER, role.getName());
 		Assert.assertEquals(
@@ -124,7 +125,7 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			_COMPANY_ID, 0, groupPermissions, guestPermissions);
 
-		List<Role> roles = modelPermissions.getRoles();
+		Collection<Role> roles = modelPermissions.getRoles();
 
 		Assert.assertEquals(0, roles.size());
 	}
@@ -137,7 +138,7 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			_COMPANY_ID, 1, groupPermissions, guestPermissions);
 
-		List<Role> roles = modelPermissions.getRoles();
+		Collection<Role> roles = modelPermissions.getRoles();
 
 		Assert.assertEquals(2, roles.size());
 
@@ -155,11 +156,11 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			_COMPANY_ID, 1, groupPermissions, guestPermissions);
 
-		List<Role> roles = modelPermissions.getRoles();
+		Collection<Role> roles = modelPermissions.getRoles();
 
 		Assert.assertEquals(1, roles.size());
 
-		Role role = roles.get(0);
+		Role role = roles.iterator().next();
 
 		Assert.assertEquals(RoleConstants.GUEST, role.getName());
 		Assert.assertEquals(
@@ -175,7 +176,7 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			_COMPANY_ID, 0, groupPermissions, guestPermissions);
 
-		List<Role> roles = modelPermissions.getRoles();
+		Collection<Role> roles = modelPermissions.getRoles();
 
 		Assert.assertTrue(roles.isEmpty());
 	}
@@ -187,7 +188,7 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			parameterMap);
 
-		List<Role> roles = modelPermissions.getRoles();
+		Collection<Role> roles = modelPermissions.getRoles();
 
 		Assert.assertEquals(0, roles.size());
 	}
@@ -206,11 +207,11 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			parameterMap);
 
-		List<Role> roles = modelPermissions.getRoles();
+		Collection<Role> roles = modelPermissions.getRoles();
 
 		Assert.assertEquals(1, roles.size());
 
-		Role role = roles.get(0);
+		Role role = roles.iterator().next();
 
 		Assert.assertEquals(RoleConstants.GUEST, role.getName());
 		Assert.assertEquals(
@@ -236,11 +237,11 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
 			parameterMap);
 
-		List<Role> roles = modelPermissions.getRoles();
+		Collection<Role> roles = modelPermissions.getRoles();
 
 		Assert.assertEquals(2, roles.size());
 
-		Role role = roles.get(0);
+		Role role = roles.iterator().next();
 
 		Assert.assertEquals(
 			ListUtil.fromArray(permissions),

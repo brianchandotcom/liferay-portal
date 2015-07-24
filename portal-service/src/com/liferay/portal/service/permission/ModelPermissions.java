@@ -19,9 +19,12 @@ import com.liferay.portal.model.Role;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Jorge Ferrer
@@ -58,7 +61,7 @@ public class ModelPermissions implements Serializable {
 		return actionIds;
 	}
 
-	public List<Role> getRoles() {
+	public Collection<Role> getRoles() {
 		return _roles;
 	}
 
@@ -79,7 +82,7 @@ public class ModelPermissions implements Serializable {
 	}
 
 	private final Map<String, List<Role>> _actionsMap = new HashMap<>();
-	private final List<Role> _roles = new ArrayList<>();
+	private final Set<Role> _roles = new HashSet<>();
 	private final Map<String, List<String>> _rolesMap = new HashMap<>();
 
 }

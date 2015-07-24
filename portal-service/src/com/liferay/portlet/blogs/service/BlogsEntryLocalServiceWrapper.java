@@ -961,6 +961,14 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			guestPermissions);
 	}
 
+	@Override
+	public void updateEntryResources(
+		com.liferay.portlet.blogs.model.BlogsEntry entry,
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_blogsEntryLocalService.updateEntryResources(entry, modelPermissions);
+	}
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
 	int, ServiceContext, Map)}

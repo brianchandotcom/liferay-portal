@@ -358,6 +358,40 @@ public interface ResourceLocalService extends BaseLocalService {
 		throws PortalException;
 
 	/**
+	* Updates resources matching the group, name, and primary key at the
+	* individual scope, setting new permissions.
+	*
+	* @param companyId the primary key of the portal instance
+	* @param groupId the primary key of the group
+	* @param name the resource's name, which should be a portlet ID if the
+	resource is a portlet or the resource's class name otherwise
+	* @param primKey the primary key of the resource instance
+	* @param modelPermissions the permissions to be applied
+	* @throws PortalException if a portal exception occurred
+	*/
+	public void updateResources(long companyId, long groupId,
+		java.lang.String name, long primKey,
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
+	* Updates resources matching the group, name, and primary key string at the
+	* individual scope, setting new permissions.
+	*
+	* @param companyId the primary key of the portal instance
+	* @param groupId the primary key of the group
+	* @param name the resource's name, which should be a portlet ID if the
+	resource is a portlet or the resource's class name otherwise
+	* @param primKey the primary key string of the resource instance
+	* @param modelPermissions the permissions to be applied
+	* @throws PortalException if a portal exception occurred
+	*/
+	public void updateResources(long companyId, long groupId,
+		java.lang.String name, java.lang.String primKey,
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	/**
 	* Updates resources matching the name, primary key string and scope,
 	* replacing the primary key of their resource permissions with the new
 	* primary key.

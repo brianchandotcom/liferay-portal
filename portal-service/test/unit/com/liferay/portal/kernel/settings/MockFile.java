@@ -30,6 +30,11 @@ import java.util.Properties;
 public class MockFile implements com.liferay.portal.kernel.util.File {
 
 	@Override
+	public String appendParentheticalSuffix(String fileName, String suffix) {
+		return null;
+	}
+
+	@Override
 	public void copyDirectory(File source, File destination) {
 	}
 
@@ -285,6 +290,11 @@ public class MockFile implements com.liferay.portal.kernel.util.File {
 
 	@Override
 	public String stripExtension(String fileName) {
+		return null;
+	}
+
+	@Override
+	public String stripParentheticalSuffix(String fileName) {
 		return null;
 	}
 

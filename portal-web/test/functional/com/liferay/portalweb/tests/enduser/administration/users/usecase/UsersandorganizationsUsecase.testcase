@@ -1106,4 +1106,227 @@
 			<var name="userScreenName" value="test1" />
 		</execute>
 	</command>
+
+	<command name="ViewContentInLocationOrganizationSite" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="Canada Orgrole" />
+			<var name="roleType" value="Organization" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="United States Orgrole" />
+			<var name="roleType" value="Organization" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="North America" />
+			<var name="orgType" value="Regular Organization" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgCountry" value="United States" />
+			<var name="orgName" value="United States" />
+			<var name="orgParent" value="North America" />
+			<var name="orgType" value="Location" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgCountry" value="Canada" />
+			<var name="orgName" value="Canada" />
+			<var name="orgParent" value="North America" />
+			<var name="orgType" value="Location" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addSiteCP">
+			<var name="organizationSite" value="Community Site" />
+			<var name="orgName" value="United States" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addSiteCP">
+			<var name="organizationSite" value="Community Site" />
+			<var name="orgName" value="Canada" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="Canada" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="United States" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignOrgRoleCP">
+			<var name="roleName" value="Canada Orgrole" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="User#assignOrgRoleCP">
+			<var name="roleName" value="United States Orgrole" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8080/web/canada" />
+		</execute>
+
+		<execute macro="MessageboardsPortlet#gotoInlinePermissionsPG" />
+
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Remove" />
+			<var name="roleList" value="Guest,Site Member" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8080/web/canada" />
+		</execute>
+
+		<execute macro="MessageboardsPortlet#gotoInlinePermissionsPG" />
+
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Add" />
+			<var name="roleList" value="Canada Orgrole" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8080/web/canada" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="Canada Message Body" />
+			<var name="threadSubject" value="Canada Message Subject" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8080/web/united-states" />
+		</execute>
+
+		<execute macro="MessageboardsPortlet#gotoInlinePermissionsPG" />
+
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Remove" />
+			<var name="roleList" value="Guest,Site Member" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8080/web/united-states" />
+		</execute>
+
+		<execute macro="MessageboardsPortlet#gotoInlinePermissionsPG" />
+
+		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
+			<var name="addOrRemoveViewPermission" value="Add" />
+			<var name="roleList" value="United States Orgrole" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8080/web/united-states" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="United States Message Body" />
+			<var name="threadSubject" value="United States Message Subject" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8080/web/united-states" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewNoPG">
+			<var name="threadSubject" value="United States Message Subject" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8080/web/canada" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewNoPG">
+			<var name="threadSubject" value="Canada Message Subject" />
+		</execute>
+	</command>
 </definition>

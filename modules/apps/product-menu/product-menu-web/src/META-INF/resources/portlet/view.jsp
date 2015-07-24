@@ -18,7 +18,96 @@
 
 <%
 PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
-PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(PanelCategoryKeys.MY_SPACE);
+PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
+
+String portletId = themeDisplay.getPpid();
+
+PanelCategory firstChildPanelCategory = panelCategoryRegistry.getFirstChildPanelCategory(PanelCategoryKeys.ROOT);
+
+String rootPanelCategoryKey = firstChildPanelCategory.getKey();
+
+if (Validator.isNotNull(portletId)) {
+	PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
+
+	for (PanelCategory panelCategory : panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.ROOT)) {
+		if (panelCategoryHelper.containsPortlet(portletId, panelCategory)) {
+			rootPanelCategoryKey = panelCategory.getKey();
+
+			break;
+		}
+	}
+}
 %>
 
-<liferay-application-list:panel-category-content panelCategory="<%= panelCategory %>" />
+<div class="sidebar-header">
+	<h4>
+		<span>
+			<span class="icon-monospaced"><img alt="" height="25px" src="<%= themeDisplay.getCompanyLogo() %>" width="25px" /></span>
+			<span><%= company.getName() %></span>
+		</span>
+
+		<span class="icon-monospaced icon-remove sidenav-close"></span>
+	</h4>
+</div>
+
+<ul class="nav nav-tabs product-menu-tabs">
+
+	<%
+	for (PanelCategory curPanelCategory : panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.ROOT)) {
+	%>
+
+		<li class="col-xs-4 <%= rootPanelCategoryKey.equals(curPanelCategory.getKey()) ? "active" : StringPool.BLANK %>">
+			<a aria-expanded="true" data-toggle="tab" href="#<%= curPanelCategory.getKey() %>">
+				<div class="product-menu-tab-icon"><span class="<%= curPanelCategory.getIconCssClass() %> icon-monospaced"></span></div>
+				<div class="product-menu-tab-text"><%= curPanelCategory.getLabel(locale) %></div>
+			</a>
+		</li>
+
+	<%
+	}
+	%>
+
+</ul>
+
+<div class="sidebar-body">
+	<div class="tab-content">
+
+		<%
+		for (PanelCategory curPanelCategory : panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.ROOT)) {
+		%>
+
+			<div class="fade tab-pane <%= rootPanelCategoryKey.equals(curPanelCategory.getKey()) ? "active" : StringPool.BLANK %> in" id="<%= curPanelCategory.getKey() %>">
+				<liferay-application-list:panel-content panelCategory="<%= curPanelCategory %>" />
+			</div>
+
+		<%
+		}
+		%>
+
+	</div>
+</div>
+
+<div class="sidebar-footer">
+	<div class="nameplate">
+		<div class="nameplate-field">
+			<div class="user-icon user-icon-lg user-icon-warning">
+				<img alt="<%= HtmlUtil.escapeAttribute(user.getFullName()) %>" src="<%= HtmlUtil.escape(user.getPortraitURL(themeDisplay)) %>" />
+			</div>
+		</div>
+
+		<div class="nameplate-content">
+			<h4 class="user-heading">
+				<%= HtmlUtil.escape(user.getFullName()) %>
+				<small class="user-subheading">
+
+				</small>
+			</h4>
+		</div>
+
+		<c:if test="<%= themeDisplay.isShowSignOutIcon() %>">
+			<div class="nameplate-field">
+				<a class="icon-monospaced icon-off user-signout" href="<%= themeDisplay.getURLSignOut() %>"></a>
+			</div>
+		</c:if>
+	</div>
+</div>

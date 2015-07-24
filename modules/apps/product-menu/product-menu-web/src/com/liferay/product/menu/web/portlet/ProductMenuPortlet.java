@@ -14,12 +14,21 @@
 
 package com.liferay.product.menu.web.portlet;
 
+import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategoryRegistry;
+import com.liferay.application.list.taglib.constants.ApplicationListWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.product.menu.web.constants.ProductMenuPortletKeys;
 
+import java.io.IOException;
+
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -29,6 +38,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=false",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.use-default-template=false",
 		"javax.portlet.init-param.view-template=/portlet/view.jsp",
 		"javax.portlet.name=" + ProductMenuPortletKeys.PRODUCT_MENU,
 		"javax.portlet.supports.mime-type=text/html"
@@ -36,4 +47,34 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class ProductMenuPortlet extends MVCPortlet {
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			ApplicationListWebKeys.PANEL_APP_REGISTRY, _panelAppRegistry);
+		renderRequest.setAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY,
+			_panelCategoryRegistry);
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	@Reference(unbind = "-")
+	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
+		_panelAppRegistry = panelAppRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPanelCategoryRegistry(
+		PanelCategoryRegistry panelCategoryRegistry) {
+
+		_panelCategoryRegistry = panelCategoryRegistry;
+	}
+
+	private PanelAppRegistry _panelAppRegistry;
+	private PanelCategoryRegistry _panelCategoryRegistry;
+
 }

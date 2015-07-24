@@ -62,7 +62,7 @@ AUI.add(
 							}
 						);
 
-						instance._dropArea = A.one('.drop-zone');
+						instance._dropArea = instance.rootNode.one('.drop-zone');
 
 						instance._bindUI();
 						instance._renderUI();

@@ -1,4 +1,6 @@
 .lfr-item-viewer {
+	position: relative;
+
 	#cardSection {
 		margin-bottom: 20px;
 	}
@@ -70,6 +72,17 @@
 
 	.url-view {
 		margin: 15px;
+	}
+
+	.upload-view {
+		display: table;
+		height: 400px;
+		width: 100%;
+
+		&> strong {
+			display: table-cell;
+			vertical-align: middle;
+		}
 	}
 
 	&.uploading > .progress-container {

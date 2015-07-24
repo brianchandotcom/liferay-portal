@@ -273,7 +273,9 @@ public class MVCPortlet extends LiferayPortlet {
 					renderRequest, renderResponse);
 			}
 
-			renderRequest.setAttribute(_MVC_PATH, mvcPath);
+			renderRequest.setAttribute(
+				getMVCPathAttributeName(PortalUtil.getPortletId(renderRequest)),
+				mvcPath);
 		}
 
 		super.render(renderRequest, renderResponse);
@@ -440,11 +442,17 @@ public class MVCPortlet extends LiferayPortlet {
 		}
 	}
 
+	protected String getMVCPathAttributeName(String namespace) {
+		return namespace.concat(StringPool.PERIOD).concat(_MVC_PATH);
+	}
+
 	protected String getPath(PortletRequest portletRequest) {
 		String mvcPath = portletRequest.getParameter("mvcPath");
 
 		if (mvcPath == null) {
-			mvcPath = (String)portletRequest.getAttribute(_MVC_PATH);
+			mvcPath = (String)portletRequest.getAttribute(
+				getMVCPathAttributeName(
+					PortalUtil.getPortletId(portletRequest)));
 		}
 
 		// Check deprecated parameter

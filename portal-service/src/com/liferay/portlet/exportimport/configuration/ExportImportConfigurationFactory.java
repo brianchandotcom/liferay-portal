@@ -80,11 +80,10 @@ public class ExportImportConfigurationFactory {
 		Map<String, Serializable> publishLayoutLocalSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.
 				buildPublishLayoutLocalSettingsMap(
-					user.getUserId(), sourceGroupId, targetGroupId,
-					privateLayout,
+					user, sourceGroupId, targetGroupId, privateLayout,
 					ExportImportHelperUtil.getAllLayoutIds(
 						sourceGroupId, privateLayout),
-					parameterMap, user.getLocale(), user.getTimeZone());
+					parameterMap);
 
 		return ExportImportConfigurationLocalServiceUtil.
 			addExportImportConfiguration(

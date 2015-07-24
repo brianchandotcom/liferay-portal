@@ -475,9 +475,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Map<String, Serializable> exportLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.
 				buildExportLayoutSettingsMap(
-					user.getUserId(), group.getGroupId(), false, layoutIds,
-					getExportParameterMap(), user.getLocale(),
-					user.getTimeZone());
+					user, group.getGroupId(), false, layoutIds,
+					getExportParameterMap());
 
 		ExportImportConfiguration exportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -494,8 +493,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Map<String, Serializable> importLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.
 				buildImportLayoutSettingsMap(
-					user.getUserId(), importedGroup.getGroupId(), false, null,
-					parameterMap, user.getLocale(), user.getTimeZone());
+					user, importedGroup.getGroupId(), false, null,
+					parameterMap);
 
 		ExportImportConfiguration importConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

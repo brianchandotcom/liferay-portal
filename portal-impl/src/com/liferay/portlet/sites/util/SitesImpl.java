@@ -298,10 +298,9 @@ public class SitesImpl implements Sites {
 		Map<String, Serializable> exportLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.
 				buildExportLayoutSettingsMap(
-					user.getUserId(), sourceLayout.getGroupId(),
+					user, sourceLayout.getGroupId(),
 					sourceLayout.isPrivateLayout(),
-					new long[] {sourceLayout.getLayoutId()}, parameterMap,
-					user.getLocale(), user.getTimeZone());
+					new long[] {sourceLayout.getLayoutId()}, parameterMap);
 
 		ExportImportConfiguration exportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -628,11 +627,10 @@ public class SitesImpl implements Sites {
 		Map<String, Serializable> exportLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.
 				buildExportLayoutSettingsMap(
-					user.getUserId(), layoutSet.getGroupId(),
-					layoutSet.isPrivateLayout(),
+					user, layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 					ExportImportHelperUtil.getLayoutIds(
 						layoutSetPrototypeLayouts),
-					parameterMap, user.getLocale(), user.getTimeZone());
+					parameterMap);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -1899,10 +1897,10 @@ public class SitesImpl implements Sites {
 			Map<String, Serializable> exportLayoutSettingsMap =
 				ExportImportConfigurationSettingsMapFactory.
 					buildExportLayoutSettingsMap(
-						user.getUserId(), layoutSetPrototype.getGroupId(), true,
+						user, layoutSetPrototype.getGroupId(), true,
 						ExportImportHelperUtil.getLayoutIds(
 							layoutSetPrototypeLayouts),
-						parameterMap, user.getLocale(), user.getTimeZone());
+						parameterMap);
 
 			ExportImportConfiguration exportImportConfiguration =
 				ExportImportConfigurationLocalServiceUtil.

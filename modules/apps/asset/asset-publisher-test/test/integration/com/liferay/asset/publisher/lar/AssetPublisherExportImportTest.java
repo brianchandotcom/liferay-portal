@@ -697,11 +697,9 @@ public class AssetPublisherExportImportTest
 		Map<String, Serializable> exportLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.
 				buildExportLayoutSettingsMap(
-					user.getUserId(), layout.getGroupId(),
-					layout.isPrivateLayout(),
+					user, layout.getGroupId(), layout.isPrivateLayout(),
 					ExportImportHelperUtil.getLayoutIds(layouts),
-					getExportParameterMap(), user.getLocale(),
-					user.getTimeZone());
+					getExportParameterMap());
 
 		ExportImportConfiguration exportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -720,9 +718,8 @@ public class AssetPublisherExportImportTest
 		Map<String, Serializable> importLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.
 				buildImportLayoutSettingsMap(
-					user.getUserId(), importedGroup.getGroupId(),
-					layout.isPrivateLayout(), null, getImportParameterMap(),
-					user.getLocale(), user.getTimeZone());
+					user, importedGroup.getGroupId(), layout.isPrivateLayout(),
+					null, getImportParameterMap());
 
 		ExportImportConfiguration importConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

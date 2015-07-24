@@ -707,11 +707,9 @@ public class ExportImportHelperUtilTest {
 		Map<String, Serializable> publishLayoutLocalSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.
 				buildPublishLayoutLocalSettingsMap(
-					user.getUserId(), _stagingGroup.getGroupId(),
-					_liveGroup.getGroupId(), privateLayout,
-					ExportImportHelperUtil.getLayoutIds(layouts),
-					new HashMap<String, String[]>(), user.getLocale(),
-					user.getTimeZone());
+					user, _stagingGroup.getGroupId(), _liveGroup.getGroupId(),
+					privateLayout, ExportImportHelperUtil.getLayoutIds(layouts),
+					new HashMap<String, String[]>());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

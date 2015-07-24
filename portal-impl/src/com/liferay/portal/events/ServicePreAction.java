@@ -1261,8 +1261,7 @@ public class ServicePreAction extends Action {
 		Map<String, Serializable> importLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.
 				buildImportLayoutSettingsMap(
-					user.getUserId(), groupId, privateLayout, null,
-					parameterMap, user.getLocale(), user.getTimeZone());
+					user, groupId, privateLayout, null, parameterMap);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

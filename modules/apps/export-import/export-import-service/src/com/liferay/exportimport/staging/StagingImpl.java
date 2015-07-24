@@ -1343,9 +1343,8 @@ public class StagingImpl implements Staging {
 		Map<String, Serializable> publishLayoutLocalSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.
 				buildPublishLayoutLocalSettingsMap(
-					userId, sourceGroupId, targetGroupId, privateLayout,
-					layoutIds, parameterMap, user.getLocale(),
-					user.getTimeZone());
+					user, sourceGroupId, targetGroupId, privateLayout,
+					layoutIds, parameterMap);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

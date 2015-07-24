@@ -1456,9 +1456,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		Map<String, Serializable> publishLayoutLocalSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.
 				buildPublishLayoutLocalSettingsMap(
-					getUserId(), sourceGroupId, targetGroupId, privateLayout,
-					layoutIds, parameterMap, user.getLocale(),
-					user.getTimeZone());
+					user, sourceGroupId, targetGroupId, privateLayout,
+					layoutIds, parameterMap);
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationLocalService.addExportImportConfiguration(

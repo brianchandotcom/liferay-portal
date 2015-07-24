@@ -136,11 +136,11 @@ public class StagingLocalizationTest {
 		Map<String, Serializable> publishLayoutLocalSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.
 				buildPublishLayoutLocalSettingsMap(
-					user.getUserId(), _sourceGroup.getGroupId(),
-					_targetGroup.getGroupId(), false,
+					user, _sourceGroup.getGroupId(), _targetGroup.getGroupId(),
+					false,
 					ExportImportHelperUtil.getAllLayoutIds(
 						_sourceGroup.getGroupId(), false),
-					parameterMap, user.getLocale(), user.getTimeZone());
+					parameterMap);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

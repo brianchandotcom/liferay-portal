@@ -1012,10 +1012,10 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			Map<String, Serializable> exportLayoutSettingsMap =
 				ExportImportConfigurationSettingsMapFactory.
 					buildExportLayoutSettingsMap(
-						user.getUserId(), group.getGroupId(), true,
+						user, group.getGroupId(), true,
 						ExportImportHelperUtil.getAllLayoutIds(
 							group.getGroupId(), true),
-						parameterMap, user.getLocale(), user.getTimeZone());
+						parameterMap);
 
 			ExportImportConfiguration exportImportConfiguration =
 				exportImportConfigurationLocalService.
@@ -1034,10 +1034,10 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			Map<String, Serializable> exportLayoutSettingsMap =
 				ExportImportConfigurationSettingsMapFactory.
 					buildExportLayoutSettingsMap(
-						user.getUserId(), group.getGroupId(), false,
+						user, group.getGroupId(), false,
 						ExportImportHelperUtil.getAllLayoutIds(
 							group.getGroupId(), false),
-						parameterMap, user.getLocale(), user.getTimeZone());
+						parameterMap);
 
 			ExportImportConfiguration exportImportConfiguration =
 				exportImportConfigurationLocalService.
@@ -1127,8 +1127,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			Map<String, Serializable> importLayoutSettingsMap =
 				ExportImportConfigurationSettingsMapFactory.
 					buildImportLayoutSettingsMap(
-						user.getUserId(), groupId, true, null, parameterMap,
-						user.getLocale(), user.getTimeZone());
+						user, groupId, true, null, parameterMap);
 
 			ExportImportConfiguration exportImportConfiguration =
 				exportImportConfigurationLocalService.
@@ -1147,8 +1146,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			Map<String, Serializable> importLayoutSettingsMap =
 				ExportImportConfigurationSettingsMapFactory.
 					buildImportLayoutSettingsMap(
-						user.getUserId(), groupId, false, null, parameterMap,
-						user.getLocale(), user.getTimeZone());
+						user, groupId, false, null, parameterMap);
 
 			ExportImportConfiguration exportImportConfiguration =
 				exportImportConfigurationLocalService.

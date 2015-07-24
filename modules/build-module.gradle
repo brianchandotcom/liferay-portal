@@ -45,6 +45,10 @@ afterEvaluate {
 	project.ext.set("plugin.full.version", project.version.toString())
 }
 
+buildCSS {
+	portalCommonDirName = new File(rootDir, "../portal-web/docroot/html/css/common")
+}
+
 configurations {
 	portal
 	portalTest

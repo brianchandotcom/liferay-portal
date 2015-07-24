@@ -180,6 +180,10 @@
 		<execute function="AssertTextEquals" locator1="PGMessageboardsConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
+	<command name="gotoInlinePermissionsPG">
+		<execute function="AssertClick" locator1="Button#PERMISSIONS" value1="Permissions" />
+	</command>
+
 	<command name="gotoRecentPostsPG">
 		<execute function="AssertClick" locator1="PGMessageboards#NAVIGATION_RECENT_POSTS" value1="Recent Posts" />
 	</command>

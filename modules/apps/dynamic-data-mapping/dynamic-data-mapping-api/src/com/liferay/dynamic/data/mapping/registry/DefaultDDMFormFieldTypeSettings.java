@@ -75,5 +75,5 @@ public interface DefaultDDMFormFieldTypeSettings
 	@DDMFormField(
 		label = "%visibility-expression", visibilityExpression = "true"
 	)
-
+	public String visibilityExpression();
 }

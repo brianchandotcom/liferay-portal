@@ -148,6 +148,19 @@ public class ToolsUtil {
 		return document.asXML();
 	}
 
+	public static String getPackagePath(File file) {
+		String fileName = StringUtil.replace(
+			file.toString(), StringPool.BACK_SLASH, StringPool.SLASH);
+
+		int x = fileName.lastIndexOf("/com/liferay/");
+		int y = fileName.lastIndexOf(StringPool.SLASH);
+
+		String packagePath = fileName.substring(x + 1, y);
+
+		return StringUtil.replace(
+			packagePath, StringPool.SLASH, StringPool.PERIOD);
+	}
+
 	public static boolean isInsideQuotes(String s, int pos) {
 		boolean insideQuotes = false;
 
@@ -268,7 +281,7 @@ public class ToolsUtil {
 			Map<String, Object> jalopySettings, Set<String> modifiedFileNames)
 		throws IOException {
 
-		String packagePath = _getPackagePath(file);
+		String packagePath = getPackagePath(file);
 
 		String className = file.getName();
 
@@ -461,19 +474,6 @@ public class ToolsUtil {
 		}
 
 		return document;
-	}
-
-	private static String _getPackagePath(File file) {
-		String fileName = StringUtil.replace(
-			file.toString(), StringPool.BACK_SLASH, StringPool.SLASH);
-
-		int x = fileName.lastIndexOf("/com/liferay/");
-		int y = fileName.lastIndexOf(StringPool.SLASH);
-
-		String packagePath = fileName.substring(x + 1, y);
-
-		return StringUtil.replace(
-			packagePath, StringPool.SLASH, StringPool.PERIOD);
 	}
 
 	private static SAXReader _getSAXReader() {

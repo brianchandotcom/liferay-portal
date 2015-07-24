@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
@@ -92,13 +93,15 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 					ddmFormField.getName());
 		}
 
-		if (ddmFormFieldNames.contains(ddmFormField.getName())) {
+		if (ddmFormFieldNames.contains(
+				StringUtil.toLowerCase(ddmFormField.getName()))) {
+
 			throw new DDMFormValidationException(
 				"The field name " + ddmFormField.getName() +
 					" was defined more than once");
 		}
 
-		ddmFormFieldNames.add(ddmFormField.getName());
+		ddmFormFieldNames.add(StringUtil.toLowerCase(ddmFormField.getName()));
 	}
 
 	protected void validateDDMFormFieldOptions(

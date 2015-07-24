@@ -18,10 +18,6 @@
 
 <%
 Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttribute(WebKeys.SOCIAL_ACTIVITY_SETTINGS_MAP);
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("struts_action", "/social_activity/view");
 %>
 
 <liferay-ui:error-principal />

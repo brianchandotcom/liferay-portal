@@ -52,7 +52,7 @@ public class OrganizationAddressesFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/organization/addresses.jsp";
+		return "/organization/addresses.jsp";
 	}
 
 }

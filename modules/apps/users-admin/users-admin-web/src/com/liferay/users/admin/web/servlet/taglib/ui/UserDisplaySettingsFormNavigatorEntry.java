@@ -51,7 +51,7 @@ public class UserDisplaySettingsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/display_settings.jsp";
+		return "/user/display_settings.jsp";
 	}
 
 }

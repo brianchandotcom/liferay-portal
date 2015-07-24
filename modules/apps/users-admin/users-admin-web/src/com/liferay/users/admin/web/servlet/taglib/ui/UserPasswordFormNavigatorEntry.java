@@ -50,7 +50,7 @@ public class UserPasswordFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/password.jsp";
+		return "/user/password.jsp";
 	}
 
 }

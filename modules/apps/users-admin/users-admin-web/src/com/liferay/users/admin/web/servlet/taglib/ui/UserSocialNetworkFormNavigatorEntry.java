@@ -51,7 +51,7 @@ public class UserSocialNetworkFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/social_network.jsp";
+		return "/user/social_network.jsp";
 	}
 
 }

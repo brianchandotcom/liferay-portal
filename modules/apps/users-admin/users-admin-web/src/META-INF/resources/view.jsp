@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
@@ -86,7 +86,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 	<c:choose>
 		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
-			<liferay-util:include page="/html/portlet/users_admin/view_flat_organizations.jsp" />
+			<liferay-util:include page="/view_flat_organizations.jsp" />
 		</c:when>
 		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
 
@@ -94,7 +94,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			boolean organizationContextView = false;
 			%>
 
-			<%@ include file="/html/portlet/users_admin/view_flat_users.jspf" %>
+			<%@ include file="/view_flat_users.jspf" %>
 		</c:when>
 		<c:otherwise>
 
@@ -112,7 +112,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			request.setAttribute("view.jsp-viewUsersRedirect", viewUsersRedirect);
 			%>
 
-			<liferay-util:include page="/html/portlet/users_admin/view_tree.jsp" />
+			<liferay-util:include page="/view_tree.jsp" />
 		</c:otherwise>
 	</c:choose>
 </aui:form>

@@ -14,4 +14,4 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/organization_search_results_database.jspf" %>
+<%@ include file="/organization_search_results_database.jspf" %>

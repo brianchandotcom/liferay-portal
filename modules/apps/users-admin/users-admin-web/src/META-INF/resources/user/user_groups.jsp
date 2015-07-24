@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 User selUser = (User)request.getAttribute("user.selUser");
@@ -151,7 +151,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 						title: '<liferay-ui:message arguments="user-group" key="select-x" />',
 
 						<liferay-portlet:renderURL var="selectUserGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-							<portlet:param name="mvcPath" value="/html/portlet/users_admin/select_user_group.jsp" />
+							<portlet:param name="mvcPath" value="/select_user_group.jsp" />
 							<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
 						</liferay-portlet:renderURL>
 

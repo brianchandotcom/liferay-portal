@@ -51,7 +51,7 @@ public class UserAdditionalEmailAddressesFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/additional_email_addresses.jsp";
+		return "/user/additional_email_addresses.jsp";
 	}
 
 }

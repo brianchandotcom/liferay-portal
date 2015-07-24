@@ -14,4 +14,4 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/common/websites.jsp" %>
+<%@ include file="/common/websites.jsp" %>

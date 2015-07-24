@@ -51,7 +51,7 @@ public class UserAddressesFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/addresses.jsp";
+		return "/user/addresses.jsp";
 	}
 
 }

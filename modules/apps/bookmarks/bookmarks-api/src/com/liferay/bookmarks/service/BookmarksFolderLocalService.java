@@ -370,8 +370,8 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public void restoreFolderFromTrash(long userId, long folderId)
-		throws PortalException;
+	public com.liferay.bookmarks.model.BookmarksFolder restoreFolderFromTrash(
+		long userId, long folderId) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.

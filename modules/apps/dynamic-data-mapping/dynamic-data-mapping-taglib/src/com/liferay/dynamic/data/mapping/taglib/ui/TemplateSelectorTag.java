@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.taglib.ddm;
+package com.liferay.dynamic.data.mapping.taglib.ui;
 
+import com.liferay.dynamic.data.mapping.taglib.ui.base.BaseTemplateSelectorTag;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
-import com.liferay.taglib.ddm.base.BaseTemplateSelectorTag;
 
 import javax.servlet.http.HttpServletRequest;
 

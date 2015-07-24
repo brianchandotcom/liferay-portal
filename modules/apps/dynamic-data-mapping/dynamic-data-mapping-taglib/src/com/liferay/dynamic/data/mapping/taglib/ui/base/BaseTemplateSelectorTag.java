@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.taglib.ddm.base;
+package com.liferay.dynamic.data.mapping.taglib.ui.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -156,7 +156,7 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 	protected static final String _ATTRIBUTE_NAMESPACE = "ddm:template-selector:";
 
 	private static final String _PAGE =
-		"/html/taglib/ddm/template_selector/page.jsp";
+		"/taglib/ui/template_selector/page.jsp";
 
 	private java.lang.String _className = null;
 	private java.lang.String _defaultDisplayStyle = null;

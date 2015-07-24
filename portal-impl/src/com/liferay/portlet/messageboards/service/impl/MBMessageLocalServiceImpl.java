@@ -103,7 +103,6 @@ import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator
 import com.liferay.portlet.messageboards.util.comparator.ThreadLastPostDateComparator;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.util.TrashUtil;
-import com.liferay.util.SerializableUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -2293,15 +2292,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				modifiedDate.getTime());
 		}
 
-		SubscriptionSender subscriptionSenderPrototype = getSubscriptionSender(
+		SubscriptionSender subscriptionSender = getSubscriptionSender(
 			userId, message, messageURL, entryTitle, htmlFormat, messageBody,
 			categoryName, inReplyTo, fromName, fromAddress, replyToAddress,
 			emailAddress, fullName, subjectLocalizedValuesMap,
 			bodyLocalizedValuesMap, serviceContext);
-
-		SubscriptionSender subscriptionSender =
-			(SubscriptionSender)SerializableUtil.clone(
-				subscriptionSenderPrototype);
 
 		subscriptionSender.addPersistedSubscribers(
 			MBCategory.class.getName(), message.getGroupId());
@@ -2321,8 +2316,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (!MailingListThreadLocal.isSourceMailingList()) {
 			for (long categoryId : categoryIds) {
 				MBSubscriptionSender sourceMailingListSubscriptionSender =
-					(MBSubscriptionSender)SerializableUtil.clone(
-						subscriptionSenderPrototype);
+					getSubscriptionSender(
+						userId, message, messageURL, entryTitle, htmlFormat,
+						messageBody, categoryName, inReplyTo, fromName,
+						fromAddress, replyToAddress, emailAddress, fullName,
+						subjectLocalizedValuesMap, bodyLocalizedValuesMap,
+						serviceContext);
 
 				sourceMailingListSubscriptionSender.setBulk(false);
 

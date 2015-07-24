@@ -13,7 +13,7 @@ AUI.add(
 
 		var CSS_FIELD_TOOLBAR_CONTAINER = A.getClassName('form', 'builder', 'field', 'toolbar', 'container');
 
-		var CSS_FIELD_WRAPPER = A.getClassName('field', 'wrapper');
+		var CSS_FORM_GROUP = A.getClassName('form', 'group');
 
 		var TPL_SETTINGS_FORM = '<form action="javascript:;"><button class="hide" type="submit" /></form>';
 
@@ -193,7 +193,7 @@ AUI.add(
 
 				container.setData('field-instance', instance);
 
-				var wrapper = container.one('.' + CSS_FIELD_WRAPPER);
+				var wrapper = container.one('.' + CSS_FORM_GROUP);
 
 				wrapper.append('<div class="' + CSS_FIELD_TOOLBAR_CONTAINER + '"></div>');
 

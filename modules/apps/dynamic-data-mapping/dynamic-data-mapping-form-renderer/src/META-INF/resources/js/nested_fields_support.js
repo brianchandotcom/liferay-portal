@@ -82,7 +82,7 @@ AUI.add(
 
 				return nodes.filter(
 					function(item) {
-						var qualifiedName = item.one('.field-wrapper').getData('fieldname');
+						var qualifiedName = item.one('.form-group').getData('fieldname');
 
 						return fn.call(instance, qualifiedName, item);
 					}

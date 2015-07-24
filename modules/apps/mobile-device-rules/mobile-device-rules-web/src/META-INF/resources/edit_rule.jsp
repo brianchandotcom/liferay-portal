@@ -20,14 +20,14 @@
 String redirect = ParamUtil.getString(request, "redirect");
 String backURL = ParamUtil.getString(request, "backURL");
 
-MDRRule rule = (MDRRule)renderRequest.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE);
+MDRRule rule = (MDRRule)renderRequest.getAttribute(MDRWebKeys.MOBILE_DEVICE_RULES_RULE);
 
 long ruleId = BeanParamUtil.getLong(rule, request, "ruleId");
 
-String type = (String)renderRequest.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_TYPE);
-String editorJSP = (String)renderRequest.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_EDITOR_JSP);
+String type = (String)renderRequest.getAttribute(MDRWebKeys.MOBILE_DEVICE_RULES_RULE_TYPE);
+String editorJSP = (String)renderRequest.getAttribute(MDRWebKeys.MOBILE_DEVICE_RULES_RULE_EDITOR_JSP);
 
-MDRRuleGroup ruleGroup = (MDRRuleGroup)renderRequest.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP);
+MDRRuleGroup ruleGroup = (MDRRuleGroup)renderRequest.getAttribute(MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP);
 
 long ruleGroupId = BeanParamUtil.getLong(ruleGroup, request, "ruleGroupId");
 

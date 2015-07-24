@@ -15,7 +15,7 @@
 package com.liferay.mobile.device.rules.web.portlet.action;
 
 import com.liferay.mobile.device.rules.constants.MobileDeviceRulesPortletKeys;
-import com.liferay.mobile.device.rules.web.util.MobileDeviceRulesWebKeys;
+import com.liferay.mobile.device.rules.web.constants.MDRWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -54,8 +54,7 @@ public class EditRuleGroupMVCRenderCommand implements MVCRenderCommand {
 				ruleGroupId);
 
 			renderRequest.setAttribute(
-				MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP,
-				ruleGroup);
+				MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP, ruleGroup);
 
 			return "/edit_rule_group.jsp";
 		}

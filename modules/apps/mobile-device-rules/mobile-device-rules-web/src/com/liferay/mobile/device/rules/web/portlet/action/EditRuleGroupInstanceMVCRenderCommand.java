@@ -15,7 +15,7 @@
 package com.liferay.mobile.device.rules.web.portlet.action;
 
 import com.liferay.mobile.device.rules.constants.MobileDeviceRulesPortletKeys;
-import com.liferay.mobile.device.rules.web.util.MobileDeviceRulesWebKeys;
+import com.liferay.mobile.device.rules.web.constants.MDRWebKeys;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -56,8 +56,7 @@ public class EditRuleGroupInstanceMVCRenderCommand implements MVCRenderCommand {
 				ruleGroupInstanceId);
 
 		renderRequest.setAttribute(
-			MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_INSTANCE,
-			ruleGroupInstance);
+			MDRWebKeys.MOBILE_DEVICE_RULES_RULE_INSTANCE, ruleGroupInstance);
 
 		long ruleGroupId = BeanParamUtil.getLong(
 			ruleGroupInstance, renderRequest, "ruleGroupId");
@@ -66,7 +65,7 @@ public class EditRuleGroupInstanceMVCRenderCommand implements MVCRenderCommand {
 			ruleGroupId);
 
 		renderRequest.setAttribute(
-			MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP, ruleGroup);
+			MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP, ruleGroup);
 
 		return "/edit_rule_group_instance_priorities.jsp";
 	}

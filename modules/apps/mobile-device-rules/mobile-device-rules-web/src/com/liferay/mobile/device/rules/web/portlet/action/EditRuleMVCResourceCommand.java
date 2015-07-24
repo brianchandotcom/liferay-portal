@@ -15,7 +15,7 @@
 package com.liferay.mobile.device.rules.web.portlet.action;
 
 import com.liferay.mobile.device.rules.constants.MobileDeviceRulesPortletKeys;
-import com.liferay.mobile.device.rules.web.util.MobileDeviceRulesWebKeys;
+import com.liferay.mobile.device.rules.web.constants.MDRWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -51,7 +51,7 @@ public class EditRuleMVCResourceCommand extends BaseMVCResourceCommand {
 			MDRRule rule = MDRRuleServiceUtil.fetchRule(ruleId);
 
 			resourceRequest.setAttribute(
-				MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE, rule);
+				MDRWebKeys.MOBILE_DEVICE_RULES_RULE, rule);
 		}
 
 		String type = ParamUtil.getString(resourceRequest, "type");

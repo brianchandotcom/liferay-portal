@@ -20,7 +20,7 @@
 String redirect = ParamUtil.getString(request, "redirect");
 String backURL = ParamUtil.getString(request, "backURL");
 
-MDRRuleGroup ruleGroup = (MDRRuleGroup)renderRequest.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP);
+MDRRuleGroup ruleGroup = (MDRRuleGroup)renderRequest.getAttribute(MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP);
 
 long ruleGroupId = BeanParamUtil.getLong(ruleGroup, request, "ruleGroupId");
 %>

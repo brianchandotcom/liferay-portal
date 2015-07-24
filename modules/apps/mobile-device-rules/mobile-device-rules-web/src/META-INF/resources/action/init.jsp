@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-MDRAction action = (MDRAction)request.getAttribute(MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION);
+MDRAction action = (MDRAction)request.getAttribute(MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION);
 
 UnicodeProperties typeSettingsProperties = null;
 

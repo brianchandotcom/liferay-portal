@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.web.util;
+package com.liferay.mobile.device.rules.web.constants;
 
 /**
  * @author Mate Thurzo
  */
-public class MobileDeviceRulesWebKeys {
+public class MDRWebKeys {
 
 	public static final String MOBILE_DEVICE_RULES_RULE =
 		"MOBILE_DEVICE_RULES_RULE";

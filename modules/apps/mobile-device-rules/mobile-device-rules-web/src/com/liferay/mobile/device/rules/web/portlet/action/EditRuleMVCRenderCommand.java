@@ -15,7 +15,7 @@
 package com.liferay.mobile.device.rules.web.portlet.action;
 
 import com.liferay.mobile.device.rules.constants.MobileDeviceRulesPortletKeys;
-import com.liferay.mobile.device.rules.web.util.MobileDeviceRulesWebKeys;
+import com.liferay.mobile.device.rules.web.constants.MDRWebKeys;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,19 +56,18 @@ public class EditRuleMVCRenderCommand implements MVCRenderCommand {
 			MDRRule rule = MDRRuleServiceUtil.fetchRule(ruleId);
 
 			renderRequest.setAttribute(
-				MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE, rule);
+				MDRWebKeys.MOBILE_DEVICE_RULES_RULE, rule);
 
 			String type = BeanPropertiesUtil.getString(rule, "type");
 
 			renderRequest.setAttribute(
-				MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_TYPE, type);
+				MDRWebKeys.MOBILE_DEVICE_RULES_RULE_TYPE, type);
 
 			String editorJSP = ActionUtil.getRuleEditorJSPMethod.getEditorJSP(
 				type);
 
 			renderRequest.setAttribute(
-				MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_EDITOR_JSP,
-				editorJSP);
+				MDRWebKeys.MOBILE_DEVICE_RULES_RULE_EDITOR_JSP, editorJSP);
 
 			long ruleGroupId = BeanParamUtil.getLong(
 				rule, renderRequest, "ruleGroupId");
@@ -77,8 +76,7 @@ public class EditRuleMVCRenderCommand implements MVCRenderCommand {
 				ruleGroupId);
 
 			renderRequest.setAttribute(
-				MobileDeviceRulesWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP,
-				ruleGroup);
+				MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP, ruleGroup);
 
 			return "/edit_rule.jsp";
 		}

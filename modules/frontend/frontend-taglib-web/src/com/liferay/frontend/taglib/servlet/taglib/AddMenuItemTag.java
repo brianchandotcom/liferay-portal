@@ -26,8 +26,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AddMenuItemTag extends IncludeTag {
 
-	private static final String _PAGE = "/taglib/add_menu_item/page.jsp";
-
 	@Override
 	public int doStartTag() {
 		return EVAL_BODY_INCLUDE;
@@ -64,6 +62,8 @@ public class AddMenuItemTag extends IncludeTag {
 			addMenuItems.add(addMenuItem);
 		}
 	}
+
+	private static final String _PAGE = "/taglib/add_menu_item/page.jsp";
 
 	private String _title;
 	private String _url;

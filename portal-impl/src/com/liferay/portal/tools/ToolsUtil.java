@@ -464,19 +464,16 @@ public class ToolsUtil {
 	}
 
 	private static String _getPackagePath(File file) {
-		String fileName = StringUtil.replace(file.toString(), "\\", "/");
+		String fileName = StringUtil.replace(
+			file.toString(), StringPool.BACK_SLASH, StringPool.SLASH);
 
-		int x = fileName.indexOf("src/");
+		int x = fileName.lastIndexOf("/com/liferay/");
+		int y = fileName.lastIndexOf(StringPool.SLASH);
 
-		if (x == -1) {
-			x = fileName.indexOf("test/");
-		}
+		String packagePath = fileName.substring(x + 1, y);
 
-		int y = fileName.lastIndexOf("/");
-
-		fileName = fileName.substring(x + 4, y);
-
-		return StringUtil.replace(fileName, "/", ".");
+		return StringUtil.replace(
+			packagePath, StringPool.SLASH, StringPool.PERIOD);
 	}
 
 	private static SAXReader _getSAXReader() {

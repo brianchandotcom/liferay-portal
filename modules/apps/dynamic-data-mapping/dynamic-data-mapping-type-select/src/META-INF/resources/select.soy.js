@@ -5,7 +5,7 @@ if (typeof ddm == 'undefined') { var ddm = {}; }
 
 
 ddm.select = function(opt_data, opt_ignored) {
-var output = '\t<div class="form-group field-wrapper' + soy.$$escapeHtml(opt_data.visible ? '' : ' hide') + '" data-fieldname="' + soy.$$escapeHtml(opt_data.name) + '"><div class="form-group input-select-wrapper"><label class="control-label" for="' + soy.$$escapeHtml(opt_data.name) + '">' + soy.$$escapeHtml(opt_data.label) + ((opt_data.required) ? '<b>&nbsp;*</b>' : '') + '</label><select id="' + soy.$$escapeHtml(opt_data.name) + '" class="form-control" dir="' + soy.$$escapeHtml(opt_data.dir) + '" name="' + soy.$$escapeHtml(opt_data.name) + '" ' + soy.$$escapeHtml(opt_data.multiple) + '>';
+var output = '\t<div class="form-group' + soy.$$escapeHtml(opt_data.visible ? '' : ' hide') + '" data-fieldname="' + soy.$$escapeHtml(opt_data.name) + '"><div class="form-group input-select-wrapper"><label class="control-label" for="' + soy.$$escapeHtml(opt_data.name) + '">' + soy.$$escapeHtml(opt_data.label) + ((opt_data.required) ? '<b>&nbsp;*</b>' : '') + '</label><select id="' + soy.$$escapeHtml(opt_data.name) + '" class="form-control" dir="' + soy.$$escapeHtml(opt_data.dir) + '" name="' + soy.$$escapeHtml(opt_data.name) + '" ' + soy.$$escapeHtml(opt_data.multiple) + '>';
 var optionList23 = opt_data.options;
 var optionListLen23 = optionList23.length;
 for (var optionIndex23 = 0; optionIndex23 < optionListLen23; optionIndex23++) {

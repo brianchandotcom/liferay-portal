@@ -37,7 +37,6 @@ import com.liferay.portal.util.PortletKeys;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -124,12 +123,6 @@ public class PortalPreferencesImplTest {
 
 	@Test
 	public void testReset() throws Exception {
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
-
-		portalPreferences.setValue(_NAMESPACE, _KEY_1, _VALUE_1);
-
 		Callable<Void> callable = new Callable<Void>() {
 
 			@Override
@@ -153,13 +146,64 @@ public class PortalPreferencesImplTest {
 				new FutureTask<>(callable), new FutureTask<>(callable),
 				captureAppender);
 
-			portalPreferences =
+			PortalPreferences portalPreferences =
 				PortletPreferencesFactoryUtil.getPortalPreferences(
 					PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
 			String value = portalPreferences.getValue(_NAMESPACE, _KEY_1);
 
 			Assert.assertNull(value);
+		}
+	}
+
+	@Test
+	public void testSetSameKeyDifferentValues() throws Exception {
+		FutureTask<Void> futureTask1 = new FutureTask<>(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() {
+					PortalPreferences portalPreferences =
+						PortletPreferencesFactoryUtil.getPortalPreferences(
+							PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+
+					portalPreferences.setValues(
+						_NAMESPACE, _KEY_1,
+						new String[] {null, _VALUE_2});
+
+					return null;
+				}
+
+			});
+
+		FutureTask<Void> futureTask2 = new FutureTask<>(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() {
+					PortalPreferences portalPreferences =
+						PortletPreferencesFactoryUtil.getPortalPreferences(
+							PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+
+					portalPreferences.setValue(_NAMESPACE, _KEY_1, _VALUE_1);
+
+					return null;
+				}
+
+			});
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					DefaultTransactionExecutor.class.getName(), Level.ERROR)) {
+
+			updateSynchronously(futureTask1, futureTask2, captureAppender);
+
+			Assert.fail();
+		}
+		catch (Exception e) {
+			Throwable cause = e.getCause();
+
+			Assert.assertEquals(IllegalStateException.class, cause.getClass());
 		}
 	}
 
@@ -254,13 +298,12 @@ public class PortalPreferencesImplTest {
 
 			updateSynchronously(futureTask1, futureTask2, captureAppender);
 
-			PortalPreferences portalPreferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+			Assert.fail();
+		}
+		catch (Exception e) {
+			Throwable cause = e.getCause();
 
-			String value = portalPreferences.getValue(_NAMESPACE, _KEY_1);
-
-			Assert.assertTrue(value.equals(_VALUE_1) || value.equals(_VALUE_2));
+			Assert.assertEquals(IllegalStateException.class, cause.getClass());
 		}
 	}
 
@@ -355,15 +398,12 @@ public class PortalPreferencesImplTest {
 
 			updateSynchronously(futureTask1, futureTask2, captureAppender);
 
-			PortalPreferences portalPreferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+			Assert.fail();
+		}
+		catch (Exception e) {
+			Throwable cause = e.getCause();
 
-			String[] values = portalPreferences.getValues(_NAMESPACE, _KEY_1);
-
-			Assert.assertTrue(
-				Arrays.equals(values, _VALUES_1) ||
-					Arrays.equals(values, _VALUES_2));
+			Assert.assertEquals(IllegalStateException.class, cause.getClass());
 		}
 	}
 

@@ -481,21 +481,6 @@
 		<css-class-wrapper>license-manager</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>179</portlet-name>
-		<icon>/html/icons/social_activity.png</icon>
-		<struts-path>social_activity</struts-path>
-		<control-panel-entry-category>site_administration.configuration</control-panel-entry-category>
-		<control-panel-entry-weight>3.0</control-panel-entry-weight>
-		<control-panel-entry-class>com.liferay.portlet.socialactivity.SocialActivityControlPanelEntry</control-panel-entry-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<header-portlet-css>/html/portlet/social_activity/css/main.css</header-portlet-css>
-		<header-portlet-javascript>/html/portlet/social_activity/js/main.js</header-portlet-javascript>
-		<css-class-wrapper>portlet-social-activity</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>180</portlet-name>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>

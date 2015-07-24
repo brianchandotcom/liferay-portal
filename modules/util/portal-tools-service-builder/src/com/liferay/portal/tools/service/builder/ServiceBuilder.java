@@ -1188,6 +1188,17 @@ public class ServiceBuilder {
 		return mappingEntitiesPKList;
 	}
 
+	public int getMaxLength(String model, String field) {
+		Map<String, String> hints = ModelHintsUtil.getHints(model, field);
+
+		if (hints == null) {
+			return _DEFAULT_COLUMN_MAX_LENGTH;
+		}
+
+		return GetterUtil.getInteger(
+			hints.get("max-length"), _DEFAULT_COLUMN_MAX_LENGTH);
+	}
+
 	public Set<String> getModifiedFileNames() {
 		return _modifiedFileNames;
 	}
@@ -1387,14 +1398,10 @@ public class ServiceBuilder {
 			return "CLOB";
 		}
 		else if (type.equals("String")) {
-			Map<String, String> hints = ModelHintsUtil.getHints(model, field);
+			int maxLength = getMaxLength(model, field);
 
-			if (hints != null) {
-				int maxLength = GetterUtil.getInteger(hints.get("max-length"));
-
-				if (maxLength == 2000000) {
-					return "CLOB";
-				}
+			if (maxLength == 2000000) {
+				return "CLOB";
 			}
 
 			return "VARCHAR";
@@ -3885,7 +3892,6 @@ public class ServiceBuilder {
 			for (int i = 0; i < pkList.size(); i++) {
 				EntityColumn col = pkList.get(i);
 
-				String colName = col.getName();
 				String colType = col.getType();
 
 				sb.append("\t");
@@ -3912,15 +3918,9 @@ public class ServiceBuilder {
 					sb.append("TEXT");
 				}
 				else if (colType.equals("String")) {
-					Map<String, String> hints = ModelHintsUtil.getHints(
-						_packagePath + ".model." + entity.getName(), colName);
-
-					int maxLength = 75;
-
-					if (hints != null) {
-						maxLength = GetterUtil.getInteger(
-							hints.get("max-length"), maxLength);
-					}
+					int maxLength = getMaxLength(
+						_packagePath + ".model." + entity.getName(),
+						entity.getName());
 
 					if (col.isLocalized()) {
 						maxLength = 4000;
@@ -4035,15 +4035,8 @@ public class ServiceBuilder {
 				sb.append("TEXT");
 			}
 			else if (colType.equals("String")) {
-				Map<String, String> hints = ModelHintsUtil.getHints(
+				int maxLength = getMaxLength(
 					_packagePath + ".model." + entity.getName(), colName);
-
-				int maxLength = 75;
-
-				if (hints != null) {
-					maxLength = GetterUtil.getInteger(
-						hints.get("max-length"), maxLength);
-				}
 
 				if (col.isLocalized() && (maxLength < 4000)) {
 					maxLength = 4000;
@@ -5087,6 +5080,8 @@ public class ServiceBuilder {
 			_createSQLTables(updateSQLFile, createTableSQL, entity, false);
 		}
 	}
+
+	private static final int _DEFAULT_COLUMN_MAX_LENGTH = 75;
 
 	private static final int _SESSION_TYPE_LOCAL = 1;
 

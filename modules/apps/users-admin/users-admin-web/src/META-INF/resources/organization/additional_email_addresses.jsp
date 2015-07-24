@@ -14,4 +14,4 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/common/additional_email_addresses.jsp" %>
+<%@ include file="/common/additional_email_addresses.jsp" %>

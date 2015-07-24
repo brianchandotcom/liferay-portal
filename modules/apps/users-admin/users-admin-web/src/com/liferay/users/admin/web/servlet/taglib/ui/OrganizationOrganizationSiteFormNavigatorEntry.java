@@ -42,7 +42,7 @@ public class OrganizationOrganizationSiteFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/organization/organization_site.jsp";
+		return "/organization/organization_site.jsp";
 	}
 
 }

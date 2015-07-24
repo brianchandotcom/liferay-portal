@@ -51,7 +51,7 @@ public class UserUserGroupsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/user_groups.jsp";
+		return "/user/user_groups.jsp";
 	}
 
 }

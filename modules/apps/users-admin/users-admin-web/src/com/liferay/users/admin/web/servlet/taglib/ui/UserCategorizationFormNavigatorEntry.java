@@ -51,7 +51,7 @@ public class UserCategorizationFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/categorization.jsp";
+		return "/user/categorization.jsp";
 	}
 
 }

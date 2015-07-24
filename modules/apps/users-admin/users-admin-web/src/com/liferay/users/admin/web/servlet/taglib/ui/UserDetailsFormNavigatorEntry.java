@@ -40,7 +40,7 @@ public class UserDetailsFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/user/details.jsp";
+		return "/user/details.jsp";
 	}
 
 }

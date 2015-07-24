@@ -52,7 +52,7 @@ public class OrganizationPhoneNumbersFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/organization/phone_numbers.jsp";
+		return "/organization/phone_numbers.jsp";
 	}
 
 }

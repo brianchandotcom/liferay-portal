@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 User selUser = (User)request.getAttribute("user.selUser");
@@ -59,15 +59,15 @@ else {
 		/>
 		<liferay-ui:search-container-column-jsp
 			name="email"
-			path="/html/portlet/users_admin/user/announcements_checkbox.jsp"
+			path="/user/announcements_checkbox.jsp"
 		/>
 		<liferay-ui:search-container-column-jsp
 			name="sms"
-			path="/html/portlet/users_admin/user/announcements_checkbox.jsp"
+			path="/user/announcements_checkbox.jsp"
 		/>
 		<liferay-ui:search-container-column-jsp
 			name="website"
-			path="/html/portlet/users_admin/user/announcements_checkbox.jsp"
+			path="/user/announcements_checkbox.jsp"
 		/>
 	</liferay-ui:search-container-row>
 

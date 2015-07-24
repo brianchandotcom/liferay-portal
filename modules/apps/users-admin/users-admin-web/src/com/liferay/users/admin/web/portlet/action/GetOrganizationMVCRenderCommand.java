@@ -43,7 +43,7 @@ public abstract class GetOrganizationMVCRenderCommand
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return "/html/portlet/users_admin/error.jsp";
+				return "/error.jsp";
 			}
 			else {
 				throw new PortletException(e);

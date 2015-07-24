@@ -52,7 +52,7 @@ public class OrganizationCommentsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/users_admin/organization/comments.jsp";
+		return "/organization/comments.jsp";
 	}
 
 }

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String className = (String)request.getAttribute("addresses.className");
@@ -91,7 +91,7 @@ else {
 
 		<div class="lfr-form-row">
 			<div class="row-fields">
-				<%@ include file="/html/portlet/users_admin/common/addresses_address.jspf" %>
+				<%@ include file="/common/addresses_address.jspf" %>
 			</div>
 		</div>
 

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 User selUser = (User)request.getAttribute("user.selUser");
@@ -115,7 +115,7 @@ else {
 	%>
 
 	<aui:fieldset>
-		<%@ include file="/html/portlet/users_admin/user/password_reminder_query_questions.jspf" %>
+		<%@ include file="/user/password_reminder_query_questions.jspf" %>
 
 		<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
 			<div class="<%= hasCustomQuestion ? "" : "hide" %>" id="<portlet:namespace />customQuestionDiv">

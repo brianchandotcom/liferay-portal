@@ -12,28 +12,27 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.portlet;
+package com.liferay.dynamic.data.lists.upgrade.v1_0_0;
 
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
-import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Rafael Praxedes
+ * @author Levente Hudak
  */
-@Component(
-	immediate = true,
-	property = {"model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord"},
-	service = EditPortletProvider.class
-)
-public class DDLEditPortletProvider
-	extends BasePortletProvider implements EditPortletProvider {
+public class UpgradeLastPublishDate
+	extends com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate {
 
 	@Override
-	public String getPortletId() {
-		return DDLPortletKeys.DYNAMIC_DATA_LISTS;
+	protected void doUpgrade() throws Exception {
+		runSQL("alter table DDLRecord add lastPublishDate DATE null");
+
+		super.updateLastPublishDates(
+			DDLPortletKeys.DYNAMIC_DATA_LISTS, "DDLRecord");
+
+		runSQL("alter table DDLRecordSet add lastPublishDate DATE null");
+
+		super.updateLastPublishDates(
+			DDLPortletKeys.DYNAMIC_DATA_LISTS, "DDLRecordSet");
 	}
 
 }

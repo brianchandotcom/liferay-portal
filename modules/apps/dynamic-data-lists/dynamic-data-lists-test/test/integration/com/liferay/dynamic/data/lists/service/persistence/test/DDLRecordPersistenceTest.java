@@ -148,6 +148,8 @@ public class DDLRecordPersistenceTest {
 
 		newDDLRecord.setDisplayIndex(RandomTestUtil.nextInt());
 
+		newDDLRecord.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_ddlRecords.add(_persistence.update(newDDLRecord));
 
 		DDLRecord existingDDLRecord = _persistence.findByPrimaryKey(newDDLRecord.getPrimaryKey());
@@ -181,6 +183,9 @@ public class DDLRecordPersistenceTest {
 			newDDLRecord.getVersion());
 		Assert.assertEquals(existingDDLRecord.getDisplayIndex(),
 			newDDLRecord.getDisplayIndex());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDDLRecord.getLastPublishDate()),
+			Time.getShortTimestamp(newDDLRecord.getLastPublishDate()));
 	}
 
 	@Test
@@ -259,7 +264,8 @@ public class DDLRecordPersistenceTest {
 			"recordId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "versionUserId", true, "versionUserName",
 			true, "createDate", true, "modifiedDate", true, "DDMStorageId",
-			true, "recordSetId", true, "version", true, "displayIndex", true);
+			true, "recordSetId", true, "version", true, "displayIndex", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -502,6 +508,8 @@ public class DDLRecordPersistenceTest {
 		ddlRecord.setVersion(RandomTestUtil.randomString());
 
 		ddlRecord.setDisplayIndex(RandomTestUtil.nextInt());
+
+		ddlRecord.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_ddlRecords.add(_persistence.update(ddlRecord));
 

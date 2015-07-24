@@ -144,6 +144,10 @@
 								'liferay-ddm-form-renderer-util'
 							]
 						},
+						'liferay-ddm-form-renderer-field-events': {
+							path: 'field_events_support.js',
+							requires: []
+						},
 						'liferay-ddm-form-renderer-field-repetition': {
 							path: 'field_repetition_support.js',
 							requires: [
@@ -183,6 +187,7 @@
 						'liferay-ddm-form-renderer-validation': {
 							path: 'form_validation_support.js',
 							requires: [
+								'aui-alert',
 								'aui-request'
 							]
 						}

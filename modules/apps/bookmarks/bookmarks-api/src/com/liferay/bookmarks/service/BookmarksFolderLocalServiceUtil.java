@@ -445,9 +445,10 @@ public class BookmarksFolderLocalServiceUtil {
 			.rebuildTree(companyId, parentFolderId, parentTreePath, reindex);
 	}
 
-	public static void restoreFolderFromTrash(long userId, long folderId)
+	public static com.liferay.bookmarks.model.BookmarksFolder restoreFolderFromTrash(
+		long userId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().restoreFolderFromTrash(userId, folderId);
+		return getService().restoreFolderFromTrash(userId, folderId);
 	}
 
 	/**

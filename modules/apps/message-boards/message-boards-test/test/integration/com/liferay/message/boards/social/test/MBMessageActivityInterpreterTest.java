@@ -15,7 +15,6 @@
 package com.liferay.message.boards.social.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.message.boards.web.social.MBMessageActivityInterpreter;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -31,8 +30,6 @@ import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.social.MBActivityKeys;
-import com.liferay.portlet.social.model.SocialActivityInterpreter;
-import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
 
 import java.io.InputStream;
 
@@ -48,7 +45,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 @Sync
 public class MBMessageActivityInterpreterTest
-	extends BaseSocialActivityInterpreterTestCase {
+	extends BaseMBSocialActivityInterpreterTestCase {
 
 	@ClassRule
 	@Rule
@@ -89,15 +86,15 @@ public class MBMessageActivityInterpreterTest
 	}
 
 	@Override
-	protected SocialActivityInterpreter getActivityInterpreter() {
-		return new MBMessageActivityInterpreter();
-	}
-
-	@Override
 	protected int[] getActivityTypes() {
 		return new int[] {
 			MBActivityKeys.ADD_MESSAGE, MBActivityKeys.REPLY_MESSAGE
 		};
+	}
+
+	@Override
+	protected String getClassName() {
+		return MBMessage.class.getName();
 	}
 
 	@Override

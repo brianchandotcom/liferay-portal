@@ -15,7 +15,6 @@
 package com.liferay.message.boards.social.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.message.boards.web.social.MBThreadActivityInterpreter;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -26,11 +25,10 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
-import com.liferay.portlet.social.model.SocialActivityInterpreter;
-import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -42,7 +40,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 @Sync
 public class MBThreadActivityInterpreterTest
-	extends BaseSocialActivityInterpreterTestCase {
+	extends BaseMBSocialActivityInterpreterTestCase {
 
 	@ClassRule
 	@Rule
@@ -67,16 +65,16 @@ public class MBThreadActivityInterpreterTest
 	}
 
 	@Override
-	protected SocialActivityInterpreter getActivityInterpreter() {
-		return new MBThreadActivityInterpreter();
-	}
-
-	@Override
 	protected int[] getActivityTypes() {
 		return new int[] {
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH
 		};
+	}
+
+	@Override
+	protected String getClassName() {
+		return MBThread.class.getName();
 	}
 
 	@Override

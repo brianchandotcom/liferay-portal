@@ -2006,42 +2006,41 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		LocalizedValuesMap bodyLocalizedValuesMap,
 		ServiceContext serviceContext) {
 
-		MBSubscriptionSender subscriptionSenderPrototype =
-			new MBSubscriptionSender(MBPermission.RESOURCE_NAME);
+		MBSubscriptionSender subscriptionSender = new MBSubscriptionSender(
+			MBPermission.RESOURCE_NAME);
 
-		subscriptionSenderPrototype.setBulk(
-			PropsValues.MESSAGE_BOARDS_EMAIL_BULK);
-		subscriptionSenderPrototype.setClassName(message.getModelClassName());
-		subscriptionSenderPrototype.setClassPK(message.getMessageId());
-		subscriptionSenderPrototype.setCompanyId(message.getCompanyId());
-		subscriptionSenderPrototype.setContextAttribute(
+		subscriptionSender.setBulk(PropsValues.MESSAGE_BOARDS_EMAIL_BULK);
+		subscriptionSender.setClassName(message.getModelClassName());
+		subscriptionSender.setClassPK(message.getMessageId());
+		subscriptionSender.setCompanyId(message.getCompanyId());
+		subscriptionSender.setContextAttribute(
 			"[$MESSAGE_BODY$]", messageBody, false);
-		subscriptionSenderPrototype.setContextAttributes(
+		subscriptionSender.setContextAttributes(
 			"[$CATEGORY_NAME$]", categoryName, "[$MAILING_LIST_ADDRESS$]",
 			replyToAddress, "[$MESSAGE_ID$]", message.getMessageId(),
 			"[$MESSAGE_SUBJECT$]", entryTitle, "[$MESSAGE_URL$]", messageURL,
 			"[$MESSAGE_USER_ADDRESS$]", emailAddress, "[$MESSAGE_USER_NAME$]",
 			fullName);
-		subscriptionSenderPrototype.setCurrentUserId(userId);
-		subscriptionSenderPrototype.setEntryTitle(entryTitle);
-		subscriptionSenderPrototype.setEntryURL(messageURL);
-		subscriptionSenderPrototype.setFrom(fromAddress, fromName);
-		subscriptionSenderPrototype.setHtmlFormat(htmlFormat);
-		subscriptionSenderPrototype.setInReplyTo(inReplyTo);
+		subscriptionSender.setCurrentUserId(userId);
+		subscriptionSender.setEntryTitle(entryTitle);
+		subscriptionSender.setEntryURL(messageURL);
+		subscriptionSender.setFrom(fromAddress, fromName);
+		subscriptionSender.setHtmlFormat(htmlFormat);
+		subscriptionSender.setInReplyTo(inReplyTo);
 
 		if (bodyLocalizedValuesMap != null) {
-			subscriptionSenderPrototype.setLocalizedBodyMap(
+			subscriptionSender.setLocalizedBodyMap(
 				LocalizationUtil.getMap(bodyLocalizedValuesMap));
 		}
 
 		if (subjectLocalizedValuesMap != null) {
-			subscriptionSenderPrototype.setLocalizedSubjectMap(
+			subscriptionSender.setLocalizedSubjectMap(
 				LocalizationUtil.getMap(subjectLocalizedValuesMap));
 		}
 
 		Date modifiedDate = message.getModifiedDate();
 
-		subscriptionSenderPrototype.setMailId(
+		subscriptionSender.setMailId(
 			MBUtil.MESSAGE_POP_PORTLET_PREFIX, message.getCategoryId(),
 			message.getMessageId(), modifiedDate.getTime());
 
@@ -2053,15 +2052,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY;
 		}
 
-		subscriptionSenderPrototype.setNotificationType(notificationType);
+		subscriptionSender.setNotificationType(notificationType);
 
-		subscriptionSenderPrototype.setPortletId(PortletKeys.MESSAGE_BOARDS);
-		subscriptionSenderPrototype.setReplyToAddress(replyToAddress);
-		subscriptionSenderPrototype.setScopeGroupId(message.getGroupId());
-		subscriptionSenderPrototype.setServiceContext(serviceContext);
-		subscriptionSenderPrototype.setUniqueMailId(false);
+		subscriptionSender.setPortletId(PortletKeys.MESSAGE_BOARDS);
+		subscriptionSender.setReplyToAddress(replyToAddress);
+		subscriptionSender.setScopeGroupId(message.getGroupId());
+		subscriptionSender.setServiceContext(serviceContext);
+		subscriptionSender.setUniqueMailId(false);
 
-		return subscriptionSenderPrototype;
+		return subscriptionSender;
 	}
 
 	protected void notifyDiscussionSubscribers(

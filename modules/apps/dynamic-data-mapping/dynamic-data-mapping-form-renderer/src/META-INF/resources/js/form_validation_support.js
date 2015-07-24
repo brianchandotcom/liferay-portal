@@ -13,8 +13,8 @@ AUI.add(
 		FormValidationSupport.ATTRS = {
 			strings: {
 				value: {
-					defaultValidationMessage: 'Unkonwn error.',
-					requestErrorMessage: 'There was an error when trying to validate your form.'
+					defaultValidationMessage: Liferay.Language.get('unkonwn-error'),
+					requestErrorMessage: Liferay.Language.get('there-was-an-error-when-trying-to-validate-your-form')
 				}
 			},
 

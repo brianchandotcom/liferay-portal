@@ -430,18 +430,6 @@
 		<put name="portlet_content" value="/portlet/sites_directory/view.jsp" />
 	</definition>
 
-	<!-- Social Activity -->
-
-	<definition name="portlet.social_activity" extends="portlet" />
-
-	<definition name="portlet.social_activity.error" extends="portlet.social_activity">
-		<put name="portlet_content" value="/portlet/social_activity/error.jsp" />
-	</definition>
-
-	<definition name="portlet.social_activity.view" extends="portlet.social_activity">
-		<put name="portlet_content" value="/portlet/social_activity/view.jsp" />
-	</definition>
-
 	<!-- Software Catalog -->
 
 	<definition name="portlet.software_catalog" extends="portlet" />

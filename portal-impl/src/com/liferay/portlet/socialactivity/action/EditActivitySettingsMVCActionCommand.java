@@ -17,50 +17,43 @@ package com.liferay.portlet.socialactivity.action;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.comparator.ModelResourceComparator;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.social.model.SocialActivityCounterConstants;
 import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
-import com.liferay.portlet.social.model.SocialActivitySetting;
 import com.liferay.portlet.social.service.SocialActivitySettingServiceUtil;
-import com.liferay.portlet.social.util.SocialConfigurationUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
- * @author Zsolt Szabó
- * @author Zsolt Berentey
+ * @author Roberto Díaz
  */
-public class ViewAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.SOCIAL_ACTIVITY,
+		"javax.portlet.name=" + PortletKeys.SOCIAL_ACTIVITY,
+		"mvc.command.name=/social_activity/edit_activity_settings"
+	},
+	service = MVCActionCommand.class
+)
+public class EditActivitySettingsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -80,85 +73,6 @@ public class ViewAction extends PortletAction {
 				throw e;
 			}
 		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		try {
-			renderRequest.setAttribute(
-				WebKeys.SOCIAL_ACTIVITY_SETTINGS_MAP,
-				getActivitySettingsMap(themeDisplay));
-		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.social_activity.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward("portlet.social_activity.view");
-	}
-
-	protected Map<String, Boolean> getActivitySettingsMap(
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		Map<String, Boolean> activitySettingsMap = new LinkedHashMap<>();
-
-		List<SocialActivitySetting> activitySettings =
-			SocialActivitySettingServiceUtil.getActivitySettings(
-				themeDisplay.getSiteGroupIdOrLiveGroupId());
-
-		String[] modelNames = SocialConfigurationUtil.getActivityModelNames();
-
-		Comparator<String> comparator = new ModelResourceComparator(
-			themeDisplay.getLocale());
-
-		Arrays.sort(modelNames, comparator);
-
-		for (String modelName : modelNames) {
-			List<SocialActivityDefinition> activityDefinitions =
-				SocialActivitySettingServiceUtil.getActivityDefinitions(
-					themeDisplay.getScopeGroupId(), modelName);
-
-			for (SocialActivityDefinition activityDefinition :
-					activityDefinitions) {
-
-				if (activityDefinition.isCountersEnabled()) {
-					activitySettingsMap.put(modelName, false);
-
-					break;
-				}
-			}
-		}
-
-		for (SocialActivitySetting activitySetting : activitySettings) {
-			String name = activitySetting.getName();
-
-			if (name.equals("enabled") &&
-				activitySettingsMap.containsKey(
-					activitySetting.getClassName())) {
-
-				activitySettingsMap.put(
-					activitySetting.getClassName(),
-					GetterUtil.getBoolean(activitySetting.getValue()));
-			}
-		}
-
-		return activitySettingsMap;
 	}
 
 	protected SocialActivityCounterDefinition updateActivityCounterDefinition(

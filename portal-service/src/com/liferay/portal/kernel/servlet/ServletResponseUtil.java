@@ -505,8 +505,7 @@ public class ServletResponseUtil {
 					contentLength += bytes.length;
 				}
 
-				response.setHeader(
-					HttpHeaders.CONTENT_LENGTH, String.valueOf(contentLength));
+				setContentLength(response, contentLength);
 
 				response.flushBuffer();
 
@@ -585,8 +584,7 @@ public class ServletResponseUtil {
 			try (FileChannel fileChannel = fileInputStream.getChannel()) {
 				long contentLength = fileChannel.size();
 
-				response.setHeader(
-					HttpHeaders.CONTENT_LENGTH, String.valueOf(contentLength));
+				setContentLength(response, contentLength);
 
 				response.flushBuffer();
 
@@ -685,6 +683,13 @@ public class ServletResponseUtil {
 		return copyRange(
 			new RandomAccessInputStream(inputStream), outputStream, start,
 			length);
+	}
+
+	protected static void setContentLength(
+		HttpServletResponse response, long contentLength) {
+
+		response.setHeader(
+			HttpHeaders.CONTENT_LENGTH, String.valueOf(contentLength));
 	}
 
 	protected static void setHeaders(

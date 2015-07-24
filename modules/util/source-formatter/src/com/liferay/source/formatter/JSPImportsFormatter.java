@@ -14,6 +14,9 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.tools.ImportPackage;
+import com.liferay.portal.tools.ImportsFormatter;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

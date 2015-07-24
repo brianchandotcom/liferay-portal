@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ddm/html/init.jsp" %>
+<%@ include file="/taglib/ui/html/init.jsp" %>
 
 <div class="lfr-ddm-container" id="<%= randomNamespace %>">
 	<c:if test="<%= ddmForm != null %>">

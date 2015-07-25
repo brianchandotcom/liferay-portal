@@ -118,6 +118,17 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="print-test-class-group">
+		<attribute name="test.class.group.index" />
+		<sequential>
+			<property file="${project.dir}/test.class.file.names.properties" />
+
+			<propertycopy from="TEST_CLASS_GROUP_@{test.class.group.index}" name="test.class.group" />
+
+			<echo>TEST_CLASS_GROUP_@{test.class.group.index}=${test.class.group}</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="run-batch-test">
 		<attribute name="test.class.group.index" />
 		<element name="test-action" />
@@ -176,6 +187,8 @@
 				<test-action>
 					<database-test-run-test database.type="@{database.type}">
 						<test-action>
+							<print-test-class-group test.class.group.index="@{test.class.group.index}" />
+
 							<ant dir="portal-impl" target="test-class-group" inheritAll="false">
 								<property name="database.type" value="@{database.type}" />
 								<property name="test.class.group.index" value="@{test.class.group.index}" />
@@ -195,6 +208,8 @@
 				<test-action>
 					<database-test-run-test database.type="@{database.type}">
 						<test-action>
+							<print-test-class-group test.class.group.index="@{test.class.group.index}" />
+
 							<antcall target="prepare-portal-ext-properties" inheritAll="false">
 								<param name="database.type" value="@{database.type}" />
 							</antcall>

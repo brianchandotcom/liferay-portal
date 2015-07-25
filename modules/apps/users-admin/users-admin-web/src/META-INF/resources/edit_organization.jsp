@@ -39,7 +39,7 @@ else if (parentOrganizationId > 0) {
 %>
 
 <aui:nav-bar>
-	<liferay-util:include page="/toolbar.jsp">
+	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="toolbarItem" value='<%= (organization == null) ? "add" : "view" %>' />
 	</liferay-util:include>
 </aui:nav-bar>

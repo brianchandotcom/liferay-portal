@@ -41,7 +41,6 @@
 				<value>com.liferay.portlet.asset.model.AssetEntry</value>
 			</list>
 		</property>
-		<property name="searchPermissionChecker" ref="com.liferay.portal.kernel.search.SearchPermissionChecker" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.search.SearchPermissionChecker" class="com.liferay.portal.search.SearchPermissionCheckerImpl" />
 	<bean id="com.liferay.portal.kernel.search.StringQueryFactory" class="com.liferay.portal.kernel.search.generic.StringQueryFactoryImpl" />

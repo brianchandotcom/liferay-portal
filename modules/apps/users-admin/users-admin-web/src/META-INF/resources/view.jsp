@@ -86,7 +86,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 	<c:choose>
 		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
-			<liferay-util:include page="/view_flat_organizations.jsp" />
+			<liferay-util:include page="/view_flat_organizations.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
 
@@ -112,7 +112,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			request.setAttribute("view.jsp-viewUsersRedirect", viewUsersRedirect);
 			%>
 
-			<liferay-util:include page="/view_tree.jsp" />
+			<liferay-util:include page="/view_tree.jsp" servletContext="<%= application %>" />
 		</c:otherwise>
 	</c:choose>
 </aui:form>

@@ -91,7 +91,7 @@ if (organization != null) {
 	</aui:nav>
 
 	<aui:nav-bar>
-		<liferay-util:include page="/toolbar.jsp" />
+		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
 		<aui:nav-bar-search>
 			<div class="form-search">
@@ -179,23 +179,23 @@ if (organization != null) {
 
 						<div class="organization-information">
 							<div class="section">
-								<liferay-util:include page="/html/portlet/directory/common/additional_email_addresses.jsp" />
+								<liferay-util:include page="/html/portlet/directory/common/additional_email_addresses.jsp" portletId="<%= PortletKeys.DIRECTORY %>" />
 							</div>
 
 							<div class="section">
-								<liferay-util:include page="/html/portlet/directory/common/websites.jsp" />
+								<liferay-util:include page="/html/portlet/directory/common/websites.jsp" portletId="<%= PortletKeys.DIRECTORY %>" />
 							</div>
 
 							<div class="section">
-								<liferay-util:include page="/html/portlet/directory/organization/addresses.jsp" />
+								<liferay-util:include page="/html/portlet/directory/organization/addresses.jsp" portletId="<%= PortletKeys.DIRECTORY %>" />
 							</div>
 
 							<div class="section">
-								<liferay-util:include page="/html/portlet/directory/organization/phone_numbers.jsp" />
+								<liferay-util:include page="/html/portlet/directory/organization/phone_numbers.jsp" portletId="<%= PortletKeys.DIRECTORY %>" />
 							</div>
 
 							<div class="section">
-								<liferay-util:include page="/html/portlet/directory/organization/comments.jsp" />
+								<liferay-util:include page="/html/portlet/directory/organization/comments.jsp" portletId="<%= PortletKeys.DIRECTORY %>" />
 							</div>
 						</div>
 
@@ -442,7 +442,7 @@ if (organization != null) {
 					request.setAttribute("view_organizations_tree.jsp-organization", organization);
 					%>
 
-					<liferay-util:include page="/organization_action.jsp" />
+					<liferay-util:include page="/organization_action.jsp" servletContext="<%= application %>" />
 				</aui:col>
 
 			</c:if>

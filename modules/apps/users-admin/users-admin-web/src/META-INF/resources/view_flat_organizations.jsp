@@ -93,7 +93,7 @@ if (filterManageableOrganizations) {
 					request.setAttribute(WebKeys.SEARCH_CONTAINER, organizationSearchContainer);
 					%>
 
-					<liferay-util:include page="/toolbar.jsp" />
+					<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
 					<aui:nav-bar-search>
 						<liferay-ui:organization-search-form />

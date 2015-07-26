@@ -111,6 +111,8 @@ public class ServiceContext implements Cloneable, Serializable {
 		serviceContext.setLanguageId(getLanguageId());
 		serviceContext.setLayoutFullURL(getLayoutFullURL());
 		serviceContext.setLayoutURL(getLayoutURL());
+		serviceContext.setModelPermissions(
+			(ModelPermissions)_modelPermissions.clone());
 		serviceContext.setModifiedDate(getModifiedDate());
 		serviceContext.setPathFriendlyURLPrivateGroup(
 			getPathFriendlyURLPrivateGroup());

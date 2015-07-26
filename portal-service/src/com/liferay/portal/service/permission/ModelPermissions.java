@@ -21,13 +21,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Jorge Ferrer
  */
-public class ModelPermissions implements Serializable {
+public class ModelPermissions implements Cloneable, Serializable {
 
 	public void addRolePermissions(String roleName, String actionId) {
 		List<String> roleNames = getRolesWithPermission(actionId);
@@ -45,6 +43,13 @@ public class ModelPermissions implements Serializable {
 		for (String actionId : actionIds) {
 			addRolePermissions(roleName, actionId);
 		}
+	}
+
+	@Override
+	public Object clone() {
+		return new ModelPermissions(
+			(HashMap)_actionsMap.clone(), (HashSet)_roleNames.clone(),
+			(HashMap)_roleNamesMap.clone());
 	}
 
 	public List<String> getActionIds(String roleName) {
@@ -79,8 +84,16 @@ public class ModelPermissions implements Serializable {
 		return _roleNames.isEmpty();
 	}
 
-	private final Map<String, List<String>> _actionsMap = new HashMap<>();
-	private final Set<String> _roleNames = new HashSet<>();
-	private final Map<String, List<String>> _roleNamesMap = new HashMap<>();
+	protected ModelPermissions(
+		HashMap actionsMap, HashSet roleNames, HashMap roleNamesMap) {
+
+		_actionsMap.putAll(actionsMap);
+		_roleNames.addAll(roleNames);
+		_roleNamesMap.putAll(roleNamesMap);
+	}
+
+	private final HashMap<String, List<String>> _actionsMap = new HashMap<>();
+	private final HashSet<String> _roleNames = new HashSet<>();
+	private final HashMap<String, List<String>> _roleNamesMap = new HashMap<>();
 
 }

@@ -7005,7 +7005,7 @@ public class JournalArticleLocalServiceImpl
 			getJournalGroupServiceConfiguration(long groupId)
 		throws ModuleConfigurationException {
 
-		return moduleConfigurationFactory.getConfiguration(
+		return moduleConfigurationFactory.getModuleConfiguration(
 			JournalGroupServiceConfiguration.class,
 			new GroupServiceSettingsLocator(
 				groupId, JournalConstants.SERVICE_NAME));

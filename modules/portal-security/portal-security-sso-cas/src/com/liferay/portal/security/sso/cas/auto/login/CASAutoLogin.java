@@ -93,7 +93,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 		long companyId = PortalUtil.getCompanyId(request);
 
 		CASConfiguration casConfiguration =
-			_moduleConfigurationFactory.getConfiguration(
+			_moduleConfigurationFactory.getModuleConfiguration(
 				CASConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, CASConstants.SERVICE_NAME));

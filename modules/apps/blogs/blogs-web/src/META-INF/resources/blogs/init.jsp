@@ -28,9 +28,9 @@ if (Validator.isNotNull(portletResource)) {
 
 BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId);
 
-BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = ModuleConfigurationFactoryUtil.getConfiguration(BlogsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
+BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = ModuleConfigurationFactoryUtil.getModuleConfiguration(BlogsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
 BlogsPortletInstanceSettingsHelper blogsPortletInstanceSettingsHelper = new BlogsPortletInstanceSettingsHelper(request, blogsPortletInstanceConfiguration);
-BlogsGroupServiceConfiguration rssBlogsGroupServiceConfiguration = ModuleConfigurationFactoryUtil.getConfiguration(BlogsGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(themeDisplay.getSiteGroupId(), BlogsConstants.SERVICE_NAME));
+BlogsGroupServiceConfiguration rssBlogsGroupServiceConfiguration = ModuleConfigurationFactoryUtil.getModuleConfiguration(BlogsGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(themeDisplay.getSiteGroupId(), BlogsConstants.SERVICE_NAME));
 
 int pageAbstractLength = PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH;
 %>

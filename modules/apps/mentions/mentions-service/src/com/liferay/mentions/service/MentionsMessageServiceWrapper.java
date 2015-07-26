@@ -90,7 +90,7 @@ public class MentionsMessageServiceWrapper
 		}
 
 		MentionsGroupServiceConfiguration mentionsGroupServiceConfiguration =
-			_moduleConfigurationFactory.getConfiguration(
+			_moduleConfigurationFactory.getModuleConfiguration(
 				MentionsGroupServiceConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					message.getCompanyId(), MentionsConstants.SERVICE_NAME));

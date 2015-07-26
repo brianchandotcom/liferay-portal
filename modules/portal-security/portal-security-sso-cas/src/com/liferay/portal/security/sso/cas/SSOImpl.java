@@ -90,7 +90,7 @@ public class SSOImpl implements SSO {
 	private CASConfiguration getCASConfiguration(long companyId) {
 		try {
 			CASConfiguration casCompanyServiceSettings =
-				_moduleConfigurationFactory.getConfiguration(
+				_moduleConfigurationFactory.getModuleConfiguration(
 					CASConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, CASConstants.SERVICE_NAME));

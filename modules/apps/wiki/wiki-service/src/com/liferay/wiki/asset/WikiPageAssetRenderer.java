@@ -76,7 +76,7 @@ public class WikiPageAssetRenderer
 		_page = page;
 
 		_wikiGroupServiceConfiguration =
-			ModuleConfigurationFactoryUtil.getConfiguration(
+			ModuleConfigurationFactoryUtil.getModuleConfiguration(
 				WikiGroupServiceOverriddenConfiguration.class,
 			new GroupServiceSettingsLocator(
 				page.getGroupId(), WikiConstants.SERVICE_NAME));

@@ -24,14 +24,14 @@ import com.liferay.registry.collections.ServiceTrackerList;
  */
 public class ModuleConfigurationFactoryUtil {
 
-	public static <T> T getConfiguration(
+	public static <T> T getModuleConfiguration(
 			Class<T> clazz, SettingsLocator settingsLocator)
 		throws ModuleConfigurationException {
 
 		ModuleConfigurationFactory moduleConfigurationFactory =
 			getModuleConfigurationFactory();
 
-		return moduleConfigurationFactory.getConfiguration(
+		return moduleConfigurationFactory.getModuleConfiguration(
 			clazz, settingsLocator);
 	}
 

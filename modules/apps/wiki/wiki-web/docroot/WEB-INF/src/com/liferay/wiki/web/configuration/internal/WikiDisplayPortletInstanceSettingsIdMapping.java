@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.settings.internal;
+package com.liferay.wiki.web.configuration.internal;
 
 import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Iván Zaera
  */
 @Component
-public class WikiAdminPortletInstanceSettingsIdMapping
+public class WikiDisplayPortletInstanceSettingsIdMapping
 	implements SettingsIdMapping {
 
 	@Override
@@ -34,7 +34,7 @@ public class WikiAdminPortletInstanceSettingsIdMapping
 
 	@Override
 	public String getSettingsId() {
-		return WikiPortletKeys.WIKI_ADMIN;
+		return WikiPortletKeys.WIKI_DISPLAY;
 	}
 
 }

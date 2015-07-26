@@ -12,17 +12,21 @@
  * details.
  */
 
-package com.liferay.wiki.web.settings;
+package com.liferay.wiki.web.configuration;
 
-import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.wiki.web.configuration.WikiPortletInstanceConfiguration;
-import com.liferay.wiki.web.settings.internal.WikiPortletInstanceConfigurationOverrideImpl;
+import java.io.IOException;
+
+import javax.portlet.ValidatorException;
 
 /**
  * @author Iván Zaera
  */
-@Settings.OverrideClass(WikiPortletInstanceConfigurationOverrideImpl.class)
-public interface WikiPortletInstanceOverriddenConfiguration
-	extends WikiPortletInstanceConfiguration,
-		WikiPortletInstanceConfigurationOverride {
+public interface WikiPortletInstanceConfigurationOverride {
+
+	public void setHiddenNodes(String[] hiddenNodes);
+
+	public void setVisibleNodes(String[] visibleNodes);
+
+	public void store() throws IOException, ValidatorException;
+
 }

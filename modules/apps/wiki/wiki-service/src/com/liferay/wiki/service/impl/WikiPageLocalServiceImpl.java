@@ -2119,7 +2119,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			// Social
 
-			WikiGroupServiceOverriddenConfiguration
+			WikiGroupServiceConfiguration
 				wikiGroupServiceConfiguration =
 					moduleConfigurationFactory.getConfiguration(
 						WikiGroupServiceOverriddenConfiguration.class,

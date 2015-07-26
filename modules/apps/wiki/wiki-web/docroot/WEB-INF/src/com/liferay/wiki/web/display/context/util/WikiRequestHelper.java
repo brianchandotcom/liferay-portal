@@ -27,7 +27,7 @@ import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.settings.WikiGroupServiceSettings;
-import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
+import com.liferay.wiki.web.settings.WikiPortletInstanceOverriddenConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -89,30 +89,32 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 		return _wikiPage;
 	}
 
-	public WikiPortletInstanceSettings getWikiPortletInstanceSettings() {
+	public WikiPortletInstanceOverriddenConfiguration
+		getWikiPortletInstanceSettings() {
+
 		try {
-			if (_wikiPortletInstanceSettings == null) {
+			if (_wikiPortletInstanceConfiguration == null) {
 				String portletResource = getPortletResource();
 
 				if (Validator.isNotNull(portletResource)) {
-					_wikiPortletInstanceSettings =
+					_wikiPortletInstanceConfiguration =
 						ModuleConfigurationFactoryUtil.getConfiguration(
-							WikiPortletInstanceSettings.class,
+							WikiPortletInstanceOverriddenConfiguration.class,
 							new ParameterMapSettingsLocator(
 								getRequest().getParameterMap(),
 								new PortletInstanceSettingsLocator(
 									getLayout(), getResourcePortletId())));
 				}
 				else {
-					_wikiPortletInstanceSettings =
+					_wikiPortletInstanceConfiguration =
 						ModuleConfigurationFactoryUtil.getConfiguration(
-							WikiPortletInstanceSettings.class,
+							WikiPortletInstanceOverriddenConfiguration.class,
 							new PortletInstanceSettingsLocator(
 								getLayout(), getPortletId()));
 				}
 			}
 
-			return _wikiPortletInstanceSettings;
+			return _wikiPortletInstanceConfiguration;
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
@@ -122,6 +124,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 	private Long _categoryId;
 	private WikiGroupServiceSettings _wikiGroupServiceSettings;
 	private WikiPage _wikiPage;
-	private WikiPortletInstanceSettings _wikiPortletInstanceSettings;
+	private WikiPortletInstanceOverriddenConfiguration
+		_wikiPortletInstanceConfiguration;
 
 }

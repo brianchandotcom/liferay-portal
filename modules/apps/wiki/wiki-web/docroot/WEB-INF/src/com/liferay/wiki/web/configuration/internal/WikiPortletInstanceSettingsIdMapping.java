@@ -12,21 +12,28 @@
  * details.
  */
 
-package com.liferay.wiki.web.settings;
+package com.liferay.wiki.web.configuration.internal;
 
-import java.io.IOException;
+import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.web.configuration.WikiPortletInstanceConfiguration;
 
-import javax.portlet.ValidatorException;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Iván Zaera
  */
-public interface WikiPortletInstanceConfigurationOverride {
+@Component
+public class WikiPortletInstanceSettingsIdMapping implements SettingsIdMapping {
 
-	public void setHiddenNodes(String[] hiddenNodes);
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return WikiPortletInstanceConfiguration.class;
+	}
 
-	public void setVisibleNodes(String[] visibleNodes);
-
-	public void store() throws IOException, ValidatorException;
+	@Override
+	public String getSettingsId() {
+		return WikiPortletKeys.WIKI;
+	}
 
 }

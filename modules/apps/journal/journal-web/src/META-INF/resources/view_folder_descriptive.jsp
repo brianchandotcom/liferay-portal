@@ -40,4 +40,5 @@ PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempR
 	thumbnailStyle="max-height: 128px; max-width: 128px;"
 	title="<%= HtmlUtil.escape(folder.getName()) %>"
 	url="<%= tempRowURL.toString() %>"
+	view="lexicon"
 />

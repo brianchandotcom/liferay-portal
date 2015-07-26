@@ -69,4 +69,5 @@ String articleImageURL = article.getArticleImageURL(themeDisplay);
 	title="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
 	url="<%= tempRowURL.toString() %>"
 	version="<%= String.valueOf(article.getVersion()) %>"
+	view="lexicon"
 />

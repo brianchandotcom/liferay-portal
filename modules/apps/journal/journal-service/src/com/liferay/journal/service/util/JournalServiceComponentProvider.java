@@ -15,7 +15,6 @@
 package com.liferay.journal.service.util;
 
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -50,20 +49,11 @@ public class JournalServiceComponentProvider {
 		return _journalGroupServiceConfiguration;
 	}
 
-	public SettingsFactory getSettingsFactory() {
-		return _settingsFactory;
-	}
-
 	@Reference
 	public void setJournalGroupServiceConfiguration(
 		JournalGroupServiceConfiguration journalGroupServiceConfiguration) {
 
 		_journalGroupServiceConfiguration = journalGroupServiceConfiguration;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
 	}
 
 	protected void unsetJournalGroupServiceConfiguration(
@@ -76,6 +66,5 @@ public class JournalServiceComponentProvider {
 		_journalServiceComponentProvider;
 
 	private JournalGroupServiceConfiguration _journalGroupServiceConfiguration;
-	private SettingsFactory _settingsFactory;
 
 }

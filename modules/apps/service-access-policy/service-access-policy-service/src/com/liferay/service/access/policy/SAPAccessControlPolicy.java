@@ -14,6 +14,7 @@
 
 package com.liferay.service.access.policy;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.access.control.AccessControlPolicy;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicyThreadLocal;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -62,7 +62,7 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 		SAPConfiguration sapConfiguration = null;
 
 		try {
-			sapConfiguration = _settingsFactory.getSettings(
+			sapConfiguration = _moduleConfigurationFactory.getConfiguration(
 				SAPConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					CompanyThreadLocal.getCompanyId(),
@@ -251,18 +251,20 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 	}
 
 	@Reference(unbind = "-")
+	protected void setModuleConfigurationFactory(
+		ModuleConfigurationFactory moduleConfigurationFactory) {
+
+		_moduleConfigurationFactory = moduleConfigurationFactory;
+	}
+
+	@Reference(unbind = "-")
 	protected void setSAPEntryLocalService(
 		SAPEntryLocalService sapEntryLocalService) {
 
 		_sapEntryLocalService = sapEntryLocalService;
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
-	}
-
+	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
 	private SAPEntryLocalService _sapEntryLocalService;
-	private volatile SettingsFactory _settingsFactory;
 
 }

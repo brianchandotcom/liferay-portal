@@ -111,41 +111,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	}
 
 	@Override
-	public <T> T getSettings(Class<T> clazz, SettingsLocator settingsLocator)
-		throws SettingsException {
-
-		Settings settings = getSettings(settingsLocator);
-
-		Class<?> settingsOverrideClass = getOverrideClass(clazz);
-
-		try {
-			TypedSettings typedSettings = new TypedSettings(settings);
-
-			Object settingsOverrideInstance = null;
-
-			if (settingsOverrideClass != null) {
-				Constructor<?> constructor =
-					settingsOverrideClass.getConstructor(TypedSettings.class);
-
-				settingsOverrideInstance = constructor.newInstance(
-					typedSettings);
-			}
-
-			SettingsInvocationHandler<T> settingsInvocationHandler =
-				new SettingsInvocationHandler<>(
-					clazz, settingsOverrideInstance, typedSettings);
-
-			return settingsInvocationHandler.createProxy();
-		}
-		catch (NoSuchMethodException | InvocationTargetException |
-				InstantiationException | IllegalAccessException e) {
-
-			throw new SettingsException(
-				"Unable to load settings of type " + clazz.getName(), e);
-		}
-	}
-
-	@Override
 	public Settings getSettings(SettingsLocator settingsLocator)
 		throws SettingsException {
 
@@ -202,21 +167,6 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		catch (PortalException pe) {
 			throw new SettingsException(pe);
 		}
-	}
-
-	protected <T> Class<?> getOverrideClass(Class<T> clazz) {
-		Settings.OverrideClass overrideClass = clazz.getAnnotation(
-			Settings.OverrideClass.class);
-
-		if (overrideClass == null) {
-			return null;
-		}
-
-		if (overrideClass.value() == Object.class) {
-			return null;
-		}
-
-		return overrideClass.value();
 	}
 
 	protected PortletItem getPortletItem(

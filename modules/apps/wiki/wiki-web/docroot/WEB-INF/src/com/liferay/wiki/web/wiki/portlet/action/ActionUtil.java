@@ -14,9 +14,9 @@
 
 package com.liferay.wiki.web.wiki.portlet.action;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -73,14 +73,8 @@ public class ActionUtil {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		WikiWebComponentProvider wikiWebComponentProvider =
-			WikiWebComponentProvider.getWikiWebComponentProvider();
-
-		SettingsFactory settingsFactory =
-			wikiWebComponentProvider.getSettingsFactory();
-
 		WikiPortletInstanceSettings wikiPortletInstanceSettings =
-			settingsFactory.getSettings(
+			ModuleConfigurationFactoryUtil.getConfiguration(
 				WikiPortletInstanceSettings.class,
 				new PortletInstanceSettingsLocator(
 					themeDisplay.getLayout(), portletDisplay.getId()));

@@ -14,12 +14,12 @@
 
 package com.liferay.portal.security.sso.cas;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.sso.SSO;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
 
@@ -80,15 +80,17 @@ public class SSOImpl implements SSO {
 		return casConfiguration.enabled();
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setModuleConfigurationFactory(
+		ModuleConfigurationFactory moduleConfigurationFactory) {
+
+		_moduleConfigurationFactory = moduleConfigurationFactory;
 	}
 
 	private CASConfiguration getCASConfiguration(long companyId) {
 		try {
 			CASConfiguration casCompanyServiceSettings =
-				_settingsFactory.getSettings(
+				_moduleConfigurationFactory.getConfiguration(
 					CASConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, CASConstants.SERVICE_NAME));
@@ -104,6 +106,6 @@ public class SSOImpl implements SSO {
 
 	private static final Log _log = LogFactoryUtil.getLog(SSOImpl.class);
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
 
 }

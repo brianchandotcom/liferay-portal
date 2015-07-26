@@ -14,8 +14,6 @@
 
 package com.liferay.portal.service.permission;
 
-import com.liferay.portal.model.Role;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -31,42 +29,42 @@ import java.util.Set;
  */
 public class ModelPermissions implements Serializable {
 
-	public void addRolePermissions(Role role, String actionId) {
-		List<Role> roles = getRoles(actionId);
+	public void addRolePermissions(String roleName, String actionId) {
+		List<String> roleNames = getRolesWithPermission(actionId);
 
-		roles.add(role);
+		roleNames.add(roleName);
 
-		List<String> actionIds = getActionIds(role);
+		List<String> actionIds = getActionIds(roleName);
 
 		actionIds.add(actionId);
 
-		_roles.add(role);
+		_roleNames.add(roleName);
 	}
 
-	public void addRolePermissions(Role role, String[] actionIds) {
+	public void addRolePermissions(String roleName, String[] actionIds) {
 		for (String actionId : actionIds) {
-			addRolePermissions(role, actionId);
+			addRolePermissions(roleName, actionId);
 		}
 	}
 
-	public List<String> getActionIds(Role role) {
-		List<String> actionIds = _rolesMap.get(role.getName());
+	public List<String> getActionIds(String roleName) {
+		List<String> actionIds = _roleNamesMap.get(roleName);
 
 		if (actionIds == null) {
 			actionIds = new ArrayList<>();
 
-			_rolesMap.put(role.getName(), actionIds);
+			_roleNamesMap.put(roleName, actionIds);
 		}
 
 		return actionIds;
 	}
 
-	public Collection<Role> getRoles() {
-		return _roles;
+	public Collection<String> getRoleNames() {
+		return _roleNames;
 	}
 
-	public List<Role> getRoles(String actionId) {
-		List<Role> roles = _actionsMap.get(actionId);
+	public List<String> getRolesWithPermission(String actionId) {
+		List<String> roles = _actionsMap.get(actionId);
 
 		if (roles == null) {
 			roles = new ArrayList<>();
@@ -78,11 +76,11 @@ public class ModelPermissions implements Serializable {
 	}
 
 	public boolean isEmpty() {
-		return _roles.isEmpty();
+		return _roleNames.isEmpty();
 	}
 
-	private final Map<String, List<Role>> _actionsMap = new HashMap<>();
-	private final Set<Role> _roles = new HashSet<>();
-	private final Map<String, List<String>> _rolesMap = new HashMap<>();
+	private final Map<String, List<String>> _actionsMap = new HashMap<>();
+	private final Set<String> _roleNames = new HashSet<>();
+	private final Map<String, List<String>> _roleNamesMap = new HashMap<>();
 
 }

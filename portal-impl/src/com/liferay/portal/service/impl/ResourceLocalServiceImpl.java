@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.ResourceActionsException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -767,11 +768,14 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				permissionedModel, ownerRole.getRoleId(), ownerActionIds);
 
 			if (modelPermissions != null) {
-				for (Role role : modelPermissions.getRoles()) {
+				for (String roleName : modelPermissions.getRoleNames()) {
+					Role role = getRole(
+						resource.getCompanyId(), groupId, roleName);
+
 					resourceBlockLocalService.setIndividualScopePermissions(
 						resource.getCompanyId(), groupId, resource.getName(),
 						permissionedModel, role.getRoleId(),
-						modelPermissions.getActionIds(role));
+						modelPermissions.getActionIds(roleName));
 				}
 			}
 		}
@@ -782,9 +786,12 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				ownerRole.getRoleId(), userId, ownerPermissions);
 
 			if (modelPermissions != null) {
-				for (Role role : modelPermissions.getRoles()) {
+				for (String roleName : modelPermissions.getRoleNames()) {
+					Role role = getRole(
+						resource.getCompanyId(), groupId, roleName);
+
 					List<String> actionIds = modelPermissions.getActionIds(
-						role);
+						roleName);
 
 					resourcePermissionLocalService.setResourcePermissions(
 						resource.getCompanyId(), resource.getName(),
@@ -1070,6 +1077,22 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		return permissionedModel;
 	}
 
+	protected Role getRole(long companyId, long groupId, String roleName)
+		throws PortalException {
+
+		if (roleName.equals(RoleConstants.DEFAULT_GROUP_ROLE)) {
+			if (groupId == 0) {
+				throw new NoSuchRoleException(
+					"Must specify a groupId different than 0 to use role " +
+						"name " + RoleConstants.DEFAULT_GROUP_ROLE);
+			}
+
+			return roleLocalService.getDefaultGroupRole(groupId);
+		}
+
+		return roleLocalService.getRole(companyId, roleName);
+	}
+
 	protected void logHasUserPermissions(
 		long userId, long resourceId, String actionId, StopWatch stopWatch,
 		int block) {
@@ -1081,7 +1104,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		_log.debug(
 			"Checking user permissions block " + block + " for " + userId +
 				" " + resourceId + " " + actionId + " takes " +
-					stopWatch.getTime() + " ms");
+				stopWatch.getTime() + " ms");
 	}
 
 	protected void updateResourceBlocks(
@@ -1120,11 +1143,13 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		// Scope is assumed to always be individual
 
-		for (Role role : modelPermissions.getRoles()) {
+		for (String roleName : modelPermissions.getRoleNames()) {
+			Role role = getRole(resource.getCompanyId(), groupId, roleName);
+
 			resourceBlockLocalService.setIndividualScopePermissions(
 				role.getCompanyId(), groupId, resource.getName(),
 				permissionedModel, role.getRoleId(),
-				modelPermissions.getActionIds(role));
+				modelPermissions.getActionIds(roleName));
 		}
 	}
 
@@ -1165,8 +1190,10 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			Resource resource, ModelPermissions modelPermissions)
 		throws PortalException {
 
-		for (Role role : modelPermissions.getRoles()) {
-			List<String> actionIds = modelPermissions.getActionIds(role);
+		for (String roleName : modelPermissions.getRoleNames()) {
+			Role role = getRole(resource.getCompanyId(), 0, roleName);
+
+			List<String> actionIds = modelPermissions.getActionIds(roleName);
 
 			resourcePermissionLocalService.setResourcePermissions(
 				resource.getCompanyId(), resource.getName(),

@@ -28,7 +28,8 @@ import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.settings.WikiGroupServiceOverriddenConfiguration;
-import com.liferay.wiki.web.settings.WikiPortletInstanceOverriddenConfiguration;
+import com.liferay.wiki.web.configuration.WikiPortletInstanceConfiguration;
+import com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -90,8 +91,8 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 		return _wikiPage;
 	}
 
-	public WikiPortletInstanceOverriddenConfiguration
-		getWikiPortletInstanceSettings() {
+	public WikiPortletInstanceConfiguration
+		getWikiPortletInstanceConfiguration() {
 
 		try {
 			if (_wikiPortletInstanceConfiguration == null) {

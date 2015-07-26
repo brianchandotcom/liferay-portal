@@ -14,7 +14,6 @@
 
 package com.liferay.wiki.service.util;
 
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 
 import org.osgi.service.component.annotations.Activate;

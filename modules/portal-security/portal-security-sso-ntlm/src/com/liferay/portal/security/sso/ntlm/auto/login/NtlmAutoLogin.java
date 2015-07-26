@@ -14,10 +14,10 @@
 
 package com.liferay.portal.security.sso.ntlm.auto.login;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
@@ -47,10 +47,11 @@ public class NtlmAutoLogin extends BaseAutoLogin {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		NtlmConfiguration ntlmConfiguration = _settingsFactory.getSettings(
-			NtlmConfiguration.class,
-			new CompanyServiceSettingsLocator(
-				companyId, NtlmConstants.SERVICE_NAME));
+		NtlmConfiguration ntlmConfiguration =
+			_moduleConfigurationFactory.getConfiguration(
+				NtlmConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, NtlmConstants.SERVICE_NAME));
 
 		if (!ntlmConfiguration.enabled()) {
 			return null;
@@ -83,11 +84,13 @@ public class NtlmAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setModuleConfigurationFactory(
+		ModuleConfigurationFactory moduleConfigurationFactory) {
+
+		_moduleConfigurationFactory = moduleConfigurationFactory;
 	}
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
 
 }

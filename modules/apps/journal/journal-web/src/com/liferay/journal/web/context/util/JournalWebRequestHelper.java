@@ -16,12 +16,11 @@ package com.liferay.journal.web.context.util;
 
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.constants.JournalConstants;
-import com.liferay.journal.service.util.JournalServiceComponentProvider;
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
@@ -49,16 +48,9 @@ public class JournalWebRequestHelper {
 				PortletDisplay portletDisplay =
 					themeDisplay.getPortletDisplay();
 
-				JournalServiceComponentProvider journalWebComponentProvider =
-					JournalServiceComponentProvider.
-						getJournalServiceComponentProvider();
-
-				SettingsFactory settingsFactory =
-					journalWebComponentProvider.getSettingsFactory();
-
 				if (Validator.isNotNull(portletDisplay.getPortletResource())) {
 					_journalGroupServiceConfiguration =
-						settingsFactory.getSettings(
+						ModuleConfigurationFactoryUtil.getConfiguration(
 							JournalGroupServiceConfiguration.class,
 						new ParameterMapSettingsLocator(
 							_request.getParameterMap(),
@@ -68,7 +60,7 @@ public class JournalWebRequestHelper {
 				}
 				else {
 					_journalGroupServiceConfiguration =
-						settingsFactory.getSettings(
+						ModuleConfigurationFactoryUtil.getConfiguration(
 							JournalGroupServiceConfiguration.class,
 							new GroupServiceSettingsLocator(
 								themeDisplay.getSiteGroupId(),

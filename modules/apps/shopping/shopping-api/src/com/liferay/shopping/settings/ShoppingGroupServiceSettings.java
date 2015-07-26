@@ -16,14 +16,14 @@ package com.liferay.shopping.settings;
 
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration;
-import com.liferay.shopping.settings.internal.ShoppingGroupServiceSettingsOverrideImpl;
+import com.liferay.shopping.settings.internal.ShoppingGroupServiceConfigurationOverrideImpl;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Eduardo Garcia
  */
-@Settings.OverrideClass(ShoppingGroupServiceSettingsOverrideImpl.class)
+@Settings.OverrideClass(ShoppingGroupServiceConfigurationOverrideImpl.class)
 public interface ShoppingGroupServiceSettings
 	extends ShoppingGroupServiceConfiguration,
-			ShoppingGroupServiceSettingsOverride {
+			ShoppingGroupServiceConfigurationOverride {
 }

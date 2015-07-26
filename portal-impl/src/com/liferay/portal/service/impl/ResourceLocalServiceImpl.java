@@ -775,7 +775,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 					resourceBlockLocalService.setIndividualScopePermissions(
 						resource.getCompanyId(), groupId, resource.getName(),
 						permissionedModel, role.getRoleId(),
-						modelPermissions.getActionIds(roleName));
+						modelPermissions.getActionIdsList(roleName));
 				}
 			}
 		}
@@ -790,14 +790,11 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 					Role role = getRole(
 						resource.getCompanyId(), groupId, roleName);
 
-					List<String> actionIds = modelPermissions.getActionIds(
-						roleName);
-
 					resourcePermissionLocalService.setResourcePermissions(
 						resource.getCompanyId(), resource.getName(),
 						resource.getScope(), resource.getPrimKey(),
 						role.getRoleId(),
-						actionIds.toArray(new String[actionIds.size()]));
+						modelPermissions.getActionIds(role.getName()));
 				}
 			}
 		}
@@ -1149,7 +1146,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			resourceBlockLocalService.setIndividualScopePermissions(
 				role.getCompanyId(), groupId, resource.getName(),
 				permissionedModel, role.getRoleId(),
-				modelPermissions.getActionIds(roleName));
+				modelPermissions.getActionIdsList(roleName));
 		}
 	}
 
@@ -1193,7 +1190,8 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		for (String roleName : modelPermissions.getRoleNames()) {
 			Role role = getRole(resource.getCompanyId(), 0, roleName);
 
-			List<String> actionIds = modelPermissions.getActionIds(roleName);
+			List<String> actionIds = modelPermissions.getActionIdsList(
+				roleName);
 
 			resourcePermissionLocalService.setResourcePermissions(
 				resource.getCompanyId(), resource.getName(),

@@ -27,12 +27,15 @@ import java.util.List;
  */
 public class ModelPermissions implements Cloneable, Serializable {
 
+	public ModelPermissions() {
+	}
+
 	public void addRolePermissions(String roleName, String actionId) {
 		List<String> roleNames = getRolesWithPermission(actionId);
 
 		roleNames.add(roleName);
 
-		List<String> actionIds = getActionIds(roleName);
+		List<String> actionIds = getActionIdsList(roleName);
 
 		actionIds.add(actionId);
 
@@ -52,7 +55,13 @@ public class ModelPermissions implements Cloneable, Serializable {
 			(HashMap)_roleNamesMap.clone());
 	}
 
-	public List<String> getActionIds(String roleName) {
+	public String[] getActionIds(String roleName) {
+		List<String> actionIds = getActionIdsList(roleName);
+
+		return actionIds.toArray(new String[actionIds.size()]);
+	}
+
+	public List<String> getActionIdsList(String roleName) {
 		List<String> actionIds = _roleNamesMap.get(roleName);
 
 		if (actionIds == null) {

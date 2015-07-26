@@ -725,7 +725,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		BookmarksGroupServiceOverriddenConfiguration
 			bookmarksGroupServiceConfiguration =
-				moduleConfigurationFactory.getConfiguration(
+				moduleConfigurationFactory.getModuleConfiguration(
 					BookmarksGroupServiceOverriddenConfiguration.class,
 					new GroupServiceSettingsLocator(
 						entry.getGroupId(), BookmarksConstants.SERVICE_NAME));

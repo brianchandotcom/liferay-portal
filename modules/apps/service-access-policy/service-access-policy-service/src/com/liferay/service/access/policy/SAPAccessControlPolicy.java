@@ -62,11 +62,12 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 		SAPConfiguration sapConfiguration = null;
 
 		try {
-			sapConfiguration = _moduleConfigurationFactory.getConfiguration(
-				SAPConfiguration.class,
-				new CompanyServiceSettingsLocator(
-					CompanyThreadLocal.getCompanyId(),
-					SAPConstants.SERVICE_NAME));
+			sapConfiguration =
+				_moduleConfigurationFactory.getModuleConfiguration(
+					SAPConfiguration.class,
+					new CompanyServiceSettingsLocator(
+						CompanyThreadLocal.getCompanyId(),
+						SAPConstants.SERVICE_NAME));
 		}
 		catch (ModuleConfigurationException mce) {
 			throw new SecurityException(

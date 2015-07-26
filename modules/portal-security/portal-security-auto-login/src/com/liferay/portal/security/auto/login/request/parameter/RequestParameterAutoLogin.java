@@ -152,7 +152,7 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		try {
 			RequestParameterAutoLoginConfiguration
 				requestParameterAutoLoginConfiguration =
-					_moduleConfigurationFactory.getConfiguration(
+					_moduleConfigurationFactory.getModuleConfiguration(
 						RequestParameterAutoLoginConfiguration.class,
 						new CompanyServiceSettingsLocator(
 							companyId,

@@ -866,7 +866,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 				String value = null;
 
 				WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-					moduleConfigurationFactory.getConfiguration(
+					moduleConfigurationFactory.getModuleConfiguration(
 						WikiGroupServiceOverriddenConfiguration.class,
 						new GroupServiceSettingsLocator(
 							page.getGroupId(), WikiConstants.SERVICE_NAME));

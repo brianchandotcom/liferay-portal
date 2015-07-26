@@ -120,7 +120,7 @@ public class RSSAction extends BaseRSSStrutsAction {
 
 		BlogsGroupServiceOverriddenConfiguration
 			rssBlogsGroupServiceConfiguration =
-				ModuleConfigurationFactoryUtil.getConfiguration(
+				ModuleConfigurationFactoryUtil.getModuleConfiguration(
 					BlogsGroupServiceOverriddenConfiguration.class,
 					new GroupServiceSettingsLocator(
 						themeDisplay.getSiteGroupId(),

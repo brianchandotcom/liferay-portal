@@ -21,7 +21,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
-import com.liferay.wiki.web.settings.WikiPortletInstanceOverriddenConfiguration;
+import com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class WikiPortletInstanceSettingsHelper {
 		_wikiRequestHelper = wikiRequestHelper;
 
 		_wikiPortletInstanceConfiguration =
-			_wikiRequestHelper.getWikiPortletInstanceSettings();
+			_wikiRequestHelper.getWikiPortletInstanceConfiguration();
 	}
 
 	public List<String> getAllNodeNames() throws PortalException {

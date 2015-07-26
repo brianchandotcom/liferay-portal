@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.wiki.web.settings.internal;
+package com.liferay.wiki.web.configuration.internal;
 
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
-import com.liferay.wiki.web.settings.WikiPortletInstanceConfigurationOverride;
+import com.liferay.wiki.web.configuration.WikiPortletInstanceConfigurationOverride;
 
 import java.io.IOException;
 

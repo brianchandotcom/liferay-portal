@@ -1277,12 +1277,12 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiPortletInstanceConfiguration</name>
-		<type>com.liferay.wiki.web.settings.WikiPortletInstanceOverriddenConfiguration</type>
+		<type>com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration</type>
 		<author><![CDATA[Iván Zaera]]></author>
 	</javadoc>
 	<javadoc>
 		<name>WikiPortletInstanceSettingsOverride</name>
-		<type>com.liferay.wiki.web.settings.WikiPortletInstanceConfigurationOverride</type>
+		<type>com.liferay.wiki.web.configuration.WikiPortletInstanceConfigurationOverride</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>setHiddenNodes</name>
@@ -1316,7 +1316,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiAdminPortletInstanceSettingsIdMapping</name>
-		<type>com.liferay.wiki.web.settings.internal.WikiAdminPortletInstanceSettingsIdMapping</type>
+		<type>com.liferay.wiki.web.configuration.internal.WikiAdminPortletInstanceSettingsIdMapping</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>getConfigurationBeanClass</name>
@@ -1333,7 +1333,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiDisplayPortletInstanceSettingsIdMapping</name>
-		<type>com.liferay.wiki.web.settings.internal.WikiDisplayPortletInstanceSettingsIdMapping</type>
+		<type>com.liferay.wiki.web.configuration.internal.WikiDisplayPortletInstanceSettingsIdMapping</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>getConfigurationBeanClass</name>
@@ -1350,7 +1350,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiPortletInstanceConfigurationBeanDeclaration</name>
-		<type>com.liferay.wiki.web.settings.internal.WikiPortletInstanceConfigurationBeanDeclaration</type>
+		<type>com.liferay.wiki.web.configuration.internal.WikiPortletInstanceConfigurationBeanDeclaration</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>getConfigurationBeanClass</name>
@@ -1361,7 +1361,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiPortletInstanceSettingsIdMapping</name>
-		<type>com.liferay.wiki.web.settings.internal.WikiPortletInstanceSettingsIdMapping</type>
+		<type>com.liferay.wiki.web.configuration.internal.WikiPortletInstanceSettingsIdMapping</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>getConfigurationBeanClass</name>
@@ -1378,7 +1378,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiPortletInstanceSettingsOverrideImpl</name>
-		<type>com.liferay.wiki.web.settings.internal.WikiPortletInstanceConfigurationOverrideImpl</type>
+		<type>com.liferay.wiki.web.configuration.internal.WikiPortletInstanceConfigurationOverrideImpl</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>WikiPortletInstanceSettingsOverrideImpl</name>
@@ -1496,12 +1496,6 @@
 			</return>
 		</method>
 		<method>
-			<name>getSettingsFactory</name>
-			<return>
-				<comment><![CDATA[]]></comment>
-			</return>
-		</method>
-		<method>
 			<name>getWikiDisplayContextProvider</name>
 			<return>
 				<comment><![CDATA[]]></comment>
@@ -1528,14 +1522,6 @@
 			<name>deactivate</name>
 		</method>
 		<method>
-			<name>setSettingsFactory</name>
-			<param>
-				<name>settingsFactory</name>
-				<type>com.liferay.portal.kernel.settings.SettingsFactory</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-		</method>
-		<method>
 			<name>setWikiGroupServiceConfiguration</name>
 			<param>
 				<name>wikiGroupServiceConfiguration</name>
@@ -1553,9 +1539,6 @@
 		</method>
 		<field>
 			<name>_wikiWebComponentProvider</name>
-		</field>
-		<field>
-			<name>_settingsFactory</name>
 		</field>
 		<field>
 			<name>_wikiDisplayContextProvider</name>
@@ -1939,7 +1922,7 @@
 			<name>updateSettings</name>
 			<param>
 				<name>wikiPortletInstanceConfiguration</name>
-				<type>com.liferay.wiki.web.settings.WikiPortletInstanceOverriddenConfiguration</type>
+				<type>com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>

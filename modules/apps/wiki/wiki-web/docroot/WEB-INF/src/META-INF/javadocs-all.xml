@@ -1282,7 +1282,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiPortletInstanceSettingsOverride</name>
-		<type>com.liferay.wiki.web.settings.WikiPortletInstanceSettingsOverride</type>
+		<type>com.liferay.wiki.web.settings.WikiPortletInstanceConfigurationOverride</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>setHiddenNodes</name>
@@ -1378,7 +1378,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiPortletInstanceSettingsOverrideImpl</name>
-		<type>com.liferay.wiki.web.settings.internal.WikiPortletInstanceSettingsOverrideImpl</type>
+		<type>com.liferay.wiki.web.settings.internal.WikiPortletInstanceConfigurationOverrideImpl</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>WikiPortletInstanceSettingsOverrideImpl</name>

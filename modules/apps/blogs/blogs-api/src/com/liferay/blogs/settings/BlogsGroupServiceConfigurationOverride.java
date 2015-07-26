@@ -17,7 +17,7 @@ package com.liferay.blogs.settings;
 /**
  * @author Sergio González
  */
-public interface BlogsGroupServiceSettingsOverride {
+public interface BlogsGroupServiceConfigurationOverride {
 
 	public boolean enableRss();
 

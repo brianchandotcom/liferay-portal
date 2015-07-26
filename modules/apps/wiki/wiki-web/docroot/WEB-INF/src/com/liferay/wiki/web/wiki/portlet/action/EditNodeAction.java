@@ -200,7 +200,7 @@ public class EditNodeAction extends PortletAction {
 
 		WikiPortletInstanceOverriddenConfiguration
 			wikiPortletInstanceConfiguration =
-				ModuleConfigurationFactoryUtil.getConfiguration(
+				ModuleConfigurationFactoryUtil.getModuleConfiguration(
 					WikiPortletInstanceOverriddenConfiguration.class,
 					new PortletInstanceSettingsLocator(
 						themeDisplay.getLayout(), portletDisplay.getId()));

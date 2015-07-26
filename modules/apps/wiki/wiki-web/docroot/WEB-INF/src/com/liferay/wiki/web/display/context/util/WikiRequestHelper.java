@@ -57,7 +57,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 
 				if (Validator.isNotNull(portletResource)) {
 					_wikiGroupServiceOverriddenConfiguration =
-						ModuleConfigurationFactoryUtil.getConfiguration(
+						ModuleConfigurationFactoryUtil.getModuleConfiguration(
 							WikiGroupServiceOverriddenConfiguration.class,
 							new ParameterMapSettingsLocator(
 								getRequest().getParameterMap(),
@@ -67,7 +67,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 				}
 				else {
 					_wikiGroupServiceOverriddenConfiguration =
-						ModuleConfigurationFactoryUtil.getConfiguration(
+						ModuleConfigurationFactoryUtil.getModuleConfiguration(
 							WikiGroupServiceOverriddenConfiguration.class,
 							new GroupServiceSettingsLocator(
 								getSiteGroupId(), WikiConstants.SERVICE_NAME));
@@ -100,7 +100,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 
 				if (Validator.isNotNull(portletResource)) {
 					_wikiPortletInstanceConfiguration =
-						ModuleConfigurationFactoryUtil.getConfiguration(
+						ModuleConfigurationFactoryUtil.getModuleConfiguration(
 							WikiPortletInstanceOverriddenConfiguration.class,
 							new ParameterMapSettingsLocator(
 								getRequest().getParameterMap(),
@@ -109,7 +109,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 				}
 				else {
 					_wikiPortletInstanceConfiguration =
-						ModuleConfigurationFactoryUtil.getConfiguration(
+						ModuleConfigurationFactoryUtil.getModuleConfiguration(
 							WikiPortletInstanceOverriddenConfiguration.class,
 							new PortletInstanceSettingsLocator(
 								getLayout(), getPortletId()));

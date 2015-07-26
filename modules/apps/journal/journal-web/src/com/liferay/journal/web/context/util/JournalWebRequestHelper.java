@@ -50,7 +50,7 @@ public class JournalWebRequestHelper {
 
 				if (Validator.isNotNull(portletDisplay.getPortletResource())) {
 					_journalGroupServiceConfiguration =
-						ModuleConfigurationFactoryUtil.getConfiguration(
+						ModuleConfigurationFactoryUtil.getModuleConfiguration(
 							JournalGroupServiceConfiguration.class,
 						new ParameterMapSettingsLocator(
 							_request.getParameterMap(),
@@ -60,7 +60,7 @@ public class JournalWebRequestHelper {
 				}
 				else {
 					_journalGroupServiceConfiguration =
-						ModuleConfigurationFactoryUtil.getConfiguration(
+						ModuleConfigurationFactoryUtil.getModuleConfiguration(
 							JournalGroupServiceConfiguration.class,
 							new GroupServiceSettingsLocator(
 								themeDisplay.getSiteGroupId(),

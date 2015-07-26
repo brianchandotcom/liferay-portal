@@ -97,7 +97,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 	@Override
 	public void checkDefaultSAPEntry(long companyId) throws PortalException {
 		SAPConfiguration sapConfiguration =
-			moduleConfigurationFactory.getConfiguration(
+			moduleConfigurationFactory.getModuleConfiguration(
 				SAPConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, SAPConstants.SERVICE_NAME));

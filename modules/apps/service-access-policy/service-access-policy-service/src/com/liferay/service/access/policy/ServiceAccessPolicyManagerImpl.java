@@ -90,7 +90,7 @@ public class ServiceAccessPolicyManagerImpl
 
 	protected SAPConfiguration getSAPConfiguration(long companyId) {
 		try {
-			return _moduleConfigurationFactory.getConfiguration(
+			return _moduleConfigurationFactory.getModuleConfiguration(
 				SAPConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, SAPConstants.SERVICE_NAME));

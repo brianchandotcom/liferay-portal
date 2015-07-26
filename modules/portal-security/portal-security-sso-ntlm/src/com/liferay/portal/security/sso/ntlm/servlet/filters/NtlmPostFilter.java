@@ -68,7 +68,7 @@ public class NtlmPostFilter extends BaseFilter {
 		long companyId = PortalInstances.getCompanyId(request);
 
 		NtlmConfiguration ntlmConfiguration =
-			_moduleConfigurationFactory.getConfiguration(
+			_moduleConfigurationFactory.getModuleConfiguration(
 				NtlmConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, NtlmConstants.SERVICE_NAME));

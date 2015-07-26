@@ -1116,7 +1116,6 @@
 	<bean id="com.liferay.portlet.trash.util.TrashUtil" class="com.liferay.portlet.trash.util.TrashUtil">
 		<property name="trash" ref="com.liferay.portlet.trash.util.Trash" />
 	</bean>
-	<bean id="com.liferay.portlet.usergroupsadmin.lar.UserGroupStagedModelDataHandler" class="com.liferay.portlet.usergroupsadmin.lar.UserGroupStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.usersadmin.util.ContactIndexer" class="com.liferay.portlet.usersadmin.util.ContactIndexer" />
 	<bean id="com.liferay.portlet.usersadmin.util.OrganizationIndexer" class="com.liferay.portlet.usersadmin.util.OrganizationIndexer" />
 	<bean id="com.liferay.portlet.usersadmin.util.UserIndexer" class="com.liferay.portlet.usersadmin.util.UserIndexer" />

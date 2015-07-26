@@ -19,12 +19,13 @@
 <liferay-staging:defineObjects />
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
 String cmd = ParamUtil.getString(request, Constants.CMD);
 
 if (Validator.isNull(cmd)) {
 	cmd = Constants.EXPORT;
 }
+
+String backURL = ParamUtil.getString(request, "backURL");
 
 if (liveGroup == null) {
 	liveGroup = group;

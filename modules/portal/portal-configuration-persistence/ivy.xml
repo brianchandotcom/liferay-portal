@@ -17,6 +17,8 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency conf="default->master" name="org.apache.felix.configadmin" org="org.apache.felix" rev="1.8.0" />
+		<dependency name="org.apache.felix.configadmin" org="org.apache.felix" rev="1.8.7-SNAPSHOT" transitive="false" />
+		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
+		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 	</dependencies>
 </ivy-module>

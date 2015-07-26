@@ -96,7 +96,7 @@ import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.model.impl.WikiPageDisplayImpl;
 import com.liferay.wiki.model.impl.WikiPageImpl;
 import com.liferay.wiki.service.base.WikiPageLocalServiceBaseImpl;
-import com.liferay.wiki.settings.WikiGroupServiceSettings;
+import com.liferay.wiki.settings.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.social.WikiActivityKeys;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
@@ -226,13 +226,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Message boards
 
-		WikiGroupServiceSettings wikiGroupServiceSettings =
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
 			moduleConfigurationFactory.getConfiguration(
-				WikiGroupServiceSettings.class,
+				WikiGroupServiceOverriddenConfiguration.class,
 				new GroupServiceSettingsLocator(
 					node.getGroupId(), WikiConstants.SERVICE_NAME));
 
-		if (wikiGroupServiceSettings.pageCommentsEnabled()) {
+		if (wikiGroupServiceConfiguration.pageCommentsEnabled()) {
 			CommentManagerUtil.addDiscussion(
 				userId, page.getGroupId(), WikiPage.class.getName(),
 				resourcePrimKey, page.getUserName());
@@ -255,13 +255,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
 
-		WikiGroupServiceSettings wikiGroupServiceSettings =
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
 			moduleConfigurationFactory.getConfiguration(
-				WikiGroupServiceSettings.class,
+				WikiGroupServiceOverriddenConfiguration.class,
 				new GroupServiceSettingsLocator(
 					node.getGroupId(), WikiConstants.SERVICE_NAME));
 
-		String format = wikiGroupServiceSettings.defaultFormat();
+		String format = wikiGroupServiceConfiguration.defaultFormat();
 
 		boolean head = false;
 		String parentTitle = null;
@@ -2124,16 +2124,18 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			// Social
 
-			WikiGroupServiceSettings wikiGroupServiceSettings =
-				moduleConfigurationFactory.getConfiguration(
-					WikiGroupServiceSettings.class,
-					new GroupServiceSettingsLocator(
-						page.getGroupId(), WikiConstants.SERVICE_NAME));
+			WikiGroupServiceOverriddenConfiguration
+				wikiGroupServiceConfiguration =
+					moduleConfigurationFactory.getConfiguration(
+						WikiGroupServiceOverriddenConfiguration.class,
+						new GroupServiceSettingsLocator(
+							page.getGroupId(), WikiConstants.SERVICE_NAME));
 
 			if ((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
 				(page.getVersion() == WikiPageConstants.VERSION_DEFAULT) &&
 				(!page.isMinorEdit() ||
-				 wikiGroupServiceSettings.pageMinorEditAddSocialActivity())) {
+				 wikiGroupServiceConfiguration.
+					 pageMinorEditAddSocialActivity())) {
 
 				JSONObject extraDataJSONObject =
 					JSONFactoryUtil.createJSONObject();
@@ -2150,7 +2152,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			if (NotificationThreadLocal.isEnabled() &&
 				(!page.isMinorEdit() ||
-				 wikiGroupServiceSettings.pageMinorEditSendEmail())) {
+				 wikiGroupServiceConfiguration.pageMinorEditSendEmail())) {
 
 				notifySubscribers(
 					userId, page,
@@ -3082,9 +3084,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return;
 		}
 
-		WikiGroupServiceSettings wikiGroupServiceSettings =
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
 			moduleConfigurationFactory.getConfiguration(
-				WikiGroupServiceSettings.class,
+				WikiGroupServiceOverriddenConfiguration.class,
 				new GroupServiceSettingsLocator(
 					page.getGroupId(), WikiConstants.SERVICE_NAME));
 
@@ -3094,9 +3096,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			update = true;
 		}
 
-		if (!update && wikiGroupServiceSettings.emailPageAddedEnabled()) {
+		if (!update && wikiGroupServiceConfiguration.emailPageAddedEnabled()) {
 		}
-		else if (update && wikiGroupServiceSettings.emailPageUpdatedEnabled()) {
+		else if (update &&
+				 wikiGroupServiceConfiguration.emailPageUpdatedEnabled()) {
 		}
 		else {
 			return;
@@ -3134,23 +3137,23 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		String pageTitle = page.getTitle();
 
-		String fromName = wikiGroupServiceSettings.emailFromName();
-		String fromAddress = wikiGroupServiceSettings.emailFromAddress();
+		String fromName = wikiGroupServiceConfiguration.emailFromName();
+		String fromAddress = wikiGroupServiceConfiguration.emailFromAddress();
 
 		LocalizedValuesMap subjectLocalizedValuesMap = null;
 		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
 		if (update) {
 			subjectLocalizedValuesMap =
-				wikiGroupServiceSettings.emailPageUpdatedSubject();
+				wikiGroupServiceConfiguration.emailPageUpdatedSubject();
 			bodyLocalizedValuesMap =
-				wikiGroupServiceSettings.emailPageUpdatedBody();
+				wikiGroupServiceConfiguration.emailPageUpdatedBody();
 		}
 		else {
 			subjectLocalizedValuesMap =
-				wikiGroupServiceSettings.emailPageAddedSubject();
+				wikiGroupServiceConfiguration.emailPageAddedSubject();
 			bodyLocalizedValuesMap =
-				wikiGroupServiceSettings.emailPageAddedBody();
+				wikiGroupServiceConfiguration.emailPageAddedBody();
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
@@ -3371,14 +3374,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Social
 
-		WikiGroupServiceSettings wikiGroupServiceSettings =
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
 			moduleConfigurationFactory.getConfiguration(
-				WikiGroupServiceSettings.class,
+				WikiGroupServiceOverriddenConfiguration.class,
 				new GroupServiceSettingsLocator(
 					node.getGroupId(), WikiConstants.SERVICE_NAME));
 
 		if (!page.isMinorEdit() ||
-			wikiGroupServiceSettings.pageMinorEditAddSocialActivity()) {
+			wikiGroupServiceConfiguration.pageMinorEditAddSocialActivity()) {
 
 			if (oldPage.getVersion() == newVersion) {
 				Date createDate = new Date(now.getTime() + 1);

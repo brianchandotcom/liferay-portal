@@ -35,6 +35,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.RSSUtil;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchPageException;
@@ -44,7 +45,7 @@ import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.base.WikiPageServiceBaseImpl;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
-import com.liferay.wiki.settings.WikiGroupServiceSettings;
+import com.liferay.wiki.settings.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 
@@ -864,16 +865,16 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			else {
 				String value = null;
 
-				WikiGroupServiceSettings wikiGroupServiceSettings =
+				WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
 					moduleConfigurationFactory.getConfiguration(
-						WikiGroupServiceSettings.class,
+						WikiGroupServiceOverriddenConfiguration.class,
 						new GroupServiceSettingsLocator(
 							page.getGroupId(), WikiConstants.SERVICE_NAME));
 
 				if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
 					value = StringUtil.shorten(
 						HtmlUtil.extractText(page.getContent()),
-						wikiGroupServiceSettings.rssAbstractLength(),
+						wikiGroupServiceConfiguration.rssAbstractLength(),
 						StringPool.BLANK);
 				}
 				else if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {

@@ -14,7 +14,6 @@
 
 package com.liferay.wiki.web.util;
 
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.web.display.context.WikiDisplayContextProvider;
 

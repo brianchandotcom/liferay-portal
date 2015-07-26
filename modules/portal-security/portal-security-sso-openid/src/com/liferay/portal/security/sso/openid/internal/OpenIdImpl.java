@@ -14,12 +14,12 @@
 
 package com.liferay.portal.security.sso.openid.internal;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
 import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.openid.OpenId;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.security.sso.openid.configuration.OpenIdConfiguration;
 import com.liferay.portal.security.sso.openid.constants.OpenIdConstants;
 
@@ -46,8 +46,8 @@ public class OpenIdImpl implements OpenId {
 
 			return openIdConfiguration.enabled();
 		}
-		catch (SettingsException se) {
-			_log.error("Unable to get OpenId configuration", se);
+		catch (ModuleConfigurationException mce) {
+			_log.error("Unable to get OpenId configuration", mce);
 		}
 
 		return false;

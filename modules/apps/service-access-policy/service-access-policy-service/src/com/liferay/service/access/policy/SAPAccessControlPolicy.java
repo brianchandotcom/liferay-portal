@@ -14,6 +14,7 @@
 
 package com.liferay.service.access.policy;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
 import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.access.control.AccessControlPolicy;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.security.access.control.BaseAccessControlPolicy
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicyThreadLocal;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -68,9 +68,9 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 					CompanyThreadLocal.getCompanyId(),
 					SAPConstants.SERVICE_NAME));
 		}
-		catch (SettingsException se) {
+		catch (ModuleConfigurationException mce) {
 			throw new SecurityException(
-				"Unable to get service access policy configuration", se);
+				"Unable to get service access policy configuration", mce);
 		}
 
 		if (sapConfiguration.requireDefaultSAPEntry() ||

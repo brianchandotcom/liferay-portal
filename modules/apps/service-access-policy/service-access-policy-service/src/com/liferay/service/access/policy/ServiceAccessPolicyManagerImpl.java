@@ -14,6 +14,7 @@
 
 package com.liferay.service.access.policy;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
 import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicy;
 import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicyManager;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.service.access.policy.configuration.SAPConfiguration;
 import com.liferay.service.access.policy.constants.SAPConstants;
 import com.liferay.service.access.policy.model.SAPEntry;
@@ -95,9 +95,9 @@ public class ServiceAccessPolicyManagerImpl
 				new CompanyServiceSettingsLocator(
 					companyId, SAPConstants.SERVICE_NAME));
 		}
-		catch (SettingsException se) {
+		catch (ModuleConfigurationException mce) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get SAP configuration", se);
+				_log.warn("Unable to get SAP configuration", mce);
 			}
 
 			return null;

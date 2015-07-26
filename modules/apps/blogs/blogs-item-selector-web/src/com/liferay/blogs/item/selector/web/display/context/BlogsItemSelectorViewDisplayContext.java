@@ -18,7 +18,6 @@ import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.blogs.item.selector.web.BlogsItemSelectorView;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
@@ -56,10 +55,6 @@ public class BlogsItemSelectorViewDisplayContext {
 		return _blogsItemSelectorCriterion;
 	}
 
-	public String getDisplayStyle(HttpServletRequest request) {
-		return ParamUtil.getString(request, "displayStyle");
-	}
-
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
 	}
@@ -72,9 +67,8 @@ public class BlogsItemSelectorViewDisplayContext {
 		PortletURL portletURL = PortletURLUtil.clone(
 			_portletURL, liferayPortletResponse);
 
-		portletURL.setParameter("displayStyle", getDisplayStyle(request));
 		portletURL.setParameter(
-			"tabName", String.valueOf(getTitle(request.getLocale())));
+			"selectedTab", String.valueOf(getTitle(request.getLocale())));
 
 		return portletURL;
 	}

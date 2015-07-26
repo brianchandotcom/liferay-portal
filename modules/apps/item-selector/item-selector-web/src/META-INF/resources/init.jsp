@@ -18,21 +18,32 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@ taglib prefix="aui" uri="http://liferay.com/tld/aui" %><%@
+taglib prefix="liferay-theme" uri="http://liferay.com/tld/theme" %><%@
+taglib prefix="liferay-ui" uri="http://liferay.com/tld/ui" %>
 
-<%@ page import="com.liferay.item.selector.ItemSelectorViewRenderer" %><%@
+<%@ page import="com.liferay.item.selector.ItemSelectorCriterion" %><%@
+page import="com.liferay.item.selector.ItemSelectorView" %><%@
+page import="com.liferay.item.selector.ItemSelectorViewRenderer" %><%@
 page import="com.liferay.item.selector.web.portlet.LocalizedItemSelectorRendering" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.log.Log" %><%@
 page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %>
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.util.PortalUtil" %>
 
-<%@ page import="java.util.List" %><%@
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %><%@
 page import="java.util.ResourceBundle" %>
 
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<%
+String currentURL = PortalUtil.getCurrentURL(request);
+%>

@@ -15,7 +15,6 @@
 package com.liferay.taglib.aui;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseButtonTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +53,7 @@ public class ButtonTag extends BaseButtonTag implements BodyTag {
 
 		String value = getValue();
 
-		if (Validator.isNull(value)) {
+		if (value == null) {
 			String type = getType();
 
 			if (type.equals("submit")) {

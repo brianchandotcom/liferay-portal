@@ -26,6 +26,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.item.selector.ItemSelectorReturnType" %><%@
 page import="com.liferay.item.selector.taglib.ItemSelectorBrowserReturnTypeUtil" %><%@
+page import="com.liferay.item.selector.taglib.servlet.taglib.ui.BrowserTag" %><%@
 page import="com.liferay.item.selector.taglib.util.ItemSelectorBrowserUtil" %><%@
 page import="com.liferay.item.selector.taglib.util.ServletContextUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@

@@ -16,7 +16,6 @@ package com.liferay.wiki.web.item.selector.view.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 import com.liferay.wiki.model.WikiPage;
@@ -48,10 +47,6 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		_portletURL = portletURL;
 	}
 
-	public String getDisplayStyle(HttpServletRequest request) {
-		return ParamUtil.getString(request, "displayStyle");
-	}
-
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
 	}
@@ -64,9 +59,8 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		PortletURL portletURL = PortletURLUtil.clone(
 			_portletURL, liferayPortletResponse);
 
-		portletURL.setParameter("displayStyle", getDisplayStyle(request));
 		portletURL.setParameter(
-			"tabName", String.valueOf(getTitle(request.getLocale())));
+			"selectedTab", String.valueOf(getTitle(request.getLocale())));
 
 		return portletURL;
 	}

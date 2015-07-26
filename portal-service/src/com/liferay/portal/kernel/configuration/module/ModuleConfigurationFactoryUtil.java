@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.configuration.module;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
@@ -27,7 +26,7 @@ public class ModuleConfigurationFactoryUtil {
 
 	public static <T> T getConfiguration(
 			Class<T> clazz, SettingsLocator settingsLocator)
-		throws SettingsException {
+		throws ModuleConfigurationException {
 
 		ModuleConfigurationFactory moduleConfigurationFactory =
 			getModuleConfigurationFactory();

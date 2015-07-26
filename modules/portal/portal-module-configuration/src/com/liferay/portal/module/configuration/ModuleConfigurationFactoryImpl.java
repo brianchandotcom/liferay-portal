@@ -14,6 +14,7 @@
 
 package com.liferay.portal.module.configuration;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
 import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
@@ -37,13 +38,14 @@ public class ModuleConfigurationFactoryImpl
 	@Override
 	public <T> T getConfiguration(
 			Class<T> clazz, SettingsLocator settingsLocator)
-		throws SettingsException {
-
-		Settings settings = SettingsFactoryUtil.getSettings(settingsLocator);
-
-		Class<?> settingsOverrideClass = getOverrideClass(clazz);
+		throws ModuleConfigurationException {
 
 		try {
+			Settings settings = SettingsFactoryUtil.getSettings(
+				settingsLocator);
+
+			Class<?> settingsOverrideClass = getOverrideClass(clazz);
+
 			TypedSettings typedSettings = new TypedSettings(settings);
 
 			Object settingsOverrideInstance = null;
@@ -64,10 +66,11 @@ public class ModuleConfigurationFactoryImpl
 			return moduleConfigurationInvocationHandler.createProxy();
 		}
 		catch (NoSuchMethodException | InvocationTargetException |
-			InstantiationException | IllegalAccessException e) {
+			InstantiationException | IllegalAccessException |
+			SettingsException e) {
 
-			throw new SettingsException(
-				"Unable to load settings of type " + clazz.getName(), e);
+			throw new ModuleConfigurationException(
+				"Unable to load configuration of type " + clazz.getName(), e);
 		}
 	}
 

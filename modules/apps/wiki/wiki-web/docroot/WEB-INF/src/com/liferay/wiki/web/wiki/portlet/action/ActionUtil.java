@@ -44,7 +44,7 @@ import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.util.WikiUtil;
-import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
+import com.liferay.wiki.web.settings.WikiPortletInstanceOverriddenConfiguration;
 import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import java.util.Arrays;
@@ -73,17 +73,19 @@ public class ActionUtil {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		WikiPortletInstanceSettings wikiPortletInstanceSettings =
-			ModuleConfigurationFactoryUtil.getConfiguration(
-				WikiPortletInstanceSettings.class,
-				new PortletInstanceSettingsLocator(
-					themeDisplay.getLayout(), portletDisplay.getId()));
+		WikiPortletInstanceOverriddenConfiguration
+			wikiPortletInstanceConfiguration =
+				ModuleConfigurationFactoryUtil.getConfiguration(
+					WikiPortletInstanceOverriddenConfiguration.class,
+					new PortletInstanceSettingsLocator(
+						themeDisplay.getLayout(), portletDisplay.getId()));
 
-		String[] visibleNodeNames = wikiPortletInstanceSettings.visibleNodes();
+		String[] visibleNodeNames =
+			wikiPortletInstanceConfiguration.visibleNodes();
 
 		nodes = WikiUtil.orderNodes(nodes, visibleNodeNames);
 
-		String[] hiddenNodes = wikiPortletInstanceSettings.hiddenNodes();
+		String[] hiddenNodes = wikiPortletInstanceConfiguration.hiddenNodes();
 		Arrays.sort(hiddenNodes);
 
 		for (WikiNode node : nodes) {

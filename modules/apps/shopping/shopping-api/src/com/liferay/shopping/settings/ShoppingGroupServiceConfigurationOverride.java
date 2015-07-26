@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 /**
  * @author Peter Fellwock
  */
-public interface ShoppingGroupServiceSettingsOverride {
+public interface ShoppingGroupServiceConfigurationOverride {
 
 	public static final String CC_NONE = "none";
 

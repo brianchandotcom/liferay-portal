@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.settings;
+package com.liferay.blogs.configuration;
 
 /**
  * @author Sergio González

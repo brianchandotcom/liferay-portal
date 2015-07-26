@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.configuration.module;
+package com.liferay.portal.module.configuration;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
@@ -24,9 +25,13 @@ import com.liferay.portal.settings.SettingsInvocationHandler;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
+ * @author Jürgen Kappler
  * @author Jorge Ferrer
  */
+@Component(immediate = true, service = ModuleConfigurationFactory.class)
 public class ModuleConfigurationFactoryImpl
 	implements ModuleConfigurationFactory {
 

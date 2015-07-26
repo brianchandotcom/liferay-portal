@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.web.portlet.action;
 
-import com.liferay.blogs.settings.BlogsGroupServiceOverriddenConfiguration;
+import com.liferay.blogs.configuration.BlogsGroupServiceOverriddenConfiguration;
 import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;

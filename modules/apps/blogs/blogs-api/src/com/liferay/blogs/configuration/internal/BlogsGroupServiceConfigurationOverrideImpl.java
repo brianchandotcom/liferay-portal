@@ -12,28 +12,33 @@
  * details.
  */
 
-package com.liferay.blogs.settings.internal;
+package com.liferay.blogs.configuration.internal;
 
-import com.liferay.blogs.configuration.BlogsGroupServiceConfiguration;
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
-import com.liferay.portlet.blogs.constants.BlogsConstants;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.blogs.configuration.BlogsGroupServiceConfigurationOverride;
+import com.liferay.portal.kernel.settings.TypedSettings;
+import com.liferay.portal.util.PortalUtil;
 
 /**
  * @author Sergio González
  */
-@Component
-public class BlogsGroupServiceSettingsIdMapping implements SettingsIdMapping {
+public class BlogsGroupServiceConfigurationOverrideImpl
+	implements BlogsGroupServiceConfigurationOverride {
 
-	@Override
-	public Class<?> getConfigurationBeanClass() {
-		return BlogsGroupServiceConfiguration.class;
+	public BlogsGroupServiceConfigurationOverrideImpl(
+		TypedSettings typedSettings) {
+
+		_typedSettings = typedSettings;
 	}
 
 	@Override
-	public String getSettingsId() {
-		return BlogsConstants.SERVICE_NAME;
+	public boolean enableRss() {
+		if (!PortalUtil.isRSSFeedsEnabled()) {
+			return false;
+		}
+
+		return _typedSettings.getBooleanValue("enableRss");
 	}
+
+	private final TypedSettings _typedSettings;
 
 }

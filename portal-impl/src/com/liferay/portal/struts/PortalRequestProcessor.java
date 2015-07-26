@@ -147,15 +147,6 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		HttpSession session = request.getSession();
-
-		Boolean basicAuthEnabled = (Boolean)session.getAttribute(
-			WebKeys.BASIC_AUTH_ENABLED);
-
-		if (basicAuthEnabled != null) {
-			session.removeAttribute(WebKeys.BASIC_AUTH_ENABLED);
-		}
-
 		String path = super.processPath(request, response);
 
 		ActionMapping actionMapping =
@@ -163,9 +154,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 		Action action = StrutsActionRegistryUtil.getAction(path);
 
-		if (((basicAuthEnabled != null) && basicAuthEnabled.booleanValue()) ||
-			((actionMapping == null) && (action == null))) {
-
+		if ((actionMapping == null) && (action == null)) {
 			String lastPath = getLastPath(request);
 
 			if (_log.isDebugEnabled()) {

@@ -14,17 +14,19 @@
 
 package com.liferay.blogs.settings.internal;
 
-import com.liferay.blogs.settings.BlogsGroupServiceSettingsOverride;
+import com.liferay.blogs.settings.BlogsGroupServiceConfigurationOverride;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.util.PortalUtil;
 
 /**
  * @author Sergio González
  */
-public class BlogsGroupServiceSettingsOverrideImpl
-	implements BlogsGroupServiceSettingsOverride {
+public class BlogsGroupServiceConfigurationOverrideImpl
+	implements BlogsGroupServiceConfigurationOverride {
 
-	public BlogsGroupServiceSettingsOverrideImpl(TypedSettings typedSettings) {
+	public BlogsGroupServiceConfigurationOverrideImpl(
+		TypedSettings typedSettings) {
+
 		_typedSettings = typedSettings;
 	}
 

@@ -12,21 +12,21 @@
  * details.
  */
 
-package com.liferay.wiki.web.settings;
-
-import java.io.IOException;
-
-import javax.portlet.ValidatorException;
+package com.liferay.wiki.settings;
 
 /**
  * @author Iván Zaera
  */
-public interface WikiPortletInstanceSettingsOverride {
+public interface WikiGroupServiceConfigurationOverride {
 
-	public void setHiddenNodes(String[] hiddenNodes);
+	public String emailPageAddedBodyXml();
 
-	public void setVisibleNodes(String[] visibleNodes);
+	public String emailPageAddedSubjectXml();
 
-	public void store() throws IOException, ValidatorException;
+	public String emailPageUpdatedBodyXml();
+
+	public String emailPageUpdatedSubjectXml();
+
+	public boolean enableRss();
 
 }

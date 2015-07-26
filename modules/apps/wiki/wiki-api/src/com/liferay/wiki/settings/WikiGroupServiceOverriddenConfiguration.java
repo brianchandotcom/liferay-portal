@@ -22,7 +22,7 @@ import com.liferay.wiki.settings.internal.WikiGroupServiceConfigurationOverrideI
  * @author Iván Zaera
  */
 @Settings.OverrideClass(WikiGroupServiceConfigurationOverrideImpl.class)
-public interface WikiGroupServiceSettings
+public interface WikiGroupServiceOverriddenConfiguration
 	extends WikiGroupServiceConfiguration,
 		WikiGroupServiceConfigurationOverride {
 }

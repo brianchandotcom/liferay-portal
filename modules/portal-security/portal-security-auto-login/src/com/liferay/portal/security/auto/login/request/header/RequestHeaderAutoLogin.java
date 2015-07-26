@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.auto.login.request.header;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
 import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -177,9 +177,9 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 
 			return requestHeaderAutoLoginConfiguration;
 		}
-		catch (SettingsException se) {
+		catch (ModuleConfigurationException mce) {
 			_log.error(
-				"Unable to get request header auto login configuration", se);
+				"Unable to get request header auto login configuration", mce);
 		}
 
 		return null;

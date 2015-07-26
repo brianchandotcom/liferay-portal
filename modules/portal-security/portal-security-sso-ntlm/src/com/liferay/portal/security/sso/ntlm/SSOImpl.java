@@ -14,12 +14,12 @@
 
 package com.liferay.portal.security.sso.ntlm;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
 import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.sso.SSO;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
 
@@ -56,8 +56,8 @@ public class SSOImpl implements SSO {
 
 			return ntlmConfiguration.enabled();
 		}
-		catch (SettingsException se) {
-			_log.error("Unable to get NTLM configuration", se);
+		catch (ModuleConfigurationException mce) {
+			_log.error("Unable to get NTLM configuration", mce);
 		}
 
 		return false;

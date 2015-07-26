@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.facebook.connect;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
 import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.facebook.FacebookConnect;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -237,8 +237,8 @@ public class FacebookConnectImpl implements FacebookConnect {
 
 			return facebookConnectCompanyServiceSettings;
 		}
-		catch (SettingsException se) {
-			_log.error("Unable to get Facebook Connect configuration", se);
+		catch (ModuleConfigurationException mce) {
+			_log.error("Unable to get Facebook Connect configuration", mce);
 		}
 
 		return null;

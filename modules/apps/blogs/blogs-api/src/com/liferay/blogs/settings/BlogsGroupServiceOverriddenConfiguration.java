@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.settings.Settings;
  * @author Sergio González
  */
 @Settings.OverrideClass(BlogsGroupServiceConfigurationOverrideImpl.class)
-public interface BlogsGroupServiceSettings
+public interface BlogsGroupServiceOverriddenConfiguration
 	extends BlogsGroupServiceConfiguration,
 		BlogsGroupServiceConfigurationOverride {
 }

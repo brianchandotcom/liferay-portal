@@ -16,13 +16,13 @@ package com.liferay.wiki.web.settings;
 
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.wiki.web.configuration.WikiPortletInstanceConfiguration;
-import com.liferay.wiki.web.settings.internal.WikiPortletInstanceSettingsOverrideImpl;
+import com.liferay.wiki.web.settings.internal.WikiPortletInstanceConfigurationOverrideImpl;
 
 /**
  * @author Iván Zaera
  */
-@Settings.OverrideClass(WikiPortletInstanceSettingsOverrideImpl.class)
+@Settings.OverrideClass(WikiPortletInstanceConfigurationOverrideImpl.class)
 public interface WikiPortletInstanceSettings
 	extends WikiPortletInstanceConfiguration,
-		WikiPortletInstanceSettingsOverride {
+		WikiPortletInstanceConfigurationOverride {
 }

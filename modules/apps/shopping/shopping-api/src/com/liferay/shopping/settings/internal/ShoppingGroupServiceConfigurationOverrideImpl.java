@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.shopping.settings.ShoppingGroupServiceSettingsOverride;
+import com.liferay.shopping.settings.ShoppingGroupServiceConfigurationOverride;
 
 import java.util.Currency;
 import java.util.Locale;
@@ -32,8 +32,8 @@ import java.util.TreeSet;
  * @author Eduardo Garcia
  * @author Peter Fellwock
  */
-public class ShoppingGroupServiceSettingsOverrideImpl
-	implements ShoppingGroupServiceSettingsOverride {
+public class ShoppingGroupServiceConfigurationOverrideImpl
+	implements ShoppingGroupServiceConfigurationOverride {
 
 	public static final String[] CURRENCY_IDS;
 
@@ -67,7 +67,7 @@ public class ShoppingGroupServiceSettingsOverrideImpl
 		}
 	}
 
-	public ShoppingGroupServiceSettingsOverrideImpl(
+	public ShoppingGroupServiceConfigurationOverrideImpl(
 		TypedSettings typedSettings) {
 
 		_typedSettings = typedSettings;

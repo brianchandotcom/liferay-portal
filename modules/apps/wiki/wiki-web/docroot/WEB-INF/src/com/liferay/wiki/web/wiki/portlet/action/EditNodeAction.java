@@ -14,10 +14,10 @@
 
 package com.liferay.wiki.web.wiki.portlet.action;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -42,7 +42,6 @@ import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
 import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
-import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -197,14 +196,8 @@ public class EditNodeAction extends PortletAction {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		WikiWebComponentProvider wikiWebComponentProvider =
-			WikiWebComponentProvider.getWikiWebComponentProvider();
-
-		SettingsFactory settingsFactory =
-			wikiWebComponentProvider.getSettingsFactory();
-
 		WikiPortletInstanceSettings wikiPortletInstanceSettings =
-			settingsFactory.getSettings(
+			ModuleConfigurationFactoryUtil.getConfiguration(
 				WikiPortletInstanceSettings.class,
 				new PortletInstanceSettingsLocator(
 					themeDisplay.getLayout(), portletDisplay.getId()));

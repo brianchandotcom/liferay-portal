@@ -14,13 +14,13 @@
 
 package com.liferay.wiki.service.impl;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -865,7 +865,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 				String value = null;
 
 				WikiGroupServiceSettings wikiGroupServiceSettings =
-					settingsFactory.getSettings(
+					moduleConfigurationFactory.getConfiguration(
 						WikiGroupServiceSettings.class,
 						new GroupServiceSettingsLocator(
 							page.getGroupId(), WikiConstants.SERVICE_NAME));
@@ -937,7 +937,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		}
 	}
 
-	@ServiceReference(type = SettingsFactory.class)
-	protected SettingsFactory settingsFactory;
+	@ServiceReference(type = ModuleConfigurationFactory.class)
+	protected ModuleConfigurationFactory moduleConfigurationFactory;
 
 }

@@ -19,9 +19,7 @@
 <%
 blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId, request.getParameterMap());
 
-SettingsFactory settingsFactory = SettingsFactoryUtil.getSettingsFactory();
-
-com.liferay.blogs.settings.BlogsGroupServiceSettings rssBlogsGroupServiceSettings = settingsFactory.getSettings(com.liferay.blogs.settings.BlogsGroupServiceSettings.class, new ParameterMapSettingsLocator(request.getParameterMap(), new GroupServiceSettingsLocator(themeDisplay.getSiteGroupId(), BlogsConstants.SERVICE_NAME)));
+com.liferay.blogs.settings.BlogsGroupServiceSettings rssBlogsGroupServiceSettings = ModuleConfigurationFactoryUtil.getConfiguration(com.liferay.blogs.settings.BlogsGroupServiceSettings.class, new ParameterMapSettingsLocator(request.getParameterMap(), new GroupServiceSettingsLocator(themeDisplay.getSiteGroupId(), BlogsConstants.SERVICE_NAME)));
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">

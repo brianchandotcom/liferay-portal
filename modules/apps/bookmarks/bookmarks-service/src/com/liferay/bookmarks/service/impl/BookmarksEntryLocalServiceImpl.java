@@ -27,6 +27,7 @@ import com.liferay.bookmarks.service.permission.BookmarksResourcePermissionCheck
 import com.liferay.bookmarks.settings.BookmarksGroupServiceSettings;
 import com.liferay.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -50,7 +51,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -729,7 +729,7 @@ public class BookmarksEntryLocalServiceImpl
 		}
 
 		BookmarksGroupServiceSettings bookmarksGroupServiceSettings =
-			settingsFactory.getSettings(
+			moduleConfigurationFactory.getConfiguration(
 				BookmarksGroupServiceSettings.class,
 				new GroupServiceSettingsLocator(
 					entry.getGroupId(), BookmarksConstants.SERVICE_NAME));
@@ -850,8 +850,8 @@ public class BookmarksEntryLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = SettingsFactory.class)
-	protected SettingsFactory settingsFactory;
+	@ServiceReference(type = ModuleConfigurationFactory.class)
+	protected ModuleConfigurationFactory moduleConfigurationFactory;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksEntryLocalServiceImpl.class);

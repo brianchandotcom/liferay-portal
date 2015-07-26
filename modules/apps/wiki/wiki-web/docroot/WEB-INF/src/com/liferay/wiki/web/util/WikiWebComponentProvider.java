@@ -33,10 +33,6 @@ public class WikiWebComponentProvider {
 		return _wikiWebComponentProvider;
 	}
 
-	public SettingsFactory getSettingsFactory() {
-		return _settingsFactory;
-	}
-
 	public WikiDisplayContextProvider getWikiDisplayContextProvider() {
 		return _wikiDisplayContextProvider;
 	}
@@ -62,11 +58,6 @@ public class WikiWebComponentProvider {
 		_wikiWebComponentProvider = null;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
-	}
-
 	@Reference
 	protected void setWikiGroupServiceConfiguration(
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
@@ -82,7 +73,6 @@ public class WikiWebComponentProvider {
 
 	private static WikiWebComponentProvider _wikiWebComponentProvider;
 
-	private SettingsFactory _settingsFactory;
 	private WikiDisplayContextProvider _wikiDisplayContextProvider;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 

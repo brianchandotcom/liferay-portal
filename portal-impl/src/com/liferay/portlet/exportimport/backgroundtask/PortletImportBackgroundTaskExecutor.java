@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.model.BackgroundTask;
-import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportLocalServiceUtil;
 
@@ -66,7 +66,7 @@ public class PortletImportBackgroundTaskExecutor
 
 				FileUtil.write(file, attachmentsFileEntry.getContentStream());
 
-				TransactionHandlerUtil.invoke(
+				TransactionInvokerUtil.invoke(
 					transactionAttribute,
 					new PortletImportCallable(exportImportConfiguration, file));
 			}

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.spring.transaction;
+package com.liferay.portal.kernel.transaction;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionAttribute.Builder;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
@@ -29,12 +29,10 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.springframework.transaction.interceptor.TransactionAttribute;
-
 /**
  * @author Shuyang Zhou
  */
-public class TransactionHandlerUtilTest {
+public class TransactionInvokerUtilTest {
 
 	@ClassRule
 	@Rule
@@ -47,7 +45,7 @@ public class TransactionHandlerUtilTest {
 		final String classNameValue = PwdGenerator.getPassword();
 
 		try {
-			TransactionHandlerUtil.invoke(
+			TransactionInvokerUtil.invoke(
 				_transactionAttribute, new Callable<Void>() {
 
 				@Override
@@ -80,7 +78,7 @@ public class TransactionHandlerUtilTest {
 		final Exception exception = new Exception();
 
 		try {
-			TransactionHandlerUtil.invoke(
+			TransactionInvokerUtil.invoke(
 				_transactionAttribute, new Callable<Void>() {
 
 				@Override
@@ -115,8 +113,15 @@ public class TransactionHandlerUtilTest {
 		}
 	}
 
-	private final TransactionAttribute _transactionAttribute =
-		TransactionAttributeBuilder.build(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+	private static final TransactionAttribute _transactionAttribute;
+
+	static {
+		Builder builder = new Builder();
+
+		builder.setPropagation(Propagation.REQUIRED);
+		builder.setRollbackForClasses(Exception.class);
+
+		_transactionAttribute = builder.build();
+	}
 
 }

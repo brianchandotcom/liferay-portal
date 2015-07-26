@@ -24,7 +24,7 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.base.BookmarksEntryLocalServiceBaseImpl;
 import com.liferay.bookmarks.service.permission.BookmarksResourcePermissionChecker;
-import com.liferay.bookmarks.settings.BookmarksGroupServiceSettings;
+import com.liferay.bookmarks.settings.BookmarksGroupServiceOverriddenConfiguration;
 import com.liferay.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
 import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
@@ -728,16 +728,17 @@ public class BookmarksEntryLocalServiceImpl
 			return;
 		}
 
-		BookmarksGroupServiceSettings bookmarksGroupServiceSettings =
-			moduleConfigurationFactory.getConfiguration(
-				BookmarksGroupServiceSettings.class,
-				new GroupServiceSettingsLocator(
-					entry.getGroupId(), BookmarksConstants.SERVICE_NAME));
+		BookmarksGroupServiceOverriddenConfiguration
+			bookmarksGroupServiceConfiguration =
+				moduleConfigurationFactory.getConfiguration(
+					BookmarksGroupServiceOverriddenConfiguration.class,
+					new GroupServiceSettingsLocator(
+						entry.getGroupId(), BookmarksConstants.SERVICE_NAME));
 
 		if ((serviceContext.isCommandAdd() &&
-			 !bookmarksGroupServiceSettings.emailEntryAddedEnabled()) ||
+			 !bookmarksGroupServiceConfiguration.emailEntryAddedEnabled()) ||
 			(serviceContext.isCommandUpdate() &&
-			 !bookmarksGroupServiceSettings.emailEntryUpdatedEnabled())) {
+			 !bookmarksGroupServiceConfiguration.emailEntryUpdatedEnabled())) {
 
 			return;
 		}
@@ -759,23 +760,24 @@ public class BookmarksEntryLocalServiceImpl
 			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "bookmarks" +
 				StringPool.SLASH + entry.getEntryId();
 
-		String fromName = bookmarksGroupServiceSettings.emailFromName();
-		String fromAddress = bookmarksGroupServiceSettings.emailFromAddress();
+		String fromName = bookmarksGroupServiceConfiguration.emailFromName();
+		String fromAddress =
+			bookmarksGroupServiceConfiguration.emailFromAddress();
 
 		LocalizedValuesMap subjectLocalizedValuesMap = null;
 		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
 		if (serviceContext.isCommandUpdate()) {
 			subjectLocalizedValuesMap =
-				bookmarksGroupServiceSettings.emailEntryUpdatedSubject();
+				bookmarksGroupServiceConfiguration.emailEntryUpdatedSubject();
 			bodyLocalizedValuesMap =
-				bookmarksGroupServiceSettings.emailEntryUpdatedBody();
+				bookmarksGroupServiceConfiguration.emailEntryUpdatedBody();
 		}
 		else {
 			subjectLocalizedValuesMap =
-				bookmarksGroupServiceSettings.emailEntryAddedSubject();
+				bookmarksGroupServiceConfiguration.emailEntryAddedSubject();
 			bodyLocalizedValuesMap =
-				bookmarksGroupServiceSettings.emailEntryAddedBody();
+				bookmarksGroupServiceConfiguration.emailEntryAddedBody();
 		}
 
 		SubscriptionSender subscriptionSender =

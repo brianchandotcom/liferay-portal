@@ -41,7 +41,6 @@ page import="com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil" %><%
 page import="com.liferay.bookmarks.service.BookmarksFolderServiceUtil" %><%@
 page import="com.liferay.bookmarks.service.permission.BookmarksEntryPermissionChecker" %><%@
 page import="com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker" %><%@
-page import="com.liferay.bookmarks.settings.BookmarksGroupServiceSettings" %><%@
 page import="com.liferay.bookmarks.web.portlet.util.BookmarksUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil" %><%@

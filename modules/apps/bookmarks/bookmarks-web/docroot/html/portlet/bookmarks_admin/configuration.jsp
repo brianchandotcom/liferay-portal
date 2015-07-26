@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/bookmarks/init.jsp" %>
 
 <%
-bookmarksGroupServiceSettings = ModuleConfigurationFactoryUtil.getConfiguration(BookmarksGroupServiceSettings.class, new ParameterMapSettingsLocator(request.getParameterMap(), new GroupServiceSettingsLocator(scopeGroupId, BookmarksConstants.SERVICE_NAME)));
+bookmarksGroupServiceConfiguration = ModuleConfigurationFactoryUtil.getConfiguration(BookmarksGroupServiceSettings.class, new ParameterMapSettingsLocator(request.getParameterMap(), new GroupServiceSettingsLocator(scopeGroupId, BookmarksConstants.SERVICE_NAME)));
 
 try {
 	BookmarksFolder rootFolder = BookmarksFolderLocalServiceUtil.getFolder(rootFolderId);
@@ -63,33 +63,33 @@ catch (NoSuchFolderException nsfe) {
 
 		<liferay-ui:section>
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= bookmarksGroupServiceSettings.emailFromName() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= bookmarksGroupServiceConfiguration.emailFromName() %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= bookmarksGroupServiceSettings.emailFromAddress() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= bookmarksGroupServiceConfiguration.emailFromAddress() %>" />
 			</aui:fieldset>
 		</liferay-ui:section>
 
 		<%
-		Map<String, String> emailDefinitionTerms = BookmarksUtil.getEmailDefinitionTerms(renderRequest, bookmarksGroupServiceSettings.emailFromAddress(), bookmarksGroupServiceSettings.emailFromName());
+		Map<String, String> emailDefinitionTerms = BookmarksUtil.getEmailDefinitionTerms(renderRequest, bookmarksGroupServiceConfiguration.emailFromAddress(), bookmarksGroupServiceConfiguration.emailFromName());
 		%>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= bookmarksGroupServiceSettings.emailEntryAddedBodyXml() %>"
+				emailBody="<%= bookmarksGroupServiceConfiguration.emailEntryAddedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= bookmarksGroupServiceSettings.emailEntryAddedEnabled() %>"
+				emailEnabled="<%= bookmarksGroupServiceConfiguration.emailEntryAddedEnabled() %>"
 				emailParam="emailEntryAdded"
-				emailSubject="<%= bookmarksGroupServiceSettings.emailEntryAddedSubjectXml() %>"
+				emailSubject="<%= bookmarksGroupServiceConfiguration.emailEntryAddedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= bookmarksGroupServiceSettings.emailEntryUpdatedBodyXml() %>"
+				emailBody="<%= bookmarksGroupServiceConfiguration.emailEntryUpdatedBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= bookmarksGroupServiceSettings.emailEntryUpdatedEnabled() %>"
+				emailEnabled="<%= bookmarksGroupServiceConfiguration.emailEntryUpdatedEnabled() %>"
 				emailParam="emailEntryUpdated"
-				emailSubject="<%= bookmarksGroupServiceSettings.emailEntryUpdatedSubjectXml() %>"
+				emailSubject="<%= bookmarksGroupServiceConfiguration.emailEntryUpdatedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 	</liferay-ui:tabs>

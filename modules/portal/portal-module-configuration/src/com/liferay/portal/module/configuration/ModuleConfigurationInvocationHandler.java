@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings;
+package com.liferay.portal.module.configuration;
 
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.TypedSettings;
@@ -26,9 +26,10 @@ import java.lang.reflect.Method;
 /**
  * @author Iván Zaera
  */
-public class SettingsInvocationHandler<S> implements InvocationHandler {
+public class ModuleConfigurationInvocationHandler<S>
+	implements InvocationHandler {
 
-	public SettingsInvocationHandler(
+	public ModuleConfigurationInvocationHandler(
 		Class<S> clazz, Object settingsOverrideInstance,
 		TypedSettings typedSettings) {
 

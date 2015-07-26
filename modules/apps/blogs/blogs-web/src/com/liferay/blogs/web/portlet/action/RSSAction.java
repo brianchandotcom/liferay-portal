@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.web.portlet.action;
 
-import com.liferay.blogs.settings.BlogsGroupServiceSettings;
+import com.liferay.blogs.settings.BlogsGroupServiceOverriddenConfiguration;
 import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -118,14 +118,15 @@ public class RSSAction extends BaseRSSStrutsAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		BlogsGroupServiceSettings rssBlogsGroupServiceSettings =
-			ModuleConfigurationFactoryUtil.getConfiguration(
-				BlogsGroupServiceSettings.class,
-				new GroupServiceSettingsLocator(
-					themeDisplay.getSiteGroupId(),
-					BlogsConstants.SERVICE_NAME));
+		BlogsGroupServiceOverriddenConfiguration
+			rssBlogsGroupServiceConfiguration =
+				ModuleConfigurationFactoryUtil.getConfiguration(
+					BlogsGroupServiceOverriddenConfiguration.class,
+					new GroupServiceSettingsLocator(
+						themeDisplay.getSiteGroupId(),
+						BlogsConstants.SERVICE_NAME));
 
-		return rssBlogsGroupServiceSettings.enableRss();
+		return rssBlogsGroupServiceConfiguration.enableRss();
 	}
 
 }

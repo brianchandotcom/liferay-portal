@@ -49,7 +49,7 @@ public class SSOImpl implements SSO {
 	public boolean isLoginRedirectRequired(long companyId) {
 		try {
 			NtlmConfiguration ntlmConfiguration =
-				_moduleConfigurationFactory.getConfiguration(
+				_moduleConfigurationFactory.getModuleConfiguration(
 					NtlmConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, NtlmConstants.SERVICE_NAME));

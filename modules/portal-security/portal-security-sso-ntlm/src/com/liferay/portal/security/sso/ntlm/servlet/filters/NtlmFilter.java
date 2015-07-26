@@ -80,7 +80,7 @@ public class NtlmFilter extends BaseFilter {
 			long companyId = PortalInstances.getCompanyId(request);
 
 			NtlmConfiguration ntlmConfiguration =
-				_moduleConfigurationFactory.getConfiguration(
+				_moduleConfigurationFactory.getModuleConfiguration(
 					NtlmConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, NtlmConstants.SERVICE_NAME));
@@ -134,7 +134,7 @@ public class NtlmFilter extends BaseFilter {
 
 	protected NtlmManager getNtlmManager(long companyId) throws Exception {
 		NtlmConfiguration ntlmConfiguration =
-			_moduleConfigurationFactory.getConfiguration(
+			_moduleConfigurationFactory.getModuleConfiguration(
 				NtlmConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, NtlmConstants.SERVICE_NAME));

@@ -169,7 +169,7 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 		try {
 			RequestHeaderAutoLoginConfiguration
 				requestHeaderAutoLoginConfiguration =
-					_moduleConfigurationFactory.getConfiguration(
+					_moduleConfigurationFactory.getModuleConfiguration(
 						RequestHeaderAutoLoginConfiguration.class,
 						new CompanyServiceSettingsLocator(
 							companyId,

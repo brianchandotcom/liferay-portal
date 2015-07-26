@@ -146,7 +146,7 @@ public class NetlogonConnectionManagerImpl
 
 		try {
 			NtlmConfiguration ntlmConfiguration =
-				_moduleConfigurationFactory.getConfiguration(
+				_moduleConfigurationFactory.getModuleConfiguration(
 					NtlmConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						CompanyThreadLocal.getCompanyId(),

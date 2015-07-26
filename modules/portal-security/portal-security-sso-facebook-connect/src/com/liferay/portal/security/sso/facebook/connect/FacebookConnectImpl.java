@@ -230,7 +230,7 @@ public class FacebookConnectImpl implements FacebookConnect {
 
 		try {
 			FacebookConnectConfiguration facebookConnectCompanyServiceSettings =
-				_moduleConfigurationFactory.getConfiguration(
+				_moduleConfigurationFactory.getModuleConfiguration(
 					FacebookConnectConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, FacebookConnectConstants.SERVICE_NAME));

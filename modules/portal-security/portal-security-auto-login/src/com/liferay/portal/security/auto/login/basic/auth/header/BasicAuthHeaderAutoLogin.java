@@ -141,7 +141,7 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 		try {
 			BasicAuthHeaderAutoLoginConfiguration
 				basicAuthHeaderAutoLoginConfiguration =
-					_moduleConfigurationFactory.getConfiguration(
+					_moduleConfigurationFactory.getModuleConfiguration(
 						BasicAuthHeaderAutoLoginConfiguration.class,
 						new CompanyServiceSettingsLocator(
 							companyId,

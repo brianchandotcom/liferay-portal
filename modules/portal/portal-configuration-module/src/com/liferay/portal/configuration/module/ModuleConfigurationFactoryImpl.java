@@ -36,7 +36,7 @@ public class ModuleConfigurationFactoryImpl
 	implements ModuleConfigurationFactory {
 
 	@Override
-	public <T> T getConfiguration(
+	public <T> T getModuleConfiguration(
 			Class<T> clazz, SettingsLocator settingsLocator)
 		throws ModuleConfigurationException {
 

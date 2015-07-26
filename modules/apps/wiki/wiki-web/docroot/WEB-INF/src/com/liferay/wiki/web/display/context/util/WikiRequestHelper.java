@@ -23,10 +23,11 @@ import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.settings.WikiGroupServiceSettings;
+import com.liferay.wiki.settings.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.web.settings.WikiPortletInstanceOverriddenConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,15 +49,15 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 		return _categoryId;
 	}
 
-	public WikiGroupServiceSettings getWikiGroupServiceSettings() {
+	public WikiGroupServiceConfiguration getWikiGroupServiceSettings() {
 		try {
-			if (_wikiGroupServiceSettings == null) {
+			if (_wikiGroupServiceConfiguration == null) {
 				String portletResource = getPortletResource();
 
 				if (Validator.isNotNull(portletResource)) {
-					_wikiGroupServiceSettings =
+					_wikiGroupServiceConfiguration =
 						ModuleConfigurationFactoryUtil.getConfiguration(
-							WikiGroupServiceSettings.class,
+							WikiGroupServiceOverriddenConfiguration.class,
 							new ParameterMapSettingsLocator(
 								getRequest().getParameterMap(),
 								new GroupServiceSettingsLocator(
@@ -64,15 +65,15 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 									WikiConstants.SERVICE_NAME)));
 				}
 				else {
-					_wikiGroupServiceSettings =
+					_wikiGroupServiceConfiguration =
 						ModuleConfigurationFactoryUtil.getConfiguration(
-							WikiGroupServiceSettings.class,
+							WikiGroupServiceOverriddenConfiguration.class,
 							new GroupServiceSettingsLocator(
 								getSiteGroupId(), WikiConstants.SERVICE_NAME));
 				}
 			}
 
-			return _wikiGroupServiceSettings;
+			return _wikiGroupServiceConfiguration;
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
@@ -122,7 +123,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 	}
 
 	private Long _categoryId;
-	private WikiGroupServiceSettings _wikiGroupServiceSettings;
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 	private WikiPage _wikiPage;
 	private WikiPortletInstanceOverriddenConfiguration
 		_wikiPortletInstanceConfiguration;

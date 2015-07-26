@@ -14,13 +14,13 @@
 
 package com.liferay.portal.security.auto.login.request.parameter;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -139,9 +139,11 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		return requestParameterAutoLoginConfiguration.enabled();
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setModuleConfigurationFactory(
+		ModuleConfigurationFactory moduleConfigurationFactory) {
+
+		_moduleConfigurationFactory = moduleConfigurationFactory;
 	}
 
 	private RequestParameterAutoLoginConfiguration
@@ -150,7 +152,7 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		try {
 			RequestParameterAutoLoginConfiguration
 				requestParameterAutoLoginConfiguration =
-					_settingsFactory.getSettings(
+					_moduleConfigurationFactory.getConfiguration(
 						RequestParameterAutoLoginConfiguration.class,
 						new CompanyServiceSettingsLocator(
 							companyId,
@@ -173,6 +175,6 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RequestParameterAutoLogin.class);
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
 
 }

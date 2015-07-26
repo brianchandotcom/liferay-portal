@@ -14,13 +14,13 @@
 
 package com.liferay.wiki.web.display.context.util;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
 import com.liferay.portal.kernel.display.context.util.BaseStrutsRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.constants.WikiConstants;
@@ -28,7 +28,6 @@ import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.settings.WikiGroupServiceSettings;
 import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
-import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -54,25 +53,22 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 			if (_wikiGroupServiceSettings == null) {
 				String portletResource = getPortletResource();
 
-				WikiWebComponentProvider wikiWebComponentProvider =
-					WikiWebComponentProvider.getWikiWebComponentProvider();
-
-				SettingsFactory settingsFactory =
-					wikiWebComponentProvider.getSettingsFactory();
-
 				if (Validator.isNotNull(portletResource)) {
-					_wikiGroupServiceSettings = settingsFactory.getSettings(
-						WikiGroupServiceSettings.class,
-						new ParameterMapSettingsLocator(
-							getRequest().getParameterMap(),
-							new GroupServiceSettingsLocator(
-								getSiteGroupId(), WikiConstants.SERVICE_NAME)));
+					_wikiGroupServiceSettings =
+						ModuleConfigurationFactoryUtil.getConfiguration(
+							WikiGroupServiceSettings.class,
+							new ParameterMapSettingsLocator(
+								getRequest().getParameterMap(),
+								new GroupServiceSettingsLocator(
+									getSiteGroupId(),
+									WikiConstants.SERVICE_NAME)));
 				}
 				else {
-					_wikiGroupServiceSettings = settingsFactory.getSettings(
-						WikiGroupServiceSettings.class,
-						new GroupServiceSettingsLocator(
-							getSiteGroupId(), WikiConstants.SERVICE_NAME));
+					_wikiGroupServiceSettings =
+						ModuleConfigurationFactoryUtil.getConfiguration(
+							WikiGroupServiceSettings.class,
+							new GroupServiceSettingsLocator(
+								getSiteGroupId(), WikiConstants.SERVICE_NAME));
 				}
 			}
 
@@ -98,25 +94,21 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 			if (_wikiPortletInstanceSettings == null) {
 				String portletResource = getPortletResource();
 
-				WikiWebComponentProvider wikiWebComponentProvider =
-					WikiWebComponentProvider.getWikiWebComponentProvider();
-
-				SettingsFactory settingsFactory =
-					wikiWebComponentProvider.getSettingsFactory();
-
 				if (Validator.isNotNull(portletResource)) {
-					_wikiPortletInstanceSettings = settingsFactory.getSettings(
-						WikiPortletInstanceSettings.class,
-						new ParameterMapSettingsLocator(
-							getRequest().getParameterMap(),
-							new PortletInstanceSettingsLocator(
-								getLayout(), getResourcePortletId())));
+					_wikiPortletInstanceSettings =
+						ModuleConfigurationFactoryUtil.getConfiguration(
+							WikiPortletInstanceSettings.class,
+							new ParameterMapSettingsLocator(
+								getRequest().getParameterMap(),
+								new PortletInstanceSettingsLocator(
+									getLayout(), getResourcePortletId())));
 				}
 				else {
-					_wikiPortletInstanceSettings = settingsFactory.getSettings(
-						WikiPortletInstanceSettings.class,
-						new PortletInstanceSettingsLocator(
-							getLayout(), getPortletId()));
+					_wikiPortletInstanceSettings =
+						ModuleConfigurationFactoryUtil.getConfiguration(
+							WikiPortletInstanceSettings.class,
+							new PortletInstanceSettingsLocator(
+								getLayout(), getPortletId()));
 				}
 			}
 

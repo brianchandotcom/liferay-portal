@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.facebook.connect;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -230,7 +230,7 @@ public class FacebookConnectImpl implements FacebookConnect {
 
 		try {
 			FacebookConnectConfiguration facebookConnectCompanyServiceSettings =
-				_settingsFactory.getSettings(
+				_moduleConfigurationFactory.getConfiguration(
 					FacebookConnectConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, FacebookConnectConstants.SERVICE_NAME));
@@ -244,14 +244,16 @@ public class FacebookConnectImpl implements FacebookConnect {
 		return null;
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unset = "-")
+	protected void setModuleConfigurationFactory(
+		ModuleConfigurationFactory moduleConfigurationFactory) {
+
+		_moduleConfigurationFactory = moduleConfigurationFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FacebookConnectImpl.class);
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
 
 }

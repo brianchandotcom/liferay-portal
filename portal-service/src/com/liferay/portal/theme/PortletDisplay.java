@@ -14,13 +14,12 @@
 
 package com.liferay.portal.theme;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.toolbar.PortletToolbar;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -240,13 +239,10 @@ public class PortletDisplay implements Serializable {
 	public <T> T getPortletInstanceConfiguration(Class<T> clazz)
 		throws SettingsException {
 
-		SettingsFactory settingsFactory =
-			SettingsFactoryUtil.getSettingsFactory();
-
 		String portletId = Validator.isNull(
 			_portletResource) ? _id : _portletResource;
 
-		return settingsFactory.getSettings(
+		return ModuleConfigurationFactoryUtil.getConfiguration(
 			clazz,
 			new PortletInstanceSettingsLocator(
 				_themeDisplay.getLayout(), portletId));

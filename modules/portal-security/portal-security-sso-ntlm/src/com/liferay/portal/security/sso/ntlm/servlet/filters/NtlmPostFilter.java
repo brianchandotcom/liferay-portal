@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.ntlm.servlet.filters;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
@@ -67,10 +67,11 @@ public class NtlmPostFilter extends BaseFilter {
 
 		long companyId = PortalInstances.getCompanyId(request);
 
-		NtlmConfiguration ntlmConfiguration = _settingsFactory.getSettings(
-			NtlmConfiguration.class,
-			new CompanyServiceSettingsLocator(
-				companyId, NtlmConstants.SERVICE_NAME));
+		NtlmConfiguration ntlmConfiguration =
+			_moduleConfigurationFactory.getConfiguration(
+				NtlmConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, NtlmConstants.SERVICE_NAME));
 
 		if (ntlmConfiguration.enabled() && BrowserSnifferUtil.isIe(request) &&
 			request.getMethod().equals(HttpMethods.POST)) {
@@ -103,13 +104,15 @@ public class NtlmPostFilter extends BaseFilter {
 		processFilter(NtlmPostFilter.class, request, response, filterChain);
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setModuleConfigurationFactory(
+		ModuleConfigurationFactory moduleConfigurationFactory) {
+
+		_moduleConfigurationFactory = moduleConfigurationFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(NtlmPostFilter.class);
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
 
 }

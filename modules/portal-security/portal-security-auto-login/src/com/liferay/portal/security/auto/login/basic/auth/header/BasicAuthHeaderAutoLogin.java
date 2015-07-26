@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.auto.login.basic.auth.header;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
@@ -21,8 +23,6 @@ import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auto.login.basic.auth.header.configuration.BasicAuthHeaderAutoLoginConfiguration;
@@ -149,7 +149,7 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 
 			return basicAuthHeaderAutoLoginConfiguration;
 		}
-		catch (SettingsException se) {
+		catch (ModuleConfigurationException mce) {
 			_log.error("Unable to get basic auth header configuration", se);
 		}
 

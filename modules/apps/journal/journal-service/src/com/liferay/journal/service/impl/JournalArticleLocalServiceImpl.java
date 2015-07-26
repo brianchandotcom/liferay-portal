@@ -59,6 +59,7 @@ import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
 import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -93,7 +94,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
@@ -7003,7 +7003,7 @@ public class JournalArticleLocalServiceImpl
 
 	protected JournalGroupServiceConfiguration
 			getJournalGroupServiceConfiguration(long groupId)
-		throws SettingsException {
+		throws ModuleConfigurationException {
 
 		return moduleConfigurationFactory.getConfiguration(
 			JournalGroupServiceConfiguration.class,

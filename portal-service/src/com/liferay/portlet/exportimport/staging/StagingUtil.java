@@ -286,8 +286,7 @@ public class StagingUtil {
 	public static JSONArray getErrorMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences) {
 
-		return getStaging().getErrorMessagesJSONArray(
-			locale, missingReferences);
+		return _staging.getErrorMessagesJSONArray(locale, missingReferences);
 	}
 
 	/**
@@ -308,7 +307,7 @@ public class StagingUtil {
 		Locale locale, Exception e,
 		ExportImportConfiguration exportImportConfiguration) {
 
-		return getStaging().getExceptionMessagesJSONObject(
+		return _staging.getExceptionMessagesJSONObject(
 			locale, e, exportImportConfiguration);
 	}
 
@@ -410,8 +409,7 @@ public class StagingUtil {
 	public static JSONArray getWarningMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences) {
 
-		return getStaging().getWarningMessagesJSONArray(
-			locale, missingReferences);
+		return _staging.getWarningMessagesJSONArray(locale, missingReferences);
 	}
 
 	/**

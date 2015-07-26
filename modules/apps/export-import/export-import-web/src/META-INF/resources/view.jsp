@@ -45,27 +45,27 @@ String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, themeDispla
 
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav">
-		<liferay-portlet:renderURL var="exportPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<liferay-portlet:renderURL var="exportPagesURL">
 			<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
 			<portlet:param name="liveGroupId" value="<%= String.valueOf(groupDisplayContextHelper.getLiveGroupId()) %>" />
 			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 			<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
-			<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 		</liferay-portlet:renderURL>
 
-		<aui:nav-item href="<%= exportPagesURL %>" iconCssClass="icon-arrow-down" label="export" useDialog="<%= true %>" />
+		<aui:nav-item href="<%= exportPagesURL %>" iconCssClass="icon-arrow-down" label="export" />
 
-		<liferay-portlet:renderURL var="importPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<liferay-portlet:renderURL var="importPagesURL">
 			<portlet:param name="mvcRenderCommandName" value="importLayouts" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
 			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 			<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
-			<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 		</liferay-portlet:renderURL>
 
-		<aui:nav-item href="<%= importPagesURL %>" iconCssClass="icon-arrow-up" label="import" useDialog="<%= true %>" />
+		<aui:nav-item href="<%= importPagesURL %>" iconCssClass="icon-arrow-up" label="import" />
 	</aui:nav>
 </aui:nav-bar>

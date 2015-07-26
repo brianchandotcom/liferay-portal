@@ -32,6 +32,9 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionAttribute.Builder;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.Constants;
@@ -47,8 +50,6 @@ import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
-import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -83,8 +84,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
-
-import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Brian Wing Shun Chan
@@ -179,7 +178,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				Callable<Object[]> updateEntryCallable =
 					new UpdateEntryCallable(actionRequest);
 
-				Object[] returnValue = TransactionHandlerUtil.invoke(
+				Object[] returnValue = TransactionInvokerUtil.invoke(
 					_transactionAttribute, updateEntryCallable);
 
 				entry = (BlogsEntry)returnValue[0];
@@ -612,9 +611,16 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditEntryMVCActionCommand.class);
 
-	private final TransactionAttribute _transactionAttribute =
-		TransactionAttributeBuilder.build(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+	private static final TransactionAttribute _transactionAttribute;
+
+	static {
+		Builder builder = new Builder();
+
+		builder.setPropagation(Propagation.REQUIRED);
+		builder.setRollbackForClasses(Exception.class);
+
+		_transactionAttribute = builder.build();
+	}
 
 	private class UpdateEntryCallable implements Callable<Object[]> {
 

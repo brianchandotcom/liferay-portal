@@ -376,7 +376,7 @@ public class JournalPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		String path = getPath(renderRequest);
+		String path = getPath(renderRequest, renderResponse);
 
 		if (Validator.equals(path, "/edit_article.jsp")) {
 			renderRequest.setAttribute(

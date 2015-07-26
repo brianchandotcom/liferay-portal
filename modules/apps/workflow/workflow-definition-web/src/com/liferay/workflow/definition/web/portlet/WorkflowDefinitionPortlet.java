@@ -77,7 +77,7 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			String path = getPath(renderRequest);
+			String path = getPath(renderRequest, renderResponse);
 
 			if (Validator.equals(path, "/edit_workflow_definition.jsp")) {
 				setWorkflowDefinitionRenderRequestAttribute(renderRequest);

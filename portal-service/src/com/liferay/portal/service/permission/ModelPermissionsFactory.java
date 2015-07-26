@@ -42,28 +42,18 @@ public class ModelPermissionsFactory {
 	}
 
 	public static ModelPermissions create(
-			long companyId, long groupId, String[] groupPermissions,
+			String[] groupPermissions,
 			String[] guestPermissions)
 		throws PortalException {
 
 		ModelPermissions modelPermissions = new ModelPermissions();
 
-		// Group permissions
-
-		if ((groupId > 0) && (groupPermissions != null) &&
-			(groupPermissions.length > 0)) {
-
+		if ((groupPermissions != null) && (groupPermissions.length > 0)) {
 			modelPermissions.addRolePermissions(
 				RoleConstants.DEFAULT_GROUP_ROLE, groupPermissions);
 		}
 
-		// Guest permissions
-
 		if ((guestPermissions != null) && (guestPermissions.length > 0)) {
-			if (guestPermissions == null) {
-				guestPermissions = new String[0];
-			}
-
 			modelPermissions.addRolePermissions(
 				RoleConstants.GUEST, guestPermissions);
 		}

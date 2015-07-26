@@ -194,8 +194,7 @@ public class ServiceContext implements Cloneable, Serializable {
 		setGuestPermissions(guestPermissions);
 
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-			siteGroup.getCompanyId(), siteGroupId, groupPermissions,
-			guestPermissions);
+			groupPermissions, guestPermissions);
 
 		setModelPermissions(modelPermissions);
 	}

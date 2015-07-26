@@ -196,7 +196,6 @@ public class ServiceContextFactory {
 
 			if ((groupPermissions != null) || (guestPermissions != null)) {
 				modelPermissions = ModelPermissionsFactory.create(
-					themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
 					groupPermissions, guestPermissions);
 			}
 
@@ -412,7 +411,6 @@ public class ServiceContextFactory {
 
 			if ((groupPermissions != null) || (guestPermissions != null)) {
 				modelPermissions = ModelPermissionsFactory.create(
-					themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
 					groupPermissions, guestPermissions);
 			}
 
@@ -568,7 +566,6 @@ public class ServiceContextFactory {
 			serviceContext.setGuestPermissions(guestPermissions);
 
 			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
 				groupPermissions, guestPermissions);
 
 			serviceContext.setModelPermissions(modelPermissions);

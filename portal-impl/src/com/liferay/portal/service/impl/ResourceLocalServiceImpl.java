@@ -581,7 +581,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		throws PortalException {
 
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-			companyId, groupId, groupPermissions, guestPermissions);
+			groupPermissions, guestPermissions);
 
 		updateResources(
 			companyId, groupId, name, primKey, modelPermissions, null);
@@ -807,7 +807,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		throws PortalException {
 
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-			companyId, groupId, groupPermissions, guestPermissions);
+			groupPermissions, guestPermissions);
 
 		addModelResources(
 			companyId, groupId, userId, resource, modelPermissions,
@@ -876,7 +876,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		throws PortalException {
 
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-			companyId, groupId, groupPermissions, guestPermissions);
+			groupPermissions, guestPermissions);
 
 		addModelResources(
 			companyId, groupId, userId, name, primKey, modelPermissions,

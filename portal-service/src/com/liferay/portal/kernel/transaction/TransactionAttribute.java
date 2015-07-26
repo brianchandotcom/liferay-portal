@@ -105,6 +105,12 @@ public class TransactionAttribute {
 			return this;
 		}
 
+		public Builder setTimeout(int timeout) {
+			_timeout = timeout;
+
+			return this;
+		}
+
 		private Isolation _isolation = Isolation.DEFAULT;
 		private Class<?>[] _noRollbackForClasses = {};
 		private String[] _noRollbackForClassNames = {};
@@ -113,6 +119,39 @@ public class TransactionAttribute {
 		private Class<?>[] _rollbackForClasses = {};
 		private String[] _rollbackForClassNames = {};
 		private int _timeout = TransactionDefinition.TIMEOUT_DEFAULT;
+
+	}
+
+	public static class Factory {
+
+		public static TransactionAttribute create(
+			Isolation isolation, Propagation propagation, boolean readOnly,
+			int timeout, Class<?>[] rollbackForClasses,
+			String[] rollbackForClassNames, Class<?>[] noRollbackForClasses,
+			String[] noRollbackForClassNames) {
+
+			Builder builder = new Builder();
+
+			builder.setIsolation(isolation);
+			builder.setPropagation(propagation);
+			builder.setReadOnly(readOnly);
+			builder.setTimeout(timeout);
+			builder.setRollbackForClasses(rollbackForClasses);
+			builder.setRollbackForClassNames(rollbackForClassNames);
+			builder.setNoRollbackForClasses(noRollbackForClasses);
+			builder.setNoRollbackForClassNames(noRollbackForClassNames);
+
+			return builder.build();
+		}
+
+		public static TransactionAttribute create(
+			Propagation propagation, Class<?>[] rollbackForClasses,
+			Class<?>... noRollbackForClasses) {
+
+			return create(
+				Isolation.PORTAL, propagation, false, -1, rollbackForClasses,
+				new String[0], noRollbackForClasses, new String[0]);
+		}
 
 	}
 

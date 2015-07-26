@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.model.BackgroundTask;
-import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 import com.liferay.portlet.exportimport.lar.MissingReferences;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManager;
@@ -73,7 +73,7 @@ public class PortletStagingBackgroundTaskExecutor
 			markBackgroundTask(
 				backgroundTask.getBackgroundTaskId(), "exported");
 
-			missingReferences = TransactionHandlerUtil.invoke(
+			missingReferences = TransactionInvokerUtil.invoke(
 				transactionAttribute,
 				new PortletStagingCallable(
 					backgroundTask.getBackgroundTaskId(),

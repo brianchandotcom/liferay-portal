@@ -21,19 +21,8 @@ import java.util.concurrent.Callable;
  */
 public interface TransactionInvoker {
 
-	public void commit(
-		TransactionAttribute transactionAttribute,
-		TransactionStatus transactionStatus);
-
 	public <T> T invoke(
 			TransactionAttribute transactionAttribute, Callable<T> callable)
 		throws Throwable;
-
-	public void rollback(
-			Throwable throwable, TransactionAttribute transactionAttribute,
-			TransactionStatus transactionStatus)
-		throws Throwable;
-
-	public TransactionStatus start(TransactionAttribute transactionAttribute);
 
 }

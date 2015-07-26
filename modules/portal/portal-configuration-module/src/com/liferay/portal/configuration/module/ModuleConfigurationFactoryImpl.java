@@ -56,11 +56,12 @@ public class ModuleConfigurationFactoryImpl
 					typedSettings);
 			}
 
-			SettingsInvocationHandler<T> settingsInvocationHandler =
-				new SettingsInvocationHandler<>(
-					clazz, settingsOverrideInstance, typedSettings);
+			ModuleConfigurationInvocationHandler<T>
+				moduleConfigurationInvocationHandler =
+					new ModuleConfigurationInvocationHandler<>(
+						clazz, settingsOverrideInstance, typedSettings);
 
-			return settingsInvocationHandler.createProxy();
+			return moduleConfigurationInvocationHandler.createProxy();
 		}
 		catch (NoSuchMethodException | InvocationTargetException |
 			InstantiationException | IllegalAccessException e) {

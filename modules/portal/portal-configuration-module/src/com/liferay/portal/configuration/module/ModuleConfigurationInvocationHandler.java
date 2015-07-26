@@ -26,9 +26,10 @@ import java.lang.reflect.Method;
 /**
  * @author Iván Zaera
  */
-public class SettingsInvocationHandler<S> implements InvocationHandler {
+public class ModuleConfigurationInvocationHandler<S>
+	implements InvocationHandler {
 
-	public SettingsInvocationHandler(
+	public ModuleConfigurationInvocationHandler(
 		Class<S> clazz, Object settingsOverrideInstance,
 		TypedSettings typedSettings) {
 

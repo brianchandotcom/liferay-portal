@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.passwordpoliciesadmin.lar;
+package com.liferay.password.policies.admin.web.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;

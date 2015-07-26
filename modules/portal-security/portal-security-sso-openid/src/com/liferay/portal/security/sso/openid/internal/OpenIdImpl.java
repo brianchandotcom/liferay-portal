@@ -39,7 +39,7 @@ public class OpenIdImpl implements OpenId {
 	public boolean isEnabled(long companyId) {
 		try {
 			OpenIdConfiguration openIdConfiguration =
-				_moduleConfigurationFactory.getConfiguration(
+				_moduleConfigurationFactory.getModuleConfiguration(
 					OpenIdConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, OpenIdConstants.SERVICE_NAME));

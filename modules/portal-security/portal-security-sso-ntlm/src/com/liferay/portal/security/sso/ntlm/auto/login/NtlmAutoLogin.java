@@ -48,7 +48,7 @@ public class NtlmAutoLogin extends BaseAutoLogin {
 		long companyId = PortalUtil.getCompanyId(request);
 
 		NtlmConfiguration ntlmConfiguration =
-			_moduleConfigurationFactory.getConfiguration(
+			_moduleConfigurationFactory.getModuleConfiguration(
 				NtlmConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, NtlmConstants.SERVICE_NAME));

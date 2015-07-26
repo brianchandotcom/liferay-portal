@@ -67,7 +67,7 @@ public class TokenAutoLogin extends BaseAutoLogin {
 		long companyId = PortalUtil.getCompanyId(request);
 
 		TokenConfiguration tokenCompanyServiceSettings =
-			_moduleConfigurationFactory.getConfiguration(
+			_moduleConfigurationFactory.getModuleConfiguration(
 				TokenConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, TokenConstants.SERVICE_NAME));

@@ -227,7 +227,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Message boards
 
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-			moduleConfigurationFactory.getConfiguration(
+			moduleConfigurationFactory.getModuleConfiguration(
 				WikiGroupServiceOverriddenConfiguration.class,
 				new GroupServiceSettingsLocator(
 					node.getGroupId(), WikiConstants.SERVICE_NAME));
@@ -256,7 +256,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
 
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-			moduleConfigurationFactory.getConfiguration(
+			moduleConfigurationFactory.getModuleConfiguration(
 				WikiGroupServiceOverriddenConfiguration.class,
 				new GroupServiceSettingsLocator(
 					node.getGroupId(), WikiConstants.SERVICE_NAME));
@@ -2109,7 +2109,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			WikiGroupServiceConfiguration
 				wikiGroupServiceConfiguration =
-					moduleConfigurationFactory.getConfiguration(
+					moduleConfigurationFactory.getModuleConfiguration(
 						WikiGroupServiceOverriddenConfiguration.class,
 						new GroupServiceSettingsLocator(
 							page.getGroupId(), WikiConstants.SERVICE_NAME));
@@ -3041,7 +3041,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-			moduleConfigurationFactory.getConfiguration(
+			moduleConfigurationFactory.getModuleConfiguration(
 				WikiGroupServiceOverriddenConfiguration.class,
 				new GroupServiceSettingsLocator(
 					page.getGroupId(), WikiConstants.SERVICE_NAME));
@@ -3331,7 +3331,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Social
 
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-			moduleConfigurationFactory.getConfiguration(
+			moduleConfigurationFactory.getModuleConfiguration(
 				WikiGroupServiceOverriddenConfiguration.class,
 				new GroupServiceSettingsLocator(
 					node.getGroupId(), WikiConstants.SERVICE_NAME));

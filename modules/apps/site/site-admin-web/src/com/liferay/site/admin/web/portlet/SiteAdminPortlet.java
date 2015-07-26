@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
-import com.liferay.portal.kernel.transaction.TransactionAttribute.Builder;
+import com.liferay.portal.kernel.transaction.TransactionAttribute.Factory;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -858,16 +858,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;
 
-	private static final TransactionAttribute _transactionAttribute;
-
-	static {
-		Builder builder = new Builder();
-
-		builder.setPropagation(Propagation.REQUIRED);
-		builder.setRollbackForClasses(Exception.class);
-
-		_transactionAttribute = builder.build();
-	}
+	private static final TransactionAttribute _transactionAttribute =
+		Factory.create(Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	private class GroupCallable implements Callable<Group> {
 

@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
-import com.liferay.portal.kernel.transaction.TransactionAttribute.Builder;
+import com.liferay.portal.kernel.transaction.TransactionAttribute.Factory;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
@@ -611,16 +611,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditEntryMVCActionCommand.class);
 
-	private static final TransactionAttribute _transactionAttribute;
-
-	static {
-		Builder builder = new Builder();
-
-		builder.setPropagation(Propagation.REQUIRED);
-		builder.setRollbackForClasses(Exception.class);
-
-		_transactionAttribute = builder.build();
-	}
+	private static final TransactionAttribute _transactionAttribute =
+		Factory.create(Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	private class UpdateEntryCallable implements Callable<Object[]> {
 

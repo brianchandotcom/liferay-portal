@@ -75,7 +75,7 @@ public class ActionUtil {
 
 		WikiPortletInstanceOverriddenConfiguration
 			wikiPortletInstanceConfiguration =
-				ModuleConfigurationFactoryUtil.getConfiguration(
+				ModuleConfigurationFactoryUtil.getModuleConfiguration(
 					WikiPortletInstanceOverriddenConfiguration.class,
 					new PortletInstanceSettingsLocator(
 						themeDisplay.getLayout(), portletDisplay.getId()));

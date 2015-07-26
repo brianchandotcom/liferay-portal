@@ -242,7 +242,7 @@ public class PortletDisplay implements Serializable {
 		String portletId = Validator.isNull(
 			_portletResource) ? _id : _portletResource;
 
-		return ModuleConfigurationFactoryUtil.getConfiguration(
+		return ModuleConfigurationFactoryUtil.getModuleConfiguration(
 			clazz,
 			new PortletInstanceSettingsLocator(
 				_themeDisplay.getLayout(), portletId));

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.settings.TypedSettings;
-import com.liferay.portal.settings.SettingsInvocationHandler;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -57,11 +56,12 @@ public class ModuleConfigurationFactoryImpl
 					typedSettings);
 			}
 
-			SettingsInvocationHandler<T> settingsInvocationHandler =
-				new SettingsInvocationHandler<>(
-					clazz, settingsOverrideInstance, typedSettings);
+			ModuleConfigurationInvocationHandler<T>
+				moduleConfigurationInvocationHandler =
+					new ModuleConfigurationInvocationHandler<>(
+						clazz, settingsOverrideInstance, typedSettings);
 
-			return settingsInvocationHandler.createProxy();
+			return moduleConfigurationInvocationHandler.createProxy();
 		}
 		catch (NoSuchMethodException | InvocationTargetException |
 			InstantiationException | IllegalAccessException e) {

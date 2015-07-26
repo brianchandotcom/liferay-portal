@@ -22,7 +22,7 @@ import com.liferay.wiki.web.settings.internal.WikiPortletInstanceConfigurationOv
  * @author Iván Zaera
  */
 @Settings.OverrideClass(WikiPortletInstanceConfigurationOverrideImpl.class)
-public interface WikiPortletInstanceSettings
+public interface WikiPortletInstanceOverriddenConfiguration
 	extends WikiPortletInstanceConfiguration,
 		WikiPortletInstanceConfigurationOverride {
 }

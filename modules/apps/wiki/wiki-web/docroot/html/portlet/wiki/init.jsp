@@ -60,13 +60,13 @@ page import="com.liferay.wiki.web.display.context.logic.WikiPortletInstanceSetti
 page import="com.liferay.wiki.web.display.context.logic.WikiVisualizationHelper" %><%@
 page import="com.liferay.wiki.web.display.context.util.WikiRequestHelper" %><%@
 page import="com.liferay.wiki.web.display.context.util.WikiURLHelper" %><%@
-page import="com.liferay.wiki.web.settings.WikiPortletInstanceSettings" %><%@
+page import="com.liferay.wiki.web.settings.WikiPortletInstanceOverriddenConfiguration" %><%@
 page import="com.liferay.wiki.web.util.WikiWebComponentProvider" %>
 
 <%
 WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);
 
-WikiPortletInstanceSettings wikiPortletInstanceSettings = wikiRequestHelper.getWikiPortletInstanceSettings();
+WikiPortletInstanceOverriddenConfiguration wikiPortletInstanceConfiguration = wikiRequestHelper.getWikiPortletInstanceSettings();
 WikiGroupServiceSettings wikiGroupServiceSettings = wikiRequestHelper.getWikiGroupServiceSettings();
 
 WikiPortletInstanceSettingsHelper wikiPortletInstanceSettingsHelper = new WikiPortletInstanceSettingsHelper(wikiRequestHelper);

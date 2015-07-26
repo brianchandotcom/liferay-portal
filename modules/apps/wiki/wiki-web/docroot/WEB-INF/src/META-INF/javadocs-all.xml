@@ -1276,8 +1276,8 @@
 		</method>
 	</javadoc>
 	<javadoc>
-		<name>WikiPortletInstanceSettings</name>
-		<type>com.liferay.wiki.web.settings.WikiPortletInstanceSettings</type>
+		<name>WikiPortletInstanceConfiguration</name>
+		<type>com.liferay.wiki.web.settings.WikiPortletInstanceOverriddenConfiguration</type>
 		<author><![CDATA[Iván Zaera]]></author>
 	</javadoc>
 	<javadoc>
@@ -1938,8 +1938,8 @@
 		<method>
 			<name>updateSettings</name>
 			<param>
-				<name>wikiPortletInstanceSettings</name>
-				<type>com.liferay.wiki.web.settings.WikiPortletInstanceSettings</type>
+				<name>wikiPortletInstanceConfiguration</name>
+				<type>com.liferay.wiki.web.settings.WikiPortletInstanceOverriddenConfiguration</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>

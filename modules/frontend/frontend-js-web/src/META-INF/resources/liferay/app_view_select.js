@@ -43,6 +43,10 @@ AUI.add(
 						validator: Array.isArray
 					},
 
+					toggleSelector: {
+						validator: Lang.isString
+					},
+
 					displayStyle: {
 						validator: Lang.isString
 					},
@@ -57,6 +61,11 @@ AUI.add(
 
 					portletContainerId: {
 						validator: Lang.isString
+					},
+
+					selectedCSSClass: {
+						validator: Lang.isString,
+						value: CSS_SELECTED
 					},
 
 					selector: {
@@ -76,6 +85,8 @@ AUI.add(
 
 						instance._portletContainer = instance.byId(instance.get('portletContainerId'));
 
+						instance._toggleSelector = instance.get('toggleSelector');
+
 						instance._displayStyle = instance.ns(STR_DISPLAY_STYLE);
 
 						instance._displayStyleToolbar = instance.get(DISPLAY_STYLE_TOOLBAR);
@@ -83,6 +94,8 @@ AUI.add(
 						instance._entriesContainer = instance.byId('entriesContainer');
 
 						instance._selectAllCheckbox = instance.byId('allRowIds');
+
+						instance._selectedCSSClass = instance.get('selectedCSSClass');
 
 						instance._selector = instance.get('selector');
 
@@ -150,6 +163,17 @@ AUI.add(
 								instance
 							)
 						);
+
+						if (instance._toggleSelector) {
+							instance._eventHandles.push(
+								instance._entriesContainer.delegate(
+									STR_CLICK,
+									A.rbind('_onEntrySelectorChange', instance, false),
+									STR_DOT + instance._toggleSelector,
+									instance
+								)
+							);
+						}
 					},
 
 					_onDragStart: function(event) {
@@ -157,17 +181,21 @@ AUI.add(
 
 						var node = event.node;
 
-						if (!node.hasClass(CSS_SELECTED)) {
+						if (!node.hasClass(instance._selectedCSSClass)) {
 							instance._unselectAllEntries();
 
 							instance._toggleSelected(node);
 						}
 					},
 
-					_onEntrySelectorChange: function(event) {
+					_onEntrySelectorChange: function(event, preventUpdate) {
 						var instance = this;
 
-						instance._toggleSelected(event.currentTarget, true);
+						if (preventUpdate === undefined) {
+							preventUpdate = true;
+						}
+
+						instance._toggleSelected(event.currentTarget, preventUpdate);
 
 						WIN[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
 
@@ -202,7 +230,7 @@ AUI.add(
 
 						var articleDisplayNodes = A.all(articleDisplayStyle);
 
-						articleDisplayNodes.toggleClass(CSS_SELECTED, instance._selectAllCheckbox.attr(ATTR_CHECKED));
+						articleDisplayNodes.toggleClass(instance._selectedCSSClass, instance._selectAllCheckbox.attr(ATTR_CHECKED));
 					},
 
 					_toggleHovered: function(event) {
@@ -239,13 +267,13 @@ AUI.add(
 							}
 						}
 
-						node.toggleClass(CSS_SELECTED);
+						node.toggleClass(instance._selectedCSSClass);
 					},
 
 					_unselectAllEntries: function() {
 						var instance = this;
 
-						instance._selectAllCheckbox.attr(CSS_SELECTED, false);
+						instance._selectAllCheckbox.attr(instance._selectedCSSClass, false);
 
 						instance._toggleEntriesSelection();
 					}

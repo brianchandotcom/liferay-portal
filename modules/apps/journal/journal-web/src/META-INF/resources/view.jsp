@@ -139,7 +139,11 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			},
 			namespace: '<portlet:namespace />',
 			portletId: '<%= portletDisplay.getId() %>',
-			rowIds: '<%= RowChecker.ROW_IDS %>'
+			rowIds: '<%= RowChecker.ROW_IDS %>',
+			select: {
+				displayStyleCSSClass: 'list-group-item',
+				selectedCSSClass: 'active'
+			}
 		}
 	);
 

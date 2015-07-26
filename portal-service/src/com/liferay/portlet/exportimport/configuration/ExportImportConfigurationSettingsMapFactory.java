@@ -16,7 +16,6 @@ package com.liferay.portlet.exportimport.configuration;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -47,35 +46,35 @@ public class ExportImportConfigurationSettingsMapFactory {
 
 	public static Map<String, Serializable> buildExportSettingsMap(
 		long userId, long sourcePlid, long sourceGroupId, String portletId,
-		Map<String, String[]> parameterMap, String cmd, Locale locale,
-		TimeZone timeZone, String fileName) {
+		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone,
+		String fileName) {
 
 		return buildSettingsMap(
 			userId, sourceGroupId, sourcePlid, 0, 0, portletId, null, null,
 			null, parameterMap, StringPool.BLANK, 0, StringPool.BLANK, null, 0,
-			null, cmd, locale, timeZone, fileName);
+			null, locale, timeZone, fileName);
 	}
 
 	public static Map<String, Serializable> buildImportSettingsMap(
 		long userId, long targetGroupId, boolean privateLayout,
-		long[] layoutIds, Map<String, String[]> parameterMap, String cmd,
-		Locale locale, TimeZone timeZone, String fileName) {
+		long[] layoutIds, Map<String, String[]> parameterMap, Locale locale,
+		TimeZone timeZone, String fileName) {
 
 		return buildSettingsMap(
 			userId, 0, 0, targetGroupId, 0, StringPool.BLANK, privateLayout,
 			null, layoutIds, parameterMap, StringPool.BLANK, 0,
-			StringPool.BLANK, null, 0, null, cmd, locale, timeZone, fileName);
+			StringPool.BLANK, null, 0, null, locale, timeZone, fileName);
 	}
 
 	public static Map<String, Serializable> buildImportSettingsMap(
 		long userId, long targetPlid, long targetGroupId, String portletId,
-		Map<String, String[]> parameterMap, String cmd, Locale locale,
-		TimeZone timeZone, String fileName) {
+		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone,
+		String fileName) {
 
 		return buildSettingsMap(
 			userId, 0, 0, targetGroupId, targetPlid, portletId, null, null,
 			null, parameterMap, StringPool.BLANK, 0, StringPool.BLANK, null, 0,
-			null, cmd, locale, timeZone, fileName);
+			null, locale, timeZone, fileName);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(
@@ -98,8 +97,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 			userId, sourceGroupId, 0, 0, 0, StringPool.BLANK, privateLayout,
 			layoutIdMap, null, parameterMap, remoteAddress, remotePort,
 			remotePathContext, secureConnection, remoteGroupId,
-			remotePrivateLayout, StringPool.BLANK, locale, timeZone,
-			StringPool.BLANK);
+			remotePrivateLayout, locale, timeZone, StringPool.BLANK);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(
@@ -110,19 +108,19 @@ public class ExportImportConfigurationSettingsMapFactory {
 		return buildSettingsMap(
 			userId, sourceGroupId, 0, targetGroupId, 0, StringPool.BLANK,
 			privateLayout, null, layoutIds, parameterMap, StringPool.BLANK, 0,
-			StringPool.BLANK, null, 0, null, StringPool.BLANK, locale, timeZone,
+			StringPool.BLANK, null, 0, null, locale, timeZone,
 			StringPool.BLANK);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(
 		long userId, long sourceGroupId, long sourcePlid, long targetGroupId,
 		long targetPlid, String portletId, Map<String, String[]> parameterMap,
-		String cmd, Locale locale, TimeZone timeZone) {
+		Locale locale, TimeZone timeZone) {
 
 		return buildSettingsMap(
 			userId, sourceGroupId, sourcePlid, targetGroupId, targetPlid,
 			portletId, null, null, null, parameterMap, StringPool.BLANK, 0,
-			StringPool.BLANK, null, 0, null, cmd, locale, timeZone, null);
+			StringPool.BLANK, null, 0, null, locale, timeZone, null);
 	}
 
 	public static Map<String, Serializable> buildSettingsMap(
@@ -210,14 +208,10 @@ public class ExportImportConfigurationSettingsMapFactory {
 		Map<Long, Boolean> layoutIdMap, long[] layoutIds,
 		Map<String, String[]> parameterMap, String remoteAddress,
 		int remotePort, String remotePathContext, Boolean secureConnection,
-		long remoteGroupId, Boolean remotePrivateLayout, String cmd,
-		Locale locale, TimeZone timeZone, String fileName) {
+		long remoteGroupId, Boolean remotePrivateLayout, Locale locale,
+		TimeZone timeZone, String fileName) {
 
 		Map<String, Serializable> settingsMap = new HashMap<>();
-
-		if (Validator.isNotNull(cmd)) {
-			settingsMap.put(Constants.CMD, cmd);
-		}
 
 		if (Validator.isNotNull(fileName)) {
 			settingsMap.put("fileName", fileName);

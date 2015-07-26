@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -3632,7 +3631,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				defaultUser.getUserId(), group.getGroupId(), false, null,
-				parameterMap, Constants.IMPORT, defaultUser.getLocale(),
+				parameterMap, defaultUser.getLocale(),
 				defaultUser.getTimeZone(), larFile.getName());
 
 		ExportImportConfiguration exportImportConfiguration =

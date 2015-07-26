@@ -200,8 +200,8 @@ public class ExportImportMVCActionCommand
 					buildExportSettingsMap(
 						themeDisplay.getUserId(), plid, groupId,
 						portlet.getPortletId(), actionRequest.getParameterMap(),
-						StringPool.BLANK, themeDisplay.getLocale(),
-						themeDisplay.getTimeZone(), fileName);
+						themeDisplay.getLocale(), themeDisplay.getTimeZone(),
+						fileName);
 
 			ExportImportConfiguration exportImportConfiguration =
 				ExportImportConfigurationLocalServiceUtil.
@@ -245,9 +245,8 @@ public class ExportImportMVCActionCommand
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				themeDisplay.getUserId(), plid, groupId, portlet.getPortletId(),
-				actionRequest.getParameterMap(), StringPool.BLANK,
-				themeDisplay.getLocale(), themeDisplay.getTimeZone(),
-				StringPool.BLANK);
+				actionRequest.getParameterMap(), themeDisplay.getLocale(),
+				themeDisplay.getTimeZone(), StringPool.BLANK);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -278,9 +277,8 @@ public class ExportImportMVCActionCommand
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				themeDisplay.getUserId(), plid, groupId, portlet.getPortletId(),
-				actionRequest.getParameterMap(), StringPool.BLANK,
-				themeDisplay.getLocale(), themeDisplay.getTimeZone(),
-				StringPool.BLANK);
+				actionRequest.getParameterMap(), themeDisplay.getLocale(),
+				themeDisplay.getTimeZone(), StringPool.BLANK);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

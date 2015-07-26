@@ -284,6 +284,18 @@ public class StagingUtil {
 	}
 
 	public static JSONArray getErrorMessagesJSONArray(
+		Locale locale, Map<String, MissingReference> missingReferences) {
+
+		return _staging.getErrorMessagesJSONArray(locale, missingReferences);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getErrorMessagesJSONArray(Locale, Map<String,
+	 *             MissingReference>)}
+	 */
+	@Deprecated
+	public static JSONArray getErrorMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences,
 		Map<String, Serializable> contextMap) {
 
@@ -291,6 +303,20 @@ public class StagingUtil {
 			locale, missingReferences, contextMap);
 	}
 
+	public static JSONObject getExceptionMessagesJSONObject(
+		Locale locale, Exception e,
+		ExportImportConfiguration exportImportConfiguration) {
+
+		return _staging.getExceptionMessagesJSONObject(
+			locale, e, exportImportConfiguration);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getExceptionMessagesJSONObject(Locale, Exception,
+	 *             ExportImportConfiguration)}
+	 */
+	@Deprecated
 	public static JSONObject getExceptionMessagesJSONObject(
 		Locale locale, Exception e, Map<String, Serializable> contextMap) {
 
@@ -380,6 +406,18 @@ public class StagingUtil {
 		return _staging.getStagingParameters(PortletRequest);
 	}
 
+	public static JSONArray getWarningMessagesJSONArray(
+		Locale locale, Map<String, MissingReference> missingReferences) {
+
+		return _staging.getWarningMessagesJSONArray(locale, missingReferences);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getWarningMessagesJSONArray(Locale, Map<String,
+	 *             MissingReference>)}
+	 */
+	@Deprecated
 	public static JSONArray getWarningMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences,
 		Map<String, Serializable> contextMap) {

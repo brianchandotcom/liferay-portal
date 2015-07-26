@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -321,8 +320,7 @@ public class SitesImpl implements Sites {
 					buildImportSettingsMap(
 						userId, targetLayout.getGroupId(),
 						targetLayout.isPrivateLayout(), null, parameterMap,
-						Constants.IMPORT, user.getLocale(), user.getTimeZone(),
-						file.getName());
+						user.getLocale(), user.getTimeZone(), file.getName());
 
 			ExportImportConfiguration importConfiguration =
 				ExportImportConfigurationLocalServiceUtil.
@@ -895,8 +893,7 @@ public class SitesImpl implements Sites {
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				user.getUserId(), layoutSet.getGroupId(),
 				layoutSet.isPrivateLayout(), null, parameterMap,
-				Constants.IMPORT, user.getLocale(), user.getTimeZone(),
-				StringPool.BLANK);
+				user.getLocale(), user.getTimeZone(), StringPool.BLANK);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -1920,8 +1917,7 @@ public class SitesImpl implements Sites {
 		Map<String, Serializable> importSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				user.getUserId(), groupId, privateLayout, null, parameterMap,
-				Constants.IMPORT, user.getLocale(), user.getTimeZone(),
-				file.getName());
+				user.getLocale(), user.getTimeZone(), file.getName());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

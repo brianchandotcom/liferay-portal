@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1127,7 +1126,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 				ExportImportConfigurationSettingsMapFactory.
 					buildImportSettingsMap(
 						user.getUserId(), groupId, true, null, parameterMap,
-						Constants.IMPORT, user.getLocale(), user.getTimeZone(),
+						user.getLocale(), user.getTimeZone(),
 						privateLayoutsFile.getName());
 
 			ExportImportConfiguration exportImportConfiguration =
@@ -1148,7 +1147,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 				ExportImportConfigurationSettingsMapFactory.
 					buildImportSettingsMap(
 						user.getUserId(), groupId, false, null, parameterMap,
-						Constants.IMPORT, user.getLocale(), user.getTimeZone(),
+						user.getLocale(), user.getTimeZone(),
 						publicLayoutsFile.getName());
 
 			ExportImportConfiguration exportImportConfiguration =

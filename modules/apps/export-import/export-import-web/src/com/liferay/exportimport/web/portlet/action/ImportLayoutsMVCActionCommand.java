@@ -273,7 +273,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		deleteTempFileEntry(themeDisplay.getScopeGroupId(), folderName);
 
 		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONObject(
-			themeDisplay.getLocale(), e, null);
+			themeDisplay.getLocale(), e, (ExportImportConfiguration)null);
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
@@ -323,8 +323,8 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				themeDisplay.getUserId(), groupId, privateLayout, null,
-				actionRequest.getParameterMap(), StringPool.BLANK,
-				themeDisplay.getLocale(), themeDisplay.getTimeZone(), fileName);
+				actionRequest.getParameterMap(), themeDisplay.getLocale(),
+				themeDisplay.getTimeZone(), fileName);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -376,7 +376,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				jsonObject.put(
 					"warningMessages",
 					StagingUtil.getWarningMessagesJSONArray(
-						themeDisplay.getLocale(), weakMissingReferences, null));
+						themeDisplay.getLocale(), weakMissingReferences));
 			}
 
 			JSONPortletResponseUtil.writeJSON(
@@ -401,9 +401,8 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		Map<String, Serializable> importSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				themeDisplay.getUserId(), groupId, privateLayout, null,
-				actionRequest.getParameterMap(), StringPool.BLANK,
-				themeDisplay.getLocale(), themeDisplay.getTimeZone(),
-				StringPool.BLANK);
+				actionRequest.getParameterMap(), themeDisplay.getLocale(),
+				themeDisplay.getTimeZone(), StringPool.BLANK);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

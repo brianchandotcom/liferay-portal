@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.asset.lar;
+package com.liferay.asset.categories.admin.web.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.xml.Element;

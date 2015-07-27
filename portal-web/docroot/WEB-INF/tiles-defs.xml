@@ -124,10 +124,6 @@
 
 	<definition name="portlet.announcements" extends="portlet" />
 
-	<definition name="portlet.announcements.edit_entry" extends="portlet.announcements">
-		<put name="portlet_content" value="/portlet/announcements/edit_entry.jsp" />
-	</definition>
-
 	<definition name="portlet.announcements.error" extends="portlet.announcements">
 		<put name="portlet_content" value="/portlet/announcements/error.jsp" />
 	</definition>

@@ -348,7 +348,7 @@ public class PortletTracker
 			return;
 		}
 
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+		for (Locale locale : _languageUtil.getAvailableLocales()) {
 			ResourceBundle resourceBundle = ResourceBundle.getBundle(
 				languageBundleName, locale, classLoader, UTF8Control.INSTANCE);
 
@@ -1209,6 +1209,11 @@ public class PortletTracker
 	}
 
 	@Reference(unbind = "-")
+	protected void setLanguageUtil(LanguageUtil languageUtil) {
+		_languageUtil = languageUtil;
+	}
+
+	@Reference(unbind = "-")
 	protected void setPortletInstanceFactory(
 		PortletInstanceFactory portletInstanceFactory) {
 
@@ -1284,6 +1289,7 @@ public class PortletTracker
 	private CompanyLocalService _companyLocalService;
 	private ComponentContext _componentContext;
 	private String _httpServiceEndpoint = StringPool.BLANK;
+	private LanguageUtil _languageUtil;
 	private PortletInstanceFactory _portletInstanceFactory;
 	private PortletLocalService _portletLocalService;
 	private final PortletPropertyValidator _portletPropertyValidator =

@@ -57,6 +57,12 @@
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
 			</attribute>
+			<attribute>
+				<name>servletContext</name>
+				<required>false</required>
+				<rtexprvalue>true</rtexprvalue>
+				<type>java.lang.Object</type>
+			</attribute>
 		</attributes>
 	</component>
 	<component name="HTMLField" bodyContent="true" writeJSP="true">
@@ -106,6 +112,12 @@
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
 			</attribute>
+			<attribute>
+				<name>servletContext</name>
+				<required>false</required>
+				<rtexprvalue>true</rtexprvalue>
+				<type>java.lang.Object</type>
+			</attribute>
 		</attributes>
 	</component>
 	<component name="TemplateRenderer" bodyContent="true" writeJSP="true">
@@ -139,6 +151,12 @@
 				<inputType><![CDATA[java.util.List<?>]]></inputType>
 				<outputType><![CDATA[java.util.List<?>]]></outputType>
 				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>servletContext</name>
+				<required>false</required>
+				<rtexprvalue>true</rtexprvalue>
+				<type>java.lang.Object</type>
 			</attribute>
 		</attributes>
 	</component>
@@ -199,6 +217,12 @@
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<required>false</required>
+			</attribute>
+			<attribute>
+				<name>servletContext</name>
+				<required>false</required>
+				<rtexprvalue>true</rtexprvalue>
+				<type>java.lang.Object</type>
 			</attribute>
 		</attributes>
 	</component>

@@ -1001,7 +1001,7 @@
 
 				POSITION_LABELS: {},
 
-				RECURRENCE_SUMMARIES : {},
+				RECURRENCE_SUMMARIES: {},
 
 				WEEKDAY_LABELS: {},
 
@@ -1038,18 +1038,18 @@
 							params.push(instance.MONTH_LABELS[recurrence.positionalWeekday.month]);
 						}
 					}
-					else if ((recurrence.frequency == instance.FREQUENCY.WEEKLY) && (recurrence.weekdays.length > 0)) {
+					else if (recurrence.frequency == instance.FREQUENCY.WEEKLY && recurrence.weekdays.length > 0) {
 						parts.push('on-x');
 
 						params.push(recurrence.weekdays.join(', '));
 					}
 
-					if (recurrence.count && (recurrence.endValue === 'after')) {
+					if (recurrence.count && recurrence.endValue === 'after') {
 						parts.push('x-times');
 
 						params.push(recurrence.count);
 					}
-					else if (recurrence.untilDate && (recurrence.endValue === 'on')) {
+					else if (recurrence.untilDate && recurrence.endValue === 'on') {
 						parts.push('until-x-x-x');
 
 						var untilDate = recurrence.untilDate;
@@ -1248,6 +1248,19 @@
 					queue.run();
 				},
 
+				showAlert: function(container, message) {
+					new A.Alert(
+						{
+							animated: true,
+							bodyContent: message,
+							closeable: true,
+							cssClass: 'alert-success',
+							destroyOnHide: true,
+							duration: 1
+						}
+					).render(container);
+				},
+
 				_queueableQuestionUpdateAllInvited: function(data) {
 					var instance = this;
 
@@ -1339,19 +1352,6 @@
 							}
 						);
 					}
-				},
-
-				showAlert: function(container, message) {
-					new A.Alert(
-						{
-							animated: true,
-							bodyContent: message,
-							closeable: true,
-							cssClass: 'alert-success',
-							destroyOnHide: true,
-							duration: 1
-						}
-					).render(container);
 				}
 			};
 		},

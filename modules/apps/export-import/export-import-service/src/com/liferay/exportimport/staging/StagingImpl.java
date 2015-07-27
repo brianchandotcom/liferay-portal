@@ -354,16 +354,13 @@ public class StagingImpl implements Staging {
 					secureConnection, remoteGroupId, remotePrivateLayout,
 					user.getLocale(), user.getTimeZone());
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					user.getUserId(), sourceGroupId, StringPool.BLANK,
-					StringPool.BLANK, ExportImportConfigurationConstants.
+				addDraftExportImportConfiguration(
+					user.getUserId(),
+					ExportImportConfigurationConstants.
 						TYPE_PUBLISH_LAYOUT_REMOTE,
-					publishLayoutRemoteSettingsMap,
-					WorkflowConstants.STATUS_DRAFT, serviceContext);
+					publishLayoutRemoteSettingsMap);
 
 		doCopyRemoteLayouts(
 			exportImportConfiguration, remoteAddress, remotePort,
@@ -1348,12 +1345,11 @@ public class StagingImpl implements Staging {
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					userId, sourceGroupId, StringPool.BLANK, StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					userId,
 					ExportImportConfigurationConstants.
 						TYPE_PUBLISH_LAYOUT_LOCAL,
-					publishLayoutLocalSettingsMap,
-					WorkflowConstants.STATUS_DRAFT, new ServiceContext());
+					publishLayoutLocalSettingsMap);
 
 		publishLayouts(userId, exportImportConfiguration);
 	}
@@ -1469,15 +1465,12 @@ public class StagingImpl implements Staging {
 					targetPlid, portletId, parameterMap, user.getLocale(),
 					user.getTimeZone());
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					userId, sourceGroupId, portletId, StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					userId,
 					ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET,
-					publishPortletSettingsMap, WorkflowConstants.STATUS_DRAFT,
-					serviceContext);
+					publishPortletSettingsMap);
 
 		publishPortlet(userId, exportImportConfiguration);
 	}

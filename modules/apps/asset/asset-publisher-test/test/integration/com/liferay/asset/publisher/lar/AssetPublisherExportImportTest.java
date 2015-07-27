@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.lar.test.BasePortletExportImportTestCase;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -703,12 +702,10 @@ public class AssetPublisherExportImportTest
 
 		ExportImportConfiguration exportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					user.getUserId(), layout.getGroupId(), StringPool.BLANK,
-					StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					user.getUserId(),
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					exportLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-					new ServiceContext());
+					exportLayoutSettingsMap);
 
 		larFile = ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportConfiguration);
@@ -723,12 +720,10 @@ public class AssetPublisherExportImportTest
 
 		ExportImportConfiguration importConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					user.getUserId(), importedGroup.getGroupId(),
-					StringPool.BLANK, StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					user.getUserId(),
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-					new ServiceContext());
+					importLayoutSettingsMap);
 
 		ExportImportLocalServiceUtil.importLayouts(
 			importConfiguration, larFile);

@@ -417,12 +417,10 @@ public abstract class BasePortletExportImportTestCase
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					user.getUserId(), layout.getGroupId(), StringPool.BLANK,
-					StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					user.getUserId(),
 					ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
-					new ServiceContext());
+					settingsMap);
 
 		ExportImportThreadLocal.setPortletStagingInProcess(true);
 

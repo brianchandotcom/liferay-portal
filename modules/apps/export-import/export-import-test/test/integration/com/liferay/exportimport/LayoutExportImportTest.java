@@ -480,12 +480,10 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		ExportImportConfiguration exportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					user.getUserId(), group.getGroupId(), StringPool.BLANK,
-					StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					user.getUserId(),
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					exportLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-					new ServiceContext());
+					exportLayoutSettingsMap);
 
 		larFile = ExportImportServiceUtil.exportLayoutsAsFile(
 			exportConfiguration);

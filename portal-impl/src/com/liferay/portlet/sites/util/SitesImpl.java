@@ -304,12 +304,10 @@ public class SitesImpl implements Sites {
 
 		ExportImportConfiguration exportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					user.getUserId(), sourceLayout.getGroupId(),
-					StringPool.BLANK, StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					user.getUserId(),
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					exportLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-					new ServiceContext());
+					exportLayoutSettingsMap);
 
 		File file = ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportConfiguration);
@@ -324,12 +322,10 @@ public class SitesImpl implements Sites {
 
 			ExportImportConfiguration importConfiguration =
 				ExportImportConfigurationLocalServiceUtil.
-					addExportImportConfiguration(
-						userId, targetLayout.getGroupId(), StringPool.BLANK,
-						StringPool.BLANK,
+					addDraftExportImportConfiguration(
+						userId,
 						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-						importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-						new ServiceContext());
+						importLayoutSettingsMap);
 
 			ExportImportLocalServiceUtil.importLayouts(
 				importConfiguration, file);
@@ -634,12 +630,10 @@ public class SitesImpl implements Sites {
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					user.getUserId(), layoutSet.getGroupId(), StringPool.BLANK,
-					StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					user.getUserId(),
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					exportLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-					new ServiceContext());
+					exportLayoutSettingsMap);
 
 		return ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportImportConfiguration);
@@ -899,12 +893,10 @@ public class SitesImpl implements Sites {
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					user.getUserId(), layoutSet.getGroupId(), StringPool.BLANK,
-					StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					user.getUserId(),
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-					serviceContext);
+					importLayoutSettingsMap);
 
 		ExportImportServiceUtil.importLayouts(
 			exportImportConfiguration, inputStream);
@@ -1904,12 +1896,10 @@ public class SitesImpl implements Sites {
 
 			ExportImportConfiguration exportImportConfiguration =
 				ExportImportConfigurationLocalServiceUtil.
-					addExportImportConfiguration(
-						user.getUserId(), layoutSetPrototype.getGroupId(),
-						StringPool.BLANK, StringPool.BLANK,
+					addDraftExportImportConfiguration(
+						user.getUserId(),
 						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-						exportLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-						new ServiceContext());
+						exportLayoutSettingsMap);
 
 			file = ExportImportLocalServiceUtil.exportLayoutsAsFile(
 				exportImportConfiguration);

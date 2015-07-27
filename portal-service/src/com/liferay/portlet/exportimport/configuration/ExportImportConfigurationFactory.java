@@ -16,11 +16,8 @@ package com.liferay.portlet.exportimport.configuration;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.exportimport.lar.ExportImportDateUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
@@ -86,12 +83,10 @@ public class ExportImportConfigurationFactory {
 					parameterMap);
 
 		return ExportImportConfigurationLocalServiceUtil.
-			addExportImportConfiguration(
-				user.getUserId(), sourceGroupId, StringPool.BLANK,
-				StringPool.BLANK, ExportImportConfigurationConstants.
-					TYPE_PUBLISH_LAYOUT_LOCAL,
-				publishLayoutLocalSettingsMap, WorkflowConstants.STATUS_DRAFT,
-				new ServiceContext());
+			addDraftExportImportConfiguration(
+				user.getUserId(),
+				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL,
+				publishLayoutLocalSettingsMap);
 	}
 
 	public static ExportImportConfiguration
@@ -202,12 +197,10 @@ public class ExportImportConfigurationFactory {
 					user.getLocale(), user.getTimeZone());
 
 		return ExportImportConfigurationLocalServiceUtil.
-			addExportImportConfiguration(
-				user.getUserId(), sourceGroupId, StringPool.BLANK,
-				StringPool.BLANK, ExportImportConfigurationConstants.
-					TYPE_PUBLISH_LAYOUT_REMOTE,
-				publishLayoutRemoteSettingsMap, WorkflowConstants.STATUS_DRAFT,
-				new ServiceContext());
+			addDraftExportImportConfiguration(
+				user.getUserId(),
+				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE,
+				publishLayoutRemoteSettingsMap);
 	}
 
 	protected static Map<String, String[]> getDefaultPublishingParameters() {

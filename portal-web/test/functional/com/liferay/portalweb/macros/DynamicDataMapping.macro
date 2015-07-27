@@ -119,9 +119,9 @@
 	<command name="editField">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd" />
+		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<if>
 			<isset var="fieldFieldLabelEdit" />
@@ -151,9 +151,9 @@
 	<command name="editFieldIndexable">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd" />
+		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_INDEXABLE" />
 		<execute function="Click" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_NOT_INDEXABLE_RADIO" />
@@ -164,9 +164,9 @@
 	</command>
 
 	<command name="editFieldLabelCmd">
-		<var name="key_fieldFieldLabel" value="${field}" />
-
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd" />
+		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+			<var name="key_fieldFieldLabel" value="${field}" />
+		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_FIELD_LABEL" />
 		<execute function="Type" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_FIELD" value1="${fieldFieldLabel}" />
@@ -176,9 +176,9 @@
 	<command name="editFieldLocalizable">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd" />
+		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_LOCALIZABLE" />
 		<execute function="Click" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_NO_RADIO" />
@@ -189,9 +189,9 @@
 	</command>
 
 	<command name="editFieldNameCmd">
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd" />
+		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<if>
 			<not>
@@ -225,9 +225,9 @@
 	<command name="editFieldOptions">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd" />
+		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_OPTIONS" />
 
@@ -270,9 +270,9 @@
 	<command name="editFieldPredefinedValue">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd" />
+		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_PREDEFINED_VALUE" />
 
@@ -346,9 +346,9 @@
 	<command name="editFieldRepeatable">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd" />
+		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_REPEATABLE" />
 		<execute function="Click" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_YES_RADIO" />
@@ -366,9 +366,9 @@
 	<command name="editFieldShowLabel">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd" />
+		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_SHOW_LABEL" />
 
@@ -398,9 +398,9 @@
 	<command name="editFieldStyle">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd" />
+		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_STYLE" />
 		<execute function="Type" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_TEXT_AREA" value1="${fieldStyle}" />
@@ -412,9 +412,9 @@
 	<command name="editFieldText">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd" />
+		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_TEXT" />
 		<execute function="Type" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_TEXT_AREA" value1="${fieldText}" />
@@ -426,9 +426,9 @@
 	<command name="editFieldTip">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd" />
+		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_TIP" />
 		<execute function="Type" locator1="Dynamicdatamapping#SETTINGS_CELL_EDITOR_TEXT_AREA" value1="${fieldTip}" />
@@ -442,9 +442,9 @@
 	<command name="editFieldWidth">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
-
-		<execute macro="DynamicDataMapping#editFieldSettingsCmd" />
+		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
+			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_WIDTH" />
 

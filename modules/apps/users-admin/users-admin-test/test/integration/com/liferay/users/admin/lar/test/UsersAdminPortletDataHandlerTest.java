@@ -12,32 +12,34 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin.lar;
+package com.liferay.users.admin.lar.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
+import com.liferay.users.admin.lar.UsersAdminPortletDataHandler;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Zsolt Berentey
  */
+@RunWith(Arquillian.class)
 public class UsersAdminPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@Override
 	protected void addStagedModels() throws Exception {
@@ -51,7 +53,7 @@ public class UsersAdminPortletDataHandlerTest
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.USERS_ADMIN;
+		return UsersAdminPortletKeys.USERS_ADMIN;
 	}
 
 	@DeleteAfterTestRun

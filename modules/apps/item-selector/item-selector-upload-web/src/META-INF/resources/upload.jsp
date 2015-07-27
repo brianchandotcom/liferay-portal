@@ -25,19 +25,24 @@
 
 	String uploadURL = itemSelectorUploadViewDisplayContext.getUploadURL();
 
+	String repositoryName = itemSelectorUploadViewDisplayContext.getUploadRepositoryName();
+
 	ItemSelectorReturnType returnType = itemSelectorUploadViewDisplayContext.getUploadItemReturnType();
 %>
 
 <div class="lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorUploadContainer">
 	<div class="drop-enabled drop-zone upload-view" data-returntype="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(returnType)) %>" data-uploadurl="<%= uploadURL %>">
-		<liferay-util:buffer var="selectFileHTML">
-			<label class="btn btn-default" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
+		<div id="<%= randomNamespace %>UploadDescription">
+			<p>
+				<strong><liferay-ui:message arguments="<%= repositoryName %>" key="drag-and-drop-to-upload-to-x-or" /></strong>
+			</p>
 
-			<input class="hide" id="<%= randomNamespace %>InputFile" type="file" />
-		</liferay-util:buffer>
+			<p>
+				<label class="btn btn-default" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
 
-		<strong><liferay-ui:message arguments="<%= selectFileHTML %>" key="drag-and-drop-to-upload-or-x" /></strong>
-
+				<input class="hide" id="<%= randomNamespace %>InputFile" type="file" />
+			</p>
+		</div>
 	</div>
 
 	<liferay-ui:drop-here-info message="drop-files-here" />

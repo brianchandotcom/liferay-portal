@@ -174,11 +174,10 @@ public class PortalPreferencesImpl
 		try {
 			retryableStore(callable, key);
 		}
+		catch (ConcurrentModificationException cme) {
+			throw cme;
+		}
 		catch (Throwable t) {
-			if (t instanceof ConcurrentModificationException) {
-				throw (ConcurrentModificationException)t;
-				}
-
 			_log.error(t, t);
 		}
 	}
@@ -201,11 +200,10 @@ public class PortalPreferencesImpl
 
 				return;
 			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
 			catch (Throwable t) {
-				if (t instanceof ConcurrentModificationException) {
-					continue;
-				}
-
 				_log.error(t, t);
 
 				return;
@@ -257,11 +255,10 @@ public class PortalPreferencesImpl
 				callable.call();
 			}
 		}
+		catch (ConcurrentModificationException cme) {
+			throw cme;
+		}
 		catch (Throwable t) {
-			if (t instanceof ConcurrentModificationException) {
-				throw (ConcurrentModificationException)t;
-			}
-
 			_log.error(t, t);
 		}
 	}
@@ -301,11 +298,10 @@ public class PortalPreferencesImpl
 				callable.call();
 			}
 		}
+		catch (ConcurrentModificationException cme) {
+			throw cme;
+		}
 		catch (Throwable t) {
-			if (t instanceof ConcurrentModificationException) {
-				throw (ConcurrentModificationException)t;
-			}
-
 			_log.error(t, t);
 		}
 	}

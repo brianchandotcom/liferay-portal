@@ -72,11 +72,10 @@ public class SessionTreeJSClicks {
 
 				return;
 			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
 			catch (Exception e) {
-				if (e instanceof ConcurrentModificationException) {
-					continue;
-				}
-
 				_log.error(e, e);
 
 				return;
@@ -93,11 +92,10 @@ public class SessionTreeJSClicks {
 
 				return;
 			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
 			catch (Exception e) {
-				if (e instanceof ConcurrentModificationException) {
-					continue;
-				}
-
 				_log.error(e, e);
 
 				return;
@@ -121,11 +119,10 @@ public class SessionTreeJSClicks {
 
 				return;
 			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
 			catch (Exception e) {
-				if (e instanceof ConcurrentModificationException) {
-					continue;
-				}
-
 				_log.error(e, e);
 
 				return;
@@ -181,11 +178,10 @@ public class SessionTreeJSClicks {
 
 				return;
 			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
 			catch (Exception e) {
-				if (e instanceof ConcurrentModificationException) {
-					continue;
-				}
-
 				_log.error(e, e);
 
 				return;
@@ -208,11 +204,10 @@ public class SessionTreeJSClicks {
 
 				return;
 			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
 			catch (Exception e) {
-				if (e instanceof ConcurrentModificationException) {
-					continue;
-				}
-
 				_log.error(e, e);
 
 				return;
@@ -265,11 +260,10 @@ public class SessionTreeJSClicks {
 			preferences.setValue(
 				SessionTreeJSClicks.class.getName(), key, value);
 		}
+		catch (ConcurrentModificationException cme) {
+			throw cme;
+		}
 		catch (Exception e) {
-			if (e instanceof ConcurrentModificationException) {
-				throw (ConcurrentModificationException)e;
-			}
-
 			_log.error(e, e);
 		}
 	}

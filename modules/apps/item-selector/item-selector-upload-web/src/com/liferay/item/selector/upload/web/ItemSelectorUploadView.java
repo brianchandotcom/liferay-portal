@@ -70,6 +70,11 @@ public class ItemSelectorUploadView
 	}
 
 	@Override
+	public boolean isShowSearch() {
+		return false;
+	}
+
+	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
 			UploadItemSelectorCriterion uploadItemSelectorCriterion,

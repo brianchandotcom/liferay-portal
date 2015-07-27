@@ -22,17 +22,21 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.RequestBackedPortletURLFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
@@ -65,7 +69,7 @@ public class BlogsContentEditorConfigContributor
 			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
 
 		populateFileBrowserURL(
-			jsonObject, requestBackedPortletURLFactory,
+			jsonObject, themeDisplay, requestBackedPortletURLFactory,
 			namespace + name + "selectItem");
 	}
 
@@ -75,7 +79,7 @@ public class BlogsContentEditorConfigContributor
 	}
 
 	protected void populateFileBrowserURL(
-		JSONObject jsonObject,
+		JSONObject jsonObject, ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 		String eventName) {
 
@@ -101,9 +105,24 @@ public class BlogsContentEditorConfigContributor
 		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			blogsContentEditorDesiredItemSelectorReturnTypes);
 
+		PortletURL uploadURL = requestBackedPortletURLFactory.createActionURL(
+			PortletKeys.BLOGS);
+
+		uploadURL.setParameter(
+			ActionRequest.ACTION_NAME, "/blogs/upload_editor_image");
+
+		ItemSelectorCriterion uploadItemSelectorCriterion =
+			new UploadItemSelectorCriterion(
+				uploadURL.toString(),
+				LanguageUtil.get(themeDisplay.getLocale(), "blogs"));
+
+		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			blogsContentEditorDesiredItemSelectorReturnTypes);
+
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, eventName,
-			blogsItemSelectorCriterion, imageItemSelectorCriterion);
+			blogsItemSelectorCriterion, imageItemSelectorCriterion,
+			uploadItemSelectorCriterion);
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());

@@ -49,7 +49,7 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 		catch (NoSuchEntryException | PrincipalException e) {
 			SessionErrors.add(renderRequest, e.getClass());
 
-			return "/html/portlet/announcements/error.jsp";
+			return "/error.jsp";
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -58,7 +58,7 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException(e);
 		}
 
-		return "/html/portlet/announcements/edit_entry.jsp";
+		return "/edit_entry.jsp";
 	}
 
 }

@@ -40,7 +40,7 @@ public class PreviewEntryMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/html/portlet/announcements/preview_entry.jsp";
+		return "/preview_entry.jsp";
 	}
 
 }

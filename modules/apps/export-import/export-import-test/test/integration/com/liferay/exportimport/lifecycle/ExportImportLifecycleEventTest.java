@@ -238,8 +238,7 @@ public class ExportImportLifecycleEventTest {
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				TestPropsValues.getUserId(), 0, _group.getGroupId(),
-				StringPool.BLANK, _parameterMap, Locale.US, TimeZoneUtil.GMT,
-				StringPool.BLANK);
+				StringPool.BLANK, _parameterMap, Locale.US, TimeZoneUtil.GMT);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

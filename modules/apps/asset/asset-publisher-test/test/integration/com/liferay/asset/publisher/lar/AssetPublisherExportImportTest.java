@@ -718,7 +718,7 @@ public class AssetPublisherExportImportTest
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				user.getUserId(), importedGroup.getGroupId(),
 				layout.isPrivateLayout(), null, getImportParameterMap(),
-				user.getLocale(), user.getTimeZone(), larFile.getName());
+				user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration importConfiguration =
 			ExportImportConfigurationLocalServiceUtil.

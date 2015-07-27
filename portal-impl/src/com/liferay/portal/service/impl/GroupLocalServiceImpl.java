@@ -3632,7 +3632,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				defaultUser.getUserId(), group.getGroupId(), false, null,
 				parameterMap, defaultUser.getLocale(),
-				defaultUser.getTimeZone(), larFile.getName());
+				defaultUser.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationLocalService.addExportImportConfiguration(

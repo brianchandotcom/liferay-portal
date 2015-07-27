@@ -12,18 +12,22 @@
  * details.
  */
 
-package com.liferay.portlet.mobiledevicerules.model;
+package com.liferay.mobile.device.rules.model.listener;
 
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.ModelListener;
+import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil;
+import org.osgi.service.component.annotations.Component;
 
 import java.util.List;
 
 /**
  * @author Eduardo Garcia
  */
+@Component(service = ModelListener.class)
 public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override

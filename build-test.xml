@@ -6168,7 +6168,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<if>
 			<equals arg1="${browser.type}" arg2="googlechrome" />
 			<then>
-				<antcall target="start-chrome-driver" />
+				<prepare-chrome-driver />
 			</then>
 		</if>
 
@@ -6300,7 +6300,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<if>
 			<equals arg1="${browser.type}" arg2="googlechrome" />
 			<then>
-				<antcall target="stop-chrome-driver" />
+				<stop-chrome-driver />
 			</then>
 		</if>
 
@@ -6338,29 +6338,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 			app.server.bundle.index="${app.server.bundle.index}"
 			testable.portal.started.marker.file="${testable.portal.started.marker.file}"
 		/>
-	</target>
-
-	<target name="start-chrome-driver">
-		<if>
-			<not>
-				<isset property="chrome.driver.zip" />
-			</not>
-			<then>
-				<fail>
-.
-
-Please set "chrome.driver.zip" in test.properties to point to "chromedriver_win_22_0_1203_0b.zip"
-which can be downloaded from this website: http://code.google.com/p/chromedriver/
-				</fail>
-			</then>
-			<else>
-				<exec executable="taskkill.exe">
-					<arg line="/F /IM chromedriver.exe" />
-				</exec>
-
-				<unzip src="${chrome.driver.zip}" dest="tools/selenium" />
-			</else>
-		</if>
 	</target>
 
 	<target name="start-ie-driver">
@@ -6451,12 +6428,6 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<stop-app-server
 			app.server.bundle.index="${app.server.bundle.index}"
 		/>
-	</target>
-
-	<target name="stop-chrome-driver">
-		<exec executable="taskkill.exe">
-			<arg line="/F /IM chromedriver.exe" />
-		</exec>
 	</target>
 
 	<target name="stop-ie-driver">

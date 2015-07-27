@@ -246,20 +246,6 @@
 		<css-class-wrapper>portlet-recent-documents</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>83</portlet-name>
-		<icon>/html/icons/announcements.png</icon>
-		<preferences-company-wide>false</preferences-company-wide>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/announcements/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-alerts</css-class-wrapper>
-	</portlet>
-	<portlet>
-		<portlet-name>84</portlet-name>
-		<icon>/html/icons/announcements.png</icon>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.announcements.messaging.CheckEntryMessageListener</scheduler-event-listener-class>
@@ -270,14 +256,6 @@
 				</simple>
 			</trigger>
 		</scheduler-entry>
-		<preferences-company-wide>true</preferences-company-wide>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/announcements/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-announcements</css-class-wrapper>
 	</portlet>
 	<portlet>
 		<portlet-name>90</portlet-name>

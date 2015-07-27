@@ -189,19 +189,14 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#viewCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
+		<execute macro="User#gotoEditCP">
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_MISCELLANEOUS_CUSTOM_FIELDS" value1="Custom Fields" />
-
-		<var name="key_customFieldName" value="Boolean" />
-
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_LABEL" value1="Boolean" />
-		<execute function="AssertSelectedLabel" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_SELECT" value1="False" />
+		<execute macro="User#viewUserMiscellaneousCustomFieldsCP">
+			<var name="customFieldName" value="Boolean" />
+			<var name="customFieldValue" value="False" />
+		</execute>
 	</command>
 
 	<command name="EditCustomFieldUserBoolean" priority="5">
@@ -241,19 +236,14 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#viewCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
+		<execute macro="User#gotoEditCP">
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_MISCELLANEOUS_CUSTOM_FIELDS" value1="Custom Fields" />
-
-		<var name="key_customFieldName" value="Boolean" />
-
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_LABEL" value1="Boolean" />
-		<execute function="AssertSelectedLabel" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_SELECT" value1="True" />
+		<execute macro="User#viewUserMiscellaneousCustomFieldsCP">
+			<var name="customFieldName" value="Boolean" />
+			<var name="customFieldValue" value="True" />
+		</execute>
 	</command>
 
 	<command name="EditRevertCustomFieldWikiPage" priority="4">

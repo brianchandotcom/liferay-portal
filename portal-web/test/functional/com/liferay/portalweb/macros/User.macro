@@ -1872,6 +1872,21 @@
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
 	</command>
 
+	<command name="viewUserMiscellaneousCustomFieldsCP">
+		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_MISCELLANEOUS_CUSTOM_FIELDS" value1="Custom Fields" />
+
+		<var name="key_customFieldName" value="${customFieldName}" />
+
+		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_LABEL" value1="${customFieldName}" />
+
+		<if>
+			<equals arg1="${customFieldName}" arg2="Boolean" />
+			<then>
+				<execute function="AssertSelectedLabel" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_SELECT" value1="${customFieldValue}" />
+			</then>
+		</if>
+	</command>
+
 	<command name="viewUserSiteCP">
 		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_SITES" value1="Sites" />
 

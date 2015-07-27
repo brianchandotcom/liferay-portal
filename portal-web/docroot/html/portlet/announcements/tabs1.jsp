@@ -21,7 +21,7 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "entries");
 
 PortletURL tabs1URL = renderResponse.createRenderURL();
 
-tabs1URL.setParameter("struts_action", "/announcements/view");
+tabs1URL.setParameter("mvcRenderCommandName", "/announcements/view");
 tabs1URL.setParameter("tabs1", tabs1);
 
 String tabs1Names = "entries";

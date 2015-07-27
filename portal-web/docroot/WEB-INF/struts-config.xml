@@ -159,16 +159,6 @@
 
 		<action path="/admin_server/view_chart" type="com.liferay.portlet.admin.action.ViewChartAction" />
 
-		<!-- Alerts -->
-
-		<action path="/alerts/view" type="com.liferay.portlet.announcements.action.ViewAction">
-			<forward name="portlet.announcements.view" path="portlet.announcements.view" />
-		</action>
-
-		<!-- Announcements -->
-
-		<action path="/announcements/view" forward="portlet.announcements.view" />
-
 		<!-- Asset -->
 
 		<action path="/asset/get_categories" type="com.liferay.portlet.asset.action.GetCategoriesAction" />

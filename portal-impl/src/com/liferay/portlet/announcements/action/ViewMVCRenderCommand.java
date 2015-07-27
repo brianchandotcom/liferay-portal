@@ -14,30 +14,31 @@
 
 package com.liferay.portlet.announcements.action;
 
-import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.util.PortletKeys;
 
-import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Thiago Moreira
  * @author Raymond Augé
  */
-public class ViewAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.ALERTS,
+		"javax.portlet.name=" + PortletKeys.ANNOUNCEMENTS, "mvc.command.name=/",
+		"mvc.command.name=/alerts/view", "mvc.command.name=/announcements/view"
+	}
+)
+public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String render(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return actionMapping.findForward("portlet.announcements.view");
+		return "/html/portlet/announcements/view.jsp";
 	}
 
 }

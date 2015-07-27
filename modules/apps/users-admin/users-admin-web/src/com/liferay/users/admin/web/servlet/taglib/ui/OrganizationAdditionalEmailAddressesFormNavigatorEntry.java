@@ -12,17 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.users.admin.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Pei-Jung Lan
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=30"})
+@Component(
+	property = {"service.ranking:Integer=30"},
+	service = FormNavigatorEntry.class
+)
 public class OrganizationAdditionalEmailAddressesFormNavigatorEntry
 	extends BaseOrganizationFormNavigatorEntry {
 

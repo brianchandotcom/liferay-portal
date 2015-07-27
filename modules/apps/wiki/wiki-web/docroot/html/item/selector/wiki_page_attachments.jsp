@@ -41,7 +41,7 @@ if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		searchContext.setFolderIds(new long[] {folderId});
 		searchContext.setStart(searchContainer.getStart());
 
-		Folder folder = DLAppServiceUtil.getFolder(wikiPage.getAttachmentsFolderId());
+		Folder folder = DLAppServiceUtil.getFolder(folderId);
 
 		Hits hits = PortletFileRepositoryUtil.searchPortletFileEntries(folder.getRepositoryId(), searchContext);
 

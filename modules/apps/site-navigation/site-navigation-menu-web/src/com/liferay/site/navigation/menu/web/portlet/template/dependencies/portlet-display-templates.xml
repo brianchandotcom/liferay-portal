@@ -2,6 +2,14 @@
 
 <root>
 	<template>
+		<template-key>custom-ftl</template-key>
+		<name>portlet-display-template-name-custom</name>
+		<description>portlet-display-template-description-custom</description>
+		<language>ftl</language>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_custom.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+	<template>
 		<template-key>default-theme-navigation-ftl</template-key>
 		<name>portlet-display-template-name-default-theme-navigation</name>
 		<description>portlet-display-template-description-default-theme-navigation</description>
@@ -55,14 +63,6 @@
 		<description>portlet-display-template-description-relative-with-breadcrumb</description>
 		<language>ftl</language>
 		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_relative_with_breadcrumb.ftl</script-file>
-		<cacheable>false</cacheable>
-	</template>
-	<template>
-		<template-key>custom-ftl</template-key>
-		<name>portlet-display-template-name-custom</name>
-		<description>portlet-display-template-description-custom</description>
-		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_custom.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 </root>

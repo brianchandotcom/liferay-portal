@@ -9,4 +9,6 @@
 >
 	<bean id="com.liferay.portlet.announcements.action.EditEntryMVCActionCommand" class="com.liferay.portlet.announcements.action.EditEntryMVCActionCommand" />
 	<bean id="com.liferay.portlet.announcements.action.EditEntryMVCRenderCommand" class="com.liferay.portlet.announcements.action.EditEntryMVCRenderCommand" />
+	<bean id="com.liferay.portlet.announcements.action.PreviewEntryMVCActionCommand" class="com.liferay.portlet.announcements.action.PreviewEntryMVCActionCommand" />
+	<bean id="com.liferay.portlet.announcements.action.PreviewEntryMVCRenderCommand" class="com.liferay.portlet.announcements.action.PreviewEntryMVCRenderCommand" />
 </beans>

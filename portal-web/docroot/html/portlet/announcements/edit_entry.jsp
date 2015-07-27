@@ -134,7 +134,7 @@ if (entry == null) {
 	}
 
 	function <portlet:namespace />previewEntry() {
-		document.<portlet:namespace />fm.action = '<portlet:actionURL><portlet:param name="struts_action" value="/announcements/preview_entry" /></portlet:actionURL>';
+		document.<portlet:namespace />fm.action = '<portlet:actionURL name="/announcements/preview_entry" />';
 		document.<portlet:namespace />fm.target = '_blank';
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.PREVIEW %>';
 		document.<portlet:namespace />fm.<portlet:namespace />content.value = <portlet:namespace />getContent();

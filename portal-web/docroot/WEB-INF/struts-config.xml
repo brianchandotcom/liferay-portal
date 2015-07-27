@@ -161,19 +161,11 @@
 
 		<!-- Alerts -->
 
-		<action path="/alerts/preview_entry" type="com.liferay.portlet.announcements.action.PreviewEntryAction">
-			<forward name="portlet.announcements.preview_entry" path="portlet.announcements.preview_entry" />
-		</action>
-
 		<action path="/alerts/view" type="com.liferay.portlet.announcements.action.ViewAction">
 			<forward name="portlet.announcements.view" path="portlet.announcements.view" />
 		</action>
 
 		<!-- Announcements -->
-
-		<action path="/announcements/preview_entry" type="com.liferay.portlet.announcements.action.PreviewEntryAction">
-			<forward name="portlet.announcements.preview_entry" path="portlet.announcements.preview_entry" />
-		</action>
 
 		<action path="/announcements/view" forward="portlet.announcements.view" />
 

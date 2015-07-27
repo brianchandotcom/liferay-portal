@@ -128,10 +128,6 @@
 		<put name="portlet_content" value="/portlet/announcements/error.jsp" />
 	</definition>
 
-	<definition name="portlet.announcements.preview_entry" extends="portlet.announcements">
-		<put name="portlet_content" value="/portlet/announcements/preview_entry.jsp" />
-	</definition>
-
 	<definition name="portlet.announcements.view" extends="portlet.announcements">
 		<put name="portlet_content" value="/portlet/announcements/view.jsp" />
 	</definition>

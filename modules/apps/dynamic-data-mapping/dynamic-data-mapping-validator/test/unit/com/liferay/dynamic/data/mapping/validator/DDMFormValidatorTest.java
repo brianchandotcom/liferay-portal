@@ -86,7 +86,7 @@ public class DDMFormValidatorTest {
 			"Name2", DDMFormFieldType.TEXT);
 
 		name2DDMFormField.addNestedDDMFormField(
-			new DDMFormField("Name1", DDMFormFieldType.TEXT));
+			new DDMFormField("name1", DDMFormFieldType.TEXT));
 
 		ddmForm.addDDMFormField(name2DDMFormField);
 

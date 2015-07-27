@@ -132,7 +132,7 @@ public class ElasticsearchConnectionManager {
 	}
 
 	protected void activate(OperationMode operationMode) {
-		requirePresent(operationMode);
+		validate(operationMode);
 
 		_operationMode = operationMode;
 	}
@@ -150,7 +150,7 @@ public class ElasticsearchConnectionManager {
 			return;
 		}
 
-		requirePresent(operationMode);
+		validate(operationMode);
 
 		ElasticsearchConnection newElasticsearchConnection =
 			_elasticsearchConnections.get(operationMode);
@@ -175,7 +175,7 @@ public class ElasticsearchConnectionManager {
 		_operationMode = operationMode;
 	}
 
-	protected void requirePresent(OperationMode operationMode) {
+	protected void validate(OperationMode operationMode) {
 		if (!_elasticsearchConnections.containsKey(operationMode)) {
 			throw new MissingOperationModeException(operationMode);
 		}

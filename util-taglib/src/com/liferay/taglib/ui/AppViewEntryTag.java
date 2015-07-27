@@ -193,7 +193,7 @@ public class AppViewEntryTag extends IncludeTag {
 		_data = null;
 		_description = null;
 		_displayDate = null;
-		_displayStyle = null;
+		_displayStyle = "descriptive";
 		_expirationDate = null;
 		_folder = false;
 		_groupId = 0;
@@ -227,7 +227,7 @@ public class AppViewEntryTag extends IncludeTag {
 
 	@Override
 	protected String getPage() {
-		return _PAGE;
+		return "/html/taglib/ui/app_view_entry/" + _displayStyle + ".jsp";
 	}
 
 	@Override
@@ -304,9 +304,6 @@ public class AppViewEntryTag extends IncludeTag {
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private static final String _PAGE =
-		"/html/taglib/ui/app_view_entry/page.jsp";
-
 	private String _actionJsp;
 	private ServletContext _actionJspServletContext;
 	private String _assetCategoryClassName;
@@ -320,7 +317,7 @@ public class AppViewEntryTag extends IncludeTag {
 	private Map<String, Object> _data;
 	private String _description;
 	private Date _displayDate;
-	private String _displayStyle;
+	private String _displayStyle = "descriptive";
 	private Date _expirationDate;
 	private boolean _folder;
 	private long _groupId;

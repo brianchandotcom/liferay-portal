@@ -2059,6 +2059,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>scroll</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description>Whether to add the <![CDATA[<code>select</code>]]> CSS class to the icon menu. If set to <![CDATA[<code>true</code>]]>, the selected icon is added to the icon menu's trigger when the icon is selected. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>select</name>
 			<required>false</required>

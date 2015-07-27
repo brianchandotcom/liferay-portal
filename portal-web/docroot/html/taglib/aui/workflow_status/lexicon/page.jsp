@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,29 +12,10 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.taglib.aui;
+<%@ include file="/html/taglib/aui/workflow_status/init.jsp" %>
 
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.taglib.aui.base.BaseIconTag;
-
-/**
- * @author Eduardo Lundgren
- * @author Bruno Basto
- * @author Nathan Cavanaugh
- * @author Julio Camarero
- */
-public class IconTag extends BaseIconTag {
-
-	@Override
-	protected String getPage() {
-		String view = getView();
-
-		if (Validator.isNotNull(view)) {
-			return "/html/taglib/aui/icon/" + view + "/page.jsp";
-		}
-
-		return "/html/taglib/aui/icon/page.jsp";
-	}
-
-}
+<div class="status">
+	<liferay-ui:message key="<%= statusMessage %>" /><%= additionalText %>
+</div>

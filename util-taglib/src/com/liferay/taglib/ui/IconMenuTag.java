@@ -204,6 +204,10 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		}
 	}
 
+	public void setScroll(boolean scroll) {
+		_scroll = scroll;
+	}
+
 	public void setSelect(boolean select) {
 		_select = select;
 	}
@@ -458,6 +462,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		}
 
 		request.setAttribute("liferay-ui:icon-menu:message", message);
+		request.setAttribute("liferay-ui:icon-menu:scroll", _scroll);
 	}
 
 	private static final String _AUI_PATH = "../aui/";
@@ -475,6 +480,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 	private boolean _localizeMessage = true;
 	private int _maxDisplayItems = _DEFAULT_MAX_DISPLAY_ITEMS;
 	private String _message = "actions";
+	private boolean _scroll;
 	private boolean _select;
 	private boolean _showArrow = true;
 	private boolean _showExpanded;

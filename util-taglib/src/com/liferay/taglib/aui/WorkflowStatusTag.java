@@ -28,6 +28,17 @@ import javax.servlet.http.HttpServletRequest;
 public class WorkflowStatusTag extends BaseWorkflowStatusTag {
 
 	@Override
+	protected String getPage() {
+		String view = getView();
+
+		if (Validator.isNotNull(view)) {
+			return "/html/taglib/aui/workflow_status/" + view + "/page.jsp";
+		}
+
+		return "/html/taglib/aui/workflow_status/page.jsp";
+	}
+
+	@Override
 	protected boolean isCleanUpSetAttributes() {
 		return _CLEAN_UP_SET_ATTRIBUTES;
 	}

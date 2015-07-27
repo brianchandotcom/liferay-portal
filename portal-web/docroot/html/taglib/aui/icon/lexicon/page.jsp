@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,29 +12,21 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.taglib.aui;
+<%@ include file="/html/taglib/aui/icon/init.jsp" %>
 
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.taglib.aui.base.BaseIconTag;
-
-/**
- * @author Eduardo Lundgren
- * @author Bruno Basto
- * @author Nathan Cavanaugh
- * @author Julio Camarero
- */
-public class IconTag extends BaseIconTag {
-
-	@Override
-	protected String getPage() {
-		String view = getView();
-
-		if (Validator.isNotNull(view)) {
-			return "/html/taglib/aui/icon/" + view + "/page.jsp";
-		}
-
-		return "/html/taglib/aui/icon/page.jsp";
-	}
-
-}
+<c:choose>
+	<c:when test="<%= Validator.isNotNull(url) %>">
+		<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="<%= url %>" id="<%= id %>" target="<%= target %>">
+			<span class="<%= image %>">
+				<liferay-ui:message key="<%= label %>" />
+			</span>
+		</aui:a>
+	</c:when>
+	<c:otherwise>
+		<span class="<%= cssClass %> <%= image %>" <%= AUIUtil.buildData(data) %> id="<%= id %>">
+			<liferay-ui:message key="<%= label %>" />
+		</span>
+	</c:otherwise>
+</c:choose>

@@ -45,21 +45,19 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 		try {
 			ActionUtil.getEntry(renderRequest);
 		}
+		catch (NoSuchEntryException | PrincipalException e) {
+			SessionErrors.add(renderRequest, e.getClass());
+
+			return "/html/portlet/announcements/error.jsp";
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
 		catch (Exception e) {
-			if (e instanceof NoSuchEntryException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.announcements.error");
-			}
-			else {
-				throw e;
-			}
+			throw new PortletException(e);
 		}
 
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.announcements.edit_entry"));
+		return "/html/portlet/announcements/edit_entry.jsp";
 	}
 
 }

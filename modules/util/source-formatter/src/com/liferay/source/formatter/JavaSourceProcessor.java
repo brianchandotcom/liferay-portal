@@ -868,6 +868,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = checkPrincipalException(newContent);
 
+		// LPS-57358
+
+		if (portalSource && isModulesFile(absolutePath) &&
+			newContent.contains("ProxyFactory.newServiceTrackedInstance(")) {
+
+			processErrorMessage(
+				fileName,
+				"Do not use ProxyFactory.newServiceTrackedInstance in " +
+					"modules: " + fileName);
+		}
+
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern1);
 		newContent = getCombinedLinesContent(

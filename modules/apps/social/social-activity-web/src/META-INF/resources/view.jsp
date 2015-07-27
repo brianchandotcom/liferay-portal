@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttribute(WebKeys.SOCIAL_ACTIVITY_SETTINGS_MAP);
+Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttribute(SocialActivityWebKeys.SOCIAL_ACTIVITY_SETTINGS_MAP);
 %>
 
 <liferay-ui:error-principal />

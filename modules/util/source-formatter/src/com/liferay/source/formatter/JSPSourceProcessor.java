@@ -767,7 +767,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 								}
 								else if (Validator.isNull(
 											previousAttributeAndValue) &&
-										 (previousAttribute.compareTo(
+										 (previousAttribute.compareToIgnoreCase(
 											 attribute) > 0)) {
 
 									previousAttributeAndValue = previousLine;
@@ -801,8 +801,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 							currentException = line.substring(x, y);
 
 							if (Validator.isNotNull(previousException) &&
-								(previousException.compareTo(currentException) >
-									0)) {
+								(previousException.compareToIgnoreCase(
+									currentException) > 0)) {
 
 								currentException = line;
 								previousException = previousLine;

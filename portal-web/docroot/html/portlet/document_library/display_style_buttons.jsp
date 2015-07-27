@@ -44,6 +44,6 @@ if (fileEntryTypeId != -1) {
 
 <liferay-ui:app-view-display-style
 	displayStyle="<%= displayStyle %>"
-	displayStyleURL="<%= displayStyleURL %>"
 	displayStyles="<%= dlPortletInstanceSettings.getDisplayViews() %>"
+	displayStyleURL="<%= displayStyleURL %>"
 />

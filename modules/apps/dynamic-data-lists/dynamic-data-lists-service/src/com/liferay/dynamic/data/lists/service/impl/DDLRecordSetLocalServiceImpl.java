@@ -28,8 +28,11 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 
 import java.util.List;
 import java.util.Locale;
@@ -377,7 +380,7 @@ public class DDLRecordSetLocalServiceImpl
 	protected void validateDDMStructureId(long ddmStructureId)
 		throws PortalException {
 
-		DDMStructure ddmStructure = ddmStructurePersistence.fetchByPrimaryKey(
+		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
 			ddmStructureId);
 
 		if (ddmStructure == null) {
@@ -394,5 +397,11 @@ public class DDLRecordSetLocalServiceImpl
 			throw new RecordSetNameException();
 		}
 	}
+
+	@ServiceReference(type = DDMStructureLinkLocalService.class)
+	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
+
+	@ServiceReference(type = DDMStructureLocalService.class)
+	protected DDMStructureLocalService ddmStructureLocalService;
 
 }

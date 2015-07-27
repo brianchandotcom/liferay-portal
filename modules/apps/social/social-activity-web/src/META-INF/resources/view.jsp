@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/social_activity/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttribute(WebKeys.SOCIAL_ACTIVITY_SETTINGS_MAP);

@@ -18,5 +18,4 @@
 	<bean id="com.liferay.portlet.asset.model.AssetEntryModelListener" class="com.liferay.portlet.asset.model.AssetEntryModelListener" />
 	<bean id="com.liferay.portlet.blogs.model.GroupModelListener" class="com.liferay.portlet.blogs.model.GroupModelListener" />
 	<bean id="com.liferay.portlet.messageboards.model.LayoutModelListener" class="com.liferay.portlet.messageboards.model.LayoutModelListener" />
-	<bean id="com.liferay.portlet.mobiledevicerules.model.LayoutModelListener" class="com.liferay.portlet.mobiledevicerules.model.LayoutModelListener" />
 </beans>

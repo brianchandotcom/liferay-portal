@@ -47,7 +47,7 @@ public class ElasticsearchConnectionManagerTest {
 	public void testActivateMustNotOpenAnyConnection() {
 		HashMap<String, Object> properties = new HashMap<>();
 
-		properties.put("operationMode", "EMBEDDED");
+		properties.put("operationMode", OperationMode.EMBEDDED.name());
 
 		_elasticsearchConnectionManager.activate(properties);
 
@@ -59,7 +59,7 @@ public class ElasticsearchConnectionManagerTest {
 	public void testActivateThenConnect() {
 		HashMap<String, Object> properties = new HashMap<>();
 
-		properties.put("operationMode", "EMBEDDED");
+		properties.put("operationMode", OperationMode.EMBEDDED.name());
 
 		_elasticsearchConnectionManager.activate(properties);
 		_elasticsearchConnectionManager.connect();
@@ -98,13 +98,13 @@ public class ElasticsearchConnectionManagerTest {
 	public void testModifiedClosesOldConnectionAndOpensNewConnection() {
 		HashMap<String, Object> properties = new HashMap<>();
 
-		properties.put("operationMode", "EMBEDDED");
+		properties.put("operationMode", OperationMode.EMBEDDED.name());
 
 		_elasticsearchConnectionManager.activate(properties);
 
 		resetMockConnections();
 
-		properties.put("operationMode", "REMOTE");
+		properties.put("operationMode", OperationMode.REMOTE.name());
 
 		_elasticsearchConnectionManager.modified(properties);
 

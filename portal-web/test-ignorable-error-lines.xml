@@ -17,12 +17,36 @@
 	</javascript>
 	<log>
 		<ignore-error description="">
+			<contains></contains>
+			<matches>.*The web application \[.*\] appears to have started a thread.*\[Thread-[0-9]+\].*</matches>
+		</ignore-error>
+		<ignore-error description="">
+			<contains></contains>
+			<matches>.*The web application \[.*\] appears to have started a thread.*\[TrueZIP InputStream Reader\].*</matches>
+		</ignore-error>
+		<ignore-error description="">
 			<contains>[antelope:post]</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="">
+			<contains>[AWT-Windows]</contains>
+			<matches>.*The web application \[.*\] appears to have started a thread.*</matches>
+		</ignore-error>
+		<ignore-error description="">
+			<contains>[com.google.inject.internal.Finalizer]</contains>
+			<matches>.*The web application \[.*\] appears to have started a thread.*</matches>
+		</ignore-error>
+		<ignore-error description="">
 			<contains>[junit]</contains>
 			<matches></matches>
+		</ignore-error>
+		<ignore-error description="">
+			<contains>[MultiThreadedHttpConnectionManager cleanup]</contains>
+			<matches>.*The web application \[.*\] appears to have started a thread.*</matches>
+		</ignore-error>
+		<ignore-error description="">
+			<contains>[org.python.google.common.base.internal.Finalizer]</contains>
+			<matches>.*The web application \[.*\] appears to have started a thread.*</matches>
 		</ignore-error>
 		<ignore-error description="">
 			<contains>BasicResourcePool</contains>
@@ -35,30 +59,6 @@
 		<ignore-error description="">
 			<contains>INFO:</contains>
 			<matches></matches>
-		</ignore-error>
-		<ignore-error description="">
-			<contains>[AWT-Windows]</contains>
-			<matches>.*The web application \[.*\] appears to have started a thread.*</matches>
-		</ignore-error>
-		<ignore-error description="">
-			<contains>[com.google.inject.internal.Finalizer]</contains>
-			<matches>.*The web application \[.*\] appears to have started a thread.*</matches>
-		</ignore-error>
-		<ignore-error description="">
-			<contains>[MultiThreadedHttpConnectionManager cleanup]</contains>
-			<matches>.*The web application \[.*\] appears to have started a thread.*</matches>
-		</ignore-error>
-		<ignore-error description="">
-			<contains>[org.python.google.common.base.internal.Finalizer]</contains>
-			<matches>.*The web application \[.*\] appears to have started a thread.*</matches>
-		</ignore-error>
-		<ignore-error description="">
-			<contains></contains>
-			<matches>.*The web application \[.*\] appears to have started a thread.*\[Thread-[0-9]+\].*</matches>
-		</ignore-error>
-		<ignore-error description="">
-			<contains></contains>
-			<matches>.*The web application \[.*\] appears to have started a thread.*\[TrueZIP InputStream Reader\].*</matches>
 		</ignore-error>
 		<ignore-error description="LPS-17639">
 			<contains>Table 'lportal.lock_' doesn't exist</contains>

@@ -21,12 +21,12 @@
 <%
 String bulletStyle = StringUtil.toLowerCase(((String)request.getAttribute("liferay-ui:navigation:bulletStyle")));
 String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:navigation:displayStyle"));
-long displayStyleGroupId = GetterUtil.getLong(request.getAttribute("liferay-ui:navigation:displayStyleGroupId"));
+long displayStyleGroupId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:navigation:displayStyleGroupId"));
 String headerType = (String)request.getAttribute("liferay-ui:navigation:headerType");
 String includedLayouts = (String)request.getAttribute("liferay-ui:navigation:includedLayouts");
 List<NavItem> navItems = (List)request.getAttribute("liferay-ui:navigation:navItems");
 boolean nestedChildren = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:navigation:nestedChildren"));
 boolean preview = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:navigation:preview"));
-int rootLayoutLevel = (Integer)request.getAttribute("liferay-ui:navigation:rootLayoutLevel");
+int rootLayoutLevel = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:navigation:rootLayoutLevel"));
 String rootLayoutType = (String)request.getAttribute("liferay-ui:navigation:rootLayoutType");
 %>

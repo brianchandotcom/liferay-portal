@@ -1841,41 +1841,42 @@
 	</command>
 
 	<command name="viewUserInfomationOrganizationSitesCP">
-		<var name="key_siteName" value="${siteName}" />
-
 		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_SITES" value1="Sites" />
+
+		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#SITES_TABLE_NAME" value1="${orgName}" />
 	</command>
 
 	<command name="viewUserInfomationRolesCP">
-		<var name="key_roleName" value="${roleName}" />
-
 		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_ROLES" value1="Roles" />
+
+		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#ROLES_REGULAR_ROLES_TABLE_TITLE" value1="${roleName}" />
 	</command>
 
 	<command name="viewUserInfomationSitesCP">
+		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_SITES" value1="Sites" />
 
 		<var name="key_siteName" value="${siteName}" />
-
-		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_SITES" value1="Sites" />
 
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#SITES_TABLE_NAME" value1="${siteName}" />
 	</command>
 
 	<command name="viewUserInfomationUserGroupsCP">
+		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_USER_GROUPS" value1="User Groups" />
+
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_USER_GROUPS" value1="User Groups" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
 	</command>
 
 	<command name="viewUserSiteCP">
+		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_SITES" value1="Sites" />
+
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_SITES" value1="Sites" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#SITES_TABLE_NAME" value1="${siteName}" />
 	</command>
 </definition>

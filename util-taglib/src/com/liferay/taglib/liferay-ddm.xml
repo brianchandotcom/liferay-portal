@@ -168,4 +168,38 @@
 			</attribute>
 		</attributes>
 	</component>
+	<component name="TemplateRenderer" bodyContent="true" writeJSP="true">
+		<attributes>
+			<attribute>
+				<name>className</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>contextObjects</name>
+				<inputType><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></inputType>
+				<outputType><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
+				<name>displayStyle</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>displayStyleGroupId</name>
+				<inputType>long</inputType>
+				<outputType>long</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>entries</name>
+				<inputType><![CDATA[java.util.List<?>]]></inputType>
+				<outputType><![CDATA[java.util.List<?>]]></outputType>
+				<required>true</required>
+			</attribute>
+		</attributes>
+	</component>
 </taglibs>

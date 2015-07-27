@@ -2568,8 +2568,8 @@
 		<column name="lockoutDate" type="Date" />
 		<column name="agreedToTermsOfUse" type="boolean" />
 		<column name="emailAddressVerified" type="boolean" />
-		<column name="status" type="int" />
 		<column name="lastPublishDate" type="Date" />
+		<column name="status" type="int" />
 
 		<!-- Relationships -->
 

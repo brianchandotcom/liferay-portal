@@ -66,7 +66,6 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.collections.ServiceRegistrationMap;
 import com.liferay.util.bridges.php.PHPPortlet;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -175,25 +174,26 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 	protected void checkResourceBundles(
 		ClassLoader classLoader, String languageBundleName, String portletId) {
 
-		if (Validator.isNotNull(languageBundleName)) {
-			Registry registry = RegistryUtil.getRegistry();
+		if (Validator.isNull(languageBundleName)) {
+			return;
+		}
 
-			for (Locale locale : LanguageUtil.getAvailableLocales()) {
-				ResourceBundle resourceBundle = ResourceBundle.getBundle(
-					languageBundleName, locale, classLoader,
-					UTF8Control.INSTANCE);
+		Registry registry = RegistryUtil.getRegistry();
 
-				Map<String, Object> properties = new HashMap<>();
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			ResourceBundle resourceBundle = ResourceBundle.getBundle(
+				languageBundleName, locale, classLoader, UTF8Control.INSTANCE);
 
-				properties.put("language.id", LocaleUtil.toLanguageId(locale));
-				properties.put("javax.portlet.name", portletId);
+			Map<String, Object> properties = new HashMap<>();
 
-				ServiceRegistration<ResourceBundle> serviceRegistration =
-					registry.registerService(
-						ResourceBundle.class, resourceBundle, properties);
+			properties.put("language.id", LocaleUtil.toLanguageId(locale));
+			properties.put("javax.portlet.name", portletId);
 
-				_serviceRegistrations.put(resourceBundle, serviceRegistration);
-			}
+			ServiceRegistration<ResourceBundle> serviceRegistration =
+				registry.registerService(
+					ResourceBundle.class, resourceBundle, properties);
+
+			_serviceRegistrations.put(resourceBundle, serviceRegistration);
 		}
 	}
 
@@ -219,16 +219,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		portletIds.add(portlet.getPortletId());
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		String filterString = String.format(
-			"(&(javax.portlet.name=%s)(language.id=*))",
-			portlet.getPortletId());
-
-		Collection<ResourceBundle> resourceBundles = registry.getServices(
-			ResourceBundle.class, filterString);
-
-		for (ResourceBundle resourceBundle : resourceBundles) {
+		for (ResourceBundle resourceBundle : _serviceRegistrations.keySet()) {
 			ServiceRegistration<ResourceBundle> serviceRegistration =
 				_serviceRegistrations.remove(resourceBundle);
 

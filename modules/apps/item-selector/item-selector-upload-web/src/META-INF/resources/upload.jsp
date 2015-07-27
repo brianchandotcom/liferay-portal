@@ -1,5 +1,3 @@
-<%@ page
-		import="com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -19,28 +17,26 @@
 <%@ include file="/init.jsp" %>
 
 <%
-	String randomNamespace = PortalUtil.generateRandomKey(request, "item_selector_upload_page") + StringPool.UNDERLINE;
+ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (ItemSelectorUploadViewDisplayContext)request.getAttribute(ItemSelectorUploadView.ITEM_SELECTOR_UPLOAD_VIEW_DISPLAY_CONTEXT);
 
-	ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (ItemSelectorUploadViewDisplayContext)request.getAttribute(ItemSelectorUploadView.ITEM_SELECTOR_UPLOAD_VIEW_DISPLAY_CONTEXT);
+String uploadURL = itemSelectorUploadViewDisplayContext.getUploadURL();
 
-	String uploadURL = itemSelectorUploadViewDisplayContext.getUploadURL();
+String repositoryName = itemSelectorUploadViewDisplayContext.getUploadRepositoryName();
 
-	String repositoryName = itemSelectorUploadViewDisplayContext.getUploadRepositoryName();
-
-	ItemSelectorReturnType returnType = itemSelectorUploadViewDisplayContext.getUploadItemReturnType();
+ItemSelectorReturnType returnType = itemSelectorUploadViewDisplayContext.getUploadItemReturnType();
 %>
 
-<div class="lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorUploadContainer">
+<div class="lfr-item-viewer" id="itemSelectorUploadContainer">
 	<div class="drop-enabled drop-zone upload-view" data-returntype="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(returnType)) %>" data-uploadurl="<%= uploadURL %>">
-		<div id="<%= randomNamespace %>UploadDescription">
+		<div>
 			<p>
 				<strong><liferay-ui:message arguments="<%= repositoryName %>" key="drag-and-drop-to-upload-to-x-or" /></strong>
 			</p>
 
 			<p>
-				<label class="btn btn-default" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
+				<label class="btn btn-default" for="inputFile"><liferay-ui:message key="select-file" /></label>
 
-				<input class="hide" id="<%= randomNamespace %>InputFile" type="file" />
+				<input class="hide" id="inputFile" type="file" />
 			</p>
 		</div>
 	</div>
@@ -57,7 +53,7 @@
 					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectorUploadViewDisplayContext.getItemSelectedEventName() %>', event);
 				}
 			},
-			rootNode: '#<%= randomNamespace %>ItemSelectorUploadContainer'
+			rootNode: '#itemSelectorUploadContainer'
 		}
 	);
 </aui:script>

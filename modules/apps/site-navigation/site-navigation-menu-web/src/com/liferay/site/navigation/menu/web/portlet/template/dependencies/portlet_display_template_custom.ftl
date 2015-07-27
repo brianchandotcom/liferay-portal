@@ -1,6 +1,6 @@
 <#include "${templatesPath}/NAVIGATION-MACRO-FTL" />
 
-<#if entries?? && entries?has_content && (entries?size >= rootLayoutLevel) >
+<#if entries?? && entries?has_content && (entries?size >= rootLayoutLevel?number) >
 	<style>
 		.breadcrumb-horizontal ul {
 			padding-left: 0;
@@ -65,7 +65,7 @@
 					<li class="open">
 						<a href="${rootNavigationItem.getRegularURL()!""} ">${htmlUtil.escape(rootNavigationItem.getName())}</a>
 
-						<#if includeAllChildEntries || rootNavigationItem.isBelongsToNavigationEntries(entries) >
+						<#if includeAllChildEntries || rootNavigationItem.isInNavigation(entries) >
 							<@displayChildNavigation childLayoutLevel=(layoutLevel + 1) childNavigationItems=rootNavigationItem.getChildren() includeAllChildEntries=includeAllChildEntries />
 						</#if>
 					</li>

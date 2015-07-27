@@ -11,7 +11,7 @@
 				<li class="open">
 					<a href="${rootNavigationItem.getRegularURL()!""} ">${htmlUtil.escape(rootNavigationItem.getName())}</a>
 
-					<#if rootNavigationItem.isBelongsToNavigationEntries(entries) >
+					<#if rootNavigationItem.isInNavigation(entries) >
 						<@displayChildNavigation childLayoutLevel=(layoutLevel + 1) childNavigationItems=rootNavigationItem.getChildren() includeAllChildEntries=false />
 					</#if>
 				</li>

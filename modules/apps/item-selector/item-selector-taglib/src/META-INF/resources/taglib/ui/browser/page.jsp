@@ -39,8 +39,8 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 		<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
 			<liferay-ui:app-view-display-style
 				displayStyle="<%= displayStyle %>"
-				displayStyleURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 				displayStyles="<%= BrowserTag.DISPLAY_STYLES %>"
+				displayStyleURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			/>
 		</aui:nav>
 	</aui:nav-bar>

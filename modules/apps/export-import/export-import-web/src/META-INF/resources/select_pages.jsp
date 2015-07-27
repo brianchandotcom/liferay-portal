@@ -56,9 +56,9 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 				incomplete="<%= false %>"
 				privateLayout="<%= privateLayout %>"
 				rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
-				selPlid="<%= selPlid %>"
 				selectableTree="<%= true %>"
 				selectedLayoutIds="<%= selectedLayoutIds %>"
+				selPlid="<%= selPlid %>"
 				treeId="<%= treeId %>"
 			/>
 		</div>

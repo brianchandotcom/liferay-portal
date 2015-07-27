@@ -35,6 +35,6 @@ if (!ddmStructureKey.equals("0")) {
 
 <liferay-ui:app-view-display-style
 	displayStyle="<%= journalDisplayContext.getDisplayStyle() %>"
-	displayStyleURL="<%= displayStyleURL %>"
 	displayStyles="<%= journalDisplayContext.getDisplayViews() %>"
+	displayStyleURL="<%= displayStyleURL %>"
 />

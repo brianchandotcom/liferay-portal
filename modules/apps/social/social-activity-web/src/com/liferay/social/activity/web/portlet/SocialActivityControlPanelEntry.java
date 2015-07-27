@@ -12,16 +12,27 @@
  * details.
  */
 
-package com.liferay.portlet.socialactivity;
+package com.liferay.social.activity.web.portlet;
 
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.ControlPanelEntry;
+import com.liferay.social.activity.web.constants.SocialActivityPortletKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + SocialActivityPortletKeys.SOCIAL_ACTIVITY
+	},
+	service = ControlPanelEntry.class
+)
 public class SocialActivityControlPanelEntry extends BaseControlPanelEntry {
 
 	@Override

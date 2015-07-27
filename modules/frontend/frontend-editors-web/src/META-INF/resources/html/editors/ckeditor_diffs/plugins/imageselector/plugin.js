@@ -1,6 +1,8 @@
 (function() {
 	var pluginName = 'imageselector';
 
+	var STR_UPLOADABLE_FILE_RETURN_TYPE = 'com.liferay.item.selector.criteria.UploadableFileReturnType';
+
 	CKEDITOR.plugins.add(
 		pluginName,
 		{
@@ -16,11 +18,17 @@
 								var selectedItem = event.newVal;
 
 								if (selectedItem) {
+									var imageSrc = selectedItem.value;
+
+									if (selectedItem.returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
+										imageSrc = JSON.parse(selectedItem.value).url;
+									}
+
 									if (callback) {
-										callback(selectedItem.value);
+										callback(imageSrc);
 									}
 									else {
-										var el = CKEDITOR.dom.element.createFromHtml('<img src="' + selectedItem.value + '">');
+										var el = CKEDITOR.dom.element.createFromHtml('<img src="' + imageSrc + '">');
 
 										editor.insertElement(el);
 									}

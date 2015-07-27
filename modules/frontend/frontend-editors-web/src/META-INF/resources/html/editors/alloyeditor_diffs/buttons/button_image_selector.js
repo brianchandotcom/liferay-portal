@@ -3,6 +3,8 @@
 (function() {
 	'use strict';
 
+	var STR_UPLOADABLE_FILE_RETURN_TYPE = 'com.liferay.item.selector.criteria.UploadableFileReturnType';
+
 	var Util = Liferay.Util;
 
 	var ButtonImage = React.createClass(
@@ -100,10 +102,16 @@
 					Util.getWindow(eventName).onceAfter(
 						'visibleChange',
 						function() {
+							var imageSrc = selectedItem.value;
+
+							if (selectedItem.returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
+								imageSrc = JSON.parse(selectedItem.value).url;
+							}
+
 							var el = CKEDITOR.dom.element.createFromHtml(
 								instance.props.imageTPL.output(
 									{
-										src: selectedItem.value
+										src: imageSrc
 									}
 								)
 							);

@@ -25,11 +25,11 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.portal.util.WebKeys" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.social.model.SocialActivityDefinition" %><%@
 page import="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil" %><%@
-page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %>
+page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %><%@
+page import="com.liferay.social.activity.web.constants.SocialActivityWebKeys" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %><%@

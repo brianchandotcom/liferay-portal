@@ -14,9 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.List;
 
@@ -34,7 +32,7 @@ public class IndexerRegistryUtil {
 	}
 
 	public static IndexerRegistry getIndexerRegistry() {
-		return _instance._serviceTracker.getService();
+		return _indexerRegistry;
 	}
 
 	public static List<Indexer<?>> getIndexers() {
@@ -69,18 +67,7 @@ public class IndexerRegistryUtil {
 		getIndexerRegistry().unregister(className);
 	}
 
-	private IndexerRegistryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(IndexerRegistry.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final IndexerRegistryUtil _instance =
-		new IndexerRegistryUtil();
-
-	private final ServiceTracker<IndexerRegistry, IndexerRegistry>
-		_serviceTracker;
+	private static final IndexerRegistry _indexerRegistry =
+		ProxyFactory.newServiceTrackedInstance(IndexerRegistry.class);
 
 }

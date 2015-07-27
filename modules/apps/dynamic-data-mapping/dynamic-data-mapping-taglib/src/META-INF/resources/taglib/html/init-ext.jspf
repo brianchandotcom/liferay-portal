@@ -27,11 +27,11 @@
 <%@ page import="com.liferay.portlet.dynamicdatamapping.util.DDMUtil" %>
 
 <%
-DDMForm ddmForm = (DDMForm)request.getAttribute("ddm:html:ddmForm");
-String ddmFormValuesInputName = (String)request.getAttribute("ddm:html:ddmFormValuesInputName");
-Fields fields = (Fields)request.getAttribute("ddm:html:fields");
-String mode = (String)request.getAttribute("ddm:html:mode");
-String randomNamespace = (String)request.getAttribute("ddm:html:randomNamespace");
+DDMForm ddmForm = (DDMForm)request.getAttribute("liferay-ddm:html:ddmForm");
+String ddmFormValuesInputName = (String)request.getAttribute("liferay-ddm:html:ddmFormValuesInputName");
+Fields fields = (Fields)request.getAttribute("liferay-ddm:html:fields");
+String mode = (String)request.getAttribute("liferay-ddm:html:mode");
+String randomNamespace = (String)request.getAttribute("liferay-ddm:html:randomNamespace");
 
 if (requestedLocale == null) {
 	requestedLocale = locale;

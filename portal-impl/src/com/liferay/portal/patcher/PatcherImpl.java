@@ -167,38 +167,43 @@ public class PatcherImpl implements Patcher {
 
 	@Override
 	public void verifyPatchLevels() throws PatchInconsistencyException {
-		Properties implJarProperty = _getProperties(PATCHER_PROPERTIES);
-		Properties serviceJarProperty = _getProperties(
+		Properties portalImplJARProperties = _getProperties(PATCHER_PROPERTIES);
+
+		String[] portalImplJARPatches = _getInstalledPatches(
+			portalImplJARProperties);
+
+		Arrays.sort(portalImplJARPatches);
+
+		Properties portalServiceJARProperties = _getProperties(
 			PATCHER_SERVICE_PROPERTIES);
 
-		String[] implJarPatches = _getInstalledPatches(implJarProperty);
-		String[] serviceJarPatches = _getInstalledPatches(serviceJarProperty);
+		String[] serviceJARPatches = _getInstalledPatches(
+			portalServiceJARProperties);
 
-		Arrays.sort(implJarPatches);
-		Arrays.sort(serviceJarPatches);
+		Arrays.sort(serviceJARPatches);
 
-		if (!Arrays.equals(implJarPatches, serviceJarPatches)) {
-			_log.error("Different patch level detected");
+		if (!Arrays.equals(portalImplJARPatches, serviceJARPatches)) {
+			_log.error("Inconsistent patch level detected");
 
 			if (_log.isWarnEnabled()) {
-				if (ArrayUtil.isEmpty(implJarPatches)) {
+				if (ArrayUtil.isEmpty(portalImplJARPatches)) {
 					_log.warn(
 						"There are no patches installed on portal-impl.jar");
 				}
 				else {
 					_log.warn(
 						"Patch level on portal-impl.jar: " +
-							Arrays.toString(implJarPatches));
+							Arrays.toString(portalImplJARPatches));
 				}
 
-				if (ArrayUtil.isEmpty(serviceJarPatches)) {
+				if (ArrayUtil.isEmpty(serviceJARPatches)) {
 					_log.warn(
 						"There are no patches installed on portal-service.jar");
 				}
 				else {
 					_log.warn(
 						"Patch level on portal-service.jar: " +
-							Arrays.toString(serviceJarPatches));
+							Arrays.toString(serviceJARPatches));
 				}
 			}
 
@@ -219,27 +224,26 @@ public class PatcherImpl implements Patcher {
 		return _installedPatchNames;
 	}
 
-	private Properties _getProperties(String propertyFileName) {
-		if (Validator.isNull(propertyFileName)) {
-			propertyFileName = PATCHER_PROPERTIES;
+	private Properties _getProperties(String fileName) {
+		if (Validator.isNull(fileName)) {
+			fileName = PATCHER_PROPERTIES;
 		}
 
 		Properties properties = new Properties();
 
 		Class<?> clazz = getClass();
 
-		if (Validator.equals(propertyFileName, PATCHER_SERVICE_PROPERTIES)) {
-			clazz = getClass().getInterfaces()[0];
+		if (Validator.equals(fileName, PATCHER_SERVICE_PROPERTIES)) {
+			clazz = clazz.getInterfaces()[0];
 		}
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		InputStream inputStream = classLoader.getResourceAsStream(
-			propertyFileName);
+		InputStream inputStream = classLoader.getResourceAsStream(fileName);
 
 		if (inputStream == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to load " + propertyFileName);
+				_log.debug("Unable to load " + fileName);
 			}
 		}
 		else {

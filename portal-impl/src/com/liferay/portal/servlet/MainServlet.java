@@ -221,10 +221,9 @@ public class MainServlet extends ActionServlet {
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"If you intend to start the portal anyway, set the " +
-							"following property in your portal-ext." +
-								"properties file: " +
-									"'verify.patch.levels.disabled=true'");
+						"Set the property \"verify.patch.levels.disabled\" " +
+							"to override stopping the server due to the " +
+								"inconsistent patch levels");
 				}
 
 				System.exit(0);

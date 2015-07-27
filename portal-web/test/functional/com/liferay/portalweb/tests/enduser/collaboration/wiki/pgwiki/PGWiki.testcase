@@ -706,8 +706,8 @@
 
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
-		<var name="wikiPageTitle" value="${wikiPageTitle}" />
-</execute>
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

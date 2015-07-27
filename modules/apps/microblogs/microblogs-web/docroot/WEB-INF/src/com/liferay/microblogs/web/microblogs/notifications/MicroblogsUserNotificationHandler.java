@@ -14,10 +14,10 @@
 
 package com.liferay.microblogs.web.microblogs.notifications;
 
+import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
 import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
-import com.liferay.microblogs.util.PortletKeys;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -35,7 +35,7 @@ public class MicroblogsUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public MicroblogsUserNotificationHandler() {
-		setPortletId(PortletKeys.MICROBLOGS);
+		setPortletId(MicroblogsPortletKeys.MICROBLOGS);
 	}
 
 	@Override

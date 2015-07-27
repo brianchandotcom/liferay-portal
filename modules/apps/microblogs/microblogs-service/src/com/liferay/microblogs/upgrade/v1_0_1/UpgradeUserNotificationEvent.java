@@ -14,6 +14,7 @@
 
 package com.liferay.microblogs.upgrade.v1_0_1;
 
+import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -70,7 +71,7 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 				"select userNotificationEventId, payload from " +
 					"UserNotificationEvent where type_ = ?");
 
-			ps.setString(1, "1_WAR_microblogsportlet");
+			ps.setString(1, MicroblogsPortletKeys.MICROBLOGS);
 
 			rs = ps.executeQuery();
 

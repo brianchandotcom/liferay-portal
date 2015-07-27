@@ -21,21 +21,22 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  */
 public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
 
-	public UploadItemSelectorCriterion() {}
+	public UploadItemSelectorCriterion() {
+	}
 
 	public UploadItemSelectorCriterion(
 		String uploadURL, String repositoryName) {
 
-		this._repositoryName = repositoryName;
-		this._url = uploadURL;
+		_repositoryName = repositoryName;
+		_url = uploadURL;
 	}
 
-	public void setRepositoryName(String _repositoryName) {
-		this._repositoryName = _repositoryName;
+	public void setRepositoryName(String repositoryName) {
+		_repositoryName = repositoryName;
 	}
 
 	public void setURL(String url) {
-		this._url = url;
+		_url = url;
 	}
 
 	public String getRepositoryName() {

@@ -940,6 +940,31 @@ jdbc.default.password=${database.password}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-chrome-driver">
+		<sequential>
+			<if>
+				<not>
+					<isset property="chrome.driver.zip" />
+				</not>
+				<then>
+					<fail>
+.
+
+Please set "chrome.driver.zip" in test.properties to point to "chromedriver_win_22_0_1203_0b.zip"
+which can be downloaded from this website: http://code.google.com/p/chromedriver/
+					</fail>
+				</then>
+				<else>
+					<exec executable="taskkill.exe">
+						<arg line="/F /IM chromedriver.exe" />
+					</exec>
+
+					<unzip src="${chrome.driver.zip}" dest="tools/selenium" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-database-jndi">
 		<sequential>
 			<if>
@@ -2042,6 +2067,14 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<record action="stop" name="${project.dir}/log" />
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-chrome-driver">
+		<sequential>
+			<exec executable="taskkill.exe">
+				<arg line="/F /IM chromedriver.exe" />
+			</exec>
 		</sequential>
 	</macrodef>
 

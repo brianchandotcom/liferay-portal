@@ -285,13 +285,13 @@
 	<portlet>
 		<portlet-name>83</portlet-name>
 		<display-name>Alerts</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.announcements.portlet.AlertsPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/announcements/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
+			<name>view-template</name>
 			<value>/alerts/view</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
@@ -315,7 +315,7 @@
 	<portlet>
 		<portlet-name>84</portlet-name>
 		<display-name>Announcements</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.announcements.portlet.AnnouncementsPortlet</portlet-class>
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/announcements/configuration.jsp</value>
@@ -325,7 +325,7 @@
 			<value>/html/portlet/announcements/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
+			<name>view-template</name>
 			<value>/announcements/view</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>

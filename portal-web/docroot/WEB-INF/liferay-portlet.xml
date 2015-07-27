@@ -248,11 +248,9 @@
 	<portlet>
 		<portlet-name>83</portlet-name>
 		<icon>/html/icons/announcements.png</icon>
-		<struts-path>alerts</struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<preferences-company-wide>false</preferences-company-wide>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
@@ -262,7 +260,6 @@
 	<portlet>
 		<portlet-name>84</portlet-name>
 		<icon>/html/icons/announcements.png</icon>
-		<struts-path>announcements</struts-path>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.announcements.messaging.CheckEntryMessageListener</scheduler-event-listener-class>
@@ -273,10 +270,9 @@
 				</simple>
 			</trigger>
 		</scheduler-entry>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<preferences-company-wide>true</preferences-company-wide>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>

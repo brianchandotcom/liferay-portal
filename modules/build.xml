@@ -52,6 +52,7 @@
 		<dirset dir="apps/search" includes="*" />
 		<dirset dir="apps/service-access-policy" includes="*" />
 		<dirset dir="apps/site" includes="*" />
+		<dirset dir="apps/shopping" includes="*" />
 		<dirset dir="apps/site-navigation" includes="*" />
 		<dirset dir="apps/social" excludes="social-networking-*" includes="*" />
 		<dirset dir="apps/social-office" includes="*" />

@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+	<bean id="com.liferay.shopping.service.ShoppingCartLocalService" class="com.liferay.shopping.service.impl.ShoppingCartLocalServiceImpl" />
+	<osgi:service interface="com.liferay.shopping.service.ShoppingCartLocalService" ref="com.liferay.shopping.service.ShoppingCartLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="shopping" />
+			<entry key="json.web.service.context.path" value="ShoppingCart" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.shopping.service.persistence.ShoppingCartPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingCartPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.shopping.service.persistence.ShoppingCartPersistence" ref="com.liferay.shopping.service.persistence.ShoppingCartPersistence" />
+	<bean id="com.liferay.shopping.service.ShoppingCategoryLocalService" class="com.liferay.shopping.service.impl.ShoppingCategoryLocalServiceImpl" />
+	<osgi:service interface="com.liferay.shopping.service.ShoppingCategoryLocalService" ref="com.liferay.shopping.service.ShoppingCategoryLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="shopping" />
+			<entry key="json.web.service.context.path" value="ShoppingCategory" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.shopping.service.ShoppingCategoryService" class="com.liferay.shopping.service.impl.ShoppingCategoryServiceImpl" />
+	<osgi:service interface="com.liferay.shopping.service.ShoppingCategoryService" ref="com.liferay.shopping.service.ShoppingCategoryService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="shopping" />
+			<entry key="json.web.service.context.path" value="ShoppingCategory" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.shopping.service.persistence.ShoppingCategoryPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingCategoryPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.shopping.service.persistence.ShoppingCategoryPersistence" ref="com.liferay.shopping.service.persistence.ShoppingCategoryPersistence" />
+	<bean id="com.liferay.shopping.service.ShoppingCouponLocalService" class="com.liferay.shopping.service.impl.ShoppingCouponLocalServiceImpl" />
+	<osgi:service interface="com.liferay.shopping.service.ShoppingCouponLocalService" ref="com.liferay.shopping.service.ShoppingCouponLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="shopping" />
+			<entry key="json.web.service.context.path" value="ShoppingCoupon" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.shopping.service.ShoppingCouponService" class="com.liferay.shopping.service.impl.ShoppingCouponServiceImpl" />
+	<osgi:service interface="com.liferay.shopping.service.ShoppingCouponService" ref="com.liferay.shopping.service.ShoppingCouponService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="shopping" />
+			<entry key="json.web.service.context.path" value="ShoppingCoupon" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.shopping.service.persistence.ShoppingCouponPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingCouponPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.shopping.service.persistence.ShoppingCouponPersistence" ref="com.liferay.shopping.service.persistence.ShoppingCouponPersistence" />
+	<bean id="com.liferay.shopping.service.persistence.ShoppingCouponFinder" class="com.liferay.shopping.service.persistence.impl.ShoppingCouponFinderImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.shopping.service.persistence.ShoppingCouponFinder" ref="com.liferay.shopping.service.persistence.ShoppingCouponFinder" />
+	<bean id="com.liferay.shopping.service.ShoppingItemLocalService" class="com.liferay.shopping.service.impl.ShoppingItemLocalServiceImpl" />
+	<osgi:service interface="com.liferay.shopping.service.ShoppingItemLocalService" ref="com.liferay.shopping.service.ShoppingItemLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="shopping" />
+			<entry key="json.web.service.context.path" value="ShoppingItem" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.shopping.service.ShoppingItemService" class="com.liferay.shopping.service.impl.ShoppingItemServiceImpl" />
+	<osgi:service interface="com.liferay.shopping.service.ShoppingItemService" ref="com.liferay.shopping.service.ShoppingItemService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="shopping" />
+			<entry key="json.web.service.context.path" value="ShoppingItem" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.shopping.service.persistence.ShoppingItemPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingItemPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.shopping.service.persistence.ShoppingItemPersistence" ref="com.liferay.shopping.service.persistence.ShoppingItemPersistence" />
+	<bean id="com.liferay.shopping.service.persistence.ShoppingItemFinder" class="com.liferay.shopping.service.persistence.impl.ShoppingItemFinderImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.shopping.service.persistence.ShoppingItemFinder" ref="com.liferay.shopping.service.persistence.ShoppingItemFinder" />
+	<bean id="com.liferay.shopping.service.ShoppingItemFieldLocalService" class="com.liferay.shopping.service.impl.ShoppingItemFieldLocalServiceImpl" />
+	<osgi:service interface="com.liferay.shopping.service.ShoppingItemFieldLocalService" ref="com.liferay.shopping.service.ShoppingItemFieldLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="shopping" />
+			<entry key="json.web.service.context.path" value="ShoppingItemField" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.shopping.service.persistence.ShoppingItemFieldPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingItemFieldPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.shopping.service.persistence.ShoppingItemFieldPersistence" ref="com.liferay.shopping.service.persistence.ShoppingItemFieldPersistence" />
+	<bean id="com.liferay.shopping.service.ShoppingItemPriceLocalService" class="com.liferay.shopping.service.impl.ShoppingItemPriceLocalServiceImpl" />
+	<osgi:service interface="com.liferay.shopping.service.ShoppingItemPriceLocalService" ref="com.liferay.shopping.service.ShoppingItemPriceLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="shopping" />
+			<entry key="json.web.service.context.path" value="ShoppingItemPrice" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.shopping.service.persistence.ShoppingItemPricePersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingItemPricePersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.shopping.service.persistence.ShoppingItemPricePersistence" ref="com.liferay.shopping.service.persistence.ShoppingItemPricePersistence" />
+	<bean id="com.liferay.shopping.service.ShoppingOrderLocalService" class="com.liferay.shopping.service.impl.ShoppingOrderLocalServiceImpl" />
+	<osgi:service interface="com.liferay.shopping.service.ShoppingOrderLocalService" ref="com.liferay.shopping.service.ShoppingOrderLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="shopping" />
+			<entry key="json.web.service.context.path" value="ShoppingOrder" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.shopping.service.ShoppingOrderService" class="com.liferay.shopping.service.impl.ShoppingOrderServiceImpl" />
+	<osgi:service interface="com.liferay.shopping.service.ShoppingOrderService" ref="com.liferay.shopping.service.ShoppingOrderService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="shopping" />
+			<entry key="json.web.service.context.path" value="ShoppingOrder" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.shopping.service.persistence.ShoppingOrderPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingOrderPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.shopping.service.persistence.ShoppingOrderPersistence" ref="com.liferay.shopping.service.persistence.ShoppingOrderPersistence" />
+	<bean id="com.liferay.shopping.service.persistence.ShoppingOrderFinder" class="com.liferay.shopping.service.persistence.impl.ShoppingOrderFinderImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.shopping.service.persistence.ShoppingOrderFinder" ref="com.liferay.shopping.service.persistence.ShoppingOrderFinder" />
+	<bean id="com.liferay.shopping.service.ShoppingOrderItemLocalService" class="com.liferay.shopping.service.impl.ShoppingOrderItemLocalServiceImpl" />
+	<osgi:service interface="com.liferay.shopping.service.ShoppingOrderItemLocalService" ref="com.liferay.shopping.service.ShoppingOrderItemLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="shopping" />
+			<entry key="json.web.service.context.path" value="ShoppingOrderItem" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.shopping.service.persistence.ShoppingOrderItemPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingOrderItemPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.shopping.service.persistence.ShoppingOrderItemPersistence" ref="com.liferay.shopping.service.persistence.ShoppingOrderItemPersistence" />
+</beans>

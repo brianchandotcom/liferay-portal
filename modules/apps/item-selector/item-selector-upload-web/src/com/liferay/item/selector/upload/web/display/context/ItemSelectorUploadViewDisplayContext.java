@@ -16,14 +16,10 @@ package com.liferay.item.selector.upload.web.display.context;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
+import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.upload.web.ItemSelectorUploadView;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.util.PortletKeys;
 
 import java.util.Locale;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.PortletURL;
 
 /**
  * @author Ambrín Chaudhary
@@ -31,9 +27,11 @@ import javax.portlet.PortletURL;
 public class ItemSelectorUploadViewDisplayContext {
 
 	public ItemSelectorUploadViewDisplayContext(
+		UploadItemSelectorCriterion uploadItemSelectorCriterion,
 		ItemSelectorUploadView itemSelectorUploadView,
 		String itemSelectedEventName) {
 
+		_uploadItemSelectorCriterion = uploadItemSelectorCriterion;
 		_itemSelectorUploadView = itemSelectorUploadView;
 		_itemSelectedEventName = itemSelectedEventName;
 	}
@@ -50,19 +48,16 @@ public class ItemSelectorUploadViewDisplayContext {
 		return new UploadableFileReturnType();
 	}
 
-	public PortletURL getUploadURL(
-		LiferayPortletResponse liferayPortletResponse) {
+	public String getUploadRepositoryName() {
+		return _uploadItemSelectorCriterion.getRepositoryName();
+	}
 
-		PortletURL portletURL = liferayPortletResponse.createActionURL(
-			PortletKeys.BLOGS);
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "/blogs/upload_editor_image");
-
-		return portletURL;
+	public String getUploadURL() {
+		return _uploadItemSelectorCriterion.getURL();
 	}
 
 	private final String _itemSelectedEventName;
 	private final ItemSelectorUploadView _itemSelectorUploadView;
+	private final UploadItemSelectorCriterion _uploadItemSelectorCriterion;
 
 }

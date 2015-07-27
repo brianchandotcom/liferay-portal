@@ -15,14 +15,17 @@
 package com.liferay.item.selector.criteria.upload.handler;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
+import com.liferay.item.selector.ItemSelectorCriterionHandler;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ambrín Chaudhary
  */
+@Component(service = ItemSelectorCriterionHandler.class)
 public class UploadItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler<UploadItemSelectorCriterion> {
 

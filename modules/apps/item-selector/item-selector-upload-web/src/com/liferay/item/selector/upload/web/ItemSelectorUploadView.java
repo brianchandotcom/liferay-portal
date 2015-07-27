@@ -17,7 +17,7 @@ package com.liferay.item.selector.upload.web;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
-import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.upload.web.display.context.ItemSelectorUploadViewDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -45,14 +45,14 @@ import org.osgi.service.component.annotations.Reference;
 
 @Component(service = ItemSelectorView.class)
 public class ItemSelectorUploadView
-	implements ItemSelectorView<ImageItemSelectorCriterion> {
+	implements ItemSelectorView<UploadItemSelectorCriterion> {
 
 	public static final String ITEM_SELECTOR_UPLOAD_VIEW_DISPLAY_CONTEXT =
 		"ITEM_SELECTOR_UPLOAD_VIEW_DISPLAY_CONTEXT";
 
 	@Override
-	public Class<ImageItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return ImageItemSelectorCriterion.class;
+	public Class<UploadItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return UploadItemSelectorCriterion.class;
 	}
 
 	public ServletContext getServletContext() {
@@ -72,7 +72,7 @@ public class ItemSelectorUploadView
 	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
-			ImageItemSelectorCriterion imageItemSelectorCriterion,
+			UploadItemSelectorCriterion uploadItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName)
 		throws IOException, ServletException {
 
@@ -84,7 +84,7 @@ public class ItemSelectorUploadView
 		ItemSelectorUploadViewDisplayContext
 			itemSelectorUploadViewDisplayContext =
 				new ItemSelectorUploadViewDisplayContext(
-					this, itemSelectedEventName);
+					uploadItemSelectorCriterion, this, itemSelectedEventName);
 
 		request.setAttribute(
 			ITEM_SELECTOR_UPLOAD_VIEW_DISPLAY_CONTEXT,

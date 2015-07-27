@@ -29,8 +29,6 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.util.PortalUtil" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
-
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects/>

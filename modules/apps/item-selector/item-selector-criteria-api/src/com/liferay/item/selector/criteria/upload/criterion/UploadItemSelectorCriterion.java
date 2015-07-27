@@ -20,4 +20,32 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  * @author Ambrín Chaudhary
  */
 public class UploadItemSelectorCriterion extends BaseItemSelectorCriterion {
+
+	public UploadItemSelectorCriterion() {}
+
+	public UploadItemSelectorCriterion(
+		String uploadURL, String repositoryName) {
+
+		this._repositoryName = repositoryName;
+		this._url = uploadURL;
+	}
+
+	public void setRepositoryName(String _repositoryName) {
+		this._repositoryName = _repositoryName;
+	}
+
+	public void setURL(String url) {
+		this._url = url;
+	}
+
+	public String getRepositoryName() {
+		return _repositoryName;
+	}
+
+	public String getURL() {
+		return _url;
+	}
+
+	private String _url;
+	private String _repositoryName;
 }

@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -21,13 +23,13 @@
 
 	ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (ItemSelectorUploadViewDisplayContext)request.getAttribute(ItemSelectorUploadView.ITEM_SELECTOR_UPLOAD_VIEW_DISPLAY_CONTEXT);
 
-	PortletURL uploadURL = itemSelectorUploadViewDisplayContext.getUploadURL(liferayPortletResponse);
+	String uploadURL = itemSelectorUploadViewDisplayContext.getUploadURL();
 
 	ItemSelectorReturnType returnType = itemSelectorUploadViewDisplayContext.getUploadItemReturnType();
 %>
 
 <div class="lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorUploadContainer">
-	<div class="drop-enabled drop-zone upload-view" data-returntype="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(returnType)) %>" data-uploadurl="<%= uploadURL.toString() %>">
+	<div class="drop-enabled drop-zone upload-view" data-returntype="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(returnType)) %>" data-uploadurl="<%= uploadURL %>">
 		<liferay-util:buffer var="selectFileHTML">
 			<label class="btn btn-default" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
 

@@ -3,11 +3,11 @@
 <ignore-errors>
 	<javascript>
 		<ignore-error description="LPS-41634">
-			<contains>TypeError: d.config.doc.defaultView is null</contains>
+			<contains>NS_ERROR_NOT_INITIALIZED:</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-41634">
-			<contains>NS_ERROR_NOT_INITIALIZED:</contains>
+			<contains>TypeError: d.config.doc.defaultView is null</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-42469">

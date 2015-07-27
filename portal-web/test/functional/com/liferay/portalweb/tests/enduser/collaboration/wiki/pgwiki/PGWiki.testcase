@@ -392,7 +392,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiFrontPageFormatHTML" priority="3">
+	<command name="AddWikiFrontPageFormatHTML" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

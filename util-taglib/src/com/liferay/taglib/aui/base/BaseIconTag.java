@@ -61,6 +61,10 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 		return _url;
 	}
 
+	public java.lang.String getView() {
+		return _view;
+	}
+
 	public void setCssClass(java.lang.String cssClass) {
 		_cssClass = cssClass;
 
@@ -103,6 +107,12 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("url", url);
 	}
 
+	public void setView(java.lang.String view) {
+		_view = view;
+
+		setScopedAttribute("view", view);
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -114,6 +124,7 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 		_label = null;
 		_target = null;
 		_url = null;
+		_view = null;
 	}
 
 	@Override
@@ -130,6 +141,7 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "label", _label);
 		setNamespacedAttribute(request, "target", _target);
 		setNamespacedAttribute(request, "url", _url);
+		setNamespacedAttribute(request, "view", _view);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:icon:";
@@ -144,5 +156,6 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _label = null;
 	private java.lang.String _target = null;
 	private java.lang.String _url = null;
+	private java.lang.String _view = null;
 
 }

@@ -943,29 +943,45 @@ jdbc.default.password=${database.password}]]></echo>
 	<macrodef name="prepare-chrome-driver">
 		<sequential>
 			<if>
-				<not>
-					<isset property="chrome.driver.zip" />
-				</not>
+				<os family="mac" />
 				<then>
-					<fail>
-.
-
-Please set "chrome.driver.zip" in test.properties to point to "chromedriver_win_22_0_1203_0b.zip"
-which can be downloaded from this website: http://code.google.com/p/chromedriver/
-					</fail>
+					<property name="selenium.chrome.driver.zip" value="chromedriver_mac32.zip" />
 				</then>
+				<elseif>
+					<os family="unix" />
+					<then>
+						<property name="selenium.chrome.driver.zip" value="chromedriver_linux64.zip" />
+					</then>
+				</elseif>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<property name="selenium.chrome.driver.zip" value="chromedriver_win32.zip" />
+					</then>
+				</elseif>
 				<else>
-					<stop-chrome-driver />
-
-					<unzip src="${chrome.driver.zip}" dest="tools/selenium" />
-
-					<if>
-						<os family="unix" />
-						<then>
-							<chmod file="tools/selenium/chromedriver" perm="a+x" />
-						</then>
-					</if>
+					<then>
+						<fail>
+Unsupported operating system.
+						</fail>
+					</then>
 				</else>
+			</if>
+
+			<mirrors-get
+				dest="tools/selenium/${selenium.chrome.driver.zip}"
+				src="http://chromedriver.storage.googleapis.com/${selenium.chrome.driver.version}/${selenium.chrome.driver.zip}"
+			/>
+
+			<stop-chrome-driver />
+
+			<unzip src="tools/selenium/${selenium.chrome.driver.zip}" dest="tools/selenium" />
+
+			<if>
+				<os family="unix" />
+				<then>
+					<chmod file="tools/selenium/chromedriver" perm="a+x" />
+				</then>
 			</if>
 		</sequential>
 	</macrodef>

@@ -955,11 +955,16 @@ which can be downloaded from this website: http://code.google.com/p/chromedriver
 					</fail>
 				</then>
 				<else>
-					<exec executable="taskkill.exe">
-						<arg line="/F /IM chromedriver.exe" />
-					</exec>
+					<stop-chrome-driver />
 
 					<unzip src="${chrome.driver.zip}" dest="tools/selenium" />
+
+					<if>
+						<os family="unix" />
+						<then>
+							<chmod file="tools/selenium/chromedriver" perm="a+x" />
+						</then>
+					</if>
 				</else>
 			</if>
 		</sequential>
@@ -2072,9 +2077,19 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="stop-chrome-driver">
 		<sequential>
-			<exec executable="taskkill.exe">
-				<arg line="/F /IM chromedriver.exe" />
-			</exec>
+			<if>
+				<os family="unix" />
+				<then>
+					<execute>
+						killall chromedriver
+					</execute>
+				</then>
+				<else>
+					<execute>
+						taskkill.exe /F /IM chromedriver.exe
+					</execute>
+				</else>
+			</if>
 		</sequential>
 	</macrodef>
 

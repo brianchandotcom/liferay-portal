@@ -53,8 +53,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.util.JS;
@@ -62,7 +60,6 @@ import com.liferay.util.JS;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -131,6 +128,10 @@ public class ResourceActionsImpl implements ResourceActions {
 			throw new NoSuchResourceActionException(
 				name.concat(StringPool.POUND).concat(actionId));
 		}
+	}
+
+	public void destroy() {
+		_resourceBundles.close();
 	}
 
 	@Override
@@ -928,9 +929,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
-		}
 
-		if (resourceBundles == null) {
 			return null;
 		}
 

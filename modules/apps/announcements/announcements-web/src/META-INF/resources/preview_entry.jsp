@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/announcements/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs1 = "preview";
@@ -26,4 +26,4 @@ int flagValue = AnnouncementsFlagConstants.NOT_HIDDEN;
 String className = StringPool.BLANK;
 %>
 
-<%@ include file="/html/portlet/announcements/view_entry.jspf" %>
+<%@ include file="/view_entry.jspf" %>

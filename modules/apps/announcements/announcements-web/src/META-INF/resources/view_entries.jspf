@@ -26,7 +26,7 @@ int flagValue = AnnouncementsFlagConstants.NOT_HIDDEN;
 %>
 
 <div class="unread-entries">
-	<%@ include file="/html/portlet/announcements/entry_iterator.jspf" %>
+	<%@ include file="/entry_iterator.jspf" %>
 </div>
 
 <%
@@ -44,7 +44,7 @@ searchContainer = new SearchContainer(renderRequest, null, null, "cur2", pageDel
 %>
 
 <div class="read-entries">
-	<%@ include file="/html/portlet/announcements/entry_iterator.jspf" %>
+	<%@ include file="/entry_iterator.jspf" %>
 </div>
 
 <%

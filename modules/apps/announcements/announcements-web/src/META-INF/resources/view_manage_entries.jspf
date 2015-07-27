@@ -39,7 +39,7 @@ if ((classNameId == 0) && (classPK == 0) && !PortalPermissionUtil.contains(permi
 		boolean submitOnChange = true;
 		%>
 
-		<%@ include file="/html/portlet/announcements/entry_select_scope.jspf" %>
+		<%@ include file="/entry_select_scope.jspf" %>
 
 	</aui:fieldset>
 
@@ -118,7 +118,7 @@ if ((classNameId == 0) && (classPK == 0) && !PortalPermissionUtil.contains(permi
 
 			// Action
 
-			row.addJSP("/html/portlet/announcements/view_manage_entries_entry_action.jsp", "entry-action");
+			row.addJSP("/view_manage_entries_entry_action.jsp", "entry-action");
 
 			// Add result row
 

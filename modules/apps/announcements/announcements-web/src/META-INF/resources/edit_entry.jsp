@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/announcements/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -59,7 +59,7 @@ if (entry == null) {
 				boolean showScopeName = true;
 				%>
 
-				<%@ include file="/html/portlet/announcements/entry_scope.jspf" %>
+				<%@ include file="/entry_scope.jspf" %>
 
 			</c:when>
 			<c:otherwise>
@@ -80,7 +80,7 @@ if (entry == null) {
 				boolean submitOnChange = false;
 				%>
 
-				<%@ include file="/html/portlet/announcements/entry_select_scope.jspf" %>
+				<%@ include file="/entry_select_scope.jspf" %>
 
 			</c:otherwise>
 		</c:choose>

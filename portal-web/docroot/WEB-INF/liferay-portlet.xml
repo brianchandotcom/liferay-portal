@@ -246,17 +246,6 @@
 		<css-class-wrapper>portlet-recent-documents</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.portlet.announcements.messaging.CheckEntryMessageListener</scheduler-event-listener-class>
-			<trigger>
-				<simple>
-					<property-key>announcements.entry.check.interval</property-key>
-					<time-unit>minute</time-unit>
-				</simple>
-			</trigger>
-		</scheduler-entry>
-	</portlet>
-	<portlet>
 		<portlet-name>90</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>portal</struts-path>

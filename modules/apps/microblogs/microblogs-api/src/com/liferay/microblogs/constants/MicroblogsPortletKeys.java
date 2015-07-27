@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.microblogs.util;
+package com.liferay.microblogs.constants;
 
 /**
  * @author Jonathan Lee
+ * @author Joan Kim
  */
-public class PortletKeys extends com.liferay.portal.util.PortletKeys {
+public class MicroblogsPortletKeys {
 
-	public static final String MICROBLOGS = "1_WAR_microblogsportlet";
+	public static final String MICROBLOGS = "1_WAR_microblogsweb";
 
-	public static final String MICROBLOGS_STATUS_UPDATE =
-		"2_WAR_microblogsportlet";
+	public static final String MICROBLOGS_STATUS_UPDATE = "2_WAR_microblogsweb";
 
 }

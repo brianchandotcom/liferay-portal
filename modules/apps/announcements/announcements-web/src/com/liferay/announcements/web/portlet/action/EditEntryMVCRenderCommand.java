@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.announcements.action;
+package com.liferay.announcements.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.announcements.NoSuchEntryException;
@@ -25,10 +24,12 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Adolfo Pérez
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"javax.portlet.name=" + PortletKeys.ALERTS,
 		"javax.portlet.name=" + PortletKeys.ANNOUNCEMENTS,

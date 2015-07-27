@@ -12,33 +12,35 @@
  * details.
  */
 
-package com.liferay.portlet.announcements.action;
+package com.liferay.announcements.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PortletKeys;
 
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @author Thiago Moreira
- * @author Raymond Augé
+ * @author Adolfo Pérez
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"javax.portlet.name=" + PortletKeys.ALERTS,
-		"javax.portlet.name=" + PortletKeys.ANNOUNCEMENTS, "mvc.command.name=/",
-		"mvc.command.name=/alerts/view", "mvc.command.name=/announcements/view"
+		"javax.portlet.name=" + PortletKeys.ANNOUNCEMENTS,
+		"mvc.command.name=/announcements/preview_entry"
 	}
 )
-public class ViewMVCRenderCommand implements MVCRenderCommand {
+public class PreviewEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
-		return "/html/portlet/announcements/view.jsp";
+		return "/html/portlet/announcements/preview_entry.jsp";
 	}
 
 }

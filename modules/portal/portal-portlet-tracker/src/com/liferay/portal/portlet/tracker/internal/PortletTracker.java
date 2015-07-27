@@ -17,6 +17,8 @@ package com.liferay.portal.portlet.tracker.internal;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.UTF8Control;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -65,8 +68,10 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -289,6 +294,11 @@ public class PortletTracker
 				bundlePortletApp.getServletContextName(),
 				bundleWiring.getClassLoader(), serviceRegistrations);
 
+			checkResourceBundles(
+				bundle.getBundleContext(), bundleWiring.getClassLoader(),
+				portletModel.getResourceBundle(), portletModel.getPortletId(),
+				serviceRegistrations);
+
 			List<Company> companies = _companyLocalService.getCompanies();
 
 			deployPortlet(serviceReference, portletModel, companies);
@@ -327,6 +337,31 @@ public class PortletTracker
 		portletModel.setStrutsPath(portletId);
 
 		return portletModel;
+	}
+
+	protected void checkResourceBundles(
+		BundleContext bundleContext, ClassLoader classLoader,
+		String languageBundleName, String portletId,
+		ServiceRegistrations serviceRegistrations) {
+
+		if (Validator.isBlank(languageBundleName)) {
+			return;
+		}
+
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			ResourceBundle resourceBundle = ResourceBundle.getBundle(
+				languageBundleName, locale, classLoader, UTF8Control.INSTANCE);
+
+			Dictionary<String, Object> properties = new HashMapDictionary<>();
+			properties.put("javax.portlet.name", portletId);
+			properties.put("language.id", LocaleUtil.toLanguageId(locale));
+
+			ServiceRegistration<ResourceBundle> serviceRegistration =
+				bundleContext.registerService(
+					ResourceBundle.class, resourceBundle, properties);
+
+			serviceRegistrations.addServiceRegistration(serviceRegistration);
+		}
 	}
 
 	protected void checkResources(

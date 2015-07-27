@@ -9,7 +9,7 @@
 				<li class="open">
 					<a href="${childNavigationItem.getRegularURL()!""} ">${htmlUtil.escape(childNavigationItem.getName())}</a>
 
-					<#if includeAllChildEntries || childNavigationItem.isBelongsToNavigationEntries(entries) >
+					<#if includeAllChildEntries || childNavigationItem.isInNavigation(entries) >
 						<@displayChildNavigation childLayoutLevel=(childLayoutLevel + 1) childNavigationItems=childNavigationItem.getChildren() includeAllChildEntries=includeAllChildEntries/>
 					</#if>
 				</li>

@@ -16,7 +16,4 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="javax.portlet.*" %>
-<%@ page import="com.liferay.portlet.*" %>
-
 <portlet:defineObjects />

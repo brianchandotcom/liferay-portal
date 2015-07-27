@@ -132,7 +132,8 @@ public class NavigationTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:navigation:displayStyle", getDisplayStyle());
 		request.setAttribute(
-			"liferay-ui:navigation:displayStyleGroupId", _ddmTemplateGroupId);
+			"liferay-ui:navigation:displayStyleGroupId",
+			String.valueOf(_ddmTemplateGroupId));
 		request.setAttribute("liferay-ui:navigation:headerType", _headerType);
 		request.setAttribute(
 			"liferay-ui:navigation:includedLayouts", _includedLayouts);
@@ -142,7 +143,8 @@ public class NavigationTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:navigation:preview", String.valueOf(_preview));
 		request.setAttribute(
-			"liferay-ui:navigation:rootLayoutLevel", _rootLayoutLevel);
+			"liferay-ui:navigation:rootLayoutLevel",
+			String.valueOf(_rootLayoutLevel));
 		request.setAttribute(
 			"liferay-ui:navigation:rootLayoutType", _rootLayoutType);
 

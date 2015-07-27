@@ -90,7 +90,7 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 </#macro>
 
 <#macro navigation_menu>
-${theme.runtime("com.liferay.portal.theme.NavItem", portletProviderAction.VIEW)}
+	${theme.runtime("com.liferay.portal.theme.NavItem", portletProviderAction.VIEW)}
 </#macro>
 
 <#macro product_menu>

@@ -1,8 +1,6 @@
 <#assign rootNavigationItems = navItem.fromLayouts(request, themeDisplay.getLayouts(), null) />
 
 <#if rootNavigationItems?has_content>
-
-	<#assign includeAllChildEntries = false />
 	<#assign layoutLevel = 0 />
 
 	<div class="nav-menu nav-menu-style-${bulletStyle}">
@@ -12,7 +10,7 @@
 					<a href="${rootNavigationItem.getRegularURL()!""} ">${htmlUtil.escape(rootNavigationItem.getName())}</a>
 
 					<#if rootNavigationItem.isBelongsToNavigationEntries(entries) >
-						<@displayChildNavigation childNavigationItems=rootNavigationItem.getChildren() childLayoutLevel=(layoutLevel + 1) includeAllChildEntries=includeAllChildEntries />
+						<@displayChildNavigation childLayoutLevel=(layoutLevel + 1) childNavigationItems=rootNavigationItem.getChildren() includeAllChildEntries=false />
 					</#if>
 				</li>
 			</#list>
@@ -21,8 +19,8 @@
 </#if>
 
 <#macro displayChildNavigation
-	childNavigationItems
 	childLayoutLevel
+	childNavigationItems
 	includeAllChildEntries
 >
 	<#if childNavigationItems?has_content>
@@ -32,7 +30,7 @@
 					<a href="${childNavigationItem.getRegularURL()!""} ">${htmlUtil.escape(childNavigationItem.getName())}</a>
 
 					<#if includeAllChildEntries || childNavigationItem.isBelongsToNavigationEntries(entries) >
-						<@displayChildNavigation childNavigationItems=childNavigationItem.getChildren() childLayoutLevel=(childLayoutLevel + 1) includeAllChildEntries=includeAllChildEntries/>
+						<@displayChildNavigation childLayoutLevel=(childLayoutLevel + 1) childNavigationItems=childNavigationItem.getChildren() includeAllChildEntries=includeAllChildEntries/>
 					</#if>
 				</li>
 			</#list>

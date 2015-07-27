@@ -855,7 +855,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-56706
 
-		if (portalSource && absolutePath.contains("/modules/") &&
+		if (portalSource && isModulesFile(absolutePath) &&
 			absolutePath.contains("/test/integration/") &&
 			newContent.contains("@RunWith(Arquillian.class)") &&
 			newContent.contains("import org.powermock.")) {
@@ -868,6 +868,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-48156
 
 		newContent = checkPrincipalException(newContent);
+
+		// LPS-57358
+
+		if (portalSource && isModulesFile(absolutePath) &&
+			newContent.contains("ProxyFactory.newServiceTrackedInstance(")) {
+
+			processErrorMessage(
+				fileName,
+				"Do not use ProxyFactory.newServiceTrackedInstance in " +
+					"modules: " + fileName);
+		}
 
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern1);

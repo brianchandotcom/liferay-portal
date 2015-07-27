@@ -75,7 +75,7 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test(expected = DDMFormValidationException.class)
-	public void testDuplicateFieldName() throws Exception {
+	public void testDuplicateCaseInsensitiveFieldName() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
 
@@ -87,6 +87,25 @@ public class DDMFormValidatorTest {
 
 		name2DDMFormField.addNestedDDMFormField(
 			new DDMFormField("name1", DDMFormFieldType.TEXT));
+
+		ddmForm.addDDMFormField(name2DDMFormField);
+
+		_ddmFormValidator.validate(ddmForm);
+	}
+
+	@Test(expected = DDMFormValidationException.class)
+	public void testDuplicateFieldName() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		ddmForm.addDDMFormField(
+			new DDMFormField("Name1", DDMFormFieldType.TEXT));
+
+		DDMFormField name2DDMFormField = new DDMFormField(
+			"Name2", DDMFormFieldType.TEXT);
+
+		name2DDMFormField.addNestedDDMFormField(
+			new DDMFormField("Name1", DDMFormFieldType.TEXT));
 
 		ddmForm.addDDMFormField(name2DDMFormField);
 

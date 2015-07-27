@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.announcements.action;
+package com.liferay.announcements.web.portlet.action;
 
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;

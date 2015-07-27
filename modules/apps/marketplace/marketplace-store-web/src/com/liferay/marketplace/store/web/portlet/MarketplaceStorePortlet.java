@@ -438,7 +438,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 			companyId, userId, token);
 
 		String portletNameSpace = PortalUtil.getPortletNamespace(
-			_OSB_PORTLET_ID);
+			OSB_PORTLET_ID);
 
 		url = HttpUtil.addParameter(
 			url, portletNameSpace.concat("clientId"), encodedClientId);
@@ -460,7 +460,5 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 	protected void setOAuthManager(OAuthManager oAuthManager) {
 		super.setOAuthManager(oAuthManager);
 	}
-
-	private static final String _OSB_PORTLET_ID = "12_WAR_osbportlet";
 
 }

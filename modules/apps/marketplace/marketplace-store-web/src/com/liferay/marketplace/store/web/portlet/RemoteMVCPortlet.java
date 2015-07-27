@@ -139,6 +139,10 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		OAuthRequest oAuthRequest = getGetOAuthRequest(
 			resourceRequest, resourceResponse);
 
+		oAuthRequest.addQuerystringParameter("p_p_lifecycle", "2");
+		oAuthRequest.addQuerystringParameter(
+			"p_p_resource_id", resourceRequest.getResourceID());
+
 		Response response = oAuthRequest.send();
 
 		PortletResponseUtil.write(resourceResponse, response.getStream());
@@ -169,9 +173,13 @@ public class RemoteMVCPortlet extends MVCPortlet {
 				continue;
 			}
 
-			oAuthRequest.addQuerystringParameter(entry.getKey(), values[0]);
+			oAuthRequest.addQuerystringParameter(
+				PortalUtil.getPortletNamespace(OSB_PORTLET_ID) + entry.getKey(),
+				values[0]);
 		}
 	}
+
+	protected static final String OSB_PORTLET_ID = "12_WAR_osbportlet";
 
 	private OAuthManager _oAuthManager;
 

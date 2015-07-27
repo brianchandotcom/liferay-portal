@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ambrín Chaudhary
  */
-
 @Component(service = ItemSelectorView.class)
 public class ItemSelectorUploadView
 	implements ItemSelectorView<UploadItemSelectorCriterion> {

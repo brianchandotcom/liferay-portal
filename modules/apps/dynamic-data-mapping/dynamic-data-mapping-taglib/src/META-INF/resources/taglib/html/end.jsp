@@ -14,12 +14,6 @@
  */
 --%>
 
-<%@ include file="/taglib/ui/template_renderer/init.jsp" %>
+<%@ include file="/taglib/html/init.jsp" %>
 
-<%
-DDMTemplate portletDisplayDDMTemplate = (DDMTemplate)request.getAttribute("ddm:template-renderer:portletDisplayDDMTemplate");
-%>
-
-<c:if test="<%= portletDisplayDDMTemplate != null %>">
-	<%= PortletDisplayTemplateManagerUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplate.getTemplateId(), entries, contextObjects) %>
-</c:if>
+</div>

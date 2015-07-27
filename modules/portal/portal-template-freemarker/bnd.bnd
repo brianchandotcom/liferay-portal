@@ -25,8 +25,8 @@ Import-Package:\
 	com.liferay.taglib.aui;version='[7.0.0,8.0)',\
 	com.liferay.taglib.aui.base;version='[7.0.0,8.0)',\
 	com.liferay.taglib.core;version='[7.0.0,8.0)',\
-	com.liferay.dynamic.data.mapping.taglib.ui;version='[1.0.0,2.0)',\
-	com.liferay.dynamic.data.mapping.taglib.ui.base;version='[1.0.0,2.0)',\
+	com.liferay.dynamic.data.mapping.taglib;version='[1.0.0,2.0)',\
+	com.liferay.dynamic.data.mapping.taglib.base;version='[1.0.0,2.0)',\
 	com.liferay.taglib.portlet;version='[7.0.0,8.0)',\
 	com.liferay.taglib.portletext;version='[7.0.0,8.0)',\
 	com.liferay.taglib.search;version='[1.0.0,2.0)',\

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,8 +11,13 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/taglib/ui/html/init.jsp" %>
+package com.liferay.dynamic.data.mapping.taglib;
 
-</div>
+import com.liferay.dynamic.data.mapping.taglib.base.BaseHTMLFieldTag;
+
+/**
+ * @author Sergio González
+ */
+public class HTMLFieldTag extends BaseHTMLFieldTag {
+}

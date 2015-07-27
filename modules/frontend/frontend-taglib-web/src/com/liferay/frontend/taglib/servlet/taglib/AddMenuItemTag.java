@@ -12,14 +12,16 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.frontend.taglib.servlet.taglib;
 
-import com.liferay.portal.kernel.servlet.taglib.ui.AddMenuItem;
+import com.liferay.frontend.taglib.servlet.taglib.util.AddMenuItem;
+import com.liferay.frontend.taglib.util.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Ambrin Chaudhary
@@ -45,16 +47,10 @@ public class AddMenuItemTag extends IncludeTag {
 		_url = null;
 	}
 
-	@Override
-	protected String getPage() {
-		return "/html/taglib/ui/add_menu_item/page.jsp";
-	}
-
-	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		List<AddMenuItem> addMenuItems =
 			(List<AddMenuItem>)request.getAttribute(
-				"liferay-ui:add-menu:addMenuItems");
+				"liferay-frontend:add-menu:addMenuItems");
 
 		if (addMenuItems != null) {
 			AddMenuItem addMenuItem = new AddMenuItem(_title, _url);

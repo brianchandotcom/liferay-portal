@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.frontend.taglib.servlet.taglib;
 
-import com.liferay.portal.kernel.servlet.taglib.ui.AddMenuItem;
+import com.liferay.frontend.taglib.servlet.taglib.util.AddMenuItem;
+import com.liferay.frontend.taglib.util.ServletContextUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -23,6 +24,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Ambrin Chaudhary
@@ -33,7 +35,7 @@ public class AddMenuTag extends IncludeTag {
 	public int doEndTag() throws JspException {
 		List<AddMenuItem> addMenuItems =
 			(List<AddMenuItem>)request.getAttribute(
-				"liferay-ui:add-menu:addMenuItems");
+				"liferay-frontend:add-menu:addMenuItems");
 
 		if (ListUtil.isEmpty(addMenuItems)) {
 			return SKIP_BODY;
@@ -44,7 +46,8 @@ public class AddMenuTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
-		request.setAttribute("liferay-ui:add-menu:addMenuItems", _addMenuItems);
+		request.setAttribute(
+			"liferay-frontend:add-menu:addMenuItems", _addMenuItems);
 
 		return EVAL_BODY_INCLUDE;
 	}
@@ -54,23 +57,33 @@ public class AddMenuTag extends IncludeTag {
 	}
 
 	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
+	}
+
+	@Override
 	protected void cleanUp() {
 		_addMenuItems = Collections.emptyList();
 	}
 
 	@Override
 	protected String getPage() {
-		return "/html/taglib/ui/add_menu/end.jsp";
+		return _PAGE;
 	}
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		List<AddMenuItem> addMenuItems =
 			(List<AddMenuItem>)request.getAttribute(
-				"liferay-ui:add-menu:addMenuItems");
+				"liferay-frontend:add-menu:addMenuItems");
 
-		request.setAttribute("liferay-ui:add-menu:addMenuItems", addMenuItems);
+		request.setAttribute(
+			"liferay-frontend:add-menu:addMenuItems", addMenuItems);
 	}
+
+	private static final String _PAGE = "/taglib/add_menu/end.jsp";
 
 	private List<AddMenuItem> _addMenuItems = Collections.emptyList();
 

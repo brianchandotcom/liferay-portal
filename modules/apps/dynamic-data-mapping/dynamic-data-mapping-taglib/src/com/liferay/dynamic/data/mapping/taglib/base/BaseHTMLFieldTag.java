@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.taglib.ui.base;
+package com.liferay.dynamic.data.mapping.taglib.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -24,17 +24,13 @@ import com.liferay.dynamic.data.mapping.taglib.util.ServletContextUtil;
  * @author Bruno Basto
  * @generated
  */
-public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
+public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
 		return super.doStartTag();
-	}
-
-	public boolean getCheckRequired() {
-		return _checkRequired;
 	}
 
 	public long getClassNameId() {
@@ -45,8 +41,8 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return _classPK;
 	}
 
-	public com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues getDdmFormValues() {
-		return _ddmFormValues;
+	public com.liferay.portlet.dynamicdatamapping.storage.Field getField() {
+		return _field;
 	}
 
 	public java.lang.String getFieldsNamespace() {
@@ -68,11 +64,9 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	public boolean getShowEmptyFieldLabel() {
 		return _showEmptyFieldLabel;
 	}
-
-	public void setCheckRequired(boolean checkRequired) {
-		_checkRequired = checkRequired;
-
-		setScopedAttribute("checkRequired", checkRequired);
+	
+	public java.lang.Object getServletContext() {
+		return _servletContext;
 	}
 
 	public void setClassNameId(long classNameId) {
@@ -87,10 +81,10 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("classPK", classPK);
 	}
 
-	public void setDdmFormValues(com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues ddmFormValues) {
-		_ddmFormValues = ddmFormValues;
+	public void setField(com.liferay.portlet.dynamicdatamapping.storage.Field field) {
+		_field = field;
 
-		setScopedAttribute("ddmFormValues", ddmFormValues);
+		setScopedAttribute("field", field);
 	}
 
 	public void setFieldsNamespace(java.lang.String fieldsNamespace) {
@@ -140,10 +134,9 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_checkRequired = true;
 		_classNameId = 0;
 		_classPK = 0;
-		_ddmFormValues = null;
+		_field = null;
 		_fieldsNamespace = null;
 		_readOnly = false;
 		_repeatable = true;
@@ -164,10 +157,9 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		setNamespacedAttribute(request, "checkRequired", _checkRequired);
 		setNamespacedAttribute(request, "classNameId", _classNameId);
 		setNamespacedAttribute(request, "classPK", _classPK);
-		setNamespacedAttribute(request, "ddmFormValues", _ddmFormValues);
+		setNamespacedAttribute(request, "field", _field);
 		setNamespacedAttribute(request, "fieldsNamespace", _fieldsNamespace);
 		setNamespacedAttribute(request, "readOnly", _readOnly);
 		setNamespacedAttribute(request, "repeatable", _repeatable);
@@ -176,18 +168,17 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "servletContext", _servletContext);
 	}
 
-	protected static final String _ATTRIBUTE_NAMESPACE = "ddm:html:";
+	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-ddm:html-field:";
 
 	private static final String _END_PAGE =
-		"/taglib/ui/html/end.jsp";
+		"/taglib/html_field/end.jsp";
 
 	private static final String _START_PAGE =
-		"/taglib/ui/html/start.jsp";
+		"/taglib/html_field/start.jsp";
 
-	private boolean _checkRequired = true;
 	private long _classNameId = 0;
 	private long _classPK = 0;
-	private com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues _ddmFormValues = null;
+	private com.liferay.portlet.dynamicdatamapping.storage.Field _field = null;
 	private java.lang.String _fieldsNamespace = null;
 	private boolean _readOnly = false;
 	private boolean _repeatable = true;

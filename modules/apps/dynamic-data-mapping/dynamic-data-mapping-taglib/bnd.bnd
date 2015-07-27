@@ -1,9 +1,9 @@
 Bundle-Name: Liferay Dynamic Data Mapping Taglib
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.taglib
 Bundle-Version: 1.0.0
-Export-Package:  \
-	com.liferay.dynamic.data.mapping.taglib.ui,\
-	com.liferay.dynamic.data.mapping.taglib.ui.base
+Export-Package:\
+	com.liferay.dynamic.data.mapping.taglib,\
+	com.liferay.dynamic.data.mapping.taglib.base
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources

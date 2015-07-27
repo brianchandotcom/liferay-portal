@@ -2979,7 +2979,6 @@ public class DataFactory {
 		wikiNodeModel.setUserId(_sampleUserId);
 		wikiNodeModel.setUserName(_SAMPLE_USER_NAME);
 		wikiNodeModel.setCreateDate(new Date());
-		wikiNodeModel.setLastPublishDate(new Date());
 		wikiNodeModel.setModifiedDate(new Date());
 		wikiNodeModel.setName("Test Node " + index);
 		wikiNodeModel.setLastPostDate(new Date());
@@ -3002,7 +3001,6 @@ public class DataFactory {
 		wikiPageModel.setUserId(_sampleUserId);
 		wikiPageModel.setUserName(_SAMPLE_USER_NAME);
 		wikiPageModel.setCreateDate(new Date());
-		wikiPageModel.setLastPublishDate(new Date());
 		wikiPageModel.setModifiedDate(new Date());
 		wikiPageModel.setNodeId(wikiNodeModel.getNodeId());
 		wikiPageModel.setTitle("Test Page " + index);

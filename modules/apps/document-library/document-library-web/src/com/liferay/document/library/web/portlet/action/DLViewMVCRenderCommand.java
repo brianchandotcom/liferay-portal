@@ -26,8 +26,6 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
-		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
 		"mvc.command.name=/", "mvc.command.name=/document_library/view"
 	},
 	service = MVCRenderCommand.class

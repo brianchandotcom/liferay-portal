@@ -23,6 +23,15 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class UserNameFieldsTag extends IncludeTag {
 
+	public void setBean(Object bean) {
+		_bean = bean;
+	}
+
+	@Override
+	protected void cleanUp() {
+		_bean = null;
+	}
+
 	@Override
 	protected String getPage() {
 		return _PAGE;
@@ -30,12 +39,16 @@ public class UserNameFieldsTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		Object bean = pageContext.getAttribute("aui:model-context:bean");
+		if (_bean == null) {
+			_bean = pageContext.getAttribute("aui:model-context:bean");
+		}
 
-		request.setAttribute("liferay-ui:user-name-fields:bean", bean);
+		request.setAttribute("liferay-ui:user-name-fields:bean", _bean);
 	}
 
 	private static final String _PAGE =
 		"/html/taglib/ui/user_name_fields/page.jsp";
+
+	private Object _bean;
 
 }

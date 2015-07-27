@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.mobiledevicerules.search;
+package com.liferay.mobile.device.rules.web.search;
 
 import com.liferay.portal.kernel.dao.search.DAOParamUtil;
 

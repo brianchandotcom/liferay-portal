@@ -27,6 +27,10 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.mobile.device.rules.rule.group.rule.SimpleRuleHandler" %><%@
 page import="com.liferay.mobile.device.rules.web.constants.MDRWebKeys" %><%@
+page import="com.liferay.mobile.device.rules.web.search.RuleGroupChecker" %><%@
+page import="com.liferay.mobile.device.rules.web.search.RuleGroupDisplayTerms" %><%@
+page import="com.liferay.mobile.device.rules.web.search.RuleGroupSearch" %><%@
+page import="com.liferay.mobile.device.rules.web.search.RuleGroupSearchTerms" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
@@ -77,10 +81,6 @@ page import="com.liferay.portlet.mobiledevicerules.model.MDRAction" %><%@
 page import="com.liferay.portlet.mobiledevicerules.model.MDRRule" %><%@
 page import="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup" %><%@
 page import="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance" %><%@
-page import="com.liferay.portlet.mobiledevicerules.search.RuleGroupChecker" %><%@
-page import="com.liferay.portlet.mobiledevicerules.search.RuleGroupDisplayTerms" %><%@
-page import="com.liferay.portlet.mobiledevicerules.search.RuleGroupSearch" %><%@
-page import="com.liferay.portlet.mobiledevicerules.search.RuleGroupSearchTerms" %><%@
 page import="com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil" %><%@
 page import="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil" %><%@
 page import="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceServiceUtil" %><%@

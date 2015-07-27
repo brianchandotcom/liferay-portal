@@ -14,10 +14,37 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ page import="com.liferay.portlet.social.model.SocialActivityDefinition" %><%@
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+
+<%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.security.permission.ActionKeys" %><%@
+page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
+page import="com.liferay.portal.util.PropsValues" %><%@
+page import="com.liferay.portal.util.WebKeys" %><%@
+page import="com.liferay.portlet.PortletURLUtil" %><%@
+page import="com.liferay.portlet.social.model.SocialActivityDefinition" %><%@
 page import="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil" %><%@
 page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %>
 
-<%@ include file="/html/portlet/social_activity/init-ext.jsp" %>
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
+
+<%@ page import="javax.portlet.PortletURL" %>
+
+<portlet:defineObjects />
+
+<liferay-theme:defineObjects />
+
+<%
+PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
+
+String currentURL = currentURLObj.toString();
+%>
+
+<%@ include file="/init-ext.jsp" %>

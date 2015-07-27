@@ -35,14 +35,6 @@
 			<var name="portletName" value="User Groups" />
 		</execute>
 
-		<execute macro="UserGroup#viewCP">
-			<var name="userGroupName" value="UG UserGroup Name" />
-		</execute>
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="User Groups" />
-		</execute>
-
 		<execute macro="UserGroup#assignMemberCP">
 			<var name="userGroupName" value="UG UserGroup Name" />
 			<var name="userScreenName" value="usersn" />

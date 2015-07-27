@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.control-panel-entry-category=site_administration.configuration",
-		"com.liferay.portlet.control-panel-entry-class=com.liferay.portlet.socialactivity.SocialActivityControlPanelEntry",
+		"com.liferay.portlet.control-panel-entry-class=com.liferay.social.activity.web.SocialActivityControlPanelEntry",
 		"com.liferay.portlet.control-panel-entry-weight=3.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-social-activity",
 		"com.liferay.portlet.display-category=category.hidden",

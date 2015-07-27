@@ -1689,13 +1689,13 @@
 	</command>
 
 	<command name="tearDownCP">
-		<var name="userFirstName" value="userfn*" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#deactivateCP" />
+		<execute macro="User#deactivateCP">
+			<var name="userFirstName" value="userfn*" />
+		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />

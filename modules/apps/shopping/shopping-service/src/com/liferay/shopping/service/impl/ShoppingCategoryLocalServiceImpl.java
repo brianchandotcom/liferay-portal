@@ -105,7 +105,9 @@ public class ShoppingCategoryLocalServiceImpl
 
 	@Override
 	public void addCategoryResources(
-			long categoryId, ModelPermissions modelPermissions)
+			long categoryId,
+			com.liferay.portal.service.permission.ModelPermissions
+				modelPermissions)
 		throws PortalException {
 
 		ShoppingCategory category =
@@ -129,7 +131,9 @@ public class ShoppingCategoryLocalServiceImpl
 
 	@Override
 	public void addCategoryResources(
-			ShoppingCategory category, ModelPermissions modelPermissions)
+			ShoppingCategory category,
+			com.liferay.portal.service.permission.ModelPermissions
+				modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(

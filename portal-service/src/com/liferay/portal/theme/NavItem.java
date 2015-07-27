@@ -264,17 +264,17 @@ public class NavItem implements Serializable {
 		method.invoke(velocityTaglib, _layout);
 	}
 
-	public boolean isBelongsToNavigationEntries(List<NavItem> navItemList) {
-		if (navItemList == null) {
-			return false;
-		}
-
-		return navItemList.contains(this);
-	}
-
 	public boolean isChildSelected() throws PortalException {
 		return _layout.isChildSelected(
 			_themeDisplay.isTilesSelectable(), _themeDisplay.getLayout());
+	}
+
+	public boolean isInNavigation(List<NavItem> navItems) {
+		if (navItems == null) {
+			return false;
+		}
+
+		return navItems.contains(this);
 	}
 
 	public boolean isSelected() throws Exception {

@@ -5,4 +5,3 @@ Export-Package: com.liferay.item.selector.web.constants
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources
-	

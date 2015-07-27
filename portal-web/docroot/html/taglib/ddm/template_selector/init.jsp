@@ -18,6 +18,8 @@
 
 <%@ include file="/html/taglib/taglib-init.jsp" %>
 
+<%@ page import="com.liferay.portlet.dynamicdatamapping.DDMTemplateManager" %>
+
 <%
 java.lang.String className = GetterUtil.getString((java.lang.String)request.getAttribute("ddm:template-selector:className"));
 java.lang.String defaultDisplayStyle = GetterUtil.getString((java.lang.String)request.getAttribute("ddm:template-selector:defaultDisplayStyle"));

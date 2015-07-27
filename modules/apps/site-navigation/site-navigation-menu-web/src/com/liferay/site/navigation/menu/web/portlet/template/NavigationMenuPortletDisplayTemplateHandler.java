@@ -111,7 +111,7 @@ public class NavigationMenuPortletDisplayTemplateHandler
 		templateVariableGroup.addVariable(
 			"nested-children", String.class, "nestedChildren");
 		templateVariableGroup.addVariable(
-			"root-layout-level", String.class, "rootLayoutLevel");
+			"root-layout-level", Integer.class, "rootLayoutLevel");
 		templateVariableGroup.addVariable(
 			"root-layout-type", String.class, "rootLayoutType");
 		templateVariableGroup.addCollectionVariable(

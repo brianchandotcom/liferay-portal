@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//input[contains(@id,'calendarportlet_title')]</td>
+	<td>//input[contains(@id,'CalendarPortlet_title')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -94,7 +94,7 @@
 <!--ALL_DAY-->
 <tr>
 	<td>ALL_DAY_CHECKBOX</td>
-	<td>//input[contains(@id,'calendarportlet_allDay')]</td>
+	<td>//input[contains(@id,'CalendarPortlet_allDay')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -105,7 +105,7 @@
 <!--REPEAT-->
 <tr>
 	<td>REPEAT_CHECKBOX</td>
-	<td>//input[contains(@id,'calendarportlet_repeat')]</td>
+	<td>//input[contains(@id,'CalendarPortlet_repeat')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -115,12 +115,12 @@
 </tr>
 <tr>
 	<td>REPEAT_REPEATS_DROPDOWN</td>
-	<td>//select[contains(@id,'calendarportlet_frequency')]</td>
+	<td>//select[contains(@id,'CalendarPortlet_frequency')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REPEAT_REPEAT_EVERY_DROPDOWN</td>
-	<td>//select[contains(@id,'calendarportlet_interval')]</td>
+	<td>//select[contains(@id,'CalendarPortlet_interval')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -135,12 +135,12 @@
 </tr>
 <tr>
 	<td>REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_POSITION_DROPDOWN</td>
-	<td>//div[contains(@id,'calendarportlet_viewPositionalWeekday')]//select[@title='Position']</td>
+	<td>//div[contains(@id,'CalendarPortlet_viewPositionalWeekday')]//select[@title='Position']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_DROPDOWN</td>
-	<td>//div[contains(@id,'calendarportlet_viewPositionalWeekday')]//select[@title='Weekday']</td>
+	<td>//div[contains(@id,'CalendarPortlet_viewPositionalWeekday')]//select[@title='Weekday']</td>
 	<td></td>
 </tr>
 <tr>
@@ -150,22 +150,22 @@
 </tr>
 <tr>
 	<td>REPEAT_ENDS_NEVER_RADIO</td>
-	<td>//input[contains(@name,'calendarportlet_ends') and @value='never']</td>
+	<td>//input[contains(@name,'CalendarPortlet_ends') and @value='never']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REPEAT_ENDS_AFTER_RADIO</td>
-	<td>//td[contains(@class,'calendar-portlet-recurrence-content')]//input[contains(@name,'calendarportlet_ends') and @value='after']</td>
+	<td>//td[contains(@class,'calendar-portlet-recurrence-content')]//input[contains(@name,'CalendarPortlet_ends') and @value='after']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REPEAT_ENDS_AFTER_FIELD</td>
-	<td>//input[contains(@id,'calendarportlet_count')]</td>
+	<td>//input[contains(@id,'CalendarPortlet_count')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REPEAT_ENDS_ON_RADIO</td>
-	<td>//input[contains(@name,'calendarportlet_ends') and @value='on']</td>
+	<td>//input[contains(@name,'CalendarPortlet_ends') and @value='on']</td>
 	<td></td>
 </tr>
 <tr>

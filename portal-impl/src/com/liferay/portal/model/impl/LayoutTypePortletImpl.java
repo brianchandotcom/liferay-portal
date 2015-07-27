@@ -671,13 +671,41 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public boolean isCacheable() throws PortalException {
+		List<Portlet> portlets = new ArrayList<>();
+
 		for (String columnId : getColumns()) {
-			for (Portlet portlet : getAllPortlets(columnId)) {
+			List<Portlet> columnPortlets = getAllPortlets(columnId);
+
+			for (Portlet portlet : columnPortlets) {
 				Portlet rootPortlet = portlet.getRootPortlet();
 
 				if (!rootPortlet.isLayoutCacheable()) {
 					return false;
 				}
+			}
+
+			portlets.addAll(columnPortlets);
+		}
+
+		List<Portlet> staticPortlets = getStaticPortlets(
+				PropsKeys.LAYOUT_STATIC_PORTLETS_ALL);
+
+		for (Portlet portlet : staticPortlets) {
+			Portlet rootPortlet = portlet.getRootPortlet();
+
+			if (!rootPortlet.isLayoutCacheable()) {
+				return false;
+			}
+		}
+
+		List<Portlet> embeddedPortlets = getEmbeddedPortlets(
+			portlets, staticPortlets);
+
+		for (Portlet portlet : embeddedPortlets) {
+			Portlet rootPortlet = portlet.getRootPortlet();
+
+			if (!rootPortlet.isLayoutCacheable()) {
+				return false;
 			}
 		}
 

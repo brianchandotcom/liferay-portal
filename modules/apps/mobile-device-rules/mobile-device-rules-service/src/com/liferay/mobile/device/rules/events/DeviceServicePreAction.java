@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.events;
+package com.liferay.mobile.device.rules.events;
 
 import com.liferay.portal.kernel.events.Action;
+import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
@@ -36,9 +37,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Edward Han
  */
+@Component(
+	property = {"key=servlet.service.events.pre"},
+	service = LifecycleAction.class
+)
 public class DeviceServicePreAction extends Action {
 
 	@Override

@@ -2562,21 +2562,21 @@ public class DataFactory {
 		long groupId, long userId, long classNameId, String structureKey,
 		String definition) {
 
-		DDMStructureModel dDMStructureModel = new DDMStructureModelImpl();
+		DDMStructureModel ddmStructureModel = new DDMStructureModelImpl();
 
-		dDMStructureModel.setUuid(SequentialUUID.generate());
-		dDMStructureModel.setStructureId(_counter.get());
-		dDMStructureModel.setGroupId(groupId);
-		dDMStructureModel.setCompanyId(_companyId);
-		dDMStructureModel.setUserId(userId);
-		dDMStructureModel.setUserName(_SAMPLE_USER_NAME);
-		dDMStructureModel.setVersionUserId(userId);
-		dDMStructureModel.setVersionUserName(_SAMPLE_USER_NAME);
-		dDMStructureModel.setCreateDate(nextFutureDate());
-		dDMStructureModel.setModifiedDate(nextFutureDate());
-		dDMStructureModel.setClassNameId(classNameId);
-		dDMStructureModel.setStructureKey(structureKey);
-		dDMStructureModel.setVersion(DDMStructureConstants.VERSION_DEFAULT);
+		ddmStructureModel.setUuid(SequentialUUID.generate());
+		ddmStructureModel.setStructureId(_counter.get());
+		ddmStructureModel.setGroupId(groupId);
+		ddmStructureModel.setCompanyId(_companyId);
+		ddmStructureModel.setUserId(userId);
+		ddmStructureModel.setUserName(_SAMPLE_USER_NAME);
+		ddmStructureModel.setVersionUserId(userId);
+		ddmStructureModel.setVersionUserName(_SAMPLE_USER_NAME);
+		ddmStructureModel.setCreateDate(nextFutureDate());
+		ddmStructureModel.setModifiedDate(nextFutureDate());
+		ddmStructureModel.setClassNameId(classNameId);
+		ddmStructureModel.setStructureKey(structureKey);
+		ddmStructureModel.setVersion(DDMStructureConstants.VERSION_DEFAULT);
 
 		StringBundler sb = new StringBundler(5);
 
@@ -2586,13 +2586,13 @@ public class DataFactory {
 		sb.append(structureKey);
 		sb.append("</name></root>");
 
-		dDMStructureModel.setName(sb.toString());
+		ddmStructureModel.setName(sb.toString());
 
-		dDMStructureModel.setDefinition(definition);
-		dDMStructureModel.setStorageType(StorageType.JSON.toString());
-		dDMStructureModel.setLastPublishDate(nextFutureDate());
+		ddmStructureModel.setDefinition(definition);
+		ddmStructureModel.setStorageType(StorageType.JSON.toString());
+		ddmStructureModel.setLastPublishDate(nextFutureDate());
 
-		return dDMStructureModel;
+		return ddmStructureModel;
 	}
 
 	protected DDMTemplateModel newDDMTemplateModel(

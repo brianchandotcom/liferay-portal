@@ -66,14 +66,14 @@ public class EditUserMVCRenderCommand implements MVCRenderCommand {
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return "/html/portlet/my_account/error.jsp";
+				return "/error.jsp";
 			}
 			else {
 				throw new PortletException(e);
 			}
 		}
 
-		return "/html/portlet/my_account/edit_user.jsp";
+		return "/edit_user.jsp";
 	}
 
 }

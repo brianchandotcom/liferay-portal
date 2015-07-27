@@ -52,7 +52,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		if ((renderRequest.getRemoteUser() == null) ||
 			!windowState.equals(WindowState.MAXIMIZED)) {
 
-			return "/html/portlet/my_account/view.jsp";
+			return "/view.jsp";
 		}
 
 		try {
@@ -68,7 +68,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			dynamicRequest.setParameter(
 				"p_u_i_d", String.valueOf(user.getUserId()));
 
-			return "/html/portlet/my_account/edit_user.jsp";
+			return "/edit_user.jsp";
 		}
 		catch (PortalException pe) {
 			throw new PortletException(pe);

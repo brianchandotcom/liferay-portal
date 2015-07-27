@@ -25,51 +25,55 @@ SearchContainer searchContainer = new SearchContainer(renderRequest, null, null,
 
 WikiPage wikiPage = wikiAttachmentItemSelectorViewDisplayContext.getWikiPage();
 
-Folder folder = DLAppServiceUtil.getFolder(wikiPage.getAttachmentsFolderId());
+long folderId = wikiPage.getAttachmentsFolderId();
 
 int total = 0;
 List<FileEntry> results = new ArrayList<FileEntry>();
 
-String keywords = ParamUtil.getString(request, "keywords");
-String selectedTab = ParamUtil.getString(request, "selectedTab");
+if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+	String keywords = ParamUtil.getString(request, "keywords");
+	String selectedTab = ParamUtil.getString(request, "selectedTab");
 
-if (Validator.isNotNull(keywords) && selectedTab.equals(wikiAttachmentItemSelectorViewDisplayContext.getTitle(locale))) {
-	SearchContext searchContext = SearchContextFactory.getInstance(request);
+	if (Validator.isNotNull(keywords) && selectedTab.equals(wikiAttachmentItemSelectorViewDisplayContext.getTitle(locale))) {
+		SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-	searchContext.setEnd(searchContainer.getEnd());
-	searchContext.setFolderIds(new long[] {folder.getFolderId()});
-	searchContext.setStart(searchContainer.getStart());
+		searchContext.setEnd(searchContainer.getEnd());
+		searchContext.setFolderIds(new long[] {folderId});
+		searchContext.setStart(searchContainer.getStart());
 
-	Hits hits = PortletFileRepositoryUtil.searchPortletFileEntries(folder.getRepositoryId(), searchContext);
+		Folder folder = DLAppServiceUtil.getFolder(folderId);
 
-	total = hits.getLength();
+		Hits hits = PortletFileRepositoryUtil.searchPortletFileEntries(folder.getRepositoryId(), searchContext);
 
-	Document[] docs = hits.getDocs();
+		total = hits.getLength();
 
-	results = new ArrayList(docs.length);
+		Document[] docs = hits.getDocs();
 
-	for (Document doc : docs) {
-		long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+		results = new ArrayList(docs.length);
 
-		FileEntry fileEntry = null;
+		for (Document doc : docs) {
+			long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
-		try {
-			fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Documents and Media search index is stale and contains file entry {" + fileEntryId + "}");
+			FileEntry fileEntry = null;
+
+			try {
+				fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Documents and Media search index is stale and contains file entry {" + fileEntryId + "}");
+				}
+
+				continue;
 			}
 
-			continue;
+			results.add(fileEntry);
 		}
-
-		results.add(fileEntry);
 	}
-}
-else {
-	total = wikiPage.getAttachmentsFileEntriesCount();
-	results = wikiPage.getAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd());
+	else {
+		total = wikiPage.getAttachmentsFileEntriesCount();
+		results = wikiPage.getAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd());
+	}
 }
 
 searchContainer.setTotal(total);

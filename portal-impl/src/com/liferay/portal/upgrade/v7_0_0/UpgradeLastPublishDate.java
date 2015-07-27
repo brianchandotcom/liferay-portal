@@ -37,29 +37,16 @@ public class UpgradeLastPublishDate extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeAddress();
-		upgradeEmailAddress();
-		upgradeLayout();
-		upgradeLayoutFriendlyURL();
-		upgradePasswordPolicy();
-		upgradePhone();
-		upgradeRepository();
-		upgradeRepositoryEntry();
-		upgradeRole();
-		upgradeUser();
-		upgradeBlogsEntry();
-		upgradeCalEvent();
-		upgradeDLFileEntry();
-		upgradeDLFileEntryType();
-		upgradeDLFileShortcut();
-		upgradeDLFolder();
-		upgradeDDMStructure();
-		upgradeDDMTemplate();
-		upgradeMBBan();
-		upgradeMBCategory();
-		upgradeMBDiscussion();
-		upgradeMBMessage();
-		upgradeMBThreadFlag();
+		upgradeAssetCategoriesAdmin();
+		upgradeBlogs();
+		upgradeDocumentLibrary();
+		upgradeDynamicDataMapping();
+		upgradeLayoutsAdmin();
+		upgradeMessageBoards();
+		upgradeMobileDeviceRules();
+		upgradeRatings();
+		upgradeRolesAdmin();
+		upgradeUsersAdmin();
 	}
 
 	protected void updateLastPublishDates(String portletId, String tableName)
@@ -218,97 +205,146 @@ public class UpgradeLastPublishDate extends UpgradeProcess {
 		}
 	}
 
-	private void upgradeAddress() throws Exception {
-		updateLastPublishDates(PortletKeys.USERS_ADMIN, "Address");
+	private void upgradeAssetCategoriesAdmin() throws Exception {
+		runSQL("alter table AssetCategory add lastPublishDate DATE null");
+
+		updateLastPublishDates("147", "AssetCategory");
+
+		runSQL("alter table AssetTag add lastPublishDate DATE null");
+
+		updateLastPublishDates("147", "AssetTag");
+
+		runSQL("alter table AssetVocabulary add lastPublishDate DATE null");
+
+		updateLastPublishDates("147", "AssetVocabulary");
 	}
 
-	private void upgradeBlogsEntry() throws Exception {
+	private void upgradeBlogs() throws Exception {
+		runSQL("alter table BlogsEntry add lastPublishDate DATE null");
+
 		updateLastPublishDates(PortletKeys.BLOGS, "BlogsEntry");
 	}
 
-	private void upgradeCalEvent() throws Exception {
-		updateLastPublishDates(PortletKeys.CALENDAR, "CalEvent");
-	}
+	private void upgradeDocumentLibrary() throws Exception {
+		runSQL("alter table DLFileEntry add lastPublishDate DATE null");
 
-	private void upgradeDDMStructure() throws Exception {
-		updateLastPublishDates(
-			PortletKeys.DYNAMIC_DATA_MAPPING, "DDMStructure");
-	}
-
-	private void upgradeDDMTemplate() throws Exception {
-		updateLastPublishDates(PortletKeys.DYNAMIC_DATA_MAPPING, "DDMTemplate");
-	}
-
-	private void upgradeDLFileEntry() throws Exception {
 		updateLastPublishDates(PortletKeys.DOCUMENT_LIBRARY, "DLFileEntry");
-	}
 
-	private void upgradeDLFileEntryType() throws Exception {
+		runSQL("alter table DLFileEntryType add lastPublishDate DATE null");
+
 		updateLastPublishDates(PortletKeys.DOCUMENT_LIBRARY, "DLFileEntryType");
-	}
 
-	private void upgradeDLFileShortcut() throws Exception {
+		runSQL("alter table DLFileShortcut add lastPublishDate DATE null");
+
 		updateLastPublishDates(PortletKeys.DOCUMENT_LIBRARY, "DLFileShortcut");
-	}
 
-	private void upgradeDLFolder() throws Exception {
+		runSQL("alter table DLFolder add lastPublishDate DATE null");
+
 		updateLastPublishDates(PortletKeys.DOCUMENT_LIBRARY, "DLFolder");
-	}
 
-	private void upgradeEmailAddress() throws Exception {
-		updateLastPublishDates(PortletKeys.USERS_ADMIN, "EmailAddress");
-	}
+		runSQL("alter table Repository add lastPublishDate DATE null");
 
-	private void upgradeLayout() throws Exception {
-		updateLastPublishDates(PortletKeys.LAYOUTS_ADMIN, "Layout");
-	}
-
-	private void upgradeLayoutFriendlyURL() throws Exception {
-		updateLastPublishDates(PortletKeys.LAYOUTS_ADMIN, "LayoutFriendlyURL");
-	}
-
-	private void upgradeMBBan() throws Exception {
-		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBBan");
-	}
-
-	private void upgradeMBCategory() throws Exception {
-		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBCategory");
-	}
-
-	private void upgradeMBDiscussion() throws Exception {
-		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBDiscussion");
-	}
-
-	private void upgradeMBMessage() throws Exception {
-		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBMessage");
-	}
-
-	private void upgradeMBThreadFlag() throws Exception {
-		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBThreadFlag");
-	}
-
-	private void upgradePasswordPolicy() throws Exception {
-		updateLastPublishDates(PortletKeys.ROLES_ADMIN, "PasswordPolicy");
-	}
-
-	private void upgradePhone() throws Exception {
-		updateLastPublishDates(PortletKeys.USERS_ADMIN, "Phone");
-	}
-
-	private void upgradeRepository() throws Exception {
 		updateLastPublishDates(PortletKeys.DOCUMENT_LIBRARY, "Repository");
-	}
 
-	private void upgradeRepositoryEntry() throws Exception {
+		runSQL("alter table RepositoryEntry add lastPublishDate DATE null");
+
 		updateLastPublishDates(PortletKeys.DOCUMENT_LIBRARY, "RepositoryEntry");
 	}
 
-	private void upgradeRole() throws Exception {
-		updateLastPublishDates(PortletKeys.ROLES_ADMIN, "Role");
+	private void upgradeDynamicDataMapping() throws Exception {
+		runSQL("alter table DDMStructure add lastPublishDate DATE null");
+
+		updateLastPublishDates(
+			PortletKeys.DYNAMIC_DATA_MAPPING, "DDMStructure");
+
+		runSQL("alter table DDMTemplate add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.DYNAMIC_DATA_MAPPING, "DDMTemplate");
 	}
 
-	private void upgradeUser() throws Exception {
-		updateLastPublishDates(PortletKeys.USERS_ADMIN, "User");
+	private void upgradeLayoutsAdmin() throws Exception {
+		runSQL("alter table Layout add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.LAYOUTS_ADMIN, "Layout");
+
+		runSQL("alter table LayoutFriendlyURL add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.LAYOUTS_ADMIN, "LayoutFriendlyURL");
+	}
+
+	private void upgradeMessageBoards() throws Exception {
+		runSQL("alter table MBBan add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBBan");
+
+		runSQL("alter table MBCategory add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBCategory");
+
+		runSQL("alter table MBDiscussion add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBDiscussion");
+
+		runSQL("alter table MBMessage add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBMessage");
+
+		runSQL("alter table MBThreadFlag add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBThreadFlag");
+	}
+
+	private void upgradeMobileDeviceRules() throws Exception {
+		runSQL("alter table MDRAction add lastPublishDate DATE null");
+
+		updateLastPublishDates("178", "MDRAction");
+
+		runSQL("alter table MDRRule add lastPublishDate DATE null");
+
+		updateLastPublishDates("178", "MDRRule");
+
+		runSQL("alter table MDRRuleGroup add lastPublishDate DATE null");
+
+		updateLastPublishDates("178", "MDRRuleGroup");
+
+		runSQL(
+			"alter table MDRRuleGroupInstance add lastPublishDate DATE null");
+
+		updateLastPublishDates("178", "MDRRuleGroupInstance");
+	}
+
+	private void upgradeRatings() throws Exception {
+		runSQL("alter table RatingsEntry add lastPublishDate DATE null");
+
+		updateLastPublishDates("108", "RatingsEntry");
+	}
+
+	private void upgradeRolesAdmin() throws Exception {
+		runSQL("alter table PasswordPolicy add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.ROLES_ADMIN, "PasswordPolicy");
+
+		runSQL("alter table Role_ add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.ROLES_ADMIN, "Role_");
+	}
+
+	private void upgradeUsersAdmin() throws Exception {
+		runSQL("alter table Address add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.USERS_ADMIN, "Address");
+
+		runSQL("alter table EmailAddress add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.USERS_ADMIN, "EmailAddress");
+
+		runSQL("alter table Phone add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.USERS_ADMIN, "Phone");
+
+		runSQL("alter table User_ add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.USERS_ADMIN, "User_");
 	}
 
 }

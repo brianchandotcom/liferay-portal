@@ -39,8 +39,7 @@ public class PreviewEntryMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.announcements.preview_entry"));
+		return "/html/portlet/announcements/preview_entry.jsp";
 	}
 
 }

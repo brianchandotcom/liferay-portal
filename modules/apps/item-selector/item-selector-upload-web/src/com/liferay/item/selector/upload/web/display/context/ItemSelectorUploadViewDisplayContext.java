@@ -14,8 +14,6 @@
 
 package com.liferay.item.selector.upload.web.display.context;
 
-import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.upload.web.ItemSelectorUploadView;
 
@@ -40,12 +38,12 @@ public class ItemSelectorUploadViewDisplayContext {
 		return _itemSelectedEventName;
 	}
 
-	public String getTitle(Locale locale) {
-		return _itemSelectorUploadView.getTitle(locale);
-	}
-
 	public String getRepositoryName() {
 		return _uploadItemSelectorCriterion.getRepositoryName();
+	}
+
+	public String getTitle(Locale locale) {
+		return _itemSelectorUploadView.getTitle(locale);
 	}
 
 	public String getURL() {

@@ -52,12 +52,15 @@ import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
@@ -314,7 +317,7 @@ public class JournalFolderLocalServiceImpl
 		long classNameId = classNameLocalService.getClassNameId(
 			JournalArticle.class);
 
-		return ddmStructurePersistence.findByG_C(groupIds, classNameId);
+		return ddmStructureLocalService.getStructures(groupIds, classNameId);
 	}
 
 	@Override
@@ -1449,5 +1452,11 @@ public class JournalFolderLocalServiceImpl
 			throw new DuplicateFolderNameException(name);
 		}
 	}
+
+	@ServiceReference(type = DDMStructureLinkLocalService.class)
+	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
+
+	@ServiceReference(type = DDMStructureLocalService.class)
+	protected DDMStructureLocalService ddmStructureLocalService;
 
 }

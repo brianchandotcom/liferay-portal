@@ -227,10 +227,6 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLApp" />
-		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStorageLink" />
-		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
-		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMTemplate" />
-		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMTemplateLink" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
@@ -430,7 +426,6 @@
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 	</entity>
 	<entity name="JournalFolder" uuid="true" local-service="true" remote-service="true" trash-enabled="true">
@@ -525,8 +520,6 @@
 		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
-		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
-		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />

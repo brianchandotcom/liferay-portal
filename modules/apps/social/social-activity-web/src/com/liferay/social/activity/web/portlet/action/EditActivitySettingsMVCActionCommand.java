@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.socialactivity.action;
+package com.liferay.social.activity.web.portlet.action;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

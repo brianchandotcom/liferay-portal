@@ -16,17 +16,16 @@ package com.liferay.social.activity.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.comparator.ModelResourceComparator;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.model.SocialActivitySetting;
 import com.liferay.portlet.social.service.SocialActivitySettingServiceUtil;
 import com.liferay.portlet.social.util.SocialConfigurationUtil;
+import com.liferay.social.activity.web.constants.SocialActivityPortletKeys;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -38,12 +37,15 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.SOCIAL_ACTIVITY,
+		"javax.portlet.name=" + SocialActivityPortletKeys.SOCIAL_ACTIVITY,
 		"mvc.command.name=/", "mvc.command.name=/social_activity/view"
 	},
 	service = MVCRenderCommand.class
@@ -67,14 +69,14 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return "/html/portlet/social_activity/error.jsp";
+				return "/error.jsp";
 			}
 			else {
 				throw new PortletException(e);
 			}
 		}
 
-		return "/html/portlet/social_activity/view.jsp";
+		return "/view.jsp";
 	}
 
 	protected Map<String, Boolean> getActivitySettingsMap(

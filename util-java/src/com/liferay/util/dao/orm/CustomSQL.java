@@ -149,6 +149,37 @@ public class CustomSQL {
 			}
 		}
 
+		if (queryDefinition.getOwnerUserId() > 0) {
+			if (queryDefinition.isIncludeOwner()) {
+				StringBundler sb = new StringBundler();
+
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(tableName);
+				sb.append(_OWNER_USER_ID_CONDITION_DEFAULT);
+				sb.append(" AND ");
+				sb.append(tableName);
+				sb.append(_STATUS_CONDITION_INVERSE);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				sql = sql.replace(_OWNER_USER_ID_KEYWORD, sb.toString());
+
+				sql = sql.replace(_OWNER_USER_ID_AND_OR_CONNECTOR, " OR ");
+			}
+			else {
+				sql = sql.replace(
+					_OWNER_USER_ID_KEYWORD,
+					tableName.concat(_OWNER_USER_ID_CONDITION_DEFAULT));
+
+				sql = sql.replace(_OWNER_USER_ID_AND_OR_CONNECTOR, " AND ");
+			}
+		}
+		else {
+			sql = sql.replace(_OWNER_USER_ID_KEYWORD, StringPool.BLANK);
+
+			sql = sql.replace(
+				_OWNER_USER_ID_AND_OR_CONNECTOR, StringPool.BLANK);
+		}
+
 		return sql;
 	}
 
@@ -840,6 +871,13 @@ public class CustomSQL {
 	private static final String _GROUP_BY_CLAUSE = " GROUP BY ";
 
 	private static final String _ORDER_BY_CLAUSE = " ORDER BY ";
+
+	private static final String _OWNER_USER_ID_AND_OR_CONNECTOR =
+		"[$OWNER_USER_ID_AND_OR_CONNECTOR$]";
+
+	private static final String _OWNER_USER_ID_CONDITION_DEFAULT = "userId = ?";
+
+	private static final String _OWNER_USER_ID_KEYWORD = "[$OWNER_USER_ID$]";
 
 	private static final String _STATUS_CONDITION_DEFAULT = "status = ?";
 

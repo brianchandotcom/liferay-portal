@@ -27,16 +27,18 @@
 	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
 
 	AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(curArticle));
-
-	PortletURL rowURL = liferayPortletResponse.createRenderURL();
-
-	rowURL.setParameter("mvcPath", "/edit_article.jsp");
-	rowURL.setParameter("redirect", currentURL);
-	rowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
-	rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
-	rowURL.setParameter("articleId", curArticle.getArticleId());
-	rowURL.setParameter("status", String.valueOf(curArticle.getStatus()));
 	%>
+
+	<liferay-portlet:renderURL varImpl="rowURL">
+		<portlet:param name="mvcPath" value="/edit_article.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="backURL" value="<%= currentURL %>" />
+		<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(curArticle.getGroupId()) %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(curArticle.getFolderId()) %>" />
+		<portlet:param name="articleId" value="<%= curArticle.getArticleId() %>" />
+		<portlet:param name="version" value="<%= String.valueOf(curArticle.getVersion()) %>" />
+	</liferay-portlet:renderURL>
 
 	<liferay-ui:icon
 		cssClass="entry-display-style selectable"

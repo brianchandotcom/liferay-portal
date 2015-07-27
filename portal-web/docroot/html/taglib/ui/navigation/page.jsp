@@ -27,7 +27,7 @@ contextObjects.put("rootLayoutLevel", rootLayoutLevel);
 contextObjects.put("rootLayoutType", rootLayoutType);
 %>
 
-<liferay-ui:ddm-template-renderer
+<liferay-ddm:template-renderer
 	className="<%= NavItem.class.getName() %>"
 	contextObjects="<%= contextObjects %>"
 	displayStyle="<%= displayStyle %>"

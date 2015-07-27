@@ -858,22 +858,24 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="User#gotoEditCP">
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
 		<execute macro="User#viewUserInfomationSitesCP">
 			<var name="siteName" value="Site Name Alpha" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="User#gotoEditCP">
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
 		<execute macro="User#viewUserInfomationSitesCP">
 			<var name="siteName" value="Organization Site Bravo" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 	</command>
 

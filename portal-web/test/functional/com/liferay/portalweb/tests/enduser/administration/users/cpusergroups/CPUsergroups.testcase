@@ -290,6 +290,14 @@
 			<var name="userGroupName" value="UG UserGroup Name" />
 			<var name="userGroupNameEdit" value="UG UserGroup Name Edit" />
 		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#viewCP">
+			<var name="userGroupName" value="UG UserGroup Name Edit" />
+		</execute>
 	</command>
 
 	<command name="RemoveMember" priority="4">

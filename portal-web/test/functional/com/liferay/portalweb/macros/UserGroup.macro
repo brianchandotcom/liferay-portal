@@ -199,7 +199,6 @@
 		<execute function="AssertClick" locator1="CPUsergroupsEditusergroup#SAVE_BUTTON" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="CPUsergroups#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="CPUsergroups#USER_GROUP_TABLE_NAME" value1="${userGroupNameEdit}" />
 	</command>
 
 	<command name="expandRootCP">

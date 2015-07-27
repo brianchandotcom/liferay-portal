@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.taglib.ui;
+package com.liferay.dynamic.data.mapping.taglib;
 
-import com.liferay.dynamic.data.mapping.taglib.ui.base.BaseTemplateSelectorTag;
+import com.liferay.dynamic.data.mapping.taglib.base.BaseTemplateSelectorTag;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;

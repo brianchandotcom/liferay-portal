@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,13 +12,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.dynamic.data.mapping.taglib.ui;
+<%@ include file="/taglib/template_renderer/init.jsp" %>
 
-import com.liferay.dynamic.data.mapping.taglib.ui.base.BaseHTMLFieldTag;
+<%
+DDMTemplate portletDisplayDDMTemplate = (DDMTemplate)request.getAttribute("liferay-ddm:template-renderer:portletDisplayDDMTemplate");
+%>
 
-/**
- * @author Sergio González
- */
-public class HTMLFieldTag extends BaseHTMLFieldTag {
-}
+<c:if test="<%= portletDisplayDDMTemplate != null %>">
+	<%= PortletDisplayTemplateManagerUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplate.getTemplateId(), entries, contextObjects) %>
+</c:if>

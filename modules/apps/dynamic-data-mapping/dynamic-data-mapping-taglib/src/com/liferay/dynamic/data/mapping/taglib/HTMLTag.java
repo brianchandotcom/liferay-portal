@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.taglib.ui;
+package com.liferay.dynamic.data.mapping.taglib;
 
-import com.liferay.dynamic.data.mapping.taglib.ui.base.BaseHTMLTag;
+import com.liferay.dynamic.data.mapping.taglib.base.BaseHTMLTag;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

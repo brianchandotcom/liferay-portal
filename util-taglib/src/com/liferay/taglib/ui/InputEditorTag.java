@@ -17,8 +17,6 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
@@ -46,6 +44,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -301,21 +300,16 @@ public class InputEditorTag extends IncludeTag {
 	}
 
 	protected String getNamespace() {
-		LiferayPortletRequest liferayPortletRequest =
-			(LiferayPortletRequest)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
-		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE);
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		if ((liferayPortletRequest == null) ||
-			(liferayPortletResponse == null)) {
-
+		if ((portletRequest == null) || (portletResponse == null)) {
 			return AUIUtil.getNamespace(request);
 		}
 
-		return AUIUtil.getNamespace(
-			liferayPortletRequest, liferayPortletResponse);
+		return AUIUtil.getNamespace(portletRequest, portletResponse);
 	}
 
 	@Override

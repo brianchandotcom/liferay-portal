@@ -1494,7 +1494,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 
 			if (Validator.isNotNull(previousAttribute) &&
-				(previousAttribute.compareTo(attribute) > 0)) {
+				(previousAttribute.compareToIgnoreCase(attribute) > 0)) {
 
 				wrongOrder = true;
 			}

@@ -50,6 +50,15 @@
 		<cacheable>false</cacheable>
 	</template>
 	<template>
+		<template-key>navigation-macro-ftl</template-key>
+		<name>portlet-display-template-name-navigation-menu-macro</name>
+		<description>portlet-display-template-description-navigation-menu-macro</description>
+		<language>ftl</language>
+		<type>macro</type>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_navigation_menu_macro.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+	<template>
 		<template-key>relative-with-breadcrumb-ftl</template-key>
 		<name>portlet-display-template-name-relative-with-breadcrumb</name>
 		<description>portlet-display-template-description-relative-with-breadcrumb</description>

@@ -1,3 +1,5 @@
+<#include "${templatesPath}/NAVIGATION-MACRO-FTL" />
+
 <#assign rootNavigationItems = navItem.fromLayouts(request, themeDisplay.getLayouts(), null) />
 
 <#if rootNavigationItems?has_content>
@@ -17,23 +19,3 @@
 		</ul>
 	</div>
 </#if>
-
-<#macro displayChildNavigation
-	childLayoutLevel
-	childNavigationItems
-	includeAllChildEntries
->
-	<#if childNavigationItems?has_content>
-		<ul class="layouts level-${childLayoutLevel}">
-			<#list childNavigationItems as childNavigationItem>
-				<li class="open">
-					<a href="${childNavigationItem.getRegularURL()!""} ">${htmlUtil.escape(childNavigationItem.getName())}</a>
-
-					<#if includeAllChildEntries || childNavigationItem.isBelongsToNavigationEntries(entries) >
-						<@displayChildNavigation childLayoutLevel=(childLayoutLevel + 1) childNavigationItems=childNavigationItem.getChildren() includeAllChildEntries=includeAllChildEntries/>
-					</#if>
-				</li>
-			</#list>
-		</ul>
-	</#if>
-</#macro>

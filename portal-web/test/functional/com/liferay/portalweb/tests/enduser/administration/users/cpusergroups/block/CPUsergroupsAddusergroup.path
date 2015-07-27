@@ -15,12 +15,12 @@
 </tr>
 <tr>
 	<td>PUBLIC_PAGES_SELECT</td>
-	<td>//select[@id='_127_publicLayoutSetPrototypeId']</td>
+	<td>//select[contains(@id,'publicLayoutSetPrototypeId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRIVATE_PAGES_SELECT</td>
-	<td>//select[@id='_127_privateLayoutSetPrototypeId']</td>
+	<td>//select[contains(@id,'privateLayoutSetPrototypeId')]</td>
 	<td></td>
 </tr>
 </tbody>

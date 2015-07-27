@@ -66,7 +66,8 @@ public class SeleniumUtil extends PropsValues {
 			else if (BROWSER_TYPE.equals("*googlechrome")) {
 				System.setProperty(
 					"webdriver.chrome.driver",
-					SELENIUM_EXECUTABLE_DIR_NAME + "\\chromedriver.exe");
+					SELENIUM_EXECUTABLE_DIR_NAME +
+						SELENIUM_CHROME_DRIVER_EXECUTABLE);
 
 				_selenium = new ChromeWebDriverImpl(projectDirName, portalURL);
 			}

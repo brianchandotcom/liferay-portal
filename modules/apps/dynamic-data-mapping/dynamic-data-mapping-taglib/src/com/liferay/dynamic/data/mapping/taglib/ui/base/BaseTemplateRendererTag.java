@@ -12,10 +12,13 @@
  * details.
  */
 
-package com.liferay.taglib.ddm.base;
+package com.liferay.dynamic.data.mapping.taglib.ui.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
+
+import com.liferay.dynamic.data.mapping.taglib.util.ServletContextUtil;
 
 /**
  * @author Bruno Basto
@@ -79,6 +82,19 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 
 		setScopedAttribute("entries", entries);
 	}
+	
+	public void setServletContext(java.lang.Object servletContext) {
+		_servletContext = servletContext;
+
+		setScopedAttribute("servletContext", servletContext);
+	}
+	
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
+	}
 
 	@Override
 	protected void cleanUp() {
@@ -89,6 +105,7 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 		_displayStyle = null;
 		_displayStyleGroupId = 0;
 		_entries = null;
+		_servletContext = null;
 	}
 
 	@Override
@@ -108,20 +125,22 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 		setNamespacedAttribute(request, "displayStyle", _displayStyle);
 		setNamespacedAttribute(request, "displayStyleGroupId", _displayStyleGroupId);
 		setNamespacedAttribute(request, "entries", _entries);
+		setNamespacedAttribute(request, "servletContext", _servletContext);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "ddm:template-renderer:";
 
 	private static final String _END_PAGE =
-		"/html/taglib/ddm/template_renderer/end.jsp";
+		"/taglib/ui/template_renderer/end.jsp";
 
 	private static final String _START_PAGE =
-		"/html/taglib/ddm/template_renderer/start.jsp";
+		"/taglib/ui/template_renderer/start.jsp";
 
 	private java.lang.String _className = null;
 	private java.util.Map<java.lang.String, java.lang.Object> _contextObjects = null;
 	private java.lang.String _displayStyle = null;
 	private long _displayStyleGroupId = 0;
 	private java.util.List<?> _entries = null;
+	private java.lang.Object _servletContext = null;
 
 }

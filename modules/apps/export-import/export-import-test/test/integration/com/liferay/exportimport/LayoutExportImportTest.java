@@ -472,10 +472,12 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		User user = TestPropsValues.getUser();
 
-		Map<String, Serializable> exportSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				user.getUserId(), group.getGroupId(), false, layoutIds,
-				getExportParameterMap(), user.getLocale(), user.getTimeZone());
+		Map<String, Serializable> exportLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildExportLayoutSettingsMap(
+					user.getUserId(), group.getGroupId(), false, layoutIds,
+					getExportParameterMap(), user.getLocale(),
+					user.getTimeZone());
 
 		ExportImportConfiguration exportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -483,16 +485,17 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 					user.getUserId(), group.getGroupId(), StringPool.BLANK,
 					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					exportSettingsMap, WorkflowConstants.STATUS_DRAFT,
+					exportLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
 		larFile = ExportImportServiceUtil.exportLayoutsAsFile(
 			exportConfiguration);
 
-		Map<String, Serializable> importSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
-				user.getUserId(), importedGroup.getGroupId(), false, null,
-				parameterMap, user.getLocale(), user.getTimeZone());
+		Map<String, Serializable> importLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportLayoutSettingsMap(
+					user.getUserId(), importedGroup.getGroupId(), false, null,
+					parameterMap, user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration importConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -500,7 +503,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 					user.getUserId(), importedGroup.getGroupId(),
 					StringPool.BLANK, StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
+					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
 		ExportImportServiceUtil.importLayouts(importConfiguration, larFile);

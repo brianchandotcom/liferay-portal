@@ -101,10 +101,11 @@ public class ExportImportLifecycleEventTest {
 
 	@Test
 	public void testFailedLayoutExport() throws Exception {
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				TestPropsValues.getUserId(), 0, false, new long[0],
-				_parameterMap, Locale.US, TimeZoneUtil.GMT);
+		Map<String, Serializable> exportLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildExportLayoutSettingsMap(
+					TestPropsValues.getUserId(), 0, false, new long[0],
+					_parameterMap, Locale.US, TimeZoneUtil.GMT);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -112,7 +113,7 @@ public class ExportImportLifecycleEventTest {
 					TestPropsValues.getUserId(), 0,
 					RandomTestUtil.randomString(), StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					exportLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					ServiceContextTestUtil.getServiceContext());
 
 		try {
@@ -133,10 +134,11 @@ public class ExportImportLifecycleEventTest {
 
 	@Test
 	public void testFailedLayoutImport() throws Exception {
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				TestPropsValues.getUserId(), 0, false, new long[0],
-				_parameterMap, Locale.US, TimeZoneUtil.GMT);
+		Map<String, Serializable> importLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportLayoutSettingsMap(
+					TestPropsValues.getUserId(), 0, false, new long[0],
+					_parameterMap, Locale.US, TimeZoneUtil.GMT);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -144,7 +146,7 @@ public class ExportImportLifecycleEventTest {
 					TestPropsValues.getUserId(), 0,
 					RandomTestUtil.randomString(), StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					ServiceContextTestUtil.getServiceContext());
 
 		try {
@@ -201,11 +203,12 @@ public class ExportImportLifecycleEventTest {
 	public void testFailedPortletExport() throws Exception {
 		long plid = RandomTestUtil.nextLong();
 
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildExportSettingsMap(
-				TestPropsValues.getUserId(), plid, _group.getGroupId(),
-				StringPool.BLANK, _parameterMap, Locale.US, TimeZoneUtil.GMT,
-				StringPool.BLANK);
+		Map<String, Serializable> exportPortletSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildExportPortletSettingsMap(
+					TestPropsValues.getUserId(), plid, _group.getGroupId(),
+					StringPool.BLANK, _parameterMap, Locale.US,
+					TimeZoneUtil.GMT, StringPool.BLANK);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -213,7 +216,7 @@ public class ExportImportLifecycleEventTest {
 					TestPropsValues.getUserId(), 0,
 					RandomTestUtil.randomString(), StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					exportPortletSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					ServiceContextTestUtil.getServiceContext());
 
 		try {
@@ -235,10 +238,12 @@ public class ExportImportLifecycleEventTest {
 
 	@Test
 	public void testFailedPortletImport() throws Exception {
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
-				TestPropsValues.getUserId(), 0, _group.getGroupId(),
-				StringPool.BLANK, _parameterMap, Locale.US, TimeZoneUtil.GMT);
+		Map<String, Serializable> importPortletSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportPortletSettingsMap(
+					TestPropsValues.getUserId(), 0, _group.getGroupId(),
+					StringPool.BLANK, _parameterMap, Locale.US,
+					TimeZoneUtil.GMT);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -246,7 +251,7 @@ public class ExportImportLifecycleEventTest {
 					TestPropsValues.getUserId(), 0,
 					RandomTestUtil.randomString(), StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					importPortletSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					ServiceContextTestUtil.getServiceContext());
 
 		try {

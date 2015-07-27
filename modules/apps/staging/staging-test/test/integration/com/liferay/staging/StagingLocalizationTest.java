@@ -133,13 +133,14 @@ public class StagingLocalizationTest {
 		Map<String, String[]> parameterMap =
 			ExportImportConfigurationParameterMapFactory.buildParameterMap();
 
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				user.getUserId(), _sourceGroup.getGroupId(),
-				_targetGroup.getGroupId(), false,
-				ExportImportHelperUtil.getAllLayoutIds(
-					_sourceGroup.getGroupId(), false),
-				parameterMap, user.getLocale(), user.getTimeZone());
+		Map<String, Serializable> publishLayoutLocalSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildPublishLayoutLocalSettingsMap(
+					user.getUserId(), _sourceGroup.getGroupId(),
+					_targetGroup.getGroupId(), false,
+					ExportImportHelperUtil.getAllLayoutIds(
+						_sourceGroup.getGroupId(), false),
+					parameterMap, user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -148,8 +149,8 @@ public class StagingLocalizationTest {
 					StringPool.BLANK, StringPool.BLANK,
 					ExportImportConfigurationConstants.
 						TYPE_PUBLISH_LAYOUT_LOCAL,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
-					new ServiceContext());
+					publishLayoutLocalSettingsMap,
+					WorkflowConstants.STATUS_DRAFT, new ServiceContext());
 
 		File file = ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportImportConfiguration);

@@ -704,13 +704,14 @@ public class ExportImportHelperUtilTest {
 
 		User user = TestPropsValues.getUser();
 
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				user.getUserId(), _stagingGroup.getGroupId(),
-				_liveGroup.getGroupId(), privateLayout,
-				ExportImportHelperUtil.getLayoutIds(layouts),
-				new HashMap<String, String[]>(), user.getLocale(),
-				user.getTimeZone());
+		Map<String, Serializable> publishLayoutLocalSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildPublishLayoutLocalSettingsMap(
+					user.getUserId(), _stagingGroup.getGroupId(),
+					_liveGroup.getGroupId(), privateLayout,
+					ExportImportHelperUtil.getLayoutIds(layouts),
+					new HashMap<String, String[]>(), user.getLocale(),
+					user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -719,8 +720,8 @@ public class ExportImportHelperUtilTest {
 					StringPool.BLANK, StringPool.BLANK,
 					ExportImportConfigurationConstants.
 						TYPE_PUBLISH_LAYOUT_LOCAL,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
-					new ServiceContext());
+					publishLayoutLocalSettingsMap,
+					WorkflowConstants.STATUS_DRAFT, new ServiceContext());
 
 		File larFile = ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportImportConfiguration);

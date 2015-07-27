@@ -1258,10 +1258,11 @@ public class ServicePreAction extends Action {
 			PortletDataHandlerKeys.THEME_REFERENCE,
 			new String[] {Boolean.TRUE.toString()});
 
-		Map<String, Serializable> importSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
-				user.getUserId(), groupId, privateLayout, null, parameterMap,
-				user.getLocale(), user.getTimeZone());
+		Map<String, Serializable> importLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportLayoutSettingsMap(
+					user.getUserId(), groupId, privateLayout, null,
+					parameterMap, user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
@@ -1269,7 +1270,7 @@ public class ServicePreAction extends Action {
 					user.getUserId(), groupId, StringPool.BLANK,
 					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
+					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
 		ExportImportLocalServiceUtil.importLayouts(

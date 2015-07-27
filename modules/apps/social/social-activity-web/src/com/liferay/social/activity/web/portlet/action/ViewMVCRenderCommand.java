@@ -26,6 +26,7 @@ import com.liferay.portlet.social.model.SocialActivitySetting;
 import com.liferay.portlet.social.service.SocialActivitySettingServiceUtil;
 import com.liferay.portlet.social.util.SocialConfigurationUtil;
 import com.liferay.social.activity.web.constants.SocialActivityPortletKeys;
+import com.liferay.social.activity.web.constants.SocialActivityWebKeys;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -62,7 +63,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			renderRequest.setAttribute(
-				WebKeys.SOCIAL_ACTIVITY_SETTINGS_MAP,
+				SocialActivityWebKeys.SOCIAL_ACTIVITY_SETTINGS_MAP,
 				getActivitySettingsMap(themeDisplay));
 		}
 		catch (Exception e) {

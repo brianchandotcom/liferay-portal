@@ -44,15 +44,11 @@ public class ItemSelectorUploadViewDisplayContext {
 		return _itemSelectorUploadView.getTitle(locale);
 	}
 
-	public ItemSelectorReturnType getUploadItemReturnType() {
-		return new UploadableFileReturnType();
-	}
-
-	public String getUploadRepositoryName() {
+	public String getRepositoryName() {
 		return _uploadItemSelectorCriterion.getRepositoryName();
 	}
 
-	public String getUploadURL() {
+	public String getURL() {
 		return _uploadItemSelectorCriterion.getURL();
 	}
 

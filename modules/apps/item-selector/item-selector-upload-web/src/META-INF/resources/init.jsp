@@ -22,6 +22,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.item.selector.ItemSelectorReturnType" %><%@
+page import="com.liferay.item.selector.criteria.UploadableFileReturnType" %><%@
 page import="com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion" %><%@
 page import="com.liferay.item.selector.upload.web.ItemSelectorUploadView" %><%@
 page import="com.liferay.item.selector.upload.web.display.context.ItemSelectorUploadViewDisplayContext" %><%@

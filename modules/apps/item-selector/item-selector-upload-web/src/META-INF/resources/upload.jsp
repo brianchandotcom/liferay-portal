@@ -18,19 +18,13 @@
 
 <%
 ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (ItemSelectorUploadViewDisplayContext)request.getAttribute(ItemSelectorUploadView.ITEM_SELECTOR_UPLOAD_VIEW_DISPLAY_CONTEXT);
-
-String uploadURL = itemSelectorUploadViewDisplayContext.getUploadURL();
-
-String repositoryName = itemSelectorUploadViewDisplayContext.getUploadRepositoryName();
-
-ItemSelectorReturnType returnType = itemSelectorUploadViewDisplayContext.getUploadItemReturnType();
 %>
 
 <div class="lfr-item-viewer" id="itemSelectorUploadContainer">
-	<div class="drop-enabled drop-zone upload-view" data-returntype="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(returnType)) %>" data-uploadurl="<%= uploadURL %>">
+	<div class="drop-enabled drop-zone upload-view" data-returntype="<%= HtmlUtil.escapeAttribute(UploadableFileReturnType.class.getName()) %>" data-uploadurl="<%= itemSelectorUploadViewDisplayContext.getURL() %>">
 		<div>
 			<p>
-				<strong><liferay-ui:message arguments="<%= repositoryName %>" key="drag-and-drop-to-upload-to-x-or" /></strong>
+				<strong><liferay-ui:message arguments="<%= itemSelectorUploadViewDisplayContext.getRepositoryName() %>" key="drag-and-drop-to-upload-to-x-or" /></strong>
 			</p>
 
 			<p>

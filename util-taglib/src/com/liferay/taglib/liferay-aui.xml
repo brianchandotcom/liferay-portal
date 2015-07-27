@@ -666,6 +666,11 @@
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
+			<attribute>
+				<name>view</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
 		</attributes>
 	</component>
 	<component name="Input" parentClass="com.liferay.taglib.BaseValidatorTagSupport">
@@ -1719,6 +1724,11 @@
 			<attribute>
 				<description>A version for the workflow status that is displayed in a label next to the workflow status.</description>
 				<name>version</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
+				<name>view</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>

@@ -369,7 +369,17 @@ AUI.add(
 						A.io.request(
 							themeDisplay.getPathMain() + '/portal/session_tree_js_click',
 							{
-								data: data
+								data: data,
+								dataType: 'json',
+								on: {
+									success: function() {
+										var checkedNodes = this.get('responseData');
+
+										if (checkedNodes) {
+											instance.set(STR_CHECKED_NODES, checkedNodes);
+										}
+									}
+								}
 							}
 						);
 					},

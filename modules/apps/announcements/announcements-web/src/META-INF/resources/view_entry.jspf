@@ -55,7 +55,7 @@ if (entry.getPriority() > 0) {
 	</h3>
 
 	<c:if test='<%= !tabs1.equals("preview") %>'>
-		<%@ include file="/html/portlet/announcements/entry_action.jspf" %>
+		<%@ include file="/entry_action.jspf" %>
 	</c:if>
 
 	<%
@@ -63,7 +63,7 @@ if (entry.getPriority() > 0) {
 	%>
 
 	<div class="<%= hiddenEntry ? "hide" : "" %> entry-content entry-type-<%= HtmlUtil.escapeAttribute(entry.getType()) %>">
-		<%@ include file="/html/portlet/announcements/entry_scope.jspf" %>
+		<%@ include file="/entry_scope.jspf" %>
 
 		<%= entry.getContent() %>
 	</div>

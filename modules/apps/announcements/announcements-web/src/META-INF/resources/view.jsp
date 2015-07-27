@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/announcements/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "entries");
@@ -26,14 +26,14 @@ portletURL.setParameter("tabs1", tabs1);
 %>
 
 <c:if test="<%= !portletName.equals(PortletKeys.ALERTS) || (portletName.equals(PortletKeys.ALERTS) && AnnouncementsEntryPermission.contains(permissionChecker, layout, PortletKeys.ALERTS, ActionKeys.ADD_ENTRY)) %>">
-	<liferay-util:include page="/html/portlet/announcements/tabs1.jsp" />
+	<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>" />
 </c:if>
 
 <c:choose>
 	<c:when test='<%= tabs1.equals("entries") %>'>
-		<%@ include file="/html/portlet/announcements/view_entries.jspf" %>
+		<%@ include file="/view_entries.jspf" %>
 	</c:when>
 	<c:when test='<%= tabs1.equals("manage-entries") %>'>
-		<%@ include file="/html/portlet/announcements/view_manage_entries.jspf" %>
+		<%@ include file="/view_manage_entries.jspf" %>
 	</c:when>
 </c:choose>

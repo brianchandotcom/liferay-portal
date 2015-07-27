@@ -270,6 +270,8 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		String[] selectedTargets = StringUtil.split(
 			ParamUtil.getString(actionRequest, "selectedTargets"));
+		String[] unselectedTargets = StringUtil.split(
+			ParamUtil.getString(actionRequest, "unselectedTargets"));
 
 		for (Map.Entry<String, List<String>> entry :
 				resourceActionsMap.entrySet()) {
@@ -284,6 +286,12 @@ public class RolesAdminPortlet extends MVCPortlet {
 				String target = selResource + actionId;
 
 				boolean selected = ArrayUtil.contains(selectedTargets, target);
+
+				if (!selected &&
+					!ArrayUtil.contains(unselectedTargets, target)) {
+
+					continue;
+				}
 
 				String[] groupIds = StringUtil.split(
 					ParamUtil.getString(actionRequest, "groupIds" + target));

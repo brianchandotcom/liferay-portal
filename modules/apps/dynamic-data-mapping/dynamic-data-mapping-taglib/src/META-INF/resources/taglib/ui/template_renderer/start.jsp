@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ddm/template_renderer/init.jsp" %>
+<%@ include file="/taglib/ui/template_renderer/init.jsp" %>
 
 <%
 DDMTemplate portletDisplayDDMTemplate = (DDMTemplate)request.getAttribute("ddm:template-renderer:portletDisplayDDMTemplate");

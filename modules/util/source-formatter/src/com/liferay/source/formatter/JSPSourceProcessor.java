@@ -522,7 +522,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				if (portalSource && _moveFrequentlyUsedImportsToCommonInit &&
 					fileName.endsWith("/init.jsp") &&
-					!absolutePath.contains("/modules/") &&
+					!isModulesFile(absolutePath) &&
 					!fileName.endsWith("/common/init.jsp")) {
 
 					addImportCounts(content);

@@ -37,6 +37,7 @@ import com.liferay.portal.util.PortletKeys;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -203,7 +204,8 @@ public class PortalPreferencesImplTest {
 		catch (Exception e) {
 			Throwable cause = e.getCause();
 
-			Assert.assertEquals(IllegalStateException.class, cause.getClass());
+			Assert.assertEquals(
+				ConcurrentModificationException.class, cause.getClass());
 		}
 	}
 
@@ -303,7 +305,8 @@ public class PortalPreferencesImplTest {
 		catch (Exception e) {
 			Throwable cause = e.getCause();
 
-			Assert.assertEquals(IllegalStateException.class, cause.getClass());
+			Assert.assertEquals(
+				ConcurrentModificationException.class, cause.getClass());
 		}
 	}
 
@@ -403,7 +406,8 @@ public class PortalPreferencesImplTest {
 		catch (Exception e) {
 			Throwable cause = e.getCause();
 
-			Assert.assertEquals(IllegalStateException.class, cause.getClass());
+			Assert.assertEquals(
+				ConcurrentModificationException.class, cause.getClass());
 		}
 	}
 

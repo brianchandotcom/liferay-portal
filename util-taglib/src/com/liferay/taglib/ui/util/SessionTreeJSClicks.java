@@ -25,6 +25,7 @@ import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -72,7 +73,7 @@ public class SessionTreeJSClicks {
 				return;
 			}
 			catch (Exception e) {
-				if (e instanceof IllegalStateException) {
+				if (e instanceof ConcurrentModificationException) {
 					continue;
 				}
 
@@ -93,7 +94,7 @@ public class SessionTreeJSClicks {
 				return;
 			}
 			catch (Exception e) {
-				if (e instanceof IllegalStateException) {
+				if (e instanceof ConcurrentModificationException) {
 					continue;
 				}
 
@@ -121,7 +122,7 @@ public class SessionTreeJSClicks {
 				return;
 			}
 			catch (Exception e) {
-				if (e instanceof IllegalStateException) {
+				if (e instanceof ConcurrentModificationException) {
 					continue;
 				}
 
@@ -181,7 +182,7 @@ public class SessionTreeJSClicks {
 				return;
 			}
 			catch (Exception e) {
-				if (e instanceof IllegalStateException) {
+				if (e instanceof ConcurrentModificationException) {
 					continue;
 				}
 
@@ -208,7 +209,7 @@ public class SessionTreeJSClicks {
 				return;
 			}
 			catch (Exception e) {
-				if (e instanceof IllegalStateException) {
+				if (e instanceof ConcurrentModificationException) {
 					continue;
 				}
 
@@ -265,8 +266,8 @@ public class SessionTreeJSClicks {
 				SessionTreeJSClicks.class.getName(), key, value);
 		}
 		catch (Exception e) {
-			if (e instanceof IllegalStateException) {
-				throw (IllegalStateException)e;
+			if (e instanceof ConcurrentModificationException) {
+				throw (ConcurrentModificationException)e;
 			}
 
 			_log.error(e, e);

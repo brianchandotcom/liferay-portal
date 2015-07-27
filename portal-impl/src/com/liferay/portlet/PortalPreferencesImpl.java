@@ -32,6 +32,7 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -174,8 +175,8 @@ public class PortalPreferencesImpl
 			retryableStore(callable, key);
 		}
 		catch (Throwable t) {
-			if (t instanceof IllegalStateException) {
-				throw (IllegalStateException)t;
+			if (t instanceof ConcurrentModificationException) {
+				throw (ConcurrentModificationException)t;
 				}
 
 			_log.error(t, t);
@@ -201,7 +202,7 @@ public class PortalPreferencesImpl
 				return;
 			}
 			catch (Throwable t) {
-				if (t instanceof IllegalStateException) {
+				if (t instanceof ConcurrentModificationException) {
 					continue;
 				}
 
@@ -257,8 +258,8 @@ public class PortalPreferencesImpl
 			}
 		}
 		catch (Throwable t) {
-			if (t instanceof IllegalStateException) {
-				throw (IllegalStateException)t;
+			if (t instanceof ConcurrentModificationException) {
+				throw (ConcurrentModificationException)t;
 			}
 
 			_log.error(t, t);
@@ -301,8 +302,8 @@ public class PortalPreferencesImpl
 			}
 		}
 		catch (Throwable t) {
-			if (t instanceof IllegalStateException) {
-				throw (IllegalStateException)t;
+			if (t instanceof ConcurrentModificationException) {
+				throw (ConcurrentModificationException)t;
 			}
 
 			_log.error(t, t);
@@ -377,7 +378,7 @@ public class PortalPreferencesImpl
 							portalPreferencesImpl.getValues(
 								key, (String[])null))) {
 
-						throw new IllegalStateException();
+						throw new ConcurrentModificationException();
 					}
 
 					reset();

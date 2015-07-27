@@ -164,22 +164,14 @@
 	</command>
 
 	<command name="AddCustomFieldUserBoolean" priority="5">
-		<var name="customFieldName" value="Boolean" />
-		<var name="customFieldType" value="True/False" />
-		<var name="resourceName" value="User" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Custom Fields" />
 		</execute>
 
 		<execute macro="CustomFields#addCP">
-			<var name="customFieldName" value="${customFieldName}" />
-			<var name="customFieldType" value="${customFieldType}" />
-			<var name="resourceName" value="${resourceName}" />
+			<var name="customFieldName" value="Boolean" />
+			<var name="customFieldType" value="True/False" />
+			<var name="resourceName" value="User" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -187,10 +179,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -198,17 +190,17 @@
 		</execute>
 
 		<execute macro="User#viewCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_MISCELLANEOUS_CUSTOM_FIELDS" value1="Custom Fields" />
 
-		<var name="key_customFieldName" value="${customFieldName}" />
+		<var name="key_customFieldName" value="Boolean" />
 
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_LABEL" value1="${customFieldName}" />
+		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_LABEL" value1="Boolean" />
 		<execute function="AssertSelectedLabel" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_SELECT" value1="False" />
 	</command>
 

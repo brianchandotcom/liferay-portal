@@ -376,6 +376,20 @@ public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
 	public void setQuestion(boolean question);
 
 	/**
+	 * Returns the last publish date of this message boards thread.
+	 *
+	 * @return the last publish date of this message boards thread
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this message boards thread.
+	 *
+	 * @param lastPublishDate the last publish date of this message boards thread
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the status of this message boards thread.
 	 *
 	 * @return the status of this message boards thread

@@ -3085,6 +3085,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 		mdrRuleGroupImpl.setModifiedDate(mdrRuleGroup.getModifiedDate());
 		mdrRuleGroupImpl.setName(mdrRuleGroup.getName());
 		mdrRuleGroupImpl.setDescription(mdrRuleGroup.getDescription());
+		mdrRuleGroupImpl.setLastPublishDate(mdrRuleGroup.getLastPublishDate());
 
 		return mdrRuleGroupImpl;
 	}

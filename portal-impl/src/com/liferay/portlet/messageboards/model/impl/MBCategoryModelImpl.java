@@ -95,6 +95,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 			{ "threadCount", Types.INTEGER },
 			{ "messageCount", Types.INTEGER },
 			{ "lastPostDate", Types.TIMESTAMP },
+			{ "lastPublishDate", Types.TIMESTAMP },
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
@@ -118,13 +119,14 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		TABLE_COLUMNS_MAP.put("threadCount", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("messageCount", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPostDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MBCategory (uuid_ VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,name VARCHAR(75) null,description STRING null,displayStyle VARCHAR(75) null,threadCount INTEGER,messageCount INTEGER,lastPostDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MBCategory (uuid_ VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,name VARCHAR(75) null,description STRING null,displayStyle VARCHAR(75) null,threadCount INTEGER,messageCount INTEGER,lastPostDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MBCategory";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbCategory.parentCategoryId ASC, mbCategory.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBCategory.parentCategoryId ASC, MBCategory.name ASC";
@@ -176,6 +178,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		model.setThreadCount(soapModel.getThreadCount());
 		model.setMessageCount(soapModel.getMessageCount());
 		model.setLastPostDate(soapModel.getLastPostDate());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
@@ -259,6 +262,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		attributes.put("threadCount", getThreadCount());
 		attributes.put("messageCount", getMessageCount());
 		attributes.put("lastPostDate", getLastPostDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -360,6 +364,12 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 		if (lastPostDate != null) {
 			setLastPostDate(lastPostDate);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -655,6 +665,17 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	@Override
 	public void setLastPostDate(Date lastPostDate) {
 		_lastPostDate = lastPostDate;
+	}
+
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
 	}
 
 	@JSON
@@ -1026,6 +1047,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		mbCategoryImpl.setThreadCount(getThreadCount());
 		mbCategoryImpl.setMessageCount(getMessageCount());
 		mbCategoryImpl.setLastPostDate(getLastPostDate());
+		mbCategoryImpl.setLastPublishDate(getLastPublishDate());
 		mbCategoryImpl.setStatus(getStatus());
 		mbCategoryImpl.setStatusByUserId(getStatusByUserId());
 		mbCategoryImpl.setStatusByUserName(getStatusByUserName());
@@ -1216,6 +1238,15 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 			mbCategoryCacheModel.lastPostDate = Long.MIN_VALUE;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			mbCategoryCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			mbCategoryCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		mbCategoryCacheModel.status = getStatus();
 
 		mbCategoryCacheModel.statusByUserId = getStatusByUserId();
@@ -1242,7 +1273,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1274,6 +1305,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		sb.append(getMessageCount());
 		sb.append(", lastPostDate=");
 		sb.append(getLastPostDate());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append(", statusByUserId=");
@@ -1289,7 +1322,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(64);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.messageboards.model.MBCategory");
@@ -1356,6 +1389,10 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		sb.append(getLastPostDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
@@ -1406,6 +1443,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	private int _threadCount;
 	private int _messageCount;
 	private Date _lastPostDate;
+	private Date _lastPublishDate;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

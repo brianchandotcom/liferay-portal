@@ -47,6 +47,7 @@ public class DLFileShortcutSoap implements Serializable {
 		soapModel.setToFileEntryId(model.getToFileEntryId());
 		soapModel.setTreePath(model.getTreePath());
 		soapModel.setActive(model.getActive());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -211,6 +212,14 @@ public class DLFileShortcutSoap implements Serializable {
 		_active = active;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -256,6 +265,7 @@ public class DLFileShortcutSoap implements Serializable {
 	private long _toFileEntryId;
 	private String _treePath;
 	private boolean _active;
+	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

@@ -63,6 +63,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("banUserId", getBanUserId());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -121,6 +122,12 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 
 		if (banUserId != null) {
 			setBanUserId(banUserId);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -197,6 +204,16 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	@Override
 	public long getGroupId() {
 		return _mbBan.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this message boards ban.
+	*
+	* @return the last publish date of this message boards ban
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _mbBan.getLastPublishDate();
 	}
 
 	/**
@@ -370,6 +387,16 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	@Override
 	public void setGroupId(long groupId) {
 		_mbBan.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this message boards ban.
+	*
+	* @param lastPublishDate the last publish date of this message boards ban
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_mbBan.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

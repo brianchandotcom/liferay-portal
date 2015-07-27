@@ -2656,6 +2656,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		repositoryImpl.setPortletId(repository.getPortletId());
 		repositoryImpl.setTypeSettings(repository.getTypeSettings());
 		repositoryImpl.setDlFolderId(repository.getDlFolderId());
+		repositoryImpl.setLastPublishDate(repository.getLastPublishDate());
 
 		return repositoryImpl;
 	}

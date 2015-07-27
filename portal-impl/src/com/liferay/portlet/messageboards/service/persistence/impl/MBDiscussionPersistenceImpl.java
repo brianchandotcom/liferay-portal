@@ -2807,6 +2807,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		mbDiscussionImpl.setClassNameId(mbDiscussion.getClassNameId());
 		mbDiscussionImpl.setClassPK(mbDiscussion.getClassPK());
 		mbDiscussionImpl.setThreadId(mbDiscussion.getThreadId());
+		mbDiscussionImpl.setLastPublishDate(mbDiscussion.getLastPublishDate());
 
 		return mbDiscussionImpl;
 	}

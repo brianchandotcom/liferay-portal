@@ -538,6 +538,20 @@ public interface DLFileEntryModel extends AttachedModel, BaseModel<DLFileEntry>,
 	public void setManualCheckInRequired(boolean manualCheckInRequired);
 
 	/**
+	 * Returns the last publish date of this document library file entry.
+	 *
+	 * @return the last publish date of this document library file entry
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this document library file entry.
+	 *
+	 * @param lastPublishDate the last publish date of this document library file entry
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the status of this document library file entry.
 	 *
 	 * @return the status of this document library file entry

@@ -58,6 +58,7 @@ public class BlogsEntrySoap implements Serializable {
 		soapModel.setSmallImageFileEntryId(model.getSmallImageFileEntryId());
 		soapModel.setSmallImageId(model.getSmallImageId());
 		soapModel.setSmallImageURL(model.getSmallImageURL());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -318,6 +319,14 @@ public class BlogsEntrySoap implements Serializable {
 		_smallImageURL = smallImageURL;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -374,6 +383,7 @@ public class BlogsEntrySoap implements Serializable {
 	private long _smallImageFileEntryId;
 	private long _smallImageId;
 	private String _smallImageURL;
+	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

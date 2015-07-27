@@ -68,6 +68,7 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 		attributes.put("classPK", getClassPK());
 		attributes.put("ruleGroupId", getRuleGroupId());
 		attributes.put("priority", getPriority());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -144,6 +145,12 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -226,6 +233,16 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	@Override
 	public long getGroupId() {
 		return _mdrRuleGroupInstance.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this m d r rule group instance.
+	*
+	* @return the last publish date of this m d r rule group instance
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _mdrRuleGroupInstance.getLastPublishDate();
 	}
 
 	/**
@@ -430,6 +447,16 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	@Override
 	public void setGroupId(long groupId) {
 		_mdrRuleGroupInstance.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this m d r rule group instance.
+	*
+	* @param lastPublishDate the last publish date of this m d r rule group instance
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_mdrRuleGroupInstance.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

@@ -93,6 +93,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		attributes.put("lockoutDate", getLockoutDate());
 		attributes.put("agreedToTermsOfUse", getAgreedToTermsOfUse());
 		attributes.put("emailAddressVerified", getEmailAddressVerified());
+		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -343,6 +344,12 @@ public class UserWrapper implements User, ModelWrapper<User> {
 
 		if (emailAddressVerified != null) {
 			setEmailAddressVerified(emailAddressVerified);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -856,6 +863,16 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	@Override
 	public java.lang.String getLastName() {
 		return _user.getLastName();
+	}
+
+	/**
+	* Returns the last publish date of this user.
+	*
+	* @return the last publish date of this user
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _user.getLastPublishDate();
 	}
 
 	/**
@@ -1750,6 +1767,16 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	@Override
 	public void setLastName(java.lang.String lastName) {
 		_user.setLastName(lastName);
+	}
+
+	/**
+	* Sets the last publish date of this user.
+	*
+	* @param lastPublishDate the last publish date of this user
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_user.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

@@ -279,6 +279,20 @@ public interface MDRRuleGroupInstanceModel extends AttachedModel,
 	 */
 	public void setPriority(int priority);
 
+	/**
+	 * Returns the last publish date of this m d r rule group instance.
+	 *
+	 * @return the last publish date of this m d r rule group instance
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this m d r rule group instance.
+	 *
+	 * @param lastPublishDate the last publish date of this m d r rule group instance
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

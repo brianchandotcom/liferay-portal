@@ -98,6 +98,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 			{ "defaultFileEntryTypeId", Types.BIGINT },
 			{ "hidden_", Types.BOOLEAN },
 			{ "restrictionType", Types.INTEGER },
+			{ "lastPublishDate", Types.TIMESTAMP },
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
@@ -124,13 +125,14 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		TABLE_COLUMNS_MAP.put("defaultFileEntryTypeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("hidden_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("restrictionType", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,treePath STRING null,name VARCHAR(255) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,hidden_ BOOLEAN,restrictionType INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,treePath STRING null,name VARCHAR(255) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,hidden_ BOOLEAN,restrictionType INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFolder";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFolder.parentFolderId ASC, dlFolder.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFolder.parentFolderId ASC, DLFolder.name ASC";
@@ -188,6 +190,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		model.setDefaultFileEntryTypeId(soapModel.getDefaultFileEntryTypeId());
 		model.setHidden(soapModel.getHidden());
 		model.setRestrictionType(soapModel.getRestrictionType());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
@@ -285,6 +288,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		attributes.put("defaultFileEntryTypeId", getDefaultFileEntryTypeId());
 		attributes.put("hidden", getHidden());
 		attributes.put("restrictionType", getRestrictionType());
+		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -405,6 +409,12 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		if (restrictionType != null) {
 			setRestrictionType(restrictionType);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -791,6 +801,17 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	@JSON
 	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -1161,6 +1182,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		dlFolderImpl.setDefaultFileEntryTypeId(getDefaultFileEntryTypeId());
 		dlFolderImpl.setHidden(getHidden());
 		dlFolderImpl.setRestrictionType(getRestrictionType());
+		dlFolderImpl.setLastPublishDate(getLastPublishDate());
 		dlFolderImpl.setStatus(getStatus());
 		dlFolderImpl.setStatusByUserId(getStatusByUserId());
 		dlFolderImpl.setStatusByUserName(getStatusByUserName());
@@ -1371,6 +1393,15 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		dlFolderCacheModel.restrictionType = getRestrictionType();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			dlFolderCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			dlFolderCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		dlFolderCacheModel.status = getStatus();
 
 		dlFolderCacheModel.statusByUserId = getStatusByUserId();
@@ -1397,7 +1428,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1435,6 +1466,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		sb.append(getHidden());
 		sb.append(", restrictionType=");
 		sb.append(getRestrictionType());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append(", statusByUserId=");
@@ -1450,7 +1483,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(70);
+		StringBundler sb = new StringBundler(73);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFolder");
@@ -1529,6 +1562,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		sb.append(getRestrictionType());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
@@ -1589,6 +1626,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	private boolean _originalHidden;
 	private boolean _setOriginalHidden;
 	private int _restrictionType;
+	private Date _lastPublishDate;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

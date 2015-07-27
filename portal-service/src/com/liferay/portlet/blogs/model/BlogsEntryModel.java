@@ -468,6 +468,20 @@ public interface BlogsEntryModel extends BaseModel<BlogsEntry>,
 	public void setSmallImageURL(String smallImageURL);
 
 	/**
+	 * Returns the last publish date of this blogs entry.
+	 *
+	 * @return the last publish date of this blogs entry
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this blogs entry.
+	 *
+	 * @param lastPublishDate the last publish date of this blogs entry
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the status of this blogs entry.
 	 *
 	 * @return the status of this blogs entry

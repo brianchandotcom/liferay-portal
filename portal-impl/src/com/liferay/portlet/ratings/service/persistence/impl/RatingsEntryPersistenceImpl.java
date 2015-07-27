@@ -2911,6 +2911,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		ratingsEntryImpl.setClassNameId(ratingsEntry.getClassNameId());
 		ratingsEntryImpl.setClassPK(ratingsEntry.getClassPK());
 		ratingsEntryImpl.setScore(ratingsEntry.getScore());
+		ratingsEntryImpl.setLastPublishDate(ratingsEntry.getLastPublishDate());
 
 		return ratingsEntryImpl;
 	}

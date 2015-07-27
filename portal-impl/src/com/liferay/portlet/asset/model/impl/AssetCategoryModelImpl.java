@@ -92,7 +92,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 			{ "name", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "vocabularyId", Types.BIGINT }
+			{ "vocabularyId", Types.BIGINT },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -112,9 +113,10 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("vocabularyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetCategory (uuid_ VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,leftCategoryId LONG,rightCategoryId LONG,name VARCHAR(75) null,title STRING null,description STRING null,vocabularyId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table AssetCategory (uuid_ VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,leftCategoryId LONG,rightCategoryId LONG,name VARCHAR(75) null,title STRING null,description STRING null,vocabularyId LONG,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table AssetCategory";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetCategory.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetCategory.name ASC";
@@ -165,6 +167,7 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
 		model.setVocabularyId(soapModel.getVocabularyId());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -256,6 +259,7 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("vocabularyId", getVocabularyId());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -353,6 +357,12 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 		if (vocabularyId != null) {
 			setVocabularyId(vocabularyId);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -804,6 +814,17 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		return _originalVocabularyId;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	public long getNestedSetsTreeNodeLeft() {
 		return _leftCategoryId;
 	}
@@ -958,6 +979,7 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		assetCategoryImpl.setTitle(getTitle());
 		assetCategoryImpl.setDescription(getDescription());
 		assetCategoryImpl.setVocabularyId(getVocabularyId());
+		assetCategoryImpl.setLastPublishDate(getLastPublishDate());
 
 		assetCategoryImpl.resetOriginalValues();
 
@@ -1121,12 +1143,21 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 		assetCategoryCacheModel.vocabularyId = getVocabularyId();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			assetCategoryCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			assetCategoryCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return assetCategoryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1158,6 +1189,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		sb.append(getDescription());
 		sb.append(", vocabularyId=");
 		sb.append(getVocabularyId());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1165,7 +1198,7 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.asset.model.AssetCategory");
@@ -1231,6 +1264,10 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 			"<column><column-name>vocabularyId</column-name><column-value><![CDATA[");
 		sb.append(getVocabularyId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1269,6 +1306,7 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	private long _vocabularyId;
 	private long _originalVocabularyId;
 	private boolean _setOriginalVocabularyId;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private AssetCategory _escapedModel;
 }

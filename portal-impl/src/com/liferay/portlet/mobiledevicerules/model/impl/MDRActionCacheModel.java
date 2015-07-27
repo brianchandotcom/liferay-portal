@@ -66,7 +66,7 @@ public class MDRActionCacheModel implements CacheModel<MDRAction>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -98,6 +98,8 @@ public class MDRActionCacheModel implements CacheModel<MDRAction>,
 		sb.append(type);
 		sb.append(", typeSettings=");
 		sb.append(typeSettings);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -172,6 +174,13 @@ public class MDRActionCacheModel implements CacheModel<MDRAction>,
 			mdrActionImpl.setTypeSettings(typeSettings);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			mdrActionImpl.setLastPublishDate(null);
+		}
+		else {
+			mdrActionImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		mdrActionImpl.resetOriginalValues();
 
 		return mdrActionImpl;
@@ -194,6 +203,7 @@ public class MDRActionCacheModel implements CacheModel<MDRAction>,
 		description = objectInput.readUTF();
 		type = objectInput.readUTF();
 		typeSettings = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -251,6 +261,8 @@ public class MDRActionCacheModel implements CacheModel<MDRAction>,
 		else {
 			objectOutput.writeUTF(typeSettings);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -268,4 +280,5 @@ public class MDRActionCacheModel implements CacheModel<MDRAction>,
 	public String description;
 	public String type;
 	public String typeSettings;
+	public long lastPublishDate;
 }

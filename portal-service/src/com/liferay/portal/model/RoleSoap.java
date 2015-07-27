@@ -49,6 +49,7 @@ public class RoleSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setType(model.getType());
 		soapModel.setSubtype(model.getSubtype());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -221,6 +222,14 @@ public class RoleSoap implements Serializable {
 		_subtype = subtype;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _roleId;
@@ -236,4 +245,5 @@ public class RoleSoap implements Serializable {
 	private String _description;
 	private int _type;
 	private String _subtype;
+	private Date _lastPublishDate;
 }

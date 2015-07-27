@@ -79,7 +79,7 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -109,6 +109,8 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		sb.append(typeId);
 		sb.append(", primary=");
 		sb.append(primary);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -172,6 +174,13 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		phoneImpl.setTypeId(typeId);
 		phoneImpl.setPrimary(primary);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			phoneImpl.setLastPublishDate(null);
+		}
+		else {
+			phoneImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		phoneImpl.resetOriginalValues();
 
 		return phoneImpl;
@@ -193,6 +202,7 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		extension = objectInput.readUTF();
 		typeId = objectInput.readLong();
 		primary = objectInput.readBoolean();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -239,6 +249,7 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 
 		objectOutput.writeLong(typeId);
 		objectOutput.writeBoolean(primary);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public long mvccVersion;
@@ -255,4 +266,5 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 	public String extension;
 	public long typeId;
 	public boolean primary;
+	public long lastPublishDate;
 }

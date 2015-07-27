@@ -67,6 +67,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("friendlyURL", getFriendlyURL());
 		attributes.put("languageId", getLanguageId());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -150,6 +151,12 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 		if (languageId != null) {
 			setLanguageId(languageId);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
 	}
 
 	@Override
@@ -216,6 +223,16 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	@Override
 	public java.lang.String getLanguageId() {
 		return _layoutFriendlyURL.getLanguageId();
+	}
+
+	/**
+	* Returns the last publish date of this layout friendly u r l.
+	*
+	* @return the last publish date of this layout friendly u r l
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _layoutFriendlyURL.getLastPublishDate();
 	}
 
 	/**
@@ -428,6 +445,16 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	@Override
 	public void setLanguageId(java.lang.String languageId) {
 		_layoutFriendlyURL.setLanguageId(languageId);
+	}
+
+	/**
+	* Sets the last publish date of this layout friendly u r l.
+	*
+	* @param lastPublishDate the last publish date of this layout friendly u r l
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_layoutFriendlyURL.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

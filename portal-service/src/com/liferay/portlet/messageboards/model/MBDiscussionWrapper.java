@@ -66,6 +66,7 @@ public class MBDiscussionWrapper implements MBDiscussion,
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("threadId", getThreadId());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -136,6 +137,12 @@ public class MBDiscussionWrapper implements MBDiscussion,
 
 		if (threadId != null) {
 			setThreadId(threadId);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -223,6 +230,16 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	@Override
 	public long getGroupId() {
 		return _mbDiscussion.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this message boards discussion.
+	*
+	* @return the last publish date of this message boards discussion
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _mbDiscussion.getLastPublishDate();
 	}
 
 	/**
@@ -411,6 +428,16 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	@Override
 	public void setGroupId(long groupId) {
 		_mbDiscussion.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this message boards discussion.
+	*
+	* @param lastPublishDate the last publish date of this message boards discussion
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_mbDiscussion.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

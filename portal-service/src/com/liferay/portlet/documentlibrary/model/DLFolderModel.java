@@ -372,6 +372,20 @@ public interface DLFolderModel extends BaseModel<DLFolder>, ContainerModel,
 	public void setRestrictionType(int restrictionType);
 
 	/**
+	 * Returns the last publish date of this document library folder.
+	 *
+	 * @return the last publish date of this document library folder
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this document library folder.
+	 *
+	 * @param lastPublishDate the last publish date of this document library folder
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the status of this document library folder.
 	 *
 	 * @return the status of this document library folder

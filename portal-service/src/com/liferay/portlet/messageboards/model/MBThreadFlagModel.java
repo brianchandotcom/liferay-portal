@@ -222,6 +222,20 @@ public interface MBThreadFlagModel extends BaseModel<MBThreadFlag>,
 	 */
 	public void setThreadId(long threadId);
 
+	/**
+	 * Returns the last publish date of this message boards thread flag.
+	 *
+	 * @return the last publish date of this message boards thread flag
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this message boards thread flag.
+	 *
+	 * @param lastPublishDate the last publish date of this message boards thread flag
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

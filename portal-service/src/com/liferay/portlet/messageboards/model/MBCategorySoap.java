@@ -49,6 +49,7 @@ public class MBCategorySoap implements Serializable {
 		soapModel.setThreadCount(model.getThreadCount());
 		soapModel.setMessageCount(model.getMessageCount());
 		soapModel.setLastPostDate(model.getLastPostDate());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -225,6 +226,14 @@ public class MBCategorySoap implements Serializable {
 		_lastPostDate = lastPostDate;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -272,6 +281,7 @@ public class MBCategorySoap implements Serializable {
 	private int _threadCount;
 	private int _messageCount;
 	private Date _lastPostDate;
+	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

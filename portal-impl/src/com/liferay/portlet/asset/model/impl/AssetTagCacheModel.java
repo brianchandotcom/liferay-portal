@@ -65,7 +65,7 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -87,6 +87,8 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 		sb.append(name);
 		sb.append(", assetCount=");
 		sb.append(assetCount);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -138,6 +140,13 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 
 		assetTagImpl.setAssetCount(assetCount);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			assetTagImpl.setLastPublishDate(null);
+		}
+		else {
+			assetTagImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		assetTagImpl.resetOriginalValues();
 
 		return assetTagImpl;
@@ -155,6 +164,7 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
 		assetCount = objectInput.readInt();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -190,6 +200,7 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 		}
 
 		objectOutput.writeInt(assetCount);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -202,4 +213,5 @@ public class AssetTagCacheModel implements CacheModel<AssetTag>, Externalizable 
 	public long modifiedDate;
 	public String name;
 	public int assetCount;
+	public long lastPublishDate;
 }

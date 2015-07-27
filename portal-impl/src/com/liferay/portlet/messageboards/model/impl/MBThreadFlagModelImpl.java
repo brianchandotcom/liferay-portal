@@ -74,7 +74,8 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "threadId", Types.BIGINT }
+			{ "threadId", Types.BIGINT },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -88,9 +89,10 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("threadId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MBThreadFlag (uuid_ VARCHAR(75) null,threadFlagId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,threadId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table MBThreadFlag (uuid_ VARCHAR(75) null,threadFlagId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,threadId LONG,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MBThreadFlag";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbThreadFlag.threadFlagId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBThreadFlag.threadFlagId ASC";
@@ -161,6 +163,7 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("threadId", getThreadId());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -222,6 +225,12 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 		if (threadId != null) {
 			setThreadId(threadId);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -404,6 +413,16 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				MBThreadFlag.class.getName()));
@@ -449,6 +468,7 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		mbThreadFlagImpl.setCreateDate(getCreateDate());
 		mbThreadFlagImpl.setModifiedDate(getModifiedDate());
 		mbThreadFlagImpl.setThreadId(getThreadId());
+		mbThreadFlagImpl.setLastPublishDate(getLastPublishDate());
 
 		mbThreadFlagImpl.resetOriginalValues();
 
@@ -582,12 +602,21 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 		mbThreadFlagCacheModel.threadId = getThreadId();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			mbThreadFlagCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			mbThreadFlagCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return mbThreadFlagCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -607,6 +636,8 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		sb.append(getModifiedDate());
 		sb.append(", threadId=");
 		sb.append(getThreadId());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -614,7 +645,7 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.messageboards.model.MBThreadFlag");
@@ -656,6 +687,10 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 			"<column><column-name>threadId</column-name><column-value><![CDATA[");
 		sb.append(getThreadId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -685,6 +720,7 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	private long _threadId;
 	private long _originalThreadId;
 	private boolean _setOriginalThreadId;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private MBThreadFlag _escapedModel;
 }

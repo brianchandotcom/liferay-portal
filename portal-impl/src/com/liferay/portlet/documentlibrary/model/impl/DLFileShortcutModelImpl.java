@@ -93,6 +93,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 			{ "toFileEntryId", Types.BIGINT },
 			{ "treePath", Types.VARCHAR },
 			{ "active_", Types.BOOLEAN },
+			{ "lastPublishDate", Types.TIMESTAMP },
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
@@ -114,13 +115,14 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		TABLE_COLUMNS_MAP.put("toFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("treePath", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLFileShortcut (uuid_ VARCHAR(75) null,fileShortcutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,toFileEntryId LONG,treePath STRING null,active_ BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileShortcut (uuid_ VARCHAR(75) null,fileShortcutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,toFileEntryId LONG,treePath STRING null,active_ BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileShortcut";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileShortcut.fileShortcutId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileShortcut.fileShortcutId ASC";
@@ -171,6 +173,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		model.setToFileEntryId(soapModel.getToFileEntryId());
 		model.setTreePath(soapModel.getTreePath());
 		model.setActive(soapModel.getActive());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
@@ -252,6 +255,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		attributes.put("toFileEntryId", getToFileEntryId());
 		attributes.put("treePath", getTreePath());
 		attributes.put("active", getActive());
+		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -341,6 +345,12 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -619,6 +629,17 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	public boolean getOriginalActive() {
 		return _originalActive;
+	}
+
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
 	}
 
 	@JSON
@@ -963,6 +984,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		dlFileShortcutImpl.setToFileEntryId(getToFileEntryId());
 		dlFileShortcutImpl.setTreePath(getTreePath());
 		dlFileShortcutImpl.setActive(getActive());
+		dlFileShortcutImpl.setLastPublishDate(getLastPublishDate());
 		dlFileShortcutImpl.setStatus(getStatus());
 		dlFileShortcutImpl.setStatusByUserId(getStatusByUserId());
 		dlFileShortcutImpl.setStatusByUserName(getStatusByUserName());
@@ -1122,6 +1144,15 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 		dlFileShortcutCacheModel.active = getActive();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			dlFileShortcutCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			dlFileShortcutCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		dlFileShortcutCacheModel.status = getStatus();
 
 		dlFileShortcutCacheModel.statusByUserId = getStatusByUserId();
@@ -1148,7 +1179,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1176,6 +1207,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		sb.append(getTreePath());
 		sb.append(", active=");
 		sb.append(getActive());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append(", statusByUserId=");
@@ -1191,7 +1224,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileShortcut");
@@ -1250,6 +1283,10 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		sb.append(getActive());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
@@ -1300,6 +1337,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
+	private Date _lastPublishDate;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

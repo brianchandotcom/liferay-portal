@@ -19033,6 +19033,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		mbMessageImpl.setPriority(mbMessage.getPriority());
 		mbMessageImpl.setAllowPingbacks(mbMessage.isAllowPingbacks());
 		mbMessageImpl.setAnswer(mbMessage.isAnswer());
+		mbMessageImpl.setLastPublishDate(mbMessage.getLastPublishDate());
 		mbMessageImpl.setStatus(mbMessage.getStatus());
 		mbMessageImpl.setStatusByUserId(mbMessage.getStatusByUserId());
 		mbMessageImpl.setStatusByUserName(mbMessage.getStatusByUserName());

@@ -145,6 +145,8 @@ public class MBCategoryPersistenceTest {
 
 		newMBCategory.setLastPostDate(RandomTestUtil.nextDate());
 
+		newMBCategory.setLastPublishDate(RandomTestUtil.nextDate());
+
 		newMBCategory.setStatus(RandomTestUtil.nextInt());
 
 		newMBCategory.setStatusByUserId(RandomTestUtil.nextLong());
@@ -190,6 +192,9 @@ public class MBCategoryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingMBCategory.getLastPostDate()),
 			Time.getShortTimestamp(newMBCategory.getLastPostDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBCategory.getLastPublishDate()),
+			Time.getShortTimestamp(newMBCategory.getLastPublishDate()));
 		Assert.assertEquals(existingMBCategory.getStatus(),
 			newMBCategory.getStatus());
 		Assert.assertEquals(existingMBCategory.getStatusByUserId(),
@@ -353,8 +358,8 @@ public class MBCategoryPersistenceTest {
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"parentCategoryId", true, "name", true, "description", true,
 			"displayStyle", true, "threadCount", true, "messageCount", true,
-			"lastPostDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"lastPostDate", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -599,6 +604,8 @@ public class MBCategoryPersistenceTest {
 		mbCategory.setMessageCount(RandomTestUtil.nextInt());
 
 		mbCategory.setLastPostDate(RandomTestUtil.nextDate());
+
+		mbCategory.setLastPublishDate(RandomTestUtil.nextDate());
 
 		mbCategory.setStatus(RandomTestUtil.nextInt());
 

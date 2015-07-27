@@ -316,6 +316,20 @@ public interface MBCategoryModel extends BaseModel<MBCategory>, ContainerModel,
 	public void setLastPostDate(Date lastPostDate);
 
 	/**
+	 * Returns the last publish date of this message boards category.
+	 *
+	 * @return the last publish date of this message boards category
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this message boards category.
+	 *
+	 * @param lastPublishDate the last publish date of this message boards category
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the status of this message boards category.
 	 *
 	 * @return the status of this message boards category

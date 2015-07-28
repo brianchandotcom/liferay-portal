@@ -75,7 +75,7 @@ public class DB2DialectTest {
 	}
 
 	@Test
-	public void testPagingWithStartBeforeEnd() {
+	public void testPagingWithStartAfterEnd() {
 		testPaging(_SQL, 10, 5, 0);
 	}
 

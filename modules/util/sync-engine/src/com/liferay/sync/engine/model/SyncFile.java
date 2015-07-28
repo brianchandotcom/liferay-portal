@@ -100,6 +100,8 @@ public class SyncFile extends StateAwareModel {
 
 	public static final int UI_EVENT_UPDATED_REMOTE = 18;
 
+	public static final int UI_EVENT_UPLOAD_EXCEPTION = 25;
+
 	public static final int UI_EVENT_UPLOADED = 19;
 
 	public static final int UI_EVENT_UPLOADING = 20;

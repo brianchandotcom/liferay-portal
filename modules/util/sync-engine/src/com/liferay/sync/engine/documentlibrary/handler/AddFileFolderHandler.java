@@ -19,6 +19,11 @@ import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.util.JSONUtil;
 
+import java.net.SocketException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Shinn Lok
  */
@@ -26,6 +31,30 @@ public class AddFileFolderHandler extends BaseJSONHandler {
 
 	public AddFileFolderHandler(Event event) {
 		super(event);
+	}
+
+	@Override
+	public void handleException(Exception e) {
+		if (e instanceof SocketException) {
+			String message = e.getMessage();
+
+			if (message.equals("Broken pipe")) {
+				if (_logger.isDebugEnabled()) {
+					_logger.debug("Handling exception {}", e.toString());
+				}
+
+				SyncFile syncFile = getLocalSyncFile();
+
+				syncFile.setState(SyncFile.STATE_ERROR);
+				syncFile.setUiEvent(SyncFile.UI_EVENT_UPLOAD_EXCEPTION);
+
+				SyncFileService.update(syncFile);
+
+				return;
+			}
+		}
+
+		super.handleException(e);
 	}
 
 	@Override
@@ -55,5 +84,8 @@ public class AddFileFolderHandler extends BaseJSONHandler {
 
 		SyncFileService.update(localSyncFile);
 	}
+
+	private static final Logger _logger = LoggerFactory.getLogger(
+		AddFileFolderHandler.class);
 
 }

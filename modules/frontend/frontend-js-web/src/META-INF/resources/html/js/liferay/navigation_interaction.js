@@ -25,13 +25,14 @@ AUI.add(
 
 						var host = instance.get('host');
 
-						var navInteractionSelector = Liferay.Data.NAV_INTERACTION_SELECTOR || 'ul';
+						var navInteractionSelector = Liferay.Data.NAV_INTERACTION_LIST_SELECTOR || 'ul';
 
 						var navigation = host.one(navInteractionSelector);
 
 						var hostULId = '#' + navigation.guid();
 
-						instance._directChildLi = hostULId + '> li';
+						instance._directChildLi = Liferay.Data.NAV_INTERACTION_ITEM_SELECTOR || hostULId + '> li';
+
 						instance._hostULId = hostULId;
 
 						instance._triggerNode = A.one('.nav-navigation-btn');
@@ -43,14 +44,16 @@ AUI.add(
 
 								var menu = event.menu;
 
-								instance._lastShownMenu = null;
+								if (menu) {
+									instance._lastShownMenu = null;
 
-								if (showMenu) {
-									instance._lastShownMenu = menu;
+									if (showMenu) {
+										instance._lastShownMenu = menu;
+									}
+
+									menu.toggleClass('hover', showMenu);
+									menu.toggleClass('open', showMenu);
 								}
-
-								event.menu.toggleClass('hover', showMenu);
-								event.menu.toggleClass('open', showMenu);
 							}
 						);
 

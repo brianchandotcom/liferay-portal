@@ -62,6 +62,6 @@
 </div>
 
 <script>
-	Liferay.Data.NAV_INTERACTION_SELECTOR = '.navbar-site';
+	Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
 	Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';
 </script>

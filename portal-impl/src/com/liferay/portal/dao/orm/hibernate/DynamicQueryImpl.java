@@ -86,6 +86,9 @@ public class DynamicQueryImpl implements DynamicQuery {
 			_criteria = _criteria.setFirstResult(0);
 			_criteria = _criteria.setMaxResults(0);
 
+			_requiresProcessing = false;
+
+			return;
 		}
 
 		if (start < 0) {

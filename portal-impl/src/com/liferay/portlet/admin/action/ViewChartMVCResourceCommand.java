@@ -102,8 +102,7 @@ public class ViewChartMVCResourceCommand implements MVCResourceCommand {
 				resourceResponse.getPortletOutputStream();
 
 			ChartUtilities.writeChartAsPNG(outputStream, jFreeChart, 280, 180);
-
-		} 
+		}
 		catch (IOException ioe) {
 			throw new PortletException(ioe);
 		}

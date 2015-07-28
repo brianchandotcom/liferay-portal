@@ -82,6 +82,7 @@ import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portal.util.WebKeys;
@@ -127,7 +128,8 @@ public class ServerAdministrationPortlet extends MVCPortlet {
 
 		String cmd = ParamUtil.getString(actionRequest, "cmd");
 
-		PortletConfig portletConfig = PortletConfigFactoryUtil.get("9");
+		PortletConfig portletConfig = PortletConfigFactoryUtil.get(
+			PortletKeys.ADMIN);
 
 		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences();
 
@@ -150,9 +152,6 @@ public class ServerAdministrationPortlet extends MVCPortlet {
 			CleanUpPermissionsUtil.cleanUpAddToPagePermissions(actionRequest);
 		}
 		else if (cmd.startsWith("convertProcess.")) {
-
-				// redirect =
-
 			convertProcess(actionRequest, actionResponse, cmd);
 		}
 		else if (cmd.equals("dlPreviews")) {
@@ -163,10 +162,6 @@ public class ServerAdministrationPortlet extends MVCPortlet {
 		}
 		else if (cmd.equals("installXuggler")) {
 			installXuggler(actionRequest, actionResponse);
-
-			// setForward(actionRequest, ActionConstants.COMMON_NULL);
-
-			//return;
 		}
 		else if (cmd.equals("reindex")) {
 			reindex(actionRequest);
@@ -180,7 +175,6 @@ public class ServerAdministrationPortlet extends MVCPortlet {
 		else if (cmd.equals("shutdown")) {
 			shutdown(actionRequest);
 		}
-
 		else if (cmd.equals("threadDump")) {
 			threadDump();
 		}

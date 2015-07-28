@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.webdav.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringPool;
@@ -30,6 +31,7 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * <p>
@@ -39,6 +41,7 @@ import org.junit.Test;
  *
  * @author Alexander Chow
  */
+@RunWith(Arquillian.class)
 public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 
 	@ClassRule

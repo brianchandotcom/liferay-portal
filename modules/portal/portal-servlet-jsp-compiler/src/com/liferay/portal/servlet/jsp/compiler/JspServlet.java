@@ -173,7 +173,7 @@ public class JspServlet extends HttpServlet {
 			"com.liferay.portal.servlet.jsp.compiler.internal.JspCompiler");
 		defaults.put("development", "false");
 		defaults.put("httpMethods", "GET,POST,HEAD");
-		defaults.put("keepgenerated", "false");
+		defaults.put("keepgenerated", "true");
 		defaults.put("logVerbosityLevel", "DEBUG");
 
 		Enumeration<String> names = servletConfig.getInitParameterNames();

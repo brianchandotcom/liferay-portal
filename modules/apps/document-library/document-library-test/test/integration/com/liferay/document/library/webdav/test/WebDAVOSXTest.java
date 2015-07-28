@@ -18,6 +18,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -54,6 +56,7 @@ import org.junit.runner.RunWith;
  * @author Alexander Chow
  */
 @RunWith(Arquillian.class)
+@Sync
 public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 	@ClassRule
@@ -61,7 +64,8 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			WebDAVEnvironmentConfigTestRule.INSTANCE);
+			WebDAVEnvironmentConfigTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {

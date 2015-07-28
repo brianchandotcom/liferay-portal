@@ -29,11 +29,9 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.log.CaptureAppender;
@@ -109,12 +107,10 @@ public class ExportImportLifecycleEventTest {
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					TestPropsValues.getUserId(), 0,
-					RandomTestUtil.randomString(), StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					exportLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-					ServiceContextTestUtil.getServiceContext());
+					exportLayoutSettingsMap);
 
 		try {
 			ExportImportLocalServiceUtil.exportLayoutsAsFile(
@@ -142,12 +138,10 @@ public class ExportImportLifecycleEventTest {
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					TestPropsValues.getUserId(), 0,
-					RandomTestUtil.randomString(), StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-					ServiceContextTestUtil.getServiceContext());
+					importLayoutSettingsMap);
 
 		try {
 			ExportImportLocalServiceUtil.importLayouts(
@@ -212,12 +206,10 @@ public class ExportImportLifecycleEventTest {
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					TestPropsValues.getUserId(), 0,
-					RandomTestUtil.randomString(), StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
 					ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
-					exportPortletSettingsMap, WorkflowConstants.STATUS_DRAFT,
-					ServiceContextTestUtil.getServiceContext());
+					exportPortletSettingsMap);
 
 		try {
 			ExportImportLocalServiceUtil.exportPortletInfoAsFile(
@@ -247,12 +239,10 @@ public class ExportImportLifecycleEventTest {
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					TestPropsValues.getUserId(), 0,
-					RandomTestUtil.randomString(), StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
 					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
-					importPortletSettingsMap, WorkflowConstants.STATUS_DRAFT,
-					ServiceContextTestUtil.getServiceContext());
+					importPortletSettingsMap);
 
 		try {
 			ExportImportLocalServiceUtil.importPortletInfo(

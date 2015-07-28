@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -1261,17 +1260,14 @@ public class ServicePreAction extends Action {
 		Map<String, Serializable> importLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.
 				buildImportLayoutSettingsMap(
-					user.getUserId(), groupId, privateLayout, null,
-					parameterMap, user.getLocale(), user.getTimeZone());
+					user, groupId, privateLayout, null, parameterMap);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					user.getUserId(), groupId, StringPool.BLANK,
-					StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					user.getUserId(),
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-					new ServiceContext());
+					importLayoutSettingsMap);
 
 		ExportImportLocalServiceUtil.importLayouts(
 			exportImportConfiguration, larFile);

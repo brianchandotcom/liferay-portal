@@ -48,6 +48,15 @@ public interface ExportImportConfigurationLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExportImportConfigurationLocalServiceUtil} to access the export import configuration local service. Add custom service methods to {@link com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration addDraftExportImportConfiguration(
+		long userId, java.lang.String name, int type,
+		java.util.Map<java.lang.String, java.io.Serializable> settingsMap)
+		throws PortalException;
+
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration addDraftExportImportConfiguration(
+		long userId, int type,
+		java.util.Map<java.lang.String, java.io.Serializable> settingsMap)
+		throws PortalException;
 
 	/**
 	* Adds the export import configuration to the database. Also notifies the appropriate model listeners.

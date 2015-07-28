@@ -34,6 +34,24 @@ public class ExportImportConfigurationLocalServiceWrapper
 		_exportImportConfigurationLocalService = exportImportConfigurationLocalService;
 	}
 
+	@Override
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration addDraftExportImportConfiguration(
+		long userId, java.lang.String name, int type,
+		java.util.Map<java.lang.String, java.io.Serializable> settingsMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _exportImportConfigurationLocalService.addDraftExportImportConfiguration(userId,
+			name, type, settingsMap);
+	}
+
+	@Override
+	public com.liferay.portlet.exportimport.model.ExportImportConfiguration addDraftExportImportConfiguration(
+		long userId, int type,
+		java.util.Map<java.lang.String, java.io.Serializable> settingsMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _exportImportConfigurationLocalService.addDraftExportImportConfiguration(userId,
+			type, settingsMap);
+	}
+
 	/**
 	* Adds the export import configuration to the database. Also notifies the appropriate model listeners.
 	*

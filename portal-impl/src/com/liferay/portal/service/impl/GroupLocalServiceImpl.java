@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.util.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.util.TreePathUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Account;
@@ -3631,17 +3630,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		Map<String, Serializable> importLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.
 				buildImportLayoutSettingsMap(
-					defaultUser.getUserId(), group.getGroupId(), false, null,
-					parameterMap, defaultUser.getLocale(),
-					defaultUser.getTimeZone());
+					defaultUser, group.getGroupId(), false, null, parameterMap);
 
 		ExportImportConfiguration exportImportConfiguration =
-			exportImportConfigurationLocalService.addExportImportConfiguration(
-				defaultUser.getUserId(), group.getGroupId(), StringPool.BLANK,
-				StringPool.BLANK,
-				ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-				importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-				new ServiceContext());
+			exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					defaultUser.getUserId(),
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					importLayoutSettingsMap);
 
 		exportImportLocalService.importLayouts(
 			exportImportConfiguration, larFile);

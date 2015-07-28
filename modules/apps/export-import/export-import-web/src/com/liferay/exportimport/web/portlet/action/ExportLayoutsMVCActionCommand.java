@@ -27,10 +27,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.exportimport.LARFileNameException;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
@@ -106,16 +104,12 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 						layoutIds, actionRequest.getParameterMap(),
 						themeDisplay.getLocale(), themeDisplay.getTimeZone());
 
-			ServiceContext serviceContext = new ServiceContext();
-
 			ExportImportConfiguration exportImportConfiguration =
 				ExportImportConfigurationLocalServiceUtil.
-					addExportImportConfiguration(
-						themeDisplay.getUserId(), groupId, taskName,
-						StringPool.BLANK,
+					addDraftExportImportConfiguration(
+						themeDisplay.getUserId(), taskName,
 						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-						exportLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-						serviceContext);
+						exportLayoutSettingsMap);
 
 			ExportImportServiceUtil.exportLayoutsAsFileInBackground(
 				exportImportConfiguration);

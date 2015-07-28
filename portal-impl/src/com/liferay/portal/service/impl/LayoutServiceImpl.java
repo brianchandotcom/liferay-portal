@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -1456,17 +1455,16 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		Map<String, Serializable> publishLayoutLocalSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.
 				buildPublishLayoutLocalSettingsMap(
-					getUserId(), sourceGroupId, targetGroupId, privateLayout,
-					layoutIds, parameterMap, user.getLocale(),
-					user.getTimeZone());
+					user, sourceGroupId, targetGroupId, privateLayout,
+					layoutIds, parameterMap);
 
 		ExportImportConfiguration exportImportConfiguration =
-			exportImportConfigurationLocalService.addExportImportConfiguration(
-				getUserId(), sourceGroupId, trigger.getJobName(), description,
-				ExportImportConfigurationConstants.
-					TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL,
-				publishLayoutLocalSettingsMap, WorkflowConstants.STATUS_DRAFT,
-				new ServiceContext());
+			exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					getUserId(), trigger.getJobName(),
+					ExportImportConfigurationConstants.
+						TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL,
+					publishLayoutLocalSettingsMap);
 
 		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, description,
@@ -1580,12 +1578,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 					user.getLocale(), user.getTimeZone());
 
 		ExportImportConfiguration exportImportConfiguration =
-			exportImportConfigurationLocalService.addExportImportConfiguration(
-				getUserId(), sourceGroupId, trigger.getJobName(), description,
-				ExportImportConfigurationConstants.
-					TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE,
-				publishLayoutRemoteSettingsMap, WorkflowConstants.STATUS_DRAFT,
-				new ServiceContext());
+			exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					getUserId(), trigger.getJobName(),
+					ExportImportConfigurationConstants.
+						TYPE_SCHEDULED_PUBLISH_LAYOUT_REMOTE,
+					publishLayoutRemoteSettingsMap);
 
 		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, description,

@@ -34,11 +34,8 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.LayoutServiceUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
@@ -329,12 +326,10 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					themeDisplay.getUserId(), groupId, StringPool.BLANK,
-					StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					themeDisplay.getUserId(),
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-					new ServiceContext());
+					importLayoutSettingsMap);
 
 		ExportImportServiceUtil.importLayoutsInBackground(
 			exportImportConfiguration, inputStream);
@@ -408,12 +403,10 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					themeDisplay.getUserId(), groupId, StringPool.BLANK,
-					StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					themeDisplay.getUserId(),
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
-					new ServiceContext());
+					importLayoutSettingsMap);
 
 		return ExportImportServiceUtil.validateImportLayoutsFile(
 			exportImportConfiguration, inputStream);

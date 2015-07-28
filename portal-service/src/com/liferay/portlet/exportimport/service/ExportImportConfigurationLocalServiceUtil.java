@@ -40,6 +40,22 @@ public class ExportImportConfigurationLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portlet.exportimport.model.ExportImportConfiguration addDraftExportImportConfiguration(
+		long userId, java.lang.String name, int type,
+		java.util.Map<java.lang.String, java.io.Serializable> settingsMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addDraftExportImportConfiguration(userId, name, type,
+			settingsMap);
+	}
+
+	public static com.liferay.portlet.exportimport.model.ExportImportConfiguration addDraftExportImportConfiguration(
+		long userId, int type,
+		java.util.Map<java.lang.String, java.io.Serializable> settingsMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addDraftExportImportConfiguration(userId, type, settingsMap);
+	}
 
 	/**
 	* Adds the export import configuration to the database. Also notifies the appropriate model listeners.

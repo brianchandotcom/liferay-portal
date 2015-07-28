@@ -31,11 +31,13 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.base.ExportImportConfigurationLocalServiceBaseImpl;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -55,6 +57,37 @@ import java.util.Map;
  */
 public class ExportImportConfigurationLocalServiceImpl
 	extends ExportImportConfigurationLocalServiceBaseImpl {
+
+	@Override
+	public ExportImportConfiguration addDraftExportImportConfiguration(
+			long userId, int type, Map<String, Serializable> settingsMap)
+		throws PortalException {
+
+		return exportImportConfigurationLocalService.
+			addDraftExportImportConfiguration(
+				userId, GetterUtil.getString(settingsMap.get("portletId")),
+				type, settingsMap);
+	}
+
+	@Override
+	public ExportImportConfiguration addDraftExportImportConfiguration(
+			long userId, String name, int type,
+			Map<String, Serializable> settingsMap)
+		throws PortalException {
+
+		long groupId = GetterUtil.getLong(settingsMap.get("sourceGroupId"));
+
+		if ((type == ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT) ||
+			(type == ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET)) {
+
+			groupId = GetterUtil.getLong(settingsMap.get("targetGroupId"));
+		}
+
+		return exportImportConfigurationLocalService.
+			addExportImportConfiguration(
+				userId, groupId, name, StringPool.BLANK, type, settingsMap,
+				WorkflowConstants.STATUS_DRAFT, new ServiceContext());
+	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override

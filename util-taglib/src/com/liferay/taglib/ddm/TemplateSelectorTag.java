@@ -50,11 +50,11 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 				portletDisplayDDMTemplate.getTemplateKey());
 		}
 
-		if (Validator.isNull(getDisplayStyle())) {
+		if (Validator.isNull(super.getDisplayStyle())) {
 			return getDefaultDisplayStyle();
 		}
 
-		return getDisplayStyle();
+		return super.getDisplayStyle();
 	}
 
 	@Override

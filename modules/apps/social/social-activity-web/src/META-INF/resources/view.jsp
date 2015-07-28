@@ -80,7 +80,9 @@ Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttr
 				counterSettings: {
 
 					<%
-					SocialActivityGroupServiceConfiguration socialActivityGroupServiceConfiguration = SocialActivityUtil.getSocialActivityGroupServiceConfiguration(company.getCompanyId());
+					SettingsFactory settingsFactory = SettingsFactoryUtil.getSettingsFactory();
+
+					SocialActivityGroupServiceConfiguration socialActivityGroupServiceConfiguration = settingsFactory.getSettings(SocialActivityGroupServiceConfiguration.class, new CompanyServiceSettingsLocator(company.getCompanyId(), SocialActivityConstants.SERVICE_NAME));
 					%>
 
 					contributionIncrements: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.contributionIncrements()) %>],

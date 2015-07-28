@@ -20,17 +20,20 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
+<%@ page import="com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator" %><%@
+page import="com.liferay.portal.kernel.settings.SettingsFactory" %><%@
+page import="com.liferay.portal.kernel.settings.SettingsFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
+page import="com.liferay.portlet.social.constants.SocialConstants" %><%@
 page import="com.liferay.portlet.social.model.SocialActivityDefinition" %><%@
 page import="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil" %><%@
 page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %><%@
 page import="com.liferay.social.activity.configuration.SocialActivityGroupServiceConfiguration" %><%@
-page import="com.liferay.social.activity.web.constants.SocialActivityWebKeys" %><%@
-page import="com.liferay.social.activity.web.util.SocialActivityUtil" %>
+page import="com.liferay.social.activity.web.constants.SocialActivityWebKeys" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %><%@

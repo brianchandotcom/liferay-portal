@@ -88,7 +88,7 @@ public class WikiPageAssetRenderer
 	}
 
 	@Override
-	public WikiPage getAsset() {
+	public WikiPage getAssetObject() {
 		return _page;
 	}
 

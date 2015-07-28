@@ -72,7 +72,7 @@ public class DLFileEntryAssetRenderer
 	}
 
 	@Override
-	public FileEntry getAsset() {
+	public FileEntry getAssetObject() {
 		return _fileEntry;
 	}
 

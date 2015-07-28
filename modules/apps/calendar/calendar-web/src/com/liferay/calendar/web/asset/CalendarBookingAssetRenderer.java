@@ -57,7 +57,7 @@ public class CalendarBookingAssetRenderer
 	}
 
 	@Override
-	public CalendarBooking getAsset() {
+	public CalendarBooking getAssetObject() {
 		return _calendarBooking;
 	}
 

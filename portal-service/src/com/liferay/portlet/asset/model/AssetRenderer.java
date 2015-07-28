@@ -47,7 +47,7 @@ public interface AssetRenderer<T> extends Renderer {
 	@Deprecated
 	public String getAddToPagePortletId() throws Exception;
 
-	public T getAsset();
+	public T getAssetObject();
 
 	public int getAssetRendererType();
 

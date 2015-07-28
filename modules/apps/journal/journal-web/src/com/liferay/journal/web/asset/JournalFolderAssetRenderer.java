@@ -57,7 +57,7 @@ public class JournalFolderAssetRenderer
 	}
 
 	@Override
-	public JournalFolder getAsset() {
+	public JournalFolder getAssetObject() {
 		return _folder;
 	}
 

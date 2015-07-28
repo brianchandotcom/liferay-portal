@@ -44,7 +44,7 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 	}
 
 	@Override
-	public Layout getAsset() {
+	public Layout getAssetObject() {
 		return _layout;
 	}
 

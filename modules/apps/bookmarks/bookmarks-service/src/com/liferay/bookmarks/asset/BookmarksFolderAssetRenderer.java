@@ -59,7 +59,7 @@ public class BookmarksFolderAssetRenderer
 	}
 
 	@Override
-	public BookmarksFolder getAsset() {
+	public BookmarksFolder getAssetObject() {
 		return _folder;
 	}
 

@@ -64,7 +64,7 @@ public class DLFolderAssetRenderer
 	}
 
 	@Override
-	public Folder getAsset() {
+	public Folder getAssetObject() {
 		return _folder;
 	}
 

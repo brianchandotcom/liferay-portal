@@ -201,6 +201,10 @@
 			<contains>The web application [/reports-portlet] appears to have started a thread named [C3P0PooledConnectionPool</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-55160">
+			<contains></contains>
+			<matches>.*ThreadName=JMX Core MBean Deregistration;.*osgi.compendium:service=.*version=1.[0-9]+.*</matches>
+		</ignore-error>
 		<ignore-error description="LRQA-14442, temporary workaround until Kiyoshi Lee fixes it">
 			<contains>[org_eclipse_equinox_http_servlet.*Framework Event Dispatcher: Equinox Container:</contains>
 			<matches></matches>

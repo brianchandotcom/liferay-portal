@@ -1100,6 +1100,15 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
+		// LPS-55160
+
+		if (line.matches(
+				".*ThreadName=JMX Core MBean Deregistration;" +
+					".*osgi.compendium:service=.*version=1.[0-9]+.*")) {
+
+			return true;
+		}
+
 		// LRQA-14442, temporary workaround until Kiyoshi Lee fixes it
 
 		if (line.contains("Framework Event Dispatcher: Equinox Container:")) {

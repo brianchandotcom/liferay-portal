@@ -15,9 +15,7 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.List;
 
@@ -62,23 +60,14 @@ public class SortFactoryUtil {
 	public static SortFactory getSortFactory() {
 		PortalRuntimePermission.checkGetBeanProperty(SortFactoryUtil.class);
 
-		return _instance._serviceTracker.getService();
+		return _sortFactory;
 	}
 
 	public static Sort[] toArray(List<Sort> sorts) {
 		return getSortFactory().toArray(sorts);
 	}
 
-	private SortFactoryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(SortFactory.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final SortFactoryUtil _instance = new SortFactoryUtil();
-
-	private final ServiceTracker<SortFactory, SortFactory> _serviceTracker;
+	private static final SortFactory _sortFactory =
+		ProxyFactory.newServiceTrackedInstance(SortFactory.class);
 
 }

@@ -37,14 +37,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Eduardo Garcia
  */
-public class LayoutAssetRenderer extends BaseJSPAssetRenderer {
+public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 
 	public LayoutAssetRenderer(Layout layout) {
 		_layout = layout;
 	}
 
 	@Override
-	public Object getAsset() {
+	public Layout getAsset() {
 		return _layout;
 	}
 

@@ -52,7 +52,7 @@ public class BookmarksEntryAssetRenderer
 	}
 
 	@Override
-	public BookmarksEntry getAsset() {
+	public BookmarksEntry getAssetObject() {
 		return _entry;
 	}
 

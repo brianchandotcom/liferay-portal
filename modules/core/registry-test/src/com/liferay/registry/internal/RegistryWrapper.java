@@ -25,6 +25,7 @@ import com.liferay.registry.dependency.ServiceDependencyManager;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -257,7 +258,7 @@ public class RegistryWrapper implements Registry {
 	}
 
 	private final Registry _registry;
-	private final ConcurrentHashMap<ServiceReference<?>, AtomicInteger>
+	private final ConcurrentMap<ServiceReference<?>, AtomicInteger>
 		_serviceReferenceCountsMap = new ConcurrentHashMap<>();
 
 }

@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.osgi.framework.Bundle;
@@ -228,7 +229,7 @@ public class BundleContextWrapper implements BundleContext {
 	}
 
 	private final BundleContext _bundleContext;
-	private final ConcurrentHashMap<ServiceReference<?>, AtomicInteger>
+	private final ConcurrentMap<ServiceReference<?>, AtomicInteger>
 		_serviceReferenceCountsMap = new ConcurrentHashMap<>();
 
 }

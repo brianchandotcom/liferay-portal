@@ -45,10 +45,15 @@ import javax.servlet.http.HttpServletResponse;
  * @author Sergio González
  */
 public class BookmarksEntryAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<BookmarksEntry> implements TrashRenderer {
 
 	public BookmarksEntryAssetRenderer(BookmarksEntry entry) {
 		_entry = entry;
+	}
+
+	@Override
+	public BookmarksEntry getAsset() {
+		return _entry;
 	}
 
 	@Override

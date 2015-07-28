@@ -60,13 +60,18 @@ import javax.servlet.http.HttpServletResponse;
  * @author Zsolt Berentey
  */
 public class DLFileEntryAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<FileEntry> implements TrashRenderer {
 
 	public DLFileEntryAssetRenderer(
 		FileEntry fileEntry, FileVersion fileVersion) {
 
 		_fileEntry = fileEntry;
 		_fileVersion = fileVersion;
+	}
+
+	@Override
+	public FileEntry getAsset() {
+		return _fileEntry;
 	}
 
 	@Override

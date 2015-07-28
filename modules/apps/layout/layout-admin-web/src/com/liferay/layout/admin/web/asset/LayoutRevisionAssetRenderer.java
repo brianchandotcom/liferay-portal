@@ -42,7 +42,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Raymond Augé
  */
-public class LayoutRevisionAssetRenderer extends BaseJSPAssetRenderer {
+public class LayoutRevisionAssetRenderer
+	extends BaseJSPAssetRenderer<LayoutRevision> {
 
 	public LayoutRevisionAssetRenderer(LayoutRevision layoutRevision) {
 		_layoutRevision = layoutRevision;
@@ -57,6 +58,11 @@ public class LayoutRevisionAssetRenderer extends BaseJSPAssetRenderer {
 		catch (Exception e) {
 			throw new IllegalStateException(e);
 		}
+	}
+
+	@Override
+	public LayoutRevision getAsset() {
+		return _layoutRevision;
 	}
 
 	@Override

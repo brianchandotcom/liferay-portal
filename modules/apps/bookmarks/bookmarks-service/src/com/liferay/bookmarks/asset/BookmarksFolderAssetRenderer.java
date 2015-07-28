@@ -49,12 +49,17 @@ import javax.servlet.http.HttpServletResponse;
  * @author Alexander Chow
  */
 public class BookmarksFolderAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<BookmarksFolder> implements TrashRenderer {
 
 	public static final String TYPE = "bookmarks_folder";
 
 	public BookmarksFolderAssetRenderer(BookmarksFolder folder) {
 		_folder = folder;
+	}
+
+	@Override
+	public BookmarksFolder getAsset() {
+		return _folder;
 	}
 
 	@Override

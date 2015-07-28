@@ -54,12 +54,17 @@ import javax.servlet.http.HttpServletResponse;
  * @author Alexander Chow
  */
 public class DLFolderAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<Folder> implements TrashRenderer {
 
 	public static final String TYPE = "folder";
 
 	public DLFolderAssetRenderer(Folder folder) {
 		_folder = folder;
+	}
+
+	@Override
+	public Folder getAsset() {
+		return _folder;
 	}
 
 	@Override

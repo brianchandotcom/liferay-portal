@@ -56,7 +56,7 @@ import javax.portlet.WindowState;
  * @author Jorge Ferrer
  * @author Sergio González
  */
-public abstract class BaseAssetRenderer implements AssetRenderer {
+public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
@@ -65,6 +65,11 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	@Override
 	public String getAddToPagePortletId() throws Exception {
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public T getAsset() {
+		return null;
 	}
 
 	public AssetRendererFactory getAssetRendererFactory() {

@@ -47,12 +47,17 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alexander Chow
  */
 public class JournalFolderAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<JournalFolder> implements TrashRenderer {
 
 	public static final String TYPE = "folder";
 
 	public JournalFolderAssetRenderer(JournalFolder folder) {
 		_folder = folder;
+	}
+
+	@Override
+	public JournalFolder getAsset() {
+		return _folder;
 	}
 
 	@Override

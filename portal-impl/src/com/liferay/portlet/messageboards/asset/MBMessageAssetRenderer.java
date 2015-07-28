@@ -48,10 +48,15 @@ import javax.servlet.http.HttpServletResponse;
  * @author Sergio González
  */
 public class MBMessageAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<MBMessage> implements TrashRenderer {
 
 	public MBMessageAssetRenderer(MBMessage message) {
 		_message = message;
+	}
+
+	@Override
+	public MBMessage getAsset() {
+		return _message;
 	}
 
 	@Override

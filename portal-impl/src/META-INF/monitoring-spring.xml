@@ -39,11 +39,4 @@
 			</map>
 		</property>
 	</bean>
-
-	<!-- Portlet container -->
-
-	<bean id="com.liferay.portal.kernel.monitoring.PortletMonitoringControl" class="com.liferay.portal.kernel.monitoring.DefaultPortletMonitoringControl" />
-	<bean id="com.liferay.portlet.InvokerPortletFactory" class="com.liferay.portlet.MonitoringPortletFactoryImpl">
-		<property name="portletMonitoringControl" ref="com.liferay.portal.kernel.monitoring.PortletMonitoringControl" />
-	</bean>
 </beans>

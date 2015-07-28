@@ -25,7 +25,7 @@ portletURL.setParameter("mvcRenderCommandName", "/announcements/view");
 portletURL.setParameter("tabs1", tabs1);
 %>
 
-<c:if test="<%= !portletName.equals(PortletKeys.ALERTS) || (portletName.equals(PortletKeys.ALERTS) && AnnouncementsEntryPermission.contains(permissionChecker, layout, PortletKeys.ALERTS, ActionKeys.ADD_ENTRY)) %>">
+<c:if test="<%= !portletName.equals(AnnouncementsPortletKeys.ALERTS) || (portletName.equals(AnnouncementsPortletKeys.ALERTS) && AnnouncementsEntryPermission.contains(permissionChecker, layout, AnnouncementsPortletKeys.ALERTS, ActionKeys.ADD_ENTRY)) %>">
 	<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>" />
 </c:if>
 

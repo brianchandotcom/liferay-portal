@@ -59,11 +59,11 @@ int start = ParamUtil.getInteger(request, "start", 0);
 
 int end = ParamUtil.getInteger(request, "end", start + pageDelta);
 
-int total = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), scopes, portletName.equals(PortletKeys.ALERTS), flagValue);
+int total = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), scopes, portletName.equals(viewAlertsPortletId), flagValue);
 
 int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(start, end, total);
 
-List<AnnouncementsEntry> results = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), scopes, portletName.equals(PortletKeys.ALERTS), flagValue, startAndEnd[0], startAndEnd[1]);
+List<AnnouncementsEntry> results = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), scopes, portletName.equals(viewAlertsPortletId), flagValue, startAndEnd[0], startAndEnd[1]);
 %>
 
 <c:if test="<%= results.isEmpty() && !readEntries %>">

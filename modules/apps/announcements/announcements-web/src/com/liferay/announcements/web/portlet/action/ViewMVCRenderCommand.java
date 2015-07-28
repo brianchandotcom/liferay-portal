@@ -14,8 +14,8 @@
 
 package com.liferay.announcements.web.portlet.action;
 
+import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.util.PortletKeys;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -28,9 +28,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.ALERTS,
-		"javax.portlet.name=" + PortletKeys.ANNOUNCEMENTS, "mvc.command.name=/",
-		"mvc.command.name=/alerts/view", "mvc.command.name=/announcements/view"
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ALERTS,
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS,
+		"mvc.command.name=/", "mvc.command.name=/alerts/view",
+		"mvc.command.name=/announcements/view"
 	}
 )
 public class ViewMVCRenderCommand implements MVCRenderCommand {

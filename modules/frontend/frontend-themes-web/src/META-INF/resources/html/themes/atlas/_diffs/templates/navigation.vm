@@ -60,3 +60,7 @@
 	<nav>
 
 </div>
+
+<script>
+	Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';
+</script>

@@ -55,16 +55,31 @@ public class DB2DialectTest {
 	}
 
 	@Test
+	public void testPagingWithNegativeStart() {
+		testPaging(_SQL, -10, 20, 20);
+	}
+
+	@Test
+	public void testPagingWithNegativeStartAndNegativeEnd() {
+		testPaging(_SQL, -10, -5, 0);
+	}
+
+	@Test
 	public void testPagingWithOffset() {
-		testPaging(_SQL, 10, 20);
+		testPaging(_SQL, 10, 30, 20);
 	}
 
 	@Test
 	public void testPagingWithoutOffset() {
-		testPaging(_SQL, 0, 20);
+		testPaging(_SQL, 0, 20, 20);
 	}
 
-	protected void testPaging(String sql, int offset, int limit) {
+	@Test
+	public void testPagingWithStartBeforeEnd() {
+		testPaging(_SQL, 10, 5, 0);
+	}
+
+	protected void testPaging(String sql, int start, int end, int expected) {
 		Session session = null;
 
 		try {
@@ -73,10 +88,10 @@ public class DB2DialectTest {
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			List<?> result = QueryUtil.list(
-				q, _sessionFactory.getDialect(), offset, offset + limit);
+				q, _sessionFactory.getDialect(), start, end);
 
 			Assert.assertNotNull(result);
-			Assert.assertEquals(limit, result.size());
+			Assert.assertEquals(expected, result.size());
 		}
 		finally {
 			_sessionFactory.closeSession(session);

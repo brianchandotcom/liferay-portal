@@ -691,7 +691,6 @@
 	</command>
 
 	<command name="viewContentSharingPG">
-
 		<var name="key_siteScope" value="${siteScope1}" />
 
 		<execute function="AssertTextEquals" locator1="PGAssetpublisher#ADD_NEW_DROPDOWN_IN_SCOPED_SITE" value1="Add New in ${siteScope1}" />

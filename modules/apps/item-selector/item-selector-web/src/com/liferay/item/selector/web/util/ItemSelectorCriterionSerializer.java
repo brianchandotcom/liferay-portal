@@ -40,6 +40,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -252,7 +253,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 		ItemSelectorCriterionSerializer.class);
 
 	private BundleContext _bundleContext;
-	private final ConcurrentHashMap<String, List<ItemSelectorReturnType>>
+	private final ConcurrentMap<String, List<ItemSelectorReturnType>>
 		_itemSelectorReturnTypes = new ConcurrentHashMap<>();
 	private ServiceTracker<ItemSelectorView, ItemSelectorView> _serviceTracker;
 

@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.product.menu.site.administration.application.list;
+package com.liferay.mobile.device.rules.web.application.list;
 
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.portal.service.PortletLocalService;
-import com.liferay.portal.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,7 +44,7 @@ public class MobileDeviceFamiliesPanelApp
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.MOBILE_DEVICE_RULES;
+		return MDRPortletKeys.MOBILE_DEVICE_RULES;
 	}
 
 	@Reference(unbind = "-")

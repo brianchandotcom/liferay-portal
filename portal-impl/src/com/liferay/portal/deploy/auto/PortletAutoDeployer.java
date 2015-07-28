@@ -42,7 +42,7 @@ public class PortletAutoDeployer
 				PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
 			destDir = DeployUtil.getAutoDeployDestDir();
 			appServerType = ServerDetector.getServerId();
-			auiTaglibDTD = DeployUtil.getResourcePath("aui.tld");
+			auiTaglibDTD = DeployUtil.getResourcePath("liferay-aui.tld");
 			portletTaglibDTD = DeployUtil.getResourcePath(
 				"liferay-portlet.tld");
 			portletExtTaglibDTD = DeployUtil.getResourcePath(

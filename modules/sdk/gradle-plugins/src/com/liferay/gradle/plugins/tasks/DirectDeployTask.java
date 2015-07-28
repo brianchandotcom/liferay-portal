@@ -92,7 +92,8 @@ public class DirectDeployTask extends BasePortalImplToolsTask {
 		}
 
 		if (webAppType.equals("portlet")) {
-			jvmArgs.add("-Ddeployer.aui.taglib.dtd=" + tldPath + "/aui.tld");
+			jvmArgs.add(
+				"-Ddeployer.aui.taglib.dtd=" + tldPath + "/liferay-aui.tld");
 			jvmArgs.add(
 				"-Ddeployer.custom.portlet.xml=" + isCustomPortletXml());
 			jvmArgs.add(

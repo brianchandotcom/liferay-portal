@@ -1368,6 +1368,10 @@ public class VerifyProperties extends VerifyProcess {
 			"scripting.forbidden.classes", "forbidden.classes",
 			"com.liferay.portal.scripting.javascript"
 		},
+		new String[] {
+			"scripting.jruby.load.paths", "load.paths",
+			"com.liferay.portal.scripting.ruby"
+		},
 
 		// Search
 

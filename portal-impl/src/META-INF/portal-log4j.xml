@@ -424,10 +424,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.scripting.ruby.RubyExecutor">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay.portal.search.lucene">
 		<priority value="ERROR" />
 	</category>

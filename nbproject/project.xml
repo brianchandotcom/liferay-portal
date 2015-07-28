@@ -445,7 +445,6 @@
 				<classpath mode="compile">lib/portal/jodconverter.jar</classpath>
 				<classpath mode="compile">lib/portal/jodd.jar</classpath>
 				<classpath mode="compile">lib/portal/jrcs-diff.jar</classpath>
-				<classpath mode="compile">lib/portal/jruby.jar</classpath>
 				<classpath mode="compile">lib/portal/json-java.jar</classpath>
 				<classpath mode="compile">lib/portal/json-schema-validator.jar</classpath>
 				<classpath mode="compile">lib/portal/jsonrpc.jar</classpath>

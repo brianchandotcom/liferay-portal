@@ -16,11 +16,11 @@ package com.liferay.portal.scripting.groovy.internal;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.portal.kernel.memory.FinalizeManager;
-import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.scripting.BaseScriptingExecutor;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;

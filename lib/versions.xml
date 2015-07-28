@@ -2419,21 +2419,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/jruby.jar</file-name>
-				<version>1.6.5</version>
-				<project-name>JRuby</project-name>
-				<project-url>http://jruby.codehaus.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-				<comments>
-					See modules/util/ruby-gem.
-				</comments>
-			</library>
-			<library>
 				<file-name>lib/portal/json-java.jar</file-name>
 				<version>c7d2d9161321e9</version>
 				<project-name>JSON in Java</project-name>

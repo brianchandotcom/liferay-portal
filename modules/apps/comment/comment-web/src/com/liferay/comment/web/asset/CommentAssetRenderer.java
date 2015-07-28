@@ -57,7 +57,7 @@ public class CommentAssetRenderer
 	}
 
 	@Override
-	public WorkflowableComment getAsset() {
+	public WorkflowableComment getAssetObject() {
 		return _workflowableComment;
 	}
 

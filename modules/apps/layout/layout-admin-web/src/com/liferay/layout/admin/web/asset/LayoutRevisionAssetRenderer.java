@@ -61,7 +61,7 @@ public class LayoutRevisionAssetRenderer
 	}
 
 	@Override
-	public LayoutRevision getAsset() {
+	public LayoutRevision getAssetObject() {
 		return _layoutRevision;
 	}
 

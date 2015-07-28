@@ -55,7 +55,7 @@ public class BlogsEntryAssetRenderer
 	}
 
 	@Override
-	public BlogsEntry getAsset() {
+	public BlogsEntry getAssetObject() {
 		return _entry;
 	}
 

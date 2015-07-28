@@ -55,7 +55,7 @@ public class MBMessageAssetRenderer
 	}
 
 	@Override
-	public MBMessage getAsset() {
+	public MBMessage getAssetObject() {
 		return _message;
 	}
 

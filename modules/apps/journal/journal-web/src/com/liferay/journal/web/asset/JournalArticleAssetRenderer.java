@@ -90,7 +90,7 @@ public class JournalArticleAssetRenderer
 	}
 
 	@Override
-	public JournalArticle getAsset() {
+	public JournalArticle getAssetObject() {
 		return _article;
 	}
 

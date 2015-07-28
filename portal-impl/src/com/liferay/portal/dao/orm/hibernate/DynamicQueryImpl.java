@@ -98,14 +98,15 @@ public class DynamicQueryImpl implements DynamicQuery {
 
 		_criteria = _criteria.setFirstResult(start);
 
+		if (end == QueryUtil.ALL_POS) {
+			return;
+		}
+
 		if (start <= end) {
 			end = end - start;
 		}
-		else if (end != QueryUtil.ALL_POS) {
-			end = 0;
-		}
 		else {
-			return;
+			end = 0;
 		}
 
 		_criteria = _criteria.setMaxResults(end);

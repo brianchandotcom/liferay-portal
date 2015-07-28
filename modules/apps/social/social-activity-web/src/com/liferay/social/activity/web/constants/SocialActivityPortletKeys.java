@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.social.activity.web.constants;
 
-<%@ page import="com.liferay.portlet.social.model.SocialActivityDefinition" %><%@
-page import="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil" %><%@
-page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %>
+/**
+ * @author Roberto Díaz
+ */
+public class SocialActivityPortletKeys {
 
-<%@ include file="/html/portlet/social_activity/init-ext.jsp" %>
+	public static final String SOCIAL_ACTIVITY =
+		"com_liferay_social_activity_web_portlet_SocialActivityPortlet";
+
+}

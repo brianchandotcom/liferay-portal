@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Social Activity API
+Bundle-SymbolicName: com.liferay.social.activity
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.social.activity.*
+Include-Resource: classes

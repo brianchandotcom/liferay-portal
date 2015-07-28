@@ -49,14 +49,14 @@ import javax.servlet.http.HttpServletResponse;
  * @author Zsolt Berentey
  */
 public class BlogsEntryAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<BlogsEntry> implements TrashRenderer {
 
 	public BlogsEntryAssetRenderer(BlogsEntry entry) {
 		_entry = entry;
 	}
 
 	@Override
-	public Object getAsset() {
+	public BlogsEntry getAsset() {
 		return _entry;
 	}
 

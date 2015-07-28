@@ -62,7 +62,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Zsolt Berentey
  */
 public class DLFileEntryAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<FileEntry> implements TrashRenderer {
 
 	public DLFileEntryAssetRenderer(
 		FileEntry fileEntry, FileVersion fileVersion) {
@@ -72,7 +72,7 @@ public class DLFileEntryAssetRenderer
 	}
 
 	@Override
-	public Object getAsset() {
+	public FileEntry getAsset() {
 		return _fileEntry;
 	}
 

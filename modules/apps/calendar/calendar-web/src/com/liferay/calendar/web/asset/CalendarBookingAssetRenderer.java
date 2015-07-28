@@ -50,10 +50,15 @@ import javax.servlet.http.HttpServletResponse;
  * @author Pier Paolo Ramon
  */
 public class CalendarBookingAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<CalendarBooking> implements TrashRenderer {
 
 	public CalendarBookingAssetRenderer(CalendarBooking calendarBooking) {
 		_calendarBooking = calendarBooking;
+	}
+
+	@Override
+	public CalendarBooking getAsset() {
+		return _calendarBooking;
 	}
 
 	@Override

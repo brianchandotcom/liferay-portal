@@ -44,14 +44,14 @@ import javax.servlet.http.HttpServletResponse;
  * @author Sergio González
  * @author Jonathan Lee
  */
-public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer {
+public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 
 	public MBCategoryAssetRenderer(MBCategory category) {
 		_category = category;
 	}
 
 	@Override
-	public Object getAsset() {
+	public MBCategory getAsset() {
 		return _category;
 	}
 

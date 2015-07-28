@@ -56,7 +56,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Sergio González
  */
 public class WikiPageAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<WikiPage> implements TrashRenderer {
 
 	public static final String TYPE = "wiki_page";
 
@@ -88,7 +88,7 @@ public class WikiPageAssetRenderer
 	}
 
 	@Override
-	public Object getAsset() {
+	public WikiPage getAsset() {
 		return _page;
 	}
 

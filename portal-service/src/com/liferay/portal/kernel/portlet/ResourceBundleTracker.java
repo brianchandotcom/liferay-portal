@@ -90,17 +90,10 @@ public class ResourceBundleTracker implements Closeable {
 			languageId = StringPool.BLANK;
 		}
 
-		for (Entry<ServiceReference<ResourceBundle>, ResourceBundle> entry :
-				_resourceBundles.entrySet()) {
+		ResourceBundle resourceBundle = _resourceBundles.get(languageId);
 
-			ServiceReference<ResourceBundle> serviceReference = entry.getKey();
-
-			Object serviceReferenceLanguageId = serviceReference.getProperty(
-				"language.id");
-
-			if (languageId.equals(serviceReferenceLanguageId)) {
-				return entry.getValue();
-			}
+		if (resourceBundle != null) {
+			return resourceBundle;
 		}
 
 		return ResourceBundle.getBundle(
@@ -110,8 +103,8 @@ public class ResourceBundleTracker implements Closeable {
 
 	private final ClassLoader _classLoader;
 	private final Portlet _portlet;
-	private final Map<ServiceReference<ResourceBundle>, ResourceBundle>
-		_resourceBundles = new ConcurrentHashMap<>();
+	private final Map<String, ResourceBundle> _resourceBundles =
+		new ConcurrentHashMap<>();
 	private final StringServiceRegistrationMap<ResourceBundle>
 		_serviceRegistrations = new StringServiceRegistrationMap<>();
 	private final ServiceTracker<ResourceBundle, ResourceBundle>
@@ -129,7 +122,9 @@ public class ResourceBundleTracker implements Closeable {
 			ResourceBundle resourceBundle = registry.getService(
 				serviceReference);
 
-			_resourceBundles.put(serviceReference, resourceBundle);
+			_resourceBundles.put(
+				(String)serviceReference.getProperty("language.id"),
+				resourceBundle);
 
 			return resourceBundle;
 		}
@@ -149,7 +144,8 @@ public class ResourceBundleTracker implements Closeable {
 
 			registry.ungetService(serviceReference);
 
-			_resourceBundles.remove(serviceReference);
+			_resourceBundles.remove(
+				(String)serviceReference.getProperty("language.id"));
 		}
 
 	}

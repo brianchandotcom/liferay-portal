@@ -14,8 +14,8 @@
 
 package com.liferay.announcements.web.portlet;
 
+import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.util.PortletKeys;
 
 import javax.portlet.Portlet;
 
@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=Alerts", "javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/alerts/view",
-		"javax.portlet.name=" + PortletKeys.ALERTS,
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ALERTS,
 		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",

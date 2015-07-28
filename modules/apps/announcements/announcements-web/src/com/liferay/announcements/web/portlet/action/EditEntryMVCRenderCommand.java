@@ -14,10 +14,10 @@
 
 package com.liferay.announcements.web.portlet.action;
 
+import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.announcements.NoSuchEntryException;
 
 import javax.portlet.PortletException;
@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.ALERTS,
-		"javax.portlet.name=" + PortletKeys.ANNOUNCEMENTS,
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ALERTS,
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS,
 		"mvc.command.name=/announcements/edit_entry"
 	}
 )

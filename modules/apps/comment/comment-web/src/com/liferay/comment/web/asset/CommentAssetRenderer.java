@@ -50,10 +50,15 @@ import javax.servlet.http.HttpServletResponse;
  * @author Sergio González
  */
 public class CommentAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<WorkflowableComment> implements TrashRenderer {
 
 	public CommentAssetRenderer(WorkflowableComment workflowableComment) {
 		_workflowableComment = workflowableComment;
+	}
+
+	@Override
+	public WorkflowableComment getAsset() {
+		return _workflowableComment;
 	}
 
 	@Override

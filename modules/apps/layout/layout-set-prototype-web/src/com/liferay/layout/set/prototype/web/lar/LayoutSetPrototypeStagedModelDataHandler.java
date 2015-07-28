@@ -102,6 +102,12 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		return CLASS_NAMES;
 	}
 
+	public String getLayoutSetPrototypeLARFileName(
+		LayoutSetPrototype layoutSetPrototype) {
+
+		return layoutSetPrototype.getLayoutSetPrototypeId() + ".lar";
+	}
+
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
@@ -282,12 +288,6 @@ public class LayoutSetPrototypeStagedModelDataHandler
 				file.delete();
 			}
 		}
-	}
-
-	protected String getLayoutSetPrototypeLARFileName(
-		LayoutSetPrototype layoutSetPrototype) {
-
-		return layoutSetPrototype.getLayoutSetPrototypeId() + ".lar";
 	}
 
 	protected void importLayoutPrototypes(

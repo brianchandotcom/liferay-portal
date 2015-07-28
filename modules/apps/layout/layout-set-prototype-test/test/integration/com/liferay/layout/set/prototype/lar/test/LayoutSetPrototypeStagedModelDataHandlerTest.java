@@ -12,11 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsetprototypes.lar;
+package com.liferay.layout.set.prototype.lar.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.set.prototype.web.lar.LayoutSetPrototypeStagedModelDataHandler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -38,8 +41,8 @@ import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 
@@ -53,12 +56,15 @@ import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Daniela Zapata Riesco
  */
+@RunWith(Arquillian.class)
 public class LayoutSetPrototypeStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
@@ -66,8 +72,15 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			TransactionalTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+	}
 
 	@After
 	@Override

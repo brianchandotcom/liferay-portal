@@ -67,11 +67,6 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 		return StringPool.BLANK;
 	}
 
-	@Override
-	public T getAsset() {
-		return null;
-	}
-
 	public AssetRendererFactory getAssetRendererFactory() {
 		if (_assetRendererFactory != null) {
 			return _assetRendererFactory;

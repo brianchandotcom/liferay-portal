@@ -105,18 +105,24 @@
 							var imageSrc = selectedItem.value;
 
 							if (selectedItem.returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
-								imageSrc = JSON.parse(selectedItem.value).url;
+								try {
+									imageSrc = JSON.parse(selectedItem.value).url;
+								}
+								catch (e) {
+								}
 							}
 
-							var el = CKEDITOR.dom.element.createFromHtml(
-								instance.props.imageTPL.output(
-									{
-										src: imageSrc
-									}
-								)
-							);
+							if (imageSrc) {
+								var el = CKEDITOR.dom.element.createFromHtml(
+									instance.props.imageTPL.output(
+										{
+											src: imageSrc
+										}
+									)
+								);
 
-							editor.insertElement(el);
+								editor.insertElement(el);
+							}
 						}
 					);
 				}

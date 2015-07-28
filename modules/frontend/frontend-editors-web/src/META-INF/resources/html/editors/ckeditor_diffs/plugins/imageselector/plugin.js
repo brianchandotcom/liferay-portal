@@ -21,16 +21,22 @@
 									var imageSrc = selectedItem.value;
 
 									if (selectedItem.returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
-										imageSrc = JSON.parse(selectedItem.value).url;
+										try {
+											imageSrc = JSON.parse(selectedItem.value).url;
+										}
+										catch (e) {
+										}
 									}
 
-									if (callback) {
-										callback(imageSrc);
-									}
-									else {
-										var el = CKEDITOR.dom.element.createFromHtml('<img src="' + imageSrc + '">');
+									if (imageSrc) {
+										if (callback) {
+											callback(imageSrc);
+										}
+										else {
+											var el = CKEDITOR.dom.element.createFromHtml('<img src="' + imageSrc + '">');
 
-										editor.insertElement(el);
+											editor.insertElement(el);
+										}
 									}
 								}
 							};

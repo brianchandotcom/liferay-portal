@@ -15,9 +15,11 @@
 package com.liferay.portlet.social.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.social.model.SocialActivitySetting;
 
 /**
  * @author Zsolt Berentey
@@ -31,8 +33,7 @@ public class SocialActivityPermissionImpl implements SocialActivityPermission {
 
 		if (!contains(permissionChecker, groupId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, PortletKeys.SOCIAL_ACTIVITY, groupId,
-				actionId);
+				permissionChecker, _getPortletId(), groupId, actionId);
 		}
 	}
 
@@ -47,12 +48,17 @@ public class SocialActivityPermissionImpl implements SocialActivityPermission {
 		}
 
 		if (permissionChecker.hasPermission(
-				groupId, PortletKeys.SOCIAL_ACTIVITY, 0, actionId)) {
+				groupId, _getPortletId(), 0, actionId)) {
 
 			return true;
 		}
 
 		return false;
+	}
+
+	private String _getPortletId() {
+		return PortletProviderUtil.getPortletId(
+			SocialActivitySetting.class.getName(), PortletProvider.Action.EDIT);
 	}
 
 }

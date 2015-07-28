@@ -155,9 +155,6 @@ public class PortletKeys {
 
 	public static final String SITE_MEMBERS_DIRECTORY = "187";
 
-	public static final String SOCIAL_ACTIVITY =
-		"com_liferay_social_activity_web_portlet_SocialActivityPortlet";
-
 	public static final String SOFTWARE_CATALOG = "98";
 
 	public static final String STAGING_BAR =

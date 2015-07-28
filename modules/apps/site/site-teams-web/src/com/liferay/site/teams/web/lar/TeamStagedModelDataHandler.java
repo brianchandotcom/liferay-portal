@@ -143,10 +143,10 @@ public class TeamStagedModelDataHandler
 		List<Element> userElements = portletDataContext.getReferenceElements(
 			team, User.class);
 
-		for (Element element : userElements) {
+		for (Element userElement : userElements) {
 			long companyId = GetterUtil.getLong(
-				element.attributeValue("company-id"));
-			String uuid = element.attributeValue("uuid");
+				userElement.attributeValue("company-id"));
+			String uuid = userElement.attributeValue("uuid");
 
 			User user = UserLocalServiceUtil.fetchUserByUuidAndCompanyId(
 				uuid, companyId);
@@ -163,10 +163,10 @@ public class TeamStagedModelDataHandler
 		List<Element> userGroupElements =
 			portletDataContext.getReferenceElements(team, UserGroup.class);
 
-		for (Element element : userGroupElements) {
+		for (Element userGroupElement : userGroupElements) {
 			long companyId = GetterUtil.getLong(
-				element.attributeValue("company-id"));
-			String uuid = element.attributeValue("uuid");
+				userGroupElement.attributeValue("company-id"));
+			String uuid = userGroupElement.attributeValue("uuid");
 
 			UserGroup userGroup =
 				UserGroupLocalServiceUtil.fetchUserGroupByUuidAndCompanyId(

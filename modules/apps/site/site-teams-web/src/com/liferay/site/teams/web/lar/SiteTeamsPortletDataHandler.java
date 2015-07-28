@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class SiteTeamsPortletDataHandler extends BasePortletDataHandler {
 
-	public static final String NAMESPACE = "team";
+	public static final String NAMESPACE = "site_teams";
 
 	@Override
 	protected PortletPreferences doDeleteData(
@@ -69,11 +69,11 @@ public class SiteTeamsPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		ActionableDynamicQuery teamActionableDynamicQuery =
+		ActionableDynamicQuery actionableDynamicQuery =
 			TeamLocalServiceUtil.getExportActionableDynamicQuery(
 				portletDataContext);
 
-		teamActionableDynamicQuery.performActions();
+		actionableDynamicQuery.performActions();
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -103,11 +103,11 @@ public class SiteTeamsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		ActionableDynamicQuery teamActionableDynamicQuery =
+		ActionableDynamicQuery actionableDynamicQuery =
 			TeamLocalServiceUtil.getExportActionableDynamicQuery(
 				portletDataContext);
 
-		teamActionableDynamicQuery.performCount();
+		actionableDynamicQuery.performCount();
 	}
 
 }

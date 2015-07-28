@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -128,7 +129,11 @@ public class DynamicQueryImpl implements DynamicQuery {
 	@SuppressWarnings("rawtypes")
 	public List list(boolean unmodifiable) {
 		if (!_requiresProcessing) {
-			return Collections.emptyList();
+			if (unmodifiable) {
+				return Collections.emptyList();
+			}
+
+			return new ArrayList<>();
 		}
 
 		List list = _criteria.list();

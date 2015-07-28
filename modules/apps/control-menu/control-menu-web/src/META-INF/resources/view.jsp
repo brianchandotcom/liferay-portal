@@ -113,18 +113,16 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 					</li>
 				</c:if>
 
-				<c:if test="<%= user.isSetupComplete() || themeDisplay.isImpersonated() %>">
+				<%
+				boolean customizableLayout = !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isStagingGroup() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE);
+				boolean linkedLayout = ((!SitesUtil.isLayoutUpdateable(layout) && SitesUtil.isUserGroupLayout(layout)) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE);
+				boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLinkActive() && SitesUtil.isLayoutModifiedSinceLastMerge(layout) && hasLayoutUpdatePermission;
+				boolean hasMessages = modifiedLayout || linkedLayout || customizableLayout;
+				%>
 
-					<%
-					boolean customizableLayout = !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isStagingGroup() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE);
-					boolean linkedLayout = ((!SitesUtil.isLayoutUpdateable(layout) && SitesUtil.isUserGroupLayout(layout)) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE);
-					boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLinkActive() && SitesUtil.isLayoutModifiedSinceLastMerge(layout) && hasLayoutUpdatePermission;
-					boolean hasMessages = modifiedLayout || linkedLayout || customizableLayout;
-					%>
-
+				<c:if test="<%= (user.isSetupComplete() || themeDisplay.isImpersonated()) && hasMessages %>">
 					<li>
 						<liferay-ui:icon
-							cssClass='<%= !hasMessages ? "no-info-messages" : StringPool.BLANK %>'
 							iconCssClass="icon-info"
 							id="infoButton"
 							linkCssClass="control-menu-icon"

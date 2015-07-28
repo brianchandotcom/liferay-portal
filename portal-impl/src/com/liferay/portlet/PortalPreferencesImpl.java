@@ -183,7 +183,7 @@ public class PortalPreferencesImpl
 	}
 
 	@Override
-	public void resetValues(final String namespace) {
+	public void resetValues(String namespace) {
 		Map<String, Preference> preferences = getPreferences();
 
 		try {

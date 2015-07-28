@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.menu.control.panel.application.list;
+package com.liferay.product.menu.site.administration.application.list;
 
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
@@ -29,31 +29,31 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL,
-		"service.ranking:Integer=200"
+		"panel.category.key=" + PanelCategoryKeys.SITES,
+		"service.ranking:Integer=100"
 	},
 	service = PanelCategory.class
 )
-public class SitesPanelCategory extends BasePanelCategory {
+public class AdministrationPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-globe";
+		return "icon-sitemap";
 	}
 
 	@Override
 	public String getKey() {
-		return PanelCategoryKeys.CONTROL_PANEL_SITES;
+		return PanelCategoryKeys.SITES_ADMINISTRATION;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "category.sites");
+		return LanguageUtil.get(locale, "administration");
 	}
 
 	@Override
 	public String getParentCategoryKey() {
-		return PanelCategoryKeys.CONTROL_PANEL;
+		return PanelCategoryKeys.SITES;
 	}
 
 }

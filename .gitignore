@@ -211,3 +211,11 @@
 /WEB-INF
 _sass_cache_*.css
 cobertura.ser
+
+!/.gradle
+/.gradle/*
+!/.gradle/caches
+/.gradle/caches/*
+!/.gradle/caches/modules-2
+/.gradle/caches/modules-2/*
+!/.gradle/caches/modules-2/files-2.1

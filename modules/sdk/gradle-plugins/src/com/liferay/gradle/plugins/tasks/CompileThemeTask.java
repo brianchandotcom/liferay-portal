@@ -325,12 +325,15 @@ public class CompileThemeTask extends DefaultTask {
 	}
 
 	protected void copyThemeParentStyled() {
-		copyPortalThemeDir("_styled", new String[] {"package.json"}, "**");
+		copyPortalThemeDir(
+			"_styled", new String[] {"npm-debug.log", "package.json"}, "**");
 	}
 
 	protected void copyThemeParentUnstyled() {
 		copyPortalThemeDir(
-			"_unstyled", new String[] {"package.json", "templates/**"}, "**");
+			"_unstyled",
+			new String[] {"npm-debug.log", "package.json", "templates/**"},
+			"**");
 
 		Set<String> themeTypes = getThemeTypes();
 

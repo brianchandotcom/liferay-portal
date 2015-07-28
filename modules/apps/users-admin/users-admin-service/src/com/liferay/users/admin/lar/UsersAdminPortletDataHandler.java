@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin.lar;
+package com.liferay.users.admin.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.xml.Element;
@@ -23,24 +23,34 @@ import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  * @author David Gonzalez
  */
+@Component(
+	property = {"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN},
+	service = PortletDataHandler.class
+)
 public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "users_admin";
 
-	public UsersAdminPortletDataHandler() {
+	@Activate
+	protected void activate() {
 		setDataLevel(DataLevel.PORTAL);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(Organization.class));

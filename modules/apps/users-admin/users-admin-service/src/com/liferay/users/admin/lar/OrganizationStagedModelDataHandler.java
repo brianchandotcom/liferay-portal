@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin.lar;
+package com.liferay.users.admin.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -40,6 +40,7 @@ import com.liferay.portal.service.WebsiteLocalServiceUtil;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
@@ -49,9 +50,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author David Mendez Gonzalez
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class OrganizationStagedModelDataHandler
 	extends BaseStagedModelDataHandler<Organization> {
 

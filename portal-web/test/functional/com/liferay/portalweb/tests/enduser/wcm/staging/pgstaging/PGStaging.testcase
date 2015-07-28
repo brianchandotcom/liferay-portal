@@ -554,7 +554,7 @@
 	</command>
 
 	<command known-issues="LRQA-16325" name="BlogsOrganizationWorkflowStaging" priority="4">
-		<property name="web.plugins.includes" value="kaleo-web" />
+	
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />

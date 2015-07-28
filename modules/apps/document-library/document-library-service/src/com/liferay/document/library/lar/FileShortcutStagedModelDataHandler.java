@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.lar;
+package com.liferay.document.library.lar;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
+import com.liferay.portlet.documentlibrary.lar.FolderUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -35,6 +37,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUti
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 
@@ -42,9 +45,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mate Thurzo
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class FileShortcutStagedModelDataHandler
 	extends BaseStagedModelDataHandler<FileShortcut> {
 

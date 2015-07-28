@@ -356,8 +356,8 @@
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPUsergroupsEditusergroup#PUBLIC_PAGES_OPEN_PAGES" value1="Open Pages" />
 		<execute function="SelectWindow" locator1="home - ${userGroupName} - Liferay" />
 
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${sitePageName}" />
+		<execute function="Pause" locator1="1073" />
+		<execute function="Pause" locator1="1073" />
 		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
 
 		<var name="key_portletName" value="${portletName}" />

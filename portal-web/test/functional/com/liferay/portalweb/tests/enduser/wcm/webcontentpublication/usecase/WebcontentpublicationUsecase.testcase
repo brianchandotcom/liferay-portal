@@ -2155,6 +2155,6 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="Asset Publisher Page 2" />
+		<execute function="Pause" locator1="1073" />
 	</command>
 </definition>

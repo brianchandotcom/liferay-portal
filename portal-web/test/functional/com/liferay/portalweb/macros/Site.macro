@@ -1075,8 +1075,8 @@
 	</command>
 
 	<command name="viewSiteFriendlyURLPG">
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${sitePageName}" />
+		<execute function="Pause" locator1="1073" />
+		<execute function="Pause" locator1="1073" />
 		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
 		<execute function="AssertLocation" value1="${sitePageURL}" />
 	</command>
@@ -1111,9 +1111,9 @@
 			<var name="soPage" value="${soPage}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${childSiteName}" />
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_3" value1="${sitePageName}" />
+		<execute function="Pause" locator1="1073" />
+		<execute function="Pause" locator1="1073" />
+		<execute function="Pause" locator1="1073" />
 		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${childSiteName}" />
 		<execute function="AssertLocation" value1="${sitePageURL}" />
 	</command>
@@ -1123,8 +1123,8 @@
 
 		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="${sitePageName}" />
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${sitePageName}" />
+		<execute function="Pause" locator1="1073" />
+		<execute function="Pause" locator1="1073" />
 
 		<execute function="AssertLocation" value1="${sitePageURL}" />
 	</command>

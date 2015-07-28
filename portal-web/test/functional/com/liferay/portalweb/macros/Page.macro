@@ -840,7 +840,7 @@
 				<execute function="AssertTextEquals" locator1="Home#PAGE_CHILD_PAGE" value1="${childPageName}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_3" value1="${childPageName}" />
+				<execute function="Pause" locator1="1073" />
 			</else>
 		</if>
 	</command>
@@ -968,10 +968,10 @@
 		<if>
 			<equals arg1="${liferaySite}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${pageName}" />
+				<execute function="Pause" locator1="1073" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${pageName}" />
+				<execute function="Pause" locator1="1073" />
 			</else>
 		</if>
 	</command>
@@ -1000,10 +1000,10 @@
 		<if>
 			<isset var="childPageName" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_3" value1="${childPageName}" />
+				<execute function="Pause" locator1="1073" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${pageName}" />
+				<execute function="Pause" locator1="1073" />
 			</else>
 		</if>
 
@@ -1045,7 +1045,7 @@
 	</command>
 
 	<command name="viewWithWorkflowPG">
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${pageName}" />
+		<execute function="Pause" locator1="1073" />
 		<execute function="Pause" locator1="5000" />
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="PGStaging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />

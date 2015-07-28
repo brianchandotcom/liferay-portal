@@ -588,7 +588,7 @@
 		</execute>
 
 		<execute function="AssertLocation" value1="http://www.able.com:8080/private-page" />
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="Private Page" />
+		<execute function="Pause" locator1="1073" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />

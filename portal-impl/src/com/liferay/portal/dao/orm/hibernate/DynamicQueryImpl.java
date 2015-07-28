@@ -85,6 +85,7 @@ public class DynamicQueryImpl implements DynamicQuery {
 		else if ((start < QueryUtil.ALL_POS) && (end < QueryUtil.ALL_POS)) {
 			_criteria = _criteria.setFirstResult(0);
 			_criteria = _criteria.setMaxResults(0);
+
 		}
 
 		if (start < 0) {
@@ -103,6 +104,8 @@ public class DynamicQueryImpl implements DynamicQuery {
 		if (end >= 0) {
 			_criteria = _criteria.setMaxResults(end);
 		}
+
+		_requiresProcessing = !(end == 0);
 	}
 
 	public DetachedCriteria getDetachedCriteria() {
@@ -118,6 +121,10 @@ public class DynamicQueryImpl implements DynamicQuery {
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List list(boolean unmodifiable) {
+		if (!_requiresProcessing) {
+			return Collections.emptyList();
+		}
+
 		List list = _criteria.list();
 
 		if (unmodifiable) {
@@ -168,6 +175,7 @@ public class DynamicQueryImpl implements DynamicQuery {
 	private Criteria _criteria;
 	private final DetachedCriteria _detachedCriteria;
 	private Integer _end;
+	private boolean _requiresProcessing = true;
 	private Integer _start;
 
 }

@@ -1,6 +1,6 @@
 <#include "${templatesPath}/NAVIGATION-MACRO-FTL" />
 
-<#if entries?? && entries?has_content && (entries?size >= rootLayoutLevel) >
+<#if entries?? && entries?has_content && (entries?size >= rootLayoutLevel?number) >
 	<style>
 		.breadcrumb-horizontal ul {
 			padding-left: 0;

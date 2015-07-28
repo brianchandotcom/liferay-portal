@@ -207,10 +207,24 @@
 				/>
 			</replaceregexp>
 
-			<replaceregexp match="^// INSERT CUSTOM EXTENSIONS" replace="@import &quot;../../aui_custom&quot;;${line.separator}@import &quot;../../liferay_custom&quot;;" byline="true">
+			<replaceregexp match="^// INSERT CUSTOM EXTENSIONS" replace="@import &quot;../../liferay_variables_custom&quot;;${line.separator}@import &quot;../../liferay_variables&quot;;${line.separator}@import &quot;../../aui_custom&quot;;${line.separator}@import &quot;../../liferay_custom&quot;;" byline="true">
 				<fileset
 					dir="${lexicon.assets.dir}/scss"
 					includes="atlas.scss,bootstrap.scss,lexicon-base.scss"
+				/>
+			</replaceregexp>
+
+			<replaceregexp match="^// INSERT CUSTOM BASE VARS" replace="@import &quot;../../aui_variables&quot;;${line.separator}@import &quot;../alloy-font-awesome/scss/font-awesome&quot;;" byline="true">
+				<fileset
+					dir="${lexicon.assets.dir}/scss"
+					includes="atlas-variables.scss,lexicon-base-variables.scss"
+				/>
+			</replaceregexp>
+
+			<replaceregexp match="^// INSERT CUSTOM VARS" replace="@import &quot;../../liferay_variables_custom&quot;;${line.separator}@import &quot;../../liferay_variables&quot;;" byline="true">
+				<fileset
+					dir="${lexicon.assets.dir}/scss"
+					includes="atlas-variables.scss,lexicon-base-variables.scss"
 				/>
 			</replaceregexp>
 

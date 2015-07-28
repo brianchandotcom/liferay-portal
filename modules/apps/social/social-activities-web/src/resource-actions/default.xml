@@ -3,16 +3,18 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>155</portlet-name>
+		<portlet-name>com_liferay_social_activities_web_portlet_SocialActivitiesPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
+				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
+				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>

@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.webdav.test;
 
+import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.webdav.methods.Method;
-import com.liferay.portal.test.rule.callback.MainServletTestCallback;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,7 +27,7 @@ import org.junit.runner.Description;
  * @author Shuyang Zhou
  */
 public class WebDAVEnvironmentConfigTestCallback
-	extends MainServletTestCallback {
+	extends BaseTestCallback<Object, Object> {
 
 	public static final WebDAVEnvironmentConfigTestCallback INSTANCE =
 		new WebDAVEnvironmentConfigTestCallback();
@@ -35,14 +35,10 @@ public class WebDAVEnvironmentConfigTestCallback
 	@Override
 	public void doAfterClass(Description description, Object object) {
 		_baseWebDAVTestCase.service(Method.DELETE, "", null, null);
-
-		super.doAfterClass(description, object);
 	}
 
 	@Override
 	public Object doBeforeClass(Description description) {
-		Object object = super.doBeforeClass(description);
-
 		Tuple tuple = _baseWebDAVTestCase.service(Method.MKCOL, "", null, null);
 
 		int statusCode = BaseWebDAVTestCase.getStatusCode(tuple);
@@ -57,7 +53,7 @@ public class WebDAVEnvironmentConfigTestCallback
 			Assert.assertEquals(HttpServletResponse.SC_CREATED, statusCode);
 		}
 
-		return object;
+		return null;
 	}
 
 	private WebDAVEnvironmentConfigTestCallback() {

@@ -4,7 +4,7 @@
 	<description><![CDATA[Provides the AUI component tags, prefixed with <code>aui:</code>.]]></description>
 	<tlib-version>1.0</tlib-version>
 	<short-name>aui</short-name>
-	<uri>http://alloy.liferay.com/tld/aui</uri>
+	<uri>http://liferay.com/tld/aui</uri>
 	<tag>
 		<description><![CDATA[Deprecated as of 6.2, replaced by aui:button.]]></description>
 		<name>button-item</name>

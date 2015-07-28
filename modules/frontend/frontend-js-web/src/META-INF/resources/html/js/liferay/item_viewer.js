@@ -146,7 +146,12 @@ AUI.add(
 
 						var link = instance.get('links').item(instance.get('currentIndex'));
 
-						link.setData('value', imageUrl);
+						var imageValue = {
+							fileEntryId: imageData.image.fileEntryId,
+							url: imageUrl
+						};
+
+						link.setData('value', JSON.stringify(imageValue));
 					},
 
 					_afterBindUI: function() {

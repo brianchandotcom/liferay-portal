@@ -3,6 +3,8 @@
 (function() {
 	'use strict';
 
+	var STR_UPLOADABLE_FILE_RETURN_TYPE = 'com.liferay.item.selector.criteria.UploadableFileReturnType';
+
 	var Util = Liferay.Util;
 
 	var ButtonImage = React.createClass(
@@ -100,15 +102,27 @@
 					Util.getWindow(eventName).onceAfter(
 						'visibleChange',
 						function() {
-							var el = CKEDITOR.dom.element.createFromHtml(
-								instance.props.imageTPL.output(
-									{
-										src: selectedItem.value
-									}
-								)
-							);
+							var imageSrc = selectedItem.value;
 
-							editor.insertElement(el);
+							if (selectedItem.returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
+								try {
+									imageSrc = JSON.parse(selectedItem.value).url;
+								}
+								catch (e) {
+								}
+							}
+
+							if (imageSrc) {
+								var el = CKEDITOR.dom.element.createFromHtml(
+									instance.props.imageTPL.output(
+										{
+											src: imageSrc
+										}
+									)
+								);
+
+								editor.insertElement(el);
+							}
 						}
 					);
 				}

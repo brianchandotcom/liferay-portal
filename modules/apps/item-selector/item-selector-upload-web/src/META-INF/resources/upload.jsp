@@ -28,9 +28,9 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 			</p>
 
 			<p>
-				<label class="btn btn-default" for="inputFile"><liferay-ui:message key="select-file" /></label>
+				<label class="btn btn-default" for="<portlet:namespace />inputFile"><liferay-ui:message key="select-file" /></label>
 
-				<input class="hide" id="inputFile" type="file" />
+				<input class="hide" id="<portlet:namespace />inputFile" type="file" />
 			</p>
 		</div>
 	</div>

@@ -147,13 +147,13 @@ public class PortalPreferencesImplTest {
 				new FutureTask<>(callable), new FutureTask<>(callable),
 				captureAppender);
 
-			PortalPreferences portalPreferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
+			Assert.fail();
+		}
+		catch (Exception e) {
+			Throwable cause = e.getCause();
 
-			String value = portalPreferences.getValue(_NAMESPACE, _KEY_1);
-
-			Assert.assertNull(value);
+			Assert.assertSame(
+				ConcurrentModificationException.class, cause.getClass());
 		}
 	}
 

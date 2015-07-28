@@ -165,10 +165,17 @@ public class FileUtil {
 	public static boolean isUpToDate(
 		Project project, Object source, Object target) {
 
+		File sourceFile = project.file(source);
+		File targetFile = project.file(target);
+
+		if (!sourceFile.exists() || !targetFile.exists()) {
+			return false;
+		}
+
 		AntBuilder antBuilder = project.getAnt();
 
 		_invokeAntMethodUpToDate(
-			antBuilder, "uptodate", project.file(source), project.file(target));
+			antBuilder, "uptodate", sourceFile, targetFile);
 
 		Map<String, Object> antProperties = antBuilder.getProperties();
 

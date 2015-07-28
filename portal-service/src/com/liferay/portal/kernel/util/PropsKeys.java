@@ -2193,10 +2193,6 @@ public interface PropsKeys {
 
 	public static final String SITES_SITEMAP_DEFAULT_PRIORITY = "sites.sitemap.default.priority";
 
-	public static final String SOCIAL_ACTIVITY_CONTRIBUTION_INCREMENTS = "social.activity.contribution.increments";
-
-	public static final String SOCIAL_ACTIVITY_CONTRIBUTION_LIMIT_VALUES = "social.activity.contribution.limit.values";
-
 	public static final String SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH = "social.activity.counter.period.length";
 
 	public static final String SOCIAL_ACTIVITY_FILTER_SEARCH_LIMIT = "social.activity.filter.search.limit";
@@ -2204,10 +2200,6 @@ public interface PropsKeys {
 	public static final String SOCIAL_ACTIVITY_LOCK_RETRY_DELAY = "social.activity.lock.retry.delay";
 
 	public static final String SOCIAL_ACTIVITY_LOCK_TIMEOUT = "social.activity.lock.timeout";
-
-	public static final String SOCIAL_ACTIVITY_PARTICIPATION_INCREMENTS = "social.activity.participation.increments";
-
-	public static final String SOCIAL_ACTIVITY_PARTICIPATION_LIMIT_VALUES = "social.activity.participation.limit.values";
 
 	public static final String SOCIAL_ACTIVITY_SETS_BUNDLING_ENABLED = "social.activity.sets.bundling.enabled";
 

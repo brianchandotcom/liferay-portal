@@ -80,10 +80,15 @@ Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttr
 					<%= StringUtil.merge(activityDefinitionLanguageKeys) %>
 				},
 				counterSettings: {
-					contributionIncrements: [<%= StringUtil.merge(PropsValues.SOCIAL_ACTIVITY_CONTRIBUTION_INCREMENTS) %>],
-					contributionLimitValues: [<%= StringUtil.merge(PropsValues.SOCIAL_ACTIVITY_CONTRIBUTION_LIMIT_VALUES) %>],
-					participationIncrements: [<%= StringUtil.merge(PropsValues.SOCIAL_ACTIVITY_PARTICIPATION_INCREMENTS) %>],
-					participationLimitValues: [<%= StringUtil.merge(PropsValues.SOCIAL_ACTIVITY_PARTICIPATION_LIMIT_VALUES) %>]
+
+					<%
+					SocialActivityGroupServiceConfiguration socialActivityGroupServiceConfiguration = SocialActivityUtil.getSocialActivityGroupServiceConfiguration(company.getCompanyId());
+					%>
+
+					contributionIncrements: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.contributionIncrements()) %>],
+					contributionLimitValues: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.contributionLimitValues()) %>],
+					participationIncrements: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.participationIncrements()) %>],
+					participationLimitValues: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.participationLimitValues()) %>]
 				},
 				namespace: '<portlet:namespace />',
 				portletId: '<%= portletDisplay.getId() %>'

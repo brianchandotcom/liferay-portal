@@ -21,25 +21,16 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-appli
 PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 %>
 
-<div class="portal-add-content">
-	<div class="panel-group">
-		<liferay-ui:panel-container
-			accordion="<%= true %>"
-			extended="<%= true %>"
-			id="<%= StringUtil.replace(panelCategory.getKey(), StringPool.PERIOD, StringPool.UNDERLINE) %>"
-			persistState="<%= true %>"
-		>
+<div class="list-group">
 
-			<%
-			for (PanelCategory childPanelCategory : panelCategoryRegistry.getChildPanelCategories(panelCategory)) {
-			%>
+	<%
+	for (PanelCategory childPanelCategory : panelCategoryRegistry.getChildPanelCategories(panelCategory)) {
+	%>
 
-				<liferay-application-list:panel-category-content panelCategory="<%= childPanelCategory %>" />
+			<liferay-application-list:panel-category-content panelCategory="<%= childPanelCategory %>" />
 
-			<%
-			}
-			%>
+	<%
+	}
+	%>
 
-		</liferay-ui:panel-container>
-	</div>
 </div>

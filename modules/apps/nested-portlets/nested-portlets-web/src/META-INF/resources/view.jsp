@@ -38,8 +38,10 @@
 
 <%
 try {
-	String templateId = (String)request.getAttribute(NestedPortletsConfiguration.TEMPLATE_ID);
-	String templateContent = (String)request.getAttribute(NestedPortletsConfiguration.TEMPLATE_CONTENT);
+	String portletId = portletDisplay.getId();
+
+	String templateId = (String)request.getAttribute(NestedPortletsConfiguration.TEMPLATE_ID + portletId);
+	String templateContent = (String)request.getAttribute(NestedPortletsConfiguration.TEMPLATE_CONTENT + portletId);
 
 	if (Validator.isNotNull(templateId) && Validator.isNotNull(templateContent)) {
 		RuntimePageUtil.processTemplate(request, response, new StringTemplateResource(templateId, templateContent));

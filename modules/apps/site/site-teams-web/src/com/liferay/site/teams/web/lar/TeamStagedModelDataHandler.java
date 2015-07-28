@@ -28,6 +28,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataException;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.site.teams.web.constants.SiteTeamsPortletKeys;
 
@@ -181,6 +182,12 @@ public class TeamStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(team, importedTeam);
+	}
+
+	@Override
+	protected void importReferenceStagedModels(
+			PortletDataContext portletDataContext, Team team)
+		throws PortletDataException {
 	}
 
 }

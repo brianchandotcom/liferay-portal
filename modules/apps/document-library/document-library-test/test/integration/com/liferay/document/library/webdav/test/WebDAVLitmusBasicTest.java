@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.webdav;
+package com.liferay.document.library.webdav.test;
 
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

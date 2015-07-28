@@ -847,27 +847,18 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 		<sequential>
 			<if>
-				<not>
-					<available file="${sdk.dir}/tools/gradle" />
-				</not>
-				<then>
-					<setup-sdk />
-				</then>
-			</if>
-
-			<if>
 				<os family="unix" />
 				<then>
 					<property name="gradlew.suffix" value="" />
 
-					<chmod file="${sdk.dir}/tools/gradle/gradlew${gradlew.suffix}" perm="a+x" />
+					<chmod file="${project.dir}/gradlew${gradlew.suffix}" perm="a+x" />
 				</then>
 				<else>
 					<property name="gradlew.suffix" value=".bat" />
 				</else>
 			</if>
 
-			<exec dir="@{dir}" executable="${sdk.dir}/tools/gradle/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
+			<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 				<args />
 				<arg value="--project-cache-dir=${project.dir}/.gradle" />
 				<arg value="--stacktrace" />

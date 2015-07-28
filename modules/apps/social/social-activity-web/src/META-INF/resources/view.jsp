@@ -82,7 +82,7 @@ Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttr
 					<%
 					SettingsFactory settingsFactory = SettingsFactoryUtil.getSettingsFactory();
 
-					SocialActivityGroupServiceConfiguration socialActivityGroupServiceConfiguration = settingsFactory.getSettings(SocialActivityGroupServiceConfiguration.class, new CompanyServiceSettingsLocator(company.getCompanyId(), SocialActivityConstants.SERVICE_NAME));
+					SocialActivityGroupServiceConfiguration socialActivityGroupServiceConfiguration = settingsFactory.getSettings(SocialActivityGroupServiceConfiguration.class, new CompanyServiceSettingsLocator(company.getCompanyId(), "com.liferay.social.activity.configuration.SocialActivityGroupServiceConfiguration"));
 					%>
 
 					contributionIncrements: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.contributionIncrements()) %>],

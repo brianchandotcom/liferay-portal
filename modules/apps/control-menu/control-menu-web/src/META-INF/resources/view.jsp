@@ -37,12 +37,12 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 }
 %>
 
-<c:if test="<%= !group.isControlPanel() && !group.isUserPersonalPanel() && userSetupComplete %>">
+<c:if test="<%= !layout.isTypeControlPanel() && !group.isControlPanel() && !layout.isTypeUserPersonalPanel() && !group.isUserPersonalPanel() && userSetupComplete %>">
 	<ul class="control-menu" data-namespace="<portlet:namespace />" id="<portlet:namespace />controlMenu">
 		<li class="left pull-left">
 			<ul>
 				<li>
-					<a class="control-menu-icon sidenav-toggler" href="javascript:;" id="<portlet:namespace />sidenavToggle"><span class="icon-align-justify icon-monospaced"></span></a>
+					<a class="control-menu-icon sidenav-toggler" href="javascript:;" id="sidenavToggleId"><span class="icon-align-justify icon-monospaced"></span></a>
 				</li>
 			</ul>
 		</li>

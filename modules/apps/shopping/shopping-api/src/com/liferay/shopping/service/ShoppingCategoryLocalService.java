@@ -60,7 +60,7 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 
 	public void addCategoryResources(
 		com.liferay.shopping.model.ShoppingCategory category,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws PortalException;
 
 	public void addCategoryResources(long categoryId,

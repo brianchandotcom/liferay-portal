@@ -45,7 +45,7 @@ public class UserAssetRenderer extends BaseJSPAssetRenderer<User> {
 	}
 
 	@Override
-	public User getAsset() {
+	public User getAssetObject() {
 		return _user;
 	}
 

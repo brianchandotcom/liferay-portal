@@ -75,7 +75,7 @@ public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer<DDLRecord> {
 	}
 
 	@Override
-	public DDLRecord getAsset() {
+	public DDLRecord getAssetObject() {
 		return _record;
 	}
 

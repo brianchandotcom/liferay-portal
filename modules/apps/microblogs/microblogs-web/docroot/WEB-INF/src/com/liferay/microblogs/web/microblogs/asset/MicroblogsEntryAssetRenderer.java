@@ -50,7 +50,7 @@ public class MicroblogsEntryAssetRenderer
 	}
 
 	@Override
-	public MicroblogsEntry getAsset() {
+	public MicroblogsEntry getAssetObject() {
 		return _entry;
 	}
 

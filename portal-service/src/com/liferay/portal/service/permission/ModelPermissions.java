@@ -14,59 +14,67 @@
 
 package com.liferay.portal.service.permission;
 
-import com.liferay.portal.model.Role;
-
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Jorge Ferrer
  */
-public class ModelPermissions implements Serializable {
+public class ModelPermissions implements Cloneable, Serializable {
 
-	public void addRolePermissions(Role role, String actionId) {
-		List<Role> roles = getRoles(actionId);
-
-		roles.add(role);
-
-		List<String> actionIds = getActionIds(role);
-
-		actionIds.add(actionId);
-
-		_roles.add(role);
+	public ModelPermissions() {
 	}
 
-	public void addRolePermissions(Role role, String[] actionIds) {
+	public void addRolePermissions(String roleName, String actionId) {
+		List<String> roleNames = getRolesWithPermission(actionId);
+
+		roleNames.add(roleName);
+
+		List<String> actionIds = getActionIdsList(roleName);
+
+		actionIds.add(actionId);
+	}
+
+	public void addRolePermissions(String roleName, String[] actionIds) {
 		for (String actionId : actionIds) {
-			addRolePermissions(role, actionId);
+			addRolePermissions(roleName, actionId);
 		}
 	}
 
-	public List<String> getActionIds(Role role) {
-		List<String> actionIds = _rolesMap.get(role.getName());
+	@Override
+	public Object clone() {
+		return new ModelPermissions(
+			(HashMap)_actionsMap.clone(), (HashMap)_roleNamesMap.clone());
+	}
+
+	public String[] getActionIds(String roleName) {
+		List<String> actionIds = getActionIdsList(roleName);
+
+		return actionIds.toArray(new String[actionIds.size()]);
+	}
+
+	public List<String> getActionIdsList(String roleName) {
+		List<String> actionIds = _roleNamesMap.get(roleName);
 
 		if (actionIds == null) {
 			actionIds = new ArrayList<>();
 
-			_rolesMap.put(role.getName(), actionIds);
+			_roleNamesMap.put(roleName, actionIds);
 		}
 
 		return actionIds;
 	}
 
-	public Collection<Role> getRoles() {
-		return _roles;
+	public Collection<String> getRoleNames() {
+		return _roleNamesMap.keySet();
 	}
 
-	public List<Role> getRoles(String actionId) {
-		List<Role> roles = _actionsMap.get(actionId);
+	public List<String> getRolesWithPermission(String actionId) {
+		List<String> roles = _actionsMap.get(actionId);
 
 		if (roles == null) {
 			roles = new ArrayList<>();
@@ -78,11 +86,15 @@ public class ModelPermissions implements Serializable {
 	}
 
 	public boolean isEmpty() {
-		return _roles.isEmpty();
+		return _roleNamesMap.isEmpty();
 	}
 
-	private final Map<String, List<Role>> _actionsMap = new HashMap<>();
-	private final Set<Role> _roles = new HashSet<>();
-	private final Map<String, List<String>> _rolesMap = new HashMap<>();
+	protected ModelPermissions(HashMap actionsMap, HashMap roleNamesMap) {
+		_actionsMap.putAll(actionsMap);
+		_roleNamesMap.putAll(roleNamesMap);
+	}
+
+	private final HashMap<String, List<String>> _actionsMap = new HashMap<>();
+	private final HashMap<String, List<String>> _roleNamesMap = new HashMap<>();
 
 }

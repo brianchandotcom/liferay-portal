@@ -111,6 +111,8 @@ public class ServiceContext implements Cloneable, Serializable {
 		serviceContext.setLanguageId(getLanguageId());
 		serviceContext.setLayoutFullURL(getLayoutFullURL());
 		serviceContext.setLayoutURL(getLayoutURL());
+		serviceContext.setModelPermissions(
+			(ModelPermissions)_modelPermissions.clone());
 		serviceContext.setModifiedDate(getModifiedDate());
 		serviceContext.setPathFriendlyURLPrivateGroup(
 			getPathFriendlyURLPrivateGroup());
@@ -192,8 +194,7 @@ public class ServiceContext implements Cloneable, Serializable {
 		setGuestPermissions(guestPermissions);
 
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-			siteGroup.getCompanyId(), siteGroupId, groupPermissions,
-			guestPermissions);
+			groupPermissions, guestPermissions);
 
 		setModelPermissions(modelPermissions);
 	}
@@ -388,7 +389,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * @return the specific group permissions
 	 */
 	public String[] getGroupPermissions() {
-		return _groupPermissions;
+		return _modelPermissions.getActionIds(RoleConstants.DEFAULT_GROUP_ROLE);
 	}
 
 	/**
@@ -425,7 +426,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * @return the specific guest permissions
 	 */
 	public String[] getGuestPermissions() {
-		return _guestPermissions;
+		return _modelPermissions.getActionIds(RoleConstants.GUEST);
 	}
 
 	/**
@@ -1277,7 +1278,8 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * @param groupPermissions the permissions (optionally <code>null</code>)
 	 */
 	public void setGroupPermissions(String[] groupPermissions) {
-		_groupPermissions = groupPermissions;
+		_modelPermissions.addRolePermissions(
+			RoleConstants.DEFAULT_GROUP_ROLE, groupPermissions);
 	}
 
 	/**
@@ -1289,7 +1291,8 @@ public class ServiceContext implements Cloneable, Serializable {
 	 *        <code>null</code>)
 	 */
 	public void setGuestPermissions(String[] guestPermissions) {
-		_guestPermissions = guestPermissions;
+		_modelPermissions.addRolePermissions(
+			RoleConstants.GUEST, guestPermissions);
 	}
 
 	/**
@@ -1569,14 +1572,12 @@ public class ServiceContext implements Cloneable, Serializable {
 	private Map<String, Serializable> _expandoBridgeAttributes;
 	private boolean _failOnPortalException = true;
 	private Date _formDate;
-	private String[] _groupPermissions;
-	private String[] _guestPermissions;
 	private transient Map<String, String> _headers;
 	private boolean _indexingEnabled = true;
 	private String _languageId;
 	private String _layoutFullURL;
 	private String _layoutURL;
-	private ModelPermissions _modelPermissions;
+	private ModelPermissions _modelPermissions = new ModelPermissions();
 	private Date _modifiedDate;
 	private String _pathFriendlyURLPrivateGroup;
 	private String _pathFriendlyURLPrivateUser;

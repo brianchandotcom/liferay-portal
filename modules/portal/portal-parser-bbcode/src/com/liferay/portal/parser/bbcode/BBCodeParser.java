@@ -185,8 +185,7 @@ public class BBCodeParser {
 			if (_blockElements.contains(startTag)) {
 				String currentTag = null;
 
-				while (!tags.isEmpty() &&
-					   ((currentTag = tags.lastElement()) != null) &&
+				while (((currentTag = tags.lastElement()) != null) &&
 					   _inlineElements.contains(currentTag)) {
 
 					BBCodeToken currentTagBBCodeToken = new BBCodeToken(

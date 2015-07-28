@@ -217,8 +217,11 @@ public class WikiPageIndexer
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		WikiPage page = WikiPageLocalServiceUtil.getPage(
-			classPK, (Boolean)null);
+		WikiPage page = WikiPageLocalServiceUtil.fetchWikiPage(classPK);
+
+		if (page == null) {
+			page = WikiPageLocalServiceUtil.getPage(classPK, (Boolean)null);
+		}
 
 		doReindex(page);
 	}

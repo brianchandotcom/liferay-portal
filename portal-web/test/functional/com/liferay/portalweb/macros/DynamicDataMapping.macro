@@ -120,7 +120,7 @@
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
-			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<if>
@@ -152,7 +152,7 @@
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
-			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_INDEXABLE" />
@@ -165,7 +165,7 @@
 
 	<command name="editFieldLabelCmd">
 		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
-			<var name="key_fieldFieldLabel" value="${field}" />
+			<var name="fieldFieldLabel" value="${field}" />
 		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_FIELD_LABEL" />
@@ -177,7 +177,7 @@
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
-			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_LOCALIZABLE" />
@@ -190,7 +190,7 @@
 
 	<command name="editFieldNameCmd">
 		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
-			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<if>
@@ -226,7 +226,7 @@
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
-			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_OPTIONS" />
@@ -271,7 +271,7 @@
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
-			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_PREDEFINED_VALUE" />
@@ -347,7 +347,7 @@
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
-			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_REPEATABLE" />
@@ -359,6 +359,8 @@
 	</command>
 
 	<command name="editFieldSettingsCmd">
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#FORM_FIELD" />
 		<execute function="AssertClick" locator1="Dynamicdatamapping#SETTINGS_LINK" value1="Settings" />
 	</command>
@@ -367,7 +369,7 @@
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
-			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_SHOW_LABEL" />
@@ -399,7 +401,7 @@
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
-			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_STYLE" />
@@ -413,7 +415,7 @@
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
-			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_TEXT" />
@@ -427,7 +429,7 @@
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
-			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_TIP" />
@@ -443,7 +445,7 @@
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
 		<execute macro="DynamicDataMapping#editFieldSettingsCmd">
-			<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 		</execute>
 
 		<execute function="DoubleClick" locator1="Dynamicdatamapping#SETTINGS_WIDTH" />

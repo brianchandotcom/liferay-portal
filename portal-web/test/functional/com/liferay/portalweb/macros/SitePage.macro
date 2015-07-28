@@ -97,6 +97,7 @@
 			<isset var="sitePageType" />
 			<then>
 				<execute macro="SitePage#selectSitePageTypeRadioCP">
+					<var name="componentName" value="${componentName}" />
 					<var name="pageTypeDescription" value="${pageTypeDescription}" />
 					<var name="pageTypeURL" value="${pageTypeURL}" />
 					<var name="sitePageType" value="${sitePageType}" />
@@ -440,7 +441,9 @@
 				</then>
 			</elseif>
 			<else>
-				<execute macro="SitePage#addSitePageTypePanelCP" />
+				<execute macro="SitePage#addSitePageTypePanelCP">
+					<var name="componentName" value="${componentName}" />
+				</execute>
 			</else>
 		</if>
 	</command>

@@ -1390,10 +1390,14 @@
 			<condition function="IsElementPresent" locator1="Dockbar#USER_NAME" />
 			<then>
 				<execute macro="User#logoutPG" />
-				<execute macro="User#loginPG" />
+				<execute macro="User#loginPG">
+					<var name="userEmailAddress" value="${userEmailAddress}" />
+				</execute>
 			</then>
 			<else>
-				<execute macro="User#loginPG" />
+				<execute macro="User#loginPG">
+					<var name="userEmailAddress" value="${userEmailAddress}" />
+				</execute>
 			</else>
 		</if>
 	</command>

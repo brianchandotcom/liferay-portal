@@ -203,7 +203,7 @@
 		</ignore-error>
 		<ignore-error description="LPS-55160">
 			<contains></contains>
-			<matches>.*ThreadName=JMX Core MBean Deregistration;.*osgi.compendium:service=.*version=1.[0-9]+.*</matches>
+			<matches>.*osgi.compendium:service=.*version=1.[0-9]+.*</matches>
 		</ignore-error>
 		<ignore-error description="LRQA-14442, temporary workaround until Kiyoshi Lee fixes it">
 			<contains>[org_eclipse_equinox_http_servlet.*Framework Event Dispatcher: Equinox Container:</contains>

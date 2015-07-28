@@ -1102,10 +1102,7 @@ public class LiferaySeleniumHelper {
 
 		// LPS-55160
 
-		if (line.matches(
-				".*ThreadName=JMX Core MBean Deregistration;" +
-					".*osgi.compendium:service=.*version=1.[0-9]+.*")) {
-
+		if (line.matches(".*osgi.compendium:service=.*version=1.[0-9]+.*")) {
 			return true;
 		}
 

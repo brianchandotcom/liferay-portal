@@ -80,7 +80,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 	protected void doDelete(WikiNode wikiNode) throws Exception {
 		Document document = new DocumentImpl();
 
-		document.addUID(CLASS_NAME, wikiNode.getNodeId(), wikiNode.getName());
+		document.addUID(CLASS_NAME, wikiNode.getNodeId());
 
 		SearchEngineUtil.deleteDocument(
 			getSearchEngineId(), wikiNode.getCompanyId(),
@@ -91,7 +91,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 	protected Document doGetDocument(WikiNode wikiNode) throws Exception {
 		Document document = getBaseModelDocument(CLASS_NAME, wikiNode);
 
-		document.addUID(CLASS_NAME, wikiNode.getNodeId(), wikiNode.getName());
+		document.addUID(CLASS_NAME, wikiNode.getNodeId());
 
 		document.addText(Field.DESCRIPTION, wikiNode.getDescription());
 		document.addText(Field.TITLE, wikiNode.getName());

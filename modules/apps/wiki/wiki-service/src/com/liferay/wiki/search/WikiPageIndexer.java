@@ -183,14 +183,14 @@ public class WikiPageIndexer
 
 	@Override
 	protected void doDelete(WikiPage wikiPage) throws Exception {
-		deleteDocument(wikiPage.getCompanyId(), wikiPage.getPageId());
+		deleteDocument(wikiPage.getCompanyId(), wikiPage.getResourcePrimKey());
 	}
 
 	@Override
 	protected Document doGetDocument(WikiPage wikiPage) throws Exception {
 		Document document = getBaseModelDocument(CLASS_NAME, wikiPage);
 
-		document.addUID(CLASS_NAME, wikiPage.getNodeId(), wikiPage.getTitle());
+		document.addUID(CLASS_NAME, wikiPage.getResourcePrimKey());
 
 		String content = HtmlUtil.extractText(
 			WikiUtil.convert(wikiPage, null, null, null));

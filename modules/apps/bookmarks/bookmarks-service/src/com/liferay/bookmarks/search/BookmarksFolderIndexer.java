@@ -89,9 +89,7 @@ public class BookmarksFolderIndexer extends BaseIndexer<BookmarksFolder> {
 	protected void doDelete(BookmarksFolder bookmarksFolder) throws Exception {
 		Document document = new DocumentImpl();
 
-		document.addUID(
-			CLASS_NAME, bookmarksFolder.getFolderId(),
-			bookmarksFolder.getName());
+		document.addUID(CLASS_NAME, bookmarksFolder.getFolderId());
 
 		SearchEngineUtil.deleteDocument(
 			getSearchEngineId(), bookmarksFolder.getCompanyId(),

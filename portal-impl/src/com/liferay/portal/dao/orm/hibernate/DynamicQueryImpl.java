@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -85,23 +86,33 @@ public class DynamicQueryImpl implements DynamicQuery {
 		else if ((start < QueryUtil.ALL_POS) && (end < QueryUtil.ALL_POS)) {
 			_criteria = _criteria.setFirstResult(0);
 			_criteria = _criteria.setMaxResults(0);
+
+			_requiresProcessing = false;
+
+			return;
 		}
 
 		if (start < 0) {
 			start = 0;
 		}
 
+		_criteria = _criteria.setFirstResult(start);
+
+		if (end == QueryUtil.ALL_POS) {
+			return;
+		}
+
 		if (start <= end) {
 			end = end - start;
 		}
-		else if (((start > end) && (end > 0)) || (end < QueryUtil.ALL_POS)) {
+		else {
 			end = 0;
 		}
 
-		_criteria = _criteria.setFirstResult(start);
+		_criteria = _criteria.setMaxResults(end);
 
-		if (end >= 0) {
-			_criteria = _criteria.setMaxResults(end);
+		if (end == 0) {
+			_requiresProcessing = false;
 		}
 	}
 
@@ -118,6 +129,14 @@ public class DynamicQueryImpl implements DynamicQuery {
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List list(boolean unmodifiable) {
+		if (!_requiresProcessing) {
+			if (unmodifiable) {
+				return Collections.emptyList();
+			}
+
+			return new ArrayList<>();
+		}
+
 		List list = _criteria.list();
 
 		if (unmodifiable) {
@@ -168,6 +187,7 @@ public class DynamicQueryImpl implements DynamicQuery {
 	private Criteria _criteria;
 	private final DetachedCriteria _detachedCriteria;
 	private Integer _end;
+	private boolean _requiresProcessing = true;
 	private Integer _start;
 
 }

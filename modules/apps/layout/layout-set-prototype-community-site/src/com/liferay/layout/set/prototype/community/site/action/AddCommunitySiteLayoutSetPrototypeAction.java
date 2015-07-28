@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.set.community.site.action;
+package com.liferay.layout.set.prototype.community.site.action;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.ActionException;

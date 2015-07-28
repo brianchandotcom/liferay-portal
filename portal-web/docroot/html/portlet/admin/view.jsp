@@ -25,14 +25,14 @@
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/admin/view");
+		portletURL.setParameter("mvcPath", "/html/portlet/admin/view.jsp");
 		portletURL.setParameter("tabs1", tabs1);
 		portletURL.setParameter("tabs2", tabs2);
 		portletURL.setParameter("tabs3", tabs3);
 		%>
 
 		<portlet:renderURL var="redirectURL">
-			<portlet:param name="struts_action" value="/admin/view" />
+			<portlet:param name="mvcPath" value="/html/portlet/admin/view.jsp" />
 			<portlet:param name="tabs1" value="<%= tabs1 %>" />
 			<portlet:param name="tabs2" value="<%= tabs2 %>" />
 			<portlet:param name="tabs3" value="<%= tabs3 %>" />
@@ -40,7 +40,7 @@
 		</portlet:renderURL>
 
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		    <aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 			<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 			<aui:input name="tabs3" type="hidden" value="<%= tabs3 %>" />
@@ -63,11 +63,12 @@
 							{
 								form: document.<portlet:namespace />fm,
 								namespace: '<portlet:namespace />',
-								url: '<portlet:actionURL><portlet:param name="struts_action" value="/admin/edit_server" /></portlet:actionURL>'
+								url: '<portlet:actionURL><portlet:param name="mvcPath" value="/html/portlet/admin/edit_server.jsp" /></portlet:actionURL>'
 							}
 						);
 					</aui:script>
 				</c:when>
+
 				<c:when test='<%= tabs1.equals("plugins") %>'>
 
 					<%
@@ -86,7 +87,7 @@
 		</aui:form>
 
 		<portlet:renderURL var="redirectURL">
-			<portlet:param name="struts_action" value="/admin/view" />
+			<portlet:param name="mvcPath" value="/html/portlet/admin/view.jsp" />
 			<portlet:param name="tabs1" value="<%= tabs1 %>" />
 			<portlet:param name="tabs2" value="<%= tabs2 %>" />
 			<portlet:param name="tabs3" value="<%= tabs3 %>" />
@@ -94,11 +95,10 @@
 			<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= String.valueOf(delta) %>" />
 		</portlet:renderURL>
 
-		<portlet:actionURL var="editServerURL">
-			<portlet:param name="struts_action" value="/admin/edit_server" />
-		</portlet:actionURL>
+		<portlet:actionURL name="editServer" var="editServerURL" />
 
 		<aui:script>
+
 			AUI.$('#<portlet:namespace />fm').on(
 				'click',
 				'.save-server-button',
@@ -108,7 +108,7 @@
 					var form = document.<portlet:namespace />fm;
 
 					form.<portlet:namespace /><%= Constants.CMD %>.value = currentTarget.data('cmd');
-					form.<portlet:namespace />redirect.value = '<%= redirectURL %>';
+					form.<portlet:namespace />redirect.value = '<%= currentURL %>';
 
 					var className = currentTarget.data('classname');
 

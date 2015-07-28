@@ -15,16 +15,12 @@
 package com.liferay.layout.set.prototype.community.site.action;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.events.ActionException;
-import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.service.UserLocalService;
@@ -45,33 +41,23 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, service = AddCommunitySiteLayoutSetPrototypeAction.class
 )
-public class AddCommunitySiteLayoutSetPrototypeAction extends SimpleAction {
-
-	@Override
-	public void run(String[] ids) throws ActionException {
-		try {
-			doRun(GetterUtil.getLong(ids[0]));
-		}
-		catch (Exception e) {
-			throw new ActionException(e);
-		}
-	}
+public class AddCommunitySiteLayoutSetPrototypeAction {
 
 	@Activate
-	protected void activate() throws ActionException {
-		Long companyId = CompanyThreadLocal.getCompanyId();
+	protected void activate() throws Exception {
+		List<Company> companies = _companyLocalService.getCompanies();
 
-		try {
-			List<Company> companies = _companyLocalService.getCompanies();
+		for (Company company : companies) {
+			long defaultUserId = _userLocalService.getDefaultUserId(
+				company.getCompanyId());
 
-			for (Company company : companies) {
-				CompanyThreadLocal.setCompanyId(company.getCompanyId());
+			List<LayoutSetPrototype> layoutSetPrototypes =
+				_layoutSetPrototypeLocalService.search(
+					company.getCompanyId(), null, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
 
-				run(new String[] {String.valueOf(company.getCompanyId())});
-			}
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(companyId);
+			addPublicSite(
+				company.getCompanyId(), defaultUserId, layoutSetPrototypes);
 		}
 	}
 

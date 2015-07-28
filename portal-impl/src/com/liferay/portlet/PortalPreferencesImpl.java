@@ -184,30 +184,22 @@ public class PortalPreferencesImpl
 
 	@Override
 	public void resetValues(final String namespace) {
-		while (true) {
-			Map<String, Preference> preferences = getPreferences();
+		Map<String, Preference> preferences = getPreferences();
 
-			try {
-				for (Map.Entry<String, Preference> entry :
-						preferences.entrySet()) {
+		try {
+			for (Map.Entry<String, Preference> entry : preferences.entrySet()) {
+				String key = entry.getKey();
 
-					String key = entry.getKey();
-
-					if (key.startsWith(namespace) && !isReadOnly(key)) {
-						reset(key);
-					}
+				if (key.startsWith(namespace) && !isReadOnly(key)) {
+					reset(key);
 				}
-
-				return;
 			}
-			catch (ConcurrentModificationException cme) {
-				continue;
-			}
-			catch (Throwable t) {
-				_log.error(t, t);
-
-				return;
-			}
+		}
+		catch (ConcurrentModificationException cme) {
+			throw cme;
+		}
+		catch (Throwable t) {
+			_log.error(t, t);
 		}
 	}
 

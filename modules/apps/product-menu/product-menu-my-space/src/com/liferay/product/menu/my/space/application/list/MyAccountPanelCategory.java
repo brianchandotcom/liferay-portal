@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {"panel.category.key=" + PanelCategoryKeys.MY_SPACE},
 	service = PanelCategory.class
 )
-public class ProductivityCenterPanelCategory extends BasePanelCategory {
+public class MyAccountPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getIconCssClass() {
@@ -45,7 +45,7 @@ public class ProductivityCenterPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "productivity-center");
+		return LanguageUtil.get(locale, "my-account");
 	}
 
 	@Override

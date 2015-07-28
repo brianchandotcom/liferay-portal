@@ -31,6 +31,9 @@ import com.liferay.portal.util.PortletKeys;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.portlet.Portlet;
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -123,6 +126,16 @@ public class AddCommunitySiteLayoutSetPrototypeAction {
 		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
 
 		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet)",
+		unbind = "-")
+	protected void setPortlet(Portlet portlet) {
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	@Reference(unbind = "-")

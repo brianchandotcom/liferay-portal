@@ -5,43 +5,102 @@
 
 $bg-color: #F5F7F8;
 
+.container-fluid-1280 .row {
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
 body {
 	background-color: $bg-color;
+}
 
-	#wrapper {
-		padding: 0;
+#wrapper {
+	padding: 0;
 
-		#banner {
-			padding: 20px 0;
+	#banner {
+		padding: 40px 0 30px;
+		position: relative;
 
-			#heading {
-				margin-left: 20px;
+		a:active, a:hover, a:focus {
+			text-decoration: none;
+		}
 
-				.navbar-toggle {
-					margin: 12px;
+		#heading .site-name {
+			font-size: 145%;
+			margin-left: 20px;
+		}
+
+		.navbar-toggle {
+			margin: 12px;
+		}
+
+		.navbar-form {
+			@include respond-to(desktop, tablet) {
+				margin-left: 30px;
+			}
+
+			.form-control {
+				background-color: transparent;
+				border-bottom-width: 1px;
+				border-color: #D6DCE2;
+				font-size: 16px;
+				height: auto;
+				margin-top: 4px;
+
+				@include respond-to(desktop, tablet) {
+					max-width: 200px;
 				}
 			}
 
-			.nav > li > a.dropdown-lft {
-				margin-left: -20px;
-			}
-
-			.site-name {
-				font-size: 145%;
-				margin-left: 20px;
+			.input-select-wrapper, .field-wrapper {
+				display: none;
 			}
 		}
 
-		#footer {
-			background-color: #29343D;
-			color: #FFF;
-			margin-bottom: 60px;
-			padding: 40px 20px;
+		.nav > li > a.dropdown-lft {
+			margin-left: -20px;
+		}
+
+		.user-personal-bar {
+			@include respond-to(desktop, tablet) {
+				position: absolute;
+				right: 20px;
+				top: 0;
+			}
+
+			.sign-in > a, .user-avatar-link {
+				display: block;
+				line-height: 28px;
+				padding: 8px 4px 14px 14px;
+			}
+
+			.user-avatar-image {
+				background-size: auto 32px;
+				border-radius: 50%;
+				display: inline-block;
+				height: 32px;
+				overflow: hidden;
+				vertical-align: text-bottom;
+				width: 32px;
+			}
+
+			@include respond-to(desktop, tablet) {
+				.icon-caret-down, .user-full-name {
+					display: none;
+				}
+			}
 		}
 	}
 
-	.modify-pages .delete-tab {
-		height: 20px;
-		top: 22px;
+	#footer {
+		background-color: #29343D;
+		color: #FFF;
+		margin-bottom: 60px;
+		padding: 40px 20px;
 	}
+}
+
+.modify-pages .delete-tab {
+	height: 20px;
+	top: 22px;
 }

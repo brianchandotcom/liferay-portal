@@ -106,7 +106,7 @@ itemSelectorJSONParamJSONObject.put("desiredItemSelectorReturnTypes", "com.lifer
 
 JSONObject itemSelectorUploadParamJSONObject = JSONFactoryUtil.createJSONObject();
 
-itemSelectorUploadParamJSONObject.put("desiredItemSelectorReturnTypes", "com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.UploadableFileReturnType");
+itemSelectorUploadParamJSONObject.put("desiredItemSelectorReturnTypes", "com.liferay.item.selector.criteria.UploadableFileReturnType");
 
 PortletURL uploadItemSelectorCriterionUploadURL = liferayPortletResponse.createActionURL(PortletKeys.BLOGS);
 uploadItemSelectorCriterionUploadURL.setParameter(javax.portlet.ActionRequest.ACTION_NAME, "/blogs/upload_editor_image");

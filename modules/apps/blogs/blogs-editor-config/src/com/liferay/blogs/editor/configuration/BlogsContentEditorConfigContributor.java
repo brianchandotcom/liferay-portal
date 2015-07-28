@@ -116,8 +116,14 @@ public class BlogsContentEditorConfigContributor
 				uploadURL.toString(),
 				LanguageUtil.get(themeDisplay.getLocale(), "blogs"));
 
+		List<ItemSelectorReturnType>
+			uploadDesiredItemSelectorReturnTypes = new ArrayList<>();
+
+		uploadDesiredItemSelectorReturnTypes.add(
+			new UploadableFileReturnType());
+
 		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			blogsContentEditorDesiredItemSelectorReturnTypes);
+			uploadDesiredItemSelectorReturnTypes);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, eventName,

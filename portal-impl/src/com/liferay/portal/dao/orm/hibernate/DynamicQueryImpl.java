@@ -98,7 +98,7 @@ public class DynamicQueryImpl implements DynamicQuery {
 		if (start <= end) {
 			end = end - start;
 		}
-		else if (((start > end) && (end > 0)) || (end < QueryUtil.ALL_POS)) {
+		else if (end != QueryUtil.ALL_POS) {
 			end = 0;
 		}
 

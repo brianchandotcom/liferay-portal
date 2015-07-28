@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.trash;
+package com.liferay.document.library.trash;
 
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -43,11 +44,19 @@ import com.liferay.portlet.trash.model.TrashEntry;
 
 import javax.portlet.PortletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * Implements trash handling for the file shortcut entity.
  *
  * @author Zsolt Berentey
  */
+@Component(
+	property = {
+		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileShortcut"
+	},
+	service = TrashHandler.class
+)
 public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 	@Override

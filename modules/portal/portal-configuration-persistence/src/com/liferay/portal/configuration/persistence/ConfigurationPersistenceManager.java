@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.io.IOException;
 
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
+
 import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -67,20 +71,28 @@ public class ConfigurationPersistenceManager
 	public static final int ALMOST_MAX_VALUE = (Integer.MAX_VALUE - 1000);
 
 	@Override
-	public void delete(String pid) throws IOException {
-		WriteLock writeLock = _readWriteLock.writeLock();
+	public void delete(final String pid) throws IOException {
+		if (System.getSecurityManager() != null) {
+			try {
+				AccessController.doPrivileged(
+					new PrivilegedExceptionAction<Void>() {
 
-		try {
-			writeLock.lock();
+						@Override
+						public Void run() throws Exception {
+							_delete(pid);
 
-			Dictionary<?, ?> dictionary = _dictionaryMap.remove(pid);
+							return null;
+						}
 
-			if ((dictionary != null) && existsInDB(pid)) {
-				deleteFromDB(pid);
+					}
+				);
+			}
+			catch (PrivilegedActionException pae) {
+				throw (IOException)pae.getException();
 			}
 		}
-		finally {
-			writeLock.unlock();
+		else {
+			_delete(pid);
 		}
 	}
 
@@ -148,20 +160,31 @@ public class ConfigurationPersistenceManager
 
 	@Override
 	public void store(
-			String pid, @SuppressWarnings("rawtypes") Dictionary dictionary)
+			final String pid,
+			@SuppressWarnings("rawtypes") final Dictionary dictionary)
 		throws IOException {
 
-		WriteLock writeLock = _readWriteLock.writeLock();
+		if (System.getSecurityManager() != null) {
+			try {
+				AccessController.doPrivileged(
+					new PrivilegedExceptionAction<Void>() {
 
-		try {
-			writeLock.lock();
+						@Override
+						public Void run() throws Exception {
+							_store(pid, dictionary);
 
-			storeInDB(pid, dictionary);
+							return null;
+						}
 
-			_dictionaryMap.put(pid, dictionary);
+					}
+				);
+			}
+			catch (PrivilegedActionException pae) {
+				throw (IOException)pae.getException();
+			}
 		}
-		finally {
-			writeLock.unlock();
+		else {
+			_store(pid, dictionary);
 		}
 	}
 
@@ -470,6 +493,41 @@ public class ConfigurationPersistenceManager
 		}
 		finally {
 			cleanUp(con, ps, rs);
+		}
+	}
+
+	private void _delete(String pid) throws IOException {
+		WriteLock writeLock = _readWriteLock.writeLock();
+
+		try {
+			writeLock.lock();
+
+			Dictionary<?, ?> dictionary = _dictionaryMap.remove(pid);
+
+			if ((dictionary != null) && existsInDB(pid)) {
+				deleteFromDB(pid);
+			}
+		}
+		finally {
+			writeLock.unlock();
+		}
+	}
+
+	private void _store(
+			String pid, @SuppressWarnings("rawtypes") Dictionary dictionary)
+		throws IOException {
+
+		WriteLock writeLock = _readWriteLock.writeLock();
+
+		try {
+			writeLock.lock();
+
+			storeInDB(pid, dictionary);
+
+			_dictionaryMap.put(pid, dictionary);
+		}
+		finally {
+			writeLock.unlock();
 		}
 	}
 

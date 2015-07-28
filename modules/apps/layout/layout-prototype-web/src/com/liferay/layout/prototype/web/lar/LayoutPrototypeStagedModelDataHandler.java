@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.layoutprototypes.lar;
+package com.liferay.layout.prototype.web.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -28,15 +27,18 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Daniela Zapata Riesco
  */
-@OSGiBeanProperties
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class LayoutPrototypeStagedModelDataHandler
 	extends BaseStagedModelDataHandler<LayoutPrototype> {
 

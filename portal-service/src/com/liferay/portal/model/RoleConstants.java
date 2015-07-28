@@ -24,6 +24,8 @@ public class RoleConstants {
 
 	public static final String ADMINISTRATOR = "Administrator";
 
+	public static final String DEFAULT_GROUP_ROLE = "DEFAULT_GROUP_ROLE";
+
 	public static final String GUEST = "Guest";
 
 	public static final String ORGANIZATION_ADMINISTRATOR =

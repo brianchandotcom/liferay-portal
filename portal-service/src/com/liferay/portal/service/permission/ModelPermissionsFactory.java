@@ -41,41 +41,6 @@ public class ModelPermissionsFactory {
 		return create(parameterMap);
 	}
 
-	public static ModelPermissions create(
-			long companyId, long groupId, String[] groupPermissions,
-			String[] guestPermissions)
-		throws PortalException {
-
-		ModelPermissions modelPermissions = new ModelPermissions();
-
-		// Group permissions
-
-		if ((groupId > 0) && (groupPermissions != null) &&
-			(groupPermissions.length > 0)) {
-
-			Role defaultGroupRole = RoleLocalServiceUtil.getDefaultGroupRole(
-				groupId);
-
-			modelPermissions.addRolePermissions(
-				defaultGroupRole, groupPermissions);
-		}
-
-		// Guest permissions
-
-		if ((guestPermissions != null) && (guestPermissions.length > 0)) {
-			Role guestRole = RoleLocalServiceUtil.getRole(
-				companyId, RoleConstants.GUEST);
-
-			if (guestPermissions == null) {
-				guestPermissions = new String[0];
-			}
-
-			modelPermissions.addRolePermissions(guestRole, guestPermissions);
-		}
-
-		return modelPermissions;
-	}
-
 	public static ModelPermissions create(Map<String, String[]> parameterMap) {
 		ModelPermissions modelPermissions = new ModelPermissions();
 
@@ -103,7 +68,7 @@ public class ModelPermissionsFactory {
 
 			String[] actionIds = parameterMap.get(parameterName);
 
-			modelPermissions.addRolePermissions(role, actionIds);
+			modelPermissions.addRolePermissions(role.getName(), actionIds);
 		}
 
 		return modelPermissions;
@@ -113,6 +78,25 @@ public class ModelPermissionsFactory {
 		Map<String, String[]> parameterMap = portletRequest.getParameterMap();
 
 		return create(parameterMap);
+	}
+
+	public static ModelPermissions create(
+			String[] groupPermissions, String[] guestPermissions)
+		throws PortalException {
+
+		ModelPermissions modelPermissions = new ModelPermissions();
+
+		if ((groupPermissions != null) && (groupPermissions.length > 0)) {
+			modelPermissions.addRolePermissions(
+				RoleConstants.DEFAULT_GROUP_ROLE, groupPermissions);
+		}
+
+		if ((guestPermissions != null) && (guestPermissions.length > 0)) {
+			modelPermissions.addRolePermissions(
+				RoleConstants.GUEST, guestPermissions);
+		}
+
+		return modelPermissions;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

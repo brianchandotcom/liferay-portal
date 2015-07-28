@@ -42,7 +42,6 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 
 <liferay-ui:search-container
 	curParam="userGroupsCur"
-	emptyResultsMessage="no-user-groups-were-found"
 	headerNames="name,null"
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= userGroups.size() %>"

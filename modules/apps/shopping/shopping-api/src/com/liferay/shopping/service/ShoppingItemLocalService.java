@@ -67,7 +67,7 @@ public interface ShoppingItemLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void addItemResources(com.liferay.shopping.model.ShoppingItem item,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws PortalException;
 
 	public void addItemResources(long itemId, boolean addGroupPermissions,

@@ -721,7 +721,7 @@ public abstract class ShoppingItemLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = ShoppingItemLocalService.class)
+	@BeanReference(type = com.liferay.shopping.service.ShoppingItemLocalService.class)
 	protected ShoppingItemLocalService shoppingItemLocalService;
 	@BeanReference(type = com.liferay.shopping.service.ShoppingItemService.class)
 	protected com.liferay.shopping.service.ShoppingItemService shoppingItemService;

@@ -10,9 +10,6 @@
 		<company-excludes />
 	</company-limit>
 	<theme id="classic" name="Classic">
-		<root-path>/html/themes/atlas</root-path>
-		<control-panel-theme>false</control-panel-theme>
-		<page-theme>true</page-theme>
 		<root-path>/html/themes/classic</root-path>
 		<templates-path>${root-path}/templates</templates-path>
 		<images-path>${root-path}/images</images-path>

@@ -135,6 +135,7 @@ public class PortletProviderUtil {
 		_addServiceTrackerMap.open();
 		_browseServiceTrackerMap.open();
 		_editServiceTrackerMap.open();
+		_manageServiceTrackerMap.open();
 		_viewServiceTrackerMap.open();
 	}
 

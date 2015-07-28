@@ -1519,6 +1519,25 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.exportimport.web"
 		},
 
+		// Social Activity
+
+		new String[] {
+			"social.activity.contribution.increments",
+			"contribution.increments", "com.liferay.social.activity"
+		},
+		new String[] {
+			"social.activity.contribution.limit.values",
+			"contribution.limit.values", "com.liferay.social.activity"
+		},
+		new String[] {
+			"social.activity.participation.increments",
+			"participation.increments", "com.liferay.social.activity"
+		},
+		new String[] {
+			"social.activity.participation.limit.values",
+			"participation.limit.values", "com.liferay.social.activity"
+		},
+
 		// Tags Compiler
 
 		new String[] {
@@ -1722,10 +1741,6 @@ public class VerifyProperties extends VerifyProcess {
 		"sites.form.add.miscellaneous", "sites.form.add.seo",
 		"sites.form.update.advanced", "sites.form.update.main",
 		"sites.form.update.miscellaneous", "sites.form.update.seo",
-		"social.activity.contribution.increments",
-		"social.activity.contribution.limit.values",
-		"social.activity.participation.increments",
-		"social.activity.participation.limit.values",
 		"staging.lock.enabled", "table.mapper.cacheless.mapping.table.names",
 		"tck.url", "users.form.add.identification", "users.form.add.main",
 		"users.form.add.miscellaneous", "users.form.my.account.identification",

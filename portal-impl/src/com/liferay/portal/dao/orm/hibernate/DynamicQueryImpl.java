@@ -109,7 +109,9 @@ public class DynamicQueryImpl implements DynamicQuery {
 
 		_criteria = _criteria.setMaxResults(end);
 
-		_requiresProcessing = !(end == 0);
+		if (end == 0) {
+			_requiresProcessing = false;
+		}
 	}
 
 	public DetachedCriteria getDetachedCriteria() {

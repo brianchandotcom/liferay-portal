@@ -61,6 +61,7 @@
 		<dirset dir="apps/unit-converter" includes="*" />
 		<dirset dir="apps/user-groups-admin" includes="*" />
 		<dirset dir="apps/user-personal-bar" includes="*" />
+		<dirset dir="apps/users-admin" includes="*" />
 		<dirset dir="apps/web-proxy" includes="*" />
 		<dirset dir="apps/wiki" includes="*" />
 		<dirset dir="apps/workflow" includes="*" />

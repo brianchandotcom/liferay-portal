@@ -36,7 +36,7 @@ if (entry == null) {
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
-	<aui:input name="alert" type="hidden" value="<%= portletName.equals(PortletKeys.ALERTS) %>" />
+	<aui:input name="alert" type="hidden" value="<%= portletName.equals(AnnouncementsPortletKeys.ALERTS) %>" />
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"

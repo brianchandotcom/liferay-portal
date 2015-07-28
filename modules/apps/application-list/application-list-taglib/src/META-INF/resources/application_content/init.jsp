@@ -14,16 +14,4 @@
  */
 --%>
 
-<%@ include file="/panel_category_content/init.jsp" %>
-
-<%
-PanelCategory panelCategory = (PanelCategory)request.getAttribute("application-list-ui:panel-content:panelCategory");
-
-request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, panelCategory);
-
-boolean include = panelCategory.include(request, response);
-%>
-
-<c:if test="<%= !include %>">
-	<liferay-application-list:panel panelCategory="<%= panelCategory %>" />
-</c:if>
+<%@ include file="/init.jsp" %>

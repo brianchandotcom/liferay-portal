@@ -14,16 +14,23 @@
  */
 --%>
 
-<%@ include file="/panel_category_content/init.jsp" %>
+<%@ include file="/application_content/init.jsp" %>
 
 <%
-PanelCategory panelCategory = (PanelCategory)request.getAttribute("application-list-ui:panel-content:panelCategory");
-
-request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, panelCategory);
-
-boolean include = panelCategory.include(request, response);
+PanelAppContentHelper panelAppContentHelper = new PanelAppContentHelper(request, response);
 %>
 
-<c:if test="<%= !include %>">
-	<liferay-application-list:panel panelCategory="<%= panelCategory %>" />
-</c:if>
+<c:choose>
+	<c:when test="<%= panelAppContentHelper.isValidPortletSelected() %>">
+
+		<%
+		panelAppContentHelper.writeContent(pageContext.getOut());
+		%>
+
+	</c:when>
+	<c:otherwise>
+		<div class="portlet-msg-info">
+			<liferay-ui:message key="please-select-a-tool-from-the-left-menu" />
+		</div>
+	</c:otherwise>
+</c:choose>

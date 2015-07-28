@@ -18,7 +18,7 @@
 
 <c:choose>
 	<c:when test="<%= themeDisplay.isStatePopUp() %>">
-		<liferay-application-list:panel-content portletId="<%= themeDisplay.getPpid() %>" />
+		<liferay-application-list:application-content portletId="<%= themeDisplay.getPpid() %>" />
 	</c:when>
 	<c:otherwise>
 		<aui:container cssClass="panel-manage-frontpage">
@@ -27,7 +27,7 @@
 					<liferay-portlet:runtime portletName="<%= ProductMenuPortletKeys.PRODUCT_MENU %>" />
 				</aui:col>
 				<aui:col width="<%= 75 %>">
-					<liferay-application-list:panel-content portletId="<%= themeDisplay.getPpid() %>" />
+					<liferay-application-list:application-content portletId="<%= themeDisplay.getPpid() %>" />
 				</aui:col>
 			</aui:row>
 		</aui:container>

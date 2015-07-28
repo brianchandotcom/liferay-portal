@@ -22,11 +22,9 @@ Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttr
 
 <liferay-ui:error-principal />
 
-<portlet:actionURL name="/social_activity/edit_activity_settings" var="editURL">
-	<portlet:param name="mvcRenderCommandName" value="/social_activity/edit_activity_settings" />
-</portlet:actionURL>
+<portlet:actionURL name="/social_activity/edit_activity_settings" var="editURL" />
 
-<aui:form action="<%= editURL.toString() %>" cssClass="update-socialactivity-form" method="post" name="fm">
+<aui:form action="<%= editURL %>" cssClass="update-socialactivity-form" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input id="settingsJSON" name="settingsJSON" type="hidden" />

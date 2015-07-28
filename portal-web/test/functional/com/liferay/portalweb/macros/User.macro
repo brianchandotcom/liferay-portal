@@ -1398,6 +1398,18 @@
 		</if>
 	</command>
 
+	<command name="gotoEditCP">
+		<execute function="AssertClick" locator1="CPUsersandorganizations#SEARCH_ALL_USERS" value1="All Users" />
+
+		<execute macro="User#searchCP">
+			<var name="searchToken" value="${userScreenName}" />
+		</execute>
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute function="AssertClick" locator1="CPUsersandorganizationsViewusers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+	</command>
+
 	<command name="impersonateCP">
 		<execute function="AssertClick" locator1="CPUsersandorganizations#SEARCH_ALL_USERS" value1="All Users" />
 
@@ -1689,13 +1701,13 @@
 	</command>
 
 	<command name="tearDownCP">
-		<var name="userFirstName" value="userfn*" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#deactivateCP" />
+		<execute macro="User#deactivateCP">
+			<var name="userFirstName" value="userfn*" />
+		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -1829,95 +1841,57 @@
 	</command>
 
 	<command name="viewUserInfomationOrganizationSitesCP">
-		<execute function="AssertClick" locator1="CPUsersandorganizations#SEARCH_ALL_USERS" value1="All Users" />
-
-		<var name="key_userScreenName" value="${userScreenName}" />
-
-		<execute function="Pause" locator1="1000" />
-		<execute function="Type" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsViewusers#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsViewusers#USER_TABLE_LAST_NAME" value1="${userLastName}" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsViewusers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizationsViewusers#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
+		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_SITES" value1="Sites" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_SITES" value1="Sites" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#SITES_TABLE_NAME" value1="${orgName}" />
 	</command>
 
 	<command name="viewUserInfomationRolesCP">
-		<execute function="AssertClick" locator1="CPUsersandorganizations#SEARCH_ALL_USERS" value1="All Users" />
-
-		<var name="key_userScreenName" value="${userScreenName}" />
-
-		<execute function="Pause" locator1="1000" />
-		<execute function="Type" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsViewusers#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsViewusers#USER_TABLE_LAST_NAME" value1="${userLastName}" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsViewusers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizationsViewusers#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
+		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_ROLES" value1="Roles" />
 
 		<var name="key_roleName" value="${roleName}" />
 
-		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_ROLES" value1="Roles" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#ROLES_REGULAR_ROLES_TABLE_TITLE" value1="${roleName}" />
 	</command>
 
 	<command name="viewUserInfomationSitesCP">
-		<execute function="AssertClick" locator1="CPUsersandorganizations#SEARCH_ALL_USERS" value1="All Users" />
-
-		<var name="key_userScreenName" value="${userScreenName}" />
-
-		<execute function="Pause" locator1="1000" />
-		<execute function="Type" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsViewusers#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsViewusers#USER_TABLE_LAST_NAME" value1="${userLastName}" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsViewusers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizationsViewusers#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
+		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_SITES" value1="Sites" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_SITES" value1="Sites" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#SITES_TABLE_NAME" value1="${siteName}" />
 	</command>
 
 	<command name="viewUserInfomationUserGroupsCP">
-		<execute function="AssertClick" locator1="CPUsersandorganizations#SEARCH_ALL_USERS" value1="All Users" />
-
-		<var name="key_userScreenName" value="${userScreenName}" />
-
-		<execute function="Pause" locator1="1000" />
-		<execute function="Type" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsViewusers#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsViewusers#USER_TABLE_LAST_NAME" value1="${userLastName}" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsViewusers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizationsViewusers#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
+		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_USER_GROUPS" value1="User Groups" />
 
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_USER_GROUPS" value1="User Groups" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
 	</command>
 
+	<command name="viewUserMiscellaneousCustomFieldsCP">
+		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_MISCELLANEOUS_CUSTOM_FIELDS" value1="Custom Fields" />
+
+		<var name="key_customFieldName" value="${customFieldName}" />
+
+		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_LABEL" value1="${customFieldName}" />
+
+		<if>
+			<equals arg1="${customFieldName}" arg2="Boolean" />
+			<then>
+				<execute function="AssertSelectedLabel" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_SELECT" value1="${customFieldValue}" />
+			</then>
+		</if>
+	</command>
+
 	<command name="viewUserSiteCP">
-		<execute function="AssertClick" locator1="CPUsersandorganizations#SEARCH_ALL_USERS" value1="All Users" />
-
-		<var name="key_userScreenName" value="${userScreenName}" />
-
-		<execute function="Pause" locator1="1000" />
-		<execute function="Type" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsViewusers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizationsViewusers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_SITES" value1="Sites" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_USER_INFORMATION_SITES" value1="Sites" />
 		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#SITES_TABLE_NAME" value1="${siteName}" />
 	</command>
 </definition>

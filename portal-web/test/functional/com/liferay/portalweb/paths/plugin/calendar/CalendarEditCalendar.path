@@ -20,17 +20,17 @@
 </tr>
 <tr>
 	<td>DEFAULT_CALENDAR_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_calendarportlet_defaultCalendar']</td>
+	<td>//input[@id='_1_WAR_CalendarPortlet_defaultCalendar']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_COMMENTS_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_calendarportlet_enableComments']</td>
+	<td>//input[@id='_1_WAR_CalendarPortlet_enableComments']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_calendarportlet_enableRatings']</td>
+	<td>//input[@id='_1_WAR_CalendarPortlet_enableRatings']</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,17 +87,17 @@
 </tr>
 <tr>
 	<td>NOTIFICATION_TEMPLATES_FROM_NAME_FIELD</td>
-	<td>//input[contains(@id,'calendarportlet_fromName')]</td>
+	<td>//input[contains(@id,'CalendarPortlet_fromName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATION_TEMPLATES_FROM_ADDRESS_FIELD</td>
-	<td>//input[contains(@id,'calendarportlet_fromAddress')]</td>
+	<td>//input[contains(@id,'CalendarPortlet_fromAddress')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NOTIFICATION_TEMPLATES_SUBJECT_FIELD</td>
-	<td>//input[contains(@id,'calendarportlet_subject')]</td>
+	<td>//input[contains(@id,'CalendarPortlet_subject')]</td>
 	<td></td>
 </tr>
 <tr>

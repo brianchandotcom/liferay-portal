@@ -7,7 +7,6 @@
 	</set-up>
 
 	<command name="KaleoWebSmoke" priority="4">
-
 		<var name="appName" value="Kaleo Workflow" />
 
 		<execute macro="Page#gotoCP">

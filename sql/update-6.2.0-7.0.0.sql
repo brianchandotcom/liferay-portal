@@ -18,8 +18,8 @@ alter table DDMStructure add versionUserId LONG;
 alter table DDMStructure add versionUserName VARCHAR(75) null;
 alter table DDMStructure add version VARCHAR(75) null;
 
-update DDMStrucrure set versionUserId = userId;
-update DDMStrucrure set versionUserName = userName;
+update DDMStructure set versionUserId = userId;
+update DDMStructure set versionUserName = userName;
 update DDMStructure set version = '1.0';
 
 create table DDMStructureLayout (

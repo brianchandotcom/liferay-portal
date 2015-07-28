@@ -10,6 +10,9 @@
 		<company-excludes />
 	</company-limit>
 	<theme id="classic" name="Classic">
+		<root-path>/html/themes/atlas</root-path>
+		<control-panel-theme>false</control-panel-theme>
+		<page-theme>true</page-theme>
 		<root-path>/html/themes/classic</root-path>
 		<templates-path>${root-path}/templates</templates-path>
 		<images-path>${root-path}/images</images-path>
@@ -23,27 +26,11 @@
 		<roles>
 			<role-name>User</role-name>
 		</roles>
-		<color-scheme id="01" name="Default">
-			<default-cs>true</default-cs>
-			<css-class>default</css-class>
-			<color-scheme-images-path>${images-path}/color_schemes/${css-class}</color-scheme-images-path>
-		</color-scheme>
-		<color-scheme id="02" name="Dark">
-			<css-class>dark</css-class>
-		</color-scheme>
-		<color-scheme id="03" name="Light">
-			<css-class>light</css-class>
-		</color-scheme>
 	</theme>
 	<theme id="admin" name="Admin">
 		<root-path>/html/themes/admin</root-path>
 		<control-panel-theme>true</control-panel-theme>
 		<page-theme>false</page-theme>
-	</theme>
-	<theme id="atlas" name="Atlas">
-		<root-path>/html/themes/atlas</root-path>
-		<control-panel-theme>false</control-panel-theme>
-		<page-theme>true</page-theme>
 	</theme>
 	<theme id="control-panel" name="Control Panel">
 		<root-path>/html/themes/control_panel</root-path>

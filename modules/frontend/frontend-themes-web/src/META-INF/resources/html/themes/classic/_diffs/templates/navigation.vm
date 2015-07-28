@@ -1,53 +1,67 @@
-<nav class="$nav_css_class navbar site-navigation" id="navigation" role="navigation">
-	<h1 class="hide-accessible">#language ("navigation")</h1>
+<div aria-expanded="false" class="collapse navbar-collapse" id="navigationCollapse">
+	<nav class="$nav_css_class site-navigation" id="navigation" role="navigation">
+		<div class="navbar-form navbar-right" role="search">
+			$theme.runtime('com_liferay_search_web_portlet_SearchPortlet', '', '')
+		</div>
 
-	<ul aria-label="#language ("site-pages")" class="nav navbar-nav" role="menubar">
-		#foreach ($nav_item in $nav_items)
-				#set ($nav_item_attr_selected="")
-				#set ($nav_item_attr_has_popup="")
-				#set ($nav_item_caret="")
-				#set ($nav_item_css_class="lfr-nav-item")
-				#set ($nav_item_link_css_class="")
+		<ul aria-label="#language ("site-pages")" class="nav navbar-nav navbar-right navbar-site" role="menubar">
+			<h1 class="hide-accessible">#language ("navigation")</h1>
 
-			#if ($nav_item.isSelected())
-				#set ($nav_item_attr_selected="aria-selected='true'")
-				#set ($nav_item_css_class="$nav_item_css_class selected active")
-			#end
+			#foreach ($nav_item in $nav_items)
+					#set ($nav_item_attr_selected="")
+					#set ($nav_item_attr_has_popup="")
+					#set ($nav_item_caret="")
+					#set ($nav_item_css_class="lfr-nav-item")
+					#set ($nav_item_link_css_class="")
 
-			#if ($nav_item.hasChildren())
-				#set ($nav_item_attr_has_popup="aria-haspopup='true'")
-				#set ($nav_item_caret='<span class="lfr-nav-child-toggle"><i class="icon-caret-down"></i></span>')
-				#set ($nav_item_css_class="$nav_item_css_class dropdown")
-				#set ($nav_item_link_css_class="dropdown-toggle")
-			#end
-
-			<li class="$nav_item_css_class" id="layout_$nav_item.getLayoutId()" $nav_item_attr_selected role="presentation">
-				<a aria-labelledby="layout_$nav_item.getLayoutId()" $nav_item_attr_has_popup class="$nav_item_link_css_class" href="$nav_item.getURL()" $nav_item.getTarget() role="menuitem">
-					<span>$nav_item.icon() $nav_item.getName() $nav_item_caret</span>
-				</a>
+				#if ($nav_item.isSelected())
+					#set ($nav_item_attr_selected="aria-selected='true'")
+					#set ($nav_item_css_class="$nav_item_css_class selected active")
+				#end
 
 				#if ($nav_item.hasChildren())
-					<ul class="child-menu dropdown-menu" role="menu">
-						#foreach ($nav_child in $nav_item.getChildren())
-							#set ($nav_child_attr_selected="")
-							#set ($nav_child_css_class="lfr-nav-item")
-
-							#if ($nav_child.isSelected())
-								#set ($nav_child_attr_selected="aria-selected='true'")
-								#set ($nav_child_css_class="selected")
-							#end
-
-							<li class="$nav_child_css_class" id="layout_$nav_child.getLayoutId()" $nav_child_attr_selected role="presentation">
-								<a aria-labelledby="layout_$nav_child.getLayoutId()" href="$nav_child.getURL()" $nav_child.getTarget() role="menuitem">$nav_child.getName()</a>
-							</li>
-						#end
-					</ul>
+					#set ($nav_item_attr_has_popup="aria-haspopup='true'")
+					#set ($nav_item_caret='<span class="lfr-nav-child-toggle"><i class="icon-caret-down"></i></span>')
+					#set ($nav_item_css_class="$nav_item_css_class dropdown")
+					#set ($nav_item_link_css_class="dropdown-toggle")
 				#end
-			</li>
-		#end
-	</ul>
-</nav>
+
+				<li class="$nav_item_css_class" id="layout_$nav_item.getLayoutId()" $nav_item_attr_selected role="presentation">
+					<a aria-labelledby="layout_$nav_item.getLayoutId()" $nav_item_attr_has_popup class="$nav_item_link_css_class" href="$nav_item.getURL()" $nav_item.getTarget() role="menuitem">
+						<span>$nav_item.icon() $nav_item.getName() $nav_item_caret</span>
+					</a>
+
+					#if ($nav_item.hasChildren())
+						<ul aria-expanded="false" class="child-menu dropdown-menu" role="menu">
+							#foreach ($nav_child in $nav_item.getChildren())
+								#set ($nav_child_attr_selected="")
+								#set ($nav_child_css_class="lfr-nav-item")
+
+								#if ($nav_child.isSelected())
+									#set ($nav_child_attr_selected="aria-selected='true'")
+									#set ($nav_child_css_class="active selected")
+								#end
+
+								<li class="$nav_child_css_class" id="layout_$nav_child.getLayoutId()" $nav_child_attr_selected role="presentation">
+									<a aria-labelledby="layout_$nav_child.getLayoutId()" href="$nav_child.getURL()" $nav_child.getTarget() role="menuitem">$nav_child.getName()</a>
+								</li>
+							#end
+						</ul>
+					#end
+				</li>
+			#end
+		</ul>
+	</nav>
+
+	<nav class="user-personal-bar">
+		<ul class="nav navbar-nav navbar-right">
+			#user_personal_bar()
+		</ul>
+	<nav>
+
+</div>
 
 <script>
-	Liferay.Data.NAV_LIST_SELECTOR = '> ul';
+	Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
+	Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';
 </script>

@@ -1,5 +1,5 @@
 <definition component-name="portal-workflow">
-	<property name="web.plugins.includes" value="kaleo-web" />
+	
 	<property name="testray.main.component.name" value="Workflow" />
 
 	<var name="workflowAssetType" value="Web Content Article" />

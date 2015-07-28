@@ -48,7 +48,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Marcellus Tavares
  * @author Sergio González
  */
-public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer {
+public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer<DDLRecord> {
 
 	public DDLRecordAssetRenderer(
 		DDLRecord record, DDLRecordVersion recordVersion) {
@@ -75,7 +75,7 @@ public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer {
 	}
 
 	@Override
-	public Object getAsset() {
+	public DDLRecord getAsset() {
 		return _record;
 	}
 

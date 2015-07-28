@@ -680,7 +680,7 @@
 	</command>
 
 	<command name="viewPageTemplatePG">
-		<execute function="Click#clickAt" locator1="Dockbar#PAGE_INFO_MESSAGE_ICON" />
+		<execute function="Click" locator1="Dockbar#PAGE_INFO_MESSAGE_ICON" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
 

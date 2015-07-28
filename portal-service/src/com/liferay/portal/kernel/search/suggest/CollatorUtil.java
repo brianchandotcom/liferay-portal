@@ -15,10 +15,7 @@
 package com.liferay.portal.kernel.search.suggest;
 
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -32,25 +29,10 @@ public class CollatorUtil {
 			Map<String, List<String>> suggestions, List<String> keywords)
 		throws SearchException {
 
-		Collator collator = _instance._serviceTracker.getService();
-
-		if (collator != null) {
-			return collator.collate(suggestions, keywords);
-		}
-
-		return StringPool.BLANK;
+		return _collator.collate(suggestions, keywords);
 	}
 
-	private CollatorUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(Collator.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final CollatorUtil _instance = new CollatorUtil();
-
-	private final ServiceTracker<Collator, Collator> _serviceTracker;
+	private static final Collator _collator =
+		ProxyFactory.newServiceTrackedInstance(Collator.class);
 
 }

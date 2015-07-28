@@ -17,9 +17,7 @@ package com.liferay.portal.kernel.search.hits;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 /**
  * @author Michael C. Han
@@ -27,15 +25,7 @@ import com.liferay.registry.ServiceTracker;
 public class HitsProcessorRegistryUtil {
 
 	public static HitsProcessorRegistry getHitsProcessorRegistry() {
-		HitsProcessorRegistry hitsProcessorRegistry =
-			_instance._serviceTracker.getService();
-
-		if (hitsProcessorRegistry == null) {
-			throw new IllegalStateException(
-				"HitsProcessorRegistry not properly initialized");
-		}
-
-		return hitsProcessorRegistry;
+		return _hitsProcessorRegistry;
 	}
 
 	public static boolean process(SearchContext searchContext, Hits hits)
@@ -44,18 +34,7 @@ public class HitsProcessorRegistryUtil {
 		return getHitsProcessorRegistry().process(searchContext, hits);
 	}
 
-	private HitsProcessorRegistryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(HitsProcessorRegistry.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final HitsProcessorRegistryUtil _instance =
-		new HitsProcessorRegistryUtil();
-
-	private final ServiceTracker<HitsProcessorRegistry, HitsProcessorRegistry>
-		_serviceTracker;
+	private static final HitsProcessorRegistry _hitsProcessorRegistry =
+		ProxyFactory.newServiceTrackedInstance(HitsProcessorRegistry.class);
 
 }

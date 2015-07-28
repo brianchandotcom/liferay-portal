@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search;
+package com.liferay.portal.search.internal;
 
 import com.liferay.portal.NoSuchResourceException;
 import com.liferay.portal.kernel.log.Log;
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -38,16 +38,15 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.AdvancedPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerBag;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
-import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.ResourceBlockLocalService;
+import com.liferay.portal.service.ResourcePermissionLocalService;
+import com.liferay.portal.service.RoleLocalService;
+import com.liferay.portal.service.UserGroupRoleLocalService;
+import com.liferay.portal.util.Portal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,12 +55,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Allen Chiang
  * @author Bruno Farache
  * @author Raymond Augé
  * @author Amos Fong
  */
+@Component(immediate = true, service = SearchPermissionChecker.class)
 public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	@Override
@@ -84,7 +87,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				long classNameId = GetterUtil.getLong(
 					document.get(Field.CLASS_NAME_ID));
 
-				className = PortalUtil.getClassName(classNameId);
+				className = _portal.getClassName(classNameId);
 
 				classPK = document.get(Field.CLASS_PK);
 			}
@@ -93,8 +96,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				return;
 			}
 
-			Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				className);
+			Indexer<?> indexer = _indexerRegistry.nullSafeGetIndexer(className);
 
 			if (!indexer.isPermissionAware()) {
 				return;
@@ -147,7 +149,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		throws Exception {
 
 		if (group.isOrganization()) {
-			Role organizationUserRole = RoleLocalServiceUtil.getRole(
+			Role organizationUserRole = _roleLocalService.getRole(
 				group.getCompanyId(), RoleConstants.ORGANIZATION_USER);
 
 			groupRolesTermsFilter.addValue(
@@ -156,7 +158,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		}
 
 		if (group.isSite()) {
-			Role siteMemberRole = RoleLocalServiceUtil.getRole(
+			Role siteMemberRole = _roleLocalService.getRole(
 				group.getCompanyId(), RoleConstants.SITE_MEMBER);
 
 			groupRolesTermsFilter.addValue(
@@ -172,12 +174,12 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		List<Role> roles = null;
 
-		if (ResourceBlockLocalServiceUtil.isSupported(className)) {
-			roles = ResourceBlockLocalServiceUtil.getRoles(
+		if (_resourceBlockLocalService.isSupported(className)) {
+			roles = _resourceBlockLocalService.getRoles(
 				className, Long.valueOf(classPK), ActionKeys.VIEW);
 		}
 		else {
-			roles = ResourcePermissionLocalServiceUtil.getRoles(
+			roles = _resourcePermissionLocalService.getRoles(
 				companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
 				classPK, ActionKeys.VIEW);
 		}
@@ -212,7 +214,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			BooleanFilter booleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(className);
+		Indexer<?> indexer = _indexerRegistry.getIndexer(className);
 
 		if (!indexer.isPermissionAware()) {
 			return booleanFilter;
@@ -221,21 +223,12 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		AdvancedPermissionChecker advancedPermissionChecker = null;
-
-		if ((permissionChecker != null) &&
-			(permissionChecker instanceof AdvancedPermissionChecker)) {
-
-			advancedPermissionChecker =
-				(AdvancedPermissionChecker)permissionChecker;
-		}
-
-		if (advancedPermissionChecker == null) {
+		if (permissionChecker.getGuestUserBag() == null) {
 			return booleanFilter;
 		}
 
 		PermissionCheckerBag permissionCheckerBag = getPermissionCheckerBag(
-			advancedPermissionChecker, userId);
+			permissionChecker, userId);
 
 		if (permissionCheckerBag == null) {
 			return booleanFilter;
@@ -247,20 +240,20 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		Map<Long, List<Role>> groupIdsToRoles = new HashMap<>();
 
 		populate(
-			companyId, groupIds, userId, advancedPermissionChecker,
+			companyId, groupIds, userId, permissionChecker,
 			permissionCheckerBag, groups, roles, userGroupRoles,
 			groupIdsToRoles);
 
 		return doGetPermissionFilter_6(
-			companyId, groupIds, userId, advancedPermissionChecker, className,
+			companyId, groupIds, userId, permissionChecker, className,
 			booleanFilter, groups, roles, userGroupRoles, groupIdsToRoles);
 	}
 
 	protected BooleanFilter doGetPermissionFilter_6(
 			long companyId, long[] groupIds, long userId,
-			AdvancedPermissionChecker advancedPermissionChecker,
-			String className, BooleanFilter booleanFilter, Set<Group> groups,
-			Set<Role> roles, Set<UserGroupRole> userGroupRoles,
+			PermissionChecker permissionChecker, String className,
+			BooleanFilter booleanFilter, Set<Group> groups, Set<Role> roles,
+			Set<UserGroupRole> userGroupRoles,
 			Map<Long, List<Role>> groupIdsToRoles)
 		throws Exception {
 
@@ -282,7 +275,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				return booleanFilter;
 			}
 
-			if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
+			if (_resourcePermissionLocalService.hasResourcePermission(
 					companyId, className, ResourceConstants.SCOPE_COMPANY,
 					String.valueOf(companyId), role.getRoleId(),
 					ActionKeys.VIEW)) {
@@ -291,7 +284,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			}
 
 			if ((role.getType() == RoleConstants.TYPE_REGULAR) &&
-				ResourcePermissionLocalServiceUtil.hasResourcePermission(
+				_resourcePermissionLocalService.hasResourcePermission(
 					companyId, className,
 					ResourceConstants.SCOPE_GROUP_TEMPLATE,
 					String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
@@ -301,9 +294,9 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			}
 
 			for (Group group : groups) {
-				if (advancedPermissionChecker.isGroupAdmin(
+				if (permissionChecker.isGroupAdmin(
 						group.getGroupId()) ||
-					ResourcePermissionLocalServiceUtil.hasResourcePermission(
+					_resourcePermissionLocalService.hasResourcePermission(
 						companyId, className, ResourceConstants.SCOPE_GROUP,
 						String.valueOf(group.getGroupId()), role.getRoleId(),
 						ActionKeys.VIEW)) {
@@ -313,7 +306,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				}
 
 				if ((role.getType() != RoleConstants.TYPE_REGULAR) &&
-					ResourcePermissionLocalServiceUtil.hasResourcePermission(
+					_resourcePermissionLocalService.hasResourcePermission(
 						companyId, className,
 						ResourceConstants.SCOPE_GROUP_TEMPLATE,
 						String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
@@ -340,7 +333,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 			if (ArrayUtil.isNotEmpty(groupIds)) {
 				for (long groupId : groupIds) {
-					if (ResourcePermissionLocalServiceUtil.
+					if (_resourcePermissionLocalService.
 							hasResourcePermission(
 								companyId, className,
 								ResourceConstants.SCOPE_GROUP,
@@ -396,28 +389,26 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			String resourceName, String resourceClassPK)
 		throws Exception {
 
-		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(resourceName);
+		Indexer<?> indexer = _indexerRegistry.nullSafeGetIndexer(resourceName);
 
-		if (indexer != null) {
-			indexer.reindex(resourceName, GetterUtil.getLong(resourceClassPK));
-		}
+		indexer.reindex(resourceName, GetterUtil.getLong(resourceClassPK));
 	}
 
 	protected PermissionCheckerBag getPermissionCheckerBag(
-			AdvancedPermissionChecker advancedPermissionChecker, long userId)
+			PermissionChecker permissionChecker, long userId)
 		throws Exception {
 
-		if (!advancedPermissionChecker.isSignedIn()) {
-			return advancedPermissionChecker.getGuestUserBag();
+		if (!permissionChecker.isSignedIn()) {
+			return permissionChecker.getGuestUserBag();
 		}
 		else {
-			return advancedPermissionChecker.getUserBag(userId, 0);
+			return permissionChecker.getUserBag(userId, 0);
 		}
 	}
 
 	protected void populate(
 			long companyId, long[] groupIds, long userId,
-			AdvancedPermissionChecker advancedPermissionChecker,
+			PermissionChecker permissionChecker,
 			PermissionCheckerBag permissionCheckerBag, Set<Group> groups,
 			Set<Role> roles, Set<UserGroupRole> userGroupRoles,
 			Map<Long, List<Role>> groupIdsToRoles)
@@ -426,37 +417,37 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		roles.addAll(permissionCheckerBag.getRoles());
 
 		if (ArrayUtil.isEmpty(groupIds)) {
-			groups.addAll(GroupLocalServiceUtil.getUserGroups(userId, true));
+			groups.addAll(_groupLocalService.getUserGroups(userId, true));
 			groups.addAll(permissionCheckerBag.getGroups());
 
 			userGroupRoles.addAll(
-				UserGroupRoleLocalServiceUtil.getUserGroupRoles(userId));
+				_userGroupRoleLocalService.getUserGroupRoles(userId));
 		}
 		else {
 			for (long groupId : groupIds) {
-				if (GroupLocalServiceUtil.hasUserGroup(userId, groupId)) {
-					Group group = GroupLocalServiceUtil.getGroup(groupId);
+				if (_groupLocalService.hasUserGroup(userId, groupId)) {
+					Group group = _groupLocalService.getGroup(groupId);
 
 					groups.add(group);
 				}
 
 				userGroupRoles.addAll(
-					UserGroupRoleLocalServiceUtil.getUserGroupRoles(
+					_userGroupRoleLocalService.getUserGroupRoles(
 						userId, groupId));
 				userGroupRoles.addAll(
-					UserGroupRoleLocalServiceUtil.
+					_userGroupRoleLocalService.
 						getUserGroupRolesByUserUserGroupAndGroup(
 							userId, groupId));
 			}
 		}
 
-		if (advancedPermissionChecker.isSignedIn()) {
+		if (permissionChecker.isSignedIn()) {
 			roles.add(
-				RoleLocalServiceUtil.getRole(companyId, RoleConstants.GUEST));
+				_roleLocalService.getRole(companyId, RoleConstants.GUEST));
 		}
 
 		for (Group group : groups) {
-			PermissionCheckerBag userBag = advancedPermissionChecker.getUserBag(
+			PermissionCheckerBag userBag = permissionChecker.getUserBag(
 				userId, group.getGroupId());
 
 			List<Role> groupRoles = ListUtil.fromCollection(userBag.getRoles());
@@ -467,7 +458,56 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setIndexerRegistry(IndexerRegistry indexerRegistry) {
+		_indexerRegistry = indexerRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortal(Portal portal) {
+		_portal = portal;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourceBlockLocalService(
+		ResourceBlockLocalService resourceBlockLocalService) {
+
+		_resourceBlockLocalService = resourceBlockLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourcePermissionLocalService(
+		ResourcePermissionLocalService resourcePermissionLocalService) {
+
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupRoleLocalService(
+		UserGroupRoleLocalService userGroupRoleLocalService) {
+
+		_userGroupRoleLocalService = userGroupRoleLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchPermissionCheckerImpl.class);
+
+	private GroupLocalService _groupLocalService;
+	private IndexerRegistry _indexerRegistry;
+	private Portal _portal;
+	private ResourceBlockLocalService _resourceBlockLocalService;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+	private RoleLocalService _roleLocalService;
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

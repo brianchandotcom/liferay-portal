@@ -255,6 +255,11 @@ public class NavItem implements Serializable {
 		}
 	}
 
+	@Override
+	public int hashCode() {
+		return _layout.hashCode();
+	}
+
 	public void icon() throws Exception {
 		Object velocityTaglib = _contextObjects.get("theme");
 

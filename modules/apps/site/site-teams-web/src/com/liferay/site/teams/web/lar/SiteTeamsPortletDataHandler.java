@@ -21,6 +21,7 @@ import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
+import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.site.teams.web.constants.SiteTeamsPortletKeys;
 
@@ -28,6 +29,7 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -40,6 +42,16 @@ import org.osgi.service.component.annotations.Component;
 public class SiteTeamsPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "site_teams";
+
+	@Activate
+	protected void activate() {
+		setDataAlwaysStaged(true);
+		setExportControls(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "site-teams", true, true, null,
+				Team.class.getName()));
+		setPublishToLiveByDefault(true);
+	}
 
 	@Override
 	protected PortletPreferences doDeleteData(

@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.workflow;
+package com.liferay.document.library.workflow;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -37,11 +38,19 @@ import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Bruno Farache
  * @author Jorge Ferrer
  * @author Alexander Chow
  */
+@Component(
+	property = {
+		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileEntry"
+	},
+	service = WorkflowHandler.class
+)
 public class DLFileEntryWorkflowHandler
 	extends BaseWorkflowHandler<DLFileEntry> {
 

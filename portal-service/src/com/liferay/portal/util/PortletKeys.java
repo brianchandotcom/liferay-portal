@@ -25,10 +25,6 @@ public class PortletKeys {
 
 	public static final String ADMIN_SERVER = "137";
 
-	public static final String ALERTS = "83";
-
-	public static final String ANNOUNCEMENTS = "84";
-
 	public static final String BACKGROUND_TASK = "189";
 
 	public static final String BLOGS =

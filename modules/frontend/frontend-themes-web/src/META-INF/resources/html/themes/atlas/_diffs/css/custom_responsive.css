@@ -1,27 +1,32 @@
 @import "mixins";
 
 @include respond-to(phone) {
-	#navigation {
+	body #wrapper #banner {
+		padding: 20px 0;
+	}
+
+	#navigationCollapse {
 		font-size: 125%;
 
 		.nav > li > a {
 			border-bottom: 1px solid #E1E1E1;
-			display: block;
-
-			&.dropdown-lft {
-				position: absolute;
-				right: 0;
-				top: 0;
-			}
 		}
+
+		.navbar-form .input-text-wrapper {
+			display: block;
+		}
+	}
+
+	.modify-pages .lfr-nav-item .lfr-nav-child-toggle, .user-personal-bar .icon-caret-down {
+		line-height: 28px;
+		padding: 14px;
+		position: absolute;
+		right: 0;
+		top: 0;
 	}
 }
 
 @include respond-to(phone, tablet) {
-	#navigation, #content {
-		padding: 0 20px;
-	}
-
 	.touch .modify-pages .lfr-nav-sortable > a > span {
 		padding-left: -18px;
 	}

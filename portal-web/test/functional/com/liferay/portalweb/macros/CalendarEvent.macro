@@ -1220,12 +1220,23 @@
 	</command>
 
 	<command name="view">
-		<var name="key_eventTitle" value="${eventTitle}" />
+		<var name="eventTitle" value="${eventTitle}" />
 
-		<execute macro="CalendarScheduler#viewDay" />
-		<execute macro="CalendarScheduler#viewWeek" />
-		<execute macro="CalendarScheduler#viewMonth" />
-		<execute macro="CalendarScheduler#viewAgenda" />
+		<execute macro="CalendarScheduler#viewDay">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarScheduler#viewWeek">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarScheduler#viewMonth">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="CalendarScheduler#viewAgenda">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
 
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />

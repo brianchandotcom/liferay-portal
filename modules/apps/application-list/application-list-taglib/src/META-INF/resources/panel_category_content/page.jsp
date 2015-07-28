@@ -25,5 +25,5 @@ boolean include = panelCategory.include(request, response);
 %>
 
 <c:if test="<%= !include %>">
-	<liferay-application-list:panel panelCategory="<%= panelCategory %>" />
+	<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" />
 </c:if>

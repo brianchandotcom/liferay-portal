@@ -121,6 +121,8 @@ buildLexicon {
 
 				if (line == "// INSERT CUSTOM EXTENSIONS") {
 					line = """\
+@import \"../../liferay_variables_custom\";
+@import \"../../liferay_variables\";
 @import \"../../aui_custom\";
 @import \"../../liferay_custom\";"""
 				}
@@ -128,6 +130,27 @@ buildLexicon {
 					line = """\
 @import \"../../aui_variables\";
 @import \"../alloy-font-awesome/scss/font-awesome\";"""
+				}
+
+				return line
+			}
+		}
+	}
+
+	eachFile {
+		if (path in ["atlas-variables.scss", "lexicon-base-variables.scss"]) {
+			filter {
+				String line ->
+
+				if (line == "// INSERT CUSTOM BASE VARS") {
+					line = """\
+@import \"../../aui_variables\";
+@import \"../alloy-font-awesome/scss/font-awesome\";"""
+				}
+				else if (line == "// INSERT CUSTOM VARS") {
+					line = """\
+@import \"../../liferay_variables_custom\";
+@import \"../../liferay_variables\";"""
 				}
 
 				return line

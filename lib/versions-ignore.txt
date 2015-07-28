@@ -1,6 +1,13 @@
 lib/development/com.liferay.ant.bnd.jar
 lib/development/com.liferay.ant.build.logger.jar
 lib/development/com.liferay.ant.heap.dump.jar
+lib/development/com.liferay.css.builder.jar
+lib/development/com.liferay.portal.tools.service.builder.jar
+lib/development/com.liferay.rtl.css.jar
+lib/development/com.liferay.sass.compiler.api.jar
+lib/development/com.liferay.sass.compiler.jni.jar
+lib/development/com.liferay.sass.compiler.ruby.jar
+lib/development/com.liferay.whip.jar
 lib/development/liferay-doclet.jar
 lib/portal/com.liferay.rtl.css.jar
 lib/portal/com.liferay.ruby.gems.jar

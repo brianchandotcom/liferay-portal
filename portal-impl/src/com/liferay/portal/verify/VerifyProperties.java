@@ -1400,18 +1400,19 @@ public class VerifyProperties extends VerifyProcess {
 
 		new String[] {
 			"social.activity.contribution.increments",
-			"contribution.increments", "com.liferay.social.activity"
+			"contribution.increments", "com.liferay.social.activity.web"
 		},
 		new String[] {
 			"social.activity.contribution.limit.values",
-			"contribution.limit.values", "com.liferay.social.activity"
+			"contribution.limit.values", "com.liferay.social.activity.web"
 		},
 		new String[] {
 			"social.activity.participation.increments",
-			"participation.increments", "com.liferay.social.activity"
-		},new String[] {
+			"participation.increments", "com.liferay.social.activity.web"
+		},
+		new String[] {
 			"social.activity.participation.limit.values",
-			"participation.limit.values", "com.liferay.social.activity"
+			"participation.limit.values", "com.liferay.social.activity.web"
 		},
 
 		// Tags Compiler

@@ -33,7 +33,7 @@ import javax.portlet.WindowState;
  * @author Jorge Ferrer
  * @author Juan Fernández
  */
-public interface AssetRenderer extends Renderer {
+public interface AssetRenderer<T> extends Renderer {
 
 	public static final String TEMPLATE_ABSTRACT = "abstract";
 
@@ -47,7 +47,7 @@ public interface AssetRenderer extends Renderer {
 	@Deprecated
 	public String getAddToPagePortletId() throws Exception;
 
-	public Object getAsset();
+	public T getAsset();
 
 	public int getAssetRendererType();
 

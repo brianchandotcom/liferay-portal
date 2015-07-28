@@ -14,23 +14,13 @@
 
 package com.liferay.portal.search.elasticsearch.connection;
 
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.client.Client;
-
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
-public interface ElasticsearchConnection {
+public class MissingOperationModeException extends IllegalArgumentException {
 
-	public void close();
-
-	public void connect();
-
-	public Client getClient();
-
-	public ClusterHealthResponse getClusterHealthResponse(
-		long timeout, int nodesCount);
-
-	public OperationMode getOperationMode();
+	public MissingOperationModeException(OperationMode operationMode) {
+		super("No connection available for: " + operationMode);
+	}
 
 }

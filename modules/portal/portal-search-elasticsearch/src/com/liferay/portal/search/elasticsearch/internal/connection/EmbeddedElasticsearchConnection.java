@@ -66,16 +66,16 @@ public class EmbeddedElasticsearchConnection
 	extends BaseElasticsearchConnection {
 
 	@Override
-	public boolean close() {
-		boolean closed = super.close();
+	public void close() {
+		super.close();
 
 		if (_node == null) {
-			return closed;
+			return;
 		}
 
 		_node.close();
 
-		return true;
+		_node = null;
 	}
 
 	@Override

@@ -25,7 +25,9 @@ AUI.add(
 
 						var host = instance.get('host');
 
-						var navigation = host.one('ul');
+						var navInteractionSelector = Liferay.Data.NAV_INTERACTION_SELECTOR || 'ul';
+
+						var navigation = host.one(navInteractionSelector);
 
 						var hostULId = '#' + navigation.guid();
 

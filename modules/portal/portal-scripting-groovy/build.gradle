@@ -2,6 +2,7 @@ dependencies {
 	compile group: "org.codehaus.groovy", name: "groovy", version: "2.2.2"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":portal:portal-scripting-api")
 }
 
 liferay {

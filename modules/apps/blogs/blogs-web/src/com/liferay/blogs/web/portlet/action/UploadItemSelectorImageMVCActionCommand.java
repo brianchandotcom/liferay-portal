@@ -42,7 +42,7 @@ public class UploadItemSelectorImageMVCActionCommand
 
 	@Override
 	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+		ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		_imageSelectorUploadHandler.uploadSelectedImage(

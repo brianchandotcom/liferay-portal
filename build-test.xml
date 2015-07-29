@@ -2614,7 +2614,7 @@ go]]></replacevalue>
 					<sequential>
 						<mirrors-get
 							dest="${todir}"
-							src="${test.jdbc.drivers.url}/db2/8.1.18/@{jdbc.driver}"
+							src="${test.jdbc.drivers.url}/db2/10.5.1/@{jdbc.driver}"
 						/>
 					</sequential>
 				</for>

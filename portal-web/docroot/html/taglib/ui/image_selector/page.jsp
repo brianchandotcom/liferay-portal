@@ -116,7 +116,7 @@ PortletURL uploadItemSelectorCriterionUploadURL = liferayPortletResponse.createA
 uploadItemSelectorCriterionUploadURL.setParameter(ActionRequest.ACTION_NAME, "/blogs/upload_item_selector_image");
 uploadItemSelectorCriterionUploadURL.setParameter("itemSelectorCaller", "coverImage");
 
-itemSelectorUploadParamJSONObject.put("url", uploadItemSelectorCriterionUploadURL.toString());
+itemSelectorUploadParamJSONObject.put("URL", uploadItemSelectorCriterionUploadURL.toString());
 itemSelectorUploadParamJSONObject.put("repositoryName", LanguageUtil.get(locale, "blogs"));
 
 itemSelectorURL.setParameter("2_json", itemSelectorUploadParamJSONObject.toString());

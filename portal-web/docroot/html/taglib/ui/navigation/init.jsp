@@ -16,7 +16,8 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.theme.NavItem" %>
+<%@ page import="com.liferay.portal.theme.NavItem" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.DDMTemplate" %>
 
 <%
 String bulletStyle = StringUtil.toLowerCase(((String)request.getAttribute("liferay-ui:navigation:bulletStyle")));

@@ -91,10 +91,10 @@ public class NavigationTag extends IncludeTag {
 		_rootLayoutType = "absolute";
 	}
 
-	protected List<NavItem> getBranchNavItems(HttpServletRequest request)
+	protected List<NavItem> getNavItems(HttpServletRequest request)
 		throws PortalException {
 
-		List<NavItem> branchNavItems = new ArrayList<>();
+		List<NavItem> navItems = new ArrayList<>();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -103,13 +103,13 @@ public class NavigationTag extends IncludeTag {
 
 		NavItem navItem = new NavItem(request, layout, null);
 
-		branchNavItems.add(navItem);
+		navItems.add(navItem);
 
 		for (Layout ancestorLayout : layout.getAncestors()) {
-			branchNavItems.add(0, new NavItem(request, ancestorLayout, null));
+			navItems.add(0, new NavItem(request, ancestorLayout, null));
 		}
 
-		return branchNavItems;
+		return navItems;
 	}
 
 	protected String getDisplayStyle() {
@@ -139,10 +139,9 @@ public class NavigationTag extends IncludeTag {
 			"liferay-ui:navigation:includedLayouts", _includedLayouts);
 
 		try {
-			List<NavItem> branchNavItems = getBranchNavItems(request);
+			List<NavItem> navItems = getNavItems(request);
 
-			request.setAttribute(
-				"liferay-ui:navigation:navItems", branchNavItems);
+			request.setAttribute("liferay-ui:navigation:navItems", navItems);
 		}
 		catch (PortalException pe) {
 			_log.error(pe);

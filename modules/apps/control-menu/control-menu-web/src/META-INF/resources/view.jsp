@@ -147,6 +147,32 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 					</li>
 				</c:if>
 
+				<c:if test="<%= (user.isSetupComplete() || themeDisplay.isImpersonated()) && themeDisplay.isShowStagingIcon() %>">
+					<li>
+						<liferay-ui:icon
+							iconCssClass="icon-circle-blank"
+							id="stagingBarButton"
+							label="staging"
+							linkCssClass="control-menu-icon"
+							url="javascript:;"
+						/>
+
+						<liferay-util:buffer var="stagingContent">
+							<liferay-portlet:runtime portletName="<%= PortletKeys.STAGING_BAR %>" />
+						</liferay-util:buffer>
+
+						<aui:script sandbox="<%= true %>">
+							$('#<portlet:namespace />stagingBarButton').popover(
+								{
+									content: '<%= HtmlUtil.escapeJS(stagingContent) %>',
+									html: true,
+									placement: 'top'
+								}
+							);
+						</aui:script>
+					</li>
+				</c:if>
+
 				<c:if test="<%= !group.isControlPanel() && !group.isUserPersonalPanel() && userSetupComplete && (!group.hasStagingGroup() || group.isStagingGroup()) && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) || PortletPermissionUtil.hasConfigurationPermission(permissionChecker, themeDisplay.getSiteGroupId(), layout, ActionKeys.CONFIGURATION)) %>">
 					<li id="<portlet:namespace />toggleControls">
 						<liferay-ui:icon

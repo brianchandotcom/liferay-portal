@@ -14,13 +14,13 @@
 
 package com.liferay.microblogs.service.impl;
 
+import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.exception.UnsupportedMicroblogsEntryException;
 import com.liferay.microblogs.microblogs.social.MicroblogsActivityKeys;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
 import com.liferay.microblogs.service.base.MicroblogsEntryLocalServiceBaseImpl;
 import com.liferay.microblogs.util.MicroblogsUtil;
-import com.liferay.microblogs.util.PortletKeys;
 import com.liferay.microblogs.util.comparator.EntryCreateDateComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -591,7 +591,8 @@ public class MicroblogsEntryLocalServiceImpl
 
 						userNotificationEventLocalService.
 							sendUserNotificationEvents(
-								receiverUserIds.get(j), PortletKeys.MICROBLOGS,
+								receiverUserIds.get(j),
+								MicroblogsPortletKeys.MICROBLOGS,
 								UserNotificationDeliveryConstants.TYPE_PUSH,
 								notificationEventJSONObject);
 					}
@@ -609,7 +610,8 @@ public class MicroblogsEntryLocalServiceImpl
 
 						userNotificationEventLocalService.
 							sendUserNotificationEvents(
-								receiverUserIds.get(j), PortletKeys.MICROBLOGS,
+								receiverUserIds.get(j),
+								MicroblogsPortletKeys.MICROBLOGS,
 								UserNotificationDeliveryConstants.TYPE_WEBSITE,
 								notificationEventJSONObject);
 					}

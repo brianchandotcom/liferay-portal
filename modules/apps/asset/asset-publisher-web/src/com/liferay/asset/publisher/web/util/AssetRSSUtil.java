@@ -16,7 +16,6 @@ package com.liferay.asset.publisher.web.util;
 
 import com.liferay.asset.publisher.web.context.AssetEntryResult;
 import com.liferay.asset.publisher.web.context.AssetPublisherDisplayContext;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -91,24 +90,14 @@ public class AssetRSSUtil {
 		List<AssetEntry> assetEntries = new ArrayList<>();
 
 		if (selectionStyle.equals("dynamic")) {
-			int rssDelta = GetterUtil.getInteger(
-				portletPreferences.getValue("rssDelta", "20"));
-
-			SearchContainer<Object> searchContainer =
-				new SearchContainer<Object>(
-					portletRequest, null, null,
-					SearchContainer.DEFAULT_CUR_PARAM,
-				0, rssDelta, portletResponse.createRenderURL(), null, null);
-
-			HttpServletRequest httpServletRequest =
-				PortalUtil.getHttpServletRequest(portletRequest);
-
 			AssetPublisherDisplayContext displayContext =
 				new AssetPublisherDisplayContext(
-					httpServletRequest, portletPreferences);
+					PortalUtil.getHttpServletRequest(portletRequest),
+					portletPreferences);
 
 			List<AssetEntryResult> assetEntryResults =
-				displayContext.getAssetEntryResults(searchContainer);
+				displayContext.getAssetEntryResults(
+					0, displayContext.getRSSDelta(), null);
 
 			for (AssetEntryResult assetEntryResult : assetEntryResults) {
 				assetEntries.addAll(assetEntryResult.getAssetEntries());

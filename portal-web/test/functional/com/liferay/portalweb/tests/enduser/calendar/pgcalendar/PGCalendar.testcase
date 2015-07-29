@@ -3476,6 +3476,105 @@
 		</execute>
 	</command>
 
+	<command name="SearchCalendarEventInSearchPortletWithTag" priority="3">
+		<var name="advancedSearchConfiguration">
+			<![CDATA[
+				{"facets": [
+				    {
+				        "className": "com.liferay.portal.kernel.search.facet.ScopeFacet",
+				        "data": {
+				            "frequencyThreshold": 1,
+				            "maxTerms": 10,
+				            "showAssetCount": true
+				        },
+				        "displayStyle": "scopes",
+				        "fieldName": "groupId",
+				        "label": "site",
+				        "order": "OrderHitsDesc",
+				        "static": false,
+				        "weight": 1.6
+				    },
+				    {
+				        "className": "com.liferay.portal.kernel.search.facet.AssetEntriesFacet",
+				        "data": {
+				            "frequencyThreshold": 1,
+				            "values": [
+				                "com.liferay.portal.model.User",
+				                "com.liferay.portlet.blogs.model.BlogsEntry",
+				                "com.liferay.portlet.documentlibrary.model.DLFileEntry",
+				                "com.liferay.portlet.documentlibrary.model.DLFolder",
+				                "com.liferay.portlet.journal.model.JournalArticle",
+				                "com.liferay.portlet.journal.model.JournalFolder",
+				                "com.liferay.knowledgebase.model.KBArticle",
+				                "com.liferay.portlet.messageboards.model.MBMessage",
+				                "com.liferay.portlet.wiki.model.WikiPage"
+				                "com.liferay.calendar.model.CalendarBooking"
+				            ]
+				        },
+				        "displayStyle": "asset_entries",
+				        "fieldName": "entryClassName",
+				        "label": "asset-type",
+				        "order": "OrderHitsDesc",
+				        "static": false,
+				        "weight": 1.5
+				    }
+				]}
+			]]>
+		</var>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#add">
+			<var name="addRSVPEnabled" value="true" />
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="eventType" value="Regular" />
+			<var name="optionSet" value="true" />
+			<var name="pageName" value="Calendar Page" />
+			<var name="rsvp" value="Yes" />
+			<var name="rsvpYes" value="Yes" />
+			<var name="tag" value="true" />
+			<var name="tagText" value="tag1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#view">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Calendar Page" />
+			<var name="portletName" value="Search" />
+		</execute>
+
+		<execute macro="SearchPortlet#configureAdvancedSearchPG">
+			<var name="advancedSearchConfiguration" value="${advancedSearchConfiguration}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="tag1" />
+		</execute>
+
+		<execute macro="Search#viewSearchPG">
+			<var name="searchAssetTitle" value="Calendar Event Title" />
+			<var name="searchAssetType" value="Calendar Event" />
+		</execute>
+	</command>
+
 	<command name="SearchForOtherCalendars" priority="5">
 		<var name="eventType" value="Regular" />
 		<var name="userEmailAddress" value="userea@liferay.com" />

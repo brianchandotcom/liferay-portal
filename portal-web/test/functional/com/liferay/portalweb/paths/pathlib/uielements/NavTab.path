@@ -149,6 +149,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_CONFIGURATION</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Portlet Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCERS</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Producers')]</td>
 	<td></td>

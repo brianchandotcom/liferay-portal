@@ -54,7 +54,7 @@
 			<then>
 				<var name="key_assetType" value="${assetType}" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="CPRecyclebin#SUCCESS_MESSAGE_CONTENT" value1="${assetType}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="${assetType}" />
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="CPRecyclebin#SUCCESS_MESSAGE" value1="The item was restored." />
@@ -66,7 +66,7 @@
 			<then>
 				<var name="key_assetRestoreLocation" value="${assetRestoreLocation}" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="CPRecyclebin#SUCCESS_MESSAGE_RESTORE_LOCATION" value1="${assetRestoreLocation}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="${assetRestoreLocation}" />
 			</then>
 		</if>
 

@@ -20,6 +20,9 @@ package com.liferay.portlet.social.model;
  */
 public class SocialActivityConstants {
 
+	public static final String SERVICE_NAME =
+		"com.liferay.portlet.social.activity";
+
 	public static final int TYPE_ADD_ATTACHMENT = 10006;
 
 	public static final int TYPE_ADD_COMMENT = 10005;

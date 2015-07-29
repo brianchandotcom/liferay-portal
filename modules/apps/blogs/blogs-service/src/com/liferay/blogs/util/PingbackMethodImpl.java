@@ -87,6 +87,14 @@ public class PingbackMethodImpl implements Method {
 
 	public static final int TARGET_URI_INVALID = 33;
 
+	public PingbackMethodImpl() {
+		this(CommentManagerUtil.getCommentManager());
+	}
+
+	public PingbackMethodImpl(CommentManager commentManager) {
+		_commentManager = commentManager;
+	}
+
 	@Override
 	public Response execute(long companyId) {
 		try {
@@ -145,10 +153,6 @@ public class PingbackMethodImpl implements Method {
 
 			return false;
 		}
-	}
-
-	public void setCommentManager(CommentManager commentManager) {
-		_commentManager = commentManager;
 	}
 
 	protected long addPingback(long companyId) throws Exception {
@@ -373,8 +377,7 @@ public class PingbackMethodImpl implements Method {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PingbackMethodImpl.class);
 
-	private CommentManager _commentManager =
-		CommentManagerUtil.getCommentManager();
+	private final CommentManager _commentManager;
 	private String _sourceURI;
 	private String _targetURI;
 

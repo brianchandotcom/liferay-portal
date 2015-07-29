@@ -20,6 +20,7 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.impl.OrganizationImpl;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -28,7 +29,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
-import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Component;
  * @author David Gonzalez
  */
 @Component(
-	property = {"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN},
+	property = {"javax.portlet.name=" + PortletKeys.USERS_ADMIN},
 	service = PortletDataHandler.class
 )
 public class UsersAdminPortletDataHandler extends BasePortletDataHandler {

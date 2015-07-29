@@ -498,7 +498,7 @@ AUI.add(
 						TPL_TAG.render(
 							{
 								checked: data.checked,
-								message: Liferay.Language.get('no-tags-found'),
+								message: Liferay.Language.get('no-tags-were-found'),
 								name: data.name,
 								tags: data
 							},

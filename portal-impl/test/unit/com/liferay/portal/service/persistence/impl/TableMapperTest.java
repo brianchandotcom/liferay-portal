@@ -17,7 +17,6 @@ package com.liferay.portal.service.persistence.impl;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.cache.test.TestPortalCache;
 import com.liferay.portal.kernel.cache.MultiVMPool;
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
@@ -1359,8 +1358,10 @@ public class TableMapperTest {
 	}
 
 	protected void testDestroy(TableMapper<?, ?> tableMapper) {
-		MockMultiVMPool mockMultiVMPool =
-			(MockMultiVMPool)MultiVMPoolUtil.getMultiVMPool();
+		Registry registry = RegistryUtil.getRegistry();
+
+		MockMultiVMPool mockMultiVMPool = (MockMultiVMPool)registry.getService(
+			_serviceRegistration.getServiceReference());
 
 		Map<String, PortalCache<?, ?>> portalCaches =
 			mockMultiVMPool.getPortalCaches();

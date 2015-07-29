@@ -18,9 +18,10 @@
 
 <%
 PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
+PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-application-list:panel-category:panelCategory");
 
-PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategory);
+PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
 
 String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.getKey(), StringPool.PERIOD, StringPool.UNDERLINE);
 %>
@@ -32,11 +33,11 @@ String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.
 	id="<%= panelPageCategoryId %>"
 	parentId="<%= StringUtil.replace(panelCategory.getParentCategoryKey(), StringPool.PERIOD, StringPool.UNDERLINE) %>"
 	persistState="<%= true %>"
-	state='<%= panelCategoryHelper.containsPortlet(themeDisplay.getPpid()) ? "open" : "closed" %>'
+	state='<%= panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), panelCategory) ? "open" : "closed" %>'
 	title="<%= panelCategory.getLabel(themeDisplay.getLocale()) %>"
 >
 
-	<ul aria-labelledby="<%= panelPageCategoryId %>" class="category-portlets list-unstyled" role="menu">
+		<ul aria-labelledby="<%= panelPageCategoryId %>" class="category-portlets list-unstyled" role="menu">
 
 		<%
 		for (PanelApp panelApp : panelAppRegistry.getPanelApps(panelCategory)) {

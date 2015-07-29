@@ -509,7 +509,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		if (Validator.isNotNull(auiTaglibDTD)) {
 			FileUtil.copyFile(
-				auiTaglibDTD, srcFile + "/WEB-INF/tld/aui.tld", true);
+				auiTaglibDTD, srcFile + "/WEB-INF/tld/liferay-aui.tld", true);
 		}
 
 		if (Validator.isNotNull(portletTaglibDTD)) {

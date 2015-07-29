@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="blogs-api,../application-list/application-list-api" />
+	<property name="import.shared" value="blogs-api,../application-list/application-list-api,../dynamic-data-mapping/dynamic-data-mapping-taglib" />
 	<property name="osgi.ide.dependencies" value="spring-tx.jar" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />

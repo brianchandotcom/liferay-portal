@@ -175,14 +175,14 @@ public class NestedPortletsPortlet extends MVCPortlet {
 
 		Map<String, Object> vmVariables =
 			(Map<String, Object>)renderRequest.getAttribute(
-				WebKeys.VM_VARIABLES + portletId);
+				WebKeys.getVMVariablesKey(portletId));
 
 		if (vmVariables != null) {
 			vmVariables.putAll(columnIds);
 		}
 		else {
 			renderRequest.setAttribute(
-				WebKeys.VM_VARIABLES + portletId, columnIds);
+				WebKeys.getVMVariablesKey(portletId), columnIds);
 		}
 
 		renderRequest.setAttribute(

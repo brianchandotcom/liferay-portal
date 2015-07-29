@@ -121,7 +121,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 
 		Map<String, Object> vmVariables =
 			(Map<String, Object>)request.getAttribute(
-				WebKeys.VM_VARIABLES + portletDisplay.getId());
+				WebKeys.getVMVariablesKey(portletDisplay.getId()));
 
 		if (vmVariables != null) {
 			for (Map.Entry<String, Object> entry : vmVariables.entrySet()) {

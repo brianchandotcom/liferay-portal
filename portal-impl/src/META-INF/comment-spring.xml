@@ -9,8 +9,4 @@
 >
 	<bean id="com.liferay.portal.comment.action.GetCommentsStrutsAction" class="com.liferay.portal.comment.action.GetCommentsStrutsAction" />
 	<bean id="com.liferay.portal.comment.action.EditDiscussionStrutsAction" class="com.liferay.portal.comment.action.EditDiscussionStrutsAction" />
-	<bean id="com.liferay.portal.kernel.comment.CommentManager" class="com.liferay.portal.comment.CommentManagerImpl" />
-	<bean id="com.liferay.portal.kernel.comment.CommentManagerUtil" class="com.liferay.portal.kernel.comment.CommentManagerUtil">
-		<property name="commentManager" ref="com.liferay.portal.kernel.comment.CommentManager" />
-	</bean>
 </beans>

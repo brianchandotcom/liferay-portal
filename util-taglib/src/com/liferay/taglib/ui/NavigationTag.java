@@ -49,10 +49,6 @@ public class NavigationTag extends IncludeTag {
 		_ddmTemplateKey = ddmTemplateKey;
 	}
 
-	public void setDisplayStyleDefinition(String[] displayStyleDefinition) {
-		_displayStyleDefinition = displayStyleDefinition;
-	}
-
 	public void setHeaderType(String headerType) {
 		_headerType = headerType;
 	}
@@ -82,7 +78,6 @@ public class NavigationTag extends IncludeTag {
 		_bulletStyle = "1";
 		_ddmTemplateGroupId = 0;
 		_ddmTemplateKey = null;
-		_displayStyleDefinition = null;
 		_headerType = "none";
 		_includedLayouts = "auto";
 		_nestedChildren = true;
@@ -166,7 +161,6 @@ public class NavigationTag extends IncludeTag {
 	private String _bulletStyle = "1";
 	private long _ddmTemplateGroupId;
 	private String _ddmTemplateKey;
-	private String[] _displayStyleDefinition;
 	private String _headerType = "none";
 	private String _includedLayouts = "auto";
 	private boolean _nestedChildren = true;

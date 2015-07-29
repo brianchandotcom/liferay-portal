@@ -839,7 +839,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56879" name="SearchMultipleTagsViaBlogs" priority="4">
+	<command name="SearchMultipleTagsViaBlogs" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

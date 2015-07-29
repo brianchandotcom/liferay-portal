@@ -11,7 +11,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LPS-55813" name="DisableShowApplicationBreadcrumb" priority="4">
+	<command name="DisableShowApplicationBreadcrumb" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -169,7 +169,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55813" name="DisableShowCurrentSite" priority="5">
+	<command name="DisableShowCurrentSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -272,7 +272,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55813" name="DisableShowPage" priority="5">
+	<command name="DisableShowPage" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -331,7 +331,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55813" name="DisableShowParentSite" priority="4">
+	<command name="DisableShowParentSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -423,7 +423,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55813" name="DisplayTemplateWithArrowsStyle" priority="4">
+	<command name="DisplayTemplateWithArrowsStyle" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -473,7 +473,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55813" name="DisplayTemplateWithHorizontalStyle" priority="4">
+	<command name="DisplayTemplateWithHorizontalStyle" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -519,7 +519,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55813" name="DisplayTemplateWithVerticalStyle" priority="4">
+	<command name="DisplayTemplateWithVerticalStyle" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -565,7 +565,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55813" name="EnableShowGuestSite" priority="4">
+	<command name="EnableShowGuestSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

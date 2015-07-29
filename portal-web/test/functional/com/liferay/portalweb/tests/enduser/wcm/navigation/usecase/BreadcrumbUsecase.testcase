@@ -11,7 +11,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LPS-55813" name="BreadcrumbConfiguration" priority="3">
+	<command name="BreadcrumbConfiguration" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

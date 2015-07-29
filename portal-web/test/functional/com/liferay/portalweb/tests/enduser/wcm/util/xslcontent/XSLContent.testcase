@@ -47,7 +47,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LPS-56923" name="AddXSL" priority="4">
+	<command name="AddXSL" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteScopeName" value="Site Name" />
@@ -339,7 +339,7 @@
 		<execute macro="XSLContent#viewErrorMessage" />
 	</command>
 
-	<command known-issues="LPS-56923" name="ConfigurePortletWithIncorrectVersionXmlAndXsl" priority="4">
+	<command name="ConfigurePortletWithIncorrectVersionXmlAndXsl" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteScopeName" value="Site Name" />

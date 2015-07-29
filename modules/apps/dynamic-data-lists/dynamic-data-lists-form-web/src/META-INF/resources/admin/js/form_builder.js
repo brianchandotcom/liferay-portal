@@ -179,7 +179,7 @@ AUI.add(
 
 						var deserializer = instance.get('deserializer');
 
-						var pages = instance._pages;
+						var pages = instance._getPages();
 
 						pages.set('descriptions', deserializer.get('descriptions'));
 						pages.set('titles', deserializer.get('titles'));

@@ -17,13 +17,13 @@ package com.liferay.blogs.web.image.selector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.blogs.CoverImageSizeException;
+import com.liferay.portlet.blogs.BlogImageSizeException;
 
 /**
  * @author Sergio González
  * @author Adolfo Pérez
  */
-public class CoverImageSelectorUploadHandler
+public class TempImageUploadHandler
 	extends BaseBlogsImageSelectorUploadHandler {
 
 	@Override
@@ -31,7 +31,7 @@ public class CoverImageSelectorUploadHandler
 		throws PortalException {
 
 		if (size > getMaxFileSize()) {
-			throw new CoverImageSizeException();
+			throw new BlogImageSizeException();
 		}
 
 		super.validateFile(fileName, contentType, size);

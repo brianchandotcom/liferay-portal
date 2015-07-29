@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelCategory.class
 )
-public class SiteAdministrationCategory extends BaseJSPPanelCategory {
+public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
 	public String getIconCssClass() {

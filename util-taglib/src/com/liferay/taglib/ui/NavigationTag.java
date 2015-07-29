@@ -80,6 +80,8 @@ public class NavigationTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_bulletStyle = "1";
+		_ddmTemplateGroupId = 0;
+		_ddmTemplateKey = null;
 		_displayStyleDefinition = null;
 		_headerType = "none";
 		_includedLayouts = "auto";
@@ -92,21 +94,19 @@ public class NavigationTag extends IncludeTag {
 	protected List<NavItem> getBranchNavItems(HttpServletRequest request)
 		throws PortalException {
 
+		List<NavItem> branchNavItems = new ArrayList<>();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
-		List<Layout> layoutAncestors = layout.getAncestors();
-
 		NavItem navItem = new NavItem(request, layout, null);
-
-		List<NavItem> branchNavItems = new ArrayList<>();
 
 		branchNavItems.add(navItem);
 
-		for (Layout layoutAncestor : layoutAncestors) {
-			branchNavItems.add(0, new NavItem(request, layoutAncestor, null));
+		for (Layout ancestorLayout : layout.getAncestors()) {
+			branchNavItems.add(0, new NavItem(request, ancestorLayout, null));
 		}
 
 		return branchNavItems;
@@ -137,6 +137,17 @@ public class NavigationTag extends IncludeTag {
 		request.setAttribute("liferay-ui:navigation:headerType", _headerType);
 		request.setAttribute(
 			"liferay-ui:navigation:includedLayouts", _includedLayouts);
+
+		try {
+			List<NavItem> branchNavItems = getBranchNavItems(request);
+
+			request.setAttribute(
+				"liferay-ui:navigation:navItems", branchNavItems);
+		}
+		catch (PortalException pe) {
+			_log.error(pe);
+		}
+
 		request.setAttribute(
 			"liferay-ui:navigation:nestedChildren",
 			String.valueOf(_nestedChildren));
@@ -147,16 +158,6 @@ public class NavigationTag extends IncludeTag {
 			String.valueOf(_rootLayoutLevel));
 		request.setAttribute(
 			"liferay-ui:navigation:rootLayoutType", _rootLayoutType);
-
-		try {
-			List<NavItem> branchNavItems = getBranchNavItems(request);
-
-			request.setAttribute(
-				"liferay-ui:navigation:navItems", branchNavItems);
-		}
-		catch (PortalException e) {
-			_log.error(e);
-		}
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/navigation/page.jsp";

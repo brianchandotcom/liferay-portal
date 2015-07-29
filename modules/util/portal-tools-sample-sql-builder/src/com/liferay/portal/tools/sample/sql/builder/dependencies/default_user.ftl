@@ -53,9 +53,9 @@
 <#list groupIds as groupId>
 	<#assign blogsStatsUserModel = dataFactory.newBlogsStatsUserModel(groupId)>
 
-	insert into BlogsStatsUser values (${blogsStatsUserModel.statsUserId}, ${blogsStatsUserModel.groupId}, ${blogsStatsUserModel.companyId}, ${blogsStatsUserModel.userId}, ${blogsStatsUserModel.entryCount}, '${dataFactory.getDateString(blogsStatsUserModel.lastPostDate)}', ${blogsStatsUserModel.ratingsTotalEntries}, ${blogsStatsUserModel.ratingsTotalScore}, ${blogsStatsUserModel.ratingsAverageScore});
+	insert into BlogsStatsUser values (${blogsStatsUserModel.statsUserId}, ${blogsStatsUserModel.groupId}, ${blogsStatsUserModel.userId}, ${blogsStatsUserModel.entryCount}, '${dataFactory.getDateString(blogsStatsUserModel.lastPostDate)}', ${blogsStatsUserModel.ratingsTotalEntries}, ${blogsStatsUserModel.ratingsTotalScore}, ${blogsStatsUserModel.ratingsAverageScore}, ${blogsStatsUserModel.companyId});
 
 	<#assign mbStatsUserModel = dataFactory.newMBStatsUserModel(groupId)>
 
-	insert into MBStatsUser values (${mbStatsUserModel.statsUserId}, ${mbStatsUserModel.groupId}, ${mbStatsUserModel.userId}, ${mbStatsUserModel.messageCount}, '${dataFactory.getDateString(mbStatsUserModel.lastPostDate)}');
+	insert into MBStatsUser values (${mbStatsUserModel.statsUserId}, ${mbStatsUserModel.groupId}, ${mbStatsUserModel.userId}, ${mbStatsUserModel.messageCount}, '${dataFactory.getDateString(mbStatsUserModel.lastPostDate)}', ${mbStatsUserModel.companyId});
 </#list>

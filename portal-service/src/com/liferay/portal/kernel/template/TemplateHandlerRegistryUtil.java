@@ -197,13 +197,14 @@ public class TemplateHandlerRegistryUtil {
 				Map<Locale, String> descriptionMap = _getLocalizationMap(
 					classLoader, group.getGroupId(),
 					templateElement.elementText("description"));
-				String language = templateElement.elementText("language");
 
 				String type = templateElement.elementText("type");
 
 				if (type == null) {
 					type = DDMTemplateManager.TEMPLATE_TYPE_DISPLAY;
 				}
+
+				String language = templateElement.elementText("language");
 
 				String scriptFileName = templateElement.elementText(
 					"script-file");

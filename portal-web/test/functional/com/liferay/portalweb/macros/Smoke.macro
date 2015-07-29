@@ -79,7 +79,7 @@
 	</command>
 
 	<command name="viewWelcomePage" summary="View default welcome page while signed in as '${userFirstName} ${userLastName}'">
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="Welcome" />
+		<execute function="Pause" locator1="1073" />
 
 		<execute function="AssertTextEquals#assertText" locator1="PGSignin#PORTLET_TITLE" value1="Sign In" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGSignin#PORTLET_CONTENT" value1="You are signed in as" />

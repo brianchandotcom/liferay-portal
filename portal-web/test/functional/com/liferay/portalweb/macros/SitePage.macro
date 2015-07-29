@@ -502,9 +502,9 @@
 			<then>
 				<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE_1" value1="${sitePageName}" />
 				<execute function="AssertClick" locator1="Home#PAGE_1_CHILD_PAGE_1" value1="${siteChildPageName}" />
-				<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />
-				<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${sitePageName}" />
-				<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_3" value1="${siteChildPageName}" />
+				<execute function="Pause" locator1="1073" />
+				<execute function="Pause" locator1="1073" />
+				<execute function="Pause" locator1="1073" />
 				<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
 				<execute function="AssertLocation" value1="${sitePageURL}" />
 			</then>
@@ -516,9 +516,9 @@
 					<then>
 						<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE_1" value1="${sitePageName}" />
 						<execute function="AssertClick" locator1="Home#PAGE_1_CHILD_PAGE_${childPageCounter}" value1="Site Child Page ${childPageCounter}" />
-						<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />
-						<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${sitePageName}" />
-						<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_3" value1="Site Child Page ${childPageCounter}" />
+						<execute function="Pause" locator1="1073" />
+						<execute function="Pause" locator1="1073" />
+						<execute function="Pause" locator1="1073" />
 						<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
 						<execute function="AssertLocation" value1="http://localhost:8080/web/site-name/site-child-page-${childPageCounter}" />
 
@@ -743,8 +743,8 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${sitePageName}" />
+		<execute function="Pause" locator1="1073" />
+		<execute function="Pause" locator1="1073" />
 		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
 		<execute function="AssertLocation" value1="${sitePageURL}" />
 	</command>

@@ -139,8 +139,8 @@
 		<var name="key_pageName" value="Test User Group Private Page" />
 
 		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="Test User Group Private Page" />
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="userfn userln" />
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="Test User Group Private Page" />
+		<execute function="Pause" locator1="1073" />
+		<execute function="Pause" locator1="1073" />
 
 		<execute macro="User#logoutUserPG" />
 

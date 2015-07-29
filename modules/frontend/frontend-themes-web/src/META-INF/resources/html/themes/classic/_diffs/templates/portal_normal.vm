@@ -18,40 +18,39 @@
 
 $theme.include($body_top_include)
 
-#dockbar()
+#if ($is_signed_in)
+	#dockbar()
+#end
 
-<div class="container-fluid" id="wrapper">
-	<header id="banner" role="banner">
-		<div id="heading">
-			<ul class="list-unstyled pull-right user-personal-bar">
-				#user_personal_bar()
-			</ul>
+<div id="wrapper">
+	<header class="container-fluid-1280" id="banner" role="banner">
+		<div class="row">
+			<div class="navbar-header" id="heading">
+				<button aria-controls="navigation" aria-expanded="false" class="collapsed navbar-toggle" data-target="#navigationCollapse" data-toggle="collapse" type="button">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
 
-			<h1 class="site-title">
 				<a class="$logo_css_class" href="$site_default_url" title="#language_format ("go-to-x", [$site_name])">
-					<img alt="$logo_description" height="$site_logo_height" src="$site_logo" width="$site_logo_width" />
-
-					#if ($show_site_name)
-						<span class="site-name" title="#language_format ("go-to-x", [$site_name])">
-							$site_name
-						</span>
-					#end
+					<img alt="$logo_description" height="64" src="$site_logo" width="64" />
 				</a>
 
-			</h1>
-		</div>
+				#if ($show_site_name)
+					<span class="site-name" title="#language_format ("go-to-x", [$site_name])">
+						$site_name
+					</span>
+				#end
+			</div>
 
-		#if ($has_navigation || $is_signed_in)
-			#parse ("$full_templates_path/navigation.vm")
-		#end
+			#if ($has_navigation || $is_signed_in)
+				#parse ("$full_templates_path/navigation.vm")
+			#end
+		</div>
 	</header>
 
-	<section id="content">
+	<section class="container-fluid-1280" id="content">
 		<h1 class="hide-accessible">$the_title</h1>
-
-		<nav id="breadcrumbs">
-			#breadcrumbs()
-		</nav>
 
 		#if ($selectable)
 			$theme.include($content_include)
@@ -64,14 +63,16 @@ $theme.include($body_top_include)
 		#end
 	</section>
 
-	<footer id="footer" role="contentinfo">
-		<p class="powered-by">
+	<footer class="container-fluid-1280" id="footer" role="contentinfo">
+		<div class="row-fluid">
 			#language ("powered-by") <a href="http://www.liferay.com" rel="external">Liferay</a>
-		</p>
+		</div>
 	</footer>
 </div>
 
-#control_menu()
+#if ($is_signed_in)
+	#control_menu()
+#end
 
 $theme.include($body_bottom_include)
 

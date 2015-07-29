@@ -449,12 +449,12 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 	}
 
 	@Override
-	protected String getRemoteNamespace() {
+	protected String getServerNamespace() {
 		return PortalUtil.getPortletNamespace(_OSB_PORTLET_ID);
 	}
 
 	@Override
-	protected String getRemotePortletURL() {
+	protected String getServerPortletURL() {
 		return
 			MarketplaceStoreWebConfigurationValues.MARKETPLACE_URL +
 				"/osb-portlet/mp_server";

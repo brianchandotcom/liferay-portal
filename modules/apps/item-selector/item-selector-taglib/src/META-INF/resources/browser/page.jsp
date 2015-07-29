@@ -26,6 +26,7 @@ String itemSelectedEventName = GetterUtil.getString(request.getAttribute("lifera
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-item-selector:browser:portletURL");
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-item-selector:browser:searchContainer");
 boolean showBreadcrumb = GetterUtil.getBoolean(request.getAttribute("liferay-item-selector:browser:showBreadcrumb"));
+boolean showDropZone = GetterUtil.getBoolean(request.getAttribute("liferay-item-selector:browser:showDropZone"));
 String tabName = GetterUtil.getString(request.getAttribute("liferay-item-selector:browser:tabName"));
 PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:browser:uploadURL");
 %>
@@ -145,7 +146,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 			<input class="hide" id="<%= randomNamespace %>InputFile" type="file" />
 		</liferay-util:buffer>
 
-		<div class="drop-enabled drop-zone no-border" data-returntype="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(draggableFileReturnType)) %>" data-uploadurl="<%= uploadURL.toString() %>">
+		<div class="drop-enabled drop-zone no-border <%= showDropZone ? StringPool.BLANK : "hide" %>" data-returntype="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(draggableFileReturnType)) %>" data-uploadurl="<%= uploadURL.toString() %>">
 			<strong><liferay-ui:message arguments="<%= selectFileHTML %>" key="drag-and-drop-to-upload-or-x" /></strong>
 		</div>
 	</c:if>

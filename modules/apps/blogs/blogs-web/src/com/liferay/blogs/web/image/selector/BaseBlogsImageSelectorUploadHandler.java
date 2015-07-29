@@ -70,9 +70,7 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 	}
 
 	@Override
-	public void validateFile(
-			PortletRequest portletRequest, String fileName, String contentType,
-			long size)
+	public void validateFile(String fileName, String contentType, long size)
 		throws PortalException {
 
 		String extension = FileUtil.getExtension(fileName);
@@ -118,7 +116,7 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 		}
 	}
 
-	protected abstract long getMaxFileSize(PortletRequest portletRequest);
+	protected abstract long getMaxFileSize();
 
 	@Override
 	protected void handleUploadException(

@@ -17,20 +17,22 @@
 <%@ include file="/html/taglib/ui/navigation/init.jsp" %>
 
 <%
-Map<String, Object> contextObjects = new HashMap<String, Object>();
+String renderedDDMTemplate = StringPool.BLANK;
 
-contextObjects.put("bulletStyle", bulletStyle);
-contextObjects.put("headerType", headerType);
-contextObjects.put("includedLayouts", includedLayouts);
-contextObjects.put("nestedChildren", nestedChildren);
-contextObjects.put("rootLayoutLevel", rootLayoutLevel);
-contextObjects.put("rootLayoutType", rootLayoutType);
+DDMTemplate portletDisplayDDMTemplate = PortletDisplayTemplateManagerUtil.getDDMTemplate(displayStyleGroupId, PortalUtil.getClassNameId(NavItem.class), displayStyle, true);
+
+if (portletDisplayDDMTemplate != null) {
+	Map<String, Object> contextObjects = new HashMap<String, Object>();
+
+	contextObjects.put("bulletStyle", bulletStyle);
+	contextObjects.put("headerType", headerType);
+	contextObjects.put("includedLayouts", includedLayouts);
+	contextObjects.put("nestedChildren", nestedChildren);
+	contextObjects.put("rootLayoutLevel", rootLayoutLevel);
+	contextObjects.put("rootLayoutType", rootLayoutType);
+
+	renderedDDMTemplate = PortletDisplayTemplateManagerUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplate.getTemplateId(), navItems, contextObjects);
+}
 %>
 
-<liferay-ddm:template-renderer
-	className="<%= NavItem.class.getName() %>"
-	contextObjects="<%= contextObjects %>"
-	displayStyle="<%= displayStyle %>"
-	displayStyleGroupId="<%= displayStyleGroupId %>"
-	entries="<%= navItems %>"
-/>
+<%= renderedDDMTemplate %>

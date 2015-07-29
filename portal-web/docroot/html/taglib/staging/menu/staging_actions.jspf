@@ -22,7 +22,7 @@
 			url="<%= publishRenderURL.toString() %>"
 		/>
 
-		<aui:script sandbox="<%= true %>">
+		<aui:script position="inline" sandbox="<%= true %>">
 			var publishGlobalLink = $('#<portlet:namespace /><%= groupId + "publishGlobalLink" %>');
 
 			publishGlobalLink.on(
@@ -143,7 +143,7 @@
 				</c:otherwise>
 			</c:choose>
 
-			<aui:script sandbox="<%= true %>">
+			<aui:script position="inline" sandbox="<%= true %>">
 				var publishLink = $('#<portlet:namespace /><%= layoutSetBranchId + "publishLink" %>');
 
 				publishLink.on(
@@ -208,7 +208,7 @@
 				</c:otherwise>
 			</c:choose>
 
-			<aui:script sandbox="<%= true %>">
+			<aui:script position="inline" sandbox="<%= true %>">
 				var layoutSetBranchesLink = $('#<portlet:namespace />manageLayoutSetBranches');
 
 				layoutSetBranchesLink.on(

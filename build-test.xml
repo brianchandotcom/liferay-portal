@@ -2610,14 +2610,10 @@ go]]></replacevalue>
 					/>
 				</delete>
 
-				<for list="${jdbc.db2.driver}" param="jdbc.driver">
-					<sequential>
-						<mirrors-get
-							dest="${todir}"
-							src="${test.jdbc.drivers.url}/db2/8.1.18/@{jdbc.driver}"
-						/>
-					</sequential>
-				</for>
+				<mirrors-get
+					dest="${todir}"
+					src="${test.jdbc.drivers.url}/db2/10.5.1/${jdbc.db2.driver}"
+				/>
 			</then>
 			<elseif>
 				<and>

@@ -14,6 +14,10 @@ body {
 	background-color: $bg-color;
 }
 
+.form-control {
+	background-color: transparent;
+}
+
 #wrapper {
 	padding: 0;
 
@@ -40,7 +44,6 @@ body {
 			}
 
 			.form-control {
-				background-color: transparent;
 				border-bottom-width: 1px;
 				border-color: #D6DCE2;
 				font-size: 16px;

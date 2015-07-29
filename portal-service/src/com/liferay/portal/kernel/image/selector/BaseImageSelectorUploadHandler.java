@@ -105,8 +105,8 @@ public abstract class BaseImageSelectorUploadHandler
 	}
 
 	protected abstract FileEntry addFileEntry(
-			ThemeDisplay themeDisplay, String uniqueFileName,
-			InputStream inputStream, String contentType)
+			ThemeDisplay themeDisplay, String fileName, InputStream inputStream,
+			String contentType)
 		throws PortalException;
 
 	protected abstract void checkPermission(

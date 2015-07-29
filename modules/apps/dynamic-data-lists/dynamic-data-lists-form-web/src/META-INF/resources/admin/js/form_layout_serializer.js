@@ -65,7 +65,7 @@ AUI.add(
 
 						var builder = instance.get('builder');
 
-						var pages = builder._pages;
+						var pages = builder._getPages();
 
 						var descriptions = pages.get('descriptions');
 						var titles = pages.get('titles');

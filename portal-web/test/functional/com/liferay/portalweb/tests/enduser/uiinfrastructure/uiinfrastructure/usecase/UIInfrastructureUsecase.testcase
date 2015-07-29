@@ -93,8 +93,11 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
 		<execute function="AssertTextEquals" locator1="NavPill#PERMISSIONS" value1="Permissions" />
+
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="Click" locator1="Icon#CLOSE" />
 
 		<execute macro="Portlet#gotoPortletOptions">
@@ -103,6 +106,7 @@
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="NavTab#PORTLET_CONFIGURATION" value1="Portlet Configuration" />
+
 		<execute function="Click" locator1="Icon#CLOSE" />
 
 		<execute macro="Portlet#dragAndDropPortletToColumnPG">

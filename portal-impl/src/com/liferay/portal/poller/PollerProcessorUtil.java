@@ -21,6 +21,7 @@ import com.liferay.portal.nio.intraband.proxy.IntrabandProxyInstallationUtil;
 import com.liferay.portal.nio.intraband.proxy.IntrabandProxyUtil;
 import com.liferay.portal.nio.intraband.proxy.StubHolder.StubCreator;
 import com.liferay.portal.nio.intraband.proxy.StubMap;
+import com.liferay.portal.nio.intraband.proxy.StubMapImpl;
 import com.liferay.portal.nio.intraband.proxy.WarnLogExceptionHandler;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
@@ -101,7 +102,7 @@ public class PollerProcessorUtil {
 		new PollerProcessorUtil();
 
 	private final StubMap<PollerProcessor> _pollerPorcessors =
-		new StubMap<PollerProcessor>(
+		new StubMapImpl<>(
 			new StubCreator<PollerProcessor>() {
 
 				@Override

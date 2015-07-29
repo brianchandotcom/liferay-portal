@@ -548,7 +548,7 @@ public class ConfigurationPersistenceManager
 
 	private static final String _RETRIEVE_CONFIGURATION_SQL_FOR_UPDATE =
 		"select configurationId, dictionary from Configuration_ where " +
-			"configurationId = ?";
+			"configurationId = ? for update";
 
 	private static final String _TABLE_SQL_CREATE =
 		"create table Configuration_ (configurationId VARCHAR(255) not null " +

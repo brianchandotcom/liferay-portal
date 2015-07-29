@@ -364,6 +364,12 @@
 </c:choose>
 
 <script type="text/javascript">
+	(function() {
+		<liferay-util:dynamic-include key="com.liferay.frontend.js.loader.modules.config" />
+	}());
+</script>
+
+<script type="text/javascript">
 	// <![CDATA[
 		<c:if test="<%= (layoutTypePortlet != null) %>">
 

@@ -30,7 +30,7 @@ import javax.portlet.RenderResponse;
 		"mvc.command.name=/plugins_admin/edit_plugin"
 	}
 )
-public class EditPluginMVSCRenderCommand implements MVCRenderCommand {
+public class EditPluginMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

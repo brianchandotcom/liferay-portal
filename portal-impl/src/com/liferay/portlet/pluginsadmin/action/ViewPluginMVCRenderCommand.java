@@ -29,7 +29,7 @@ import javax.portlet.RenderResponse;
 		"javax.portlet.name=" + PortletKeys.PLUGINS_ADMIN, "mvc.command.name=/"
 	}
 )
-public class ViewPluginMVSCRenderCommand implements MVCRenderCommand {
+public class ViewPluginMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

@@ -20,10 +20,12 @@ import com.liferay.portal.kernel.image.selector.BaseImageSelectorUploadHandler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -38,6 +40,7 @@ import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -85,6 +88,32 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 
 		throw new CoverImageNameException(
 			"Invalid cover image for file name " + fileName);
+	}
+
+	@Override
+	protected FileEntry addFileEntry(
+			ThemeDisplay themeDisplay, String uniqueFileName,
+			InputStream inputStream, String contentType)
+		throws PortalException {
+
+		return TempFileEntryUtil.addTempFileEntry(
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			_TEMP_FOLDER_NAME, uniqueFileName, inputStream, contentType);
+	}
+
+	@Override
+	protected FileEntry fetchTempFileEntry(
+			ThemeDisplay themeDisplay, String fileName)
+		throws PortalException {
+
+		try {
+			return TempFileEntryUtil.getTempFileEntry(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				_TEMP_FOLDER_NAME, fileName);
+		}
+		catch (PortalException pe) {
+			return null;
+		}
 	}
 
 	protected abstract long getMaxFileSize();

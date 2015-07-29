@@ -41,10 +41,6 @@
 		<portlet id="197" />
 		<portlet id="199" />
 	</category>
-	<category name="category.news">
-		<portlet id="83" />
-		<portlet id="84" />
-	</category>
 	<category name="category.sample">
 		<portlet id="47" />
 	</category>

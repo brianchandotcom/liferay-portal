@@ -32,4 +32,15 @@
 	<bean id="com.liferay.portlet.messageboards.action.SplitThreadMVCRenderCommand" class="com.liferay.portlet.messageboards.action.SplitThreadMVCRenderCommand" />
 	<bean id="com.liferay.portlet.messageboards.action.ViewMessageMVCRenderCommand" class="com.liferay.portlet.messageboards.action.ViewMessageMVCRenderCommand" />
 	<bean id="com.liferay.portlet.messageboards.action.ViewMVCRenderCommand" class="com.liferay.portlet.messageboards.action.ViewMVCRenderCommand" />
+	<bean id="com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory" class="com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory" />
+	<bean id="com.liferay.portlet.messageboards.social.MBMessageSocialActivityManager" class="com.liferay.portlet.messageboards.social.MBMessageSocialActivityManager" />
+	<bean id="com.liferay.portlet.messageboards.social.MBThreadSocialActivityManager" class="com.liferay.portlet.messageboards.social.MBThreadSocialActivityManager" />
+	<bean id="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" class="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" />
+	<bean id="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" class="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" />
+	<bean id="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" class="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" />
+	<bean id="com.liferay.portlet.messageboards.service.permission.MBThreadPermission" class="com.liferay.portlet.messageboards.service.permission.MBThreadPermission" />
+	<bean id="com.liferay.portlet.messageboards.service.permission.MBPermission" class="com.liferay.portlet.messageboards.service.permission.MBPermission" />
+	<bean id="com.liferay.portlet.messageboards.util.MBMessageIndexer" class="com.liferay.portlet.messageboards.util.MBMessageIndexer" />
+	<bean id="com.liferay.portlet.messageboards.util.MBOpenSearchImpl" class="com.liferay.portlet.messageboards.util.MBOpenSearchImpl" />
+	<bean id="com.liferay.portlet.messageboards.util.MBThreadIndexer" class="com.liferay.portlet.messageboards.util.MBThreadIndexer" />
 </beans>

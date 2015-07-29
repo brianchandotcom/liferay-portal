@@ -33,8 +33,8 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourcePermissionCheckerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.blogs.CoverImageNameException;
-import com.liferay.portlet.blogs.CoverImageSizeException;
+import com.liferay.portlet.blogs.BlogImageNameException;
+import com.liferay.portlet.blogs.BlogImageSizeException;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
@@ -86,7 +86,7 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 			}
 		}
 
-		throw new CoverImageNameException(
+		throw new BlogImageNameException(
 			"Invalid cover image for file name " + fileName);
 	}
 
@@ -127,8 +127,8 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 		jsonObject.put("success", Boolean.FALSE);
 
 		if (pe instanceof AntivirusScannerException ||
-			pe instanceof CoverImageNameException ||
-			pe instanceof CoverImageSizeException ||
+			pe instanceof BlogImageNameException ||
+			pe instanceof BlogImageSizeException ||
 			pe instanceof FileNameException) {
 
 			String errorMessage = StringPool.BLANK;
@@ -145,11 +145,11 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 
 				errorMessage = themeDisplay.translate(ase.getMessageKey());
 			}
-			else if (pe instanceof CoverImageNameException) {
+			else if (pe instanceof BlogImageNameException) {
 				errorType =
 					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 			}
-			else if (pe instanceof CoverImageSizeException) {
+			else if (pe instanceof BlogImageSizeException) {
 				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 			}
 			else if (pe instanceof FileNameException) {

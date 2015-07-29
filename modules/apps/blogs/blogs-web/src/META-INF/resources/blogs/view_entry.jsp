@@ -193,9 +193,13 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	</c:if>
 </c:if>
 
-<c:if test="<%= blogsPortletInstanceConfiguration.enableComments() %>">
+<%
+Discussion discussion = CommentManagerUtil.getDiscussion(user.getUserId(), scopeGroupId, BlogsEntry.class.getName(), entry.getEntryId(), new ServiceContextFunction(request));
+%>
+
+<c:if test="<%= (discussion != null) && blogsPortletInstanceConfiguration.enableComments() %>">
 	<liferay-ui:panel-container extended="<%= false %>" id="blogsCommentsPanelContainer" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" id="blogsCommentsPanel" persistState="<%= true %>" title='<%= LanguageUtil.format(request, "x-comments", MBMessageLocalServiceUtil.getDiscussionMessagesCount(BlogsEntry.class.getName(), entry.getEntryId(), WorkflowConstants.STATUS_APPROVED)) %>'>
+		<liferay-ui:panel collapsible="<%= true %>" id="blogsCommentsPanel" persistState="<%= true %>" title='<%= LanguageUtil.format(request, "x-comments", CommentManagerUtil.getCommentsCount(BlogsEntry.class.getName(), entry.getEntryId())) %>'>
 			<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED && entry.isAllowTrackbacks() && !portletId.equals(BlogsPortletKeys.BLOGS_ADMIN) %>">
 				<aui:input inlineLabel="left" name="trackbackURL" type="resource" value='<%= PortalUtil.getLayoutFullURL(themeDisplay) + Portal.FRIENDLY_URL_SEPARATOR + "blogs/trackback/" + entry.getUrlTitle() %>' />
 			</c:if>

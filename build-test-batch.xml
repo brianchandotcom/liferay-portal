@@ -1,0 +1,376 @@
+<?xml version="1.0"?>
+
+<project name="portal-test-batch" basedir="." xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
+	<import file="build-test.xml" />
+
+	<condition else="0" property="jenkins.axis.variable" value="${env.AXIS_VARIABLE}">
+		<isset property="env.AXIS_VARIABLE" />
+	</condition>
+
+	<macrodef name="check-deprecated-method">
+		<sequential>
+			<if>
+				<and>
+					<available file="javac.output.txt" />
+					<isset property="env.TOP_LEVEL_SHARED_DIR" />
+				</and>
+				<then>
+					<copy file="javac.output.txt" tofile="${env.TOP_LEVEL_SHARED_DIR}/javac.output.txt" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="database-test-action">
+		<attribute name="database.type" />
+		<element name="action" />
+
+		<sequential>
+			<local name="database.type" />
+
+			<property name="database.type" value="@{database.type}" />
+
+			<local name="database.service.executable" />
+
+			<get-database-property property.name="database.service.executable" />
+
+			<local name="database.service.cmd.start" />
+
+			<get-database-property property.name="database.service.cmd.start" />
+
+			<local name="database.service.cmd.stop" />
+
+			<get-database-property property.name="database.service.cmd.stop" />
+
+			<action />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="database-test-run-test">
+		<attribute name="database.type" />
+		<element name="test-action" />
+
+		<sequential>
+			<database-test-action database.type="@{database.type}">
+				<action>
+					<exec executable="${database.service.executable}">
+						<arg line="${database.service.cmd.stop}" />
+					</exec>
+				</action>
+			</database-test-action>
+
+			<database-test-action database.type="@{database.type}">
+				<action>
+					<set-portal-impl-portal-ext-properties />
+
+					<set-portal-impl-portal-test-ext-properties />
+
+					<set-portal-impl-system-ext-properties />
+
+					<exec executable="${database.service.executable}" failonerror="true">
+						<arg line="${database.service.cmd.start}" />
+					</exec>
+
+					<antcall target="copy-optional-jars" inheritall="false" >
+						<param name="database.type" value="@{database.type}" />
+						<param name="todir" value="lib/development" />
+					</antcall>
+
+					<antcall target="copy-optional-jars" inheritall="false" >
+						<param name="database.type" value="@{database.type}" />
+						<param name="todir" value="${app.server.lib.global.dir}" />
+					</antcall>
+
+					<antcall target="rebuild-database" inheritall="false" >
+						<param name="database.type" value="@{database.type}" />
+					</antcall>
+
+					<test-action />
+
+					<exec executable="${database.service.executable}" failonerror="true">
+						<arg line="${database.service.cmd.stop}" />
+					</exec>
+				</action>
+			</database-test-action>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="merge-test-results">
+		<sequential>
+			<antcall target="merge-test-results" />
+
+			<if>
+				<isset property="env.WORKSPACE" />
+				<then>
+					<mkdir dir="${env.WORKSPACE}/test-results" />
+
+					<copy file="test-results/TESTS-TestSuites.xml" tofile="${env.WORKSPACE}/test-results/TESTS-TestSuites.xml" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-test-build">
+		<sequential>
+			<antcall target="prepare-test-build">
+				<param name="test.class.groups.size" value="${test.batch.size}" />
+			</antcall>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="print-test-class-group">
+		<attribute name="test.class.group.index" />
+		<sequential>
+			<property file="${project.dir}/test.class.file.names.properties" />
+
+			<propertycopy from="TEST_CLASS_GROUP_@{test.class.group.index}" name="test.class.group" />
+
+			<echo>TEST_CLASS_GROUP_@{test.class.group.index}=${test.class.group}</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-batch-test">
+		<attribute name="test.class.group.index" />
+		<element name="test-action" />
+		<sequential>
+			<if>
+				<not>
+					<equals arg1="@{test.class.group.index}" arg2="default" />
+				</not>
+				<then>
+					<prepare-test-build />
+
+					<test-action />
+
+					<merge-test-results />
+
+					<check-deprecated-method />
+
+					<if>
+						<available file=".testable.portal.started" />
+						<then>
+							<antcall target="stop-app-server" />
+
+							<delete file=".testable.portal.started" failonerror="false" />
+						</then>
+					</if>
+
+					<print-gc-logs />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-functional-test">
+		<attribute name="database.type" />
+		<sequential>
+			<property name="test.class" value="${axis.variable}" />
+
+			<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+				<test-action>
+					<database-test-run-test database.type="@{database.type}">
+						<test-action>
+							<ant antfile="build-test-tomcat.xml" inheritAll="false" target="run-selenium-tomcat">
+								<property name="test.class" value="${axis.variable}" />
+							</ant>
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+			</run-batch-test>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-integration-test">
+		<attribute name="database.type" />
+		<sequential>
+			<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+				<test-action>
+					<database-test-run-test database.type="@{database.type}">
+						<test-action>
+							<print-test-class-group test.class.group.index="@{test.class.group.index}" />
+
+							<ant dir="portal-impl" target="test-class-group" inheritAll="false">
+								<property name="database.type" value="@{database.type}" />
+								<property name="test.class.group.index" value="@{test.class.group.index}" />
+								<property name="test.type" value="integration" />
+							</ant>
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+			</run-batch-test>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-modules-integration-test">
+		<attribute name="database.type" />
+		<sequential>
+			<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+				<test-action>
+					<database-test-run-test database.type="@{database.type}">
+						<test-action>
+							<print-test-class-group test.class.group.index="@{test.class.group.index}" />
+
+							<antcall target="prepare-portal-ext-properties" inheritAll="false">
+								<param name="database.type" value="@{database.type}" />
+							</antcall>
+
+							<antcall target="prepare-system-ext-properties" inheritAll="false" />
+
+							<ant dir="modules" target="test-class-group" inheritAll="false">
+								<property name="test.class.group.index" value="@{test.class.group.index}" />
+								<property name="test.type" value="integration" />
+							</ant>
+
+							<ant dir="portal-service" target="test-class" inheritAll="false">
+								<property name="test.class" value="PortalLogAssertorTest" />
+							</ant>
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+			</run-batch-test>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-build-selenium">
+		<sequential>
+			<ant antfile="build.xml" dir="portal-web" target="build-selenium" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-source-formatter">
+		<sequential>
+			<antcall target="test-package" inheritAll="false">
+				<param name="test.package" value="com.liferay.source.formatter" />
+			</antcall>
+		</sequential>
+	</macrodef>
+
+	<target name="functional-tomcat-mysql">
+		<run-functional-test database.type="mysql" />
+	</target>
+
+	<target name="integration-db2">
+		<run-integration-test database.type="db2" />
+	</target>
+
+	<target name="integration-mysql">
+		<run-integration-test database.type="mysql" />
+	</target>
+
+	<target name="integration-oracle">
+		<run-integration-test database.type="oracle" />
+	</target>
+
+	<target name="integration-postgresql">
+		<run-integration-test database.type="postgresql" />
+	</target>
+
+	<target name="modules-integration-db2">
+		<run-modules-integration-test database.type="db2" />
+	</target>
+
+	<target name="modules-integration-mysql">
+		<run-modules-integration-test database.type="mysql" />
+	</target>
+
+	<target name="modules-integration-oracle">
+		<run-modules-integration-test database.type="oracle" />
+	</target>
+
+	<target name="modules-integration-postgresql">
+		<run-modules-integration-test database.type="postgresql" />
+	</target>
+
+	<target name="modules-unit">
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<test-action>
+				<ant dir="modules" target="test-class-group" inheritAll="false">
+					<property name="test.class.group.index" value="@{test.class.group.index}" />
+					<property name="test.type" value="unit" />
+				</ant>
+			</test-action>
+		</run-batch-test>
+	</target>
+
+	<target name="plugins">
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<test-action>
+				<ant antfile="build-test-plugins.xml" target="test-plugin-group">
+					<property name="test.plugin.group.index" value="@{test.class.group.index}" />
+				</ant>
+			</test-action>
+		</run-batch-test>
+	</target>
+
+	<target name="portal-web">
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<test-action>
+				<database-test-run-test database.type="mysql">
+					<test-action>
+						<run-build-selenium />
+
+						<if>
+							<equals arg1="${TEST_PORTAL_WEB}" arg2="true" />
+							<then>
+								<run-source-formatter />
+							</then>
+						</if>
+					</test-action>
+				</database-test-run-test>
+			</test-action>
+		</run-batch-test>
+	</target>
+
+	<target name="service-builder">
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<test-action>
+				<ant dir="modules/util/portal-tools-service-builder" target="clean" />
+
+				<ant dir="modules/util/portal-tools-service-builder" target="deploy" />
+
+				<ant dir="portal-impl" target="build-services" />
+			</test-action>
+		</run-batch-test>
+	</target>
+
+	<target name="tck">
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<test-action>
+				<exec executable="${database.mysql.service.executable}" failonerror="true">
+					<arg line="${database.mysql.service.cmd.start}" />
+				</exec>
+
+				<antcall target="rebuild-database" inheritAll="false" />
+
+				<antcall target="delete-liferay-home" />
+
+				<ant antfile="build-test-tck.xml" target="record-test-tck-package-names">
+					<property name="test.class.groups.size" value="${test.batch.size}" />
+				</ant>
+
+				<ant antfile="build-test-tck.xml" target="test-class-group">
+					<property name="test.class.group.index" value="@{test.class.group.index}" />
+				</ant>
+			</test-action>
+		</run-batch-test>
+	</target>
+
+	<target name="unit">
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<test-action>
+				<ant dir="portal-service" target="test-class-group" inheritAll="false">
+					<property name="test.class.group.index" value="@{test.class.group.index}" />
+				</ant>
+
+				<ant dir="portal-impl" target="test-class-group" inheritAll="false">
+					<property name="test.class.group.index" value="@{test.class.group.index}" />
+					<property name="test.type" value="unit" />
+				</ant>
+
+				<ant dir="util-java" target="test-class-group" inheritAll="false">
+					<property name="test.class.group.index" value="@{test.class.group.index}" />
+				</ant>
+			</test-action>
+		</run-batch-test>
+	</target>
+</project>

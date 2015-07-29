@@ -52,11 +52,10 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	* @param entryId1 the primary key of the first asset entry
 	* @param entryId2 the primary key of the second asset entry
 	* @param type the link type. Acceptable values include {@link
-	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_RELATED}
-	which is a bidirectional relationship and {@link
-	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_CHILD}
-	which is a unidirectional relationship. For more information see
-	{@link com.liferay.portlet.asset.model.AssetLinkConstants}
+	AssetLinkConstants#TYPE_RELATED} which is a bidirectional
+	relationship and {@link AssetLinkConstants#TYPE_CHILD} which is a
+	unidirectional relationship. For more information see {@link
+	AssetLinkConstants}
 	* @param weight the weight of the relationship, allowing precedence
 	ordering of links
 	* @return the asset link
@@ -322,11 +321,10 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	*
 	* @param entryId the primary key of the asset entry
 	* @param typeId the link type. Acceptable values include {@link
-	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_RELATED}
-	which is a bidirectional relationship and {@link
-	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_CHILD}
-	which is a unidirectional relationship. For more information see
-	{@link com.liferay.portlet.asset.model.AssetLinkConstants}
+	AssetLinkConstants#TYPE_RELATED} which is a bidirectional
+	relationship and {@link AssetLinkConstants#TYPE_CHILD} which is a
+	unidirectional relationship. For more information see {@link
+	AssetLinkConstants}
 	* @return the asset links of the given link type whose first entry ID is
 	the given entry ID
 	*/
@@ -356,11 +354,10 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	*
 	* @param entryId the primary key of the asset entry
 	* @param typeId the link type. Acceptable values include {@link
-	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_RELATED}
-	which is a bidirectional relationship and {@link
-	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_CHILD}
-	which is a unidirectional relationship. For more information see
-	{@link com.liferay.portlet.asset.model.AssetLinkConstants}
+	AssetLinkConstants#TYPE_RELATED} which is a bidirectional
+	relationship and {@link AssetLinkConstants#TYPE_CHILD} which is a
+	unidirectional relationship. For more information see {@link
+	AssetLinkConstants}
 	* @return the asset links of the given link type whose first or second
 	entry ID is the given entry ID
 	*/
@@ -383,11 +380,10 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	*
 	* @param entryId the primary key of the asset entry
 	* @param typeId the link type. Acceptable values include {@link
-	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_RELATED}
-	which is a bidirectional relationship and {@link
-	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_CHILD}
-	which is a unidirectional relationship. For more information see
-	{@link com.liferay.portlet.asset.model.AssetLinkConstants}
+	AssetLinkConstants#TYPE_RELATED} which is a bidirectional
+	relationship and {@link AssetLinkConstants#TYPE_CHILD} which is a
+	unidirectional relationship. For more information see {@link
+	AssetLinkConstants}
 	* @return the asset links of the given link type whose second entry ID is
 	the given entry ID
 	*/
@@ -444,12 +440,10 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	* @param linkEntryIds the primary keys of the asset entries to be linked
 	with the asset entry to be managed
 	* @param typeId the type of the asset links to be created. Acceptable
-	values include {@link
-	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_RELATED}
-	which is a bidirectional relationship and {@link
-	com.liferay.portlet.asset.model.AssetLinkConstants#TYPE_CHILD}
-	which is a unidirectional relationship. For more information see
-	{@link com.liferay.portlet.asset.model.AssetLinkConstants}
+	values include {@link AssetLinkConstants#TYPE_RELATED} which is a
+	bidirectional relationship and {@link
+	AssetLinkConstants#TYPE_CHILD} which is a unidirectional
+	relationship. For more information see {@link AssetLinkConstants}
 	* @throws PortalException if the user could not be found
 	*/
 	@Override

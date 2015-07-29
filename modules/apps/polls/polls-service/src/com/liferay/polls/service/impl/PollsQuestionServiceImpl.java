@@ -14,6 +14,8 @@
 
 package com.liferay.polls.service.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.base.PollsQuestionServiceBaseImpl;
@@ -31,6 +33,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
  */
+@ProviderType
 public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 
 	@Override

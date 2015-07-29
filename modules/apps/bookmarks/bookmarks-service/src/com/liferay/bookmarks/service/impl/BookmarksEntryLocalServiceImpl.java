@@ -14,6 +14,8 @@
 
 package com.liferay.bookmarks.service.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.exception.EntryURLException;
@@ -25,17 +27,18 @@ import com.liferay.bookmarks.service.permission.BookmarksResourcePermissionCheck
 import com.liferay.bookmarks.settings.BookmarksGroupServiceSettings;
 import com.liferay.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
@@ -61,6 +64,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.SubscriptionSender;
@@ -78,6 +82,7 @@ import java.util.List;
  * @author Raymond Augé
  * @author Levente Hudák
  */
+@ProviderType
 public class BookmarksEntryLocalServiceImpl
 	extends BookmarksEntryLocalServiceBaseImpl {
 
@@ -456,7 +461,7 @@ public class BookmarksEntryLocalServiceImpl
 			int start, int end)
 		throws PortalException {
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(
+		Indexer<BookmarksEntry> indexer = IndexerRegistryUtil.getIndexer(
 			BookmarksEntry.class.getName());
 
 		SearchContext searchContext = new SearchContext();
@@ -493,7 +498,11 @@ public class BookmarksEntryLocalServiceImpl
 			final long folderId, final String treePath, final boolean reindex)
 		throws PortalException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
+		if (treePath == null) {
+			throw new IllegalArgumentException("Tree path is null");
+		}
+
+		final ActionableDynamicQuery actionableDynamicQuery =
 			getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
@@ -509,13 +518,16 @@ public class BookmarksEntryLocalServiceImpl
 					Property treePathProperty = PropertyFactoryUtil.forName(
 						"treePath");
 
-					dynamicQuery.add(treePathProperty.ne(treePath));
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.or(
+							treePathProperty.isNull(),
+							treePathProperty.ne(treePath)));
 				}
 
 			});
 
-		final Indexer indexer = IndexerRegistryUtil.getIndexer(
-			BookmarksEntry.class.getName());
+		final Indexer<BookmarksEntry> indexer = IndexerRegistryUtil.getIndexer(
+			BookmarksEntry.class);
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {
@@ -530,7 +542,9 @@ public class BookmarksEntryLocalServiceImpl
 
 					updateBookmarksEntry(entry);
 
-					indexer.reindex(entry);
+					Document document = indexer.getDocument(entry);
+
+					actionableDynamicQuery.addDocument(document);
 				}
 
 			});
@@ -710,7 +724,7 @@ public class BookmarksEntryLocalServiceImpl
 		}
 
 		BookmarksGroupServiceSettings bookmarksGroupServiceSettings =
-			_settingsFactory.getSettings(
+			settingsFactory.getSettings(
 				BookmarksGroupServiceSettings.class,
 				new GroupServiceSettingsLocator(
 					entry.getGroupId(), BookmarksConstants.SERVICE_NAME));
@@ -831,10 +845,10 @@ public class BookmarksEntryLocalServiceImpl
 		}
 	}
 
+	@ServiceReference(type = SettingsFactory.class)
+	protected SettingsFactory settingsFactory;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksEntryLocalServiceImpl.class);
-
-	@BeanReference(type = SettingsFactory.class)
-	private SettingsFactory _settingsFactory;
 
 }

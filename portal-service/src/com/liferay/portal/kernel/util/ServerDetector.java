@@ -17,10 +17,6 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import javax.management.MBeanServer;
-import javax.management.MBeanServerFactory;
-import javax.management.ObjectName;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -103,14 +99,6 @@ public class ServerDetector {
 
 	public static boolean isJBoss() {
 		return getInstance()._jBoss;
-	}
-
-	public static boolean isJBoss5() {
-		return getInstance()._jBoss5;
-	}
-
-	public static boolean isJBoss7() {
-		return getInstance()._jBoss7;
 	}
 
 	public static boolean isJetty() {
@@ -201,13 +189,6 @@ public class ServerDetector {
 		else if (_isJBoss()) {
 			_serverId = JBOSS_ID;
 			_jBoss = true;
-
-			if (_isJBoss5()) {
-				_jBoss5 = true;
-			}
-			else {
-				_jBoss7 = true;
-			}
 		}
 		else if (_isJOnAS()) {
 			_serverId = JONAS_ID;
@@ -265,36 +246,6 @@ public class ServerDetector {
 		return _hasSystemProperty("jboss.home.dir");
 	}
 
-	private boolean _isJBoss5() {
-		try {
-			for (MBeanServer mBeanServer :
-					MBeanServerFactory.findMBeanServer(null)) {
-
-				String defaultDomain = GetterUtil.getString(
-					mBeanServer.getDefaultDomain(), "jboss");
-
-				if (defaultDomain.equals("jboss")) {
-					ObjectName objectName = new ObjectName(
-						"jboss.system:type=Server");
-
-					String version = (String)mBeanServer.getAttribute(
-						objectName, "VersionNumber");
-
-					if (version.startsWith("5")) {
-						return true;
-					}
-
-					return false;
-				}
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return false;
-	}
-
 	private boolean _isJetty() {
 		return _hasSystemProperty("jetty.home");
 	}
@@ -331,8 +282,6 @@ public class ServerDetector {
 
 	private boolean _glassfish;
 	private boolean _jBoss;
-	private boolean _jBoss5;
-	private boolean _jBoss7;
 	private boolean _jetty;
 	private boolean _jonas;
 	private boolean _oc4j;

@@ -553,7 +553,8 @@ public class InvokerPortletImpl
 				if ((expCache != null) && (expCache.length > 0) &&
 					(expCache[0] != null)) {
 
-					_expCache = new Integer(GetterUtil.getInteger(expCache[0]));
+					_expCache = Integer.valueOf(
+						GetterUtil.getInteger(expCache[0]));
 				}
 			}
 		}

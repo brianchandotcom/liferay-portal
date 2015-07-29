@@ -99,6 +99,11 @@ public class SelectDDMFormFieldType extends BaseDDMFormFieldType {
 	}
 
 	@Override
+	public String getIcon() {
+		return "icon-list";
+	}
+
+	@Override
 	public String getName() {
 		return "select";
 	}

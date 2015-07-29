@@ -29,8 +29,10 @@ import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @see CalEventImpl
  * @see CalEvent
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class CalEventBaseImpl extends CalEventModelImpl
 	implements CalEvent {

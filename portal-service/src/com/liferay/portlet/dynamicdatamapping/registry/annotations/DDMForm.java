@@ -28,6 +28,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface DDMForm {
 
+	public String availableLanguageIds() default StringPool.BLANK;
+
+	public String defaultLanguageId() default StringPool.BLANK;
+
 	public String localization() default StringPool.BLANK;
 
 }

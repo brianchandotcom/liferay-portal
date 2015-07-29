@@ -12,10 +12,10 @@
 		<execute macro="BlogsEntry#tearDownCP" />
 	</tear-down>
 
-	<command name="AddAndDeleteBlogEntriesOnSeparateNodes" priority="5">
+	<command name="AddAndDeleteBlogEntriesOnSeparateNodes" priority="4">
 		<property name="app.server.bundles.size" value="1" />
 
-		<execute macro="Page#assertnodePortPG">
+		<execute macro="Page#assertNodePortPG">
 			<var name="nodePort" value="8080" />
 		</execute>
 
@@ -51,7 +51,7 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute macro="Page#assertnodePortPG">
+		<execute macro="Page#assertNodePortPG">
 			<var name="nodePort" value="9080" />
 		</execute>
 
@@ -183,11 +183,11 @@
 		</execute>
 	</command>
 
-	<command name="ValidateDocumentOnSeparateNodes" priority="5">
+	<command name="ValidateDocumentOnSeparateNodes" priority="4">
 		<property name="custom.properties" value="dl.store.impl=com.liferay.portlet.documentlibrary.store.DBStore" />
 		<property name="app.server.bundles.size" value="1" />
 
-		<execute macro="Page#assertnodePortPG">
+		<execute macro="Page#assertNodePortPG">
 			<var name="nodePort" value="8080" />
 		</execute>
 
@@ -228,7 +228,7 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute macro="Page#assertnodePortPG">
+		<execute macro="Page#assertNodePortPG">
 			<var name="nodePort" value="9080" />
 		</execute>
 
@@ -254,11 +254,11 @@
 		</execute>
 	</command>
 
-	<command name="ValidateSchedulerOnSeparateNodes" priority="5">
+	<command name="ValidateSchedulerOnSeparateNodes" priority="4">
 		<property name="app.server.bundles.size" value="1" />
 		<var name="pageName" value="Home" />
 
-		<execute macro="Page#assertnodePortPG">
+		<execute macro="Page#assertNodePortPG">
 			<var name="nodePort" value="8080" />
 		</execute>
 
@@ -305,7 +305,7 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute macro="Page#assertnodePortPG">
+		<execute macro="Page#assertNodePortPG">
 			<var name="nodePort" value="9080" />
 		</execute>
 

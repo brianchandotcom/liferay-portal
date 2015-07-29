@@ -565,7 +565,7 @@ public abstract class ContactServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.ContactLocalService.class)
 	protected com.liferay.portal.service.ContactLocalService contactLocalService;
-	@BeanReference(type = ContactService.class)
+	@BeanReference(type = com.liferay.portal.service.ContactService.class)
 	protected ContactService contactService;
 	@BeanReference(type = ContactPersistence.class)
 	protected ContactPersistence contactPersistence;

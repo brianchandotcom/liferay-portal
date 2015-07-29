@@ -42,7 +42,6 @@ import com.liferay.sync.engine.util.FileLockRetryUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.LoggerUtil;
 import com.liferay.sync.engine.util.OSDetector;
-import com.liferay.sync.engine.util.PropsValues;
 import com.liferay.sync.engine.util.SyncEngineUtil;
 
 import java.io.IOException;
@@ -53,6 +52,7 @@ import java.nio.file.Paths;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -170,12 +170,19 @@ public class SyncEngine {
 
 		SyncAccountService.update(syncAccount);
 
-		Path filePath = Paths.get(syncAccount.getFilePathName());
+		Path syncAccountFilePath = Paths.get(syncAccount.getFilePathName());
 
-		SyncFile syncFile = SyncFileService.fetchSyncFile(
+		SyncFile syncAccountFile = SyncFileService.fetchSyncFile(
 			syncAccount.getFilePathName());
 
-		if (!FileKeyUtil.hasFileKey(filePath, syncFile.getSyncFileId())) {
+		if (!FileKeyUtil.hasFileKey(
+				syncAccountFilePath, syncAccountFile.getSyncFileId())) {
+
+			if (_logger.isTraceEnabled()) {
+				_logger.trace(
+					"Missing sync account file path {}", syncAccountFilePath);
+			}
+
 			syncAccount.setActive(false);
 			syncAccount.setUiEvent(
 				SyncAccount.UI_EVENT_SYNC_ACCOUNT_FOLDER_MISSING);
@@ -188,6 +195,29 @@ public class SyncEngine {
 			SyncAccountService.activateSyncAccount(syncAccountId, false);
 
 			return;
+		}
+
+		List<SyncSite> syncSites = SyncSiteService.findSyncSites(syncAccountId);
+
+		for (SyncSite syncSite : syncSites) {
+			if (!syncSite.isActive() || (syncSite.getRemoteSyncTime() == -1)) {
+				continue;
+			}
+
+			Path syncSiteFilePath = Paths.get(syncSite.getFilePathName());
+
+			if (Files.notExists(syncSiteFilePath)) {
+				if (_logger.isTraceEnabled()) {
+					_logger.trace(
+						"Missing sync site file path {}", syncSiteFilePath);
+				}
+
+				syncSite.setUiEvent(SyncSite.UI_EVENT_SYNC_SITE_FOLDER_MISSING);
+
+				SyncSiteService.update(syncSite);
+
+				SyncSiteService.deactivateSyncSite(syncSite.getSyncSiteId());
+			}
 		}
 
 		SyncWatchEventService.deleteSyncWatchEvents(syncAccountId);
@@ -216,16 +246,17 @@ public class SyncEngine {
 		Watcher watcher = null;
 
 		if (OSDetector.isApple()) {
-			watcher = new BarbaryWatcher(filePath, watchEventListener);
+			watcher = new BarbaryWatcher(
+				syncAccountFilePath, watchEventListener);
 		}
 		else {
-			watcher = new JPathWatcher(filePath, watchEventListener);
+			watcher = new JPathWatcher(syncAccountFilePath, watchEventListener);
 		}
 
 		_executorService.execute(watcher);
 
 		if (!ConnectionRetryUtil.retryInProgress(syncAccountId)) {
-			synchronizeSyncFiles(filePath, syncAccountId);
+			synchronizeSyncFiles(syncAccountFilePath, syncAccountId);
 		}
 
 		scheduleGetSyncDLObjectUpdateEvent(
@@ -240,7 +271,7 @@ public class SyncEngine {
 
 		LoggerUtil.init();
 
-		_logger.info("Starting {}", PropsValues.SYNC_PRODUCT_NAME);
+		_logger.info("Starting Sync engine");
 
 		UpgradeUtil.upgrade();
 
@@ -258,7 +289,7 @@ public class SyncEngine {
 		SyncEngineUtil.fireSyncEngineStateChanged(
 			SyncEngineUtil.SYNC_ENGINE_STATE_STOPPING);
 
-		_logger.info("Stopping {}", PropsValues.SYNC_PRODUCT_NAME);
+		_logger.info("Stopping Sync engine");
 
 		for (long syncAccountId : _syncAccountTasks.keySet()) {
 			cancelSyncAccountTasks(syncAccountId);

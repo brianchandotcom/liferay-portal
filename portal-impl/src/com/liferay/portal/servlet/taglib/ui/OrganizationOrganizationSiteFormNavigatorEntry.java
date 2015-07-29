@@ -16,9 +16,6 @@ package com.liferay.portal.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Organization;
-import com.liferay.portal.model.User;
 
 /**
  * @author Pei-Jung Lan
@@ -36,19 +33,6 @@ public class OrganizationOrganizationSiteFormNavigatorEntry
 	@Override
 	public String getKey() {
 		return "organization-site";
-	}
-
-	@Override
-	public boolean isVisible(User user, Organization organization) {
-		if (organization != null) {
-			Group group = organization.getGroup();
-
-			if (group.isSite()) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	@Override

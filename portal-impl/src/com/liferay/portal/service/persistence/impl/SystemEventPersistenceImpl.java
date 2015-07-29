@@ -2919,6 +2919,11 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		return _badColumnNames;
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return SystemEventModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the system event persistence.
 	 */

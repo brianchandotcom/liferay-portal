@@ -36,6 +36,18 @@ public class WikiPageResourceLocalServiceWrapper
 
 	@Override
 	public com.liferay.wiki.model.WikiPageResource addPageResource(
+		long groupId, long nodeId, java.lang.String title) {
+		return _wikiPageResourceLocalService.addPageResource(groupId, nodeId,
+			title);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #addPageResource(long, long,
+	String)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.wiki.model.WikiPageResource addPageResource(
 		long nodeId, java.lang.String title) {
 		return _wikiPageResourceLocalService.addPageResource(nodeId, title);
 	}
@@ -210,6 +222,20 @@ public class WikiPageResourceLocalServiceWrapper
 		return _wikiPageResourceLocalService.fetchWikiPageResource(resourcePrimKey);
 	}
 
+	/**
+	* Returns the wiki page resource matching the UUID and group.
+	*
+	* @param uuid the wiki page resource's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
+	*/
+	@Override
+	public com.liferay.wiki.model.WikiPageResource fetchWikiPageResourceByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _wikiPageResourceLocalService.fetchWikiPageResourceByUuidAndGroupId(uuid,
+			groupId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _wikiPageResourceLocalService.getActionableDynamicQuery();
@@ -240,6 +266,18 @@ public class WikiPageResourceLocalServiceWrapper
 	}
 
 	@Override
+	public long getPageResourcePrimKey(long groupId, long nodeId,
+		java.lang.String title) {
+		return _wikiPageResourceLocalService.getPageResourcePrimKey(groupId,
+			nodeId, title);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getPageResourcePrimKey(long,
+	long, String)}
+	*/
+	@Deprecated
+	@Override
 	public long getPageResourcePrimKey(long nodeId, java.lang.String title) {
 		return _wikiPageResourceLocalService.getPageResourcePrimKey(nodeId,
 			title);
@@ -264,6 +302,22 @@ public class WikiPageResourceLocalServiceWrapper
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageResourceLocalService.getWikiPageResource(resourcePrimKey);
+	}
+
+	/**
+	* Returns the wiki page resource matching the UUID and group.
+	*
+	* @param uuid the wiki page resource's UUID
+	* @param groupId the primary key of the group
+	* @return the matching wiki page resource
+	* @throws PortalException if a matching wiki page resource could not be found
+	*/
+	@Override
+	public com.liferay.wiki.model.WikiPageResource getWikiPageResourceByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _wikiPageResourceLocalService.getWikiPageResourceByUuidAndGroupId(uuid,
+			groupId);
 	}
 
 	/**

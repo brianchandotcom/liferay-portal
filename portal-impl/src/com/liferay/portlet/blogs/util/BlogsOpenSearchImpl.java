@@ -35,7 +35,7 @@ public class BlogsOpenSearchImpl extends HitsOpenSearchImpl {
 	}
 
 	@Override
-	public Indexer getIndexer() {
+	public Indexer<BlogsEntry> getIndexer() {
 		return IndexerRegistryUtil.getIndexer(BlogsEntry.class);
 	}
 

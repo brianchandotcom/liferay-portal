@@ -86,8 +86,15 @@ import java.util.TreeSet;
  * @see ${entity.name}Impl
  * @see ${packagePath}.model.${entity.name}
  * @see ${packagePath}.model.${entity.name}Model
+<#if classDeprecated>
+ * @deprecated ${classDeprecatedComment}
+</#if>
  * @generated
  */
+
+<#if classDeprecated>
+	@Deprecated
+</#if>
 
 <#if entity.jsonEnabled>
 	@JSON(strict = true)
@@ -116,6 +123,16 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				</#if>
 			</#list>
 		};
+
+		public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+		static {
+			<#list entity.getRegularColList() as column>
+				<#assign sqlType = serviceBuilder.getSqlType(packagePath + ".model." + entity.getName(), column.getName(), column.getType())>
+
+				TABLE_COLUMNS_MAP.put("${column.DBName}", Types.${sqlType});
+			</#list>
+		}
 	</#compress>
 
 	public static final String TABLE_SQL_CREATE = "${serviceBuilder.getCreateTableSQL(entity)}";

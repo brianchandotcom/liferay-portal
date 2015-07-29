@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.servlet.PortalWebResources;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -48,7 +47,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -355,7 +353,7 @@ public class ServicePreAction extends Action {
 				Group sourceGroup = GroupLocalServiceUtil.getGroup(
 					sourceGroupId);
 
-				if (layout.isPublicLayout() ||
+				if (layout.isTypeControlPanel() || layout.isPublicLayout() ||
 					SitesUtil.isUserGroupLayoutSetViewable(
 						permissionChecker, layout.getGroup())) {
 
@@ -444,7 +442,8 @@ public class ServicePreAction extends Action {
 				if (user.isDefaultUser() &&
 					PropsValues.AUTH_LOGIN_PROMPT_ENABLED) {
 
-					throw new PrincipalException("User is not authenticated");
+					throw new PrincipalException.MustBeAuthenticated(
+						user.getUserId());
 				}
 
 				sb = new StringBundler(6);
@@ -709,7 +708,8 @@ public class ServicePreAction extends Action {
 		boolean wapTheme = BrowserSnifferUtil.isWap(request);
 
 		if ((layout != null) &&
-			(group.isControlPanel() || group.isUserPersonalPanel())) {
+			(layout.isTypeControlPanel() || group.isControlPanel() ||
+			 group.isUserPersonalPanel())) {
 
 			String themeId = PrefsPropsUtil.getString(
 				companyId, PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID);
@@ -1103,7 +1103,7 @@ public class ServicePreAction extends Action {
 						PortletRequest.RENDER_PHASE);
 
 					publishToLiveURL.setParameter(
-						"struts_action", "/export_import/publish_layouts");
+						"mvcRenderCommandName", "publishLayouts");
 
 					if (layout.isPrivateLayout()) {
 						publishToLiveURL.setParameter("tabs1", "private-pages");
@@ -1257,20 +1257,17 @@ public class ServicePreAction extends Action {
 			PortletDataHandlerKeys.THEME_REFERENCE,
 			new String[] {Boolean.TRUE.toString()});
 
-		Map<String, Serializable> importSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
-				user.getUserId(), groupId, privateLayout, null, parameterMap,
-				Constants.IMPORT, user.getLocale(), user.getTimeZone(),
-				larFile.getName());
+		Map<String, Serializable> importLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportLayoutSettingsMap(
+					user, groupId, privateLayout, null, parameterMap);
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					user.getUserId(), groupId, StringPool.BLANK,
-					StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					user.getUserId(),
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
-					new ServiceContext());
+					importLayoutSettingsMap);
 
 		ExportImportLocalServiceUtil.importLayouts(
 			exportImportConfiguration, larFile);
@@ -1522,7 +1519,7 @@ public class ServicePreAction extends Action {
 
 		final LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
-		groupParams.put("usersGroups", new Long(user.getUserId()));
+		groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
 
 		int count = GroupLocalServiceUtil.searchCount(
 			user.getCompanyId(), null, null, groupParams);
@@ -1747,7 +1744,8 @@ public class ServicePreAction extends Action {
 				if (user.isDefaultUser() &&
 					PropsValues.AUTH_LOGIN_PROMPT_ENABLED) {
 
-					throw new PrincipalException("User is not authenticated");
+					throw new PrincipalException.MustBeAuthenticated(
+						String.valueOf(user.getUserId()));
 				}
 
 				SessionErrors.add(
@@ -2153,15 +2151,15 @@ public class ServicePreAction extends Action {
 			WebKeys.VISITED_GROUP_ID_PREVIOUS);
 
 		if (recentGroupId == null) {
-			recentGroupId = new Long(currentGroupId);
+			recentGroupId = Long.valueOf(currentGroupId);
 
 			session.setAttribute(
 				WebKeys.VISITED_GROUP_ID_RECENT, recentGroupId);
 		}
 		else if (recentGroupId.longValue() != currentGroupId) {
-			previousGroupId = new Long(recentGroupId.longValue());
+			previousGroupId = Long.valueOf(recentGroupId.longValue());
 
-			recentGroupId = new Long(currentGroupId);
+			recentGroupId = Long.valueOf(currentGroupId);
 
 			session.setAttribute(
 				WebKeys.VISITED_GROUP_ID_RECENT, recentGroupId);

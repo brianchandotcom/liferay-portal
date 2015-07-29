@@ -31,7 +31,7 @@ public class DefaultSearchResultPermissionFilter
 	extends BaseSearchResultPermissionFilter {
 
 	public DefaultSearchResultPermissionFilter(
-		BaseIndexer baseIndexer, PermissionChecker permissionChecker) {
+		BaseIndexer<?> baseIndexer, PermissionChecker permissionChecker) {
 
 		_baseIndexer = baseIndexer;
 		_permissionChecker = permissionChecker;
@@ -55,7 +55,7 @@ public class DefaultSearchResultPermissionFilter
 
 			String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
 
-			Indexer indexer = IndexerRegistryUtil.getIndexer(entryClassName);
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(entryClassName);
 
 			long entryClassPK = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
@@ -94,7 +94,7 @@ public class DefaultSearchResultPermissionFilter
 		return _baseIndexer.doSearch(searchContext);
 	}
 
-	private final BaseIndexer _baseIndexer;
+	private final BaseIndexer<?> _baseIndexer;
 	private final PermissionChecker _permissionChecker;
 
 }

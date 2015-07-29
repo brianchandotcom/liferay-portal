@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
+import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.language.web.configuration.LanguageWebConfiguration;
 import com.liferay.site.navigation.language.web.configuration.LanguageWebConfigurationValues;
 import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;

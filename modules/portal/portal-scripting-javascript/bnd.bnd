@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Portal Scripting JavaScript
 Bundle-SymbolicName: com.liferay.portal.scripting.javascript
 Bundle-Version: 1.0.0
+DynamicImport-Package: *
 Import-Package:\
 	!javax.swing.*,\
 	!org.apache.xmlbeans.*,\

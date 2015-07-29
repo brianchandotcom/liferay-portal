@@ -808,7 +808,7 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = ContactLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.ContactLocalService.class)
 	protected ContactLocalService contactLocalService;
 	@BeanReference(type = com.liferay.portal.service.ContactService.class)
 	protected com.liferay.portal.service.ContactService contactService;

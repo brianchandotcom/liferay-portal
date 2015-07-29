@@ -407,8 +407,9 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		}
 	}
 
-	protected void cacheUniqueFindersCache(PortalPreferences portalPreferences) {
-		if (portalPreferences.isNew()) {
+	protected void cacheUniqueFindersCache(
+		PortalPreferences portalPreferences, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					portalPreferences.getOwnerId(),
 					portalPreferences.getOwnerType()
@@ -598,7 +599,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 			portalPreferences, false);
 
 		clearUniqueFindersCache(portalPreferences);
-		cacheUniqueFindersCache(portalPreferences);
+		cacheUniqueFindersCache(portalPreferences, isNew);
 
 		portalPreferences.resetOriginalValues();
 
@@ -978,6 +979,11 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return PortalPreferencesModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

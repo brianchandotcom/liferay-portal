@@ -72,6 +72,19 @@ public class DLContentModelImpl extends BaseModelImpl<DLContent>
 			{ "data_", Types.BLOB },
 			{ "size_", Types.BIGINT }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("contentId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("repositoryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("path_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("data_", Types.BLOB);
+		TABLE_COLUMNS_MAP.put("size_", Types.BIGINT);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table DLContent (contentId LONG not null primary key,groupId LONG,companyId LONG,repositoryId LONG,path_ VARCHAR(255) null,version VARCHAR(75) null,data_ BLOB,size_ LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DLContent";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlContent.version DESC";

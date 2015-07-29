@@ -146,9 +146,7 @@ catch (RuntimeException re) {
 	re.printStackTrace();
 }
 
-HttpServletRequest originalRequest = PortalUtil.getOriginalServletRequest(request);
-
-RenderRequestImpl renderRequestImpl = RenderRequestFactory.create(originalRequest, portlet, invokerPortlet, portletCtx, windowState, portletMode, portletPreferences, plid);
+RenderRequestImpl renderRequestImpl = RenderRequestFactory.create(request, portlet, invokerPortlet, portletCtx, windowState, portletMode, portletPreferences, plid);
 
 BufferCacheServletResponse bufferCacheServletResponse = new BufferCacheServletResponse(response);
 
@@ -164,19 +162,16 @@ String responseContentType = renderRequestImpl.getResponseContentType();
 
 String currentURL = PortalUtil.getCurrentURL(request);
 
-String portletResource = StringPool.BLANK;
+String portletResource = ParamUtil.getString(request, "portletResource");
+
+if (Validator.isNull(portletResource)) {
+	portletResource = ParamUtil.getString(renderRequestImpl, "portletResource");
+}
+
 Portlet portletResourcePortlet = null;
 
-if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-	portletResource = ParamUtil.getString(request, "portletResource");
-
-	if (Validator.isNull(portletResource)) {
-		portletResource = ParamUtil.getString(renderRequestImpl, "portletResource");
-	}
-
-	if (Validator.isNotNull(portletResource)) {
-		portletResourcePortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
-	}
+if (Validator.isNotNull(portletResource)) {
+	portletResourcePortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
 }
 
 boolean showCloseIcon = true;
@@ -201,32 +196,30 @@ if ((portletParallelRender != null) && (portletParallelRender.booleanValue() == 
 	showRefreshIcon = false;
 }
 
-if (!portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
-	Layout curLayout = PortletConfigurationLayoutUtil.getLayout(themeDisplay);
+Layout curLayout = PortletConfigurationLayoutUtil.getLayout(themeDisplay);
 
-	if ((!group.hasStagingGroup() || group.isStagingGroup()) &&
-		(PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), curLayout, portlet, ActionKeys.CONFIGURATION))) {
+if ((!group.hasStagingGroup() || group.isStagingGroup()) &&
+	(PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), curLayout, portlet, ActionKeys.CONFIGURATION))) {
 
-		showConfigurationIcon = true;
+	showConfigurationIcon = true;
 
-		boolean supportsConfigurationLAR = portlet.getConfigurationActionInstance() != null;
-		boolean supportsDataLAR = !(portlet.getPortletDataHandlerInstance() instanceof DefaultConfigurationPortletDataHandler);
+	boolean supportsConfigurationLAR = portlet.getConfigurationActionInstance() != null;
+	boolean supportsDataLAR = !(portlet.getPortletDataHandlerInstance() instanceof DefaultConfigurationPortletDataHandler);
 
-		if (supportsConfigurationLAR || supportsDataLAR || (!group.isControlPanel() && !group.isUserPersonalPanel())) {
-			showExportImportIcon = true;
-		}
-
-		if (PropsValues.PORTLET_CSS_ENABLED) {
-			showPortletCssIcon = true;
-		}
+	if (supportsConfigurationLAR || supportsDataLAR || (!group.isControlPanel() && !group.isUserPersonalPanel())) {
+		showExportImportIcon = true;
 	}
 
-	if (layoutTypePortlet.isCustomizable() && !layoutTypePortlet.isColumnDisabled(columnId) && !portlet.isPreferencesCompanyWide() && portlet.isPreferencesUniquePerLayout() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) {
-		showConfigurationIcon = true;
+	if (PropsValues.PORTLET_CSS_ENABLED) {
+		showPortletCssIcon = true;
+	}
+}
 
-		if (PropsValues.PORTLET_CSS_ENABLED) {
-			showPortletCssIcon = true;
-		}
+if (layoutTypePortlet.isCustomizable() && !layoutTypePortlet.isColumnDisabled(columnId) && !portlet.isPreferencesCompanyWide() && portlet.isPreferencesUniquePerLayout() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) {
+	showConfigurationIcon = true;
+
+	if (PropsValues.PORTLET_CSS_ENABLED) {
+		showPortletCssIcon = true;
 	}
 }
 
@@ -323,7 +316,7 @@ if (layout.isLayoutPrototypeLinkActive()) {
 
 long previousScopeGroupId = themeDisplay.getScopeGroupId();
 
-if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION) && (portletResourcePortlet != null)) {
+if (Validator.isNotNull(portletResource)) {
 	themeDisplay.setScopeGroupId(PortalUtil.getScopeGroupId(request, portletResourcePortlet.getPortletId()));
 }
 else {
@@ -420,14 +413,12 @@ portletDisplay.setURLClose(urlClose);
 
 // URL configuration
 
-PortletURLImpl urlConfiguration = new PortletURLImpl(request, PortletKeys.PORTLET_CONFIGURATION, plid, PortletRequest.RENDER_PHASE);
+PortletURL urlConfiguration = PortletProviderUtil.getPortletURL(request, PortletConfigurationApplicationType.PortletConfiguration.CLASS_NAME, PortletProvider.Action.VIEW);
 
 urlConfiguration.setWindowState(LiferayWindowState.POP_UP);
 
-urlConfiguration.setEscapeXml(false);
-
 if (portlet.getConfigurationActionInstance() != null) {
-	urlConfiguration.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_configuration.jsp");
+	urlConfiguration.setParameter("mvcPath", "/edit_configuration.jsp");
 
 	String settingsScope = (String)request.getAttribute(WebKeys.SETTINGS_SCOPE);
 
@@ -436,18 +427,42 @@ if (portlet.getConfigurationActionInstance() != null) {
 	}
 }
 else if (PortletPermissionUtil.contains(permissionChecker, layout, portletDisplay.getId(), ActionKeys.PERMISSIONS)) {
-	urlConfiguration.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_permissions.jsp");
+	urlConfiguration.setParameter("mvcPath", "/edit_permissions.jsp");
 }
 else {
-	urlConfiguration.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_sharing.jsp");
+	urlConfiguration.setParameter("mvcPath", "/edit_sharing.jsp");
 }
 
 urlConfiguration.setParameter("redirect", currentURL);
 urlConfiguration.setParameter("returnToFullPageURL", currentURL);
+urlConfiguration.setParameter("portletConfiguration", Boolean.TRUE.toString());
 urlConfiguration.setParameter("portletResource", portletDisplay.getId());
 urlConfiguration.setParameter("resourcePrimKey", PortletPermissionUtil.getPrimaryKey(plid, portlet.getPortletId()));
 
-portletDisplay.setURLConfiguration(urlConfiguration.toString() + "&" + PortalUtil.getPortletNamespace(PortletKeys.PORTLET_CONFIGURATION));
+portletDisplay.setURLConfiguration(urlConfiguration.toString());
+
+StringBuilder urlConfigurationJSSB = new StringBuilder(14);
+
+urlConfigurationJSSB.append("Liferay.Portlet.openWindow({bodyCssClass: 'dialog-with-footer',");
+urlConfigurationJSSB.append("namespace: '");
+urlConfigurationJSSB.append(portletDisplay.getNamespace());
+urlConfigurationJSSB.append("', portlet: '#p_p_id_");
+urlConfigurationJSSB.append(portletDisplay.getId());
+urlConfigurationJSSB.append("_', portletId: '");
+urlConfigurationJSSB.append(portletDisplay.getId());
+
+if (PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID) {
+	urlConfigurationJSSB.append("', subTitle: '");
+	urlConfigurationJSSB.append(portletDisplay.getId());
+}
+
+urlConfigurationJSSB.append("', title: '");
+urlConfigurationJSSB.append(UnicodeLanguageUtil.get(request, "configuration"));
+urlConfigurationJSSB.append("', uri: '");
+urlConfigurationJSSB.append(HtmlUtil.escapeJS(portletDisplay.getURLConfiguration()));
+urlConfigurationJSSB.append("'}); return false;");
+
+portletDisplay.setURLConfigurationJS(urlConfigurationJSSB.toString());
 
 // URL edit
 
@@ -524,7 +539,7 @@ PortletURLImpl urlExportImport = new PortletURLImpl(request, PortletKeys.EXPORT_
 
 urlExportImport.setWindowState(LiferayWindowState.POP_UP);
 
-urlExportImport.setParameter("struts_action", "/export_import/export_import");
+urlExportImport.setParameter("mvcRenderCommandName", "exportImport");
 urlExportImport.setParameter("redirect", currentURL);
 urlExportImport.setParameter("returnToFullPageURL", currentURL);
 urlExportImport.setParameter("portletResource", portletDisplay.getId());
@@ -648,7 +663,7 @@ PortletURLImpl urlStaging = new PortletURLImpl(request, PortletKeys.EXPORT_IMPOR
 
 urlStaging.setWindowState(LiferayWindowState.POP_UP);
 
-urlStaging.setParameter("struts_action", "/export_import/staging");
+urlStaging.setParameter("mvcRenderCommandName", "staging");
 urlStaging.setParameter("cmd", Constants.PUBLISH_TO_LIVE);
 urlStaging.setParameter("redirect", currentURL);
 urlStaging.setParameter("returnToFullPageURL", currentURL);
@@ -678,19 +693,6 @@ else if (portletDisplay.isModePrint()) {
 	urlBack = urlPrint.toString();
 }
 else if (portletDisplay.isStateMax()) {
-	//if (portletDisplay.getId().equals(PortletKeys.PORTLET_CONFIGURATION)) {
-		/*String portletResource = ParamUtil.getString(request, "portletResource");
-
-		urlMax.setAnchor(false);
-
-		urlBack = urlMax.toString() + "#p_" + portletResource;*/
-
-		//urlBack = ParamUtil.getString(renderRequestImpl, "returnToFullPageURL");
-	//}
-	//else {
-	//	urlBack = urlMax.toString();
-	//}
-
 	if (portletDisplay.getId().startsWith("WSRP_")) {
 		urlBack = portletDisplay.getURLBack();
 	}

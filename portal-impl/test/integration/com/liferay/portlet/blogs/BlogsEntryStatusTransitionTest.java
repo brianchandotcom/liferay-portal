@@ -15,6 +15,8 @@
 package com.liferay.portlet.blogs;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -38,7 +40,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -389,8 +390,11 @@ public class BlogsEntryStatusTransitionTest {
 
 		serviceContext.setCommand(Constants.UPDATE);
 
+		String portletId = PortletProviderUtil.getPortletId(
+			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
+
 		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			entry.getGroupId(), PortletKeys.BLOGS);
+			entry.getGroupId(), portletId);
 
 		serviceContext.setLayoutFullURL(layoutFullURL);
 
@@ -407,7 +411,8 @@ public class BlogsEntryStatusTransitionTest {
 	}
 
 	protected int searchBlogsEntriesCount(long groupId) throws Exception {
-		Indexer indexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);
+		Indexer<BlogsEntry> indexer = IndexerRegistryUtil.getIndexer(
+			BlogsEntry.class);
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
 

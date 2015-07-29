@@ -22,7 +22,7 @@
 		</execute>
 	</set-up>
 
-	<command name="AddWikiPage" priority="5">
+	<command name="AddWikiPage" priority="4">
 		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
 

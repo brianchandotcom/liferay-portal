@@ -64,9 +64,13 @@
 
 	var REGEX_LASTCHAR_NEWLINE_WHITESPACE = /(\r?\n\s*)$/;
 
+	var REGEX_LIST_CIRCLE = /circle/i;
+
 	var REGEX_LIST_LOWER_ALPHA = /lower-alpha/i;
 
 	var REGEX_LIST_LOWER_ROMAN = /lower-roman/i;
+
+	var REGEX_LIST_SQUARE = /square/i;
 
 	var REGEX_LIST_UPPER_ALPHA = /upper-alpha/i;
 
@@ -298,20 +302,23 @@
 			else if (sizeValue <= 12) {
 				sizeValue = '2';
 			}
-			else if (sizeValue <= 16) {
+			else if (sizeValue <= 14) {
 				sizeValue = '3';
 			}
-			else if (sizeValue <= 18) {
+			else if (sizeValue <= 16) {
 				sizeValue = '4';
 			}
-			else if (sizeValue <= 24) {
+			else if (sizeValue <= 18) {
 				sizeValue = '5';
 			}
-			else if (sizeValue <= 32) {
+			else if (sizeValue <= 24) {
 				sizeValue = '6';
 			}
-			else {
+			else if (sizeValue <= 32) {
 				sizeValue = '7';
+			}
+			else {
+				sizeValue = '8';
 			}
 
 			return sizeValue;
@@ -572,25 +579,33 @@
 		},
 
 		_handleOrderedList: function(element, listTagsIn, listTagsOut) {
-			listTagsIn.push('[list=');
+			listTagsIn.push('[list');
 
 			var listStyleType = element.style.listStyleType;
 
 			if (REGEX_LIST_LOWER_ALPHA.test(listStyleType)) {
-				listTagsIn.push('a]');
+				listTagsIn.push(' type="a"');
 			}
 			else if (REGEX_LIST_LOWER_ROMAN.test(listStyleType)) {
-				listTagsIn.push('i]');
+				listTagsIn.push(' type="i"');
 			}
 			else if (REGEX_LIST_UPPER_ALPHA.test(listStyleType)) {
-				listTagsIn.push('A]');
+				listTagsIn.push(' type="A"');
 			}
 			else if (REGEX_LIST_UPPER_ROMAN.test(listStyleType)) {
-				listTagsIn.push('I]');
+				listTagsIn.push(' type="I"');
 			}
 			else {
-				listTagsIn.push('1]');
+				listTagsIn.push(' type="1"');
 			}
+
+			var start = element.start;
+
+			if (start >= 0) {
+				listTagsIn.push(' start="' + start + '"');
+			}
+
+			listTagsIn.push(']');
 
 			listTagsOut.push('[/list]');
 		},
@@ -818,7 +833,19 @@
 		},
 
 		_handleUnorderedList: function(element, listTagsIn, listTagsOut) {
-			listTagsIn.push('[list]');
+			listTagsIn.push('[list');
+
+			var listStyleType = element.style.listStyleType;
+
+			if (REGEX_LIST_CIRCLE.test(listStyleType)) {
+				listTagsIn.push(' type="circle"]');
+			}
+			else if (REGEX_LIST_SQUARE.test(listStyleType)) {
+				listTagsIn.push(' type="square"]');
+			}
+			else {
+				listTagsIn.push(' type="disc"]');
+			}
 
 			listTagsOut.push('[/list]');
 		},

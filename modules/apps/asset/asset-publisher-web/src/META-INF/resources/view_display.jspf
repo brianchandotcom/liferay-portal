@@ -15,7 +15,7 @@
 --%>
 
 <%
-if (StringUtil.startsWith(assetPublisherDisplayContext.getDisplayStyle(), PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+if (StringUtil.startsWith(assetPublisherDisplayContext.getDisplayStyle(), PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX)) {
 	assetPublisherDisplayContext.setDisplayStyle(AssetPublisherWebConfigurationValues.DISPLAY_STYLE_DEFAULT);
 }
 

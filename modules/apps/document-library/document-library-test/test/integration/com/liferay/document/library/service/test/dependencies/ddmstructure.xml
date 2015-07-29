@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US,hu_HU" default-locale="en_US">
+	<dynamic-element dataType="date" fieldNamespace="ddm" indexType="" name="date_an" required="false" showLabel="true" type="ddm-date" width="25">
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Date_EN]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="tip"><![CDATA[]]></entry>
+		</meta-data>
+		<meta-data locale="hu_HU">
+			<entry name="label"><![CDATA[Date_HU]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="tip"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+</root>

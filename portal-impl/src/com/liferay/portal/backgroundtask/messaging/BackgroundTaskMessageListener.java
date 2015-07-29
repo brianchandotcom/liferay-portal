@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager
 import com.liferay.portal.kernel.backgroundtask.ClassLoaderAwareBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.SerialBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.ThreadLocalAwareBackgroundTaskExecutor;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -121,11 +122,19 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			status = backgroundTaskResult.getStatus();
 			statusMessage = backgroundTaskResult.getStatusMessage();
 		}
-		catch (DuplicateLockException e) {
+		catch (DuplicateLockException dle) {
 			status = BackgroundTaskConstants.STATUS_QUEUED;
 		}
 		catch (Exception e) {
 			status = BackgroundTaskConstants.STATUS_FAILED;
+
+			if (e instanceof SystemException) {
+				Throwable cause = e.getCause();
+
+				if (cause instanceof Exception) {
+					e = (Exception)cause;
+				}
+			}
 
 			if (backgroundTaskExecutor != null) {
 				statusMessage = backgroundTaskExecutor.handleException(

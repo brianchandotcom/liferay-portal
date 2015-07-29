@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>HelloWorld</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">HelloWorld</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//section[@id='portlet_47']//h1[@class='portlet-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_CONTENT</td>
+	<td>//section[@id='portlet_47']//div[@class='portlet-body']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

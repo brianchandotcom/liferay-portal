@@ -22,5 +22,6 @@
 <liferay-ui:error exception="<%= LockedThreadException.class %>" message="thread-is-locked" />
 <liferay-ui:error exception="<%= NoSuchCategoryException.class %>" message="the-category-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchMessageException.class %>" message="the-message-could-not-be-found" />
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
 <liferay-ui:error exception="<%= RequiredMessageException.class %>" message="you-cannot-delete-a-root-message-that-has-more-than-one-immediate-reply" />
+
+<liferay-ui:error-principal />

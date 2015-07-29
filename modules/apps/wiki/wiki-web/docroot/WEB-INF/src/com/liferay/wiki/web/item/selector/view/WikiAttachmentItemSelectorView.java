@@ -14,18 +14,19 @@
 
 package com.liferay.wiki.web.item.selector.view;
 
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
-import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 import com.liferay.wiki.web.item.selector.view.display.context.WikiAttachmentItemSelectorViewDisplayContext;
 
 import java.io.IOException;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -43,8 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component
 public class WikiAttachmentItemSelectorView
-	implements ItemSelectorView
-		<WikiAttachmentItemSelectorCriterion, DefaultItemSelectorReturnType> {
+	implements ItemSelectorView<WikiAttachmentItemSelectorCriterion> {
 
 	public static final String
 		WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
@@ -62,9 +62,7 @@ public class WikiAttachmentItemSelectorView
 	}
 
 	@Override
-	public Set<DefaultItemSelectorReturnType>
-		getSupportedItemSelectorReturnTypes() {
-
+	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
 	}
 
@@ -74,6 +72,11 @@ public class WikiAttachmentItemSelectorView
 			"content/Language", locale);
 
 		return resourceBundle.getString("page-attachments");
+	}
+
+	@Override
+	public boolean isShowSearch() {
+		return true;
 	}
 
 	@Override
@@ -98,7 +101,7 @@ public class WikiAttachmentItemSelectorView
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(
-				"/html/item/selector/attachments.jsp");
+				"/html/item/selector/wiki_page_attachments.jsp");
 
 		requestDispatcher.include(request, response);
 	}
@@ -110,11 +113,11 @@ public class WikiAttachmentItemSelectorView
 		_servletContext = servletContext;
 	}
 
-	private static final Set<DefaultItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
-			SetUtil.fromArray(
-				new DefaultItemSelectorReturnType[] {
-					DefaultItemSelectorReturnType.URL
+	private static final List<ItemSelectorReturnType>
+		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
+			ListUtil.fromArray(
+				new ItemSelectorReturnType[] {
+					new URLItemSelectorReturnType()
 				}));
 
 	private ServletContext _servletContext;

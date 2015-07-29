@@ -14,9 +14,9 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.portal.kernel.cache.CacheListener;
-import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
 import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
@@ -53,10 +53,10 @@ public class CachelessTableMapperImpl
 			new int[] {Types.BIGINT, Types.BIGINT}, RowMapper.COUNT);
 
 		leftToRightPortalCache = new DummyPortalCache(
-			leftToRightPortalCache.getName(),
+			leftToRightPortalCache.getPortalCacheName(),
 			leftToRightPortalCache.getPortalCacheManager());
 		rightToLeftPortalCache = new DummyPortalCache(
-			rightToLeftPortalCache.getName(),
+			rightToLeftPortalCache.getPortalCacheName(),
 			rightToLeftPortalCache.getPortalCacheManager());
 
 		destroy();
@@ -104,14 +104,23 @@ public class CachelessTableMapperImpl
 			return Collections.emptyList();
 		}
 
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCacheName()}
+		 */
+		@Deprecated
 		@Override
 		public String getName() {
-			return portalCacheName;
+			return getPortalCacheName();
 		}
 
 		@Override
 		public PortalCacheManager<Long, long[]> getPortalCacheManager() {
 			return portalCacheManager;
+		}
+
+		@Override
+		public String getPortalCacheName() {
+			return portalCacheName;
 		}
 
 		@Override
@@ -123,14 +132,14 @@ public class CachelessTableMapperImpl
 		}
 
 		@Override
-		public void registerCacheListener(
-			CacheListener<Long, long[]> cacheListener) {
+		public void registerPortalCacheListener(
+			PortalCacheListener<Long, long[]> portalCacheListener) {
 		}
 
 		@Override
-		public void registerCacheListener(
-			CacheListener<Long, long[]> cacheListener,
-			CacheListenerScope cacheListenerScope) {
+		public void registerPortalCacheListener(
+			PortalCacheListener<Long, long[]> portalCacheListener,
+			PortalCacheListenerScope portalCacheListenerScope) {
 		}
 
 		@Override
@@ -142,12 +151,12 @@ public class CachelessTableMapperImpl
 		}
 
 		@Override
-		public void unregisterCacheListener(
-			CacheListener<Long, long[]> cacheListener) {
+		public void unregisterPortalCacheListener(
+			PortalCacheListener<Long, long[]> portalCacheListener) {
 		}
 
 		@Override
-		public void unregisterCacheListeners() {
+		public void unregisterPortalCacheListeners() {
 		}
 
 		protected DummyPortalCache(

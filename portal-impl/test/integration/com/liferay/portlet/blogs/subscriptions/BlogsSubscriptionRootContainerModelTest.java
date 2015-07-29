@@ -99,7 +99,9 @@ public class BlogsSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected void updateBaseModel(long userId, long baseModelId) throws Exception {
+	protected void updateBaseModel(long userId, long baseModelId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), userId);

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.DocletTag;
@@ -247,7 +246,7 @@ public class InstanceWrapperBuilder {
 				StringUtil.replace(javaClass.getPackage().getName(), ".", "/") +
 					"/" + javaClass.getName() + "_IW.java");
 
-		ServiceBuilder.writeFile(file, sb.toString());
+		ToolsUtil.writeFile(file, sb.toString(), null);
 	}
 
 	private String _getDimensions(Type type) {

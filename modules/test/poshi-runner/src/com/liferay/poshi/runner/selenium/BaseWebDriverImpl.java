@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
@@ -46,17 +47,12 @@ public abstract class BaseWebDriverImpl
 
 		System.setProperty("java.awt.headless", "false");
 
-		String dependenciesDirName =
-			"portal-web//test//functional//com//liferay//portalweb//" +
-				"dependencies//";
-
-		String outputDirName = PropsValues.OUTPUT_DIR_NAME;
-
-		String sikuliImagesDirName = dependenciesDirName + "sikuli//linux//";
+		String outputDirName = _OUTPUT_DIR_NAME;
+		String sikuliImagesDirName =
+			_TEST_DEPENDENCIES_DIR_NAME + "//sikuli//linux//";
+		String testDependenciesDirName = _TEST_DEPENDENCIES_DIR_NAME;
 
 		if (OSDetector.isWindows()) {
-			dependenciesDirName = StringUtil.replace(
-				dependenciesDirName, "//", "\\");
 			outputDirName = StringUtil.replace(outputDirName, "//", "\\");
 			projectDirName = StringUtil.replace(projectDirName, "//", "\\");
 
@@ -64,12 +60,15 @@ public abstract class BaseWebDriverImpl
 				sikuliImagesDirName, "//", "\\");
 			sikuliImagesDirName = StringUtil.replace(
 				sikuliImagesDirName, "linux", "windows");
+
+			testDependenciesDirName = StringUtil.replace(
+				testDependenciesDirName, "//", "\\");
 		}
 
-		_dependenciesDirName = dependenciesDirName;
 		_outputDirName = outputDirName;
 		_projectDirName = projectDirName;
 		_sikuliImagesDirName = sikuliImagesDirName;
+		_testDependenciesDirName = testDependenciesDirName;
 
 		WebDriver.Options options = webDriver.manage();
 
@@ -113,6 +112,11 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public void assertConsoleTextPresent(String text) throws Exception {
 		LiferaySeleniumHelper.assertConsoleTextPresent(text);
+	}
+
+	@Override
+	public void assertEditable(String locator) throws Exception {
+		LiferaySeleniumHelper.assertEditable(this, locator);
 	}
 
 	@Override
@@ -186,6 +190,11 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public void assertNotChecked(String locator) throws Exception {
 		LiferaySeleniumHelper.assertNotChecked(this, locator);
+	}
+
+	@Override
+	public void assertNotEditable(String locator) throws Exception {
+		LiferaySeleniumHelper.assertNotEditable(this, locator);
 	}
 
 	@Override
@@ -336,11 +345,6 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public String getDependenciesDirName() {
-		return _dependenciesDirName;
-	}
-
-	@Override
 	public String getEmailBody(String index) throws Exception {
 		return LiferaySeleniumHelper.getEmailBody(index);
 	}
@@ -421,6 +425,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public String getTestDependenciesDirName() {
+		return _testDependenciesDirName;
+	}
+
+	@Override
 	public void goBackAndWait() {
 		super.goBack();
 		super.waitForPageToLoad("30000");
@@ -454,6 +463,11 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public boolean isNotChecked(String locator) {
 		return LiferaySeleniumHelper.isNotChecked(this, locator);
+	}
+
+	@Override
+	public boolean isNotEditable(String locator) {
+		return !isEditable(locator);
 	}
 
 	@Override
@@ -720,6 +734,13 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void sikuliClickByIndex(String image, String index)
+		throws Exception {
+
+		LiferaySeleniumHelper.sikuliClickByIndex(this, image, index);
+	}
+
+	@Override
 	public void sikuliDragAndDrop(String image, String coordString)
 		throws Exception {
 
@@ -799,13 +820,13 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void typeCKEditor(String locator, String value) {
-		WebDriverHelper.typeCKEditor(this, locator, value);
+	public void typeAlloyEditor(String locator, String value) {
+		WebDriverHelper.typeAlloyEditor(this, locator, value);
 	}
 
 	@Override
-	public void typeFrame(String locator, String value) {
-		LiferaySeleniumHelper.typeFrame(this, locator, value);
+	public void typeCKEditor(String locator, String value) {
+		LiferaySeleniumHelper.typeCKEditor(this, locator, value);
 	}
 
 	@Override
@@ -815,7 +836,15 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void uploadCommonFile(String location, String value) {
-		uploadFile(location, _projectDirName + _dependenciesDirName + value);
+		String slash = "/";
+
+		if (OSDetector.isWindows()) {
+			slash = "\\";
+		}
+
+		uploadFile(
+			location,
+			_TEST_BASE_DIR_NAME + slash + _testDependenciesDirName + value);
 	}
 
 	@Override
@@ -945,11 +974,19 @@ public abstract class BaseWebDriverImpl
 		super.waitForPageToLoad("30000");
 	}
 
+	private static final String _OUTPUT_DIR_NAME = PropsValues.OUTPUT_DIR_NAME;
+
+	private static final String _TEST_BASE_DIR_NAME =
+		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR_NAME);
+
+	private static final String _TEST_DEPENDENCIES_DIR_NAME =
+		PropsValues.TEST_DEPENDENCIES_DIR_NAME;
+
 	private String _clipBoard = "";
-	private final String _dependenciesDirName;
 	private final String _outputDirName;
 	private String _primaryTestSuiteName;
 	private final String _projectDirName;
 	private final String _sikuliImagesDirName;
+	private final String _testDependenciesDirName;
 
 }

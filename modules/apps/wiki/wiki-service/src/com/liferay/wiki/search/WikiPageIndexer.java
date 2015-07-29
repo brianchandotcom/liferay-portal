@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BaseRelatedEntryIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
@@ -66,7 +65,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = Indexer.class)
 public class WikiPageIndexer
-	extends BaseIndexer implements RelatedEntryIndexer {
+	extends BaseIndexer<WikiPage> implements RelatedEntryIndexer {
 
 	public static final String CLASS_NAME = WikiPage.class.getName();
 
@@ -183,44 +182,23 @@ public class WikiPageIndexer
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		if (obj instanceof Object[]) {
-			Object[] array = (Object[])obj;
-
-			long companyId = (Long)array[0];
-			long nodeId = (Long)array[1];
-			String title = (String)array[2];
-
-			Document document = new DocumentImpl();
-
-			document.addUID(CLASS_NAME, nodeId, title);
-
-			SearchEngineUtil.deleteDocument(
-				getSearchEngineId(), companyId, document.get(Field.UID),
-				isCommitImmediately());
-		}
-		else if (obj instanceof WikiPage) {
-			WikiPage page = (WikiPage)obj;
-
-			deleteDocument(page.getCompanyId(), page.getPageId());
-		}
+	protected void doDelete(WikiPage wikiPage) throws Exception {
+		deleteDocument(wikiPage.getCompanyId(), wikiPage.getPageId());
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		WikiPage page = (WikiPage)obj;
+	protected Document doGetDocument(WikiPage wikiPage) throws Exception {
+		Document document = getBaseModelDocument(CLASS_NAME, wikiPage);
 
-		Document document = getBaseModelDocument(CLASS_NAME, page);
-
-		document.addUID(CLASS_NAME, page.getNodeId(), page.getTitle());
+		document.addUID(CLASS_NAME, wikiPage.getNodeId(), wikiPage.getTitle());
 
 		String content = HtmlUtil.extractText(
-			WikiUtil.convert(page, null, null, null));
+			WikiUtil.convert(wikiPage, null, null, null));
 
 		document.addText(Field.CONTENT, content);
 
-		document.addKeyword(Field.NODE_ID, page.getNodeId());
-		document.addText(Field.TITLE, page.getTitle());
+		document.addKeyword(Field.NODE_ID, wikiPage.getNodeId());
+		document.addText(Field.TITLE, wikiPage.getTitle());
 
 		return document;
 	}
@@ -238,25 +216,6 @@ public class WikiPageIndexer
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		WikiPage page = (WikiPage)obj;
-
-		if (!page.isHead() || (!page.isApproved() && !page.isInTrash())) {
-			return;
-		}
-
-		if (Validator.isNotNull(page.getRedirectTitle())) {
-			return;
-		}
-
-		Document document = getDocument(page);
-
-		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), page.getCompanyId(), document,
-			isCommitImmediately());
-	}
-
-	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
 		WikiPage page = WikiPageLocalServiceUtil.getPage(
 			classPK, (Boolean)null);
@@ -269,6 +228,25 @@ public class WikiPageIndexer
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		reindexNodes(companyId);
+	}
+
+	@Override
+	protected void doReindex(WikiPage wikiPage) throws Exception {
+		if (!wikiPage.isHead() ||
+			(!wikiPage.isApproved() && !wikiPage.isInTrash())) {
+
+			return;
+		}
+
+		if (Validator.isNotNull(wikiPage.getRedirectTitle())) {
+			return;
+		}
+
+		Document document = getDocument(wikiPage);
+
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), wikiPage.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	protected void reindexNodes(final long companyId) throws PortalException {

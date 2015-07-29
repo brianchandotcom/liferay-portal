@@ -18,8 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.DateRange;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -44,14 +44,13 @@ import javax.portlet.PortletRequest;
 public class ExportImportHelperUtil {
 
 	public static long[] getAllLayoutIds(long groupId, boolean privateLayout) {
-		return getExportImportHelper().getAllLayoutIds(groupId, privateLayout);
+		return _exportImportHelper.getAllLayoutIds(groupId, privateLayout);
 	}
 
 	public static Map<Long, Boolean> getAllLayoutIdsMap(
 		long groupId, boolean privateLayout) {
 
-		return getExportImportHelper().getAllLayoutIdsMap(
-			groupId, privateLayout);
+		return _exportImportHelper.getAllLayoutIdsMap(groupId, privateLayout);
 	}
 
 	/**
@@ -64,8 +63,22 @@ public class ExportImportHelperUtil {
 		PortletRequest portletRequest, String paramPrefix,
 		boolean timeZoneSensitive) {
 
-		return getExportImportHelper().getCalendar(
+		return _exportImportHelper.getCalendar(
 			portletRequest, paramPrefix, timeZoneSensitive);
+	}
+
+	public static List<Portlet> getDataSiteLevelPortlets(long companyId)
+		throws Exception {
+
+		return _exportImportHelper.getDataSiteLevelPortlets(companyId);
+	}
+
+	public static List<Portlet> getDataSiteLevelPortlets(
+			long companyId, boolean excludeDataAlwaysStaged)
+		throws Exception {
+
+		return _exportImportHelper.getDataSiteLevelPortlets(
+			companyId, excludeDataAlwaysStaged);
 	}
 
 	/**
@@ -79,7 +92,7 @@ public class ExportImportHelperUtil {
 			long plid, String portletId, String defaultRange)
 		throws Exception {
 
-		return getExportImportHelper().getDateRange(
+		return _exportImportHelper.getDateRange(
 			portletRequest, groupId, privateLayout, plid, portletId,
 			defaultRange);
 	}
@@ -87,22 +100,15 @@ public class ExportImportHelperUtil {
 	public static Layout getExportableLayout(ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		return getExportImportHelper().getExportableLayout(themeDisplay);
+		return _exportImportHelper.getExportableLayout(themeDisplay);
 	}
 
 	public static String getExportableRootPortletId(
 			long companyId, String portletId)
 		throws Exception {
 
-		return getExportImportHelper().getExportableRootPortletId(
+		return _exportImportHelper.getExportableRootPortletId(
 			companyId, portletId);
-	}
-
-	public static ExportImportHelper getExportImportHelper() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			ExportImportHelperUtil.class);
-
-		return _exportImportHelper;
 	}
 
 	/**
@@ -115,7 +121,7 @@ public class ExportImportHelperUtil {
 			Map<String, String[]> parameterMap)
 		throws Exception {
 
-		return getExportImportHelper().getExportPortletControls(
+		return _exportImportHelper.getExportPortletControls(
 			companyId, portletId, parameterMap);
 	}
 
@@ -129,7 +135,7 @@ public class ExportImportHelperUtil {
 			Map<String, String[]> parameterMap, String type)
 		throws Exception {
 
-		return getExportImportHelper().getExportPortletControls(
+		return _exportImportHelper.getExportPortletControls(
 			companyId, portletId, parameterMap, type);
 	}
 
@@ -138,7 +144,7 @@ public class ExportImportHelperUtil {
 			Map<String, String[]> parameterMap)
 		throws Exception {
 
-		return getExportImportHelper().getExportPortletControlsMap(
+		return _exportImportHelper.getExportPortletControlsMap(
 			companyId, portletId, parameterMap);
 	}
 
@@ -147,7 +153,7 @@ public class ExportImportHelperUtil {
 			Map<String, String[]> parameterMap, String type)
 		throws Exception {
 
-		return getExportImportHelper().getExportPortletControlsMap(
+		return _exportImportHelper.getExportPortletControlsMap(
 			companyId, portletId, parameterMap, type);
 	}
 
@@ -162,7 +168,7 @@ public class ExportImportHelperUtil {
 			Map<String, String[]> parameterMap, Element portletDataElement)
 		throws Exception {
 
-		return getExportImportHelper().getImportPortletControls(
+		return _exportImportHelper.getImportPortletControls(
 			companyId, portletId, parameterMap, portletDataElement);
 	}
 
@@ -178,7 +184,7 @@ public class ExportImportHelperUtil {
 			ManifestSummary manifestSummary)
 		throws Exception {
 
-		return getExportImportHelper().getImportPortletControls(
+		return _exportImportHelper.getImportPortletControls(
 			companyId, portletId, parameterMap, portletDataElement,
 			manifestSummary);
 	}
@@ -189,7 +195,7 @@ public class ExportImportHelperUtil {
 			ManifestSummary manifestSummary)
 		throws Exception {
 
-		return getExportImportHelper().getImportPortletControlsMap(
+		return _exportImportHelper.getImportPortletControlsMap(
 			companyId, portletId, parameterMap, portletDataElement,
 			manifestSummary);
 	}
@@ -198,42 +204,41 @@ public class ExportImportHelperUtil {
 			PortletRequest portletRequest)
 		throws PortalException {
 
-		return getExportImportHelper().getLayoutIdMap(portletRequest);
+		return _exportImportHelper.getLayoutIdMap(portletRequest);
 	}
 
 	public static long[] getLayoutIds(List<Layout> layouts) {
-		return getExportImportHelper().getLayoutIds(layouts);
+		return _exportImportHelper.getLayoutIds(layouts);
 	}
 
 	public static long[] getLayoutIds(Map<Long, Boolean> layoutIdMap)
 		throws PortalException {
 
-		return getExportImportHelper().getLayoutIds(layoutIdMap);
+		return _exportImportHelper.getLayoutIds(layoutIdMap);
 	}
 
 	public static long[] getLayoutIds(
 			Map<Long, Boolean> layoutIdMap, long targetGroupId)
 		throws PortalException {
 
-		return getExportImportHelper().getLayoutIds(layoutIdMap, targetGroupId);
+		return _exportImportHelper.getLayoutIds(layoutIdMap, targetGroupId);
 	}
 
 	public static long[] getLayoutIds(PortletRequest portletRequest)
 		throws PortalException {
 
-		return getExportImportHelper().getLayoutIds(portletRequest);
+		return _exportImportHelper.getLayoutIds(portletRequest);
 	}
 
 	public static long[] getLayoutIds(
 			PortletRequest portletRequest, long targetGroupId)
 		throws PortalException {
 
-		return getExportImportHelper().getLayoutIds(
-			portletRequest, targetGroupId);
+		return _exportImportHelper.getLayoutIds(portletRequest, targetGroupId);
 	}
 
 	public static ZipWriter getLayoutSetZipWriter(long groupId) {
-		return getExportImportHelper().getLayoutSetZipWriter(groupId);
+		return _exportImportHelper.getLayoutSetZipWriter(groupId);
 	}
 
 	/**
@@ -246,7 +251,7 @@ public class ExportImportHelperUtil {
 			File file)
 		throws Exception {
 
-		return getExportImportHelper().getManifestSummary(
+		return _exportImportHelper.getManifestSummary(
 			userId, groupId, parameterMap, file);
 	}
 
@@ -255,7 +260,7 @@ public class ExportImportHelperUtil {
 			FileEntry fileEntry)
 		throws Exception {
 
-		return getExportImportHelper().getManifestSummary(
+		return _exportImportHelper.getManifestSummary(
 			userId, groupId, parameterMap, fileEntry);
 	}
 
@@ -263,15 +268,14 @@ public class ExportImportHelperUtil {
 			PortletDataContext portletDataContext)
 		throws Exception {
 
-		return getExportImportHelper().getManifestSummary(portletDataContext);
+		return _exportImportHelper.getManifestSummary(portletDataContext);
 	}
 
 	public static List<Layout> getMissingParentLayouts(
 			Layout layout, long liveGroupId)
 		throws PortalException {
 
-		return getExportImportHelper().getMissingParentLayouts(
-			layout, liveGroupId);
+		return _exportImportHelper.getMissingParentLayouts(layout, liveGroupId);
 	}
 
 	public static long getModelDeletionCount(
@@ -279,18 +283,18 @@ public class ExportImportHelperUtil {
 			final StagedModelType stagedModelType)
 		throws PortalException {
 
-		return getExportImportHelper().getModelDeletionCount(
+		return _exportImportHelper.getModelDeletionCount(
 			portletDataContext, stagedModelType);
 	}
 
 	public static ZipWriter getPortletZipWriter(String portletId) {
-		return getExportImportHelper().getPortletZipWriter(portletId);
+		return _exportImportHelper.getPortletZipWriter(portletId);
 	}
 
 	public static String getSelectedLayoutsJSON(
 		long groupId, boolean privateLayout, String selectedNodes) {
 
-		return getExportImportHelper().getSelectedLayoutsJSON(
+		return _exportImportHelper.getSelectedLayoutsJSON(
 			groupId, privateLayout, selectedNodes);
 	}
 
@@ -298,7 +302,7 @@ public class ExportImportHelperUtil {
 			long groupId, long userId, String folderName)
 		throws PortalException {
 
-		return getExportImportHelper().getTempFileEntry(
+		return _exportImportHelper.getTempFileEntry(
 			groupId, userId, folderName);
 	}
 
@@ -306,14 +310,13 @@ public class ExportImportHelperUtil {
 			long userId, String userIdStrategy)
 		throws PortalException {
 
-		return getExportImportHelper().getUserIdStrategy(
-			userId, userIdStrategy);
+		return _exportImportHelper.getUserIdStrategy(userId, userIdStrategy);
 	}
 
 	public static boolean isReferenceWithinExportScope(
 		PortletDataContext portletDataContext, StagedModel stagedModel) {
 
-		return getExportImportHelper().isReferenceWithinExportScope(
+		return _exportImportHelper.isReferenceWithinExportScope(
 			portletDataContext, stagedModel);
 	}
 
@@ -329,7 +332,7 @@ public class ExportImportHelperUtil {
 			String content, boolean exportReferencedContent)
 		throws Exception {
 
-		return getExportImportHelper().replaceExportContentReferences(
+		return _exportImportHelper.replaceExportContentReferences(
 			portletDataContext, entityStagedModel, entityElement, content,
 			exportReferencedContent);
 	}
@@ -340,7 +343,7 @@ public class ExportImportHelperUtil {
 			boolean exportReferencedContent)
 		throws Exception {
 
-		return getExportImportHelper().replaceExportContentReferences(
+		return _exportImportHelper.replaceExportContentReferences(
 			portletDataContext, entityStagedModel, content,
 			exportReferencedContent);
 	}
@@ -351,7 +354,7 @@ public class ExportImportHelperUtil {
 			boolean exportReferencedContent, boolean escapeContent)
 		throws Exception {
 
-		return getExportImportHelper().replaceExportContentReferences(
+		return _exportImportHelper.replaceExportContentReferences(
 			portletDataContext, entityStagedModel, content,
 			exportReferencedContent, escapeContent);
 	}
@@ -368,7 +371,7 @@ public class ExportImportHelperUtil {
 			String content, boolean exportReferencedContent)
 		throws Exception {
 
-		return getExportImportHelper().replaceExportDLReferences(
+		return _exportImportHelper.replaceExportDLReferences(
 			portletDataContext, entityStagedModel, entityElement, content,
 			exportReferencedContent);
 	}
@@ -379,7 +382,7 @@ public class ExportImportHelperUtil {
 			boolean exportReferencedContent)
 		throws Exception {
 
-		return getExportImportHelper().replaceExportDLReferences(
+		return _exportImportHelper.replaceExportDLReferences(
 			portletDataContext, entityStagedModel, content,
 			exportReferencedContent);
 	}
@@ -388,7 +391,7 @@ public class ExportImportHelperUtil {
 			PortletDataContext portletDataContext, String content)
 		throws Exception {
 
-		return getExportImportHelper().replaceExportLayoutReferences(
+		return _exportImportHelper.replaceExportLayoutReferences(
 			portletDataContext, content);
 	}
 
@@ -402,7 +405,7 @@ public class ExportImportHelperUtil {
 			boolean exportReferencedContent)
 		throws Exception {
 
-		return getExportImportHelper().replaceExportLayoutReferences(
+		return _exportImportHelper.replaceExportLayoutReferences(
 			portletDataContext, content, exportReferencedContent);
 	}
 
@@ -418,7 +421,7 @@ public class ExportImportHelperUtil {
 			String content, boolean exportReferencedContent)
 		throws Exception {
 
-		return getExportImportHelper().replaceExportLinksToLayouts(
+		return _exportImportHelper.replaceExportLinksToLayouts(
 			portletDataContext, entityStagedModel, entityElement, content,
 			exportReferencedContent);
 	}
@@ -428,7 +431,7 @@ public class ExportImportHelperUtil {
 			StagedModel entityStagedModel, String content)
 		throws Exception {
 
-		return getExportImportHelper().replaceExportLinksToLayouts(
+		return _exportImportHelper.replaceExportLinksToLayouts(
 			portletDataContext, entityStagedModel, content);
 	}
 
@@ -443,7 +446,7 @@ public class ExportImportHelperUtil {
 			String content, boolean importReferencedContent)
 		throws Exception {
 
-		return getExportImportHelper().replaceImportContentReferences(
+		return _exportImportHelper.replaceImportContentReferences(
 			portletDataContext, entityElement, content,
 			importReferencedContent);
 	}
@@ -453,7 +456,7 @@ public class ExportImportHelperUtil {
 			StagedModel entityStagedModel, String content)
 		throws Exception {
 
-		return getExportImportHelper().replaceImportContentReferences(
+		return _exportImportHelper.replaceImportContentReferences(
 			portletDataContext, entityStagedModel, content);
 	}
 
@@ -468,7 +471,7 @@ public class ExportImportHelperUtil {
 			String content, boolean importReferencedContent)
 		throws Exception {
 
-		return getExportImportHelper().replaceImportDLReferences(
+		return _exportImportHelper.replaceImportDLReferences(
 			portletDataContext, entityElement, content,
 			importReferencedContent);
 	}
@@ -478,7 +481,7 @@ public class ExportImportHelperUtil {
 			StagedModel entityStagedModel, String content)
 		throws Exception {
 
-		return getExportImportHelper().replaceImportDLReferences(
+		return _exportImportHelper.replaceImportDLReferences(
 			portletDataContext, entityStagedModel, content);
 	}
 
@@ -486,7 +489,7 @@ public class ExportImportHelperUtil {
 			PortletDataContext portletDataContext, String content)
 		throws Exception {
 
-		return getExportImportHelper().replaceImportLayoutReferences(
+		return _exportImportHelper.replaceImportLayoutReferences(
 			portletDataContext, content);
 	}
 
@@ -500,7 +503,7 @@ public class ExportImportHelperUtil {
 			boolean importReferencedContent)
 		throws Exception {
 
-		return getExportImportHelper().replaceImportLayoutReferences(
+		return _exportImportHelper.replaceImportLayoutReferences(
 			portletDataContext, content, importReferencedContent);
 	}
 
@@ -508,7 +511,7 @@ public class ExportImportHelperUtil {
 			PortletDataContext portletDataContext, String content)
 		throws Exception {
 
-		return getExportImportHelper().replaceImportLinksToLayouts(
+		return _exportImportHelper.replaceImportLinksToLayouts(
 			portletDataContext, content);
 	}
 
@@ -522,16 +525,23 @@ public class ExportImportHelperUtil {
 			boolean importReferencedContent)
 		throws Exception {
 
-		return getExportImportHelper().replaceImportLinksToLayouts(
+		return _exportImportHelper.replaceImportLinksToLayouts(
 			portletDataContext, content, importReferencedContent);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             DefaultConfigurationPortletDataHandler#updateExportPortletPreferencesClassPKs(
+	 *             PortletDataContext, Portlet, PortletPreferences, String,
+	 *             String)}
+	 */
+	@Deprecated
 	public static void updateExportPortletPreferencesClassPKs(
 			PortletDataContext portletDataContext, Portlet portlet,
 			PortletPreferences portletPreferences, String key, String className)
 		throws Exception {
 
-		getExportImportHelper().updateExportPortletPreferencesClassPKs(
+		_exportImportHelper.updateExportPortletPreferencesClassPKs(
 			portletDataContext, portlet, portletPreferences, key, className);
 	}
 
@@ -547,18 +557,24 @@ public class ExportImportHelperUtil {
 			Element rootElement)
 		throws Exception {
 
-		getExportImportHelper().updateExportPortletPreferencesClassPKs(
+		_exportImportHelper.updateExportPortletPreferencesClassPKs(
 			portletDataContext, portlet, portletPreferences, key, className,
 			rootElement);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             DefaultConfigurationPortletDataHandler#updateImportPortletPreferencesClassPKs(
+	 *             PortletDataContext, PortletPreferences, String, Class, long)}
+	 */
+	@Deprecated
 	public static void updateImportPortletPreferencesClassPKs(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences, String key, Class<?> clazz,
 			long companyGroupId)
 		throws Exception {
 
-		getExportImportHelper().updateImportPortletPreferencesClassPKs(
+		_exportImportHelper.updateImportPortletPreferencesClassPKs(
 			portletDataContext, portletPreferences, key, clazz, companyGroupId);
 	}
 
@@ -572,7 +588,7 @@ public class ExportImportHelperUtil {
 			File file)
 		throws Exception {
 
-		return getExportImportHelper().validateMissingReferences(
+		return _exportImportHelper.validateMissingReferences(
 			userId, groupId, parameterMap, file);
 	}
 
@@ -580,22 +596,17 @@ public class ExportImportHelperUtil {
 			final PortletDataContext portletDataContext)
 		throws Exception {
 
-		return getExportImportHelper().validateMissingReferences(
+		return _exportImportHelper.validateMissingReferences(
 			portletDataContext);
 	}
 
 	public static void writeManifestSummary(
 		Document document, ManifestSummary manifestSummary) {
 
-		getExportImportHelper().writeManifestSummary(document, manifestSummary);
+		_exportImportHelper.writeManifestSummary(document, manifestSummary);
 	}
 
-	public void setExportImportHelper(ExportImportHelper exportImportHelper) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_exportImportHelper = exportImportHelper;
-	}
-
-	private static ExportImportHelper _exportImportHelper;
+	private static final ExportImportHelper _exportImportHelper =
+		ProxyFactory.newServiceTrackedInstance(ExportImportHelper.class);
 
 }

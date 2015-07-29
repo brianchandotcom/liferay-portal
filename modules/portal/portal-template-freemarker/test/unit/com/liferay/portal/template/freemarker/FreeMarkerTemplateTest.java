@@ -16,12 +16,18 @@ package com.liferay.portal.template.freemarker;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.cache.test.TestPortalCacheManager;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 import com.liferay.portal.tools.ToolDependencies;
@@ -36,6 +42,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Reader;
+import java.io.Serializable;
 import java.io.StringReader;
 
 import java.util.Collections;
@@ -49,6 +56,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 /**
  * @author Tina Tian
@@ -64,24 +75,69 @@ public class FreeMarkerTemplateTest {
 	public void setUp() throws Exception {
 		_configuration = new Configuration();
 
-		try {
-			FreeMarkerTemplateResourceLoader freeMarkerTemplateResourceLoader =
-				new FreeMarkerTemplateResourceLoader();
+		FreeMarkerTemplateResourceLoader freeMarkerTemplateResourceLoader =
+			new FreeMarkerTemplateResourceLoader();
 
-			freeMarkerTemplateResourceLoader.activate(
-				Collections.<String, Object>emptyMap());
+		MultiVMPool multiVMPool = Mockito.mock(MultiVMPool.class);
 
-			TemplateCache templateCache = new LiferayTemplateCache(
-				_configuration, _freemarkerEngineConfiguration,
-				freeMarkerTemplateResourceLoader);
+		final PortalCacheManager<? extends Serializable, ? extends Serializable>
+			portalCacheManager =
+				TestPortalCacheManager.createTestPortalCacheManager(
+					RandomTestUtil.randomString());
 
-			ReflectionTestUtil.setFieldValue(
-				_configuration, "cache", templateCache);
-		}
-		catch (Exception e) {
-			throw new TemplateException(
-				"Unable to initialize FreeMarker manager");
-		}
+		Mockito.when(
+			multiVMPool.getPortalCache(Mockito.anyString())
+		).thenAnswer(
+			new Answer
+				<PortalCache
+					<? extends Serializable, ? extends Serializable>>() {
+
+				@Override
+				public PortalCache
+					<? extends Serializable, ? extends Serializable> answer(
+						InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					return portalCacheManager.getPortalCache(
+						RandomTestUtil.randomString());
+				}
+
+			});
+
+		freeMarkerTemplateResourceLoader.setMultiVMPool(multiVMPool);
+
+		SingleVMPool singleVMPool = Mockito.mock(SingleVMPool.class);
+
+		Mockito.when(
+			singleVMPool.getPortalCache(Mockito.anyString())
+		).thenAnswer(
+			new Answer
+				<PortalCache
+					<? extends Serializable, ? extends Serializable>>() {
+
+				@Override
+				public PortalCache
+					<? extends Serializable, ? extends Serializable> answer(
+						InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					return portalCacheManager.getPortalCache("test");
+				}
+
+			}
+		);
+
+		freeMarkerTemplateResourceLoader.setSingleVMPool(singleVMPool);
+
+		freeMarkerTemplateResourceLoader.activate(
+			Collections.<String, Object>emptyMap());
+
+		TemplateCache templateCache = new LiferayTemplateCache(
+			_configuration, _freemarkerEngineConfiguration,
+			freeMarkerTemplateResourceLoader);
+
+		ReflectionTestUtil.setFieldValue(
+			_configuration, "cache", templateCache);
 
 		_configuration.setLocalizedLookup(false);
 
@@ -175,8 +231,8 @@ public class FreeMarkerTemplateTest {
 	public void testProcessTemplate3() throws Exception {
 		Template template = new FreeMarkerTemplate(
 			new StringTemplateResource(
-				_WRONG_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT), null, null,
-			_configuration, _templateContextHelper, false,
+				_WRONG_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT),
+			null, null, _configuration, _templateContextHelper, false,
 			_freemarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);

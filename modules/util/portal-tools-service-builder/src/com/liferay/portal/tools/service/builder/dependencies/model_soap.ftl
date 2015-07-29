@@ -22,8 +22,16 @@ import java.util.Map;
 <#if entity.hasRemoteService()>
  * @see ${packagePath}.service.http.${entity.name}ServiceSoap
 </#if>
+<#if classDeprecated>
+ * @deprecated ${classDeprecatedComment}
+</#if>
  * @generated
  */
+
+<#if classDeprecated>
+	@Deprecated
+</#if>
+
 @ProviderType
 public class ${entity.name}Soap implements Serializable {
 

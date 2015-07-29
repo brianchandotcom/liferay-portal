@@ -14,8 +14,8 @@
 
 package com.liferay.journal.web.search;
 
+import com.liferay.journal.model.JournalFeed;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portlet.journal.model.JournalFeed;
 
 import java.util.ArrayList;
 import java.util.List;

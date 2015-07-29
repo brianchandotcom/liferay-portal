@@ -2254,8 +2254,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(PollsChoice pollsChoice) {
-		if (pollsChoice.isNew()) {
+	protected void cacheUniqueFindersCache(PollsChoice pollsChoice,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					pollsChoice.getUuid(), pollsChoice.getGroupId()
 				};
@@ -2572,7 +2573,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			false);
 
 		clearUniqueFindersCache(pollsChoice);
-		cacheUniqueFindersCache(pollsChoice);
+		cacheUniqueFindersCache(pollsChoice, isNew);
 
 		pollsChoice.resetOriginalValues();
 
@@ -2961,6 +2962,11 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return PollsChoiceModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

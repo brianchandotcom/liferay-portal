@@ -16,7 +16,7 @@ package com.liferay.portlet.exportimport.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -33,7 +33,7 @@ public class PortletDataContextFactoryUtil {
 	public static PortletDataContext clonePortletDataContext(
 		PortletDataContext portletDataContext) {
 
-		return getPortletDataContextFactory().clonePortletDataContext(
+		return _portletDataContextFactory.clonePortletDataContext(
 			portletDataContext);
 	}
 
@@ -42,7 +42,7 @@ public class PortletDataContextFactoryUtil {
 			Date startDate, Date endDate, ZipWriter zipWriter)
 		throws PortletDataException {
 
-		return getPortletDataContextFactory().createExportPortletDataContext(
+		return _portletDataContextFactory.createExportPortletDataContext(
 			companyId, groupId, parameterMap, startDate, endDate, zipWriter);
 	}
 
@@ -51,7 +51,7 @@ public class PortletDataContextFactoryUtil {
 			UserIdStrategy userIdStrategy, ZipReader zipReader)
 		throws PortletDataException {
 
-		return getPortletDataContextFactory().createImportPortletDataContext(
+		return _portletDataContextFactory.createImportPortletDataContext(
 			companyId, groupId, parameterMap, userIdStrategy, zipReader);
 	}
 
@@ -59,7 +59,7 @@ public class PortletDataContextFactoryUtil {
 			long companyId, long groupId, Date startDate, Date endDate)
 		throws PortletDataException {
 
-		return getPortletDataContextFactory().createPreparePortletDataContext(
+		return _portletDataContextFactory.createPreparePortletDataContext(
 			companyId, groupId, startDate, endDate);
 	}
 
@@ -67,25 +67,11 @@ public class PortletDataContextFactoryUtil {
 			ThemeDisplay themeDisplay, Date startDate, Date endDate)
 		throws PortletDataException {
 
-		return getPortletDataContextFactory().createPreparePortletDataContext(
+		return _portletDataContextFactory.createPreparePortletDataContext(
 			themeDisplay, startDate, endDate);
 	}
 
-	public static PortletDataContextFactory getPortletDataContextFactory() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			PortletDataContextFactoryUtil.class);
-
-		return _portletDataContextFactory;
-	}
-
-	public void setPortletDataContextFactory(
-		PortletDataContextFactory portletDataContextFactory) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_portletDataContextFactory = portletDataContextFactory;
-	}
-
-	private static PortletDataContextFactory _portletDataContextFactory;
+	private static final PortletDataContextFactory _portletDataContextFactory =
+		ProxyFactory.newServiceTrackedInstance(PortletDataContextFactory.class);
 
 }

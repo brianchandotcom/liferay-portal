@@ -222,9 +222,10 @@ public class XSLTemplate implements Template {
 
 			if (xslErrorListener.getLocation() != null) {
 				errorTransformer.setParameter(
-					"column", new Integer(xslErrorListener.getColumnNumber()));
+					"column",
+					Integer.valueOf(xslErrorListener.getColumnNumber()));
 				errorTransformer.setParameter(
-					"line", new Integer(xslErrorListener.getLineNumber()));
+					"line", Integer.valueOf(xslErrorListener.getLineNumber()));
 			}
 
 			try {

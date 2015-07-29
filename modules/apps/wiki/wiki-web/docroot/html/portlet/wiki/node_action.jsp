@@ -74,7 +74,7 @@ WikiNode node = (WikiNode)row.getObject();
 			delta="<%= GetterUtil.getInteger(wikiGroupServiceSettings.rssDelta()) %>"
 			displayStyle="<%= wikiGroupServiceSettings.rssDisplayStyle() %>"
 			feedType="<%= wikiGroupServiceSettings.rssFeedType() %>"
-			url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&nodeId=" + node.getNodeId() %>'
+			url='<%= themeDisplay.getPathMain() + "/wiki/rss?nodeId=" + node.getNodeId() %>'
 		/>
 	</c:if>
 

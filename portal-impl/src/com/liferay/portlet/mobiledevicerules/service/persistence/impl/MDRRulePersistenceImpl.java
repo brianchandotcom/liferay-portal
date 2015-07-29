@@ -1984,8 +1984,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(MDRRule mdrRule) {
-		if (mdrRule.isNew()) {
+	protected void cacheUniqueFindersCache(MDRRule mdrRule, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] { mdrRule.getUuid(), mdrRule.getGroupId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
@@ -2255,7 +2255,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 			MDRRuleImpl.class, mdrRule.getPrimaryKey(), mdrRule, false);
 
 		clearUniqueFindersCache(mdrRule);
-		cacheUniqueFindersCache(mdrRule);
+		cacheUniqueFindersCache(mdrRule, isNew);
 
 		mdrRule.resetOriginalValues();
 
@@ -2643,6 +2643,11 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return MDRRuleModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

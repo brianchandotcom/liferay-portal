@@ -414,7 +414,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = BrowserTrackerLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.BrowserTrackerLocalService.class)
 	protected BrowserTrackerLocalService browserTrackerLocalService;
 	@BeanReference(type = BrowserTrackerPersistence.class)
 	protected BrowserTrackerPersistence browserTrackerPersistence;

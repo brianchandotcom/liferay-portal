@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.util.Set;
@@ -63,6 +64,7 @@ public class HttpOnlyCookieServletResponse extends HttpServletResponseWrapper {
 
 	private static final Set<String> _cookieHttpOnlyCookieNamesExcludes =
 		SetUtil.fromArray(
-			SystemProperties.getArray("cookie.http.only.names.excludes"));
+			StringUtil.split(
+				SystemProperties.get("cookie.http.only.names.excludes")));
 
 }

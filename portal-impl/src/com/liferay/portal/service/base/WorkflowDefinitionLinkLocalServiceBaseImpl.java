@@ -595,7 +595,7 @@ public abstract class WorkflowDefinitionLinkLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = WorkflowDefinitionLinkLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.WorkflowDefinitionLinkLocalService.class)
 	protected WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService;
 	@BeanReference(type = WorkflowDefinitionLinkPersistence.class)
 	protected WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence;

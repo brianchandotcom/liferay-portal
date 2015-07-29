@@ -17,6 +17,7 @@ package com.liferay.css.builder;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.net.URL;
@@ -80,26 +81,13 @@ public class CSSBuilderTest {
 	}
 
 	@Test
-	public void testSassToCssBuilder() throws Exception {
-		CSSBuilder cssBuilder = new CSSBuilder(
-			_docrootDirName, "../../../portal-web/docroot/html/css/common",
-			new String[0], "jni");
+	public void testJniSassToCssBuilder() throws Exception {
+		_testSassToCssBuilder("jni");
+	}
 
-		cssBuilder.execute(Arrays.asList(new String[] {"/css"}));
-
-		String expectedCacheContent = _read(
-			_docrootDirName + "/expected/test.css");
-		String actualCacheContent = _read(
-			_docrootDirName + "/css/.sass-cache/test.css");
-
-		Assert.assertEquals(expectedCacheContent, actualCacheContent);
-
-		String expectedRtlCacheContent = _read(
-			_docrootDirName + "/expected/test_rtl.css");
-		String actualRtlCacheContent = _read(
-			_docrootDirName + "/css/.sass-cache/test_rtl.css");
-
-		Assert.assertEquals(expectedRtlCacheContent, actualRtlCacheContent);
+	@Test
+	public void testRubySassToCssBuilder() throws Exception {
+		_testSassToCssBuilder("ruby");
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -109,6 +97,43 @@ public class CSSBuilderTest {
 
 		return StringUtil.replace(
 			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+	}
+
+	private void _testSassToCssBuilder(String compiler) throws Exception {
+		CSSBuilder cssBuilder = new CSSBuilder(
+			_docrootDirName, "../../../portal-web/docroot/html/css/common",
+			new String[0], compiler);
+
+		cssBuilder.execute(Arrays.asList(new String[] {"/css"}));
+
+		String expectedCacheContent = _read(
+			_docrootDirName + "/expected/test.css");
+		String actualTestCacheContent = _read(
+			_docrootDirName + "/css/.sass-cache/test.css");
+
+		Assert.assertEquals(expectedCacheContent, actualTestCacheContent);
+
+		String actualMainCacheContent = _read(
+			_docrootDirName + "/css/.sass-cache/main.css");
+
+		Assert.assertEquals(expectedCacheContent, actualMainCacheContent);
+
+		File file = new File(
+			Paths.get("/css/.sass-cache/_partial.css").toString());
+
+		Assert.assertFalse(file.exists());
+
+		String expectedRtlCacheContent = _read(
+			_docrootDirName + "/expected/test_rtl.css");
+		String actualTestRtlCacheContent = _read(
+			_docrootDirName + "/css/.sass-cache/test_rtl.css");
+
+		Assert.assertEquals(expectedRtlCacheContent, actualTestRtlCacheContent);
+
+		String actualMainRtlCacheContent = _read(
+			_docrootDirName + "/css/.sass-cache/main_rtl.css");
+
+		Assert.assertEquals(expectedRtlCacheContent, actualMainRtlCacheContent);
 	}
 
 	private static String _docrootDirName;

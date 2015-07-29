@@ -107,6 +107,11 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 	}
 
 	@Override
+	public ExpandoRow fetchRow(long tableId, long classPK) {
+		return expandoRowPersistence.fetchByT_C(tableId, classPK);
+	}
+
+	@Override
 	public List<ExpandoRow> getDefaultTableRows(
 		long companyId, long classNameId, int start, int end) {
 

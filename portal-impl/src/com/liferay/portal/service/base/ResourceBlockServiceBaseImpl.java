@@ -455,7 +455,7 @@ public abstract class ResourceBlockServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.ResourceBlockLocalService.class)
 	protected com.liferay.portal.service.ResourceBlockLocalService resourceBlockLocalService;
-	@BeanReference(type = ResourceBlockService.class)
+	@BeanReference(type = com.liferay.portal.service.ResourceBlockService.class)
 	protected ResourceBlockService resourceBlockService;
 	@BeanReference(type = ResourceBlockPersistence.class)
 	protected ResourceBlockPersistence resourceBlockPersistence;

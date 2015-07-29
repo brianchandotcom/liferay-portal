@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>ADD_EXPLANATION_POST_BODY_FIELD</td>
-	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td>//div[contains(@id,'cke__')]</td>
 	<td></td>
 </tr>
 <tr>

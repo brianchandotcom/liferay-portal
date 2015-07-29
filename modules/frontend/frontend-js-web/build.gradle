@@ -1,0 +1,125 @@
+plugins {
+	id "com.moowork.node" version "0.10"
+}
+
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+}
+
+ext {
+	alloyBootstrapVersion = "3.2.0-2"
+	alloyVersion = "3.0.1"
+	lexiconVersion = "0.1.7"
+	lfrAMDLoaderVersion = "1.3.1"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}
+
+File jsDestinationDir = file("tmp/META-INF/resources/html/js")
+File thirdPartyDir = file("../../../portal-web/third-party")
+
+task buildAlloy(type: Copy)
+task buildAlloyBootstrap(type: Copy)
+task buildLexicon(type: Copy)
+task buildLfrAMDLoader(type: Copy)
+task downloadLfrAMDLoader(type: NpmTask)
+
+buildAlloy {
+	File alloyDestinationDir = new File(jsDestinationDir, "aui")
+	File alloyZipFile = new File(thirdPartyDir, "alloy-${alloyVersion}.zip")
+
+	doFirst {
+		delete alloyDestinationDir
+	}
+
+	doLast {
+		File auiDeprecatedCssFile = new File(alloyDestinationDir, "aui_deprecated.css")
+
+		File auiSkinDeprecatedCssFile = new File(alloyDestinationDir, "aui-skin-deprecated/css/aui-skin-deprecated.css")
+		FileTree cssFileTree = fileTree(dir: alloyDestinationDir, include: "*-deprecated/assets/skins/sam/*-deprecated.css")
+
+		FileUtil.concatenate(auiDeprecatedCssFile, files(auiSkinDeprecatedCssFile, cssFileTree))
+
+		ant.replaceregexp(file: auiDeprecatedCssFile, flags: "g", match: "url\\(([^)]+)\\)", replace: "url(@theme_image_path@/aui/\\1)")
+
+		ant.replace(file: auiDeprecatedCssFile) {
+			replacefilter token: "../images/", value: ""
+			replacefilter token: "../../../../../build/aui-skin-base/images/", value: ""
+			replacefilter token: "../../../../../build/aui-skin-classic/images/", value: ""
+			replacefilter token: "../../../../../build/aui-skin-deprecated/images/", value: ""
+		}
+	}
+
+	eachFile new StripPathSegmentsAction(1)
+	from zipTree(alloyZipFile)
+	include "build/**"
+	includeEmptyDirs = false
+	into alloyDestinationDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, alloyZipFile, alloyDestinationDir)
+	}
+}
+
+buildAlloyBootstrap {
+	File alloyBootstrapDestinationDir = new File(jsDestinationDir, "bootstrap")
+	File bootstrapSassZipFile = new File(thirdPartyDir, "bootstrap-sass-${alloyBootstrapVersion}.zip")
+
+	doFirst {
+		delete alloyBootstrapDestinationDir
+	}
+
+	eachFile new StripPathSegmentsAction(3)
+	exclude "bootstrap-sass-${alloyBootstrapVersion}/assets/javascripts/bootstrap-*.js"
+	from zipTree(bootstrapSassZipFile)
+	include "bootstrap-sass-${alloyBootstrapVersion}/assets/javascripts/**"
+	includeEmptyDirs = false
+	into alloyBootstrapDestinationDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, bootstrapSassZipFile, alloyBootstrapDestinationDir)
+	}
+}
+
+buildLexicon {
+	File lexiconDestinatioDir = new File(jsDestinationDir, "lexicon")
+	File lexiconZipFile = new File(thirdPartyDir, "lexicon-${lexiconVersion}.zip")
+
+	doFirst {
+		delete lexiconDestinatioDir
+	}
+
+	eachFile new StripPathSegmentsAction(1)
+	from zipTree(lexiconZipFile)
+	include "js/**"
+	includeEmptyDirs = false
+	into lexiconDestinatioDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, lexiconZipFile, lexiconDestinatioDir)
+	}
+}
+
+buildLfrAMDLoader {
+	dependsOn downloadLfrAMDLoader
+	from new File(node.nodeModulesDir, "node_modules/lfr-amd-loader/dist/loader.js")
+	into "tmp/META-INF/resources/html/js/loader"
+}
+
+downloadLfrAMDLoader {
+	args = ["install", "lfr-amd-loader@${lfrAMDLoaderVersion}"]
+	workingDir = node.nodeModulesDir
+}
+
+classes {
+	dependsOn buildAlloy
+	dependsOn buildAlloyBootstrap
+	dependsOn buildLexicon
+	dependsOn buildLfrAMDLoader
+}

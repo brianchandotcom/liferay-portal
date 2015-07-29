@@ -1,0 +1,48 @@
+.definition-of-terms dt {
+	color: #333;
+	font-weight: normal;
+	word-break: break-word;
+}
+
+.lfr-code {
+	background: #FFF;
+	border-color: #777;
+	font-family: monospace;
+
+	tr td.line-numbers {
+		background: #FAFAFA;
+
+		&:before {
+			color: #AAA;
+			text-shadow: 1px 1px #FFF;
+		}
+	}
+}
+
+.popup-alert-notice .countdown-timer {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+.lfr-token {
+	background-color: #B3DAEF;
+	border-color: #5FA8FF;
+	color: #444;
+	text-decoration: none;
+
+	&:hover {
+		background-color: #D1E5EF;
+	}
+}
+
+.lfr-token-primary {
+	font-weight: bold;
+
+	&, &:hover {
+		background-color: #B3DAEF;
+	}
+}
+
+.lfr-token-close:hover {
+	text-decoration: none;
+}

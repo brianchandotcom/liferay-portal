@@ -88,16 +88,16 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<String> doGetFileNames() {
+	protected List<String> doGetFileNames() throws Exception {
 		String[] excludes = {
-			"**\\js\\aui\\**", "**\\js\\jquery\\**", "**\\js\\lodash\\**",
-			"**\\js\\misc\\**", "**\\r2.js", "**\\tools\\**", "**\\VAADIN\\**"
+			"**/js/aui/**", "**/js/jquery/**", "**/js/lodash/**",
+			"**/js/misc/**", "**/r2.js", "**/tools/**", "**/VAADIN/**"
 		};
 
 		return getFileNames(excludes, getIncludes());
 	}
 
-	private static final String[] _INCLUDES = {"**\\*.js"};
+	private static final String[] _INCLUDES = {"**/*.js"};
 
 	private final Pattern _multipleVarsOnSingleLinePattern = Pattern.compile(
 		"\t+var \\w+\\, ");

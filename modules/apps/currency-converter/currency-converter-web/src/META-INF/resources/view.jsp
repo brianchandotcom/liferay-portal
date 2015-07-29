@@ -17,8 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String from = ParamUtil.getString(request, "from", CurrencyConverter.DEFAULT_FROM);
-String to = ParamUtil.getString(request, "to", CurrencyConverter.DEFAULT_TO);
+String from = ParamUtil.getString(request, "from");
+
+if (!CurrencyConverterUtil.isCurrency(from)) {
+	from = CurrencyConverter.DEFAULT_FROM;
+}
+
+String to = ParamUtil.getString(request, "to");
+
+if (!CurrencyConverterUtil.isCurrency(to)) {
+	to = CurrencyConverter.DEFAULT_TO;
+}
 
 CurrencyConverter currencyConverter = CurrencyConverterUtil.getCurrencyConverter(from + to);
 

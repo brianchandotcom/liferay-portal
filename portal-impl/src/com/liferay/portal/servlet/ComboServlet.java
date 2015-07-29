@@ -308,13 +308,13 @@ public class ComboServlet extends HttpServlet {
 
 				if (minifierType.equals("css")) {
 					try {
-						stringFileContent = DynamicCSSUtil.parseSass(
-							getServletContext(), request, resourcePath,
-							stringFileContent);
+						stringFileContent = DynamicCSSUtil.replaceToken(
+							getServletContext(), request, stringFileContent);
 					}
 					catch (Exception e) {
 						_log.error(
-							"Unable to parse SASS on CSS " + resourcePath, e);
+							"Unable to replace tokens in CSS " + resourcePath,
+							e);
 
 						if (_log.isDebugEnabled()) {
 							_log.debug(stringFileContent);
@@ -461,9 +461,9 @@ public class ComboServlet extends HttpServlet {
 	private static final Log _log = LogFactoryUtil.getLog(ComboServlet.class);
 
 	private static final PortalCache<String, byte[][]> _bytesArrayPortalCache =
-		SingleVMPoolUtil.getCache(ComboServlet.class.getName());
+		SingleVMPoolUtil.getPortalCache(ComboServlet.class.getName());
 	private static final PortalCache<String, FileContentBag>
-		_fileContentBagPortalCache = SingleVMPoolUtil.getCache(
+		_fileContentBagPortalCache = SingleVMPoolUtil.getPortalCache(
 			FileContentBag.class.getName());
 
 	private final Set<String> _protectedParameters = SetUtil.fromArray(

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Blogs Layout Prototype
+Bundle-SymbolicName: com.liferay.blogs.layout.prototype
+Bundle-Version: 1.0.0
+Include-Resource: classes

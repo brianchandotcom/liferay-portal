@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.service.impl;
 
+import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordServiceBaseImpl;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordPermission;
@@ -45,7 +46,7 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 		throws PortalException {
 
 		DDLRecordSetPermission.check(
-			getPermissionChecker(), recordSetId, ActionKeys.ADD_RECORD);
+			getPermissionChecker(), recordSetId, DDLActionKeys.ADD_RECORD);
 
 		return ddlRecordLocalService.addRecord(
 			getGuestOrUserId(), groupId, recordSetId, displayIndex,
@@ -59,7 +60,7 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 		throws PortalException {
 
 		DDLRecordSetPermission.check(
-			getPermissionChecker(), recordSetId, ActionKeys.ADD_RECORD);
+			getPermissionChecker(), recordSetId, DDLActionKeys.ADD_RECORD);
 
 		return ddlRecordLocalService.addRecord(
 			getGuestOrUserId(), groupId, recordSetId, displayIndex, fields,
@@ -73,7 +74,7 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 		throws PortalException {
 
 		DDLRecordSetPermission.check(
-			getPermissionChecker(), recordSetId, ActionKeys.ADD_RECORD);
+			getPermissionChecker(), recordSetId, DDLActionKeys.ADD_RECORD);
 
 		return ddlRecordLocalService.addRecord(
 			getGuestOrUserId(), groupId, recordSetId, displayIndex, fieldsMap,

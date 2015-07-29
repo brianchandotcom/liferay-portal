@@ -394,7 +394,7 @@ public abstract class PluginSettingServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.PluginSettingLocalService.class)
 	protected com.liferay.portal.service.PluginSettingLocalService pluginSettingLocalService;
-	@BeanReference(type = PluginSettingService.class)
+	@BeanReference(type = com.liferay.portal.service.PluginSettingService.class)
 	protected PluginSettingService pluginSettingService;
 	@BeanReference(type = PluginSettingPersistence.class)
 	protected PluginSettingPersistence pluginSettingPersistence;

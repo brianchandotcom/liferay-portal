@@ -14,17 +14,15 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.util.AntCommands;
-import com.liferay.poshi.runner.util.DateUtil;
 import com.liferay.poshi.runner.util.EmailCommands;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.HtmlUtil;
-import com.liferay.poshi.runner.util.LocaleUtil;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.RuntimeVariables;
-import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
@@ -34,6 +32,7 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -162,6 +161,16 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	public static void assertEditable(
+			LiferaySelenium liferaySelenium, String locator)
+		throws Exception {
+
+		if (liferaySelenium.isNotEditable(locator)) {
+			throw new Exception(
+				"Element is not editable at \"" + locator + "\"");
+		}
+	}
+
 	public static void assertElementNotPresent(
 			LiferaySelenium liferaySelenium, String locator)
 		throws Exception {
@@ -216,11 +225,7 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static void assertLiferayErrors() throws Exception {
-		String currentDate = DateUtil.getCurrentDate(
-			"yyyy-MM-dd", LocaleUtil.getDefault());
-
-		String fileName =
-			PropsValues.LIFERAY_HOME + "/logs/liferay." + currentDate + ".xml";
+		String fileName = PropsValues.TEST_CONSOLE_LOG_FILE_NAME;
 
 		if (!FileUtil.exists(fileName)) {
 			return;
@@ -232,14 +237,15 @@ public class LiferaySeleniumHelper {
 			return;
 		}
 
+		SAXReader saxReader = new SAXReader();
+
 		content = "<log4j>" + content + "</log4j>";
 		content = content.replaceAll("log4j:", "");
 
-		SAXReader saxReader = new SAXReader();
+		InputStream inputStream = new ByteArrayInputStream(
+			content.getBytes("UTF-8"));
 
-		File file = new File(fileName);
-
-		Document document = saxReader.read(file);
+		Document document = saxReader.read(inputStream);
 
 		Element rootElement = document.getRootElement();
 
@@ -266,7 +272,7 @@ public class LiferaySeleniumHelper {
 
 				Element throwableElement = eventElement.element("throwable");
 
-				Exception exception;
+				Exception exception = null;
 
 				if (throwableElement != null) {
 					exception = new Exception(
@@ -381,6 +387,15 @@ public class LiferaySeleniumHelper {
 
 		if (liferaySelenium.isChecked(locator)) {
 			throw new Exception("Element is checked at \"" + locator + "\"");
+		}
+	}
+
+	public static void assertNotEditable(
+			LiferaySelenium liferaySelenium, String locator)
+		throws Exception {
+
+		if (liferaySelenium.isEditable(locator)) {
+			throw new Exception("Element is editable at \"" + locator + "\"");
 		}
 	}
 
@@ -568,6 +583,10 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static void captureScreen(String fileName) throws Exception {
+		if (!PropsValues.SAVE_SCREENSHOT) {
+			return;
+		}
+
 		File file = new File(fileName);
 
 		file.mkdirs();
@@ -615,8 +634,8 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		File file = new File(
-			getPortalRootDirName() + liferaySelenium.getSikuliImagesDirName() +
-				image);
+			_TEST_BASE_DIR_NAME + "/" +
+				liferaySelenium.getSikuliImagesDirName() + image);
 
 		return new ImageTarget(file);
 	}
@@ -629,14 +648,6 @@ public class LiferaySeleniumHelper {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
 	}
 
-	public static String getPortalRootDirName() throws Exception {
-		File file = new File("../../../" + StringPool.PERIOD);
-
-		String absolutePath = file.getAbsolutePath();
-
-		return absolutePath.substring(0, absolutePath.length() - 1);
-	}
-
 	public static boolean isConfirmation(
 		LiferaySelenium liferaySelenium, String pattern) {
 
@@ -646,19 +657,47 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static boolean isConsoleTextPresent(String text) throws Exception {
-		String currentDate = DateUtil.getCurrentDate(
-			"yyyy-MM-dd", LocaleUtil.getDefault());
+		String fileName = PropsValues.TEST_CONSOLE_LOG_FILE_NAME;
 
-		String fileName =
-			PropsValues.LIFERAY_HOME + "/logs/liferay." + currentDate + ".log";
+		if (!FileUtil.exists(fileName)) {
+			return false;
+		}
 
 		String content = FileUtil.read(fileName);
 
-		Pattern pattern = Pattern.compile(text);
+		if (content.equals("")) {
+			return false;
+		}
 
-		Matcher matcher = pattern.matcher(content);
+		SAXReader saxReader = new SAXReader();
 
-		return matcher.find();
+		content = "<log4j>" + content + "</log4j>";
+		content = content.replaceAll("log4j:", "");
+
+		InputStream inputStream = new ByteArrayInputStream(
+			content.getBytes("UTF-8"));
+
+		Document document = saxReader.read(inputStream);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> eventElements = rootElement.elements("event");
+
+		for (Element eventElement : eventElements) {
+			Element messageElement = eventElement.element("message");
+
+			String messageText = messageElement.getText();
+
+			Pattern pattern = Pattern.compile(text);
+
+			Matcher matcher = pattern.matcher(messageText);
+
+			if (matcher.matches()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean isElementPresentAfterWait(
@@ -710,305 +749,9 @@ public class LiferaySeleniumHelper {
 		return false;
 	}
 
-	public static boolean isIgnorableErrorLine(String line) {
-		if (line.contains("[antelope:post]")) {
+	public static boolean isIgnorableErrorLine(String line) throws Exception {
+		if (isInIgnoreErrorsFile(line, "log")) {
 			return true;
-		}
-
-		if (line.contains("[junit]")) {
-			return true;
-		}
-
-		if (line.contains("BasicResourcePool")) {
-			return true;
-		}
-
-		if (line.contains("Caused by:")) {
-			return true;
-		}
-
-		if (line.contains("INFO:")) {
-			return true;
-		}
-
-		if (line.matches(
-				".*The web application \\[.*\\] appears to have started a " +
-					"thread.*")) {
-
-			if (line.contains("[AWT-Windows]")) {
-				return true;
-			}
-
-			if (line.contains("[com.google.inject.internal.Finalizer]")) {
-				return true;
-			}
-
-			if (line.contains("[MultiThreadedHttpConnectionManager cleanup]")) {
-				return true;
-			}
-
-			if (line.contains(
-					"[org.python.google.common.base.internal.Finalizer]")) {
-
-				return true;
-			}
-
-			if (line.matches(".*\\[Thread-[0-9]+\\].*")) {
-				return true;
-			}
-
-			if (line.matches(".*\\[TrueZIP InputStream Reader\\].*")) {
-				return true;
-			}
-		}
-
-		// LPS-17639
-
-		if (line.contains("Table 'lportal.lock_' doesn't exist")) {
-			return true;
-		}
-
-		if (line.contains("Table 'lportal.Lock_' doesn't exist")) {
-			return true;
-		}
-
-		// LPS-22821
-
-		if (line.contains(
-				"Exception sending context destroyed event to listener " +
-					"instance of class com.liferay.portal.spring.context." +
-						"PortalContextLoaderListener")) {
-
-			return true;
-		}
-
-		// LPS-23351
-
-		if (line.contains("user lacks privilege or object not found: LOCK_")) {
-			return true;
-		}
-
-		// LPS-23498
-
-		if (line.contains("JBREM00200: ")) {
-			return true;
-		}
-
-		// LPS-28734
-
-		if (line.contains("java.nio.channels.ClosedChannelException")) {
-			return true;
-		}
-
-		// LPS-28954
-
-		if (line.matches(
-				".*The web application \\[/wsrp-portlet\\] created a " +
-					"ThreadLocal with key of type.*")) {
-
-			if (line.contains(
-					"[org.apache.axis.utils.XMLUtils." +
-						"ThreadLocalDocumentBuilder]")) {
-
-				return true;
-			}
-
-			if (line.contains(
-					"[org.apache.xml.security.utils." +
-						"UnsyncByteArrayOutputStream$1]")) {
-
-				return true;
-			}
-		}
-
-		// LPS-37574
-
-		if (line.contains("java.util.zip.ZipException: ZipFile closed")) {
-			return true;
-		}
-
-		// LPS-39742
-
-		if (line.contains("java.lang.IllegalStateException")) {
-			return true;
-		}
-
-		// LPS-41257
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains("[de.schlichtherle")) {
-				return true;
-			}
-		}
-
-		// LPS-41776
-
-		if (line.contains("SEC5054: Certificate has expired")) {
-			return true;
-		}
-
-		// LPS-41863
-
-		if (line.contains("Disabling contextual LOB") &&
-			line.contains("MSC service thread") &&
-			line.contains("[org.hibernate.engine.jdbc.JdbcSupportLoader]")) {
-
-			return true;
-		}
-
-		// LPS-46161
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains(
-					"[com.google.javascript.jscomp.Tracer.ThreadTrace]")) {
-
-				return true;
-			}
-		}
-
-		// LPS-49204
-
-		if (line.matches(
-				".*The web application \\[\\] appears to have started a " +
-					"thread named \\[elasticsearch\\[.*")) {
-
-			return true;
-		}
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains("[org.elasticsearch.common.inject]")) {
-				return true;
-			}
-
-			if (line.contains("[org.elasticsearch.index.mapper]")) {
-				return true;
-			}
-		}
-
-		// LPS-49228
-
-		if (line.matches(
-				".*The web application \\[/sharepoint-hook\\] created a " +
-					"ThreadLocal with key of type.*")) {
-
-			if (line.contains(
-					"[org.apache.axis.utils.XMLUtils." +
-						"ThreadLocalDocumentBuilder]")) {
-
-				return true;
-			}
-		}
-
-		// LPS-49229
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains(
-					"[org.apache.xmlbeans.impl.schema." +
-						"SchemaTypeLoaderImpl$1]")) {
-
-				return true;
-			}
-
-			if (line.contains("[org.apache.xmlbeans.impl.store.CharUtil$1]")) {
-				return true;
-			}
-
-			if (line.contains("[org.apache.xmlbeans.impl.store.Locale$1]")) {
-				return true;
-			}
-		}
-
-		// LPS-49505
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains("[org.jruby.RubyEncoding$2]")) {
-				return true;
-			}
-		}
-
-		// LPS-49506
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains("[org.joni.StackMachine$1]")) {
-				return true;
-			}
-		}
-
-		// LPS-49628
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains(
-					"[org.apache.poi.extractor.ExtractorFactory$1]")) {
-
-				return true;
-			}
-		}
-
-		// LPS-49629
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains("[org.apache.xmlbeans.XmlBeans$1]")) {
-				return true;
-			}
-		}
-
-		// LPS-50047
-
-		if (line.matches(
-				".*The web application \\[\\] created a ThreadLocal with key " +
-					"of type.*")) {
-
-			if (line.contains(
-					"[com.sun.syndication.feed.impl.ToStringBean$1]")) {
-
-				return true;
-			}
-		}
-
-		// LPS-50936
-
-		if (line.matches(
-				"Liferay does not have the Xuggler native libraries " +
-					"installed.")) {
-
-			return true;
-		}
-
-		// LPS-51371
-
-		if (line.matches(
-				".*The web application \\[/jasperreports-web\\] created a " +
-					"ThreadLocal with key of type.*")) {
-
-			if (line.contains(
-					"[net.sf.jasperreports.engine.fonts.FontUtil$1]")) {
-
-				return true;
-			}
 		}
 
 		if (Validator.equals(PropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.1") ||
@@ -1051,6 +794,63 @@ public class LiferaySeleniumHelper {
 			}
 			else if (line.contains(PropsValues.IGNORE_ERRORS)) {
 				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isInIgnoreErrorsFile(String line, String errorType)
+		throws Exception {
+
+		if (Validator.isNotNull(PropsValues.IGNORE_ERRORS_FILE_NAME)) {
+			SAXReader saxReader = new SAXReader();
+
+			String content = FileUtil.read(PropsValues.IGNORE_ERRORS_FILE_NAME);
+
+			InputStream inputStream = new ByteArrayInputStream(
+				content.getBytes("UTF-8"));
+
+			Document document = saxReader.read(inputStream);
+
+			Element rootElement = document.getRootElement();
+
+			Element errorTypeElement = rootElement.element(errorType);
+
+			if (errorTypeElement == null) {
+				return false;
+			}
+
+			List<Element> ignoreErrorElements = errorTypeElement.elements(
+				"ignore-error");
+
+			for (Element ignoreErrorElement : ignoreErrorElements) {
+				Element containsElement = ignoreErrorElement.element(
+					"contains");
+				Element matchesElement = ignoreErrorElement.element("matches");
+
+				String containsText = containsElement.getText();
+				String matchesText = matchesElement.getText();
+
+				if (Validator.isNotNull(containsText) &&
+					Validator.isNotNull(matchesText)) {
+
+					if (line.contains(containsText) &&
+						line.matches(matchesText)) {
+
+						return true;
+					}
+				}
+				else if (Validator.isNotNull(containsText)) {
+					if (line.contains(containsText)) {
+						return true;
+					}
+				}
+				else if (Validator.isNotNull(matchesText)) {
+					if (line.matches(matchesText)) {
+						return true;
+					}
+				}
 			}
 		}
 
@@ -1121,6 +921,10 @@ public class LiferaySeleniumHelper {
 	public static void saveScreenshot(LiferaySelenium liferaySelenium)
 		throws Exception {
 
+		if (!PropsValues.SAVE_SCREENSHOT) {
+			return;
+		}
+
 		_screenshotCount++;
 
 		captureScreen(
@@ -1132,6 +936,10 @@ public class LiferaySeleniumHelper {
 	public static void saveScreenshotBeforeAction(
 			LiferaySelenium liferaySelenium, boolean actionFailed)
 		throws Exception {
+
+		if (!PropsValues.SAVE_SCREENSHOT) {
+			return;
+		}
 
 		if (actionFailed) {
 			_screenshotErrorCount++;
@@ -1195,15 +1003,34 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {
 
+		Mouse mouse = new DesktopMouse();
+
 		ScreenRegion screenRegion = new DesktopScreenRegion();
 
 		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
 
-		screenRegion = screenRegion.find(imageTarget);
+		ScreenRegion imageTargetScreenRegion = screenRegion.find(imageTarget);
+
+		mouse.click(imageTargetScreenRegion.getCenter());
+	}
+
+	public static void sikuliClickByIndex(
+			LiferaySelenium liferaySelenium, String image, String index)
+		throws Exception {
 
 		Mouse mouse = new DesktopMouse();
 
-		mouse.click(screenRegion.getCenter());
+		ScreenRegion screenRegion = new DesktopScreenRegion();
+
+		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
+
+		List<ScreenRegion> imageTargetScreenRegions = screenRegion.findAll(
+			imageTarget);
+
+		ScreenRegion imageTargetScreenRegion = imageTargetScreenRegions.get(
+			Integer.parseInt(index));
+
+		mouse.click(imageTargetScreenRegion.getCenter());
 	}
 
 	public static void sikuliDragAndDrop(
@@ -1343,8 +1170,7 @@ public class LiferaySeleniumHelper {
 
 		sikuliType(
 			liferaySelenium, image,
-			getPortalRootDirName() + liferaySelenium.getDependenciesDirName() +
-				value);
+			_TEST_BASE_DIR_NAME + "/" + _TEST_DEPENDENCIES_DIR_NAME + value);
 
 		keyboard.type(Key.ENTER);
 	}
@@ -1430,22 +1256,21 @@ public class LiferaySeleniumHelper {
 		keyboard.type(line.trim());
 	}
 
-	public static void typeFrame(
+	public static void typeCKEditor(
 		LiferaySelenium liferaySelenium, String locator, String value) {
 
 		StringBuilder sb = new StringBuilder();
 
-		String titleAttribute = liferaySelenium.getAttribute(
-			locator + "@title");
+		String idAttribute = liferaySelenium.getAttribute(locator + "@id");
 
-		int x = titleAttribute.indexOf(",");
-		int y = titleAttribute.indexOf(",", x + 1);
+		int x = idAttribute.indexOf("cke__");
+		int y = idAttribute.indexOf("cke__", x + 1);
 
 		if (y == -1) {
-			y = titleAttribute.length();
+			y = idAttribute.length();
 		}
 
-		sb.append(titleAttribute.substring(x + 1, y));
+		sb.append(idAttribute.substring(x + 4, y));
 
 		sb.append(".setHTML(\"");
 		sb.append(HtmlUtil.escapeJS(value.replace("\\", "\\\\")));
@@ -1794,6 +1619,23 @@ public class LiferaySeleniumHelper {
 			Thread.sleep(1000);
 		}
 	}
+
+	private static List<ScreenRegion> getScreenRegions(
+			LiferaySelenium liferaySelenium, String image)
+		throws Exception {
+
+		ScreenRegion screenRegion = new DesktopScreenRegion();
+
+		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
+
+		return screenRegion.findAll(imageTarget);
+	}
+
+	private static final String _TEST_BASE_DIR_NAME =
+		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR_NAME);
+
+	private static final String _TEST_DEPENDENCIES_DIR_NAME =
+		PropsValues.TEST_DEPENDENCIES_DIR_NAME;
 
 	private static final Pattern _aceEditorPattern = Pattern.compile(
 		"\\(|\\$\\{line\\.separator\\}");

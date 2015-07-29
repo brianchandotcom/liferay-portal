@@ -68,7 +68,8 @@ public class UserPermissionImpl
 		throws PrincipalException {
 
 		if (!contains(permissionChecker, userId, organizationIds, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, User.class.getName(), userId, actionId);
 		}
 	}
 
@@ -78,7 +79,8 @@ public class UserPermissionImpl
 		throws PrincipalException {
 
 		if (!contains(permissionChecker, userId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, User.class.getName(), userId, actionId);
 		}
 	}
 

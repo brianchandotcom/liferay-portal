@@ -16,22 +16,28 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
+import java.util.Locale;
+import java.util.Map;
+
 import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletRequest;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Iván Zaera
@@ -40,8 +46,8 @@ public class BaseJSPSettingsConfigurationAction
 	extends SettingsConfigurationAction
 	implements ConfigurationAction, ResourceServingConfigurationAction {
 
-	public String getJspPath(RenderRequest renderRequest) {
-		PortletConfig selPortletConfig = getSelPortletConfig(renderRequest);
+	public String getJspPath(HttpServletRequest request) {
+		PortletConfig selPortletConfig = getSelPortletConfig(request);
 
 		String configTemplate = selPortletConfig.getInitParameter(
 			"config-template");
@@ -61,27 +67,25 @@ public class BaseJSPSettingsConfigurationAction
 
 	@Override
 	public void include(
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
+			PortletConfig portletConfig, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
-		ServletContext servletContext = getServletContext(
-			PortalUtil.getHttpServletRequest(renderRequest));
+		ServletContext servletContext = getServletContext(request);
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(getJspPath(renderRequest));
+			servletContext.getRequestDispatcher(getJspPath(request));
 
 		try {
-			requestDispatcher.include(
-				PortalUtil.getHttpServletRequest(renderRequest),
-				PortalUtil.getHttpServletResponse(renderResponse));
+			requestDispatcher.include(request, response);
 		}
 		catch (ServletException se) {
 			if (_log.isErrorEnabled()) {
 				_log.error("Unable to include JSP", se);
 			}
 
-			throw new IOException("Unable to include JSP", se);
+			throw new IOException(
+				"Unable to include " + getJspPath(request), se);
 		}
 	}
 
@@ -107,6 +111,27 @@ public class BaseJSPSettingsConfigurationAction
 		}
 
 		return (ServletContext)request.getAttribute(WebKeys.CTX);
+	}
+
+	protected void removeDefaultValue(
+		PortletRequest portletRequest, ModifiableSettings modifiableSettings,
+		String key, LocalizedValuesMap localizedMap) {
+
+		String defaultValue = localizedMap.getDefaultValue();
+
+		Map<Locale, String> localizedMapValues = localizedMap.getValues();
+
+		for (Locale locale : localizedMapValues.keySet()) {
+			String languageKeyId = key + "_" + LocaleUtil.toLanguageId(locale);
+
+			String value = getParameter(portletRequest, languageKeyId);
+
+			if (defaultValue.equals(value) ||
+				StringUtil.equalsIgnoreBreakLine(defaultValue, value)) {
+
+				modifiableSettings.reset(languageKeyId);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

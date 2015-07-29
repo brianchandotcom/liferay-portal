@@ -13,9 +13,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="CalendarPortletSmoke" priority="5">
-		<property name="portlet.plugins.includes" value="calendar-portlet" />
-
+	<command name="CalendarPortletSmoke" priority="4">
 		<var name="appName" value="Calendar" />
 
 		<execute macro="Page#gotoPG">

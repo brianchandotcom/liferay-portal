@@ -66,6 +66,16 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 			{ "path_", Types.VARCHAR },
 			{ "pathDate", Types.TIMESTAMP }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userTrackerPathId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userTrackerId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("path_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("pathDate", Types.TIMESTAMP);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table UserTrackerPath (mvccVersion LONG default 0,userTrackerPathId LONG not null primary key,userTrackerId LONG,path_ STRING null,pathDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table UserTrackerPath";
 	public static final String ORDER_BY_JPQL = " ORDER BY userTrackerPath.userTrackerPathId ASC";

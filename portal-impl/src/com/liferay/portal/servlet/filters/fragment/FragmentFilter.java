@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 public class FragmentFilter extends BasePortalFilter {
 
 	public static final String SKIP_FILTER =
-		FragmentFilter.class.getName() + "SKIP_FILTER";
+		FragmentFilter.class.getName() + "#SKIP_FILTER";
 
 	@Override
 	public boolean isFilterEnabled(

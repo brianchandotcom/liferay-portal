@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
+import com.liferay.portlet.exportimport.lar.StagedModelType;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,6 +54,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("tagId", getTagId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -67,6 +70,12 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long tagId = (Long)attributes.get("tagId");
 
 		if (tagId != null) {
@@ -252,6 +261,16 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 		return _assetTag.getUserUuid();
 	}
 
+	/**
+	* Returns the uuid of this asset tag.
+	*
+	* @return the uuid of this asset tag
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _assetTag.getUuid();
+	}
+
 	@Override
 	public int hashCode() {
 		return _assetTag.hashCode();
@@ -420,6 +439,16 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 		_assetTag.setUserUuid(userUuid);
 	}
 
+	/**
+	* Sets the uuid of this asset tag.
+	*
+	* @param uuid the uuid of this asset tag
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_assetTag.setUuid(uuid);
+	}
+
 	@Override
 	public com.liferay.portal.model.CacheModel<com.liferay.portlet.asset.model.AssetTag> toCacheModel() {
 		return _assetTag.toCacheModel();
@@ -462,6 +491,11 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _assetTag.getStagedModelType();
 	}
 
 	/**

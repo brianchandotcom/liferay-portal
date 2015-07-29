@@ -578,7 +578,7 @@ public abstract class SocialRelationLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = SocialRelationLocalService.class)
+	@BeanReference(type = com.liferay.portlet.social.service.SocialRelationLocalService.class)
 	protected SocialRelationLocalService socialRelationLocalService;
 	@BeanReference(type = SocialRelationPersistence.class)
 	protected SocialRelationPersistence socialRelationPersistence;

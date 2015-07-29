@@ -21,7 +21,7 @@
 		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 
-	<command name="AddCalendarEventComment" priority="5">
+	<command name="AddCalendarEventComment" priority="4">
 		<var name="commentContent" value="Calendar Event Comment" />
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
@@ -81,6 +81,7 @@
 		<execute macro="SOActivities#viewCalendarActivityEntry">
 			<var name="action" value="Added a new calendar event." />
 			<var name="commentCount" value="1" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -104,6 +105,7 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -120,7 +122,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventComments" priority="5">
+	<command name="AddCalendarEventComments" priority="4">
 		<var name="commentContent1" value="Calendar Event Comment1" />
 		<var name="commentContent2" value="Calendar Event Comment2" />
 		<var name="commentContent3" value="Calendar Event Comment3" />
@@ -295,6 +297,7 @@
 		<execute macro="SOActivities#viewCalendarActivityEntry">
 			<var name="action" value="Added a new calendar event." />
 			<var name="commentCount" value="3" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
@@ -332,6 +335,7 @@
 		<execute macro="SOActivities#viewCalendarActivityEntry">
 			<var name="action" value="Added a new calendar event." />
 			<var name="commentCount" value="3" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
@@ -369,6 +373,7 @@
 		<execute macro="SOActivities#viewCalendarActivityEntry">
 			<var name="action" value="Added a new calendar event." />
 			<var name="commentCount" value="3" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminName}" />
 		</execute>
 
@@ -406,6 +411,7 @@
 		<execute macro="SOActivities#viewCalendarActivityEntry">
 			<var name="action" value="Added a new calendar event." />
 			<var name="commentCount" value="3" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -431,7 +437,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCalendarEventComment" priority="5">
+	<command name="DeleteCalendarEventComment" priority="4">
 		<var name="commentContent" value="Calendar Event Comment" />
 		<var name="commentContentEdit" value="Calendar Event Comment Edit" />
 		<var name="eventTitle" value="Calendar Event Title" />
@@ -501,6 +507,7 @@
 
 		<execute macro="SOActivities#viewCalendarActivityEntry">
 			<var name="action" value="Added a new calendar event." />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -519,12 +526,13 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" value1="${commentContent}" />
 	</command>
 
-	<command name="EditCalendarEventComment" priority="5">
+	<command name="EditCalendarEventComment" priority="4">
 		<var name="commentContent" value="Calendar Event Comment" />
 		<var name="commentContentEdit" value="Calendar Event Comment Edit" />
 		<var name="eventTitle" value="Calendar Event Title" />
@@ -596,6 +604,7 @@
 		<execute macro="SOActivities#viewCalendarActivityEntry">
 			<var name="action" value="Added a new calendar event." />
 			<var name="commentCount" value="1" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -619,6 +628,7 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -635,7 +645,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewCalendarEventsActivities" priority="5">
+	<command name="ViewCalendarEventsActivities" priority="4">
 		<var name="eventTitle1" value="Calendar Event1 Title" />
 		<var name="eventTitle2" value="Calendar Event2 Title" />
 		<var name="eventTitle3" value="Calendar Event3 Title" />
@@ -708,6 +718,7 @@
 			<var name="action" value="Added a new calendar event." />
 			<var name="eventTitle" value="${eventTitle3}" />
 			<var name="row" value="01" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -715,6 +726,7 @@
 			<var name="action" value="Added a new calendar event." />
 			<var name="eventTitle" value="${eventTitle2}" />
 			<var name="row" value="02" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 
@@ -722,6 +734,7 @@
 			<var name="action" value="Added a new calendar event." />
 			<var name="eventTitle" value="${eventTitle1}" />
 			<var name="row" value="03" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userName" value="${adminFirstName}" />
 		</execute>
 	</command>

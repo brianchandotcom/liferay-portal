@@ -2176,8 +2176,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	}
 
 	protected void cacheUniqueFindersCache(
-		WorkflowDefinitionLink workflowDefinitionLink) {
-		if (workflowDefinitionLink.isNew()) {
+		WorkflowDefinitionLink workflowDefinitionLink, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					workflowDefinitionLink.getGroupId(),
 					workflowDefinitionLink.getCompanyId(),
@@ -2479,7 +2479,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			false);
 
 		clearUniqueFindersCache(workflowDefinitionLink);
-		cacheUniqueFindersCache(workflowDefinitionLink);
+		cacheUniqueFindersCache(workflowDefinitionLink, isNew);
 
 		workflowDefinitionLink.resetOriginalValues();
 
@@ -2870,6 +2870,11 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return WorkflowDefinitionLinkModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

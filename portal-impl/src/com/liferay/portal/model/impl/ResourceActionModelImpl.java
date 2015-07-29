@@ -65,6 +65,16 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 			{ "actionId", Types.VARCHAR },
 			{ "bitwiseValue", Types.BIGINT }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("resourceActionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("actionId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("bitwiseValue", Types.BIGINT);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table ResourceAction (mvccVersion LONG default 0,resourceActionId LONG not null primary key,name VARCHAR(255) null,actionId VARCHAR(75) null,bitwiseValue LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ResourceAction";
 	public static final String ORDER_BY_JPQL = " ORDER BY resourceAction.name ASC, resourceAction.bitwiseValue ASC";

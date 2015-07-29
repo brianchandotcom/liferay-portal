@@ -816,7 +816,7 @@ public abstract class SCFrameworkVersionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = SCFrameworkVersionLocalService.class)
+	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionLocalService.class)
 	protected SCFrameworkVersionLocalService scFrameworkVersionLocalService;
 	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService.class)
 	protected com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService scFrameworkVersionService;

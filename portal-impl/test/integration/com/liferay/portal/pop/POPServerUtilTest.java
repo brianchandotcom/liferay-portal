@@ -54,7 +54,7 @@ public class POPServerUtilTest {
 	}
 
 	@Test
-	public void testGetListeners() throws Exception {
+	public void testGetListeners() {
 		POPServerUtil.start();
 
 		Assert.assertTrue(_atomicState.isSet());

@@ -16,35 +16,37 @@ package com.liferay.portal.search.solr.internal.http;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.search.solr.configuration.SolrConfiguration;
+import com.liferay.portal.search.solr.configuration.SolrHttpClientFactoryConfiguration;
 import com.liferay.portal.search.solr.http.HttpClientFactory;
 import com.liferay.portal.search.solr.http.SSLSocketFactoryBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpRequestInterceptor;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author László Csontos
  * @author André de Oliveira
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.solr.configuration.SolrConfiguration",
-	immediate = true, service = HttpClientFactory.class
+	configurationPid = "com.liferay.portal.search.solr.configuration.SolrHttpClientFactoryConfiguration",
+	immediate = true, property = {"type=CERT"},
+	service = HttpClientFactory.class
 )
 public class CertAuthPoolingHttpClientFactory
 	extends BasePoolingHttpClientFactory {
@@ -52,45 +54,46 @@ public class CertAuthPoolingHttpClientFactory
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_solrConfiguration = Configurable.createConfigurable(
-			SolrConfiguration.class, properties);
+		_solrHttpClientFactoryConfiguration = Configurable.createConfigurable(
+			SolrHttpClientFactoryConfiguration.class, properties);
 
 		int defaultMaxConnectionsPerRoute =
-			_solrConfiguration.defaultMaxConnectionsPerRoute();
+			_solrHttpClientFactoryConfiguration.defaultMaxConnectionsPerRoute();
 
 		setDefaultMaxConnectionsPerRoute(defaultMaxConnectionsPerRoute);
 
-		int maxTotalConnections = _solrConfiguration.maxTotalConnections();
+		int maxTotalConnections =
+			_solrHttpClientFactoryConfiguration.maxTotalConnections();
 
 		setMaxTotalConnections(maxTotalConnections);
 	}
 
 	@Override
-	protected void configure(DefaultHttpClient defaultHttpClient) {
+	protected void configure(HttpClientBuilder httpClientBuilder) {
 	}
 
 	@Override
-	protected PoolingClientConnectionManager
-		createPoolingClientConnectionManager() throws Exception {
+	protected PoolingHttpClientConnectionManager
+		createPoolingHttpClientConnectionManager() throws Exception {
 
-		SSLSocketFactory sslSocketFactory = _sslSocketFactoryBuilder.build();
+		SSLConnectionSocketFactory sslConnectionSocketFactory =
+			_sslSocketFactoryBuilder.build();
 
-		SchemeRegistry schemeRegistry = createSchemeRegistry(sslSocketFactory);
+		Registry<ConnectionSocketFactory> schemeRegistry = createSchemeRegistry(
+			sslConnectionSocketFactory);
 
-		return new PoolingClientConnectionManager(schemeRegistry);
+		return new PoolingHttpClientConnectionManager(schemeRegistry);
 	}
 
-	protected SchemeRegistry createSchemeRegistry(
-		SSLSocketFactory sslSocketFactory) {
+	protected Registry<ConnectionSocketFactory> createSchemeRegistry(
+		SSLConnectionSocketFactory sslConnectionSocketFactory) {
 
-		SchemeRegistry schemeRegistry = new SchemeRegistry();
+		RegistryBuilder<ConnectionSocketFactory> registryBuilder =
+			RegistryBuilder.create();
 
-		Scheme scheme = new Scheme(
-			Http.HTTPS, Http.HTTPS_PORT, sslSocketFactory);
+		registryBuilder.register("https", sslConnectionSocketFactory);
 
-		schemeRegistry.register(scheme);
-
-		return schemeRegistry;
+		return registryBuilder.build();
 	}
 
 	@Deactivate
@@ -98,16 +101,15 @@ public class CertAuthPoolingHttpClientFactory
 		shutdown();
 	}
 
-	@Reference(unbind = "-")
+	@Reference(
+		cardinality = ReferenceCardinality.AT_LEAST_ONE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	protected void setHttpRequestInterceptor(
 		HttpRequestInterceptor httpRequestInterceptor) {
 
-		List<HttpRequestInterceptor> httpRequestInterceptors =
-			new ArrayList<>();
-
-		httpRequestInterceptors.add(httpRequestInterceptor);
-
-		setHttpRequestInterceptors(httpRequestInterceptors);
+		addHttpRequestInterceptor(httpRequestInterceptor);
 	}
 
 	@Reference(unbind = "-")
@@ -117,7 +119,14 @@ public class CertAuthPoolingHttpClientFactory
 		_sslSocketFactoryBuilder = sslSocketFactoryBuilder;
 	}
 
-	private volatile SolrConfiguration _solrConfiguration;
+	protected void unsetHttpRequestInterceptor(
+		HttpRequestInterceptor httpRequestInterceptor) {
+
+		removeHttpRequestInterceptor(httpRequestInterceptor);
+	}
+
+	private volatile SolrHttpClientFactoryConfiguration
+		_solrHttpClientFactoryConfiguration;
 	private SSLSocketFactoryBuilder _sslSocketFactoryBuilder;
 
 }

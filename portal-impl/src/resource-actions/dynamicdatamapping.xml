@@ -5,7 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.dynamicdatamapping.model.DDMStructure</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_dynamic_data_mapping_web_portlet_DynamicDataMappingPortlet</portlet-name>
+			<portlet-name>com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet</portlet-name>
 		</portlet-ref>
 		<weight>1</weight>
 		<permissions>
@@ -29,7 +29,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.dynamicdatamapping.model.DDMTemplate</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_dynamic_data_mapping_web_portlet_DynamicDataMappingPortlet</portlet-name>
+			<portlet-name>com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

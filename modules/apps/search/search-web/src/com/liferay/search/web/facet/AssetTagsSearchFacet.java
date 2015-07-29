@@ -24,22 +24,20 @@ import com.liferay.search.web.util.SearchFacet;
 
 import javax.portlet.ActionRequest;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = SearchFacet.class)
-public class AssetTagsSearchFacet extends BaseSearchFacet {
+public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
-	public String getClassName() {
-		return AssetTagsSearchFacet.class.getName();
-	}
-
-	@Override
-	public String getConfigurationView() {
-		return "/facets/configuration/asset_tags.jsp";
+	public String getConfigurationJspPath() {
+		return "/META-INF/resources/facets/configuration/asset_tags.jsp";
 	}
 
 	@Override
@@ -67,8 +65,8 @@ public class AssetTagsSearchFacet extends BaseSearchFacet {
 	}
 
 	@Override
-	public String getDisplayView() {
-		return "/facets/view/asset_tags.jsp";
+	public String getDisplayJspPath() {
+		return "/META-INF/resources/facets/view/asset_tags.jsp";
 	}
 
 	public String getFacetClassName() {
@@ -78,11 +76,6 @@ public class AssetTagsSearchFacet extends BaseSearchFacet {
 	@Override
 	public String getFieldName() {
 		return Field.ASSET_TAG_NAMES;
-	}
-
-	@Override
-	public String getId() {
-		return AssetTagsSearchFacet.class.getName();
 	}
 
 	@Override
@@ -112,8 +105,11 @@ public class AssetTagsSearchFacet extends BaseSearchFacet {
 	}
 
 	@Override
-	public String getTitle() {
-		return "tag";
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.search.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

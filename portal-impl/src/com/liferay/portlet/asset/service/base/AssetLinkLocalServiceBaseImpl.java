@@ -565,7 +565,7 @@ public abstract class AssetLinkLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = AssetLinkLocalService.class)
+	@BeanReference(type = com.liferay.portlet.asset.service.AssetLinkLocalService.class)
 	protected AssetLinkLocalService assetLinkLocalService;
 	@BeanReference(type = AssetLinkPersistence.class)
 	protected AssetLinkPersistence assetLinkPersistence;

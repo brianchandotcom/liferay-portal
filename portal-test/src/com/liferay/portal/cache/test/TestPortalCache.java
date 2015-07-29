@@ -15,6 +15,7 @@
 package com.liferay.portal.cache.test;
 
 import com.liferay.portal.kernel.cache.AbstractPortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
 
 import java.io.Serializable;
 
@@ -28,6 +29,16 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class TestPortalCache <K extends Serializable, V>
 	extends AbstractPortalCache<K, V> {
+
+	public TestPortalCache(
+		PortalCacheManager<K, V> portalCacheManager, String portalCacheName) {
+
+		super(portalCacheManager);
+
+		_portalCacheName = portalCacheName;
+
+		_concurrentMap = new ConcurrentHashMap<>();
+	}
 
 	public TestPortalCache(String portalCacheName) {
 		super(null);
@@ -48,8 +59,17 @@ public class TestPortalCache <K extends Serializable, V>
 		return keys;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getPortalCacheName()}
+	 */
+	@Deprecated
 	@Override
 	public String getName() {
+		return getPortalCacheName();
+	}
+
+	@Override
+	public String getPortalCacheName() {
 		return _portalCacheName;
 	}
 
@@ -57,7 +77,7 @@ public class TestPortalCache <K extends Serializable, V>
 	public void removeAll() {
 		_concurrentMap.clear();
 
-		aggregatedCacheListener.notifyRemoveAll(this);
+		aggregatedPortalCacheListener.notifyRemoveAll(this);
 	}
 
 	@Override
@@ -70,11 +90,11 @@ public class TestPortalCache <K extends Serializable, V>
 		V oldValue = _concurrentMap.put(key, value);
 
 		if (oldValue != null) {
-			aggregatedCacheListener.notifyEntryUpdated(
+			aggregatedPortalCacheListener.notifyEntryUpdated(
 				this, key, value, timeToLive);
 		}
 		else {
-			aggregatedCacheListener.notifyEntryPut(
+			aggregatedPortalCacheListener.notifyEntryPut(
 				this, key, value, timeToLive);
 		}
 	}
@@ -84,7 +104,7 @@ public class TestPortalCache <K extends Serializable, V>
 		V oldValue = _concurrentMap.putIfAbsent(key, value);
 
 		if (oldValue == null) {
-			aggregatedCacheListener.notifyEntryPut(
+			aggregatedPortalCacheListener.notifyEntryPut(
 				this, key, value, timeToLive);
 		}
 
@@ -96,7 +116,7 @@ public class TestPortalCache <K extends Serializable, V>
 		V value = _concurrentMap.remove(key);
 
 		if (value != null) {
-			aggregatedCacheListener.notifyEntryRemoved(
+			aggregatedPortalCacheListener.notifyEntryRemoved(
 				this, key, value, DEFAULT_TIME_TO_LIVE);
 		}
 	}
@@ -106,7 +126,7 @@ public class TestPortalCache <K extends Serializable, V>
 		boolean removed = _concurrentMap.remove(key, value);
 
 		if (removed) {
-			aggregatedCacheListener.notifyEntryRemoved(
+			aggregatedPortalCacheListener.notifyEntryRemoved(
 				this, key, value, DEFAULT_TIME_TO_LIVE);
 		}
 
@@ -118,7 +138,7 @@ public class TestPortalCache <K extends Serializable, V>
 		V oldValue = _concurrentMap.replace(key, value);
 
 		if (oldValue != null) {
-			aggregatedCacheListener.notifyEntryUpdated(
+			aggregatedPortalCacheListener.notifyEntryUpdated(
 				this, key, value, timeToLive);
 		}
 
@@ -130,7 +150,7 @@ public class TestPortalCache <K extends Serializable, V>
 		boolean replaced = _concurrentMap.replace(key, oldValue, newValue);
 
 		if (replaced) {
-			aggregatedCacheListener.notifyEntryUpdated(
+			aggregatedPortalCacheListener.notifyEntryUpdated(
 				this, key, newValue, timeToLive);
 		}
 

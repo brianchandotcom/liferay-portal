@@ -14,10 +14,13 @@
 
 package com.liferay.polls.service.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.polls.service.base.PollsChoiceServiceBaseImpl;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class PollsChoiceServiceImpl extends PollsChoiceServiceBaseImpl {
 }

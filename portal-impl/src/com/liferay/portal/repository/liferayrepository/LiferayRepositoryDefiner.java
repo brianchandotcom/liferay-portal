@@ -41,9 +41,19 @@ import com.liferay.portal.repository.capabilities.LiferaySyncCapability;
 import com.liferay.portal.repository.capabilities.LiferayThumbnailCapability;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 import com.liferay.portal.repository.capabilities.LiferayWorkflowCapability;
+import com.liferay.portal.repository.capabilities.util.DLAppServiceAdapter;
+import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
+import com.liferay.portal.repository.capabilities.util.DLFileVersionServiceAdapter;
+import com.liferay.portal.repository.capabilities.util.DLFolderServiceAdapter;
+import com.liferay.portal.repository.capabilities.util.GroupServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryConverter;
+import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
+import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 
 /**
  * @author Adolfo Pérez
@@ -66,13 +76,17 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 	public void registerCapabilities(
 		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
 
-		capabilityRegistry.addExportedCapability(
-			TrashCapability.class, _trashCapability);
-
 		DocumentRepository documentRepository = capabilityRegistry.getTarget();
 
+		DLFileEntryServiceAdapter dlFileEntryServiceAdapter =
+			DLFileEntryServiceAdapter.create(documentRepository);
+		DLFolderServiceAdapter dlFolderServiceAdapter =
+			DLFolderServiceAdapter.create(documentRepository);
+
 		BulkOperationCapability bulkOperationCapability =
-			new LiferayBulkOperationCapability(documentRepository);
+			new LiferayBulkOperationCapability(
+				documentRepository, dlFileEntryServiceAdapter,
+				dlFolderServiceAdapter);
 
 		capabilityRegistry.addExportedCapability(
 			BulkOperationCapability.class, bulkOperationCapability);
@@ -91,8 +105,22 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			new LiferayThumbnailCapability(
 				repositoryEntryConverter, repositoryEntryChecker));
 
+		TrashCapability trashCapability = new LiferayTrashCapability(
+			DLAppHelperLocalServiceUtil.getService(),
+			DLAppServiceAdapter.create(documentRepository),
+			dlFileEntryServiceAdapter, dlFolderServiceAdapter,
+			RepositoryServiceAdapter.create(documentRepository),
+			TrashEntryLocalServiceUtil.getService(),
+			TrashVersionLocalServiceUtil.getService());
+
 		capabilityRegistry.addExportedCapability(
-			WorkflowCapability.class, _workflowCapability);
+			TrashCapability.class, trashCapability);
+
+		capabilityRegistry.addExportedCapability(
+			WorkflowCapability.class,
+			new LiferayWorkflowCapability(
+				dlFileEntryServiceAdapter,
+				DLFileVersionServiceAdapter.create(documentRepository)));
 
 		if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
 			capabilityRegistry.addSupportedCapability(
@@ -103,7 +131,9 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			ProcessorCapability.class, _processorCapability);
 		capabilityRegistry.addSupportedCapability(
 			SyncCapability.class,
-			new LiferaySyncCapability(bulkOperationCapability));
+			new LiferaySyncCapability(
+				GroupServiceAdapter.create(documentRepository),
+				DLSyncEventLocalServiceUtil.getService()));
 	}
 
 	@Override
@@ -123,10 +153,6 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 	private final ProcessorCapability _processorCapability =
 		new LiferayProcessorCapability();
 	private RepositoryFactory _repositoryFactory;
-	private final TrashCapability _trashCapability =
-		new LiferayTrashCapability();
-	private final WorkflowCapability _workflowCapability =
-		new LiferayWorkflowCapability();
 
 	private class LiferayRepositoryFactoryWrapper implements RepositoryFactory {
 

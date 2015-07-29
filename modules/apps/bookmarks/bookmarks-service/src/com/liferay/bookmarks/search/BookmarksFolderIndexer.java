@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eduardo Garcia
  */
 @Component(immediate = true, service = Indexer.class)
-public class BookmarksFolderIndexer extends BaseIndexer {
+public class BookmarksFolderIndexer extends BaseIndexer<BookmarksFolder> {
 
 	public static final String CLASS_NAME = BookmarksFolder.class.getName();
 
@@ -86,37 +86,38 @@ public class BookmarksFolderIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		BookmarksFolder folder = (BookmarksFolder)obj;
-
+	protected void doDelete(BookmarksFolder bookmarksFolder) throws Exception {
 		Document document = new DocumentImpl();
 
-		document.addUID(CLASS_NAME, folder.getFolderId(), folder.getName());
+		document.addUID(
+			CLASS_NAME, bookmarksFolder.getFolderId(),
+			bookmarksFolder.getName());
 
 		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), folder.getCompanyId(), document.get(Field.UID),
-			isCommitImmediately());
+			getSearchEngineId(), bookmarksFolder.getCompanyId(),
+			document.get(Field.UID), isCommitImmediately());
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		BookmarksFolder folder = (BookmarksFolder)obj;
+	protected Document doGetDocument(BookmarksFolder bookmarksFolder)
+		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing folder " + folder);
+			_log.debug("Indexing folder " + bookmarksFolder);
 		}
 
-		Document document = getBaseModelDocument(CLASS_NAME, folder);
+		Document document = getBaseModelDocument(CLASS_NAME, bookmarksFolder);
 
-		document.addText(Field.DESCRIPTION, folder.getDescription());
-		document.addKeyword(Field.FOLDER_ID, folder.getParentFolderId());
-		document.addText(Field.TITLE, folder.getName());
+		document.addText(Field.DESCRIPTION, bookmarksFolder.getDescription());
+		document.addKeyword(
+			Field.FOLDER_ID, bookmarksFolder.getParentFolderId());
+		document.addText(Field.TITLE, bookmarksFolder.getName());
 		document.addKeyword(
 			Field.TREE_PATH,
-			StringUtil.split(folder.getTreePath(), CharPool.SLASH));
+			StringUtil.split(bookmarksFolder.getTreePath(), CharPool.SLASH));
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + folder + " indexed successfully");
+			_log.debug("Document " + bookmarksFolder + " indexed successfully");
 		}
 
 		return document;
@@ -136,23 +137,21 @@ public class BookmarksFolderIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		BookmarksFolder folder = (BookmarksFolder)obj;
+	protected void doReindex(BookmarksFolder bookmarksFolder) throws Exception {
+		Document document = getDocument(bookmarksFolder);
 
-		Document document = getDocument(folder);
-
-		if (!folder.isApproved() && !folder.isInTrash()) {
+		if (!bookmarksFolder.isApproved() && !bookmarksFolder.isInTrash()) {
 			return;
 		}
 
 		if (document != null) {
 			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), folder.getCompanyId(), document,
+				getSearchEngineId(), bookmarksFolder.getCompanyId(), document,
 				isCommitImmediately());
 		}
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), folder.getCompanyId(), document,
+			getSearchEngineId(), bookmarksFolder.getCompanyId(), document,
 			isCommitImmediately());
 	}
 

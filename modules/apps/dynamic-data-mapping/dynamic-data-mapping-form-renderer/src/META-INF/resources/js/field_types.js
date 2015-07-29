@@ -2,18 +2,42 @@ AUI.add(
 	'liferay-ddm-form-renderer-field-types',
 	function(A) {
 		var AArray = A.Array;
-		var AObject = A.Object;
+
+		var _fieldTypes = [];
 
 		var FieldTypes = {
-			_fieldTypes: [],
+			get: function(type) {
+				var instance = this;
+
+				return AArray.find(
+					_fieldTypes,
+					function(item, index) {
+						return item.get('name') === type;
+					}
+				);
+			},
+
+			getAll: function() {
+				var instance = this;
+
+				return _fieldTypes;
+			},
+
+			register: function(fieldTypes) {
+				var instance = this;
+
+				_fieldTypes = AArray(fieldTypes).map(instance._getFieldType);
+			},
 
 			_getFieldType: function(config) {
 				var instance = this;
 
-				var defaultConfig = {
-					definition: config.settings,
-					fieldType: config.name
-				};
+				var defaultConfig = A.merge(
+					config.settings,
+					{
+						type: config.name
+					}
+				);
 
 				var fieldType = new A.FormBuilderFieldType(
 					{
@@ -30,41 +54,6 @@ AUI.add(
 				fieldType.set('templateNamespace', config.templateNamespace);
 
 				return fieldType;
-			},
-
-			get: function(type) {
-				var instance = this;
-
-				return AArray.find(
-					instance._fieldTypes,
-					function(item, index) {
-						return item.get('name') === type;
-					}
-				);
-			},
-
-			getAll: function() {
-				var instance = this;
-
-				return instance._fieldTypes;
-			},
-
-			getFieldTypeTemplate: function(type, context) {
-				var instance = this;
-
-				var fieldType = instance.get(type);
-
-				var templateNamespace = fieldType.get('templateNamespace');
-
-				var renderer = AObject.getValue(window, templateNamespace.split('.'));
-
-				return renderer(context);
-			},
-
-			register: function(fieldTypes) {
-				var instance = this;
-
-				instance._fieldTypes = AArray(fieldTypes).map(instance._getFieldType);
 			}
 		};
 
@@ -72,6 +61,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-extras', 'aui-form-builder-field-type', 'liferay-ddm-form-field-checkbox-template', 'liferay-ddm-form-field-radio-template', 'liferay-ddm-form-field-select-template', 'liferay-ddm-form-field-text-template', 'liferay-ddm-form-renderer-util']
+		requires: ['array-extras', 'aui-form-builder-field-type']
 	}
 );

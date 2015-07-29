@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.ConfigurationContainer;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.process.JavaExecSpec;
 
@@ -42,8 +44,14 @@ public class BuildServiceTask extends JavaExec {
 	}
 
 	@Override
+	public JavaExec classpath(Object... paths) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void exec() {
 		super.setArgs(getArgs());
+		super.setClasspath(getClasspath());
 		super.setWorkingDir(getWorkingDir());
 
 		super.exec();
@@ -103,6 +111,17 @@ public class BuildServiceTask extends JavaExec {
 
 	public long getBuildNumber() {
 		return _serviceBuilderArgs.getBuildNumber();
+	}
+
+	@Override
+	public FileCollection getClasspath() {
+		Project project = getProject();
+
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		return configurationContainer.getByName(
+			ServiceBuilderPlugin.CONFIGURATION_NAME);
 	}
 
 	public String getHbmFileName() {
@@ -252,6 +271,11 @@ public class BuildServiceTask extends JavaExec {
 
 	public void setBuildNumberIncrement(boolean buildNumberIncrement) {
 		_serviceBuilderArgs.setBuildNumberIncrement(buildNumberIncrement);
+	}
+
+	@Override
+	public JavaExec setClasspath(FileCollection classpath) {
+		throw new UnsupportedOperationException();
 	}
 
 	public void setHbmFileName(String hbmFileName) {

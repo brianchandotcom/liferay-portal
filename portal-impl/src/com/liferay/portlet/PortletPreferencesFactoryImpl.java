@@ -426,7 +426,9 @@ public class PortletPreferencesFactoryImpl
 				// Only users with the correct permissions can update guest
 				// preferences
 
-				throw new PrincipalException();
+				throw new PrincipalException.MustHavePermission(
+					permissionChecker, Layout.class.getName(),
+					layout.getLayoutId(), ActionKeys.UPDATE);
 			}
 		}
 
@@ -942,7 +944,7 @@ public class PortletPreferencesFactoryImpl
 	private final Log _log = LogFactoryUtil.getLog(
 		PortletPreferencesFactoryImpl.class);
 	private final PortalCache<String, Map<String, Preference>>
-		_preferencesMapPortalCache = SingleVMPoolUtil.getCache(
+		_preferencesMapPortalCache = SingleVMPoolUtil.getPortalCache(
 			PortletPreferencesFactoryImpl.class.getName());
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.layoutconfiguration.util.velocity;
 
+import com.liferay.portal.kernel.portlet.PortletProvider;
+
 import java.util.Map;
 
 /**
@@ -39,6 +41,11 @@ public interface ColumnProcessor {
 
 	public String processPortlet(
 			String portletId, Map<String, ?> defaultSettingsMap)
+		throws Exception;
+
+	public String processPortlet(
+			String portletProviderClassName,
+			PortletProvider.Action portletProviderAction)
 		throws Exception;
 
 }

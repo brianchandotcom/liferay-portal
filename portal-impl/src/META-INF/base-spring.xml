@@ -81,9 +81,13 @@
 		<constructor-arg ref="liferayTransactionManager" />
 		<constructor-arg value="false" />
 	</bean>
-	<bean class="com.liferay.portal.spring.transaction.TransactionHandlerUtil">
-		<property name="platformTransactionManager" ref="liferayTransactionManager" />
-		<property name="transactionExecutor" ref="transactionExecutor" />
+	<bean id="com.liferay.portal.kernel.transaction.TransactionInvokerUtil" class="com.liferay.portal.kernel.transaction.TransactionInvokerUtil">
+		<property name="transactionInvoker">
+			<bean class="com.liferay.portal.spring.transaction.TransactionInvokerImpl">
+				<property name="platformTransactionManager" ref="liferayTransactionManager" />
+				<property name="transactionExecutor" ref="transactionExecutor" />
+			</bean>
+		</property>
 	</bean>
 	<bean class="com.liferay.portal.transaction.TransactionLifecycleManagerInitializer">
 		<property name="transactionLifecycleListeners">
@@ -91,7 +95,8 @@
 				<util:constant static-field="com.liferay.portal.kernel.cache.ThreadLocalCacheManager.TRANSACTION_LIFECYCLE_LISTENER" />
 				<util:constant static-field="com.liferay.portal.spring.hibernate.LastSessionRecorderUtil.TRANSACTION_LIFECYCLE_LISTENER" />
 				<util:constant static-field="com.liferay.portal.kernel.cache.transactional.TransactionalPortalCacheHelper.TRANSACTION_LIFECYCLE_LISTENER" />
-				<util:constant static-field="com.liferay.portal.spring.transaction.TransactionCommitCallbackUtil.TRANSACTION_LIFECYCLE_LISTENER" />
+				<util:constant static-field="com.liferay.portal.kernel.transaction.TransactionLifecycleNotifier.TRANSACTION_LIFECYCLE_LISTENER" />
+				<util:constant static-field="com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil.TRANSACTION_LIFECYCLE_LISTENER" />
 			</list>
 		</property>
 	</bean>

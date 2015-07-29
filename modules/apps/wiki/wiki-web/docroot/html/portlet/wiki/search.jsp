@@ -63,7 +63,7 @@ portletURL.setParameter("keywords", keywords);
 	>
 
 		<%
-		Indexer indexer = IndexerRegistryUtil.getIndexer(WikiPage.class);
+		Indexer<WikiPage> indexer = IndexerRegistryUtil.getIndexer(WikiPage.class);
 
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 

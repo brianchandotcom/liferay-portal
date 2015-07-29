@@ -14,7 +14,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="TwitterPortletSmoke" priority="5">
+	<command name="TwitterPortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="twitter-portlet" />
 
 		<var name="appName" value="Twitter" />

@@ -166,6 +166,11 @@ public abstract class BaseSearchTestCase {
 	}
 
 	@Test
+	public void testSearchMixedPhraseKeywords() throws Exception {
+		searchByMixedPhraseKeywords();
+	}
+
+	@Test
 	public void testSearchMyEntries() throws Exception {
 		searchMyEntries();
 	}
@@ -442,7 +447,7 @@ public abstract class BaseSearchTestCase {
 			Class<?> clazz, long groupId, SearchContext searchContext)
 		throws Exception {
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(clazz);
+		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(clazz);
 
 		searchContext.setGroupIds(new long[] {groupId});
 
@@ -633,6 +638,84 @@ public abstract class BaseSearchTestCase {
 			parentBaseModel2, true, getSearchKeywords(), serviceContext);
 
 		assertBaseModelsCount(initialBaseModelsSearchCount + 2, searchContext);
+	}
+
+	protected void searchByMixedPhraseKeywords() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		String keyword1 = getSearchKeywords() + 1;
+		String keyword2 = getSearchKeywords() + 2;
+		String keyword3 = getSearchKeywords() + 3;
+		String keyword4 = getSearchKeywords() + 4;
+		String keyword5 = getSearchKeywords() + 5;
+		String keyword6 = getSearchKeywords() + 6;
+		String keyword7 = getSearchKeywords() + 7;
+
+		String combinedKeywords =
+			keyword1 + " " + keyword2 + " " + keyword3 + " " + keyword4 + " " +
+				keyword5 + " " + keyword6 + " " + keyword7;
+
+		searchContext.setKeywords(combinedKeywords);
+
+		int initialBaseModelsSearchCount = 0;
+
+		assertBaseModelsCount(initialBaseModelsSearchCount, searchContext);
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(
+			parentBaseModel, true, combinedKeywords, serviceContext);
+
+		assertBaseModelsCount(initialBaseModelsSearchCount + 1, searchContext);
+
+		searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		searchContext.setKeywords("\"" + keyword1 + " " + keyword2 + "\"");
+
+		assertBaseModelsCount(initialBaseModelsSearchCount + 1, searchContext);
+
+		searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		searchContext.setKeywords("\"" + keyword2 + " " + keyword1 + "\"");
+
+		assertBaseModelsCount(initialBaseModelsSearchCount, searchContext);
+
+		searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		searchContext.setKeywords("\"" + keyword2 + " " + keyword4 + "\"");
+
+		assertBaseModelsCount(initialBaseModelsSearchCount, searchContext);
+
+		searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		searchContext.setKeywords(
+			keyword1 + " \"" + keyword2 + " " + keyword3 + "\"");
+
+		assertBaseModelsCount(initialBaseModelsSearchCount + 1, searchContext);
+
+		searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		searchContext.setKeywords(
+			RandomTestUtil.randomString() + " \"" + keyword2 + " " + keyword3 +
+				"\"" + " " + keyword5);
+
+		assertBaseModelsCount(initialBaseModelsSearchCount + 1, searchContext);
+
+		searchContext.setKeywords(
+			RandomTestUtil.randomString() + " \"" + keyword2 + " " + keyword5 +
+				"\"" + " " + RandomTestUtil.randomString());
+
+		assertBaseModelsCount(initialBaseModelsSearchCount, searchContext);
 	}
 
 	protected void searchComments() throws Exception {

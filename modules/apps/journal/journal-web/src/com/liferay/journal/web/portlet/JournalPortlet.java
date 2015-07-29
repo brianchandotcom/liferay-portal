@@ -15,9 +15,40 @@
 package com.liferay.journal.web.portlet;
 
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.constants.JournalWebKeys;
+import com.liferay.journal.exception.ArticleContentException;
+import com.liferay.journal.exception.ArticleContentSizeException;
+import com.liferay.journal.exception.ArticleDisplayDateException;
+import com.liferay.journal.exception.ArticleExpirationDateException;
+import com.liferay.journal.exception.ArticleIdException;
+import com.liferay.journal.exception.ArticleSmallImageNameException;
+import com.liferay.journal.exception.ArticleSmallImageSizeException;
+import com.liferay.journal.exception.ArticleTitleException;
+import com.liferay.journal.exception.ArticleVersionException;
+import com.liferay.journal.exception.DuplicateArticleIdException;
+import com.liferay.journal.exception.DuplicateFeedIdException;
+import com.liferay.journal.exception.DuplicateFolderNameException;
+import com.liferay.journal.exception.FeedContentFieldException;
+import com.liferay.journal.exception.FeedIdException;
+import com.liferay.journal.exception.FeedNameException;
+import com.liferay.journal.exception.FeedTargetLayoutFriendlyUrlException;
+import com.liferay.journal.exception.FeedTargetPortletIdException;
+import com.liferay.journal.exception.FolderNameException;
+import com.liferay.journal.exception.InvalidDDMStructureException;
+import com.liferay.journal.exception.NoSuchArticleException;
+import com.liferay.journal.exception.NoSuchFeedException;
+import com.liferay.journal.exception.NoSuchFolderException;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFeed;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.service.JournalArticleService;
+import com.liferay.journal.service.JournalContentSearchLocalService;
+import com.liferay.journal.service.JournalFeedService;
+import com.liferay.journal.service.JournalFolderService;
+import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
-import com.liferay.journal.web.constants.JournalPortletKeys;
-import com.liferay.journal.web.constants.JournalWebKeys;
 import com.liferay.journal.web.portlet.action.ActionUtil;
 import com.liferay.journal.web.upgrade.JournalWebUpgrade;
 import com.liferay.journal.web.util.JournalRSSUtil;
@@ -68,37 +99,6 @@ import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
-import com.liferay.portlet.journal.ArticleContentException;
-import com.liferay.portlet.journal.ArticleContentSizeException;
-import com.liferay.portlet.journal.ArticleDisplayDateException;
-import com.liferay.portlet.journal.ArticleExpirationDateException;
-import com.liferay.portlet.journal.ArticleIdException;
-import com.liferay.portlet.journal.ArticleSmallImageNameException;
-import com.liferay.portlet.journal.ArticleSmallImageSizeException;
-import com.liferay.portlet.journal.ArticleTitleException;
-import com.liferay.portlet.journal.ArticleVersionException;
-import com.liferay.portlet.journal.DuplicateArticleIdException;
-import com.liferay.portlet.journal.DuplicateFeedIdException;
-import com.liferay.portlet.journal.DuplicateFolderNameException;
-import com.liferay.portlet.journal.FeedContentFieldException;
-import com.liferay.portlet.journal.FeedIdException;
-import com.liferay.portlet.journal.FeedNameException;
-import com.liferay.portlet.journal.FeedTargetLayoutFriendlyUrlException;
-import com.liferay.portlet.journal.FeedTargetPortletIdException;
-import com.liferay.portlet.journal.FolderNameException;
-import com.liferay.portlet.journal.InvalidDDMStructureException;
-import com.liferay.portlet.journal.NoSuchArticleException;
-import com.liferay.portlet.journal.NoSuchFeedException;
-import com.liferay.portlet.journal.NoSuchFolderException;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalFeed;
-import com.liferay.portlet.journal.model.JournalFolder;
-import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.service.JournalArticleService;
-import com.liferay.portlet.journal.service.JournalContentSearchLocalService;
-import com.liferay.portlet.journal.service.JournalFeedService;
-import com.liferay.portlet.journal.service.JournalFolderService;
-import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.trash.service.TrashEntryService;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -160,7 +160,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.webdav-storage-token=journal",
 		"javax.portlet.display-name=Web Content",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.action.package.prefix=com.liferay.journal.web.portlet.action",
+		"javax.portlet.init-param.mvc-action-command-package-prefix=com.liferay.journal.web.portlet.action",
 		"javax.portlet.init-param.single-page-application-cacheable=false",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
@@ -289,13 +289,6 @@ public class JournalPortlet extends MVCPortlet {
 		sendEditEntryRedirect(actionRequest, actionResponse);
 	}
 
-	public void moveArticlesToTrash(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		deleteArticles(actionRequest, actionResponse, true);
-	}
-
 	public void moveEntries(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -364,6 +357,13 @@ public class JournalPortlet extends MVCPortlet {
 		deleteFolders(actionRequest, actionResponse, true);
 	}
 
+	public void moveToTrash(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		deleteArticles(actionRequest, actionResponse, true);
+	}
+
 	public void previewArticle(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -376,7 +376,7 @@ public class JournalPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		String path = getPath(renderRequest);
+		String path = getPath(renderRequest, renderResponse);
 
 		if (Validator.equals(path, "/edit_article.jsp")) {
 			renderRequest.setAttribute(
@@ -1059,7 +1059,7 @@ public class JournalPortlet extends MVCPortlet {
 			SessionErrors.contains(
 				renderRequest, NoSuchTemplateException.class.getName()) ||
 			SessionErrors.contains(
-				renderRequest, PrincipalException.class.getName())) {
+				renderRequest, PrincipalException.getNestedClasses())) {
 
 			include(
 				"/portlet/journal/html/error.jsp", renderRequest,

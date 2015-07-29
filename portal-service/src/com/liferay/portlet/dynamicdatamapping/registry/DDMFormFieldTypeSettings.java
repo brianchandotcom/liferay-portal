@@ -20,13 +20,13 @@ import com.liferay.portlet.dynamicdatamapping.registry.annotations.DDMFormField;
 /**
  * @author Marcellus Tavares
  */
-@DDMForm
+@DDMForm(localization = "content/Language")
 public interface DDMFormFieldTypeSettings {
 
 	@DDMFormField(visibilityExpression = "false")
 	public String dataType();
 
-	@DDMFormField
+	@DDMFormField(label = "%name")
 	public String name();
 
 	@DDMFormField(visibilityExpression = "false")

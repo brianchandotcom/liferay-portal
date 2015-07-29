@@ -116,7 +116,8 @@ public abstract class BaseFacet implements Facet {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #doGetFacetFilterBooleanClause}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #doGetFacetFilterBooleanClause}
 	 */
 	@Deprecated
 	protected BooleanClause<Query> doGetFacetClause() {

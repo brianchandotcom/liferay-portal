@@ -93,6 +93,8 @@ public interface WebKeys {
 	@Distributed
 	public static final String LAYOUT_ASSET_ENTRY = "LIFERAY_SHARED_LAYOUT_ASSET_ENTRY";
 
+	public static final String LAYOUT_CONTENT = "LAYOUT_CONTENT";
+
 	public static final String LAYOUTS = "LAYOUTS";
 
 	/**
@@ -161,6 +163,8 @@ public interface WebKeys {
 	public static final String PORTLET_PREFERENCES_MAP = "PORTLET_PREFERENCES_MAP";
 
 	public static final String PORTLET_QUICK_ACCESS_ENTRIES = "LIFERAY_SHARED_PORTLET_QUICK_ACCESS_ENTRIES";
+
+	public static final String PORTLET_RENDER_PARAMETERS = "PORTLET_RENDER_PARAMETERS_";
 
 	public static final String PORTLET_RESOURCE_STATIC_URLS = "PORTLET_RESOURCE_STATIC_URLS";
 

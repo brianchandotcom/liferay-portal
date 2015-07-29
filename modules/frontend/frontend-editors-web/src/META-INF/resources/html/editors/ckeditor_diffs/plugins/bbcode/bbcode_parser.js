@@ -6,10 +6,10 @@
 	var entities = A.merge(
 		Liferay.Util.MAP_HTML_CHARS_ESCAPED,
 		{
-			'[': '&#91;',
-			']': '&#93;',
 			'(': '&#40;',
-			')': '&#41;'
+			')': '&#41;',
+			'[': '&#91;',
+			']': '&#93;'
 		}
 	);
 
@@ -45,7 +45,7 @@
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 	var isString = function(val) {
-		return (typeof val == 'string');
+		return typeof val == 'string';
 	};
 
 	var ELEMENTS_BLOCK = {
@@ -80,6 +80,8 @@
 		'u': 1,
 		'url': 1
 	};
+
+	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
 
 	var STR_TAG_CODE = 'code';
 
@@ -123,7 +125,7 @@
 
 			var token;
 
-			while ((token = lexer.getNextToken())) {
+			while (token = lexer.getNextToken()) {
 				instance._handleData(token, data);
 
 				if (token[1]) {
@@ -163,12 +165,16 @@
 
 			var length = data.length;
 
-			var lastIndex = length;
+			var lastIndex = instance._lexer.getLastIndex();
 
 			if (token) {
-				length = token.index;
+				var tokenItem = token[1] || token[3];
 
-				lastIndex = instance._lexer.getLastIndex();
+				length = lastIndex;
+
+				if (instance._isValidTag(tokenItem)) {
+					length = token.index;
+				}
 			}
 
 			if (length > instance._dataPointer) {
@@ -190,9 +196,9 @@
 
 			var stack = instance._stack;
 
-			if (token) {
-				var tagName;
+			var tagName;
 
+			if (token) {
 				if (isString(token)) {
 					tagName = token;
 				}
@@ -209,7 +215,7 @@
 				}
 			}
 
-			if (pos >= 0) {
+			if (pos >= 0 && instance._isValidTag(tagName)) {
 				var tokenTagEnd = Parser.TOKEN_TAG_END;
 
 				for (var i = stack.length - 1; i >= pos; i--) {
@@ -230,29 +236,41 @@
 
 			var tagName = token[1].toLowerCase();
 
-			var stack = instance._stack;
+			if (instance._isValidTag(tagName)) {
+				var stack = instance._stack;
 
-			if (hasOwnProperty.call(ELEMENTS_BLOCK, tagName)) {
-				var lastTag;
+				if (hasOwnProperty.call(ELEMENTS_BLOCK, tagName)) {
+					var lastTag;
 
-				while ((lastTag = stack.last()) && hasOwnProperty.call(ELEMENTS_INLINE, lastTag)) {
-					instance._handleTagEnd(lastTag);
+					while ((lastTag = stack.last()) && hasOwnProperty.call(ELEMENTS_INLINE, lastTag)) {
+						instance._handleTagEnd(lastTag);
+					}
 				}
+
+				if (hasOwnProperty.call(ELEMENTS_CLOSE_SELF, tagName) && stack.last() == tagName) {
+					instance._handleTagEnd(tagName);
+				}
+
+				stack.push(tagName);
+
+				instance._result.push(
+					{
+						attribute: token[2],
+						type: Parser.TOKEN_TAG_START,
+						value: tagName
+					}
+				);
+			}
+		},
+
+		_isValidTag: function(tagName) {
+			var valid = false;
+
+			if (tagName && tagName.length) {
+				valid = REGEX_TAG_NAME.test(tagName);
 			}
 
-			if (hasOwnProperty.call(ELEMENTS_CLOSE_SELF, tagName) && stack.last() == tagName) {
-				instance._handleTagEnd(tagName);
-			}
-
-			stack.push(tagName);
-
-			instance._result.push(
-				{
-					attribute: token[2],
-					type: Parser.TOKEN_TAG_START,
-					value: tagName
-				}
-			);
+			return valid;
 		},
 
 		_reset: function() {
@@ -283,12 +301,13 @@
 	var MAP_FONT_SIZE = {
 		1: 10,
 		2: 12,
-		3: 16,
-		4: 18,
-		5: 24,
-		6: 32,
-		7: 48,
-		defaultSize: 12
+		3: 14,
+		4: 16,
+		5: 18,
+		6: 24,
+		7: 32,
+		8: 48,
+		defaultSize: 14
 	};
 
 	var MAP_HANDLERS = {
@@ -335,12 +354,18 @@
 		'width': 1
 	};
 
-	var MAP_LIST_STYLES = {
+	var MAP_ORDERED_LIST_STYLES = {
 		1: 'list-style-type: decimal;',
 		a: 'list-style-type: lower-alpha;',
 		i: 'list-style-type: lower-roman;',
 		A: 'list-style-type: upper-alpha;',
 		I: 'list-style-type: upper-roman;'
+	};
+
+	var MAP_UNORDERED_LIST_STYLES = {
+		circle: 'list-style-type: circle;',
+		disc: 'list-style-type: disc;',
+		square: 'list-style-type: square;'
 	};
 
 	var MAP_TOKENS_EXCLUDE_NEW_LINE = {
@@ -358,7 +383,7 @@
 
 	var REGEX_ESCAPE_REGEX = /[-[\]{}()*+?.,\\^$|#\s]/g;
 
-	var REGEX_IMAGE_SRC = /^(?:https?:\/\/|\/)[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z]{1,512}$/i;
+	var REGEX_IMAGE_SRC = /^(?:https?:\/\/|\/)[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z]{1,2048}$/i;
 
 	var REGEX_LASTCHAR_NEWLINE = /\r?\n$/;
 
@@ -368,9 +393,7 @@
 
 	var REGEX_STRING_IS_NEW_LINE = /^\r?\n$/;
 
-	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
-
-	var REGEX_URI = /^[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z#]{1,512}$|\${\S+}/i;
+	var REGEX_URI = /^[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z#]{1,2048}$|\${\S+}/i;
 
 	var STR_BLANK = '';
 
@@ -383,6 +406,8 @@
 	var STR_MAILTO = 'mailto:';
 
 	var STR_NEW_LINE = '\n';
+
+	var STR_START = 'start';
 
 	var STR_TAG_A_CLOSE = '</a>';
 
@@ -407,6 +432,8 @@
 	var STR_TAG_URL = 'url';
 
 	var STR_TEXT_ALIGN = '<p style="text-align: ';
+
+	var STR_TYPE = 'type';
 
 	var TOKEN_DATA = Parser.TOKEN_DATA;
 
@@ -454,13 +481,13 @@
 
 				var type = token.type;
 
-				if (type == TOKEN_TAG_START) {
+				if (type === TOKEN_TAG_START) {
 					instance._handleTagStart(token);
 				}
-				else if (type == TOKEN_TAG_END) {
+				else if (type === TOKEN_TAG_END) {
 					instance._handleTagEnd(token);
 				}
-				else if (type == TOKEN_DATA) {
+				else if (type === TOKEN_DATA) {
 					instance._handleData(token);
 				}
 				else {
@@ -489,12 +516,12 @@
 			do {
 				token = instance._parsedData[index++];
 
-				if (token.type == TOKEN_DATA) {
+				if (token && token.type === TOKEN_DATA) {
 					result.push(token.value);
 				}
 
 			}
-			while (token.type != TOKEN_TAG_END && token.value != toTagName);
+			while (token && token.type !== TOKEN_TAG_END && token.value !== toTagName);
 
 			if (consume) {
 				instance._tokenPointer = index - 1;
@@ -623,12 +650,12 @@
 		_handleImageAttributes: function(token) {
 			var instance = this;
 
-			var attrs = '';
+			var attrs = STR_BLANK;
 
 			if (token.attribute) {
 				var bbCodeAttr;
 
-				while (bbCodeAttr = REGEX_ATTRS.exec(token.attribute)) {
+				while ((bbCodeAttr = REGEX_ATTRS.exec(token.attribute))) {
 					var attrName = bbCodeAttr[1];
 
 					if (MAP_IMAGE_ATTRIBUTES[attrName]) {
@@ -648,23 +675,38 @@
 			var instance = this;
 
 			var tag = 'ul';
-			var styleAttr;
+			var listAttributes = STR_BLANK;
 
-			var listAttribute = token.attribute;
+			if (token.attribute) {
+				var listAttribute;
 
-			if (listAttribute) {
-				tag = 'ol';
+				while ((listAttribute = REGEX_ATTRS.exec(token.attribute))) {
+					var attrName = listAttribute[1];
+					var attrValue = listAttribute[2];
 
-				styleAttr = MAP_LIST_STYLES[listAttribute];
+					var styleAttr;
+
+					if (attrName === STR_TYPE) {
+						if (MAP_ORDERED_LIST_STYLES[attrValue]) {
+							styleAttr = MAP_ORDERED_LIST_STYLES[attrValue];
+
+							tag = 'ol';
+						}
+						else {
+							styleAttr = MAP_UNORDERED_LIST_STYLES[attrValue];
+						}
+
+						if (styleAttr) {
+							listAttributes += ' style="' + styleAttr + '"';
+						}
+					}
+					else if (attrName === STR_START && REGEX_NUMBER.test(attrValue)) {
+						listAttributes += ' start="' + attrValue + '"';
+					}
+				}
 			}
 
-			var result = STR_TAG_OPEN + tag + STR_TAG_END_CLOSE;
-
-			if (styleAttr) {
-				result = STR_TAG_OPEN + tag + ' style="' + styleAttr + STR_TAG_ATTR_CLOSE;
-			}
-
-			instance._result.push(result);
+			instance._result.push(STR_TAG_OPEN + tag + listAttributes + STR_TAG_END_CLOSE);
 
 			instance._stack.push(STR_TAG_END_OPEN + tag + STR_TAG_END_CLOSE);
 		},
@@ -695,8 +737,8 @@
 					nextToken = instance._parsedData[instance._tokenPointer + 1];
 
 					if (nextToken &&
-						nextToken.type == TOKEN_TAG_END &&
-						nextToken.value == STR_TAG_LIST_ITEM_SHORT) {
+						nextToken.type === TOKEN_TAG_END &&
+						nextToken.value === STR_TAG_LIST_ITEM_SHORT) {
 
 						value = value.substring(0, value.length - 1);
 					}
@@ -800,12 +842,10 @@
 
 			var tagName = token.value;
 
-			if (instance._isValidTag(tagName)) {
-				instance._result.push(instance._stack.pop());
+			instance._result.push(instance._stack.pop());
 
-				if (tagName == STR_CODE) {
-					instance._noParse = false;
-				}
+			if (tagName === STR_CODE) {
+				instance._noParse = false;
 			}
 		},
 
@@ -814,11 +854,9 @@
 
 			var tagName = token.value;
 
-			if (instance._isValidTag(tagName)) {
-				var handlerName = MAP_HANDLERS[tagName] || '_handleSimpleTags';
+			var handlerName = MAP_HANDLERS[tagName] || '_handleSimpleTags';
 
-				instance[handlerName](token);
-			}
+			instance[handlerName](token);
 		},
 
 		_handleTextAlign: function(token) {
@@ -843,16 +881,6 @@
 			instance._result.push(STR_TAG_ATTR_HREF_OPEN + href + STR_TAG_ATTR_CLOSE);
 
 			instance._stack.push(STR_TAG_A_CLOSE);
-		},
-
-		_isValidTag: function(tagName) {
-			var valid = false;
-
-			if (tagName && tagName.length) {
-				valid = REGEX_TAG_NAME.test(tagName);
-			}
-
-			return valid;
 		},
 
 		_reset: function() {

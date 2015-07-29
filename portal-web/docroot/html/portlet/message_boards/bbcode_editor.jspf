@@ -15,7 +15,7 @@
 --%>
 
 <%
-Map<String,String> configParams = new HashMap();
+Map<String, String> configParams = new HashMap();
 
 configParams.put("emoticonsPath", themeDisplay.getPathThemeImages() + MBUtil.EMOTICONS);
 

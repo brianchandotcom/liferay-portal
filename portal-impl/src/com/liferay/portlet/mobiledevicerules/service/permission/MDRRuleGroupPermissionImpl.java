@@ -34,7 +34,9 @@ public class MDRRuleGroupPermissionImpl implements MDRRuleGroupPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, ruleGroupId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, MDRRuleGroup.class.getName(), ruleGroupId,
+				actionId);
 		}
 	}
 
@@ -45,7 +47,9 @@ public class MDRRuleGroupPermissionImpl implements MDRRuleGroupPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, ruleGroup, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, MDRRuleGroup.class.getName(),
+				ruleGroup.getRuleGroupId(), actionId);
 		}
 	}
 
@@ -69,7 +73,7 @@ public class MDRRuleGroupPermissionImpl implements MDRRuleGroupPermission {
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, ruleGroup.getGroupId(),
 			MDRRuleGroup.class.getName(), ruleGroup.getRuleGroupId(),
-			PortletKeys.MOBILE_DEVICE_SITE_ADMIN, actionId);
+			PortletKeys.MOBILE_DEVICE_RULES, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

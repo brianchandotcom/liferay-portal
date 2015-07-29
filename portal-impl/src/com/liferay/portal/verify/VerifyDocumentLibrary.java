@@ -40,7 +40,6 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -59,10 +58,6 @@ import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.DLFileVersionVersionComparator;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageAdapter;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageAdapterRegistryUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 
 import java.io.InputStream;
 
@@ -464,18 +459,8 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 			DLFileEntryMetadata dlFileEntryMetadata)
 		throws Exception {
 
-		DLFileEntryMetadataLocalServiceUtil.deleteDLFileEntryMetadata(
+		DLFileEntryMetadataLocalServiceUtil.deleteFileEntryMetadata(
 			dlFileEntryMetadata);
-
-		StorageAdapter storageAdapter =
-			StorageAdapterRegistryUtil.getStorageAdapter(
-				StorageType.JSON.toString());
-
-		storageAdapter.deleteByClass(dlFileEntryMetadata.getDDMStorageId());
-
-		DDMStructureLinkLocalServiceUtil.deleteStructureLinks(
-			PortalUtil.getClassNameId(DLFileEntryMetadata.class),
-			dlFileEntryMetadata.getFileEntryMetadataId());
 	}
 
 	@Override

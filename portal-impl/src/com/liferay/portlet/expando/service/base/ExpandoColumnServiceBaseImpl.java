@@ -475,7 +475,7 @@ public abstract class ExpandoColumnServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.expando.service.ExpandoColumnLocalService.class)
 	protected com.liferay.portlet.expando.service.ExpandoColumnLocalService expandoColumnLocalService;
-	@BeanReference(type = ExpandoColumnService.class)
+	@BeanReference(type = com.liferay.portlet.expando.service.ExpandoColumnService.class)
 	protected ExpandoColumnService expandoColumnService;
 	@BeanReference(type = ExpandoColumnPersistence.class)
 	protected ExpandoColumnPersistence expandoColumnPersistence;

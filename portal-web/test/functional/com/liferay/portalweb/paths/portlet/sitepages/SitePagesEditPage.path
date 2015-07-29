@@ -66,7 +66,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_LAYOUT</td>
-	<td>//select[@id='_156_type']</td>
+	<td>//select[contains(@id,'type')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,7 +96,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_PANEL_DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_156_descriptionPanel']</td>
+	<td>//textarea[contains(@id,'descriptionPanel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -126,22 +126,22 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_LINK_TO_URL_URL_FIELD</td>
-	<td>//input[@id='_156_url']</td>
+	<td>//input[contains(@id,'url')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TYPE_LINK_TO_URL_DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_156_descriptionUrl']</td>
+	<td>//textarea[contains(@id,'descriptionUrl')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TYPE_LINK_TO_PAGE_LABEL</td>
-	<td>//div[contains(@class,'link_to_layout')]/div/label[@for='_156_linkToLayoutId']</td>
+	<td>//div[contains(@class,'link_to_layout')]/div/label[contains(@for,'linkToLayoutId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TYPE_LINK_TO_PAGE_PAGE_SELECT</td>
-	<td>//div[contains(@class,'link_to_layout')]/div/select[@id='_156_linkToLayoutId']</td>
+	<td>//div[contains(@class,'link_to_layout')]/div/select[contains(@id,'linkToLayoutId')]</td>
 	<td></td>
 </tr>
 <tr>

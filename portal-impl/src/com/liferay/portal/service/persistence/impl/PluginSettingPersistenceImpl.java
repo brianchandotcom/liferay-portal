@@ -973,8 +973,9 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		}
 	}
 
-	protected void cacheUniqueFindersCache(PluginSetting pluginSetting) {
-		if (pluginSetting.isNew()) {
+	protected void cacheUniqueFindersCache(PluginSetting pluginSetting,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					pluginSetting.getCompanyId(), pluginSetting.getPluginId(),
 					pluginSetting.getPluginType()
@@ -1190,7 +1191,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 			pluginSetting, false);
 
 		clearUniqueFindersCache(pluginSetting);
-		cacheUniqueFindersCache(pluginSetting);
+		cacheUniqueFindersCache(pluginSetting, isNew);
 
 		pluginSetting.resetOriginalValues();
 
@@ -1574,6 +1575,11 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return PluginSettingModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

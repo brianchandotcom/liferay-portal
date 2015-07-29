@@ -41,8 +41,8 @@ public abstract class BaseConvertionUserToolAssetAddonEntry
 	public abstract String getExtension();
 
 	@Override
-	public String getJSPPath() {
-		return _JSP_PATH;
+	public String getJspPath() {
+		return "/META-INF/resources/conversions.jsp";
 	}
 
 	@Override
@@ -83,8 +83,5 @@ public abstract class BaseConvertionUserToolAssetAddonEntry
 
 		return super.isEnabled();
 	}
-
-	private static final String _JSP_PATH =
-		"/META-INF/resources/conversions.jsp";
 
 }

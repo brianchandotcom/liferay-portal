@@ -75,6 +75,7 @@
 			<var name="rememberMe" value="${rememberMe}" />
 			<var name="userEmailAddress" value="${userScreenName}" />
 			<var name="userPassword" value="${userPassword}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 	</command>
 
@@ -92,6 +93,7 @@
 		</execute>
 
 		<execute macro="SignIn#setPasswordReminder">
+			<var name="userPasswordReminderAnswer" value="${userPasswordReminderAnswer}" />
 			<var name="userReminderQueryAnswer" value="${userReminderQueryAnswer}" />
 		</execute>
 	</command>

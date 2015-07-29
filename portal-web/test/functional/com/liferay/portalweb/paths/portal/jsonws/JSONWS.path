@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>JSONWS</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">JSONWS</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>SITE_NAME</td>
+	<td>//h1[@class='site-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH</td>
+	<td>//input[@id='serviceSearch']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTEXT_PATH_SELECT</td>
+	<td>//select[@id='contextPath']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PANEL_HEADING-->
+<tr>
+	<td>PANEL_HEADING_ADDRESS</td>
+	<td>//div[contains(@class,'panel-heading')]/div/span[contains(.,'Address')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_HEADING_ANNOUNCEMENTS_DELIVERY</td>
+	<td>//div[contains(@class,'panel-heading')]/div/span[contains(.,'AnnouncementsDelivery')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_HEADING_USER</td>
+	<td>//div[contains(@class,'panel-heading')]/div/span[contains(.,'User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL_HEADING_WIKI_PAGE</td>
+	<td>//div[contains(@class,'panel-heading')]/div/span[contains(.,'WikiPage')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADDRESS-->
+<tr>
+	<td>ADDRESS</td>
+	<td>//div[@id='apiServiceAddressServiceImplPanelContent']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDRESS_ADD_ADDRESS</td>
+	<td>//div[@id='apiServiceAddressServiceImplPanelContent']/div/ul/li/a[contains(.,'add-address')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER-->
+<tr>
+	<td>USER_UPDATE_PASSWORD</td>
+	<td>//div[@id='apiServiceUserServiceImplPanelContent']/div/ul/li/a[contains(.,'update-password')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_UPDATE_USER</td>
+	<td>//div[@id='apiServiceUserServiceImplPanelContent']/div/ul/li/a[contains(.,'update-user')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SET_ROLE_USERS</td>
+	<td>//div[@id='apiServiceUserServiceImplPanelContent']/div/ul/li/a[contains(.,'set-role-users')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SECURITY_TEST_PAGE-->
+<tr>
+	<td>SECURITY_TEST_PAGE_POPULATED</td>
+	<td>//body/pre[contains(.,*)]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SECURITY_TEST_PAGE_BODY</td>
+	<td>//body/pre</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

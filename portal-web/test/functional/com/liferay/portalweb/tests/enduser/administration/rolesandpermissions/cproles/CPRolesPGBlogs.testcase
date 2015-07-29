@@ -21,7 +21,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddBlogsEntryNoGuestRole" priority="5">
+	<command name="AddBlogsEntryNoGuestRole" priority="4">
 		<var name="pageName" value="Blogs Page" />
 		<var name="portletName" value="Blogs" />
 
@@ -64,8 +64,11 @@
 		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
 			<var name="orgName" value="${orgName}" />
 			<var name="orgType" value="${orgType}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
 			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -98,7 +101,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
@@ -125,7 +128,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryOrgRoleInline" priority="5">
+	<command name="AddBlogsEntryOrgRoleInline" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="orgName" value="Organization Name" />
@@ -146,8 +149,11 @@
 		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
 			<var name="orgName" value="${orgName}" />
 			<var name="orgType" value="${orgType}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
 			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -193,7 +199,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
@@ -276,10 +282,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Permissions#removePermissionLoginUserCP">
@@ -302,7 +307,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryRegRoleInline" priority="5">
+	<command name="AddBlogsEntryRegRoleInline" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
@@ -355,10 +360,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -446,7 +450,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
@@ -473,7 +477,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntrySiteRoleInline" priority="5">
+	<command name="AddBlogsEntrySiteRoleInline" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
@@ -540,7 +544,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
@@ -580,7 +584,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntrySiteTeamRoleInline" priority="5">
+	<command name="AddBlogsEntrySiteTeamRoleInline" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
@@ -647,7 +651,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
@@ -687,7 +691,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteBlogsEntryNoGuestRole" priority="5">
+	<command name="DeleteBlogsEntryNoGuestRole" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
@@ -702,7 +706,7 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
@@ -718,7 +722,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteBlogsEntryOrgRole" priority="5">
+	<command name="DeleteBlogsEntryOrgRole" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="orgName" value="Organization Name" />
@@ -740,8 +744,11 @@
 		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
 			<var name="orgName" value="${orgName}" />
 			<var name="orgType" value="${orgType}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
 			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -826,7 +833,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteBlogsEntryOrgRoleInline" priority="5">
+	<command name="DeleteBlogsEntryOrgRoleInline" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="orgName" value="Organization Name" />
@@ -847,8 +854,11 @@
 		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
 			<var name="orgName" value="${orgName}" />
 			<var name="orgType" value="${orgType}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
+			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
 			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -961,7 +971,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteBlogsEntryOwnerRoleInline" priority="5">
+	<command name="DeleteBlogsEntryOwnerRoleInline" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
@@ -999,10 +1009,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -1064,7 +1073,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteBlogsEntryRegRole" priority="5">
+	<command name="DeleteBlogsEntryRegRole" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
@@ -1153,7 +1162,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteBlogsEntryRegRoleInline" priority="5">
+	<command name="DeleteBlogsEntryRegRoleInline" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
@@ -1260,7 +1269,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteBlogsEntrySiteRole" priority="5">
+	<command name="DeleteBlogsEntrySiteRole" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
@@ -1367,7 +1376,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteBlogsEntrySiteRoleInline" priority="5">
+	<command name="DeleteBlogsEntrySiteRoleInline" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
@@ -1496,7 +1505,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteBlogsEntrySiteTeamRoleInline" priority="5">
+	<command name="DeleteBlogsEntrySiteTeamRoleInline" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
@@ -1625,7 +1634,7 @@
 		</execute>
 	</command>
 
-	<command name="EditBlogsEntryOwnerRoleInline" priority="5">
+	<command name="EditBlogsEntryOwnerRoleInline" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -1665,10 +1674,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -1696,6 +1704,7 @@
 		</execute>
 
 		<execute macro="BlogsEntry#editNoPermissionPG">
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
@@ -1731,7 +1740,7 @@
 		</execute>
 	</command>
 
-	<command name="SubcribeBlogsRegRoleInline" priority="5">
+	<command name="SubcribeBlogsRegRoleInline" priority="4">
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX" />
 		<var name="portletName" value="Blogs" />
@@ -1815,7 +1824,7 @@
 		</execute>
 	</command>
 
-	<command name="SubcribeBlogsSiteRoleInline" priority="5">
+	<command name="SubcribeBlogsSiteRoleInline" priority="4">
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX" />
 		<var name="portletName" value="Blogs" />
@@ -1901,7 +1910,7 @@
 		</execute>
 	</command>
 
-	<command name="SubscribeBlogsRegRole" priority="5">
+	<command name="SubscribeBlogsRegRole" priority="4">
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_SUBSCRIBE_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Subscribe" />
@@ -2002,10 +2011,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -2065,7 +2073,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsPermissionsRegRole" priority="5">
+	<command name="ViewBlogsPermissionsRegRole" priority="4">
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_PERMISSIONS_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Permissions" />
@@ -2128,7 +2136,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsPermissionsRegRoleInline" priority="5">
+	<command name="ViewBlogsPermissionsRegRoleInline" priority="4">
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_PERMISSIONS_CHECKBOX" />
 		<var name="portletName" value="Blogs" />
@@ -2212,7 +2220,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsPermissionsSiteRole" priority="5">
+	<command name="ViewBlogsPermissionsSiteRole" priority="4">
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_PERMISSIONS_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Permissions" />
@@ -2288,7 +2296,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsPermissionsSiteRoleInline" priority="5">
+	<command name="ViewBlogsPermissionsSiteRoleInline" priority="4">
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_PERMISSIONS_CHECKBOX" />
 		<var name="portletName" value="Blogs" />
@@ -2390,7 +2398,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsPortletNoGuestRole" priority="5">
+	<command name="ViewBlogsPortletNoGuestRole" priority="4">
 		<var name="pageName" value="Blogs Page" />
 		<var name="portletName" value="Blogs" />
 

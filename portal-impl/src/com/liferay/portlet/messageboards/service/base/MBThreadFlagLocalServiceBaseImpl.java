@@ -610,7 +610,7 @@ public abstract class MBThreadFlagLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = MBThreadFlagLocalService.class)
+	@BeanReference(type = com.liferay.portlet.messageboards.service.MBThreadFlagLocalService.class)
 	protected MBThreadFlagLocalService mbThreadFlagLocalService;
 	@BeanReference(type = MBThreadFlagPersistence.class)
 	protected MBThreadFlagPersistence mbThreadFlagPersistence;

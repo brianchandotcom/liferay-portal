@@ -14,6 +14,8 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -39,6 +41,12 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 		_emailBody = emailBody;
 	}
 
+	public void setEmailBodyLocalizedValuesMap(
+		LocalizedValuesMap emailBodyLocalizedValuesMap) {
+
+		_emailBodyLocalizedValuesMap = emailBodyLocalizedValuesMap;
+	}
+
 	public void setEmailDefinitionTerms(
 		Map<String, String> emailDefinitionTerms) {
 
@@ -55,6 +63,12 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 
 	public void setEmailSubject(String emailSubject) {
 		_emailSubject = emailSubject;
+	}
+
+	public void setEmailSubjectLocalizedValuesMap(
+		LocalizedValuesMap emailSubjectLocalizedValuesMap) {
+
+		_emailSubjectLocalizedValuesMap = emailSubjectLocalizedValuesMap;
 	}
 
 	public void setFieldPrefix(String fieldPrefix) {
@@ -118,8 +132,19 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 
 		request.setAttribute(
 			"liferay-ui:email-notification-settings:bodyLabel", _bodyLabel);
+
+		String emailBody = _emailBody;
+
+		if (Validator.isNull(emailBody) &&
+			(_emailBodyLocalizedValuesMap != null)) {
+
+			emailBody = LocalizationUtil.getXml(
+				_emailBodyLocalizedValuesMap, _emailParam + "Body");
+		}
+
 		request.setAttribute(
-			"liferay-ui:email-notification-settings:emailBody", _emailBody);
+			"liferay-ui:email-notification-settings:emailBody", emailBody);
+
 		request.setAttribute(
 			"liferay-ui:email-notification-settings:emailDefinitionTerms",
 			_emailDefinitionTerms);
@@ -128,9 +153,20 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 			String.valueOf(_emailEnabled));
 		request.setAttribute(
 			"liferay-ui:email-notification-settings:emailParam", _emailParam);
+
+		String emailSubject = _emailSubject;
+
+		if (Validator.isNull(emailSubject) &&
+			(_emailSubjectLocalizedValuesMap != null)) {
+
+			emailSubject = LocalizationUtil.getXml(
+				_emailSubjectLocalizedValuesMap, _emailParam + "Subject");
+		}
+
 		request.setAttribute(
 			"liferay-ui:email-notification-settings:emailSubject",
-			_emailSubject);
+			emailSubject);
+
 		request.setAttribute(
 			"liferay-ui:email-notification-settings:fieldPrefix", _fieldPrefix);
 		request.setAttribute(
@@ -152,10 +188,12 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 
 	private String _bodyLabel;
 	private String _emailBody;
+	private LocalizedValuesMap _emailBodyLocalizedValuesMap;
 	private Map<String, String> _emailDefinitionTerms;
 	private boolean _emailEnabled;
 	private String _emailParam;
 	private String _emailSubject;
+	private LocalizedValuesMap _emailSubjectLocalizedValuesMap;
 	private String _fieldPrefix;
 	private String _fieldPrefixSeparator;
 	private String _helpMessage;

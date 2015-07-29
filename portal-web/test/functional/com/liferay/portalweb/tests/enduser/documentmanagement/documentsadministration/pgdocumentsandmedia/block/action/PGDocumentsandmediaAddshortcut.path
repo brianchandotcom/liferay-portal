@@ -58,32 +58,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--PERMISSIONS-->
-<tr>
-	<td>PERMISSIONS_VIEWABLE_BY_SELECT</td>
-	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_MORE_OPTIONS_LINK</td>
-	<td>//span[contains(@id,'inputPermissionsShowOptions')]/a[contains(.,'More Options')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_HIDE_OPTIONS_LINK</td>
-	<td>//a[contains(@id,'inputPermissionsHideOptions') and contains (.,'Hide Options')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_roleName}')]//input[@value='${key_permissionDefinitionKey}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SELECT_SITE-->
 <tr>
 	<td>SELECT_SITE_SEARCH_FIELD</td>
@@ -119,16 +93,6 @@
 <tr>
 	<td>SELECT_FOLDER_TABLE_FOLDER</td>
 	<td>//tr[contains(.,'${key_dmFolderName}')]/td[1]/span/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_FOLDER_TABLE_#_OF_FOLDERS</td>
-	<td>//tr[contains(.,'${key_dmFolderName}')]/td[2]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_FOLDER_TABLE_#_OF_DOCUMENTS</td>
-	<td>//tr[contains(.,'${key_dmFolderName}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>

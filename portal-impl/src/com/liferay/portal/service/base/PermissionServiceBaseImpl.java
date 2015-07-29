@@ -518,7 +518,7 @@ public abstract class PermissionServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = PermissionService.class)
+	@BeanReference(type = com.liferay.portal.service.PermissionService.class)
 	protected PermissionService permissionService;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;

@@ -516,7 +516,7 @@ public abstract class SocialActivitySetLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = SocialActivitySetLocalService.class)
+	@BeanReference(type = com.liferay.portlet.social.service.SocialActivitySetLocalService.class)
 	protected SocialActivitySetLocalService socialActivitySetLocalService;
 	@BeanReference(type = SocialActivitySetPersistence.class)
 	protected SocialActivitySetPersistence socialActivitySetPersistence;

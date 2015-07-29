@@ -17,9 +17,10 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="lucene-core" org="org.apache.lucene" rev="3.5.0" />
-		<dependency name="lucene-queries" org="org.apache.lucene" rev="3.5.0" />
-		<dependency name="lucene-queryparser" org="org.apache.lucene" rev="3.5.0" />
+		<dependency name="lucene-analyzers-common" org="org.apache.lucene" rev="5.2.1" />
+		<dependency name="lucene-core" org="org.apache.lucene" rev="5.2.1" />
+		<dependency name="lucene-queries" org="org.apache.lucene" rev="5.2.1" />
+		<dependency name="lucene-queryparser" org="org.apache.lucene" rev="5.2.1" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 	</dependencies>

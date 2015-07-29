@@ -224,7 +224,7 @@
 		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_EMAIL_NOTIFICATIONS" value1="Email Notifications" />
 
 		<execute function="AssertClick" locator1="CPPortalsettingsEmailNotifications#NAVIGATION_ACCOUNT_CREATED_NOTIFICATION" value1="Account Created Notification" />
-		<execute function="Type#typeFrame" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD" value1="[$USER_PASSWORD$]" />
+		<execute function="Type#typeCKEditor" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD" value1="[$USER_PASSWORD$]" />
 		<execute function="AssertClick" locator1="CPPortalsettingsEmailNotifications#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="CPPortalsettingsEmailNotifications#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -237,10 +237,10 @@
 		<if>
 			<equals arg1="${emailVerificationURL}" arg2="true" />
 			<then>
-				<execute function="Type#typeFrame" locator1="CPPortalsettingsEmailNotifications#NAVIGATION_EMAIL_VERIFICATiON_NOTIFICATION_BODY" value1="[$EMAIL_VERIFICATION_URL$]" />
+				<execute function="Type#typeCKEditor" locator1="CPPortalsettingsEmailNotifications#NAVIGATION_EMAIL_VERIFICATiON_NOTIFICATION_BODY" value1="[$EMAIL_VERIFICATION_URL$]" />
 			</then>
 			<else>
-				<execute function="Type#typeFrame" locator1="CPPortalsettingsEmailNotifications#NAVIGATION_EMAIL_VERIFICATiON_NOTIFICATION_BODY" value1="[$EMAIL_VERIFICATION_CODE$]" />
+				<execute function="Type#typeCKEditor" locator1="CPPortalsettingsEmailNotifications#NAVIGATION_EMAIL_VERIFICATiON_NOTIFICATION_BODY" value1="[$EMAIL_VERIFICATION_CODE$]" />
 			</else>
 		</if>
 

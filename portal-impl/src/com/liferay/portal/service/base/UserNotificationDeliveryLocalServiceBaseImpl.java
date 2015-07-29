@@ -498,7 +498,7 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = UserNotificationDeliveryLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.UserNotificationDeliveryLocalService.class)
 	protected UserNotificationDeliveryLocalService userNotificationDeliveryLocalService;
 	@BeanReference(type = UserNotificationDeliveryPersistence.class)
 	protected UserNotificationDeliveryPersistence userNotificationDeliveryPersistence;

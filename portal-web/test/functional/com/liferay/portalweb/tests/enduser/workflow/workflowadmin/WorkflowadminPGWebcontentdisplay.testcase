@@ -1,5 +1,4 @@
 <definition component-name="portal-workflow">
-	<property name="web.plugins.includes" value="kaleo-web" />
 	<property name="testray.main.component.name" value="Workflow" />
 
 	<var name="pageName" value="Web Content Display Page" />
@@ -40,7 +39,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command name="ApproveWebContentViaWebContentDisplayPG" priority="5">
+	<command known-issues="LPS-56092" name="ApproveWebContentViaWebContentDisplayPG" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -100,10 +99,11 @@
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>
 
-	<command name="RejectWebContentViaWebContentDisplayPG" priority="5">
+	<command known-issues="LPS-56092" name="RejectWebContentViaWebContentDisplayPG" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 

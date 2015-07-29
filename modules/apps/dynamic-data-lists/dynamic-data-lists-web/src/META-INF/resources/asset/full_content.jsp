@@ -17,23 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DDLRecordVersion recordVersion = (DDLRecordVersion)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION);
+DDLRecordVersion recordVersion = (DDLRecordVersion)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION);
 
-DDLRecord record = (DDLRecord)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD);
+DDLRecord record = (DDLRecord)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
 DDLRecordSet recordSet = record.getRecordSet();
 
 DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
-
-Fields fields = DDMFormValuesToFieldsConverterUtil.convert(ddmStructure, ddmFormValues);
 %>
 
 <liferay-ddm:html
 	classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 	classPK="<%= ddmStructure.getPrimaryKey() %>"
-	fields="<%= fields %>"
+	ddmFormValues="<%= ddmFormValues %>"
 	readOnly="<%= true %>"
 	requestedLocale="<%= locale %>"
 />

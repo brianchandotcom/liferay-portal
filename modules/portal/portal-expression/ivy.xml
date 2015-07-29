@@ -19,6 +19,6 @@
 	<dependencies defaultconf="default">
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
-		<dependency name="janino" org="org.codehaus.janino" rev="2.7.4" />
+		<dependency name="janino" org="org.codehaus.janino" rev="2.7.8" />
 	</dependencies>
 </ivy-module>

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.cache;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.io.Serializable;
 
@@ -27,44 +27,74 @@ import java.io.Serializable;
 public class MultiVMPoolUtil {
 
 	public static void clear() {
-		getMultiVMPool().clear();
+		_multiVMPool.clear();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String)}
+	 */
+	@Deprecated
 	public static <K extends Serializable, V extends Serializable>
 		PortalCache<K, V> getCache(String portalCacheName) {
 
-		return (PortalCache<K, V>)getMultiVMPool().getCache(portalCacheName);
+		return getPortalCache(portalCacheName);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String,
+	 *             boolean)}
+	 */
+	@Deprecated
+	public static <K extends Serializable, V extends Serializable>
+		PortalCache<K, V> getCache(
+			String portalCacheName, boolean blocking) {
+
+		return getPortalCache(portalCacheName, blocking);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getPortalCacheManager()}
+	 */
+	@Deprecated
+	public static <K extends Serializable, V extends Serializable>
+		PortalCacheManager<K, V> getCacheManager() {
+
+		return getPortalCacheManager();
 	}
 
 	public static <K extends Serializable, V extends Serializable>
-		PortalCache<K, V> getCache(String portalCacheName, boolean blocking) {
+		PortalCache<K, V> getPortalCache(String portalCacheName) {
 
-		return (PortalCache<K, V>)getMultiVMPool().getCache(
+		return (PortalCache<K, V>)_multiVMPool.getPortalCache(portalCacheName);
+	}
+
+	public static <K extends Serializable, V extends Serializable>
+		PortalCache<K, V> getPortalCache(
+			String portalCacheName, boolean blocking) {
+
+		return (PortalCache<K, V>)_multiVMPool.getPortalCache(
 			portalCacheName, blocking);
 	}
 
 	public static <K extends Serializable, V extends Serializable>
-		PortalCacheManager<K, V> getCacheManager() {
+		PortalCacheManager<K, V> getPortalCacheManager() {
 
-		return (PortalCacheManager<K, V>)getMultiVMPool().getCacheManager();
+		return (PortalCacheManager<K, V>)_multiVMPool.getPortalCacheManager();
 	}
 
-	public static MultiVMPool getMultiVMPool() {
-		PortalRuntimePermission.checkGetBeanProperty(MultiVMPoolUtil.class);
-
-		return _multiVMPool;
-	}
-
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #removePortalCache(String)}
+	 */
+	@Deprecated
 	public static void removeCache(String portalCacheName) {
-		getMultiVMPool().removeCache(portalCacheName);
+		removePortalCache(portalCacheName);
 	}
 
-	public void setMultiVMPool(MultiVMPool multiVMPool) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_multiVMPool = multiVMPool;
+	public static void removePortalCache(String portalCacheName) {
+		_multiVMPool.removePortalCache(portalCacheName);
 	}
 
-	private static MultiVMPool _multiVMPool;
+	private static final MultiVMPool _multiVMPool =
+		ProxyFactory.newServiceTrackedInstance(MultiVMPool.class);
 
 }

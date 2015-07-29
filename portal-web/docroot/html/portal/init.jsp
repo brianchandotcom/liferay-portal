@@ -40,9 +40,10 @@ page import="com.liferay.portal.util.PortletCategoryUtil" %><%@
 page import="com.liferay.portal.util.TermsOfUseContentProvider" %><%@
 page import="com.liferay.portal.util.TermsOfUseContentProviderRegistryUtil" %><%@
 page import="com.liferay.portlet.admin.util.PortalAdministrationApplicationType" %><%@
-page import="com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler" %>
+page import="com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler" %><%@
+page import="com.liferay.portlet.portletconfiguration.util.PortletConfigurationApplicationType" %>
 
 <%@ page import="org.apache.struts.action.ActionMapping" %><%@
-page import="org.apache.struts.taglib.tiles.ComponentConstants" %><%@
 page import="org.apache.struts.tiles.ComponentDefinition" %><%@
-page import="org.apache.struts.tiles.TilesUtil" %>
+page import="org.apache.struts.tiles.TilesUtil" %><%@
+page import="org.apache.struts.tiles.taglib.ComponentConstants" %>

@@ -5,12 +5,19 @@
  *
  * @param label
  * @param name
+ * @param required
  * @param value
- * @param visible 
+ * @param visible
  */
 {template .options}
 	<div class="form-group field-wrapper{$visible ? '' : ' hide'}" data-fieldname="{$name}">
-		<span class="control-label">{$label}</span>
+		<span class="control-label">
+			{$label}
+
+			{if $required}
+				<b>&nbsp;*</b>
+			{/if}
+		</span>
 
 		<input name="{$name}" type="hidden" />
 

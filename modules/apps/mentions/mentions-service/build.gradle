@@ -1,0 +1,8 @@
+dependencies {
+	compile project(":apps:mentions:mentions-api")
+	compile project(":apps:mentions:mentions-web")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

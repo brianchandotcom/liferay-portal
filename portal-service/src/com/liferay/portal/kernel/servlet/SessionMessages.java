@@ -41,6 +41,9 @@ public class SessionMessages {
 	public static final String KEY_SUFFIX_DELETE_SUCCESS_DATA =
 		".deleteSuccessData";
 
+	public static final String KEY_SUFFIX_FORCE_SEND_REDIRECT =
+		".forceSendRedirect";
+
 	public static final String KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE =
 		".hideDefaultErrorMessage";
 

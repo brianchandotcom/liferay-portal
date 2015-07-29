@@ -30,7 +30,7 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/users_admin/edit_organization_assignments");
+portletURL.setParameter("mvcRenderCommandName", "/users_admin/edit_organization_assignments");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
@@ -49,9 +49,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-
 
 <liferay-ui:membership-policy-error />
 
-<portlet:actionURL var="editAssignmentsURL">
-	<portlet:param name="struts_action" value="/users_admin/edit_organization_assignments" />
-</portlet:actionURL>
+<portlet:actionURL name="/users_admin/edit_organization_assignments" var="editAssignmentsURL" />
 
 <aui:form action="<%= editAssignmentsURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -83,7 +81,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-
 		LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 		if (tabs2.equals("current")) {
-			userParams.put("usersOrgs", new Long(organization.getOrganizationId()));
+			userParams.put("usersOrgs", Long.valueOf(organization.getOrganizationId()));
 		}
 		else if (PropsValues.ORGANIZATIONS_ASSIGNMENT_STRICT && !permissionChecker.isCompanyAdmin() && !permissionChecker.hasPermission(scopeGroupId, User.class.getName(), company.getCompanyId(), ActionKeys.VIEW)) {
 			userParams.put("usersOrgsTree", user.getOrganizations(true));

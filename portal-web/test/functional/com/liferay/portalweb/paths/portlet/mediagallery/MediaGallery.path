@@ -1,0 +1,129 @@
+<html>
+<head>
+<title>MediaGallery</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MediaGallery</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CLOSE</td>
+	<td>//button[contains(@class,'image-viewer-close') and contains(@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MEDIA_CAPTION</td>
+	<td>//h4[@class='image-viewer-caption']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_EDIT_ICON</td>
+	<td>//span[contains(.,'Edit')]/a/i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_RECYCLE_BIN_ICON</td>
+	<td>//span[contains(.,'Move to the Recycle Bin')]/a/i</td>
+	<td></td>
+</tr>
+<!--ENTRY-->
+<tr>
+	<td>ENTRY_THUMBNAIL</td>
+	<td>//a[contains(.,'${key_mgDocumentTitle}')]/span[@class='image-thumbnail']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TITLE</td>
+	<td>//span[@class='image-title' and contains(.,'${key_mgDocumentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRIES_FOLDER</td>
+	<td>//span[@class='image-thumbnail']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER-->
+<tr>
+	<td>FOLDER_THUMBNAIL</td>
+	<td>//a[contains(.,'${key_mgFolderName}')]/span[@class='image-thumbnail']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_NAME</td>
+	<td>//span[@class='image-title' and contains(.,'${key_mgFolderName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_HEADER_TITLE</td>
+	<td>//h3[@class='header-title']/span[contains(.,'${mgFolderName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_DESCRIPTION</td>
+	<td>//div[@class='lfr-asset-description' and contains(.,'${mgFolderDescription}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SUBFOLDER-->
+<tr>
+	<td>SUBFOLDER_THUMBNAIL</td>
+	<td>//a[contains(.,'${key_mgDocumentTitle}')]/span[@class='image-thumbnail']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBFOLDER_NAME</td>
+	<td>//span[@class='image-title' and contains(.,'${mgSubfolderName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADT_CAROUSEL-->
+<tr>
+	<td>ADT_CAROUSEL_ITEM</td>
+	<td>//div[contains(@class,'image-viewer-base carousel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_CAROUSEL_PLAY_PAUSE</td>
+	<td>//menu/li/a[contains(@class,'carousel-menu-item')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_CAROUSEL_PREVIOUS_ARROW</td>
+	<td>//li/a[contains(@class,'carousel-menu-item') and contains(@class,'carousel-menu-prev')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_CAROUSEL_NEXT_ARROW</td>
+	<td>//li/a[contains(@class,'carousel-menu-item') and contains(@class,'carousel-menu-next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_CAROUSEL_MENU_INDEX</td>
+	<td>//li/a[contains(@class,'carousel-menu-item') and contains(@class,'carousel-menu-index')]</td>
+	<td></td>
+</tr>
+<!--MEDIA_TABLE-->
+<tr>
+	<td>MEDIA_TABLE_BASIC_DOCUMENT</td>
+	<td>//a[@class='select-file-entry-type' and contains(.,'Basic Document')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

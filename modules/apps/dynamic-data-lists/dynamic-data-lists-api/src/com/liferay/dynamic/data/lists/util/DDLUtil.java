@@ -23,13 +23,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -84,17 +81,6 @@ public class DDLUtil {
 		throws Exception {
 
 		return getDDL().getRecordsJSONArray(records, latestRecordVersion);
-	}
-
-	public static String getTemplateContent(
-			long ddmTemplateId, DDLRecordSet recordSet,
-			ThemeDisplay themeDisplay, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		return getDDL().getTemplateContent(
-			ddmTemplateId, recordSet, themeDisplay, renderRequest,
-			renderResponse);
 	}
 
 	/**

@@ -24,12 +24,19 @@ int cur = (Integer)request.getAttribute("edit_site_assignments.jsp-cur");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
+
 Group group = (Group)request.getAttribute("edit_site_assignments.jsp-group");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_site_assignments.jsp-portletURL");
 
 PortletURL viewUsersURL = renderResponse.createRenderURL();
 
+viewUsersURL.setParameter("mvcPath", "/view.jsp");
 viewUsersURL.setParameter("tabs1", "users");
 viewUsersURL.setParameter("tabs2", tabs2);
 viewUsersURL.setParameter("redirect", currentURL);
@@ -76,11 +83,11 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 
 	if (tabs1.equals("summary") || tabs2.equals("current")) {
 		userParams.put("inherit", Boolean.TRUE);
-		userParams.put("usersGroups", new Long(group.getGroupId()));
+		userParams.put("usersGroups", Long.valueOf(group.getGroupId()));
 	}
 	else if (group.isLimitedToParentSiteMembers()) {
 		userParams.put("inherit", Boolean.TRUE);
-		userParams.put("usersGroups", new Long(group.getParentGroupId()));
+		userParams.put("usersGroups", Long.valueOf(group.getParentGroupId()));
 	}
 	%>
 
@@ -237,7 +244,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 				<liferay-ui:search-iterator paginate="<%= false %>" />
 
 				<c:if test="<%= total > searchContainer.getDelta() %>">
-					<a href="<%= viewUsersURL %>"><liferay-ui:message key="view-more" /> &raquo;</a>
+					<a href="<%= HtmlUtil.escapeAttribute(viewUsersURL.toString()) %>"><liferay-ui:message key="view-more" /> &raquo;</a>
 				</c:if>
 			</liferay-ui:panel>
 		</c:when>

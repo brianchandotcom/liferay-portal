@@ -1,0 +1,9 @@
+dependencies {
+	compile group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
+	compile group: "org.eclipse.jgit", name: "org.eclipse.jgit", version: "4.0.0.201505050340-m2"
+	compile group: "org.slf4j", name: "slf4j-log4j12", version: "1.7.2"
+}
+
+liferay {
+	deployDir = file("../../../tools/sdk/dependencies/${bundle.instructions['Bundle-SymbolicName']}/lib")
+}

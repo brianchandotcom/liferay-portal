@@ -17,125 +17,143 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 JournalArticle article = journalContentDisplayContext.getArticle();
 
-String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
+List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 %>
 
 <liferay-ui:error exception="<%= NoSuchArticleException.class %>" message="the-web-content-could-not-be-found" />
 
-<div class="alert alert-info">
-	<span class="displaying-help-message-holder <%= article == null ? StringPool.BLANK : "hide" %>">
-		<liferay-ui:message key="please-select-a-web-content-from-the-list-below" />
-	</span>
+<div class="article-preview row row-spacing">
+	<div class="col-md-4 col-xs-12">
+		<p class="text-muted"><liferay-ui:message key="layout.types.article" /></p>
 
-	<span class="displaying-article-id-holder <%= article == null ? "hide" : StringPool.BLANK %>">
-		<liferay-ui:message key="displaying-content" />: <span class="displaying-article-id"><%= article != null ? article.getTitle(locale) : StringPool.BLANK %></span>
-	</span>
+		<div class="hidden loading-animation"></div>
+
+		<div class="alert alert-danger hidden">
+			<liferay-ui:message key="an-unexpected-error-occurred" />
+		</div>
+
+		<div class="article-preview-content-container">
+			<c:if test="<%= article != null %>">
+				<liferay-util:include page="/journal_article_resources.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="articleId" value="<%= article.getArticleId() %>" />
+				</liferay-util:include>
+			</c:if>
+		</div>
+	</div>
+
+	<div class="col-md-12">
+		<aui:button cssClass="web-content-selector" name="webContentSelector" value='<%= Validator.isNull(article) ? "select" : "change" %>' />
+	</div>
 </div>
 
-<c:if test="<%= article != null %>">
+<div class="row row-spacing template-preview <%= article == null ? "hidden" : "" %>">
+	<div class="col-md-4 col-xs-12">
+		<p class="text-muted"><liferay-ui:message key="template" /></p>
 
-	<%
-	List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
-	%>
+		<div class="hidden loading-animation"></div>
 
-	<c:if test="<%= !ddmTemplates.isEmpty() %>">
-		<aui:fieldset>
-			<liferay-ui:message key="override-default-template" />
+		<div class="alert alert-danger hidden">
+			<liferay-ui:message key="an-unexpected-error-occurred" />
+		</div>
 
-			<liferay-ui:table-iterator
-				list="<%= ddmTemplates %>"
-				listType="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate"
-				rowLength="3"
-				rowPadding="30"
-			>
+		<div class="template-preview-content-container">
+			<c:if test="<%= article != null %>">
+				<liferay-util:include page="/journal_template_resources.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="articleId" value="<%= article.getArticleId() %>" />
+				</liferay-util:include>
+			</c:if>
+		</div>
+	</div>
 
-				<%
-				boolean templateChecked = false;
-
-				if (ddmTemplateKey.equals(tableIteratorObj.getTemplateKey())) {
-					templateChecked = true;
-				}
-
-				if ((tableIteratorPos.intValue() == 0) && Validator.isNull(ddmTemplateKey)) {
-					templateChecked = true;
-				}
-				%>
-
-				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL">
-					<portlet:param name="mvcPath" value="/edit_template.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="refererPortletName" value="<%= PortletProviderUtil.getPortletId(JournalArticle.class.getName(), PortletProvider.Action.EDIT) %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(tableIteratorObj.getGroupId()) %>" />
-					<portlet:param name="templateId" value="<%= String.valueOf(tableIteratorObj.getTemplateId()) %>" />
-				</liferay-portlet:renderURL>
-
-				<liferay-util:buffer var="linkContent">
-					<aui:a href="<%= editTemplateURL %>" id="tableIteratorObjName"><%= HtmlUtil.escape(tableIteratorObj.getName(locale)) %></aui:a>
-				</liferay-util:buffer>
-
-				<aui:input checked="<%= templateChecked %>" label="<%= linkContent %>" name="overideTemplateId" onChange='<%= "if (this.checked) {document." + renderResponse.getNamespace() + "fm." + renderResponse.getNamespace() + "ddmTemplateKey.value = this.value;}" %>' type="radio" value="<%= tableIteratorObj.getTemplateKey() %>" />
-
-				<c:if test="<%= tableIteratorObj.isSmallImage() %>">
-					<br />
-
-					<img alt="" hspace="0" src="<%= HtmlUtil.escapeAttribute(tableIteratorObj.getTemplateImageURL(themeDisplay)) %>" vspace="0" />
-				</c:if>
-			</liferay-ui:table-iterator>
-
-			<br />
-		</aui:fieldset>
-	</c:if>
-</c:if>
-
-<aui:button name="webContentSelector" value="select-web-content" />
+	<div class="button-container col-md-12 <%= ddmTemplates.size() > 1 ? StringPool.BLANK : "hidden" %>">
+		<aui:button name="templateSelector" value="change" />
+	</div>
+</div>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" varImpl="configurationRenderURL" />
 
+<%
+String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
+%>
+
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
-	<aui:input name="preferences--assetEntryId--" type="hidden" value="<%= journalContentDisplayContext.getAssetEntryId() %>" />
-	<aui:input name="preferences--ddmTemplateKey--" type="hidden" value="<%= ddmTemplateKey %>" />
+	<div class="<%= article == null ? "hidden" : "" %> configuration-options-container">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+		<aui:input name="preferences--assetEntryId--" type="hidden" value="<%= journalContentDisplayContext.getAssetEntryId() %>" />
+		<aui:input name="preferences--ddmTemplateKey--" type="hidden" value="<%= ddmTemplateKey %>" />
 
-	<aui:fieldset>
-		<aui:input name="portletId" type="resource" value="<%= journalContentDisplayContext.getPortletResource() %>" />
-	</aui:fieldset>
+		<aui:fieldset>
+			<aui:field-wrapper label="user-tools">
+				<liferay-ui:asset-addon-entry-selector
+					assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledUserToolAssetAddonEntries() %>"
+					hiddenInput="preferences--userToolAssetAddonEntryKeys--"
+					id="userToolsAssetAddonEntriesSelector"
+					selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>"
+					title="select-user-tools"
+				/>
+			</aui:field-wrapper>
 
-	<aui:fieldset>
-		<aui:field-wrapper label="user-tools">
-			<liferay-ui:asset-addon-entry-selector
-				assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledUserToolAssetAddonEntries() %>"
-				hiddenInput="preferences--userToolAssetAddonEntryKeys--"
-				id="userToolsAssetAddonEntriesSelector"
-				selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>"
-				title="select-user-tools"
-			/>
-		</aui:field-wrapper>
+			<aui:field-wrapper label="content-metadata">
+				<liferay-ui:asset-addon-entry-selector
+					assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledContentMetadataAssetAddonEntries() %>"
+					hiddenInput="preferences--contentMetadataAssetAddonEntryKeys--"
+					id="contentMetadataAssetAddonEntriesSelector"
+					selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>"
+					title="select-content-metadata"
+				/>
+			</aui:field-wrapper>
 
-		<aui:field-wrapper label="content-metadata">
-			<liferay-ui:asset-addon-entry-selector
-				assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledContentMetadataAssetAddonEntries() %>"
-				hiddenInput="preferences--contentMetadataAssetAddonEntryKeys--"
-				id="contentMetadataAssetAddonEntriesSelector"
-				selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>"
-				title="select-content-metadata"
-			/>
-		</aui:field-wrapper>
+			<aui:input name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
+		</aui:fieldset>
+	</div>
 
-		<aui:input name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
-	</aui:fieldset>
-
-	<aui:button-row>
+	<aui:button-row cssClass="dialog-footer">
 		<aui:button name="saveButton" type="submit" />
+
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
+	var STR_HIDDEN = 'hidden';
+
 	var form = AUI.$(document.<portlet:namespace />fm);
+
+	var articlePreviewNode = $('.article-preview');
+	var templatePreviewNode = $('.template-preview');
+
+	var showLoading = function(element) {
+		element.find('.loading-animation').removeClass(STR_HIDDEN);
+	};
+
+	var hideLoading = function(element) {
+		element.find('.loading-animation').addClass(STR_HIDDEN);
+	};
+
+	var showError = function(element) {
+		element.find('.alert').removeClass(STR_HIDDEN);
+	};
+
+	var hideError = function(element) {
+		element.find('.alert').addClass(STR_HIDDEN);
+	};
+
+	var showArticleError = function() {
+		showError(articlePreviewNode);
+	};
+
+	var showTemplateError = function() {
+		templatePreviewNode.removeClass(STR_HIDDEN);
+
+		showError(templatePreviewNode);
+	};
 
 	$('#<portlet:namespace />webContentSelector').on(
 		'click',
@@ -147,10 +165,15 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 
 			selectWebContentURL.setParameter("groupId", String.valueOf(scopeGroupId));
 			selectWebContentURL.setParameter("selectedGroupIds", StringUtil.merge(PortalUtil.getSharedContentSiteGroupIds(company.getCompanyId(), scopeGroupId, user.getUserId())));
+			selectWebContentURL.setParameter("refererAssetEntryId", "[$ARTICLE_REFERER_ASSET_ENTRY_ID$]");
 			selectWebContentURL.setParameter("typeSelection", JournalArticle.class.getName());
 			selectWebContentURL.setParameter("eventName", "selectContent");
 			selectWebContentURL.setWindowState(LiferayWindowState.POP_UP);
+
+			String selectWebContentURI = HttpUtil.addParameter(selectWebContentURL.toString(), "doAsGroupId", scopeGroupId);
 			%>
+
+			var baseSelectWebContentURI = '<%= selectWebContentURI %>';
 
 			Liferay.Util.selectEntity(
 				{
@@ -162,20 +185,118 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 					eventName: 'selectContent',
 					id: 'selectContent',
 					title: '<liferay-ui:message key="select-web-content" />',
-					uri: '<%= HttpUtil.addParameter(selectWebContentURL.toString(), "doAsGroupId", scopeGroupId) %>'
+					uri: baseSelectWebContentURI.replace(encodeURIComponent('[$ARTICLE_REFERER_ASSET_ENTRY_ID$]'), form.fm('assetEntryId').val())
 				},
 				function(event) {
+					<liferay-portlet:resourceURL portletName="<%= JournalContentPortletKeys.JOURNAL_CONTENT %>" var="journalArticleResource">
+						<portlet:param name="mvcPath" value="/journal_resources.jsp" />
+						<portlet:param name="articleResourcePrimKey" value="[$ARTICLE_RESOURCE_PRIMKEY$]" />
+					</liferay-portlet:resourceURL>
+
+					var baseJournalArticleResourceUrl = '<%= journalArticleResource.toString() %>';
+
 					form.fm('assetEntryId').val(event.assetentryid);
 					form.fm('ddmTemplateKey').val('');
 
-					$('.displaying-article-id-holder').removeClass('hide');
-					$('.displaying-help-message-holder').addClass('hide');
+					hideError(articlePreviewNode);
+					showLoading(articlePreviewNode);
 
-					var displayArticleId = $('.displaying-article-id');
+					templatePreviewNode.addClass(STR_HIDDEN);
 
-					displayArticleId.html(event.assettitle + ' (<liferay-ui:message key="modified" />)');
+					articlePreviewNode.find('.article-preview-content-container').html('');
+					templatePreviewNode.find('.template-preview-content-container').html('');
 
-					displayArticleId.addClass('modified');
+					articlePreviewNode.find('.web-content-selector').html('<liferay-ui:message key="change" />');
+
+					$.ajax(
+						baseJournalArticleResourceUrl.replace(encodeURIComponent('[$ARTICLE_RESOURCE_PRIMKEY$]'), event.assetclasspk),
+						{
+							error: function() {
+								hideLoading(articlePreviewNode);
+								showArticleError();
+							},
+							success: function(responseData) {
+								var responseDataNode = $(responseData);
+
+								var articlePreviewContent = responseDataNode.find('.article-preview-content');
+								var templatePreviewContent = responseDataNode.find('.template-preview-content');
+
+								hideLoading(articlePreviewNode);
+
+								articlePreviewNode.find('.article-preview-content-container').html(articlePreviewContent);
+								templatePreviewNode.find('.template-preview-content-container').html(templatePreviewContent);
+
+								if (articlePreviewContent.length > 0) {
+									$('.configuration-options-container').removeClass(STR_HIDDEN);
+
+									if (templatePreviewContent.length > 0) {
+										var templatePreviewContentNode = templatePreviewNode.find('.template-preview-content');
+
+										templatePreviewNode.find('.button-container').toggleClass(STR_HIDDEN, templatePreviewContentNode.attr('data-change-enabled') === 'false');
+										templatePreviewNode.removeClass(STR_HIDDEN);
+
+										form.fm('ddmTemplateKey').val(templatePreviewContentNode.attr('data-template-key'));
+									}
+									else {
+										showTemplateError();
+									}
+								}
+								else {
+									showArticleError();
+								}
+							}
+						}
+					);
+				}
+			);
+		}
+	);
+
+	$('#<portlet:namespace />templateSelector').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var templatePreviewContent = templatePreviewNode.find('.template-preview-content');
+
+			Liferay.Util.openDDMPortlet(
+				{
+					basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE) %>',
+					classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
+					classPK: templatePreviewContent.attr('data-structure-key'),
+					dialog: {
+						destroyOnHide: true
+					},
+					eventName: 'selectTemplate',
+					groupId: $('.template-preview-content').attr('data-group-id'),
+					mvcPath: '/select_template.jsp',
+					refererPortletName: '<%= JournalPortletKeys.JOURNAL %>',
+					resourceClassNameId: $('.template-preview-content').attr('data-structure-id'),
+					showAncestorScopes: true,
+					templateId: $('.template-preview-content').attr('data-template-id'),
+					title: '<liferay-ui:message key="templates" />'
+				},
+				function(event) {
+					templatePreviewContent.attr('data-template-id', event.ddmtemplateid);
+					templatePreviewContent.attr('data-template-key', event.ddmtemplatekey);
+
+					templatePreviewContent.find('.template-title').html(event.name);
+					templatePreviewContent.find('.template-description').html(event.description);
+
+					var templateImage = templatePreviewContent.find('.template-image');
+
+					if (event.imageurl !== 'null') {
+						templateImage.attr('alt', event.name);
+						templateImage.attr('src', event.imageurl);
+						templateImage.removeClass('hidden');
+					}
+					else {
+						templateImage.attr('alt', '');
+						templateImage.attr('src', '');
+						templateImage.addClass('hidden');
+					}
+
+					form.fm('ddmTemplateKey').val(event.ddmtemplatekey);
 				}
 			);
 		}

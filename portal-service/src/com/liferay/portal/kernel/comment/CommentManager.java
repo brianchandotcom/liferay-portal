@@ -24,7 +24,7 @@ import com.liferay.portal.service.ServiceContext;
  */
 public interface CommentManager {
 
-	public void addComment(
+	public long addComment(
 			long userId, long groupId, String className, long classPK,
 			String body,
 			Function<String, ServiceContext> serviceContextFunction)
@@ -52,6 +52,10 @@ public interface CommentManager {
 	public void deleteDiscussion(String className, long classPK)
 		throws PortalException;
 
+	public void deleteGroupComments(long groupId) throws PortalException;
+
+	public Comment fetchComment(long commentId);
+
 	public int getCommentsCount(String className, long classPK);
 
 	public Discussion getDiscussion(
@@ -61,6 +65,8 @@ public interface CommentManager {
 
 	public DiscussionPermission getDiscussionPermission(
 		PermissionChecker permissionChecker);
+
+	public DiscussionStagingHandler getDiscussionStagingHandler();
 
 	public boolean hasDiscussion(String className, long classPK)
 		throws PortalException;

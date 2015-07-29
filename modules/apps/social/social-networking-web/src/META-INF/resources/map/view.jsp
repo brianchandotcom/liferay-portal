@@ -98,7 +98,7 @@ if (Validator.isNull(apiKey)) {
 		if (siteProfileMap) {
 			LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
-			userParams.put("usersGroups", new Long(group.getGroupId()));
+			userParams.put("usersGroups", Long.valueOf(group.getGroupId()));
 
 			users = UserLocalServiceUtil.search(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams, 0, 50, new UserLoginDateComparator());
 		}
@@ -108,7 +108,7 @@ if (Validator.isNull(apiKey)) {
 		else if (organizationProfileMap) {
 			LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
-			userParams.put("usersOrgs", new Long(organization.getOrganizationId()));
+			userParams.put("usersOrgs", Long.valueOf(organization.getOrganizationId()));
 
 			users = UserLocalServiceUtil.search(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams, 0, 50, new UserLoginDateComparator());
 		}

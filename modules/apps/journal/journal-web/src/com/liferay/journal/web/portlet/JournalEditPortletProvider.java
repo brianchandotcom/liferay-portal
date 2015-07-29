@@ -14,7 +14,7 @@
 
 package com.liferay.journal.web.portlet;
 
-import com.liferay.journal.web.constants.JournalPortletKeys;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
 
@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"model.class.name=com.liferay.portlet.journal.model.JournalArticle"
-	},
+	property = {"model.class.name=com.liferay.journal.model.JournalArticle"},
 	service = EditPortletProvider.class
 )
 public class JournalEditPortletProvider

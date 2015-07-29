@@ -26,16 +26,16 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PortalCacheManagerConfiguration {
 
 	public PortalCacheManagerConfiguration(
-		Set<CallbackConfiguration> cacheManagerListenerConfigurations,
+		Set<CallbackConfiguration> portalCacheManagerListenerConfigurations,
 		PortalCacheConfiguration defaultPortalCacheConfiguration,
 		Set<PortalCacheConfiguration> portalCacheConfigurations) {
 
-		if (cacheManagerListenerConfigurations == null) {
-			_cacheManagerListenerConfigurations = Collections.emptySet();
+		if (portalCacheManagerListenerConfigurations == null) {
+			_portalCacheManagerListenerConfigurations = Collections.emptySet();
 		}
 		else {
-			_cacheManagerListenerConfigurations = new HashSet<>(
-				cacheManagerListenerConfigurations);
+			_portalCacheManagerListenerConfigurations = new HashSet<>(
+				portalCacheManagerListenerConfigurations);
 		}
 
 		_defaultPortalCacheConfiguration = defaultPortalCacheConfiguration;
@@ -53,12 +53,6 @@ public class PortalCacheManagerConfiguration {
 		}
 	}
 
-	public Set<CallbackConfiguration>
-		getCacheManagerListenerConfigurations() {
-
-		return Collections.unmodifiableSet(_cacheManagerListenerConfigurations);
-	}
-
 	public PortalCacheConfiguration getDefaultPortalCacheConfiguration() {
 		return _defaultPortalCacheConfiguration;
 	}
@@ -67,6 +61,13 @@ public class PortalCacheManagerConfiguration {
 		String portalCacheName) {
 
 		return _portalCacheConfigurations.get(portalCacheName);
+	}
+
+	public Set<CallbackConfiguration>
+		getPortalCacheManagerListenerConfigurations() {
+
+		return Collections.unmodifiableSet(
+			_portalCacheManagerListenerConfigurations);
 	}
 
 	public Set<String> getPortalCacheNames() {
@@ -81,10 +82,10 @@ public class PortalCacheManagerConfiguration {
 			portalCacheName, portalCacheConfiguration);
 	}
 
-	private final Set<CallbackConfiguration>
-		_cacheManagerListenerConfigurations;
 	private final PortalCacheConfiguration _defaultPortalCacheConfiguration;
 	private final Map<String, PortalCacheConfiguration>
 		_portalCacheConfigurations;
+	private final Set<CallbackConfiguration>
+		_portalCacheManagerListenerConfigurations;
 
 }

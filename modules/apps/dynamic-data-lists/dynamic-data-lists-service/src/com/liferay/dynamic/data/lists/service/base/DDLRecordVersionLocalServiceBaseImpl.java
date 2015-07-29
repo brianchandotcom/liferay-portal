@@ -437,7 +437,7 @@ public abstract class DDLRecordVersionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DDLRecordVersionLocalService.class)
+	@BeanReference(type = com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService.class)
 	protected DDLRecordVersionLocalService ddlRecordVersionLocalService;
 	@BeanReference(type = com.liferay.dynamic.data.lists.service.DDLRecordVersionService.class)
 	protected com.liferay.dynamic.data.lists.service.DDLRecordVersionService ddlRecordVersionService;

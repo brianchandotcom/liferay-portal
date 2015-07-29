@@ -4,25 +4,25 @@
 		module="eclipse-platform-parent"
 		revision="4.5.0-SNAPSHOT"
 		status="integration"
-		publication="20150611095155"
+		publication="20150713082833"
 	>
 		<description homepage="" />
 		<m:properties__buildType>I</m:properties__buildType>
 		<m:properties__tycho-extras.version>0.23.0</m:properties__tycho-extras.version>
 		<m:properties__cbi-jdt-repo.url>https://repo.eclipse.org/content/repositories/eclipse-staging/</m:properties__cbi-jdt-repo.url>
 		<m:properties__eclipse-repo.url>https://repo.eclipse.org/content/repositories/releases/</m:properties__eclipse-repo.url>
-		<m:properties__releaseNumberSDK>4.5</m:properties__releaseNumberSDK>
+		<m:properties__releaseNumberSDK>4.6</m:properties__releaseNumberSDK>
 		<m:properties__skipTests>true</m:properties__skipTests>
-		<m:properties__eclipse-p2-repo.url>http://download.eclipse.org/eclipse/updates/4.5-I-builds</m:properties__eclipse-p2-repo.url>
+		<m:properties__eclipse-p2-repo.url>http://download.eclipse.org/eclipse/updates/4.6-N-builds</m:properties__eclipse-p2-repo.url>
 		<m:properties__tycho-repo.url>https://oss.sonatype.org/content/repositories/public/</m:properties__tycho-repo.url>
 		<m:properties__cbi-jdt-apt-version>1.2.0.v20150514-0146</m:properties__cbi-jdt-apt-version>
 		<m:properties__cbi-jdt-version>3.11.0.v20150601-1755</m:properties__cbi-jdt-version>
-		<m:properties__releaseName>Mars</m:properties__releaseName>
-		<m:properties__eclipserun-repo>http://download.eclipse.org/eclipse/updates/4.5milestones/S-4.5RC3-201505280700/</m:properties__eclipserun-repo>
+		<m:properties__releaseName>Neon</m:properties__releaseName>
+		<m:properties__eclipserun-repo>http://download.eclipse.org/eclipse/updates/4.5/R-4.5-201506032000</m:properties__eclipserun-repo>
 		<m:properties__buildTimestamp>${maven.build.timestamp}</m:properties__buildTimestamp>
-		<m:properties__comparator.repo>http://download.eclipse.org/eclipse/updates/4.5-I-builds</m:properties__comparator.repo>
+		<m:properties__comparator.repo>http://download.eclipse.org/eclipse/updates/4.6-I-builds</m:properties__comparator.repo>
 		<m:properties__jgit.dirtyWorkingTree>ignore</m:properties__jgit.dirtyWorkingTree>
-		<m:properties__releaseNumberPlatform>4.5</m:properties__releaseNumberPlatform>
+		<m:properties__releaseNumberPlatform>4.6</m:properties__releaseNumberPlatform>
 		<m:properties__defaultSigning-excludeInnerJars>false</m:properties__defaultSigning-excludeInnerJars>
 		<m:properties__buildId>${buildType}${buildTimestamp}</m:properties__buildId>
 		<m:properties__jetty-version>9.2.9.v20150224</m:properties__jetty-version>

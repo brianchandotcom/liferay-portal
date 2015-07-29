@@ -734,7 +734,7 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = MDRActionLocalService.class)
+	@BeanReference(type = com.liferay.portlet.mobiledevicerules.service.MDRActionLocalService.class)
 	protected MDRActionLocalService mdrActionLocalService;
 	@BeanReference(type = com.liferay.portlet.mobiledevicerules.service.MDRActionService.class)
 	protected com.liferay.portlet.mobiledevicerules.service.MDRActionService mdrActionService;

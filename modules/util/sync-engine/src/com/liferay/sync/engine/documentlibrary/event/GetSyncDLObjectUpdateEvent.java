@@ -80,7 +80,6 @@ public class GetSyncDLObjectUpdateEvent extends BaseEvent {
 
 		parameters.clear();
 
-		parameters.put("companyId", syncSite.getCompanyId());
 		parameters.put("lastAccessTime", syncSite.getRemoteSyncTime());
 		parameters.put("repositoryId", syncSite.getGroupId());
 		parameters.put("syncSite", syncSite);

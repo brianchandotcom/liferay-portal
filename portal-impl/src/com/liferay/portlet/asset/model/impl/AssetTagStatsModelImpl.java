@@ -67,6 +67,15 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 			{ "classNameId", Types.BIGINT },
 			{ "assetCount", Types.INTEGER }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("tagStatsId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("tagId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("assetCount", Types.INTEGER);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table AssetTagStats (tagStatsId LONG not null primary key,tagId LONG,classNameId LONG,assetCount INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table AssetTagStats";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetTagStats.assetCount DESC";

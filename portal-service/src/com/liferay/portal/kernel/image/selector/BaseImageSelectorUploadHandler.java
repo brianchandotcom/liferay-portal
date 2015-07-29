@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
@@ -45,6 +45,7 @@ import javax.portlet.PortletResponse;
 /**
  * @author Sergio González
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 public abstract class BaseImageSelectorUploadHandler
 	implements ImageSelectorUploadHandler {
@@ -137,10 +138,11 @@ public abstract class BaseImageSelectorUploadHandler
 			inputStream = uploadPortletRequest.getFileAsStream(
 				"imageSelectorFileName");
 
+			String uniqueFileName = getUniqueFileName(themeDisplay, fileName);
+
 			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				_TEMP_FOLDER_NAME, StringUtil.randomString() + fileName,
-				inputStream, contentType);
+				_TEMP_FOLDER_NAME, uniqueFileName, inputStream, contentType);
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 
@@ -159,6 +161,35 @@ public abstract class BaseImageSelectorUploadHandler
 		}
 	}
 
+	protected String getUniqueFileName(
+			ThemeDisplay themeDisplay, String fileName)
+		throws PortalException {
+
+		FileEntry fileEntry = _fetchTempFileEntry(themeDisplay, fileName);
+
+		if (fileEntry == null) {
+			return fileName;
+		}
+
+		int suffix = 1;
+
+		for (int i = 0; i < _UNIQUE_FILE_NAME_TRIES; i++) {
+			String curFileName = FileUtil.appendParentheticalSuffix(
+				fileName, String.valueOf(suffix));
+
+			fileEntry = _fetchTempFileEntry(themeDisplay, curFileName);
+
+			if (fileEntry == null) {
+				return curFileName;
+			}
+
+			suffix++;
+		}
+
+		throw new PortalException(
+			"Unable to get a unique file name for " + fileName);
+	}
+
 	protected abstract void handleUploadException(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortalException pe, JSONObject jsonObject)
@@ -168,7 +199,22 @@ public abstract class BaseImageSelectorUploadHandler
 			String fileName, String contentType, long size)
 		throws PortalException;
 
+	private FileEntry _fetchTempFileEntry(
+		ThemeDisplay themeDisplay, String fileName) {
+
+		try {
+			return TempFileEntryUtil.getTempFileEntry(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				_TEMP_FOLDER_NAME, fileName);
+		}
+		catch (PortalException pe) {
+			return null;
+		}
+	}
+
 	private static final String _TEMP_FOLDER_NAME =
 		BaseImageSelectorUploadHandler.class.getName();
+
+	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
 
 }

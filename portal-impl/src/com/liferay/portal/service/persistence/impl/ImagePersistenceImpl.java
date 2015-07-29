@@ -1133,6 +1133,11 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		return _badColumnNames;
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return ImageModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the image persistence.
 	 */

@@ -26,8 +26,16 @@ import aQute.bnd.annotation.ProviderType;
  * @author ${author}
  * @see ${entity.name}Impl
  * @see ${packagePath}.model.${entity.name}
+<#if classDeprecated>
+ * @deprecated ${classDeprecatedComment}
+</#if>
  * @generated
  */
+
+<#if classDeprecated>
+	@Deprecated
+</#if>
+
 @ProviderType
 public abstract class ${entity.name}BaseImpl extends ${entity.name}ModelImpl implements ${entity.name} {
 

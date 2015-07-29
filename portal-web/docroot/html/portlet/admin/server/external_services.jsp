@@ -105,7 +105,7 @@
 					<liferay-ui:progress
 						id='<%= renderResponse.getNamespace() + "xugglerProgressInfo" %>'
 						message="preparing-the-installation"
-						sessionKey="<%= LiferayFileUpload.PERCENT + WebKeys.XUGGLER_INSTALL_STATUS %>"
+						sessionKey="<%= ProgressTracker.PERCENT + WebKeys.XUGGLER_INSTALL_STATUS %>"
 					/>
 
 					<aui:select label="jar-file" name="jarName">
@@ -146,5 +146,5 @@
 </aui:button-row>
 
 <%!
-private static final String[] _IMAGEMAGICK_RESOURCE_LIMIT_LABELS= {"area", "disk", "file", "map", "memory", "thread", "time"};
+private static final String[] _IMAGEMAGICK_RESOURCE_LIMIT_LABELS = {"area", "disk", "file", "map", "memory", "thread", "time"};
 %>

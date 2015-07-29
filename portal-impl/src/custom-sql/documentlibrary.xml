@@ -106,9 +106,9 @@
 				(DLFileEntry.groupId = ?) AND
 				(DLFileEntry.fileEntryTypeId IN (
 					SELECT
-						DLFileEntryTypes_DDMStructures.fileEntryTypeId
+						DDMStructureLink.classPK
 					FROM
-						DLFileEntryTypes_DDMStructures
+						DDMStructureLink
 					WHERE
 						[$DDM_STRUCTURE_ID$]
 				))

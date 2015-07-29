@@ -321,11 +321,14 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected void configureTaskDeployFrom(Copy deployTask) {
-		War war = (War)GradleUtil.getTask(
-			deployTask.getProject(), WarPlugin.WAR_TASK_NAME);
+	protected void configureTaskDeployFrom(Copy copy) {
+		Project project = copy.getProject();
 
-		deployTask.from(war.getOutputs());
+		War war = (War)GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
+
+		copy.from(war);
+
+		addCleanDeployedFile(project, war.getArchivePath());
 	}
 
 	protected void configureTaskDirectDeploy(
@@ -408,14 +411,16 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		File webAppDir = getWebAppDir(project);
 
-		String portletXml;
+		String portletXml = "";
 
 		try {
 			File portletXmlFile = new File(webAppDir, "WEB-INF/portlet.xml");
 
-			portletXml = new String(
-				Files.readAllBytes(portletXmlFile.toPath()),
-				StandardCharsets.UTF_8);
+			if (portletXmlFile.exists()) {
+				portletXml = new String(
+					Files.readAllBytes(portletXmlFile.toPath()),
+					StandardCharsets.UTF_8);
+			}
 		}
 		catch (Exception e) {
 			throw new GradleException("Unable to read portlet.xml", e);
@@ -626,7 +631,7 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		File pluginPackagePropertiesFile = new File(
 			getWebAppDir(project), "WEB-INF/liferay-plugin-package.properties");
 
-		Properties pluginPackageProperties;
+		Properties pluginPackageProperties = null;
 
 		try {
 			pluginPackageProperties = FileUtil.readProperties(

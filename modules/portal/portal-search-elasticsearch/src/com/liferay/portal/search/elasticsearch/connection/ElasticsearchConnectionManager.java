@@ -16,6 +16,9 @@ package com.liferay.portal.search.elasticsearch.connection;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 
 import java.util.HashMap;
@@ -41,6 +44,13 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 )
 public class ElasticsearchConnectionManager {
 
+	public void connect() {
+		ElasticsearchConnection elasticsearchConnection =
+			getElasticsearchConnection();
+
+		elasticsearchConnection.connect();
+	}
+
 	public AdminClient getAdminClient() {
 		Client client = getClient();
 
@@ -52,8 +62,7 @@ public class ElasticsearchConnectionManager {
 			getElasticsearchConnection();
 
 		if (elasticsearchConnection == null) {
-			throw new IllegalStateException(
-				"Elasticsearch connection not initialized");
+			throw new ElasticsearchConnectionNotInitializedException();
 		}
 
 		return elasticsearchConnection.getClient();
@@ -81,7 +90,8 @@ public class ElasticsearchConnectionManager {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MANDATORY,
-		target = "(operation.mode=EMBEDDED)"
+		target = "(operation.mode=EMBEDDED)",
+		unbind = "unsetElasticsearchConnection"
 	)
 	public void setEmbeddedElasticsearchConnection(
 		ElasticsearchConnection elasticsearchConnection) {
@@ -93,7 +103,8 @@ public class ElasticsearchConnectionManager {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MANDATORY,
-		target = "(operation.mode=REMOTE)"
+		target = "(operation.mode=REMOTE)",
+		unbind = "unsetElasticsearchConnection"
 	)
 	public void setRemoteElasticsearchConnection(
 		ElasticsearchConnection elasticsearchConnection) {
@@ -113,32 +124,65 @@ public class ElasticsearchConnectionManager {
 	}
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_elasticsearchConfiguration = Configurable.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
 
-		OperationMode newOperationMode = OperationMode.valueOf(
-			_elasticsearchConfiguration.operationMode());
+		activate(_elasticsearchConfiguration.operationMode());
+	}
 
-		if (newOperationMode.equals(_operationMode)) {
+	protected void activate(OperationMode operationMode) {
+		validate(operationMode);
+
+		_operationMode = operationMode;
+	}
+
+	@Modified
+	protected synchronized void modified(Map<String, Object> properties) {
+		_elasticsearchConfiguration = Configurable.createConfigurable(
+			ElasticsearchConfiguration.class, properties);
+
+		modify(_elasticsearchConfiguration.operationMode());
+	}
+
+	protected void modify(OperationMode operationMode) {
+		if (Validator.equals(operationMode, _operationMode)) {
 			return;
 		}
 
-		if (_operationMode != null) {
-			ElasticsearchConnection elasticsearchConnection =
-				_elasticsearchConnections.get(_operationMode);
-
-			elasticsearchConnection.close();
-		}
-
-		_operationMode = newOperationMode;
+		validate(operationMode);
 
 		ElasticsearchConnection newElasticsearchConnection =
-			_elasticsearchConnections.get(_operationMode);
+			_elasticsearchConnections.get(operationMode);
 
-		newElasticsearchConnection.initialize();
+		newElasticsearchConnection.connect();
+
+		if (_operationMode != null) {
+			ElasticsearchConnection oldElasticsearchConnection =
+				_elasticsearchConnections.get(_operationMode);
+
+			try {
+				oldElasticsearchConnection.close();
+			}
+			catch (Exception e) {
+				if (_log.isErrorEnabled()) {
+					_log.error(
+						"Unable to close " + oldElasticsearchConnection, e);
+				}
+			}
+		}
+
+		_operationMode = operationMode;
 	}
+
+	protected void validate(OperationMode operationMode) {
+		if (!_elasticsearchConnections.containsKey(operationMode)) {
+			throw new MissingOperationModeException(operationMode);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ElasticsearchConnectionManager.class);
 
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private final Map<OperationMode, ElasticsearchConnection>

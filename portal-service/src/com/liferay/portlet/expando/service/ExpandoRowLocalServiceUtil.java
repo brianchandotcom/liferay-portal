@@ -215,6 +215,11 @@ public class ExpandoRowLocalServiceUtil {
 		return getService().fetchExpandoRow(rowId);
 	}
 
+	public static com.liferay.portlet.expando.model.ExpandoRow fetchRow(
+		long tableId, long classPK) {
+		return getService().fetchRow(tableId, classPK);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

@@ -90,7 +90,7 @@
 		</execute>
 	</command>
 
-	<command name="AllowMultiplePortletConfigurationsPerSite" priority="5">
+	<command name="AllowMultiplePortletConfigurationsPerSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -177,7 +177,7 @@
 		<execute macro="BlogsConfiguration#viewDefaultConfigurationRSS" />
 	</command>
 
-	<command name="DemoTrackbackURL" priority="5">
+	<command name="DemoTrackbackURL" priority="4">
 		<var name="ipAddress" value="${getIPAddress()}" />
 
 		<execute macro="Page#gotoPG">
@@ -194,6 +194,7 @@
 			<var name="entryContent2" value="Blogs Entry2 Content" />
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 			<var name="entryTitle2" value="Blogs Entry2 Title" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#gotoPG">
@@ -223,7 +224,7 @@
 		</execute>
 
 		<execute macro="User#firstLoginPG">
-+			<var name="password" value="test" />
+			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@www.able.com" />
 			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
@@ -262,6 +263,7 @@
 			<var name="entryContent2" value="Blogs Entry4 Content" />
 			<var name="entryTitle" value="Blogs Entry3 Title" />
 			<var name="entryTitle2" value="Blogs Entry4 Title" />
+			<var name="pageName" value="${pageName}" />
 			<var name="virtualHosts" value="true" />
 			<var name="virtualHostsURL" value="www.able.com:8080" />
 		</execute>
@@ -319,6 +321,7 @@
 			<var name="entryContent2" value="Blogs Entry6 Content" />
 			<var name="entryTitle" value="Blogs Entry5 Title" />
 			<var name="entryTitle2" value="Blogs Entry6 Title" />
+			<var name="pageName" value="${pageName}" />
 			<var name="virtualHosts" value="true" />
 			<var name="virtualHostsURL" value="http://${ipAddress}:8080" />
 		</execute>
@@ -353,7 +356,7 @@
 		</execute>
 	</command>
 
-	<command name="ImportBlogsCommentLAR" priority="5">
+	<command name="ImportBlogsCommentLAR" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -381,9 +384,13 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntryComment#addPG">
-			<var name="entryComment" value="Blogs Entry Comment" />
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#add">
+			<var name="entryComment" value="Blogs Entry Comment" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -635,82 +642,81 @@
 	</command>
 
 	<command name="ViewBlogsEntryAsPublishedViaAP" priority="3">
-		<var name="assetTitle" value="Blogs Entry Title" />
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="pageName2" value="Asset Publisher Page" />
-		<var name="portletName2" value="Asset Publisher" />
-
 		<execute macro="Page#addPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName2}" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+		<execute macro="BlogsEntry#addPGViaAP">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntryViaAPPG">
-			<var name="assetTitle" value="${assetTitle}" />
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="assetTitle" value="Blogs Entry Title" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="BlogsEntry#editContentPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryContentEdit" value="${entryContentEdit}" />
-			<var name="entryTitle" value="${entryTitle}" />
+		<execute macro="Blogs#editEntryAndSaveDraftPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContentEdit" value="Blogs Entry Content Edit" />
+			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
+			<var name="entrySubtitleEdit" value="Blogs Entry Subtitle Edit" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
 			<var name="saveAsDraft" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewNoEntryViaAPPG">
-			<var name="assetTitle" value="${assetTitle}" />
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="assetTitle" value="Blogs Entry Title" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#publishDraftCP">
+			<var name="entryContent" value="Blogs Entry Content Edit" />
+			<var name="entrySubtitle" value="Blogs Entry Subtitle Edit" />
+			<var name="entryTitle" value="Blogs Entry Title Edit" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#publishDraftPG">
-			<var name="entryContent" value="${entryContentEdit}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntryViaAPPG">
-			<var name="assetTitle" value="${assetTitle}" />
-			<var name="entryContent" value="${entryContentEdit}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="assetTitle" value="Blogs Entry Title Edit" />
+			<var name="entryContent" value="Blogs Entry Content Edit" />
+			<var name="entryTitle" value="Blogs Entry Title Edit" />
 		</execute>
 	</command>
 
@@ -734,6 +740,7 @@
 		<execute macro="BlogsEntry#viewFriendlyURLPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Page#addPG">
@@ -752,10 +759,11 @@
 			<var name="entryAuthor" value="Test Test" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56162" name="ViewBlogsEntryOnMultiplePagesWithDefaultAndPageScope" priority="4">
+	<command name="ViewBlogsEntryOnMultiplePagesWithDefaultAndPageScope" priority="4">
 		<var name="entryAuthor" value="Test Test" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -817,6 +825,7 @@
 
 		<execute macro="BlogsEntry#viewCP">
 			<var name="entryAuthor" value="${entryAuthor}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
@@ -867,7 +876,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryWithFutureDisplayDateViaBlogsAggregator" priority="3">
+	<command known-issues="LPS-56528" name="ViewBlogsEntryWithFutureDisplayDateViaBlogsAggregator" priority="3">
 		<var name="entryAbstractDescription" value="Blogs Entry Abstract Description" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -957,7 +966,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewParentOrganizationViaSelectOrganizationInBlogsConfiguration" priority="4">
+	<command known-issues="LPS-56543" name="ViewParentOrganizationViaSelectOrganizationInBlogsConfiguration" priority="4">
 		<var name="orgName1" value="Organization1 Name" />
 		<var name="orgName2" value="Organization2 Name" />
 		<var name="orgName3" value="Organization3 Name" />
@@ -1020,6 +1029,8 @@
 		<execute macro="Organization#viewParentOrganizationCP">
 			<var name="orgName" value="${orgName2}" />
 			<var name="parentOrgExist" value="false" />
+			<var name="parentOrgName" value="${parentOrgName}" />
+			<var name="subOrgName" value="${subOrgName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

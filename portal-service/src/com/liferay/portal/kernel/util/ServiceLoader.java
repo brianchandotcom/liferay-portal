@@ -133,10 +133,6 @@ public class ServiceLoader {
 			List<S> services, ClassLoader classLoader, Class<S> clazz, URL url)
 		throws Exception {
 
-		if (ServerDetector.isJBoss5()) {
-			url = normalizeURL(url);
-		}
-
 		try (InputStream inputStream = url.openStream()) {
 			BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(inputStream, StringPool.UTF8));

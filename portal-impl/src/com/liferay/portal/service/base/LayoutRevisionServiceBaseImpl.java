@@ -704,7 +704,7 @@ public abstract class LayoutRevisionServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.LayoutRevisionLocalService.class)
 	protected com.liferay.portal.service.LayoutRevisionLocalService layoutRevisionLocalService;
-	@BeanReference(type = LayoutRevisionService.class)
+	@BeanReference(type = com.liferay.portal.service.LayoutRevisionService.class)
 	protected LayoutRevisionService layoutRevisionService;
 	@BeanReference(type = LayoutRevisionPersistence.class)
 	protected LayoutRevisionPersistence layoutRevisionPersistence;

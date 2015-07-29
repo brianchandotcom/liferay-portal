@@ -14,7 +14,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="WikiNavigationPortletSmoke" priority="5">
+	<command name="WikiNavigationPortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="wiki-navigation-portlet" />
 
 		<var name="appName" value="Wiki Navigation" />

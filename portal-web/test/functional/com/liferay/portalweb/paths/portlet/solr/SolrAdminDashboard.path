@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>SolrAdminDashboard</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SolrAdminDashboard</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>LOGO</td>
+	<td>//div[@id='header']/a[@id='solr']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_CORE</td>
+	<td>//ul[@id='menu']/li[@id='cores']/p/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VERSIONS-->
+<tr>
+	<td>VERSIONS_SOLR_SPEC</td>
+	<td>//li[contains(@class,'solr_spec_version')]/dl/dd</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERSIONS_SOLR_IMPL</td>
+	<td>//li[contains(@class,'solr_impl_version')]/dl/dd</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CORE_ADMIN-->
+<tr>
+	<td>CORE_ADMIN_CORE_NAVIGATION</td>
+	<td>//div[@id='navigation']/ul/li/a[contains(.,'${key_coreName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CORE_ADMIN_CONTENT-->
+<tr>
+	<td>CORE_ADMIN_CONTENT_INSTANCE_DIR</td>
+	<td>//div[@id='core-data']//li[contains(@class,'instanceDir')]/dl/dd</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CORE_ADMIN_CONTENT_DATA_DIR</td>
+	<td>//div[@id='core-data']//li[@class='dataDir']/dl/dd</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CORE_ADMIN_INDEX_DATA-->
+<tr>
+	<td>CORE_ADMIN_INDEX_DATA_OPTIMIZED_ICON</td>
+	<td>//div[@id='index-data']//li[contains(@class,'optimized')]/dl/dd[contains(@class,'ico-1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CORE_ADMIN_INDEX_DATA_CURRENT_ICON</td>
+	<td>//div[@id='index-data']//li[contains(@class,'current')]/dl/dd[contains(@class,'ico-1')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

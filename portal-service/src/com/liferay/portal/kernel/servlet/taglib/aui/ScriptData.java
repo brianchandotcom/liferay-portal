@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.servlet.taglib.aui;
 
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.Mergeable;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -27,11 +26,16 @@ import java.io.Serializable;
 import java.io.Writer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,21 +45,28 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
-	public void append(String portletId, String content, String use) {
+	public void append(
+		String portletId, String content, String modules,
+		ModulesType modulesType) {
+
 		PortletData portletData = _getPortletData(portletId);
 
-		portletData.append(content, use);
+		portletData.append(content, modules, modulesType);
 	}
 
-	public void append(String portletId, StringBundler contentSB, String use) {
+	public void append(
+		String portletId, StringBundler contentSB, String modules,
+		ModulesType modulesType) {
+
 		PortletData portletData = _getPortletData(portletId);
 
-		portletData.append(contentSB, use);
+		portletData.append(contentSB, modules, modulesType);
 	}
 
 	public void mark() {
 		for (PortletData portletData : _portletDataMap.values()) {
-			_addToSBIndexList(portletData._callbackSB);
+			_addToSBIndexList(portletData._auiCallbackSB);
+			_addToSBIndexList(portletData._es6CallbackSB);
 			_addToSBIndexList(portletData._rawSB);
 		}
 	}
@@ -82,52 +93,92 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 		writer.write("<script type=\"text/javascript\">\n// <![CDATA[\n");
 
-		StringBundler callbackSB = new StringBundler(_portletDataMap.size());
+		StringBundler auiModulesSB = new StringBundler(_portletDataMap.size());
+		Set<String> auiModulesSet = new HashSet<>();
+		StringBundler es6ModulesSB = new StringBundler(_portletDataMap.size());
+		Set<String> es6ModulesSet = new HashSet<>();
 
 		for (PortletData portletData : _portletDataMap.values()) {
 			portletData._rawSB.writeTo(writer);
 
-			callbackSB.append(portletData._callbackSB);
+			if (!portletData._auiModulesSet.isEmpty()) {
+				auiModulesSB.append(portletData._auiCallbackSB);
+			}
+
+			if (!portletData._es6ModulesSet.isEmpty()) {
+				es6ModulesSB.append(portletData._es6CallbackSB);
+			}
+
+			auiModulesSet.addAll(portletData._auiModulesSet);
+			es6ModulesSet.addAll(portletData._es6ModulesSet);
 		}
 
-		if (callbackSB.index() == 0) {
+		if ((auiModulesSB.index() == 0) && (es6ModulesSB.index() == 0)) {
 			writer.write("\n// ]]>\n</script>");
 
 			return;
 		}
 
-		String loadMethod = "use";
+		if (!es6ModulesSet.isEmpty()) {
+			writer.write("require(");
 
-		if (BrowserSnifferUtil.isIe(request) &&
-			(BrowserSnifferUtil.getMajorVersion(request) < 8)) {
+			Map<String, String> generatedVariables = _generateVariables(
+				es6ModulesSet);
 
-			loadMethod = "ready";
-		}
+			Iterator<String> iterator = es6ModulesSet.iterator();
 
-		writer.write("AUI().");
-		writer.write(loadMethod);
-		writer.write("(");
+			while (iterator.hasNext()) {
+				writer.write(StringPool.APOSTROPHE);
+				writer.write(iterator.next());
+				writer.write(StringPool.APOSTROPHE);
 
-		Set<String> useSet = new TreeSet<>();
+				if (iterator.hasNext()) {
+					writer.write(StringPool.COMMA_AND_SPACE);
+				}
+			}
 
-		for (PortletData portletData : _portletDataMap.values()) {
-			useSet.addAll(portletData._useSet);
-		}
-
-		for (String use : useSet) {
-			writer.write(StringPool.APOSTROPHE);
-			writer.write(use);
-			writer.write(StringPool.APOSTROPHE);
 			writer.write(StringPool.COMMA_AND_SPACE);
+			writer.write("function(");
+
+			iterator = es6ModulesSet.iterator();
+
+			while (iterator.hasNext()) {
+				writer.write(generatedVariables.get(iterator.next()));
+
+				if (iterator.hasNext()) {
+					writer.write(StringPool.COMMA_AND_SPACE);
+				}
+			}
+
+			writer.write(") {\n");
+
+			es6ModulesSB.writeTo(writer);
+
+			writer.write("},\nfunction(error) {\nconsole.error(error);\n});");
+			writer.write("\n// ]]>\n</script>");
 		}
+		else if (!auiModulesSet.isEmpty()) {
+			writer.write("AUI().use(");
 
-		writer.write("function(A) {");
+			for (String use : auiModulesSet) {
+				writer.write(StringPool.APOSTROPHE);
+				writer.write(use);
+				writer.write(StringPool.APOSTROPHE);
+				writer.write(StringPool.COMMA_AND_SPACE);
+			}
 
-		callbackSB.writeTo(writer);
+			writer.write("function(A) {");
 
-		writer.write("});");
+			auiModulesSB.writeTo(writer);
 
-		writer.write("\n// ]]>\n</script>");
+			writer.write("});\n// ]]>\n</script>");
+		}
+	}
+
+	public static enum ModulesType {
+
+		AUI, ES6
+
 	}
 
 	private void _addToSBIndexList(StringBundler sb) {
@@ -144,6 +195,77 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 			ovp.setValue(sb.index());
 		}
+	}
+
+	private Map<String, String> _generateVariables(
+		Set<String> requiredFileNames) {
+
+		Map<String, Integer> indexes = new HashMap<>();
+		Set<String> generatedVariables = new HashSet<>();
+		Map<String, String> generatedVariablesMap = new HashMap<>();
+
+		for (String requiredFileName : requiredFileNames) {
+			StringBundler sb = new StringBundler();
+
+			CharSequence firstCharSequence = requiredFileName.subSequence(0, 1);
+
+			Matcher matcher = _validFirstCharacterPattern.matcher(
+				firstCharSequence);
+
+			if (!matcher.matches()) {
+				sb.append(StringPool.UNDERLINE);
+			}
+			else {
+				sb.append(firstCharSequence);
+			}
+
+			for (int i = 1; i < requiredFileName.length(); i++) {
+				CharSequence currentCharSequence = requiredFileName.subSequence(
+					i, i + 1);
+
+				matcher = _validCharactersPattern.matcher(currentCharSequence);
+
+				if (!matcher.matches()) {
+					while (++i < requiredFileName.length()) {
+						CharSequence nextCharSequence =
+							requiredFileName.subSequence(i, i + 1);
+
+						matcher = _validCharactersPattern.matcher(
+							nextCharSequence);
+
+						if (matcher.matches()) {
+							sb.append(
+								StringUtil.toUpperCase(
+									nextCharSequence.toString()));
+
+							break;
+						}
+					}
+				}
+				else {
+					sb.append(currentCharSequence);
+				}
+			}
+
+			String generatedVariable = sb.toString();
+
+			if (generatedVariables.contains(generatedVariable)) {
+				int index = 1;
+
+				if (indexes.containsKey(generatedVariable)) {
+					index = indexes.get(generatedVariable) + 1;
+				}
+
+				indexes.put(generatedVariable, index);
+
+				generatedVariable += index;
+			}
+
+			generatedVariables.add(generatedVariable);
+			generatedVariablesMap.put(requiredFileName, generatedVariable);
+		}
+
+		return generatedVariablesMap;
 	}
 
 	private PortletData _getPortletData(String portletId) {
@@ -173,48 +295,80 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		new ConcurrentHashMap<>();
 	private final List<ObjectValuePair<StringBundler, Integer>> _sbIndexList =
 		new ArrayList<>();
+	private final Pattern _validCharactersPattern = Pattern.compile(
+		"[0-9a-z_$]", Pattern.CASE_INSENSITIVE);
+	private final Pattern _validFirstCharacterPattern = Pattern.compile(
+		"[a-z_$]", Pattern.CASE_INSENSITIVE);
 
 	private class PortletData implements Serializable {
 
-		public void append(String content, String use) {
-			if (Validator.isNull(use)) {
+		public void append(
+			String content, String modules, ModulesType modulesType) {
+
+			if (Validator.isNull(modules)) {
 				_rawSB.append(content);
 			}
 			else {
-				_callbackSB.append("(function() {");
-				_callbackSB.append(content);
-				_callbackSB.append("})();");
+				String[] modulesArray = StringUtil.split(modules);
 
-				String[] useArray = StringUtil.split(use);
+				if (modulesType == ModulesType.AUI) {
+					_auiCallbackSB.append("(function() {");
+					_auiCallbackSB.append(content);
+					_auiCallbackSB.append("})();");
 
-				for (int i = 0; i < useArray.length; i++) {
-					_useSet.add(StringUtil.trim(useArray[i]));
+					for (String module : modulesArray) {
+						_auiModulesSet.add(StringUtil.trim(module));
+					}
+				}
+				else {
+					_es6CallbackSB.append("(function() {");
+					_es6CallbackSB.append(content);
+					_es6CallbackSB.append("})();");
+
+					for (String module : modulesArray) {
+						_es6ModulesSet.add(StringUtil.trim(module));
+					}
 				}
 			}
 		}
 
-		public void append(StringBundler contentSB, String use) {
-			if (Validator.isNull(use)) {
+		public void append(
+			StringBundler contentSB, String modules, ModulesType modulesType) {
+
+			if (Validator.isNull(modules)) {
 				_rawSB.append(contentSB);
 			}
 			else {
-				_callbackSB.append("(function() {");
-				_callbackSB.append(contentSB);
-				_callbackSB.append("})();");
+				String[] modulesArray = StringUtil.split(modules);
 
-				String[] useArray = StringUtil.split(use);
+				if (modulesType == ModulesType.AUI) {
+					_auiCallbackSB.append("(function() {");
+					_auiCallbackSB.append(contentSB);
+					_auiCallbackSB.append("})();");
 
-				for (int i = 0; i < useArray.length; i++) {
-					_useSet.add(StringUtil.trim(useArray[i]));
+					for (String module : modulesArray) {
+						_auiModulesSet.add(StringUtil.trim(module));
+					}
+				}
+				else {
+					_es6CallbackSB.append("(function() {");
+					_es6CallbackSB.append(contentSB);
+					_es6CallbackSB.append("})();");
+
+					for (String module : modulesArray) {
+						_es6ModulesSet.add(StringUtil.trim(module));
+					}
 				}
 			}
 		}
 
 		private static final long serialVersionUID = 1L;
 
-		private final StringBundler _callbackSB = new StringBundler();
+		private final StringBundler _auiCallbackSB = new StringBundler();
+		private final Set<String> _auiModulesSet = new HashSet<>();
+		private final StringBundler _es6CallbackSB = new StringBundler();
+		private final Set<String> _es6ModulesSet = new HashSet<>();
 		private final StringBundler _rawSB = new StringBundler();
-		private final Set<String> _useSet = new TreeSet<>();
 
 	}
 

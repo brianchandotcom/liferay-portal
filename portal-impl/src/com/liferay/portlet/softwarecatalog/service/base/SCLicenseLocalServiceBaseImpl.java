@@ -626,7 +626,7 @@ public abstract class SCLicenseLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = SCLicenseLocalService.class)
+	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCLicenseLocalService.class)
 	protected SCLicenseLocalService scLicenseLocalService;
 	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCLicenseService.class)
 	protected com.liferay.portlet.softwarecatalog.service.SCLicenseService scLicenseService;

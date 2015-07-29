@@ -1,0 +1,6 @@
+Bundle-Name: Liferay User Personal Bar Web
+Bundle-SymbolicName: com.liferay.user.personal.bar.web
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources

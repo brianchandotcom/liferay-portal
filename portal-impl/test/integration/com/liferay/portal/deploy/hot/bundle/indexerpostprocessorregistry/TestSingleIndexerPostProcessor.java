@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"indexer.class.name=com.liferay.portlet.blogs.util.BlogsIndexer"
+		"indexer.class.name=com.liferay.portlet.usersadmin.util.OrganizationIndexer"
 	},
 	service = IndexerPostProcessor.class
 )
@@ -43,6 +43,7 @@ public class TestSingleIndexerPostProcessor implements IndexerPostProcessor {
 		throws Exception {
 	}
 
+	@Deprecated
 	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)

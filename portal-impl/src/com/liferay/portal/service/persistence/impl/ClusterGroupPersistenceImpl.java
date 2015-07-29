@@ -674,6 +674,11 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 		return count.intValue();
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return ClusterGroupModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the cluster group persistence.
 	 */

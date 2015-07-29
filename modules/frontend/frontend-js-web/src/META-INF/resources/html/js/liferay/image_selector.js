@@ -23,9 +23,11 @@ AUI.add(
 
 		var STR_IMAGE_DATA = 'imageData';
 
-		var STR_IMAGE_DELETED = 'imageDeleted';
+		var STR_IMAGE_DELETED = 'coverImageDeleted';
 
-		var STR_IMAGE_UPLOADED = 'imageUploaded';
+		var STR_IMAGE_SELECTED = 'coverImageSelected';
+
+		var STR_IMAGE_UPLOADED = 'coverImageUploaded';
 
 		var STR_SPACE = ' ';
 
@@ -210,16 +212,18 @@ AUI.add(
 
 						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 							{
-								eventName: instance.ns('selectImage'),
-								on: {
+								after: {
 									selectedItemChange: function(event) {
 										var selectedItem = event.newVal;
 
 										if (selectedItem) {
 											instance._updateImageData(JSON.parse(selectedItem.value));
+
+											Liferay.fire(STR_IMAGE_SELECTED);
 										}
 									}
 								},
+								eventName: instance.ns('selectImage'),
 								url: instance.get('itemSelectorURL')
 							}
 						);

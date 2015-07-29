@@ -1197,6 +1197,11 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		return _badColumnNames;
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return UserTrackerPathModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the user tracker path persistence.
 	 */

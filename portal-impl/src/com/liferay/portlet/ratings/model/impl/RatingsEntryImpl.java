@@ -14,8 +14,17 @@
 
 package com.liferay.portlet.ratings.model.impl;
 
+import com.liferay.portlet.exportimport.lar.StagedModelType;
+import com.liferay.portlet.ratings.model.RatingsEntry;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class RatingsEntryImpl extends RatingsEntryBaseImpl {
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(RatingsEntry.class);
+	}
+
 }

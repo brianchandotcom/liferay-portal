@@ -19,6 +19,12 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
+
 if (Validator.isNotNull(redirect)) {
 	portletDisplay.setURLBack(redirect);
 }
@@ -35,9 +41,7 @@ String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
 
 <portlet:renderURL var="searchURL">
 	<portlet:param name="mvcPath" value="/search.jsp" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="showListed" value="<%= String.valueOf(showListed) %>" />
-	<portlet:param name="targetPortletId" value="<%= targetPortletId %>" />
+	<portlet:param name="targetPortletId" value="<%= journalContentSearchPortletInstanceConfiguration.targetPortletId() %>" />
 </portlet:renderURL>
 
 <aui:form action="<%= searchURL %>" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "search(); event.preventDefault();" %>'>
@@ -47,7 +51,6 @@ String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
 
 	renderURL.setParameter("mvcPath", "/search.jsp");
 	renderURL.setParameter("keywords", keywords);
-	renderURL.setParameter("redirect", redirect);
 
 	List<String> headerNames = new ArrayList<String>();
 
@@ -59,7 +62,7 @@ String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
 	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, renderURL, headerNames, LanguageUtil.format(request, "no-pages-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>", false));
 
 	try {
-		Indexer indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
+		Indexer<JournalArticle> indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
 
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 
@@ -72,7 +75,7 @@ String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
 
 		ContentHits contentHits = new ContentHits();
 
-		contentHits.setShowListed(showListed);
+		contentHits.setShowListed(journalContentSearchPortletInstanceConfiguration.showListed());
 
 		contentHits.recordHits(hits, layout.getGroupId(), layout.isPrivateLayout(), searchContainer.getStart(), searchContainer.getEnd());
 

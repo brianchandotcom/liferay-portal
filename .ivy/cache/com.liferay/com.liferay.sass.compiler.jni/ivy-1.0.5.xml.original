@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+	<artifactId>com.liferay.sass.compiler.jni</artifactId>
+	<description>com.liferay.sass.compiler.jni</description>
+	<developers>
+		<developer>
+			<name>Brian Wing Shun Chan</name>
+			<organization>Liferay, Inc.</organization>
+			<organizationUrl>http://www.liferay.com</organizationUrl>
+		</developer>
+	</developers>
+	<groupId>com.liferay</groupId>
+	<licenses>
+		<license>
+			<name>LGPL 2.1</name>
+			<url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</url>
+		</license>
+	</licenses>
+	<modelVersion>4.0.0</modelVersion>
+	<name>com.liferay.sass.compiler.jni</name>
+	<packaging>jar</packaging>
+	<scm>
+		<connection>scm:git:git@github.com:liferay/liferay-portal.git</connection>
+		<developerConnection>scm:git:git@github.com:liferay/liferay-portal.git</developerConnection>
+		<url>http://github.com/liferay/liferay-portal</url>
+	</scm>
+	<version>1.0.5</version>
+ <dependencies>
+  <dependency>
+   <groupId>com.liferay</groupId>
+   <artifactId>com.liferay.sass.compiler.api</artifactId>
+   <version>1.0.0</version>
+   <scope>compile</scope>
+  </dependency>
+  <dependency>
+   <groupId>net.java.dev.jna</groupId>
+   <artifactId>jna</artifactId>
+   <version>4.1.0</version>
+   <scope>provided</scope>
+  </dependency>
+  <dependency>
+   <groupId>com.nativelibs4java</groupId>
+   <artifactId>jnaerator-runtime</artifactId>
+   <version>0.11</version>
+   <scope>provided</scope>
+  </dependency>
+  <dependency>
+   <groupId>com.nativelibs4java</groupId>
+   <artifactId>ochafik-util</artifactId>
+   <version>0.11</version>
+   <scope>provided</scope>
+  </dependency>
+  <dependency>
+   <groupId>junit</groupId>
+   <artifactId>junit</artifactId>
+   <version>4.12</version>
+   <optional>true</optional>
+  </dependency>
+ </dependencies>
+</project>

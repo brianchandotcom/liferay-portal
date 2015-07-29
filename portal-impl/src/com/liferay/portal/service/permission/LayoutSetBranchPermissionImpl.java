@@ -33,7 +33,9 @@ public class LayoutSetBranchPermissionImpl
 		throws PortalException {
 
 		if (!contains(permissionChecker, layoutSetBranch, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, LayoutSetBranch.class.getName(),
+				layoutSetBranch.getLayoutSetBranchId(), actionId);
 		}
 	}
 
@@ -44,7 +46,9 @@ public class LayoutSetBranchPermissionImpl
 		throws PortalException {
 
 		if (!contains(permissionChecker, layoutSetBranchId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, LayoutSetBranch.class.getName(),
+				layoutSetBranchId, actionId);
 		}
 	}
 

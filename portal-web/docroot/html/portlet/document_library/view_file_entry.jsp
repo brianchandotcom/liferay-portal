@@ -34,7 +34,7 @@ long folderId = fileEntry.getFolderId();
 if (Validator.isNull(redirect)) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/document_library/view");
+	portletURL.setParameter("mvcRenderCommandName", "/document_library/view");
 	portletURL.setParameter("folderId", String.valueOf(folderId));
 
 	redirect = portletURL.toString();
@@ -88,9 +88,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileVersion);
 %>
 
-<portlet:actionURL var="editFileEntry">
-	<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
-</portlet:actionURL>
+<portlet:actionURL name="/document_library/edit_file_entry" var="editFileEntry" />
 
 <aui:form action="<%= editFileEntry %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -178,7 +176,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 						}
 						%>
 
-						<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="thumbnail" src="<%= thumbnailSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0) %>" />
+						<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="thumbnail" src="<%= thumbnailSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>" />
 					</span>
 
 					<span class="user-date">
@@ -247,20 +245,10 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 
 				<c:if test="<%= PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED && showComments %>">
 					<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-document-library-comments" extended="<%= true %>" persistState="<%= true %>" title="comments">
-						<portlet:actionURL var="discussionURL">
-							<portlet:param name="struts_action" value="/document_library/edit_file_entry_discussion" />
-						</portlet:actionURL>
-
-						<portlet:resourceURL var="discussionPaginationURL">
-							<portlet:param name="struts_action" value="/document_library/edit_file_entry_discussion" />
-						</portlet:resourceURL>
-
 						<liferay-ui:discussion
 							className="<%= DLFileEntryConstants.getClassName() %>"
 							classPK="<%= fileEntryId %>"
-							formAction="<%= discussionURL %>"
 							formName="fm2"
-							paginationURL="<%= discussionPaginationURL %>"
 							ratingsEnabled="<%= dlPortletInstanceSettings.isEnableCommentRatings() %>"
 							redirect="<%= currentURL %>"
 							userId="<%= fileEntry.getUserId() %>"
@@ -376,10 +364,10 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 							List<DDMStructure> ddmStructures = dlViewFileVersionDisplayContext.getDDMStructures();
 
 							for (DDMStructure ddmStructure : ddmStructures) {
-								Fields fields = null;
+								DDMFormValues ddmFormValues = null;
 
 								try {
-									fields = DDMFormValuesToFieldsConverterUtil.convert(ddmStructure, dlViewFileVersionDisplayContext.getDDMFormValues(ddmStructure));
+									ddmFormValues = dlViewFileVersionDisplayContext.getDDMFormValues(ddmStructure);
 								}
 								catch (Exception e) {
 								}
@@ -388,9 +376,9 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 								<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" id="documentLibraryMetadataPanel" persistState="<%= true %>" title="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>">
 
 									<liferay-ddm:html
-										classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+										classNameId="<%= PortalUtil.getClassNameId(DDMStructureManagerUtil.getDDMStructureModelClass()) %>"
 										classPK="<%= ddmStructure.getPrimaryKey() %>"
-										fields="<%= fields %>"
+										ddmFormValues="<%= ddmFormValues %>"
 										fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
 										readOnly="<%= true %>"
 										requestedLocale="<%= locale %>"
@@ -419,31 +407,30 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 
 						<%
 						try {
-							List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getClassStructures(company.getCompanyId(), PortalUtil.getClassNameId(RawMetadataProcessor.class), new StructureStructureKeyComparator(true));
+							List<DDMStructure> ddmStructures = DDMStructureManagerUtil.getClassStructures(company.getCompanyId(), PortalUtil.getClassNameId(RawMetadataProcessor.class), DDMStructureManager.STRUCTURE_COMPARATOR_STRUCTURE_KEY);
 
 							for (DDMStructure ddmStructure : ddmStructures) {
-								Fields fields = null;
+								DDMFormValues ddmFormValues = null;
 
 								try {
 									DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
 
-									DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
+									ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
 
-									fields = DDMFormValuesToFieldsConverterUtil.convert(ddmStructure, ddmFormValues);
 								}
 								catch (Exception e) {
 								}
 
-								if (fields != null) {
+								if (ddmFormValues != null) {
 									String name = "metadata." + ddmStructure.getName(locale, true);
 						%>
 
 									<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-asset-metadata" id="documentLibraryAssetMetadataPanel" persistState="<%= true %>" title="<%= name %>">
 
 										<liferay-ddm:html
-											classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+											classNameId="<%= PortalUtil.getClassNameId(DDMStructureManagerUtil.getDDMStructureModelClass()) %>"
 											classPK="<%= ddmStructure.getPrimaryKey() %>"
-											fields="<%= fields %>"
+											ddmFormValues="<%= ddmFormValues %>"
 											fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
 											readOnly="<%= true %>"
 											requestedLocale="<%= locale %>"
@@ -473,7 +460,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 
 								PortletURL viewFileEntryURL = renderResponse.createRenderURL();
 
-								viewFileEntryURL.setParameter("struts_action", "/document_library/view_file_entry");
+								viewFileEntryURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
 								viewFileEntryURL.setParameter("redirect", currentURL);
 								viewFileEntryURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
@@ -541,9 +528,9 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 									FileVersion curFileVersion = (FileVersion)fileVersions.get(0);
 								%>
 
-									<portlet:actionURL var="compareVersionsURL">
-										<portlet:param name="struts_action" value="/document_library/compare_versions" />
-									</portlet:actionURL>
+									<portlet:renderURL var="compareVersionsURL">
+										<portlet:param name="mvcRenderCommandName" value="/document_library/compare_versions" />
+									</portlet:renderURL>
 
 									<aui:form action="<%= compareVersionsURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "compare();" %>'>
 										<aui:input name="backURL" type="hidden" value="<%= currentURL %>" />

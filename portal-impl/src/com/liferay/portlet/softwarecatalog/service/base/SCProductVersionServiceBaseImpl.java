@@ -378,7 +378,7 @@ public abstract class SCProductVersionServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductVersionLocalService.class)
 	protected com.liferay.portlet.softwarecatalog.service.SCProductVersionLocalService scProductVersionLocalService;
-	@BeanReference(type = SCProductVersionService.class)
+	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductVersionService.class)
 	protected SCProductVersionService scProductVersionService;
 	@BeanReference(type = SCProductVersionPersistence.class)
 	protected SCProductVersionPersistence scProductVersionPersistence;

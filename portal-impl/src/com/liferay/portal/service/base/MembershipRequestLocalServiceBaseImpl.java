@@ -855,7 +855,7 @@ public abstract class MembershipRequestLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = MembershipRequestLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.MembershipRequestLocalService.class)
 	protected MembershipRequestLocalService membershipRequestLocalService;
 	@BeanReference(type = com.liferay.portal.service.MembershipRequestService.class)
 	protected com.liferay.portal.service.MembershipRequestService membershipRequestService;

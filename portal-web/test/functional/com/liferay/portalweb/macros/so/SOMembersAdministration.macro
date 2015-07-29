@@ -61,6 +61,7 @@
 			<var name="gmailMessageBodyClosing" value="If you have any questions, contact the administrator at ${adminEmailAddress}." />
 			<var name="gmailMessageBodyGreeting" value="${adminName} has invited you to join ${siteName} on Social Office." />
 			<var name="gmailMessageTitle" value="${adminName} has invited you to join ${siteName}" />
+			<var name="gmailMesssageAttachment" value="${gmailMesssageAttachment}" />
 		</execute>
 
 		<var name="key_gmailAssetType" value="${siteName}" />
@@ -97,6 +98,7 @@
 		<execute macro="SOMembersAdministration#createAccountViaSiteInviteEmail">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
 			<var name="adminName" value="${adminName}" />
+			<var name="singleApproverWorkflow" value="${singleApproverWorkflow}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -138,6 +140,7 @@
 			<var name="gmailMessageBodyClosing" value="If you have any questions, contact the administrator at ${adminEmailAddress}." />
 			<var name="gmailMessageBodyGreeting" value="${adminName} has invited you to join ${siteName} on Social Office." />
 			<var name="gmailMessageTitle" value="${adminName} has invited you to join ${siteName}" />
+			<var name="gmailMesssageAttachment" value="${gmailMesssageAttachment}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_SITE_INVITE_CREATE_ACCOUNT_LINK" value1="Create Account" />
@@ -288,8 +291,16 @@
 				<execute function="AssertTextEquals" locator1="SOMembersPortlet#USER_DETAILS_EMAIL" value1="${userEmailAddress}" />
 
 				<execute macro="Page#openURL">
+					<var name="friendlyURL" value="${friendlyURL}" />
+					<var name="pageAccess" value="${pageAccess}" />
+					<var name="pageAccessURL" value="${pageAccessURL}" />
+					<var name="pageStaging" value="${pageStaging}" />
+					<var name="pageStagingURL" value="${pageStagingURL}" />
 					<var name="siteName" value="${siteName}" />
+					<var name="siteNameURL" value="${siteNameURL}" />
 					<var name="siteURL" value="true" />
+					<var name="specificURL" value="${specificURL}" />
+					<var name="virtualHostsURL" value="${virtualHostsURL}" />
 				</execute>
 
 				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />

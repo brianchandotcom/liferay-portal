@@ -32,5 +32,5 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/xml/SecureXMLFactoryProvider.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/xml/SecureXMLFactoryProviderUtil.class,\
-	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLFormatter.class
+	@../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jUtil.class
 Main-Class: com.liferay.xml.formatter.XMLFormatter

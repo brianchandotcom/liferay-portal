@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD</td>
-	<td>//textarea[contains(@id,'description')]</td>
+	<td>//span/input[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>

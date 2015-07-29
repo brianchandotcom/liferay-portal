@@ -814,7 +814,7 @@ public abstract class BookmarksFolderServiceBaseImpl extends BaseServiceImpl
 	protected BookmarksEntryFinder bookmarksEntryFinder;
 	@BeanReference(type = com.liferay.bookmarks.service.BookmarksFolderLocalService.class)
 	protected com.liferay.bookmarks.service.BookmarksFolderLocalService bookmarksFolderLocalService;
-	@BeanReference(type = BookmarksFolderService.class)
+	@BeanReference(type = com.liferay.bookmarks.service.BookmarksFolderService.class)
 	protected BookmarksFolderService bookmarksFolderService;
 	@BeanReference(type = BookmarksFolderPersistence.class)
 	protected BookmarksFolderPersistence bookmarksFolderPersistence;

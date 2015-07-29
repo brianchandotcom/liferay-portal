@@ -26,6 +26,9 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Eduardo Garcia
  */
@@ -81,6 +84,15 @@ public class MBCategoryTrashRenderer extends BaseTrashRenderer {
 	@Override
 	public String getType() {
 		return TYPE;
+	}
+
+	@Override
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
+			String template)
+		throws Exception {
+
+		return false;
 	}
 
 	private final MBCategory _category;

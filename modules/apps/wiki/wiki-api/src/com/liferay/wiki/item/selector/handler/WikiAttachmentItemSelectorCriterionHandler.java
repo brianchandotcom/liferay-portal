@@ -16,9 +16,10 @@ package com.liferay.wiki.item.selector.handler;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -27,13 +28,18 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = ItemSelectorCriterionHandler.class)
 public class WikiAttachmentItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler
-		<WikiAttachmentItemSelectorCriterion, DefaultItemSelectorReturnType> {
+		<WikiAttachmentItemSelectorCriterion> {
 
 	@Override
 	public Class<WikiAttachmentItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
 		return WikiAttachmentItemSelectorCriterion.class;
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		super.activate(bundleContext);
 	}
 
 }

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
 import com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextFactory;
 import com.liferay.portlet.imagegallerydisplay.display.context.IGViewFileVersionDisplayContext;
@@ -60,7 +61,8 @@ public class GoogleDocsIGDisplayContextFactory
 		catch (PortalException pe) {
 			throw new SystemException(
 				"Unable to build GoogleDocsDLViewFileVersionDisplayContext " +
-					"for shortcut " + fileShortcut.getPrimaryKey(), pe);
+					"for shortcut " + fileShortcut.getPrimaryKey(),
+				pe);
 		}
 	}
 
@@ -72,6 +74,7 @@ public class GoogleDocsIGDisplayContextFactory
 
 		GoogleDocsMetadataHelper googleDocsMetadataHelper =
 			new GoogleDocsMetadataHelper(
+				_ddmStructureLocalService,
 				(DLFileVersion)fileVersion.getModel(),
 				_dlFileEntryMetadataLocalService, _storageEngine);
 
@@ -82,6 +85,13 @@ public class GoogleDocsIGDisplayContextFactory
 		}
 
 		return parentIGViewFileVersionDisplayContext;
+	}
+
+	@Reference
+	public void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
 	@Reference
@@ -101,6 +111,7 @@ public class GoogleDocsIGDisplayContextFactory
 		_storageEngine = storageEngine;
 	}
 
+	private DDMStructureLocalService _ddmStructureLocalService;
 	private DLAppService _dlAppService;
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
 	private StorageEngine _storageEngine;

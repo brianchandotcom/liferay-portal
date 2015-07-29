@@ -24,16 +24,6 @@ public class AddDefaultDataAction extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {
-		SimpleAction addDefaultDocumentLibraryStructuresAction =
-			new AddDefaultDocumentLibraryStructuresAction();
-
-		addDefaultDocumentLibraryStructuresAction.run(ids);
-
-		SimpleAction addDefaultLayoutPrototypesAction =
-			new AddDefaultLayoutPrototypesAction();
-
-		addDefaultLayoutPrototypesAction.run(ids);
-
 		SimpleAction addDefaultLayoutSetPrototypesAction =
 			new AddDefaultLayoutSetPrototypesAction();
 

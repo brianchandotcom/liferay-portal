@@ -10,9 +10,7 @@ AUI.add(
 			{
 				ATTRS: {
 					definition: {
-						validator: function(val) {
-							return Lang.isObject(val);
-						}
+						validator: Lang.isObject
 					},
 
 					deserializer: {
@@ -26,13 +24,17 @@ AUI.add(
 					},
 
 					layouts: {
-						setter: '_setLayouts',
-						validator: function(val) {
-							return Lang.isObject(val);
-						}
+						valueFn: '_valueLayouts'
 					},
 
-					portletNamespace: {
+					pages: {
+						validator: Array.isArray,
+						value: []
+					},
+
+					visitor: {
+						getter: '_getVisitor',
+						valueFn: '_valueVisitor'
 					}
 				},
 
@@ -48,92 +50,40 @@ AUI.add(
 
 						var boundingBox = instance.get('boundingBox');
 
-						instance.after('field:saveSettings', instance._afterFieldSettingsModalSave, instance);
-
 						boundingBox.delegate('click', instance._onClickPaginationItem, '.pagination li a');
 					},
 
 					renderUI: function() {
 						var instance = this;
 
-						var deserializer = instance.get('deserializer');
-
 						FormBuilder.superclass.renderUI.apply(instance, arguments);
 
-						var pages = instance._pages;
-
-						pages.set('descriptions', deserializer.get('descriptions'));
-						pages.set('titles', deserializer.get('titles'));
-
-						pages._uiSetActivePageNumber(pages.get('activePageNumber'));
+						instance._renderFields();
+						instance._renderPages();
 					},
 
 					destructor: function() {
 						var instance = this;
 
-						new Liferay.DDL.LayoutVisitor(
-							{
-								fieldHandler: A.bind('destroyField', instance),
-								layouts: instance.get('layouts')
-							}
-						).visit();
+						var visitor = instance.get('visitor');
+
+						visitor.set('fieldHandler', instance.destroyField);
+
+						visitor.visit();
 					},
 
-					_afterFieldSettingsModalSave: function(event) {
+					createField: function(fieldType) {
 						var instance = this;
 
-						var field = event.field;
+						var fieldClass = FormBuilderUtil.getFieldClass(fieldType.get('name'));
 
-						field.renderTemplate();
-
-						FormBuilder.superclass._afterFieldSettingsModalSave.apply(instance, arguments);
-					},
-
-					_onClickFieldType: function(event) {
-						var instance = this;
-
-						var fieldType = event.currentTarget.getData('fieldType');
-
-						if (!fieldType.get('disabled')) {
-							instance.hideFieldsPanel();
-
-							var fieldClassName = fieldType.get('className');
-
-							var fieldClass = FormBuilderUtil.getFieldClass(fieldClassName);
-
-							var field = new fieldClass(fieldType.get('defaultConfig'));
-
-							instance.showFieldSettingsPanel(field, fieldType.get('label'));
-						}
-					},
-
-					_onClickPaginationItem: function(event) {
-						var instance = this;
-
-						event.halt();
-					},
-
-					_setLayouts: function(val) {
-						var instance = this;
-
-						if (val.pages) {
-							var deserializer = instance.get('deserializer');
-
-							deserializer.set('layouts', val.pages);
-
-							val = deserializer.deserialize();
-						}
-
-						return val;
-					},
-
-					_valueDeserializer: function() {
-						var instance = this;
-
-						return new Liferay.DDL.LayoutDeserializer(
-							{
-								definition: instance.get('definition')
-							}
+						return new fieldClass(
+							A.merge(
+								fieldType.get('defaultConfig'),
+								{
+									builder: instance
+								}
+							)
 						);
 					},
 
@@ -146,14 +96,125 @@ AUI.add(
 					findTypeOfField: function(field) {
 						var instance = this;
 
-						return FieldTypes.get(field.get('fieldType'));
+						return FieldTypes.get(field.get('type'));
 					},
 
-					showFieldSettingsPanel: function(field, fieldTypeName) {
+					getField: function(name) {
 						var instance = this;
 
-						field.addTarget(instance);
-						field.showSettingsPanel(fieldTypeName);
+						return AArray.find(
+							instance.getFields(),
+							function(item) {
+								return item.get('name') === name;
+							}
+						);
+					},
+
+					getFields: function() {
+						var instance = this;
+
+						var fields = [];
+
+						var visitor = instance.get('visitor');
+
+						visitor.set(
+							'fieldHandler',
+							function(field) {
+								fields.push(field);
+							}
+						);
+
+						visitor.visit();
+
+						return fields;
+					},
+
+					_getVisitor: function(visitor) {
+						var instance = this;
+
+						visitor.set('pages', instance.get('layouts'));
+
+						return visitor;
+					},
+
+					_onClickFieldType: function(event) {
+						var instance = this;
+
+						var fieldType = event.currentTarget.getData('fieldType');
+
+						instance.hideFieldsPanel();
+
+						instance.showFieldSettingsPanel(
+							instance.createField(fieldType),
+							fieldType.get('label')
+						);
+					},
+
+					_onClickPaginationItem: function(event) {
+						var instance = this;
+
+						event.halt();
+					},
+
+					_renderField: function(field) {
+						var instance = this;
+
+						field.set('builder', instance);
+
+						field.render();
+					},
+
+					_renderFields: function() {
+						var instance = this;
+
+						var visitor = instance.get('visitor');
+
+						visitor.set('fieldHandler', A.bind('_renderField', instance));
+
+						visitor.visit();
+					},
+
+					_renderPages: function() {
+						var instance = this;
+
+						var deserializer = instance.get('deserializer');
+
+						var pages = instance._pages;
+
+						pages.set('descriptions', deserializer.get('descriptions'));
+						pages.set('titles', deserializer.get('titles'));
+
+						pages._uiSetActivePageNumber(pages.get('activePageNumber'));
+					},
+
+					_valueDeserializer: function() {
+						var instance = this;
+
+						return new Liferay.DDL.LayoutDeserializer(
+							{
+								definition: instance.get('definition')
+							}
+						);
+					},
+
+					_valueLayouts: function() {
+						var instance = this;
+
+						var deserializer = instance.get('deserializer');
+
+						deserializer.set('pages', instance.get('pages'));
+
+						return deserializer.deserialize();
+					},
+
+					_valueVisitor: function() {
+						var instance = this;
+
+						return new Liferay.DDL.LayoutVisitor(
+							{
+								pages: instance.get('layouts')
+							}
+						);
 					}
 				}
 			}

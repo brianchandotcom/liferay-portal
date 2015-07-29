@@ -4,7 +4,7 @@
 		module="wstx-asl"
 		revision="3.2.4"
 		status="release"
-		publication="20150612220121"
+		publication="20150721120044"
 		default="true"
 	/>
 	<configurations>

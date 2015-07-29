@@ -191,6 +191,12 @@ public class DLFileVersionLocalServiceUtil {
 		return getService().fetchDLFileVersionByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion fetchLatestFileVersion(
+		long fileEntryId, boolean excludeWorkingCopy) {
+		return getService()
+				   .fetchLatestFileVersion(fileEntryId, excludeWorkingCopy);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

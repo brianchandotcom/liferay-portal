@@ -49,7 +49,7 @@ public class TableIteratorTag extends TagSupport {
 				pageContext.setAttribute(
 					"tableIteratorObj", _list.get(_listPos));
 				pageContext.setAttribute(
-					"tableIteratorPos", new Integer(_listPos));
+					"tableIteratorPos", Integer.valueOf(_listPos));
 
 				return EVAL_BODY_AGAIN;
 			}
@@ -113,7 +113,7 @@ public class TableIteratorTag extends TagSupport {
 				pageContext.setAttribute(
 					"tableIteratorObj", _list.get(_listPos));
 				pageContext.setAttribute(
-					"tableIteratorPos", new Integer(_listPos));
+					"tableIteratorPos", Integer.valueOf(_listPos));
 
 				return EVAL_BODY_INCLUDE;
 			}

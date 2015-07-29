@@ -25,6 +25,7 @@ import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,45 +61,72 @@ public class SessionTreeJSClicks {
 	public static void closeNode(
 		HttpServletRequest request, String treeId, String nodeId) {
 
-		try {
-			String openNodesString = get(request, treeId);
+		while (true) {
+			try {
+				String openNodesString = get(request, treeId);
 
-			openNodesString = StringUtil.removeFromList(
-				openNodesString, nodeId);
+				openNodesString = StringUtil.removeFromList(
+					openNodesString, nodeId);
 
-			put(request, treeId, openNodesString);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+				put(request, treeId, openNodesString);
+
+				return;
+			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				return;
+			}
 		}
 	}
 
 	public static void closeNodes(HttpServletRequest request, String treeId) {
-		try {
-			String openNodesString = StringPool.BLANK;
+		while (true) {
+			try {
+				String openNodesString = StringPool.BLANK;
 
-			put(request, treeId, openNodesString);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+				put(request, treeId, openNodesString);
+
+				return;
+			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				return;
+			}
 		}
 	}
 
 	public static void closeNodes(
 		HttpServletRequest request, String treeId, String[] nodeIds) {
 
-		try {
-			String openNodesString = get(request, treeId);
+		while (true) {
+			try {
+				String openNodesString = get(request, treeId);
 
-			for (String nodeId : nodeIds) {
-				openNodesString = StringUtil.removeFromList(
-					openNodesString, nodeId);
+				for (String nodeId : nodeIds) {
+					openNodesString = StringUtil.removeFromList(
+						openNodesString, nodeId);
+				}
+
+				put(request, treeId, openNodesString);
+
+				return;
 			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
 
-			put(request, treeId, openNodesString);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+				return;
+			}
 		}
 	}
 
@@ -140,32 +168,50 @@ public class SessionTreeJSClicks {
 	public static void openNode(
 		HttpServletRequest request, String treeId, String nodeId) {
 
-		try {
-			String openNodesString = get(request, treeId);
+		while (true) {
+			try {
+				String openNodesString = get(request, treeId);
 
-			openNodesString = StringUtil.add(openNodesString, nodeId);
+				openNodesString = StringUtil.add(openNodesString, nodeId);
 
-			put(request, treeId, openNodesString);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+				put(request, treeId, openNodesString);
+
+				return;
+			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				return;
+			}
 		}
 	}
 
 	public static void openNodes(
 		HttpServletRequest request, String treeId, String[] nodeIds) {
 
-		try {
-			String openNodesString = get(request, treeId);
+		while (true) {
+			try {
+				String openNodesString = get(request, treeId);
 
-			for (String nodeId : nodeIds) {
-				openNodesString = StringUtil.add(openNodesString, nodeId);
+				for (String nodeId : nodeIds) {
+					openNodesString = StringUtil.add(openNodesString, nodeId);
+				}
+
+				put(request, treeId, openNodesString);
+
+				return;
 			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
 
-			put(request, treeId, openNodesString);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+				return;
+			}
 		}
 	}
 
@@ -213,6 +259,9 @@ public class SessionTreeJSClicks {
 
 			preferences.setValue(
 				SessionTreeJSClicks.class.getName(), key, value);
+		}
+		catch (ConcurrentModificationException cme) {
+			throw cme;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

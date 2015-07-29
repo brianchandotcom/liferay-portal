@@ -6,7 +6,7 @@
 		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ARTICLE_MENULIST_ADD_CHILD_ARTICLE" value1="Add Child Article" />
 
 		<execute function="Type" locator1="CPKnowledgebaseadminAddchildarticle#TITLE_FIELD" value1="${kbChildArticleTitle}" />
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="CPKnowledgebaseadminAddchildarticle#CONTENT_FIELD" value1="${kbChildArticleContent}" />
+		<execute function="Type#typeCKEditor" locator1="CPKnowledgebaseadminAddchildarticle#CONTENT_FIELD" value1="${kbChildArticleContent}" />
 		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddchildarticle#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -17,7 +17,7 @@
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ACTIONS_MENULIST_ADD_CHILD_ARTICLE" value1="Add Child Article" />
 
 		<execute function="Type" locator1="PGKnowledgebasedisplayAddchildarticle#TITLE_FIELD" value1="${kbArticleTitle}" />
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGKnowledgebasedisplayAddchildarticle#CONTENT_FIELD" value1="${kbArticleContent}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGKnowledgebasedisplayAddchildarticle#CONTENT_FIELD" value1="${kbArticleContent}" />
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplayAddchildarticle#PUBLISH_BUTTON" value1="Publish" />
 	</command>
 
@@ -59,7 +59,7 @@
 				<execute function="Type" locator1="CPKnowledgebaseadminAddarticle#CONTENT_BODY_SOURCE_ON" value1="${kbArticleContentSource}" />
 			</then>
 			<else>
-				<execute function="Type#typeFrameWaitForCKEditor" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" value1="${kbArticleContent}" />
+				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" value1="${kbArticleContent}" />
 			</else>
 		</if>
 
@@ -156,7 +156,7 @@
 		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ADD_MENULIST_ADD_ARTICLE" value1="Add Article" />
 
 		<execute function="Type" locator1="CPKnowledgebaseadminAddarticle#TITLE_FIELD" value1="${kbArticleTitle}" />
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" value1="${kbArticleContent}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" value1="${kbArticleContent}" />
 		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#PUBLISH_BUTTON" value1="Publish" />
 		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#TITLE_FIELD_REQUIRED" value1="Required" />
 		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#TITLE_FIELD_REQUIRED_ALERT" value1="This field is required." />
@@ -214,6 +214,7 @@
 
 	<command name="configureKBArticleDisplayPG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -265,6 +266,7 @@
 
 	<command name="configureKBDisplaySettingsPG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -319,6 +321,7 @@
 		<var name="key_kbFolderName" value="${kbFolderName}" />
 
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -337,6 +340,7 @@
 
 	<command name="configureKBRatingTypePG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -363,6 +367,7 @@
 	<command name="configureKBSectionPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Knowledge Base Section" />
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -375,6 +380,7 @@
 
 	<command name="configureKBSocialBookmarkSites">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -388,6 +394,7 @@
 			<then>
 				<execute macro="KBArticle#enableSocialBookmarkSites">
 					<var name="enableSocialBookmarkSites" value="${enableSocialBookmarkSites}" />
+					<var name="socialBookmarkSite" value="${socialBookmarkSite}" />
 				</execute>
 			</then>
 		</if>
@@ -397,6 +404,7 @@
 			<then>
 				<execute macro="KBArticle#disableSocialBookmarkSites">
 					<var name="disableSocialBookmarkSites" value="${disableSocialBookmarkSites}" />
+					<var name="socialBookmarkSite" value="${socialBookmarkSite}" />
 				</execute>
 			</then>
 		</if>
@@ -443,7 +451,7 @@
 
 		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#INFO_MESSAGE" value1="A new version is created automatically if this content is modified." />
 		<execute function="Type" locator1="CPKnowledgebaseadminAddarticle#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
 
 		<if>
 			<isset var="kbArticleAttachment" />
@@ -481,7 +489,7 @@
 
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayEditarticle#INFO_MESSAGE" value1="A new version is created automatically if this content is modified." />
 		<execute function="Type" locator1="PGKnowledgebasedisplayEditarticle#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGKnowledgebasedisplayEditarticle#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGKnowledgebasedisplayEditarticle#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
 		<execute function="AssertClick" locator1="PGKnowledgebasedisplayEditarticle#PUBLISH_BUTTON" value1="Publish" />
 
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -496,7 +504,7 @@
 
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayEditarticle#HEADER_TITLE" value1="${kbArticleTitle}" />
 		<execute function="Type" locator1="PGKnowledgebasedisplayEditarticle#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGKnowledgebasedisplayEditarticle#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGKnowledgebasedisplayEditarticle#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
 
 		<execute function="AssertClick" locator1="xpath=//button[contains(@id,'_knowledgebaseportlet_publish')]" value1="Publicar" />
 
@@ -564,7 +572,6 @@
 	</command>
 
 	<command name="gotoPGViaKBSection">
-
 		<execute function="AssertClick" locator1="PGKnowledgebasesection#KB_ARTICLE_LINK" value1="${kbArticleTitle}" />
 	</command>
 
@@ -842,6 +849,7 @@
 
 	<command name="selectSectionPGViaKBSection">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -1141,7 +1149,7 @@
 		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#INFO_MESSAGE" value1="A new version is created automatically if this content is modified." />
 		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#TITLE_FIELD" value1="${kbArticleTitle}" />
 
-		<execute function="SelectFrame" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD" />
+		<execute function="SelectFrame" locator1="CPKnowledgebaseadminAddarticle#CONTENT_FIELD_IFRAME" />
 		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#CONTENT_BODY" value1="${kbArticleContent}" />
 		<execute function="SelectFrame"  value1="relative=top" />
 

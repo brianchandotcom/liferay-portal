@@ -54,7 +54,7 @@ else {
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= !defaultParentCategory && MBCategoryPermission.contains(permissionChecker, category, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/message_boards/edit_category" />
+			<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_category" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
 		</portlet:renderURL>
@@ -66,7 +66,7 @@ else {
 		/>
 
 		<portlet:renderURL var="moveURL">
-			<portlet:param name="struts_action" value="/message_boards/move_category" />
+			<portlet:param name="mvcRenderCommandName" value="/message_boards/move_category" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
 		</portlet:renderURL>
@@ -99,20 +99,11 @@ else {
 	<c:if test="<%= portletName.equals(PortletKeys.MESSAGE_BOARDS) %>">
 		<c:if test="<%= enableRSS %>">
 
-			<%
-			if (category.getCategoryId() > 0) {
-				rssURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
-			}
-			else {
-				rssURL.setParameter("groupId", String.valueOf(scopeGroupId));
-			}
-			%>
-
 			<liferay-ui:rss
 				delta="<%= rssDelta %>"
 				displayStyle="<%= rssDisplayStyle %>"
 				feedType="<%= rssFeedType %>"
-				resourceURL="<%= rssURL %>"
+				url="<%= MBUtil.getRSSURL(plid, category.getCategoryId(), 0, 0, themeDisplay) %>"
 			/>
 		</c:if>
 
@@ -136,8 +127,7 @@ else {
 		<c:if test="<%= hasSubscriptionPermission && (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) %>">
 			<c:choose>
 				<c:when test="<%= (categorySubscriptionClassPKs != null) && categorySubscriptionClassPKs.contains(categorySubscriptionClassPK) %>">
-					<portlet:actionURL var="unsubscribeURL">
-						<portlet:param name="struts_action" value="/message_boards/edit_category" />
+					<portlet:actionURL name="/message_boards/edit_category" var="unsubscribeURL">
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
@@ -150,8 +140,7 @@ else {
 					/>
 				</c:when>
 				<c:otherwise>
-					<portlet:actionURL var="subscribeURL">
-						<portlet:param name="struts_action" value="/message_boards/edit_category" />
+					<portlet:actionURL name="/message_boards/edit_category" var="subscribeURL">
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
@@ -168,8 +157,7 @@ else {
 	</c:if>
 
 	<c:if test="<%= !defaultParentCategory && MBCategoryPermission.contains(permissionChecker, category, ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/message_boards/edit_category" />
+		<portlet:actionURL name="/message_boards/edit_category" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />

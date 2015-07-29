@@ -15,6 +15,11 @@
 package com.liferay.journal.subscriptions.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.constants.JournalConstants;
+import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -26,9 +31,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.subscriptions.test.BaseSubscriptionLocalizedContentTestCase;
 
 import javax.portlet.PortletPreferences;
@@ -81,7 +83,12 @@ public class JournalSubscriptionLocalizedContentTest
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.JOURNAL;
+		return JournalPortletKeys.JOURNAL;
+	}
+
+	@Override
+	protected String getServiceName() {
+		return JournalConstants.SERVICE_NAME;
 	}
 
 	@Override
@@ -101,7 +108,7 @@ public class JournalSubscriptionLocalizedContentTest
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				layout, getPortletId());
+				layout, getServiceName());
 
 		LocalizationUtil.setPreferencesValue(
 			portletPreferences, bodyPreferenceName,
@@ -112,7 +119,8 @@ public class JournalSubscriptionLocalizedContentTest
 
 		PortletPreferencesLocalServiceUtil.updatePreferences(
 			group.getGroupId(), PortletKeys.PREFS_OWNER_TYPE_GROUP,
-			PortletKeys.PREFS_PLID_SHARED, getPortletId(), portletPreferences);
+			PortletKeys.PREFS_PLID_SHARED, getServiceName(),
+			portletPreferences);
 	}
 
 	@Override

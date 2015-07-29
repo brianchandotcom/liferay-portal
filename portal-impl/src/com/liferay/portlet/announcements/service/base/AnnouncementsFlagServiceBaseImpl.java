@@ -186,7 +186,7 @@ public abstract class AnnouncementsFlagServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsFlagLocalService.class)
 	protected com.liferay.portlet.announcements.service.AnnouncementsFlagLocalService announcementsFlagLocalService;
-	@BeanReference(type = AnnouncementsFlagService.class)
+	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsFlagService.class)
 	protected AnnouncementsFlagService announcementsFlagService;
 	@BeanReference(type = AnnouncementsFlagPersistence.class)
 	protected AnnouncementsFlagPersistence announcementsFlagPersistence;

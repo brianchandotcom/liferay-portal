@@ -261,7 +261,7 @@ public abstract class Watcher implements Runnable {
 		if (Files.notExists(syncAccountFilePath)) {
 			if (_logger.isTraceEnabled()) {
 				_logger.trace(
-					"Missing sync account file path {}", missingFilePath);
+					"Missing sync account file path {}", syncAccountFilePath);
 			}
 
 			syncAccount.setActive(false);
@@ -274,16 +274,19 @@ public abstract class Watcher implements Runnable {
 			SyncSite syncSite = SyncSiteService.fetchSyncSite(
 				missingFilePath.toString(), syncAccount.getSyncAccountId());
 
-			if ((syncSite != null) && Files.notExists(missingFilePath)) {
+			if ((syncSite != null) && syncSite.isActive() &&
+				Files.notExists(missingFilePath)) {
+
 				if (_logger.isTraceEnabled()) {
 					_logger.trace(
 						"Missing sync site file path {}", missingFilePath);
 				}
 
-				syncSite.setActive(false);
 				syncSite.setUiEvent(SyncSite.UI_EVENT_SYNC_SITE_FOLDER_MISSING);
 
 				SyncSiteService.update(syncSite);
+
+				SyncSiteService.deactivateSyncSite(syncSite.getSyncSiteId());
 			}
 		}
 	}
@@ -345,7 +348,7 @@ public abstract class Watcher implements Runnable {
 		else if (eventType.equals(SyncWatchEvent.EVENT_TYPE_RENAME_FROM)) {
 			removeCreatedFilePathName(filePath.toString());
 
-			processMissingFilePath(getBaseFilePath());
+			processMissingFilePath(filePath);
 
 			fireWatchEventListener(
 				SyncWatchEvent.EVENT_TYPE_RENAME_FROM, filePath);

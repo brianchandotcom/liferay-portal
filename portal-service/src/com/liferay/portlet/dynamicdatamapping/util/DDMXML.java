@@ -29,10 +29,6 @@ import java.util.Locale;
  */
 public interface DDMXML {
 
-	public String formatXML(Document document);
-
-	public String formatXML(String xml);
-
 	public Fields getFields(DDMStructure structure, String xml)
 		throws PortalException;
 

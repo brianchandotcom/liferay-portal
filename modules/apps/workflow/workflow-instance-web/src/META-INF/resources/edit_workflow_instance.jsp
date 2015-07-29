@@ -103,18 +103,10 @@ else {
 				</liferay-ui:panel>
 
 				<liferay-ui:panel title="comments">
-					<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
-
-					<portlet:resourceURL var="discussionPaginationURL">
-						<portlet:param name="invokeTaglibDiscussion" value="<%= Boolean.TRUE.toString() %>" />
-					</portlet:resourceURL>
-
 					<liferay-ui:discussion
 						className="<%= assetRenderer.getClassName() %>"
 						classPK="<%= assetRenderer.getClassPK() %>"
-						formAction="<%= discussionURL %>"
 						formName='<%= "fm" + assetRenderer.getClassPK() %>'
-						paginationURL="<%= discussionPaginationURL %>"
 						ratingsEnabled="<%= false %>"
 						redirect="<%= currentURL %>"
 						userId="<%= user.getUserId() %>" />

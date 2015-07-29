@@ -9,7 +9,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="storeAttributeHref" priority="5">
+	<command name="storeAttributeHref" priority="4">
 		<var attribute="href" locator="//a[@rel='external']" name="attributeValue" />
 
 		<echo message="Test storeAttribute #1: storing href values in attributeValue" />
@@ -20,7 +20,7 @@
 		</execute>
 	</command>
 
-	<command name="storeAttributeHrefWithVariablesInLocator" priority="5">
+	<command name="storeAttributeHrefWithVariablesInLocator" priority="4">
 		<var name="rel-name">external</var>
 
 		<var attribute="href" locator="//a[@rel='${rel-name}']" name="attributeValue" />
@@ -33,7 +33,7 @@
 		</execute>
 	</command>
 
-	<command name="storeAttributeWithoutVariablesInLocator" priority="5">
+	<command name="storeAttributeWithoutVariablesInLocator" priority="4">
 		<var attribute="class" locator="TestUtils#TEST_PATH" name="attributeValue" />
 
 		<echo message="Test storeAttribute #3: using locator/path with xpath containing no variables" />
@@ -44,7 +44,7 @@
 		</execute>
 	</command>
 
-	<command name="storeAttributeWithoutVariablesInLocatorKey" priority="5">
+	<command name="storeAttributeWithoutVariablesInLocatorKey" priority="4">
 		<var attribute="class" locator="//h1[@class='site-title']/a/span" name="attributeValue" />
 
 		<echo message="Test storeAttribute #4: using locator with xpath containing no variables" />
@@ -55,7 +55,7 @@
 		</execute>
 	</command>
 
-	<command name="storeAttributeWithVariablesInAttributeName" priority="5">
+	<command name="storeAttributeWithVariablesInAttributeName" priority="4">
 		<var name="key_testVar" value="site-title" />
 
 		<var attribute="class" locator="TestUtils#TEST_VAR_PATH" name="attributeValue" />
@@ -68,7 +68,7 @@
 		</execute>
 	</command>
 
-	<command name="storeAttributeWithVariablesInLocator" priority="5">
+	<command name="storeAttributeWithVariablesInLocator" priority="4">
 		<var name="class-name">site-title</var>
 
 		<var attribute="class" locator="//h1[@class='${class-name}']" name="attributeValue" />
@@ -81,7 +81,7 @@
 		</execute>
 	</command>
 
-	<command name="storeAttributeWithVariablesInLocatorKey" priority="5">
+	<command name="storeAttributeWithVariablesInLocatorKey" priority="4">
 		<var name="attributeNamePart1">la</var>
 		<var name="attributeNamePart2">ss</var>
 		<var name="class-name">site-title</var>

@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.exportimport.staging.permission;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -23,18 +23,11 @@ import com.liferay.portal.security.permission.PermissionChecker;
  */
 public class StagingPermissionUtil {
 
-	public static StagingPermission getStagingPermission() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			StagingPermissionUtil.class);
-
-		return _stagingPermission;
-	}
-
 	public static Boolean hasPermission(
 		PermissionChecker permissionChecker, Group group, String className,
 		long classPK, String portletId, String actionId) {
 
-		return getStagingPermission().hasPermission(
+		return _stagingPermission.hasPermission(
 			permissionChecker, group, className, classPK, portletId, actionId);
 	}
 
@@ -42,17 +35,12 @@ public class StagingPermissionUtil {
 		PermissionChecker permissionChecker, long groupId, String className,
 		long classPK, String portletId, String actionId) {
 
-		return getStagingPermission().hasPermission(
+		return _stagingPermission.hasPermission(
 			permissionChecker, groupId, className, classPK, portletId,
 			actionId);
 	}
 
-	public void setStagingPermission(StagingPermission stagingPermission) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_stagingPermission = stagingPermission;
-	}
-
-	private static StagingPermission _stagingPermission;
+	private static final StagingPermission _stagingPermission =
+		ProxyFactory.newServiceTrackedInstance(StagingPermission.class);
 
 }

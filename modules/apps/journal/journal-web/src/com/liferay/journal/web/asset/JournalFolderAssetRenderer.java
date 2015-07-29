@@ -14,7 +14,12 @@
 
 package com.liferay.journal.web.asset;
 
-import com.liferay.journal.web.constants.JournalPortletKeys;
+import com.liferay.journal.configuration.JournalServiceConfigurationValues;
+import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalArticleServiceUtil;
+import com.liferay.journal.service.JournalFolderServiceUtil;
+import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -23,14 +28,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.model.BaseAssetRenderer;
-import com.liferay.portlet.journal.model.JournalFolder;
-import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
-import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
-import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
+import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Date;
@@ -41,11 +41,13 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Alexander Chow
  */
 public class JournalFolderAssetRenderer
-	extends BaseAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer implements TrashRenderer {
 
 	public static final String TYPE = "folder";
 
@@ -75,7 +77,7 @@ public class JournalFolderAssetRenderer
 
 	@Override
 	public String getIconCssClass() throws PortalException {
-		if (PropsValues.JOURNAL_FOLDER_ICON_CHECK_COUNT &&
+		if (JournalServiceConfigurationValues.JOURNAL_FOLDER_ICON_CHECK_COUNT &&
 			JournalFolderServiceUtil.getFoldersAndArticlesCount(
 				_folder.getGroupId(), _folder.getFolderId()) > 0) {
 
@@ -88,7 +90,8 @@ public class JournalFolderAssetRenderer
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		try {
-			if (PropsValues.JOURNAL_FOLDER_ICON_CHECK_COUNT &&
+			if (JournalServiceConfigurationValues.
+					JOURNAL_FOLDER_ICON_CHECK_COUNT &&
 				JournalFolderServiceUtil.getFoldersAndArticlesCount(
 					_folder.getGroupId(), _folder.getFolderId(),
 					WorkflowConstants.STATUS_APPROVED) > 0) {
@@ -104,10 +107,25 @@ public class JournalFolderAssetRenderer
 	}
 
 	@Override
+	public String getJspPath(HttpServletRequest request, String template) {
+		if (template.equals(TEMPLATE_FULL_CONTENT)) {
+			return "/asset/folder_" + template + ".jsp";
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
 	public String getPortletId() {
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
+	}
+
+	@Override
+	public int getStatus() {
+		return _folder.getStatus();
 	}
 
 	@Override
@@ -124,7 +142,9 @@ public class JournalFolderAssetRenderer
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!PropsValues.JOURNAL_FOLDER_ICON_CHECK_COUNT) {
+		if (!JournalServiceConfigurationValues.
+				JOURNAL_FOLDER_ICON_CHECK_COUNT) {
+
 			return themeDisplay.getPathThemeImages() +
 				"/file_system/large/folder_empty_article.png";
 		}
@@ -235,20 +255,6 @@ public class JournalFolderAssetRenderer
 
 		return JournalFolderPermission.contains(
 			permissionChecker, _folder, ActionKeys.VIEW);
-	}
-
-	@Override
-	public String render(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			String template)
-		throws Exception {
-
-		if (template.equals(TEMPLATE_FULL_CONTENT)) {
-			return "/asset/folder_" + template + ".jsp";
-		}
-		else {
-			return null;
-		}
 	}
 
 	private final JournalFolder _folder;

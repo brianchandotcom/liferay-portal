@@ -242,6 +242,15 @@ public class LayoutRevisionLocalServiceImpl
 	}
 
 	@Override
+	public LayoutRevision fetchLatestLayoutRevision(
+		long layoutSetBranchId, long plid) {
+
+		return layoutRevisionPersistence.fetchByL_P_First(
+			layoutSetBranchId, plid,
+			new LayoutRevisionCreateDateComparator(false));
+	}
+
+	@Override
 	public LayoutRevision fetchLayoutRevision(
 		long layoutSetBranchId, boolean head, long plid) {
 

@@ -24,7 +24,7 @@
 		displayStyle="icon"
 		showCheckbox="<%= Boolean.FALSE %>"
 		thumbnailSrc="<%= thumbnailSrc %>"
-		thumbnailStyle="<%= DLUtil.getThumbnailStyle() %>"
+		thumbnailStyle="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>"
 		title="{title}"
 		url="<%= uploadURL %>"
 	/>
@@ -33,7 +33,7 @@
 		displayStyle="descriptive"
 		showCheckbox="<%= Boolean.FALSE %>"
 		thumbnailSrc="<%= thumbnailSrc %>"
-		thumbnailStyle="<%= DLUtil.getThumbnailStyle() %>"
+		thumbnailStyle="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>"
 		title="{title}"
 		url="<%= uploadURL %>"
 	/>

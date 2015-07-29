@@ -9,18 +9,13 @@
 </thead>
 <tbody>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RESOURCE_HEADER_TITLE</td>
 	<td>//h3[@class='header-title']/span[contains(.,'${key_resourceName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_CUSTOM_FIELD_BUTTON</td>
-	<td>//button[contains(.,'Add Custom Field')]</td>
+	<td>//a[contains(.,'Add Custom Field')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -16,6 +16,8 @@ package com.liferay.taglib.search;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.Writer;
@@ -50,6 +52,10 @@ public class StatusSearchEntry extends TextSearchEntry {
 	}
 
 	public ServletContext getServletContext() {
+		if (_servletContext == null) {
+			return ServletContextPool.get(PortalUtil.getServletContextName());
+		}
+
 		return _servletContext;
 	}
 
@@ -80,20 +86,12 @@ public class StatusSearchEntry extends TextSearchEntry {
 			"liferay-ui:search-container-column-status:statusDate",
 			_statusDate);
 
-		if (_servletContext != null) {
-			RequestDispatcher requestDispatcher =
-				DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
-					_servletContext, _PAGE);
+		RequestDispatcher requestDispatcher =
+			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+				getServletContext(), _PAGE);
 
-			requestDispatcher.include(
-				request, new PipingServletResponse(response, writer));
-		}
-		else {
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-				_PAGE);
-
-			requestDispatcher.include(request, response);
-		}
+		requestDispatcher.include(
+			request, new PipingServletResponse(response, writer));
 	}
 
 	public void setRequest(HttpServletRequest request) {

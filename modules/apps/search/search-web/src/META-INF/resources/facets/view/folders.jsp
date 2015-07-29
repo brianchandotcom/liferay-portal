@@ -25,7 +25,7 @@ int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
 int maxTerms = dataJSONObject.getInt("maxTerms", 10);
 boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 
-Indexer indexer = FolderSearcher.getInstance();
+Indexer<?> indexer = FolderSearcher.getInstance();
 
 SearchContext searchContext = SearchContextFactory.getInstance(request);
 %>

@@ -21,13 +21,13 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.RequestBackedPortletURLFactory;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -161,7 +161,8 @@ public class EditorConfigTransformerTest {
 	}
 
 	@Test
-	public void testEditorConfigTransformedWhenEditorConfigTransformerIsRegistered()
+	public void
+			testEditorConfigTransformedWhenEditorConfigTransformerIsRegistered()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -211,7 +212,8 @@ public class EditorConfigTransformerTest {
 	}
 
 	@Test
-	public void testEditorConfigTransformedWithMultipleEditorOptionsContributors()
+	public void
+			testEditorConfigTransformedWithMultipleEditorOptionsContributors()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -296,7 +298,7 @@ public class EditorConfigTransformerTest {
 			JSONObject jsonObject,
 			Map<String, Object> inputEditorTaglibAttributes,
 			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse) {
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			jsonObject.put("textMode", "html");
 			jsonObject.put("toolbar", "HTMLToolbar");
@@ -312,9 +314,8 @@ public class EditorConfigTransformerTest {
 		public void transform(
 			EditorOptions editorOptions,
 			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse,
-			JSONObject configJSONObject) {
+			JSONObject configJSONObject, ThemeDisplay themeDisplay,
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			String uploadURL = editorOptions.getUploadURL();
 
@@ -340,7 +341,7 @@ public class EditorConfigTransformerTest {
 			EditorOptions editorOptions,
 			Map<String, Object> inputEditorTaglibAttributes,
 			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse) {
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			editorOptions.setTextMode(true);
 		}
@@ -355,7 +356,7 @@ public class EditorConfigTransformerTest {
 			EditorOptions editorOptions,
 			Map<String, Object> inputEditorTaglibAttributes,
 			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse) {
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			editorOptions.setUploadURL("http://upload.com");
 		}

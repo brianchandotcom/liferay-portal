@@ -62,8 +62,9 @@ public class SanitizerLogWrapper extends LogWrapper {
 		}
 
 		int[] whitelistCharacters = GetterUtil.getIntegerValues(
-			SystemProperties.getArray(
-				PropsKeys.LOG_SANITIZER_WHITELIST_CHARACTERS));
+			StringUtil.split(
+				SystemProperties.get(
+					PropsKeys.LOG_SANITIZER_WHITELIST_CHARACTERS)));
 
 		for (int whitelistCharacter : whitelistCharacters) {
 			if ((whitelistCharacter >= 0) &&

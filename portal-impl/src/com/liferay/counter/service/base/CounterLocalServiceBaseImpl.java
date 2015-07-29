@@ -384,7 +384,7 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = CounterLocalService.class)
+	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected CounterLocalService counterLocalService;
 	@BeanReference(type = CounterPersistence.class)
 	protected CounterPersistence counterPersistence;

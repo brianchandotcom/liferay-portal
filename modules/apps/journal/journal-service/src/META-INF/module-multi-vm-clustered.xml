@@ -1,0 +1,22 @@
+<ehcache
+	dynamicConfig="true"
+	monitoring="off"
+	name="liferay-multi-vm-clustered"
+	updateCheck="false"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../../../modules/portal/portal-cache-ehcache/src/ehcache/ehcache.xsd"
+>
+	<cache
+		eternal="false"
+		maxElementsInMemory="10000"
+		name="com.liferay.journal.util.JournalContent"
+		overflowToDisk="false"
+		timeToIdleSeconds="600"
+	>
+		<cacheEventListenerFactory
+			class="portalPropertyKey=ehcache.cache.event.listener.factory"
+			properties="replicatePuts=false"
+			propertySeparator=","
+		/>
+	</cache>
+</ehcache>

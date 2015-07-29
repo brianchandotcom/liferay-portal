@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.action;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -47,12 +48,16 @@ public class ActionUtil {
 
 		String topLink = ParamUtil.getString(request, "topLink");
 
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
 		if (topLink.equals("banned-users") &&
 			!MBPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ActionKeys.BAN_USER)) {
+				permissionChecker, themeDisplay.getScopeGroupId(),
+				ActionKeys.BAN_USER)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, ActionKeys.BAN_USER);
 		}
 
 		MBBanLocalServiceUtil.checkBan(
@@ -67,8 +72,8 @@ public class ActionUtil {
 		}
 		else {
 			MBPermission.check(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ActionKeys.VIEW);
+				permissionChecker, themeDisplay.getScopeGroupId(),
+				ActionKeys.VIEW);
 		}
 
 		request.setAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY, category);

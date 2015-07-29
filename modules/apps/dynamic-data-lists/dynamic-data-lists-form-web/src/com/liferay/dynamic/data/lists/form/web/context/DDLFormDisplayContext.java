@@ -14,17 +14,17 @@
 
 package com.liferay.dynamic.data.lists.form.web.context;
 
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormWebKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 
 import javax.portlet.RenderRequest;
@@ -39,9 +39,7 @@ public class DDLFormDisplayContext {
 
 		_renderRequest = renderRequest;
 
-		String portletId = PortalUtil.getPortletId(_renderRequest);
-
-		if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+		if (Validator.isNull(getPortletResource())) {
 			return;
 		}
 
@@ -59,7 +57,7 @@ public class DDLFormDisplayContext {
 		}
 
 		_recordSet = (DDLRecordSet)_renderRequest.getAttribute(
-			WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
+			DDLFormWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 		if (_recordSet != null) {
 			return _recordSet;
@@ -102,6 +100,14 @@ public class DDLFormDisplayContext {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.getId();
+	}
+
+	protected String getPortletResource() {
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return portletDisplay.getPortletResource();
 	}
 
 	protected ThemeDisplay getThemeDisplay() {

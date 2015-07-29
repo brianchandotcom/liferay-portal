@@ -534,10 +534,15 @@
 		</if>
 
 		<execute macro="SOForumsCategoryThread#viewPG">
+			<var name="adminName" value="${adminName}" />
+			<var name="categoryCount" value="${categoryCount}" />
 			<var name="categoryName" value="${categoryName}" />
+			<var name="currentUser" value="${currentUser}" />
 			<var name="pageName" value="${pageName}" />
+			<var name="postCount" value="${postCount}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="threadBody" value="${threadBody}" />
+			<var name="threadCount" value="${threadCount}" />
 			<var name="threadSubject" value="${threadSubject}" />
 			<var name="userName" value="${userName}" />
 		</execute>

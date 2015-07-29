@@ -2919,8 +2919,9 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		}
 	}
 
-	protected void cacheUniqueFindersCache(BlogsStatsUser blogsStatsUser) {
-		if (blogsStatsUser.isNew()) {
+	protected void cacheUniqueFindersCache(BlogsStatsUser blogsStatsUser,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					blogsStatsUser.getGroupId(), blogsStatsUser.getUserId()
 				};
@@ -3167,7 +3168,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 			blogsStatsUser, false);
 
 		clearUniqueFindersCache(blogsStatsUser);
-		cacheUniqueFindersCache(blogsStatsUser);
+		cacheUniqueFindersCache(blogsStatsUser, isNew);
 
 		blogsStatsUser.resetOriginalValues();
 
@@ -3549,6 +3550,11 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return BlogsStatsUserModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

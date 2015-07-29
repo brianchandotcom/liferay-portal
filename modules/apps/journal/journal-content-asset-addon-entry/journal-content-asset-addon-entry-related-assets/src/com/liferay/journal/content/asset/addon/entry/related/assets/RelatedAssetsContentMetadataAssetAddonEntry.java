@@ -38,8 +38,8 @@ public class RelatedAssetsContentMetadataAssetAddonEntry
 	}
 
 	@Override
-	public String getJSPPath() {
-		return _JSP_PATH;
+	public String getJspPath() {
+		return "/META-INF/resources/related_assets.jsp";
 	}
 
 	@Override
@@ -59,13 +59,11 @@ public class RelatedAssetsContentMetadataAssetAddonEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.related.assets)"
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.related.assets)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	private static final String _JSP_PATH =
-		"/META-INF/resources/related_assets.jsp";
 
 }

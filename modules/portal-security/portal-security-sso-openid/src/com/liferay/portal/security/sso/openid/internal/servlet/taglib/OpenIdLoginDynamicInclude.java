@@ -53,7 +53,7 @@ public class OpenIdLoginDynamicInclude extends BaseDynamicInclude {
 				_log.error("Unable to include JSP", se);
 			}
 
-			throw new IOException("Unable to include JSP", se);
+			throw new IOException("Unable to include " + _JSP_PATH, se);
 		}
 	}
 

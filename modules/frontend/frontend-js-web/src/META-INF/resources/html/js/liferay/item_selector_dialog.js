@@ -74,6 +74,7 @@ AUI.add(
 											}
 										},
 										{
+											cssClass: 'btn-link close-modal',
 											id: 'cancelButton',
 											label: strings.cancel,
 											on: {

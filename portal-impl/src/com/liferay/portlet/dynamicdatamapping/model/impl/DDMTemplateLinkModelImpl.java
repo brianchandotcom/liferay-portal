@@ -67,6 +67,15 @@ public class DDMTemplateLinkModelImpl extends BaseModelImpl<DDMTemplateLink>
 			{ "classPK", Types.BIGINT },
 			{ "templateId", Types.BIGINT }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("templateLinkId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("templateId", Types.BIGINT);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table DDMTemplateLink (templateLinkId LONG not null primary key,classNameId LONG,classPK LONG,templateId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplateLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmTemplateLink.templateLinkId ASC";

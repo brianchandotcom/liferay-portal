@@ -370,7 +370,7 @@ public abstract class ResourceLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = ResourceLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;

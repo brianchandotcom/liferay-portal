@@ -14,34 +14,39 @@
 
 package com.liferay.portlet.messageboards.action;
 
-import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.struts.FindActionHelper;
+import com.liferay.portal.util.PortletKeys;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class FindCategoryAction extends FindMessageAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
+		"path=/message_boards/find_category"
+	},
+	service = StrutsAction.class
+)
+public class FindCategoryAction extends BaseStrutsAction {
 
 	@Override
-	protected long getGroupId(long primaryKey) throws Exception {
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(
-			primaryKey);
+	public String execute(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
 
-		return category.getGroupId();
+		_findActionHelper.execute(request, response);
+
+		return null;
 	}
 
-	@Override
-	protected String getPrimaryKeyParameterName() {
-		return "mbCategoryId";
-	}
-
-	@Override
-	protected String getStrutsAction(
-		HttpServletRequest request, String portletId) {
-
-		return "/message_boards/view";
-	}
+	private final FindActionHelper _findActionHelper =
+		new CategoryFindActionHelper();
 
 }

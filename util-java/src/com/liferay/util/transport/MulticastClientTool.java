@@ -90,7 +90,7 @@ public class MulticastClientTool {
 				i++;
 			}
 			else if (args[i].equals("-p")) {
-				argsMap.put("port", new Integer(args[i + 1]));
+				argsMap.put("port", Integer.valueOf(args[i + 1]));
 
 				i++;
 			}

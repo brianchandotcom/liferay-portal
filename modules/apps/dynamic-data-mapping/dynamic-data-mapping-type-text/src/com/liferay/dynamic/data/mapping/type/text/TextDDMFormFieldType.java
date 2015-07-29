@@ -61,6 +61,11 @@ public class TextDDMFormFieldType extends BaseDDMFormFieldType {
 	}
 
 	@Override
+	public String getIcon() {
+		return "icon-font";
+	}
+
+	@Override
 	public String getName() {
 		return "text";
 	}

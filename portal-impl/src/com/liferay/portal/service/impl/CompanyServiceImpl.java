@@ -55,7 +55,6 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 * @param  webId the company's web domain
 	 * @param  virtualHost the company's virtual host name
 	 * @param  mx the company's mail domain
-	 * @param  shardName the company's shard
 	 * @param  system whether the company is the very first company (i.e., the
 	 * @param  maxUsers the max number of company users (optionally
 	 *         <code>0</code>)
@@ -68,18 +67,18 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public Company addCompany(
-			String webId, String virtualHost, String mx, String shardName,
-			boolean system, int maxUsers, boolean active)
+			String webId, String virtualHost, String mx, boolean system,
+			int maxUsers, boolean active)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.isOmniadmin()) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeOmniadmin(permissionChecker);
 		}
 
 		return companyLocalService.addCompany(
-			webId, virtualHost, mx, shardName, system, maxUsers, active);
+			webId, virtualHost, mx, system, maxUsers, active);
 	}
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
@@ -88,7 +87,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.isOmniadmin()) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeOmniadmin(permissionChecker);
 		}
 
 		return companyLocalService.deleteCompany(companyId);
@@ -228,7 +227,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.isOmniadmin()) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeOmniadmin(permissionChecker);
 		}
 
 		return companyLocalService.updateCompany(
@@ -448,8 +447,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 * @deprecated As of 7.0.0, replaced by {@link #updateCompany(long, String,
 	 *             String, String, boolean, byte[], String, String, String,
 	 *             String, String, String, String, String, String, String,
-	 *             String, java.util.List, java.util.List, java.util.List,
-	 *             java.util.List, UnicodeProperties)}
+	 *             String, List, List, List, List, UnicodeProperties)}
 	 */
 	@Deprecated
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
@@ -547,7 +545,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  properties the company's properties. See {@link
-	 *         com.liferay.portal.kernel.util.UnicodeProperties}
+	 *         UnicodeProperties}
 	 * @throws PortalException if the user was not an administrator
 	 */
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

@@ -162,7 +162,8 @@ public class SPIAgentSerializableTest {
 			Assert.assertEquals(
 				"Nonserializable distributed request attribute name " +
 					distributedNonserializable + " with value " +
-						distributedNonserializable, logRecord.getMessage());
+						distributedNonserializable,
+				logRecord.getMessage());
 
 			Assert.assertEquals(1, distributedRequestAttributes.size());
 			Assert.assertEquals(
@@ -184,7 +185,8 @@ public class SPIAgentSerializableTest {
 			Assert.assertEquals(
 				"Nonserializable distributed request attribute name " +
 					distributedNonserializable + " with value " +
-						distributedNonserializable, logRecord.getMessage());
+						distributedNonserializable,
+				logRecord.getMessage());
 
 			logRecord = logRecords.get(1);
 
@@ -411,7 +413,8 @@ public class SPIAgentSerializableTest {
 			Assert.assertEquals(
 				"Nonserializable session attribute name " +
 					nonserializableAttribute + " with value " +
-						nonserializableAttribute, logRecord.getMessage());
+						nonserializableAttribute,
+				logRecord.getMessage());
 
 			Assert.assertEquals(2, sessionAttributes.size());
 			Assert.assertEquals(
@@ -440,14 +443,16 @@ public class SPIAgentSerializableTest {
 			Assert.assertEquals(
 				"Nonserializable session attribute name " +
 					nonserializableAttribute + " with value " +
-						nonserializableAttribute, logRecord.getMessage());
+						nonserializableAttribute,
+				logRecord.getMessage());
 
 			logRecord = logRecords.get(1);
 
 			Assert.assertEquals(
 				"Nonserializable session attribute name " +
 					nonserializableAttribute + " with value " +
-						nonserializableAttribute, logRecord.getMessage());
+						nonserializableAttribute,
+				logRecord.getMessage());
 
 			Assert.assertEquals(2, sessionAttributes.size());
 			Assert.assertEquals(

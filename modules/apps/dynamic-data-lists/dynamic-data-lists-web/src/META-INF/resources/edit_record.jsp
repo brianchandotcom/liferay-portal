@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-DDLRecord record = (DDLRecord)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD);
+DDLRecord record = (DDLRecord)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
 long recordId = BeanParamUtil.getLong(record, request, "recordId");
 
@@ -38,12 +38,10 @@ DDLRecordSet recordSet = DDLRecordSetServiceUtil.getRecordSet(recordSetId);
 
 DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-Fields fields = null;
+DDMFormValues ddmFormValues = null;
 
 if (recordVersion != null) {
-	DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
-
-	fields = DDMFormValuesToFieldsConverterUtil.convert(ddmStructure, ddmFormValues);
+	ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
 }
 
 String defaultLanguageId = ParamUtil.getString(request, "defaultLanguageId");
@@ -54,12 +52,12 @@ if (Validator.isNull(defaultLanguageId)) {
 
 Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
 
-if (fields != null) {
-	Set<Locale> availableLocalesSet = fields.getAvailableLocales();
+if (ddmFormValues != null) {
+	Set<Locale> availableLocalesSet = ddmFormValues.getAvailableLocales();
 
 	availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
 
-	defaultLanguageId = LocaleUtil.toLanguageId(fields.getDefaultLocale());
+	defaultLanguageId = LocaleUtil.toLanguageId(ddmFormValues.getDefaultLocale());
 }
 
 String languageId = ParamUtil.getString(request, "languageId", defaultLanguageId);
@@ -149,7 +147,7 @@ if (translating) {
 		<liferay-ddm:html
 			classNameId="<%= classNameId %>"
 			classPK="<%= classPK %>"
-			fields="<%= fields %>"
+			ddmFormValues="<%= ddmFormValues %>"
 			repeatable="<%= translating ? false : true %>"
 			requestedLocale="<%= LocaleUtil.fromLanguageId(languageId) %>"
 		/>

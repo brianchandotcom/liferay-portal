@@ -850,7 +850,7 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = LayoutPrototypeLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.LayoutPrototypeLocalService.class)
 	protected LayoutPrototypeLocalService layoutPrototypeLocalService;
 	@BeanReference(type = com.liferay.portal.service.LayoutPrototypeService.class)
 	protected com.liferay.portal.service.LayoutPrototypeService layoutPrototypeService;

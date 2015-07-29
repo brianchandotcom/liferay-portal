@@ -14,12 +14,16 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -27,17 +31,17 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Brian Wing Shun Chan
  * @author Mirco Tamburini
  * @author Brett Randall
+ * @author Shuyang Zhou
  */
 public class SystemProperties {
 
-	public static final String SYSTEM_PROPERTIES_FINAL =
-		"system.properties.final";
-
-	public static final String SYSTEM_PROPERTIES_LOAD =
-		"system.properties.load";
-
 	public static final String SYSTEM_PROPERTIES_QUIET =
 		"system.properties.quiet";
+
+	public static final String SYSTEM_PROPERTIES_SET = "system.properties.set";
+
+	public static final String SYSTEM_PROPERTIES_SET_OVERRIDE =
+		"system.properties.set.override";
 
 	public static final String TMP_DIR = "java.io.tmpdir";
 
@@ -57,34 +61,32 @@ public class SystemProperties {
 		return value;
 	}
 
-	public static String[] getArray(String key) {
-		String value = get(key);
-
-		if (value == null) {
-			return new String[0];
-		}
-		else {
-			return StringUtil.split(value);
-		}
-	}
-
 	public static Properties getProperties() {
 		return PropertiesUtil.fromMap(_properties);
 	}
 
-	public static void reload() {
-		if (_loaded) {
-			return;
-		}
+	public static void set(String key, String value) {
+		System.setProperty(key, value);
 
+		_properties.put(key, value);
+	}
+
+	private static final Map<String, String> _properties;
+
+	static {
 		Properties properties = new Properties();
 
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader classLoader = currentThread.getContextClassLoader();
 
-		boolean systemPropertiesQuiet = GetterUtil.getBoolean(
-			System.getProperty(SYSTEM_PROPERTIES_QUIET));
+		List<URL> urls = null;
+
+		if (!GetterUtil.getBoolean(
+				System.getProperty(SYSTEM_PROPERTIES_QUIET))) {
+
+			urls = new ArrayList<>();
+		}
 
 		// system.properties
 
@@ -99,13 +101,13 @@ public class SystemProperties {
 					properties.load(inputStream);
 				}
 
-				if (!systemPropertiesQuiet) {
-					System.out.println("Loading " + url);
+				if (urls != null) {
+					urls.add(url);
 				}
 			}
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
 		}
 
 		// system-ext.properties
@@ -117,19 +119,17 @@ public class SystemProperties {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				_loaded = true;
-
 				try (InputStream inputStream = url.openStream()) {
 					properties.load(inputStream);
 				}
 
-				if (!systemPropertiesQuiet) {
-					System.out.println("Loading " + url);
+				if (urls != null) {
+					urls.add(url);
 				}
 			}
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
 		}
 
 		// Set environment properties
@@ -138,23 +138,19 @@ public class SystemProperties {
 
 		// Set system properties
 
-		boolean systemPropertiesLoad = GetterUtil.getBoolean(
-			System.getProperty(SYSTEM_PROPERTIES_LOAD), true);
+		if (GetterUtil.getBoolean(
+				System.getProperty(SYSTEM_PROPERTIES_SET), true)) {
 
-		boolean systemPropertiesFinal = GetterUtil.getBoolean(
-			System.getProperty(SYSTEM_PROPERTIES_FINAL), true);
+			boolean systemPropertiesSetOverride = GetterUtil.getBoolean(
+				System.getProperty(SYSTEM_PROPERTIES_SET_OVERRIDE), true);
 
-		if (systemPropertiesLoad) {
-			Enumeration<String> enu =
-				(Enumeration<String>)properties.propertyNames();
+			for (Entry<Object, Object> entry : properties.entrySet()) {
+				String key = String.valueOf(entry.getKey());
 
-			while (enu.hasMoreElements()) {
-				String key = enu.nextElement();
-
-				if (systemPropertiesFinal ||
+				if (systemPropertiesSetOverride ||
 					Validator.isNull(System.getProperty(key))) {
 
-					System.setProperty(key, properties.getProperty(key));
+					System.setProperty(key, String.valueOf(entry.getValue()));
 				}
 			}
 		}
@@ -165,19 +161,12 @@ public class SystemProperties {
 		// java.util.Properties
 
 		PropertiesUtil.fromProperties(properties, _properties);
-	}
 
-	public static void set(String key, String value) {
-		System.setProperty(key, value);
-
-		_properties.put(key, value);
-	}
-
-	private static boolean _loaded;
-	private static Map<String, String> _properties;
-
-	static {
-		reload();
+		if (urls != null) {
+			for (URL url : urls) {
+				System.out.println("Loading " + url);
+			}
+		}
 	}
 
 }

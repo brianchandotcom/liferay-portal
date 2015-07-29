@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
@@ -89,6 +90,13 @@ public interface DocumentRepository extends CapabilityProvider {
 			long folderId, int start, int end, OrderByComparator<FileEntry> obc)
 		throws PortalException;
 
+	public List<RepositoryEntry> getFileEntriesAndFileShortcuts(
+			long folderId, int status, int start, int end)
+		throws PortalException;
+
+	public int getFileEntriesAndFileShortcutsCount(long folderId, int status)
+		throws PortalException;
+
 	public int getFileEntriesCount(long folderId) throws PortalException;
 
 	public int getFileEntriesCount(long folderId, int status)
@@ -110,6 +118,23 @@ public interface DocumentRepository extends CapabilityProvider {
 	public Folder getFolder(long folderId) throws PortalException;
 
 	public Folder getFolder(long parentFolderId, String name)
+		throws PortalException;
+
+	public List<Folder> getFolders(
+			long parentFolderId, boolean includeMountFolders, int start,
+			int end, OrderByComparator<Folder> obc)
+		throws PortalException;
+
+	public List<Folder> getFolders(
+			long parentFolderId, int status, boolean includeMountFolders,
+			int start, int end, OrderByComparator<Folder> obc)
+		throws PortalException;
+
+	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
+		throws PortalException;
+
+	public int getFoldersCount(
+			long parentFolderId, int status, boolean includeMountfolders)
 		throws PortalException;
 
 	public List<FileEntry> getRepositoryFileEntries(

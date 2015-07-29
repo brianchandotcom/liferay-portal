@@ -1,0 +1,7 @@
+dependencies {
+	compile group: "org.eclipse.osgi", name: "org.eclipse.osgi.services", version: "3.5.0-SNAPSHOT"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

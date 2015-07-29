@@ -17,10 +17,8 @@ package com.liferay.portal.search.elasticsearch.internal.cluster;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.Index;
 
-import org.elasticsearch.indices.recovery.RecoveryState.Type;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -30,74 +28,54 @@ import org.junit.rules.TestName;
  */
 public class Cluster2InstancesTest {
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_elasticsearchFixture1 = createFixture(1);
-
-		_elasticsearchFixture1.setUpClass();
-
-		_elasticsearchFixture2 = createFixture(2);
-
-		_elasticsearchFixture2.setUpClass();
+	@Before
+	public void setUp() throws Exception {
+		_testCluster.setUp();
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_elasticsearchFixture1.tearDownClass();
-
-		_elasticsearchFixture1 = null;
-
-		_elasticsearchFixture2.tearDownClass();
-
-		_elasticsearchFixture2 = null;
+	@After
+	public void tearDown() throws Exception {
+		_testCluster.tearDown();
 	}
 
 	@Test
 	public void test2Nodes1PrimaryShard() throws Exception {
-		Index index1 = createIndex(_elasticsearchFixture1);
+		ElasticsearchFixture elasticsearchFixture0 = _testCluster.getNode(0);
 
-		assertEntireClusterHasOnly1PrimaryShard(index1);
+		createIndex(elasticsearchFixture0);
 
-		Index index2 = createIndex(_elasticsearchFixture2);
+		ClusterAssert.assert1PrimaryShardAnd2Nodes(elasticsearchFixture0);
 
-		assertEntireClusterHasOnly1PrimaryShard(index2);
+		ElasticsearchFixture elasticsearchFixture1 = _testCluster.getNode(1);
+
+		createIndex(elasticsearchFixture1);
+
+		ClusterAssert.assert1PrimaryShardAnd2Nodes(elasticsearchFixture1);
 	}
 
 	@Test
 	public void testExpandAndShrink() throws Exception {
-		Index index1 = createIndex(_elasticsearchFixture1);
-		Index index2 = createIndex(_elasticsearchFixture2);
+		ElasticsearchFixture elasticsearchFixture0 = _testCluster.getNode(0);
 
-		updateNumberOfReplicas(1, index2, _elasticsearchFixture2);
+		Index index0 = createIndex(elasticsearchFixture0);
 
-		assertClusterHas1PrimaryAnd1ReplicaShard(index1);
-		assertClusterHas1PrimaryAnd1ReplicaShard(index2);
+		ElasticsearchFixture elasticsearchFixture1 = _testCluster.getNode(1);
 
-		updateNumberOfReplicas(0, index1, _elasticsearchFixture1);
+		Index index1 = createIndex(elasticsearchFixture1);
 
-		assertEntireClusterHasOnly1PrimaryShard(index1);
-		assertEntireClusterHasOnly1PrimaryShard(index2);
+		updateNumberOfReplicas(1, index1, elasticsearchFixture1);
+
+		ClusterAssert.assert1ReplicaShard(elasticsearchFixture0);
+		ClusterAssert.assert1ReplicaShard(elasticsearchFixture1);
+
+		updateNumberOfReplicas(0, index0, elasticsearchFixture0);
+
+		ClusterAssert.assert1PrimaryShardAnd2Nodes(elasticsearchFixture0);
+		ClusterAssert.assert1PrimaryShardAnd2Nodes(elasticsearchFixture1);
 	}
 
 	@Rule
 	public TestName testName = new TestName();
-
-	protected static ElasticsearchFixture createFixture(int i) {
-		return new ElasticsearchFixture(
-			Cluster2InstancesTest.class.getSimpleName() + "-" + i);
-	}
-
-	protected void assertClusterHas1PrimaryAnd1ReplicaShard(Index index)
-		throws Exception {
-
-		ClusterAssert.assertShards(index, Type.GATEWAY, Type.REPLICA);
-	}
-
-	protected void assertEntireClusterHasOnly1PrimaryShard(Index index)
-		throws Exception {
-
-		ClusterAssert.assertShards(index, Type.GATEWAY);
-	}
 
 	protected Index createIndex(ElasticsearchFixture elasticsearchFixture) {
 		return elasticsearchFixture.createIndex(testName.getMethodName());
@@ -114,7 +92,6 @@ public class Cluster2InstancesTest {
 			numberOfReplicas, index.getName());
 	}
 
-	private static ElasticsearchFixture _elasticsearchFixture1;
-	private static ElasticsearchFixture _elasticsearchFixture2;
+	private final TestCluster _testCluster = new TestCluster(2, this);
 
 }

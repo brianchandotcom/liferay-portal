@@ -911,8 +911,9 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		}
 	}
 
-	protected void cacheUniqueFindersCache(AnnouncementsFlag announcementsFlag) {
-		if (announcementsFlag.isNew()) {
+	protected void cacheUniqueFindersCache(
+		AnnouncementsFlag announcementsFlag, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					announcementsFlag.getUserId(),
 					announcementsFlag.getEntryId(), announcementsFlag.getValue()
@@ -1125,7 +1126,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			announcementsFlag, false);
 
 		clearUniqueFindersCache(announcementsFlag);
-		cacheUniqueFindersCache(announcementsFlag);
+		cacheUniqueFindersCache(announcementsFlag, isNew);
 
 		announcementsFlag.resetOriginalValues();
 
@@ -1505,6 +1506,11 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return AnnouncementsFlagModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

@@ -85,7 +85,7 @@ public interface StagingService extends BaseService {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
-	boolean, java.util.Map)}
+	boolean, Map)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portlet.exportimport.lar.MissingReferences validateStagingRequest(

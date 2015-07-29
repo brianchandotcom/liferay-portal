@@ -339,7 +339,7 @@ public abstract class SocialRequestServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.social.service.SocialRequestLocalService.class)
 	protected com.liferay.portlet.social.service.SocialRequestLocalService socialRequestLocalService;
-	@BeanReference(type = SocialRequestService.class)
+	@BeanReference(type = com.liferay.portlet.social.service.SocialRequestService.class)
 	protected SocialRequestService socialRequestService;
 	@BeanReference(type = SocialRequestPersistence.class)
 	protected SocialRequestPersistence socialRequestPersistence;

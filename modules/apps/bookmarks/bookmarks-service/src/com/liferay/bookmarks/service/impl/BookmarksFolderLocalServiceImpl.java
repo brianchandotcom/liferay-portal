@@ -482,11 +482,15 @@ public class BookmarksFolderLocalServiceImpl
 						return;
 					}
 
-					Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-						BookmarksFolder.class);
+					Indexer<BookmarksFolder> indexer =
+						IndexerRegistryUtil.nullSafeGetIndexer(
+							BookmarksFolder.class);
 
 					for (TreeModel treeModel : treeModels) {
-						indexer.reindex(treeModel);
+						BookmarksFolder bookmarkFolder =
+							(BookmarksFolder)treeModel;
+
+						indexer.reindex(bookmarkFolder);
 					}
 				}
 
@@ -660,8 +664,8 @@ public class BookmarksFolderLocalServiceImpl
 
 		// Index
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			BookmarksFolder.class);
+		Indexer<BookmarksFolder> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(BookmarksFolder.class);
 
 		indexer.reindex(folder);
 
@@ -739,8 +743,8 @@ public class BookmarksFolderLocalServiceImpl
 
 			bookmarksEntryPersistence.update(entry);
 
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				BookmarksEntry.class);
+			Indexer<BookmarksEntry> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(BookmarksEntry.class);
 
 			indexer.reindex(entry);
 		}
@@ -790,8 +794,9 @@ public class BookmarksFolderLocalServiceImpl
 
 				// Indexer
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					BookmarksEntry.class);
+				Indexer<BookmarksEntry> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(
+						BookmarksEntry.class);
 
 				indexer.reindex(entry);
 			}
@@ -834,8 +839,9 @@ public class BookmarksFolderLocalServiceImpl
 
 				// Index
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					BookmarksFolder.class);
+				Indexer<BookmarksFolder> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(
+						BookmarksFolder.class);
 
 				indexer.reindex(folder);
 			}
@@ -886,8 +892,9 @@ public class BookmarksFolderLocalServiceImpl
 
 				// Indexer
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					BookmarksEntry.class);
+				Indexer<BookmarksEntry> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(
+						BookmarksEntry.class);
 
 				indexer.reindex(entry);
 			}
@@ -937,8 +944,9 @@ public class BookmarksFolderLocalServiceImpl
 
 				// Index
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					BookmarksFolder.class);
+				Indexer<BookmarksFolder> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(
+						BookmarksFolder.class);
 
 				indexer.reindex(folder);
 			}

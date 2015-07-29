@@ -272,14 +272,6 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public java.util.List<com.liferay.portlet.expando.model.CustomAttributesDisplay> getCustomAttributesDisplayInstances();
 
 	/**
-	* Returns the name of the dynamic data mapping display class of the
-	* portlet.
-	*
-	* @return the name of the dynamic data mapping display class of the portlet
-	*/
-	public java.lang.String getDDMDisplayClass();
-
-	/**
 	* Get the default plugin settings of the portlet.
 	*
 	* @return the plugin settings
@@ -446,7 +438,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*
 	* @return the indexer instances of the portlet
 	*/
-	public java.util.List<com.liferay.portal.kernel.search.Indexer> getIndexerInstances();
+	public java.util.List<com.liferay.portal.kernel.search.Indexer<?>> getIndexerInstances();
 
 	/**
 	* Returns the init parameters of the portlet.
@@ -1615,14 +1607,6 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*/
 	public void setCustomAttributesDisplayClasses(
 		java.util.List<java.lang.String> customAttributesDisplayClasses);
-
-	/**
-	* Sets the name of the dynamic data mapping display class of the portlet.
-	*
-	* @param ddmDisplayClass the name of dynamic data mapping display class of
-	the portlet
-	*/
-	public void setDDMDisplayClass(java.lang.String ddmDisplayClass);
 
 	/**
 	* Sets the default plugin settings of the portlet.

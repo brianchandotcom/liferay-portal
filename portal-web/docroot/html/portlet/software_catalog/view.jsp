@@ -479,7 +479,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 		searchContainer.setTotal(total);
 
-		List results = SCFrameworkVersionLocalServiceUtil.getFrameworkVersions(scopeGroupId, searchContainer.getStart(),searchContainer.getEnd());
+		List results = SCFrameworkVersionLocalServiceUtil.getFrameworkVersions(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd());
 
 		searchContainer.setResults(results);
 
@@ -517,7 +517,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 			rowTextEntry = (TextSearchEntry)rowTextEntry.clone();
 
-			rowTextEntry.setName(LanguageUtil.get(request,frameworkVersion.isActive() ? "yes" : "no"));
+			rowTextEntry.setName(LanguageUtil.get(request, frameworkVersion.isActive() ? "yes" : "no"));
 
 			row.addText(rowTextEntry);
 

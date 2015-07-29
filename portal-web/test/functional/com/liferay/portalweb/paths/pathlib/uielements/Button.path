@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_CONSUMER</td>
+	<td>//a[contains(.,'Add Consumer')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_CUSTOM_FIELD</td>
 	<td>//button[contains(.,'Add Custom Field')]</td>
 	<td></td>
@@ -44,8 +49,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_SUBFOLDER</td>
-	<td>//a[contains(.,'Add Subfolder')]</td>
+	<td>ADD_PRODUCER</td>
+	<td>//button[contains(.,'Add Producer')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PORTLET</td>
+	<td>//button[contains(.,'Add Portlet')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,8 +64,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_SUBFOLDER</td>
+	<td>//a[contains(.,'Add Subfolder')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_TAGS</td>
-	<td>//button[contains(.,'Add Tags')]</td>
+	<td>//button[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -85,7 +100,7 @@
 </tr>
 <tr>
 	<td>CANCEL</td>
-	<td>//a[contains(@id,'cancel') and contains(@class,'btn')]|//button[contains(.,'Cancel')]</td>
+	<td>//a[contains(@id,'cancel') and contains(@class,'btn')] | //button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,6 +111,16 @@
 <tr>
 	<td>CHANGE</td>
 	<td>//button[contains(.,'Change')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKIN</td>
+	<td>//button[contains(.,'Checkin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT</td>
+	<td>//button[contains(.,'Checkout')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -159,8 +184,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DONE</td>
+	<td>//button[contains(.,'Done')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOWNLOAD</td>
+	<td>//button[contains(.,'Download')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT</td>
-	<td>//a[contains(@id,'edit') and contains(@class,'btn')]</td>
+	<td>//a[contains(@id,'edit') and contains(@class,'btn')] | //button[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -174,6 +209,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FINISH_CONFIGURATION</td>
+	<td>//button[contains(.,'Finish Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>I_AGREE</td>
 	<td>//button[contains(.,'I Agree')]</td>
 	<td></td>
@@ -181,6 +221,11 @@
 <tr>
 	<td>I_DISAGREE_BUTTON</td>
 	<td>//button[contains(.,'I Disagree')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVOKE</td>
+	<td>//button[contains(.,'Invoke')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -199,8 +244,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MOVE_TO_RECYCLE_BIN</td>
-	<td>//button[contains(.,'Move to the Recycle Bin')]</td>
+	<td>MOVE_AVAILABLE_TO_CURRENT</td>
+	<td>//button[@title='Move selected items from Available to Current.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_CURRENT_TO_AVAILABLE</td>
+	<td>//button[@title='Move selected items from Current to Available.']</td>
 	<td></td>
 </tr>
 <tr>
@@ -209,13 +259,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MOVE_AVAILABLE_TO_CURRENT</td>
-	<td>//button[@title='Move selected items from Available to Current.']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MOVE_CURRENT_TO_AVAILABLE</td>
-	<td>//button[@title='Move selected items from Current to Available.']</td>
+	<td>MOVE_TO_RECYCLE_BIN</td>
+	<td>//button[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -290,12 +335,7 @@
 </tr>
 <tr>
 	<td>REPLY_AS</td>
-	<td>//button[contains(.,'Reply As...')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REPLY_BUTTON</td>
-	<td>//button[contains(.,'Reply')]</td>
+	<td>//button[contains(.,'Reply as...')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -339,6 +379,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_CATEGORIES</td>
+	<td>//button[contains(.,'Select Categories')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_FILE</td>
 	<td>//button[contains(.,'Select File')]</td>
 	<td></td>
@@ -346,11 +391,6 @@
 <tr>
 	<td>SELECT_PAGES</td>
 	<td>//button[contains(.,'Select Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_CATEGORIES</td>
-	<td>//button[contains(.,'Select Categories')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -366,6 +406,11 @@
 <tr>
 	<td>SEND</td>
 	<td>//button[contains(.,'Send')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHARE</td>
+	<td>//button[contains(.,'Share')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -411,6 +456,11 @@
 <tr>
 	<td>VIEW_HISTORY</td>
 	<td>//button[contains(.,'View History')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOTE</td>
+	<td>//button[contains(.,'Vote')]</td>
 	<td></td>
 </tr>
 <tr>

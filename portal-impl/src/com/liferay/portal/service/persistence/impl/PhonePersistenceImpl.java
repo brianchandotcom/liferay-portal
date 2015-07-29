@@ -4536,6 +4536,11 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		return _badColumnNames;
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return PhoneModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the phone persistence.
 	 */

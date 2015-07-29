@@ -24,12 +24,12 @@ import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.item.selector.web.constants.ItemSelectorPortletKeys;
 import com.liferay.item.selector.web.util.ItemSelectorCriterionSerializer;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portlet.RequestBackedPortletURLFactoryUtil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -70,6 +70,9 @@ public class ItemSelectorImpl implements ItemSelector {
 	public ItemSelectorRendering getItemSelectorRendering(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(portletRequest);
+
 		Map<String, String[]> parameters = portletRequest.getParameterMap();
 
 		String itemSelectedEventName = getValue(
@@ -92,24 +95,20 @@ public class ItemSelectorImpl implements ItemSelector {
 			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
 				itemSelectorCriterion.getClass();
 
-			ItemSelectorCriterionHandler
-				<ItemSelectorCriterion, ItemSelectorReturnType>
-					itemSelectorCriterionHandler =
-						_itemSelectionCriterionHandlers.get(
-							itemSelectorCriterionClass.getName());
+			ItemSelectorCriterionHandler<ItemSelectorCriterion>
+				itemSelectorCriterionHandler =
+					_itemSelectionCriterionHandlers.get(
+						itemSelectorCriterionClass.getName());
 
-			List
-				<ItemSelectorView
-					<ItemSelectorCriterion, ItemSelectorReturnType>>
-						itemSelectorViews =
-							itemSelectorCriterionHandler.getItemSelectorViews(
-								itemSelectorCriterion);
+			List<ItemSelectorView<ItemSelectorCriterion>> itemSelectorViews =
+				itemSelectorCriterionHandler.getItemSelectorViews(
+					itemSelectorCriterion);
 
-			for (ItemSelectorView<ItemSelectorCriterion, ItemSelectorReturnType>
-					itemSelectorView : itemSelectorViews) {
+			for (ItemSelectorView<ItemSelectorCriterion> itemSelectorView :
+					itemSelectorViews) {
 
 				PortletURL portletURL = getItemSelectorURL(
-					portletResponse, itemSelectedEventName,
+					requestBackedPortletURLFactory, itemSelectedEventName,
 					itemSelectorCriteriaArray);
 
 				portletURL.setParameter(
@@ -130,13 +129,11 @@ public class ItemSelectorImpl implements ItemSelector {
 
 	@Override
 	public PortletURL getItemSelectorURL(
-		PortletResponse portletResponse, String itemSelectedEventName,
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
+		String itemSelectedEventName,
 		ItemSelectorCriterion... itemSelectorCriteria) {
 
-		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)portletResponse;
-
-		LiferayPortletURL portletURL = liferayPortletResponse.createRenderURL(
+		PortletURL portletURL = requestBackedPortletURLFactory.createRenderURL(
 			ItemSelectorPortletKeys.ITEM_SELECTOR);
 
 		try {
@@ -198,11 +195,8 @@ public class ItemSelectorImpl implements ItemSelector {
 
 			T itemSelectorCriterion = constructor.newInstance();
 
-			ItemSelectorCriterionSerializer<?> itemSelectorCriterionSerializer =
-				new ItemSelectorCriterionSerializer<>(
-					itemSelectorCriterion, prefix);
-
-			itemSelectorCriterionSerializer.setProperties(parameters);
+			_itemSelectionCriterionSerializer.setProperties(
+				itemSelectorCriterion, prefix, parameters);
 
 			return itemSelectorCriterion;
 		}
@@ -227,12 +221,15 @@ public class ItemSelectorImpl implements ItemSelector {
 		for (String itemSelectorCriterionClassName :
 				itemSelectorCriterionClassNames) {
 
-			ItemSelectorCriterionHandler<?, ?> itemSelectorCriterionHandler =
+			ItemSelectorCriterionHandler<?> itemSelectorCriterionHandler =
 				_itemSelectionCriterionHandlers.get(
 					itemSelectorCriterionClassName);
 
-			itemSelectorCriterionClasses.add(
-				itemSelectorCriterionHandler.getItemSelectorCriterionClass());
+			if (itemSelectorCriterionHandler != null) {
+				itemSelectorCriterionClasses.add(
+					itemSelectorCriterionHandler.
+						getItemSelectorCriterionClass());
+			}
 		}
 
 		return itemSelectorCriterionClasses;
@@ -303,12 +300,9 @@ public class ItemSelectorImpl implements ItemSelector {
 			ItemSelectorCriterion itemSelectorCriterion =
 				itemSelectorCriteria[i];
 
-			ItemSelectorCriterionSerializer<ItemSelectorCriterion>
-				itemSelectorCriterionSerializer =
-					new ItemSelectorCriterionSerializer<>(
-						itemSelectorCriterion, i + "_");
-
-			parameters.putAll(itemSelectorCriterionSerializer.getProperties());
+			parameters.putAll(
+				_itemSelectionCriterionSerializer.getProperties(
+					itemSelectorCriterion, i + "_"));
 		}
 	}
 
@@ -320,8 +314,7 @@ public class ItemSelectorImpl implements ItemSelector {
 	protected
 		<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType> void
 			setItemSelectionCriterionHandler(
-				ItemSelectorCriterionHandler
-					<T, S> itemSelectionCriterionHandler) {
+				ItemSelectorCriterionHandler<T> itemSelectionCriterionHandler) {
 
 		Class<T> itemSelectorCriterionClass =
 			itemSelectionCriterionHandler.getItemSelectorCriterionClass();
@@ -331,11 +324,17 @@ public class ItemSelectorImpl implements ItemSelector {
 			(ItemSelectorCriterionHandler)itemSelectionCriterionHandler);
 	}
 
+	@Reference(unbind = "-")
+	protected void setItemSelectorCriterionSerializer(
+		ItemSelectorCriterionSerializer itemSelectorCriterionSerializer) {
+
+		_itemSelectionCriterionSerializer = itemSelectorCriterionSerializer;
+	}
+
 	protected
 		<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType>
 			void unsetItemSelectionCriterionHandler(
-				ItemSelectorCriterionHandler
-					<T, S> itemSelectionCriterionHandler) {
+				ItemSelectorCriterionHandler<T> itemSelectionCriterionHandler) {
 
 		Class<T> itemSelectorCriterionClass =
 			itemSelectionCriterionHandler.getItemSelectorCriterionClass();
@@ -345,8 +344,8 @@ public class ItemSelectorImpl implements ItemSelector {
 	}
 
 	private final ConcurrentMap
-		<String, ItemSelectorCriterionHandler
-			 <ItemSelectorCriterion, ItemSelectorReturnType>>
-				_itemSelectionCriterionHandlers = new ConcurrentHashMap<>();
+		<String, ItemSelectorCriterionHandler<ItemSelectorCriterion>>
+			_itemSelectionCriterionHandlers = new ConcurrentHashMap<>();
+	private ItemSelectorCriterionSerializer _itemSelectionCriterionSerializer;
 
 }

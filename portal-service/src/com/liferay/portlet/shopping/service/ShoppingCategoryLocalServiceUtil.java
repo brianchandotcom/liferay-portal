@@ -61,10 +61,9 @@ public class ShoppingCategoryLocalServiceUtil {
 
 	public static void addCategoryResources(
 		com.liferay.portlet.shopping.model.ShoppingCategory category,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addCategoryResources(category, groupPermissions, guestPermissions);
+		getService().addCategoryResources(category, modelPermissions);
 	}
 
 	public static void addCategoryResources(long categoryId,
@@ -76,10 +75,9 @@ public class ShoppingCategoryLocalServiceUtil {
 	}
 
 	public static void addCategoryResources(long categoryId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addCategoryResources(categoryId, groupPermissions, guestPermissions);
+		getService().addCategoryResources(categoryId, modelPermissions);
 	}
 
 	/**

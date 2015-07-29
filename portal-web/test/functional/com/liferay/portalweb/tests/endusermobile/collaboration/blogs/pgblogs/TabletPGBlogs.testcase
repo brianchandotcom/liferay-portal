@@ -28,7 +28,7 @@
 		<execute macro="MobilePage#tearDownCP" />
 	</tear-down>
 
-	<command name="AddBlogsEntry" priority="5">
+	<command name="AddBlogsEntry" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 

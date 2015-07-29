@@ -93,10 +93,6 @@
 		<column name="storageType" type="String" />
 		<column name="type" type="int" />
 
-		<!-- Relationships -->
-
-		<column name="dlFileEntryTypes" type="Collection" entity="com.liferay.portlet.documentlibrary.DLFileEntryType" mapping-table="DLFileEntryTypes_DDMStructures" />
-
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
@@ -141,7 +137,6 @@
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntryType" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLayout" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureVersion" />
@@ -194,6 +189,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ClassNameId" return-type="Collection">
+			<finder-column name="classNameId" />
+		</finder>
 		<finder name="StructureId" return-type="Collection">
 			<finder-column name="structureId" />
 		</finder>

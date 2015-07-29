@@ -67,6 +67,7 @@ public class LayoutSetPrototypeExportImportTest
 	}
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

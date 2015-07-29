@@ -31,7 +31,9 @@ public class LayoutPrototypePermissionImpl
 		throws PrincipalException {
 
 		if (!contains(permissionChecker, layoutPrototypeId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, LayoutPrototype.class.getName(),
+				layoutPrototypeId, actionId);
 		}
 	}
 

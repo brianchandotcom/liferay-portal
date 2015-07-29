@@ -3664,8 +3664,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(AssetEntry assetEntry) {
-		if (assetEntry.isNew()) {
+	protected void cacheUniqueFindersCache(AssetEntry assetEntry, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					assetEntry.getGroupId(), assetEntry.getClassUuid()
 				};
@@ -4027,7 +4027,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			AssetEntryImpl.class, assetEntry.getPrimaryKey(), assetEntry, false);
 
 		clearUniqueFindersCache(assetEntry);
-		cacheUniqueFindersCache(assetEntry);
+		cacheUniqueFindersCache(assetEntry, isNew);
 
 		assetEntry.resetOriginalValues();
 
@@ -4975,6 +4975,11 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		catch (Exception e) {
 			throw processException(e);
 		}
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return AssetEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

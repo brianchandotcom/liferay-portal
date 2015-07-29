@@ -57,7 +57,7 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 	protected void activate(Map<String, Object> properties) {
 		setConfigFile(props.get(PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION));
 		setDefaultConfigFile(_DEFAULT_CONFIG_FILE_NAME);
-		setName(PortalCacheManagerNames.SINGLE_VM);
+		setPortalCacheManagerName(PortalCacheManagerNames.SINGLE_VM);
 
 		initialize();
 

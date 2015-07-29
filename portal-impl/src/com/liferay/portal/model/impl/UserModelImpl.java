@@ -110,6 +110,52 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 			{ "emailAddressVerified", Types.BOOLEAN },
 			{ "status", Types.INTEGER }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("defaultUser", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("contactId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("password_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("passwordEncrypted", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("passwordReset", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("passwordModifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("digest", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("reminderQueryQuestion", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("reminderQueryAnswer", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("graceLoginCount", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("screenName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("emailAddress", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("facebookId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ldapServerId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("openId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("portraitId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("timeZoneId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("greeting", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("comments", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("firstName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("middleName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("lastName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("jobTitle", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("loginDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("loginIP", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("lastLoginDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("lastLoginIP", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("lastFailedLoginDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("failedLoginAttempts", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("lockout", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("lockoutDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("agreedToTermsOfUse", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("emailAddressVerified", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table User_ (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,userId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,defaultUser BOOLEAN,contactId LONG,password_ VARCHAR(75) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(75) null,facebookId LONG,ldapServerId LONG,openId VARCHAR(1024) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table User_";
 	public static final String ORDER_BY_JPQL = " ORDER BY user.userId ASC";

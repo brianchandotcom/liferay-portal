@@ -28,7 +28,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="DashboardEventsDemo" priority="5">
+	<command name="DashboardEventsDemo" priority="4">
 		<var name="eventType" value="Regular" />
 		<var name="siteDescription1" value="Open Site1 Description" />
 		<var name="siteDescription2" value="Public Restricted Site2 Description" />
@@ -556,7 +556,7 @@
 		</execute>
 	</command>
 
-	<command name="SiteEventsDemo" priority="5">
+	<command name="SiteEventsDemo" priority="4">
 		<var name="eventType" value="Regular" />
 		<var name="siteDescription1" value="Open Site1 Description" />
 		<var name="siteDescription2" value="Public Restricted Site2 Description" />

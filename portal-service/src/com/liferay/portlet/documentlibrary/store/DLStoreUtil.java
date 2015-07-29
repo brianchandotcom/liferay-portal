@@ -233,15 +233,13 @@ public class DLStoreUtil {
 	/**
 	 * Deletes a directory.
 	 *
-	 * @param  companyId the primary key of the company
-	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
-	 * @param  dirName the directory's name
-	 * @throws PortalException if the directory's information was invalid
+	 * @param companyId the primary key of the company
+	 * @param repositoryId the primary key of the data repository (optionally
+	 *        {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
+	 * @param dirName the directory's name
 	 */
 	public static void deleteDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException {
+		long companyId, long repositoryId, String dirName) {
 
 		getStore().deleteDirectory(companyId, repositoryId, dirName);
 	}

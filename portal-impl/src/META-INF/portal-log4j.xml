@@ -136,14 +136,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.dao.shard">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.dao.shard.DefaultShardDataSourceTargetSource">
-		<priority value="INFO" />
-	</category>
-
 	<category name="com.liferay.portal.deploy">
 		<priority value="INFO" />
 	</category>
@@ -432,14 +424,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.scripting.ruby.RubyExecutor">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.search.IndexerRegistryImpl">
-		<priority value="WARN" />
-	</category>
-
 	<category name="com.liferay.portal.search.lucene">
 		<priority value="ERROR" />
 	</category>
@@ -450,6 +434,10 @@
 
 	<category name="com.liferay.portal.search.lucene.LuceneIndexWriterImpl">
 		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security">
+		<priority value="WARN" />
 	</category>
 
 	<category name="com.liferay.portal.security.auth.EmailAddressGeneratorFactory">
@@ -990,34 +978,6 @@
 
 	<category name="com.liferay.portlet.documentlibrary.webdav">
 		<priority value="WARN" />
-	</category>
-
-	<category name="com.liferay.portlet.journal">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portlet.journal.lar">
-		<priority value="WARN" />
-	</category>
-
-	<category name="com.liferay.portlet.journal.service.impl.JournalContentSearchLocalServiceImpl">
-		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.portlet.journal.util.JournalContentUtil">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portlet.journal.util.JournalUtil">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portlet.journal.util.PropertiesTransformerListener">
-		<priority value="WARN" />
-	</category>
-
-	<category name="com.liferay.portlet.journal.util.RegexTransformerUtil">
-		<priority value="INFO" />
 	</category>
 
 	<category name="com.liferay.portlet.mail">

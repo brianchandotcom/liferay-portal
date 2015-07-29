@@ -13,7 +13,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="SocialNetworkingPortletSmoke" priority="5">
+	<command name="SocialNetworkingPortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="social-networking-portlet" />
 
 		<var name="appName" value="Social Networking" />

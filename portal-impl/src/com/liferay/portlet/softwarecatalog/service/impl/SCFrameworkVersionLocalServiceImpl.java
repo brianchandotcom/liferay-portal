@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portlet.softwarecatalog.FrameworkVersionNameException;
 import com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion;
 import com.liferay.portlet.softwarecatalog.service.base.SCFrameworkVersionLocalServiceBaseImpl;
@@ -71,8 +72,7 @@ public class SCFrameworkVersionLocalServiceImpl
 		}
 		else {
 			addFrameworkVersionResources(
-				frameworkVersion, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
+				frameworkVersion, serviceContext.getModelPermissions());
 		}
 
 		return frameworkVersion;
@@ -93,15 +93,13 @@ public class SCFrameworkVersionLocalServiceImpl
 
 	@Override
 	public void addFrameworkVersionResources(
-			long frameworkVersionId, String[] groupPermissions,
-			String[] guestPermissions)
+			long frameworkVersionId, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		SCFrameworkVersion frameworkVersion =
 			scFrameworkVersionPersistence.findByPrimaryKey(frameworkVersionId);
 
-		addFrameworkVersionResources(
-			frameworkVersion, groupPermissions, guestPermissions);
+		addFrameworkVersionResources(frameworkVersion, modelPermissions);
 	}
 
 	@Override
@@ -119,15 +117,14 @@ public class SCFrameworkVersionLocalServiceImpl
 
 	@Override
 	public void addFrameworkVersionResources(
-			SCFrameworkVersion frameworkVersion, String[] groupPermissions,
-			String[] guestPermissions)
+			SCFrameworkVersion frameworkVersion,
+			ModelPermissions modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			frameworkVersion.getCompanyId(), frameworkVersion.getGroupId(),
 			frameworkVersion.getUserId(), SCFrameworkVersion.class.getName(),
-			frameworkVersion.getFrameworkVersionId(), groupPermissions,
-			guestPermissions);
+			frameworkVersion.getFrameworkVersionId(), modelPermissions);
 	}
 
 	@Override

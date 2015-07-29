@@ -28,8 +28,16 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author ${author}
  * @see ${entity.name}Persistence
  * @see ${packagePath}.service.persistence.impl.${entity.name}PersistenceImpl
+<#if classDeprecated>
+ * @deprecated ${classDeprecatedComment}
+</#if>
  * @generated
  */
+
+<#if classDeprecated>
+	@Deprecated
+</#if>
+
 @ProviderType
 public class ${entity.name}Util {
 

@@ -76,6 +76,7 @@ public class SelectDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 		return selectDDMFormFieldContextHelper.getOptions();
 	}
 
+	@Override
 	protected void populateRequiredContext(
 		Template template, DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {

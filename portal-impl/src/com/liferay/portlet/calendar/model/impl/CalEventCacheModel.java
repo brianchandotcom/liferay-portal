@@ -35,8 +35,10 @@ import java.util.Date;
  *
  * @author Brian Wing Shun Chan
  * @see CalEvent
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class CalEventCacheModel implements CacheModel<CalEvent>, Externalizable {
 	@Override

@@ -36,8 +36,10 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @see CalEventPersistence
  * @see com.liferay.portlet.calendar.service.persistence.impl.CalEventPersistenceImpl
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class CalEventUtil {
 	/*

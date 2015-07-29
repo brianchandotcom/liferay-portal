@@ -53,18 +53,18 @@ if (Validator.isNotNull(portletResource)) {
 }
 %>
 
-<portlet:actionURL var="editRolePermissionsURL">
-	<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
+<portlet:actionURL name="updateActions" var="editRolePermissionsURL">
+	<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role_permissions_form.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= editRolePermissionsURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" />
 	<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 	<aui:input name="modelResources" type="hidden" value='<%= (modelResources == null) ? "" : StringUtil.merge(modelResources) %>' />
 	<aui:input name="selectedTargets" type="hidden" />
+	<aui:input name="unselectedTargets" type="hidden" />
 
 	<h3><%= HtmlUtil.escape(portletResourceLabel) %></h3>
 
@@ -136,7 +136,7 @@ if (Validator.isNotNull(portletResource)) {
 
 			List resultRows = searchContainer.getResultRows();
 
-			List <TemplateHandler> templateHandlers = PortletDisplayTemplateUtil.getPortletDisplayTemplateHandlers();
+			List<TemplateHandler> templateHandlers = PortletDisplayTemplateManagerUtil.getPortletDisplayTemplateHandlers();
 
 			ListUtil.sort(templateHandlers, new TemplateHandlerComparator(locale));
 
@@ -186,7 +186,7 @@ if (Validator.isNotNull(portletResource)) {
 <%
 PortletURL definePermissionsURL = liferayPortletResponse.createRenderURL();
 
-definePermissionsURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
+definePermissionsURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role_permissions.jsp");
 definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 definePermissionsURL.setParameter("redirect", backURL);
 definePermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
@@ -196,7 +196,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "define-
 if (Validator.isNotNull(portletResource)) {
 	PortletURL resourceURL = liferayPortletResponse.createRenderURL();
 
-	resourceURL.setParameter("struts_action", "/roles_admin/edit_role");
+	resourceURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role.jsp");
 	resourceURL.setParameter(Constants.CMD, Constants.EDIT);
 	resourceURL.setParameter("tabs1", tabs1);
 	resourceURL.setParameter("portletResource", portletResource);

@@ -73,6 +73,20 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 			{ "remoteHost", Types.VARCHAR },
 			{ "userAgent", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userTrackerId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("sessionId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("remoteAddr", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("remoteHost", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("userAgent", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table UserTracker (mvccVersion LONG default 0,userTrackerId LONG not null primary key,companyId LONG,userId LONG,modifiedDate DATE null,sessionId VARCHAR(200) null,remoteAddr VARCHAR(75) null,remoteHost VARCHAR(75) null,userAgent VARCHAR(200) null)";
 	public static final String TABLE_SQL_DROP = "drop table UserTracker";
 	public static final String ORDER_BY_JPQL = " ORDER BY userTracker.userTrackerId ASC";

@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.messageboards.action;
 
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -27,19 +30,21 @@ import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
  * @author Brian Wing Shun Chan
  */
-public class FindRecentPostsAction extends Action {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
+		"path=/message_boards/find_recent_posts"
+	},
+	service = StrutsAction.class
+)
+public class FindRecentPostsAction extends BaseStrutsAction {
 
 	@Override
-	public ActionForward execute(
-			ActionMapping actionMapping, ActionForm actionForm,
+	public String execute(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
@@ -50,7 +55,8 @@ public class FindRecentPostsAction extends Action {
 				request, PortletKeys.MESSAGE_BOARDS, plid,
 				PortletRequest.RENDER_PHASE);
 
-			portletURL.setParameter("struts_action", "/message_boards/view");
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/message_boards/view");
 			portletURL.setParameter("tabs2", "recent-posts");
 			portletURL.setPortletMode(PortletMode.VIEW);
 			portletURL.setWindowState(WindowState.NORMAL);

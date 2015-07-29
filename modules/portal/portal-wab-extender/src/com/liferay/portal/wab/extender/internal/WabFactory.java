@@ -87,7 +87,8 @@ public class WabFactory extends AbstractExtender {
 
 		try {
 			_webBundleDeployer = new WebBundleDeployer(
-				_bundleContext, _saxParserFactory, _eventUtil, _logger);
+				_bundleContext, properties, _saxParserFactory, _eventUtil,
+				_logger);
 
 			super.start(_bundleContext);
 		}

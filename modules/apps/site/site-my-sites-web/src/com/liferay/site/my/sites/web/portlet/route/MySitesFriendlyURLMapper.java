@@ -37,6 +37,6 @@ public class MySitesFriendlyURLMapper extends DefaultFriendlyURLMapper {
 		return _MAPPING;
 	}
 
-	private static final String _MAPPING = "my-sites";
+	private static final String _MAPPING = "my_sites";
 
 }

@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Portal JS Loader Modules Extender
+Bundle-SymbolicName: com.liferay.portal.js.loader.modules.extender
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portal.kernel.servlet;resolution:="optional",\
+	*
+Include-Resource:\
+	classes,\
+	@lib/json.jar,\
+	@../../../lib/portal/bnd.jar!/aQute/lib/base64/*,\
+	@../../../lib/portal/bnd.jar!/aQute/lib/converter/*

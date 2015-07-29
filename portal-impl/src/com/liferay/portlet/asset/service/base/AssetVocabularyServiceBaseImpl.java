@@ -512,7 +512,7 @@ public abstract class AssetVocabularyServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.asset.service.AssetVocabularyLocalService.class)
 	protected com.liferay.portlet.asset.service.AssetVocabularyLocalService assetVocabularyLocalService;
-	@BeanReference(type = AssetVocabularyService.class)
+	@BeanReference(type = com.liferay.portlet.asset.service.AssetVocabularyService.class)
 	protected AssetVocabularyService assetVocabularyService;
 	@BeanReference(type = AssetVocabularyPersistence.class)
 	protected AssetVocabularyPersistence assetVocabularyPersistence;

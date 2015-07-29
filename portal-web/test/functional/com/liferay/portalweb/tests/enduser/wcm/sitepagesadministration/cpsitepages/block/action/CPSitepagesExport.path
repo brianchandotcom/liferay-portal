@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>PERMISSIONS_CHECKBOX</td>
-	<td>//input[@id='_156_PERMISSIONS']</td>
+	<td>//input[contains(@id,'PERMISSIONS')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@
 <!--PAGES-->
 <tr>
 	<td>PAGES_CHANGE_LINK</td>
-	<td>//div/a[@id='_156_pagesLink']</td>
+	<td>//div/a[contains(@id,'pagesLink')]</td>
 	<td></td>
 </tr>
 <tr>

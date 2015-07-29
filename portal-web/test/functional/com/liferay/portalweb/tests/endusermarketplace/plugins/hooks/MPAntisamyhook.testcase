@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="AntiSamyHookSmoke" priority="5">
+	<command name="AntiSamyHookSmoke" priority="4">
 		<property name="hook.plugins.includes" value="antisamy-hook" />
 
 		<var name="appName" value="AntiSamy" />

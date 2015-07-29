@@ -339,7 +339,7 @@ public abstract class ResourcePermissionServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.ResourcePermissionLocalService.class)
 	protected com.liferay.portal.service.ResourcePermissionLocalService resourcePermissionLocalService;
-	@BeanReference(type = ResourcePermissionService.class)
+	@BeanReference(type = com.liferay.portal.service.ResourcePermissionService.class)
 	protected ResourcePermissionService resourcePermissionService;
 	@BeanReference(type = ResourcePermissionPersistence.class)
 	protected ResourcePermissionPersistence resourcePermissionPersistence;

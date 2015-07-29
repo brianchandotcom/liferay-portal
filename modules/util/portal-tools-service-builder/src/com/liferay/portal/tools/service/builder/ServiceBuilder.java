@@ -39,9 +39,9 @@ import com.liferay.portal.model.CacheField;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.tools.ArgumentsUtil;
-import com.liferay.portal.tools.sourceformatter.JavaImportsFormatter;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
-import com.liferay.util.xml.XMLFormatter;
+import com.liferay.util.xml.Dom4jUtil;
 import com.liferay.util.xml.XMLSafeReader;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -55,12 +55,6 @@ import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaParameter;
 import com.thoughtworks.qdox.model.JavaSource;
 import com.thoughtworks.qdox.model.Type;
-
-import de.hunsicker.io.FileFormat;
-import de.hunsicker.jalopy.Jalopy;
-import de.hunsicker.jalopy.storage.Convention;
-import de.hunsicker.jalopy.storage.ConventionKeys;
-import de.hunsicker.jalopy.storage.Environment;
 
 import freemarker.ext.beans.BeansWrapper;
 
@@ -129,86 +123,6 @@ import org.dom4j.io.SAXReader;
 public class ServiceBuilder {
 
 	public static final String AUTHOR = "Brian Wing Shun Chan";
-
-	public static String getContent(String fileName) throws Exception {
-		Document document = _getContentDocument(fileName);
-
-		Element rootElement = document.getRootElement();
-
-		Element authorElement = null;
-		Element namespaceElement = null;
-		Map<String, Element> entityElements = new TreeMap<>();
-		Map<String, Element> exceptionElements = new TreeMap<>();
-
-		List<Element> elements = rootElement.elements();
-
-		for (Element element : elements) {
-			String elementName = element.getName();
-
-			if (elementName.equals("author")) {
-				element.detach();
-
-				if (authorElement != null) {
-					throw new IllegalArgumentException(
-						"There can only be one author element");
-				}
-
-				authorElement = element;
-			}
-			else if (elementName.equals("namespace")) {
-				element.detach();
-
-				if (namespaceElement != null) {
-					throw new IllegalArgumentException(
-						"There can only be one namespace element");
-				}
-
-				namespaceElement = element;
-			}
-			else if (elementName.equals("entity")) {
-				element.detach();
-
-				String name = element.attributeValue("name");
-
-				entityElements.put(StringUtil.toLowerCase(name), element);
-			}
-			else if (elementName.equals("exceptions")) {
-				element.detach();
-
-				List<Element> exceptionElementsList = element.elements(
-					"exception");
-
-				for (Element exceptionElement : exceptionElementsList) {
-					exceptionElement.detach();
-
-					exceptionElements.put(
-						exceptionElement.getText(), exceptionElement);
-				}
-			}
-		}
-
-		if (authorElement != null) {
-			rootElement.add(authorElement);
-		}
-
-		if (namespaceElement == null) {
-			throw new IllegalArgumentException(
-				"The namespace element is required");
-		}
-		else {
-			rootElement.add(namespaceElement);
-		}
-
-		_addElements(rootElement, entityElements);
-
-		if (!exceptionElements.isEmpty()) {
-			Element exceptionsElement = rootElement.addElement("exceptions");
-
-			_addElements(exceptionsElement, exceptionElements);
-		}
-
-		return document.asXML();
-	}
 
 	public static boolean hasAnnotation(
 		AbstractBaseJavaEntity abstractBaseJavaEntity, String annotationName) {
@@ -500,154 +414,6 @@ public class ServiceBuilder {
 		return humanName;
 	}
 
-	public static void writeFile(
-			File file, String content, Set<String> modifiedFileNames)
-		throws IOException {
-
-		writeFile(file, content, AUTHOR, modifiedFileNames);
-	}
-
-	public static void writeFile(
-			File file, String content, String author,
-			Map<String, Object> jalopySettings, Set<String> modifiedFileNames)
-		throws IOException {
-
-		String packagePath = _getPackagePath(file);
-
-		String className = file.getName();
-
-		className = className.substring(0, className.length() - 5);
-
-		content = JavaImportsFormatter.stripJavaImports(
-			content, packagePath, className);
-
-		content = _stripFullyQualifiedClassNames(content);
-
-		File tempFile = new File(_TMP_DIR, "ServiceBuilder.temp");
-
-		_write(tempFile, content);
-
-		// Beautify
-
-		StringBuffer sb = new StringBuffer();
-
-		Jalopy jalopy = new Jalopy();
-
-		jalopy.setFileFormat(FileFormat.UNIX);
-		jalopy.setInput(tempFile);
-		jalopy.setOutput(sb);
-
-		File jalopyXmlFile = new File("tools/jalopy.xml");
-
-		if (!jalopyXmlFile.exists()) {
-			jalopyXmlFile = new File("../tools/jalopy.xml");
-		}
-
-		if (!jalopyXmlFile.exists()) {
-			jalopyXmlFile = new File("misc/jalopy.xml");
-		}
-
-		if (!jalopyXmlFile.exists()) {
-			jalopyXmlFile = new File("../misc/jalopy.xml");
-		}
-
-		if (!jalopyXmlFile.exists()) {
-			jalopyXmlFile = new File("../../misc/jalopy.xml");
-		}
-
-		if (jalopyXmlFile.exists()) {
-			Jalopy.setConvention(jalopyXmlFile);
-		}
-		else {
-			URL url = _readJalopyXmlFromClassLoader();
-
-			Jalopy.setConvention(url);
-		}
-
-		if (jalopySettings == null) {
-			jalopySettings = new HashMap<>();
-		}
-
-		Environment env = Environment.getInstance();
-
-		// Author
-
-		author = GetterUtil.getString(
-			(String)jalopySettings.get("author"), author);
-
-		env.set("author", author);
-
-		// File name
-
-		env.set("fileName", file.getName());
-
-		Convention convention = Convention.getInstance();
-
-		String classMask = "/**\n * @author $author$\n*/";
-
-		convention.put(
-			ConventionKeys.COMMENT_JAVADOC_TEMPLATE_CLASS,
-			env.interpolate(classMask));
-
-		convention.put(
-			ConventionKeys.COMMENT_JAVADOC_TEMPLATE_INTERFACE,
-			env.interpolate(classMask));
-
-		jalopy.format();
-
-		String newContent = sb.toString();
-
-		// Remove double blank lines after the package or last import
-
-		newContent = newContent.replaceFirst(
-			"(?m)^[ \t]*((?:package|import) .*;)\\s*^[ \t]*/\\*\\*",
-			"$1\n\n/**");
-
-		/*
-		// Remove blank lines after try {
-
-		newContent = StringUtil.replace(newContent, "try {\n\n", "try {\n");
-
-		// Remove blank lines after ) {
-
-		newContent = StringUtil.replace(newContent, ") {\n\n", ") {\n");
-
-		// Remove blank lines empty braces { }
-
-		newContent = StringUtil.replace(newContent, "\n\n\t}", "\n\t}");
-
-		// Add space to last }
-
-		newContent = newContent.substring(0, newContent.length() - 2) + "\n\n}";
-		*/
-
-		writeFileRaw(file, newContent, modifiedFileNames);
-
-		tempFile.deleteOnExit();
-	}
-
-	public static void writeFile(
-			File file, String content, String author, Set<String> modifiedFileNames)
-		throws IOException {
-
-		writeFile(file, content, author, null, modifiedFileNames);
-	}
-
-	public static void writeFileRaw(
-			File file, String content, Set<String> modifiedFileNames)
-		throws IOException {
-
-		// Write file if and only if the file has changed
-
-		if (!file.exists() || !content.equals(_read(file))) {
-			_write(file, content);
-
-			modifiedFileNames.add(file.getAbsolutePath());
-
-			System.out.println("Writing " + file);
-		}
-	}
-
 	public ServiceBuilder(
 			String apiDirName, boolean autoImportDefaultReferences,
 			boolean autoNamespaceTables, String beanLocatorUtil,
@@ -763,7 +529,7 @@ public class ServiceBuilder {
 			SAXReader saxReader = _getSAXReader();
 
 			Document document = saxReader.read(
-				new XMLSafeReader(getContent(inputFileName)));
+				new XMLSafeReader(ToolsUtil.getContent(inputFileName)));
 
 			Element rootElement = document.getRootElement();
 
@@ -782,7 +548,8 @@ public class ServiceBuilder {
 
 			if (Validator.isNotNull(_testDirName)) {
 				_testOutputPath =
-					_testDirName + "/" + StringUtil.replace(packagePath, ".", "/");
+					_testDirName + "/" +
+						StringUtil.replace(packagePath, ".", "/");
 			}
 
 			_packagePath = packagePath;
@@ -1421,6 +1188,17 @@ public class ServiceBuilder {
 		return mappingEntitiesPKList;
 	}
 
+	public int getMaxLength(String model, String field) {
+		Map<String, String> hints = ModelHintsUtil.getHints(model, field);
+
+		if (hints == null) {
+			return _DEFAULT_COLUMN_MAX_LENGTH;
+		}
+
+		return GetterUtil.getInteger(
+			hints.get("max-length"), _DEFAULT_COLUMN_MAX_LENGTH);
+	}
+
 	public Set<String> getModifiedFileNames() {
 		return _modifiedFileNames;
 	}
@@ -1616,15 +1394,14 @@ public class ServiceBuilder {
 		else if (type.equals("Date")) {
 			return "TIMESTAMP";
 		}
-		else if (type.equals("Map") || type.equals("String")) {
-			Map<String, String> hints = ModelHintsUtil.getHints(model, field);
+		else if (type.equals("Map")) {
+			return "CLOB";
+		}
+		else if (type.equals("String")) {
+			int maxLength = getMaxLength(model, field);
 
-			if (hints != null) {
-				int maxLength = GetterUtil.getInteger(hints.get("max-length"));
-
-				if (maxLength == 2000000) {
-					return "CLOB";
-				}
+			if (maxLength == 2000000) {
+				return "CLOB";
 			}
 
 			return "VARCHAR";
@@ -1912,78 +1689,6 @@ public class ServiceBuilder {
 		return false;
 	}
 
-	private static void _addElements(
-		Element element, Map<String, Element> elements) {
-
-		for (Map.Entry<String, Element> entry : elements.entrySet()) {
-			Element childElement = entry.getValue();
-
-			element.add(childElement);
-		}
-	}
-
-	private static Document _getContentDocument(String fileName)
-		throws Exception {
-
-		SAXReader saxReader = _getSAXReader();
-
-		Document document = saxReader.read(new File(fileName));
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> elements = rootElement.elements();
-
-		for (Element element : elements) {
-			String elementName = element.getName();
-
-			if (!elementName.equals("service-builder-import")) {
-				continue;
-			}
-
-			element.detach();
-
-			String dirName = fileName.substring(
-				0, fileName.lastIndexOf(StringPool.SLASH) + 1);
-			String serviceBuilderImportFileName = element.attributeValue(
-				"file");
-
-			Document serviceBuilderImportDocument = _getContentDocument(
-				dirName + serviceBuilderImportFileName);
-
-			Element serviceBuilderImportRootElement =
-				serviceBuilderImportDocument.getRootElement();
-
-			List<Element> serviceBuilderImportElements =
-				serviceBuilderImportRootElement.elements();
-
-			for (Element serviceBuilderImportElement :
-					serviceBuilderImportElements) {
-
-				serviceBuilderImportElement.detach();
-
-				rootElement.add(serviceBuilderImportElement);
-			}
-		}
-
-		return document;
-	}
-
-	private static String _getPackagePath(File file) {
-		String fileName = StringUtil.replace(file.toString(), "\\", "/");
-
-		int x = fileName.indexOf("src/");
-
-		if (x == -1) {
-			x = fileName.indexOf("test/");
-		}
-
-		int y = fileName.lastIndexOf("/");
-
-		fileName = fileName.substring(x + 4, y);
-
-		return StringUtil.replace(fileName, "/", ".");
-	}
-
 	private static SAXReader _getSAXReader() {
 		return SAXReaderFactory.getSAXReader(null, false, false);
 	}
@@ -2000,19 +1705,6 @@ public class ServiceBuilder {
 
 		return StringUtil.replace(
 			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
-	}
-
-	private static URL _readJalopyXmlFromClassLoader() {
-		ClassLoader classLoader = ServiceBuilder.class.getClassLoader();
-
-		URL url = classLoader.getResource("jalopy.xml");
-
-		if (url == null) {
-			throw new RuntimeException(
-				"Unable to load jalopy.xml from the class loader");
-		}
-
-		return url;
 	}
 
 	private static void _readResourceActionModels(
@@ -2042,61 +1734,6 @@ public class ServiceBuilder {
 		for (Element element : elements) {
 			resourceActionModels.add(element.getText().trim());
 		}
-	}
-
-	private static String _stripFullyQualifiedClassNames(String content)
-		throws IOException {
-
-		String imports = JavaImportsFormatter.getImports(content);
-
-		if (Validator.isNull(imports)) {
-			return content;
-		}
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
-
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			int x = line.indexOf("import ");
-
-			if (x == -1) {
-				continue;
-			}
-
-			String importPackageAndClassName = line.substring(
-				x + 7, line.lastIndexOf(StringPool.SEMICOLON));
-
-			for (x = -1;;) {
-				x = content.indexOf(importPackageAndClassName, x + 1);
-
-				if (x == -1) {
-					break;
-				}
-
-				char nextChar = content.charAt(
-					x + importPackageAndClassName.length());
-				char previousChar = content.charAt(x - 1);
-
-				if (Character.isAlphabetic(nextChar) ||
-					(nextChar == CharPool.QUOTE) ||
-					(nextChar == CharPool.SEMICOLON) ||
-					(previousChar == CharPool.QUOTE)) {
-
-					continue;
-				}
-
-				String importClassName = importPackageAndClassName.substring(
-					importPackageAndClassName.lastIndexOf(StringPool.PERIOD) +
-						1);
-
-				content = StringUtil.replaceFirst(
-					content, importPackageAndClassName, importClassName, x);
-			}
-		}
-
-		return content;
 	}
 
 	private static void _touch(File file) throws IOException {
@@ -2168,7 +1805,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/persistence/" +
 				entity.getName() + "ActionableDynamicQuery.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createBlobModels(Entity entity) throws Exception {
@@ -2205,7 +1842,8 @@ public class ServiceBuilder {
 				_serviceOutputPath + "/model/" + entity.getName() +
 					col.getMethodName() + "BlobModel.java");
 
-			writeFile(blobModelFile, content, _author, _modifiedFileNames);
+			ToolsUtil.writeFile(
+				blobModelFile, content, _author, _modifiedFileNames);
 		}
 	}
 
@@ -2224,7 +1862,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/persistence/" +
 				entity.getPKClassName() + ".java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createExceptions(List<String> exceptions) throws Exception {
@@ -2268,7 +1906,8 @@ public class ServiceBuilder {
 
 				content = StringUtil.replace(content, "\r\n", "\n");
 
-				writeFileRaw(exceptionFile, content, _modifiedFileNames);
+				ToolsUtil.writeFileRaw(
+					exceptionFile, content, _modifiedFileNames);
 			}
 
 			if (exception.startsWith("NoSuch")) {
@@ -2281,7 +1920,8 @@ public class ServiceBuilder {
 						content, "kernel.exception.NoSuchModelException",
 						"NoSuchModelException");
 
-					writeFileRaw(exceptionFile, content, _modifiedFileNames);
+					ToolsUtil.writeFileRaw(
+						exceptionFile, content, _modifiedFileNames);
 				}
 			}
 		}
@@ -2309,7 +1949,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/persistence/" +
 				entity.getName() + "ExportActionableDynamicQuery.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createExtendedModel(Entity entity) throws Exception {
@@ -2343,6 +1983,8 @@ public class ServiceBuilder {
 		context.put("entity", entity);
 		context.put("methods", methods.toArray(new Object[methods.size()]));
 
+		context = _putDeprecatedKeys(context, modelJavaClass);
+
 		// Content
 
 		String content = _processTemplate(_tplExtendedModel, context);
@@ -2352,13 +1994,18 @@ public class ServiceBuilder {
 		File modelFile = new File(
 			_serviceOutputPath + "/model/" + entity.getName() + ".java");
 
-		writeFile(modelFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(modelFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createExtendedModelBaseImpl(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
+
+		JavaClass modelImplJavaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
+
+		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
 		// Content
 
@@ -2369,7 +2016,7 @@ public class ServiceBuilder {
 		File modelFile = new File(
 			_outputPath + "/model/impl/" + entity.getName() + "BaseImpl.java");
 
-		writeFile(modelFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(modelFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createExtendedModelImpl(Entity entity) throws Exception {
@@ -2394,10 +2041,11 @@ public class ServiceBuilder {
 					"ModelImpl\\s+implements\\s+" + entity.getName(),
 				"extends " + entity.getName() + "BaseImpl");
 
-			writeFileRaw(modelFile, content, _modifiedFileNames);
+			ToolsUtil.writeFileRaw(modelFile, content, _modifiedFileNames);
 		}
 		else {
-			writeFile(modelFile, content, _author, _modifiedFileNames);
+			ToolsUtil.writeFile(
+				modelFile, content, _author, _modifiedFileNames);
 		}
 	}
 
@@ -2417,6 +2065,8 @@ public class ServiceBuilder {
 		context.put("entity", entity);
 		context.put("methods", _getMethods(javaClass));
 
+		context = _putDeprecatedKeys(context, javaClass);
+
 		// Content
 
 		String content = _processTemplate(_tplFinder, context);
@@ -2427,7 +2077,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/persistence/" + entity.getName() +
 				"Finder.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createFinderUtil(Entity entity) throws Exception {
@@ -2446,6 +2096,8 @@ public class ServiceBuilder {
 		context.put("entity", entity);
 		context.put("methods", _getMethods(javaClass));
 
+		context = _putDeprecatedKeys(context, javaClass);
+
 		// Content
 
 		String content = _processTemplate(_tplFinderUtil, context);
@@ -2456,7 +2108,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/persistence/" + entity.getName() +
 				"FinderUtil.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createHbm(Entity entity) {
@@ -2564,13 +2216,19 @@ public class ServiceBuilder {
 					newContent.substring(lastClass);
 		}
 
-		writeFileRaw(xmlFile, _formatXml(newContent), _modifiedFileNames);
+		ToolsUtil.writeFileRaw(
+			xmlFile, _formatXml(newContent), _modifiedFileNames);
 	}
 
 	private void _createModel(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
+
+		JavaClass modelImplJavaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
+
+		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
 		// Content
 
@@ -2581,17 +2239,19 @@ public class ServiceBuilder {
 		File modelFile = new File(
 			_serviceOutputPath + "/model/" + entity.getName() + "Model.java");
 
-		writeFile(modelFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(modelFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createModelCache(Entity entity) throws Exception {
-		JavaClass javaClass = _getJavaClass(
+		JavaClass modelImplJavaClass = _getJavaClass(
 			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
-		context.put("cacheFields", _getCacheFields(javaClass));
+		context.put("cacheFields", _getCacheFields(modelImplJavaClass));
+
+		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
 		// Content
 
@@ -2603,7 +2263,7 @@ public class ServiceBuilder {
 			_outputPath + "/model/impl/" + entity.getName() +
 				"CacheModel.java");
 
-		writeFile(modelFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(modelFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createModelClp(Entity entity) throws Exception {
@@ -2611,16 +2271,16 @@ public class ServiceBuilder {
 			return;
 		}
 
-		JavaClass javaClass = _getJavaClass(
+		JavaClass modelImplJavaClass = _getJavaClass(
 			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
 		Map<String, JavaMethod> methods = new HashMap<>();
 
-		for (JavaMethod method : javaClass.getMethods()) {
+		for (JavaMethod method : modelImplJavaClass.getMethods()) {
 			methods.put(method.getDeclarationSignature(false), method);
 		}
 
-		Type superClass = javaClass.getSuperClass();
+		Type superClass = modelImplJavaClass.getSuperClass();
 
 		String superClassValue = superClass.getValue();
 
@@ -2631,7 +2291,7 @@ public class ServiceBuilder {
 				superClassValue = superClassValue.substring(pos + 1);
 			}
 
-			javaClass = _getJavaClass(
+			JavaClass javaClass = _getJavaClass(
 				_outputPath + "/model/impl/" + superClassValue + ".java");
 
 			for (JavaMethod method : _getMethods(javaClass)) {
@@ -2656,7 +2316,7 @@ public class ServiceBuilder {
 		File modelFile = new File(
 			_serviceOutputPath + "/model/" + entity.getName() + "Clp.java");
 
-		writeFile(modelFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(modelFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createModelHintsXml() throws Exception {
@@ -2703,17 +2363,20 @@ public class ServiceBuilder {
 					newContent.substring(lastModel);
 		}
 
-		writeFileRaw(xmlFile, _formatXml(newContent), _modifiedFileNames);
+		ToolsUtil.writeFileRaw(
+			xmlFile, _formatXml(newContent), _modifiedFileNames);
 	}
 
 	private void _createModelImpl(Entity entity) throws Exception {
-		JavaClass javaClass = _getJavaClass(
+		JavaClass modelImplJavaClass = _getJavaClass(
 			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
-		context.put("cacheFields", _getCacheFields(javaClass));
+		context.put("cacheFields", _getCacheFields(modelImplJavaClass));
+
+		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
 		// Content
 
@@ -2724,7 +2387,7 @@ public class ServiceBuilder {
 		File modelFile = new File(
 			_outputPath + "/model/impl/" + entity.getName() + "ModelImpl.java");
 
-		writeFile(modelFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(modelFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createModelSoap(Entity entity) throws Exception {
@@ -2735,13 +2398,18 @@ public class ServiceBuilder {
 
 		context.put("entity", entity);
 
+		JavaClass modelImplJavaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
+
+		context = _putDeprecatedKeys(context, modelImplJavaClass);
+
 		// Content
 
 		String content = _processTemplate(_tplModelSoap, context);
 
 		// Write file
 
-		writeFile(modelFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(modelFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createModelWrapper(Entity entity) throws Exception {
@@ -2767,6 +2435,8 @@ public class ServiceBuilder {
 		context.put("entity", entity);
 		context.put("methods", methods);
 
+		context = _putDeprecatedKeys(context, modelJavaClass);
+
 		// Content
 
 		String content = _processTemplate(_tplModelWrapper, context);
@@ -2776,7 +2446,7 @@ public class ServiceBuilder {
 		File modelFile = new File(
 			_serviceOutputPath + "/model/" + entity.getName() + "Wrapper.java");
 
-		writeFile(modelFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(modelFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createPersistence(Entity entity) throws Exception {
@@ -2789,6 +2459,8 @@ public class ServiceBuilder {
 		context.put("entity", entity);
 		context.put("methods", _getMethods(javaClass));
 
+		context = _putDeprecatedKeys(context, javaClass);
+
 		// Content
 
 		String content = _processTemplate(_tplPersistence, context);
@@ -2799,7 +2471,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/persistence/" + entity.getName() +
 				"Persistence.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createPersistenceImpl(Entity entity) throws Exception {
@@ -2807,6 +2479,11 @@ public class ServiceBuilder {
 
 		context.put("entity", entity);
 		context.put("referenceList", _mergeReferenceList(entity));
+
+		JavaClass modelImplJavaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
+
+		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
 		// Content
 
@@ -2822,7 +2499,7 @@ public class ServiceBuilder {
 			_outputPath + "/service/persistence/impl/" + entity.getName() +
 				"PersistenceImpl.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 
 		ejbFile = new File(
 			_outputPath + "/service/persistence/" + entity.getName() +
@@ -2840,6 +2517,11 @@ public class ServiceBuilder {
 
 		context.put("entity", entity);
 
+		JavaClass modelImplJavaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
+
+		context = _putDeprecatedKeys(context, modelImplJavaClass);
+
 		// Content
 
 		String content = _processTemplate(_tplPersistenceTest, context);
@@ -2850,7 +2532,7 @@ public class ServiceBuilder {
 			_testOutputPath + "/service/persistence/test/" + entity.getName() +
 				"PersistenceTest.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 
 		ejbFile = new File(
 			_testOutputPath + "/service/persistence/" + entity.getName() +
@@ -2873,6 +2555,8 @@ public class ServiceBuilder {
 		context.put("entity", entity);
 		context.put("methods", _getMethods(javaClass));
 
+		context = _putDeprecatedKeys(context, javaClass);
+
 		// Content
 
 		String content = _processTemplate(_tplPersistenceUtil, context);
@@ -2883,7 +2567,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/persistence/" + entity.getName() +
 				"Util.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createPool(Entity entity) {
@@ -2949,7 +2633,7 @@ public class ServiceBuilder {
 
 		// Write file
 
-		writeFileRaw(propsFile, content, _modifiedFileNames);
+		ToolsUtil.writeFileRaw(propsFile, content, _modifiedFileNames);
 	}
 
 	private void _createRemotingXml() throws Exception {
@@ -3034,7 +2718,8 @@ public class ServiceBuilder {
 			}
 		}
 
-		writeFileRaw(outputFile, _formatXml(newContent), _modifiedFileNames);
+		ToolsUtil.writeFileRaw(
+			outputFile, _formatXml(newContent), _modifiedFileNames);
 	}
 
 	private void _createService(Entity entity, int sessionType)
@@ -3091,7 +2776,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "Service.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createServiceBaseImpl(Entity entity, int sessionType)
@@ -3123,7 +2808,7 @@ public class ServiceBuilder {
 			_outputPath + "/service/base/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceBaseImpl.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createServiceClp(Entity entity, int sessionType)
@@ -3155,7 +2840,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceClp.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createServiceClpInvoker(Entity entity, int sessionType)
@@ -3204,7 +2889,7 @@ public class ServiceBuilder {
 			_outputPath + "/service/base/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceClpInvoker.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createServiceClpMessageListener() throws Exception {
@@ -3226,7 +2911,7 @@ public class ServiceBuilder {
 		File ejbFile = new File(
 			_serviceOutputPath + "/service/messaging/ClpMessageListener.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createServiceClpSerializer(List<String> exceptions)
@@ -3250,7 +2935,7 @@ public class ServiceBuilder {
 		File ejbFile = new File(
 			_serviceOutputPath + "/service/ClpSerializer.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createServiceFactory(Entity entity, int sessionType) {
@@ -3298,7 +2983,7 @@ public class ServiceBuilder {
 			_outputPath + "/service/http/" + entity.getName() +
 				"ServiceHttp.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createServiceImpl(Entity entity, int sessionType)
@@ -3320,7 +3005,7 @@ public class ServiceBuilder {
 				_getSessionTypeName(sessionType) + "ServiceImpl.java");
 
 		if (!ejbFile.exists()) {
-			writeFile(ejbFile, content, _author, _modifiedFileNames);
+			ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 		}
 	}
 
@@ -3368,7 +3053,7 @@ public class ServiceBuilder {
 
 		String content = _processTemplate(_tplServicePropsUtil, context);
 
-		writeFile(file, content, _modifiedFileNames);
+		ToolsUtil.writeFile(file, content, _modifiedFileNames);
 	}
 
 	private void _createServiceSoap(Entity entity) throws Exception {
@@ -3393,7 +3078,7 @@ public class ServiceBuilder {
 			_outputPath + "/service/http/" + entity.getName() +
 				"ServiceSoap.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createServiceUtil(Entity entity, int sessionType)
@@ -3421,7 +3106,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceUtil.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createServiceWrapper(Entity entity, int sessionType)
@@ -3449,7 +3134,7 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/service/" + entity.getName() +
 				_getSessionTypeName(sessionType) + "ServiceWrapper.java");
 
-		writeFile(ejbFile, content, _author, _modifiedFileNames);
+		ToolsUtil.writeFile(ejbFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createSpringXml() throws Exception {
@@ -3524,7 +3209,8 @@ public class ServiceBuilder {
 					newContent.substring(lastSession);
 		}
 
-		writeFileRaw(xmlFile, _formatXml(newContent), _modifiedFileNames);
+		ToolsUtil.writeFileRaw(
+			xmlFile, _formatXml(newContent), _modifiedFileNames);
 	}
 
 	private void _createSQLIndexes() throws Exception {
@@ -3643,7 +3329,7 @@ public class ServiceBuilder {
 			sb.setIndex(sb.index() - 2);
 		}
 
-		writeFileRaw(sqlFile, sb.toString(), _modifiedFileNames);
+		ToolsUtil.writeFileRaw(sqlFile, sb.toString(), _modifiedFileNames);
 
 		// indexes.properties
 
@@ -3675,7 +3361,7 @@ public class ServiceBuilder {
 					content.substring(0, x) + newCreateTableString +
 						content.substring(y + 2);
 
-				writeFileRaw(sqlFile, content, _modifiedFileNames);
+				ToolsUtil.writeFileRaw(sqlFile, content, _modifiedFileNames);
 			}
 		}
 		else if (addMissingTables) {
@@ -3711,7 +3397,8 @@ public class ServiceBuilder {
 					sb.append(newCreateTableString);
 				}
 
-				writeFileRaw(sqlFile, sb.toString(), _modifiedFileNames);
+				ToolsUtil.writeFileRaw(
+					sqlFile, sb.toString(), _modifiedFileNames);
 			}
 		}
 	}
@@ -3796,7 +3483,7 @@ public class ServiceBuilder {
 			sb.setIndex(sb.index() - 1);
 		}
 
-		writeFileRaw(sqlFile, sb.toString(), _modifiedFileNames);
+		ToolsUtil.writeFileRaw(sqlFile, sb.toString(), _modifiedFileNames);
 	}
 
 	private void _createSQLTables() throws Exception {
@@ -3849,7 +3536,7 @@ public class ServiceBuilder {
 
 		String content = _read(sqlFile);
 
-		writeFileRaw(sqlFile, content.trim(), _modifiedFileNames);
+		ToolsUtil.writeFileRaw(sqlFile, content.trim(), _modifiedFileNames);
 	}
 
 	private void _createSQLTables(
@@ -3910,7 +3597,8 @@ public class ServiceBuilder {
 					sb.append(newCreateTableString);
 				}
 
-				writeFileRaw(sqlFile, sb.toString(), _modifiedFileNames);
+				ToolsUtil.writeFileRaw(
+					sqlFile, sb.toString(), _modifiedFileNames);
 			}
 		}
 	}
@@ -3942,8 +3630,6 @@ public class ServiceBuilder {
 		_deleteFile("docroot/WEB-INF/src/META-INF/hibernate-spring.xml");
 		_deleteFile("docroot/WEB-INF/src/META-INF/infrastructure-spring.xml");
 		_deleteFile("docroot/WEB-INF/src/META-INF/misc-spring.xml");
-		_deleteFile(
-			"docroot/WEB-INF/src/META-INF/shard-data-source-spring.xml");
 	}
 
 	private String _fixHbmXml(String content) throws IOException {
@@ -4056,7 +3742,7 @@ public class ServiceBuilder {
 		}
 
 		xml = StringUtil.replace(xml, '\r', "");
-		xml = XMLFormatter.toString(xml);
+		xml = Dom4jUtil.toString(xml);
 		xml = StringUtil.replace(xml, "\"/>", "\" />");
 
 		if (Validator.isNotNull(doctype)) {
@@ -4206,7 +3892,6 @@ public class ServiceBuilder {
 			for (int i = 0; i < pkList.size(); i++) {
 				EntityColumn col = pkList.get(i);
 
-				String colName = col.getName();
 				String colType = col.getType();
 
 				sb.append("\t");
@@ -4233,15 +3918,9 @@ public class ServiceBuilder {
 					sb.append("TEXT");
 				}
 				else if (colType.equals("String")) {
-					Map<String, String> hints = ModelHintsUtil.getHints(
-						_packagePath + ".model." + entity.getName(), colName);
-
-					int maxLength = 75;
-
-					if (hints != null) {
-						maxLength = GetterUtil.getInteger(
-							hints.get("max-length"), maxLength);
-					}
+					int maxLength = getMaxLength(
+						_packagePath + ".model." + entity.getName(),
+						entity.getName());
 
 					if (col.isLocalized()) {
 						maxLength = 4000;
@@ -4356,15 +4035,8 @@ public class ServiceBuilder {
 				sb.append("TEXT");
 			}
 			else if (colType.equals("String")) {
-				Map<String, String> hints = ModelHintsUtil.getHints(
+				int maxLength = getMaxLength(
 					_packagePath + ".model." + entity.getName(), colName);
-
-				int maxLength = 75;
-
-				if (hints != null) {
-					maxLength = GetterUtil.getInteger(
-						hints.get("max-length"), maxLength);
-				}
 
 				if (col.isLocalized() && (maxLength < 4000)) {
 					maxLength = 4000;
@@ -4859,7 +4531,7 @@ public class ServiceBuilder {
 				content, "package " + _packagePath + ".service.persistence;",
 				sb.toString());
 
-			writeFileRaw(newFinderImpl, content, _modifiedFileNames);
+			ToolsUtil.writeFileRaw(newFinderImpl, content, _modifiedFileNames);
 		}
 
 		if (newFinderImpl.exists()) {
@@ -5278,11 +4950,13 @@ public class ServiceBuilder {
 
 		context.put("classDeprecated", false);
 
-		DocletTag tag = javaClass.getTagByName("deprecated");
+		if (javaClass != null) {
+			DocletTag tag = javaClass.getTagByName("deprecated");
 
-		if (tag != null) {
-			context.put("classDeprecated", true);
-			context.put("classDeprecatedComment", tag.getValue());
+			if (tag != null) {
+				context.put("classDeprecated", true);
+				context.put("classDeprecatedComment", tag.getValue());
+			}
 		}
 
 		return context;
@@ -5406,6 +5080,8 @@ public class ServiceBuilder {
 			_createSQLTables(updateSQLFile, createTableSQL, entity, false);
 		}
 	}
+
+	private static final int _DEFAULT_COLUMN_MAX_LENGTH = 75;
 
 	private static final int _SESSION_TYPE_LOCAL = 1;
 

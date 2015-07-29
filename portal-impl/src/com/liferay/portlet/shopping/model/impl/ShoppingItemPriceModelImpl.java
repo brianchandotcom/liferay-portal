@@ -70,6 +70,21 @@ public class ShoppingItemPriceModelImpl extends BaseModelImpl<ShoppingItemPrice>
 			{ "useShippingFormula", Types.BOOLEAN },
 			{ "status", Types.INTEGER }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("itemPriceId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("itemId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("minQuantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("maxQuantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("price", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("discount", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("taxable", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("shipping", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("useShippingFormula", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table ShoppingItemPrice (itemPriceId LONG not null primary key,itemId LONG,minQuantity INTEGER,maxQuantity INTEGER,price DOUBLE,discount DOUBLE,taxable BOOLEAN,shipping DOUBLE,useShippingFormula BOOLEAN,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table ShoppingItemPrice";
 	public static final String ORDER_BY_JPQL = " ORDER BY shoppingItemPrice.itemId ASC, shoppingItemPrice.itemPriceId ASC";

@@ -74,6 +74,20 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 			{ "ratingsTotalScore", Types.DOUBLE },
 			{ "ratingsAverageScore", Types.DOUBLE }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("statsUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("entryCount", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("lastPostDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("ratingsTotalEntries", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("ratingsTotalScore", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("ratingsAverageScore", Types.DOUBLE);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table BlogsStatsUser (statsUserId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,entryCount INTEGER,lastPostDate DATE null,ratingsTotalEntries INTEGER,ratingsTotalScore DOUBLE,ratingsAverageScore DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table BlogsStatsUser";
 	public static final String ORDER_BY_JPQL = " ORDER BY blogsStatsUser.entryCount DESC";

@@ -82,7 +82,7 @@ public class SynchronousDestinationTestCallback
 		public BaseDestination createSynchronousDestination(
 			String destinationName) {
 
-			SynchronousDestination synchronousDestination;
+			SynchronousDestination synchronousDestination = null;
 
 			if ((_sync != null) && _sync.cleanTransaction()) {
 				synchronousDestination =

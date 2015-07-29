@@ -15,6 +15,8 @@
 package com.liferay.portal.json.web.service.extender.internal;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceRegistrator;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceRegistratorFactory;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 
 import org.osgi.framework.Bundle;
@@ -121,7 +123,7 @@ public class JSONWebServiceTracker
 
 		try {
 			_jsonWebServiceActionsManager.registerService(
-				contextName, contextPath, service);
+				contextName, contextPath, service, _jsonWebServiceRegistrator);
 		}
 		finally {
 			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
@@ -137,6 +139,14 @@ public class JSONWebServiceTracker
 		_jsonWebServiceActionsManager = jsonWebServiceActionsManager;
 	}
 
+	@Reference
+	protected void setJSONWebServiceRegistratorFactory(
+		JSONWebServiceRegistratorFactory jsonWebServiceRegistratorFactory) {
+
+		_jsonWebServiceRegistrator = jsonWebServiceRegistratorFactory.build(
+			new ServiceJSONWebServiceScannerStrategy());
+	}
+
 	protected void unregisterService(Object service) {
 		_jsonWebServiceActionsManager.unregisterJSONWebServiceActions(service);
 	}
@@ -147,8 +157,15 @@ public class JSONWebServiceTracker
 		_jsonWebServiceActionsManager = null;
 	}
 
+	protected void unsetJSONWebServiceRegistratorFactory(
+		JSONWebServiceRegistratorFactory jsonWebServiceRegistratorFactory) {
+
+		_jsonWebServiceRegistrator = null;
+	}
+
 	private ComponentContext _componentContext;
 	private JSONWebServiceActionsManager _jsonWebServiceActionsManager;
+	private JSONWebServiceRegistrator _jsonWebServiceRegistrator;
 	private ServiceTracker<Object, Object> _serviceTracker;
 
 }

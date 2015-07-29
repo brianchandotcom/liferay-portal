@@ -17,6 +17,7 @@ package com.liferay.portlet.ratings.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
@@ -251,9 +252,8 @@ public class RatingsEntryLocalServiceImpl
 
 			extraDataJSONObject.put("title", assetEntry.getTitle());
 
-			socialActivityLocalService.addActivity(
-				userId, assetEntry.getGroupId(), className, classPK,
-				SocialActivityConstants.TYPE_ADD_VOTE,
+			SocialActivityManagerUtil.addActivity(
+				userId, assetEntry, SocialActivityConstants.TYPE_ADD_VOTE,
 				extraDataJSONObject.toString(), 0);
 		}
 
@@ -262,7 +262,8 @@ public class RatingsEntryLocalServiceImpl
 
 	protected void validate(double score) throws PortalException {
 		if ((score > 1) || (score < 0)) {
-			throw new EntryScoreException();
+			throw new EntryScoreException(
+				"Score " + score + " is not a value between 0 and 1");
 		}
 	}
 

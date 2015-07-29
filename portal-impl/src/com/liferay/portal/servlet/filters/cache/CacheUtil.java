@@ -78,6 +78,6 @@ public class CacheUtil {
 	}
 
 	private static final PortalCache<String, CacheResponseData> _portalCache =
-		MultiVMPoolUtil.getCache(CACHE_NAME);
+		MultiVMPoolUtil.getPortalCache(CACHE_NAME);
 
 }

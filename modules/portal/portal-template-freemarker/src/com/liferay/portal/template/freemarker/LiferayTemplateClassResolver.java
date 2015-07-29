@@ -71,7 +71,8 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			if (className.startsWith(restrictedPackageName)) {
 				throw new TemplateException(
 					"Instantiating " + className + " is not allowed in the " +
-						"template for security reasons", environment);
+						"template for security reasons",
+					environment);
 			}
 		}
 

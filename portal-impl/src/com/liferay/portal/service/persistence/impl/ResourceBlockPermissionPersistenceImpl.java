@@ -1389,8 +1389,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	}
 
 	protected void cacheUniqueFindersCache(
-		ResourceBlockPermission resourceBlockPermission) {
-		if (resourceBlockPermission.isNew()) {
+		ResourceBlockPermission resourceBlockPermission, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					resourceBlockPermission.getResourceBlockId(),
 					resourceBlockPermission.getRoleId()
@@ -1627,7 +1627,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 			false);
 
 		clearUniqueFindersCache(resourceBlockPermission);
-		cacheUniqueFindersCache(resourceBlockPermission);
+		cacheUniqueFindersCache(resourceBlockPermission, isNew);
 
 		resourceBlockPermission.resetOriginalValues();
 
@@ -2010,6 +2010,11 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return ResourceBlockPermissionModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

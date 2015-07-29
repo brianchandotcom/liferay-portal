@@ -14,7 +14,9 @@
 			</then>
 		</if>
 
-		<execute macro="SitePage#addCmd" />
+		<execute macro="SitePage#addCmd">
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+		</execute>
 
 		<execute macro="SitePage#expandRootCP" />
 
@@ -69,7 +71,9 @@
 			</then>
 		</if>
 
-		<execute macro="SitePage#addCmd" />
+		<execute macro="SitePage#addCmd">
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+		</execute>
 
 		<execute function="Pause" locator1="5000" />
 		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_ADD_PAGE" value1="Add Page" />
@@ -93,6 +97,9 @@
 			<isset var="sitePageType" />
 			<then>
 				<execute macro="SitePage#selectSitePageTypeRadioCP">
+					<var name="componentName" value="${componentName}" />
+					<var name="pageTypeDescription" value="${pageTypeDescription}" />
+					<var name="pageTypeURL" value="${pageTypeURL}" />
 					<var name="sitePageType" value="${sitePageType}" />
 				</execute>
 			</then>
@@ -280,7 +287,16 @@
 	</command>
 
 	<command name="deleteSitepagesPG">
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<while>
 			<condition function="IsElementPresent#isElementPresentClickNavigation" locator1="Home#PAGE_2" />
@@ -327,8 +343,6 @@
 		<execute function="AssertClick" locator1="DockbarEditpanel#DETAILS_TYPE_PAGE_OPTIONS" value1="Embedded" />
 		<execute function="Type" locator1="DockbarEditpanel#DETAILS_TYPE_PAGE_URL" value1="http://www.liferay.com" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarEditpanel#SAVE_BUTTON" value1="Save" />
-
-		<execute function="AssertTextPresent" locator1="Home#EMBEDDED_SITE_LIFERAY_BANNER_LOGO" value1="Liferay" />
 	</command>
 
 	<command name="expandRootCP">
@@ -427,7 +441,9 @@
 				</then>
 			</elseif>
 			<else>
-				<execute macro="SitePage#addSitePageTypePanelCP" />
+				<execute macro="SitePage#addSitePageTypePanelCP">
+					<var name="componentName" value="${componentName}" />
+				</execute>
 			</else>
 		</if>
 	</command>
@@ -465,7 +481,20 @@
 		<var name="i" value="0" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="nodePort" value="${nodePort}" />
+			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageName" value="${sitePageName}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="sitePageName" value="${sitePageName}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
 		<if>
@@ -473,9 +502,9 @@
 			<then>
 				<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE_1" value1="${sitePageName}" />
 				<execute function="AssertClick" locator1="Home#PAGE_1_CHILD_PAGE_1" value1="${siteChildPageName}" />
-				<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />
-				<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${sitePageName}" />
-				<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_3" value1="${siteChildPageName}" />
+				<execute function="Pause" locator1="1073" />
+				<execute function="Pause" locator1="1073" />
+				<execute function="Pause" locator1="1073" />
 				<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
 				<execute function="AssertLocation" value1="${sitePageURL}" />
 			</then>
@@ -487,9 +516,9 @@
 					<then>
 						<execute function="MouseOver#mouseOverClickNavigation" locator1="Home#PAGE_1" value1="${sitePageName}" />
 						<execute function="AssertClick" locator1="Home#PAGE_1_CHILD_PAGE_${childPageCounter}" value1="Site Child Page ${childPageCounter}" />
-						<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />
-						<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${sitePageName}" />
-						<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_3" value1="Site Child Page ${childPageCounter}" />
+						<execute function="Pause" locator1="1073" />
+						<execute function="Pause" locator1="1073" />
+						<execute function="Pause" locator1="1073" />
 						<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
 						<execute function="AssertLocation" value1="http://localhost:8080/web/site-name/site-child-page-${childPageCounter}" />
 
@@ -510,8 +539,16 @@
 
 	<command name="viewDefaultSiteTemplatePagesPG">
 		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageAccessURL" value="${pageAccessURL}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="pageStagingURL" value="${pageStagingURL}" />
 			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
 			<var name="siteURL" value="true" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
 		<execute function="Click" locator1="Home#PAGE_NAVIGATION_BAR" />
@@ -643,9 +680,11 @@
 	</command>
 
 	<command name="viewPageTemplatePG">
+		<execute function="Click" locator1="Dockbar#PAGE_INFO_MESSAGE_ICON" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
 
-		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
+		<execute function="Click#clickAt" locator1="Dockbar#EDIT" />
 
 		<execute function="AssertTextEquals" locator1="DockbarEditpanel#DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_LABEL" value1="Automatically apply changes done to the page template ${pageTemplateName}." />
 		<execute function="AssertChecked" locator1="DockbarEditpanel#DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_CHECKBOX" />
@@ -688,11 +727,24 @@
 
 	<command name="viewPG">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="nodePort" value="${nodePort}" />
+			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageName" value="${sitePageName}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="sitePageName" value="${sitePageName}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="${siteName}" />
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_2" value1="${sitePageName}" />
+		<execute function="Pause" locator1="1073" />
+		<execute function="Pause" locator1="1073" />
 		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
 		<execute function="AssertLocation" value1="${sitePageURL}" />
 	</command>

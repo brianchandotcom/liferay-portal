@@ -98,6 +98,11 @@ public class RadioDDMFormFieldType extends BaseDDMFormFieldType {
 	}
 
 	@Override
+	public String getIcon() {
+		return "icon-ok-circle";
+	}
+
+	@Override
 	public String getName() {
 		return "radio";
 	}

@@ -36,8 +36,9 @@ import javax.servlet.jsp.tagext.BodyContent;
 public class ScriptTag extends BaseScriptTag {
 
 	public static void doTag(
-			String position, String use, String bodyContentString,
-			BodyContent previousBodyContent, PageContext pageContext)
+			String position, String require, String use,
+			String bodyContentString, BodyContent previousBodyContent,
+			PageContext pageContext)
 		throws Exception {
 
 		String previousBodyContentString = null;
@@ -54,6 +55,7 @@ public class ScriptTag extends BaseScriptTag {
 
 		scriptTag.setPageContext(pageContext);
 		scriptTag.setPosition(position);
+		scriptTag.setRequire(require);
 		scriptTag.setUse(use);
 
 		BodyContent bodyContent = pageContext.pushBody();
@@ -113,12 +115,18 @@ public class ScriptTag extends BaseScriptTag {
 
 			StringBundler bodyContentSB = getBodyContentAsStringBundler();
 
+			String require = getRequire();
 			String use = getUse();
 
-			if (getSandbox() || (use != null)) {
+			if ((require != null) && (use != null)) {
+				throw new JspException(
+					"Attributes \"require\" and \"use\" are both set");
+			}
+
+			if (getSandbox() || (require != null) || (use != null)) {
 				StringBundler sb = new StringBundler();
 
-				if (use == null) {
+				if ((require == null) && (use == null)) {
 					sb.append("(function() {");
 				}
 
@@ -126,7 +134,7 @@ public class ScriptTag extends BaseScriptTag {
 				sb.append("var _ = AUI._;");
 				sb.append(bodyContentSB);
 
-				if (use == null) {
+				if ((require == null) && (use == null)) {
 					sb.append("})();");
 				}
 
@@ -136,7 +144,16 @@ public class ScriptTag extends BaseScriptTag {
 			if (isPositionInLine()) {
 				ScriptData scriptData = new ScriptData();
 
-				scriptData.append(portletId, bodyContentSB, use);
+				if (require != null) {
+					scriptData.append(
+						portletId, bodyContentSB, require,
+						ScriptData.ModulesType.ES6);
+				}
+				else {
+					scriptData.append(
+						portletId, bodyContentSB, use,
+						ScriptData.ModulesType.AUI);
+				}
 
 				String page = getPage();
 
@@ -159,7 +176,16 @@ public class ScriptTag extends BaseScriptTag {
 					request.setAttribute(WebKeys.AUI_SCRIPT_DATA, scriptData);
 				}
 
-				scriptData.append(portletId, bodyContentSB, use);
+				if (require != null) {
+					scriptData.append(
+						portletId, bodyContentSB, require,
+						ScriptData.ModulesType.ES6);
+				}
+				else {
+					scriptData.append(
+						portletId, bodyContentSB, use,
+						ScriptData.ModulesType.AUI);
+				}
 			}
 
 			return EVAL_PAGE;
@@ -189,6 +215,7 @@ public class ScriptTag extends BaseScriptTag {
 	@Override
 	protected void cleanUp() {
 		setPosition(null);
+		setRequire(null);
 		setUse(null);
 	}
 

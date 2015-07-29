@@ -15,12 +15,12 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -98,7 +98,8 @@ public class UpgradePortletDisplayTemplatePreferences
 		if (templateKey != null) {
 			portletPreferences.setValue(
 				"displayStyle",
-				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + templateKey);
+				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
+					templateKey);
 		}
 	}
 

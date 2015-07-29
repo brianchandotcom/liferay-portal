@@ -14,11 +14,12 @@
 
 package com.liferay.portal.kernel.cache.cluster;
 
-import com.liferay.portal.kernel.cache.BootstrapLoader;
-import com.liferay.portal.kernel.cache.CacheListener;
-import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.CallbackFactory;
-import com.liferay.portal.kernel.cache.bootstrap.ClusterLinkBootstrapLoader;
+import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoader;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
+import com.liferay.portal.kernel.cache.bootstrap.ClusterLinkPortalCacheBootstrapLoader;
 
 import java.io.Serializable;
 
@@ -27,27 +28,30 @@ import java.util.Properties;
 /**
  * @author Tina Tian
  */
-public class ClusterLinkCallbackFactory implements CallbackFactory {
+public class ClusterLinkCallbackFactory
+	implements CallbackFactory<PortalCacheManager<?, ?>> {
 
-	public static final CallbackFactory INSTANCE =
+	public static final CallbackFactory<PortalCacheManager<?, ?>> INSTANCE =
 		new ClusterLinkCallbackFactory();
 
 	@Override
-	public BootstrapLoader createBootstrapLoader(Properties properties) {
-		return new ClusterLinkBootstrapLoader(properties);
+	public PortalCacheBootstrapLoader createPortalCacheBootstrapLoader(
+		Properties properties) {
+
+		return new ClusterLinkPortalCacheBootstrapLoader(properties);
 	}
 
 	@Override
-	public <K extends Serializable, V> CacheListener<K, V> createCacheListener(
-		Properties properties) {
+	public <K extends Serializable, V> PortalCacheListener<K, V>
+		createPortalCacheListener(Properties properties) {
 
-		return (CacheListener<K, V>)
-			new ClusterLinkCacheReplicator<K, Serializable>(properties);
+		return (PortalCacheListener<K, V>)
+			new ClusterLinkPortalCacheReplicator<K, Serializable>(properties);
 	}
 
 	@Override
-	public CacheManagerListener createCacheManagerListener(
-		Properties properties) {
+	public PortalCacheManagerListener createPortalCacheManagerListener(
+		PortalCacheManager<?, ?> portalCacheManager, Properties properties) {
 
 		throw new UnsupportedOperationException();
 	}

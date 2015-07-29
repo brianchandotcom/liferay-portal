@@ -19,7 +19,7 @@
 <liferay-staging:defineObjects />
 
 <%
-String cssClass = "staging-icon-menu " + GetterUtil.getString((String) request.getAttribute("liferay-staging:menu:cssClass"));
+String cssClass = "staging-icon-menu " + GetterUtil.getString((String)request.getAttribute("liferay-staging:menu:cssClass"));
 boolean extended = GetterUtil.getBoolean((String)request.getAttribute("liferay-staging:menu:extended"));
 String icon = GetterUtil.getString((String)request.getAttribute("liferay-staging:menu:icon"));
 long layoutSetBranchId = GetterUtil.getLong((String)request.getAttribute("liferay-staging:menu:layoutSetBranchId"));
@@ -62,7 +62,7 @@ String publishMessage = LanguageUtil.get(request, publishDialogTitle);
 %>
 
 <liferay-portlet:renderURL plid="<%= plid %>" portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= PortletKeys.EXPORT_IMPORT %>" varImpl="publishRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<liferay-portlet:param name="struts_action" value="/export_import/publish_layouts" />
+	<liferay-portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 	<liferay-portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH_TO_LIVE %>" />
 	<liferay-portlet:param name="tabs1" value='<%= (privateLayout) ? "private-pages" : "public-pages" %>' />
 	<liferay-portlet:param name="closeRedirect" value="<%= currentURL %>" />

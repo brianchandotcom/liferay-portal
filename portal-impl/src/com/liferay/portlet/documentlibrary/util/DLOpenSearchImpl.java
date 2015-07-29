@@ -35,7 +35,7 @@ public class DLOpenSearchImpl extends HitsOpenSearchImpl {
 	}
 
 	@Override
-	public Indexer getIndexer() {
+	public Indexer<DLFileEntry> getIndexer() {
 		return IndexerRegistryUtil.getIndexer(DLFileEntry.class);
 	}
 

@@ -1217,7 +1217,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	protected BookmarksEntryPersistence bookmarksEntryPersistence;
 	@BeanReference(type = BookmarksEntryFinder.class)
 	protected BookmarksEntryFinder bookmarksEntryFinder;
-	@BeanReference(type = BookmarksFolderLocalService.class)
+	@BeanReference(type = com.liferay.bookmarks.service.BookmarksFolderLocalService.class)
 	protected BookmarksFolderLocalService bookmarksFolderLocalService;
 	@BeanReference(type = com.liferay.bookmarks.service.BookmarksFolderService.class)
 	protected com.liferay.bookmarks.service.BookmarksFolderService bookmarksFolderService;

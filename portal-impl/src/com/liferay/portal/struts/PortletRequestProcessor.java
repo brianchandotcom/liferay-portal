@@ -156,7 +156,8 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 								currentURL);
 					}
 
-					throw new PrincipalException(currentURL);
+					throw new PrincipalException.MustBeInvokedUsingPost(
+						currentURL);
 				}
 			}
 
@@ -560,10 +561,8 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 			if (!strutsPath.equals(portlet.getStrutsPath()) &&
 				!strutsPath.equals(portlet.getParentStrutsPath())) {
 
-				throw new PrincipalException(
-					"The struts path " + strutsPath + " does not belong to " +
-						"portlet " + portlet.getPortletId() + ". Check the " +
-							"definition in liferay-portlet.xml");
+				throw new PrincipalException.MustBePortletStrutsPath(
+					strutsPath, portlet.getPortletId());
 			}
 			else if (!portlet.isActive()) {
 				ForwardConfig forwardConfig = actionMapping.findForward(

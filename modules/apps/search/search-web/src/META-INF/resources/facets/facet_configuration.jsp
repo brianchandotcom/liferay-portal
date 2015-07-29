@@ -26,9 +26,10 @@ SearchFacet searchFacet = (SearchFacet)request.getAttribute("facet_configuration
 	<div class="facet-configuration-options" id="<portlet:namespace /><%= AUIUtil.normalizeId(searchFacet.getClassName()) %>Options">
 		<aui:input label="weight" name='<%= searchFacet.getClassName() + "weight" %>' value="<%= searchFacet.getWeight() %>" />
 
-		<c:if test="<%= Validator.isNotNull(searchFacet.getConfigurationView()) %>">
-			<liferay-util:include page="<%= searchFacet.getConfigurationView() %>" servletContext="<%= application %>" />
-		</c:if>
+		<%
+		searchFacet.includeConfiguration(request, response);
+		%>
+
 	</div>
 </aui:fieldset>
 

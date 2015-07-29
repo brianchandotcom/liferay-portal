@@ -1,0 +1,8 @@
+dependencies {
+	compile group: "org.eclipse.osgi", name: "org.eclipse.osgi", version: "3.10.100-SNAPSHOT"
+	compile group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/core")
+}

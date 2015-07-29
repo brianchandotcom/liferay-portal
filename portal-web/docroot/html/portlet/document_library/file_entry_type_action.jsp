@@ -25,7 +25,7 @@ DLFileEntryType fileEntryType = (DLFileEntryType)row.getObject();
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= false %>">
 	<c:if test="<%= DLFileEntryTypePermission.contains(permissionChecker, fileEntryType, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/document_library/edit_file_entry_type" />
+			<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry_type" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
 		</portlet:renderURL>
@@ -56,8 +56,7 @@ DLFileEntryType fileEntryType = (DLFileEntryType)row.getObject();
 	</c:if>
 
 	<c:if test="<%= DLFileEntryTypePermission.contains(permissionChecker, fileEntryType, ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/document_library/edit_file_entry_type" />
+		<portlet:actionURL name="/document_library/edit_file_entry_type" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />

@@ -35,7 +35,7 @@ import java.util.Set;
  */
 public class FacetedSearcher extends BaseSearcher {
 
-	public static Indexer getInstance() {
+	public static Indexer<?> getInstance() {
 		return new FacetedSearcher();
 	}
 
@@ -98,7 +98,7 @@ public class FacetedSearcher extends BaseSearcher {
 		}
 
 		for (String entryClassName : searchContext.getEntryClassNames()) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(entryClassName);
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(entryClassName);
 
 			if (indexer == null) {
 				continue;
@@ -172,7 +172,7 @@ public class FacetedSearcher extends BaseSearcher {
 		}
 
 		for (String entryClassName : searchContext.getEntryClassNames()) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(entryClassName);
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(entryClassName);
 
 			if (indexer == null) {
 				continue;
@@ -207,7 +207,8 @@ public class FacetedSearcher extends BaseSearcher {
 			queryBooleanFilter.addRequiredTerm(
 				Field.COMPANY_ID, searchContext.getCompanyId());
 
-			Query fullQuery = getFullQuery(searchContext);
+			Query fullQuery = createFullQuery(
+				queryBooleanFilter, searchContext);
 
 			if (!fullQuery.hasChildren()) {
 				BooleanFilter preBooleanFilter =
@@ -238,7 +239,7 @@ public class FacetedSearcher extends BaseSearcher {
 		}
 
 		for (String entryClassName : searchContext.getEntryClassNames()) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(entryClassName);
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(entryClassName);
 
 			if (indexer == null) {
 				continue;

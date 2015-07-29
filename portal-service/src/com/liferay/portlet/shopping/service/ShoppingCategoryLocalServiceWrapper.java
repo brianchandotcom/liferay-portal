@@ -56,10 +56,10 @@ public class ShoppingCategoryLocalServiceWrapper
 	@Override
 	public void addCategoryResources(
 		com.liferay.portlet.shopping.model.ShoppingCategory category,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_shoppingCategoryLocalService.addCategoryResources(category,
-			groupPermissions, guestPermissions);
+			modelPermissions);
 	}
 
 	@Override
@@ -72,10 +72,10 @@ public class ShoppingCategoryLocalServiceWrapper
 
 	@Override
 	public void addCategoryResources(long categoryId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_shoppingCategoryLocalService.addCategoryResources(categoryId,
-			groupPermissions, guestPermissions);
+			modelPermissions);
 	}
 
 	/**

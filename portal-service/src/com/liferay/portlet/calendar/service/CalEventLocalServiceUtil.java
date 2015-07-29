@@ -31,8 +31,10 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @see CalEventLocalService
  * @see com.liferay.portlet.calendar.service.base.CalEventLocalServiceBaseImpl
  * @see com.liferay.portlet.calendar.service.impl.CalEventLocalServiceImpl
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class CalEventLocalServiceUtil {
 	/*
@@ -107,9 +109,9 @@ public class CalEventLocalServiceUtil {
 
 	public static void addEventResources(
 		com.liferay.portlet.calendar.model.CalEvent event,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addEventResources(event, groupPermissions, guestPermissions);
+		getService().addEventResources(event, modelPermissions);
 	}
 
 	public static void addEventResources(long eventId,
@@ -120,10 +122,9 @@ public class CalEventLocalServiceUtil {
 	}
 
 	public static void addEventResources(long eventId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addEventResources(eventId, groupPermissions, guestPermissions);
+		getService().addEventResources(eventId, modelPermissions);
 	}
 
 	public static void checkEvents() {

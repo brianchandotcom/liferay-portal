@@ -42,7 +42,7 @@ public class BaseRelatedEntryIndexer implements RelatedEntryIndexer {
 		BooleanFilter relatedBooleanFilters = new BooleanFilter();
 
 		for (String relatedEntryClassName : relatedEntryClassNames) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 				relatedEntryClassName);
 
 			if (indexer == null) {
@@ -91,13 +91,13 @@ public class BaseRelatedEntryIndexer implements RelatedEntryIndexer {
 
 	/**
 	 * @deprecated As of 7.0.0, added strictly to support backwards
-	 *             compatibility of {@link Indexer#postProcessContextQuery(
-	 *             BooleanQuery, SearchContext)}
+	 *             compatibility of {@link
+	 *             Indexer#postProcessContextQuery(BooleanQuery, SearchContext)}
 	 */
 	@Deprecated
 	protected void postProcessContextQuery(
 			BooleanFilter relatedBooleanFilter, SearchContext searchContext,
-			Indexer indexer)
+			Indexer<?> indexer)
 		throws Exception {
 
 		BooleanQuery entityQuery = new BooleanQueryImpl();

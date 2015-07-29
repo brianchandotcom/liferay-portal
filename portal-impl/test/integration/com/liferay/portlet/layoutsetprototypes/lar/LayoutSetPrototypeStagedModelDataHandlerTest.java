@@ -74,22 +74,27 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 	public void tearDown() throws Exception {
 		super.tearDown();
 
-		_layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.
-				fetchLayoutSetPrototypeByUuidAndCompanyId(
-					_layoutSetPrototype.getUuid(),
-					_layoutSetPrototype.getCompanyId());
+		if (_layoutSetPrototype != null) {
+			_layoutSetPrototype =
+				LayoutSetPrototypeLocalServiceUtil.
+					fetchLayoutSetPrototypeByUuidAndCompanyId(
+						_layoutSetPrototype.getUuid(),
+						_layoutSetPrototype.getCompanyId());
 
-		LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
-			_layoutSetPrototype);
+			LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+				_layoutSetPrototype);
+		}
 
-		_layoutPrototype =
-			LayoutPrototypeLocalServiceUtil.
-				fetchLayoutPrototypeByUuidAndCompanyId(
-					_layoutPrototype.getUuid(),
-					_layoutPrototype.getCompanyId());
+		if (_layoutPrototype != null) {
+			_layoutPrototype =
+				LayoutPrototypeLocalServiceUtil.
+					fetchLayoutPrototypeByUuidAndCompanyId(
+						_layoutPrototype.getUuid(),
+						_layoutPrototype.getCompanyId());
 
-		LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(_layoutPrototype);
+			LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(
+				_layoutPrototype);
+		}
 	}
 
 	protected void addLayout(Class<?> clazz, Layout layout) throws Exception {

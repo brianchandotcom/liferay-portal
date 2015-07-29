@@ -10,17 +10,22 @@
 <tbody>
 <tr>
 	<td>BODY_FIELD</td>
-	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td>//div[contains(@id,'cke__')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BODY_FIELD_LOCALIZED</td>
-	<td>//iframe[contains(@title,'_editor')]</td>
+	<td>//div[contains(@id,'cke__')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BODY_FIELD_SOURCE_ON</td>
 	<td>//div[@id='cke_1_contents']/textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_FIELD_IFRAME</td>
+	<td>//div[contains(@id,'cke__')]//iframe</td>
 	<td></td>
 </tr>
 <tr>
@@ -57,6 +62,11 @@
 <tr>
 	<td>RESIZER</td>
 	<td>//span[@id='cke_1_resizer']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CKEDITOR_PNG</td>
+	<td>/portal/fields/ckeditor.png</td>
 	<td></td>
 </tr>
 <tr>

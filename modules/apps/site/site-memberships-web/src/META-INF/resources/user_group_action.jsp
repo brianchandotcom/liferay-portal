@@ -29,7 +29,6 @@ Group group = (Group)row.getParameter("group");
 		<portlet:renderURL var="assignURL">
 			<portlet:param name="mvcPath" value="/view.jsp" />
 			<portlet:param name="tabs1" value="user-groups" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 		</portlet:renderURL>

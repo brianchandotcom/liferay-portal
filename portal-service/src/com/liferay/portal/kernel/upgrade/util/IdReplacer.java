@@ -57,7 +57,7 @@ public class IdReplacer {
 				String oldString = s.substring(x + begin.length(), y);
 
 				if (Validator.isNotNull(oldString)) {
-					Long oldValue = new Long(GetterUtil.getLong(oldString));
+					Long oldValue = Long.valueOf(GetterUtil.getLong(oldString));
 
 					Long newValue = null;
 
@@ -110,7 +110,7 @@ public class IdReplacer {
 			else {
 				sb.append(s.substring(pos, x + begin.length()));
 
-				Long oldValue = new Long(
+				Long oldValue = Long.valueOf(
 					GetterUtil.getLong(s.substring(x + begin.length(), y)));
 
 				Long newValue = null;

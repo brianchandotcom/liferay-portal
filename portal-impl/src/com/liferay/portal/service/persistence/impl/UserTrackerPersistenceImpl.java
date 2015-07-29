@@ -2219,6 +2219,11 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		return count.intValue();
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return UserTrackerModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the user tracker persistence.
 	 */

@@ -40,10 +40,18 @@ public interface Comment {
 
 	public Date getModifiedDate();
 
+	public long getParentCommentId();
+
+	public String getTranslatedBody(String pathThemeImages);
+
 	public User getUser() throws PortalException;
 
 	public long getUserId();
 
 	public String getUserName();
+
+	public String getUuid();
+
+	public boolean isRoot();
 
 }

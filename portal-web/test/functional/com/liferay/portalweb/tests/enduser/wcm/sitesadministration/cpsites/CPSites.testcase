@@ -9,7 +9,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddChildChildSite" priority="5">
+	<command name="AddChildChildSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -115,6 +115,7 @@
 		</execute>
 
 		<execute macro="Site#viewVirtualHostsURLPG">
+			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Public Page" />
 			<var name="sitePageURL" value="http://www.able.com:8080/public-page" />
 		</execute>
@@ -138,7 +139,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSitesMultiple" priority="5">
+	<command name="AddSitesMultiple" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -295,7 +296,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSiteFriendlyURL" priority="4">
+	<command known-issues="LPS-56875" name="EditSiteFriendlyURL" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -335,6 +336,7 @@
 		</execute>
 
 		<execute macro="Site#viewSiteFriendlyURLPG">
+			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Public Page" />
 			<var name="sitePageURL" value="http://localhost:8080/web/alpha" />
 		</execute>
@@ -345,12 +347,13 @@
 		</execute>
 
 		<execute macro="Site#viewSiteFriendlyURLPG">
+			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Private Page" />
 			<var name="sitePageURL" value="http://localhost:8080/group/alpha" />
 		</execute>
 	</command>
 
-	<command name="EditSiteFriendlyURLInvalid" priority="4">
+	<command known-issues="LPS-51074" name="EditSiteFriendlyURLInvalid" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -410,7 +413,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-52605" name="SiteCannotBeItsOwnParent" priority="5">
+	<command known-issues="LPS-52605" name="SiteCannotBeItsOwnParent" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -430,7 +433,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-52605" name="SiteCannotBeItsOwnParentStaging" priority="5">
+	<command known-issues="LPS-52605" name="SiteCannotBeItsOwnParentStaging" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -469,7 +472,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDisplayParentSiteViaSitesDirectory" priority="5">
+	<command known-issues="LPS-56875" name="ViewDisplayParentSiteViaSitesDirectory" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -565,7 +568,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSiteHierarchiesViaSitesDirectory" priority="5">
+	<command known-issues="LPS-56875" name="ViewSiteHierarchiesViaSitesDirectory" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

@@ -71,6 +71,21 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 			{ "state_", Types.INTEGER },
 			{ "testString", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("releaseId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("servletContextName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("buildNumber", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("buildDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("verified", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("state_", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("testString", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table Release_ (mvccVersion LONG default 0,releaseId LONG not null primary key,createDate DATE null,modifiedDate DATE null,servletContextName VARCHAR(75) null,buildNumber INTEGER,buildDate DATE null,verified BOOLEAN,state_ INTEGER,testString VARCHAR(1024) null)";
 	public static final String TABLE_SQL_DROP = "drop table Release_";
 	public static final String ORDER_BY_JPQL = " ORDER BY release.releaseId ASC";

@@ -642,7 +642,7 @@ public abstract class PluginSettingLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = PluginSettingLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.PluginSettingLocalService.class)
 	protected PluginSettingLocalService pluginSettingLocalService;
 	@BeanReference(type = com.liferay.portal.service.PluginSettingService.class)
 	protected com.liferay.portal.service.PluginSettingService pluginSettingService;

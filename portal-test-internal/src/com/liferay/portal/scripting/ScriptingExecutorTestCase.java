@@ -14,35 +14,31 @@
 
 package com.liferay.portal.scripting;
 
-import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-
-import org.mockito.Mock;
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 
 /**
  * @author Miguel Pastor
  */
-@PrepareForTest(SingleVMPoolUtil.class)
-public abstract class ScriptingExecutorTestCase extends PowerMockito {
+public abstract class ScriptingExecutorTestCase {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		ToolDependencies.wireCaches();
+	}
 
 	public abstract String getScriptExtension();
 
@@ -50,20 +46,7 @@ public abstract class ScriptingExecutorTestCase extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		mockStatic(SingleVMPoolUtil.class);
-
-		when(
-			SingleVMPoolUtil.getCache(Mockito.anyString())
-		).thenReturn(
-			_portalCache
-		);
-
 		_scriptingExecutor = getScriptingExecutor();
-	}
-
-	@After
-	public void tearDown() {
-		verifyStatic();
 	}
 
 	@Test
@@ -103,9 +86,6 @@ public abstract class ScriptingExecutorTestCase extends PowerMockito {
 
 		return StringUtil.read(inputStream);
 	}
-
-	@Mock
-	private PortalCache<Serializable, Object> _portalCache;
 
 	private ScriptingExecutor _scriptingExecutor;
 

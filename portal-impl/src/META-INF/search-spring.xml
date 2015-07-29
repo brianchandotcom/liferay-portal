@@ -34,28 +34,6 @@
 
 	<!-- Util -->
 
-	<bean id="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilder" class="com.liferay.portal.repository.search.RepositorySearchQueryBuilderImpl" />
-	<bean id="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil" class="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil">
-		<property name="repositorySearchQueryBuilder" ref="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilder" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.search.QueryPreProcessConfiguration" class="com.liferay.portal.search.QueryPreProcessConfigurationImpl">
-		<property name="fieldNames">
-			<util:set>
-				<value>assetCategoryTitles?(_.+)?</value>
-				<value>assetTagNames</value>
-				<value>emailAddress</value>
-				<value>firstName</value>
-				<value>lastName</value>
-				<value>license</value>
-				<value>middleName</value>
-				<value>path</value>
-				<value>screenName</value>
-				<value>tag</value>
-				<value>treePath</value>
-				<value>userName</value>
-			</util:set>
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.search.SearchEngineUtil" class="com.liferay.portal.kernel.search.SearchEngineUtil">
 		<property name="excludedEntryClassNames">
 			<list>
@@ -63,12 +41,6 @@
 				<value>com.liferay.portlet.asset.model.AssetEntry</value>
 			</list>
 		</property>
-		<property name="searchPermissionChecker" ref="com.liferay.portal.kernel.search.SearchPermissionChecker" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.search.SearchPermissionChecker" class="com.liferay.portal.search.SearchPermissionCheckerImpl" />
-	<bean id="com.liferay.portal.kernel.search.SortFactory" class="com.liferay.portal.kernel.search.SortFactoryImpl" />
-	<bean id="com.liferay.portal.kernel.search.SortFactoryUtil" class="com.liferay.portal.kernel.search.SortFactoryUtil">
-		<property name="sortFactory" ref="com.liferay.portal.kernel.search.SortFactory" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.search.StringQueryFactory" class="com.liferay.portal.kernel.search.generic.StringQueryFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.search.StringQueryFactoryUtil" class="com.liferay.portal.kernel.search.StringQueryFactoryUtil">
@@ -80,24 +52,6 @@
 	<bean id="com.liferay.portal.kernel.search.facet.RangeFacetFactory" class="com.liferay.portal.kernel.search.facet.RangeFacetFactory" />
 	<bean id="com.liferay.portal.kernel.search.facet.ScopeFacetFactory" class="com.liferay.portal.kernel.search.facet.ScopeFacetFactory" />
 	<bean id="com.liferay.portal.kernel.search.facet.SimpleFacetFactory" class="com.liferay.portal.kernel.search.facet.SimpleFacetFactory" />
-	<bean id="com.liferay.portal.kernel.search.hits.HitsProcessorRegistryUtil" class="com.liferay.portal.kernel.search.hits.HitsProcessorRegistryUtil">
-		<property name="defaultHitsProcessor">
-			<bean class="com.liferay.portal.kernel.search.hits.CompositeHitsProcessor">
-				<property name="hitsProcessors">
-					<util:list>
-						<bean class="com.liferay.portal.kernel.search.hits.CollatedSpellCheckHitsProcessor" />
-						<bean class="com.liferay.portal.kernel.search.hits.QueryIndexingHitsProcessor" />
-						<bean class="com.liferay.portal.kernel.search.hits.QuerySuggestionHitsProcessor" />
-					</util:list>
-				</property>
-			</bean>
-		</property>
-	</bean>
-	<bean id="com.liferay.portal.kernel.search.suggest.CollatorUtil" class="com.liferay.portal.kernel.search.suggest.CollatorUtil">
-		<property name="collator">
-			<bean class="com.liferay.portal.search.DefaultCollatorImpl" />
-		</property>
-	</bean>
 
 	<!-- Generic search engine -->
 

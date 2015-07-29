@@ -277,7 +277,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDMFolderDocumentsViaFlashUploader" priority="5">
+	<command name="AddDMFolderDocumentsViaFlashUploader" priority="4">
 		<var name="dmDocumentFile1" value="Document_1.doc" />
 		<var name="dmDocumentFile2" value="Document_2.doc" />
 		<var name="dmDocumentFile3" value="Document_3.doc" />
@@ -360,7 +360,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDocument" priority="5">
+	<command name="AddDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
@@ -407,6 +407,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewAllPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="Document_1.doc" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
 		</execute>
@@ -423,6 +424,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewAllPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="Document_1.docx" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
 		</execute>
@@ -439,6 +441,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewAllPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="Document_1.jpeg" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
 		</execute>
@@ -455,6 +458,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewAllPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="Document_1.jpg" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
 		</execute>
@@ -471,6 +475,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewAllPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="Document_2.mp3" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
 		</execute>
@@ -487,6 +492,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewAllPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="Document_1.odt" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
 		</execute>
@@ -503,6 +509,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewAllPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="Document_1.pdf" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
 		</execute>
@@ -519,6 +526,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewAllPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="Document_1.png" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
 		</execute>
@@ -535,6 +543,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewAllPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="Document_1.xls" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
 		</execute>
@@ -551,6 +560,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewAllPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="Document_1.xlsx" />
 			<var name="dmDocumentTitle" value="${dmDocumentFile}" />
 		</execute>
@@ -592,6 +602,7 @@
 		</execute>
 
 		<execute macro="DMDocument#addShortcutPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
@@ -686,6 +697,7 @@
 		<execute macro="DMMetadataSet#gotoPG" />
 
 		<execute macro="DMMetadataSet#addPG">
+			<var name="dmMetadataSetFieldName" value="${dmMetadataSetFieldName}" />
 			<var name="dmMetadataSetFieldNames" value="${dmMetadataSetFieldName}" />
 			<var name="metadataSetName" value="${metadataSetName}" />
 		</execute>
@@ -700,6 +712,7 @@
 
 		<execute macro="DMDocumentType#addPG">
 			<var name="dmDocumentTypeDescription" value="${dmDocumentTypeDescription}" />
+			<var name="dmDocumentTypeFieldName" value="${dmDocumentTypeFieldName}" />
 			<var name="dmDocumentTypeFieldNames" value="${dmDocumentTypeFieldName}" />
 			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
 			<var name="metadataSetName" value="${metadataSetName}" />
@@ -731,7 +744,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFolderDocument" priority="5">
+	<command name="AddFolderDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Folder Document Title" />
@@ -854,7 +867,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFolderDocumentDuplicate" priority="5">
+	<command name="AddFolderDocumentDuplicate" priority="4">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
@@ -1123,7 +1136,7 @@
 		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_THUMBNAIL" />
 	</command>
 
-	<command name="AddFolderImage" priority="5">
+	<command name="AddFolderImage" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Image Description" />
 		<var name="dmDocumentFile" value="Document_1.jpeg" />
 		<var name="dmDocumentTitle" value="DM Folder Image Title" />
@@ -1244,7 +1257,7 @@
 		</execute>
 	</command>
 
-	<command name="AddFolderImageDuplicate" priority="5">
+	<command name="AddFolderImageDuplicate" priority="4">
 		<var name="dmDocumentDescription" value="DM Image Description" />
 		<var name="dmDocumentFile" value="Document_1.jpg" />
 		<var name="dmDocumentTitle" value="DM Image Title" />
@@ -1486,7 +1499,7 @@
 		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmedia#ENTRY_ICON_FOLDER_THUMBNAIL" />
 	</command>
 
-	<command name="AddSubFolderDocument" priority="5">
+	<command name="AddSubFolderDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
@@ -1526,11 +1539,12 @@
 		</execute>
 
 		<execute macro="DMDocument#viewAllPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 	</command>
 
-	<command name="CancelCheckoutFolderDocument" priority="5">
+	<command name="CancelCheckoutFolderDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Folder Document Title" />
@@ -1611,7 +1625,7 @@
 		</execute>
 	</command>
 
-	<command name="CheckinMajorFolderDocument" priority="5">
+	<command name="CheckinMajorFolderDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentSize" value="22k" />
@@ -1697,7 +1711,7 @@
 		</execute>
 	</command>
 
-	<command name="CheckinMinorDMFolderDocumentViaDocumentActionMenu" priority="5">
+	<command name="CheckinMinorDMFolderDocumentViaDocumentActionMenu" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentSize" value="22k" />
@@ -1783,7 +1797,7 @@
 		</execute>
 	</command>
 
-	<command name="CheckinMinorFolderDocument" priority="5">
+	<command name="CheckinMinorFolderDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentSize" value="22k" />
@@ -1869,7 +1883,7 @@
 		</execute>
 	</command>
 
-	<command name="CheckoutFolderDocument" priority="5">
+	<command name="CheckoutFolderDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentSize" value="22k" />
@@ -1980,7 +1994,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteFolderDocument" priority="5">
+	<command name="DeleteFolderDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Folder Document Title" />
@@ -2030,7 +2044,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteFolderImage" priority="5">
+	<command name="DeleteFolderImage" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Image Description" />
 		<var name="dmDocumentFile" value="Document_1.jpeg" />
 		<var name="dmDocumentTitle" value="DM Folder Image Title" />
@@ -2080,7 +2094,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSubFolderDocument" priority="5">
+	<command name="DeleteSubFolderDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
@@ -2124,7 +2138,7 @@
 		</execute>
 	</command>
 
-	<command name="DownloadAndAddDMFolderDocument" priority="5">
+	<command name="DownloadAndAddDMFolderDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentSize" value="22k" />
@@ -2227,7 +2241,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDMFolderDocumentXSSChangeLog" priority="5">
+	<command name="EditDMFolderDocumentXSSChangeLog" priority="4">
 		<var name="changeLog" value="&lt;script&gt;alert(&quot;This is a Minor Revision&quot;);&lt;/script&gt;" />
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentDescriptionEdit" value="DM Folder Document Description Edit" />
@@ -2395,7 +2409,7 @@
 		</execute>
 	</command>
 
-	<command name="EditFolderDocument" priority="5">
+	<command name="EditFolderDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentDescriptionEdit" value="DM Folder Document Description Edit" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
@@ -2619,7 +2633,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSubFolderDocument" priority="5">
+	<command name="EditSubFolderDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Image Description" />
 		<var name="dmDocumentDescriptionEdit" value="DM Folder Image Description Edit" />
 		<var name="dmDocumentFile" value="Document_1.jpeg" />
@@ -2790,7 +2804,7 @@
 		</execute>
 	</command>
 
-	<command name="PublishDraftFolderDocument" priority="5">
+	<command name="PublishDraftFolderDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Folder Document Title" />
@@ -2997,7 +3011,7 @@
 		<execute macro="DMDocument#viewPGRating" />
 	</command>
 
-	<command name="SaveandcheckinMajorFolderDocument" priority="5">
+	<command name="SaveandcheckinMajorFolderDocument" priority="4">
 		<var name="changeLog" value="This is a Major Revision" />
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentDescriptionEdit" value="DM Folder Document Description Edit" />
@@ -3067,6 +3081,7 @@
 			<var name="changeLog" value="${changeLog}" />
 			<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentFileEdit" value="${dmDocumentFileEdit}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
 			<var name="revision" value="Major" />
 		</execute>
@@ -3091,7 +3106,7 @@
 		</execute>
 	</command>
 
-	<command name="SaveandcheckinMinorFolderDocument" priority="5">
+	<command name="SaveandcheckinMinorFolderDocument" priority="4">
 		<var name="changeLog" value="This is a Minor Revision" />
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentDescriptionEdit" value="DM Folder Document Description Edit" />
@@ -3110,7 +3125,7 @@
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 			<var name="soPage" value="true" />
-		</execute>>
+		</execute>
 
 		<execute macro="DMFolder#addPG">
 			<var name="dmFolderDescription" value="${dmFolderDescription}" />
@@ -3161,6 +3176,7 @@
 			<var name="changeLog" value="${changeLog}" />
 			<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentFileEdit" value="${dmDocumentFileEdit}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
 			<var name="revision" value="Minor" />
 		</execute>
@@ -3185,7 +3201,7 @@
 		</execute>
 	</command>
 
-	<command name="SaveAsDraftEditFolderDocument" priority="5">
+	<command name="SaveAsDraftEditFolderDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentDescriptionEdit" value="DM Folder Document Description Edit" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
@@ -3241,6 +3257,7 @@
 		<execute macro="DMDocument#editSaveAsDraftPG">
 			<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentFileEdit" value="${dmDocumentFileEdit}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
 		</execute>
 
@@ -3256,6 +3273,7 @@
 
 		<execute macro="DMDocument#viewEditedDraftPG">
 			<var name="dmDocumentSize" value="${dmDocumentSize2}" />
+			<var name="dmDocumentSize2" value="${dmDocumentSize2}" />
 			<var name="dmDocumentSizeSO" value="${dmDocumentSizeSO2}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
@@ -3265,7 +3283,7 @@
 		</execute>
 	</command>
 
-	<command name="SaveAsDraftFolderDocument" priority="5">
+	<command name="SaveAsDraftFolderDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Folder Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentSize" value="22k" />
@@ -3322,7 +3340,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchContentDocument" priority="5">
+	<command name="SearchContentDocument" priority="4">
 		<var name="dmDocumentContent" value="This is a *.doc file." />
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
@@ -3346,7 +3364,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchDocument" priority="5">
+	<command name="SearchDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
@@ -3369,7 +3387,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchFolderDocument" priority="5">
+	<command name="SearchFolderDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
@@ -3403,7 +3421,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchFolderImage" priority="5">
+	<command name="SearchFolderImage" priority="4">
 		<var name="dmDocumentDescription" value="DM Image Description" />
 		<var name="dmDocumentFile" value="Document_1.jpg" />
 		<var name="dmDocumentTitle" value="DM Image Title" />
@@ -3437,7 +3455,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchSubFolderDocument" priority="5">
+	<command name="SearchSubFolderDocument" priority="4">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
@@ -3563,7 +3581,7 @@
 		<execute function="SikuliAssertElementPresent" locator1="SODocuments#SCREENSHOTS_DOCUMENTS_DISPLAY_STYLE_LIST_ALL_DOCUMENTS_SELECTED_PNG" />
 	</command>
 
-	<command name="ViewDocumentVersioning" priority="5">
+	<command name="ViewDocumentVersioning" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />

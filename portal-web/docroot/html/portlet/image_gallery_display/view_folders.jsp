@@ -53,7 +53,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 		modelVar="curFolder"
 	>
 		<liferay-portlet:renderURL varImpl="rowURL">
-			<portlet:param name="struts_action" value="/image_gallery_display/view" />
+			<portlet:param name="mvcRenderCommandName" value="/image_gallery_display/view" />
 			<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</liferay-portlet:renderURL>
@@ -119,7 +119,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 		<%
 		List subfolderIds = new ArrayList();
 
-		subfolderIds.add(new Long(curFolder.getFolderId()));
+		subfolderIds.add(Long.valueOf(curFolder.getFolderId()));
 
 		DLAppServiceUtil.getSubfolderIds(repositoryId, curFolder.getFolderId());
 

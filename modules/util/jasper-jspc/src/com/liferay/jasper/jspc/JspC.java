@@ -83,7 +83,7 @@ public class JspC extends org.apache.jasper.JspC {
 
 			if ((portalDir == null) || portalDir.isEmpty()) {
 				throw new RuntimeException(
-					"The ssytem property \"jspc.portal.dir\" is not set");
+					"The system property \"jspc.portal.dir\" is not set");
 			}
 
 			try {

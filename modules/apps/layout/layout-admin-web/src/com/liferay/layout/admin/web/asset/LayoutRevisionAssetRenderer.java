@@ -29,17 +29,20 @@ import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.asset.model.BaseAssetRenderer;
+import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Raymond Augé
  */
-public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
+public class LayoutRevisionAssetRenderer extends BaseJSPAssetRenderer {
 
 	public LayoutRevisionAssetRenderer(LayoutRevision layoutRevision) {
 		_layoutRevision = layoutRevision;
@@ -69,6 +72,21 @@ public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 	@Override
 	public long getGroupId() {
 		return _layoutRevision.getGroupId();
+	}
+
+	@Override
+	public String getJspPath(HttpServletRequest request, String template) {
+		if (template.equals(TEMPLATE_FULL_CONTENT)) {
+			return "/asset/" + template + ".jsp";
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
+	public int getStatus() {
+		return _layoutRevision.getStatus();
 	}
 
 	@Override
@@ -150,25 +168,19 @@ public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 	}
 
 	@Override
-	public boolean isPreviewInContext() {
-		return true;
-	}
-
-	@Override
-	public String render(
-			PortletRequest portletRequest, PortletResponse portletResponse,
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
 			String template)
 		throws Exception {
 
-		if (template.equals(TEMPLATE_FULL_CONTENT)) {
-			portletRequest.setAttribute(
-				WebKeys.LAYOUT_REVISION, _layoutRevision);
+		request.setAttribute(WebKeys.LAYOUT_REVISION, _layoutRevision);
 
-			return "/asset/" + template + ".jsp";
-		}
-		else {
-			return null;
-		}
+		return super.include(request, response, template);
+	}
+
+	@Override
+	public boolean isPreviewInContext() {
+		return true;
 	}
 
 	private final LayoutBranch _layoutBranch;

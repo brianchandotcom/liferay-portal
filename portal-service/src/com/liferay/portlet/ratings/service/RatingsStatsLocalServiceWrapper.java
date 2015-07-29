@@ -196,6 +196,12 @@ public class RatingsStatsLocalServiceWrapper implements RatingsStatsLocalService
 	}
 
 	@Override
+	public com.liferay.portlet.ratings.model.RatingsStats fetchStats(
+		java.lang.String className, long classPK) {
+		return _ratingsStatsLocalService.fetchStats(className, classPK);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _ratingsStatsLocalService.getActionableDynamicQuery();
 	}

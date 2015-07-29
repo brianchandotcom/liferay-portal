@@ -38,8 +38,8 @@ public class LocalesUserToolAssetAddonEntry
 	}
 
 	@Override
-	public String getJSPPath() {
-		return _JSP_PATH;
+	public String getJspPath() {
+		return "/META-INF/resources/locales.jsp";
 	}
 
 	@Override
@@ -59,12 +59,11 @@ public class LocalesUserToolAssetAddonEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.locales)"
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.locales)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	private static final String _JSP_PATH = "/META-INF/resources/locales.jsp";
 
 }

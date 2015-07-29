@@ -2268,8 +2268,9 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		}
 	}
 
-	protected void cacheUniqueFindersCache(RepositoryEntry repositoryEntry) {
-		if (repositoryEntry.isNew()) {
+	protected void cacheUniqueFindersCache(RepositoryEntry repositoryEntry,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					repositoryEntry.getUuid(), repositoryEntry.getGroupId()
 				};
@@ -2592,7 +2593,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 			repositoryEntry, false);
 
 		clearUniqueFindersCache(repositoryEntry);
-		cacheUniqueFindersCache(repositoryEntry);
+		cacheUniqueFindersCache(repositoryEntry, isNew);
 
 		repositoryEntry.resetOriginalValues();
 
@@ -2982,6 +2983,11 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return RepositoryEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

@@ -459,9 +459,9 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 		query.append(_SQL_SELECT_COUNTER_WHERE_PKS_IN);
 
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
-			query.append(StringPool.QUOTE);
+			query.append(StringPool.APOSTROPHE);
 			query.append((String)primaryKey);
-			query.append(StringPool.QUOTE);
+			query.append(StringPool.APOSTROPHE);
 
 			query.append(StringPool.COMMA);
 		}
@@ -667,6 +667,11 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return CounterModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

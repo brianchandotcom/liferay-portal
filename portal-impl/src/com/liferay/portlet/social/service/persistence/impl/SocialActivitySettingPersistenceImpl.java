@@ -2595,8 +2595,8 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 	}
 
 	protected void cacheUniqueFindersCache(
-		SocialActivitySetting socialActivitySetting) {
-		if (socialActivitySetting.isNew()) {
+		SocialActivitySetting socialActivitySetting, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					socialActivitySetting.getGroupId(),
 					socialActivitySetting.getClassNameId(),
@@ -2884,7 +2884,7 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 			socialActivitySetting.getPrimaryKey(), socialActivitySetting, false);
 
 		clearUniqueFindersCache(socialActivitySetting);
-		cacheUniqueFindersCache(socialActivitySetting);
+		cacheUniqueFindersCache(socialActivitySetting, isNew);
 
 		socialActivitySetting.resetOriginalValues();
 
@@ -3267,6 +3267,11 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return SocialActivitySettingModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

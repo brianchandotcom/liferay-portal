@@ -1,0 +1,108 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, portletURL);
+%>
+
+<liferay-ui:search-container
+	rowChecker="<%= new UserGroupChecker(renderResponse) %>"
+	searchContainer="<%= userGroupSearch %>"
+>
+	<aui:input disabled="<%= true %>" name="userGroupsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:input name="deleteUserGroupIds" type="hidden" />
+
+	<aui:nav-bar>
+		<aui:nav cssClass="navbar-nav" searchContainer="<%= userGroupSearch %>">
+			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
+				<portlet:renderURL var="viewUserGroupsURL" />
+
+				<portlet:renderURL var="addUsergroupURL">
+					<portlet:param name="mvcPath" value="/edit_user_group.jsp" />
+					<portlet:param name="redirect" value="<%= viewUserGroupsURL %>" />
+				</portlet:renderURL>
+
+				<aui:nav-item href="<%= addUsergroupURL %>" iconCssClass="icon-plus" label="add" />
+			</c:if>
+		</aui:nav>
+
+		<aui:nav-bar-search>
+			<liferay-ui:user-group-search-form />
+		</aui:nav-bar-search>
+	</aui:nav-bar>
+
+	<%
+	UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
+
+	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
+
+	if (filterManageableUserGroups) {
+		userGroupParams.put("userGroupsUsers", Long.valueOf(user.getUserId()));
+	}
+	%>
+
+	<liferay-ui:user-group-search-container-results
+		searchTerms="<%= searchTerms %>"
+		userGroupParams="<%= userGroupParams %>"
+	/>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.UserGroup"
+		escapedModel="<%= true %>"
+		keyProperty="userGroupId"
+		modelVar="userGroup"
+	>
+		<portlet:renderURL var="rowURL">
+			<portlet:param name="mvcPath" value="/edit_user_group.jsp" />
+			<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
+			<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
+		</portlet:renderURL>
+
+		<%
+		if (!UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.VIEW)) {
+			rowURL = null;
+		}
+		%>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="name"
+			orderable="<%= true %>"
+			property="name"
+		/>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="description"
+			orderable="<%= true %>"
+			property="description"
+		/>
+
+		<liferay-ui:search-container-column-jsp
+			align="right"
+			cssClass="entry-action"
+			path="/user_group_action.jsp"
+		/>
+	</liferay-ui:search-container-row>
+
+	<c:if test="<%= searchContainer.hasResults() && PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
+		<div class="separator"><!-- --></div>
+
+		<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteUserGroups();" %>' value="delete" />
+	</c:if>
+
+	<liferay-ui:search-iterator />
+</liferay-ui:search-container>

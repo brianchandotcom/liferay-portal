@@ -5,8 +5,12 @@
 
 	<macrodef name="prepare-solr">
 		<sequential>
-			<copy overwrite="true" todir="${app.server.parent.dir}/solr-${solr.version}/example/solr/collection1/conf">
-				<fileset dir="${lp.plugins.dir}/webs/solr4-web/docroot/WEB-INF/conf/">
+			<copy overwrite="true" todir="${solr.dir}/server/solr/liferay/conf">
+				<fileset dir="${solr.dir}/server/solr/configsets/data_driven_schema_configs/conf">
+					<exclude name="solrconfig.xml" />
+				</fileset>
+
+				<fileset dir="modules/portal/portal-search-solr/src/META-INF/resources">
 					<include name="schema.xml" />
 					<include name="solrconfig.xml" />
 				</fileset>
@@ -16,7 +20,7 @@
 
 	<macrodef name="unzip-solr">
 		<sequential>
-			<delete dir="${app.server.parent.dir}/solr-${solr.version}" />
+			<delete dir="${solr.dir}" />
 
 			<if>
 				<not>
@@ -38,20 +42,13 @@
 		</sequential>
 	</macrodef>
 
-	<target name="prepare-solr-web-properties">
-		<if>
-			<available file="${lp.plugins.dir}/shared/solr4-shared/src/solr.properties" />
-			<then>
-				<echo file="${lp.plugins.dir}/webs/solr4-web/docroot/WEB-INF/src/solr-ext.properties">server.http.url=http://localhost:8983/solr</echo>
-			</then>
-			<else>
-				<replace
-					file="${lp.plugins.dir}/webs/solr4-web/docroot/WEB-INF/src/META-INF/solr-spring.xml"
-					token="property name=&quot;url&quot; value=&quot;http://localhost:8080/solr&quot;"
-					value="property name=&quot;url&quot; value=&quot;http://localhost:8983/solr&quot;"
-				/>
-			</else>
-		</if>
+	<target name="configure-solr-osgi-bundle-properties">
+		<echo file="${liferay.home}/osgi/portal/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">readURL=http://localhost:8983/solr/liferay
+writeURL=http://localhost:8983/solr/liferay</echo>
+	</target>
+
+	<target name="delete-elasticseach-osgi-bundle">
+		<delete file="${liferay.home}/osgi/com.liferay.portal.search.elasticsearch.jar" failonerror="false" />
 	</target>
 
 	<target name="start-solr">
@@ -59,16 +56,50 @@
 
 		<prepare-solr />
 
-		<parallel>
-			<daemons>
-				<exec
-					dir="${app.server.parent.dir}/solr-${solr.version}/example"
-					executable="java"
-					failonerror="true"
-				>
-					<arg line="-jar start.jar" />
+		<antcall target="delete-elasticseach-osgi-bundle" />
+
+		<ant dir="modules/portal/portal-search-solr" target="all" />
+
+		<antcall target="configure-solr-osgi-bundle-properties" />
+
+		<local name="solr.server.not.started" />
+
+		<if>
+			<os family="unix" />
+			<then>
+				<exec executable="/bin/bash" os="${os.unix}">
+					<arg value="-c" />
+					<arg value="${solr.dir}/bin/solr -V" />
 				</exec>
-			</daemons>
-		</parallel>
+
+				<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="solr.server.not.started">
+					<http url="http://localhost:8983/solr" />
+				</waitfor>
+
+				<fail message="Solr server failed to initialize." if="solr.server.not.started" />
+
+				<exec executable="/bin/bash" os="${os.unix}">
+					<arg value="-c" />
+					<arg value="${solr.dir}/bin/solr create_core -c liferay -d ${solr.dir}/server/solr/liferay/conf" />
+				</exec>
+			</then>
+			<else>
+				<exec executable="cmd" spawn="true">
+					<arg value="/c" />
+					<arg value="${solr.dir}/bin/solr -V" />
+				</exec>
+
+				<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="solr.server.not.started">
+					<http url="http://localhost:8983/solr" />
+				</waitfor>
+
+				<fail message="Solr server failed to initialize." if="solr.server.not.started" />
+
+				<exec executable="cmd" >
+					<arg value="/c" />
+					<arg value="${solr.dir}/bin/solr create_core -c liferay -d ${solr.dir}/server/solr/liferay/conf" />
+				</exec>
+			</else>
+		</if>
 	</target>
 </project>

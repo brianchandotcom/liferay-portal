@@ -16,29 +16,7 @@
 
 <%@ include file="/html/taglib/ui/user_display/init.jsp" %>
 
-<%
-if (author) {
-	imageCssClass += " author";
-}
-
-if (Validator.isNull(url) && (userDisplay != null)) {
-	url = userDisplay.getDisplayURL(themeDisplay);
-}
-%>
-
 <div class="display-style-<%= displayStyle %> taglib-user-display">
-
-	<%
-	String taglibSrc = null;
-
-	if (userDisplay != null) {
-		taglibSrc = userDisplay.getPortraitURL(themeDisplay);
-	}
-	else {
-		taglibSrc = UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null);
-	}
-	%>
-
 	<aui:a href="<%= url %>">
 		<span class="user-profile-image">
 			<span class="avatar <%= imageCssClass %>" style="background-image: url('<%= HtmlUtil.escape(taglibSrc) %>')"></span>

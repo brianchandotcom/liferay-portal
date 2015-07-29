@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.solr.connection.SolrClientManager;
 import com.liferay.portal.search.solr.suggest.NGramQueryBuilder;
 
 import java.util.ArrayList;
@@ -43,9 +44,9 @@ import java.util.TreeSet;
 
 import org.apache.lucene.search.spell.LevensteinDistance;
 import org.apache.lucene.search.spell.StringDistance;
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrRequest;
-import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
@@ -97,6 +98,8 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 	public String[] suggestKeywordQueries(SearchContext searchContext, int max)
 		throws SearchException {
 
+		SolrClient solrClient = _solrClientManager.getSolrClient();
+
 		SolrQuery solrQuery = new SolrQuery();
 
 		solrQuery.setFilterQueries(
@@ -121,7 +124,7 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 		solrQuery.setRows(max);
 
 		try {
-			QueryResponse queryResponse = _solrServer.query(solrQuery);
+			QueryResponse queryResponse = solrClient.query(solrQuery);
 
 			SolrDocumentList solrDocumentList = queryResponse.getResults();
 
@@ -232,8 +235,8 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 	}
 
 	@Reference(unbind = "-")
-	protected void setSolrServer(SolrServer solrServer) {
-		_solrServer = solrServer;
+	protected void setSolrClientManager(SolrClientManager solrClientManager) {
+		_solrClientManager = solrClientManager;
 	}
 
 	@Reference(
@@ -284,6 +287,8 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 			SearchContext searchContext, String input)
 		throws SearchException {
 
+		SolrClient solrClient = _solrClientManager.getSolrClient();
+
 		try {
 			Map<String, WeightedWord> weightedWordsMap = new HashMap<>();
 			TreeSet<WeightedWord> weightedWordsSet = new TreeSet<>();
@@ -296,7 +301,7 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 
 			solrQuery.setRows(_MAX_QUERY_RESULTS);
 
-			QueryResponse queryResponse = _solrServer.query(
+			QueryResponse queryResponse = solrClient.query(
 				solrQuery, SolrRequest.METHOD.POST);
 
 			SolrDocumentList solrDocumentList = queryResponse.getResults();
@@ -370,7 +375,7 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 
 	private double _distanceThreshold;
 	private NGramQueryBuilder _nGramQueryBuilder;
-	private SolrServer _solrServer;
+	private SolrClientManager _solrClientManager;
 	private StringDistance _stringDistance = new LevensteinDistance();
 
 }

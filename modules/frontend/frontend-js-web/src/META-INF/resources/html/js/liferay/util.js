@@ -1035,7 +1035,8 @@
 			}
 
 			if (!hasErrors) {
-				var action = event.action;
+				var action = event.action || form.attr('action');
+
 				var singleSubmit = event.singleSubmit;
 
 				var inputs = form.all('input[type=button], input[type=image], input[type=reset], input[type=submit]');
@@ -1054,9 +1055,19 @@
 					Util._submitLocked = true;
 				}
 
-				if (action !== null) {
-					form.attr('action', action);
+				var actionURL = new A.Url(action);
+
+				var authToken = actionURL.getParameter('p_auth');
+
+				if (authToken) {
+					form.append('<input name="p_auth" type="hidden" value="' + authToken + '" />');
+
+					actionURL.removeParameter('p_auth');
+
+					action = actionURL.toString();
 				}
+
+				form.attr('action', action);
 
 				form.submit();
 
@@ -1154,6 +1165,7 @@
 			var dialog = event.dialog;
 
 			iframeBody.addClass('dialog-iframe-popup');
+			iframeBody.addClass(dialog.iframeConfig.bodyCssClass);
 
 			var detachEventHandles = function() {
 				AArray.invoke(eventHandles, 'detach');
@@ -1553,7 +1565,7 @@
 				);
 			}
 		},
-		['aui-base', 'aui-form-validator', 'liferay-form']
+		['aui-base', 'aui-form-validator', 'aui-url', 'liferay-form']
 	);
 
 	Liferay.publish(

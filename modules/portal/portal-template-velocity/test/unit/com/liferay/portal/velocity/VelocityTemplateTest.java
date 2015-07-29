@@ -16,12 +16,18 @@ package com.liferay.portal.velocity;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.cache.test.TestPortalCacheManager;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.velocity.FastExtendedProperties;
@@ -40,6 +46,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Reader;
+import java.io.Serializable;
 import java.io.StringReader;
 
 import java.util.Collections;
@@ -60,6 +67,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 /**
  * @author Tina Tian
@@ -383,6 +394,57 @@ public class VelocityTemplateTest {
 
 		@Override
 		protected void activate(Map<String, Object> properties) {
+			MultiVMPool multiVMPool = Mockito.mock(MultiVMPool.class);
+
+			final PortalCacheManager
+				<? extends Serializable, ? extends Serializable>
+				portalCacheManager =
+					TestPortalCacheManager.createTestPortalCacheManager(
+						RandomTestUtil.randomString());
+
+			Mockito.when(
+				multiVMPool.getPortalCache(Mockito.anyString())
+			).thenAnswer(
+				new Answer
+					<PortalCache
+						<? extends Serializable, ? extends Serializable>>() {
+
+					@Override
+					public PortalCache
+						<? extends Serializable, ? extends Serializable> answer(
+							InvocationOnMock invocationOnMock)
+						throws Throwable {
+
+						return portalCacheManager.getPortalCache(
+							RandomTestUtil.randomString());
+					}
+
+				});
+
+			setMultiVMPool(multiVMPool);
+
+			SingleVMPool singleVMPool = Mockito.mock(SingleVMPool.class);
+
+			Mockito.when(
+				singleVMPool.getPortalCache(Mockito.anyString())
+			).thenAnswer(
+				new Answer
+					<PortalCache
+						<? extends Serializable, ? extends Serializable>>() {
+
+					@Override
+					public PortalCache
+						<? extends Serializable, ? extends Serializable> answer(
+							InvocationOnMock invocationOnMock)
+						throws Throwable {
+
+						return portalCacheManager.getPortalCache("test");
+					}
+
+				});
+
+			setSingleVMPool(singleVMPool);
+
 			super.activate(properties);
 		}
 

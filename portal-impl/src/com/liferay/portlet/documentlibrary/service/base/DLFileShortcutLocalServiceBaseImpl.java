@@ -1046,7 +1046,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DLFileShortcutLocalService.class)
+	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalService.class)
 	protected DLFileShortcutLocalService dlFileShortcutLocalService;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileShortcutService.class)
 	protected com.liferay.portlet.documentlibrary.service.DLFileShortcutService dlFileShortcutService;

@@ -35,6 +35,9 @@ public class RoleConstants {
 
 	public static final String OWNER = "Owner";
 
+	public static final String PLACEHOLDER_DEFAULT_GROUP_ROLE =
+		"PLACEHOLDER_DEFAULT_GROUP_ROLE";
+
 	public static final String PORTAL_CONTENT_REVIEWER =
 		"Portal Content Reviewer";
 

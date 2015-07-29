@@ -16,8 +16,8 @@ package com.liferay.item.selector;
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -28,14 +28,15 @@ import javax.servlet.ServletResponse;
 /**
  * @author Iván Zaera
  */
-public interface ItemSelectorView
-	<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType> {
+public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 
 	public Class<T> getItemSelectorCriterionClass();
 
-	public Set<S> getSupportedItemSelectorReturnTypes();
+	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes();
 
 	public String getTitle(Locale locale);
+
+	public boolean isShowSearch();
 
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,

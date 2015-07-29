@@ -37,8 +37,8 @@ public class BooleanClauseFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link create(
-	 *             String, String, String)}
+	 * @deprecated As of 7.0.0, replaced by {@link create(String, String,
+	 *             String)}
 	 */
 	@Deprecated
 	public static BooleanClause<Query> create(

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
@@ -335,37 +334,15 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 		Map<String, Object> properties = new HashMap<>();
 
-		StringBundler sb = new StringBundler();
-
-		sb.append("UDP(bind_addr=localhost;mcast_group_addr=239.255.0.2;");
-		sb.append("mcast_port=23302):");
-		sb.append("PING(timeout=2000;num_initial_members=20;");
-		sb.append("break_on_coord_rsp=true):");
-		sb.append("MERGE3(min_interval=10000;max_interval=30000):");
-		sb.append("FD_SOCK:FD_ALL:VERIFY_SUSPECT(timeout=1500):");
-		sb.append("pbcast.NAKACK2(xmit_interval=1000;");
-		sb.append("xmit_table_num_rows=100;xmit_table_msgs_per_row=2000;");
-		sb.append("xmit_table_max_compaction_time=30000;");
-		sb.append("max_msg_batch_size=500;use_mcast_xmit=false;");
-		sb.append("discard_delivered_msgs=true):");
-		sb.append("UNICAST2(max_bytes=10M;xmit_table_num_rows=100;");
-		sb.append("xmit_table_msgs_per_row=2000;");
-		sb.append("xmit_table_max_compaction_time=60000;");
-		sb.append("max_msg_batch_size=500):");
-		sb.append("pbcast.STABLE(stability_delay=1000;");
-		sb.append("desired_avg_gossip=50000;max_bytes=4M):");
-		sb.append("pbcast.GMS(join_timeout=3000;print_local_addr=true;");
-		sb.append("view_bundling=true):");
-		sb.append("UFC(max_credits=2M;min_threshold=0.4):");
-		sb.append("MFC(max_credits=2M;min_threshold=0.4):");
-		sb.append("FRAG2(frag_size=61440):");
-		sb.append("RSVP(resend_interval=2000;timeout=10000)");
-
 		for (int i = 0; i < channels; i++) {
+			properties.put(
+				ClusterPropsKeys.CHANNEL_NAME_TRANSPORT_PREFIX +
+					StringPool.PERIOD + i,
+				"test-channel-name-transport-" + i);
 			properties.put(
 				ClusterPropsKeys.CHANNEL_PROPERTIES_TRANSPORT_PREFIX +
 					StringPool.PERIOD + i,
-				sb.toString());
+				"test-channel-properties-transport-" + i);
 		}
 
 		clusterLinkImpl.activate(properties);

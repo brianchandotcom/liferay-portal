@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
 import com.liferay.portal.repository.liferayrepository.LiferayWorkflowLocalRepositoryWrapper;
 import com.liferay.portal.repository.liferayrepository.LiferayWorkflowRepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapperAware;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -38,6 +38,12 @@ import java.util.Map;
  */
 public class MinimalWorkflowCapability
 	implements RepositoryWrapperAware, WorkflowCapability, WorkflowSupport {
+
+	public MinimalWorkflowCapability(
+		DLFileEntryServiceAdapter dlFileEntryServiceAdapter) {
+
+		_dlFileEntryServiceAdapter = dlFileEntryServiceAdapter;
+	}
 
 	@Override
 	public void addFileEntry(
@@ -98,9 +104,11 @@ public class MinimalWorkflowCapability
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
-		DLFileEntryLocalServiceUtil.updateStatus(
+		_dlFileEntryServiceAdapter.updateStatus(
 			userId, fileVersion.getFileVersionId(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
 	}
+
+	private final DLFileEntryServiceAdapter _dlFileEntryServiceAdapter;
 
 }

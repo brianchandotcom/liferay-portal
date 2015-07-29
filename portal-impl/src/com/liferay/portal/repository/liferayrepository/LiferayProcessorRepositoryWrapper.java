@@ -150,26 +150,6 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 	}
 
 	@Override
-	public void deleteFileEntry(long fileEntryId) throws PortalException {
-		FileEntry fileEntry = getFileEntry(fileEntryId);
-
-		super.deleteFileEntry(fileEntryId);
-
-		_processorCapability.cleanUp(fileEntry);
-	}
-
-	@Override
-	public void deleteFileEntry(long folderId, String title)
-		throws PortalException {
-
-		FileEntry fileEntry = getFileEntry(folderId, title);
-
-		super.deleteFileEntry(folderId, title);
-
-		_processorCapability.cleanUp(fileEntry);
-	}
-
-	@Override
 	public void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException {
 

@@ -172,7 +172,7 @@ contextObjects.put("formattedContent", formattedContent);
 contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 %>
 
-<liferay-ui:ddm-template-renderer className="<%= WikiPage.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= wikiPortletInstanceSettingsHelper.getDisplayStyle() %>" displayStyleGroupId="<%= wikiPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>" entries="<%= entries %>">
+<liferay-ddm:template-renderer className="<%= WikiPage.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= wikiPortletInstanceSettingsHelper.getDisplayStyle() %>" displayStyleGroupId="<%= wikiPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>" entries="<%= entries %>">
 	<liferay-ui:header
 		backLabel="<%= parentTitle %>"
 		backURL="<%= (viewParentPageURL != null) ? viewParentPageURL.toString() : null %>"
@@ -357,20 +357,11 @@ contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 		<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnableComments() %>">
 			<liferay-ui:panel-container extended="<%= false %>" id="wikiCommentsPanelContainer" persistState="<%= true %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="wikiCommentsPanel" persistState="<%= true %>" title="comments">
-					<portlet:actionURL var="discussionURL">
-						<portlet:param name="struts_action" value="/wiki/edit_page_discussion" />
-					</portlet:actionURL>
-
-					<portlet:resourceURL var="discussionPaginationURL">
-						<portlet:param name="struts_action" value="/wiki/edit_page_discussion" />
-					</portlet:resourceURL>
 
 					<liferay-ui:discussion
 						className="<%= WikiPage.class.getName() %>"
 						classPK="<%= wikiPage.getResourcePrimKey() %>"
-						formAction="<%= discussionURL %>"
 						formName="fm2"
-						paginationURL="<%= discussionPaginationURL %>"
 						ratingsEnabled="<%= wikiPortletInstanceSettingsHelper.isEnableCommentRatings() %>"
 						redirect="<%= currentURL %>"
 						userId="<%= wikiPage.getUserId() %>"
@@ -379,7 +370,7 @@ contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 			</liferay-ui:panel-container>
 		</c:if>
 	</c:if>
-</liferay-ui:ddm-template-renderer>
+</liferay-ddm:template-renderer>
 
 <aui:script sandbox="<%= true %>">
 	var toc = $('#p_p_id<portlet:namespace /> .toc');

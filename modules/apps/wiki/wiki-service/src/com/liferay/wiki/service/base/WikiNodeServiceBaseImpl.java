@@ -666,7 +666,7 @@ public abstract class WikiNodeServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.wiki.service.WikiNodeLocalService.class)
 	protected com.liferay.wiki.service.WikiNodeLocalService wikiNodeLocalService;
-	@BeanReference(type = WikiNodeService.class)
+	@BeanReference(type = com.liferay.wiki.service.WikiNodeService.class)
 	protected WikiNodeService wikiNodeService;
 	@BeanReference(type = WikiNodePersistence.class)
 	protected WikiNodePersistence wikiNodePersistence;

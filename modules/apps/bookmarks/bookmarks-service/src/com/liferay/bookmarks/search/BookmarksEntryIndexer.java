@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  */
 @Component(immediate = true, service = Indexer.class)
-public class BookmarksEntryIndexer extends BaseIndexer {
+public class BookmarksEntryIndexer extends BaseIndexer<BookmarksEntry> {
 
 	public static final String CLASS_NAME = BookmarksEntry.class.getName();
 
@@ -94,25 +94,24 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		BookmarksEntry entry = (BookmarksEntry)obj;
-
-		deleteDocument(entry.getCompanyId(), entry.getEntryId());
+	protected void doDelete(BookmarksEntry bookmarksEntry) throws Exception {
+		deleteDocument(
+			bookmarksEntry.getCompanyId(), bookmarksEntry.getEntryId());
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		BookmarksEntry entry = (BookmarksEntry)obj;
+	protected Document doGetDocument(BookmarksEntry bookmarksEntry)
+		throws Exception {
 
-		Document document = getBaseModelDocument(CLASS_NAME, entry);
+		Document document = getBaseModelDocument(CLASS_NAME, bookmarksEntry);
 
-		document.addText(Field.DESCRIPTION, entry.getDescription());
-		document.addKeyword(Field.FOLDER_ID, entry.getFolderId());
-		document.addText(Field.TITLE, entry.getName());
+		document.addText(Field.DESCRIPTION, bookmarksEntry.getDescription());
+		document.addKeyword(Field.FOLDER_ID, bookmarksEntry.getFolderId());
+		document.addText(Field.TITLE, bookmarksEntry.getName());
 		document.addKeyword(
 			Field.TREE_PATH,
-			StringUtil.split(entry.getTreePath(), CharPool.SLASH));
-		document.addText(Field.URL, entry.getUrl());
+			StringUtil.split(bookmarksEntry.getTreePath(), CharPool.SLASH));
+		document.addText(Field.URL, bookmarksEntry.getUrl());
 
 		return document;
 	}
@@ -128,13 +127,11 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		BookmarksEntry entry = (BookmarksEntry)obj;
-
-		Document document = getDocument(entry);
+	protected void doReindex(BookmarksEntry bookmarksEntry) throws Exception {
+		Document document = getDocument(bookmarksEntry);
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), entry.getCompanyId(), document,
+			getSearchEngineId(), bookmarksEntry.getCompanyId(), document,
 			isCommitImmediately());
 	}
 

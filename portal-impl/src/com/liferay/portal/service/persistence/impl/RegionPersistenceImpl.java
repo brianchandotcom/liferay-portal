@@ -1892,8 +1892,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Region region) {
-		if (region.isNew()) {
+	protected void cacheUniqueFindersCache(Region region, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					region.getCountryId(), region.getRegionCode()
 				};
@@ -2134,7 +2134,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			RegionImpl.class, region.getPrimaryKey(), region, false);
 
 		clearUniqueFindersCache(region);
-		cacheUniqueFindersCache(region);
+		cacheUniqueFindersCache(region, isNew);
 
 		region.resetOriginalValues();
 
@@ -2515,6 +2515,11 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return RegionModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

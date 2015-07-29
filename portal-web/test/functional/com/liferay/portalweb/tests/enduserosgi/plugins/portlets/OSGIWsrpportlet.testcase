@@ -14,7 +14,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="WSRPPortletSmoke" priority="5">
+	<command name="WSRPPortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="wsrp-portlet" />
 
 		<var name="appName" value="WSRP" />

@@ -47,7 +47,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 
 		registeredEventListeners.registerListener(
 			new PortalCacheCacheEventListener<K, V>(
-				aggregatedCacheListener, this),
+				aggregatedPortalCacheListener, this),
 			NotificationScope.ALL);
 	}
 
@@ -57,7 +57,7 @@ public class EhcachePortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public String getName() {
+	public String getPortalCacheName() {
 		return ehcache.getName();
 	}
 

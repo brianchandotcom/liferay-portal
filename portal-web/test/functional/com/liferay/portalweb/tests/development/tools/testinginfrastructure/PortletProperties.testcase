@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="AssertKnowledgeBasePortletPropertiesApplied" priority="5">
+	<command name="AssertKnowledgeBasePortletPropertiesApplied" priority="4">
 		<property name="portlet.plugins.includes" value="knowledge-base-portlet" />
 
 		<property

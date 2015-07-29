@@ -39,7 +39,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface TeamModel extends BaseModel<Team>, GroupedModel, MVCCModel {
+public interface TeamModel extends BaseModel<Team>, MVCCModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -75,6 +75,23 @@ public interface TeamModel extends BaseModel<Team>, GroupedModel, MVCCModel {
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the uuid of this team.
+	 *
+	 * @return the uuid of this team
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this team.
+	 *
+	 * @param uuid the uuid of this team
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the team ID of this team.

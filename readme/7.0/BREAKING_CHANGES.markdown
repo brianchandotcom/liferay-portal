@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `6d3a2a4`.*
+*This document has been reviewed through commit `dd4de87`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -571,11 +571,16 @@ Old classes:
 
 New classes:
 
-    com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand
-    com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand
+    com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand
+    com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand
 
 In addition, `com.liferay.util.bridges.mvc.MVCPortlet` is deprecated, but was
 made to extend `com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet`.
+
+The classes in the `com.liferay.portal.kernel.portlet.bridges.mvc` package have
+been renamed to add the `MVC` prefix. These modifications were made after this
+breaking change, and can be referenced in
+[LPS-56372](https://issues.liferay.com/browse/LPS-56372).
 
 #### Who is affected?
 
@@ -902,38 +907,6 @@ Each new exception provides its context and has all the necessary information
 about why the exception was thrown. For example, the
 `UserEmailAddressException.MustNotBeReserved` exception contains the problematic
 email address and the list of reserved email addresses.
-
----------------------------------------
-
-### Added Required Attribute paginationURL to the Tag liferay-ui:discussion
-- **Date:** 2015-Feb-05
-- **JIRA Ticket:** LPS-53313
-
-#### What changed?
-
-The `liferay-ui:discussion` tag now contains a new required attribute
-`paginationURL`.
-
-#### Who is affected?
-
-This affects all developers who are using this tag in their plugins.
-
-#### How should I update my code?
-
-You should include the new attribute `paginationURL` in the tag. This attribute
-holds a URL that returns an HTML fragment containing the next comments for
-portlets such as Asset Publisher, Blogs, Document Library, etc.
-
-If you are using the Liferay `MVCPortlet` class, you can use the following URL:
-
-    <portlet:resourceURL var="discussionPaginationURL">
-        <portlet:param name="invokeTaglibDiscussion"
-            value="<%= Boolean.TRUE.toString() %>" />
-    </portlet:resourceURL>
-
-#### Why was this change made?
-
-This change was made to support comment pagination.
 
 ---------------------------------------
 
@@ -2002,3 +1975,195 @@ FreeMarker or any other framework.
 
 ---------------------------------------
 
+### Removed ckconfig Files Used for CKEditor Configuration
+- **Date:** 2015-Jun-16
+- **JIRA Ticket:** LPS-55518
+
+#### What changed?
+
+The files `ckconfig.jsp`, `ckconfig-ext.jsp`, `ckconfig_bbcode.jsp`,
+`ckconfig_bbcode-ext.jsp`, `ckconfig_creole.jsp`, and `ckconfig_creole-ext.jsp`
+have been removed and are no longer used to configure the CKEditor instances
+created using the `liferay-ui:input-editor` tag.
+
+#### Who is affected?
+
+This affects any hook or plugin-ext overriding these files to modify the editor
+configuration.
+
+#### How should I update my code?
+
+Depending on the changes, different extension methods are available:
+
+- For CKEditor configuration options, an implementation of
+`EditorConfigContributor` can be created to pass or modify the expected
+parameters.
+- For CKEditor instance manipulation (setting attributes, adding listeners,
+etc.), the `DynamicInclude` extension point
+`js#ckeditor[_creole|_bbcode]#onEditorCreated` has been added to provide the
+possibility of injecting JavaScript, when needed.
+
+#### Why was this change made?
+
+This change is part of a greater effort to provide mechanisms to extend and
+configure any editor in Liferay Portal in a coherent and extensible way.
+
+---------------------------------------
+
+### Removed the liferay-ui:journal-article Tag
+- **Date:** 2015-Jun-29
+- **JIRA Ticket:** LPS-56383
+
+#### What changed?
+
+The `liferay-ui:journal-article` tag has been removed.
+
+#### Who is affected?
+
+This affects developers using the `liferay-ui:journal-article` tag.
+
+#### How should I update my code?
+
+You should use the `liferay-ui:asset-display` tag instead.
+
+**Example**
+
+Old code:
+
+    <liferay-ui:journal-article
+        articleId="<%= article.getArticleId() %>"
+    />
+
+New code:
+
+    <liferay-ui:asset-display
+        className="<%= JournalArticleResource.class.getName() %>"
+        template="<%= article.getResourcePrimKey() %>"
+    />
+
+#### Why was this change made?
+
+The `liferay-ui:asset-display` is a generic way to display any type of asset.
+Therefore, the `liferay-ui:journal-article` tag is no longer necessary.
+
+---------------------------------------
+
+### Changed Java Package Names for Portlets Extracted as Modules
+- **Date:** 2015-Jun-29
+- **JIRA Ticket:** LPS-56383 and others
+
+#### What changed?
+
+The Java package names changed for portlets that were extracted as OSGi modules
+in 7.0. Here is the complete list:
+
+- `com.liferay.portlet.bookmarks` &rarr; `com.liferay.bookmarks`
+- `com.liferay.portlet.dynamicdatalists` &rarr; `com.liferay.dynamicdatalists`
+- `com.liferay.portlet.journal` &rarr; `com.liferay.journal`
+- `com.liferay.portlet.polls` &rarr; `com.liferay.polls`
+- `com.liferay.portlet.wiki` &rarr; `com.liferay.wiki`
+
+#### Who is affected?
+
+This affects developers using the portlets API from their own plugins.
+
+#### How should I update my code?
+
+Update the package imports to use the new package names. Any literal usage of
+the portlet `className` should also be updated.
+
+#### Why was this change made?
+
+Package names have been adapted to the new condition of Liferay portlets as
+OSGi services.
+
+---------------------------------------
+
+### Removed the DLFileEntryTypes_DDMStructures Mapping Table
+- **Date:** 2015-Jul-01
+- **JIRA Ticket:** LPS-56660
+
+#### What changed?
+
+The `DLFileEntryTypes_DDMStructures` mapping table is no longer available.
+
+#### Who is affected?
+
+This affects developers using the Document Library File Entry Type Local Service
+API.
+
+#### How should I update my code?
+
+Update the calls to `addDDMStructureLinks`, `deleteDDMStructureLinks`, and
+`updateDDMStructureLinks` if you want to add, delete, or update references
+between `DLFileEntryType` and `DDMStructures`.
+
+#### Why was this change made?
+
+This change was made to reduce the coupling between the two applications.
+
+---------------------------------------
+
+### Removed render Method from AssetRenderer API and WorkflowHandler API
+- **Date:** 2015-Jul-03
+- **JIRA Ticket:** LPS-56705
+
+#### What changed?
+
+The method `render` has been removed from the interfaces `AssetRenderer` and
+`WorkflowHandler`.
+
+#### Who is affected?
+
+This affects any Java code calling the method `render` on an `AssetRenderer` or
+`WorkflowHandler` class, or Java classes overriding the `render` method of these
+classes.
+
+#### How should I update my code?
+
+The method `render` was used to return the path of a JSP, including the
+configuration of a portlet. That method is now available for the same
+AssetRender API extending the `BaseJSPAssetRenderer` class, and is called
+`getJspPath`.
+
+If any logic was added to override the `render` method, it can now be added in
+the `include` method.
+
+#### Why was this change made?
+
+This change was part of needed modifications to support adding asset renderers
+and workflow handlers for portlets based on other technology different than JSP
+(e.g., FreeMarker). The method `include` can now be used to create asset
+renderers or workflow handlers with UIs written in FreeMarker or any other
+framework.
+
+---------------------------------------
+
+### Renamed ADMIN_INSTANCE to PORTAL_INSTANCES in PortletKeys
+- **Date:** 2015-Jul-08
+- **JIRA Ticket:** LPS-56867
+
+#### What changed?
+
+The constant `PortletKeys.ADMIN_INSTANCE` has been renamed as
+`PortletKeys.PORTAL_INSTANCES`.
+
+#### Who is affected?
+
+This affects developers using the old constant in their code; for example,
+creating a direct link to it. This is not common and usually not a good
+practice, so this should not affect many people.
+
+#### How should I update my code?
+
+You should rename the constant `ADMIN_INSTANCE` to `PORTAL_INSTANCES`
+everywhere it is used.
+
+#### Why was this change made?
+
+This change was part of needed modifications to extract the Portal Instances
+portlet from the Admin portlet. The constant's old name was not accurate, since
+it originated from the old Admin portlet. Since the Portal Instances portlet
+is now extracted to its own module, the old name no longer resembles its usage.
+
+---------------------------------------

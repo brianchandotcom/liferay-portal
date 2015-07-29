@@ -19,11 +19,17 @@
 <%
 AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute(WebKeys.ASSET_RENDERER);
 
-String summary = StringUtil.shorten(assetRenderer.getSummary(renderRequest, renderResponse), Integer.MAX_VALUE);
+boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 %>
 
-<liferay-ui:header
-	title="<%= assetRenderer.getTitle(locale) %>"
-/>
+<c:if test="<%= showHeader %>">
+	<liferay-ui:header
+		title="<%= assetRenderer.getTitle(locale) %>"
+	/>
+</c:if>
+
+<%
+String summary = StringUtil.shorten(assetRenderer.getSummary(renderRequest, renderResponse), Integer.MAX_VALUE);
+%>
 
 <%= HtmlUtil.escape(summary) %>

@@ -1,0 +1,28 @@
+.dialog-bd {
+	min-height: 30px;
+}
+
+.dialog-content {
+	border: 1px solid #C8C9CA;
+	padding: 5px;
+}
+
+.dialog-with-footer {
+	.portlet-layout {
+		height: calc(100% - #{$input-height-base} - #{2 * $dialog-footer-padding});
+		overflow-y: auto;
+	}
+
+	.button-holder {
+		&.dialog-footer {
+			background-color: #FFF;
+			border-top: 1px solid #E5E5E5;
+			bottom: 0;
+			left: 0;
+			margin: 0;
+			padding: $dialog-footer-padding;
+			position: fixed;
+			width: 100%;
+		}
+	}
+}

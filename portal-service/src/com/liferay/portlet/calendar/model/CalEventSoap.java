@@ -26,8 +26,10 @@ import java.util.List;
  * This class is used by SOAP remote services.
  *
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class CalEventSoap implements Serializable {
 	public static CalEventSoap toSoapModel(CalEvent model) {

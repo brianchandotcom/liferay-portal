@@ -5,9 +5,9 @@
 	<model-resource>
 		<model-name>com.liferay.marketplace</model-name>
 		<portlet-ref>
-			<portlet-name>1_WAR_marketplaceweb</portlet-name>
-			<portlet-name>2_WAR_marketplaceweb</portlet-name>
-			<portlet-name>3_WAR_marketplaceweb</portlet-name>
+			<portlet-name>com_liferay_marketplace_app_manager_web_portlet_MarketplaceAppManagerPortlet</portlet-name>
+			<portlet-name>com_liferay_marketplace_store_web_portlet_MarketplacePuchasedPortlet</portlet-name>
+			<portlet-name>com_liferay_marketplace_store_web_portlet_MarketplaceStorePortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>

@@ -625,7 +625,7 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = LayoutBranchLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.LayoutBranchLocalService.class)
 	protected LayoutBranchLocalService layoutBranchLocalService;
 	@BeanReference(type = com.liferay.portal.service.LayoutBranchService.class)
 	protected com.liferay.portal.service.LayoutBranchService layoutBranchService;

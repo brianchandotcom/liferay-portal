@@ -64,6 +64,7 @@ public class PortalSessionAuthVerifier implements AuthVerifier {
 				return authVerifierResult;
 			}
 
+			authVerifierResult.setPasswordBasedAuthentication(true);
 			authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 			authVerifierResult.setUserId(user.getUserId());
 

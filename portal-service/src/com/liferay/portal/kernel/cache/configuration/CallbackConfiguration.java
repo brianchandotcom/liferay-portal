@@ -25,7 +25,7 @@ import java.util.Properties;
 public class CallbackConfiguration {
 
 	public CallbackConfiguration(
-		CallbackFactory callbackFactory, Properties properties) {
+		CallbackFactory<?> callbackFactory, Properties properties) {
 
 		if (callbackFactory == null) {
 			throw new NullPointerException("Callback factory is null");
@@ -61,7 +61,7 @@ public class CallbackConfiguration {
 		return false;
 	}
 
-	public CallbackFactory getCallbackFactory() {
+	public CallbackFactory<?> getCallbackFactory() {
 		return _callbackFactory;
 	}
 
@@ -76,7 +76,7 @@ public class CallbackConfiguration {
 		return HashUtil.hash(hash, _properties);
 	}
 
-	private final CallbackFactory _callbackFactory;
+	private final CallbackFactory<?> _callbackFactory;
 	private final Properties _properties;
 
 }

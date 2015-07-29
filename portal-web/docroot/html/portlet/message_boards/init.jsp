@@ -19,7 +19,6 @@
 <%@ page import="com.liferay.portal.kernel.util.MimeTypesUtil" %><%@
 page import="com.liferay.portlet.messageboards.BannedUserException" %><%@
 page import="com.liferay.portlet.messageboards.CategoryNameException" %><%@
-page import="com.liferay.portlet.messageboards.DiscussionMaxCommentsException" %><%@
 page import="com.liferay.portlet.messageboards.LockedThreadException" %><%@
 page import="com.liferay.portlet.messageboards.MBGroupServiceSettings" %><%@
 page import="com.liferay.portlet.messageboards.MailingListEmailAddressException" %><%@
@@ -89,12 +88,6 @@ boolean enableRSS = mbGroupServiceSettings.isEnableRSS();
 int rssDelta = mbGroupServiceSettings.getRSSDelta();
 String rssDisplayStyle = mbGroupServiceSettings.getRSSDisplayStyle();
 String rssFeedType = mbGroupServiceSettings.getRSSFeedType();
-
-ResourceURL rssURL = liferayPortletResponse.createResourceURL();
-
-rssURL.setParameter("struts_action", "/message_boards/rss");
-rssURL.setParameter("p_l_id", String.valueOf(plid));
-rssURL.setParameter("mbCategoryId", String.valueOf(scopeGroupId));
 
 boolean categoriesPanelCollapsible = true;
 boolean categoriesPanelExtended = true;

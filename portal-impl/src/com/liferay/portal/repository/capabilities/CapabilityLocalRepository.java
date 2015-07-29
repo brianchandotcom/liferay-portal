@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
@@ -254,6 +255,23 @@ public class CapabilityLocalRepository
 	}
 
 	@Override
+	public List<RepositoryEntry> getFileEntriesAndFileShortcuts(
+			long folderId, int status, int start, int end)
+		throws PortalException {
+
+		return getRepository().getFileEntriesAndFileShortcuts(
+			folderId, status, start, end);
+	}
+
+	@Override
+	public int getFileEntriesAndFileShortcutsCount(long folderId, int status)
+		throws PortalException {
+
+		return getRepository().getFileEntriesAndFileShortcutsCount(
+			folderId, status);
+	}
+
+	@Override
 	public int getFileEntriesCount(long folderId) throws PortalException {
 		return getRepository().getFileEntriesCount(folderId);
 	}
@@ -306,6 +324,43 @@ public class CapabilityLocalRepository
 		throws PortalException {
 
 		return getRepository().getFolder(parentFolderId, name);
+	}
+
+	@Override
+	public List<Folder> getFolders(
+			long parentFolderId, boolean includeMountFolders, int start,
+			int end, OrderByComparator<Folder> obc)
+		throws PortalException {
+
+		return getRepository().getFolders(
+			parentFolderId, includeMountFolders, start, end, obc);
+	}
+
+	@Override
+	public List<Folder> getFolders(
+			long parentFolderId, int status, boolean includeMountFolders,
+			int start, int end, OrderByComparator<Folder> obc)
+		throws PortalException {
+
+		return getRepository().getFolders(
+			parentFolderId, status, includeMountFolders, start, end, obc);
+	}
+
+	@Override
+	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
+		throws PortalException {
+
+		return getRepository().getFoldersCount(
+			parentFolderId, includeMountfolders);
+	}
+
+	@Override
+	public int getFoldersCount(
+			long parentFolderId, int status, boolean includeMountfolders)
+		throws PortalException {
+
+		return getRepository().getFoldersCount(
+			parentFolderId, status, includeMountfolders);
 	}
 
 	@Override

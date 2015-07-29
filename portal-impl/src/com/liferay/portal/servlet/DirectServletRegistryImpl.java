@@ -109,7 +109,11 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 
 		File file = new File(rootPath, path);
 
-		return file.lastModified();
+		if (file.exists()) {
+			return file.lastModified();
+		}
+
+		return -1;
 	}
 
 	protected Servlet reloadDependants(

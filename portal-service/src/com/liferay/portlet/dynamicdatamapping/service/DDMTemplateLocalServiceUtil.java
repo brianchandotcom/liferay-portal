@@ -65,12 +65,11 @@ public class DDMTemplateLocalServiceUtil {
 	* @param nameMap the template's locales and localized names
 	* @param descriptionMap the template's locales and localized descriptions
 	* @param type the template's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	DDMTemplateConstants}.
 	* @param mode the template's mode. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	DDMTemplateConstants}.
 	* @param language the template's script language. For more information,
-	see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	see {@link DDMTemplateConstants}.
 	* @param script the template's script
 	* @param serviceContext the service context to be applied. Can set the
 	UUID, creation date, modification date, guest permissions, and
@@ -108,12 +107,11 @@ public class DDMTemplateLocalServiceUtil {
 	* @param nameMap the template's locales and localized names
 	* @param descriptionMap the template's locales and localized descriptions
 	* @param type the template's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	DDMTemplateConstants}.
 	* @param mode the template's mode. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	DDMTemplateConstants}.
 	* @param language the template's script language. For more information,
-	see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	see {@link DDMTemplateConstants}.
 	* @param script the template's script
 	* @param cacheable whether the template is cacheable
 	* @param smallImage whether the template has a small image
@@ -166,16 +164,14 @@ public class DDMTemplateLocalServiceUtil {
 	* Adds the model resources with the permissions to the template.
 	*
 	* @param template the template to add resources to
-	* @param groupPermissions the group permissions to be added
-	* @param guestPermissions the guest permissions to be added
+	* @param modelPermissions the model permissions to be added
 	* @throws PortalException if a portal exception occurred
 	*/
 	public static void addTemplateResources(
 		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate template,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addTemplateResources(template, groupPermissions, guestPermissions);
+		getService().addTemplateResources(template, modelPermissions);
 	}
 
 	/**
@@ -223,7 +219,7 @@ public class DDMTemplateLocalServiceUtil {
 	* @param oldClassPK the primary key of the old template's related entity
 	* @param newClassPK the primary key of the new template's related entity
 	* @param type the template's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	DDMTemplateConstants}.
 	* @param serviceContext the service context to be applied. Can set the
 	creation date, modification date, guest permissions, and group
 	permissions for the new templates.
@@ -694,7 +690,7 @@ public class DDMTemplateLocalServiceUtil {
 	related model
 	* @param classPK the primary key of the template's related entity
 	* @param type the template's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	DDMTemplateConstants}.
 	* @return the matching templates
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
@@ -711,9 +707,9 @@ public class DDMTemplateLocalServiceUtil {
 	related model
 	* @param classPK the primary key of the template's related entity
 	* @param type the template's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	DDMTemplateConstants}.
 	* @param mode the template's mode. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	DDMTemplateConstants}.
 	* @return the matching templates
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
@@ -871,11 +867,9 @@ public class DDMTemplateLocalServiceUtil {
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
-	information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	information, see {@link DDMTemplateConstants}.
 	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	information, see {@link DDMTemplateConstants}.
 	* @param start the lower bound of the range of templates to return
 	* @param end the upper bound of the range of templates to return (not
 	inclusive)
@@ -920,14 +914,12 @@ public class DDMTemplateLocalServiceUtil {
 	* @param description the description keywords (optionally
 	<code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
-	information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	information, see {@link DDMTemplateConstants}.
 	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	information, see {@link DDMTemplateConstants}.
 	* @param language the template's script language (optionally
 	<code>null</code>). For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	DDMTemplateConstants}.
 	* @param andOperator whether every field must match its keywords, or just
 	one field
 	* @param start the lower bound of the range of templates to return
@@ -975,11 +967,9 @@ public class DDMTemplateLocalServiceUtil {
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
-	information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	information, see {@link DDMTemplateConstants}.
 	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	information, see {@link DDMTemplateConstants}.
 	* @param start the lower bound of the range of templates to return
 	* @param end the upper bound of the range of templates to return (not
 	inclusive)
@@ -1024,14 +1014,12 @@ public class DDMTemplateLocalServiceUtil {
 	* @param description the description keywords (optionally
 	<code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
-	information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	information, see {@link DDMTemplateConstants}.
 	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	information, see {@link DDMTemplateConstants}.
 	* @param language the template's script language (optionally
 	<code>null</code>). For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	DDMTemplateConstants}.
 	* @param andOperator whether every field must match its keywords, or just
 	one field.
 	* @param start the lower bound of the range of templates to return
@@ -1069,11 +1057,9 @@ public class DDMTemplateLocalServiceUtil {
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
-	information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	information, see {@link DDMTemplateConstants}.
 	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	information, see {@link DDMTemplateConstants}.
 	* @return the number of matching templates
 	*/
 	public static int searchCount(long companyId, long groupId,
@@ -1099,14 +1085,12 @@ public class DDMTemplateLocalServiceUtil {
 	* @param description the description keywords (optionally
 	<code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
-	information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	information, see {@link DDMTemplateConstants}.
 	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	information, see {@link DDMTemplateConstants}.
 	* @param language the template's script language (optionally
 	<code>null</code>). For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	DDMTemplateConstants}.
 	* @param andOperator whether every field must match its keywords, or just
 	one field.
 	* @return the number of matching templates
@@ -1137,11 +1121,9 @@ public class DDMTemplateLocalServiceUtil {
 	* @param keywords the keywords (space separated), which may occur in the
 	template's name or description (optionally <code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
-	information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	information, see {@link DDMTemplateConstants}.
 	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	information, see {@link DDMTemplateConstants}.
 	* @return the number of matching templates
 	*/
 	public static int searchCount(long companyId, long[] groupIds,
@@ -1167,14 +1149,12 @@ public class DDMTemplateLocalServiceUtil {
 	* @param description the description keywords (optionally
 	<code>null</code>)
 	* @param type the template's type (optionally <code>null</code>). For more
-	information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	information, see {@link DDMTemplateConstants}.
 	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	information, see {@link DDMTemplateConstants}.
 	* @param language the template's script language (optionally
 	<code>null</code>). For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	DDMTemplateConstants}.
 	* @param andOperator whether every field must match its keywords, or just
 	one field.
 	* @return the number of matching templates
@@ -1220,12 +1200,11 @@ public class DDMTemplateLocalServiceUtil {
 	* @param descriptionMap the template's new locales and localized
 	description
 	* @param type the template's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	DDMTemplateConstants}.
 	* @param mode the template's mode. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	DDMTemplateConstants}.
 	* @param language the template's script language. For more information,
-	see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	see {@link DDMTemplateConstants}.
 	* @param script the template's script
 	* @param cacheable whether the template is cacheable
 	* @param serviceContext the service context to be applied. Can set the
@@ -1257,12 +1236,11 @@ public class DDMTemplateLocalServiceUtil {
 	* @param descriptionMap the template's new locales and localized
 	description
 	* @param type the template's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	DDMTemplateConstants}.
 	* @param mode the template's mode. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	DDMTemplateConstants}.
 	* @param language the template's script language. For more information,
-	see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants}.
+	see {@link DDMTemplateConstants}.
 	* @param script the template's script
 	* @param cacheable whether the template is cacheable
 	* @param smallImage whether the template has a small image

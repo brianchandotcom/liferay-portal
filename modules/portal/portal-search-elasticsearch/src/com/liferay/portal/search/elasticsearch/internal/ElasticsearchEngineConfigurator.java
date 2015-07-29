@@ -79,6 +79,13 @@ public class ElasticsearchEngineConfigurator
 		return clazz.getClassLoader();
 	}
 
+	@Override
+	protected void initialize() {
+		_elasticsearchConnectionManager.connect();
+
+		super.initialize();
+	}
+
 	@Reference(unbind = "-")
 	protected void setElasticsearchConnectionManager(
 		ElasticsearchConnectionManager elasticsearchConnectionManager) {

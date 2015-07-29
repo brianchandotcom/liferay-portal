@@ -1,5 +1,4 @@
 <definition component-name="portal-workflow">
-	<property name="web.plugins.includes" value="kaleo-web" />
 	<property name="testray.main.component.name" value="Workflow" />
 
 	<var name="pageName" value="Wiki Page" />
@@ -43,7 +42,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command name="ApproveFrontPageUserEdit" priority="5">
+	<command known-issues="LPS-56092" name="ApproveFrontPageUserEdit" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -109,7 +108,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="FrontPage" />
-			<var name="workflowAssetType" value="Wiki Page" />/>
+			<var name="workflowAssetType" value="Wiki Page" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -151,7 +150,7 @@
 		</execute>
 	</command>
 
-	<command name="ApproveWikiPagePG" priority="5">
+	<command known-issues="LPS-56092" name="ApproveWikiPagePG" priority="4">
 		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
 		<var name="wikiPageUsername" value="Test Test" />
@@ -229,7 +228,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectFrontPageUserEdit" priority="5">
+	<command known-issues="LPS-56092" name="RejectFrontPageUserEdit" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -295,7 +294,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="FrontPage" />
-			<var name="workflowAssetType" value="Wiki Page" />/>
+			<var name="workflowAssetType" value="Wiki Page" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -335,7 +334,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectWikiPagePG" priority="5">
+	<command known-issues="LPS-56092" name="RejectWikiPagePG" priority="4">
 		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
 		<var name="wikiPageUsername" value="Test Test" />

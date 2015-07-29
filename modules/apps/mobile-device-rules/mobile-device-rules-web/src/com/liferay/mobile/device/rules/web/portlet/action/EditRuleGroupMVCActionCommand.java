@@ -1,0 +1,205 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.mobile.device.rules.web.portlet.action;
+
+import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException;
+import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupServiceUtil;
+
+import java.util.Locale;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Edward Han
+ * @author Mate Thurzo
+ */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + MDRPortletKeys.MOBILE_DEVICE_RULES,
+		"mvc.command.name=/mobile_device_rules/edit_rule_group"
+	},
+	service = MVCActionCommand.class
+)
+public class EditRuleGroupMVCActionCommand extends BaseMVCActionCommand {
+
+	protected MDRRuleGroup copyRuleGroup(ActionRequest actionRequest)
+		throws Exception {
+
+		long ruleGroupId = ParamUtil.getLong(actionRequest, "ruleGroupId");
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		return MDRRuleGroupServiceUtil.copyRuleGroup(
+			ruleGroupId, groupId, serviceContext);
+	}
+
+	protected void deleteRuleGroups(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] deleteRuleGroupIds = null;
+
+		long ruleGroupId = ParamUtil.getLong(actionRequest, "ruleGroupId");
+
+		if (ruleGroupId > 0) {
+			deleteRuleGroupIds = new long[] {ruleGroupId};
+		}
+		else {
+			deleteRuleGroupIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "ruleGroupIds"), 0L);
+		}
+
+		for (long deleteRuleGroupId : deleteRuleGroupIds) {
+			MDRRuleGroupServiceUtil.deleteRuleGroup(deleteRuleGroupId);
+		}
+	}
+
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			MDRRuleGroup ruleGroup = null;
+
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				ruleGroup = updateRuleGroup(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteRuleGroups(actionRequest);
+			}
+			else if (cmd.equals(Constants.COPY)) {
+				ruleGroup = copyRuleGroup(actionRequest);
+			}
+
+			String redirect = StringPool.BLANK;
+
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.COPY)) {
+				redirect = getAddOrCopyRedirect(
+					actionRequest, actionResponse, ruleGroup);
+			}
+			else {
+				redirect = getRedirect(actionRequest, actionResponse);
+			}
+
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchRuleGroupException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+			}
+			else {
+				throw e;
+			}
+		}
+	}
+
+	protected String getAddOrCopyRedirect(
+		ActionRequest actionRequest, ActionResponse actionResponse,
+		MDRRuleGroup ruleGroup) {
+
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)actionResponse;
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/mobile_device_rules/edit_rule_group");
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		portletURL.setParameter("redirect", redirect);
+
+		portletURL.setParameter(
+			"ruleGroupId", String.valueOf(ruleGroup.getRuleGroupId()));
+
+		return portletURL.toString();
+	}
+
+	protected String getRedirect(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)actionResponse;
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/mobile_device_rules/edit_rule_group");
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		portletURL.setParameter("redirect", redirect);
+
+		return portletURL.toString();
+	}
+
+	protected MDRRuleGroup updateRuleGroup(ActionRequest actionRequest)
+		throws Exception {
+
+		long ruleGroupId = ParamUtil.getLong(actionRequest, "ruleGroupId");
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		MDRRuleGroup ruleGroup = null;
+
+		if (ruleGroupId <= 0) {
+			ruleGroup = MDRRuleGroupServiceUtil.addRuleGroup(
+				groupId, nameMap, descriptionMap, serviceContext);
+		}
+		else {
+			ruleGroup = MDRRuleGroupServiceUtil.updateRuleGroup(
+				ruleGroupId, nameMap, descriptionMap, serviceContext);
+		}
+
+		return ruleGroup;
+	}
+
+}

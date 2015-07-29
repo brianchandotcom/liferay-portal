@@ -45,7 +45,7 @@
         such as Version: 4.4.0 (Luna), for main features.
         See bug 328139.
      -->
-    <releaseName>Mars</releaseName>
+    <releaseName>Neon</releaseName>
     <!--
         The releaseNumbers below, for SDK and Platform, might be
         thought of as the "marketing number" or "branding number",
@@ -60,8 +60,8 @@
         but we'd still want the "marketing number" to be increased to reflect
         "a new yearly release".
     -->
-    <releaseNumberSDK>4.5</releaseNumberSDK>
-    <releaseNumberPlatform>4.5</releaseNumberPlatform>
+    <releaseNumberSDK>4.6</releaseNumberSDK>
+    <releaseNumberPlatform>4.6</releaseNumberPlatform>
 
     <!-- using snapshot, or locally built (forked) snapshot version for bug 461207 and bug 431116
     <tycho.version>0.23.0-SNAPSHOT</tycho.version>
@@ -79,9 +79,9 @@
       The tycho-eclipserun-plugin will create its instance of Eclipse from this
       'eclipiserun-repo' repository, such as for computing .api-descriptions.
     -->
-    <eclipserun-repo>http://download.eclipse.org/eclipse/updates/4.5milestones/S-4.5RC3-201505280700/</eclipserun-repo>
+    <eclipserun-repo>http://download.eclipse.org/eclipse/updates/4.5/R-4.5-201506032000</eclipserun-repo>
 
-    <comparator.repo>http://download.eclipse.org/eclipse/updates/4.5-I-builds</comparator.repo>
+    <comparator.repo>http://download.eclipse.org/eclipse/updates/4.6-I-builds</comparator.repo>
 
     <!--
       NOTE: this EMF and ECF URL must match exactly what is in the eclipse-sdk-prereqs.target file.
@@ -137,7 +137,7 @@
          Usually set to N-builds for main dev. cycle, but set to I-builds during RC time (since there are
          no N-builds, but daily I-builds).
     -->
-    <eclipse-p2-repo.url>http://download.eclipse.org/eclipse/updates/4.5-I-builds</eclipse-p2-repo.url>
+    <eclipse-p2-repo.url>http://download.eclipse.org/eclipse/updates/4.6-N-builds</eclipse-p2-repo.url>
 
     <!--
         If configuration is not specified at all, in signing plugin, the default
@@ -256,7 +256,7 @@
             <artifact>
               <groupId>org.eclipse</groupId>
               <artifactId>eclipse-sdk-prereqs</artifactId>
-              <version>4.5.0-SNAPSHOT</version>
+              <version>4.6.0-SNAPSHOT</version>
             </artifact>
           </target>
           <environments>

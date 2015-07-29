@@ -46,7 +46,7 @@ import javax.portlet.PortletResponse;
  * @author Zsolt Berentey
  */
 @OSGiBeanProperties
-public class TrashIndexer extends BaseIndexer {
+public class TrashIndexer extends BaseIndexer<TrashEntry> {
 
 	public static final String CLASS_NAME = TrashEntry.class.getName();
 
@@ -148,11 +148,11 @@ public class TrashIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) {
+	protected void doDelete(TrashEntry trashEntry) {
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) {
+	protected Document doGetDocument(TrashEntry trashEntry) {
 		return null;
 	}
 
@@ -178,15 +178,15 @@ public class TrashIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) {
-	}
-
-	@Override
 	protected void doReindex(String className, long classPK) {
 	}
 
 	@Override
 	protected void doReindex(String[] ids) {
+	}
+
+	@Override
+	protected void doReindex(TrashEntry trashEntry) {
 	}
 
 	/**

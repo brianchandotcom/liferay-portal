@@ -431,7 +431,7 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = ClassNameLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
 	protected ClassNameLocalService classNameLocalService;
 	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
 	protected com.liferay.portal.service.ClassNameService classNameService;

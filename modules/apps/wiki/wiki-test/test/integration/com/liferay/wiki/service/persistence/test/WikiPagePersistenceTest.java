@@ -159,6 +159,8 @@ public class WikiPagePersistenceTest {
 
 		newWikiPage.setRedirectTitle(RandomTestUtil.randomString());
 
+		newWikiPage.setLastPublishDate(RandomTestUtil.nextDate());
+
 		newWikiPage.setStatus(RandomTestUtil.nextInt());
 
 		newWikiPage.setStatusByUserId(RandomTestUtil.nextLong());
@@ -208,6 +210,9 @@ public class WikiPagePersistenceTest {
 			newWikiPage.getParentTitle());
 		Assert.assertEquals(existingWikiPage.getRedirectTitle(),
 			newWikiPage.getRedirectTitle());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingWikiPage.getLastPublishDate()),
+			Time.getShortTimestamp(newWikiPage.getLastPublishDate()));
 		Assert.assertEquals(existingWikiPage.getStatus(),
 			newWikiPage.getStatus());
 		Assert.assertEquals(existingWikiPage.getStatusByUserId(),
@@ -573,8 +578,8 @@ public class WikiPagePersistenceTest {
 			true, "modifiedDate", true, "nodeId", true, "title", true,
 			"version", true, "minorEdit", true, "content", true, "summary",
 			true, "format", true, "head", true, "parentTitle", true,
-			"redirectTitle", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"redirectTitle", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -847,6 +852,8 @@ public class WikiPagePersistenceTest {
 		wikiPage.setParentTitle(RandomTestUtil.randomString());
 
 		wikiPage.setRedirectTitle(RandomTestUtil.randomString());
+
+		wikiPage.setLastPublishDate(RandomTestUtil.nextDate());
 
 		wikiPage.setStatus(RandomTestUtil.nextInt());
 

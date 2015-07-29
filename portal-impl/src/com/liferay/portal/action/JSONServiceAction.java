@@ -186,22 +186,22 @@ public class JSONServiceAction extends JSONAction {
 		else if (typeNameOrClassDescriptor.equals("double") ||
 				 typeNameOrClassDescriptor.equals(Double.class.getName())) {
 
-			return new Double(ParamUtil.getDouble(request, parameter));
+			return Double.valueOf(ParamUtil.getDouble(request, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals("int") ||
 				 typeNameOrClassDescriptor.equals(Integer.class.getName())) {
 
-			return new Integer(ParamUtil.getInteger(request, parameter));
+			return Integer.valueOf(ParamUtil.getInteger(request, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals("long") ||
 				 typeNameOrClassDescriptor.equals(Long.class.getName())) {
 
-			return new Long(ParamUtil.getLong(request, parameter));
+			return Long.valueOf(ParamUtil.getLong(request, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals("short") ||
 				 typeNameOrClassDescriptor.equals(Short.class.getName())) {
 
-			return new Short(ParamUtil.getShort(request, parameter));
+			return Short.valueOf(ParamUtil.getShort(request, parameter));
 		}
 		else if (typeNameOrClassDescriptor.equals(Calendar.class.getName())) {
 			Calendar cal = Calendar.getInstance(LocaleUtil.getDefault());

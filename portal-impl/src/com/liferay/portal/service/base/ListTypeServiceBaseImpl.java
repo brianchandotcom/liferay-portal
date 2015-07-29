@@ -241,7 +241,7 @@ public abstract class ListTypeServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.ListTypeLocalService.class)
 	protected com.liferay.portal.service.ListTypeLocalService listTypeLocalService;
-	@BeanReference(type = ListTypeService.class)
+	@BeanReference(type = com.liferay.portal.service.ListTypeService.class)
 	protected ListTypeService listTypeService;
 	@BeanReference(type = ListTypePersistence.class)
 	protected ListTypePersistence listTypePersistence;

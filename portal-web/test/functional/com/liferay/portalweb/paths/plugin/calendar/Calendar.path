@@ -151,52 +151,52 @@
 <!--MY_CALENDARS_CALENDAR-->
 <tr>
 	<td>MY_CALENDARS_CALENDAR_PRIMARY</td>
-	<td>//div[contains(@id,'calendarportlet_myCalendarList')]/div/div/span[contains(.,'${key_user}')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div/span[contains(.,'${key_user}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MY_CALENDARS_CALENDAR_PRIMARY_COLOR</td>
-	<td>//div[contains(@id,'calendarportlet_myCalendarList')]/div/div/div[contains(@style,'${key_color}')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div/div[contains(@style,'${key_color}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MY_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT</td>
-	<td>//div[contains(@id,'calendarportlet_myCalendarList')]/div/div/div[contains(@style,'D96666')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div/div[contains(@style,'D96666')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW</td>
-	<td>//div[contains(@id,'calendarportlet_myCalendarList')]/div/div[contains(.,'${key_user}')]/div[@class='calendar-list-item-arrow']</td>
+	<td>//div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div[contains(.,'${key_user}')]/div[@class='calendar-list-item-arrow']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MY_CALENDARS_CALENDAR_PRIMARY_GENERIC</td>
-	<td>//div[contains(@id,'calendarportlet_myCalendarList')]/div/div</td>
+	<td>//div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MY_CALENDARS_CALENDAR_PRIMARY_GENERIC_MENULIST_ARROW</td>
-	<td>//div[contains(@id,'calendarportlet_myCalendarList')]/div/div/div[@class='calendar-list-item-arrow']</td>
+	<td>//div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div/div[@class='calendar-list-item-arrow']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MY_CALENDARS_CALENDAR_ADDITIONAL</td>
-	<td>//div[contains(@id,'calendarportlet_myCalendarList')]/div/div/span[contains(.,'${key_user} - ${key_calendarName}')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div/span[contains(.,'${key_user} - ${key_calendarName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MY_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW</td>
-	<td>//div[contains(@id,'calendarportlet_myCalendarList')]/div/div[contains(., '${key_user} - ${key_calendarName}')]/div[@class='calendar-list-item-arrow']</td>
+	<td>//div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div[contains(., '${key_user} - ${key_calendarName}')]/div[@class='calendar-list-item-arrow']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MY_CALENDARS_CALENDAR_ADDITIONAL_GENERIC</td>
-	<td>//div[contains(@id,'calendarportlet_myCalendarList')]/div/div[2]</td>
+	<td>//div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MY_CALENDARS_CALENDAR_ADDITIONAL_GENERIC_MENULIST_ARROW</td>
-	<td>//div[contains(@id,'calendarportlet_myCalendarList')]/div/div[2]/div[@class='calendar-list-item-arrow']</td>
+	<td>//div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div[2]/div[@class='calendar-list-item-arrow']</td>
 	<td></td>
 </tr>
 <tr>
@@ -239,52 +239,52 @@
 <!--CURRENT_SITE_CALENDARS_CALENDAR-->
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY</td>
-	<td>//div[contains(@id,'calendarportlet_siteCalendarList')]/div/div/span[contains(.,'${key_site}')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div/span[contains(.,'${key_site}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR</td>
-	<td>//div[contains(@id,'calendarportlet_siteCalendarList')]/div/div/div[contains(@style,'${key_color}')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div/div[contains(@style,'${key_color}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT</td>
-	<td>//div[contains(@id,'calendarportlet_siteCalendarList')]/div/div/div[contains(@style,'D96666')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div/div[contains(@style,'D96666')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW</td>
-	<td>//div[contains(@id,'calendarportlet_siteCalendarList')]/div/div[contains(.,'${key_site}')]/div[@class='calendar-list-item-arrow']/i[@class='icon-caret-down']</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div[contains(.,'${key_site}')]/div[@class='calendar-list-item-arrow']/i[@class='icon-caret-down']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_GENERIC</td>
-	<td>//div[contains(@id,'calendarportlet_siteCalendarList')]/div/div</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_GENERIC_MENULIST_ARROW</td>
-	<td>//div[contains(@id,'calendarportlet_siteCalendarList')]/div/div/div[@class='calendar-list-item-arrow']/i[@class='icon-caret-down']</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div/div[@class='calendar-list-item-arrow']/i[@class='icon-caret-down']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL</td>
-	<td>//div[contains(@id,'calendarportlet_siteCalendarList')]/div/div/span[contains(.,'${key_site} - ${key_calendarName}')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div/span[contains(.,'${key_site} - ${key_calendarName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_GENERIC</td>
-	<td>//div[contains(@id,'calendarportlet_siteCalendarList')]/div/div[2]</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_GENERIC_MENULIST_ARROW</td>
-	<td>//div[contains(@id,'calendarportlet_siteCalendarList')]/div/div[2]/div[@class='calendar-list-item-arrow']/i[@class='icon-caret-down']</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div[2]/div[@class='calendar-list-item-arrow']/i[@class='icon-caret-down']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW</td>
-	<td>//div[contains(@id,'calendarportlet_siteCalendarList')]/div/div[contains(., '${key_site} - ${key_calendarName}')]/div[@class='calendar-list-item-arrow']/i[@class='icon-caret-down']</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div[contains(., '${key_site} - ${key_calendarName}')]/div[@class='calendar-list-item-arrow']/i[@class='icon-caret-down']</td>
 	<td></td>
 </tr>
 <tr>
@@ -300,7 +300,7 @@
 </tr>
 <tr>
 	<td>OTHER_CALENDARS_SEARCH</td>
-	<td>//input[contains(@id,'calendarportlet_addOtherCalendar')]</td>
+	<td>//input[contains(@id,'CalendarPortlet_addOtherCalendar')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -316,27 +316,27 @@
 <!--OTHER_CALENDARS_CALENDAR-->
 <tr>
 	<td>OTHER_CALENDARS_CALENDAR</td>
-	<td>//div[contains(@id,'calendarportlet_otherCalendarList')]/div/div[contains(.,'${key_calendarName}')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_otherCalendarList')]/div/div[contains(.,'${key_calendarName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OTHER_CALENDARS_CALENDAR_MENULIST_ARROW</td>
-	<td>//div[contains(@id,'calendarportlet_otherCalendarList')]/div/div[contains(.,'${key_calendarName}')]/div[@class='calendar-list-item-arrow']</td>
+	<td>//div[contains(@id,'CalendarPortlet_otherCalendarList')]/div/div[contains(.,'${key_calendarName}')]/div[@class='calendar-list-item-arrow']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OTHER_CALENDARS_CALENDAR_GENERIC</td>
-	<td>//div[contains(@id,'calendarportlet_otherCalendarList')]/div/div/span</td>
+	<td>//div[contains(@id,'CalendarPortlet_otherCalendarList')]/div/div/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OTHER_CALENDARS_CALENDAR_GENERIC_MENULIST_ARROW</td>
-	<td>//div[contains(@id,'calendarportlet_otherCalendarList')]/div/div/div[@class='calendar-list-item-arrow']</td>
+	<td>//div[contains(@id,'CalendarPortlet_otherCalendarList')]/div/div/div[@class='calendar-list-item-arrow']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OTHER_CALENDARS_CALENDAR_EMPTY_MESSAGE</td>
-	<td>//div[contains(@id,'calendarportlet_otherCalendarList')]/div/div[@class='calendar-list-empty-message']</td>
+	<td>//div[contains(@id,'CalendarPortlet_otherCalendarList')]/div/div[@class='calendar-list-empty-message']</td>
 	<td></td>
 </tr>
 <tr>

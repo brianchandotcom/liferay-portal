@@ -2810,6 +2810,11 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		return count.intValue();
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return MembershipRequestModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the membership request persistence.
 	 */

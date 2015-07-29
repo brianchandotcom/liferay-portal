@@ -25,9 +25,9 @@
 				<required>true</required>
 			</attribute>
 			<attribute>
-				<name>fields</name>
-				<inputType>com.liferay.portlet.dynamicdatamapping.storage.Fields</inputType>
-				<outputType>com.liferay.portlet.dynamicdatamapping.storage.Fields</outputType>
+				<name>ddmFormValues</name>
+				<inputType>com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues</inputType>
+				<outputType>com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues</outputType>
 			</attribute>
 			<attribute>
 				<name>fieldsNamespace</name>
@@ -105,6 +105,100 @@
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
+			</attribute>
+		</attributes>
+	</component>
+	<component name="TemplateRenderer" bodyContent="true" writeJSP="true">
+		<attributes>
+			<attribute>
+				<name>className</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>contextObjects</name>
+				<inputType><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></inputType>
+				<outputType><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
+				<name>displayStyle</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>displayStyleGroupId</name>
+				<inputType>long</inputType>
+				<outputType>long</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>entries</name>
+				<inputType><![CDATA[java.util.List<?>]]></inputType>
+				<outputType><![CDATA[java.util.List<?>]]></outputType>
+				<required>true</required>
+			</attribute>
+		</attributes>
+	</component>
+	<component name="TemplateSelector" bodyContent="false" writeJSP="true">
+		<attributes>
+			<attribute>
+				<name>className</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>defaultDisplayStyle</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
+				<name>displayStyle</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>displayStyleGroupId</name>
+				<inputType>long</inputType>
+				<outputType>long</outputType>
+				<required>true</required>
+			</attribute>
+			<attribute>
+				<name>displayStyles</name>
+				<inputType><![CDATA[java.util.List<java.lang.String>]]></inputType>
+				<outputType><![CDATA[java.util.List<java.lang.String>]]></outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
+				<name>icon</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>false</required>
+				<defaultValue>icon-cog</defaultValue>
+			</attribute>
+			<attribute>
+				<name>label</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>false</required>
+				<defaultValue>display-template</defaultValue>
+			</attribute>
+			<attribute>
+				<name>refreshURL</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+				<required>false</required>
+			</attribute>
+			<attribute>
+				<name>showEmptyOption</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<required>false</required>
 			</attribute>
 		</attributes>
 	</component>

@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="MarketplacePortletContentTargetingSmoke" priority="5">
+	<command name="MarketplacePortletContentTargetingSmoke" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Store" />
 		</execute>

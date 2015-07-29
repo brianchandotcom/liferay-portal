@@ -21,14 +21,15 @@ import java.util.Properties;
 /**
  * @author Tina Tian
  */
-public interface CallbackFactory {
+public interface CallbackFactory<T extends PortalCacheManager<?, ?>> {
 
-	public BootstrapLoader createBootstrapLoader(Properties properties);
-
-	public <K extends Serializable, V> CacheListener<K, V> createCacheListener(
+	public PortalCacheBootstrapLoader createPortalCacheBootstrapLoader(
 		Properties properties);
 
-	public CacheManagerListener createCacheManagerListener(
-		Properties properties);
+	public <K extends Serializable, V> PortalCacheListener<K, V>
+		createPortalCacheListener(Properties properties);
+
+	public PortalCacheManagerListener createPortalCacheManagerListener(
+		T portalCacheManager, Properties properties);
 
 }

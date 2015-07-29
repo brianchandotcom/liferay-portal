@@ -477,7 +477,7 @@ public abstract class SCProductScreenshotLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = SCProductScreenshotLocalService.class)
+	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalService.class)
 	protected SCProductScreenshotLocalService scProductScreenshotLocalService;
 	@BeanReference(type = SCProductScreenshotPersistence.class)
 	protected SCProductScreenshotPersistence scProductScreenshotPersistence;

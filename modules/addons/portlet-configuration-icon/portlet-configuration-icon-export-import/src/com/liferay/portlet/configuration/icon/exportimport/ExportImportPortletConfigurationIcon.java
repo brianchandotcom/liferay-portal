@@ -58,17 +58,17 @@ public class ExportImportPortletConfigurationIcon
 
 		StringBundler sb = new StringBundler(11);
 
-		sb.append("Liferay.Portlet.openWindow('#p_p_id_");
-		sb.append(portletDisplay.getId());
-		sb.append("_', '");
-		sb.append(portletDisplay.getId());
-		sb.append("', '");
-		sb.append(HtmlUtil.escapeJS(portletDisplay.getURLExportImport()));
-		sb.append("', '");
+		sb.append("Liferay.Portlet.openWindow({namespace: '");
 		sb.append(portletDisplay.getNamespace());
-		sb.append("', '");
+		sb.append("', portlet: '#p_p_id_");
+		sb.append(portletDisplay.getId());
+		sb.append("_', portletId: '");
+		sb.append(portletDisplay.getId());
+		sb.append("', title: '");
 		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "export-import"));
-		sb.append("'); return false;");
+		sb.append("', uri: '");
+		sb.append(HtmlUtil.escapeJS(portletDisplay.getURLExportImport()));
+		sb.append("'}); return false;");
 
 		return sb.toString();
 	}

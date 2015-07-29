@@ -18,7 +18,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="DeleteExportTemplate" priority="4">
+	<command known-issues="LPS-56378" name="DeleteExportTemplate" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletCategoryName" value="Configuration" />
 			<var name="portletName" value="Export/Import" />
@@ -329,7 +329,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportDMRootFolder" priority="4">
+	<command known-issues="LRQA-16325" name="ExportImportDMRootFolder" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -422,7 +422,7 @@
 
 	<command known-issues="LPS-46906" name="ExportImportPortletWithADT" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Application Display Templates" />
+			<var name="portletName" value="Application Display Template" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addCP">
@@ -504,7 +504,7 @@
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 	</command>
 
-	<command name="ExportImportSampleLARPortlet" priority="4">
+	<command name="ExportImportSampleLARPortlet" priority="5">
 		<property name="portlet.plugins.includes" value="sample-lar-portlet" />
 
 		<execute macro="Page#addPG">
@@ -529,6 +529,7 @@
 
 		<execute macro="SampleLARPortlet#viewSampleBookingNumber">
 			<var name="${bookingNumber}" value="${bookingNumber}" />
+			<var name="bookingNumber" value="${bookingNumber}" />
 		</execute>
 
 		<execute macro="LAR#exportPortlet">
@@ -577,6 +578,7 @@
 
 		<execute macro="SampleLARPortlet#viewSampleBookingNumber">
 			<var name="${bookingNumber}" value="${bookingNumber}" />
+			<var name="bookingNumber" value="${bookingNumber}" />
 		</execute>
 	</command>
 
@@ -620,7 +622,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportSmoke" priority="5">
+	<command known-issues="LRQA-16325" name="ExportImportSmoke" priority="4">
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="LAR#configureExportSiteCP" />
@@ -657,7 +659,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportValidation" priority="5">
+	<command name="ExportImportValidation" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -728,7 +730,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportWithExportTemplate" priority="5">
+	<command known-issues="LRQA-16325" name="ExportImportWithExportTemplate" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name = "portletCategoryName" value = "Configuration" />
 			<var name="portletName" value="Export/Import" />
@@ -781,7 +783,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportWSRPUnitConverter" priority="5">
+	<command known-issues="LRQA-16325" name="ExportImportWSRPUnitConverter" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="WSRP" />
 		</execute>

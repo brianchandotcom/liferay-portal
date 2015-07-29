@@ -20,7 +20,7 @@
 		<execute macro="PortalSettings#tearDownCP" />
 	</tear-down>
 
-	<command name="AddUserGroupRegRole" priority="5">
+	<command name="AddUserGroupRegRole" priority="4">
 		<var name="permissionDefinition1Key" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_USER_GROUP_CHECKBOX" />
 		<var name="permissionDefinition1Value" value="Add User Group" />
 		<var name="permissionDefinition2Key" value="CONTROL_PANEL_USERS_USER_GROUPS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
@@ -42,6 +42,7 @@
 			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
@@ -54,7 +55,7 @@
 
 		<execute macro="Page#gotoCP" />
 
-		<execute function="AssertElementNotPresent" locator1="CPUsergroups#ADD" />
+		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinition1Key}" />
@@ -96,6 +97,6 @@
 
 		<execute macro="Page#gotoCP" />
 
-		<execute function="AssertElementNotPresent" locator1="CPUsergroups#ADD" />
+		<execute function="AssertElementNotPresent" locator1="NavBar#ADD" />
 	</command>
 </definition>

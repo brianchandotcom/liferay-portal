@@ -1931,7 +1931,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = OrganizationLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.OrganizationLocalService.class)
 	protected OrganizationLocalService organizationLocalService;
 	@BeanReference(type = com.liferay.portal.service.OrganizationService.class)
 	protected com.liferay.portal.service.OrganizationService organizationService;

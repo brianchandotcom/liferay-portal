@@ -94,7 +94,8 @@ public class ClassicToCreoleTranslator extends BaseTranslator {
 
 		regexps.put(
 			"(^|\\p{Punct}|\\p{Space})((\\p{Lu}\\p{Ll}+){2,})" +
-				"(\\z|\\n|\\p{Punct}|\\p{Space})", " [[$2]] ");
+				"(\\z|\\n|\\p{Punct}|\\p{Space})",
+			" [[$2]] ");
 	}
 
 }

@@ -76,8 +76,8 @@
 
 		<execute function="SelectFrame" locator1="PGAssetpublisherAddnewblogsentry#BLOGS_ENTRY_IFRAME" />
 
-		<execute function="Type#typeCKEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="Type#typeCKEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
@@ -206,6 +206,7 @@
 			<isset var="tagNameList" />
 			<then>
 				<execute macro="BlogsEntry#addTagList">
+					<var name="tagName" value="${tagName}" />
 					<var name="tagNameList" value="${tagNameList}" />
 				</execute>
 			</then>
@@ -233,14 +234,62 @@
 
 		<execute function="SelectFrame" locator1="PGAssetpublisherAddnewblogsentry#BLOGS_ENTRY_IFRAME" />
 
-		<execute function="Type#typeCKEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="Type#typeCKEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
 
 		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
 		<execute function="Pause" locator1="5000" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="disableSocialBookmarkSites">
+		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
+			<var name="pageName" value="Blogs Page" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
+			<var name="portletNameBorderless" value="Blogs" />
+			<var name="soPage" value="${soPage}" />
+		</execute>
+
+		<execute macro="BlogsConfiguration#checkSocialBookmarks" />
+
+		<for list="${socialBookmarkSites}" param="socialBookmarkSite">
+			<execute macro="BlogsConfiguration#disableSocialBookmarkSites">
+				<var name="socialBookmarkSite" value="${socialBookmarkSite}" />
+				<var name="socialBookmarkSites" value="${socialBookmarkSite}" />
+			</execute>
+		</for>
+
+		<execute macro="IFrame#saveConfiguration" />
+	</command>
+
+	<command name="editEntryAndSaveDraftPG">
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEditPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#editEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContentEdit" value="${entryContentEdit}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entrySubtitleEdit" value="${entrySubtitleEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitleEdit" value="${entryTitleEdit}" />
+		</execute>
+
+		<execute macro="BlogsEntry#saveAsDraft" />
 	</command>
 
 	<command name="editEntryContentCP">
@@ -282,6 +331,32 @@
 		<execute macro="BlogsEntry#publish" />
 	</command>
 
+	<command name="enableSocialBookmarkSites">
+		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
+			<var name="pageName" value="Blogs Page" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
+			<var name="portletNameBorderless" value="Blogs" />
+			<var name="soPage" value="${soPage}" />
+		</execute>
+
+		<execute macro="BlogsConfiguration#checkSocialBookmarks" />
+
+		<for list="${socialBookmarkSites}" param="socialBookmarkSite">
+			<execute macro="BlogsConfiguration#enableSocialBookmarkSites">
+				<var name="socialBookmarkSite" value="${socialBookmarkSite}" />
+				<var name="socialBookmarkSites" value="${socialBookmarkSite}" />
+			</execute>
+		</for>
+
+		<execute macro="IFrame#saveConfiguration" />
+	</command>
+
 	<command name="publishDraftCP">
 		<execute macro="BlogsNavigator#gotoEditCP">
 			<var name="entryTitle" value="${entryTitle}" />
@@ -304,7 +379,11 @@
 
 	<command name="tearDownConfigurationDisplaySettingsPG">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
@@ -320,7 +399,11 @@
 
 	<command name="tearDownConfigurationScopePG">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
@@ -360,7 +443,11 @@
 
 	<command name="tearDownSubscribePG">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="PGBlogs#UNSUBSCRIBE_LINK" value1="Unsubscribe" />
@@ -390,7 +477,11 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
 			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitleSpecialCharacter" value="${entryTitleSpecialCharacter}" />
+			<var name="viewSpecificEntry" value="${viewSpecificEntry}" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntryAuthorPG">

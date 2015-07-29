@@ -18,9 +18,8 @@ import com.liferay.journal.content.search.web.constants.JournalContentSearchPort
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 
-import javax.portlet.RenderRequest;
-
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,7 +38,7 @@ public class JournalContentSearchConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
-	public String getJspPath(RenderRequest renderRequest) {
+	public String getJspPath(HttpServletRequest request) {
 		return "/configuration.jsp";
 	}
 

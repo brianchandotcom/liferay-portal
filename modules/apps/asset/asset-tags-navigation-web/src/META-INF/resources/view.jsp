@@ -30,10 +30,10 @@ assetTags = ListUtil.sort(assetTags);
 
 Map<String, Object> contextObjects = new HashMap<String, Object>();
 
-contextObjects.put("scopeGroupId", new Long(scopeGroupId));
+contextObjects.put("scopeGroupId", Long.valueOf(scopeGroupId));
 %>
 
-<liferay-ui:ddm-template-renderer className="<%= AssetTag.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= assetTags %>">
+<liferay-ddm:template-renderer className="<%= AssetTag.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= assetTags %>">
 	<liferay-ui:asset-tags-navigation
 		classNameId="<%= classNameId %>"
 		displayStyle="<%= displayStyle %>"
@@ -42,4 +42,4 @@ contextObjects.put("scopeGroupId", new Long(scopeGroupId));
 		showAssetCount="<%= showAssetCount %>"
 		showZeroAssetCount="<%= showZeroAssetCount %>"
 	/>
-</liferay-ui:ddm-template-renderer>
+</liferay-ddm:template-renderer>

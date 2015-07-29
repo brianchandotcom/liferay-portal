@@ -1,0 +1,176 @@
+@import "bourbon";
+@import "mixins";
+
+td {
+	&.lfr-center {
+		text-align: center;
+	}
+
+	&.lfr-top {
+		vertical-align: top;
+	}
+
+	&.lfr-middle {
+		vertical-align: middle;
+	}
+}
+
+.definition-of-terms {
+	margin-bottom: 2em;
+
+	dd:after {
+		clear: both;
+		content: '';
+		display: block;
+		height: 0;
+		visibility: hidden;
+	}
+
+	dl {
+		margin-left: 0;
+	}
+
+	dt {
+		float: left;
+		width: 25em;
+	}
+}
+
+.lfr-code {
+	border: 1px solid transparent;
+	overflow: hidden;
+	overflow-x: auto;
+	white-space: pre;
+
+	@include word-wrap(normal);
+
+	table {
+		table-layout: auto;
+		width: 100%;
+
+		tr td {
+			&.lines, &.line-numbers {
+				border-width: 0;
+			}
+
+			&.line-numbers {
+				border-right-width: 1px;
+				cursor: default;
+				padding: 0 8px;
+				text-align: right;
+
+				@include user-select(none);
+
+				vertical-align: top;
+				width: 1%;
+			}
+
+			&.line-numbers:before {
+				content: attr(data-line-number);
+			}
+		}
+	}
+}
+
+.lfr-grid {
+	width: 100%;
+}
+
+img.icon {
+	vertical-align: middle;
+}
+
+#layout-grid.dragging .lfr-portlet-column.empty {
+	padding: 20px;
+}
+
+.lfr-js-required {
+	clip: rect(0 0 0 0);
+	position: absolute;
+}
+
+.js .lfr-js-required {
+	clip: rect(auto auto auto auto);
+	position: static;
+}
+
+.popup-alert-close {
+	margin-left: 5px;
+}
+
+.alert {
+	&.popup-alert-notice, &.popup-alert-warning, &.taglib-portal-message {
+		left: 0;
+		line-height: 30px;
+		padding: 9px 14px;
+		position: fixed;
+		right: 0;
+		top: 0;
+		z-index: 10000;
+
+		@include respond-to(phone, tablet) {
+			line-height: 20px;
+			margin-bottom: 0;
+			padding: 14px 28px;
+			position: static;
+
+			@include respond-to(phone) {
+				margin: 0 -20px;
+			}
+		}
+	}
+
+	&.lfr-shutdown-message.popup-alert-warning {
+		margin: 0;
+		position: relative;
+	}
+}
+
+.lfr-token-list {
+	clear: both;
+	margin: 1em 0;
+}
+
+.lfr-token {
+	border: 1px solid transparent;
+	cursor: pointer;
+	display: inline-block;
+	line-height: 1;
+	margin: 0.1em 0.2em;
+	padding: 0.3em 0.5em 0.3em;
+}
+
+.lfr-token-primary {
+	border-width: 0;
+
+	&, &:hover {
+		cursor: auto;
+	}
+}
+
+.lfr-token-close, .lfr-token-text {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.lfr-token-close {
+	margin-left: 0.3em;
+}
+
+@include respond-to(phone) {
+	.definition-of-terms {
+		dd {
+			margin-left: 10px;
+		}
+
+		dt {
+			float: none;
+		}
+	}
+}
+
+.ie6, .ie7 {
+	.lfr-code table tr td.line-numbers {
+		display: none;
+	}
+}

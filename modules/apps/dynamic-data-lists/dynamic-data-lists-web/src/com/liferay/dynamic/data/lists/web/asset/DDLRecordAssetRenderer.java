@@ -14,10 +14,12 @@
 
 package com.liferay.dynamic.data.lists.web.asset;
 
+import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
+import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,9 +31,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.asset.model.BaseAssetRenderer;
+import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 import com.liferay.portlet.asset.model.DDMFormValuesReader;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
@@ -41,11 +41,14 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Marcellus Tavares
  * @author Sergio González
  */
-public class DDLRecordAssetRenderer extends BaseAssetRenderer {
+public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer {
 
 	public DDLRecordAssetRenderer(
 		DDLRecord record, DDLRecordVersion recordVersion) {
@@ -92,6 +95,23 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 	}
 
 	@Override
+	public String getJspPath(HttpServletRequest request, String template) {
+		if (template.equals(TEMPLATE_ABSTRACT) ||
+			template.equals(TEMPLATE_FULL_CONTENT)) {
+
+			return "/asset/full_content.jsp";
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
+	public int getStatus() {
+		return _recordVersion.getStatus();
+	}
+
+	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
@@ -117,7 +137,7 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			getControlPanelPlid(liferayPortletRequest),
-			PortletKeys.DYNAMIC_DATA_LISTS, PortletRequest.RENDER_PHASE);
+			DDLPortletKeys.DYNAMIC_DATA_LISTS, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_record.jsp");
 		portletURL.setParameter(
@@ -172,24 +192,16 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 	}
 
 	@Override
-	public String render(
-			PortletRequest portletRequest, PortletResponse portletResponse,
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
 			String template)
 		throws Exception {
 
-		if (template.equals(TEMPLATE_ABSTRACT) ||
-			template.equals(TEMPLATE_FULL_CONTENT)) {
+		request.setAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD, _record);
+		request.setAttribute(
+			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION, _recordVersion);
 
-			portletRequest.setAttribute(
-				WebKeys.DYNAMIC_DATA_LISTS_RECORD, _record);
-			portletRequest.setAttribute(
-				WebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION, _recordVersion);
-
-			return "/asset/full_content.jsp";
-		}
-		else {
-			return null;
-		}
+		return super.include(request, response, template);
 	}
 
 	@Override

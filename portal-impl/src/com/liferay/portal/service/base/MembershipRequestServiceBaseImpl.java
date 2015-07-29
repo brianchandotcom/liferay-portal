@@ -604,7 +604,7 @@ public abstract class MembershipRequestServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.MembershipRequestLocalService.class)
 	protected com.liferay.portal.service.MembershipRequestLocalService membershipRequestLocalService;
-	@BeanReference(type = MembershipRequestService.class)
+	@BeanReference(type = com.liferay.portal.service.MembershipRequestService.class)
 	protected MembershipRequestService membershipRequestService;
 	@BeanReference(type = MembershipRequestPersistence.class)
 	protected MembershipRequestPersistence membershipRequestPersistence;

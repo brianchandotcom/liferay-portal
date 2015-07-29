@@ -126,64 +126,6 @@ jdbc.default.password=${database.password}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="database-test-for-each-action">
-		<attribute name="database.test.sequence" />
-		<element name="action" />
-
-		<sequential>
-			<for list="@{database.test.sequence}" param="database.type">
-				<sequential>
-					<local name="database.type" />
-
-					<property name="database.type" value="@{database.type}" />
-
-					<local name="database.service.name" />
-
-					<get-database-property property.name="database.service.name" />
-
-					<action />
-				</sequential>
-			</for>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="database-test-run-test">
-		<attribute name="database.test.sequence" />
-		<element name="test-action" />
-
-		<sequential>
-			<database-test-for-each-action database.test.sequence="@{database.test.sequence}">
-				<action>
-					<exec executable="service" failonerror="true">
-						<arg line="${database.service.name} stop" />
-					</exec>
-				</action>
-			</database-test-for-each-action>
-
-			<database-test-for-each-action database.test.sequence="@{database.test.sequence}">
-				<action>
-					<set-portal-impl-portal-ext-properties />
-
-					<set-portal-impl-portal-test-ext-properties />
-
-					<exec executable="service" failonerror="true">
-						<arg line="${database.service.name} start" />
-					</exec>
-
-					<antcall target="rebuild-database" inheritall="false" >
-						<param name="database.type" value="${database.type}" />
-					</antcall>
-
-					<test-action />
-
-					<exec executable="service" failonerror="true">
-						<arg line="${database.service.name} stop" />
-					</exec>
-				</action>
-			</database-test-for-each-action>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="get-auto-deploy-dir">
 		<sequential>
 			<var name="auto.deploy.dir" unset="true" />
@@ -686,27 +628,42 @@ jdbc.default.password=${database.password}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-testray-case-defect">
+		<sequential>
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-testcase-property property.name="known.issues" />
+				</then>
+			</if>
+
+			<condition property="testray.case.defect" value="${known.issues}" else="">
+				<isset property="known.issues" />
+			</condition>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-testray-components">
 		<sequential>
-			<property file="${basedir}/test.run.properties" />
-
 			<if>
+				<isset property="test.class" />
+				<then>
+					<get-testcase-property property.name="testray.component.names" />
+					<get-testcase-property property.name="testray.main.component.name" />
+				</then>
+			</if>
+
+			<condition property="testray.main.component.name" value="">
 				<not>
 					<isset property="testray.main.component.name" />
 				</not>
-				<then>
-					<property name="testray.main.component.name" value="" />
-				</then>
-			</if>
+			</condition>
 
-			<if>
+			<condition property="testray.component.names" value="${testray.main.component.name}">
 				<not>
 					<isset property="testray.component.names" />
 				</not>
-				<then>
-					<property name="testray.component.names" value="${testray.main.component.name}" />
-				</then>
-			</if>
+			</condition>
 		</sequential>
 	</macrodef>
 
@@ -751,6 +708,40 @@ jdbc.default.password=${database.password}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-testray-run-id">
+		<sequential>
+			<var name="testray.run.id" unset="true" />
+
+			<propertyregex
+				input="${app.server.version}"
+				override="true"
+				property="app.server.major.version"
+				regexp="(\d+\.\d+).*"
+				replace="\1"
+			/>
+
+			<propertyregex
+				input="${browser.version}"
+				override="true"
+				property="browser.major.version"
+				regexp="(\d+\.\d+).*"
+				replace="\1"
+			/>
+
+			<get-database-property property.name="database.version" />
+
+			<propertyregex
+				input="${database.version}"
+				override="true"
+				property="database.major.version"
+				regexp="(\d+\.?\d+?).*"
+				replace="\1"
+			/>
+
+			<property name="testray.run.id" value="${app.server.type}-${app.server.major.version} ${database.type}-${database.major.version} ${browser.type}-${browser.major.version} ${operating.system.type}-${operating.system.version} jdk${java.jdk.version}-${java.jdk.type}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-testray-team-name">
 		<sequential>
 			<script classpathref="project.classpath" language="beanshell">
@@ -781,6 +772,68 @@ jdbc.default.password=${database.password}]]></echo>
 					}
 				]]>
 			</script>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-testray-testcase-description">
+		<sequential>
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-testcase-property property.name="description" />
+				</then>
+			</if>
+
+			<condition property="testray.testcase.description" value="${description}" else="">
+				<isset property="description" />
+			</condition>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-testray-testcase-name">
+		<sequential>
+			<var name="testray.testcase.name" unset="true" />
+
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-poshi-test-name />
+
+					<property name="testray.testcase.name" value="${poshi.test.name}" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-testray-testcase-priority">
+		<sequential>
+			<var name="testray.testcase.priority" unset="true" />
+
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-testcase-property property.name="priority" />
+
+					<property name="testray.testcase.priority" value="${priority}" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-testray-testcase-product-edition">
+		<sequential>
+			<if>
+				<isset property="test.class" />
+				<then>
+					<get-testcase-property property.name="testray.testcase.product.edition" />
+				</then>
+			</if>
+
+			<condition property="testray.testcase.product.edition" value="CE">
+				<not>
+					<isset property="testray.testcase.product.edition" />
+				</not>
+			</condition>
 		</sequential>
 	</macrodef>
 
@@ -1223,6 +1276,122 @@ ${tomcat-gc-log}
 		</sequential>
 	</macrodef>
 
+	<macrodef name="record-test-class-file-names">
+		<sequential>
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					import org.apache.tools.ant.DirectoryScanner;
+
+					List getClassGroups(List classFileNames, int groupsSize) {
+						List classFileNameGroups = new ArrayList(groupsSize);
+
+						for (int i = 0; i < groupsSize; i++) {
+							classFileNameGroups.add(new ArrayList());
+						}
+
+						int i = 0;
+
+						for (String classFileName : classFileNames) {
+							List classFileNameGroup = classFileNameGroups.get(i++ % groupsSize);
+
+							classFileNameGroup.add(classFileName);
+						}
+
+						return classFileNameGroups;
+					}
+
+					List getClassFileNames() {
+						DirectoryScanner directoryScanner = new DirectoryScanner();
+
+						directoryScanner.setBasedir(project.getBaseDir());
+						directoryScanner.setExcludes(
+							new String[] {
+								"modules/apps/social/social-networking-test/test/integration/**/*Test.java",
+								"modules/portal/portal-json-web-service-extender/test/integration/**/*Test.java",
+								"modules/portal/portal-template-freemarker/test/integration/**/*Test.java",
+								"modules/util/osgi-util/test/integration/**/*Test.java",
+								"portal-service/test/unit/com/liferay/portal/log/assertor/PortalLogAssertorTest.java",
+								"*/pacl/test/[\\w]+Test.class",
+								"**/*ServiceHttpTest.java",
+								"**/*ServiceJsonTest.java",
+								"**/*ServiceSoapTest.java"
+							});
+						directoryScanner.setIncludes(new String[] {"**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
+
+						directoryScanner.scan();
+
+						List classFileNames = new ArrayList();
+
+						for (String fileName : directoryScanner.getIncludedFiles()) {
+							String classFileName = fileName.substring(fileName.indexOf("com" + File.separator), fileName.length() - 4);
+
+							classFileName = classFileName.concat("class");
+
+							classFileNames.add(classFileName);
+						}
+
+						Collections.sort(classFileNames);
+
+						return classFileNames;
+					}
+
+					StringBuilder sb = new StringBuilder();
+
+					int allTestClassGroupsSize = Integer.parseInt(project.getProperty("test.class.groups.size"));
+
+					String autoBalanceTestClassNamesString = project.getProperty("test.class.names.auto.balance");
+
+					String[] autoBalanceTestClassNames = autoBalanceTestClassNamesString.split(",");
+
+					List classFileNames = getClassFileNames();
+
+					List testClassGroups = getClassGroups(classFileNames, allTestClassGroupsSize);
+
+					for (i = 0; i < allTestClassGroupsSize; i++) {
+						List testClassGroup = testClassGroups.get(i);
+
+						sb.append("TEST_CLASS_GROUP_");
+						sb.append(i);
+						sb.append("=");
+
+						for (String testClass : testClassGroup) {
+							sb.append(testClass);
+							sb.append(",");
+						}
+
+						for (String testClass : autoBalanceTestClassNames) {
+							if (!testClassGroup.contains(testClass)) {
+								sb.append(testClass);
+								sb.append(",");
+							}
+						}
+
+						if (!testClassGroup.isEmpty() || autoBalanceTestClassNames.length > 0) {
+							sb.setLength(sb.length() - 1);
+						}
+
+						sb.append("\n\n");
+					}
+
+					sb.append("TEST_CLASS_GROUPS=");
+
+					for (int i = 0; i < allTestClassGroupsSize; i++) {
+						sb.append(i);
+						sb.append(" ");
+					}
+
+					if (allTestClassGroupsSize > 0) {
+						sb.setLength(sb.length() - 1);
+					}
+
+					project.setProperty("test.class.file.names.properties.content", sb.toString());
+				]]>
+			</script>
+
+			<echo file="test.class.file.names.properties">${test.class.file.names.properties.content}</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="set-app-server-properties">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />
@@ -1233,6 +1402,7 @@ ${tomcat-gc-log}
 			<var name="test.app.server.deploy.dir" unset="true" />
 			<var name="test.app.server.dir" unset="true" />
 			<var name="test.app.server.leading.port.number" unset="true" />
+			<var name="test.app.server.liferay.home" unset="true" />
 			<var name="test.app.server.parent.dir" unset="true" />
 
 			<math
@@ -1250,6 +1420,7 @@ ${tomcat-gc-log}
 					<var name="test.app.server.classes.portal.dir" value="${app.server.classes.portal.dir}" />
 					<var name="test.app.server.deploy.dir" value="${app.server.deploy.dir}" />
 					<var name="test.app.server.dir" value="${app.server.dir}" />
+					<var name="test.app.server.liferay.home" value="${liferay.home}" />
 					<var name="test.app.server.parent.dir" value="${app.server.parent.dir}" />
 				 </then>
 				 <else>
@@ -1266,6 +1437,10 @@ ${tomcat-gc-log}
 					</antelope:stringutil>
 
 					<antelope:stringutil property="test.app.server.dir" string="${app.server.dir}">
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
+					</antelope:stringutil>
+
+					<antelope:stringutil property="test.app.server.liferay.home" string="${liferay.home}">
 						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
 					</antelope:stringutil>
 
@@ -1291,6 +1466,12 @@ ${tomcat-gc-log}
 module.framework.base.dir=${project.dir}/osgi]]></echo>
 				</post-action>
 			</generate-jdbc-properties>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="set-portal-impl-system-ext-properties">
+		<sequential>
+			<echo file="portal-impl/test/system-ext.properties">log.sanitizer.enabled=false</echo>
 		</sequential>
 	</macrodef>
 
@@ -1697,6 +1878,34 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-lcs-app-server">
+		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
+		<attribute default="0" name="app.server.bundle.index" />
+		<attribute default="8" name="app.server.leading.port.number" />
+
+		<sequential>
+			<parallel>
+				<sequential>
+					<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.waiting.timeout">
+						<socket server="localhost" port="@{app.server.leading.port.number}080" />
+					</waitfor>
+				</sequential>
+				<daemons>
+					<exec dir="@{app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" resolveexecutable="true">
+						<arg line="${app.server.start.executable.arg.line}" />
+					</exec>
+				</daemons>
+			</parallel>
+
+			<if>
+				<equals arg1="@{app.server.bundle.index}" arg2="0" />
+				<then>
+					<record action="stop" name="${project.dir}/log" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="stop-android-device">
 		<sequential>
 			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
@@ -1773,7 +1982,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				<then>
 					<antcall target="clean-up-logs" />
 
-					<record action="start" name="log" />
+					<record action="start" name="${project.dir}/log" />
 				</then>
 			</if>
 
@@ -1817,9 +2026,36 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</not>
 				</and>
 				<then>
-					<record action="stop" name="log" />
+					<record action="stop" name="${project.dir}/log" />
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-lcs-app-server">
+		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
+		<attribute default="0" name="app.server.bundle.index" />
+		<attribute default="8" name="app.server.leading.port.number" />
+
+		<sequential>
+			<if>
+				<equals arg1="@{app.server.bundle.index}" arg2="0" />
+				<then>
+					<antcall target="clean-up-logs" />
+
+					<record action="start" name="${project.dir}/log" />
+				</then>
+			</if>
+
+			<exec dir="@{app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
+				<arg line="${app.server.stop.executable.arg.line}" />
+			</exec>
+
+			<waitfor maxwait="1" maxwaitunit="minute">
+				<not>
+					<socket server="localhost" port="@{app.server.leading.port.number}080" />
+				</not>
+			</waitfor>
 		</sequential>
 	</macrodef>
 
@@ -1971,8 +2207,8 @@ create database lportal${database.index} character set utf8;</echo>
 					<equals arg1="${database.type}" arg2="db2" />
 					<then>
 						<replace file="create.sql">
-							<replacetoken>create database lportal;</replacetoken>
-							<replacevalue>create database lportal pagesize 8192;</replacevalue>
+							<replacetoken>drop database lportal;</replacetoken>
+							<replacevalue></replacevalue>
 						</replace>
 					</then>
 					<elseif>
@@ -2028,23 +2264,16 @@ go]]></replacevalue>
 		<get-env-java-jdk />
 		<get-env-liferay-portal />
 		<get-env-operating-system />
-
-		<if>
-			<isset property="test.class" />
-			<then>
-				<get-testcase-property property.name="testray.component.names" />
-				<get-testcase-property property.name="testray.main.component.name" />
-				<get-testcase-property property.name="testray.testcase.description" />
-				<get-testcase-property property.name="testray.testcase.name" />
-				<get-testcase-property property.name="testray.testcase.priority" />
-				<get-testcase-property property.name="testray.testcase.product.edition" />
-			</then>
-		</if>
-
+		<get-testray-case-defect />
 		<get-testray-components />
 		<get-testray-logs />
 		<get-testray-project-name />
+		<get-testray-run-id />
 		<get-testray-team-name />
+		<get-testray-testcase-description />
+		<get-testray-testcase-name />
+		<get-testray-testcase-priority />
+		<get-testray-testcase-product-edition />
 
 		<if>
 			<isset property="env.TEST_BUILD_FIX_PACK_NAME" />
@@ -2085,6 +2314,7 @@ go]]></replacevalue>
 		<property name="test.case.properties">
 			<![CDATA[
 				<properties>
+					<property name="testray.case.defect" value="${testray.case.defect}" />
 					<property name="testray.component.names" value="${testray.component.names}" />
 					<property name="testray.main.component.name" value="${testray.main.component.name}" />
 					<property name="testray.team.name" value="${testray.team.name}" />
@@ -2127,6 +2357,7 @@ go]]></replacevalue>
 					<property name="testray.product.type" value="${testray.product.type}" />
 					<property name="testray.product.version" value="${testray.product.version}" />
 					<property name="testray.project.name" value="${testray.project.name}" />
+					<property name="testray.run.id" value="${testray.run.id}" />
 				</properties>
 			]]>
 		</property>
@@ -2465,13 +2696,41 @@ go]]></replacevalue>
 		<if>
 			<os family="unix" />
 			<then>
-				<mkdir dir="lib/development/libs" />
+				<mirrors-get
+					dest="lib/development/opencv-linux-x86.jar"
+					src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-linux-x86.jar"
+				/>
 
-				<copy todir="lib/development/libs">
-					<fileset dir="tools/selenium/sikuli/linux" />
-				</copy>
+				<mirrors-get
+					dest="lib/development/opencv-linux-x86_64.jar"
+					src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-linux-x86_64.jar"
+				/>
 			</then>
+			<else>
+				<if>
+					<os family="windows" />
+					<then>
+						<mirrors-get
+							dest="lib/development/opencv-windows-x86.jar"
+							src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-windows-x86.jar"
+						/>
+
+						<mirrors-get
+							dest="lib/development/opencv-windows-x86_64.jar"
+							src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-windows-x86_64.jar"
+						/>
+					</then>
+				</if>
+			</else>
 		</if>
+	</target>
+
+	<target name="curl-execute">
+		<fail message="Please set the property ${curl.args}." unless="curl.args" />
+
+		<exec executable="curl">
+			<arg line="${curl.args}" />
+		</exec>
 	</target>
 
 	<target name="delete-liferay-home">
@@ -2480,11 +2739,20 @@ go]]></replacevalue>
 				<equals arg1="${delete.liferay.home}" arg2="false" />
 			</not>
 			<then>
-				<delete dir="${liferay.home}/data" />
-				<delete dir="${liferay.home}/logs" />
-				<delete dir="${liferay.home}/osgi/state" />
+				<if>
+					<not>
+						<isset property="test.app.server.liferay.home" />
+					</not>
+					<then>
+						<set-app-server-properties />
+					</then>
+				</if>
 
-				<delete file="${liferay.home}/portal-setup-wizard.properties" />
+				<delete dir="${test.app.server.liferay.home}/data" />
+				<delete dir="${test.app.server.liferay.home}/logs" />
+				<delete dir="${test.app.server.liferay.home}/osgi/state" />
+
+				<delete file="${test.app.server.liferay.home}/portal-setup-wizard.properties" />
 			</then>
 		</if>
 	</target>
@@ -2500,6 +2768,12 @@ go]]></replacevalue>
 				</ant>
 			</then>
 		</if>
+	</target>
+
+	<target name="deploy-lcs-environment-token">
+		<copy todir="${liferay.home}/data">
+			<fileset dir="${selenium.output.dir}" includes="lcs-cluster-entry-token-*.txt" />
+		</copy>
 	</target>
 
 	<target name="deploy-license-xml">
@@ -3400,17 +3674,6 @@ custom.sql.function.isnull=CAST(? AS VARCHAR(32672)) IS NULL
 custom.sql.function.isnotnull=CAST(? AS VARCHAR(32672)) IS NOT NULL</echo>
 			</then>
 			<elseif>
-				<equals arg1="${database.type}" arg2="oracle" />
-				<then>
-					<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-jdbc.default.acquireIncrement=1
-jdbc.default.maxPoolSize=5
-jdbc.default.minPoolSize=1
-jdbc.default.numHelperThreads=1</echo>
-				</then>
-			</elseif>
-			<elseif>
 				<equals arg1="${database.type}" arg2="sybase" />
 				<then>
 					<echo file="portal-impl/src/portal-ext.properties" append="true">
@@ -3442,79 +3705,6 @@ ${custom.properties}</echo>
 					<replacetoken>jdbc.default.jndi.name=</replacetoken>
 					<replacevalue>jdbc.default.jndi.name=jdbc/LiferayPool</replacevalue>
 				</replace>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="database.sharding" />
-
-		<if>
-			<and>
-				<equals arg1="${database.type}" arg2="mysql" />
-				<equals arg1="${database.sharding}" arg2="true" />
-			</and>
-			<then>
-				<get-database-property property.name="database.driver" />
-				<get-database-property property.name="database.host" />
-				<get-database-property property.name="database.password" />
-				<get-database-property property.name="database.username" />
-
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
-					<![CDATA[
-						jdbc.one.driverClassName=${database.driver}
-						jdbc.one.url=jdbc:mysql://${database.host}/lportal1?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
-						jdbc.one.username=${database.username}
-						jdbc.one.password=${database.password}
-
-						jdbc.two.driverClassName=${database.driver}
-						jdbc.two.url=jdbc:mysql://${database.host}/lportal2?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
-						jdbc.two.username=${database.username}
-						jdbc.two.password=${database.password}
-
-						shard.default.name=default
-						shard.selector=com.liferay.portal.dao.shard.ManualShardSelector
-
-						spring.configs=\
-							META-INF/base-spring.xml,\
-							\
-							META-INF/hibernate-spring.xml,\
-							META-INF/infrastructure-spring.xml,\
-							META-INF/management-spring.xml,\
-							\
-							META-INF/util-spring.xml,\
-							\
-							META-INF/executor-spring.xml,\
-							\
-							META-INF/audit-spring.xml,\
-							META-INF/cluster-spring.xml,\
-							META-INF/comment-spring.xml,\
-							META-INF/form-navigator-spring.xml,\
-							META-INF/jcr-spring.xml,\
-							META-INF/ldap-spring.xml,\
-							META-INF/messaging-core-spring.xml,\
-							META-INF/messaging-misc-spring.xml,\
-							META-INF/mobile-device-spring.xml,\
-							META-INF/notifications-spring.xml,\
-							META-INF/poller-spring.xml,\
-							META-INF/rules-spring.xml,\
-							META-INF/scheduler-spring.xml,\
-							META-INF/search-spring.xml,\
-							META-INF/workflow-spring.xml,\
-							\
-							META-INF/counter-spring.xml,\
-							META-INF/mail-spring.xml,\
-							META-INF/portal-spring.xml,\
-							META-INF/portlet-container-spring.xml,\
-							META-INF/staging-spring.xml,\
-							META-INF/virtual-layouts-spring.xml,\
-							\
-							META-INF/monitoring-spring.xml,\
-							\
-							#META-INF/dynamic-data-source-spring.xml,\
-							META-INF/shard-data-source-spring.xml,\
-							\
-							classpath*:META-INF/ext-spring.xml
-					]]>
-				</echo>
 			</then>
 		</if>
 
@@ -3880,10 +4070,10 @@ module.framework.properties.osgi.console=11312</echo>
 		<antcall target="prepare-selenium-testcase-properties" />
 
 		<if>
-			<isset property="mobile.android.home" />
+			<isset property="legacy.theme.ids" />
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					mobile.android.home=${mobile.android.home}
+					theme.ids=${legacy.theme.ids}
 				</echo>
 			</then>
 		</if>
@@ -3907,10 +4097,19 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
-			<isset property="legacy.theme.ids" />
+			<isset property="mobile.android.home" />
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					theme.ids=${legacy.theme.ids}
+					mobile.android.home=${mobile.android.home}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="osb.lcs.portlet.host.name" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					osb.lcs.portlet.host.name=${osb.lcs.portlet.host.name}
 				</echo>
 			</then>
 		</if>
@@ -4634,6 +4833,10 @@ module.framework.properties.osgi.console=11312</echo>
 		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" />
 	</target>
 
+	<target name="prepare-system-ext-properties">
+		<echo file="${app.server.classes.portal.dir}/system-ext.properties">log.sanitizer.enabled=false</echo>
+	</target>
+
 	<target name="prepare-test-build">
 		<record-git-commit-portal />
 
@@ -4686,8 +4889,6 @@ module.framework.properties.osgi.console=11312</echo>
 				<matches pattern="http" string="${test.build.portal.war.url}" />
 			</and>
 			<then>
-				<property name="test.app.server.jboss.eap.version" value="6.1" />
-
 				<app-server-properties-update>
 					app.server.type=jboss
 					app.server.jboss.version=6.1.0
@@ -4703,8 +4904,6 @@ module.framework.properties.osgi.console=11312</echo>
 				</antcall>
 
 				<app-server-properties-reset />
-
-				<var name="test.app.server.jboss.eap.version" unset="true" />
 			</then>
 			<elseif>
 				<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
@@ -4866,19 +5065,28 @@ module.framework.properties.osgi.console=11312</echo>
 				<equals arg1="${test.build.unit}" arg2="true" />
 			</not>
 			<then>
-				<ant dir="portal-impl" target="build-selenium-block" inheritAll="false" />
+				<if>
+					<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
+					<then>
+						<antcall target="record-test-generated-properties" />
+					</then>
+					<else>
+						<ant dir="portal-impl" target="build-selenium-block" inheritAll="false" />
+					</else>
+				</if>
 			</then>
 		</if>
 
 		<antcall target="compile-test" inheritAll="false" />
 
-		<antcall target="record-test-class-file-names" inheritAll="false" />
+		<record-test-class-file-names />
 
 		<antcall target="record-test-plugin-names" inheritAll="false" />
-	</target>
 
-	<target name="prepare-system-ext-properties">
-		<echo file="${app.server.classes.portal.dir}/system-ext.properties">log.sanitizer.enabled=false</echo>
+		<echo if:set="env.JENKINS_HOME">
+ANT_OPTS=${env.ANT_OPTS}</echo>
+
+		<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
 	</target>
 
 	<target name="prepare-test-build-tomcat-dependents">
@@ -4984,8 +5192,8 @@ plugins.includes=marketplace-portlet</echo>
 			<else>
 				<if>
 					<and>
+						<equals arg1="${app.server.jboss.version}" arg2="6.1.0" />
 						<equals arg1="${app.server.type}" arg2="jboss" />
-						<equals arg1="${test.app.server.jboss.eap.version}" arg2="6.1" />
 					</and>
 					<then>
 						<ant antfile="build-dist.xml" target="unzip-jboss" inheritAll="false" />
@@ -5115,6 +5323,10 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					<equals arg1="${database.type}" arg2="db2" />
 					<then>
 						<exec executable="${db2.executable}">
+							<arg line="drop db lportal" />
+						</exec>
+
+						<exec executable="${db2.executable}" failonerror="true">
 							<arg value="-fcreate.sql" />
 							<arg value="-t" />
 						</exec>
@@ -5161,7 +5373,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								</else>
 							</if>
 
-							<exec executable="${mysql.executable}" input="create.sql">
+							<exec executable="${mysql.executable}" input="create.sql" failonerror="true">
 								<arg line="${mysql.arg.line}" />
 							</exec>
 						</then>
@@ -5172,7 +5384,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<get-database-property property.name="database.password" />
 							<get-database-property property.name="database.username" />
 
-							<exec executable="${oracle.sqlplus.executable}">
+							<exec executable="${oracle.sqlplus.executable}" failonerror="true">
 								<arg value="${oracle.admin.user}/${oracle.admin.password}" />
 								<arg value="@create.sql" />
 								<arg value="${database.username}" />
@@ -5185,7 +5397,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 						<then>
 							<get-database-property property.name="database.username" />
 
-							<exec executable="${postgresql.executable}">
+							<exec executable="${postgresql.executable}" failonerror="true">
 								<arg value="-f" />
 								<arg value="create.sql" />
 								<arg value="-U" />
@@ -5200,7 +5412,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<get-database-property property.name="database.schema" />
 							<get-database-property property.name="database.username" />
 
-							<exec executable="${sybase.executable}">
+							<exec executable="${sybase.executable}" failonerror="true">
 								<arg value="-i" />
 								<arg value="create.sql" />
 								<arg value="-P" />
@@ -5307,122 +5519,32 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="record-test-class-file-names">
-		<script classpathref="project.classpath" language="beanshell">
-			<![CDATA[
-				import org.apache.tools.ant.DirectoryScanner;
-
-				List getClassGroups(List classFileNames, int groupsSize) {
-					List classFileNameGroups = new ArrayList(groupsSize);
-
-					for (int i = 0; i < groupsSize; i++) {
-						classFileNameGroups.add(new ArrayList());
-					}
-
-					int i = 0;
-
-					for (String classFileName : classFileNames) {
-						List classFileNameGroup = classFileNameGroups.get(i++ % groupsSize);
-
-						classFileNameGroup.add(classFileName);
-					}
-
-					return classFileNameGroups;
-				}
-
-				List getClassFileNames() {
-					DirectoryScanner directoryScanner = new DirectoryScanner();
-
-					directoryScanner.setBasedir(project.getBaseDir());
-					directoryScanner.setExcludes(
-						new String[] {
-							"modules/apps/social/social-networking-test/test/integration/**/*Test.java",
-							"modules/portal/portal-json-web-service-extender/test/integration/**/*Test.java",
-							"modules/portal/portal-template-freemarker/test/integration/**/*Test.java",
-							"modules/util/osgi-util/test/integration/**/*Test.java",
-							"*/pacl/test/[\\w]+Test.class",
-							"**/*ServiceHttpTest.java",
-							"**/*ServiceJsonTest.java",
-							"**/*ServiceSoapTest.java"
-						});
-					directoryScanner.setIncludes(new String[] {"**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
-
-					directoryScanner.scan();
-
-					List classFileNames = new ArrayList();
-
-					for (String fileName : directoryScanner.getIncludedFiles()) {
-						String classFileName = fileName.substring(fileName.indexOf("com" + File.separator), fileName.length() - 4);
-
-						classFileName = classFileName.concat("class");
-
-						classFileNames.add(classFileName);
-					}
-
-					Collections.sort(classFileNames);
-
-					return classFileNames;
-				}
-
-				StringBuilder sb = new StringBuilder();
-
-				int allTestClassGroupsSize = Integer.parseInt(project.getProperty("test.class.groups.size"));
-
-				String autoBalanceTestClassNamesString = project.getProperty("test.class.names.auto.balance");
-
-				String[] autoBalanceTestClassNames = autoBalanceTestClassNamesString.split(",");
-
-				List classFileNames = getClassFileNames();
-
-				List testClassGroups = getClassGroups(classFileNames, allTestClassGroupsSize);
-
-				for (i = 0; i < allTestClassGroupsSize; i++) {
-					List testClassGroup = testClassGroups.get(i);
-
-					sb.append("TEST_CLASS_GROUP_");
-					sb.append(i);
-					sb.append("=");
-
-					for (String testClass : testClassGroup) {
-						sb.append(testClass);
-						sb.append(",");
-					}
-
-					for (String testClass : autoBalanceTestClassNames) {
-						if (!testClassGroup.contains(testClass)) {
-							sb.append(testClass);
-							sb.append(",");
-						}
-					}
-
-					if (!testClassGroup.isEmpty() || autoBalanceTestClassNames.length > 0) {
-						sb.setLength(sb.length() - 1);
-					}
-
-					sb.append("\n\n");
-				}
-
-				sb.append("TEST_CLASS_GROUPS=");
-
-				for (int i = 0; i < allTestClassGroupsSize; i++) {
-					sb.append(i);
-					sb.append(" ");
-				}
-
-				if (allTestClassGroupsSize > 0) {
-					sb.setLength(sb.length() - 1);
-				}
-
-				project.setProperty("test.class.file.names.properties.content", sb.toString());
-			]]>
-		</script>
-
-		<echo file="test.class.file.names.properties">${test.class.file.names.properties.content}</echo>
+		<record-test-class-file-names />
 	</target>
 
-	<target name="record-test-package-names">
-		<antcall target="record-test-class-file-names" />
+	<target name="record-test-generated-properties">
+		<fail message="Please set the property ${test.class}." unless="test.class" />
 
-		<copy file="test.class.file.names.properties" tofile="test.package.names.properties" />
+		<get-poshi-test-name />
+
+		<gradle-execute failonerror="false" task="writePoshiProperties">
+			<arg value="--build-file=portal-web/build-test.gradle" />
+			<arg value="-PcomponentNames=${component.names}" />
+			<arg value="-PposhiTestName=${poshi.test.name}" />
+			<arg value="-PproductNames=${product.names}" />
+			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
+		</gradle-execute>
+
+		<move file="portal-web/test.generated.properties" tofile="test.generated.properties" />
+
+		<loadfile failonerror="false" property="test.generated.properties.content" srcfile="test.generated.properties" />
+
+		<echo>##</echo>
+		<echo>## test.generated.properties</echo>
+		<echo>##</echo>
+		<echo></echo>
+		<echo>${test.generated.properties.content}</echo>
+		<echo></echo>
 	</target>
 
 	<target name="record-test-plugin-names">
@@ -5626,11 +5748,19 @@ if (ppstate.equals("normal")) {
 	<target name="run-poshi-runner">
 		<get-poshi-test-name />
 
+		<tstamp>
+			<format property="current.date" pattern="yyyy-MM-dd" />
+		</tstamp>
+
+		<property name="test.console.log.file.name" value="${liferay.home}/logs/liferay.${current.date}.xml" />
+
 		<gradle-execute failonerror="false" task="runPoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />
 			<arg value="-PposhiTestName=${poshi.test.name}" />
+			<arg value="-PsaveScreenshot=${test.save.screenshot}" />
 			<arg value="-PseleniumLoggerEnabled=${test.selenium.logger.enabled}" />
 			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
+			<arg value="-PtestConsoleLogFileName=${test.console.log.file.name}" />
 			<arg value="-PtestSkipTearDown=${test.skip.tear.down}" />
 		</gradle-execute>
 	</target>
@@ -5786,7 +5916,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 					<and>
 						<or>
 							<available file="portal-web/test-results/functional/screenshots" />
-							<available file="portal-web/test-results/${poshi.runner.results.dir}/screenshot" />
+							<available file="portal-web/test-results/${poshi.runner.results.dir}/screenshots" />
 						</or>
 						<equals arg1="${test.save.screenshot}" arg2="true" />
 					</and>
@@ -5794,18 +5924,14 @@ jdbc.default.password=${database.mysql.password}</echo>
 						<if>
 							<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
 							<then>
-								<property name="screenshot.dir" value="portal-web/test-results/${poshi.runner.results.dir}/screenshot" />
-
-								<property name="screenshot.dest.dir"  value="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshot" />
+								<property name="screenshot.dir" value="portal-web/test-results/${poshi.runner.results.dir}/screenshots" />
 							</then>
 							<else>
 								<property name="screenshot.dir" value="portal-web/test-results/functional/screenshots" />
-
-								<property name="screenshot.dest.dir"  value="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshots" />
 							</else>
 						</if>
 
-						<copy todir="${screenshot.dest.dir}">
+						<copy todir="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshots">
 							<fileset dir="${screenshot.dir}" erroronmissingdir="false" />
 						</copy>
 					</then>
@@ -5916,8 +6042,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<if>
 			<equals arg1="${solr.enabled}" arg2="true" />
 			<then>
-				<ant antfile="build-test-solr.xml" target="prepare-solr-web-properties" />
-
 				<ant antfile="build-test-solr.xml" target="start-solr" />
 			</then>
 		</if>
@@ -6213,6 +6337,22 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		</if>
 	</target>
 
+	<target name="start-lcs-server">
+		<start-lcs-app-server
+			app.server.bin.dir="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/bin"
+			app.server.bundle.index="1"
+			app.server.leading.port.number="7"
+		/>
+
+		<start-lcs-app-server
+			app.server.bin.dir="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/bin"
+			app.server.bundle.index="2"
+			app.server.leading.port.number="9"
+		/>
+
+		<start-lcs-app-server />
+	</target>
+
 	<target name="start-ldap">
 		<exec dir="${app.server.parent.dir}/apacheds_1.5.7" executable="cmd">
 			<arg value="/c" />
@@ -6275,6 +6415,22 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<exec executable="taskkill.exe">
 			<arg line="/F /IM IEDriverServer.exe" />
 		</exec>
+	</target>
+
+	<target name="stop-lcs-server">
+		<stop-lcs-app-server
+			app.server.bin.dir="${app.server.parent.dir}/gateway/tomcat-${app.server.tomcat.version}/bin"
+			app.server.bundle.index="1"
+			app.server.leading.port.number="7"
+		/>
+
+		<stop-lcs-app-server
+			app.server.bin.dir="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/bin"
+			app.server.bundle.index="2"
+			app.server.leading.port.number="9"
+		/>
+
+		<stop-lcs-app-server />
 	</target>
 
 	<target name="stop-ldap">
@@ -6343,53 +6499,6 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		</if>
 
 		<antelope:post to="http://localhost:14444/selenium-server/driver/?cmd=shutDownSeleniumServer" wantresponse="true" />
-	</target>
-
-	<target name="test-class-group">
-		<echo if:set="env.JENKINS_HOME">
-ANT_OPTS=${env.ANT_OPTS}</echo>
-
-		<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
-
-		<ant dir="portal-service" target="test-class-group" inheritAll="false" />
-
-		<ant dir="portal-impl" target="test-class-group" inheritAll="false">
-			<property name="test.type" value="unit" />
-		</ant>
-
-		<database-test-run-test database.test.sequence="${database.test.sequence}">
-			<test-action>
-				<ant dir="portal-impl" target="test-class-group" inheritAll="false">
-					<property name="database.type" value="${database.type}" />
-					<property name="test.type" value="integration" />
-				</ant>
-			</test-action>
-		</database-test-run-test>
-
-		<exec executable="service" failonerror="true">
-			<arg line="${database.mysql.service.name} start" />
-		</exec>
-
-		<ant dir="util-java" target="test-class-group" inheritAll="false" />
-
-		<antcall target="rebuild-database" inheritAll="false" />
-
-		<ant dir="modules" target="test-class-group" inheritAll="false" />
-
-		<ant antfile="build-test-tck.xml" target="record-test-tck-package-names" />
-
-		<ant antfile="build-test-tck.xml" target="test-class-group" />
-
-		<if>
-			<available file=".testable.portal.started" />
-			<then>
-				<antcall target="stop-app-server" />
-
-				<delete file=".testable.portal.started" failonerror="false" />
-			</then>
-		</if>
-
-		<print-gc-logs if:set="env.JENKINS_HOME" />
 	</target>
 
 	<target name="test-integration">

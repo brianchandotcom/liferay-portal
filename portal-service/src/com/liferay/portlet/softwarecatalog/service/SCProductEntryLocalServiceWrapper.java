@@ -62,10 +62,10 @@ public class SCProductEntryLocalServiceWrapper
 	@Override
 	public void addProductEntryResources(
 		com.liferay.portlet.softwarecatalog.model.SCProductEntry productEntry,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_scProductEntryLocalService.addProductEntryResources(productEntry,
-			groupPermissions, guestPermissions);
+			modelPermissions);
 	}
 
 	@Override
@@ -78,10 +78,10 @@ public class SCProductEntryLocalServiceWrapper
 
 	@Override
 	public void addProductEntryResources(long productEntryId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_scProductEntryLocalService.addProductEntryResources(productEntryId,
-			groupPermissions, guestPermissions);
+			modelPermissions);
 	}
 
 	@Override

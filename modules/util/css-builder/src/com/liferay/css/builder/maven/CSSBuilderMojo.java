@@ -26,7 +26,6 @@ import org.apache.maven.plugin.MojoExecutionException;
  * Compiles CSS files.
  *
  * @author Andrea Di Giorgi
- * @goal build-css
  */
 public class CSSBuilderMojo extends AbstractMojo {
 
@@ -40,46 +39,26 @@ public class CSSBuilderMojo extends AbstractMojo {
 		}
 	}
 
-	/**
-	 * @parameter
-	 */
 	public void setDirNames(String dirNames) {
 		_cssBuilderArgs.setDirNames(dirNames);
 	}
 
-	/**
-	 * @parameter
-	 */
 	public void setDocrootDirName(String docrootDirName) {
 		_cssBuilderArgs.setDocrootDirName(docrootDirName);
 	}
 
-	/**
-	 * @parameter
-	 * @required
-	 */
 	public void setPortalCommonDirName(String portalCommonDirName) {
 		_cssBuilderArgs.setPortalCommonDirName(portalCommonDirName);
 	}
 
-	/**
-	 * @parameter
-	 */
 	public void setRtlExcludedPathRegexps(String rtlExcludedPathRegexps) {
 		_cssBuilderArgs.setRtlExcludedPathRegexps(rtlExcludedPathRegexps);
 	}
 
-	/**
-	 * @parameter
-	 */
 	public void setSassCompilerClassName(String sassCompilerClassName) {
 		_cssBuilderArgs.setSassCompilerClassName(sassCompilerClassName);
 	}
 
-	/**
-	 * @parameter default-value="${project.basedir}
-	 * @readonly
-	 */
 	protected File baseDir;
 
 	private final CSSBuilderArgs _cssBuilderArgs = new CSSBuilderArgs();

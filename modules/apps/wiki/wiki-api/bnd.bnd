@@ -4,7 +4,5 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.wiki.*,\
 	!com.liferay.wiki.configuration.dependencies,\
-	!com.liferay.wiki.configuration.impl,\
-	!com.liferay.wiki.item.selector.handler,\
-	!com.liferay.wiki.settings.provider
+	!com.liferay.wiki.item.selector.handler
 Include-Resource: classes

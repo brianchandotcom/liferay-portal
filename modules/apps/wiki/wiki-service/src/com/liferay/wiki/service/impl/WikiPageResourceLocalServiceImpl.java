@@ -26,18 +26,31 @@ public class WikiPageResourceLocalServiceImpl
 	extends WikiPageResourceLocalServiceBaseImpl {
 
 	@Override
-	public WikiPageResource addPageResource(long nodeId, String title) {
+	public WikiPageResource addPageResource(
+		long groupId, long nodeId, String title) {
+
 		long pageResourcePrimKey = counterLocalService.increment();
 
 		WikiPageResource pageResource = wikiPageResourcePersistence.create(
 			pageResourcePrimKey);
 
+		pageResource.setGroupId(groupId);
 		pageResource.setNodeId(nodeId);
 		pageResource.setTitle(title);
 
 		wikiPageResourcePersistence.update(pageResource);
 
 		return pageResource;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #addPageResource(long, long,
+	 *             String)}
+	 */
+	@Deprecated
+	@Override
+	public WikiPageResource addPageResource(long nodeId, String title) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -73,20 +86,31 @@ public class WikiPageResourceLocalServiceImpl
 	}
 
 	@Override
+	public long getPageResourcePrimKey(
+		long groupId, long nodeId, String title) {
+
+		WikiPageResource pageResource = wikiPageResourcePersistence.fetchByN_T(
+			nodeId, title);
+
+		if (pageResource == null) {
+			pageResource = addPageResource(groupId, nodeId, title);
+		}
+
+		return pageResource.getResourcePrimKey();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getPageResourcePrimKey(long,
+	 *             long, String)}
+	 */
+	@Deprecated
+	@Override
 	public long getPageResourcePrimKey(long nodeId, String title) {
 		WikiPageResource pageResource = wikiPageResourcePersistence.fetchByN_T(
 			nodeId, title);
 
 		if (pageResource == null) {
-			long pageResourcePrimKey = counterLocalService.increment();
-
-			pageResource = wikiPageResourcePersistence.create(
-				pageResourcePrimKey);
-
-			pageResource.setNodeId(nodeId);
-			pageResource.setTitle(title);
-
-			wikiPageResourcePersistence.update(pageResource);
+			pageResource = addPageResource(nodeId, title);
 		}
 
 		return pageResource.getResourcePrimKey();

@@ -16,9 +16,7 @@ package com.liferay.portal.kernel.scripting;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.Map;
 import java.util.Set;
@@ -96,7 +94,7 @@ public class ScriptingUtil {
 	public static Scripting getScripting() {
 		PortalRuntimePermission.checkGetBeanProperty(ScriptingUtil.class);
 
-		return _instance._serviceTracker.getService();
+		return _scripting;
 	}
 
 	public static Set<String> getSupportedLanguages() {
@@ -116,16 +114,7 @@ public class ScriptingUtil {
 		return servletContextNames;
 	}
 
-	private ScriptingUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(Scripting.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final ScriptingUtil _instance = new ScriptingUtil();
-
-	private final ServiceTracker<Scripting, Scripting> _serviceTracker;
+	private static final Scripting _scripting =
+		ProxyFactory.newServiceTrackedInstance(Scripting.class);
 
 }

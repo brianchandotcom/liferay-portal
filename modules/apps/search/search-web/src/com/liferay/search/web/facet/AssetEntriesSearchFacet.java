@@ -31,6 +31,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.ActionRequest;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -41,20 +43,15 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = SearchFacet.class)
-public class AssetEntriesSearchFacet extends BaseSearchFacet {
+public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 
 	public List<AssetRendererFactory> getAssetRendererFactories() {
 		return _assetRendererFactories;
 	}
 
 	@Override
-	public String getClassName() {
-		return AssetEntriesSearchFacet.class.getName();
-	}
-
-	@Override
-	public String getConfigurationView() {
-		return "/facets/configuration/asset_entries.jsp";
+	public String getConfigurationJspPath() {
+		return "/META-INF/resources/facets/configuration/asset_entries.jsp";
 	}
 
 	@Override
@@ -87,8 +84,8 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 	}
 
 	@Override
-	public String getDisplayView() {
-		return "/facets/view/asset_entries.jsp";
+	public String getDisplayJspPath() {
+		return "/META-INF/resources/facets/view/asset_entries.jsp";
 	}
 
 	@Override
@@ -99,11 +96,6 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 	@Override
 	public String getFieldName() {
 		return Field.ENTRY_CLASS_NAME;
-	}
-
-	@Override
-	public String getId() {
-		return AssetEntriesSearchFacet.class.getName();
 	}
 
 	@Override
@@ -139,8 +131,11 @@ public class AssetEntriesSearchFacet extends BaseSearchFacet {
 	}
 
 	@Override
-	public String getTitle() {
-		return "asset-type";
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.search.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Reference(

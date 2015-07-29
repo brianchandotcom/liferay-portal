@@ -14,10 +14,7 @@
 
 package com.liferay.item.selector;
 
-import com.liferay.portal.kernel.util.SetUtil;
-
-import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Iván Zaera
@@ -26,46 +23,17 @@ public abstract class BaseItemSelectorCriterion
 	implements ItemSelectorCriterion {
 
 	@Override
-	public Set<ItemSelectorReturnType> getAvailableItemSelectorReturnTypes() {
-		return _availableItemSelectorReturnTypes;
-	}
-
-	@Override
-	public Set<ItemSelectorReturnType> getDesiredItemSelectorReturnTypes() {
+	public List<ItemSelectorReturnType> getDesiredItemSelectorReturnTypes() {
 		return _desiredItemSelectorReturnTypes;
 	}
 
 	@Override
 	public void setDesiredItemSelectorReturnTypes(
-		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
-
-		if (!_availableItemSelectorReturnTypes.containsAll(
-				desiredItemSelectorReturnTypes)) {
-
-			throw new IllegalArgumentException(
-				"Desired item selector return types must be a subset of " +
-					"available item selector return types");
-		}
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
 		_desiredItemSelectorReturnTypes = desiredItemSelectorReturnTypes;
 	}
 
-	protected static Set<ItemSelectorReturnType> getImmutableSet(
-		ItemSelectorReturnType... itemSelectorReturnTypes) {
-
-		return Collections.unmodifiableSet(
-			SetUtil.fromArray(itemSelectorReturnTypes));
-	}
-
-	protected BaseItemSelectorCriterion(
-		Set<ItemSelectorReturnType> availableItemSelectorReturnTypes) {
-
-		_availableItemSelectorReturnTypes = availableItemSelectorReturnTypes;
-
-		_desiredItemSelectorReturnTypes = _availableItemSelectorReturnTypes;
-	}
-
-	private final Set<ItemSelectorReturnType> _availableItemSelectorReturnTypes;
-	private Set<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
+	private List<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
 
 }

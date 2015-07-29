@@ -19,19 +19,15 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
+
 long teamId = ParamUtil.getLong(request, "teamId");
 
 Team team = TeamLocalServiceUtil.fetchTeam(teamId);
-
-long groupId = BeanParamUtil.getLong(team, request, "groupId");
-
-Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-Organization organization = null;
-
-if (group.isOrganization()) {
-	organization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
-}
 %>
 
 <liferay-ui:header
@@ -41,12 +37,13 @@ if (group.isOrganization()) {
 	title='<%= ((team == null) ? LanguageUtil.get(request, "new-team") : HtmlUtil.escape(team.getName())) %>'
 />
 
-<portlet:actionURL name="editTeam" var="editTeamURL" />
+<portlet:actionURL name="editTeam" var="editTeamURL">
+	<portlet:param name="mvcPath" value="/edit_team.jsp" />
+</portlet:actionURL>
 
 <aui:form action="<%= editTeamURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="teamId" type="hidden" value="<%= teamId %>" />
-	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 
 	<liferay-ui:error exception="<%= DuplicateTeamException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= TeamNameException.class %>" message="please-enter-a-valid-name" />
@@ -71,7 +68,11 @@ if (group.isOrganization()) {
 </aui:form>
 
 <%
+Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
+
 if (group.isOrganization()) {
+	Organization organization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
+
 	UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
 }
 else {

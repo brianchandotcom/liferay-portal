@@ -126,7 +126,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 
 		<aui:nav cssClass="nav-tabs">
 			<portlet:renderURL var="viewUsersTreeURL">
-				<portlet:param name="struts_action" value="/users_admin/view" />
+				<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
 				<portlet:param name="toolbarItem" value="browse" />
 				<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
 				<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
@@ -135,7 +135,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 			<aui:nav-item href="<%= viewUsersTreeURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
 
 			<portlet:renderURL var="viewOrganizationsFlatURL">
-				<portlet:param name="struts_action" value="/users_admin/view" />
+				<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
 				<portlet:param name="toolbarItem" value="view-all-organizations" />
 				<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
 				<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
@@ -144,7 +144,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 			<aui:nav-item href="<%= viewOrganizationsFlatURL %>" label="all-organizations" selected='<%= toolbarItem.equals("view-all-organizations") %>' />
 
 			<portlet:renderURL var="viewUsersFlatURL">
-				<portlet:param name="struts_action" value="/users_admin/view" />
+				<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
 				<portlet:param name="toolbarItem" value="view-all-users" />
 				<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
 				<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
@@ -205,7 +205,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 	if (userOrganizationId > 0) {
-		userParams.put("usersOrgs", new Long(userOrganizationId));
+		userParams.put("usersOrgs", Long.valueOf(userOrganizationId));
 	}
 	else if (usersListView.equals(UserConstants.LIST_VIEW_TREE) && Validator.isNull(searchTerms.getKeywords())) {
 		userParams.put("noOrganizations", Boolean.TRUE);
@@ -218,11 +218,11 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	}
 
 	if (roleId > 0) {
-		userParams.put("usersRoles", new Long(roleId));
+		userParams.put("usersRoles", Long.valueOf(roleId));
 	}
 
 	if (userGroupId > 0) {
-		userParams.put("usersUserGroups", new Long(userGroupId));
+		userParams.put("usersUserGroups", Long.valueOf(userGroupId));
 	}
 	%>
 
@@ -245,7 +245,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 		rowIdProperty="screenName"
 	>
 		<liferay-portlet:renderURL varImpl="rowURL">
-			<portlet:param name="struts_action" value="/users_admin/edit_user" />
+			<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
 			<portlet:param name="redirect" value="<%= userSearchContainer.getIteratorURL().toString() %>" />
 			<portlet:param name="p_u_i_d" value="<%= String.valueOf(user2.getUserId()) %>" />
 		</liferay-portlet:renderURL>

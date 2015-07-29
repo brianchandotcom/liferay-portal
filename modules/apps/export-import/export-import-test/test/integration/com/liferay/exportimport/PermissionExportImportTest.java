@@ -15,11 +15,16 @@
 package com.liferay.exportimport;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.lar.LayoutCache;
+import com.liferay.exportimport.lar.PermissionExporter;
+import com.liferay.exportimport.lar.PermissionImporter;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Group;
@@ -43,10 +48,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.ResourcePermissionUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portlet.exportimport.lar.LayoutCache;
-import com.liferay.portlet.exportimport.lar.PermissionExporter;
-import com.liferay.portlet.exportimport.lar.PermissionImporter;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,13 +65,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Mate Thurzo
  */
 @RunWith(Arquillian.class)
-public class PermissionExportImportTest extends PowerMockito {
+public class PermissionExportImportTest {
 
 	@ClassRule
 	@Rule
@@ -148,22 +151,37 @@ public class PermissionExportImportTest extends PowerMockito {
 	}
 
 	protected Element exportPortletPermissions(
-			Group exportGroup, Layout exportLayout)
+			final Group exportGroup, Layout exportLayout)
 		throws Exception {
 
-		PortletDataContext portletDataContext = mock(PortletDataContext.class);
+		final Method getCompanyIdMethod = ReflectionTestUtil.getMethod(
+			PortletDataContext.class, "getCompanyId");
+		final Method getGroupIdMethod = ReflectionTestUtil.getMethod(
+			PortletDataContext.class, "getGroupId");
 
-		when(
-			portletDataContext.getCompanyId()
-		).thenReturn(
-			TestPropsValues.getCompanyId()
-		);
+		PortletDataContext portletDataContext =
+			(PortletDataContext)ProxyUtil.newProxyInstance(
+				PortletDataContext.class.getClassLoader(),
+				new Class<?>[] {PortletDataContext.class},
+				new InvocationHandler() {
 
-		when(
-			portletDataContext.getGroupId()
-		).thenReturn(
-			exportGroup.getGroupId()
-		);
+					@Override
+					public Object invoke(
+							Object proxy, Method method, Object[] args)
+						throws PortalException {
+
+						if (method.equals(getCompanyIdMethod)) {
+							return TestPropsValues.getCompanyId();
+						}
+
+						if (method.equals(getGroupIdMethod)) {
+							return exportGroup.getGroupId();
+						}
+
+						throw new UnsupportedOperationException();
+					}
+
+				});
 
 		Element portletElement = SAXReaderUtil.createElement("portlet");
 

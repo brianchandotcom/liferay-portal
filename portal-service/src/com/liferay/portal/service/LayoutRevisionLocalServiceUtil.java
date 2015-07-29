@@ -224,6 +224,11 @@ public class LayoutRevisionLocalServiceUtil {
 		return getService().fetchLastLayoutRevision(plid, head);
 	}
 
+	public static com.liferay.portal.model.LayoutRevision fetchLatestLayoutRevision(
+		long layoutSetBranchId, long plid) {
+		return getService().fetchLatestLayoutRevision(layoutSetBranchId, plid);
+	}
+
 	public static com.liferay.portal.model.LayoutRevision fetchLayoutRevision(
 		long layoutRevisionId) {
 		return getService().fetchLayoutRevision(layoutRevisionId);

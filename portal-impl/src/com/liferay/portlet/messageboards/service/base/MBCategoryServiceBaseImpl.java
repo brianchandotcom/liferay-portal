@@ -934,7 +934,7 @@ public abstract class MBCategoryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.messageboards.service.MBCategoryLocalService.class)
 	protected com.liferay.portlet.messageboards.service.MBCategoryLocalService mbCategoryLocalService;
-	@BeanReference(type = MBCategoryService.class)
+	@BeanReference(type = com.liferay.portlet.messageboards.service.MBCategoryService.class)
 	protected MBCategoryService mbCategoryService;
 	@BeanReference(type = MBCategoryPersistence.class)
 	protected MBCategoryPersistence mbCategoryPersistence;

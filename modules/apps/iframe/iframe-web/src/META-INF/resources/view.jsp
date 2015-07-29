@@ -24,7 +24,7 @@
 	</c:when>
 	<c:otherwise>
 		<div class="iframe-container">
-			<iframe alt="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.alt()) %>" border="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.border()) %>" bordercolor="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.bordercolor()) %>" frameborder="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.frameborder()) %>" height="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getHeight()) %>" hspace="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.hspace()) %>" id="<portlet:namespace />iframe" longdesc="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.longdesc()) %>" name="<portlet:namespace />iframe" onload="<portlet:namespace />monitorIframe();" scrolling="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.scrolling()) %>" src="<%= HtmlUtil.escapeHREF(iFrameDisplayContext.getIframeSrc()) %>" title="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.title()) %>" vspace="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.vspace()) %>" width="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.width()) %>">
+			<iframe alt="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.alt()) %>" border="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.border()) %>" bordercolor="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.bordercolor()) %>" frameborder="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.frameborder()) %>" height="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getHeight()) %>" hspace="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.hspace()) %>" id="<portlet:namespace />iframe" longdesc="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.longdesc()) %>" name="<portlet:namespace />iframe" onload='<%= iFrameConfiguration.dynamicUrlEnabled() ? "<portlet:namespace />monitorIframe();" : "" %>' scrolling="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.scrolling()) %>" src="<%= HtmlUtil.escapeHREF(iFrameDisplayContext.getIframeSrc()) %>" title="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.title()) %>" vspace="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.vspace()) %>" width="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.width()) %>">
 				<liferay-ui:message
 					arguments="<%= HtmlUtil.escape(iFrameDisplayContext.getIframeSrc()) %>"
 					key="your-browser-does-not-support-inline-frames-or-is-currently-configured-not-to-display-inline-frames.-content-can-be-viewed-at-actual-source-page-x"
@@ -51,6 +51,8 @@
 				return true;
 			}
 
+			iframe.contentWindow.Liferay.on('surfaceEndNavigate', <portlet:namespace />monitorIframe);
+
 			var baseSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
 			var iframeSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeSrc()) %>';
 
@@ -68,7 +70,7 @@
 			return true;
 		}
 
-	 	Liferay.provide(
+		Liferay.provide(
 			window,
 			'<portlet:namespace />init',
 			function() {
@@ -119,26 +121,26 @@
 
 				hashObj['<portlet:namespace />'] = url;
 
-				var maximize = A.one('#p_p_id<portlet:namespace /> .portlet-maximize-icon a');
-
 				hash = A.QueryString.stringify(hashObj);
 
+				var maximize = A.one('#p_p_id<portlet:namespace /> .portlet-maximize-icon a');
+
 				if (maximize) {
-					var href = maximize.attr('href');
+					var maximizeUrl = maximize.attr('href');
 
-					href = href.split('#')[0];
+					maximizeUrl = maximizeUrl.split('#')[0];
 
-					maximize.attr('href', href + '#' + hash);
+					maximize.attr('href', maximizeUrl + '#' + hash);
 				}
 
 				var restore = A.one('#p_p_id<portlet:namespace /> a.portlet-icon-back');
 
 				if (restore) {
-					var href = restore.attr('href');
+					var restoreHREF = restore.attr('href');
 
-					href = href.split('#')[0];
+					restoreHREF = restoreHREF.split('#')[0];
 
-					restore.attr('href', href + '#' + hash);
+					restore.attr('href', restoreHREF + '#' + hash);
 				}
 
 				// LPS-33951

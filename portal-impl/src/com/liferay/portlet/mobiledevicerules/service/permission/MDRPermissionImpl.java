@@ -31,7 +31,8 @@ public class MDRPermissionImpl implements MDRPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, groupId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, RESOURCE_NAME, groupId, actionId);
 		}
 	}
 
@@ -41,7 +42,7 @@ public class MDRPermissionImpl implements MDRPermission {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, groupId, RESOURCE_NAME, groupId,
-			PortletKeys.MOBILE_DEVICE_SITE_ADMIN, actionId);
+			PortletKeys.MOBILE_DEVICE_RULES, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

@@ -70,7 +70,6 @@ public class MentionsBlogsEntryServiceWrapper
 			userId, entryId, status, serviceContext, workflowContext);
 
 		if ((status != WorkflowConstants.STATUS_APPROVED) ||
-			(oldStatus == WorkflowConstants.STATUS_APPROVED) ||
 			(oldStatus == WorkflowConstants.STATUS_IN_TRASH)) {
 
 			return entry;

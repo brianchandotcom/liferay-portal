@@ -75,7 +75,7 @@ public class IndexerPostProcessorRegistry {
 				serviceReference.getProperty("indexer.class.name"));
 
 			for (String indexerClassName : indexerClassNames) {
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
+				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 					indexerClassName);
 
 				if (indexer == null) {
@@ -110,7 +110,7 @@ public class IndexerPostProcessorRegistry {
 				serviceReference.getProperty("indexer.class.name"));
 
 			for (String indexerClassName : indexerClassNames ) {
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
+				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 					indexerClassName);
 
 				if (indexer == null) {

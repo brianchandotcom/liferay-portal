@@ -41,7 +41,9 @@ public class ShoppingItemPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (!contains(permissionChecker, itemId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, ShoppingItem.class.getName(), itemId,
+				actionId);
 		}
 	}
 
@@ -51,7 +53,9 @@ public class ShoppingItemPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (!contains(permissionChecker, item, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, ShoppingItem.class.getName(),
+				item.getItemId(), actionId);
 		}
 	}
 

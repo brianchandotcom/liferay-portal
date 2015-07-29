@@ -42,7 +42,6 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 
 <liferay-ui:search-container
 	curParam="userGroupsCur"
-	emptyResultsMessage="no-user-groups-were-found"
 	headerNames="name,null"
 	iteratorURL="<%= currentURLObj %>"
 	total="<%= userGroups.size() %>"
@@ -150,10 +149,10 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 						id: '<portlet:namespace />selectUserGroup',
 						title: '<liferay-ui:message arguments="user-group" key="select-x" />',
 
-						<portlet:renderURL var="selectUserGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-							<portlet:param name="struts_action" value="/user_groups_admin/select_user_group" />
+						<liferay-portlet:renderURL var="selectUserGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="mvcPath" value="/html/portlet/users_admin/select_user_group.jsp" />
 							<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" />
-						</portlet:renderURL>
+						</liferay-portlet:renderURL>
 
 						uri: '<%= selectUserGroupURL.toString() %>'
 					},

@@ -65,6 +65,16 @@ public class VirtualHostModelImpl extends BaseModelImpl<VirtualHost>
 			{ "layoutSetId", Types.BIGINT },
 			{ "hostname", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("virtualHostId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("layoutSetId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("hostname", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table VirtualHost (mvccVersion LONG default 0,virtualHostId LONG not null primary key,companyId LONG,layoutSetId LONG,hostname VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table VirtualHost";
 	public static final String ORDER_BY_JPQL = " ORDER BY virtualHost.virtualHostId ASC";

@@ -11,12 +11,13 @@
 	var MAP_FONT_SIZE = {
 		1: 10,
 		2: 12,
-		3: 16,
-		4: 18,
-		5: 24,
-		6: 32,
-		7: 48,
-		defaultSize: 12
+		3: 14,
+		4: 16,
+		5: 18,
+		6: 24,
+		7: 32,
+		8: 48,
+		defaultSize: 14
 	};
 
 	var MAP_HANDLERS = {
@@ -63,7 +64,7 @@
 		'width': 1
 	};
 
-	var MAP_LIST_STYLES = {
+	var MAP_ORDERED_LIST_STYLES = {
 		1: 'list-style-type: decimal;',
 		a: 'list-style-type: lower-alpha;',
 		i: 'list-style-type: lower-roman;',
@@ -80,13 +81,19 @@
 		tr: 3
 	};
 
+	var MAP_UNORDERED_LIST_STYLES = {
+		circle: 'list-style-type: circle;',
+		disc: 'list-style-type: disc;',
+		square: 'list-style-type: square;'
+	};
+
 	var REGEX_ATTRS = /\s*([^=]+)\s*=\s*"([^"]+)"\s*/g;
 
 	var REGEX_COLOR = /^(:?aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|#(?:[0-9a-f]{3})?[0-9a-f]{3})$/i;
 
 	var REGEX_ESCAPE_REGEX = /[-[\]{}()*+?.,\\^$|#\s]/g;
 
-	var REGEX_IMAGE_SRC = /^(?:https?:\/\/|\/)[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z]{1,512}$/i;
+	var REGEX_IMAGE_SRC = /^(?:https?:\/\/|\/)[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z]{1,2048}$/i;
 
 	var REGEX_LASTCHAR_NEWLINE = /\r?\n$/;
 
@@ -96,9 +103,7 @@
 
 	var REGEX_STRING_IS_NEW_LINE = /^\r?\n$/;
 
-	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
-
-	var REGEX_URI = /^[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z#]{1,512}$|\${\S+}/i;
+	var REGEX_URI = /^[-;\/\?:@&=\+\$,_\.!~\*'\(\)%0-9a-z#]{1,2048}$|\${\S+}/i;
 
 	var STR_BLANK = '';
 
@@ -111,6 +116,8 @@
 	var STR_MAILTO = 'mailto:';
 
 	var STR_NEW_LINE = '\n';
+
+	var STR_START = 'start';
 
 	var STR_TAG_A_CLOSE = '</a>';
 
@@ -135,6 +142,8 @@
 	var STR_TAG_URL = 'url';
 
 	var STR_TEXT_ALIGN = '<p style="text-align: ';
+
+	var STR_TYPE = 'type';
 
 	var TOKEN_DATA = Parser.TOKEN_DATA;
 
@@ -182,13 +191,13 @@
 
 				var type = token.type;
 
-				if (type == TOKEN_TAG_START) {
+				if (type === TOKEN_TAG_START) {
 					instance._handleTagStart(token);
 				}
-				else if (type == TOKEN_TAG_END) {
+				else if (type === TOKEN_TAG_END) {
 					instance._handleTagEnd(token);
 				}
-				else if (type == TOKEN_DATA) {
+				else if (type === TOKEN_DATA) {
 					instance._handleData(token);
 				}
 				else {
@@ -217,12 +226,12 @@
 			do {
 				token = instance._parsedData[index++];
 
-				if (token.type == TOKEN_DATA) {
+				if (token && token.type === TOKEN_DATA) {
 					result.push(token.value);
 				}
 
 			}
-			while (token.type != TOKEN_TAG_END && token.value != toTagName);
+			while (token && token.type !== TOKEN_TAG_END && token.value !== toTagName);
 
 			if (consume) {
 				instance._tokenPointer = index - 1;
@@ -351,7 +360,7 @@
 		_handleImageAttributes: function(token) {
 			var instance = this;
 
-			var attrs = '';
+			var attrs = STR_BLANK;
 
 			if (token.attribute) {
 				var bbCodeAttr;
@@ -375,24 +384,39 @@
 		_handleList: function(token) {
 			var instance = this;
 
+			var listAttributes = STR_BLANK;
 			var tag = 'ul';
-			var styleAttr;
 
-			var listAttribute = token.attribute;
+			if (token.attribute) {
+				var listAttribute;
 
-			if (listAttribute) {
-				tag = 'ol';
+				while (listAttribute = REGEX_ATTRS.exec(token.attribute)) {
+					var attrName = listAttribute[1];
+					var attrValue = listAttribute[2];
 
-				styleAttr = MAP_LIST_STYLES[listAttribute];
+					var styleAttr;
+
+					if (attrName === STR_TYPE) {
+						if (MAP_ORDERED_LIST_STYLES[attrValue]) {
+							styleAttr = MAP_ORDERED_LIST_STYLES[attrValue];
+
+							tag = 'ol';
+						}
+						else {
+							styleAttr = MAP_UNORDERED_LIST_STYLES[attrValue];
+						}
+
+						if (styleAttr) {
+							listAttributes += ' style="' + styleAttr + '"';
+						}
+					}
+					else if (attrName === STR_START && REGEX_NUMBER.test(attrValue)) {
+						listAttributes += ' start="' + attrValue + '"';
+					}
+				}
 			}
 
-			var result = STR_TAG_OPEN + tag + STR_TAG_END_CLOSE;
-
-			if (styleAttr) {
-				result = STR_TAG_OPEN + tag + ' style="' + styleAttr + STR_TAG_ATTR_CLOSE;
-			}
-
-			instance._result.push(result);
+			instance._result.push(STR_TAG_OPEN + tag + listAttributes + STR_TAG_END_CLOSE);
 
 			instance._stack.push(STR_TAG_END_OPEN + tag + STR_TAG_END_CLOSE);
 		},
@@ -423,8 +447,8 @@
 					nextToken = instance._parsedData[instance._tokenPointer + 1];
 
 					if (nextToken &&
-						nextToken.type == TOKEN_TAG_END &&
-						nextToken.value == STR_TAG_LIST_ITEM_SHORT) {
+						nextToken.type === TOKEN_TAG_END &&
+						nextToken.value === STR_TAG_LIST_ITEM_SHORT) {
 
 						value = value.substring(0, value.length - 1);
 					}
@@ -528,12 +552,10 @@
 
 			var tagName = token.value;
 
-			if (instance._isValidTag(tagName)) {
-				instance._result.push(instance._stack.pop());
+			instance._result.push(instance._stack.pop());
 
-				if (tagName == STR_CODE) {
-					instance._noParse = false;
-				}
+			if (tagName === STR_CODE) {
+				instance._noParse = false;
 			}
 		},
 
@@ -542,11 +564,9 @@
 
 			var tagName = token.value;
 
-			if (instance._isValidTag(tagName)) {
-				var handlerName = MAP_HANDLERS[tagName] || '_handleSimpleTags';
+			var handlerName = MAP_HANDLERS[tagName] || '_handleSimpleTags';
 
-				instance[handlerName](token);
-			}
+			instance[handlerName](token);
 		},
 
 		_handleTextAlign: function(token) {
@@ -571,16 +591,6 @@
 			instance._result.push(STR_TAG_ATTR_HREF_OPEN + href + STR_TAG_ATTR_CLOSE);
 
 			instance._stack.push(STR_TAG_A_CLOSE);
-		},
-
-		_isValidTag: function(tagName) {
-			var valid = false;
-
-			if (tagName && tagName.length) {
-				valid = REGEX_TAG_NAME.test(tagName);
-			}
-
-			return valid;
 		},
 
 		_reset: function() {

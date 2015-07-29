@@ -15,22 +15,9 @@
 package com.liferay.item.selector.criteria.url.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
-import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
-
-import java.util.Set;
 
 /**
  * @author Roberto Díaz
  */
 public class URLItemSelectorCriterion extends BaseItemSelectorCriterion {
-
-	public URLItemSelectorCriterion() {
-		super(_availableItemSelectorReturnTypes);
-	}
-
-	private static final Set<ItemSelectorReturnType>
-		_availableItemSelectorReturnTypes = getImmutableSet(
-			DefaultItemSelectorReturnType.URL);
-
 }

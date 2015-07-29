@@ -3,15 +3,6 @@
 
 	<var name="siteName" value="Test Site Name" />
 
-	<tear-down>
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Site#tearDownCP" />
-	</tear-down>
-
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 
@@ -34,7 +25,16 @@
 		</execute>
 	</set-up>
 
-	<command name="AddRSSADTViaPortletConfiguration" priority="3">
+	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
+	<command name="AddRSSADTViaPortletConfiguration" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
@@ -71,7 +71,7 @@
 		</execute>
 
 		<execute macro="RSS#viewCustomADT">
-			<var name="feedContentTitle" value="Liferay Blogs - General NYT > Technology" />
+			<var name="feedContentTitle" value="Technology" />
 		</execute>
 	</command>
 
@@ -144,15 +144,13 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<for list="Liferay Blogs - General,NYT > Technology" param="feedTitle" >
-			<execute macro="RSS#viewNavigationDisplayFeedTitle">
-				<var name="feedTitle" value="${feedTitle}" />
-				<var name="navigationNullADT" value="true" />
-			</execute>
-		</for>
+		<execute macro="RSS#viewNavigationDisplayFeedTitle">
+			<var name="feedTitle" value="Technology" />
+			<var name="navigationNullADT" value="true" />
+		</execute>
 	</command>
 
-	<command name="ADTAssetPublisher" priority="3">
+	<command known-issues="LPS-56541" name="ADTAssetPublisher" priority="3">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -183,9 +181,9 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPGViaAP">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
+		<execute macro="WebContent#addPGViaAP">
+			<var name="webContentContent" value="WC Content" />
+			<var name="webContentTitle" value="WC Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -218,8 +216,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewDefaultWithAllDisplaySettingsCheckboxesPG">
-			<var name="assetDescription" value="Blogs Entry Content" />
-			<var name="assetTitle" value="Blogs Entry Title" />
+			<var name="assetDescription" value="WC Content" />
+			<var name="assetTitle" value="WC Title" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
@@ -234,8 +232,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewCustomADTRichSummaryPG">
-			<var name="assetDescription" value="Blogs Entry Content" />
-			<var name="assetTitle" value="Blogs Entry Title" />
+			<var name="assetDescription" value="WC Content" />
+			<var name="assetTitle" value="WC Title" />
 		</execute>
 
 		<execute macro="Staging#gotoPublishToLive" />
@@ -249,13 +247,13 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewCustomADTRichSummaryPG">
-			<var name="assetDescription" value="Blogs Entry Content" />
-			<var name="assetTitle" value="Blogs Entry Title" />
+			<var name="assetDescription" value="WC Content" />
+			<var name="assetTitle" value="WC Title" />
 			<var name="pageStaging" value="true" />
 		</execute>
 	</command>
 
-	<command name="ADTBreadcrumb" priority="3">
+	<command name="ADTBreadcrumb" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
@@ -286,7 +284,7 @@
 		</execute>
 	</command>
 
-	<command name="ADTCategoriesNavigation" priority="3">
+	<command name="ADTCategoriesNavigation" priority="5">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoContentCP">
@@ -627,7 +625,7 @@
 		</execute>
 	</command>
 
-	<command name="ADTTagsNavigationPortlet" priority="3">
+	<command name="ADTTagsNavigationPortlet" priority="5">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -832,7 +830,7 @@
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Application Display Templates" />
+			<var name="portletName" value="Application Display Template" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>

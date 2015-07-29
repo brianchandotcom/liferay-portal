@@ -871,13 +871,6 @@
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
-	<model name="com.liferay.portal.model.Shard">
-		<field name="mvccVersion" type="long" />
-		<field name="shardId" type="long" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
-		<field name="name" type="String" />
-	</model>
 	<model name="com.liferay.portal.model.Subscription">
 		<field name="mvccVersion" type="long" />
 		<field name="subscriptionId" type="long" />
@@ -912,6 +905,7 @@
 	</model>
 	<model name="com.liferay.portal.model.Team">
 		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
 		<field name="teamId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -1294,6 +1288,7 @@
 		<field name="weight" type="int" />
 	</model>
 	<model name="com.liferay.portlet.asset.model.AssetTag">
+		<field name="uuid" type="String" />
 		<field name="tagId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1668,7 +1663,7 @@
 			<validator name="required" />
 		</field>
 		<field name="description" type="String" localized="true">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="definition" type="String">
 			<hint-collection name="CLOB" />
@@ -1710,7 +1705,7 @@
 			<validator name="required" />
 		</field>
 		<field name="description" type="String" localized="true">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="definition" type="String">
 			<hint-collection name="CLOB" />
@@ -1745,7 +1740,7 @@
 			<validator name="required" />
 		</field>
 		<field name="description" type="String" localized="true">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 			<hint name="autoSize">true</hint>
 		</field>
 		<field name="type" type="String" />
@@ -1780,7 +1775,7 @@
 			<validator name="required" />
 		</field>
 		<field name="description" type="String" localized="true">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 			<hint name="autoSize">true</hint>
 		</field>
 		<field name="language" type="String" />
@@ -1851,150 +1846,6 @@
 		<field name="settings" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="status" type="int" />
-		<field name="statusByUserId" type="long" />
-		<field name="statusByUserName" type="String" />
-		<field name="statusDate" type="Date" />
-	</model>
-	<model name="com.liferay.portlet.journal.model.JournalArticle">
-		<field name="uuid" type="String" />
-		<field name="id" type="long" />
-		<field name="resourcePrimKey" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="folderId" type="long" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
-		<field name="treePath" type="String">
-			<hint name="max-length">4000</hint>
-		</field>
-		<field name="articleId" type="String">
-			<hint name="upper-case">true</hint>
-		</field>
-		<field name="version" type="double" />
-		<field name="title" type="String" localized="true">
-			<hint name="max-length">4000</hint>
-		</field>
-		<field name="urlTitle" type="String">
-			<hint name="max-length">150</hint>
-		</field>
-		<field name="description" type="String" localized="true">
-			<hint-collection name="CLOB" />
-			<hint name="display-height">40</hint>
-		</field>
-		<field name="content" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-		<field name="DDMStructureKey" type="String" />
-		<field name="DDMTemplateKey" type="String" />
-		<field name="layoutUuid" type="String" />
-		<field name="displayDate" type="Date" />
-		<field name="expirationDate" type="Date">
-			<hint name="default-year-delta">1</hint>
-		</field>
-		<field name="reviewDate" type="Date">
-			<hint name="default-month-delta">9</hint>
-		</field>
-		<field name="indexable" type="boolean">
-			<hint name="default-value">true</hint>
-		</field>
-		<field name="smallImage" type="boolean" />
-		<field name="smallImageId" type="long" />
-		<field name="smallImageURL" type="String">
-			<hint-collection name="URL" />
-		</field>
-		<field name="status" type="int" />
-		<field name="statusByUserId" type="long" />
-		<field name="statusByUserName" type="String" />
-		<field name="statusDate" type="Date" />
-	</model>
-	<model name="com.liferay.portlet.journal.model.JournalArticleImage">
-		<field name="articleImageId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="articleId" type="String" />
-		<field name="version" type="double" />
-		<field name="elInstanceId" type="String" />
-		<field name="elName" type="String" />
-		<field name="languageId" type="String" />
-		<field name="tempImage" type="boolean" />
-	</model>
-	<model name="com.liferay.portlet.journal.model.JournalArticleResource">
-		<field name="uuid" type="String" />
-		<field name="resourcePrimKey" type="long" />
-		<field name="groupId" type="long" />
-		<field name="articleId" type="String" />
-	</model>
-	<model name="com.liferay.portlet.journal.model.JournalContentSearch">
-		<field name="contentSearchId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="privateLayout" type="boolean" />
-		<field name="layoutId" type="long" />
-		<field name="portletId" type="String">
-			<hint name="max-length">200</hint>
-		</field>
-		<field name="articleId" type="String" />
-	</model>
-	<model name="com.liferay.portlet.journal.model.JournalFeed">
-		<field name="uuid" type="String" />
-		<field name="id" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="feedId" type="String">
-			<hint name="auto-escape">false</hint>
-		</field>
-		<field name="name" type="String">
-			<validator name="required" />
-		</field>
-		<field name="description" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
-		<field name="DDMStructureKey" type="String" />
-		<field name="DDMTemplateKey" type="String" />
-		<field name="DDMRendererTemplateKey" type="String" />
-		<field name="delta" type="int">
-			<hint name="display-width">50</hint>
-		</field>
-		<field name="orderByCol" type="String" />
-		<field name="orderByType" type="String" />
-		<field name="targetLayoutFriendlyUrl" type="String">
-			<hint name="max-length">255</hint>
-			<validator name="required" />
-		</field>
-		<field name="targetPortletId" type="String" />
-		<field name="contentField" type="String" />
-		<field name="feedFormat" type="String" />
-		<field name="feedVersion" type="double" />
-	</model>
-	<model name="com.liferay.portlet.journal.model.JournalFolder">
-		<field name="uuid" type="String" />
-		<field name="folderId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="parentFolderId" type="long" />
-		<field name="treePath" type="String">
-			<hint name="max-length">4000</hint>
-		</field>
-		<field name="name" type="String">
-			<hint name="max-length">100</hint>
-			<validator name="required" />
-		</field>
-		<field name="description" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
-		<field name="restrictionType" type="int" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />

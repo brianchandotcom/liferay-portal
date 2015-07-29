@@ -54,7 +54,6 @@ public interface CompanyService extends BaseService {
 	* @param webId the company's web domain
 	* @param virtualHost the company's virtual host name
 	* @param mx the company's mail domain
-	* @param shardName the company's shard
 	* @param system whether the company is the very first company (i.e., the
 	* @param maxUsers the max number of company users (optionally
 	<code>0</code>)
@@ -66,9 +65,8 @@ public interface CompanyService extends BaseService {
 	*/
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public com.liferay.portal.model.Company addCompany(java.lang.String webId,
-		java.lang.String virtualHost, java.lang.String mx,
-		java.lang.String shardName, boolean system, int maxUsers, boolean active)
-		throws PortalException;
+		java.lang.String virtualHost, java.lang.String mx, boolean system,
+		int maxUsers, boolean active) throws PortalException;
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	public com.liferay.portal.model.Company deleteCompany(long companyId)
@@ -345,8 +343,7 @@ public interface CompanyService extends BaseService {
 	* @deprecated As of 7.0.0, replaced by {@link #updateCompany(long, String,
 	String, String, boolean, byte[], String, String, String,
 	String, String, String, String, String, String, String,
-	String, java.util.List, java.util.List, java.util.List,
-	java.util.List, UnicodeProperties)}
+	String, List, List, List, List, UnicodeProperties)}
 	*/
 	@java.lang.Deprecated
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
@@ -428,7 +425,7 @@ public interface CompanyService extends BaseService {
 	*
 	* @param companyId the primary key of the company
 	* @param properties the company's properties. See {@link
-	com.liferay.portal.kernel.util.UnicodeProperties}
+	UnicodeProperties}
 	* @throws PortalException if the user was not an administrator
 	*/
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

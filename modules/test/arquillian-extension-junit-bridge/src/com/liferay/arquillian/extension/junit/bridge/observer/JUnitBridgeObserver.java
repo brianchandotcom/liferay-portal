@@ -76,7 +76,8 @@ public class JUnitBridgeObserver {
 
 		statement = withRules(
 			statement, Rule.class, junitTestClass, target,
-			Description.createTestDescription(clazz, method.getName()));
+			Description.createTestDescription(
+				clazz, method.getName(), method.getAnnotations()));
 
 		statement = withBefores(
 			statement, BeforeClass.class, junitTestClass, null);

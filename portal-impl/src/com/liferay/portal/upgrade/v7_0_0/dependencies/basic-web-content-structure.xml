@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>basic-web-content</name>
+		<description>basic-web-content</description>
+		<definition>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"availableLanguageIds": ["[$LOCALE_DEFAULT$]"],
+					"fields": [
+						{
+							"dataType": "html",
+							"fieldNamespace": "ddm",
+							"indexType": "keyword",
+							"label": {
+								"[$LOCALE_DEFAULT$]": "Content"
+							},
+							"localizable": true,
+							"name": "content",
+							"showLabel": true,
+							"type": "ddm-text-html",
+							"width": "small"
+						}
+					]
+				}
+			]]>
+		</definition>
+		<layout>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"pages": [
+						{
+							"rows": [
+								{
+									"columns": [
+										{
+											"fieldNames": ["content"],
+											"size": 12
+										}
+									]
+								}
+							],
+							"title": {
+								"[$LOCALE_DEFAULT$]": "Basic Web Content"
+							}
+						}
+					]
+				}
+			]]>
+		</layout>
+		<template>
+			<cacheable>true</cacheable>
+			<file-name>basic-web-content-template.ftl</file-name>
+		</template>
+	</structure>
+</root>

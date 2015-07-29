@@ -41,13 +41,9 @@ import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -58,7 +54,7 @@ import javax.portlet.PortletResponse;
  * @author Hugo Huijser
  */
 @OSGiBeanProperties
-public class OrganizationIndexer extends BaseIndexer {
+public class OrganizationIndexer extends BaseIndexer<Organization> {
 
 	public static final String CLASS_NAME = Organization.class.getName();
 
@@ -159,16 +155,14 @@ public class OrganizationIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		Organization organization = (Organization)obj;
-
+	protected void doDelete(Organization organization) throws Exception {
 		deleteDocument(
 			organization.getCompanyId(), organization.getOrganizationId());
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		Organization organization = (Organization)obj;
+	protected Document doGetDocument(Organization organization)
+		throws Exception {
 
 		Document document = getBaseModelDocument(CLASS_NAME, organization);
 
@@ -215,64 +209,12 @@ public class OrganizationIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		if (obj instanceof Long) {
-			long organizationId = (Long)obj;
+	protected void doReindex(Organization organization) throws Exception {
+		Document document = getDocument(organization);
 
-			Organization organization =
-				OrganizationLocalServiceUtil.getOrganization(organizationId);
-
-			doReindex(organization);
-		}
-		else if (obj instanceof long[]) {
-			long[] organizationIds = (long[])obj;
-
-			Map<Long, Collection<Document>> documentsMap = new HashMap<>();
-
-			for (long organizationId : organizationIds) {
-				Organization organization =
-					OrganizationLocalServiceUtil.fetchOrganization(
-						organizationId);
-
-				if (organization == null) {
-					continue;
-				}
-
-				Document document = getDocument(organization);
-
-				long companyId = organization.getCompanyId();
-
-				Collection<Document> documents = documentsMap.get(companyId);
-
-				if (documents == null) {
-					documents = new ArrayList<>();
-
-					documentsMap.put(companyId, documents);
-				}
-
-				documents.add(document);
-			}
-
-			for (Map.Entry<Long, Collection<Document>> entry :
-					documentsMap.entrySet()) {
-
-				long companyId = entry.getKey();
-				Collection<Document> documents = entry.getValue();
-
-				SearchEngineUtil.updateDocuments(
-					getSearchEngineId(), companyId, documents,
-					isCommitImmediately());
-			}
-		}
-		else if (obj instanceof Organization) {
-			Organization organization = (Organization)obj;
-
-			Document document = getDocument(organization);
-
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), organization.getCompanyId(), document,
-				isCommitImmediately());
-		}
+		SearchEngineUtil.updateDocument(
+			getSearchEngineId(), organization.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	@Override

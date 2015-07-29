@@ -1188,6 +1188,11 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		return _badColumnNames;
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return PasswordTrackerModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the password tracker persistence.
 	 */

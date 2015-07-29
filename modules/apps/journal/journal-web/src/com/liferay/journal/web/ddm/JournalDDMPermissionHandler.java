@@ -14,11 +14,11 @@
 
 package com.liferay.journal.web.ddm;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.permission.JournalPermission;
 
 /**
  * @author Marcellus Tavares

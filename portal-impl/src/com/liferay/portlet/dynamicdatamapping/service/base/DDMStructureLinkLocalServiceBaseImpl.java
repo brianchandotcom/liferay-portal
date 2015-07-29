@@ -418,7 +418,7 @@ public abstract class DDMStructureLinkLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DDMStructureLinkLocalService.class)
+	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService.class)
 	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
 	@BeanReference(type = DDMStructureLinkPersistence.class)
 	protected DDMStructureLinkPersistence ddmStructureLinkPersistence;

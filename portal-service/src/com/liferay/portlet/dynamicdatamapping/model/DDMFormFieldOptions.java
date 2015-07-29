@@ -72,6 +72,10 @@ public class DDMFormFieldOptions implements Serializable {
 		return _options.get(optionValue);
 	}
 
+	public Map<String, LocalizedValue> getOptions() {
+		return _options;
+	}
+
 	public Set<String> getOptionsValues() {
 		return _options.keySet();
 	}

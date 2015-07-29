@@ -200,7 +200,7 @@ public abstract class RegionServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = RegionService.class)
+	@BeanReference(type = com.liferay.portal.service.RegionService.class)
 	protected RegionService regionService;
 	@BeanReference(type = RegionPersistence.class)
 	protected RegionPersistence regionPersistence;

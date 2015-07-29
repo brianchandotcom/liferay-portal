@@ -23,7 +23,7 @@ import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.asset.model.BaseAssetRenderer;
+import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 
 import java.util.Locale;
 
@@ -31,11 +31,14 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Michael C. Han
  * @author Sergio González
  */
-public class UserAssetRenderer extends BaseAssetRenderer {
+public class UserAssetRenderer extends BaseJSPAssetRenderer {
 
 	public UserAssetRenderer(User user) {
 		_user = user;
@@ -62,6 +65,23 @@ public class UserAssetRenderer extends BaseAssetRenderer {
 	}
 
 	@Override
+	public String getJspPath(HttpServletRequest request, String template) {
+		if (template.equals(TEMPLATE_ABSTRACT) ||
+			template.equals(TEMPLATE_FULL_CONTENT)) {
+
+			return "/html/portlet/directory/asset/abstract.jsp";
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
+	public int getStatus() {
+		return _user.getStatus();
+	}
+
+	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
@@ -83,7 +103,8 @@ public class UserAssetRenderer extends BaseAssetRenderer {
 			getControlPanelPlid(liferayPortletRequest), PortletKeys.USERS_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/users_admin/edit_user");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/users_admin/edit_user");
 		portletURL.setParameter("p_u_i_d", String.valueOf(_user.getUserId()));
 
 		return portletURL;
@@ -141,26 +162,19 @@ public class UserAssetRenderer extends BaseAssetRenderer {
 	}
 
 	@Override
-	public boolean isPrintable() {
-		return false;
-	}
-
-	@Override
-	public String render(
-			PortletRequest portletRequest, PortletResponse portletResponse,
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
 			String template)
 		throws Exception {
 
-		if (template.equals(TEMPLATE_ABSTRACT) ||
-			template.equals(TEMPLATE_FULL_CONTENT)) {
+		request.setAttribute(WebKeys.USER, _user);
 
-			portletRequest.setAttribute(WebKeys.USER, _user);
+		return super.include(request, response, template);
+	}
 
-			return "/html/portlet/directory/asset/abstract.jsp";
-		}
-		else {
-			return null;
-		}
+	@Override
+	public boolean isPrintable() {
+		return false;
 	}
 
 	@Override

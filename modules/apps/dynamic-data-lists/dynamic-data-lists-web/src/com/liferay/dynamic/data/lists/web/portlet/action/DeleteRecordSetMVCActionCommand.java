@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,21 +39,21 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DeleteRecordSetMVCActionCommand extends BaseMVCActionCommand {
 
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
+
+		_ddlRecordSetService.deleteRecordSet(recordSetId);
+	}
+
 	@Reference
-	public void setDDLRecordSetService(
+	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
 		_ddlRecordSetService = ddlRecordSetService;
-	}
-
-	@Override
-	protected void doProcessAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws Exception {
-
-		long recordSetId = ParamUtil.getLong(portletRequest, "recordSetId");
-
-		_ddlRecordSetService.deleteRecordSet(recordSetId);
 	}
 
 	private DDLRecordSetService _ddlRecordSetService;

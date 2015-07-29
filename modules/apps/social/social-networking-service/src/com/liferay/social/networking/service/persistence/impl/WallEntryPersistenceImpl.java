@@ -2227,6 +2227,11 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 		return count.intValue();
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return WallEntryModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the wall entry persistence.
 	 */

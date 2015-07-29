@@ -258,20 +258,20 @@ public class QuartzSchedulerEngineTest {
 
 	@Test
 	public void testGetQuartzTrigger3() throws SchedulerException {
+		IntervalTrigger intervalTrigger = new IntervalTrigger(
+			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, 0);
+
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
-					QuartzSchedulerEngine.class.getName(), Level.FINE)) {
-
-			List<LogRecord> logRecords = captureHandler.getLogRecords();
-
-			IntervalTrigger intervalTrigger = new IntervalTrigger(
-				_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, 0);
+					QuartzSchedulerEngine.class.getName(), Level.WARNING)) {
 
 			org.quartz.Trigger trigger =
 				_quartzSchedulerEngine.getQuartzTrigger(
 					intervalTrigger, StorageType.MEMORY);
 
 			Assert.assertNull(trigger);
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertEquals(1, logRecords.size());
 
@@ -470,9 +470,25 @@ public class QuartzSchedulerEngineTest {
 		IntervalTrigger intervalTrigger = new IntervalTrigger(
 			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, 0);
 
-		_quartzSchedulerEngine.schedule(
-			intervalTrigger, StringPool.BLANK, _TEST_DESTINATION_NAME, null,
-			StorageType.MEMORY);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					QuartzSchedulerEngine.class.getName(), Level.WARNING)) {
+
+			_quartzSchedulerEngine.schedule(
+				intervalTrigger, StringPool.BLANK, _TEST_DESTINATION_NAME, null,
+				StorageType.MEMORY);
+
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
+
+			Assert.assertEquals(1, logRecords.size());
+
+			LogRecord logRecord = logRecords.get(0);
+
+			Assert.assertEquals(
+				"Not scheduling " + _TEST_JOB_NAME_0 + " because interval " +
+					"is less than or equal to 0",
+				logRecord.getMessage());
+		}
 
 		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs(
 			_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);

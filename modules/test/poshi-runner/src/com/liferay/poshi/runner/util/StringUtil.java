@@ -347,6 +347,22 @@ public class StringUtil {
 		return new String(chars);
 	}
 
+	public static boolean matches(String s, String pattern) {
+		String[] array = pattern.split("\\*");
+
+		for (String element : array) {
+			int pos = s.indexOf(element);
+
+			if (pos == -1) {
+				return false;
+			}
+
+			s = s.substring(pos + element.length());
+		}
+
+		return true;
+	}
+
 	public static String quote(String s, String quote) {
 		if (s == null) {
 			return null;
@@ -575,6 +591,72 @@ public class StringUtil {
 		}
 
 		return s.substring(x, y);
+	}
+
+	public static String trimLeading(String s) {
+		if (s == null) {
+			return null;
+		}
+
+		if (s.length() == 0) {
+			return s;
+		}
+
+		int len = s.length();
+		int x = len;
+
+		for (int i = 0; i < len; i++) {
+			char c = s.charAt(i);
+
+			if (!Character.isWhitespace(c)) {
+				x = i;
+
+				break;
+			}
+		}
+
+		if (x == len) {
+			return StringPool.BLANK;
+		}
+		else if (x == 0) {
+			return s;
+		}
+		else {
+			return s.substring(x);
+		}
+	}
+
+	public static String trimTrailing(String s) {
+		if (s == null) {
+			return null;
+		}
+
+		if (s.length() == 0) {
+			return s;
+		}
+
+		int len = s.length();
+		int x = 0;
+
+		for (int i = len - 1; i >= 0; i--) {
+			char c = s.charAt(i);
+
+			if (!Character.isWhitespace(c)) {
+				x = i + 1;
+
+				break;
+			}
+		}
+
+		if (x == 0) {
+			return StringPool.BLANK;
+		}
+		else if (x == len) {
+			return s;
+		}
+		else {
+			return s.substring(0, x);
+		}
 	}
 
 	public static String unquote(String s) {

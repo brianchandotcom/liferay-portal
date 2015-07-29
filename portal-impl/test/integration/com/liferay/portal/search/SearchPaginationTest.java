@@ -222,7 +222,7 @@ public class SearchPaginationTest {
 	protected Hits getHits(String keyword, int start, int end)
 		throws Exception {
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(User.class);
+		Indexer<User> indexer = IndexerRegistryUtil.getIndexer(User.class);
 
 		SearchContext searchContext = new SearchContext();
 

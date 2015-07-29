@@ -32,7 +32,10 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
@@ -108,6 +111,7 @@ public class LayoutRevisionAssetRendererFactory
 			new LayoutRevisionAssetRenderer(layoutRevision);
 
 		layoutRevisionAssetRenderer.setAssetRendererType(type);
+		layoutRevisionAssetRenderer.setServletContext(_servletContext);
 
 		return layoutRevisionAssetRenderer;
 	}
@@ -127,9 +131,19 @@ public class LayoutRevisionAssetRendererFactory
 		return TYPE;
 	}
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
 	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/pages.png";
 	}
+
+	private ServletContext _servletContext;
 
 }

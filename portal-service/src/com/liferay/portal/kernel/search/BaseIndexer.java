@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
-import com.liferay.portal.kernel.search.hits.HitsProcessor;
 import com.liferay.portal.kernel.search.hits.HitsProcessorRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -109,7 +108,7 @@ import javax.portlet.PortletResponse;
  * @author Ryan Park
  * @author Raymond Augé
  */
-public abstract class BaseIndexer implements Indexer {
+public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	@Override
 	public void delete(long companyId, String uid) throws SearchException {
@@ -126,9 +125,13 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
-	public void delete(Object obj) throws SearchException {
+	public void delete(T object) throws SearchException {
+		if (object == null) {
+			return;
+		}
+
 		try {
-			doDelete(obj);
+			doDelete(object);
 		}
 		catch (SearchException se) {
 			throw se;
@@ -148,14 +151,14 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
-	public Document getDocument(Object obj) throws SearchException {
+	public Document getDocument(T object) throws SearchException {
 		try {
-			Document document = doGetDocument(obj);
+			Document document = doGetDocument(object);
 
 			for (IndexerPostProcessor indexerPostProcessor :
 					_indexerPostProcessors) {
 
-				indexerPostProcessor.postProcessDocument(document, obj);
+				indexerPostProcessor.postProcessDocument(document, object);
 			}
 
 			if (document == null) {
@@ -435,8 +438,9 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #postProcessContextBooleanFilter(
-	 *             BooleanFilter, SearchContext)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #postProcessContextBooleanFilter(BooleanFilter,
+	 *             SearchContext)}
 	 */
 	@Deprecated
 	@Override
@@ -461,8 +465,9 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #postProcessSearchQuery(
-	 *             BooleanQuery, BooleanFilter, SearchContext)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #postProcessSearchQuery(BooleanQuery, BooleanFilter,
+	 *             SearchContext)}
 	 */
 	@Deprecated
 	@Override
@@ -485,28 +490,22 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	@Override
-	public void reindex(Object obj) throws SearchException {
-		try {
-			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
-				return;
+	public void reindex(Collection<T> collection) {
+		if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled() ||
+			collection.isEmpty()) {
+
+			return;
+		}
+
+		for (T element : collection) {
+			try {
+				reindex(element);
 			}
-
-			if (obj instanceof List<?>) {
-				List<?> list = (List<?>)obj;
-
-				for (Object element : list) {
-					doReindex(element);
+			catch (SearchException se) {
+				if (_log.isErrorEnabled()) {
+					_log.error("Unable to index object: " + element);
 				}
 			}
-			else {
-				doReindex(obj);
-			}
-		}
-		catch (SearchException se) {
-			throw se;
-		}
-		catch (Exception e) {
-			throw new SearchException(e);
 		}
 	}
 
@@ -542,6 +541,27 @@ public abstract class BaseIndexer implements Indexer {
 			}
 
 			doReindex(ids);
+		}
+		catch (SearchException se) {
+			throw se;
+		}
+		catch (Exception e) {
+			throw new SearchException(e);
+		}
+	}
+
+	@Override
+	public void reindex(T object) throws SearchException {
+		try {
+			if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
+				return;
+			}
+
+			if (object == null) {
+				return;
+			}
+
+			doReindex(object);
 		}
 		catch (SearchException se) {
 			throw se;
@@ -704,10 +724,15 @@ public abstract class BaseIndexer implements Indexer {
 			document.addDate(Field.PUBLISH_DATE, new Date(0));
 		}
 
-		RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.getStats(
+		RatingsStats ratingsStats = RatingsStatsLocalServiceUtil.fetchStats(
 			className, classPK);
 
-		document.addNumber(Field.RATINGS, ratingsStats.getAverageScore());
+		if (ratingsStats != null) {
+			document.addNumber(Field.RATINGS, ratingsStats.getAverageScore());
+		}
+		else {
+			document.addNumber(Field.RATINGS, 0.0f);
+		}
 
 		document.addNumber(Field.VIEW_COUNT, assetEntry.getViewCount());
 
@@ -1372,9 +1397,9 @@ public abstract class BaseIndexer implements Indexer {
 			_commitImmediately);
 	}
 
-	protected abstract void doDelete(Object obj) throws Exception;
+	protected abstract void doDelete(T object) throws Exception;
 
-	protected abstract Document doGetDocument(Object obj) throws Exception;
+	protected abstract Document doGetDocument(T object) throws Exception;
 
 	protected String doGetSortField(String orderByCol) {
 		return orderByCol;
@@ -1387,12 +1412,12 @@ public abstract class BaseIndexer implements Indexer {
 
 	/**
 	 * @deprecated As of 7.0.0, added strictly to support backwards
-	 *             compatibility of {@link Indexer#postProcessSearchQuery(
-	 *             BooleanQuery, SearchContext)}
+	 *             compatibility of {@link
+	 *             Indexer#postProcessSearchQuery(BooleanQuery, SearchContext)}
 	 */
 	@Deprecated
 	protected void doPostProcessSearchQuery(
-			Indexer indexer, BooleanQuery searchQuery,
+			Indexer<?> indexer, BooleanQuery searchQuery,
 			SearchContext searchContext)
 		throws Exception {
 
@@ -1406,12 +1431,12 @@ public abstract class BaseIndexer implements Indexer {
 		}
 	}
 
-	protected abstract void doReindex(Object obj) throws Exception;
-
 	protected abstract void doReindex(String className, long classPK)
 		throws Exception;
 
 	protected abstract void doReindex(String[] ids) throws Exception;
+
+	protected abstract void doReindex(T object) throws Exception;
 
 	protected Hits doSearch(SearchContext searchContext)
 		throws SearchException {
@@ -1787,18 +1812,13 @@ public abstract class BaseIndexer implements Indexer {
 	protected void processHits(SearchContext searchContext, Hits hits)
 		throws SearchException {
 
-		HitsProcessor hitsProcessor =
-			HitsProcessorRegistryUtil.getDefaultHitsProcessor();
-
-		if (hitsProcessor != null) {
-			hitsProcessor.process(searchContext, hits);
-		}
+		HitsProcessorRegistryUtil.process(searchContext, hits);
 	}
 
 	protected void resetFullQuery(SearchContext searchContext) {
 		searchContext.clearFullQueryEntryClassNames();
 
-		for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
+		for (Indexer<?> indexer : IndexerRegistryUtil.getIndexers()) {
 			if (indexer instanceof RelatedEntryIndexer) {
 				RelatedEntryIndexer relatedEntryIndexer =
 					(RelatedEntryIndexer)indexer;

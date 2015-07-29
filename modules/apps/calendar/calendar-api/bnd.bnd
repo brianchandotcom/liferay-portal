@@ -1,0 +1,23 @@
+Bundle-Name: Liferay Calendar API
+Bundle-SymbolicName: com.liferay.calendar.api
+Bundle-Version: 1.0.0
+Include-Resource: classes
+Export-Package:\
+       com.google.ical.iter,\
+       com.google.ical.util,\
+       com.google.ical.values,\
+       com.liferay.calendar.constants,\
+       com.liferay.calendar.exception,\
+       com.liferay.calendar.exporter,\
+       com.liferay.calendar.model,\
+       com.liferay.calendar.notification,\
+       com.liferay.calendar.recurrence,\
+       com.liferay.calendar.service,\
+       com.liferay.calendar.service.persistence,\
+       com.liferay.calendar.util.comparator
+Import-Package:\
+       !org.joda.*,\
+       *
+Include-Resource:\
+       classes,\
+       @lib/com.google.ical.jar

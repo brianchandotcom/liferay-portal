@@ -108,8 +108,8 @@ public class ServiceTrackerCollectionTest {
 		properties.put("a.property", "G");
 
 		ServiceRegistration<InterfaceOne> serviceRegistrationA =
-			_registry.registerService(InterfaceOne.class, interfaceOneA,
-			properties);
+			_registry.registerService(
+				InterfaceOne.class, interfaceOneA, properties);
 
 		Assert.assertNotNull(serviceRegistrationA);
 

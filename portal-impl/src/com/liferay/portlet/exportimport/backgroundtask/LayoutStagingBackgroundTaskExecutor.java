@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -32,7 +33,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 import com.liferay.portlet.exportimport.lar.MissingReferences;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManager;
@@ -95,7 +95,7 @@ public class LayoutStagingBackgroundTaskExecutor
 			markBackgroundTask(
 				backgroundTask.getBackgroundTaskId(), "exported");
 
-			missingReferences = TransactionHandlerUtil.invoke(
+			missingReferences = TransactionInvokerUtil.invoke(
 				transactionAttribute,
 				new LayoutStagingImportCallable(
 					backgroundTask.getBackgroundTaskId(),

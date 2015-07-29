@@ -14,12 +14,12 @@
 
 package com.liferay.journal.content.asset.addon.entry.comments;
 
+import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.content.asset.addon.entry.common.ContentMetadataAssetAddonEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.AssetAddonEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPAssetAddonEntry;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -46,8 +46,8 @@ public class CommentsContentMetadataAssetAddonEntry
 	}
 
 	@Override
-	public String getJSPPath() {
-		return _JSP_PATH;
+	public String getJspPath() {
+		return "/META-INF/resources/comments.jsp";
 	}
 
 	@Override
@@ -94,7 +94,9 @@ public class CommentsContentMetadataAssetAddonEntry
 
 	@Override
 	public boolean isEnabled() {
-		if (!PropsValues.JOURNAL_ARTICLE_COMMENTS_ENABLED) {
+		if (!JournalServiceConfigurationValues.
+				JOURNAL_ARTICLE_COMMENTS_ENABLED) {
+
 			return false;
 		}
 
@@ -112,13 +114,12 @@ public class CommentsContentMetadataAssetAddonEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.comments)"
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.comments)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	private static final String _JSP_PATH = "/META-INF/resources/comments.jsp";
 
 	private CommentRatingsContentMetadataAssetAddonEntry
 		_commentRatingsContentMetadataAssetAddonEntry;

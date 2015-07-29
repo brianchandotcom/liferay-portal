@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<!DOCTYPE project>
-
-<project>
-	<property name="import.shared" value="service-access-control-profile-service" />
-
-	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
-</project>

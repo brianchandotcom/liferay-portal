@@ -1,0 +1,62 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+Closure pomConfigureClosure = {
+	project {
+		developers {
+			developer {
+				name = project.properties["pom.developer.name"] ?: "Brian Wing Shun Chan"
+				organization = project.properties["pom.developer.organization"] ?: "Liferay, Inc."
+				organizationUrl = project.properties["pom.developer.organizationUrl"] ?: "http://www.liferay.com"
+			}
+		}
+
+		licenses {
+			license {
+				name = project.properties["pom.license.name"] ?: "LGPL 2.1"
+				url = project.properties["pom.license.url"] ?: "http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt"
+			}
+		}
+
+		scm {
+			connection = project.properties["pom.scm.connection"] ?: "scm:git:git@github.com:liferay/liferay-plugins.git"
+			developerConnection = project.properties["pom.scm.developerConnection"] ?: "scm:git:git@github.com:liferay/liferay-plugins.git"
+			url = project.properties["pom.scm.url"] ?: "http://github.com/liferay/liferay-plugins"
+		}
+	}
+}
+
+install {
+	repositories {
+		mavenInstaller {
+			pom pomConfigureClosure
+		}
+	}
+}
+
+uploadArchives {
+	repositories {
+		mavenDeployer {
+			pom pomConfigureClosure
+
+			repository(url: project.properties["sonatype.release.url"] ?: "https://repository.liferay.com/nexus/content/repositories/liferay-releases-ce") {
+				authentication password: project.properties["sonatype.release.password"], userName: project.properties["sonatype.release.username"]
+			}
+
+			snapshotRepository(url: project.properties["sonatype.snapshot.url"] ?: "https://repository.liferay.com/nexus/content/repositories/liferay-snapshots-ce") {
+				authentication password: project.properties["sonatype.snapshot.password"], userName: project.properties["sonatype.snapshot.username"]
+			}
+		}
+	}
+}

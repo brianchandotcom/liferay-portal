@@ -56,10 +56,10 @@ public class SCFrameworkVersionLocalServiceWrapper
 	@Override
 	public void addFrameworkVersionResources(
 		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion frameworkVersion,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_scFrameworkVersionLocalService.addFrameworkVersionResources(frameworkVersion,
-			groupPermissions, guestPermissions);
+			modelPermissions);
 	}
 
 	@Override
@@ -72,10 +72,10 @@ public class SCFrameworkVersionLocalServiceWrapper
 
 	@Override
 	public void addFrameworkVersionResources(long frameworkVersionId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_scFrameworkVersionLocalService.addFrameworkVersionResources(frameworkVersionId,
-			groupPermissions, guestPermissions);
+			modelPermissions);
 	}
 
 	/**

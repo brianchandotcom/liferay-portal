@@ -34,7 +34,7 @@ public interface PortletProvider {
 
 	public enum Action {
 
-		ADD, BROWSE, EDIT, VIEW
+		ADD, BROWSE, EDIT, MANAGE, VIEW
 
 	}
 

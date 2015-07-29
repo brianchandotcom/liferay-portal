@@ -103,7 +103,7 @@
 	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 	userParams.put("inherit", Boolean.TRUE);
-	userParams.put("usersGroups", new Long(curGroup.getGroupId()));
+	userParams.put("usersGroups", Long.valueOf(curGroup.getGroupId()));
 
 	int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
 	%>
@@ -117,8 +117,8 @@
 	<%
 	LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
-	organizationParams.put("groupOrganization", new Long(curGroup.getGroupId()));
-	organizationParams.put("organizationsGroups", new Long(curGroup.getGroupId()));
+	organizationParams.put("groupOrganization", Long.valueOf(curGroup.getGroupId()));
+	organizationParams.put("organizationsGroups", Long.valueOf(curGroup.getGroupId()));
 
 	int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null, null, null, null, organizationParams);
 	%>
@@ -132,7 +132,7 @@
 	<%
 	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
-	userGroupParams.put("userGroupsGroups", new Long(curGroup.getGroupId()));
+	userGroupParams.put("userGroupsGroups", Long.valueOf(curGroup.getGroupId()));
 
 	int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), null, userGroupParams);
 	%>

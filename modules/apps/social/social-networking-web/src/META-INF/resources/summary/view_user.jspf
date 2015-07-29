@@ -217,7 +217,7 @@
 												delta="<%= rssDelta %>"
 												displayStyle="<%= rssDisplayStyle %>"
 												feedType="<%= rssFeedType %>"
-												url='<%= blogsFriendlyURL + "/-/blogs/rss" %>'
+												url='<%= themeDisplay.getPathMain() + "/blogs/rss" %>'
 											/>
 										</span>
 									</c:if>

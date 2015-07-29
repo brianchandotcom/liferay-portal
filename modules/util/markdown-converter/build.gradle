@@ -1,0 +1,12 @@
+dependencies {
+	compile group: "org.parboiled", name: "parboiled-core", version: "1.1.6"
+	compile group: "org.parboiled", name: "parboiled-java", version: "1.1.6"
+	compile group: "org.pegdown", name: "pegdown", version: "1.1.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"

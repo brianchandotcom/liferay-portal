@@ -723,7 +723,7 @@ public abstract class ExpandoColumnLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = ExpandoColumnLocalService.class)
+	@BeanReference(type = com.liferay.portlet.expando.service.ExpandoColumnLocalService.class)
 	protected ExpandoColumnLocalService expandoColumnLocalService;
 	@BeanReference(type = com.liferay.portlet.expando.service.ExpandoColumnService.class)
 	protected com.liferay.portlet.expando.service.ExpandoColumnService expandoColumnService;

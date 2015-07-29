@@ -3730,7 +3730,7 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = GroupLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.GroupLocalService.class)
 	protected GroupLocalService groupLocalService;
 	@BeanReference(type = com.liferay.portal.service.GroupService.class)
 	protected com.liferay.portal.service.GroupService groupService;

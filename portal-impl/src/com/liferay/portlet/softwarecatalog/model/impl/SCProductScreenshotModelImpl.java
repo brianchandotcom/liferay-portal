@@ -67,6 +67,18 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 			{ "fullImageId", Types.BIGINT },
 			{ "priority", Types.INTEGER }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("productScreenshotId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("productEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("thumbnailId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("fullImageId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table SCProductScreenshot (productScreenshotId LONG not null primary key,companyId LONG,groupId LONG,productEntryId LONG,thumbnailId LONG,fullImageId LONG,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table SCProductScreenshot";
 	public static final String ORDER_BY_JPQL = " ORDER BY scProductScreenshot.productEntryId ASC, scProductScreenshot.priority ASC";

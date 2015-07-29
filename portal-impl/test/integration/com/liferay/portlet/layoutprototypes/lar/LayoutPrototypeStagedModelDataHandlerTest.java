@@ -57,13 +57,16 @@ public class LayoutPrototypeStagedModelDataHandlerTest
 	public void tearDown() throws Exception {
 		super.tearDown();
 
-		_layoutPrototype =
-			LayoutPrototypeLocalServiceUtil.
-				fetchLayoutPrototypeByUuidAndCompanyId(
-					_layoutPrototype.getUuid(),
-					_layoutPrototype.getCompanyId());
+		if (_layoutPrototype != null) {
+			_layoutPrototype =
+				LayoutPrototypeLocalServiceUtil.
+					fetchLayoutPrototypeByUuidAndCompanyId(
+						_layoutPrototype.getUuid(),
+						_layoutPrototype.getCompanyId());
 
-		LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(_layoutPrototype);
+			LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(
+				_layoutPrototype);
+		}
 	}
 
 	@Override

@@ -16,4 +16,4 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.upload.LiferayFileUpload" %>
+<%@ page import="com.liferay.portal.kernel.util.ProgressTracker" %>

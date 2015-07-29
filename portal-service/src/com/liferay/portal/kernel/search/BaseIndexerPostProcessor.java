@@ -31,8 +31,9 @@ public class BaseIndexerPostProcessor implements IndexerPostProcessor {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #postProcessContextBooleanFilter(
-	 *             BooleanFilter, SearchContext)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #postProcessContextBooleanFilter(BooleanFilter,
+	 *             SearchContext)}
 	 */
 	@Deprecated
 	@Override
@@ -60,8 +61,9 @@ public class BaseIndexerPostProcessor implements IndexerPostProcessor {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #postProcessSearchQuery(
-	 *             BooleanQuery, BooleanFilter, SearchContext)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #postProcessSearchQuery(BooleanQuery, BooleanFilter,
+	 *             SearchContext)}
 	 */
 	@Deprecated
 	@Override

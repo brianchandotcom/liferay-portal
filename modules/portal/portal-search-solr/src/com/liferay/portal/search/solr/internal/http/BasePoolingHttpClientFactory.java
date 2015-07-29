@@ -18,13 +18,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.solr.http.HttpClientFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.pool.PoolStats;
 
 /**
@@ -42,30 +43,25 @@ public abstract class BasePoolingHttpClientFactory
 		}
 
 		_poolingClientConnectionManager =
-			createPoolingClientConnectionManager();
+			createPoolingHttpClientConnectionManager();
 
 		applyProperties(_poolingClientConnectionManager);
 
-		DefaultHttpClient defaultHttpClient = new DefaultHttpClient(
-			_poolingClientConnectionManager);
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
-		applyProperties(defaultHttpClient);
+		httpClientBuilder.setConnectionManager(_poolingClientConnectionManager);
 
-		configure(defaultHttpClient);
+		applyProperties(httpClientBuilder);
 
-		return defaultHttpClient;
+		configure(httpClientBuilder);
+
+		return httpClientBuilder.build();
 	}
 
 	public void setDefaultMaxConnectionsPerRoute(
 		Integer defaultMaxConnectionsPerRoute) {
 
 		_defaultMaxConnectionsPerRoute = defaultMaxConnectionsPerRoute;
-	}
-
-	public void setHttpRequestInterceptors(
-		List<HttpRequestInterceptor> httpRequestInterceptors) {
-
-		_httpRequestInterceptors = httpRequestInterceptors;
 	}
 
 	public void setMaxTotalConnections(Integer maxTotalConnections) {
@@ -121,39 +117,52 @@ public abstract class BasePoolingHttpClientFactory
 		}
 	}
 
-	protected void applyProperties(DefaultHttpClient defaultHttpClient) {
+	protected void addHttpRequestInterceptor(
+		HttpRequestInterceptor httpRequestInterceptor) {
+
+		_httpRequestInterceptors.add(httpRequestInterceptor);
+	}
+
+	protected void applyProperties(HttpClientBuilder httpClientBuilder) {
 		for (HttpRequestInterceptor httpRequestInterceptor :
 				_httpRequestInterceptors) {
 
-			defaultHttpClient.addRequestInterceptor(httpRequestInterceptor, 0);
+			httpClientBuilder.addInterceptorFirst(httpRequestInterceptor);
 		}
 	}
 
 	protected void applyProperties(
-		PoolingClientConnectionManager poolingClientConnectionManager) {
+		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager) {
 
 		if (_defaultMaxConnectionsPerRoute != null) {
-			poolingClientConnectionManager.setDefaultMaxPerRoute(
+			poolingHttpClientConnectionManager.setDefaultMaxPerRoute(
 				_defaultMaxConnectionsPerRoute.intValue());
 		}
 
 		if (_maxTotalConnections != null) {
-			poolingClientConnectionManager.setMaxTotal(
+			poolingHttpClientConnectionManager.setMaxTotal(
 				_maxTotalConnections.intValue());
 		}
 	}
 
-	protected abstract void configure(DefaultHttpClient defaultHttpClient);
+	protected abstract void configure(HttpClientBuilder httpClientBuilder);
 
-	protected abstract PoolingClientConnectionManager
-		createPoolingClientConnectionManager() throws Exception;
+	protected abstract PoolingHttpClientConnectionManager
+		createPoolingHttpClientConnectionManager() throws Exception;
+
+	protected void removeHttpRequestInterceptor(
+		HttpRequestInterceptor httpRequestInterceptor) {
+
+		_httpRequestInterceptors.remove(httpRequestInterceptor);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasePoolingHttpClientFactory.class);
 
 	private Integer _defaultMaxConnectionsPerRoute;
-	private List<HttpRequestInterceptor> _httpRequestInterceptors;
+	private final List<HttpRequestInterceptor> _httpRequestInterceptors =
+		new ArrayList<>();
 	private Integer _maxTotalConnections;
-	private PoolingClientConnectionManager _poolingClientConnectionManager;
+	private PoolingHttpClientConnectionManager _poolingClientConnectionManager;
 
 }

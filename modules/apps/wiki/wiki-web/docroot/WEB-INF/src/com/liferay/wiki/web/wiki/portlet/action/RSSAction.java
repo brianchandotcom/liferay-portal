@@ -49,7 +49,6 @@ public class RSSAction extends BaseRSSStrutsAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long companyId = ParamUtil.getLong(request, "companyId");
 		long nodeId = ParamUtil.getLong(request, "nodeId");
 		String title = ParamUtil.getString(request, "title");
 		int max = ParamUtil.getInteger(
@@ -86,8 +85,8 @@ public class RSSAction extends BaseRSSStrutsAction {
 
 			if (Validator.isNotNull(title)) {
 				rss = WikiPageServiceUtil.getPagesRSS(
-					companyId, nodeId, title, max, type, version, displayStyle,
-					feedURL, entryURL, attachmentURLPrefix, locale);
+					nodeId, title, max, type, version, displayStyle, feedURL,
+					entryURL, attachmentURLPrefix, locale);
 			}
 			else {
 				rss = WikiPageServiceUtil.getNodePagesRSS(

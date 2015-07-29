@@ -26,6 +26,9 @@ public class DDMFormLayoutColumn {
 
 	public static final int FULL = 12;
 
+	public DDMFormLayoutColumn() {
+	}
+
 	public DDMFormLayoutColumn(DDMFormLayoutColumn ddmFormLayoutColumn) {
 		_ddmFormFieldNames = new ArrayList<>(
 			ddmFormLayoutColumn._ddmFormFieldNames);
@@ -53,7 +56,11 @@ public class DDMFormLayoutColumn {
 		_ddmFormFieldNames = ddmFormFieldNames;
 	}
 
+	public void setSize(int size) {
+		_size = size;
+	}
+
 	private List<String> _ddmFormFieldNames = new ArrayList<>();
-	private final int _size;
+	private int _size;
 
 }

@@ -17,8 +17,8 @@ package com.liferay.portlet.asset.model;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ public class BaseDDMStructureClassTypeReader implements ClassTypeReader {
 		List<ClassType> classTypes = new ArrayList<>();
 
 		List<DDMStructure> ddmStructures =
-			DDMStructureServiceUtil.getStructures(
+			DDMStructureManagerUtil.getStructures(
 				groupIds, PortalUtil.getClassNameId(_className));
 
 		for (DDMStructure ddmStructure : ddmStructures) {
@@ -57,7 +57,7 @@ public class BaseDDMStructureClassTypeReader implements ClassTypeReader {
 	public ClassType getClassType(long classTypeId, Locale locale)
 		throws PortalException {
 
-		DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(
+		DDMStructure ddmStructure = DDMStructureManagerUtil.getStructure(
 			classTypeId);
 
 		return new DDMStructureClassType(

@@ -93,6 +93,13 @@ public interface ExportImportHelper {
 		PortletRequest portletRequest, String paramPrefix,
 		boolean timeZoneSensitive);
 
+	public List<Portlet> getDataSiteLevelPortlets(long companyId)
+		throws Exception;
+
+	public List<Portlet> getDataSiteLevelPortlets(
+			long companyId, boolean excludeDataAlwaysStaged)
+		throws Exception;
+
 	/**
 	 * @deprecated As of 7.0.0, moved to {@link
 	 *             ExportImportDateUtil#getDateRange(PortletRequest, long,
@@ -365,6 +372,13 @@ public interface ExportImportHelper {
 			boolean importReferencedContent)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             DefaultConfigurationPortletDataHandler#updateExportPortletPreferencesClassPKs(
+	 *             PortletDataContext, Portlet, PortletPreferences, String,
+	 *             String)}
+	 */
+	@Deprecated
 	public void updateExportPortletPreferencesClassPKs(
 			PortletDataContext portletDataContext, Portlet portlet,
 			PortletPreferences portletPreferences, String key, String className)
@@ -382,6 +396,12 @@ public interface ExportImportHelper {
 			Element rootElement)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             DefaultConfigurationPortletDataHandler#updateImportPortletPreferencesClassPKs(
+	 *             PortletDataContext, PortletPreferences, String, Class, long)}
+	 */
+	@Deprecated
 	public void updateImportPortletPreferencesClassPKs(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences, String key, Class<?> clazz,

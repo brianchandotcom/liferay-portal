@@ -108,20 +108,30 @@ public class DownloadFileHandler extends BaseHandler {
 		}
 
 		if (exception.equals(
-				"com.liferay.portlet.documentlibrary." +
-					"NoSuchFileVersionException") &&
-			(Boolean)getParameterValue("patch")) {
+				"com.liferay.portal.security.auth.PrincipalException")) {
+
+			syncFile.setState(SyncFile.STATE_ERROR);
+			syncFile.setUiEvent(SyncFile.UI_EVENT_INVALID_PERMISSIONS);
+
+			SyncFileService.update(syncFile);
+
+			return true;
+		}
+		else if (exception.equals(
+					"com.liferay.portlet.documentlibrary." +
+						"NoSuchFileVersionException") &&
+				 (Boolean)getParameterValue("patch")) {
 
 			FileEventUtil.downloadFile(getSyncAccountId(), syncFile, false);
 
 			return true;
 		}
-
-		if (exception.equals(
-				"com.liferay.portlet.documentlibrary." +
-					"NoSuchFileEntryException") ||
-			exception.equals(
-				"com.liferay.portlet.documentlibrary.NoSuchFileException")) {
+		else if (exception.equals(
+					"com.liferay.portlet.documentlibrary." +
+						"NoSuchFileEntryException") ||
+				 exception.equals(
+					 "com.liferay.portlet.documentlibrary." +
+						 "NoSuchFileException")) {
 
 			SyncFileService.deleteSyncFile(syncFile, false);
 
@@ -194,6 +204,8 @@ public class DownloadFileHandler extends BaseHandler {
 
 			String message = fse.getMessage();
 
+			_logger.error(message, fse);
+
 			if (message.contains("File name too long")) {
 				syncFile.setState(SyncFile.STATE_ERROR);
 				syncFile.setUiEvent(SyncFile.UI_EVENT_FILE_NAME_TOO_LONG);
@@ -255,8 +267,24 @@ public class DownloadFileHandler extends BaseHandler {
 	protected boolean isUnsynced(SyncFile syncFile) {
 		syncFile = SyncFileService.fetchSyncFile(syncFile.getSyncFileId());
 
-		if ((syncFile == null) ||
-			(syncFile.getState() == SyncFile.STATE_UNSYNCED)) {
+		if (syncFile.getState() == SyncFile.STATE_UNSYNCED) {
+			_logger.debug(
+				"Skipping file {}. File is unsynced.", syncFile.getName());
+
+			return true;
+		}
+
+		Path filePath = Paths.get(syncFile.getFilePathName());
+
+		if (Files.notExists(filePath.getParent())) {
+			_logger.debug(
+				"Skipping file {}. Missing parent file path {}.",
+				syncFile.getName(), filePath.getParent());
+
+			syncFile.setState(SyncFile.STATE_ERROR);
+			syncFile.setUiEvent(SyncFile.UI_EVENT_PARENT_MISSING);
+
+			SyncFileService.update(syncFile);
 
 			return true;
 		}

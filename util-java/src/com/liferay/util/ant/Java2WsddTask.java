@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.xml.XMLFormatter;
+import com.liferay.util.xml.Dom4jUtil;
 import com.liferay.util.xml.XMLSafeReader;
 
 import java.io.File;
@@ -258,7 +258,7 @@ public class Java2WsddTask {
 	}
 
 	private static String _formattedString(Node node) throws Exception {
-		return XMLFormatter.toString(node);
+		return Dom4jUtil.toString(node);
 	}
 
 	private static String _stripComments(String text) {

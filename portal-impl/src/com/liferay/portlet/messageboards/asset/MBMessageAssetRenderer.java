@@ -26,7 +26,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.model.BaseAssetRenderer;
+import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
@@ -39,13 +39,16 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Julio Camarero
  * @author Juan Fernández
  * @author Sergio González
  */
 public class MBMessageAssetRenderer
-	extends BaseAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer implements TrashRenderer {
 
 	public MBMessageAssetRenderer(MBMessage message) {
 		_message = message;
@@ -72,6 +75,18 @@ public class MBMessageAssetRenderer
 	}
 
 	@Override
+	public String getJspPath(HttpServletRequest request, String template) {
+		if (template.equals(TEMPLATE_ABSTRACT) ||
+			template.equals(TEMPLATE_FULL_CONTENT)) {
+
+			return "/html/portlet/message_boards/asset/" + template + ".jsp";
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
 	public String getPortletId() {
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
@@ -86,6 +101,11 @@ public class MBMessageAssetRenderer
 		}
 
 		return getSummary(null, null);
+	}
+
+	@Override
+	public int getStatus() {
+		return _message.getStatus();
 	}
 
 	@Override
@@ -127,7 +147,7 @@ public class MBMessageAssetRenderer
 			PortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"struts_action", "/message_boards/edit_message");
+			"mvcRenderCommandName", "/message_boards/edit_message");
 		portletURL.setParameter(
 			"messageId", String.valueOf(_message.getMessageId()));
 
@@ -146,7 +166,7 @@ public class MBMessageAssetRenderer
 			liferayPortletResponse, windowState);
 
 		portletURL.setParameter(
-			"struts_action", "/message_boards/view_message");
+			"mvcRenderCommandName", "/message_boards/view_message");
 		portletURL.setParameter(
 			"messageId", String.valueOf(_message.getMessageId()));
 		portletURL.setWindowState(windowState);
@@ -210,27 +230,19 @@ public class MBMessageAssetRenderer
 	}
 
 	@Override
-	public boolean isPrintable() {
-		return true;
-	}
-
-	@Override
-	public String render(
-			PortletRequest portletRequest, PortletResponse portletResponse,
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
 			String template)
 		throws Exception {
 
-		if (template.equals(TEMPLATE_ABSTRACT) ||
-			template.equals(TEMPLATE_FULL_CONTENT)) {
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, _message);
 
-			portletRequest.setAttribute(
-				WebKeys.MESSAGE_BOARDS_MESSAGE, _message);
+		return super.include(request, response, template);
+	}
 
-			return "/html/portlet/message_boards/asset/" + template + ".jsp";
-		}
-		else {
-			return null;
-		}
+	@Override
+	public boolean isPrintable() {
+		return true;
 	}
 
 	@Override

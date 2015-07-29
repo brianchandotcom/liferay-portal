@@ -31,8 +31,8 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-
 import com.liferay.portal.service.test.ServiceTestUtil;
+
 import org.junit.After;
 import org.junit.Before;
 
@@ -76,7 +76,7 @@ public abstract class BasePermissionTestCase {
 		ResourcePermissionLocalServiceUtil.setResourcePermissions(
 			group.getCompanyId(), getResourceName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, getPrimKey(), role.getRoleId(),
-			new String[]{ActionKeys.VIEW});
+			new String[] {ActionKeys.VIEW});
 	}
 
 	protected abstract void doSetUp() throws Exception;

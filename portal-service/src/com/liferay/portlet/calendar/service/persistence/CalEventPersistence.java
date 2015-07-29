@@ -30,8 +30,10 @@ import com.liferay.portlet.calendar.model.CalEvent;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.calendar.service.persistence.impl.CalEventPersistenceImpl
  * @see CalEventUtil
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	/*

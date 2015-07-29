@@ -16,9 +16,10 @@ package com.liferay.item.selector.criteria.image.handler;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -26,12 +27,16 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = ItemSelectorCriterionHandler.class)
 public class ImageItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler
-		<ImageItemSelectorCriterion, ItemSelectorReturnType> {
+	extends BaseItemSelectorCriterionHandler<ImageItemSelectorCriterion> {
 
 	@Override
 	public Class<ImageItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return ImageItemSelectorCriterion.class;
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		super.activate(bundleContext);
 	}
 
 }

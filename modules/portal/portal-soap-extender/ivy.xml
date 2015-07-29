@@ -19,16 +19,10 @@
 	<dependencies defaultconf="default">
 		<dependency name="cxf-rt-frontend-jaxws" org="org.apache.cxf" rev="3.0.3" />
 		<dependency name="cxf-rt-ws-policy" org="org.apache.cxf" rev="3.0.3" />
+		<dependency conf="default->master" name="com.liferay.portal.dependency.manager.tccl" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency conf="default->master" name="com.liferay.portal.http.service.api" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency name="org.apache.felix.dependencymanager" org="org.apache.felix" rev="3.2.0" />
-		<dependency name="org.apache.felix.scr" org="org.apache.felix" rev="1.8.2" />
-		<dependency name="org.eclipse.equinox.http.servlet" org="org.eclipse.equinox" rev="1.2.0-SNAPSHOT" />
-		<dependency name="org.eclipse.osgi.services" org="org.eclipse.osgi" rev="3.5.0-SNAPSHOT" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
-		<dependency conf="test->default" name="arquillian-container-liferay" org="org.arquillian.liferay" rev="1.0.0.Final-SNAPSHOT" />
-		<dependency conf="test->default" name="arquillian-deployment-generator-bnd" org="org.arquillian.liferay" rev="1.0.0.Final-SNAPSHOT" />
-		<dependency conf="test->default" name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.8.Final" />
-		<dependency conf="test->default" name="httpclient" org="org.apache.httpcomponents" rev="4.3.5" />
-		<dependency conf="test->default" name="junit" org="junit" rev="4.11" />
 	</dependencies>
 </ivy-module>

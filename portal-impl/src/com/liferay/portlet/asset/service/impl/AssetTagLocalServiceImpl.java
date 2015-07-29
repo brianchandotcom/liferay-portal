@@ -27,6 +27,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.DuplicateTagException;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -77,6 +78,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		AssetTag tag = assetTagPersistence.create(tagId);
 
+		tag.setUuid(serviceContext.getUuid());
 		tag.setGroupId(groupId);
 		tag.setCompanyId(user.getCompanyId());
 		tag.setUserId(user.getUserId());
@@ -106,9 +108,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 				serviceContext.isAddGuestPermissions());
 		}
 		else {
-			addTagResources(
-				tag, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
+			addTagResources(tag, serviceContext.getModelPermissions());
 		}
 
 		return tag;
@@ -139,20 +139,17 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	 * Adds resources for the asset tag using the group and guest permissions.
 	 *
 	 * @param  tag the asset tag for which to add resources
-	 * @param  groupPermissions the group permissions to be applied
-	 * @param  guestPermissions the guest permissions to be applied
+	 * @param  modelPermissions the model permissions to be applied
 	 * @throws PortalException if resources could not be added for the asset tag
 	 *         or if a portal exception occurred
 	 */
 	@Override
-	public void addTagResources(
-			AssetTag tag, String[] groupPermissions, String[] guestPermissions)
+	public void addTagResources(AssetTag tag, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			tag.getCompanyId(), tag.getGroupId(), tag.getUserId(),
-			AssetTag.class.getName(), tag.getTagId(), groupPermissions,
-			guestPermissions);
+			AssetTag.class.getName(), tag.getTagId(), modelPermissions);
 	}
 
 	/**
@@ -286,6 +283,10 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		resourceLocalService.deleteResource(
 			tag.getCompanyId(), AssetTag.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, tag.getTagId());
+
+		// Stats
+
+		assetTagStatsLocalService.deleteTagStatsByTagId(tag.getTagId());
 
 		// Indexer
 

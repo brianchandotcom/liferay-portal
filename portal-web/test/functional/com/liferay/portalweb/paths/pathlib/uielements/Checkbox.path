@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_SAMPLE_DATA</td>
+	<td>//label[contains(.,'Add Sample Data')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ALLOW_DICTIONARY_WORDS</td>
 	<td>//label[contains(.,'Allow Dictionary Words')]/input[@type='checkbox']</td>
 	<td></td>
@@ -26,6 +31,11 @@
 <tr>
 	<td>ALLOW_SITE_ADMIN_MODIFY_PAGES</td>
 	<td>//label[contains(.,'Allow site administrators to modify')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLOGS_ENTRY</td>
+	<td>//input[contains(@id,'BlogsEntry')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,6 +96,11 @@
 <tr>
 	<td>ENABLE_FLAGS</td>
 	<td>//label[contains(.,'Enable Flags')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_FULLSCREEN</td>
+	<td>//input[@id='_86_enableFullscreen']</td>
 	<td></td>
 </tr>
 <tr>
@@ -174,6 +189,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENTIONS</td>
+	<td>//input[contains(@id,'mentionsEnabledCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENTIONS_CHECKBOX_DISABLED</td>
+	<td>//input[contains(@id,'mentionsEnabled') and contains(@class,'disabled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MERGE_WITH_PARENT_FOLDER</td>
 	<td>//input[contains(@id,'mergeWithParentFolder')]</td>
 	<td></td>
@@ -214,6 +239,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SHOW_ACTIONS_CHECKBOX</td>
+	<td>//input[@id='_86_showActions']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SHOW_ADD_CONTENT_BUTTON</td>
 	<td>//label[contains(.,'Show Add Content Button')]/input[@type='checkbox']</td>
 	<td></td>
@@ -221,6 +251,21 @@
 <tr>
 	<td>SHOW_AVAILABLE_LOCALES</td>
 	<td>//label[contains(.,'Show Available Locales')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_FOLDER_MENU_CHECKBOX</td>
+	<td>//input[@id='_86_showFolderMenu']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_NAVIGATION_LINKS_CHECKBOX</td>
+	<td>//input[@id='_86_showTabs']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_SEARCH_CHECKBOX</td>
+	<td>//input[@id='_86_showFoldersSearch']</td>
 	<td></td>
 </tr>
 <tr>

@@ -26,8 +26,7 @@ public interface RSSPortletInstanceConfiguration {
 
 	/**
 	 * Set a DDM template ID that starts with the prefix "ddmTemplate_" (i.e.
-	 * ddmTemplate_rss-navigation-ftl) to use as the display
-	 * style.
+	 * ddmTemplate_rss-navigation-ftl) to use as the display style.
 	 */
 	@Meta.AD(deflt = "", required = false)
 	public String displayStyle();
@@ -63,8 +62,7 @@ public interface RSSPortletInstanceConfiguration {
 	public String[] titles();
 
 	@Meta.AD(
-		deflt = "http://partners.userland.com/nytRss/technology.xml",
-		required = false
+		deflt = "http://www.ft.com/rss/companies/technology", required = false
 	)
 	public String[] urls();
 

@@ -19,7 +19,7 @@ DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
 int status = WorkflowConstants.STATUS_APPROVED;
 
-if (DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.ADD_RECORD)) {
+if (DDLRecordSetPermission.contains(permissionChecker, recordSet, DDLActionKeys.ADD_RECORD)) {
 	status = WorkflowConstants.STATUS_ANY;
 }
 

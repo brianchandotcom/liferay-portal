@@ -26,6 +26,7 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.TeamLocalServiceBaseImpl;
 
 import java.util.LinkedHashMap;
@@ -36,9 +37,25 @@ import java.util.List;
  */
 public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 
+	/**
+	 * @throws     PortalException
+	 * @deprecated As of 7.0.0, replaced by {@link #addTeam(long, long, String,
+	 *             String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public Team addTeam(
 			long userId, long groupId, String name, String description)
+		throws PortalException {
+
+		return addTeam(
+			userId, groupId, name, description, new ServiceContext());
+	}
+
+	@Override
+	public Team addTeam(
+			long userId, long groupId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Team
@@ -51,6 +68,7 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 
 		Team team = teamPersistence.create(teamId);
 
+		team.setUuid(serviceContext.getUuid());
 		team.setUserId(userId);
 		team.setCompanyId(user.getCompanyId());
 		team.setUserName(user.getFullName());

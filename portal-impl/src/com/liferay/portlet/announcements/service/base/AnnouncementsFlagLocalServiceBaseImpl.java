@@ -437,7 +437,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = AnnouncementsFlagLocalService.class)
+	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsFlagLocalService.class)
 	protected AnnouncementsFlagLocalService announcementsFlagLocalService;
 	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsFlagService.class)
 	protected com.liferay.portlet.announcements.service.AnnouncementsFlagService announcementsFlagService;

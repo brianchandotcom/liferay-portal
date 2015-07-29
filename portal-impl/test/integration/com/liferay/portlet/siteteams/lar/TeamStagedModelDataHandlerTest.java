@@ -1,0 +1,157 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portlet.siteteams.lar;
+
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.Team;
+import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.TeamLocalServiceUtil;
+import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.MainServletTestRule;
+
+import java.util.List;
+import java.util.Map;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
+
+/**
+ * @author Akos Thurzo
+ */
+public class TeamStagedModelDataHandlerTest
+	extends BaseStagedModelDataHandlerTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			TransactionalTestRule.INSTANCE);
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		if (_user != null) {
+			UserLocalServiceUtil.deleteUser(_user);
+		}
+
+		if (_userGroup != null) {
+			UserGroupLocalServiceUtil.deleteUserGroup(_userGroup);
+		}
+	}
+
+	@Override
+	protected StagedModel addStagedModel(
+			Group group,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		Team team = TeamLocalServiceUtil.addTeam(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		_user = UserTestUtil.addUser();
+
+		UserLocalServiceUtil.addTeamUser(team.getTeamId(), _user);
+
+		_userGroup = UserGroupLocalServiceUtil.addUserGroup(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		UserGroupLocalServiceUtil.addTeamUserGroup(
+			team.getTeamId(), _userGroup);
+
+		return team;
+	}
+
+	@Override
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		TeamLocalServiceUtil.deleteTeam((Team)stagedModel);
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group) {
+		try {
+			return TeamLocalServiceUtil.getTeamByUuidAndGroupId(
+				uuid, group.getGroupId());
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	protected Class<? extends StagedModel> getStagedModelClass() {
+		return Team.class;
+	}
+
+	@Override
+	protected void validateImportedStagedModel(
+			StagedModel stagedModel, StagedModel importedStagedModel)
+		throws Exception {
+
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
+
+		Team team = (Team)stagedModel;
+		Team importedTeam = (Team)importedStagedModel;
+
+		Assert.assertEquals(team.getName(), importedTeam.getName());
+		Assert.assertEquals(
+			team.getDescription(), importedTeam.getDescription());
+
+		List<User> teamUsers = UserLocalServiceUtil.getTeamUsers(
+			importedTeam.getTeamId());
+
+		Assert.assertEquals(1, teamUsers.size());
+		Assert.assertEquals(_user, teamUsers.get(0));
+
+		List<UserGroup> teamUserGroups =
+			UserGroupLocalServiceUtil.getTeamUserGroups(
+				importedTeam.getTeamId());
+
+		Assert.assertEquals(1, teamUserGroups.size());
+		Assert.assertEquals(_userGroup, teamUserGroups.get(0));
+	}
+
+	private User _user;
+	private UserGroup _userGroup;
+
+}

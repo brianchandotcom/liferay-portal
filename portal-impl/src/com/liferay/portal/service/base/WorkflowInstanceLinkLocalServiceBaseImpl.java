@@ -596,7 +596,7 @@ public abstract class WorkflowInstanceLinkLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = WorkflowInstanceLinkLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.WorkflowInstanceLinkLocalService.class)
 	protected WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService;
 	@BeanReference(type = WorkflowInstanceLinkPersistence.class)
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;

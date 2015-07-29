@@ -1,11 +1,19 @@
 AUI.add(
 	'liferay-ddm-form-field-radio',
 	function(A) {
-		var AArray = A.Array;
-		var Lang = A.Lang;
-
 		var RadioField = A.Component.create(
 			{
+				ATTRS: {
+					options: {
+						validator: Array.isArray,
+						value: []
+					},
+
+					type: {
+						value: 'radio'
+					}
+				},
+
 				EXTENDS: Liferay.DDM.Renderer.Field,
 
 				NAME: 'liferay-ddm-form-field-radio',
@@ -14,11 +22,18 @@ AUI.add(
 					getOptions: function() {
 						var instance = this;
 
-						return _.map(
-							instance.get('definition').options,
+						var value = instance.get('value');
+
+						if (instance.get('localizable')) {
+							value = value[instance.get('locale')];
+						}
+
+						return A.map(
+							instance.get('options'),
 							function(item) {
 								return {
 									label: item.label[instance.get('locale')],
+									status: value === item.value ? 'checked' : '',
 									value: item.value
 								};
 							}
@@ -29,7 +44,7 @@ AUI.add(
 						var instance = this;
 
 						return A.merge(
-								RadioField.superclass.getTemplateContext.apply(instance, arguments),
+							RadioField.superclass.getTemplateContext.apply(instance, arguments),
 							{
 								options: instance.getOptions()
 							}

@@ -29,7 +29,7 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/users_admin/view_users");
+portletURL.setParameter("mvcRenderCommandName", "/users_admin/view");
 portletURL.setParameter("usersListView", usersListView);
 
 if (Validator.isNotNull(viewUsersRedirect)) {
@@ -138,7 +138,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			form.fm('redirect').val(form.fm('usersRedirect').val());
 			form.fm('deleteUserIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUser'));
 
-			submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user" /></portlet:actionURL>');
+			submitForm(form, '<portlet:actionURL name="/users_admin/edit_user" />');
 		}
 	}
 
@@ -199,12 +199,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		form.fm('redirect').val(form.fm('organizationsRedirect').val());
 		form.fm('deleteOrganizationIds').val(organizationIds);
 
-		submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /></portlet:actionURL>');
+		submitForm(form, '<portlet:actionURL name="/users_admin/edit_organization" />');
 	}
 
 	function <portlet:namespace />getUsersCount(className, ids, status, callback) {
 		AUI.$.ajax(
-			'<%= themeDisplay.getPathMain() %>/users_admin/get_users_count',
+			'<liferay-portlet:resourceURL id="/users_admin/get_users_count" />',
 			{
 				data: {
 					className: className,
@@ -230,7 +230,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<%
 		PortletURL showUsersURL = renderResponse.createRenderURL();
 
-		showUsersURL.setParameter("struts_action", "/users_admin/view_users");
+		showUsersURL.setParameter("mvcRenderCommandName", "/users_admin/view");
 		showUsersURL.setParameter("usersListView", usersListView);
 
 		long organizationId = ParamUtil.getLong(request, "organizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
@@ -244,6 +244,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		}
 		%>
 
-		location.href = Liferay.Util.addParams('<portlet:namespace />status=' + status.value, '<%= showUsersURL.toString() %>');
+		location.href = Liferay.Util.addParams('<portlet:namespace />status=' + status.value, '<%= HtmlUtil.escapeJS(showUsersURL.toString()) %>');
 	}
 </aui:script>

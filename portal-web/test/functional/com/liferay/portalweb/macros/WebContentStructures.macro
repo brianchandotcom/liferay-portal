@@ -189,6 +189,7 @@
 				<for list="${structureFieldNames}" param="structureFieldName">
 					<execute macro="DynamicDataMapping#editFieldWidth">
 						<var name="fieldFieldLabel" value="${structureFieldName}" />
+						<var name="widthSize" value="${widthSize}" />
 					</execute>
 				</for>
 			</then>
@@ -265,7 +266,9 @@
 
 				<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
 					<var name="addOrRemoveViewPermission" value="Add" />
+					<var name="key_roleName" value="${key_roleName}" />
 					<var name="roleList" value="${addRoleViewPermissions}" />
+					<var name="roleName" value="${roleName}" />
 				</execute>
 			</then>
 		</if>

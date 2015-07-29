@@ -14,6 +14,8 @@
 
 package com.liferay.sync.engine.upgrade.v3_0_8;
 
+import com.liferay.sync.engine.service.SyncFileService;
+import com.liferay.sync.engine.service.persistence.SyncFilePersistence;
 import com.liferay.sync.engine.upgrade.UpgradeProcess;
 import com.liferay.sync.engine.util.PropsValues;
 
@@ -37,6 +39,11 @@ public class UpgradeProcess_3_0_8 extends UpgradeProcess {
 
 	@Override
 	public void upgrade() throws Exception {
+		upgradeLoggerConfiguration();
+		upgradeTable();
+	}
+
+	protected void upgradeLoggerConfiguration() throws Exception {
 		Class<?> clazz = getClass();
 
 		ClassLoader classLoader = clazz.getClassLoader();
@@ -53,6 +60,14 @@ public class UpgradeProcess_3_0_8 extends UpgradeProcess {
 		Files.copy(
 			inputStream, loggerConfigurationFilePath,
 			StandardCopyOption.REPLACE_EXISTING);
+	}
+
+	protected void upgradeTable() throws Exception {
+		SyncFilePersistence syncFilePersistence =
+			SyncFileService.getSyncFilePersistence();
+
+		syncFilePersistence.executeRaw(
+			"CREATE INDEX syncfile_checksum_idx ON SyncFile(checksum)");
 	}
 
 }

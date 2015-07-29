@@ -14,12 +14,14 @@
 
 package com.liferay.portal.kernel.cache.transactional;
 
-import com.liferay.portal.kernel.cache.AggregatedCacheListener;
+import com.liferay.portal.kernel.cache.AggregatedPortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionDefinition;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleListener;
 import com.liferay.portal.kernel.transaction.TransactionStatus;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -43,19 +45,56 @@ public class TransactionalPortalCacheHelper {
 		TRANSACTION_LIFECYCLE_LISTENER = new TransactionLifecycleListener() {
 
 			@Override
-			public void created(
-				TransactionAttribute transactionAttribute,
-				TransactionStatus transactionStatus) {
-
-				begin();
-			}
-
-			@Override
 			public void committed(
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus) {
 
-				commit();
+				if (!_isTransactionalCacheEnabled()) {
+					return;
+				}
+
+				Propagation propagation = transactionAttribute.getPropagation();
+
+				if (propagation.value() >=
+						TransactionDefinition.PROPAGATION_NOT_SUPPORTED) {
+
+					List<List<PortalCacheMap>> backupPortalCacheMaps =
+						_backupPortalCacheMapsThreadLocal.get();
+
+					_portalCacheMapsThreadLocal.set(
+						backupPortalCacheMaps.remove(
+							backupPortalCacheMaps.size() - 1));
+				}
+				else if (transactionStatus.isNewTransaction()) {
+					commit();
+				}
+			}
+
+			@Override
+			public void created(
+				TransactionAttribute transactionAttribute,
+				TransactionStatus transactionStatus) {
+
+				if (!_isTransactionalCacheEnabled()) {
+					return;
+				}
+
+				Propagation propagation = transactionAttribute.getPropagation();
+
+				if (propagation.value() >=
+						TransactionDefinition.PROPAGATION_NOT_SUPPORTED) {
+
+					List<List<PortalCacheMap>> backupPortalCacheMaps =
+						_backupPortalCacheMapsThreadLocal.get();
+
+					backupPortalCacheMaps.add(
+						_portalCacheMapsThreadLocal.get());
+
+					_portalCacheMapsThreadLocal.remove();
+				}
+				else if (transactionStatus.isNewTransaction()) {
+					begin();
+				}
 			}
 
 			@Override
@@ -63,27 +102,40 @@ public class TransactionalPortalCacheHelper {
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus, Throwable throwable) {
 
-				rollback();
+				if (!_isTransactionalCacheEnabled()) {
+					return;
+				}
 
-				EntityCacheUtil.clearLocalCache();
-				FinderCacheUtil.clearLocalCache();
+				Propagation propagation = transactionAttribute.getPropagation();
+
+				if (propagation.value() >=
+						TransactionDefinition.PROPAGATION_NOT_SUPPORTED) {
+
+					List<List<PortalCacheMap>> backupPortalCacheMaps =
+						_backupPortalCacheMapsThreadLocal.get();
+
+					_portalCacheMapsThreadLocal.set(
+						backupPortalCacheMaps.remove(
+							backupPortalCacheMaps.size() - 1));
+				}
+				else if (transactionStatus.isNewTransaction()) {
+					rollback();
+
+					EntityCacheUtil.clearLocalCache();
+					FinderCacheUtil.clearLocalCache();
+				}
 			}
 
 		};
 
 	public static void begin() {
-		if (!_isTransactionalCacheEnabled()) {
-			return;
-		}
+		List<PortalCacheMap> portalCacheMaps =
+			_portalCacheMapsThreadLocal.get();
 
-		_pushPortalCacheMap();
+		portalCacheMaps.add(new PortalCacheMap());
 	}
 
 	public static void commit() {
-		if (!_isTransactionalCacheEnabled()) {
-			return;
-		}
-
 		PortalCacheMap portalCacheMap = _popPortalCacheMap();
 
 		for (Map.Entry
@@ -114,10 +166,6 @@ public class TransactionalPortalCacheHelper {
 	}
 
 	public static void rollback() {
-		if (!_isTransactionalCacheEnabled()) {
-			return;
-		}
-
 		PortalCacheMap portalCacheMap = _popPortalCacheMap();
 
 		portalCacheMap.clear();
@@ -159,7 +207,7 @@ public class TransactionalPortalCacheHelper {
 		uncommittedBuffer.put(
 			key,
 			new ValueEntry(
-				value, ttl, AggregatedCacheListener.isRemoteInvoke()));
+				value, ttl, AggregatedPortalCacheListener.isRemoteInvoke()));
 	}
 
 	protected static <K extends Serializable, V> void removeAll(
@@ -175,7 +223,13 @@ public class TransactionalPortalCacheHelper {
 			portalCacheMap.put(portalCache, uncommittedBuffer);
 		}
 
-		uncommittedBuffer.removeAll(AggregatedCacheListener.isRemoteInvoke());
+		uncommittedBuffer.removeAll(
+			AggregatedPortalCacheListener.isRemoteInvoke());
+	}
+
+	protected static class PortalCacheMap
+		extends HashMap
+			<PortalCache<? extends Serializable, ?>, UncommittedBuffer> {
 	}
 
 	private static boolean _isTransactionalCacheEnabled() {
@@ -201,17 +255,16 @@ public class TransactionalPortalCacheHelper {
 		return portalCacheMaps.remove(portalCacheMaps.size() - 1);
 	}
 
-	private static void _pushPortalCacheMap() {
-		List<PortalCacheMap> portalCacheMaps =
-			_portalCacheMapsThreadLocal.get();
-
-		portalCacheMaps.add(new PortalCacheMap());
-	}
-
 	private static final ValueEntry _NULL_HOLDER_VALUE_ENTRY = new ValueEntry(
 		TransactionalPortalCache.NULL_HOLDER, PortalCache.DEFAULT_TIME_TO_LIVE,
 		false);
 
+	private static final ThreadLocal<List<List<PortalCacheMap>>>
+		_backupPortalCacheMapsThreadLocal =
+			new InitialThreadLocal<List<List<PortalCacheMap>>>(
+				TransactionalPortalCacheHelper.class.getName() +
+					"._backupPortalCacheMapsThreadLocal",
+				new ArrayList<List<PortalCacheMap>>());
 	private static final ThreadLocal<List<PortalCacheMap>>
 		_portalCacheMapsThreadLocal =
 			new InitialThreadLocal<List<PortalCacheMap>>(
@@ -220,11 +273,6 @@ public class TransactionalPortalCacheHelper {
 				new ArrayList<PortalCacheMap>());
 
 	private volatile static Boolean _transactionalCacheEnabled;
-
-	private static class PortalCacheMap
-		extends HashMap
-			<PortalCache<? extends Serializable, ?>, UncommittedBuffer> {
-	}
 
 	private static class UncommittedBuffer {
 

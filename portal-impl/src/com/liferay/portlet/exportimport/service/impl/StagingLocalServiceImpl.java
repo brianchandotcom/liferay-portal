@@ -69,6 +69,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -407,6 +408,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		try {
 			ExportImportThreadLocal.setLayoutImportInProcess(true);
+			ExportImportThreadLocal.setLayoutStagingInProcess(true);
 
 			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
 				stagingRequestId);
@@ -440,6 +442,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		}
 		finally {
 			ExportImportThreadLocal.setLayoutImportInProcess(false);
+			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 		}
 	}
 
@@ -460,7 +463,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
-	 *             long, boolean, java.util.Map)}
+	 *             long, boolean, Map)}
 	 */
 	@Deprecated
 	@Override

@@ -4,7 +4,7 @@
 		module="arquillian-container-osgi-allin"
 		revision="1.0.0.Final-SNAPSHOT"
 		status="integration"
-		publication="20150605011433"
+		publication="20150630101216"
 	>
 		<description homepage="">
 		Arquillian Remote Container OSGi that allow to use standars extensions
@@ -76,7 +76,7 @@
 		<m:properties__useReleaseProfile>false</m:properties__useReleaseProfile>
 		<m:properties__version.release.plugin>2.5</m:properties__version.release.plugin>
 		<m:properties__version.ear.plugin>2.9.1</m:properties__version.ear.plugin>
-		<m:maven.plugins>org.apache.maven.plugins__maven-enforcer-plugin__null|org.codehaus.mojo__buildnumber-maven-plugin__null|org.apache.maven.plugins__maven-source-plugin__null|org.apache.maven.plugins__maven-enforcer-plugin__null|org.codehaus.mojo__buildnumber-maven-plugin__null|org.apache.maven.plugins__maven-source-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__3.1|org.apache.maven.plugins__maven-surefire-plugin__2.17|org.apache.maven.plugins__maven-release-plugin__2.5|org.apache.maven.plugins__maven-enforcer-plugin__null|org.codehaus.mojo__buildnumber-maven-plugin__null|org.apache.maven.plugins__maven-source-plugin__null|org.apache.maven.plugins__maven-enforcer-plugin__null|org.codehaus.mojo__buildnumber-maven-plugin__null|org.apache.maven.plugins__maven-source-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__3.1|org.apache.maven.plugins__maven-surefire-plugin__2.17|org.apache.maven.plugins__maven-release-plugin__2.5</m:maven.plugins>
+		<m:maven.plugins>org.apache.maven.plugins__maven-enforcer-plugin__null|org.codehaus.mojo__buildnumber-maven-plugin__null|org.apache.maven.plugins__maven-source-plugin__null|org.apache.maven.plugins__maven-enforcer-plugin__null|org.codehaus.mojo__buildnumber-maven-plugin__null|org.apache.maven.plugins__maven-source-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__3.1|org.apache.maven.plugins__maven-surefire-plugin__2.17|org.apache.maven.plugins__maven-release-plugin__2.5|com.liferay__com.liferay.source.formatter__1.0.19|org.apache.maven.plugins__maven-enforcer-plugin__null|org.codehaus.mojo__buildnumber-maven-plugin__null|org.apache.maven.plugins__maven-source-plugin__null|org.apache.maven.plugins__maven-enforcer-plugin__null|org.codehaus.mojo__buildnumber-maven-plugin__null|org.apache.maven.plugins__maven-source-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__3.1|org.apache.maven.plugins__maven-surefire-plugin__2.17|org.apache.maven.plugins__maven-release-plugin__2.5|com.liferay__com.liferay.source.formatter__1.0.19</m:maven.plugins>
 		<m:dependency.management__org.jboss.spec__jboss-javaee-6.0__version>2.0.0.Final</m:dependency.management__org.jboss.spec__jboss-javaee-6.0__version>
 		<m:dependency.management__org.jboss.spec__jboss-javaee-6.0__scope>provided</m:dependency.management__org.jboss.spec__jboss-javaee-6.0__scope>
 		<m:dependency.management__org.jboss.spec__jboss-javaee-6.0__exclusion_0>org.apache.xalan__xalan</m:dependency.management__org.jboss.spec__jboss-javaee-6.0__exclusion_0>

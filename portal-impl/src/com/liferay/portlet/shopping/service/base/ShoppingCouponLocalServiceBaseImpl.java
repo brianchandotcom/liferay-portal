@@ -665,7 +665,7 @@ public abstract class ShoppingCouponLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = ShoppingCouponLocalService.class)
+	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingCouponLocalService.class)
 	protected ShoppingCouponLocalService shoppingCouponLocalService;
 	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingCouponService.class)
 	protected com.liferay.portlet.shopping.service.ShoppingCouponService shoppingCouponService;

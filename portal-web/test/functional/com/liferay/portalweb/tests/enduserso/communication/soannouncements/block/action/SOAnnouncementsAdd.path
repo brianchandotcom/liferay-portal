@@ -45,12 +45,17 @@
 </tr>
 <tr>
 	<td>CONTENT_FIELD</td>
-	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td>//div[contains(@id,'cke__')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_FIELD_FORMATTED_TEXT</td>
 	<td>//body[contains(@class,'so-announcements-portlet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_IFRAME</td>
+	<td>//div[contains(@id,'cke__')]//iframe</td>
 	<td></td>
 </tr>
 <tr>

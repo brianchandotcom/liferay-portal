@@ -41,6 +41,5 @@
 		<dependency org="org.easymock" name="easymock" rev="2.4" force="true" conf="test->runtime(*),master(*)"/>
 		<dependency org="org.mockito" name="mockito-all" rev="1.7" force="true" conf="test->runtime(*),master(*)"/>
 		<override org="junit" module="junit" matcher="exact" rev="4.5"/>
-		<override org="junit" module="junit" matcher="exact" rev="4.5"/>
 	</dependencies>
 </ivy-module>

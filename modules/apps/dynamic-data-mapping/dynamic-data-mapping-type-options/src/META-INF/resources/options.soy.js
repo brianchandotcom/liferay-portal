@@ -5,15 +5,15 @@ if (typeof ddm == 'undefined') { var ddm = {}; }
 
 
 ddm.options = function(opt_data, opt_ignored) {
-var output = '\t<div class="form-group field-wrapper' + soy.$$escapeHtml(opt_data.visible ? '' : ' hide') + '" data-fieldname="' + soy.$$escapeHtml(opt_data.name) + '"><span class="control-label">' + soy.$$escapeHtml(opt_data.label) + '</span><input name="' + soy.$$escapeHtml(opt_data.name) + '" type="hidden" /><div class="auto-fields">';
+var output = '\t<div class="form-group field-wrapper' + soy.$$escapeHtml(opt_data.visible ? '' : ' hide') + '" data-fieldname="' + soy.$$escapeHtml(opt_data.name) + '"><span class="control-label">' + soy.$$escapeHtml(opt_data.label) + ((opt_data.required) ? '<b>&nbsp;*</b>' : '') + '</span><input name="' + soy.$$escapeHtml(opt_data.name) + '" type="hidden" /><div class="auto-fields">';
 if (opt_data.value.length == 0) {
 	output += ddm.option(soy.$$augmentMap(opt_data, {label: '', value: ''}));
 } else {
-	var optionList18 = opt_data.value;
-	var optionListLen18 = optionList18.length;
-	for (var optionIndex18 = 0; optionIndex18 < optionListLen18; optionIndex18++) {
-	  var optionData18 = optionList18[optionIndex18];
-	  output += ddm.option(soy.$$augmentMap(opt_data, {label: optionData18.label, value: optionData18.value}));
+	var optionList21 = opt_data.value;
+	var optionListLen21 = optionList21.length;
+	for (var optionIndex21 = 0; optionIndex21 < optionListLen21; optionIndex21++) {
+	  var optionData21 = optionList21[optionIndex21];
+	  output += ddm.option(soy.$$augmentMap(opt_data, {label: optionData21.label, value: optionData21.value}));
 	}
 }
 output += '</div></div>';

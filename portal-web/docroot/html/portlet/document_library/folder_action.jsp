@@ -124,8 +124,7 @@ String iconMenuId = null;
 
 		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
 			<c:if test="<%= hasViewPermission %>">
-				<portlet:resourceURL var="downloadURL">
-					<portlet:param name="struts_action" value="/document_library/edit_folder" />
+				<portlet:resourceURL id="/document_library/edit_folder" var="downloadURL">
 					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 				</portlet:resourceURL>
@@ -147,7 +146,7 @@ String iconMenuId = null;
 
 					<c:if test="<%= hasUpdatePermission && !folder.isMountPoint() %>">
 						<portlet:renderURL var="editURL">
-							<portlet:param name="struts_action" value="/document_library/edit_folder" />
+							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
 							<portlet:param name="redirect" value="<%= redirect %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
@@ -162,7 +161,7 @@ String iconMenuId = null;
 
 					<c:if test="<%= hasUpdatePermission && folder.isMountPoint() %>">
 						<portlet:renderURL var="editURL">
-							<portlet:param name="struts_action" value="/document_library/edit_repository" />
+							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
 							<portlet:param name="redirect" value="<%= redirect %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
@@ -177,7 +176,7 @@ String iconMenuId = null;
 
 					<c:if test="<%= hasUpdatePermission && !folder.isMountPoint() %>">
 						<portlet:renderURL var="moveURL">
-							<portlet:param name="struts_action" value="/document_library/move_entry" />
+							<portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" />
 							<portlet:param name="redirect" value="<%= redirect %>" />
 							<portlet:param name="folderIds" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
@@ -210,7 +209,7 @@ String iconMenuId = null;
 
 					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) && !folder.isMountPoint() %>">
 						<portlet:renderURL var="addFolderURL">
-							<portlet:param name="struts_action" value="/document_library/edit_folder" />
+							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 							<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
@@ -232,8 +231,7 @@ String iconMenuId = null;
 						if (localRepository.isCapabilityProvided(TemporaryFileEntriesCapability.class)) {
 						%>
 
-							<portlet:actionURL var="deleteExpiredTemporaryFileEntriesURL">
-								<portlet:param name="struts_action" value="/document_library/edit_folder" />
+							<portlet:actionURL name="/document_library/edit_folder" var="deleteExpiredTemporaryFileEntriesURL">
 								<portlet:param name="<%= Constants.CMD %>" value="deleteExpiredTemporaryFileEntries" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="repositoryId" value="<%= String.valueOf(folder.getRepositoryId()) %>" />
@@ -259,7 +257,7 @@ String iconMenuId = null;
 
 					<c:if test="<%= workflowEnabled && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>">
 						<portlet:renderURL var="editURL">
-							<portlet:param name="struts_action" value="/document_library/edit_folder" />
+							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
 							<portlet:param name="redirect" value="<%= redirect %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
@@ -293,7 +291,7 @@ String iconMenuId = null;
 
 					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
 						<portlet:renderURL var="addFolderURL">
-							<portlet:param name="struts_action" value="/document_library/edit_folder" />
+							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 							<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
@@ -309,7 +307,7 @@ String iconMenuId = null;
 
 					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_REPOSITORY) %>">
 						<portlet:renderURL var="addRepositoryURL">
-							<portlet:param name="struts_action" value="/document_library/edit_repository" />
+							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 						</portlet:renderURL>
@@ -329,7 +327,7 @@ String iconMenuId = null;
 				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && ((folder == null) || !folder.isMountPoint()) %>">
 					<c:if test="<%= ((folder == null) || folder.isSupportsMultipleUpload()) %>">
 						<portlet:renderURL var="editFileEntryURL">
-							<portlet:param name="struts_action" value="/document_library/upload_multiple_file_entries" />
+							<portlet:param name="mvcPath" value="/html/portlet/document_library/upload_multiple_file_entries.jsp" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="backURL" value="<%= currentURL %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
@@ -349,7 +347,15 @@ String iconMenuId = null;
 					%>
 
 					<liferay-portlet:renderURL var="editFileEntryURL" windowState="<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? LiferayWindowState.POP_UP.toString() : WindowState.NORMAL.toString() %>">
-						<portlet:param name="struts_action" value='<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? "/document_library_display/select_add_file_entry_type" : "/document_library_display/edit_file_entry" %>' />
+						<c:choose>
+							<c:when test="<%= ((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0) %>">
+								<portlet:param name="mvcPath" value="/html/portlet/document_library_display/select_add_file_entry_type.jsp" />
+							</c:when>
+							<c:otherwise>
+								<portlet:param name="mvcRenderCommandName" value="/document_library_display/edit_file_entry" />
+							</c:otherwise>
+						</c:choose>
+
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="backURL" value="<%= currentURL %>" />
 						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
@@ -378,7 +384,7 @@ String iconMenuId = null;
 
 				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && ((folder == null) || (!folder.isMountPoint() && folder.isSupportsShortcuts())) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
 					<portlet:renderURL var="editFileShortcutURL">
-						<portlet:param name="struts_action" value="/document_library_display/edit_file_shortcut" />
+						<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_shortcut" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
@@ -415,12 +421,11 @@ String iconMenuId = null;
 
 			<c:if test="<%= hasDeletePermission && !folder.isMountPoint() %>">
 				<portlet:renderURL var="redirectURL">
-					<portlet:param name="struts_action" value="/document_library/view" />
+					<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
 					<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
 				</portlet:renderURL>
 
-				<portlet:actionURL var="deleteURL">
-					<portlet:param name="struts_action" value="/document_library/edit_folder" />
+				<portlet:actionURL name="/document_library/edit_folder" var="deleteURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= ((folder.getModel() instanceof DLFolder) && TrashUtil.isTrashEnabled(scopeGroupId)) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 					<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
@@ -431,12 +436,11 @@ String iconMenuId = null;
 
 			<c:if test="<%= hasDeletePermission && folder.isMountPoint() %>">
 				<portlet:renderURL var="redirectURL">
-					<portlet:param name="struts_action" value="/document_library/view" />
+					<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
 					<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
 				</portlet:renderURL>
 
-				<portlet:actionURL var="deleteURL">
-					<portlet:param name="struts_action" value="/document_library/edit_repository" />
+				<portlet:actionURL name="/document_library/edit_repository" var="deleteURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 					<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
 					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
@@ -499,7 +503,7 @@ String iconMenuId = null;
 			'click',
 			function(event) {
 				<portlet:renderURL var="viewSlideShowURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="struts_action" value="/image_gallery_display/view_slide_show" />
+					<portlet:param name="mvcRenderCommandName" value="/image_gallery_display/view_slide_show" />
 					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 				</portlet:renderURL>
 

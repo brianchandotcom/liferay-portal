@@ -7615,6 +7615,11 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		return _badColumnNames;
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return UserNotificationEventModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the user notification event persistence.
 	 */

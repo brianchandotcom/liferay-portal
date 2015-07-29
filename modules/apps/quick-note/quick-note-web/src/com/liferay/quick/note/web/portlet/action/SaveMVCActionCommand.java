@@ -14,10 +14,10 @@
 
 package com.liferay.quick.note.web.portlet.action;
 
+import com.liferay.portal.PortletPreferencesException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -26,10 +26,10 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
 import com.liferay.quick.note.web.constants.QuickNotePortletKeys;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -49,10 +49,10 @@ public class SaveMVCActionCommand implements MVCActionCommand {
 
 	@Override
 	public boolean processAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		try {
@@ -65,11 +65,12 @@ public class SaveMVCActionCommand implements MVCActionCommand {
 					themeDisplay.getLayout(), themeDisplay.getPpid());
 
 			if (portletPreferences instanceof StrictPortletPreferencesImpl) {
-				throw new PrincipalException();
+				throw new PortletPreferencesException.MustBeStrict(
+					themeDisplay.getPpid());
 			}
 
-			String color = ParamUtil.getString(portletRequest, "color");
-			String data = ParamUtil.getString(portletRequest, "data");
+			String color = ParamUtil.getString(actionRequest, "color");
+			String data = ParamUtil.getString(actionRequest, "data");
 
 			if (Validator.isNotNull(color)) {
 				portletPreferences.setValue("color", color);

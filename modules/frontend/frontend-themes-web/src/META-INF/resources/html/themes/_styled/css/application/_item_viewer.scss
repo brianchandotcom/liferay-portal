@@ -1,0 +1,49 @@
+.lfr-item-viewer {
+	.image-viewer-base {
+		outline: none;
+	}
+
+	.image-viewer-footer-content .image-viewer-footer-control {
+		color: #777;
+	}
+
+	.item-preview:hover {
+		cursor: pointer;
+	}
+
+	.aspect-ratio  a.item-preview {
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+
+	.search-info {
+		background-color: #D3E8F1;
+
+		.keywords {
+			font-size: 1.4em;
+			font-weight: bold;
+		}
+
+		.change-search-folder {
+			font-size: 0.8em;
+			font-weight: normal;
+		}
+	}
+
+	.progress-container {
+		background-color: #FFF;
+	}
+
+	&.uploading > div:not(.progress-container) {
+		opacity: 0.3;
+	}
+}
+
+.lfr-item-viewer-close {
+	color: #FFF;
+}
+
+.lfr-item-viewer-icon-info {
+	color: #CCC;
+}

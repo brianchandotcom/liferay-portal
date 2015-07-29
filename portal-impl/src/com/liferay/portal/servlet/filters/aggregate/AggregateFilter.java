@@ -360,8 +360,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		URL resourceURL = _servletContext.getResource(resourcePath);
 
 		if (resourceURL == null) {
-			resourceURL = PortalWebResourcesUtil.getServletContextResource(
-				resourcePath);
+			resourceURL = PortalWebResourcesUtil.getResource(resourcePath);
 
 			if (resourceURL == null) {
 				return null;
@@ -459,19 +458,19 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 			String requestURI = request.getRequestURI();
 
-			if (PortalWebResourcesUtil.isResourceContextPath(requestURI)) {
-				cssServletContext = PortalWebResourcesUtil.getServletContext(
-					PortalWebResourceConstants.RESOURCE_TYPE_CSS);
+			if (PortalWebResourcesUtil.hasContextPath(requestURI)) {
+				cssServletContext =
+					PortalWebResourcesUtil.getPathServletContext(requestURI);
 			}
 			else {
 				cssServletContext = _servletContext;
 			}
 
-			content = DynamicCSSUtil.parseSass(
-				cssServletContext, request, resourcePath, content);
+			content = DynamicCSSUtil.replaceToken(
+				cssServletContext, request, content);
 		}
 		catch (Exception e) {
-			_log.error("Unable to parse SASS on CSS " + resourcePath, e);
+			_log.error("Unable to replace tokens in CSS " + resourcePath, e);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(content);
@@ -522,7 +521,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 	protected boolean isModuleRequest(HttpServletRequest request) {
 		String requestURI = request.getRequestURI();
 
-		if (PortalWebResourcesUtil.isResourceContextPath(requestURI)) {
+		if (PortalWebResourcesUtil.hasContextPath(requestURI)) {
 			return false;
 		}
 

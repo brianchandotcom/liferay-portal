@@ -47,7 +47,7 @@ import javax.portlet.PortletResponse;
  * @author Istvan Andras Dezsi
  */
 @OSGiBeanProperties
-public class AssetVocabularyIndexer extends BaseIndexer {
+public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 
 	public static final String CLASS_NAME = AssetVocabulary.class.getName();
 
@@ -97,37 +97,35 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		AssetVocabulary vocabulary = (AssetVocabulary)obj;
-
+	protected void doDelete(AssetVocabulary assetVocabulary) throws Exception {
 		Document document = new DocumentImpl();
 
-		document.addUID(CLASS_NAME, vocabulary.getVocabularyId());
+		document.addUID(CLASS_NAME, assetVocabulary.getVocabularyId());
 
 		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), vocabulary.getCompanyId(),
+			getSearchEngineId(), assetVocabulary.getCompanyId(),
 			document.get(Field.UID), isCommitImmediately());
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		AssetVocabulary vocabulary = (AssetVocabulary)obj;
+	protected Document doGetDocument(AssetVocabulary assetVocabulary)
+		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing vocabulary " + vocabulary);
+			_log.debug("Indexing asset vocabulary " + assetVocabulary);
 		}
 
-		Document document = getBaseModelDocument(CLASS_NAME, vocabulary);
+		Document document = getBaseModelDocument(CLASS_NAME, assetVocabulary);
 
 		document.addKeyword(
-			Field.ASSET_VOCABULARY_ID, vocabulary.getVocabularyId());
+			Field.ASSET_VOCABULARY_ID, assetVocabulary.getVocabularyId());
 		document.addLocalizedText(
-			Field.DESCRIPTION, vocabulary.getDescriptionMap());
-		document.addText(Field.NAME, vocabulary.getName());
-		document.addLocalizedText(Field.TITLE, vocabulary.getTitleMap());
+			Field.DESCRIPTION, assetVocabulary.getDescriptionMap());
+		document.addText(Field.NAME, assetVocabulary.getName());
+		document.addLocalizedText(Field.TITLE, assetVocabulary.getTitleMap());
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + vocabulary + " indexed successfully");
+			_log.debug("Document " + assetVocabulary + " indexed successfully");
 		}
 
 		return document;
@@ -142,14 +140,12 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		AssetVocabulary vocabulary = (AssetVocabulary)obj;
-
-		Document document = getDocument(vocabulary);
+	protected void doReindex(AssetVocabulary assetVocabulary) throws Exception {
+		Document document = getDocument(assetVocabulary);
 
 		if (document != null) {
 			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), vocabulary.getCompanyId(), document,
+				getSearchEngineId(), assetVocabulary.getCompanyId(), document,
 				isCommitImmediately());
 		}
 	}

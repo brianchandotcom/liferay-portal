@@ -378,6 +378,12 @@ public class ResourceBlockLocalServiceUtil {
 		return getService().getResourceBlocksCount();
 	}
 
+	public static java.util.List<com.liferay.portal.model.Role> getRoles(
+		java.lang.String name, long primKey, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRoles(name, primKey, actionId);
+	}
+
 	public static boolean hasPermission(java.lang.String name,
 		com.liferay.portal.model.PermissionedModel permissionedModel,
 		java.lang.String actionId,

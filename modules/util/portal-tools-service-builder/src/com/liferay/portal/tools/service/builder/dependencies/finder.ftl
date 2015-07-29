@@ -4,8 +4,16 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author ${author}
+<#if classDeprecated>
+ * @deprecated ${classDeprecatedComment}
+</#if>
  * @generated
  */
+
+<#if classDeprecated>
+	@Deprecated
+</#if>
+
 @ProviderType
 public interface ${entity.name}Finder {
 

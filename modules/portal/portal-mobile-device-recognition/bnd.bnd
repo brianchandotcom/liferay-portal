@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Mobile Device Recognition
+Bundle-SymbolicName: com.liferay.portal.mobile.device
+Bundle-Version: 1.0.0
+Include-Resource: classes

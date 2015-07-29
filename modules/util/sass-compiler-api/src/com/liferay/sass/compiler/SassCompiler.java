@@ -19,12 +19,30 @@ package com.liferay.sass.compiler;
  */
 public interface SassCompiler {
 
+	public String compileFile(String inputFileName, String includeDirName)
+		throws SassCompilerException;
+
 	public String compileFile(
-			String inputFileName, String includeDirName, String imgDirName)
+			String inputFileName, String includeDirName,
+			boolean generateSourceMap)
+		throws SassCompilerException;
+
+	public String compileFile(
+			String inputFileName, String includeDirName,
+			boolean generateSourceMap, String sourceMapFileName)
+		throws SassCompilerException;
+
+	public String compileString(String input, String includeDirName)
 		throws SassCompilerException;
 
 	public String compileString(
-			String input, String includeDirName, String imgDirName)
+			String input, String inputFileName, String includeDirName,
+			boolean generateSourceMap)
+		throws SassCompilerException;
+
+	public String compileString(
+			String input, String inputFileName, String includeDirName,
+			boolean generateSourceMap, String sourceMapFileName)
 		throws SassCompilerException;
 
 }

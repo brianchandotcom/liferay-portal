@@ -26,7 +26,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.model.BaseAssetRenderer;
+import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 
 import java.util.Date;
 import java.util.Locale;
@@ -36,13 +36,16 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Julio Camarero
  * @author Juan Fernández
  * @author Sergio González
  */
 public class BookmarksEntryAssetRenderer
-	extends BaseAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer implements TrashRenderer {
 
 	public BookmarksEntryAssetRenderer(BookmarksEntry entry) {
 		_entry = entry;
@@ -74,10 +77,25 @@ public class BookmarksEntryAssetRenderer
 	}
 
 	@Override
+	public String getJspPath(HttpServletRequest request, String template) {
+		if (template.equals(TEMPLATE_FULL_CONTENT)) {
+			return "/html/portlet/bookmarks/asset/" + template + ".jsp";
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
 	public String getPortletId() {
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
+	}
+
+	@Override
+	public int getStatus() {
+		return _entry.getStatus();
 	}
 
 	@Override
@@ -195,25 +213,19 @@ public class BookmarksEntryAssetRenderer
 	}
 
 	@Override
-	public boolean isPrintable() {
-		return true;
-	}
-
-	@Override
-	public String render(
-			PortletRequest portletRequest, PortletResponse portletResponse,
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
 			String template)
 		throws Exception {
 
-		if (template.equals(TEMPLATE_FULL_CONTENT)) {
-			portletRequest.setAttribute(
-				BookmarksWebKeys.BOOKMARKS_ENTRY, _entry);
+		request.setAttribute(BookmarksWebKeys.BOOKMARKS_ENTRY, _entry);
 
-			return "/html/portlet/bookmarks/asset/" + template + ".jsp";
-		}
-		else {
-			return null;
-		}
+		return super.include(request, response, template);
+	}
+
+	@Override
+	public boolean isPrintable() {
+		return true;
 	}
 
 	private final BookmarksEntry _entry;

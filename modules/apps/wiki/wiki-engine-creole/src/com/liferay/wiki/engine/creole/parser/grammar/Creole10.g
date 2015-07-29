@@ -97,8 +97,8 @@ import java.util.Stack;
 
 /**
 * This is a generated file from Creole10.g. DO NOT MODIFY THIS FILE MANUALLY!!
-* If needed, modify the grammar and rerun the ant generation task
-* (ant build-creole-parser)
+* If needed, modify the grammar and rerun the gradle generation task
+* (gradle buildCreoleParser)
 */
 }
 

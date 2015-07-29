@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>SocialActivity</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SocialActivity</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>POSSIBLE_USER_ACTIONS_BUTTON</td>
+	<td>//div[contains(.,'Possible User Actions')]/ul/li/div/span[contains(.,'${key_userAction}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARTICIPATION_INCREMENT_SELECT</td>
+	<td>//div[@class='settings-field-content' and contains(.,'${key_userAction}')]//select[contains(@id,'_participationIncrement')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTRIBUTION_INCREMENT_SELECT</td>
+	<td>//div[@class='settings-field-content' and contains(.,'${key_userAction}')]//select[contains(@id,'_contributionIncrement')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIMIT_LINK</td>
+	<td>//div[@class='settings-field-content' and contains(.,'${key_userAction}')]//div[@class='settings-field-buttons']/a/span[contains(.,'Limit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_ICON</td>
+	<td>//div[@class='settings-field-content' and contains(.,'${key_userAction}')]//div[@class='settings-field-buttons']/a/span[contains(@class,'settings-icon-close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTRIBUTION_LIMIT_VALUE_SELECT</td>
+	<td>//div[@class='settings-field-content' and contains(.,'${key_userAction}')]//select[contains(@id,'_contributionLimitValue')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTRIBUTION_LIMIT_PERIOD_SELECT</td>
+	<td>//div[@class='settings-field-content' and contains(.,'${key_userAction}')]//select[contains(@id,'_contributionLimitPeriod')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARTICIPATION_LIMIT_VALUE_SELECT</td>
+	<td>//div[@class='settings-field-content' and contains(.,'${key_userAction}')]//select[contains(@id,'_participationLimitValue')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARTICIPATION_LIMIT_PERIOD_SELECT</td>
+	<td>//div[@class='settings-field-content' and contains(.,'${key_userAction}')]//select[contains(@id,'_participationLimitPeriod')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

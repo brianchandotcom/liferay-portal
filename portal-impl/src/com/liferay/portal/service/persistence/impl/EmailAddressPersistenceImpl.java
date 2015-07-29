@@ -4581,6 +4581,11 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		return _badColumnNames;
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return EmailAddressModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the email address persistence.
 	 */

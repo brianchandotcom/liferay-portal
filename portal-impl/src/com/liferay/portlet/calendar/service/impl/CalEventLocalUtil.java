@@ -27,9 +27,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Michael Young
+ * @author     Brian Wing Shun Chan
+ * @author     Michael Young
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class CalEventLocalUtil {
 
 	protected static void clearEventsPool(long groupId) {
@@ -61,6 +63,6 @@ public class CalEventLocalUtil {
 	private static final String _CACHE_NAME = CalEventLocalUtil.class.getName();
 
 	private static final PortalCache<String, Serializable> _portalCache =
-		MultiVMPoolUtil.getCache(_CACHE_NAME);
+		MultiVMPoolUtil.getPortalCache(_CACHE_NAME);
 
 }

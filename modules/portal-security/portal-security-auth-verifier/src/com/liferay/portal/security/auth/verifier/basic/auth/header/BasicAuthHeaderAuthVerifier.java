@@ -14,20 +14,19 @@
 
 package com.liferay.portal.security.auth.verifier.basic.auth.header;
 
+import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
+import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auto.login.basic.auth.header.BasicAuthHeaderAutoLogin;
-import com.liferay.portal.util.Portal;
 
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -66,6 +65,7 @@ public class BasicAuthHeaderAuthVerifier
 
 			if (credentials != null) {
 				authVerifierResult.setPassword(credentials[1]);
+				authVerifierResult.setPasswordBasedAuthentication(true);
 				authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 				authVerifierResult.setUserId(Long.valueOf(credentials[0]));
 			}
@@ -77,13 +77,14 @@ public class BasicAuthHeaderAuthVerifier
 					accessControlContext.getSettings(), "basic_auth");
 
 				if (forcedBasicAuth) {
-					HttpServletResponse response =
-						accessControlContext.getResponse();
+					HttpAuthorizationHeader httpAuthorizationHeader =
+						new HttpAuthorizationHeader(
+							HttpAuthorizationHeader.SCHEME_BASIC);
 
-					response.setHeader(
-						HttpHeaders.WWW_AUTHENTICATE, _BASIC_REALM);
-
-					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+					HttpAuthManagerUtil.generateChallenge(
+						accessControlContext.getRequest(),
+						accessControlContext.getResponse(),
+						httpAuthorizationHeader);
 
 					authVerifierResult.setState(
 						AuthVerifierResult.State.INVALID_CREDENTIALS);
@@ -101,8 +102,5 @@ public class BasicAuthHeaderAuthVerifier
 	protected boolean isEnabled(long companyId) {
 		return true;
 	}
-
-	private static final String _BASIC_REALM =
-		"Basic realm=\"" + Portal.PORTAL_REALM + "\"";
 
 }

@@ -27,8 +27,8 @@ public class PortalCacheMapSynchronizeUtil {
 		PortalCache<K, V> portalCache, Map<? extends K, ? extends V> map,
 		Synchronizer<K, V> synchronizer) {
 
-		portalCache.registerCacheListener(
-			new SynchronizeCacheListener<K, V>(map, synchronizer));
+		portalCache.registerPortalCacheListener(
+			new SynchronizePortalCacheListener<K, V>(map, synchronizer));
 	}
 
 	public interface Synchronizer<K extends Serializable, V> {
@@ -38,10 +38,10 @@ public class PortalCacheMapSynchronizeUtil {
 
 	}
 
-	private static class SynchronizeCacheListener<K extends Serializable, V>
-		implements CacheListener<K, V> {
+	private static class SynchronizePortalCacheListener
+		<K extends Serializable, V> implements PortalCacheListener<K, V> {
 
-		public SynchronizeCacheListener(
+		public SynchronizePortalCacheListener(
 			Map<? extends K, ? extends V> map,
 			Synchronizer<K, V> synchronizer) {
 

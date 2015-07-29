@@ -753,7 +753,7 @@ public abstract class AddressLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = AddressLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.AddressLocalService.class)
 	protected AddressLocalService addressLocalService;
 	@BeanReference(type = com.liferay.portal.service.AddressService.class)
 	protected com.liferay.portal.service.AddressService addressService;

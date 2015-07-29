@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>CLOSE_BUTTON</td>
-	<td>//div/button[contains(@class,'btn close')]</td>
+	<td>//div/button[contains(@class,'btn') and contains(@class,'close')]</td>
 	<td></td>
 </tr>
 </tbody>

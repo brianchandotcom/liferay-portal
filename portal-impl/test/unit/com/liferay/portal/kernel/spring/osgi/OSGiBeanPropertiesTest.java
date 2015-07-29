@@ -602,8 +602,8 @@ public class OSGiBeanPropertiesTest {
 		Assert.assertNotNull(properties);
 		Assert.assertEquals("value1", properties.get("key1"));
 		Assert.assertEquals(Boolean.TRUE, properties.get("key2"));
-		Assert.assertEquals(new Byte("127"), properties.get("key3"));
-		Assert.assertEquals(new Character('@'), properties.get("key4"));
+		Assert.assertEquals(Byte.valueOf("127"), properties.get("key3"));
+		Assert.assertEquals(Character.valueOf('@'), properties.get("key4"));
 		Assert.assertEquals(Double.MAX_VALUE, properties.get("key5"));
 		Assert.assertEquals(Float.MAX_VALUE, properties.get("key6"));
 		Assert.assertEquals(Integer.MAX_VALUE, properties.get("key7"));

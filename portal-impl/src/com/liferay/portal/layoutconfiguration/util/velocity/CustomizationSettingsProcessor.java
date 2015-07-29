@@ -14,6 +14,8 @@
 
 package com.liferay.portal.layoutconfiguration.util.velocity;
 
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.servlet.JSPSupportServlet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -149,6 +151,18 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 	public String processPortlet(
 			String portletId, Map<String, ?> defaultSettingsMap)
 		throws Exception {
+
+		return processPortlet(portletId);
+	}
+
+	@Override
+	public String processPortlet(
+			String portletProviderClassName,
+			PortletProvider.Action portletProviderAction)
+		throws Exception {
+
+		String portletId = PortletProviderUtil.getPortletId(
+			portletProviderClassName, portletProviderAction);
 
 		return processPortlet(portletId);
 	}

@@ -76,6 +76,7 @@ AUI.add(
 
 						moveConfig.displayStyleCSSClass = displayStyleCSSClass;
 						moveConfig.draggableCSSClass = '.entry-link';
+						moveConfig.moveToTrashActionName = 'move_to_trash';
 						moveConfig.namespace = namespace;
 						moveConfig.portletContainerId = portletContainerId;
 						moveConfig.portletGroup = 'document-library';

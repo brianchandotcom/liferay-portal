@@ -19,11 +19,11 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.RequestBackedPortletURLFactory;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -157,6 +157,53 @@ public class EditorConfigContributorTest {
 
 		Assert.assertEquals(
 			"emoticons", toolbarsJSONObject.getString("button3"));
+	}
+
+	@Test
+	public void testEditorNameOverridesEmptySelectorConfig() throws Exception {
+		Registry registry = RegistryUtil.getRegistry();
+
+		EditorConfigContributor tablesEditorConfigContributor =
+			new TablesEditorConfigContributor();
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("editor.name", _EDITOR_NAME);
+		properties.put("service.ranking", 1000);
+
+		_editorConfigContributorServiceRegistration1 = registry.registerService(
+			EditorConfigContributor.class, tablesEditorConfigContributor,
+			properties);
+
+		EditorConfigContributor textFormatEditorConfigContributor =
+			new TextFormatEditorConfigContributor();
+
+		properties = new HashMap<>();
+
+		properties.put("service.ranking", 1000);
+
+		_editorConfigContributorServiceRegistration2 = registry.registerService(
+			EditorConfigContributor.class, textFormatEditorConfigContributor,
+			properties);
+
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
+				new HashMap<String, Object>(), null, null);
+
+		JSONObject configJSONObject = editorConfiguration.getConfigJSONObject();
+
+		Assert.assertEquals(
+			TablesEditorConfigContributor.class.getName(),
+			configJSONObject.getString("className"));
+
+		JSONObject toolbarsJSONObject = configJSONObject.getJSONObject(
+			"toolbars");
+
+		Assert.assertEquals("link", toolbarsJSONObject.getString("button1"));
+		Assert.assertEquals("bold", toolbarsJSONObject.getString("button2"));
+		Assert.assertEquals(
+			"tablesButton", toolbarsJSONObject.getString("button3"));
 	}
 
 	@Test
@@ -365,7 +412,8 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
-	public void testPortletNameAndEditorNameOverridesEditorConfigKeyEditorConfig()
+	public void
+			testPortletNameAndEditorNameOverridesEditorConfigKeyEditorConfig()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -486,7 +534,7 @@ public class EditorConfigContributorTest {
 			JSONObject jsonObject,
 			Map<String, Object> inputEditorTaglibAttributes,
 			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse) {
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			jsonObject.put(
 				"className", EmoticonsEditorConfigContributor.class.getName());
@@ -513,7 +561,7 @@ public class EditorConfigContributorTest {
 			JSONObject jsonObject,
 			Map<String, Object> inputEditorTaglibAttributes,
 			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse) {
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			jsonObject.put(
 				"className", ImageEditorConfigContributor.class.getName());
@@ -536,7 +584,7 @@ public class EditorConfigContributorTest {
 			JSONObject jsonObject,
 			Map<String, Object> inputEditorTaglibAttributes,
 			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse) {
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			jsonObject.put(
 				"className", TablesEditorConfigContributor.class.getName());
@@ -563,7 +611,7 @@ public class EditorConfigContributorTest {
 			JSONObject jsonObject,
 			Map<String, Object> inputEditorTaglibAttributes,
 			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse) {
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			jsonObject.put(
 				"className", TextFormatEditorConfigContributor.class.getName());
@@ -593,7 +641,7 @@ public class EditorConfigContributorTest {
 			JSONObject jsonObject,
 			Map<String, Object> inputEditorTaglibAttributes,
 			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse) {
+			RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 			JSONObject toolbarsJSONObject = jsonObject.getJSONObject(
 				"toolbars");

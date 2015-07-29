@@ -1,0 +1,14 @@
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+
+	testCompile group: "junit", name: "junit", version: "4.12"
+	testCompile group: "org.apache.httpcomponents", name: "httpclient", version: "4.3.5"
+	testCompile group: "org.arquillian.liferay", name: "arquillian-container-liferay", version: "1.0.0.Final-SNAPSHOT"
+	testCompile group: "org.arquillian.liferay", name: "arquillian-deployment-generator-bnd", version: "1.0.0.Final-SNAPSHOT"
+	testCompile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.8.Final"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

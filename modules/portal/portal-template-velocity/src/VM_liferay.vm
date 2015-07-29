@@ -2,6 +2,10 @@
 	$theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", $portletProviderAction.VIEW)
 #end
 
+#macro (control_menu)
+	$theme.runtime("com.liferay.portlet.admin.util.PortalControlMenuApplicationType$ControlMenu", $portletProviderAction.VIEW)
+#end
+
 #macro (css $file_name)
 	#if ($file_name == $css_main_file)
 		<link class="lfr-css-file" href="$file_name" id="mainLiferayThemeCSS" rel="stylesheet" type="text/css" />
@@ -43,6 +47,10 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 	$menu_tag.runTag()
 #end
 
+#macro (product_menu)
+	$theme.runtime("com.liferay.portlet.admin.util.PortalProductMenuApplicationType$ProductMenu", $portletProviderAction.VIEW)
+#end
+
 #macro (quick_access $content_id)
 	#set ($quick_access_tag = $theme.getQuickAccessTag())
 
@@ -53,4 +61,14 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 
 #macro (silently $foo)
 	#set ($foo = $foo)
+#end
+
+#macro (user_personal_bar)
+	#set ($render_portlet_boundary = $request.getAttribute("RENDER_PORTLET_BOUNDARY"))
+
+	$request.setAttribute("RENDER_PORTLET_BOUNDARY", false)
+
+	$theme.runtime("com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType$UserPersonalBar", $portletProviderAction.VIEW)
+
+	$request.setAttribute("RENDER_PORTLET_BOUNDARY", $render_portlet_boundary)
 #end

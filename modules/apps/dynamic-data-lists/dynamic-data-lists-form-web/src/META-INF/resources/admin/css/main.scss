@@ -1,0 +1,161 @@
+@import "bourbon";
+
+.portlet-forms {
+	.form-builder-header-title {
+		display: none;
+	}
+
+	.ddl-form-builder-basic-info {
+		margin-top: -25px;
+
+		.ddl-form-builder-description .alloy-editor.alloy-editor-placeholder {
+			font-weight: 400;
+		}
+
+		.ddl-form-builder-name .alloy-editor.alloy-editor-placeholder {
+			font-weight: 300;
+		}
+
+		.ddl-form-builder-description, .ddl-form-builder-name {
+			.alloy-editor.alloy-editor-placeholder {
+				padding-left: 0;
+
+				&:empty:not(:focus) {
+					border-width: 0;
+				}
+			}
+
+			.help-block {
+				position: absolute;
+				top: -15px;
+			}
+		}
+	}
+
+	.ddl-form-builder-app {
+		background-color: #F5F5F5;
+		margin-left: -40px;
+		margin-right: -25px;
+		padding-left: 40px;
+		padding-right: 25px;
+
+		.form-builder-header {
+			display: none;
+		}
+
+		.form-builder-layout {
+			margin: 3px auto;
+			width: auto;
+
+			.layout-builder-add-row-area {
+				margin: 0;
+			}
+
+			.layout-row-container-row {
+				margin-bottom: 2px;
+
+				.layout-row {
+					border-width: 0;
+					margin: 0;
+
+					.col {
+						border-radius: 0;
+						border-width: 0;
+						min-height: 100px;
+
+						.field-wrapper {
+							min-height: 60px;
+						}
+					}
+				}
+			}
+		}
+
+		.form-builder-content {
+			background: transparent;
+			margin: 0 auto;
+			width: auto;
+
+			.form-builder-pages-header {
+				margin-bottom: 0;
+				width: auto;
+
+				input {
+					border-width: 0;
+
+					&.form-builder-page-header-description {
+						margin-bottom: 5px;
+						padding-top: 0;
+					}
+
+					&.form-builder-page-header-title {
+						margin: 10px 0 0 0;
+						padding-bottom: 0;
+					}
+
+					&:focus {
+						box-shadow: none;
+					}
+				}
+			}
+
+			.form-builder-pages {
+				width: auto;
+
+				.pagination .pagination-content li.active a {
+					z-index: 0;
+				}
+			}
+		}
+	}
+
+	.lfr-ddm-repeatable-add-button {
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	.lfr-ddm-repeatable-delete-button {
+		position: absolute;
+		right: 15px;
+		top: 0;
+	}
+}
+
+.form-builder-field {
+	border-radius: 0;
+	border-width: 0;
+	box-shadow: none;
+	margin: 0;
+}
+
+.form-builder-field-settings-content {
+	padding: 10px;
+
+	.modal-body {
+		max-height: 500px;
+		overflow: hidden;
+
+		&:hover {
+			overflow-y: auto;
+		}
+	}
+
+	.lfr-ddm-form-field-container .lfr-form-row {
+		border-width: 0;
+		padding-bottom: 5px;
+		padding-top: 5px;
+
+		&:hover {
+			padding-top: 5px;
+		}
+
+		.lfr-autorow-controls {
+			bottom: 13px;
+
+			.add-row {
+				margin-right: 5px;
+			}
+		}
+	}
+}

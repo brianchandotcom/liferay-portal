@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Source Formatter
 Bundle-SymbolicName: com.liferay.source.formatter
-Bundle-Version: 1.0.13
+Bundle-Version: 1.0.43
 Import-Package:\
 	!javax.portlet,\
 	!javax.servlet.http,\
@@ -14,6 +14,10 @@ Include-Resource:\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/deploy/dependencies/web.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ImportPackage.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ImportsFormatter.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/JavaImportsFormatter.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ToolsUtil.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/util/EntityResolver.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/xml/SAXReaderFactory.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/bean/BeanProperties.class,\
@@ -55,7 +59,9 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ListUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/LocaleThreadLocal.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/LocaleUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/MapUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/NaturalOrderStringComparator.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/PredicateFilter.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/PropertiesUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/PropsKeys.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ReflectionUtil.class,\
@@ -74,4 +80,4 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/xml/SecureXMLFactoryProvider.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/xml/SecureXMLFactoryProviderUtil.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
-	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLFormatter.class
+	@../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jUtil.class

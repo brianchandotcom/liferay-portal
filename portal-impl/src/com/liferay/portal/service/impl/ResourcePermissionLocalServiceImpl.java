@@ -145,8 +145,6 @@ public class ResourcePermissionLocalServiceImpl
 		updateResourcePermission(
 			companyId, name, scope, primKey, roleId, 0, new String[] {actionId},
 			ResourcePermissionConstants.OPERATOR_ADD);
-
-		PermissionCacheUtil.clearResourcePermissionCache(name, primKey);
 	}
 
 	/**
@@ -244,7 +242,7 @@ public class ResourcePermissionLocalServiceImpl
 				session.save(resourcePermission);
 
 				PermissionCacheUtil.clearResourcePermissionCache(
-					resourcePermission.getName(),
+					resourcePermission.getScope(), resourcePermission.getName(),
 					resourcePermission.getPrimKey());
 			}
 		}
@@ -324,8 +322,6 @@ public class ResourcePermissionLocalServiceImpl
 			deleteResourcePermission(
 				resourcePermission.getResourcePermissionId());
 		}
-
-		PermissionCacheUtil.clearResourcePermissionCache(name, primKey);
 	}
 
 	@Override
@@ -545,6 +541,40 @@ public class ResourcePermissionLocalServiceImpl
 		long roleId, int[] scopes, int start, int end) {
 
 		return resourcePermissionFinder.findByR_S(roleId, scopes, start, end);
+	}
+
+	@Override
+	public List<Role> getRoles(
+			long companyId, String name, int scope, String primKey,
+			String actionId)
+		throws PortalException {
+
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionPersistence.findByC_N_S_P(
+				companyId, name, scope, primKey);
+
+		if (resourcePermissions.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		ResourceAction resourceAction =
+			resourceActionLocalService.getResourceAction(name, actionId);
+
+		Set<Long> rolesIds = new HashSet<>();
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			if (resourcePermission.hasAction(resourceAction)) {
+				rolesIds.add(resourcePermission.getRoleId());
+			}
+		}
+
+		List<Role> roles = new ArrayList<>(rolesIds.size());
+
+		for (long roleId : rolesIds) {
+			roles.add(roleLocalService.getRole(roleId));
+		}
+
+		return roles;
 	}
 
 	/**
@@ -793,6 +823,11 @@ public class ResourcePermissionLocalServiceImpl
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getRoles(long, String, int,
+	 *             String, String}
+	 */
+	@Deprecated
 	@Override
 	public boolean[] hasResourcePermissions(
 			long companyId, String name, int scope, String primKey,
@@ -997,8 +1032,6 @@ public class ResourcePermissionLocalServiceImpl
 		updateResourcePermission(
 			companyId, name, scope, primKey, roleId, 0, new String[] {actionId},
 			ResourcePermissionConstants.OPERATOR_REMOVE);
-
-		PermissionCacheUtil.clearResourcePermissionCache(name, primKey);
 	}
 
 	/**
@@ -1030,9 +1063,6 @@ public class ResourcePermissionLocalServiceImpl
 				companyId, name, scope, resourcePermission.getPrimKey(), roleId,
 				0, new String[] {actionId},
 				ResourcePermissionConstants.OPERATOR_REMOVE);
-
-			PermissionCacheUtil.clearResourcePermissionCache(
-				name, resourcePermission.getPrimKey());
 		}
 	}
 
@@ -1238,8 +1268,6 @@ public class ResourcePermissionLocalServiceImpl
 
 		resourcePermissionPersistence.update(resourcePermission);
 
-		PermissionCacheUtil.clearResourcePermissionCache(name, primKey);
-
 		SearchEngineUtil.updatePermissionFields(name, primKey);
 	}
 
@@ -1290,7 +1318,8 @@ public class ResourcePermissionLocalServiceImpl
 			PermissionThreadLocal.setFlushResourcePermissionEnabled(
 				name, primKey, flushResourcePermissionEnabled);
 
-			PermissionCacheUtil.clearResourcePermissionCache(name, primKey);
+			PermissionCacheUtil.clearResourcePermissionCache(
+				scope, name, primKey);
 
 			SearchEngineUtil.updatePermissionFields(name, primKey);
 		}

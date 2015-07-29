@@ -30,8 +30,8 @@
 </tr>
 <!--NAVIGATION-->
 <tr>
-	<td>NAVIGATION_MY</td>
-	<td>//ul[@class='category-portlets list-unstyled']/li[contains(.,'${key_portletName}')]/span/a</td>
+	<td>NAVIGATION_PRODUCTIVITY_CENTER</td>
+	<td>//ul[@class='category-portlets list-unstyled']//a[contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
 <tr>

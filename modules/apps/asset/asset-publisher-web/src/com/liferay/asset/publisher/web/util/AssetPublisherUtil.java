@@ -320,6 +320,28 @@ public class AssetPublisherUtil {
 		actionableDynamicQuery.performActions();
 	}
 
+	public static String filterAssetTagNames(
+		long groupId, String assetTagNames) {
+
+		List<String> filteredAssetTagNames = new ArrayList<>();
+
+		String[] assetTagNamesArray = StringUtil.split(assetTagNames);
+
+		long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(
+			groupId, assetTagNamesArray);
+
+		for (long assetTagId : assetTagIds) {
+			AssetTag assetTag = AssetTagLocalServiceUtil.fetchAssetTag(
+				assetTagId);
+
+			if (assetTag != null) {
+				filteredAssetTagNames.add(assetTag.getName());
+			}
+		}
+
+		return StringUtil.merge(filteredAssetTagNames);
+	}
+
 	public static long[] getAssetCategoryIds(
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -440,6 +462,19 @@ public class AssetPublisherUtil {
 			boolean deleteMissingAssetEntries, boolean checkPermission)
 		throws Exception {
 
+		return getAssetEntries(
+			portletRequest, portletPreferences, permissionChecker, groupIds,
+			deleteMissingAssetEntries, checkPermission, false);
+	}
+
+	public static List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences,
+			PermissionChecker permissionChecker, long[] groupIds,
+			boolean deleteMissingAssetEntries, boolean checkPermission,
+			boolean includeNonVisibleAssets)
+		throws Exception {
+
 		String[] assetEntryXmls = portletPreferences.getValues(
 			"assetEntryXml", new String[0]);
 
@@ -473,7 +508,7 @@ public class AssetPublisherUtil {
 				continue;
 			}
 
-			if (!assetEntry.isVisible()) {
+			if (!assetEntry.isVisible() && !includeNonVisibleAssets) {
 				continue;
 			}
 
@@ -483,7 +518,7 @@ public class AssetPublisherUtil {
 						assetEntry.getClassName());
 
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-				assetEntry.getClassPK());
+				assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
 
 			if (!assetRendererFactory.isActive(
 					permissionChecker.getCompanyId())) {
@@ -496,7 +531,7 @@ public class AssetPublisherUtil {
 			}
 
 			if (checkPermission &&
-				(!assetRenderer.isDisplayable() ||
+				((!assetRenderer.isDisplayable() && !includeNonVisibleAssets) ||
 				 !assetRenderer.hasViewPermission(permissionChecker))) {
 
 				continue;
@@ -619,6 +654,8 @@ public class AssetPublisherUtil {
 		if (overrideAllAssetCategoryIds != null) {
 			allAssetCategoryIds = overrideAllAssetCategoryIds;
 		}
+
+		allAssetCategoryIds = _filterAssetCategoryIds(allAssetCategoryIds);
 
 		assetEntryQuery.setAllCategoryIds(allAssetCategoryIds);
 
@@ -774,8 +811,8 @@ public class AssetPublisherUtil {
 
 		Long[] classTypeIds = ArrayUtil.toArray(
 			StringUtil.split(
-				portletPreferences.getValue(
-					"classTypeIds" + className, null), 0L));
+				portletPreferences.getValue("classTypeIds" + className, null),
+				0L));
 
 		if (classTypeIds != null) {
 			return classTypeIds;
@@ -920,13 +957,9 @@ public class AssetPublisherUtil {
 
 			long scopeGroupId = GetterUtil.getLong(scopeIdSuffix);
 
-			Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
+			Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
-			if (scopeGroup == null) {
-				throw new PrincipalException();
-			}
-
-			return scopeGroupId;
+			return scopeGroup.getGroupId();
 		}
 		else if (scopeId.startsWith(SCOPE_ID_LAYOUT_UUID_PREFIX)) {
 			String layoutUuid = scopeId.substring(
@@ -1309,8 +1342,12 @@ public class AssetPublisherUtil {
 				portletPreferencesModel)
 		throws PortalException {
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
 			portletPreferencesModel.getPlid());
+
+		if (layout == null) {
+			return;
+		}
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.fromXML(
@@ -1384,6 +1421,26 @@ public class AssetPublisherUtil {
 		}
 
 		return filteredAssetEntries;
+	}
+
+	private static long[] _filterAssetCategoryIds(long[] assetCategoryIds) {
+		List<Long> assetCategoryIdsList = new ArrayList<>();
+
+		for (long assetCategoryId : assetCategoryIds) {
+			AssetCategory category =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(
+					assetCategoryId);
+
+			if (category == null) {
+				continue;
+			}
+
+			assetCategoryIdsList.add(assetCategoryId);
+		}
+
+		return ArrayUtil.toArray(
+			assetCategoryIdsList.toArray(
+				new Long[assetCategoryIdsList.size()]));
 	}
 
 	private static List<AssetEntry> _filterAssetTagNamesAssetEntries(

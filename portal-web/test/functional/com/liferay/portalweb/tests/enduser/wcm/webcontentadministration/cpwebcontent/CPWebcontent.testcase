@@ -24,7 +24,7 @@
 		</execute>
 	</command>
 
-	<command name="AddStructure" priority="5">
+	<command known-issues="LPS-56771" name="AddStructure" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -63,7 +63,7 @@
 		</execute>
 	</command>
 
-	<command name="AddStructures" priority="4">
+	<command known-issues="LPS-56771" name="AddStructures" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -188,7 +188,7 @@
 		</for>
 	</command>
 
-	<command name="AddStructureWithSeparator" priority="4">
+	<command known-issues="LPS-56771" name="AddStructureWithSeparator" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -227,7 +227,7 @@
 		</execute>
 	</command>
 
-	<command name="AddStructureWithSubfield" priority="5">
+	<command known-issues="LPS-56771" name="AddStructureWithSubfield" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -271,7 +271,9 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
@@ -320,7 +322,7 @@
 		</for>
 	</command>
 
-	<command name="AddStructureWithUnlocalizableFields" priority="4">
+	<command known-issues="LPS-56771" name="AddStructureWithUnlocalizableFields" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -372,7 +374,9 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
@@ -424,7 +428,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55977" name="AddTemplate" priority="5">
+	<command known-issues="LPS-56771" name="AddTemplate" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -444,7 +448,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55977" name="AddTemplateWithStructure" priority="5">
+	<command known-issues="LPS-56771" name="AddTemplateWithStructure" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -491,7 +495,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55977" name="AddTemplateXSL" priority="5">
+	<command known-issues="LPS-56771" name="AddTemplateXSL" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -547,7 +551,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="AddWebContentDraft" priority="5">
+	<command known-issues="LPS-51687" name="AddWebContentDraft" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -703,7 +707,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="AddWebContentTitleEscapeCharacter" priority="5">
+	<command known-issues="LPS-51687" name="AddWebContentTitleEscapeCharacter" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -735,7 +739,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55977" name="AddWebContentWithStructure" priority="5">
+	<command known-issues="LPS-56771" name="AddWebContentWithStructure" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -772,7 +776,9 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
@@ -788,7 +794,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentWithTemplateXSL" priority="5">
+	<command known-issues="LPS-56771" name="AddWebContentWithTemplateXSL" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -826,7 +832,9 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
@@ -851,7 +859,7 @@
 		</execute>
 	</command>
 
-	<command name="AdvancedSearchStructure" priority="4">
+	<command known-issues="LPS-56771" name="AdvancedSearchStructure" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -906,7 +914,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteWebContent" priority="5">
+	<command known-issues="LPS-56665" name="DeleteWebContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -933,7 +941,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteWebContentTitleEscapeCharacter" priority="5">
+	<command name="DeleteWebContentTitleEscapeCharacter" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle"><![CDATA[<!-- -->]]></var>
 
@@ -963,7 +971,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSubstructureDefaultValues" priority="4">
+	<command known-issues="LPS-56771" name="EditSubstructureDefaultValues" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1214,7 +1222,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55977" name="ImportLAR" priority="5">
+	<command name="ImportLAR" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1251,7 +1259,9 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
@@ -1327,7 +1337,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55977" name="ImportLARLinkToPageValidation" priority="4">
+	<command name="ImportLARLinkToPageValidation" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Page" />
 		</execute>
@@ -1367,7 +1377,9 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="Test Structure" />
+		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="linkedPageName" value="Test Page" />
@@ -1535,7 +1547,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContent" priority="4">
+	<command name="SearchWebContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

@@ -874,7 +874,7 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsEntryLocalService.class)
 	protected com.liferay.portlet.announcements.service.AnnouncementsEntryLocalService announcementsEntryLocalService;
-	@BeanReference(type = AnnouncementsEntryService.class)
+	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsEntryService.class)
 	protected AnnouncementsEntryService announcementsEntryService;
 	@BeanReference(type = AnnouncementsEntryPersistence.class)
 	protected AnnouncementsEntryPersistence announcementsEntryPersistence;

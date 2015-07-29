@@ -18,7 +18,7 @@
 
 	<dependencies defaultconf="default">
 		<dependency name="ch.securityvision.xattrj" org="com.liferay" rev="1.0" />
-		<dependency name="com.barbarysoftware.watchservice" org="com.liferay" rev="1.3" />
+		<dependency name="com.barbarysoftware.watchservice" org="com.liferay" rev="1.4" />
 		<dependency name="com.btr.proxy.vole" org="com.liferay" rev="20131209" />
 		<dependency name="com.liferay.io.delta" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency name="commons-configuration" org="commons-configuration" rev="1.10" />

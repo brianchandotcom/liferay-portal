@@ -1,7 +1,6 @@
 <definition component-name="portal-test-plugins">
 	<property name="testray.main.component.name" value="Test Plugins" />
 	<property name="portlet.plugins.includes" value="test-kaleo-portlet" />
-	<property name="web.plugins.includes" value="kaleo-web" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
@@ -11,7 +10,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command known-issues="LPS-45103" name="ViewKaleo" priority="5">
+	<command known-issues="LPS-45103" name="ViewKaleo" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Kaleo Page" />
 		</execute>

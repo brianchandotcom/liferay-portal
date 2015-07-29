@@ -96,12 +96,8 @@ public class CallbackPreferringTransactionExecutor
 
 		@Override
 		public Object doInTransaction(TransactionStatus transactionStatus) {
-			boolean newTransaction = transactionStatus.isNewTransaction();
-
-			if (newTransaction) {
-				fireTransactionCreatedEvent(
-					_transactionAttribute, transactionStatus);
-			}
+			fireTransactionCreatedEvent(
+				_transactionAttribute, transactionStatus);
 
 			boolean rollback = false;
 
@@ -110,11 +106,10 @@ public class CallbackPreferringTransactionExecutor
 			}
 			catch (Throwable throwable) {
 				if (_transactionAttribute.rollbackOn(throwable)) {
-					if (newTransaction) {
-						fireTransactionRollbackedEvent(
-							_transactionAttribute, transactionStatus,
-							throwable);
+					fireTransactionRollbackedEvent(
+						_transactionAttribute, transactionStatus, throwable);
 
+					if (transactionStatus.isNewTransaction()) {
 						rollback = true;
 					}
 
@@ -130,7 +125,7 @@ public class CallbackPreferringTransactionExecutor
 				}
 			}
 			finally {
-				if (newTransaction && !rollback) {
+				if (!rollback) {
 					fireTransactionCommittedEvent(
 						_transactionAttribute, transactionStatus);
 				}

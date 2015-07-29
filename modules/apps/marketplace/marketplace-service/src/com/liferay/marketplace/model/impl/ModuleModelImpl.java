@@ -68,6 +68,17 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 			{ "bundleVersion", Types.VARCHAR },
 			{ "contextName", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("moduleId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("appId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("bundleSymbolicName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("bundleVersion", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("contextName", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table Marketplace_Module (uuid_ VARCHAR(75) null,moduleId LONG not null primary key,appId LONG,bundleSymbolicName VARCHAR(500) null,bundleVersion VARCHAR(75) null,contextName VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Marketplace_Module";
 	public static final String ORDER_BY_JPQL = " ORDER BY module.moduleId ASC";
@@ -75,13 +86,13 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.marketplace.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.marketplace.model.Module"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.marketplace.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.marketplace.model.Module"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.marketplace.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.marketplace.model.Module"),
 			true);
 	public static final long APPID_COLUMN_BITMASK = 1L;
@@ -90,7 +101,7 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 	public static final long CONTEXTNAME_COLUMN_BITMASK = 8L;
 	public static final long UUID_COLUMN_BITMASK = 16L;
 	public static final long MODULEID_COLUMN_BITMASK = 32L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.marketplace.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.marketplace.model.Module"));
 
 	public ModuleModelImpl() {

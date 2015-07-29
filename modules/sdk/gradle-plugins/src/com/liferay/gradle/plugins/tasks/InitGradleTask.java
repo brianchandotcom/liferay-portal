@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.tasks;
 
 import aQute.bnd.osgi.Constants;
 
+import com.liferay.gradle.plugins.LiferayJavaPlugin;
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
@@ -45,6 +46,8 @@ import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.TaskAction;
@@ -55,6 +58,11 @@ import org.gradle.api.tasks.TaskAction;
  * @author Andrea Di Giorgi
  */
 public class InitGradleTask extends DefaultTask {
+
+	public static final String[] SOURCE_FILE_NAMES = {
+		"build.xml", "docroot/WEB-INF/liferay-plugin-package.properties",
+		"ivy.xml"
+	};
 
 	public InitGradleTask() {
 		portalDependencyNotation("antlr2.jar", "antlr", "antlr", "2.7.7");
@@ -68,6 +76,8 @@ public class InitGradleTask extends DefaultTask {
 		portalDependencyNotation(
 			"commons-beanutils.jar", "commons-beanutils", "commons-beanutils",
 			"1.8.2");
+		portalDependencyNotation(
+			"commons-chain.jar", "commons-chain", "commons-chain", "1.2");
 		portalDependencyNotation(
 			"commons-codec.jar", "commons-codec", "commons-codec", "1.9");
 		portalDependencyNotation(
@@ -137,8 +147,15 @@ public class InitGradleTask extends DefaultTask {
 		portalDependencyNotation(
 			"slf4j-api.jar", "org.slf4j", "slf4j-api", "1.7.2");
 		portalDependencyNotation(
-			"struts.jar", "com.liferay", "org.apache.struts",
-			"1.2.9.LIFERAY-PATCHED-1");
+			"struts-core.jar", "org.apache.struts", "struts-core", "1.3.10");
+		portalDependencyNotation(
+			"struts-extras.jar", "org.apache.struts", "struts-extras",
+			"1.3.10");
+		portalDependencyNotation(
+			"struts-taglib.jar", "org.apache.struts", "struts-taglib",
+			"1.3.10");
+		portalDependencyNotation(
+			"struts-tiles.jar", "org.apache.struts", "struts-tiles", "1.3.10");
 		portalDependencyNotation(
 			"util-slf4j.jar", "com.liferay.portal", "util-slf4j", "default");
 		portalDependencyNotation("wsdl4j.jar", "wsdl4j", "wsdl4j", "1.6.1");
@@ -158,6 +175,18 @@ public class InitGradleTask extends DefaultTask {
 	public void initGradle() throws Exception {
 		_project = getProject();
 
+		File buildGradleFile = _project.file("build.gradle");
+
+		if (!isOverwrite() && buildGradleFile.exists() &&
+			(buildGradleFile.length() > 0)) {
+
+			_logger.error(
+				"Unable to automatically upgrade build.gradle in \"" +
+					_project.getPath() + "\"");
+
+			return;
+		}
+
 		_liferayExtension = GradleUtil.getExtension(
 			_project, LiferayExtension.class);
 		_pluginPackageProperties = FileUtil.readProperties(
@@ -171,15 +200,22 @@ public class InitGradleTask extends DefaultTask {
 		_buildXmlNode = readXml(xmlParser, "build.xml");
 		_ivyXmlNode = readXml(xmlParser, "ivy.xml");
 
-		File buildGradleFile = _project.file("build.gradle");
-
 		List<String> contents = new ArrayList<>();
 
 		addContents(contents, getBuildGradleDependencies());
+		addContents(contents, getBuildGradleDeploy());
 		addContents(contents, getBuildGradleLiferay());
 		addContents(contents, getBuildGradleProperties());
 
 		FileUtil.write(buildGradleFile, contents);
+	}
+
+	public boolean isIgnoreMissingDependencies() {
+		return _ignoreMissingDependencies;
+	}
+
+	public boolean isOverwrite() {
+		return _overwrite;
 	}
 
 	public void portalDependencyNotation(
@@ -187,6 +223,16 @@ public class InitGradleTask extends DefaultTask {
 
 		_portalDependencyNotations.put(
 			fileName, new String[] {group, name, version});
+	}
+
+	public void setIgnoreMissingDependencies(
+		boolean ignoreMissingDependencies) {
+
+		_ignoreMissingDependencies = ignoreMissingDependencies;
+	}
+
+	public void setOverwrite(boolean overwrite) {
+		_overwrite = overwrite;
 	}
 
 	protected void addContents(List<String> contents1, List<String> contents2) {
@@ -246,13 +292,14 @@ public class InitGradleTask extends DefaultTask {
 				String name = (String)dependencyNode.attribute("name");
 
 				boolean optional = false;
-				boolean transitive = true;
+				boolean transitive = getNodeAttribute(
+					dependencyNode, "transitive", true);
 
 				if (Validator.isNotNull(conf)) {
-					if (conf.equals("default->master")) {
+					if (conf.startsWith("default")) {
 						transitive = false;
 					}
-					else if (conf.equals("internal->master")) {
+					else if (conf.startsWith("internal")) {
 						optional = true;
 					}
 				}
@@ -307,6 +354,8 @@ public class InitGradleTask extends DefaultTask {
 			String[] importSharedArray = importShared.split(",");
 
 			for (String projectFileName : importSharedArray) {
+				projectFileName = projectFileName.trim();
+
 				String projectName = projectFileName;
 
 				int pos = projectName.lastIndexOf('/');
@@ -318,8 +367,17 @@ public class InitGradleTask extends DefaultTask {
 				String projectPath = projectNamePathMap.get(projectName);
 
 				if (Validator.isNull(projectPath)) {
-					throw new GradleException(
-						"Unable to find project dependency " + projectFileName);
+					String message =
+						"Unable to find project dependency " + projectFileName;
+
+					if (isIgnoreMissingDependencies()) {
+						_logger.error(message);
+
+						continue;
+					}
+					else {
+						throw new GradleException(message);
+					}
 				}
 
 				contents.add(
@@ -387,7 +445,7 @@ public class InitGradleTask extends DefaultTask {
 					fileName);
 
 				if (portalDependencyNotation == null) {
-					System.out.println(
+					_logger.error(
 						"Unable to find portal dependency " + fileName);
 				}
 				else {
@@ -424,12 +482,14 @@ public class InitGradleTask extends DefaultTask {
 
 				String group = (String)dependencyNode.attribute("org");
 				String name = (String)dependencyNode.attribute("name");
+				boolean transitive = getNodeAttribute(
+					dependencyNode, "transitive", true);
 				String version = (String)dependencyNode.attribute("rev");
 
 				contents.add(
 					wrapDependency(
 						JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME, group, name,
-						true, version));
+						transitive, version));
 			}
 		}
 
@@ -447,6 +507,29 @@ public class InitGradleTask extends DefaultTask {
 		addContents(contents, getBuildDependenciesTestCompile());
 
 		return wrapContents(contents, 0, " {", "dependencies", "}", false);
+	}
+
+	protected List<String> getBuildGradleDeploy() {
+		String osgiRuntimeDependencies = getBuildXmlProperty(
+			"osgi.runtime.dependencies");
+
+		if (Validator.isNull(osgiRuntimeDependencies)) {
+			return Collections.emptyList();
+		}
+
+		List<String> contents = new ArrayList<>();
+
+		String[] osgiRuntimeDependenciesArray = osgiRuntimeDependencies.split(
+			",");
+
+		for (String osgiRuntimeDependency : osgiRuntimeDependenciesArray) {
+			contents.add("\t\tinclude \"" + osgiRuntimeDependency + "\"");
+		}
+
+		contents = wrapContents(contents, 1, " {", "from(\"lib\")", "}", true);
+
+		return wrapContents(
+			contents, 0, " {", LiferayJavaPlugin.DEPLOY_TASK_NAME, "}", false);
 	}
 
 	protected List<String> getBuildGradleLiferay() {
@@ -561,6 +644,18 @@ public class InitGradleTask extends DefaultTask {
 		}
 
 		return (Node)nodeList.get(0);
+	}
+
+	protected boolean getNodeAttribute(
+		Node node, String name, boolean defaultValue) {
+
+		String value = (String)node.attribute(name);
+
+		if (Validator.isNull(value)) {
+			return defaultValue;
+		}
+
+		return Boolean.parseBoolean(value);
 	}
 
 	protected String getServiceJarFileName(String deploymentContext) {
@@ -725,9 +820,14 @@ public class InitGradleTask extends DefaultTask {
 		return sb.toString();
 	}
 
+	private static final Logger _logger = Logging.getLogger(
+		InitGradleTask.class);
+
 	private Node _buildXmlNode;
+	private boolean _ignoreMissingDependencies;
 	private Node _ivyXmlNode;
 	private LiferayExtension _liferayExtension;
+	private boolean _overwrite;
 	private Properties _pluginPackageProperties;
 	private final Map<String, String[]> _portalDependencyNotations =
 		new HashMap<>();

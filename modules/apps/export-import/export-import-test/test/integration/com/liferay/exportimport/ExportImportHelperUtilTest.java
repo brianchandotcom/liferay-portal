@@ -15,6 +15,8 @@
 package com.liferay.exportimport;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.lar.ExportImportHelperImpl;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -38,7 +40,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -62,18 +63,16 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
-import com.liferay.portlet.exportimport.lar.CurrentUserIdStrategy;
-import com.liferay.portlet.exportimport.lar.ExportImportHelperImpl;
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.MissingReference;
 import com.liferay.portlet.exportimport.lar.MissingReferences;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataContextFactoryUtil;
+import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portlet.exportimport.service.ExportImportLocalServiceUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.io.File;
 import java.io.InputStream;
@@ -98,15 +97,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Zsolt Berentey
  * @author Peter Borkuti
  */
 @RunWith(Arquillian.class)
 @Sync
-public class ExportImportHelperUtilTest extends PowerMockito {
+public class ExportImportHelperUtilTest {
 
 	@ClassRule
 	@Rule
@@ -166,8 +163,7 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		_portletDataContextImport =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
 				_liveGroup.getCompanyId(), _liveGroup.getGroupId(),
-				new HashMap<String, String[]>(),
-				new CurrentUserIdStrategy(TestPropsValues.getUser()),
+				new HashMap<String, String[]>(), new TestUserIdStrategy(),
 				testReaderWriter);
 
 		_portletDataContextImport.setImportDataRootElement(rootElement);
@@ -273,13 +269,14 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 	@Test
 	public void testExportLayoutReferencesWithContext() throws Exception {
-		PortalImpl portalImpl = spy(new PortalImpl());
+		PortalImpl portalImpl = new PortalImpl() {
 
-		when(
-			portalImpl.getPathContext()
-		).thenReturn(
-			"/de"
-		);
+			@Override
+			public String getPathContext() {
+				return "/de";
+			}
+
+		};
 
 		PortalUtil portalUtil = new PortalUtil();
 
@@ -706,23 +703,20 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		User user = TestPropsValues.getUser();
 
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				user.getUserId(), _stagingGroup.getGroupId(),
-				_liveGroup.getGroupId(), privateLayout,
-				ExportImportHelperUtil.getLayoutIds(layouts),
-				new HashMap<String, String[]>(), user.getLocale(),
-				user.getTimeZone());
+		Map<String, Serializable> publishLayoutLocalSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildPublishLayoutLocalSettingsMap(
+					user, _stagingGroup.getGroupId(), _liveGroup.getGroupId(),
+					privateLayout, ExportImportHelperUtil.getLayoutIds(layouts),
+					new HashMap<String, String[]>());
 
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					user.getUserId(), _stagingGroup.getGroupId(),
-					StringPool.BLANK, StringPool.BLANK,
+				addDraftExportImportConfiguration(
+					user.getUserId(),
 					ExportImportConfigurationConstants.
 						TYPE_PUBLISH_LAYOUT_LOCAL,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
-					new ServiceContext());
+					publishLayoutLocalSettingsMap);
 
 		File larFile = ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportImportConfiguration);
@@ -927,7 +921,14 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		@Override
 		public InputStream getEntryAsInputStream(String name) {
-			return null;
+			return new InputStream() {
+
+				@Override
+				public int read() {
+					return -1;
+				}
+
+			};
 		}
 
 		@Override
@@ -952,6 +953,20 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		private final List<String> _binaryEntries = new ArrayList<>();
 		private final Map<String, String> _entries = new HashMap<>();
+
+	}
+
+	private class TestUserIdStrategy implements UserIdStrategy {
+
+		@Override
+		public long getUserId(String userUuid) {
+			try {
+				return TestPropsValues.getUserId();
+			}
+			catch (Exception e) {
+				return 0;
+			}
+		}
 
 	}
 

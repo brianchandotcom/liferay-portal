@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.search.suggest;
 
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -28,17 +29,10 @@ public class CollatorUtil {
 			Map<String, List<String>> suggestions, List<String> keywords)
 		throws SearchException {
 
-		return _getCollator().collate(suggestions, keywords);
+		return _collator.collate(suggestions, keywords);
 	}
 
-	public void setCollator(Collator collator) {
-		_collator = collator;
-	}
-
-	private static Collator _getCollator() {
-		return _collator;
-	}
-
-	private static Collator _collator;
+	private static final Collator _collator =
+		ProxyFactory.newServiceTrackedInstance(Collator.class);
 
 }

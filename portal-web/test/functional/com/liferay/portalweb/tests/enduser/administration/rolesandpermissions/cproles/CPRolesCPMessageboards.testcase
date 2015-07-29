@@ -21,7 +21,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ViewMessageBoardsPortletRegRole" priority="5">
+	<command name="ViewMessageBoardsPortletRegRole" priority="4">
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />
 		<var name="portletName1" value="Message Boards" />
@@ -79,7 +79,7 @@
 		<execute function="AssertElementNotPresent" locator1="Dockbar#ADMIN" />
 	</command>
 
-	<command name="ViewMessageBoardsPortletSiteRole" priority="5">
+	<command name="ViewMessageBoardsPortletSiteRole" priority="4">
 		<var name="pageName" value="Blogs Page" />
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 		<var name="permissionDefinitionValue" value="Access in Site Administration" />

@@ -15,11 +15,12 @@
 package com.liferay.exportimport.lifecycle;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.NoSuchLayoutSetException;
 import com.liferay.portal.backgroundtask.messaging.BackgroundTaskMessageListener;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -30,27 +31,31 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationParameterMapFactory;
-import com.liferay.portlet.exportimport.lar.LayoutExporter;
-import com.liferay.portlet.exportimport.lar.LayoutImporter;
-import com.liferay.portlet.exportimport.lar.PortletExporter;
-import com.liferay.portlet.exportimport.lar.PortletImporter;
+import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEventListenerRegistryUtil;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleListener;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportLocalServiceUtil;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
-import com.liferay.portlet.journal.model.JournalFolderConstants;
 
-import java.util.Date;
+import java.io.File;
+import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.log4j.Level;
@@ -64,14 +69,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Daniel Kocsis
  */
 @RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)
-public class ExportImportLifecycleEventTest extends PowerMockito {
+public class ExportImportLifecycleEventTest {
 
 	@ClassRule
 	@Rule
@@ -96,11 +99,22 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 	@Test
 	public void testFailedLayoutExport() throws Exception {
-		LayoutExporter layoutExporter = LayoutExporter.getInstance();
+		Map<String, Serializable> exportLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildExportLayoutSettingsMap(
+					TestPropsValues.getUserId(), 0, false, new long[0],
+					_parameterMap, Locale.US, TimeZoneUtil.GMT);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					exportLayoutSettingsMap);
 
 		try {
-			layoutExporter.exportLayoutsAsFile(
-				0, false, new long[0], _parameterMap, new Date(), new Date());
+			ExportImportLocalServiceUtil.exportLayoutsAsFile(
+				exportImportConfiguration);
 
 			Assert.fail();
 		}
@@ -116,11 +130,22 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 	@Test
 	public void testFailedLayoutImport() throws Exception {
-		LayoutImporter layoutImporter = LayoutImporter.getInstance();
+		Map<String, Serializable> importLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportLayoutSettingsMap(
+					TestPropsValues.getUserId(), 0, false, new long[0],
+					_parameterMap, Locale.US, TimeZoneUtil.GMT);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					importLayoutSettingsMap);
 
 		try {
-			layoutImporter.importLayouts(
-				TestPropsValues.getUserId(), 0, false, _parameterMap, null);
+			ExportImportLocalServiceUtil.importLayouts(
+				exportImportConfiguration, (File)null);
 
 			Assert.fail();
 		}
@@ -158,7 +183,8 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 			Throwable throwable = throwableInformation.getThrowable();
 
-			Assert.assertSame(SystemException.class, throwable.getClass());
+			Assert.assertSame(
+				NoSuchLayoutSetException.class, throwable.getClass());
 		}
 
 		Assert.assertTrue(
@@ -169,14 +195,25 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 	@Test
 	public void testFailedPortletExport() throws Exception {
-		PortletExporter portletExporter = PortletExporter.getInstance();
-
 		long plid = RandomTestUtil.nextLong();
 
+		Map<String, Serializable> exportPortletSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildExportPortletSettingsMap(
+					TestPropsValues.getUserId(), plid, _group.getGroupId(),
+					StringPool.BLANK, _parameterMap, Locale.US,
+					TimeZoneUtil.GMT, StringPool.BLANK);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
+					exportPortletSettingsMap);
+
 		try {
-			portletExporter.exportPortletInfoAsFile(
-				plid, _group.getGroupId(), StringPool.BLANK, _parameterMap,
-				new Date(), new Date());
+			ExportImportLocalServiceUtil.exportPortletInfoAsFile(
+				exportImportConfiguration);
 
 			Assert.fail();
 		}
@@ -193,12 +230,23 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 	@Test
 	public void testFailedPortletImport() throws Exception {
-		PortletImporter portletImporter = PortletImporter.getInstance();
+		Map<String, Serializable> importPortletSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildImportPortletSettingsMap(
+					TestPropsValues.getUserId(), 0, _group.getGroupId(),
+					StringPool.BLANK, _parameterMap, Locale.US,
+					TimeZoneUtil.GMT);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
+					importPortletSettingsMap);
 
 		try {
-			portletImporter.importPortletInfo(
-				TestPropsValues.getUserId(), 0, 0, StringPool.BLANK,
-				_parameterMap, null);
+			ExportImportLocalServiceUtil.importPortletInfo(
+				exportImportConfiguration, (File)null);
 
 			Assert.fail();
 		}
@@ -238,7 +286,8 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 			Throwable throwable = throwableInformation.getThrowable();
 
-			Assert.assertSame(SystemException.class, throwable.getClass());
+			Assert.assertSame(
+				NoSuchLayoutException.class, throwable.getClass());
 		}
 
 		Assert.assertTrue(

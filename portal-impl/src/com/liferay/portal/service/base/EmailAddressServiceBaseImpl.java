@@ -375,7 +375,7 @@ public abstract class EmailAddressServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.EmailAddressLocalService.class)
 	protected com.liferay.portal.service.EmailAddressLocalService emailAddressLocalService;
-	@BeanReference(type = EmailAddressService.class)
+	@BeanReference(type = com.liferay.portal.service.EmailAddressService.class)
 	protected EmailAddressService emailAddressService;
 	@BeanReference(type = EmailAddressPersistence.class)
 	protected EmailAddressPersistence emailAddressPersistence;

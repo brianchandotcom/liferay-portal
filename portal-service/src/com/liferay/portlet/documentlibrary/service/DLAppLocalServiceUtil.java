@@ -96,8 +96,7 @@ public class DLAppLocalServiceUtil {
 	}
 
 	/**
-	* Adds a file entry and associated metadata based on a {@link java.io.File}
-	* object.
+	* Adds a file entry and associated metadata based on a {@link File} object.
 	*
 	* <p>
 	* This method takes two file names, the <code>sourceFileName</code> and the
@@ -693,11 +692,10 @@ public class DLAppLocalServiceUtil {
 	}
 
 	/**
-	* Updates a file entry and associated metadata based on a {@link
-	* java.io.File} object. If the file data is <code>null</code>, then only
-	* the associated metadata (i.e., <code>title</code>,
-	* <code>description</code>, and parameters in the
-	* <code>serviceContext</code>) will be updated.
+	* Updates a file entry and associated metadata based on a {@link File}
+	* object. If the file data is <code>null</code>, then only the associated
+	* metadata (i.e., <code>title</code>, <code>description</code>, and
+	* parameters in the <code>serviceContext</code>) will be updated.
 	*
 	* <p>
 	* This method takes two file names, the <code>sourceFileName</code> and the
@@ -838,7 +836,10 @@ public class DLAppLocalServiceUtil {
 	* entry. This method is only supported by the Liferay repository.
 	*
 	* @param oldToFileEntryId the primary key of the old file entry pointed to
-	* @param newToFileEntryId the primary key of the new file entry to point to
+	* @param newToFileEntryId the primary key of the new file entry to point
+	to
+	* @throws PortalException if a file entry for any one of the primary keys
+	could not be found
 	*/
 	public static void updateFileShortcuts(long oldToFileEntryId,
 		long newToFileEntryId)
@@ -848,7 +849,7 @@ public class DLAppLocalServiceUtil {
 
 	/**
 	* Deprecated as of 7.0.0, replaced by {@link #updateFileShortcuts(long,
-	*            long)}
+	* long)}
 	*/
 	@Deprecated
 	public static void updateFileShortcuts(long toRepositoryId,

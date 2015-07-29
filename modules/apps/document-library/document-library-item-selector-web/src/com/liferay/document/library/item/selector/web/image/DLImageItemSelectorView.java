@@ -15,16 +15,16 @@
 package com.liferay.document.library.item.selector.web.image;
 
 import com.liferay.document.library.item.selector.web.BaseDLItemSelectorView;
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
-import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -34,10 +34,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Roberto Díaz
  */
-@Component(service = ItemSelectorView.class)
+@Component(
+	property = {"service.ranking:Integer=100"},
+	service = ItemSelectorView.class
+)
 public class DLImageItemSelectorView
-	extends BaseDLItemSelectorView
-		<ImageItemSelectorCriterion, DefaultItemSelectorReturnType> {
+	extends BaseDLItemSelectorView<ImageItemSelectorCriterion> {
 
 	@Override
 	public Class<ImageItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -50,18 +52,8 @@ public class DLImageItemSelectorView
 	}
 
 	@Override
-	public Set<DefaultItemSelectorReturnType>
-		getSupportedItemSelectorReturnTypes() {
-
+	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
-	}
-
-	@Override
-	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundle.getBundle(
-			"content/Language", locale);
-
-		return resourceBundle.getString("images");
 	}
 
 	@Override
@@ -73,12 +65,12 @@ public class DLImageItemSelectorView
 		super.setServletContext(servletContext);
 	}
 
-	private static final Set<DefaultItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
-			SetUtil.fromArray(
-				new DefaultItemSelectorReturnType[] {
-					DefaultItemSelectorReturnType.FILE_ENTRY,
-					DefaultItemSelectorReturnType.URL
+	private static final List<ItemSelectorReturnType>
+		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
+			ListUtil.fromArray(
+				new ItemSelectorReturnType[] {
+					new FileEntryItemSelectorReturnType(),
+					new URLItemSelectorReturnType()
 				}));
 
 }

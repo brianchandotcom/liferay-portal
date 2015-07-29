@@ -17,9 +17,6 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.search.dummy.DummyIndexSearcher;
 import com.liferay.portal.kernel.search.dummy.DummyIndexWriter;
 import com.liferay.portal.kernel.search.generic.BooleanClauseFactoryImpl;
-import com.liferay.portal.kernel.search.generic.BooleanQueryFactoryImpl;
-import com.liferay.portal.kernel.search.generic.TermQueryFactoryImpl;
-import com.liferay.portal.kernel.search.generic.TermRangeQueryFactoryImpl;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 /**
@@ -60,7 +57,9 @@ public class BaseSearchEngine implements SearchEngine {
 	@Override
 	public BooleanQueryFactory getBooleanQueryFactory() {
 		if (_booleanQueryFactory == null) {
-			_booleanQueryFactory = new BooleanQueryFactoryImpl();
+			_booleanQueryFactory =
+				new com.liferay.portal.kernel.search.generic.
+					BooleanQueryFactoryImpl();
 		}
 
 		return _booleanQueryFactory;
@@ -76,10 +75,16 @@ public class BaseSearchEngine implements SearchEngine {
 		return _indexWriter;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public TermQueryFactory getTermQueryFactory() {
 		if (_termQueryFactory == null) {
-			_termQueryFactory = new TermQueryFactoryImpl();
+			_termQueryFactory =
+				new com.liferay.portal.kernel.search.generic.
+					TermQueryFactoryImpl();
 		}
 
 		return _termQueryFactory;
@@ -92,7 +97,9 @@ public class BaseSearchEngine implements SearchEngine {
 	@Override
 	public TermRangeQueryFactory getTermRangeQueryFactory() {
 		if (_termRangeQueryFactory == null) {
-			_termRangeQueryFactory = new TermRangeQueryFactoryImpl();
+			_termRangeQueryFactory =
+				new com.liferay.portal.kernel.search.generic.
+					TermRangeQueryFactoryImpl();
 		}
 
 		return _termRangeQueryFactory;
@@ -178,11 +185,19 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	private BooleanClauseFactory _booleanClauseFactory;
+
+	@SuppressWarnings("deprecation")
 	private BooleanQueryFactory _booleanQueryFactory;
+
 	private IndexSearcher _indexSearcher = new DummyIndexSearcher();
 	private IndexWriter _indexWriter = new DummyIndexWriter();
+
+	@SuppressWarnings("deprecation")
 	private TermQueryFactory _termQueryFactory;
+
+	@SuppressWarnings("deprecation")
 	private TermRangeQueryFactory _termRangeQueryFactory;
+
 	private String _vendor;
 
 }

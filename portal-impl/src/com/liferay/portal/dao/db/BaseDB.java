@@ -117,7 +117,6 @@ public abstract class BaseDB implements DB {
 
 		buildCreateFile(sqlDir, databaseName, BARE);
 		buildCreateFile(sqlDir, databaseName, DEFAULT);
-		buildCreateFile(sqlDir, databaseName, SHARDED);
 	}
 
 	@Override
@@ -131,35 +130,11 @@ public abstract class BaseDB implements DB {
 			sqlDir + "/create" + suffix + "/create" + suffix + "-" +
 				getServerName() + ".sql");
 
-		if (population != SHARDED) {
-			String content = buildCreateFileContent(
-				sqlDir, databaseName, population);
+		String content = buildCreateFileContent(
+			sqlDir, databaseName, population);
 
-			if (content != null) {
-				FileUtil.write(file, content);
-			}
-		}
-		else {
-			String content = buildCreateFileContent(
-				sqlDir, databaseName, DEFAULT);
-
-			if (content != null) {
-				FileUtil.write(file, content);
-			}
-
-			content = buildCreateFileContent(
-				sqlDir, databaseName + "1", DEFAULT);
-
-			if (content != null) {
-				FileUtil.write(file, content, false, true);
-			}
-
-			content = buildCreateFileContent(
-				sqlDir, databaseName + "2", DEFAULT);
-
-			if (content != null) {
-				FileUtil.write(file, content, false, true);
-			}
+		if (content != null) {
+			FileUtil.write(file, content);
 		}
 	}
 
@@ -829,9 +804,6 @@ public abstract class BaseDB implements DB {
 	protected String getSuffix(int type) {
 		if (type == BARE) {
 			return "-bare";
-		}
-		else if (type == SHARDED) {
-			return "-sharded";
 		}
 		else {
 			return StringPool.BLANK;

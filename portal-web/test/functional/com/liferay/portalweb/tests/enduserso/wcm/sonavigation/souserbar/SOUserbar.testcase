@@ -9,7 +9,7 @@
 		<execute macro="SOUser#firstLoginPG" />
 	</set-up>
 
-	<command name="ViewLinkContactscenter" priority="5">
+	<command name="ViewLinkContactscenter" priority="4">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="Click" locator1="SOUserBar#CONTACT_CENTER" value1="Contacts Center" />
@@ -17,13 +17,13 @@
 		<execute macro="SODashboard#viewLinkContactscenter" />
 	</command>
 
-	<command name="ViewLinkHome" priority="5">
+	<command name="ViewLinkHome" priority="4">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute macro="SODashboard#viewLinkHome" />
 	</command>
 
-	<command name="ViewLinkMicroblogs" priority="5">
+	<command name="ViewLinkMicroblogs" priority="4">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="Click" locator1="SOUserBar#MICROBLOGS" value1="Microblogs" />
@@ -31,7 +31,7 @@
 		<execute macro="SODashboard#viewLinkMicroblogs" />
 	</command>
 
-	<command name="ViewLinkMyDocuments" priority="5">
+	<command name="ViewLinkMyDocuments" priority="4">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="Click" locator1="SOUserBar#MY_DOCUMENTS" value1="My Documents" />
@@ -39,7 +39,7 @@
 		<execute macro="SODashboard#viewLinkMydocuments" />
 	</command>
 
-	<command name="ViewLinkPrivateMessaging" priority="5">
+	<command name="ViewLinkPrivateMessaging" priority="4">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="Click" locator1="SOUserBar#MESSAGES" value1="Messages" />
@@ -53,7 +53,7 @@
 		<execute macro="SODashboard#viewLinkHome" />
 	</command>
 
-	<command name="ViewLinkTasks" priority="5">
+	<command name="ViewLinkTasks" priority="4">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="Click" locator1="SOUserBar#TASKS" value1="Tasks" />

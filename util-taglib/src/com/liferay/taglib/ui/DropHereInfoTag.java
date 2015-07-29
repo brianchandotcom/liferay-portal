@@ -17,6 +17,10 @@ package com.liferay.taglib.ui;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+
+/**
+ * @author Brian Wing Shun Chan
+ */
 public class DropHereInfoTag extends IncludeTag {
 
 	public void setMessage(String message) {

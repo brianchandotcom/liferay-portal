@@ -44,7 +44,7 @@ import java.util.Map;
  */
 public class AssetSearcher extends BaseSearcher {
 
-	public static Indexer getInstance() {
+	public static Indexer<?> getInstance() {
 		return new AssetSearcher();
 	}
 

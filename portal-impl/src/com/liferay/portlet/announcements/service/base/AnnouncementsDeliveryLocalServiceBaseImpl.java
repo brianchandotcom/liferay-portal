@@ -514,7 +514,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = AnnouncementsDeliveryLocalService.class)
+	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalService.class)
 	protected AnnouncementsDeliveryLocalService announcementsDeliveryLocalService;
 	@BeanReference(type = com.liferay.portlet.announcements.service.AnnouncementsDeliveryService.class)
 	protected com.liferay.portlet.announcements.service.AnnouncementsDeliveryService announcementsDeliveryService;

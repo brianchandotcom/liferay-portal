@@ -701,7 +701,20 @@ public class StringBundlerTest {
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
-	public void testToStringWithoutThreadLocalBuffer() {
+	public void testToStringWithoutThreadLocalBufferMaxValueLimit() {
+		String propertyKey =
+			StringBundler.class.getName() + ".threadlocal.buffer.limit";
+
+		String propertyValue = System.getProperty(propertyKey);
+
+		System.setProperty(propertyKey, String.valueOf(Integer.MAX_VALUE));
+
+		testToStringWithoutThreadLocalBuffer(propertyKey, propertyValue);
+	}
+
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@Test
+	public void testToStringWithoutThreadLocalBufferNoSetting() {
 		String propertyKey =
 			StringBundler.class.getName() + ".threadlocal.buffer.limit";
 
@@ -709,32 +722,20 @@ public class StringBundlerTest {
 
 		System.clearProperty(propertyKey);
 
-		try {
-			Assert.assertEquals(
-				Integer.MAX_VALUE,
-				ReflectionTestUtil.getFieldValue(
-					StringBundler.class, "_THREAD_LOCAL_BUFFER_LIMIT"));
-			Assert.assertNull(
-				ReflectionTestUtil.getFieldValue(
-					StringBundler.class, "_stringBuilderThreadLocal"));
+		testToStringWithoutThreadLocalBuffer(propertyKey, propertyValue);
+	}
 
-			StringBundler sb = new StringBundler();
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@Test
+	public void testToStringWithoutThreadLocalBufferZeroLimit() {
+		String propertyKey =
+			StringBundler.class.getName() + ".threadlocal.buffer.limit";
 
-			sb.append("1");
-			sb.append("2");
-			sb.append("3");
-			sb.append("4");
+		String propertyValue = System.getProperty(propertyKey);
 
-			Assert.assertEquals("1234", sb.toString());
-			Assert.assertNull(
-				ReflectionTestUtil.getFieldValue(
-					StringBundler.class, "_stringBuilderThreadLocal"));
-		}
-		finally {
-			if (propertyValue != null) {
-				System.setProperty(propertyKey, propertyValue);
-			}
-		}
+		System.setProperty(propertyKey, "0");
+
+		testToStringWithoutThreadLocalBuffer(propertyKey, propertyValue);
 	}
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
@@ -826,6 +827,37 @@ public class StringBundlerTest {
 
 		for (int i = prefix.length; i < strings.length; i++) {
 			Assert.assertNull(strings[i]);
+		}
+	}
+
+	protected void testToStringWithoutThreadLocalBuffer(
+		String propertyKey, String propertyValue) {
+
+		try {
+			Assert.assertEquals(
+				Integer.MAX_VALUE,
+				ReflectionTestUtil.getFieldValue(
+					StringBundler.class, "_THREAD_LOCAL_BUFFER_LIMIT"));
+			Assert.assertNull(
+				ReflectionTestUtil.getFieldValue(
+					StringBundler.class, "_stringBuilderThreadLocal"));
+
+			StringBundler sb = new StringBundler();
+
+			sb.append("1");
+			sb.append("2");
+			sb.append("3");
+			sb.append("4");
+
+			Assert.assertEquals("1234", sb.toString());
+			Assert.assertNull(
+				ReflectionTestUtil.getFieldValue(
+					StringBundler.class, "_stringBuilderThreadLocal"));
+		}
+		finally {
+			if (propertyValue != null) {
+				System.setProperty(propertyKey, propertyValue);
+			}
 		}
 	}
 

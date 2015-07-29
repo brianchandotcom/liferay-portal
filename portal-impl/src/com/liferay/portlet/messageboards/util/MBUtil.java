@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.util;
 
-import com.liferay.portal.kernel.dao.shard.ShardCallable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -26,7 +25,7 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
@@ -143,18 +141,20 @@ public class MBUtil {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		String strutsAction = ParamUtil.getString(request, "struts_action");
+		String mvcRenderCommandName = ParamUtil.getString(
+			request, "mvcRenderCommandName");
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		if (strutsAction.equals("/message_boards/select_category") ||
-			strutsAction.equals("/message_boards_admin/select_category")) {
+		if (mvcRenderCommandName.equals("/message_boards/select_category") ||
+			mvcRenderCommandName.equals(
+				"/message_boards_admin/select_category")) {
 
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 			portletURL.setParameter(
-				"struts_action", "/message_boards/select_category");
+				"mvcRenderCommandName", "/message_boards/select_category");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			PortalUtil.addPortletBreadcrumbEntry(
@@ -162,7 +162,8 @@ public class MBUtil {
 				portletURL.toString());
 		}
 		else {
-			portletURL.setParameter("struts_action", "/message_boards/view");
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/message_boards/view");
 		}
 
 		List<MBCategory> ancestorCategories = category.getAncestors();
@@ -205,7 +206,7 @@ public class MBUtil {
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"struts_action", "/message_boards/view_message");
+			"mvcRenderCommandName", "/message_boards/view_message");
 		portletURL.setParameter(
 			"messageId", String.valueOf(message.getMessageId()));
 
@@ -687,6 +688,39 @@ public class MBUtil {
 		return sb.toString();
 	}
 
+	public static String getRSSURL(
+		long plid, long categoryId, long threadId, long userId,
+		ThemeDisplay themeDisplay) {
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(themeDisplay.getPortalURL());
+		sb.append(themeDisplay.getPathMain());
+		sb.append("/message_boards/rss?p_l_id=");
+		sb.append(plid);
+
+		if (categoryId > 0) {
+			sb.append("&mbCategoryId=");
+			sb.append(categoryId);
+		}
+		else {
+			sb.append("&groupId=");
+			sb.append(themeDisplay.getScopeGroupId());
+		}
+
+		if (threadId > 0) {
+			sb.append("&threadId=");
+			sb.append(threadId);
+		}
+
+		if (userId > 0) {
+			sb.append("&userId=");
+			sb.append(userId);
+		}
+
+		return sb.toString();
+	}
+
 	public static String getSubjectForEmail(MBMessage message)
 		throws Exception {
 
@@ -982,127 +1016,64 @@ public class MBUtil {
 			});
 	}
 
-	public static void updateCategoryMessageCount(
-		long companyId, final long categoryId) {
-
-		Callable<Void> callable = new ShardCallable<Void>(companyId) {
+	public static void updateCategoryMessageCount(final long categoryId) {
+		Callable<Void> callable = new Callable<Void>() {
 
 			@Override
-			protected Void doCall() throws Exception {
-				MBCategory category =
-					MBCategoryLocalServiceUtil.fetchMBCategory(categoryId);
-
-				if (category == null) {
-					return null;
-				}
-
-				int messageCount = _getMessageCount(category);
-
-				category.setMessageCount(messageCount);
-
-				MBCategoryLocalServiceUtil.updateMBCategory(category);
+			public Void call() throws Exception {
+				MBCategoryLocalServiceUtil.updateMessageCount(categoryId);
 
 				return null;
 			}
 
 		};
 
-		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
+		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
 
-	public static void updateCategoryStatistics(
-		long companyId, final long categoryId) {
-
-		Callable<Void> callable = new ShardCallable<Void>(companyId) {
+	public static void updateCategoryStatistics(final long categoryId) {
+		Callable<Void> callable = new Callable<Void>() {
 
 			@Override
-			protected Void doCall() throws Exception {
-				MBCategory category =
-					MBCategoryLocalServiceUtil.fetchMBCategory(categoryId);
-
-				if (category == null) {
-					return null;
-				}
-
-				int messageCount = _getMessageCount(category);
-
-				int threadCount =
-					MBThreadLocalServiceUtil.getCategoryThreadsCount(
-						category.getGroupId(), category.getCategoryId(),
-						WorkflowConstants.STATUS_APPROVED);
-
-				category.setMessageCount(messageCount);
-				category.setThreadCount(threadCount);
-
-				MBCategoryLocalServiceUtil.updateMBCategory(category);
+			public Void call() throws Exception {
+				MBCategoryLocalServiceUtil.updateStatistics(categoryId);
 
 				return null;
 			}
 
 		};
 
-		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
+		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
 
-	public static void updateCategoryThreadCount(
-		long companyId, final long categoryId) {
-
-		Callable<Void> callable = new ShardCallable<Void>(companyId) {
+	public static void updateCategoryThreadCount(final long categoryId) {
+		Callable<Void> callable = new Callable<Void>() {
 
 			@Override
-			protected Void doCall() throws Exception {
-				MBCategory category =
-					MBCategoryLocalServiceUtil.fetchMBCategory(categoryId);
-
-				if (category == null) {
-					return null;
-				}
-
-				int threadCount =
-					MBThreadLocalServiceUtil.getCategoryThreadsCount(
-						category.getGroupId(), category.getCategoryId(),
-						WorkflowConstants.STATUS_APPROVED);
-
-				category.setThreadCount(threadCount);
-
-				MBCategoryLocalServiceUtil.updateMBCategory(category);
+			public Void call() throws Exception {
+				MBCategoryLocalServiceUtil.updateThreadCount(categoryId);
 
 				return null;
 			}
 
 		};
 
-		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
+		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
 
-	public static void updateThreadMessageCount(
-		long companyId, final long threadId) {
-
-		Callable<Void> callable = new ShardCallable<Void>(companyId) {
+	public static void updateThreadMessageCount(final long threadId) {
+		Callable<Void> callable = new Callable<Void>() {
 
 			@Override
-			protected Void doCall() throws Exception {
-				MBThread thread = MBThreadLocalServiceUtil.fetchThread(
-					threadId);
-
-				if (thread == null) {
-					return null;
-				}
-
-				int messageCount =
-					MBMessageLocalServiceUtil.getThreadMessagesCount(
-						threadId, WorkflowConstants.STATUS_APPROVED);
-
-				thread.setMessageCount(messageCount);
-
-				MBThreadLocalServiceUtil.updateMBThread(thread);
+			public Void call() throws Exception {
+				MBThreadLocalServiceUtil.updateMessageCount(threadId);
 
 				return null;
 			}
 
 		};
 
-		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
+		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
 
 	private static String[] _findThreadPriority(
@@ -1132,12 +1103,6 @@ public class MBUtil {
 		}
 
 		return null;
-	}
-
-	private static int _getMessageCount(MBCategory category) {
-		return MBMessageLocalServiceUtil.getCategoryMessagesCount(
-			category.getGroupId(), category.getCategoryId(),
-			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	private static String[] _getMessageIdStringParts(String messageIdString) {

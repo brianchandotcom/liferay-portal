@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
+DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
@@ -28,10 +28,10 @@ boolean hasDeletePermission = false;
 boolean hasUpdatePermission = false;
 boolean showAddRecordButton = false;
 
-if (editable || portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS)) {
+if (editable || portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS)) {
 	hasDeletePermission = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.DELETE);
 	hasUpdatePermission = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.UPDATE);
-	showAddRecordButton = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.ADD_RECORD);
+	showAddRecordButton = DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), DDLActionKeys.ADD_RECORD);
 }
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -84,8 +84,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 					<aui:nav-item href="<%= addRecordURL %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>' />
 				</c:if>
 
-				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="exportRecordSetURL">
-					<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="exportRecordSet" />
+				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportRecordSet" var="exportRecordSetURL">
 					<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 				</liferay-portlet:resourceURL>
 
@@ -135,6 +134,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 
 			ResultRow row = new ResultRow(record, record.getRecordId(), i);
 
+			row.setParameter("editable", String.valueOf(editable));
 			row.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
 			row.setParameter("hasDeletePermission", String.valueOf(hasDeletePermission));
 			row.setParameter("hasUpdatePermission", String.valueOf(hasUpdatePermission));
@@ -145,6 +145,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("recordId", String.valueOf(record.getRecordId()));
 			rowURL.setParameter("version", recordVersion.getVersion());
+			rowURL.setParameter("editable", String.valueOf(editable));
 			rowURL.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
 
 			// Columns

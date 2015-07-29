@@ -14,6 +14,7 @@
 
 package com.liferay.site.my.sites.web.portlet;
 
+import com.liferay.portal.MembershipRequestCommentsException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.MembershipRequestServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -79,6 +81,8 @@ public class MySitesPortlet extends MVCPortlet {
 			groupId, comments, serviceContext);
 
 		SessionMessages.add(actionRequest, "membershipRequestSent");
+
+		addSuccessMessage(actionRequest, actionResponse);
 
 		sendRedirect(actionRequest, actionResponse);
 	}
@@ -141,6 +145,18 @@ public class MySitesPortlet extends MVCPortlet {
 
 		return ArrayUtil.toArray(
 			filteredUserIds.toArray(new Long[filteredUserIds.size()]));
+	}
+
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof MembershipRequestCommentsException ||
+			cause instanceof PrincipalException ||
+			super.isSessionErrorException(cause)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference(unbind = "-")

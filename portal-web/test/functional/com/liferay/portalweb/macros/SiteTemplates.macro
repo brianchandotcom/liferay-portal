@@ -118,7 +118,6 @@
 	</command>
 
 	<command name="deleteCP">
-
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
 		<execute function="Click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" />

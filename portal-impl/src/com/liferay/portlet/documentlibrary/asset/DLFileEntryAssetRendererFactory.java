@@ -134,7 +134,7 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 			PortletKeys.DOCUMENT_LIBRARY);
 
 		portletURL.setParameter(
-			"struts_action", "/document_library/edit_file_entry");
+			"mvcRenderCommandName", "/document_library/edit_file_entry");
 		portletURL.setParameter(Constants.CMD, Constants.ADD);
 		portletURL.setParameter(
 			"folderId",

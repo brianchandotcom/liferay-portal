@@ -32,14 +32,16 @@ public interface BaseRepository extends Repository {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.kernel.repository.registry.RepositoryDefiner#getSupportedConfigurations()}
+	 *             com.liferay.portal.kernel.repository.registry.RepositoryDefiner#getSupportedConfigurations(
+	 *             )}
 	 */
 	@Deprecated
 	public String[] getSupportedConfigurations();
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.kernel.repository.registry.RepositoryDefiner#getSupportedParameters()}
+	 *             com.liferay.portal.kernel.repository.registry.RepositoryDefiner#getSupportedParameters(
+	 *             )}
 	 */
 	@Deprecated
 	public String[][] getSupportedParameters();

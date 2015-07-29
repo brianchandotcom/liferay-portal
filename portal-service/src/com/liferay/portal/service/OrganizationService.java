@@ -93,9 +93,8 @@ public interface OrganizationService extends BaseService {
 	invalid, or if the user did not have permission to add the
 	organization
 	* @deprecated As of 6.2.0, replaced by {@link #addOrganization(long,
-	String, String, long, long, int, String, boolean,
-	java.util.List, java.util.List, java.util.List,
-	java.util.List, java.util.List, ServiceContext)}
+	String, String, long, long, int, String, boolean, List, List,
+	List, List, List, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portal.model.Organization addOrganization(
@@ -467,8 +466,7 @@ public interface OrganizationService extends BaseService {
 	the new information was invalid
 	* @deprecated As of 6.2.0, replaced by {@link #updateOrganization(long,
 	long, String, String, long, long, int, String, boolean,
-	byte[], boolean, java.util.List, java.util.List,
-	java.util.List, java.util.List, java.util.List,
+	byte[], boolean, List, List, List, List, List,
 	ServiceContext)}
 	*/
 	@java.lang.Deprecated
@@ -595,8 +593,7 @@ public interface OrganizationService extends BaseService {
 	the new information was invalid
 	* @deprecated As of 7.0.0, replaced by {@link #updateOrganization(long,
 	long, String, String, long, long, int, String, boolean,
-	byte[], boolean, java.util.List, java.util.List,
-	java.util.List, java.util.List, java.util.List,
+	byte[], boolean, List, List, List, List, List,
 	ServiceContext)}
 	*/
 	@java.lang.Deprecated

@@ -65,7 +65,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @param ownerType the counter's owner type. Acceptable values are
 	<code>TYPE_ACTOR</code>, <code>TYPE_ASSET</code> and
 	<code>TYPE_CREATOR</code> defined in {@link
-	com.liferay.portlet.social.model.SocialActivityCounterConstants}.
+	SocialActivityCounterConstants}.
 	* @param currentValue the counter's current value (optionally
 	<code>0</code>)
 	* @param totalValue the counter's total value (optionally
@@ -102,7 +102,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @param ownerType the counter's owner type. Acceptable values are
 	<code>TYPE_ACTOR</code>, <code>TYPE_ASSET</code> and
 	<code>TYPE_CREATOR</code> defined in {@link
-	com.liferay.portlet.social.model.SocialActivityCounterConstants}.
+	SocialActivityCounterConstants}.
 	* @param currentValue the current value of the counter (optionally
 	<code>0</code>)
 	* @param totalValue the counter's total value (optionally
@@ -116,8 +116,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	<code>PERIOD_LENGTH_INFINITE</code> for never ending counters
 	or <code>PERIOD_LENGTH_SYSTEM</code> for the period length
 	defined in <code>portal-ext.properties</code>. For more
-	information see {@link
-	com.liferay.portlet.social.model.SocialActivityCounterConstants}.
+	information see {@link SocialActivityCounterConstants}.
 	* @return the added activity counter
 	* @throws PortalException if the group or the previous activity counter
 	could not be found
@@ -149,7 +148,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @param ownerType the counter's owner type. Acceptable values are
 	<code>TYPE_ACTOR</code>, <code>TYPE_ASSET</code> and
 	<code>TYPE_CREATOR</code> defined in {@link
-	com.liferay.portlet.social.model.SocialActivityCounterConstants}.
+	SocialActivityCounterConstants}.
 	* @param totalValue the counter's total value (optionally <code>0</code>)
 	* @param previousActivityCounterId the primary key of the activity counter
 	for the previous time period (optionally <code>0</code>, if this
@@ -158,8 +157,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	<code>PERIOD_LENGTH_INFINITE</code> for never ending counters or
 	<code>PERIOD_LENGTH_SYSTEM</code> for the period length defined
 	in <code>portal-ext.properties</code>. For more information see
-	{@link
-	com.liferay.portlet.social.model.SocialActivityCounterConstants}.
+	{@link SocialActivityCounterConstants}.
 	* @return the added activity counter
 	* @throws PortalException if the group or the previous activity counter
 	could not be found
@@ -218,7 +216,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @param ownerType the counter's owner type. Acceptable values are
 	<code>TYPE_ACTOR</code>, <code>TYPE_ASSET</code> and
 	<code>TYPE_CREATOR</code> defined in {@link
-	com.liferay.portlet.social.model.SocialActivityCounterConstants}.
+	SocialActivityCounterConstants}.
 	* @param currentValue the counter's current value (optionally
 	<code>0</code>)
 	* @param totalValue the counter's total value (optionally
@@ -255,7 +253,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* @param ownerType the counter's owner type. Acceptable values are
 	<code>TYPE_ACTOR</code>, <code>TYPE_ASSET</code> and
 	<code>TYPE_CREATOR</code> defined in {@link
-	com.liferay.portlet.social.model.SocialActivityCounterConstants}.
+	SocialActivityCounterConstants}.
 	* @param currentValue the counter's current value (optionally
 	<code>0</code>)
 	* @param totalValue the counter's total value of the counter
@@ -269,8 +267,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	<code>PERIOD_LENGTH_INFINITE</code> for never ending counters
 	or <code>PERIOD_LENGTH_SYSTEM</code> for the period length
 	defined in <code>portal-ext.properties</code>. For more
-	information see {@link
-	com.liferay.portlet.social.model.SocialActivityConstants}.
+	information see {@link SocialActivityConstants}.
 	* @return the created activity counter
 	* @throws PortalException if the group or the previous activity counter
 	could not be found
@@ -694,8 +691,7 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*

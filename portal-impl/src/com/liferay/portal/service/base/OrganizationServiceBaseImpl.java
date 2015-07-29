@@ -1333,7 +1333,7 @@ public abstract class OrganizationServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.OrganizationLocalService.class)
 	protected com.liferay.portal.service.OrganizationLocalService organizationLocalService;
-	@BeanReference(type = OrganizationService.class)
+	@BeanReference(type = com.liferay.portal.service.OrganizationService.class)
 	protected OrganizationService organizationService;
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;

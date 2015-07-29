@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.log;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.logging.LogManager;
@@ -29,11 +30,9 @@ public class Jdk14LogFactoryImpl implements LogFactory {
 			return;
 		}
 
-		try {
-			Class<?> clazz = getClass();
-
-			InputStream inputStream = clazz.getResourceAsStream(
-				"/logging.properties");
+		try (InputStream inputStream =
+				Jdk14LogFactoryImpl.class.getResourceAsStream(
+					"/logging.properties")) {
 
 			if (inputStream != null) {
 				LogManager logManager = LogManager.getLogManager();
@@ -41,8 +40,8 @@ public class Jdk14LogFactoryImpl implements LogFactory {
 				logManager.readConfiguration(inputStream);
 			}
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (IOException ioe) {
+			ioe.printStackTrace();
 		}
 	}
 
@@ -54,10 +53,6 @@ public class Jdk14LogFactoryImpl implements LogFactory {
 	@Override
 	public Log getLog(String name) {
 		return new Jdk14LogImpl(Logger.getLogger(name));
-	}
-
-	@Override
-	public void setLevel(String name, String priority, boolean custom) {
 	}
 
 }

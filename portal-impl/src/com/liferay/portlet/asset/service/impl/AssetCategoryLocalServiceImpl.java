@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -44,6 +44,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portlet.asset.AssetCategoryNameException;
 import com.liferay.portlet.asset.DuplicateCategoryException;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -134,8 +135,7 @@ public class AssetCategoryLocalServiceImpl
 		}
 		else {
 			addCategoryResources(
-				category, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
+				category, serviceContext.getModelPermissions());
 		}
 
 		// Properties
@@ -203,14 +203,13 @@ public class AssetCategoryLocalServiceImpl
 
 	@Override
 	public void addCategoryResources(
-			AssetCategory category, String[] groupPermissions,
-			String[] guestPermissions)
+			AssetCategory category, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			category.getCompanyId(), category.getGroupId(),
 			category.getUserId(), AssetCategory.class.getName(),
-			category.getCategoryId(), groupPermissions, guestPermissions);
+			category.getCategoryId(), modelPermissions);
 	}
 
 	@Override
@@ -225,7 +224,7 @@ public class AssetCategoryLocalServiceImpl
 
 				final long groupId = category.getGroupId();
 
-				TransactionCommitCallbackRegistryUtil.registerCallback(
+				TransactionCommitCallbackUtil.registerCallback(
 					new Callable<Void>() {
 
 						@Override
@@ -286,7 +285,7 @@ public class AssetCategoryLocalServiceImpl
 		if (!categories.isEmpty() && !skipRebuildTree) {
 			final long groupId = category.getGroupId();
 
-			TransactionCommitCallbackRegistryUtil.registerCallback(
+			TransactionCommitCallbackUtil.registerCallback(
 				new Callable<Void>() {
 
 					@Override
@@ -373,7 +372,7 @@ public class AssetCategoryLocalServiceImpl
 			if (category == null) {
 				categories = null;
 
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
+				Indexer<AssetCategory> indexer = IndexerRegistryUtil.getIndexer(
 					AssetCategory.class);
 
 				long companyId = GetterUtil.getLong(
@@ -805,7 +804,7 @@ public class AssetCategoryLocalServiceImpl
 			SearchContext searchContext)
 		throws PortalException {
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<AssetCategory> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			AssetCategory.class);
 
 		for (int i = 0; i < 10; i++) {

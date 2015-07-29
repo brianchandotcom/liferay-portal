@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>WSRPAdmin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WSRPAdmin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>NEW_CONSUMER_HEADER</td>
+	<td>//h3[@class='header-title']/span[contains(.,'New Consumer')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PRODUCER_HEADER</td>
+	<td>//h3[@class='header-title']/span[contains(.,'New Producer')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONSUMER_TABLE-->
+<tr>
+	<td>CONSUMER_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_consumerName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONSUMER_TABLE_ACTIONS_BUTTON</td>
+	<td>//tr[contains(.,'${key_consumerName}')]//div/a[@id='_1_WAR_wsrpportlet_wsrpConsumersSearchContainer_1_menu']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONSUMER_TABLE_ACTIONS_BUTTON_GENERIC</td>
+	<td>//div/a[@id='_1_WAR_wsrpportlet_wsrpConsumersSearchContainer_1_menu']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PRODUCER_TABLE-->
+<tr>
+	<td>PRODUCER_TABLE_PRODUCER</td>
+	<td>//tr[contains(.,'${key_producerName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCER_TABLE_URL</td>
+	<td>//tr[contains(.,'${key_producerName}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCER_TABLE_VERSION</td>
+	<td>//tr[contains(.,'${key_producerName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCER_TABLE_ACTIONS_BUTTON</td>
+	<td>//tr[contains(.,'${key_producerName}')]//div[@class='btn-group lfr-icon-menu']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCER_TABLE_ACTIONS_BUTTON_GENERIC</td>
+	<td>//div[@class='btn-group lfr-icon-menu']/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

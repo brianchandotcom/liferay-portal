@@ -66,6 +66,17 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 			{ "buildDate", Types.BIGINT },
 			{ "data_", Types.CLOB }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("serviceComponentId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("buildNamespace", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("buildNumber", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("buildDate", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table ServiceComponent (mvccVersion LONG default 0,serviceComponentId LONG not null primary key,buildNamespace VARCHAR(75) null,buildNumber LONG,buildDate LONG,data_ TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table ServiceComponent";
 	public static final String ORDER_BY_JPQL = " ORDER BY serviceComponent.buildNamespace DESC, serviceComponent.buildNumber DESC";

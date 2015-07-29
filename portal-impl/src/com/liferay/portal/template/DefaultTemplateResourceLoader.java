@@ -15,11 +15,11 @@
 package com.liferay.portal.template;
 
 import com.liferay.portal.deploy.sandbox.SandboxHandler;
-import com.liferay.portal.kernel.cache.CacheListener;
-import com.liferay.portal.kernel.cache.CacheListenerScope;
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
@@ -49,7 +49,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 	public DefaultTemplateResourceLoader(
 		String name, String[] templateResourceParserClassNames,
-		long modificationCheckInterval) {
+		long modificationCheckInterval, MultiVMPool multiVMPool,
+		SingleVMPool singleVMPool) {
 
 		if (Validator.isNull(name)) {
 			throw new IllegalArgumentException(
@@ -80,23 +81,31 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 		_modificationCheckInterval = modificationCheckInterval;
 
+		_multiVMPool = multiVMPool;
+
 		String portalCacheName = TemplateResourceLoader.class.getName();
 
 		portalCacheName = portalCacheName.concat(
 			StringPool.PERIOD).concat(name);
 
-		_multiVMPortalCache = MultiVMPoolUtil.getCache(portalCacheName);
+		_multiVMPortalCache =
+			(PortalCache<String, TemplateResource>)_multiVMPool.getPortalCache(
+				portalCacheName);
 
-		CacheListener<String, TemplateResource> cacheListener =
-			new TemplateResourceCacheListener(name);
+		PortalCacheListener<String, TemplateResource> cacheListener =
+			new TemplateResourcePortalCacheListener(name);
 
-		_multiVMPortalCache.registerCacheListener(
-			cacheListener, CacheListenerScope.ALL);
+		_multiVMPortalCache.registerPortalCacheListener(
+			cacheListener, PortalCacheListenerScope.ALL);
 
-		_singleVMPortalCache = SingleVMPoolUtil.getCache(portalCacheName);
+		_singleVMPool = singleVMPool;
 
-		_singleVMPortalCache.registerCacheListener(
-			cacheListener, CacheListenerScope.ALL);
+		_singleVMPortalCache =
+			(PortalCache<String, TemplateResource>)_singleVMPool.getPortalCache(
+				portalCacheName);
+
+		_singleVMPortalCache.registerPortalCacheListener(
+			cacheListener, PortalCacheListenerScope.ALL);
 	}
 
 	@Override
@@ -113,8 +122,10 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 	@Override
 	public void destroy() {
-		MultiVMPoolUtil.removeCache(_multiVMPortalCache.getName());
-		SingleVMPoolUtil.removeCache(_singleVMPortalCache.getName());
+		_multiVMPool.removePortalCache(
+			_multiVMPortalCache.getPortalCacheName());
+		_singleVMPool.removePortalCache(
+			_singleVMPortalCache.getPortalCacheName());
 
 		_templateResourceParsers.clear();
 	}
@@ -330,8 +341,10 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		_nullHolderTemplateResource = new NullHolderTemplateResource();
 
 	private long _modificationCheckInterval;
+	private final MultiVMPool _multiVMPool;
 	private final PortalCache<String, TemplateResource> _multiVMPortalCache;
 	private final String _name;
+	private final SingleVMPool _singleVMPool;
 	private final PortalCache<String, TemplateResource> _singleVMPortalCache;
 	private final Set<TemplateResourceParser> _templateResourceParsers =
 		new HashSet<>();

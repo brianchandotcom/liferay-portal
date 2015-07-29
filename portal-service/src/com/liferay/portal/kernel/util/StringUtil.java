@@ -348,7 +348,7 @@ public class StringUtil {
 	 *         character, ignoring case; <code>false</code> otherwise
 	 */
 	public static boolean endsWith(String s, char end) {
-		return endsWith(s, (new Character(end)).toString());
+		return endsWith(s, (Character.valueOf(end)).toString());
 	}
 
 	/**
@@ -3651,7 +3651,7 @@ public class StringUtil {
 	 *         specified character; <code>false</code> otherwise
 	 */
 	public static boolean startsWith(String s, char begin) {
-		return startsWith(s, (new Character(begin)).toString());
+		return startsWith(s, (Character.valueOf(begin)).toString());
 	}
 
 	/**
@@ -3885,6 +3885,25 @@ public class StringUtil {
 		}
 
 		return s;
+	}
+
+	public static String stripParentheticalSuffix(String s) {
+		int x = s.lastIndexOf(StringPool.OPEN_PARENTHESIS);
+		int y = s.lastIndexOf(StringPool.CLOSE_PARENTHESIS);
+
+		if ((x == -1) || (y == -1)) {
+			return s;
+		}
+
+		if ((x > y) || !s.endsWith(StringPool.CLOSE_PARENTHESIS)) {
+			return s;
+		}
+
+		if (s.charAt(x - 1) != CharPool.SPACE) {
+			return s;
+		}
+
+		return s.substring(0, x - 1).concat(s.substring(y + 1, s.length()));
 	}
 
 	/**

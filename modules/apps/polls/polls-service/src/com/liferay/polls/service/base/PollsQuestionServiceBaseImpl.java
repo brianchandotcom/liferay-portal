@@ -417,7 +417,7 @@ public abstract class PollsQuestionServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.polls.service.PollsQuestionLocalService.class)
 	protected com.liferay.polls.service.PollsQuestionLocalService pollsQuestionLocalService;
-	@BeanReference(type = PollsQuestionService.class)
+	@BeanReference(type = com.liferay.polls.service.PollsQuestionService.class)
 	protected PollsQuestionService pollsQuestionService;
 	@BeanReference(type = PollsQuestionPersistence.class)
 	protected PollsQuestionPersistence pollsQuestionPersistence;

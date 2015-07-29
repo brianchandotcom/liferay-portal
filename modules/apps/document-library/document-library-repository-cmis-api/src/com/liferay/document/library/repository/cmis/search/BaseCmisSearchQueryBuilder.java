@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
+import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -397,6 +398,21 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 
 			if (!notCMISConjunction.isEmpty()) {
 				cmisJunction.add(new CMISNotExpression(notCMISConjunction));
+			}
+		}
+		else if (query instanceof MatchQuery) {
+			MatchQuery matchQuery = (MatchQuery)query;
+
+			if (!isSupportedField(matchQuery.getField())) {
+				return;
+			}
+
+			CMISCriterion cmisCriterion = buildFieldExpression(
+				matchQuery.getField(), matchQuery.getValue(),
+				CMISSimpleExpressionOperator.EQ, queryConfig);
+
+			if (cmisCriterion != null) {
+				cmisJunction.add(cmisCriterion);
 			}
 		}
 		else if (query instanceof TermQuery) {

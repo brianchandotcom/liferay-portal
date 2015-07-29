@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Comments Sanitizer
-Bundle-SymbolicName: com.liferay.comments.sanitizer
-Bundle-Version: 1.0.0
-Include-Resource:\
-	classes,\
-	@lib/guava.jar,\
-	@lib/owasp-java-html-sanitizer.jar

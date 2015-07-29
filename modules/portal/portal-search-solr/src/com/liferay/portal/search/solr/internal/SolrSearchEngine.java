@@ -18,17 +18,14 @@ import com.liferay.portal.kernel.search.BaseSearchEngine;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngine;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.Dictionary;
+import java.util.Map;
 
 import org.apache.lucene.util.Version;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -39,10 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"lucene.version=LUCENE_43", "search.engine.id=SYSTEM_ENGINE",
-		"search.engine.impl=Solr"
-	},
+	property = {"search.engine.id=SYSTEM_ENGINE", "search.engine.impl=Solr"},
 	service = {SolrSearchEngine.class, SearchEngine.class}
 )
 public class SolrSearchEngine extends BaseSearchEngine {
@@ -83,29 +77,10 @@ public class SolrSearchEngine extends BaseSearchEngine {
 	}
 
 	@Activate
-	protected void activate(ComponentContext componentContext) {
-		Dictionary<String, Object> properties =
-			componentContext.getProperties();
-
-		String vendor = GetterUtil.getString(
-			properties.get("search.engine.impl"));
+	protected void activate(Map<String, Object> properties) {
+		String vendor = MapUtil.getString(properties, "search.engine.impl");
 
 		setVendor(vendor);
-
-		BundleContext bundleContext = componentContext.getBundleContext();
-
-		String versionString = GetterUtil.getString(
-			properties.get("lucene.version"), "LUCENE_43");
-
-		Version version = Version.valueOf(versionString);
-
-		Dictionary<String, Object> versionProperties =
-			new HashMapDictionary<>();
-
-		versionProperties.put("search.engine.impl", vendor);
-
-		_serviceRegistration = bundleContext.registerService(
-			Version.class, version, versionProperties);
 	}
 
 	@Deactivate

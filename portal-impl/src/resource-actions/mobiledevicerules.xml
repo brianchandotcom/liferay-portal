@@ -2,24 +2,10 @@
 <!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.0.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_0_0.dtd">
 
 <resource-action-mapping>
-	<portlet-resource>
-		<portlet-name>178</portlet-name>
-		<permissions>
-			<supports>
-				<action-key>CONFIGURATION</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults />
-			<guest-defaults />
-			<guest-unsupported>
-				<action-key>CONFIGURATION</action-key>
-			</guest-unsupported>
-		</permissions>
-	</portlet-resource>
 	<model-resource>
 		<model-name>com.liferay.portlet.mobiledevicerules</model-name>
 		<portlet-ref>
-			<portlet-name>178</portlet-name>
+			<portlet-name>com_liferay_mobile_device_rules_web_portlet_MDRPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -42,7 +28,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup</model-name>
 		<portlet-ref>
-			<portlet-name>178</portlet-name>
+			<portlet-name>com_liferay_mobile_device_rules_web_portlet_MDRPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -64,7 +50,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance</model-name>
 		<portlet-ref>
-			<portlet-name>178</portlet-name>
+			<portlet-name>com_liferay_mobile_device_rules_web_portlet_MDRPortlet</portlet-name>
 		</portlet-ref>
 		<weight>3</weight>
 		<permissions>

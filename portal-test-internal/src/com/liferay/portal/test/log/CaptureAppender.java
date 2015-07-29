@@ -51,6 +51,8 @@ public class CaptureAppender extends AppenderSkeleton implements Closeable {
 
 	@Override
 	public void close() {
+		closed = true;
+
 		_logger.removeAppender(this);
 
 		_logger.setLevel(_level);

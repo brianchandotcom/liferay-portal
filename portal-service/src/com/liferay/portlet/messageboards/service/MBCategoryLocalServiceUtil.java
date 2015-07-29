@@ -82,10 +82,9 @@ public class MBCategoryLocalServiceUtil {
 
 	public static void addCategoryResources(
 		com.liferay.portlet.messageboards.model.MBCategory category,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addCategoryResources(category, groupPermissions, guestPermissions);
+		getService().addCategoryResources(category, modelPermissions);
 	}
 
 	public static void addCategoryResources(long categoryId,
@@ -97,10 +96,9 @@ public class MBCategoryLocalServiceUtil {
 	}
 
 	public static void addCategoryResources(long categoryId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addCategoryResources(categoryId, groupPermissions, guestPermissions);
+		getService().addCategoryResources(categoryId, modelPermissions);
 	}
 
 	/**
@@ -591,10 +589,25 @@ public class MBCategoryLocalServiceUtil {
 		return getService().updateMBCategory(mbCategory);
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBCategory updateMessageCount(
+		long categoryId) {
+		return getService().updateMessageCount(categoryId);
+	}
+
+	public static com.liferay.portlet.messageboards.model.MBCategory updateStatistics(
+		long categoryId) {
+		return getService().updateStatistics(categoryId);
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBCategory updateStatus(
 		long userId, long categoryId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateStatus(userId, categoryId, status);
+	}
+
+	public static com.liferay.portlet.messageboards.model.MBCategory updateThreadCount(
+		long categoryId) {
+		return getService().updateThreadCount(categoryId);
 	}
 
 	public static MBCategoryLocalService getService() {

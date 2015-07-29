@@ -76,8 +76,8 @@ public interface MBMessageService extends BaseService {
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #addMessage(long, String,
-	String, String, java.util.List, boolean, double, boolean,
-	com.liferay.portal.service.ServiceContext)}
+	String, String, List, boolean, double, boolean,
+	ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portlet.messageboards.model.MBMessage addMessage(
@@ -101,8 +101,8 @@ public interface MBMessageService extends BaseService {
 		java.io.File file, java.lang.String mimeType) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
-	long)}
+	* @deprecated As of 7.0.0, replaced by {@link
+	#deleteDiscussionMessage(long)}
 	*/
 	@java.lang.Deprecated
 	public void deleteDiscussionMessage(long groupId,

@@ -1,25 +1,35 @@
 AUI.add(
 	'liferay-ddm-form-renderer-util',
 	function(A) {
-		var AArray = A.Array;
+		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 
 		var Util = {
-			generateInstanceId: function(number) {
+			generateInstanceId: function(length) {
 				var instance = this;
 
 				var text = '';
 
 				var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-				for (var i = 0; i < number; i++) {
+				for (var i = 0; i < length; i++) {
 					text += possible.charAt(Math.floor(Math.random() * possible.length));
 				}
 
 				return text;
 			},
 
-			getFieldClass: function(fieldClassName) {
+			getFieldByKey: function(haystack, needle, searchKey) {
 				var instance = this;
+
+				return instance.searchFieldsByKey(haystack, needle, searchKey)[0];
+			},
+
+			getFieldClass: function(type) {
+				var instance = this;
+
+				var fieldType = FieldTypes.get(type);
+
+				var fieldClassName = fieldType.get('className');
 
 				return A.Object.getValue(window, fieldClassName.split('.'));
 			},
@@ -40,22 +50,22 @@ AUI.add(
 				return name.split('$')[1];
 			},
 
-			searchFieldData: function(parent, key, value) {
-				var queue = new A.Queue(parent);
+			searchFieldsByKey: function(haystack, needle, searchKey) {
+				var queue = new A.Queue(haystack);
+
+				var results = [];
 
 				var addToQueue = function(item) {
-					if (queue._q.indexOf(item) === -1) {
-						queue.add(item);
-					}
+					queue.add(item);
 				};
 
-				var fieldInfo = {};
+				searchKey = searchKey || 'name';
 
 				while (queue.size() > 0) {
 					var next = queue.next();
 
-					if (next[key] === value) {
-						fieldInfo = next;
+					if (next[searchKey] === needle) {
+						results.push(next);
 					}
 					else {
 						var children = next.fields || next.nestedFields || next.fieldValues || next.nestedFieldValues;
@@ -66,7 +76,7 @@ AUI.add(
 					}
 				}
 
-				return fieldInfo;
+				return results;
 			}
 		};
 
@@ -74,6 +84,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-extras']
+		requires: ['liferay-ddm-form-renderer-field-types', 'queue']
 	}
 );

@@ -41,7 +41,7 @@ else {
 
 		addressesIndexes = new int[addresses.size()];
 
-		for (int i = 0; i < addresses.size() ; i++) {
+		for (int i = 0; i < addresses.size(); i++) {
 			addressesIndexes[i] = i;
 		}
 	}

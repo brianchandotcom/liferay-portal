@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
 
 /**
  * @author Marcellus Tavares

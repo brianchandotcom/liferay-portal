@@ -447,6 +447,24 @@ public class WikiPageServiceSoap {
 	}
 
 	public static com.liferay.wiki.model.WikiPageSoap[] getPages(long groupId,
+		long nodeId, boolean head, long userId, boolean includeOwner,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.wiki.model.WikiPage> returnValue = WikiPageServiceUtil.getPages(groupId,
+					nodeId, head, userId, includeOwner, status, start, end, obc);
+
+			return com.liferay.wiki.model.WikiPageSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.wiki.model.WikiPageSoap[] getPages(long groupId,
 		long userId, long nodeId, int status, int start, int end)
 		throws RemoteException {
 		try {
@@ -477,6 +495,22 @@ public class WikiPageServiceSoap {
 		}
 	}
 
+	public static int getPagesCount(long groupId, long nodeId, boolean head,
+		long userId, boolean includeOwner, int status)
+		throws RemoteException {
+		try {
+			int returnValue = WikiPageServiceUtil.getPagesCount(groupId,
+					nodeId, head, userId, includeOwner, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getPagesCount(long groupId, long userId, long nodeId,
 		int status) throws RemoteException {
 		try {
@@ -493,8 +527,8 @@ public class WikiPageServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getPagesRSS(long, long,
-	String, int, String, double, String, String, String, String,
+	* @deprecated As of 6.2.0, replaced by {@link #getPagesRSS(long, String,
+	int, String, double, String, String, String, String,
 	java.util.Locale)}
 	*/
 	@Deprecated
@@ -516,16 +550,15 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static java.lang.String getPagesRSS(long companyId, long nodeId,
+	public static java.lang.String getPagesRSS(long nodeId,
 		java.lang.String title, int max, java.lang.String type, double version,
 		java.lang.String displayStyle, java.lang.String feedURL,
 		java.lang.String entryURL, java.lang.String attachmentURLPrefix,
 		String locale) throws RemoteException {
 		try {
-			java.lang.String returnValue = WikiPageServiceUtil.getPagesRSS(companyId,
-					nodeId, title, max, type, version, displayStyle, feedURL,
-					entryURL, attachmentURLPrefix,
-					LocaleUtil.fromLanguageId(locale));
+			java.lang.String returnValue = WikiPageServiceUtil.getPagesRSS(nodeId,
+					title, max, type, version, displayStyle, feedURL, entryURL,
+					attachmentURLPrefix, LocaleUtil.fromLanguageId(locale));
 
 			return returnValue;
 		}

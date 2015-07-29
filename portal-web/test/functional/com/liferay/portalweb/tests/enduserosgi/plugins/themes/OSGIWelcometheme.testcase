@@ -6,7 +6,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="WelcomeThemeSmoke" priority="5">
+	<command name="WelcomeThemeSmoke" priority="4">
 		<property name="theme.plugins.includes" value="welcome-theme" />
 		<property name="web.plugins.includes" value="resources-importer-web" />
 

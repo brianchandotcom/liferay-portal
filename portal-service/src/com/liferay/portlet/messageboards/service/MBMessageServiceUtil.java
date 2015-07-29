@@ -84,8 +84,8 @@ public class MBMessageServiceUtil {
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #addMessage(long, String,
-	String, String, java.util.List, boolean, double, boolean,
-	com.liferay.portal.service.ServiceContext)}
+	String, String, List, boolean, double, boolean,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
@@ -121,8 +121,8 @@ public class MBMessageServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
-	long)}
+	* @deprecated As of 7.0.0, replaced by {@link
+	#deleteDiscussionMessage(long)}
 	*/
 	@Deprecated
 	public static void deleteDiscussionMessage(long groupId,

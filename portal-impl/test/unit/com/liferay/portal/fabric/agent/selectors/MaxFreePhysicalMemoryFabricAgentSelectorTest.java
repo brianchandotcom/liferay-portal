@@ -62,7 +62,8 @@ public class MaxFreePhysicalMemoryFabricAgentSelectorTest {
 
 		Collection<FabricAgent> fabricAgents = fabricAgentSelector.select(
 			new ArrayList<FabricAgent>(
-				Arrays.asList(fabricAgent1, fabricAgent2)), null);
+				Arrays.asList(fabricAgent1, fabricAgent2)),
+			null);
 
 		Assert.assertEquals(1, fabricAgents.size());
 
@@ -77,7 +78,8 @@ public class MaxFreePhysicalMemoryFabricAgentSelectorTest {
 
 		fabricAgents = fabricAgentSelector.select(
 			new ArrayList<FabricAgent>(
-				Arrays.asList(fabricAgent1, fabricAgent2)), null);
+				Arrays.asList(fabricAgent1, fabricAgent2)),
+			null);
 
 		Assert.assertEquals(1, fabricAgents.size());
 
@@ -92,7 +94,8 @@ public class MaxFreePhysicalMemoryFabricAgentSelectorTest {
 
 		fabricAgents = fabricAgentSelector.select(
 			new ArrayList<FabricAgent>(
-				Arrays.asList(fabricAgent1, fabricAgent2)), null);
+				Arrays.asList(fabricAgent1, fabricAgent2)),
+			null);
 
 		Assert.assertEquals(1, fabricAgents.size());
 
@@ -107,7 +110,8 @@ public class MaxFreePhysicalMemoryFabricAgentSelectorTest {
 
 		fabricAgents = fabricAgentSelector.select(
 			new ArrayList<FabricAgent>(
-				Arrays.asList(fabricAgent1, fabricAgent2)), null);
+				Arrays.asList(fabricAgent1, fabricAgent2)),
+			null);
 
 		Assert.assertEquals(1, fabricAgents.size());
 

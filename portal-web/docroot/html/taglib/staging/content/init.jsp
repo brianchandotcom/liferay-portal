@@ -49,5 +49,5 @@ dateRange = ExportImportDateUtil.getDateRange(renderRequest, exportGroupId, priv
 Date startDate = dateRange.getStartDate();
 Date endDate = dateRange.getEndDate();
 
-List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId(), false);
+List<Portlet> dataSiteLevelPortlets = ExportImportHelperUtil.getDataSiteLevelPortlets(company.getCompanyId(), false);
 %>

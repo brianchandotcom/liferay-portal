@@ -8,10 +8,6 @@
 		</layout>
 	</appender>
 
-	<category name="com.liferay.portal.dao.shard.DefaultShardDataSourceTargetSource">
-		<priority value="INFO" />
-	</category>
-
 	<category name="com.liferay.portal.spring.hibernate.DialectDetector">
 		<priority value="INFO" />
 	</category>

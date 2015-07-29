@@ -11,7 +11,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ValidateXSSVulnerabilities" priority="5">
+	<command name="ValidateXSSVulnerabilities" priority="4">
 		<var name="maliciousURL1">
 			<![CDATA[
 				http://localhost:8080/group/guest/home?p_p_id=82&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_82_struts_action=%2Flanguage%2Fview&languageId=&lt;/script&gt;&lt;script&gt;alert(document.domain)&lt;/script>
@@ -126,7 +126,7 @@
 		<execute function="AssertTextEquals" locator1="Home#CONTROL_PANEL_MANAGE_BUTTON" value1="Manage ${siteName}" />
 	</command>
 
-	<command name="ViewGoogleAnalyticsIDNoXSS" priority="5">
+	<command name="ViewGoogleAnalyticsIDNoXSS" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 		</execute>
@@ -139,14 +139,14 @@
 		<execute function="AssertAlertNotPresent" />
 	</command>
 
-	<command name="ViewJSONWSNoXSS" priority="5">
+	<command name="ViewJSONWSNoXSS" priority="4">
 		<var name="url" value="http://localhost:8080/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E" />
 
 		<execute function="Open" locator1="${url}" />
 		<execute function="AssertAlertNotPresent" />
 	</command>
 
-	<command name="ViewLiferayPortletListNoXSS" priority="5">
+	<command name="ViewLiferayPortletListNoXSS" priority="4">
 		<var name="url" value="http://localhost:8080/web/guest/home?p_p_id=86&amp;p_p_state=pop_up&amp;_86_portletResource=101_INSTANCE_S1GhHANAwleV;alert(1)//%22;alert(2)//%22;alert(3)//%E2%80%93%3E%3C/script%3E%22%3E%27%3E%3Cscript%3Ealert(4)%3C/script%3E&amp;_86_resourcePrimKey=asdfxxx&amp;_86_struts_action=%2Fportlet_configuration%2Fedit_configuration" />
 
 		<execute macro="Portlet#addPG">
@@ -221,7 +221,7 @@
 		<execute function="AssertAlertNotPresent" />
 	</command>
 
-	<command name="ViewURLValidateNoXSS" priority="5">
+	<command name="ViewURLValidateNoXSS" priority="4">
 		<var name="maliciousURL1">
 			<![CDATA[
 				http://localhost:8080/c/portal/flash?title=abc</title><script%0d%0a>alert(3.1415926)</script%0d%0a><title>aaa

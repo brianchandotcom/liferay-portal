@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipFile;
 
 /**
@@ -31,22 +33,17 @@ import java.util.zip.ZipFile;
 public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
 	public boolean isExtPlugin(File file) {
-		String fileName = file.getName();
+		Matcher matcher = _extPluginPattern.matcher(file.getName());
 
-		if (fileName.contains("-ext") && !isJarFile(file)) {
-			return true;
-		}
-
-		return false;
+		return matcher.find();
 	}
 
 	public boolean isHookPlugin(File file) throws AutoDeployException {
-		String fileName = file.getName();
+		Matcher matcher = _hookPluginPattern.matcher(file.getName());
 
-		if (isMatchingFile(file, "WEB-INF/liferay-hook.xml") &&
-			!isMatchingFile(file, "WEB-INF/liferay-portlet.xml") &&
-			!fileName.contains("-theme") && !fileName.contains("-web") &&
-			!isJarFile(file)) {
+		if (matcher.find() &&
+			isMatchingFile(file, "WEB-INF/liferay-hook.xml", false) &&
+			!isMatchingFile(file, "WEB-INF/liferay-portlet.xml", false)) {
 
 			return true;
 		}
@@ -79,7 +76,14 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	public boolean isMatchingFile(File file, String checkXmlFile)
 		throws AutoDeployException {
 
-		if (!isMatchingFileExtension(file)) {
+		return isMatchingFile(file, checkXmlFile, true);
+	}
+
+	public boolean isMatchingFile(
+			File file, String checkXmlFile, boolean checkFileExtension)
+		throws AutoDeployException {
+
+		if (checkFileExtension && !isMatchingFileExtension(file)) {
 			return false;
 		}
 
@@ -141,16 +145,15 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	}
 
 	public boolean isThemePlugin(File file) throws AutoDeployException {
-		if (isMatchingFile(file, "WEB-INF/liferay-look-and-feel.xml") &&
-			!isJarFile(file)) {
-
+		if (isMatchingFile(file, "WEB-INF/liferay-look-and-feel.xml")) {
 			return true;
 		}
 
-		String fileName = file.getName();
+		Matcher matcher = _themePluginPattern.matcher(file.getName());
 
-		if (isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties") &&
-			fileName.contains("-theme")) {
+		if (matcher.find() &&
+			isMatchingFile(
+				file, "WEB-INF/liferay-plugin-package.properties", false)) {
 
 			return true;
 		}
@@ -159,10 +162,11 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	}
 
 	public boolean isWebPlugin(File file) throws AutoDeployException {
-		String fileName = file.getName();
+		Matcher matcher = _webPluginPattern.matcher(file.getName());
 
-		if (isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties") &&
-			fileName.contains("-web") && !isJarFile(file)) {
+		if (matcher.find() &&
+			isMatchingFile(
+				file, "WEB-INF/liferay-plugin-package.properties", false)) {
 
 			return true;
 		}
@@ -176,5 +180,14 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAutoDeployListener.class);
+
+	private static final Pattern _extPluginPattern = Pattern.compile(
+		"-(E|e)xt[-0-9.]*\\+?\\.(war|zip)$");
+	private static final Pattern _hookPluginPattern = Pattern.compile(
+		"-(H|h)ook[-0-9.]*\\+?\\.(war|zip)$");
+	private static final Pattern _themePluginPattern = Pattern.compile(
+		"-(T|t)heme[-0-9.]*\\+?\\.(war|zip)$");
+	private static final Pattern _webPluginPattern = Pattern.compile(
+		"-(W|w)eb[-0-9.]*\\+?\\.(war|zip)$");
 
 }

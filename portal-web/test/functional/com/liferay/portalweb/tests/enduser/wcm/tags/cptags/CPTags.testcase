@@ -9,7 +9,7 @@
 		<execute macro="Tag#tearDownCP" />
 	</tear-down>
 
-	<command name="AddTag" priority="5">
+	<command name="AddTag" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -19,16 +19,16 @@
 		</execute>
 	</command>
 
-	<command name="AddTags" priority="5">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Tags" />
-		</execute>
+	<command name="AddTags" priority="4">
+		<for list="tag name 1,tag name 2,tag name 3" param="tagName">
+			<execute macro="Page#gotoContentCP">
+				<var name="portletName" value="Tags" />
+			</execute>
 
-		<execute macro="Tag#addTagsCP">
-			<var name="tagName1" value="tag name 1" />
-			<var name="tagName2" value="tag name 2" />
-			<var name="tagName3" value="tag name 3" />
-		</execute>
+			<execute macro="Tag#addCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
@@ -41,7 +41,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTagsAdmin" priority="5">
+	<command known-issues="LPS-56754" name="AddTagsAdmin" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -269,7 +269,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteTagFromList" priority="5">
+	<command name="DeleteTagFromList" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -288,7 +288,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteTagFromToolbar" priority="5">
+	<command name="DeleteTagFromToolbar" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -318,10 +318,19 @@
 
 		<execute macro="Tag#editCP">
 			<var name="tagName" value="tag name" />
+			<var name="tagNameEdit" value="tag name edit" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#viewCP">
+			<var name="tagName" value="tag name edit" />
 		</execute>
 	</command>
 
-	<command name="EditTagCancel" priority="5">
+	<command name="EditTagCancel" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -335,7 +344,7 @@
 		</execute>
 	</command>
 
-	<command name="MergeMultipleTags" priority="5">
+	<command known-issues="LPS-56754" name="MergeMultipleTags" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -362,7 +371,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55436" name="MergeSingleTagWarning" priority="5">
+	<command known-issues="LPS-55436" name="MergeSingleTagWarning" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -376,7 +385,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchTag" priority="5">
+	<command known-issues="LPS-56754" name="SearchTag" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>

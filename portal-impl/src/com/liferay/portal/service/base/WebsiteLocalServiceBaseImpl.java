@@ -715,7 +715,7 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = WebsiteLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.WebsiteLocalService.class)
 	protected WebsiteLocalService websiteLocalService;
 	@BeanReference(type = com.liferay.portal.service.WebsiteService.class)
 	protected com.liferay.portal.service.WebsiteService websiteService;

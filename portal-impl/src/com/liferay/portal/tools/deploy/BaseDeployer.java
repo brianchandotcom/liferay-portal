@@ -67,7 +67,7 @@ import com.liferay.util.ant.ExpandTask;
 import com.liferay.util.ant.UpToDateTask;
 import com.liferay.util.ant.WarTask;
 import com.liferay.util.xml.DocUtil;
-import com.liferay.util.xml.XMLFormatter;
+import com.liferay.util.xml.XMLUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -578,13 +578,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		throws Exception {
 
 		if (appServerType.equals(ServerDetector.JBOSS_ID)) {
-			if (ServerDetector.isJBoss5()) {
-				copyDependencyXml("jboss-web.xml", srcFile + "/WEB-INF");
-			}
-			else {
-				copyDependencyXml(
-					"jboss-deployment-structure.xml", srcFile + "/WEB-INF");
-			}
+			copyDependencyXml(
+				"jboss-deployment-structure.xml", srcFile + "/WEB-INF");
 		}
 		else if (appServerType.equals(ServerDetector.WEBLOGIC_ID)) {
 			copyDependencyXml("weblogic.xml", srcFile + "/WEB-INF");
@@ -1948,7 +1943,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			else {
 				String xml = StringUtil.read(is);
 
-				xml = XMLFormatter.fixProlog(xml);
+				xml = XMLUtil.fixProlog(xml);
 
 				return PluginPackageUtil.readPluginPackageXml(xml);
 			}

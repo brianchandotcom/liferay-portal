@@ -84,6 +84,24 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 			{ "receiverUserId", Types.BIGINT },
 			{ "status", Types.INTEGER }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("requestId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("createDate", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("extraData", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("receiverUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table SocialRequest (uuid_ VARCHAR(75) null,requestId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,modifiedDate LONG,classNameId LONG,classPK LONG,type_ INTEGER,extraData STRING null,receiverUserId LONG,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table SocialRequest";
 	public static final String ORDER_BY_JPQL = " ORDER BY socialRequest.requestId DESC";

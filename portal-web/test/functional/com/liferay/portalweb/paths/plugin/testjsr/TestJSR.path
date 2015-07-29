@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>TestJSR</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TestJSR</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>TEST_PORTLET_BODY_PASSED</td>
+	<td>//div[contains(@id,'test')]//div[contains(.,'PASSED')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEST_PORTLET_BODY_FAILED</td>
+	<td>//div[contains(@id,'test')]//div[contains(.,'FAILED')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEST_ACTION_URL</td>
+	<td>//div[contains(@id,'testjsr')]//p[contains(.,'Action URL')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEST_RENDER_URL</td>
+	<td>//div[contains(@id,'testjsr')]//p[contains(.,'Render URL')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEST_RESOURCE_URL</td>
+	<td>//div[contains(@id,'testjsr')]//p[contains(.,'Resource URL')]/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

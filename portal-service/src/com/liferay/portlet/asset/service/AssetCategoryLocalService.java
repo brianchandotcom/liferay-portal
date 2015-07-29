@@ -90,7 +90,7 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 
 	public void addCategoryResources(
 		com.liferay.portlet.asset.model.AssetCategory category,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws PortalException;
 
 	public void clearAssetEntryAssetCategories(long entryId);

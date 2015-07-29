@@ -4478,8 +4478,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(WikiNode wikiNode) {
-		if (wikiNode.isNew()) {
+	protected void cacheUniqueFindersCache(WikiNode wikiNode, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					wikiNode.getUuid(), wikiNode.getGroupId()
 				};
@@ -4846,7 +4846,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			WikiNodeImpl.class, wikiNode.getPrimaryKey(), wikiNode, false);
 
 		clearUniqueFindersCache(wikiNode);
-		cacheUniqueFindersCache(wikiNode);
+		cacheUniqueFindersCache(wikiNode, isNew);
 
 		wikiNode.resetOriginalValues();
 
@@ -4874,6 +4874,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		wikiNodeImpl.setName(wikiNode.getName());
 		wikiNodeImpl.setDescription(wikiNode.getDescription());
 		wikiNodeImpl.setLastPostDate(wikiNode.getLastPostDate());
+		wikiNodeImpl.setLastPublishDate(wikiNode.getLastPublishDate());
 		wikiNodeImpl.setStatus(wikiNode.getStatus());
 		wikiNodeImpl.setStatusByUserId(wikiNode.getStatusByUserId());
 		wikiNodeImpl.setStatusByUserName(wikiNode.getStatusByUserName());
@@ -5236,6 +5237,11 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return WikiNodeModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

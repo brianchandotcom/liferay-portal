@@ -4,15 +4,27 @@
 
 	<command name="runSmoke" summary-ignore="true">
 		<execute macro="Page#addPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Test Page1" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageType" value="${pageType}" />
 		</execute>
 
 		<execute macro="Page#addPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Test Page2" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageType" value="${pageType}" />
 		</execute>
 
 		<execute macro="Page#addPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Test Page3" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageType" value="${pageType}" />
 		</execute>
 
 		<var name="pageName" value="Test Page1" />
@@ -25,6 +37,7 @@
 			</execute>
 
 			<execute macro="Portlet#addPG">
+				<var name="i" value="${i}" />
 				<var name="portletName" value="${portletName}" />
 			</execute>
 
@@ -51,8 +64,8 @@
 			</execute>
 		</task>
 
-		<var name="portletName" value="Blogs" />
-		<var name="portletTitle" value="Blogs" />
+		<var name="portletName" value="Web Content" />
+		<var name="portletTitle" value="Web Content" />
 
 		<task macro-summary="Page#gotoContentCP">
 			<execute macro="Page#gotoContentCP">
@@ -66,7 +79,7 @@
 	</command>
 
 	<command name="viewWelcomePage" summary="View default welcome page while signed in as '${userFirstName} ${userLastName}'">
-		<execute function="AssertTextEquals" locator1="Home#BREADCRUMB_1" value1="Welcome" />
+		<execute function="Pause" locator1="1073" />
 
 		<execute function="AssertTextEquals#assertText" locator1="PGSignin#PORTLET_TITLE" value1="Sign In" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGSignin#PORTLET_CONTENT" value1="You are signed in as" />

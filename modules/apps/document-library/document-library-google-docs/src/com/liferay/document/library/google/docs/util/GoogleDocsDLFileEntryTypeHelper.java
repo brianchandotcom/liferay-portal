@@ -105,7 +105,7 @@ public class GoogleDocsDLFileEntryTypeHelper {
 		}
 
 		List<DLFileEntryType> dlFileEntryTypes =
-			_dlFileEntryTypeLocalService.getDDMStructureDLFileEntryTypes(
+			_dlFileEntryTypeLocalService.getFileEntryTypes(
 				ddmStructure.getStructureId());
 
 		if (!dlFileEntryTypes.isEmpty()) {

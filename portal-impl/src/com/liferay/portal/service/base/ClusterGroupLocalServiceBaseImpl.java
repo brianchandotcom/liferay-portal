@@ -414,7 +414,7 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = ClusterGroupLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.ClusterGroupLocalService.class)
 	protected ClusterGroupLocalService clusterGroupLocalService;
 	@BeanReference(type = ClusterGroupPersistence.class)
 	protected ClusterGroupPersistence clusterGroupPersistence;

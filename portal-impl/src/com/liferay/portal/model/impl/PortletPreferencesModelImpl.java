@@ -72,6 +72,18 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 			{ "portletId", Types.VARCHAR },
 			{ "preferences", Types.CLOB }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("portletPreferencesId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ownerId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ownerType", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("portletId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("preferences", Types.CLOB);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table PortletPreferences (mvccVersion LONG default 0,portletPreferencesId LONG not null primary key,ownerId LONG,ownerType INTEGER,plid LONG,portletId VARCHAR(200) null,preferences TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table PortletPreferences";
 	public static final String ORDER_BY_JPQL = " ORDER BY portletPreferences.portletPreferencesId ASC";

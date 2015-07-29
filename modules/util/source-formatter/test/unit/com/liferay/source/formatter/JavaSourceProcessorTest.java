@@ -94,8 +94,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"IncorrectImports2.testjava",
 			new String[] {
-				"Proxy:", "edu.emory.mathcs.backport.java:",
-				"jodd.util.StringPool:"
+				"edu.emory.mathcs.backport.java:", "jodd.util.StringPool:",
+				"Proxy:"
 			});
 	}
 
@@ -107,10 +107,12 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"line break:", "line break:", "line break:", "line break:",
 				"line break:", "line break:", "line break:", "line break:",
 				"line break:", "line break:", "line break:", "line break:",
-				"line break:", "line break:", "line break:", "line break:"
+				"line break:", "line break:", "line break:", "line break:",
+				"line break:", "line break:", "line break:"
 			},
 			new Integer[] {
-				23, 27, 31, 38, 42, 45, 48, 52, 55, 60, 66, 70, 76, 84, 87, 94
+				23, 27, 31, 38, 42, 46, 51, 55, 57, 60, 64, 67, 72, 78, 82, 88,
+				96, 99, 106
 			});
 		test("IncorrectLineBreaks2.testjava");
 	}
@@ -228,6 +230,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testTruncateLongLines() throws Exception {
 		test("TruncateLongLines.testjava");
+	}
+
+	@Test
+	public void testUnassignedVariables() throws Exception {
+		test("UnassignedVariables.testjava");
 	}
 
 	@Test

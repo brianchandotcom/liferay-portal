@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>STRUCTURE</td>
-	<td>//input[contains(@id,'structure')]</td>
+	<td>//input[contains(@id,'structure') and contains(@class,'input-resource ')]</td>
 	<td></td>
 </tr>
 <tr>

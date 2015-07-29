@@ -110,14 +110,15 @@ public class DB2DB extends BaseDB {
 
 		String suffix = getSuffix(population);
 
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("drop database ");
 		sb.append(databaseName);
 		sb.append(";\n");
 		sb.append("create database ");
 		sb.append(databaseName);
-		sb.append(" pagesize 8192;\n");
+		sb.append(" pagesize 32768 temporary tablespace managed by automatic ");
+		sb.append("storage;\n");
 
 		if (population != BARE) {
 			sb.append("connect to ");

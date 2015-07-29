@@ -4654,8 +4654,8 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	private static final String _FINDER_COLUMN_T_C_D_TABLEID_2 = "expandoValue.tableId = ? AND ";
 	private static final String _FINDER_COLUMN_T_C_D_COLUMNID_2 = "expandoValue.columnId = ? AND ";
 	private static final String _FINDER_COLUMN_T_C_D_DATA_1 = "expandoValue.data IS NULL";
-	private static final String _FINDER_COLUMN_T_C_D_DATA_2 = "expandoValue.data = ?";
-	private static final String _FINDER_COLUMN_T_C_D_DATA_3 = "(expandoValue.data IS NULL OR expandoValue.data = '')";
+	private static final String _FINDER_COLUMN_T_C_D_DATA_2 = "CAST_CLOB_TEXT(expandoValue.data) = ?";
+	private static final String _FINDER_COLUMN_T_C_D_DATA_3 = "(expandoValue.data IS NULL OR CAST_CLOB_TEXT(expandoValue.data) = '')";
 
 	public ExpandoValuePersistenceImpl() {
 		setModelClass(ExpandoValue.class);
@@ -4750,8 +4750,9 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ExpandoValue expandoValue) {
-		if (expandoValue.isNew()) {
+	protected void cacheUniqueFindersCache(ExpandoValue expandoValue,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					expandoValue.getColumnId(), expandoValue.getRowId()
 				};
@@ -5143,7 +5144,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 			false);
 
 		clearUniqueFindersCache(expandoValue);
-		cacheUniqueFindersCache(expandoValue);
+		cacheUniqueFindersCache(expandoValue, isNew);
 
 		expandoValue.resetOriginalValues();
 
@@ -5528,6 +5529,11 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return ExpandoValueModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

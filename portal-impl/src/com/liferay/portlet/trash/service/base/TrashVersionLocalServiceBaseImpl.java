@@ -632,7 +632,7 @@ public abstract class TrashVersionLocalServiceBaseImpl
 	protected com.liferay.portlet.trash.service.TrashEntryService trashEntryService;
 	@BeanReference(type = TrashEntryPersistence.class)
 	protected TrashEntryPersistence trashEntryPersistence;
-	@BeanReference(type = TrashVersionLocalService.class)
+	@BeanReference(type = com.liferay.portlet.trash.service.TrashVersionLocalService.class)
 	protected TrashVersionLocalService trashVersionLocalService;
 	@BeanReference(type = TrashVersionPersistence.class)
 	protected TrashVersionPersistence trashVersionPersistence;

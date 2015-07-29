@@ -1,0 +1,122 @@
+.lfr-item-viewer {
+	position: relative;
+
+	#cardSection {
+		margin-bottom: 20px;
+	}
+
+	.image-viewer-base-image-list {
+		padding-top: 30px;
+	}
+
+	.image-viewer-footer-content {
+		min-height: 30px;
+		padding: 5px 20px;
+		text-align: center;
+		width: 100%;
+
+		.image-viewer-caption {
+			position: absolute;
+		}
+
+		.image-viewer-footer-control {
+			margin: 0 10px;
+			position: relative;
+		}
+
+		.image-viewer-thumbnails {
+			display: none;
+		}
+	}
+
+	.aspect-ratio {
+		margin-top: 30px;
+
+		a.item-preview {
+			height: 100%;
+			position: absolute;
+			width: 100%;
+		}
+	}
+
+	.progress-container {
+		left: 0;
+		margin: 0 auto;
+		padding: 20px 30px;
+		position: absolute;
+		right: 0;
+		text-align: center;
+		top: 50%;
+		transform: translateY(-50%);
+		visibility: hidden;
+		width: 80%;
+		z-index: 1000;
+
+		a {
+			position: absolute;
+			right: 30px;
+		}
+
+		.progress {
+			margin-top: 10px;
+		}
+	}
+
+	.sidenav-menu-slider {
+		top: 0;
+	}
+
+	.tabular-list-group {
+		width: 100%;
+	}
+
+	.upload-view {
+		display: table;
+		height: 400px;
+		width: 100%;
+
+		& > div {
+			display: table-cell;
+			vertical-align: middle;
+		}
+	}
+
+	.url-view {
+		margin: 15px;
+	}
+
+	&.uploading > .progress-container {
+		visibility: visible;
+	}
+}
+
+.lfr-item-viewer-close {
+	left: 20px;
+	margin-top: 5px;
+	text-shadow: none;
+
+	&.image-viewer-close {
+		font-size: 16px;
+		padding-bottom: 3px;
+	}
+
+	.glyphicon {
+		font-size: 0.8em;
+		margin-right: 5px;
+	}
+}
+
+.lfr-item-viewer-icon-info {
+	float: right;
+	font-size: 20px;
+}
+
+.image-viewer-base-image-info {
+	float: right;
+	text-align: left;
+	width: 300px;
+
+	p {
+		line-height: 16px;
+	}
+}

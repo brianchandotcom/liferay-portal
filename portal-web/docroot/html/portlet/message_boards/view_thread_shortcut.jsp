@@ -57,7 +57,7 @@ if (threadFlag != null) {
 			if (portletName.equals(PortletKeys.MESSAGE_BOARDS_ADMIN)) {
 				PortletURL selMessageURL = renderResponse.createRenderURL();
 
-				selMessageURL.setParameter("struts_action", "/message_boards/view_message");
+				selMessageURL.setParameter("mvcRenderCommandName", "/message_boards/view_message");
 				selMessageURL.setParameter("messageId", String.valueOf(selMessage.getMessageId()));
 
 				messageURL = selMessageURL.toString();
@@ -149,7 +149,7 @@ for (int i = range[0]; i < range[1]; i++) {
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, curMessage);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(depth));
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(depth));
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, selMessage);
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);

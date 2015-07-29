@@ -70,7 +70,7 @@ public class UpgradeDynamicDataListsTest extends PowerMockito {
 	}
 
 	@Test
-	public void testToXMLWihoutLocalizedData() throws Exception {
+	public void testToXMLWithoutLocalizedData() throws Exception {
 		Map<String, String> expandoValuesMap = new HashMap<>();
 
 		expandoValuesMap.put(
@@ -223,11 +223,14 @@ public class UpgradeDynamicDataListsTest extends PowerMockito {
 	}
 
 	protected void setUpLanguageUtil() {
-		whenLanguageGetLanguageId(LocaleUtil.US, "en_US");
 		whenLanguageGetLanguageId(LocaleUtil.BRAZIL, "pt_BR");
+		whenLanguageGetLanguageId(LocaleUtil.US, "en_US");
 
 		whenLanguageGetAvailableLocalesThen(
 			SetUtil.fromArray(new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}));
+
+		whenLanguageIsAvailableLocale(LocaleUtil.BRAZIL);
+		whenLanguageIsAvailableLocale(LocaleUtil.US);
 
 		LanguageUtil languageUtil = new LanguageUtil();
 
@@ -312,7 +315,15 @@ public class UpgradeDynamicDataListsTest extends PowerMockito {
 		when(
 			_language.getLanguageId(Matchers.eq(locale))
 		).thenReturn(
-				languageId
+			languageId
+		);
+	}
+
+	protected void whenLanguageIsAvailableLocale(Locale locale) {
+		when(
+			_language.isAvailableLocale(Matchers.eq(locale))
+		).thenReturn(
+			true
 		);
 	}
 

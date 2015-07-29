@@ -2,6 +2,7 @@
 	<command name="configureSelectionMethod">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Blogs Aggregator" />
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -58,6 +59,7 @@
 
 	<command name="viewParentOrganizationPG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -79,6 +81,7 @@
 
 	<command name="viewSelectOrganizationNoPG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -97,6 +100,7 @@
 
 	<command name="viewSubOrganizationPG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

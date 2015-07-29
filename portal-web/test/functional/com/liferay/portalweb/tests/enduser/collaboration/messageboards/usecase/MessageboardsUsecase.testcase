@@ -20,7 +20,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="CopyAndPasteTextInCKEditor" priority="5">
+	<command name="CopyAndPasteTextInCKEditor" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
@@ -40,7 +40,7 @@
 		<execute function="AssertClick" locator1="PGMessageboards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
 		<execute function="Type" locator1="PGMessageboardsPostthread#SUBJECT_FIELD" value1="Message Boards Subject" />
-		<execute function="Type#typeFrameWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="Message Boards Body" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="Message Boards Body" />
 		<execute function="Copy" locator1="PGMessageboardsPostthread#SUBJECT_FIELD" />
 		<execute function="Paste#ckEditorPaste" locator1="PGMessageboardsPostthread#BODY_FIELD" />
 		<execute function="AssertClick" locator1="PGMessageboardsPostthread#PUBLISH_BUTTON" value1="Publish" />
@@ -106,7 +106,7 @@
 		</execute>
 	</command>
 
-	<command name="SplitMBThread" priority="5">
+	<command name="SplitMBThread" priority="4">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadReplyBody" value="MB Thread Reply Body" />
 		<var name="threadSplitReplyBody" value="Split Reply Thread Body" />
@@ -161,6 +161,7 @@
 			<var name="threadReplyBody" value="${threadReplyBody}" />
 			<var name="threadReplySubject" value="${threadReplySubject}" />
 			<var name="threadSplitReplyBody" value="${threadSplitReplyBody}" />
+			<var name="threadSplitReplySubject" value="${threadSplitReplySubject}" />
 			<var name="threadSplitSubject" value="${threadSplitSubject}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -170,10 +171,12 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewSplitThreadPG">
+			<var name="pageName" value="${pageName}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadReplyBody" value="${threadReplyBody}" />
 			<var name="threadReplySubject" value="${threadReplySubject}" />
 			<var name="threadSplitReplyBody" value="${threadSplitReplyBody}" />
+			<var name="threadSplitReplySubject" value="${threadSplitReplySubject}" />
 			<var name="threadSplitSubject" value="${threadSplitSubject}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -1068,6 +1071,7 @@
 		<execute macro="MessageboardsThread#editPG">
 			<var name="saveAsDraft" value="true" />
 			<var name="threadBodyEdit" value="${threadBodyEdit}" />
+			<var name="threadSubject" value="${threadSubject}" />
 			<var name="threadSubjectEdit" value="${threadSubjectEdit}" />
 		</execute>
 
@@ -1125,7 +1129,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoMBThreadXSS" priority="5">
+	<command name="ViewNoMBThreadXSS" priority="4">
 		<var name="source" value="true" />
 		<var name="threadBody" value="[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
@@ -1158,7 +1162,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoSubscribeLinksNoWithEmailNotificationsDisabled" priority="5">
+	<command name="ViewNoSubscribeLinksNoWithEmailNotificationsDisabled" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="messageAddedEmailEnabled" value="false" />
 		<var name="messageUpdatedEmailEnabled" value="false" />
@@ -1309,6 +1313,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewSplitThreadPG">
+			<var name="pageName" value="${pageName}" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadReplyBody" value="MB Thread Split Reply Body" />
 			<var name="threadSplitReplyBody" value="Split Reply Thread Body" />

@@ -14,37 +14,29 @@
 
 package com.liferay.portal.security.auth.verifier;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.tunnel.TunnelAuthenticationManagerUtil;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
-import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicyThreadLocal;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
-import com.liferay.portal.security.auth.RemoteAuthException;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.http.TunnelUtil;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.util.Encryptor;
-import com.liferay.util.EncryptorException;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+import java.util.Map;
 import java.util.Properties;
-import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Zsolt Berentey
@@ -54,10 +46,17 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=255.255.255.255",
 		"auth.verifier.TunnelingServletAuthVerifier.urls.excludes=",
-		"auth.verifier.TunnelingServletAuthVerifier.urls.includes=/api/liferay/do"
+		"auth.verifier.TunnelingServletAuthVerifier.urls.includes=/api/liferay/do",
+		"service.access.policy.name=DEFAULT_USER"
 	}
 )
 public class TunnelingServletAuthVerifier implements AuthVerifier {
+
+	@Activate
+	@Modified
+	public void activate(Map<String, Object> properties) {
+		_properties = properties;
+	}
 
 	@Override
 	public String getAuthType() {
@@ -78,6 +77,12 @@ public class TunnelingServletAuthVerifier implements AuthVerifier {
 				authVerifierResult.setPassword(credentials[1]);
 				authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 				authVerifierResult.setUserId(Long.valueOf(credentials[0]));
+
+				String serviceAccessPolicyName = (String)_properties.get(
+					"service.access.policy.name");
+
+				ServiceAccessPolicyThreadLocal.addActiveServiceAccessPolicyName(
+					serviceAccessPolicyName);
 			}
 		}
 		catch (AuthException ae) {
@@ -106,123 +111,26 @@ public class TunnelingServletAuthVerifier implements AuthVerifier {
 	}
 
 	protected String[] verify(HttpServletRequest request) throws AuthException {
-		String authorization = request.getHeader("Authorization");
+		String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
 
 		if (authorization == null) {
 			return null;
 		}
 
-		StringTokenizer st = new StringTokenizer(authorization);
-
-		if (!st.hasMoreTokens()) {
-			return null;
-		}
-
-		String basic = st.nextToken();
-
-		if (!StringUtil.equalsIgnoreCase(
-				basic, HttpServletRequest.BASIC_AUTH)) {
-
-			return null;
-		}
-
-		String encodedCredentials = st.nextToken();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Encoded credentials " + encodedCredentials);
-		}
-
-		String decodedCredentials = new String(
-			Base64.decode(encodedCredentials));
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Decoded credentials " + decodedCredentials);
-		}
-
-		int index = decodedCredentials.indexOf(CharPool.COLON);
-
-		if (index == -1) {
-			return null;
-		}
-
-		String login = GetterUtil.getString(
-			decodedCredentials.substring(0, index));
-		String password = decodedCredentials.substring(index + 1);
-
-		String expectedPassword = null;
-
-		try {
-			expectedPassword = Encryptor.encrypt(
-				TunnelUtil.getSharedSecretKey(), login);
-		}
-		catch (EncryptorException ee) {
-			AuthException authException = new RemoteAuthException(ee);
-
-			authException.setType(AuthException.INTERNAL_SERVER_ERROR);
-
-			throw authException;
-		}
-		catch (AuthException ae) {
-			AuthException authException = new RemoteAuthException();
-
-			authException.setType(ae.getType());
-
-			throw authException;
-		}
-
-		if (!password.equals(expectedPassword)) {
-			AuthException authException = new RemoteAuthException();
-
-			authException.setType(RemoteAuthException.WRONG_SHARED_SECRET);
-
-			throw authException;
-		}
-
-		User user = null;
-
-		try {
-			user = UserLocalServiceUtil.fetchUser(GetterUtil.getLong(login));
-
-			if (user == null) {
-				Company company = PortalUtil.getCompany(request);
-
-				user = UserLocalServiceUtil.fetchUserByEmailAddress(
-					company.getCompanyId(), login);
-
-				if (user == null) {
-					user = UserLocalServiceUtil.fetchUserByScreenName(
-						company.getCompanyId(), login);
-				}
-			}
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to find company", pe);
-			}
-		}
-		catch (SystemException se) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to find user", se);
-			}
-		}
-
-		if (user == null) {
-			AuthException authException = new RemoteAuthException();
-
-			authException.setType(AuthException.INTERNAL_SERVER_ERROR);
-
-			throw authException;
-		}
-
 		String[] credentials = new String[2];
 
-		credentials[0] = String.valueOf(user.getUserId());
-		credentials[1] = password;
+		long userId = TunnelAuthenticationManagerUtil.getUserId(request);
+
+		credentials[0] = String.valueOf(userId);
+
+		credentials[1] = StringPool.BLANK;
 
 		return credentials;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TunnelingServletAuthVerifier.class);
+
+	private Map<String, Object> _properties;
 
 }

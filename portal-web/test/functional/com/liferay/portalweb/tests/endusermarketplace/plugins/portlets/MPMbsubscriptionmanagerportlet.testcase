@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="MBSubscriptionManagerPortletSmoke" priority="5">
+	<command name="MBSubscriptionManagerPortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="mb-subscription-manager-portlet" />
 
 		<var name="appName" value="Message Boards Subscription Manager" />

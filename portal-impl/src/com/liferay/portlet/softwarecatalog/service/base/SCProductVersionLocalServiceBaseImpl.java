@@ -781,7 +781,7 @@ public abstract class SCProductVersionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = SCProductVersionLocalService.class)
+	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductVersionLocalService.class)
 	protected SCProductVersionLocalService scProductVersionLocalService;
 	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductVersionService.class)
 	protected com.liferay.portlet.softwarecatalog.service.SCProductVersionService scProductVersionService;

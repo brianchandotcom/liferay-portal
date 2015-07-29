@@ -2256,6 +2256,11 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		return count.intValue();
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return ContactModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the contact persistence.
 	 */

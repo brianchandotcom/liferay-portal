@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.cluster;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+
 import java.util.List;
 
 /**
@@ -25,6 +28,10 @@ public interface ClusterExecutor {
 		ClusterEventListener clusterEventListener);
 
 	public FutureClusterResponses execute(ClusterRequest clusterRequest);
+
+	public InetAddress getBindInetAddress();
+
+	public NetworkInterface getBindNetworkInterface();
 
 	public List<ClusterEventListener> getClusterEventListeners();
 

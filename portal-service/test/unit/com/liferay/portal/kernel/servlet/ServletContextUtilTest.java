@@ -27,78 +27,57 @@ import javax.servlet.ServletContext;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockServletContext;
 
 /**
  * @author Laszlo Csontos
  */
-@RunWith(PowerMockRunner.class)
-public class ServletContextUtilTest extends PowerMockito {
+public class ServletContextUtilTest {
 
 	@Test
 	public void testGetResourceURIWithEmptyPath() throws Exception {
-		getResourceURI(StringPool.BLANK);
+		testGetResourceURI(StringPool.BLANK);
 	}
 
 	@Test(expected = URISyntaxException.class)
 	public void testGetResourceURIWithInvalidCharacters() throws Exception {
-		getResourceURI(_URI_WITH_INVALID_CHARACTERS);
+		ServletContextUtil.getResourceURI(
+			new URL("file://" + _URI_WITH_INVALID_CHARACTERS + "/dummy"));
 	}
 
 	@Test
 	public void testGetResourceURIWithReservedCharacters() throws Exception {
-		getResourceURI(_URI_WITH_RESERVED_CHARACTERS);
+		testGetResourceURI(_URI_WITH_RESERVED_CHARACTERS);
 	}
 
 	@Test
 	public void testGetResourceURIWithUnreservedCharacters() throws Exception {
-		getResourceURI(_URI_WITH_UNRESERVED_CHARACTERS);
+		testGetResourceURI(_URI_WITH_UNRESERVED_CHARACTERS);
 	}
 
 	@Test
 	public void testGetRootURIWithEmptyPath() throws Exception {
-		getRootURI(StringPool.BLANK, getURI(StringPool.SLASH));
+		testGetRootURI(StringPool.BLANK, getURI(StringPool.SLASH));
 	}
 
 	@Test(expected = MalformedURLException.class)
 	public void testGetRootURIWithInvalidCharacters() throws Exception {
-		getRootURI(_URI_WITH_INVALID_CHARACTERS, null);
+		testGetRootURI(_URI_WITH_INVALID_CHARACTERS, null);
 	}
 
 	@Test
 	public void testGetRootURIWithReservedCharacters() throws Exception {
 		String path = _URI_WITH_RESERVED_CHARACTERS;
 
-		getRootURI(path, getURI(path));
+		testGetRootURI(path, getURI(path));
 	}
 
 	@Test
 	public void testGetRootURIWithUnreservedCharacters() throws Exception {
 		String path = _URI_WITH_UNRESERVED_CHARACTERS;
 
-		getRootURI(path, getURI(path));
-	}
-
-	protected void getResourceURI(String resourceURL) throws Exception {
-		URL url = getURL(resourceURL);
-
-		Assert.assertEquals(
-			getURI(url.getPath()), ServletContextUtil.getResourceURI(url));
-	}
-
-	protected void getRootURI(String path, URI uri) throws Exception {
-		ServletContext servletContext = getServletContext(path);
-
-		URI rootURI = ServletContextUtil.getRootURI(servletContext);
-
-		Assert.assertEquals(uri, rootURI);
-		Assert.assertEquals(
-			uri, servletContext.getAttribute(ServletContextUtil.URI_ATTRIBUTE));
+		testGetRootURI(path, getURI(path));
 	}
 
 	protected ServletContext getServletContext(final String path) {
@@ -108,38 +87,41 @@ public class ServletContextUtilTest extends PowerMockito {
 			public URL getResource(String resourcePath)
 				throws MalformedURLException {
 
-				URL url = new URL("file:" + path + resourcePath);
-
-				return url;
+				return new URL("file:" + path + resourcePath);
 			}
 
 		};
 	}
 
 	protected URI getURI(String path) {
-		URI uri = null;
-
 		try {
-			uri = new URI("file", path, null);
+			return new URI("file", path, null);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
 
-		return uri;
+		return null;
 	}
 
-	protected URL getURL(String path) {
-		URL url = null;
+	protected void testGetResourceURI(String resourceURL) throws Exception {
+		URL url = new URL("file://" + resourceURL + "/dummy");
 
-		try {
-			url = new URL("file://" + path + "/dummy");
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+		URI uri = ServletContextUtil.getResourceURI(url);
 
-		return url;
+		Assert.assertEquals("file", uri.getScheme());
+		Assert.assertEquals(url.getPath(), uri.getSchemeSpecificPart());
+		Assert.assertNull(uri.getFragment());
+	}
+
+	protected void testGetRootURI(String path, URI uri) throws Exception {
+		ServletContext servletContext = getServletContext(path);
+
+		URI rootURI = ServletContextUtil.getRootURI(servletContext);
+
+		Assert.assertEquals(uri, rootURI);
+		Assert.assertEquals(
+			uri, servletContext.getAttribute(ServletContextUtil.URI_ATTRIBUTE));
 	}
 
 	private static final String _URI_WITH_INVALID_CHARACTERS = ":?#[]/@";

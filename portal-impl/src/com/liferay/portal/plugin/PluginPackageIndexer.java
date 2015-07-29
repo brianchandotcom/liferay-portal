@@ -50,7 +50,7 @@ import javax.portlet.PortletResponse;
  * @author Raymond Augé
  */
 @OSGiBeanProperties
-public class PluginPackageIndexer extends BaseIndexer {
+public class PluginPackageIndexer extends BaseIndexer<PluginPackage> {
 
 	public static final String CLASS_NAME = PluginPackage.class.getName();
 
@@ -68,15 +68,13 @@ public class PluginPackageIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		PluginPackage pluginPackage = (PluginPackage)obj;
-
+	protected void doDelete(PluginPackage pluginPackage) throws Exception {
 		deleteDocument(CompanyConstants.SYSTEM, pluginPackage.getModuleId());
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		PluginPackage pluginPackage = (PluginPackage)obj;
+	protected Document doGetDocument(PluginPackage pluginPackage)
+		throws Exception {
 
 		Document document = new DocumentImpl();
 
@@ -183,9 +181,7 @@ public class PluginPackageIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		PluginPackage pluginPackage = (PluginPackage)obj;
-
+	protected void doReindex(PluginPackage pluginPackage) throws Exception {
 		Document document = getDocument(pluginPackage);
 
 		SearchEngineUtil.updateDocument(

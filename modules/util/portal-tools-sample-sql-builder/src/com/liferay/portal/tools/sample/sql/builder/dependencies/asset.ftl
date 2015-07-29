@@ -15,7 +15,7 @@
 </#list>
 
 <#list dataFactory.assetTagModels as assetTagModel>
-	insert into AssetTag values (${assetTagModel.tagId}, ${assetTagModel.groupId}, ${assetTagModel.companyId}, ${assetTagModel.userId}, '${assetTagModel.userName}', '${dataFactory.getDateString(assetTagModel.createDate)}', '${dataFactory.getDateString(assetTagModel.modifiedDate)}', '${assetTagModel.name}', ${assetTagModel.assetCount});
+	insert into AssetTag values ('${assetTagModel.uuid}', ${assetTagModel.tagId}, ${assetTagModel.groupId}, ${assetTagModel.companyId}, ${assetTagModel.userId}, '${assetTagModel.userName}', '${dataFactory.getDateString(assetTagModel.createDate)}', '${dataFactory.getDateString(assetTagModel.modifiedDate)}', '${assetTagModel.name}', ${assetTagModel.assetCount});
 
 	<@insertResourcePermissions
 		_entry = assetTagModel

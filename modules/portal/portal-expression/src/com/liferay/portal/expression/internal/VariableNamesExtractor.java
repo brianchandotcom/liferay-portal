@@ -34,6 +34,8 @@ public class VariableNamesExtractor {
 
 		List<String> variableNames = new ArrayList<>();
 
+		expressionString = removeStringConstants(expressionString);
+
 		Matcher matcher = _pattern.matcher(expressionString);
 
 		while (matcher.find()) {
@@ -47,8 +49,12 @@ public class VariableNamesExtractor {
 		return variableNames;
 	}
 
+	private String removeStringConstants(String expressionString) {
+		return expressionString.replaceAll("\"([^\"]|\\\")*\"", "");
+	}
+
 	private static final Pattern _pattern = Pattern.compile(
-		"\\b([a-zA-Z]+[\\w\\._]*)(?!\\()\\b", Pattern.MULTILINE);
+		"\\b([a-zA-Z]+[\\w_]*)(?!\\()\\b", Pattern.MULTILINE);
 	private static final String[] _reservedWords = {"false", "true"};
 
 }

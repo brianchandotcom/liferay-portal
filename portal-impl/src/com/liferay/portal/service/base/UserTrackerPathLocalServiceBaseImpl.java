@@ -416,7 +416,7 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = UserTrackerPathLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.UserTrackerPathLocalService.class)
 	protected UserTrackerPathLocalService userTrackerPathLocalService;
 	@BeanReference(type = UserTrackerPathPersistence.class)
 	protected UserTrackerPathPersistence userTrackerPathPersistence;

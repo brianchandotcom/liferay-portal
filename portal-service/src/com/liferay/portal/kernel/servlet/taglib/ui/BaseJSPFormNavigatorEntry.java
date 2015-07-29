@@ -55,7 +55,7 @@ public abstract class BaseJSPFormNavigatorEntry<T>
 				_log.error("Unable to include JSP", se);
 			}
 
-			throw new IOException("Unable to include JSP", se);
+			throw new IOException("Unable to include " + getJspPath(), se);
 		}
 	}
 

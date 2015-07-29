@@ -30,5 +30,6 @@
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
 	<classpathentry kind="lib" path="lib/ant.jar" />
 	<classpathentry kind="lib" path="lib/biz.aQute.bnd.jar" />
+	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-api/jars/shrinkwrap-api-1.2.2.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

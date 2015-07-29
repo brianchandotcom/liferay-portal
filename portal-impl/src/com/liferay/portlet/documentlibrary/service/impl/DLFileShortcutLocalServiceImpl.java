@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -26,6 +27,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
@@ -88,8 +90,7 @@ public class DLFileShortcutLocalServiceImpl
 		}
 		else {
 			addFileShortcutResources(
-				fileShortcut, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
+				fileShortcut, serviceContext.getModelPermissions());
 		}
 
 		// Folder
@@ -127,15 +128,13 @@ public class DLFileShortcutLocalServiceImpl
 
 	@Override
 	public void addFileShortcutResources(
-			DLFileShortcut fileShortcut, String[] groupPermissions,
-			String[] guestPermissions)
+			DLFileShortcut fileShortcut, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			fileShortcut.getCompanyId(), fileShortcut.getGroupId(),
 			fileShortcut.getUserId(), DLFileShortcutConstants.getClassName(),
-			fileShortcut.getFileShortcutId(), groupPermissions,
-			guestPermissions);
+			fileShortcut.getFileShortcutId(), modelPermissions);
 	}
 
 	@Override
@@ -153,15 +152,13 @@ public class DLFileShortcutLocalServiceImpl
 
 	@Override
 	public void addFileShortcutResources(
-			long fileShortcutId, String[] groupPermissions,
-			String[] guestPermissions)
+			long fileShortcutId, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		DLFileShortcut fileShortcut =
 			dlFileShortcutPersistence.findByPrimaryKey(fileShortcutId);
 
-		addFileShortcutResources(
-			fileShortcut, groupPermissions, guestPermissions);
+		addFileShortcutResources(fileShortcut, modelPermissions);
 	}
 
 	@Override
@@ -302,6 +299,10 @@ public class DLFileShortcutLocalServiceImpl
 	public void setTreePaths(final long folderId, final String treePath)
 		throws PortalException {
 
+		if (treePath == null) {
+			throw new IllegalArgumentException("Tree path is null");
+		}
+
 		ActionableDynamicQuery actionableDynamicQuery =
 			getActionableDynamicQuery();
 
@@ -318,7 +319,10 @@ public class DLFileShortcutLocalServiceImpl
 					Property treePathProperty = PropertyFactoryUtil.forName(
 						"treePath");
 
-					dynamicQuery.add(treePathProperty.ne(treePath));
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.or(
+							treePathProperty.isNull(),
+							treePathProperty.ne(treePath)));
 				}
 
 			});

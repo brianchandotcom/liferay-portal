@@ -168,10 +168,6 @@ else {
 			</c:otherwise>
 		</c:choose>
 
-		<%
-		String detailsLanguageStrutsAction = "/users_admin/edit_user_details";
-		%>
-
 		<%@ include file="/html/portlet/users_admin/user/details_language.jspf" %>
 
 		<%@ include file="/html/portlet/users_admin/user/details_user_name.jspf" %>

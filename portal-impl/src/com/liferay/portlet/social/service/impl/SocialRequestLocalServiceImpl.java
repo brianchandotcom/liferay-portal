@@ -387,14 +387,11 @@ public class SocialRequestLocalServiceImpl
 	 * Updates the social request replacing its status.
 	 *
 	 * <p>
-	 * If the status is updated to {@link
-	 * com.liferay.portlet.social.model.SocialRequestConstants#STATUS_CONFIRM}
+	 * If the status is updated to {@link SocialRequestConstants#STATUS_CONFIRM}
 	 * then {@link
 	 * com.liferay.portlet.social.service.SocialRequestInterpreterLocalService#processConfirmation(
 	 * SocialRequest, ThemeDisplay)} is called. If the status is updated to
-	 * {@link
-	 * com.liferay.portlet.social.model.SocialRequestConstants#STATUS_IGNORE}
-	 * then {@link
+	 * {@link SocialRequestConstants#STATUS_IGNORE} then {@link
 	 * com.liferay.portlet.social.service.SocialRequestInterpreterLocalService#processRejection(
 	 * SocialRequest, ThemeDisplay)} is called.
 	 * </p>

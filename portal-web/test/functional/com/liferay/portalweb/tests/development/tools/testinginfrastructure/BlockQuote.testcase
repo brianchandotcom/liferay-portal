@@ -20,7 +20,7 @@
 		</execute>
 	</set-up>
 
-	<command name="BlockQuote" priority="5">
+	<command name="BlockQuote" priority="4">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 

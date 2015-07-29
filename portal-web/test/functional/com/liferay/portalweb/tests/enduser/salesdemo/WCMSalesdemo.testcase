@@ -17,7 +17,36 @@
 		</execute>
 	</tear-down>
 
-	<command name="SalesDemo" priority="5">
+	<command known-issues="sales-demo" name="IFrameDemo" priority="4">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="IFrame Page" />
+			<var name="pageType" value="1 Column" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="IFrame" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="IFrame#addCP">
+			<var name="sourceURL" value="http://www.liferay.com/products/liferay-portal/overview" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="IFrame Page" />
+		</execute>
+
+		<execute function="Pause" locator1="2000" />
+
+		<take-screenshot />
+
+		<execute function="SikuliAssertElementPresent" locator1="PGIFrame#SCREENSHOTS_LIFERAY_PRODUCTS_LOGO_PNG" />
+	</command>
+
+	<command name="SalesDemo" priority="4">
 		<var name="webContentContent" value="DHS Content" />
 		<var name="webContentTitle" value="DHS Title" />
 
@@ -64,6 +93,7 @@
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
 		<execute macro="Page#openURL" />
@@ -106,6 +136,7 @@
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
+			<var name="webContentContent" value="${webContentContent}" />
 		</execute>
 
 		<execute macro="Page#addPG">

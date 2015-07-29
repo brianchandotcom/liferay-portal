@@ -38,8 +38,8 @@ public class PrintUserToolAssetAddonEntry
 	}
 
 	@Override
-	public String getJSPPath() {
-		return _JSP_PATH;
+	public String getJspPath() {
+		return "/META-INF/resources/print.jsp";
 	}
 
 	@Override
@@ -59,12 +59,11 @@ public class PrintUserToolAssetAddonEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.print)"
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.print)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	private static final String _JSP_PATH = "/META-INF/resources/print.jsp";
 
 }

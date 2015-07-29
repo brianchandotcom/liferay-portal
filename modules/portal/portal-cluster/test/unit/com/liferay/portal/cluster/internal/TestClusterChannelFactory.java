@@ -18,6 +18,10 @@ import com.liferay.portal.cluster.ClusterChannel;
 import com.liferay.portal.cluster.ClusterChannelFactory;
 import com.liferay.portal.cluster.ClusterReceiver;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+
 /**
  * @author Tina Tian
  */
@@ -30,6 +34,22 @@ public class TestClusterChannelFactory implements ClusterChannelFactory {
 
 		return new TestClusterChannel(
 			channelProperties, clusterName, clusterReceiver);
+	}
+
+	@Override
+	public InetAddress getBindInetAddress() {
+		return InetAddress.getLoopbackAddress();
+	}
+
+	@Override
+	public NetworkInterface getBindNetworkInterface() {
+		try {
+			return NetworkInterface.getByInetAddress(
+				InetAddress.getLoopbackAddress());
+		}
+		catch (SocketException se) {
+			throw new IllegalStateException(se);
+		}
 	}
 
 }

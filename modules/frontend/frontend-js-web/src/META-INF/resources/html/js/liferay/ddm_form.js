@@ -178,13 +178,13 @@ AUI.add(
 				portletURL.setParameter('controlPanelCategory', 'portlet');
 				portletURL.setParameter('definition', JSON.stringify(instance.get('definition')));
 				portletURL.setParameter('fieldName', instance.get('name'));
-				portletURL.setParameter('javax.portlet.action', 'renderStructureField');
 				portletURL.setParameter('mode', instance.get('mode'));
 				portletURL.setParameter('namespace', instance.get('namespace'));
 				portletURL.setParameter('portletNamespace', instance.get('portletNamespace'));
 				portletURL.setParameter('readOnly', instance.get('readOnly'));
 				portletURL.setPlid(instance.get('p_l_id'));
 				portletURL.setPortletId('com_liferay_dynamic_data_mapping_web_portlet_DynamicDataMappingPortlet');
+				portletURL.setResourceId('renderStructureField');
 				portletURL.setWindowState('pop_up');
 
 				return portletURL.toString();
@@ -925,10 +925,7 @@ AUI.add(
 						portletURL.setParameter('repositoryId', instance.get('doAsGroupId'));
 
 						var criterionJSON = {
-							desiredItemSelectorReturnTypes:
-								[
-									'FILE_ENTRY'
-								]
+							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
 						};
 
 						portletURL.setParameter('0_json', JSON.stringify(criterionJSON));
@@ -961,13 +958,10 @@ AUI.add(
 						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
 
 						portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
-
 						portletURL.setLifecycle(Liferay.PortletURL.ACTION_PHASE);
-
 						portletURL.setParameter('cmd', 'add_temp');
+						portletURL.setParameter('javax.portlet.action', '/document_library/upload_file_entry');
 						portletURL.setParameter('p_auth', Liferay.authToken);
-						portletURL.setParameter('struts_action', '/document_library/upload_file_entry');
-
 						portletURL.setPortletId(Liferay.PortletKeys.DOCUMENT_LIBRARY);
 
 						return portletURL.toString();

@@ -16,9 +16,21 @@ package com.liferay.source.formatter.dependencies;
 
 import java.util.List;
 
+import javax.portlet.Portlet;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Hugo Huijser
  */
+@Component(
+	property = {
+		"com.liferay.portlet.css-class-wrapper=social-networking-portlet-friends-activities",
+		"com.liferay.portlet.display-category=category.social",
+		"javax.portlet.display-name=Friends' Activities"
+	},
+	service = Portlet.class
+)
 public class IncorrectWhitespace {
 
 	public void method1(String s1, String s2, String s3, String s4) {
@@ -67,5 +79,7 @@ public class IncorrectWhitespace {
 			String s2 = (String)s1;
 		}
 	}
+
+	public void method3() throws Exception;
 
 }

@@ -3,6 +3,8 @@
 (function() {
 	'use strict';
 
+	var STR_UPLOADABLE_FILE_RETURN_TYPE = 'com.liferay.item.selector.criteria.UploadableFileReturnType';
+
 	var Util = Liferay.Util;
 
 	var ButtonImage = React.createClass(
@@ -12,14 +14,6 @@
 			propTypes: {
 				editor: React.PropTypes.object.isRequired,
 				imageTPL: React.PropTypes.string
-			},
-
-			componentWillUnmount: function() {
-				var instance = this;
-
-				if (instance._itemSelectorDialog) {
-					instance._itemSelectorDialog.destroy();
-				}
 			},
 
 			getDefaultProps: function() {
@@ -50,12 +44,25 @@
 				);
 			},
 
+			_destroyItemSelectorDialog: function() {
+				var instance = this;
+
+				if (instance._itemSelectorDialog) {
+					setTimeout(
+						function() {
+							instance._itemSelectorDialog.destroy();
+						},
+						0
+					);
+				}
+			},
+
 			_handleClick: function() {
 				var instance = this;
 
 				var editor = this.props.editor.get('nativeEditor');
 
-				var eventName = editor.name + 'selectDocument';
+				var eventName = editor.name + 'selectItem';
 
 				if (instance._itemSelectorDialog) {
 					instance._itemSelectorDialog.open();
@@ -66,10 +73,10 @@
 						function(A) {
 							var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 								{
-									eventName: eventName,
-									on: {
+									after: {
 										selectedItemChange: A.bind('_onSelectedItemChange', instance)
 									},
+									eventName: eventName,
 									url: editor.config.filebrowserImageBrowseUrl
 								}
 							);
@@ -87,7 +94,7 @@
 
 				var editor = instance.props.editor.get('nativeEditor');
 
-				var eventName = editor.name + 'selectDocument';
+				var eventName = editor.name + 'selectItem';
 
 				var selectedItem = event.newVal;
 
@@ -95,18 +102,32 @@
 					Util.getWindow(eventName).onceAfter(
 						'visibleChange',
 						function() {
-							var image = CKEDITOR.dom.element.createFromHtml(
-								instance.props.imageTPL.output(
-									{
-										src: selectedItem.value
-									}
-								)
-							);
+							var imageSrc = selectedItem.value;
 
-							editor.insertElement(image);
+							if (selectedItem.returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
+								try {
+									imageSrc = JSON.parse(selectedItem.value).url;
+								}
+								catch (e) {
+								}
+							}
+
+							if (imageSrc) {
+								var el = CKEDITOR.dom.element.createFromHtml(
+									instance.props.imageTPL.output(
+										{
+											src: imageSrc
+										}
+									)
+								);
+
+								editor.insertElement(el);
+							}
 						}
 					);
 				}
+
+				instance._destroyItemSelectorDialog();
 			}
 		}
 	);

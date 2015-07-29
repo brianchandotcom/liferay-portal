@@ -14,18 +14,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DELETE_BUTTON</td>
-	<td>//button[contains(.,'Delete')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>OPTIONS_ICON</td>
 	<td>//div[@id='main-content']//menu[@class='portlet-topper-toolbar']/div/a/i</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,27 +31,6 @@
 <tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--BASIC_SEARCH-->
-<tr>
-	<td>BASIC_SEARCH_FIELD</td>
-	<td>//input[contains(@id,'user_group_searchkeywords')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASIC_SEARCH_BUTTON</td>
-	<td>//button[contains(.,'Search')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASIC_SEARCH_ADVANCED</td>
-	<td>//a[contains(@id,'user_group_searchtoggleAdvanced')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -91,11 +60,6 @@
 	<td></td>
 </tr>
 <!--USER_GROUP_TABLE-->
-<tr>
-	<td>USER_GROUP_TABLE_ALL_CHECKBOX</td>
-	<td>//input[@name='_127_allRowIds']</td>
-	<td></td>
-</tr>
 <tr>
 	<td>USER_GROUP_TABLE_CHECKBOX</td>
 	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]/input</td>

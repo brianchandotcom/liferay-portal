@@ -384,22 +384,22 @@ public class MapUtil {
 				else if (StringUtil.equalsIgnoreCase(type, "double") ||
 						 type.equals(Double.class.getName())) {
 
-					map.put(kvp[0], new Double(kvp[1]));
+					map.put(kvp[0], Double.valueOf(kvp[1]));
 				}
 				else if (StringUtil.equalsIgnoreCase(type, "int") ||
 						 type.equals(Integer.class.getName())) {
 
-					map.put(kvp[0], new Integer(kvp[1]));
+					map.put(kvp[0], Integer.valueOf(kvp[1]));
 				}
 				else if (StringUtil.equalsIgnoreCase(type, "long") ||
 						 type.equals(Long.class.getName())) {
 
-					map.put(kvp[0], new Long(kvp[1]));
+					map.put(kvp[0], Long.valueOf(kvp[1]));
 				}
 				else if (StringUtil.equalsIgnoreCase(type, "short") ||
 						 type.equals(Short.class.getName())) {
 
-					map.put(kvp[0], new Short(kvp[1]));
+					map.put(kvp[0], Short.valueOf(kvp[1]));
 				}
 				else if (type.equals(String.class.getName())) {
 					map.put(kvp[0], kvp[1]);

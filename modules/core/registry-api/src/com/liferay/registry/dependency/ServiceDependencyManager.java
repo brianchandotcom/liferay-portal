@@ -138,7 +138,7 @@ public class ServiceDependencyManager {
 				}
 			}
 
-			_serviceDependencies.notify();
+			_serviceDependencies.notifyAll();
 
 			for (ServiceDependencyListener serviceDependencyListener :
 					_serviceDependencyListeners) {

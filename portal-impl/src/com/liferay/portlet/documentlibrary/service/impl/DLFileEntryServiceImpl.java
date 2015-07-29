@@ -27,7 +27,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -39,6 +38,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,14 +80,12 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		boolean locked = LockManagerUtil.isLocked(
 			DLFileEntry.class.getName(), fileEntryId);
 
-		try {
-			if (locked && !hasFileEntryLock(fileEntryId) &&
-				!_hasOverrideCheckoutPermission(fileEntryId)) {
+		if (locked && !hasFileEntryLock(fileEntryId) &&
+			!_hasOverrideCheckoutPermission(fileEntryId)) {
 
-				throw new PrincipalException();
-			}
-		}
-		catch (NoSuchFileEntryException nsfee) {
+			throw new PrincipalException.MustHavePermission(
+				getUserId(), DLFileEntry.class.getName(), fileEntryId,
+				ActionKeys.OVERRIDE_CHECKOUT);
 		}
 
 		return dlFileEntryLocalService.cancelCheckOut(getUserId(), fileEntryId);
@@ -102,14 +100,12 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		boolean isLocked = LockManagerUtil.isLocked(
 			DLFileEntry.class.getName(), fileEntryId);
 
-		try {
-			if (isLocked && !hasFileEntryLock(fileEntryId) &&
-				!_hasOverrideCheckoutPermission(fileEntryId)) {
+		if (isLocked && !hasFileEntryLock(fileEntryId) &&
+			!_hasOverrideCheckoutPermission(fileEntryId)) {
 
-				throw new PrincipalException();
-			}
-		}
-		catch (NoSuchFileEntryException nsfee) {
+			throw new PrincipalException.MustHavePermission(
+				getUserId(), DLFileEntry.class.getName(), fileEntryId,
+				ActionKeys.OVERRIDE_CHECKOUT);
 		}
 
 		dlFileEntryLocalService.checkInFileEntry(
@@ -133,14 +129,12 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			long fileEntryId, String lockUuid, ServiceContext serviceContext)
 		throws PortalException {
 
-		try {
-			if (!hasFileEntryLock(fileEntryId) &&
-				!_hasOverrideCheckoutPermission(fileEntryId)) {
+		if (!hasFileEntryLock(fileEntryId) &&
+			!_hasOverrideCheckoutPermission(fileEntryId)) {
 
-				throw new PrincipalException();
-			}
-		}
-		catch (NoSuchFileEntryException nsfee) {
+			throw new PrincipalException.MustHavePermission(
+				getUserId(), DLFileEntry.class.getName(), fileEntryId,
+				ActionKeys.OVERRIDE_CHECKOUT);
 		}
 
 		dlFileEntryLocalService.checkInFileEntry(
@@ -607,6 +601,20 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	}
 
 	@Override
+	public boolean isKeepFileVersionLabel(
+			long fileEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		DLFileEntryPermission.check(
+			permissionChecker, fileEntryId, ActionKeys.VIEW);
+
+		return dlFileEntryLocalService.isKeepFileVersionLabel(
+			fileEntryId, serviceContext);
+	}
+
+	@Override
 	public DLFileEntry moveFileEntry(
 			long fileEntryId, long newFolderId, ServiceContext serviceContext)
 		throws PortalException {
@@ -680,6 +688,24 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			getUserId(), fileEntryId, sourceFileName, mimeType, title,
 			description, changeLog, majorVersion, fileEntryTypeId,
 			ddmFormValuesMap, file, is, size, serviceContext);
+	}
+
+	@Override
+	public DLFileEntry updateStatus(
+			long userId, long fileVersionId, int status,
+			ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		DLFileVersion dlFileVersion = dlFileVersionLocalService.getFileVersion(
+			fileVersionId);
+
+		DLFileEntryPermission.check(
+			getPermissionChecker(), dlFileVersion.getFileEntryId(),
+			ActionKeys.UPDATE);
+
+		return dlFileEntryLocalService.updateStatus(
+			userId, fileVersionId, status, serviceContext, workflowContext);
 	}
 
 	@Override

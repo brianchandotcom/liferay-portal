@@ -220,9 +220,9 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 	@Mock
 	private GroupLocalService _groupLocalService;
 
-	private BaseIndexer _indexer;
+	private BaseIndexer<Object> _indexer;
 
-	private static class TestIndexer extends BaseIndexer {
+	private static class TestIndexer extends BaseIndexer<Object> {
 
 		@Override
 		public String getClassName() {
@@ -230,11 +230,11 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 		}
 
 		@Override
-		protected void doDelete(Object obj) throws Exception {
+		protected void doDelete(Object object) throws Exception {
 		}
 
 		@Override
-		protected Document doGetDocument(Object obj) throws Exception {
+		protected Document doGetDocument(Object object) throws Exception {
 			return null;
 		}
 
@@ -248,7 +248,7 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 		}
 
 		@Override
-		protected void doReindex(Object obj) throws Exception {
+		protected void doReindex(Object object) throws Exception {
 		}
 
 		@Override

@@ -299,7 +299,7 @@ public abstract class MBBanServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.messageboards.service.MBBanLocalService.class)
 	protected com.liferay.portlet.messageboards.service.MBBanLocalService mbBanLocalService;
-	@BeanReference(type = MBBanService.class)
+	@BeanReference(type = com.liferay.portlet.messageboards.service.MBBanService.class)
 	protected MBBanService mbBanService;
 	@BeanReference(type = MBBanPersistence.class)
 	protected MBBanPersistence mbBanPersistence;

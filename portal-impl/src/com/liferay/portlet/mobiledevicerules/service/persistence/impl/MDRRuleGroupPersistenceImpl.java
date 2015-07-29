@@ -2777,8 +2777,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 		}
 	}
 
-	protected void cacheUniqueFindersCache(MDRRuleGroup mdrRuleGroup) {
-		if (mdrRuleGroup.isNew()) {
+	protected void cacheUniqueFindersCache(MDRRuleGroup mdrRuleGroup,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					mdrRuleGroup.getUuid(), mdrRuleGroup.getGroupId()
 				};
@@ -3057,7 +3058,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 			false);
 
 		clearUniqueFindersCache(mdrRuleGroup);
-		cacheUniqueFindersCache(mdrRuleGroup);
+		cacheUniqueFindersCache(mdrRuleGroup, isNew);
 
 		mdrRuleGroup.resetOriginalValues();
 
@@ -3444,6 +3445,11 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return MDRRuleGroupModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

@@ -17,7 +17,7 @@ package com.liferay.portlet.documentlibrary.display.context.util;
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 
@@ -35,9 +35,9 @@ public class DLRequestHelper extends BaseRequestHelper {
 	public DLGroupServiceSettings getDLGroupServiceSettings() {
 		try {
 			if (_dlGroupServiceSettings == null) {
-				String portletId = getPortletId();
+				String portletResource = getPortletResource();
 
-				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+				if (Validator.isNotNull(portletResource)) {
 					HttpServletRequest request = getRequest();
 
 					_dlGroupServiceSettings =
@@ -60,9 +60,9 @@ public class DLRequestHelper extends BaseRequestHelper {
 	public DLPortletInstanceSettings getDLPortletInstanceSettings() {
 		try {
 			if (_dlPortletInstanceSettings == null) {
-				String portletId = getPortletId();
+				String portletResource = getPortletResource();
 
-				if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+				if (Validator.isNotNull(portletResource)) {
 					HttpServletRequest request = getRequest();
 
 					_dlPortletInstanceSettings =

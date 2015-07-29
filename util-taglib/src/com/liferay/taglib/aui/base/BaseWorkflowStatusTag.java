@@ -69,6 +69,10 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 		return _version;
 	}
 
+	public java.lang.String getView() {
+		return _view;
+	}
+
 	public void setBean(java.lang.Object bean) {
 		_bean = bean;
 
@@ -123,6 +127,12 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 		setScopedAttribute("version", version);
 	}
 
+	public void setView(java.lang.String view) {
+		_view = view;
+
+		setScopedAttribute("view", view);
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -136,6 +146,7 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 		_status = null;
 		_statusMessage = null;
 		_version = null;
+		_view = null;
 	}
 
 	@Override
@@ -154,6 +165,7 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 		setNamespacedAttribute(request, "status", _status);
 		setNamespacedAttribute(request, "statusMessage", _statusMessage);
 		setNamespacedAttribute(request, "version", _version);
+		setNamespacedAttribute(request, "view", _view);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:workflow-status:";
@@ -170,5 +182,6 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 	private java.lang.Integer _status = null;
 	private java.lang.String _statusMessage = null;
 	private java.lang.String _version = null;
+	private java.lang.String _view = null;
 
 }

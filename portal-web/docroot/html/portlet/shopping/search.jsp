@@ -32,7 +32,7 @@ if (searchCategoryId > 0) {
 else {
 	List categoryIds = new ArrayList();
 
-	categoryIds.add(new Long(searchCategoryIds));
+	categoryIds.add(Long.valueOf(searchCategoryIds));
 
 	ShoppingCategoryServiceUtil.getSubcategoryIds(categoryIds, scopeGroupId, searchCategoryIds);
 

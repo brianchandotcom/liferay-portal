@@ -20,6 +20,11 @@
 String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_asset_publisher_edit_query_rule") + StringPool.UNDERLINE;
 
 long[] categorizableGroupIds = (long[])request.getAttribute("configuration.jsp-categorizableGroupIds");
+
+if (categorizableGroupIds == null) {
+	categorizableGroupIds = StringUtil.split(ParamUtil.getString(request, "categorizableGroupIds"), 0l);
+}
+
 int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String)request.getAttribute("configuration.jsp-index")));
 int queryLogicIndex = GetterUtil.getInteger((String)request.getAttribute("configuration.jsp-queryLogicIndex"));
 
@@ -36,6 +41,8 @@ if (queryLogicIndex >= 0) {
 
 	if (Validator.equals(queryName, "assetTags")) {
 		queryValues = ParamUtil.getString(request, "queryTagNames" + queryLogicIndex, queryValues);
+
+		queryValues = AssetPublisherUtil.filterAssetTagNames(scopeGroupId, queryValues);
 	}
 	else {
 		queryValues = ParamUtil.getString(request, "queryCategoryIds" + queryLogicIndex, queryValues);

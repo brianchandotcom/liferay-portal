@@ -65,25 +65,22 @@
 		<dependency org="junit" name="junit" rev="4.11" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
 		<dependency org="net.sourceforge.pmd" name="pmd-core" rev="5.2.3" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
 		<dependency org="org.apache.ant" name="ant-testutil" rev="1.9.4" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
-		<override org="org.apache.ant" module="ant" matcher="exact" rev="1.9.4"/>
-		<override org="org.apache.ant" module="ant-testutil" matcher="exact" rev="1.9.4"/>
-		<override org="jaxen" module="jaxen" matcher="exact" rev="1.1.4"/>
-		<override org="jaxen" module="jaxen" matcher="exact" rev="1.1.4"/>
-		<override org="jaxen" module="jaxen" matcher="exact" rev="1.1.4"/>
-		<override org="jaxen" module="jaxen" matcher="exact" rev="1.1.4"/>
-		<override org="com.beust" module="jcommander" matcher="exact" rev="1.35"/>
-		<override org="org.ow2.asm" module="asm" matcher="exact" rev="5.0.3"/>
-		<override org="net.sourceforge.pmd" module="pmd-core" matcher="exact" rev="5.2.3"/>
-		<override org="net.sourceforge.pmd" module="pmd-test" matcher="exact" rev="5.2.3"/>
 		<override org="net.sourceforge.saxon" module="saxon" matcher="exact" rev="9.1.0.8"/>
+		<override org="com.beust" module="jcommander" matcher="exact" rev="1.35"/>
 		<override org="org.mozilla" module="rhino" matcher="exact" rev="1.7R4"/>
-		<override org="junit" module="junit" matcher="exact" rev="4.11"/>
 		<override org="xerces" module="xercesImpl" matcher="exact" rev="2.11.0"/>
-		<override org="net.java.dev.javacc" module="javacc" matcher="exact" rev="5.0"/>
-		<override org="commons-io" module="commons-io" matcher="exact" rev="2.4"/>
-		<override org="org.mockito" module="mockito-all" matcher="exact" rev="1.10.8"/>
-		<override org="org.apache.commons" module="commons-lang3" matcher="exact" rev="3.3.2"/>
+		<override org="org.apache.ant" module="ant-testutil" matcher="exact" rev="1.9.4"/>
 		<override org="org.slf4j" module="slf4j-api" matcher="exact" rev="1.7.7"/>
+		<override org="org.apache.commons" module="commons-lang3" matcher="exact" rev="3.3.2"/>
 		<override org="com.github.tomakehurst" module="wiremock" matcher="exact" rev="1.52"/>
+		<override org="junit" module="junit" matcher="exact" rev="4.11"/>
+		<override org="net.sourceforge.pmd" module="pmd-test" matcher="exact" rev="5.2.3"/>
+		<override org="org.ow2.asm" module="asm" matcher="exact" rev="5.0.3"/>
+		<override org="commons-io" module="commons-io" matcher="exact" rev="2.4"/>
+		<override org="jaxen" module="jaxen" matcher="exact" rev="1.1.4"/>
+		<override org="org.mockito" module="mockito-all" matcher="exact" rev="1.10.8"/>
+		<override org="net.sourceforge.pmd" module="pmd-core" matcher="exact" rev="5.2.3"/>
+		<override org="net.java.dev.javacc" module="javacc" matcher="exact" rev="5.0"/>
+		<override org="org.apache.ant" module="ant" matcher="exact" rev="1.9.4"/>
 	</dependencies>
 </ivy-module>

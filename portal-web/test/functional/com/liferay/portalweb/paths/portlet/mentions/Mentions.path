@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>MENTIONS_CHECKBOX</td>
-	<td>//input[contains(@id,'mentionsEnabledCheckbox')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MENTIONS_HEADER</td>
 	<td>//h3[contains(.,'Mentions')]</td>
 	<td></td>

@@ -494,23 +494,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_LIST_DOCUMENT_SIZE</td>
-	<td>//div[@data-title='${key_dmDocumentTitle}']//td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_LIST_DOCUMENT_DOWNLOAD</td>
-	<td>//div[@data-title='${key_dmDocumentTitle}']//td[5]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENTRY_LIST_DOCUMENT_ACTION</td>
 	<td>//div[@data-title='${key_dmDocumentTitle}']//span[contains(@class,'entry-action')]/div/a/</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_LIST_DOCUMENT_ACTION</td>
-	<td>//div[@data-title='apple']//span[contains(@class,'entry-action')]/div/a</td>
 	<td></td>
 </tr>
 <tr>

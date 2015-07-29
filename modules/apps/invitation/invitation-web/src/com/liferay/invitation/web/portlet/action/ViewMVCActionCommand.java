@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -39,10 +41,9 @@ import java.util.Set;
 
 import javax.mail.internet.InternetAddress;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -62,20 +63,20 @@ public class ViewMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		Set<String> invalidEmailAddresses = new HashSet<>();
 		Set<String> validEmailAddresses = new HashSet<>();
 
-		PortletPreferences portletPreferences = portletRequest.getPreferences();
+		PortletPreferences portletPreferences = actionRequest.getPreferences();
 
 		int emailMessageMaxRecipients =
 			InvitationUtil.getEmailMessageMaxRecipients(portletPreferences);
 
 		for (int i = 0; i < emailMessageMaxRecipients; i++) {
 			String emailAddress = ParamUtil.getString(
-				portletRequest, "emailAddress" + i);
+				actionRequest, "emailAddress" + i);
 
 			if (Validator.isEmailAddress(emailAddress)) {
 				validEmailAddresses.add(emailAddress);
@@ -91,12 +92,12 @@ public class ViewMVCActionCommand extends BaseMVCActionCommand {
 
 		if (!invalidEmailAddresses.isEmpty()) {
 			SessionErrors.add(
-				portletRequest, "emailAddresses", invalidEmailAddresses);
+				actionRequest, "emailAddresses", invalidEmailAddresses);
 
 			return;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		User user = themeDisplay.getUser();
@@ -108,7 +109,7 @@ public class ViewMVCActionCommand extends BaseMVCActionCommand {
 
 		Layout layout = themeDisplay.getLayout();
 
-		String portalURL = PortalUtil.getPortalURL(portletRequest);
+		String portalURL = PortalUtil.getPortalURL(actionRequest);
 
 		String layoutFullURL = PortalUtil.getLayoutFullURL(
 			layout, themeDisplay);
@@ -155,21 +156,24 @@ public class ViewMVCActionCommand extends BaseMVCActionCommand {
 			MailMessage message = new MailMessage(
 				from, to, subject, body, true);
 
+			Company company = themeDisplay.getCompany();
+
+			message.setMessageId(
+				PortalUtil.getMailId(
+					company.getMx(), InvitationUtil.MESSAGE_POP_PORTLET_PREFIX,
+					PortalUUIDUtil.generate()));
+
 			MailServiceUtil.sendEmail(message);
 		}
 
-		SessionMessages.add(portletRequest, "invitationSent");
+		SessionMessages.add(actionRequest, "invitationSent");
 
 		String redirect = PortalUtil.escapeRedirect(
-			ParamUtil.getString(portletRequest, "redirect"));
+			ParamUtil.getString(actionRequest, "redirect"));
 
 		if (Validator.isNotNull(redirect)) {
-			ActionResponse actionResponse = (ActionResponse)portletResponse;
-
 			actionResponse.setRenderParameter("mvcPath", redirect);
 		}
-
-		ActionResponse actionResponse = (ActionResponse)portletResponse;
 
 		actionResponse.setRenderParameter("mvcPath", "/view.jsp");
 	}

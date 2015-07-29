@@ -1,6 +1,6 @@
 <definition component-name="portal-collaboration">
 	<property name="ignore.errors" value="Error1|Error 2" delimiter="|" />
-	<property name="testray.main.component.name" value="Collaboration" />
+	<property name="testray.main.component.name" value="Blogs" />
 
 	<var name="name" value="value" />
 	<var name="name" value="" />

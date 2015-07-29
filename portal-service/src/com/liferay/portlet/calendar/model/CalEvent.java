@@ -25,8 +25,10 @@ import com.liferay.portal.model.PersistedModel;
  * @see CalEventModel
  * @see com.liferay.portlet.calendar.model.impl.CalEventImpl
  * @see com.liferay.portlet.calendar.model.impl.CalEventModelImpl
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface CalEvent extends CalEventModel, PersistedModel {
 	/*

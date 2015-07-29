@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.registry;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.registry.annotations.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.registry.annotations.DDMFormField;
@@ -28,31 +29,38 @@ public interface DefaultDDMFormFieldTypeSettings
 	@DDMFormField(visibilityExpression = "false")
 	public String fieldNamespace();
 
-	@DDMFormField
+	@DDMFormField(
+		label = "%indexable",
+		optionLabels = {
+			"%not-indexable", "%indexable-keyword", "%indexable-text"
+		},
+		optionValues = {StringPool.BLANK, "keyword", "text"},
+		type = "select"
+	)
 	public String indexType();
 
-	@DDMFormField(type = "text")
+	@DDMFormField(label = "%label", type = "text")
 	public LocalizedValue label();
 
-	@DDMFormField
+	@DDMFormField(label = "%localizable")
 	public boolean localizable();
 
-	@DDMFormField(type = "text")
+	@DDMFormField(label = "%predefined-value", type = "text")
 	public LocalizedValue predefinedValue();
 
-	@DDMFormField
+	@DDMFormField(label = "%read-only")
 	public boolean readOnly();
 
-	@DDMFormField
+	@DDMFormField(label = "%repeatable")
 	public boolean repeatable();
 
-	@DDMFormField
+	@DDMFormField(label = "%required")
 	public boolean required();
 
-	@DDMFormField
+	@DDMFormField(label = "%show-label")
 	public boolean showLabel();
 
-	@DDMFormField(type = "text")
+	@DDMFormField(label = "%tip", type = "text")
 	public LocalizedValue tip();
 
 	@DDMFormField(visibilityExpression = "false")

@@ -104,6 +104,45 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 			{ "largeImageId", Types.BIGINT },
 			{ "largeImageURL", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("itemId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("categoryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("sku", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("properties", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("fields_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("fieldsQuantities", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("minQuantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("maxQuantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("price", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("discount", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("taxable", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("shipping", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("useShippingFormula", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("requiresShipping", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("stockQuantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("featured_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("sale_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("smallImage", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("smallImageId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("smallImageURL", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("mediumImage", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("mediumImageId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("mediumImageURL", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("largeImage", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("largeImageId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("largeImageURL", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table ShoppingItem (itemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,sku VARCHAR(75) null,name VARCHAR(200) null,description STRING null,properties STRING null,fields_ BOOLEAN,fieldsQuantities STRING null,minQuantity INTEGER,maxQuantity INTEGER,price DOUBLE,discount DOUBLE,taxable BOOLEAN,shipping DOUBLE,useShippingFormula BOOLEAN,requiresShipping BOOLEAN,stockQuantity INTEGER,featured_ BOOLEAN,sale_ BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,mediumImage BOOLEAN,mediumImageId LONG,mediumImageURL STRING null,largeImage BOOLEAN,largeImageId LONG,largeImageURL STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table ShoppingItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY shoppingItem.itemId ASC";

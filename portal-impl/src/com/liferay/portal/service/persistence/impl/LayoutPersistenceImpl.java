@@ -7901,8 +7901,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Layout layout) {
-		if (layout.isNew()) {
+	protected void cacheUniqueFindersCache(Layout layout, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					layout.getUuid(), layout.getGroupId(),
 					layout.getPrivateLayout()
@@ -8461,7 +8461,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			LayoutImpl.class, layout.getPrimaryKey(), layout, false);
 
 		clearUniqueFindersCache(layout);
-		cacheUniqueFindersCache(layout);
+		cacheUniqueFindersCache(layout, isNew);
 
 		layout.resetOriginalValues();
 
@@ -8867,6 +8867,11 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return LayoutModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

@@ -16,16 +16,21 @@ package com.liferay.gradle.util;
 
 import groovy.lang.Closure;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
+import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,10 +44,100 @@ import org.gradle.api.Project;
  */
 public class FileUtil {
 
+	public static void concatenate(
+			File destinationFile, Iterable<File> sourceFiles)
+		throws IOException {
+
+		try (FileOutputStream fileOutputStream = new FileOutputStream(
+				destinationFile);
+			FileChannel destinationChannel = fileOutputStream.getChannel()) {
+
+			for (File sourceFile : sourceFiles) {
+				try (FileInputStream fileInputStream = new FileInputStream(
+						sourceFile);
+					FileChannel sourceChannel = fileInputStream.getChannel()) {
+
+					sourceChannel.transferTo(
+						0, sourceChannel.size(), destinationChannel);
+				}
+			}
+		}
+	}
+
 	public static boolean exists(Project project, String fileName) {
 		File file = project.file(fileName);
 
 		return file.exists();
+	}
+
+	public static File get(Project project, String url) throws IOException {
+		return get(project, url, null);
+	}
+
+	public static File get(Project project, String url, File destinationFile)
+		throws IOException {
+
+		return get(project, url, destinationFile, false, true, false);
+	}
+
+	public static File get(
+			Project project, String url, File destinationFile,
+			boolean ignoreErrors, boolean tryLocalNetwork, boolean verbose)
+		throws IOException {
+
+		String mirrorsCacheArtifactSubdir = url.replaceFirst(
+			"https?:\\/\\/(.+\\/).+", "$1");
+
+		File mirrorsCacheArtifactDir = new File(
+			_getMirrorsCacheDir(), mirrorsCacheArtifactSubdir);
+
+		String fileName = url.replaceFirst(".+\\/(.+)", "$1");
+
+		File mirrorsCacheArtifactFile = new File(
+			mirrorsCacheArtifactDir, fileName);
+
+		if (!mirrorsCacheArtifactFile.exists()) {
+			mirrorsCacheArtifactDir.mkdirs();
+
+			String mirrorsUrl = url.replaceFirst(
+				"http:\\/\\/", "http://mirrors/");
+
+			if (tryLocalNetwork) {
+				try {
+					_get(
+						project, mirrorsUrl, mirrorsCacheArtifactFile,
+						ignoreErrors, verbose);
+				}
+				catch (Exception e) {
+					_get(
+						project, url, mirrorsCacheArtifactFile, ignoreErrors,
+						verbose);
+				}
+			}
+			else {
+				_get(
+					project, url, mirrorsCacheArtifactFile, ignoreErrors,
+					verbose);
+			}
+		}
+
+		if (destinationFile == null) {
+			return mirrorsCacheArtifactFile;
+		}
+
+		Path destinationPath = destinationFile.toPath();
+
+		if (destinationFile.isDirectory()) {
+			destinationPath = destinationPath.resolve(fileName);
+		}
+
+		Files.createDirectories(destinationPath.getParent());
+
+		Files.copy(
+			mirrorsCacheArtifactFile.toPath(), destinationPath,
+			StandardCopyOption.REPLACE_EXISTING);
+
+		return destinationPath.toFile();
 	}
 
 	public static String getAbsolutePath(File file) {
@@ -67,6 +162,30 @@ public class FileUtil {
 		return false;
 	}
 
+	public static boolean isUpToDate(
+		Project project, Object source, Object target) {
+
+		File sourceFile = project.file(source);
+		File targetFile = project.file(target);
+
+		if (!sourceFile.exists() || !targetFile.exists()) {
+			return false;
+		}
+
+		AntBuilder antBuilder = project.getAnt();
+
+		_invokeAntMethodUpToDate(
+			antBuilder, "uptodate", sourceFile, targetFile);
+
+		Map<String, Object> antProperties = antBuilder.getProperties();
+
+		if (antProperties.containsKey("uptodate")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static void jar(
 		Project project, final File destinationFile, final String duplicate,
 		final boolean update, final String[][] filesets) {
@@ -84,7 +203,27 @@ public class FileUtil {
 		project.ant(closure);
 	}
 
-	public static Properties readProperties(File file) throws Exception {
+	public static String read(String resourceName) throws IOException {
+		StringBuilder sb = new StringBuilder();
+
+		ClassLoader classLoader = FileUtil.class.getClassLoader();
+
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(
+					classLoader.getResourceAsStream(resourceName)))) {
+
+			String line = null;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				sb.append(line);
+				sb.append('\n');
+			}
+		}
+
+		return sb.toString();
+	}
+
+	public static Properties readProperties(File file) throws IOException {
 		Properties properties = new Properties();
 
 		if (file.exists()) {
@@ -97,7 +236,7 @@ public class FileUtil {
 	}
 
 	public static Properties readProperties(Project project, String fileName)
-		throws Exception {
+		throws IOException {
 
 		File file = project.file(fileName);
 
@@ -139,25 +278,7 @@ public class FileUtil {
 		return fileName;
 	}
 
-	public static void unzip(
-		Project project, final File sourceFile, final File destinationFile,
-		final int cutDirs, final String[] excludes, final String[] includes) {
-
-		Closure<Void> closure = new Closure<Void>(null) {
-
-			@SuppressWarnings("unused")
-			public void doCall(AntBuilder antBuilder) {
-				_invokeAntMethodUnzip(
-					antBuilder, sourceFile, destinationFile, cutDirs, excludes,
-					includes);
-			}
-
-		};
-
-		project.ant(closure);
-	}
-
-	public static void write(File file, List<String> lines) throws Exception {
+	public static void write(File file, List<String> lines) throws IOException {
 		try (PrintWriter printWriter = new PrintWriter(
 				new OutputStreamWriter(
 					new FileOutputStream(file), StandardCharsets.UTF_8))) {
@@ -175,14 +296,33 @@ public class FileUtil {
 		}
 	}
 
-	private static void _invokeAntMethod(
-		AntBuilder antBuilder, String method, String paramName,
-		Object paramValue) {
+	private static void _get(
+		Project project, final String url, final File destinationFile,
+		final boolean ignoreErrors, final boolean verbose) {
 
-		Map<String, Object> args = Collections.singletonMap(
-			paramName, paramValue);
+		Closure<Void> closure = new Closure<Void>(null) {
 
-		antBuilder.invokeMethod(method, args);
+			@SuppressWarnings("unused")
+			public void doCall(AntBuilder antBuilder) {
+				Map<String, Object> args = new HashMap<>();
+
+				args.put("dest", destinationFile);
+				args.put("ignoreerrors", ignoreErrors);
+				args.put("src", url);
+				args.put("verbose", verbose);
+
+				antBuilder.invokeMethod("get", args);
+			}
+
+		};
+
+		project.ant(closure);
+	}
+
+	private static File _getMirrorsCacheDir() {
+		String userHome = System.getProperty("user.home");
+
+		return new File(userHome, ".liferay/mirrors");
 	}
 
 	private static void _invokeAntMethodFileset(
@@ -220,58 +360,17 @@ public class FileUtil {
 		antBuilder.invokeMethod("jar", new Object[] {args, closure});
 	}
 
-	private static void _invokeAntMethodPatternset(
-		final AntBuilder antBuilder, final String[] excludes,
-		final String[] includes) {
-
-		Closure<Void> closure = new Closure<Void>(null) {
-
-			@SuppressWarnings("unused")
-			public void doCall() {
-				if (ArrayUtil.isNotEmpty(excludes)) {
-					for (String exclude : excludes) {
-						_invokeAntMethod(
-							antBuilder, "exclude", "name", exclude);
-					}
-				}
-
-				if (ArrayUtil.isNotEmpty(includes)) {
-					for (String include : includes) {
-						_invokeAntMethod(
-							antBuilder, "include", "name", include);
-					}
-				}
-			}
-
-		};
-
-		antBuilder.invokeMethod("patternset", closure);
-	}
-
-	private static void _invokeAntMethodUnzip(
-		final AntBuilder antBuilder, File sourceFile, File destinationFile,
-		final int cutDirs, final String[] excludes, final String[] includes) {
+	private static void _invokeAntMethodUpToDate(
+		AntBuilder antBuilder, String property, File sourceFile,
+		File targetFile) {
 
 		Map<String, Object> args = new HashMap<>();
 
-		args.put("dest", destinationFile);
-		args.put("src", sourceFile);
+		args.put("property", property);
+		args.put("srcfile", sourceFile);
+		args.put("targetfile", targetFile);
 
-		Closure<Void> closure = new Closure<Void>(null) {
-
-			@SuppressWarnings("unused")
-			public void doCall() {
-				if (cutDirs > 0) {
-					_invokeAntMethod(
-						antBuilder, "cutdirsmapper", "dirs", cutDirs);
-				}
-
-				_invokeAntMethodPatternset(antBuilder, excludes, includes);
-			}
-
-		};
-
-		antBuilder.invokeMethod("unzip", new Object[] {args, closure});
+		antBuilder.invokeMethod("uptodate", args);
 	}
 
 }

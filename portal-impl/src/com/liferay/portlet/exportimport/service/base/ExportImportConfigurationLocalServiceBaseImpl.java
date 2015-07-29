@@ -735,7 +735,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	protected com.liferay.portlet.exportimport.service.ExportImportLocalService exportImportLocalService;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportService.class)
 	protected com.liferay.portlet.exportimport.service.ExportImportService exportImportService;
-	@BeanReference(type = ExportImportConfigurationLocalService.class)
+	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService.class)
 	protected ExportImportConfigurationLocalService exportImportConfigurationLocalService;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportConfigurationService.class)
 	protected com.liferay.portlet.exportimport.service.ExportImportConfigurationService exportImportConfigurationService;

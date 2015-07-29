@@ -34,7 +34,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="struts_action" value="/document_library_display/search" />
+	<portlet:param name="mvcPath" value="/html/portlet/document_library_display/search.jsp" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= searchURL %>" method="get" name="fm">
@@ -68,7 +68,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 			PortletURL searchExternalRepositoryURL = renderResponse.createRenderURL();
 
-			searchExternalRepositoryURL.setParameter("struts_action", "/document_library_display/search");
+			searchExternalRepositoryURL.setParameter("mvcPath", "/html/portlet/document_library_display/search.jsp");
 			searchExternalRepositoryURL.setParameter("redirect", redirect);
 			searchExternalRepositoryURL.setParameter("repositoryId", String.valueOf(mountFolder.getRepositoryId()));
 			searchExternalRepositoryURL.setParameter("folderId", String.valueOf(mountFolder.getFolderId()));
@@ -96,7 +96,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/document_library_display/search");
+	portletURL.setParameter("mvcPath", "/html/portlet/document_library_display/search.jsp");
 	portletURL.setParameter("redirect", redirect);
 	portletURL.setParameter("repositoryId", String.valueOf(repositoryId));
 	portletURL.setParameter("folderId", String.valueOf(folderId));
@@ -160,7 +160,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					%>
 
 					<portlet:renderURL var="rowURL">
-						<portlet:param name="struts_action" value="/document_library_display/view_file_entry" />
+						<portlet:param name="mvcRenderCommandName" value="/document_library/view_file_entry" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 					</portlet:renderURL>
@@ -192,7 +192,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					%>
 
 					<portlet:renderURL var="rowURL">
-						<portlet:param name="struts_action" value="/document_library/view" />
+						<portlet:param name="mvcRenderCommandName" value="/document_library_display/view" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
 					</portlet:renderURL>

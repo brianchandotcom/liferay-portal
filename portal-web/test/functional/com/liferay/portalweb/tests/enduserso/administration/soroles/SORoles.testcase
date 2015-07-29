@@ -29,7 +29,7 @@
 		<!--<execute macro="PortalSettings#tearDownCP" />-->
 	</tear-down>
 
-	<command name="AssignSORole" priority="5">
+	<command name="AssignSORole" priority="4">
 		<var name="roleName" value="Social Office User" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -996,7 +996,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignSORoleSiteAndOrganizationAndUnassignSORoleSite" priority="5">
+	<command name="AssignSORoleSiteAndOrganizationAndUnassignSORoleSite" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="roleName" value="Social Office User" />
@@ -1125,7 +1125,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignSORoleSiteAndOrganizationAndUnassignSOUserSite" priority="5">
+	<command name="AssignSORoleSiteAndOrganizationAndUnassignSOUserSite" priority="4">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="roleName" value="Social Office User" />
@@ -1259,7 +1259,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignSORoleSiteAndUserGroupAndUnassignSORoleSite" priority="5">
+	<command name="AssignSORoleSiteAndUserGroupAndUnassignSORoleSite" priority="4">
 		<var name="roleName" value="Social Office User" />
 		<var name="siteName" value="Site Name" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -1386,7 +1386,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignSORoleSiteAndUserGroupAndUnassignSOUserSite" priority="5">
+	<command name="AssignSORoleSiteAndUserGroupAndUnassignSOUserSite" priority="4">
 		<var name="roleName" value="Social Office User" />
 		<var name="siteName" value="Site Name" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -2424,7 +2424,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignSORoleUserInformation" priority="5">
+	<command name="AssignSORoleUserInformation" priority="4">
 		<var name="roleName" value="Social Office User" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -2497,7 +2497,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDefaultUserAssociationsSORole" priority="5">
+	<command name="EditDefaultUserAssociationsSORole" priority="4">
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />

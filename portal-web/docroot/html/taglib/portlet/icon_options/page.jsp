@@ -18,12 +18,13 @@
 
 <liferay-ui:icon-menu
 	cssClass="portlet-options"
-	direction="down"
+	direction="<%= direction %>"
 	extended="<%= false %>"
 	icon="../aui/cog"
 	message="options"
-	showArrow="<%= true %>"
+	showArrow="<%= showArrow %>"
 	showWhenSingleIcon="<%= true %>"
+	view="<%= view %>"
 >
 
 	<%

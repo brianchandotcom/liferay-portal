@@ -2835,8 +2835,9 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Subscription subscription) {
-		if (subscription.isNew()) {
+	protected void cacheUniqueFindersCache(Subscription subscription,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					subscription.getCompanyId(), subscription.getUserId(),
 					subscription.getClassNameId(), subscription.getClassPK()
@@ -3162,7 +3163,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			false);
 
 		clearUniqueFindersCache(subscription);
-		cacheUniqueFindersCache(subscription);
+		cacheUniqueFindersCache(subscription, isNew);
 
 		subscription.resetOriginalValues();
 
@@ -3545,6 +3546,11 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return SubscriptionModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

@@ -2,11 +2,25 @@
 	<command name="viewAdminDashboard">
 		<description message="The Solr Admin Dashboard is accessible only if the Solr server is successfully running." />
 
-		<execute function="Open" locator1="http://localhost:8983/solr" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8983/solr" />
+		</execute>
 
 		<execute function="AssertElementPresent#assertVisible" locator1="SolrAdminDashboard#LOGO" />
 		<execute function="AssertTextEquals" locator1="SolrAdminDashboard#VERSIONS_SOLR_SPEC" value1="${solrVersion}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#VERSIONS_SOLR_IMPL" value1="${solrVersion}" />
+	</command>
+
+	<command name="viewLiferayCoreAdminDashboard">
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8983/solr/#/~cores/liferay" />
+		</execute>
+
+		<var name="key_coreName" value="${coreName}" />
+
+		<execute function="AssertTextEquals" locator1="SolrAdminDashboard#CORE_ADMIN_CORE_NAVIGATION" value1="liferay" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#CORE_ADMIN_CONTENT_INSTANCE_DIR" value1="\solr-${solrVersion}\server\solr\liferay\" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#CORE_ADMIN_CONTENT_DATA_DIR" value1="\solr-${solrVersion}\server\solr\liferay\data\" />
 	</command>
 
 	<command name="viewSolrLogsInConsole">

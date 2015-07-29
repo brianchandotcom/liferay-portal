@@ -65,6 +65,16 @@ public class PortalPreferencesModelImpl extends BaseModelImpl<PortalPreferences>
 			{ "ownerType", Types.INTEGER },
 			{ "preferences", Types.CLOB }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("portalPreferencesId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ownerId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ownerType", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("preferences", Types.CLOB);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table PortalPreferences (mvccVersion LONG default 0,portalPreferencesId LONG not null primary key,ownerId LONG,ownerType INTEGER,preferences TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table PortalPreferences";
 	public static final String ORDER_BY_JPQL = " ORDER BY portalPreferences.portalPreferencesId ASC";

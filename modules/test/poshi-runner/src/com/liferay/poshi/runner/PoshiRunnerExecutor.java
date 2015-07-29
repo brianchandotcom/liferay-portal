@@ -296,7 +296,9 @@ public class PoshiRunnerExecutor {
 			}
 
 			if (locator != null) {
-				if (locator.contains("#")) {
+				Matcher matcher = _locatorKeyPattern.matcher(locator);
+
+				if (matcher.find()) {
 					String pathClassName =
 						PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 							locator);
@@ -568,7 +570,7 @@ public class PoshiRunnerExecutor {
 						"locator2");
 				}
 			}
-			else if (argument.matches("\\$\\{([^}]*)\\}")) {
+			else {
 				argument = PoshiRunnerVariablesUtil.replaceCommandVars(
 					argument);
 			}
@@ -602,6 +604,11 @@ public class PoshiRunnerExecutor {
 
 	public static void runTaskElement(Element element) throws Exception {
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
+
+		String summary = PoshiRunnerVariablesUtil.replaceCommandVars(
+			element.attributeValue("summary"));
+
+		element.addAttribute("summary", summary);
 
 		XMLLoggerHandler.updateStatus(element, "pending");
 
@@ -688,18 +695,14 @@ public class PoshiRunnerExecutor {
 		String varValue = element.attributeValue("value");
 
 		if (varValue == null) {
-			if (element.attributeValue("method") != null) {
-				String classCommandName =
-					PoshiRunnerVariablesUtil.replaceCommandVars(
-						element.attributeValue("method"));
+			if (element.attributeValue("attribute") != null) {
+				LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
 
-				if (classCommandName.startsWith("TestPropsUtil")) {
-					classCommandName = classCommandName.replace(
-						"TestPropsUtil", "PropsUtil");
-				}
+				String attribute = element.attributeValue("attribute");
+				String locator = element.attributeValue("locator");
 
-				varValue = PoshiRunnerGetterUtil.getVarMethodValue(
-					classCommandName);
+				varValue = liferaySelenium.getAttribute(
+					locator + "@" + attribute);
 			}
 			else if ((element.attributeValue("group") != null) &&
 					 (element.attributeValue("input") != null) &&
@@ -717,6 +720,37 @@ public class PoshiRunnerExecutor {
 
 				varValue = PoshiRunnerGetterUtil.getVarMethodValue(
 					sb.toString());
+			}
+			else if (element.attributeValue("locator") != null) {
+				String locator = element.attributeValue("locator");
+
+				if (locator.contains("#")) {
+					locator = PoshiRunnerContext.getPathLocator(locator);
+				}
+
+				LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
+
+				locator = PoshiRunnerVariablesUtil.replaceCommandVars(locator);
+
+				if (locator.contains("/input")) {
+					varValue = liferaySelenium.getValue(locator);
+				}
+				else {
+					varValue = liferaySelenium.getText(locator);
+				}
+			}
+			else if (element.attributeValue("method") != null) {
+				String classCommandName =
+					PoshiRunnerVariablesUtil.replaceCommandVars(
+						element.attributeValue("method"));
+
+				if (classCommandName.startsWith("TestPropsUtil")) {
+					classCommandName = classCommandName.replace(
+						"TestPropsUtil", "PropsUtil");
+				}
+
+				varValue = PoshiRunnerGetterUtil.getVarMethodValue(
+					classCommandName);
 			}
 			else {
 				varValue = element.getText();
@@ -819,6 +853,8 @@ public class PoshiRunnerExecutor {
 		}
 	}
 
+	private static final Pattern _locatorKeyPattern = Pattern.compile(
+		"\\S#\\S");
 	private static Object _returnObject;
 	private static final Pattern _variableMethodPattern = Pattern.compile(
 		"\\$\\{([\\S]*)\\?([\\S]*)\\}");

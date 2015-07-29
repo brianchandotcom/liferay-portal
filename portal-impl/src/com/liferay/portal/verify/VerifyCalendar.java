@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.calendar.model.CalEvent;
-import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -74,17 +72,20 @@ public class VerifyCalendar extends VerifyProcess {
 					"'null')");
 	}
 
+	@SuppressWarnings("deprecation")
 	protected void verifyNoAssets() throws Exception {
-		List<CalEvent> events = CalEventLocalServiceUtil.getNoAssetEvents();
+		List<com.liferay.portlet.calendar.model.CalEvent> events =
+			com.liferay.portlet.calendar.service.CalEventLocalServiceUtil.
+				getNoAssetEvents();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Processing " + events.size() + " events with no asset");
 		}
 
-		for (CalEvent event : events) {
+		for (com.liferay.portlet.calendar.model.CalEvent event : events) {
 			try {
-				CalEventLocalServiceUtil.updateAsset(
-					event.getUserId(), event, null, null, null);
+				com.liferay.portlet.calendar.service.CalEventLocalServiceUtil.
+					updateAsset(event.getUserId(), event, null, null, null);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

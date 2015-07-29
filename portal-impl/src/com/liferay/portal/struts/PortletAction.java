@@ -167,16 +167,16 @@ public class PortletAction extends Action {
 			ResourceResponse resourceResponse)
 		throws Exception {
 
-		String resourceId = resourceRequest.getResourceID();
+		String resourceID = resourceRequest.getResourceID();
 
-		if (Validator.isNull(resourceId)) {
+		if (Validator.isNull(resourceID)) {
 			return;
 		}
 
 		PortletContext portletContext = portletConfig.getPortletContext();
 
 		PortletRequestDispatcher portletRequestDispatcher =
-			portletContext.getRequestDispatcher(resourceId);
+			portletContext.getRequestDispatcher(resourceID);
 
 		if (portletRequestDispatcher == null) {
 			return;

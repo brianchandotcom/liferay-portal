@@ -198,7 +198,7 @@ public abstract class LayoutTemplateLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = LayoutTemplateLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.LayoutTemplateLocalService.class)
 	protected LayoutTemplateLocalService layoutTemplateLocalService;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;

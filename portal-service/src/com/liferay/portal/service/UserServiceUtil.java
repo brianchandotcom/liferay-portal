@@ -1133,10 +1133,9 @@ public class UserServiceUtil {
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be
 	found, if the current user was updating her own status to
-	anything but {@link
-	com.liferay.portal.kernel.workflow.WorkflowConstants#STATUS_APPROVED},
-	or if the current user did not have permission to update the
-	user's workflow status.
+	anything but {@link WorkflowConstants#STATUS_APPROVED}, or if
+	the current user did not have permission to update the user's
+	workflow status.
 	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, int,
 	ServiceContext)}
 	*/
@@ -1157,10 +1156,9 @@ public class UserServiceUtil {
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be
 	found, if the current user was updating her own status to
-	anything but {@link
-	com.liferay.portal.kernel.workflow.WorkflowConstants#STATUS_APPROVED},
-	or if the current user did not have permission to update the
-	user's workflow status.
+	anything but {@link WorkflowConstants#STATUS_APPROVED}, or if the
+	current user did not have permission to update the user's
+	workflow status.
 	*/
 	public static com.liferay.portal.model.User updateStatus(long userId,
 		int status, com.liferay.portal.service.ServiceContext serviceContext)
@@ -1234,10 +1232,8 @@ public class UserServiceUtil {
 	long, String, boolean, byte[], String, String, String,
 	String, String, String, String, int, int, boolean, int, int,
 	int, String, String, String, String, String, String, String,
-	String, String, String, String, long[], long[], long[],
-	java.util.List, long[], java.util.List, java.util.List,
-	java.util.List, java.util.List, java.util.List,
-	com.liferay.portal.service.ServiceContext)}
+	String, String, String, String, long[], long[], long[], List,
+	long[], List, List, List, List, List, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.model.User updateUser(long userId,

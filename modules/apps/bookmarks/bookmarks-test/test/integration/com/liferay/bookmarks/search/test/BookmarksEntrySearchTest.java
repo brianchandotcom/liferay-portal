@@ -144,7 +144,8 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 			folderId = folder.getFolderId();
 		}
 
-		return BookmarksTestUtil.addEntry(folderId, true, serviceContext);
+		return BookmarksTestUtil.addEntry(
+			keywords, folderId, true, serviceContext);
 	}
 
 	@Override

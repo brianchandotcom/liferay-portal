@@ -49,7 +49,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_organization_assi
 	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
 	if (tabs3.equals("current")) {
-		userGroupParams.put("userGroupsGroups", new Long(group.getGroupId()));
+		userGroupParams.put("userGroupsGroups", Long.valueOf(group.getGroupId()));
 	}
 
 	total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);

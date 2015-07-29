@@ -352,6 +352,10 @@ public class SearchContainer<R> {
 		return _totalVar;
 	}
 
+	public boolean hasResults() {
+		return !_results.isEmpty();
+	}
+
 	public boolean isDeltaConfigurable() {
 		return _deltaConfigurable;
 	}

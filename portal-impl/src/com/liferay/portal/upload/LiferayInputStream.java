@@ -20,12 +20,18 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletInputStreamAdapter;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.servlet.filters.uploadservletrequest.UploadServletRequestFilter;
 import com.liferay.portal.util.PropsUtil;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -54,16 +60,61 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 		}
 
 		_totalSize = totalSize;
-	}
 
-	public ServletInputStream getCachedInputStream() {
-		if (_totalSize < THRESHOLD_SIZE) {
-			return this;
+		boolean createTempFile = GetterUtil.getBoolean(
+			request.getAttribute(
+				UploadServletRequestFilter.COPY_MULTIPART_STREAM_TO_FILE),
+				Boolean.TRUE);
+
+		if ((_totalSize >= THRESHOLD_SIZE) && createTempFile) {
+			_tempFile = FileUtil.createTempFile();
 		}
 		else {
+			_tempFile = null;
+
+			request.removeAttribute(
+				UploadServletRequestFilter.COPY_MULTIPART_STREAM_TO_FILE);
+		}
+	}
+
+	public void cleanUp() {
+		if (_tempFile != null) {
+			if (_tempFileOutputStream != null) {
+				try {
+					_tempFileOutputStream.close();
+				}
+				catch (IOException ioe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(ioe, ioe);
+					}
+				}
+			}
+
+			_tempFile.delete();
+		}
+	}
+
+	@Override
+	public void close() throws IOException {
+		super.close();
+
+		if (_tempFileOutputStream != null) {
+			_tempFileOutputStream.close();
+		}
+	}
+
+	public ServletInputStream getCachedInputStream() throws IOException {
+		if (_totalSize < THRESHOLD_SIZE) {
 			return new ServletInputStreamAdapter(
 				new UnsyncByteArrayInputStream(
 					_cachedBytes.unsafeGetByteArray(), 0, _cachedBytes.size()));
+		}
+		else if (_tempFile != null) {
+			return new ServletInputStreamAdapter(
+				new FileInputStream(_tempFile));
+		}
+		else {
+			return this;
 		}
 	}
 
@@ -84,12 +135,17 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 			_log.debug(bytesRead + "/" + _totalRead + "=" + percent);
 		}
 
-		if ((_totalSize > 0) && (_totalSize < THRESHOLD_SIZE)) {
-			_cachedBytes.write(b, off, bytesRead);
+		if (_totalSize > 0) {
+			if (_totalSize < THRESHOLD_SIZE) {
+				_cachedBytes.write(b, off, bytesRead);
+			}
+			else {
+				_writeToTempFile(b, off, bytesRead);
+			}
 		}
 
 		ProgressTracker progressTracker =
-			(ProgressTracker)_session.getAttribute(LiferayFileUpload.PERCENT);
+			(ProgressTracker)_session.getAttribute(ProgressTracker.PERCENT);
 
 		Integer curPercent = null;
 
@@ -110,12 +166,26 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 		return bytesRead;
 	}
 
+	private void _writeToTempFile(byte[] b, int off, int bytesRead)
+		throws IOException {
+
+		if ((_tempFile != null) && (bytesRead > 0)) {
+			if (_tempFileOutputStream == null) {
+				_tempFileOutputStream = new FileOutputStream(_tempFile, true);
+			}
+
+			_tempFileOutputStream.write(b, off, bytesRead);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayInputStream.class);
 
 	private final UnsyncByteArrayOutputStream _cachedBytes =
 		new UnsyncByteArrayOutputStream();
 	private final HttpSession _session;
+	private final File _tempFile;
+	private OutputStream _tempFileOutputStream;
 	private long _totalRead;
 	private final long _totalSize;
 

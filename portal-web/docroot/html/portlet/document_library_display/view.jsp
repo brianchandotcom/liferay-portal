@@ -69,7 +69,7 @@ boolean useAssetEntryQuery = (assetCategoryId > 0) || Validator.isNotNull(assetT
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/document_library_display/view");
+portletURL.setParameter("mvcRenderCommandName", "/document_library_display/view");
 portletURL.setParameter("topLink", topLink);
 portletURL.setParameter("folderId", String.valueOf(folderId));
 
@@ -86,8 +86,7 @@ request.setAttribute("view.jsp-viewFolder", Boolean.TRUE.toString());
 request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntryQuery));
 %>
 
-<portlet:actionURL var="restoreTrashEntriesURL">
-	<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+<portlet:actionURL name="/document_library/edit_file_entry" var="restoreTrashEntriesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
@@ -179,7 +178,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 									rowVar="row"
 								>
 									<liferay-portlet:renderURL varImpl="rowURL">
-										<portlet:param name="struts_action" value="/document_library_display/view" />
+										<portlet:param name="mvcRenderCommandName" value="/document_library_display/view" />
 										<portlet:param name="redirect" value="<%= currentURL %>" />
 										<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 									</liferay-portlet:renderURL>
@@ -276,7 +275,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 				if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW)) {
 					PortletURL viewFileEntryURL = renderResponse.createRenderURL();
 
-					viewFileEntryURL.setParameter("struts_action", "/document_library_display/view_file_entry");
+					viewFileEntryURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
 					viewFileEntryURL.setParameter("redirect", currentURL);
 					viewFileEntryURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 

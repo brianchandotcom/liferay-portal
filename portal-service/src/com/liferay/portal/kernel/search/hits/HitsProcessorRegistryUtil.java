@@ -14,38 +14,27 @@
 
 package com.liferay.portal.kernel.search.hits;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 /**
  * @author Michael C. Han
  */
 public class HitsProcessorRegistryUtil {
 
-	public static HitsProcessor getDefaultHitsProcessor() {
-		return _defaultHitsProcessor;
+	public static HitsProcessorRegistry getHitsProcessorRegistry() {
+		return _hitsProcessorRegistry;
 	}
 
-	public static HitsProcessor getHitsProcessor(String className) {
-		HitsProcessor hitsProcessor = _hitsProcessors.get(className);
+	public static boolean process(SearchContext searchContext, Hits hits)
+		throws SearchException {
 
-		if (hitsProcessor != null) {
-			return hitsProcessor;
-		}
-
-		return _defaultHitsProcessor;
+		return getHitsProcessorRegistry().process(searchContext, hits);
 	}
 
-	public void setDefaultHitsProcessor(HitsProcessor hitsProcessor) {
-		_defaultHitsProcessor = hitsProcessor;
-	}
-
-	public void setHitsProcessors(Map<String, HitsProcessor> hitsProcessors) {
-		_hitsProcessors.putAll(hitsProcessors);
-	}
-
-	private static HitsProcessor _defaultHitsProcessor;
-	private static final Map<String, HitsProcessor> _hitsProcessors =
-		new HashMap<>();
+	private static final HitsProcessorRegistry _hitsProcessorRegistry =
+		ProxyFactory.newServiceTrackedInstance(HitsProcessorRegistry.class);
 
 }

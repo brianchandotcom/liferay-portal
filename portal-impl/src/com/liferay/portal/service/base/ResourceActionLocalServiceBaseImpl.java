@@ -492,7 +492,7 @@ public abstract class ResourceActionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = ResourceActionLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.ResourceActionLocalService.class)
 	protected ResourceActionLocalService resourceActionLocalService;
 	@BeanReference(type = ResourceActionPersistence.class)
 	protected ResourceActionPersistence resourceActionPersistence;

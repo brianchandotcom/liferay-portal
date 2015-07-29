@@ -126,9 +126,6 @@ boolean wsrp = ParamUtil.getBoolean(PortalUtil.getOriginalServletRequest(request
 
 			containerStyles = "style=\"height: ".concat(GetterUtil.getString(HtmlUtil.escapeAttribute(freeformStyleProps.getProperty("height")), "300px")).concat("; overflow: auto;\"");
 		}
-		else {
-			containerStyles = "style=\"\"";
-		}
 		%>
 
 		<c:choose>

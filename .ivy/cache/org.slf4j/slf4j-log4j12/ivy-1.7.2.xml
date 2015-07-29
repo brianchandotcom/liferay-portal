@@ -41,9 +41,9 @@
 		<dependency org="org.slf4j" name="slf4j-api" rev="1.7.2" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
 		<dependency org="log4j" name="log4j" rev="1.2.17" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
 		<dependency org="junit" name="junit" rev="4.10" force="true" conf="test->runtime(*),master(*)"/>
-		<override org="org.slf4j" module="slf4j-jdk14" matcher="exact" rev="1.7.2"/>
-		<override org="ch.qos.cal10n" module="cal10n-api" matcher="exact" rev="0.7.4"/>
-		<override org="log4j" module="log4j" matcher="exact" rev="1.2.17"/>
 		<override org="org.slf4j" module="slf4j-api" matcher="exact" rev="1.7.2"/>
+		<override org="org.slf4j" module="slf4j-jdk14" matcher="exact" rev="1.7.2"/>
+		<override org="log4j" module="log4j" matcher="exact" rev="1.2.17"/>
+		<override org="ch.qos.cal10n" module="cal10n-api" matcher="exact" rev="0.7.4"/>
 	</dependencies>
 </ivy-module>

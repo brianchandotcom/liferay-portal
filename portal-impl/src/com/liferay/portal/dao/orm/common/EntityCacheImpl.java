@@ -15,32 +15,30 @@
 package com.liferay.portal.dao.orm.common;
 
 import com.liferay.portal.cache.mvcc.MVCCPortalCacheFactory;
-import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
-import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.dependency.ServiceDependencyListener;
+import com.liferay.registry.dependency.ServiceDependencyManager;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.io.Serializable;
 
 import java.util.Map;
@@ -55,12 +53,42 @@ import org.apache.commons.collections.map.LRUMap;
  */
 @DoPrivileged
 public class EntityCacheImpl
-	implements CacheManagerListener, CacheRegistryItem, EntityCache {
+	implements PortalCacheManagerListener, CacheRegistryItem, EntityCache {
 
 	public static final String CACHE_NAME = EntityCache.class.getName();
 
 	public void afterPropertiesSet() {
 		CacheRegistryUtil.register(this);
+
+		ServiceDependencyManager serviceDependencyManager =
+			new ServiceDependencyManager();
+
+		serviceDependencyManager.addServiceDependencyListener(
+			new ServiceDependencyListener() {
+
+				@Override
+				public void dependenciesFulfilled() {
+					Registry registry = RegistryUtil.getRegistry();
+
+					_multiVMPool = registry.getService(MultiVMPool.class);
+
+					PortalCacheManager
+						<? extends Serializable, ? extends Serializable>
+							portalCacheManager =
+								_multiVMPool.getPortalCacheManager();
+
+					portalCacheManager.registerPortalCacheManagerListener(
+						EntityCacheImpl.this);
+				}
+
+				@Override
+				public void destroy() {
+				}
+
+			}
+		);
+
+		serviceDependencyManager.registerDependencies(MultiVMPool.class);
 	}
 
 	@Override
@@ -245,11 +273,11 @@ public class EntityCacheImpl
 	}
 
 	@Override
-	public void notifyCacheAdded(String portalCacheName) {
+	public void notifyPortalCacheAdded(String portalCacheName) {
 	}
 
 	@Override
-	public void notifyCacheRemoved(String portalCacheName) {
+	public void notifyPortalCacheRemoved(String portalCacheName) {
 		_portalCaches.remove(portalCacheName);
 	}
 
@@ -304,7 +332,7 @@ public class EntityCacheImpl
 
 		String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
-		_multiVMPool.removeCache(groupKey);
+		_multiVMPool.removePortalCache(groupKey);
 	}
 
 	@Override
@@ -334,30 +362,12 @@ public class EntityCacheImpl
 		portalCache.remove(cacheKey);
 	}
 
-	public void setMultiVMPool(MultiVMPool multiVMPool) {
-		_multiVMPool = multiVMPool;
-
-		PortalCacheManager<? extends Serializable, ? extends Serializable>
-			portalCacheManager = _multiVMPool.getCacheManager();
-
-		portalCacheManager.registerCacheManagerListener(this);
-	}
-
 	private Serializable _encodeCacheKey(Serializable primaryKey) {
-		if (ShardUtil.isEnabled()) {
-			return new CacheKey(ShardUtil.getCurrentShardName(), primaryKey);
-		}
-
 		return primaryKey;
 	}
 
 	private Serializable _encodeLocalCacheKey(
 		Class<?> clazz, Serializable primaryKey) {
-
-		if (ShardUtil.isEnabled()) {
-			return new ShardLocalCacheKey(
-				ShardUtil.getCurrentShardName(), clazz.getName(), primaryKey);
-		}
 
 		return new LocalCacheKey(clazz.getName(), primaryKey);
 	}
@@ -374,8 +384,10 @@ public class EntityCacheImpl
 			String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
 			portalCache =
-				(PortalCache<Serializable, Serializable>)_multiVMPool.getCache(
-					groupKey, PropsValues.VALUE_OBJECT_ENTITY_BLOCKING_CACHE);
+				(PortalCache<Serializable, Serializable>)
+					_multiVMPool.getPortalCache(
+						groupKey,
+						PropsValues.VALUE_OBJECT_ENTITY_BLOCKING_CACHE);
 
 			if (PropsValues.VALUE_OBJECT_MVCC_ENTITY_CACHE_ENABLED &&
 				MVCCModel.class.isAssignableFrom(clazz)) {
@@ -442,57 +454,6 @@ public class EntityCacheImpl
 	private final ConcurrentMap<String, PortalCache<Serializable, Serializable>>
 		_portalCaches = new ConcurrentHashMap<>();
 
-	private static class CacheKey implements Externalizable {
-
-		public CacheKey() {
-		}
-
-		public CacheKey(String shardName, Serializable primaryKey) {
-			_shardName = shardName;
-			_primaryKey = primaryKey;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			CacheKey cacheKey = (CacheKey)obj;
-
-			if (cacheKey._shardName.equals(_shardName) &&
-				cacheKey._primaryKey.equals(_primaryKey)) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		@Override
-		public int hashCode() {
-			return _shardName.hashCode() * 11 + _primaryKey.hashCode();
-		}
-
-		@Override
-		public void readExternal(ObjectInput objectInput)
-			throws ClassNotFoundException, IOException {
-
-			_primaryKey = (Serializable)objectInput.readObject();
-			_shardName = objectInput.readUTF();
-		}
-
-		@Override
-		public void writeExternal(ObjectOutput objectOutput)
-			throws IOException {
-
-			objectOutput.writeObject(_primaryKey);
-			objectOutput.writeUTF(_shardName);
-		}
-
-		private static final long serialVersionUID = 1L;
-
-		private Serializable _primaryKey;
-		private String _shardName;
-
-	}
-
 	private static class LocalCacheKey implements Serializable {
 
 		public LocalCacheKey(String className, Serializable primaryKey) {
@@ -522,48 +483,6 @@ public class EntityCacheImpl
 
 		private final String _className;
 		private final Serializable _primaryKey;
-
-	}
-
-	private static class ShardLocalCacheKey implements Serializable {
-
-		public ShardLocalCacheKey(
-			String shardName, String className, Serializable primaryKey) {
-
-			_shardName = shardName;
-			_className = className;
-			_primaryKey = primaryKey;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			ShardLocalCacheKey shardLocalCacheKey = (ShardLocalCacheKey)obj;
-
-			if (shardLocalCacheKey._shardName.equals(_shardName) &&
-				shardLocalCacheKey._className.equals(_className) &&
-				shardLocalCacheKey._primaryKey.equals(_primaryKey)) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		@Override
-		public int hashCode() {
-			int hashCode = HashUtil.hash(0, _shardName);
-
-			hashCode = HashUtil.hash(hashCode, _className);
-			hashCode = HashUtil.hash(hashCode, _primaryKey);
-
-			return hashCode;
-		}
-
-		private static final long serialVersionUID = 1L;
-
-		private final String _className;
-		private final Serializable _primaryKey;
-		private final String _shardName;
 
 	}
 

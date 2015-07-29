@@ -30,7 +30,6 @@ Import-Package:\
 	com.liferay.portlet.asset.util,\
 	com.liferay.portlet.documentlibrary.antivirus,\
 	com.liferay.portlet.exportimport.lar,\
-	com.liferay.portlet.portletdisplaytemplate.util,\
 	com.liferay.portlet.social.model,\
 	com.liferay.portlet.social.service,\
 	\

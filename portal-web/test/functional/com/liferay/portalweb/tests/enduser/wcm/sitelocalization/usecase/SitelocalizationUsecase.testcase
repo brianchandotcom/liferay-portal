@@ -342,7 +342,7 @@
 		</execute>
 	</command>
 
-	<command name="PortletInteractionLocalization" priority="5">
+	<command name="PortletInteractionLocalization" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -502,9 +502,7 @@
 		</execute>
 	</command>
 
-	<command name="SiteTemplateLocalization" priority="5">
-		<property name="web.plugins.includes" value="kaleo-web" />
-
+	<command known-issues="LPS-56473" name="SiteTemplateLocalization" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>
@@ -578,7 +576,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAvailableSiteLocaleAlternatives" priority="5">
+	<command name="ViewAvailableSiteLocaleAlternatives" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

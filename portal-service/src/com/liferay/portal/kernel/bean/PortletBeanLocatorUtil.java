@@ -44,7 +44,7 @@ public class PortletBeanLocatorUtil {
 					servletContextName);
 
 			throw new BeanLocatorException(
-				"BeanLocator has not been set for servlet context " +
+				"BeanLocator is not set for servlet context " +
 					servletContextName);
 		}
 		else {

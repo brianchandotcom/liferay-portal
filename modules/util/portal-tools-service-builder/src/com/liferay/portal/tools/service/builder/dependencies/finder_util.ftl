@@ -8,8 +8,16 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * @author ${author}
+<#if classDeprecated>
+ * @deprecated ${classDeprecatedComment}
+</#if>
  * @generated
  */
+
+<#if classDeprecated>
+	@Deprecated
+</#if>
+
 @ProviderType
 public class ${entity.name}FinderUtil {
 

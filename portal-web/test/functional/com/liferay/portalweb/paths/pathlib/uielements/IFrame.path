@@ -34,8 +34,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_TYPES</td>
+	<td>//iframe[contains(@id,'_openFileEntryTypeView_iframe_')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_ASSET</td>
 	<td>//iframe[contains(@id,'editAsset_iframe_')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_SETS_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node ')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -44,8 +54,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_FILE</td>
+	<td>//iframe[contains(@name,'selectFileEntry')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_FOLDER</td>
 	<td>//iframe[contains(@id,'selectFolder_iframe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_MEDIA_TYPE</td>
+	<td>//iframe[contains(@id,'selectFileEntryType_iframe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ORGANIZATION</td>
+	<td>//iframe[contains(@id,'selectOrganization_iframe')]</td>
 	<td></td>
 </tr>
 <tr>

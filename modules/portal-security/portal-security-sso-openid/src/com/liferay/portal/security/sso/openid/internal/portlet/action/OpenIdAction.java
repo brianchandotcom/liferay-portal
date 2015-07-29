@@ -114,7 +114,8 @@ public class OpenIdAction extends BaseStrutsPortletAction {
 			WebKeys.THEME_DISPLAY);
 
 		if (!_openId.isEnabled(themeDisplay.getCompanyId())) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeEnabled(
+				themeDisplay.getCompanyId(), OpenId.class.getName());
 		}
 
 		if (actionRequest.getRemoteUser() != null) {

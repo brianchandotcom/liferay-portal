@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.generic.DisMaxQuery;
-import com.liferay.portal.kernel.search.generic.FuzzyLikeThisQuery;
 import com.liferay.portal.kernel.search.generic.FuzzyQuery;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
 import com.liferay.portal.search.elasticsearch.query.BooleanQueryTranslator;
 import com.liferay.portal.search.elasticsearch.query.DisMaxQueryTranslator;
-import com.liferay.portal.search.elasticsearch.query.FuzzyLikeThisQueryTranslator;
 import com.liferay.portal.search.elasticsearch.query.FuzzyQueryTranslator;
 import com.liferay.portal.search.elasticsearch.query.MatchAllQueryTranslator;
 import com.liferay.portal.search.elasticsearch.query.MatchQueryTranslator;
@@ -81,11 +79,6 @@ public class ElasticsearchQueryTranslator
 	@Override
 	public QueryBuilder visitQuery(DisMaxQuery disMaxQuery) {
 		return _disMaxQueryTranslator.translate(disMaxQuery, this);
-	}
-
-	@Override
-	public QueryBuilder visitQuery(FuzzyLikeThisQuery fuzzyLikeThisQuery) {
-		return _fuzzyLikeThisQueryTranslator.translate(fuzzyLikeThisQuery);
 	}
 
 	@Override
@@ -150,13 +143,6 @@ public class ElasticsearchQueryTranslator
 		DisMaxQueryTranslator disMaxQueryTranslator) {
 
 		_disMaxQueryTranslator = disMaxQueryTranslator;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFuzzyLikeThisQueryTranslator(
-		FuzzyLikeThisQueryTranslator fuzzyLikeThisQueryTranslator) {
-
-		_fuzzyLikeThisQueryTranslator = fuzzyLikeThisQueryTranslator;
 	}
 
 	@Reference(unbind = "-")
@@ -231,7 +217,6 @@ public class ElasticsearchQueryTranslator
 
 	private BooleanQueryTranslator _booleanQueryTranslator;
 	private DisMaxQueryTranslator _disMaxQueryTranslator;
-	private FuzzyLikeThisQueryTranslator _fuzzyLikeThisQueryTranslator;
 	private FuzzyQueryTranslator _fuzzyQueryTranslator;
 	private MatchAllQueryTranslator _matchAllQueryTranslator;
 	private MatchQueryTranslator _matchQueryTranslator;

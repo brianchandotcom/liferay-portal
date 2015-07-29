@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.ajaxable=false",
 		"com.liferay.portlet.css-class-wrapper=portlet-breadcrumb",
 		"com.liferay.portlet.display-category=category.cms",
 		"com.liferay.portlet.icon=/icons/breadcrumb.png",

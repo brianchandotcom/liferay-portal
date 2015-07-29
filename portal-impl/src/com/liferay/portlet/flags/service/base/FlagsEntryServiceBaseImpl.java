@@ -823,7 +823,7 @@ public abstract class FlagsEntryServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = FlagsEntryService.class)
+	@BeanReference(type = com.liferay.portlet.flags.service.FlagsEntryService.class)
 	protected FlagsEntryService flagsEntryService;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;

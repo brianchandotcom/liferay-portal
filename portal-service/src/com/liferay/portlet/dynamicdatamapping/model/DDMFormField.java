@@ -30,6 +30,10 @@ import java.util.Map;
  */
 public class DDMFormField implements Serializable {
 
+	public DDMFormField() {
+		_properties = new LinkedHashMap<>();
+	}
+
 	public DDMFormField(DDMFormField ddmFormField) {
 		_properties = new LinkedHashMap<>(ddmFormField._properties);
 

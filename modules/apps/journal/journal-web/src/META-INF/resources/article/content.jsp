@@ -31,20 +31,24 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 
-Fields ddmFields = null;
+DDMFormValues ddmFormValues = null;
 
 if (article != null) {
 	String content = article.getContent();
 
 	if (Validator.isNotNull(content)) {
-		ddmFields = JournalConverterUtil.getDDMFields(ddmStructure, content);
+		Fields fields = JournalConverterUtil.getDDMFields(ddmStructure, content);
+
+		if (fields != null) {
+			ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
+		}
 	}
 }
 
 Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
 
-if (ddmFields != null) {
-	Set<Locale> availableLocalesSet = ddmFields.getAvailableLocales();
+if (ddmFormValues != null) {
+	Set<Locale> availableLocalesSet = ddmFormValues.getAvailableLocales();
 
 	availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
 }
@@ -195,7 +199,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 				checkRequired="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
 				classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 				classPK="<%= ddmStructure.getStructureId() %>"
-				fields="<%= ddmFields %>"
+				ddmFormValues="<%= ddmFormValues %>"
 				requestedLocale="<%= LocaleUtil.fromLanguageId(defaultLanguageId) %>"
 			/>
 

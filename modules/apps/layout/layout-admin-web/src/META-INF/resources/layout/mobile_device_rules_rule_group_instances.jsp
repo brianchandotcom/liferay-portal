@@ -43,8 +43,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 		keyProperty="ruleGroupInstanceId"
 		modelVar="mdrRuleGroupInstance"
 	>
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="rowURL" windowState="<%= (themeDisplay.isStateExclusive() || Validator.equals(themeDisplay.getControlPanelCategory(), PortletCategoryKeys.MY)) ? LiferayWindowState.POP_UP.toString() : windowState.toString() %>">
-			<portlet:param name="struts_action" value="/mobile_device_rules/view_actions" />
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_RULES %>" varImpl="rowURL" windowState="<%= (themeDisplay.isStateExclusive() || Validator.equals(themeDisplay.getControlPanelCategory(), PortletCategoryKeys.MY)) ? LiferayWindowState.POP_UP.toString() : windowState.toString() %>">
+			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/view_actions" />
 			<portlet:param name="redirect" value='<%= currentURL + "#tab=mobileDeviceRules" %>' />
 			<portlet:param name="showBackURL" value="<%= themeDisplay.isStateExclusive() ? Boolean.FALSE.toString() : Boolean.TRUE.toString() %>" />
 			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(mdrRuleGroupInstance.getRuleGroupInstanceId()) %>" />
@@ -77,7 +77,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 					},
 					width: 1024
 				},
-				title: '<liferay-ui:message key="javax.portlet.title.178" />'
+				title: '<liferay-ui:message key="javax.portlet.title.com_liferay_mobile_device_rules_web_portlet_MDRPortlet" />'
 			}
 		);
 

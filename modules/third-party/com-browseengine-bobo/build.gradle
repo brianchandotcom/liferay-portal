@@ -1,0 +1,29 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+dependencies {
+	compile group: "com.browseengine.bobo", name: "bobo-browse", optional, version: "3.2.0"
+	compile group: "org.apache.lucene", name: "lucene-core", version: "3.5.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+task patch(type: PatchTask)
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "**/DocComparatorSource.java"
+	fileNames "**/ReverseDocComparatorSource.java"
+	fileNames "**/SortCollector.java"
+
+	originalLibModuleName = "bobo-browse"
+}

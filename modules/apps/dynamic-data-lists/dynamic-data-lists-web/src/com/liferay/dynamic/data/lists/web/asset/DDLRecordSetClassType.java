@@ -38,7 +38,7 @@ public class DDLRecordSetClassType extends DDMStructureClassType {
 		DDLRecordSet recordSet = DDLRecordSetServiceUtil.getRecordSet(
 			getClassTypeId());
 
-		return getClassTypeFields(recordSet.getDDMStructure());
+		return getClassTypeFields(recordSet.getDDMStructureId());
 	}
 
 }

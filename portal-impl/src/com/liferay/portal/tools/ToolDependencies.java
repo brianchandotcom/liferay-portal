@@ -14,15 +14,14 @@
 
 package com.liferay.portal.tools;
 
-import com.liferay.portal.cache.MultiVMPoolImpl;
-import com.liferay.portal.cache.SingleVMPoolImpl;
+import com.liferay.portal.cache.DummyPortalCacheManager;
 import com.liferay.portal.cache.key.SimpleCacheKeyGenerator;
-import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorFactoryUtil;
@@ -54,14 +53,12 @@ import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.xml.SAXReaderImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Serializable;
 
 /**
  * @author Raymond Augé
@@ -165,41 +162,16 @@ public class ToolDependencies {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put(
-			"portal.cache.manager.name", PortalCacheManagerNames.SINGLE_VM);
-		properties.put(
-			"portal.cache.manager.type",
-			PropsValues.PORTAL_CACHE_MANAGER_TYPE_SINGLE_VM);
-
 		registry.registerService(
-			PortalCacheManager.class,
-			MemoryPortalCacheManager.createMemoryPortalCacheManager(
-				PortalCacheManagerNames.SINGLE_VM),
-			properties);
-
-		SingleVMPoolUtil singleVMPoolUtil = new SingleVMPoolUtil();
-
-		singleVMPoolUtil.setSingleVMPool(new SingleVMPoolImpl());
-
-		properties = new HashMap<>();
-
-		properties.put(
-			"portal.cache.manager.name", PortalCacheManagerNames.MULTI_VM);
-		properties.put(
-			"portal.cache.manager.type",
-			PropsValues.PORTAL_CACHE_MANAGER_TYPE_MULTI_VM);
-
+			SingleVMPool.class,
+			new TestSingleVMPool(
+				new DummyPortalCacheManager<>(
+					PortalCacheManagerNames.SINGLE_VM)));
 		registry.registerService(
-			PortalCacheManager.class,
-			MemoryPortalCacheManager.createMemoryPortalCacheManager(
-				PortalCacheManagerNames.MULTI_VM),
-			properties);
-
-		MultiVMPoolUtil multiVMPoolUtil = new MultiVMPoolUtil();
-
-		multiVMPoolUtil.setMultiVMPool(new MultiVMPoolImpl());
+			MultiVMPool.class,
+			new TestMultiVMPool(
+				new DummyPortalCacheManager<>(
+					PortalCacheManagerNames.MULTI_VM)));
 	}
 
 	public static void wireDeployers() {
@@ -220,6 +192,189 @@ public class ToolDependencies {
 		resourceActionsImpl.afterPropertiesSet();
 
 		resourceActionsUtil.setResourceActions(resourceActionsImpl);
+	}
+
+	private static class TestMultiVMPool implements MultiVMPool {
+
+		public TestMultiVMPool(
+			PortalCacheManager<? extends Serializable, ?>
+				portalCacheManager) {
+
+			_portalCacheManager =
+				(PortalCacheManager
+					<? extends Serializable, ? extends Serializable>)
+						portalCacheManager;
+		}
+
+		@Override
+		public void clear() {
+			_portalCacheManager.clearAll();
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String)}
+		 */
+		@Deprecated
+		@Override
+		public PortalCache<? extends Serializable, ? extends Serializable>
+			getCache(String portalCacheName) {
+
+			return getPortalCache(portalCacheName);
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String,
+		 * boolean)}
+		 */
+		@Deprecated
+		@Override
+		public PortalCache<? extends Serializable, ? extends Serializable>
+			getCache(String portalCacheName, boolean blocking) {
+
+			return getPortalCache(portalCacheName, blocking);
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCacheManager()}
+		 */
+		@Deprecated
+		@Override
+		public PortalCacheManager
+				<? extends Serializable, ? extends Serializable>
+			getCacheManager() {
+
+			return getPortalCacheManager();
+		}
+
+		@Override
+		public PortalCache<? extends Serializable, ? extends Serializable>
+			getPortalCache(String portalCacheName) {
+
+			return _portalCacheManager.getPortalCache(portalCacheName);
+		}
+
+		@Override
+		public PortalCache<? extends Serializable, ? extends Serializable>
+			getPortalCache(String portalCacheName, boolean blocking) {
+
+			return _portalCacheManager.getPortalCache(
+				portalCacheName, blocking);
+		}
+
+		@Override
+		public PortalCacheManager
+			<? extends Serializable, ? extends Serializable>
+			 getPortalCacheManager() {
+
+			return _portalCacheManager;
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #removePortalCache(
+		 * String)}
+		 */
+		@Deprecated
+		@Override
+		public void removeCache(String portalCacheName) {
+			removePortalCache(portalCacheName);
+		}
+
+		@Override
+		public void removePortalCache(String portalCacheName) {
+			_portalCacheManager.removePortalCache(portalCacheName);
+		}
+
+		private final PortalCacheManager
+			<? extends Serializable, ? extends Serializable>
+				_portalCacheManager;
+
+	}
+
+	private static class TestSingleVMPool implements SingleVMPool {
+
+		public TestSingleVMPool(
+			PortalCacheManager<? extends Serializable, ?> portalCacheManager) {
+
+			_portalCacheManager = portalCacheManager;
+		}
+
+		@Override
+		public void clear() {
+			_portalCacheManager.clearAll();
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String)}
+		 */
+		@Deprecated
+		@Override
+		public PortalCache<? extends Serializable, ?> getCache(
+			String portalCacheName) {
+
+			return getPortalCache(portalCacheName);
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCache(String,
+		 * boolean)}
+		 */
+		@Deprecated
+		@Override
+		public PortalCache<? extends Serializable, ?> getCache(
+			String portalCacheName, boolean blocking) {
+
+			return getPortalCache(portalCacheName, blocking);
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCacheManager()}
+		 */
+		@Deprecated
+		@Override
+		public PortalCacheManager<? extends Serializable, ?> getCacheManager() {
+			return getPortalCacheManager();
+		}
+
+		@Override
+		public PortalCache<? extends Serializable, ?> getPortalCache(
+			String portalCacheName) {
+
+			return _portalCacheManager.getPortalCache(portalCacheName);
+		}
+
+		@Override
+		public PortalCache<? extends Serializable, ?> getPortalCache(
+			String portalCacheName, boolean blocking) {
+
+			return _portalCacheManager.getPortalCache(
+				portalCacheName, blocking);
+		}
+
+		@Override
+		public PortalCacheManager<? extends Serializable, ?>
+			getPortalCacheManager() {
+
+			return _portalCacheManager;
+		}
+
+		/**
+		 * @deprecated As of 7.0.0, replaced by {@link #removePortalCache(
+		 * String)}
+		 */
+		@Deprecated
+		@Override
+		public void removeCache(String portalCacheName) {
+			removePortalCache(portalCacheName);
+		}
+
+		@Override
+		public void removePortalCache(String portalCacheName) {
+			_portalCacheManager.removePortalCache(portalCacheName);
+		}
+
+		private final PortalCacheManager<? extends Serializable, ?>
+			_portalCacheManager;
+
 	}
 
 }

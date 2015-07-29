@@ -246,7 +246,7 @@
 </tr>
 <tr>
 	<td>FILTER_CATEGORIES_CATEGORY_CLOSE_BUTTON</td>
-	<td>//div[contains(@class,'selector-popup')]//button[contains(@class,'close-content')]</td>
+	<td>//div[contains(@class,'selector-popup')]//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>

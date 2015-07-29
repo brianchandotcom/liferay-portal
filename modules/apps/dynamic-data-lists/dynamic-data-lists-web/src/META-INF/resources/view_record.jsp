@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-DDLRecord record = (DDLRecord)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD);
+DDLRecord record = (DDLRecord)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
 long recordId = BeanParamUtil.getLong(record, request, "recordId");
 
@@ -27,6 +27,7 @@ long recordSetId = BeanParamUtil.getLong(record, request, "recordSetId");
 
 DDLRecordSet recordSet = DDLRecordSetServiceUtil.getRecordSet(recordSetId);
 
+boolean editable = ParamUtil.getBoolean(request, "editable", true);
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
 DDMStructure ddmStructure = recordSet.getDDMStructure(formDDMTemplateId);
@@ -52,19 +53,17 @@ DDLRecordVersion latestRecordVersion = record.getLatestRecordVersion();
 <aui:fieldset>
 
 	<%
-	Fields fields = null;
+	DDMFormValues ddmFormValues = null;
 
 	if (recordVersion != null) {
-		DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
-
-		fields = DDMFormValuesToFieldsConverterUtil.convert(ddmStructure, ddmFormValues);
+		ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
 	}
 	%>
 
 	<liferay-ddm:html
 		classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
 		classPK="<%= ddmStructure.getPrimaryKey() %>"
-		fields="<%= fields %>"
+		ddmFormValues="<%= ddmFormValues %>"
 		readOnly="<%= true %>"
 		requestedLocale="<%= locale %>"
 	/>
@@ -78,7 +77,7 @@ DDLRecordVersion latestRecordVersion = record.getLatestRecordVersion();
 	%>
 
 	<aui:button-row>
-		<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.UPDATE) && version.equals(latestRecordVersion.getVersion()) %>">
+		<c:if test="<%= editable && DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.UPDATE) && version.equals(latestRecordVersion.getVersion()) %>">
 			<portlet:renderURL var="editRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 				<portlet:param name="mvcPath" value="/edit_record.jsp" />
 				<portlet:param name="redirect" value="<%= redirect %>" />

@@ -197,7 +197,6 @@ public class VerifyLayout extends VerifyProcess {
 
 	protected void verifyUuid() throws Exception {
 		verifyUuid("AssetEntry");
-		verifyUuid("JournalArticle");
 
 		runSQL(
 			"update Layout set uuid_ = sourcePrototypeLayoutUuid where " +

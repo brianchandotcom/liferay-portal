@@ -111,7 +111,7 @@ if (row == null) {
 
 	<c:if test="<%= group.isCompany() && hasUpdatePermission %>">
 		<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="exportURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="struts_action" value="/export_import/export_layouts" />
+			<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 			<portlet:param name="rootNodeName" value="<%= group.getDescriptiveName(locale) %>" />
@@ -129,7 +129,7 @@ if (row == null) {
 		/>
 
 		<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="importURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="struts_action" value="/export_import/import_layouts" />
+			<portlet:param name="mvcRenderCommandName" value="importLayouts" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 			<portlet:param name="rootNodeName" value="<%= group.getDescriptiveName(locale) %>" />
@@ -148,7 +148,7 @@ if (row == null) {
 
 		<c:if test="<%= group.isStaged() %>">
 			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="publishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/export_import/publish_layouts" />
+				<portlet:param name="mvcRenderCommandName" value="publishLayouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= group.isStagedRemotely() ? Constants.PUBLISH_TO_REMOTE : Constants.PUBLISH_TO_LIVE %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 				<portlet:param name="rootNodeName" value="<%= group.getDescriptiveName(locale) %>" />

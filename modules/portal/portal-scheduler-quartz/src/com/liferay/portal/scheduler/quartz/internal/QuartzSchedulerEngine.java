@@ -93,7 +93,6 @@ import org.quartz.impl.matchers.GroupMatcher;
  * @author Tina Tian
  * @author Edward C. Han
  */
-
 @Component(
 	immediate = true,
 	service = {QuartzSchedulerEngine.class, SchedulerEngine.class}

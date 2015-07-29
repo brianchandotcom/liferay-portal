@@ -72,14 +72,12 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManager;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
+import com.liferay.portlet.dynamicdatamapping.StorageEngineManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMIndexer;
-import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
@@ -102,7 +100,8 @@ import javax.portlet.PortletResponse;
  */
 @OSGiBeanProperties
 public class DLFileEntryIndexer
-	extends BaseIndexer implements DDMStructureIndexer, RelatedEntryIndexer {
+	extends BaseIndexer<DLFileEntry>
+	implements DDMStructureIndexer, RelatedEntryIndexer {
 
 	public static final String CLASS_NAME = DLFileEntry.class.getName();
 
@@ -185,7 +184,7 @@ public class DLFileEntryIndexer
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
 			if (dlFileEntry.isInHiddenFolder()) {
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
+				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 					dlFileEntry.getClassName());
 
 				return indexer.isVisible(dlFileEntry.getClassPK(), status);
@@ -206,8 +205,13 @@ public class DLFileEntryIndexer
 			addRelatedClassNames(contextBooleanFilter, searchContext);
 		}
 
-		contextBooleanFilter.addRequiredTerm(
-			Field.HIDDEN, searchContext.isIncludeAttachments());
+		if (ArrayUtil.contains(
+				searchContext.getFolderIds(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
+			contextBooleanFilter.addRequiredTerm(
+				Field.HIDDEN, searchContext.isIncludeAttachments());
+		}
 
 		addSearchClassTypeIds(contextBooleanFilter, searchContext);
 
@@ -220,9 +224,10 @@ public class DLFileEntryIndexer
 			Validator.isNotNull(ddmStructureFieldValue)) {
 
 			String[] ddmStructureFieldNameParts = StringUtil.split(
-				ddmStructureFieldName, DDMIndexer.DDM_FIELD_SEPARATOR);
+				ddmStructureFieldName,
+				DDMStructureManager.STRUCTURE_INDEXER_FIELD_SEPARATOR);
 
-			DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+			DDMStructure ddmStructure = DDMStructureManagerUtil.getStructure(
 				GetterUtil.getLong(ddmStructureFieldNameParts[1]));
 
 			String fieldName = StringUtil.replaceLast(
@@ -232,8 +237,10 @@ public class DLFileEntryIndexer
 				StringPool.BLANK);
 
 			try {
-				ddmStructureFieldValue = DDMUtil.getIndexedFieldValue(
-					ddmStructureFieldValue, structure.getFieldType(fieldName));
+				ddmStructureFieldValue =
+					DDMStructureManagerUtil.getIndexedFieldValue(
+						ddmStructureFieldValue,
+						ddmStructure.getFieldType(fieldName));
 			}
 			catch (StructureFieldException sfe) {
 				if (_log.isDebugEnabled()) {
@@ -247,7 +254,8 @@ public class DLFileEntryIndexer
 				ddmStructureFieldName,
 				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 
-			contextBooleanFilter.add(new QueryFilter(booleanQuery));
+			contextBooleanFilter.add(
+				new QueryFilter(booleanQuery), BooleanClauseOccur.MUST);
 		}
 
 		String[] mimeTypes = (String[])searchContext.getAttribute("mimeTypes");
@@ -307,12 +315,15 @@ public class DLFileEntryIndexer
 		}
 
 		try {
+			Indexer<DLFileEntry> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
+
 			List<DLFileEntry> dlFileEntries =
 				DLFileEntryLocalServiceUtil.getDDMStructureFileEntries(
 					ArrayUtil.toLongArray(ddmStructureIds));
 
 			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				doReindex(dlFileEntry);
+				indexer.reindex(dlFileEntry);
 			}
 		}
 		catch (Exception e) {
@@ -341,27 +352,22 @@ public class DLFileEntryIndexer
 			DDMFormValues ddmFormValues = null;
 
 			try {
-				ddmFormValues = StorageEngineUtil.getDDMFormValues(
+				ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(
 					dlFileEntryMetadata.getDDMStorageId());
 			}
 			catch (Exception e) {
 			}
 
 			if (ddmFormValues != null) {
-				DDMStructure ddmStructure =
-					DDMStructureLocalServiceUtil.getStructure(
-						dlFileEntryMetadata.getDDMStructureId());
-
-				DDMIndexerUtil.addAttributes(
-					document, ddmStructure, ddmFormValues);
+				DDMStructureManagerUtil.addAttributes(
+					dlFileEntryMetadata.getDDMStructureId(), document,
+					ddmFormValues);
 			}
 		}
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		DLFileEntry dlFileEntry = (DLFileEntry)obj;
-
+	protected void doDelete(DLFileEntry dlFileEntry) throws Exception {
 		Document document = new DocumentImpl();
 
 		document.addUID(CLASS_NAME, dlFileEntry.getFileEntryId());
@@ -372,9 +378,7 @@ public class DLFileEntryIndexer
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		DLFileEntry dlFileEntry = (DLFileEntry)obj;
-
+	protected Document doGetDocument(DLFileEntry dlFileEntry) throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Indexing document " + dlFileEntry);
 		}
@@ -399,6 +403,9 @@ public class DLFileEntryIndexer
 			}
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Error retrieving document stream", e);
+			}
 		}
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
@@ -465,7 +472,7 @@ public class DLFileEntryIndexer
 			addFileEntryTypeAttributes(document, dlFileVersion);
 
 			if (dlFileEntry.isInHiddenFolder()) {
-				Indexer indexer = IndexerRegistryUtil.getIndexer(
+				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 					dlFileEntry.getClassName());
 
 				if ((indexer != null) &&
@@ -518,9 +525,7 @@ public class DLFileEntryIndexer
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		DLFileEntry dlFileEntry = (DLFileEntry)obj;
-
+	protected void doReindex(DLFileEntry dlFileEntry) throws Exception {
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 		if (!dlFileVersion.isApproved() && !dlFileEntry.isInTrash()) {
@@ -576,20 +581,17 @@ public class DLFileEntryIndexer
 			DDMFormValues ddmFormValues = null;
 
 			try {
-				ddmFormValues = StorageEngineUtil.getDDMFormValues(
+				ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(
 					dlFileEntryMetadata.getDDMStorageId());
 			}
 			catch (Exception e) {
 			}
 
 			if (ddmFormValues != null) {
-				DDMStructure ddmStructure =
-					DDMStructureLocalServiceUtil.getStructure(
-						dlFileEntryMetadata.getDDMStructureId());
-
 				sb.append(
-					DDMIndexerUtil.extractAttributes(
-						ddmStructure, ddmFormValues, locale));
+					DDMStructureManagerUtil.extractAttributes(
+						dlFileEntryMetadata.getDDMStructureId(), ddmFormValues,
+						locale));
 			}
 		}
 

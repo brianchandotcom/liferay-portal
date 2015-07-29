@@ -99,7 +99,7 @@ public class StagingServiceUtil {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
-	boolean, java.util.Map)}
+	boolean, Map)}
 	*/
 	@Deprecated
 	public static com.liferay.portlet.exportimport.lar.MissingReferences validateStagingRequest(

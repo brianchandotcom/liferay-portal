@@ -23,12 +23,14 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
-import com.liferay.portlet.blogs.util.BlogsIndexer;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
 import com.liferay.registry.ServiceTracker;
 
@@ -78,7 +80,7 @@ public class IndexerPostProcessorRegistryTest {
 
 	@Test
 	public void testMultipleIndexerPostProcessors() throws Exception {
-		Indexer mbMessageIndexer = IndexerRegistryUtil.getIndexer(
+		Indexer<MBMessage> mbMessageIndexer = IndexerRegistryUtil.getIndexer(
 			MBMessageIndexer.class.getName());
 
 		IndexerPostProcessor[] mbMessageIndexerPostProcessors =
@@ -91,7 +93,7 @@ public class IndexerPostProcessorRegistryTest {
 
 		assertNotNull(mbMessageIndexerPostProcessor);
 
-		Indexer mbThreadIndexer = IndexerRegistryUtil.getIndexer(
+		Indexer<MBThread> mbThreadIndexer = IndexerRegistryUtil.getIndexer(
 			"com.liferay.portlet.messageboards.util.MBThreadIndexer");
 
 		IndexerPostProcessor[] mbThreadIndexerPostProcessors =
@@ -109,7 +111,7 @@ public class IndexerPostProcessorRegistryTest {
 
 	@Test
 	public void testMultipleModelIndexerPostProcessors() throws Exception {
-		Indexer userIndexer = IndexerRegistryUtil.getIndexer(
+		Indexer<User> userIndexer = IndexerRegistryUtil.getIndexer(
 			User.class.getName());
 
 		IndexerPostProcessor[] userIndexerPostProcessors =
@@ -122,7 +124,7 @@ public class IndexerPostProcessorRegistryTest {
 
 		assertNotNull(userIndexerPostProcessor);
 
-		Indexer userGroupIndexer = IndexerRegistryUtil.getIndexer(
+		Indexer<UserGroup> userGroupIndexer = IndexerRegistryUtil.getIndexer(
 			UserGroup.class.getName());
 
 		IndexerPostProcessor[] userGroupIndexerPostProcessors =
@@ -139,23 +141,23 @@ public class IndexerPostProcessorRegistryTest {
 
 	@Test
 	public void testSingleIndexerPostProcessor() throws Exception {
-		Indexer blogsIndexer = IndexerRegistryUtil.getIndexer(
-			BlogsIndexer.class.getName());
+		Indexer<Organization> organizationIndexer =
+			IndexerRegistryUtil.getIndexer(Organization.class.getName());
 
-		IndexerPostProcessor[] blogIndexerPostProcessors =
-			blogsIndexer.getIndexerPostProcessors();
+		IndexerPostProcessor[] organizationIndexerPostProcessors =
+			organizationIndexer.getIndexerPostProcessors();
 
-		assertEquals(1, blogIndexerPostProcessors.length);
+		assertEquals(1, organizationIndexerPostProcessors.length);
 
-		IndexerPostProcessor blogsIndexerPostProcessor =
-			blogIndexerPostProcessors[0];
+		IndexerPostProcessor organizationIndexerPostProcessor =
+			organizationIndexerPostProcessors[0];
 
-		assertNotNull(blogsIndexerPostProcessor);
+		assertNotNull(organizationIndexerPostProcessor);
 	}
 
 	@Test
 	public void testSingleModelIndexerPostProcessor() throws Exception {
-		Indexer contactIndexer = IndexerRegistryUtil.getIndexer(
+		Indexer<Contact> contactIndexer = IndexerRegistryUtil.getIndexer(
 			Contact.class.getName());
 
 		IndexerPostProcessor[] contactIndexerPostProcessors =

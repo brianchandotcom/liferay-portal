@@ -5,13 +5,17 @@
 		<execute function="Click" locator1="PGWebformConfiguration#SETUP_FORM_FIELDS_ADD_ROW_BUTTON" />
 
 		<execute macro="WebFormPortlet#editField">
+			<var name="optional" value="${optional}" />
+			<var name="optionsList" value="${optionsList}" />
 			<var name="wfFieldName" value="New Item" />
+			<var name="wfFieldType" value="${wfFieldType}" />
 			<var name="wfNewFieldName" value="${wfNewFieldName}" />
 		</execute>
 	</command>
 
 	<command name="configureSetupFormFieldsPG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -33,13 +37,17 @@
 	</command>
 
 	<command name="deleteEditableField">
-		<execute macro="WebFormPortlet#viewEditableField" />
+		<execute macro="WebFormPortlet#viewEditableField">
+			<var name="wfFieldName" value="${wfFieldName}" />
+		</execute>
 
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
 		<execute function="DoubleClick" locator1="PGWebformConfiguration#SETUP_FORM_FIELDS_DELETE_ROW_BUTTON" />
 
-		<execute macro="WebFormPortlet#viewEditableFieldNotVisibleCmd" />
+		<execute macro="WebFormPortlet#viewEditableFieldNotVisibleCmd">
+			<var name="wfFieldName" value="${wfFieldName}" />
+		</execute>
 	</command>
 
 	<command name="editField">

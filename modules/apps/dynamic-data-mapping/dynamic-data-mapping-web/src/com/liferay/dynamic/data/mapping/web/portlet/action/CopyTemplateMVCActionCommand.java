@@ -29,8 +29,9 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,18 +50,18 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CopyTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
 
-	protected DDMTemplate copyTemplate(PortletRequest portletRequest)
+	protected DDMTemplate copyTemplate(ActionRequest actionRequest)
 		throws Exception {
 
-		long templateId = ParamUtil.getLong(portletRequest, "templateId");
+		long templateId = ParamUtil.getLong(actionRequest, "templateId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			portletRequest, "name");
+			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(portletRequest, "description");
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMTemplate.class.getName(), portletRequest);
+			DDMTemplate.class.getName(), actionRequest);
 
 		return _ddmTemplateService.copyTemplate(
 			templateId, nameMap, descriptionMap, serviceContext);
@@ -68,31 +69,30 @@ public class CopyTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DDMTemplate template = copyTemplate(portletRequest);
+		DDMTemplate template = copyTemplate(actionRequest);
 
-		setRedirectAttribute(portletRequest, template);
+		setRedirectAttribute(actionRequest, template);
 	}
 
 	@Override
 	protected String getSaveAndContinueRedirect(
-			PortletRequest portletRequest, DDMTemplate template,
-			String redirect)
+			ActionRequest actionRequest, DDMTemplate template, String redirect)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletURLImpl portletURL = new PortletURLImpl(
-			portletRequest, themeDisplay.getPpid(), themeDisplay.getPlid(),
+			actionRequest, themeDisplay.getPpid(), themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/copy_template");
 		portletURL.setParameter(
 			"templateId", String.valueOf(template.getTemplateId()), false);
-		portletURL.setWindowState(portletRequest.getWindowState());
+		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();
 	}

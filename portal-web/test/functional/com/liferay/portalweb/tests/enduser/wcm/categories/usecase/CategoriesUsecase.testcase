@@ -22,7 +22,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddCategorywithLocalization" priority="4">
+	<command known-issues="LPS-56879" name="AddCategorywithLocalization" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -163,7 +163,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCategorywithSiteRole" priority="4">
+	<command known-issues="LPS-56956" name="AddCategorywithSiteRole" priority="4">
 		<var name="pageName" value="Test Page Name" />
 		<var name="siteName" value="Test Site Name" />
 
@@ -372,7 +372,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWCFailWithRequiredVocabularyAssetType" priority="3">
+	<command known-issues="LPS-56665" name="AddWCFailWithRequiredVocabularyAssetType" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -416,7 +416,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWCWithOptionalVocabularyAssetType" priority="3">
+	<command known-issues="LPS-56665" name="AddWCWithOptionalVocabularyAssetType" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -457,7 +457,7 @@
 		</execute>
 	</command>
 
-	<command name="DeletePartialCategory" priority="5">
+	<command known-issues="LPS-56956" name="DeletePartialCategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -621,7 +621,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="WebContent#viewCategorizationCategoryNotVisibleCP">
@@ -734,7 +734,7 @@
 
 		<execute macro="Vocabulary#addCP">
 			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>f
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
@@ -786,8 +786,6 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_EXPORT" value1="Export" />
-
 		<if>
 			<equals arg1="${exportPermissions}" arg2="true" />
 			<then>
@@ -823,7 +821,8 @@
 
 		<execute macro="LAR#importSiteCP">
 			<var name="larFileName" value="${larFileName}" />
-			<var name="siteName" value="Site Name" />
+			<var name="siteName" value="Import Site Name" />
+			<var name="siteScopeName" value="Import Site Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -907,7 +906,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchCategory" priority="4">
+	<command known-issues="LPS-56879" name="SearchCategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -1013,7 +1012,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchEditedCategory" priority="4">
+	<command known-issues="LPS-56879" name="SearchEditedCategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -1274,7 +1273,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewCannotAddDuplicateSubCategory" priority="5">
+	<command name="ViewCannotAddDuplicateSubCategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

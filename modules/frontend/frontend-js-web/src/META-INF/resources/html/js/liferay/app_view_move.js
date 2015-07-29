@@ -1,6 +1,13 @@
 AUI.add(
 	'liferay-app-view-move',
 	function(A) {
+
+		/**
+		 * The AppViewMove Component.
+		 *
+		 * @module liferay-app-view-move
+		 */
+
 		var History = Liferay.HistoryManager;
 		var Lang = A.Lang;
 		var UA = A.UA;
@@ -40,33 +47,80 @@ AUI.add(
 
 		var STR_MOVE_ENTRY_URL = 'moveEntryRenderUrl';
 
-		var STR_MOVE_TO_TRASH = 'move_to_trash';
-
 		var STR_NODE = 'node';
 
 		var STR_PORTLET_GROUP = 'portletGroup';
 
 		var TOUCH = UA.touch;
 
+		/**
+		 * A base class for `A.AppViewMove`.
+		 *
+		 * @class A.AppViewMove
+		 * @extends Base
+		 * @param {Object} config Object literal specifying
+		 *     widget configuration properties.
+		 * @constructor
+		 */
 		var AppViewMove = A.Component.create(
 			{
+
+				/**
+				 * A static property used to define the default attribute
+				 * configuration for `AppViewMove`.
+				 *
+				 * @property ATTRS
+				 * @type Object
+				 * @static
+				 */
 				ATTRS: {
+
+					/**
+					 * The ID of the all row checkbox.
+					 *
+					 * @attribute allRowIds
+					 * @type String
+					 */
 					allRowIds: {
 						validator: Lang.isString
 					},
 
+					/**
+					 * The display style CSS class.
+					 *
+					 * @attribute displayStyleCSSClass
+					 * @type String
+					 */
 					displayStyleCSSClass: {
 						validator: Lang.isString
 					},
 
+					/**
+					 * The draggable CSS class.
+					 *
+					 * @attribute draggableCSSClass
+					 * @type String
+					 */
 					draggableCSSClass: {
 						validator: Lang.isString
 					},
 
+					/**
+					 * The URL when an entry is edited.
+					 *
+					 * @attribute editEntryUrl
+					 * @type String
+					 */
 					editEntryUrl: {
 						validator: Lang.isString
 					},
 
+					/**
+					 * The RegEx for the folder ID.
+					 *
+					 * @attribute folderIdHashRegEx
+					 * @type String
+					 */
 					folderIdHashRegEx: {
 						setter: function(value) {
 							if (Lang.isString(value)) {
@@ -80,46 +134,134 @@ AUI.add(
 						}
 					},
 
+					/**
+					 * The form.
+					 *
+					 * @attribute form
+					 * @type Object
+					 */
 					form: {
 						validator: Lang.isObject
 					},
 
+					/**
+					 * The URL for an entry when it is moved.
+					 *
+					 * @attribute moveEntryRenderUrl
+					 * @type String
+					 */
 					moveEntryRenderUrl: {
 						validator: Lang.isString
 					},
 
+					/**
+					 * The action used when an item is moved to the trash.
+					 *
+					 * @attribute moveToTrashActionName
+					 * @type String
+					 */
+					moveToTrashActionName: {
+						validator: Lang.isString
+					},
+
+					/**
+					 * The namespace.
+					 *
+					 * @attribute namespace
+					 * @type String
+					 */
 					namespace: {
 						validator: Lang.isString
 					},
 
+					/**
+					 *The ID of the portlet container.
+					 *
+					 * @attribute portletContainerId
+					 * @type String
+					 */
 					portletContainerId: {
 						validator: Lang.isString
 					},
 
+					/**
+					 * The portlet group.
+					 *
+					 * @attribute portletGroup
+					 * @type String
+					 */
 					portletGroup: {
 						validator: Lang.isString
 					},
 
+					/**
+					 * Contains IDs of the entries to process.
+					 *
+					 * @attribute processEntryIds
+					 * @type Object
+					 */
 					processEntryIds: {
 						validator: Lang.isObject
 					},
 
+					/**
+					 * The ID of the trash link.
+					 *
+					 * @attribute trashLinkId
+					 * @type String
+					 */
 					trashLinkId: {
 						validator: Lang.isString
 					},
 
+					/**
+					 * Specifies whether an entry can be moved.
+					 *
+					 * @attribute updateable
+					 * @type Boolean
+					 */
 					updateable: {
 						validator: Lang.isBoolean
 					}
 				},
 
+				/**
+				 * Augment the PortletBase module.
+				 *
+				 * @property AUGMENTS
+				 * @type Object
+				 * @static
+				 */
 				AUGMENTS: [Liferay.PortletBase],
 
+				/**
+				 * Extend the AUI Base module.
+				 *
+				 * @property EXTENDS
+				 * @type Object
+				 * @static
+				 */
 				EXTENDS: A.Base,
 
+				/**
+				 * Static property provides a string to identify the class.
+				 *
+				 * @property NAME
+				 * @type String
+				 * @static
+				 */
 				NAME: 'liferay-app-view-move',
 
 				prototype: {
+
+					/**
+					 * Construction lifecycle implementation executed during
+					 * `AppViewMove` instantiation.
+					 *
+					 * @method initializer
+					 * @param config
+					 * @protected
+					 */
 					initializer: function(config) {
 						var instance = this;
 
@@ -138,6 +280,13 @@ AUI.add(
 						instance._registerDragDrop();
 					},
 
+					/**
+					 * Destructor lifecycle implementation for the `AppViewMove`
+					 * class.
+					 *
+					 * @method destructor
+					 * @protected
+					 */
 					destructor: function() {
 						var instance = this;
 
@@ -148,6 +297,13 @@ AUI.add(
 						}
 					},
 
+					/**
+					 * Fires when namespaced `editEntry` event is run.
+					 *
+					 * @method _editEntry
+					 * @param event
+					 * @protected
+					 */
 					_editEntry: function(event) {
 						var instance = this;
 
@@ -162,6 +318,17 @@ AUI.add(
 						instance._processEntryAction(action, url);
 					},
 
+					/**
+					 * Returns the text to display when moving according to
+					 * whether a target is available. Fires when an item is
+					 * moved.
+					 *
+					 * @method _getMoveText
+					 * @param selectedItemsCount
+					 * @param targetAvailable
+					 * @protected
+					 * @return moveText
+					 */
 					_getMoveText: function(selectedItemsCount, targetAvailable) {
 						var moveText = STR_BLANK;
 
@@ -183,6 +350,12 @@ AUI.add(
 						return moveText;
 					},
 
+					/**
+					 * Initializes the drag/drop.
+					 *
+					 * @method _initDragDrop
+					 * @protected
+					 */
 					_initDragDrop: function() {
 						var instance = this;
 
@@ -249,6 +422,12 @@ AUI.add(
 						instance._ddHandler = ddHandler;
 					},
 
+					/**
+					 * Initializes the drop targets.
+					 *
+					 * @method _initDropTargets
+					 * @protected
+					 */
 					_initDropTargets: function() {
 						var instance = this;
 
@@ -269,6 +448,13 @@ AUI.add(
 						}
 					},
 
+					/**
+					 * Moves entries.
+					 *
+					 * @method _moveEntries
+					 * @param folderId
+					 * @protected
+					 */
 					_moveEntries: function(folderId) {
 						var instance = this;
 
@@ -279,12 +465,25 @@ AUI.add(
 						instance._processEntryAction(STR_MOVE, this.get(STR_MOVE_ENTRY_URL));
 					},
 
+					/**
+					 * Moves entries to the trash.
+					 *
+					 * @method _moveEntriesToTrash
+					 * @protected
+					 */
 					_moveEntriesToTrash: function() {
 						var instance = this;
 
-						instance._processEntryAction(STR_MOVE_TO_TRASH, instance.get('editEntryUrl'));
+						instance._processEntryAction(instance.get('moveToTrashActionName'), instance.get('editEntryUrl'));
 					},
 
+					/**
+					 * Fires when the `drag:drophit` event is run.
+					 *
+					 * @method _onDragDropHit
+					 * @param event
+					 * @protected
+					 */
 					_onDragDropHit: function(event) {
 						var instance = this;
 
@@ -312,6 +511,13 @@ AUI.add(
 						}
 					},
 
+					/**
+					 * Fires when the `drag:enter` event is run.
+					 *
+					 * @method _onDragEnter
+					 * @param event
+					 * @protected
+					 */
 					_onDragEnter: function(event) {
 						var instance = this;
 
@@ -337,6 +543,13 @@ AUI.add(
 						}
 					},
 
+					/**
+					 * Fires when the `drag:exit` event is run.
+					 *
+					 * @method _onDragExit
+					 * @param event
+					 * @protected
+					 */
 					_onDragExit: function(event) {
 						var instance = this;
 
@@ -355,6 +568,13 @@ AUI.add(
 						proxyNode.html(Lang.sub(moveText, [selectedItemsCount]));
 					},
 
+					/**
+					 * Fires when the `drag:start` event is run.
+					 *
+					 * @method _onDragStart
+					 * @param event
+					 * @protected
+					 */
 					_onDragStart: function(event) {
 						var instance = this;
 
@@ -400,6 +620,14 @@ AUI.add(
 						);
 					},
 
+					/**
+					 * Runs when the edit, move, or move to trash actions occur.
+					 *
+					 * @method _processEntryAction
+					 * @param action
+					 * @param url
+					 * @protected
+					 */
 					_processEntryAction: function(action, url) {
 						var instance = this;
 
@@ -407,7 +635,7 @@ AUI.add(
 
 						var redirectUrl = location.href;
 
-						if (action === STR_DELETE || action === STR_DELETE_ENTRIES || action === STR_MOVE_TO_TRASH || action === STR_MOVE_ENTRIES_TO_TRASH && !History.HTML5 && location.hash) {
+						if (action === STR_DELETE || action === STR_DELETE_ENTRIES || action === instance.get('moveToTrashActionName') || action === STR_MOVE_ENTRIES_TO_TRASH && !History.HTML5 && location.hash) {
 							redirectUrl = instance._updateFolderIdRedirectUrl(redirectUrl);
 						}
 
@@ -441,6 +669,12 @@ AUI.add(
 						submitForm(form, url);
 					},
 
+					/**
+					 * Registers the drag/drop events.
+					 *
+					 * @method _registerDragDrop
+					 * @protected
+					 */
 					_registerDragDrop: function() {
 						var instance = this;
 
@@ -451,6 +685,14 @@ AUI.add(
 						}
 					},
 
+					/**
+					 * Updates the redirect URL for the folder ID.
+					 *
+					 * @method _updateFolderIdRedirectUrl
+					 * @param redirectUrl
+					 * @protected
+					 * @return redirectUrl
+					 */
 					_updateFolderIdRedirectUrl: function(redirectUrl) {
 						var instance = this;
 

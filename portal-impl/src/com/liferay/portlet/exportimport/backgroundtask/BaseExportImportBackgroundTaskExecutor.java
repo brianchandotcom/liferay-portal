@@ -17,9 +17,9 @@ package com.liferay.portlet.exportimport.backgroundtask;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
-import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
@@ -27,8 +27,6 @@ import com.liferay.portlet.exportimport.staging.StagingUtil;
 import java.io.Serializable;
 
 import java.util.Map;
-
-import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Akos Thurzo
@@ -43,12 +41,9 @@ public abstract class BaseExportImportBackgroundTaskExecutor
 
 	@Override
 	public String handleException(BackgroundTask backgroundTask, Exception e) {
-		ExportImportConfiguration exportImportConfiguration =
-			getExportImportConfiguration(backgroundTask);
-
 		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONObject(
 			getLocale(backgroundTask), e,
-			exportImportConfiguration.getSettingsMap());
+			getExportImportConfiguration(backgroundTask));
 
 		return jsonObject.toString();
 	}
@@ -66,8 +61,8 @@ public abstract class BaseExportImportBackgroundTaskExecutor
 			fetchExportImportConfiguration(exportImportConfigurationId);
 	}
 
-	protected TransactionAttribute transactionAttribute =
-		TransactionAttributeBuilder.build(
+	protected static final TransactionAttribute transactionAttribute =
+		TransactionAttribute.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 }

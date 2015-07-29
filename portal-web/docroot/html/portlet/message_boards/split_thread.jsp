@@ -38,9 +38,7 @@ boolean quote = false;
 boolean splitThread = true;
 %>
 
-<portlet:actionURL var="splitThreadURL">
-	<portlet:param name="struts_action" value="/message_boards/split_thread" />
-</portlet:actionURL>
+<portlet:actionURL name="/message_boards/split_thread" var="splitThreadURL" />
 
 <aui:form action="<%= splitThreadURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "splitThread();" %>'>
 	<aui:input name="messageId" type="hidden" value="<%= messageId %>" />
@@ -82,7 +80,7 @@ boolean splitThread = true;
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, message);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(0));
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, Integer.valueOf(0));
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(false));
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, message);
 	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
@@ -142,7 +140,7 @@ boolean splitThread = true;
 
 		var nameEl = document.getElementById('<portlet:namespace />categoryName');
 
-		nameEl.href = '<portlet:renderURL><portlet:param name="struts_action" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=' + categoryId;
+		nameEl.href = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=' + categoryId;
 		nameEl.innerHTML = categoryName + '&nbsp;';
 	}
 

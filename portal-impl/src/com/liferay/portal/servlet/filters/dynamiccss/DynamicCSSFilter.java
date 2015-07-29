@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -66,8 +65,6 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 		_tempDir = new File(tempDir, _TEMP_DIR);
 
 		_tempDir.mkdirs();
-
-		DynamicCSSUtil.init(_servletContext);
 	}
 
 	protected String getCacheFileName(HttpServletRequest request) {
@@ -97,7 +94,6 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 			FilterChain filterChain)
 		throws Exception {
 
-		boolean bundleResource = false;
 		ServletContext servletContext = _servletContext;
 
 		String requestPath = getRequestPath(request);
@@ -105,16 +101,19 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 		URL resourceURL = _servletContext.getResource(requestPath);
 
 		if (resourceURL == null) {
-			resourceURL = PortalWebResourcesUtil.getServletContextResource(
-				requestPath);
+			ServletContext resourceServletContext =
+				PortalWebResourcesUtil.getPathServletContext(requestPath);
+
+			if (resourceServletContext != null) {
+				resourceURL = PortalWebResourcesUtil.getResource(
+					resourceServletContext, requestPath);
+			}
 
 			if (resourceURL == null) {
 				return null;
 			}
 
-			bundleResource = true;
-			servletContext = PortalWebResourcesUtil.getServletContext(
-				PortalWebResourceConstants.RESOURCE_TYPE_CSS);
+			servletContext = resourceServletContext;
 		}
 
 		String cacheCommonFileName = getCacheFileName(request);
@@ -144,19 +143,13 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 		try {
 			if (requestPath.endsWith(_CSS_EXTENSION)) {
 				if (_log.isInfoEnabled()) {
-					_log.info("Parsing SASS on CSS " + requestPath);
+					_log.info("Replacing tokens on CSS " + requestPath);
 				}
 
 				content = StringUtil.read(resourceURL.openStream());
 
-				if (bundleResource) {
-					dynamicContent = DynamicCSSUtil.replaceToken(
-						servletContext, request, content);
-				}
-				else {
-					dynamicContent = DynamicCSSUtil.parseSass(
-						servletContext, request, requestPath, content);
-				}
+				dynamicContent = DynamicCSSUtil.replaceToken(
+					servletContext, request, content);
 
 				response.setContentType(ContentTypes.TEXT_CSS);
 
@@ -164,7 +157,8 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 			}
 			else if (requestPath.endsWith(_JSP_EXTENSION)) {
 				if (_log.isInfoEnabled()) {
-					_log.info("Parsing SASS on JSP or servlet " + requestPath);
+					_log.info(
+						"Replacing tokens on JSP or servlet " + requestPath);
 				}
 
 				BufferCacheServletResponse bufferCacheServletResponse =
@@ -178,8 +172,8 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 				content = bufferCacheServletResponse.getString();
 
-				dynamicContent = DynamicCSSUtil.parseSass(
-					servletContext, request, requestPath, content);
+				dynamicContent = DynamicCSSUtil.replaceToken(
+					servletContext, request, content);
 
 				FileUtil.write(
 					cacheContentTypeFile,
@@ -190,7 +184,7 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 			}
 		}
 		catch (Exception e) {
-			_log.error("Unable to parse SASS on CSS " + requestPath, e);
+			_log.error("Unable to replace tokens in CSS " + requestPath, e);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(content);
@@ -227,7 +221,7 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 	protected boolean isModuleRequest(HttpServletRequest request) {
 		String requestURI = request.getRequestURI();
 
-		if (PortalWebResourcesUtil.isResourceContextPath(requestURI)) {
+		if (PortalWebResourcesUtil.hasContextPath(requestURI)) {
 			return false;
 		}
 

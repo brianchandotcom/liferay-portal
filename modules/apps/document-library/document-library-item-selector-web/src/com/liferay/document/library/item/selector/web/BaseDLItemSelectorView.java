@@ -16,9 +16,11 @@ package com.liferay.document.library.item.selector.web;
 
 import com.liferay.document.library.item.selector.web.display.context.DLItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.ItemSelectorReturnType;
 
 import java.io.IOException;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -31,9 +33,8 @@ import javax.servlet.ServletResponse;
 /**
  * @author Roberto Díaz
  */
-public abstract class BaseDLItemSelectorView
-	<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType>
-		implements DLItemSelectorView<T, S> {
+public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
+	implements DLItemSelectorView<T> {
 
 	@Override
 	public String[] getMimeTypes() {
@@ -42,6 +43,19 @@ public abstract class BaseDLItemSelectorView
 
 	public ServletContext getServletContext() {
 		return _servletContext;
+	}
+
+	@Override
+	public String getTitle(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content/Language", locale);
+
+		return resourceBundle.getString("documents-and-media");
+	}
+
+	@Override
+	public boolean isShowSearch() {
+		return true;
 	}
 
 	@Override

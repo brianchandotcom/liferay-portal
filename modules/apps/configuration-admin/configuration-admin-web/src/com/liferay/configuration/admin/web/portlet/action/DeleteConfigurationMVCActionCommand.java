@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.Configuration;
@@ -51,10 +51,10 @@ public class DeleteConfigurationMVCActionCommand implements MVCActionCommand {
 
 	@Override
 	public boolean processAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortletException {
 
-		String pid = ParamUtil.getString(portletRequest, "pid");
+		String pid = ParamUtil.getString(actionRequest, "pid");
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Deleting configuration for service " + pid);

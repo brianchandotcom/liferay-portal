@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ActionResult;
-import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
@@ -29,9 +28,7 @@ import com.liferay.portal.kernel.portlet.toolbar.PortletToolbar;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -374,26 +371,7 @@ public class PortletContainerImpl implements PortletContainer {
 			_log.debug("Content type " + contentType);
 		}
 
-		UploadServletRequest uploadServletRequest = null;
-
 		try {
-			if ((contentType != null) &&
-				contentType.startsWith(ContentTypes.MULTIPART_FORM_DATA)) {
-
-				LiferayPortletConfig liferayPortletConfig =
-					(LiferayPortletConfig)invokerPortlet.getPortletConfig();
-
-				if (invokerPortlet.isStrutsPortlet() ||
-					liferayPortletConfig.isCopyRequestParameters() ||
-					!liferayPortletConfig.isWARFile()) {
-
-					uploadServletRequest = PortalUtil.getUploadServletRequest(
-						request);
-
-					request = uploadServletRequest;
-				}
-			}
-
 			ActionRequestImpl actionRequestImpl = ActionRequestFactory.create(
 				request, portlet, invokerPortlet, portletContext, windowState,
 				portletMode, portletPreferences, layout.getPlid());
@@ -449,10 +427,6 @@ public class PortletContainerImpl implements PortletContainer {
 			return new ActionResult(events, redirectLocation);
 		}
 		finally {
-			if (uploadServletRequest != null) {
-				uploadServletRequest.cleanUp();
-			}
-
 			ServiceContextThreadLocal.popServiceContext();
 		}
 	}

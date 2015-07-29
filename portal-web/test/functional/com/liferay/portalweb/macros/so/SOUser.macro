@@ -8,11 +8,15 @@
 		</execute>
 
 		<execute macro="User#addCP">
+			<var name="userBirthday" value="${userBirthday}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
 			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userGender" value="${userGender}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -20,6 +24,8 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
+			<var name="newPassword" value="${newPassword}" />
+			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
@@ -72,8 +78,12 @@
 			</elseif>
 			<else>
 				<execute macro="User#loginPG">
+					<var name="authenticationMethod" value="${authenticationMethod}" />
+					<var name="nodePort" value="${nodePort}" />
 					<var name="password" value="test" />
+					<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 					<var name="userEmailAddress" value="test@liferay.com" />
+					<var name="userScreenName" value="${userScreenName}" />
 				</execute>
 			</else>
 		</if>
@@ -123,7 +133,16 @@
 	</command>
 
 	<command name="viewNonSORole">
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="SOUserBar#USER_BAR" />
 		<execute function="AssertTextNotPresent" value1="Dashboard" />
@@ -159,7 +178,16 @@
 	</command>
 
 	<command name="viewSORole">
-		<execute macro="Page#openURL" />
+		<execute macro="Page#openURL">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 
 		<execute function="AssertElementPresent" locator1="SOUserBar#USER_BAR" />
 		<execute function="AssertTextEquals" locator1="SOUserBar#DASHBOARD" value1="Dashboard" />

@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>JSONWSAddress</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">JSONWSAddress</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>API_METHOD</td>
+	<td>//div[contains(@class,'lfr-api-method') and contains(@class,'lfr-api-section')]/h2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>P_AUTH_FIELD</td>
+	<td>//input[@name='p_auth']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

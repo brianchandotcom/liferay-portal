@@ -17,18 +17,13 @@ package com.liferay.portal.dao.orm.hibernate;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.dao.shard.ShardDataSourceTargetSource;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -111,49 +106,11 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 	}
 
 	protected DataSource getDataSource() {
-		ShardDataSourceTargetSource shardDataSourceTargetSource =
-			InfrastructureUtil.getShardDataSourceTargetSource();
-
-		if (shardDataSourceTargetSource != null) {
-			return shardDataSourceTargetSource.getDataSource();
-		}
-
 		return _dataSource;
 	}
 
 	protected SessionFactory getSessionFactory() {
-		ShardDataSourceTargetSource shardDataSourceTargetSource =
-			InfrastructureUtil.getShardDataSourceTargetSource();
-
-		if (shardDataSourceTargetSource == null) {
-			return getSessionFactoryImplementor();
-		}
-
-		DataSource dataSource = shardDataSourceTargetSource.getDataSource();
-
-		SessionFactory sessionFactory = getSessionFactory(dataSource);
-
-		if (sessionFactory != null) {
-			return sessionFactory;
-		}
-
-		sessionFactory = createSessionFactory(dataSource);
-
-		if (sessionFactory != null) {
-			putSessionFactory(dataSource, sessionFactory);
-		}
-
-		return sessionFactory;
-	}
-
-	protected SessionFactory getSessionFactory(DataSource dataSource) {
-		return _sessionFactories.get(dataSource);
-	}
-
-	protected void putSessionFactory(
-		DataSource dataSource, SessionFactory sessionFactory) {
-
-		_sessionFactories.put(dataSource, sessionFactory);
+		return getSessionFactoryImplementor();
 	}
 
 	@Override
@@ -165,7 +122,5 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 		PortletSessionFactoryImpl.class);
 
 	private DataSource _dataSource;
-	private final Map<DataSource, SessionFactory> _sessionFactories =
-		new HashMap<>();
 
 }

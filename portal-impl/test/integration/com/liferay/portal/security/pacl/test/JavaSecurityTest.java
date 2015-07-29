@@ -32,6 +32,9 @@ import java.security.Permissions;
 import java.security.Policy;
 import java.security.PrivilegedAction;
 import java.security.ProtectionDomain;
+import java.security.SecurityPermission;
+
+import java.util.concurrent.Callable;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -284,7 +287,23 @@ public class JavaSecurityTest {
 	@Test
 	public void testPolicy2() throws Exception {
 		try {
-			Policy.setPolicy(null);
+
+			// Simulate the stack length required to set the policy without
+			// actually setting it (in case we fail)
+
+			Callable<Void> callable = new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					SecurityManager sm = System.getSecurityManager();
+
+					sm.checkPermission(new SecurityPermission("setPolicy"));
+
+					return null;
+				}
+			};
+
+			callable.call();
 
 			Assert.fail();
 		}

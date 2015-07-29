@@ -645,7 +645,7 @@ public abstract class SocialRequestLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = SocialRequestLocalService.class)
+	@BeanReference(type = com.liferay.portlet.social.service.SocialRequestLocalService.class)
 	protected SocialRequestLocalService socialRequestLocalService;
 	@BeanReference(type = com.liferay.portlet.social.service.SocialRequestService.class)
 	protected com.liferay.portlet.social.service.SocialRequestService socialRequestService;

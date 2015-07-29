@@ -57,7 +57,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDraftBlogsEntry" priority="5">
+	<command name="DeleteDraftBlogsEntry" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>

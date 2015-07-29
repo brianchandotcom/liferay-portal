@@ -14,16 +14,12 @@
 
 package com.liferay.portal.kernel.mobile.device;
 
-import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
-import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Milen Dyankov
  * @author Michael C. Han
  */
-@MessagingProxy(mode = ProxyMode.SYNC)
 public interface DeviceRecognitionProvider {
 
 	public Device detectDevice(HttpServletRequest request);

@@ -213,7 +213,7 @@ public class BasicRegistryImpl implements Registry {
 		Integer serviceRanking = (Integer)properties.get("service.ranking");
 
 		if (serviceRanking == null) {
-			serviceRanking = new Integer(0);
+			serviceRanking = Integer.valueOf(0);
 		}
 
 		BasicServiceReference<T> basicServiceReference =
@@ -247,7 +247,7 @@ public class BasicRegistryImpl implements Registry {
 		Integer serviceRanking = (Integer)properties.get("service.ranking");
 
 		if (serviceRanking == null) {
-			serviceRanking = new Integer(0);
+			serviceRanking = Integer.valueOf(0);
 		}
 
 		BasicServiceReference<T> basicServiceReference =
@@ -295,7 +295,7 @@ public class BasicRegistryImpl implements Registry {
 		Integer serviceRanking = (Integer)properties.get("service.ranking");
 
 		if (serviceRanking == null) {
-			serviceRanking = new Integer(0);
+			serviceRanking = Integer.valueOf(0);
 		}
 
 		BasicServiceReference<T> basicServiceReference =

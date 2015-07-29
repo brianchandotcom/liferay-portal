@@ -15,15 +15,13 @@
 package com.liferay.document.library.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 
 /**
  * @author Roberto Díaz
  */
-public interface DLItemSelectorView
-	<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType>
-		extends ItemSelectorView<T, S> {
+public interface DLItemSelectorView<T extends ItemSelectorCriterion>
+	extends ItemSelectorView<T> {
 
 	public static final String DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
 		"DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";

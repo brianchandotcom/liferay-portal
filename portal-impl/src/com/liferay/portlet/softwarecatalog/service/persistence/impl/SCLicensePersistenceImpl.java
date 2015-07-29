@@ -2727,6 +2727,11 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		return _badColumnNames;
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return SCLicenseModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the s c license persistence.
 	 */

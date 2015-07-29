@@ -28,7 +28,7 @@
 
 			<aui:fieldset>
 				<div class="display-template">
-					<liferay-ui:ddm-template-selector
+					<liferay-ddm:template-selector
 						className="<%= BreadcrumbEntry.class.getName() %>"
 						displayStyle="<%= breadcrumbDisplayContext.getDisplayStyle() %>"
 						displayStyleGroupId="<%= breadcrumbDisplayContext.getDisplayStyleGroupId() %>"
@@ -98,5 +98,10 @@
 		}
 	);
 
-	Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) %>_', data);
+	Liferay.once(
+		'portletReady',
+		function(event) {
+			Liferay.Portlet.refresh('#p_p_id_<%= HtmlUtil.escapeJS(breadcrumbDisplayContext.getPortletResource()) %>_', data);
+		}
+	);
 </aui:script>

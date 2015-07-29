@@ -65,8 +65,8 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 					portletURL="<%= editLayoutURL %>"
 					rootNodeName="<%= group.getLayoutRootNodeName(false, themeDisplay.getLocale()) %>"
 					saveState="<%= false %>"
-					selPlid="<%= selPlid %>"
 					selectedLayoutIds="<%= selectedLayoutIds %>"
+					selPlid="<%= selPlid %>"
 					treeId="treeContainerPublicPages"
 				/>
 			</div>
@@ -89,8 +89,8 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 					privateLayout="<%= true %>"
 					rootNodeName="<%= group.getLayoutRootNodeName(true, themeDisplay.getLocale()) %>"
 					saveState="<%= false %>"
-					selPlid="<%= selPlid %>"
 					selectedLayoutIds="<%= selectedLayoutIds %>"
+					selPlid="<%= selPlid %>"
 					treeId="treeContainerPrivatePages"
 				/>
 			</div>
@@ -208,7 +208,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 			LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorViewDisplayContext.getLayoutItemSelectorCriterion();
 
 			for (ItemSelectorReturnType desiredItemSelectorReturnType : layoutItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) {
-				itemSelectorReturnTypeName = desiredItemSelectorReturnType.getName();
+				itemSelectorReturnTypeName = ClassUtil.getClassName(desiredItemSelectorReturnType);
 
 				break;
 			}
@@ -221,10 +221,10 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 			button.attr('data-returnType', '<%= itemSelectorReturnTypeName %>');
 
 			<c:choose>
-				<c:when test="<%= itemSelectorReturnTypeName.equals(DefaultItemSelectorReturnType.URL.getName()) %>">
+				<c:when test="<%= itemSelectorReturnTypeName.equals(URLItemSelectorReturnType.class.getName()) %>">
 					button.attr('data-value', url);
 				</c:when>
-				<c:when test="<%= itemSelectorReturnTypeName.equals(DefaultItemSelectorReturnType.UUID.getName()) %>">
+				<c:when test="<%= Validator.equals(ClassUtil.getClassName(itemSelectorReturnTypeName), UUIDItemSelectorReturnType.class.getName()) %>">
 					button.attr('data-value', uuid);
 				</c:when>
 			</c:choose>

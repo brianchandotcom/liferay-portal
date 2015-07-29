@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ETagFilter extends BasePortalFilter {
 
 	public static final String SKIP_FILTER =
-		ETagFilter.class.getName() + "SKIP_FILTER";
+		ETagFilter.class.getName() + "#SKIP_FILTER";
 
 	@Override
 	public boolean isFilterEnabled(

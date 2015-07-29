@@ -16,7 +16,7 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.xml.simple.Element;
-import com.liferay.util.xml.XMLFormatter;
+import com.liferay.util.xml.XMLUtil;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -141,7 +141,7 @@ public abstract class BasePreferencesImpl implements Serializable {
 	}
 
 	public void reset() {
-		_modifiedPreferences = new ConcurrentHashMap<>();
+		_modifiedPreferences = null;
 	}
 
 	public abstract void reset(String key) throws ReadOnlyException;
@@ -219,7 +219,7 @@ public abstract class BasePreferencesImpl implements Serializable {
 			return null;
 		}
 		else {
-			return XMLFormatter.fromCompactSafe(value);
+			return XMLUtil.fromCompactSafe(value);
 		}
 	}
 
@@ -278,7 +278,7 @@ public abstract class BasePreferencesImpl implements Serializable {
 			return _NULL_VALUE;
 		}
 		else {
-			return XMLFormatter.toCompactSafe(value);
+			return XMLUtil.toCompactSafe(value);
 		}
 	}
 
@@ -304,6 +304,16 @@ public abstract class BasePreferencesImpl implements Serializable {
 		}
 
 		return false;
+	}
+
+	protected void setOriginalPreferences(
+		Map<String, Preference> originalPreferences) {
+
+		_originalPreferences = originalPreferences;
+	}
+
+	protected void setOriginalXML(String originalXML) {
+		_originalXML = originalXML;
 	}
 
 	protected String toXML() {
@@ -339,8 +349,8 @@ public abstract class BasePreferencesImpl implements Serializable {
 	private static final String _NULL_VALUE = "NULL_VALUE";
 
 	private Map<String, Preference> _modifiedPreferences;
-	private final Map<String, Preference> _originalPreferences;
-	private final String _originalXML;
+	private Map<String, Preference> _originalPreferences;
+	private String _originalXML;
 	private final long _ownerId;
 	private final int _ownerType;
 

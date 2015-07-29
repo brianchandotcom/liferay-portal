@@ -95,7 +95,7 @@ public class FinalizeManagerTest {
 	}
 
 	@Test
-	public void testManuelClear() throws InterruptedException {
+	public void testManualClear() throws InterruptedException {
 		System.setProperty(_THREAD_ENABLED_KEY, StringPool.FALSE);
 
 		Object object = new Object();

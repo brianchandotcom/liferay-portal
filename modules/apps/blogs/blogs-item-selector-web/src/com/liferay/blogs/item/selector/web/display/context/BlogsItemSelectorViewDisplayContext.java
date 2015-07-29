@@ -16,12 +16,16 @@ package com.liferay.blogs.item.selector.web.display.context;
 
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.blogs.item.selector.web.BlogsItemSelectorView;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,20 +55,38 @@ public class BlogsItemSelectorViewDisplayContext {
 		return _blogsItemSelectorCriterion;
 	}
 
-	public String getDisplayStyle(HttpServletRequest request) {
-		return ParamUtil.getString(request, "displayStyle");
-	}
-
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
 	}
 
-	public PortletURL getPortletURL() {
-		return _portletURL;
+	public PortletURL getPortletURL(
+			HttpServletRequest request,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortletException {
+
+		PortletURL portletURL = PortletURLUtil.clone(
+			_portletURL, liferayPortletResponse);
+
+		portletURL.setParameter(
+			"selectedTab", String.valueOf(getTitle(request.getLocale())));
+
+		return portletURL;
 	}
 
 	public String getTitle(Locale locale) {
 		return _blogsItemSelectorView.getTitle(locale);
+	}
+
+	public PortletURL getUploadURL(
+		LiferayPortletResponse liferayPortletResponse) {
+
+		PortletURL portletURL = liferayPortletResponse.createActionURL(
+			PortletKeys.BLOGS);
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "/blogs/upload_editor_image");
+
+		return portletURL;
 	}
 
 	private final BlogsItemSelectorCriterion _blogsItemSelectorCriterion;

@@ -14,13 +14,10 @@
 
 package com.liferay.portal.spring.transaction;
 
-import com.liferay.portal.dao.shard.ShardLastSessionRecorderHibernateTransactionManager;
-import com.liferay.portal.kernel.dao.shard.ShardSessionFactoryTargetSource;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.SortedProperties;
-import com.liferay.portal.spring.hibernate.LastSessionRecorderHibernateTransactionManager;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -42,8 +39,7 @@ import org.springframework.transaction.support.AbstractPlatformTransactionManage
 public class TransactionManagerFactory {
 
 	public static AbstractPlatformTransactionManager createTransactionManager(
-			DataSource dataSource, SessionFactory sessionFactory,
-			ShardSessionFactoryTargetSource shardSessionFactoryTargetSource)
+			DataSource dataSource, SessionFactory sessionFactory)
 		throws Exception {
 
 		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
@@ -52,19 +48,7 @@ public class TransactionManagerFactory {
 			PropsValues.TRANSACTION_MANAGER_IMPL);
 
 		AbstractPlatformTransactionManager abstractPlatformTransactionManager =
-			null;
-
-		if ((shardSessionFactoryTargetSource != null) &&
-			(clazz == LastSessionRecorderHibernateTransactionManager.class)) {
-
-			abstractPlatformTransactionManager =
-				new ShardLastSessionRecorderHibernateTransactionManager(
-					shardSessionFactoryTargetSource);
-		}
-		else {
-			abstractPlatformTransactionManager =
-				(AbstractPlatformTransactionManager)clazz.newInstance();
-		}
+			(AbstractPlatformTransactionManager)clazz.newInstance();
 
 		Properties properties = PropsUtil.getProperties(
 			"transaction.manager.property.", true);

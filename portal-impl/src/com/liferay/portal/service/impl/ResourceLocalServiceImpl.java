@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.ResourceActionsException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,6 +36,8 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.ResourceLocalServiceBaseImpl;
+import com.liferay.portal.service.permission.ModelPermissions;
+import com.liferay.portal.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.util.ResourcePermissionsThreadLocal;
 
 import java.util.Arrays;
@@ -106,9 +109,9 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * <li>
 	 * If the service context specifies that default group or default guest
 	 * permissions are to be added, then only default permissions are added. See
-	 * {@link com.liferay.portal.service.ServiceContext#setAddGroupPermissions(
+	 * {@link ServiceContext#setAddGroupPermissions(
 	 * boolean)} and {@link
-	 * com.liferay.portal.service.ServiceContext#setAddGuestPermissions(
+	 * ServiceContext#setAddGuestPermissions(
 	 * boolean)}.
 	 * </li>
 	 * <li>
@@ -118,15 +121,15 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * If the service context specifies to derive default permissions, then
 	 * default group and guest permissions are derived from the model and
 	 * added. See {@link
-	 * com.liferay.portal.service.ServiceContext#setDeriveDefaultPermissions(
+	 * ServiceContext#setDeriveDefaultPermissions(
 	 * boolean)}.
 	 * </li>
 	 * <li>
 	 * Lastly group and guest permissions from the service
 	 * context are applied. See {@link
-	 * com.liferay.portal.service.ServiceContext#setGroupPermissions(String[])}
+	 * ServiceContext#setGroupPermissions(String[])}
 	 * and {@link
-	 * com.liferay.portal.service.ServiceContext#setGuestPermissions(String[])}.
+	 * ServiceContext#setGuestPermissions(String[])}.
 	 * </li>
 	 * </ol>
 	 *
@@ -146,8 +149,18 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			AuditedModel auditedModel, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (serviceContext.isAddGroupPermissions() ||
-			serviceContext.isAddGuestPermissions()) {
+		ModelPermissions modelPermissions =
+			serviceContext.getModelPermissions();
+
+		if ((modelPermissions != null) && !modelPermissions.isEmpty()) {
+			addModelResources(
+				auditedModel.getCompanyId(), getGroupId(auditedModel),
+				auditedModel.getUserId(), auditedModel.getModelClassName(),
+				String.valueOf(auditedModel.getPrimaryKeyObj()),
+				modelPermissions, getPermissionedModel(auditedModel));
+		}
+		else if (serviceContext.isAddGroupPermissions() ||
+				 serviceContext.isAddGuestPermissions()) {
 
 			addResources(
 				auditedModel.getCompanyId(), getGroupId(auditedModel),
@@ -167,10 +180,20 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				auditedModel.getCompanyId(), getGroupId(auditedModel),
 				auditedModel.getUserId(), auditedModel.getModelClassName(),
 				String.valueOf(auditedModel.getPrimaryKeyObj()),
-				serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions(),
+				serviceContext.getModelPermissions(),
 				getPermissionedModel(auditedModel));
 		}
+	}
+
+	@Override
+	public void addModelResources(
+			long companyId, long groupId, long userId, String name,
+			long primKey, ModelPermissions modelPermissions)
+		throws PortalException {
+
+		addModelResources(
+			companyId, groupId, userId, name, String.valueOf(primKey),
+			modelPermissions, null);
 	}
 
 	/**
@@ -199,6 +222,16 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		addModelResources(
 			companyId, groupId, userId, name, String.valueOf(primKey),
 			groupPermissions, guestPermissions, null);
+	}
+
+	@Override
+	public void addModelResources(
+			long companyId, long groupId, long userId, String name,
+			String primKey, ModelPermissions modelPermissions)
+		throws PortalException {
+
+		addModelResources(
+			companyId, groupId, userId, name, primKey, modelPermissions, null);
 	}
 
 	/**
@@ -321,7 +354,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 *
 	 * @param  auditedModel the model associated with the resource
 	 * @param  scope the scope of the resource. For more information see {@link
-	 *         com.liferay.portal.model.ResourceConstants}.
+	 *         ResourceConstants}.
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
@@ -341,7 +374,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * @param  name the resource's name, which should be a portlet ID if the
 	 *         resource is a portlet or the resource's class name otherwise
 	 * @param  scope the scope of the resource. For more information see {@link
-	 *         com.liferay.portal.model.ResourceConstants}.
+	 *         ResourceConstants}.
 	 * @param  primKey the primary key of the resource instance
 	 * @throws PortalException if a portal exception occurred
 	 */
@@ -360,7 +393,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * @param  name the resource's name, which should be a portlet ID if the
 	 *         resource is a portlet or the resource's class name otherwise
 	 * @param  scope the scope of the resource. For more information see {@link
-	 *         com.liferay.portal.model.ResourceConstants}.
+	 *         ResourceConstants}.
 	 * @param  primKey the primary key string of the resource instance
 	 * @throws PortalException if a portal exception occurred
 	 */
@@ -379,7 +412,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * @param  name a name for the resource, which should be a portlet ID if the
 	 *         resource is a portlet or the resource's class name otherwise
 	 * @param  scope the scope of the resource. For more information see {@link
-	 *         com.liferay.portal.model.ResourceConstants}.
+	 *         ResourceConstants}.
 	 * @param  primKey the primary key string of the resource
 	 * @return the new resource
 	 */
@@ -455,9 +488,31 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			auditedModel.getCompanyId(), getGroupId(auditedModel),
 			auditedModel.getModelClassName(),
 			String.valueOf(auditedModel.getPrimaryKeyObj()),
-			serviceContext.getGroupPermissions(),
-			serviceContext.getGuestPermissions(),
+			serviceContext.getModelPermissions(),
 			getPermissionedModel(auditedModel));
+	}
+
+	/**
+	 * Updates resources matching the group, name, and primary key at the
+	 * individual scope, setting new permissions.
+	 *
+	 * @param  companyId the primary key of the portal instance
+	 * @param  groupId the primary key of the group
+	 * @param  name the resource's name, which should be a portlet ID if the
+	 *         resource is a portlet or the resource's class name otherwise
+	 * @param  primKey the primary key of the resource instance
+	 * @param  modelPermissions the model permissions to be applied
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public void updateResources(
+			long companyId, long groupId, String name, long primKey,
+			ModelPermissions modelPermissions)
+		throws PortalException {
+
+		updateResources(
+			companyId, groupId, name, String.valueOf(primKey), modelPermissions,
+			null);
 	}
 
 	/**
@@ -486,6 +541,28 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 	/**
 	 * Updates resources matching the group, name, and primary key string at the
+	 * individual scope, setting new permissions.
+	 *
+	 * @param  companyId the primary key of the portal instance
+	 * @param  groupId the primary key of the group
+	 * @param  name the resource's name, which should be a portlet ID if the
+	 *         resource is a portlet or the resource's class name otherwise
+	 * @param  primKey the primary key string of the resource instance
+	 * @param  modelPermissions the model permissions to be applied
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public void updateResources(
+			long companyId, long groupId, String name, String primKey,
+			ModelPermissions modelPermissions)
+		throws PortalException {
+
+		updateResources(
+			companyId, groupId, name, primKey, modelPermissions, null);
+	}
+
+	/**
+	 * Updates resources matching the group, name, and primary key string at the
 	 * individual scope, setting new group and guest permissions.
 	 *
 	 * @param  companyId the primary key of the portal instance
@@ -503,9 +580,11 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			String[] groupPermissions, String[] guestPermissions)
 		throws PortalException {
 
+		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+			groupPermissions, guestPermissions);
+
 		updateResources(
-			companyId, groupId, name, primKey, groupPermissions,
-			guestPermissions, null);
+			companyId, groupId, name, primKey, modelPermissions, null);
 	}
 
 	/**
@@ -517,7 +596,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	 * @param name the resource's name, which should be a portlet ID if the
 	 *        resource is a portlet or the resource's class name otherwise
 	 * @param scope the scope of the resource. For more information see {@link
-	 *        com.liferay.portal.model.ResourceConstants}.
+	 *        ResourceConstants}.
 	 * @param primKey the primary key string of the resource instance
 	 * @param newPrimKey the new primary key string of the resource
 	 */
@@ -657,7 +736,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 	protected void addModelResources(
 			long companyId, long groupId, long userId, Resource resource,
-			String[] groupPermissions, String[] guestPermissions,
+			ModelPermissions modelPermissions,
 			PermissionedModel permissionedModel)
 		throws PortalException {
 
@@ -676,27 +755,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		String[] ownerPermissions = ownerActionIds.toArray(
 			new String[ownerActionIds.size()]);
 
-		// Group permissions
-
-		Role defaultGroupRole = null;
-
-		if (groupId > 0) {
-			defaultGroupRole = roleLocalService.getDefaultGroupRole(groupId);
-
-			if (groupPermissions == null) {
-				groupPermissions = new String[0];
-			}
-		}
-
-		// Guest permissions
-
-		Role guestRole = roleLocalService.getRole(
-			companyId, RoleConstants.GUEST);
-
-		if (guestPermissions == null) {
-			guestPermissions = new String[0];
-		}
-
 		if (resourceBlockLocalService.isSupported(resource.getName())) {
 			if (permissionedModel == null) {
 				throw new IllegalArgumentException(
@@ -709,17 +767,17 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				resource.getCompanyId(), groupId, resource.getName(),
 				permissionedModel, ownerRole.getRoleId(), ownerActionIds);
 
-			if (groupId > 0) {
-				resourceBlockLocalService.setIndividualScopePermissions(
-					resource.getCompanyId(), groupId, resource.getName(),
-					permissionedModel, defaultGroupRole.getRoleId(),
-					Arrays.asList(groupPermissions));
-			}
+			if (modelPermissions != null) {
+				for (String roleName : modelPermissions.getRoleNames()) {
+					Role role = getRole(
+						resource.getCompanyId(), groupId, roleName);
 
-			resourceBlockLocalService.setIndividualScopePermissions(
-				resource.getCompanyId(), groupId, resource.getName(),
-				permissionedModel, guestRole.getRoleId(),
-				Arrays.asList(guestPermissions));
+					resourceBlockLocalService.setIndividualScopePermissions(
+						resource.getCompanyId(), groupId, resource.getName(),
+						permissionedModel, role.getRoleId(),
+						modelPermissions.getActionIdsList(roleName));
+				}
+			}
 		}
 		else {
 			resourcePermissionLocalService.setOwnerResourcePermissions(
@@ -727,24 +785,39 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				resource.getScope(), resource.getPrimKey(),
 				ownerRole.getRoleId(), userId, ownerPermissions);
 
-			if (groupId > 0) {
-				resourcePermissionLocalService.setResourcePermissions(
-					resource.getCompanyId(), resource.getName(),
-					resource.getScope(), resource.getPrimKey(),
-					defaultGroupRole.getRoleId(), groupPermissions);
-			}
+			if (modelPermissions != null) {
+				for (String roleName : modelPermissions.getRoleNames()) {
+					Role role = getRole(
+						resource.getCompanyId(), groupId, roleName);
 
-			resourcePermissionLocalService.setResourcePermissions(
-				resource.getCompanyId(), resource.getName(),
-				resource.getScope(), resource.getPrimKey(),
-				guestRole.getRoleId(), guestPermissions);
+					resourcePermissionLocalService.setResourcePermissions(
+						resource.getCompanyId(), resource.getName(),
+						resource.getScope(), resource.getPrimKey(),
+						role.getRoleId(),
+						modelPermissions.getActionIds(roleName));
+				}
+			}
 		}
 	}
 
 	protected void addModelResources(
+			long companyId, long groupId, long userId, Resource resource,
+			String[] groupPermissions, String[] guestPermissions,
+			PermissionedModel permissionedModel)
+		throws PortalException {
+
+		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+			groupPermissions, guestPermissions);
+
+		addModelResources(
+			companyId, groupId, userId, resource, modelPermissions,
+			permissionedModel);
+	}
+
+	protected void addModelResources(
 			long companyId, long groupId, long userId, String name,
-			String primKey, String[] groupPermissions,
-			String[] guestPermissions, PermissionedModel permissionedModel)
+			String primKey, ModelPermissions modelPermissions,
+			PermissionedModel permissionedModel)
 		throws PortalException {
 
 		if (!PermissionThreadLocal.isAddResource()) {
@@ -778,8 +851,8 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 		try {
 			addModelResources(
-				companyId, groupId, userId, resource, groupPermissions,
-				guestPermissions, permissionedModel);
+				companyId, groupId, userId, resource, modelPermissions,
+				permissionedModel);
 		}
 		finally {
 			PermissionThreadLocal.setFlushResourceBlockEnabled(
@@ -789,10 +862,25 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 			PermissionCacheUtil.clearResourceBlockCache(
 				companyId, groupId, name);
-			PermissionCacheUtil.clearResourcePermissionCache(name, primKey);
+			PermissionCacheUtil.clearResourcePermissionCache(
+				ResourceConstants.SCOPE_INDIVIDUAL, name, primKey);
 
 			SearchEngineUtil.updatePermissionFields(name, primKey);
 		}
+	}
+
+	protected void addModelResources(
+			long companyId, long groupId, long userId, String name,
+			String primKey, String[] groupPermissions,
+			String[] guestPermissions, PermissionedModel permissionedModel)
+		throws PortalException {
+
+		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+			groupPermissions, guestPermissions);
+
+		addModelResources(
+			companyId, groupId, userId, name, primKey, modelPermissions,
+			permissionedModel);
 	}
 
 	protected void addResources(
@@ -914,7 +1002,8 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 			PermissionCacheUtil.clearResourceBlockCache(
 				companyId, groupId, name);
-			PermissionCacheUtil.clearResourcePermissionCache(name, primKey);
+			PermissionCacheUtil.clearResourcePermissionCache(
+				ResourceConstants.SCOPE_INDIVIDUAL, name, primKey);
 
 			SearchEngineUtil.updatePermissionFields(name, primKey);
 		}
@@ -985,6 +1074,22 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		return permissionedModel;
 	}
 
+	protected Role getRole(long companyId, long groupId, String roleName)
+		throws PortalException {
+
+		if (roleName.equals(RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE)) {
+			if (groupId == 0) {
+				throw new NoSuchRoleException(
+					"Specify a group ID other than 0 for role name " +
+						RoleConstants.PLACEHOLDER_DEFAULT_GROUP_ROLE);
+			}
+
+			return roleLocalService.getDefaultGroupRole(groupId);
+		}
+
+		return roleLocalService.getRole(companyId, roleName);
+	}
+
 	protected void logHasUserPermissions(
 		long userId, long resourceId, String actionId, StopWatch stopWatch,
 		int block) {
@@ -996,7 +1101,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		_log.debug(
 			"Checking user permissions block " + block + " for " + userId +
 				" " + resourceId + " " + actionId + " takes " +
-					stopWatch.getTime() + " ms");
+				stopWatch.getTime() + " ms");
 	}
 
 	protected void updateResourceBlocks(
@@ -1022,6 +1127,27 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 		resourceBlockLocalService.setIndividualScopePermissions(
 			companyId, groupId, resource.getName(), permissionedModel,
 			role.getRoleId(), Arrays.asList(guestPermissions));
+	}
+
+	protected void updateResourceBlocks(
+			long groupId, Resource resource, ModelPermissions modelPermissions,
+			PermissionedModel permissionedModel)
+		throws PortalException {
+
+		if (permissionedModel == null) {
+			throw new IllegalArgumentException("Permissioned model is null");
+		}
+
+		// Scope is assumed to always be individual
+
+		for (String roleName : modelPermissions.getRoleNames()) {
+			Role role = getRole(resource.getCompanyId(), groupId, roleName);
+
+			resourceBlockLocalService.setIndividualScopePermissions(
+				role.getCompanyId(), groupId, resource.getName(),
+				permissionedModel, role.getRoleId(),
+				modelPermissions.getActionIdsList(roleName));
+		}
 	}
 
 	protected void updateResourcePermissions(
@@ -1055,8 +1181,41 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 
 			resourcePermissionPersistence.update(resourcePermission);
 		}
+	}
 
-		PermissionCacheUtil.clearResourcePermissionCache(name, primKey);
+	protected void updateResourcePermissions(
+			Resource resource, ModelPermissions modelPermissions)
+		throws PortalException {
+
+		for (String roleName : modelPermissions.getRoleNames()) {
+			Role role = getRole(resource.getCompanyId(), 0, roleName);
+
+			List<String> actionIds = modelPermissions.getActionIdsList(
+				roleName);
+
+			resourcePermissionLocalService.setResourcePermissions(
+				resource.getCompanyId(), resource.getName(),
+				resource.getScope(), resource.getPrimKey(), role.getRoleId(),
+				actionIds.toArray(new String[actionIds.size()]));
+		}
+	}
+
+	protected void updateResources(
+			long companyId, long groupId, String name, String primKey,
+			ModelPermissions modelPermissions,
+			PermissionedModel permissionedModel)
+		throws PortalException {
+
+		Resource resource = getResource(
+			companyId, name, ResourceConstants.SCOPE_INDIVIDUAL, primKey);
+
+		if (resourceBlockLocalService.isSupported(name)) {
+			updateResourceBlocks(
+				groupId, resource, modelPermissions, permissionedModel);
+		}
+		else {
+			updateResourcePermissions(resource, modelPermissions);
+		}
 	}
 
 	protected void updateResources(

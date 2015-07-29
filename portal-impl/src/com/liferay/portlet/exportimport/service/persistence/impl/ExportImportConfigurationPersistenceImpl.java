@@ -3437,6 +3437,11 @@ public class ExportImportConfigurationPersistenceImpl
 		return _badColumnNames;
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return ExportImportConfigurationModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the export import configuration persistence.
 	 */

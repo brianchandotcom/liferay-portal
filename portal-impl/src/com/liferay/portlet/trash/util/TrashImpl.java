@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -185,7 +184,8 @@ public class TrashImpl implements Trash {
 		SessionMessages.add(
 			actionRequest,
 			PortalUtil.getPortletId(actionRequest) +
-				SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA, data);
+				SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA,
+			data);
 	}
 
 	@Override
@@ -209,9 +209,8 @@ public class TrashImpl implements Trash {
 
 	@Override
 	public void deleteEntriesAttachments(
-			long companyId, long repositoryId, Date date,
-			String[] attachmentFileNames)
-		throws PortalException {
+		long companyId, long repositoryId, Date date,
+		String[] attachmentFileNames) {
 
 		for (String attachmentFileName : attachmentFileNames) {
 			String trashTime = TrashUtil.getTrashTime(
@@ -382,12 +381,12 @@ public class TrashImpl implements Trash {
 
 	@Override
 	public String getOriginalTitle(String title) {
-		return getOriginalTitle(title, "title", StringPool.SLASH);
+		return getOriginalTitle(title, "title", TRASH_PREFIX);
 	}
 
 	@Override
 	public String getOriginalTitle(String title, String paramName) {
-		return getOriginalTitle(title, paramName, StringPool.SLASH);
+		return getOriginalTitle(title, paramName, TRASH_PREFIX);
 	}
 
 	@Override
@@ -403,7 +402,7 @@ public class TrashImpl implements Trash {
 
 	@Override
 	public String getTrashTitle(long trashEntryId) {
-		return getTrashTitle(trashEntryId, StringPool.SLASH);
+		return getTrashTitle(trashEntryId, TRASH_PREFIX);
 	}
 
 	@Override
@@ -477,12 +476,7 @@ public class TrashImpl implements Trash {
 				"trashEntryId", String.valueOf(trashEntry.getEntryId()));
 		}
 
-		portletURL.setParameter("type", trashRenderer.getType());
-		portletURL.setParameter(
-			"status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
-		portletURL.setParameter("showActions", Boolean.FALSE.toString());
 		portletURL.setParameter("showAssetMetadata", Boolean.TRUE.toString());
-		portletURL.setParameter("showEditURL", Boolean.FALSE.toString());
 
 		return portletURL;
 	}
@@ -552,6 +546,11 @@ public class TrashImpl implements Trash {
 		return isTrashEnabled(GroupLocalServiceUtil.getGroup(groupId));
 	}
 
+	@Override
+	public boolean isValidTrashTitle(String title) {
+		return isValidTrashTitle(title, TRASH_PREFIX);
+	}
+
 	protected void addBreadcrumbEntries(
 			HttpServletRequest request,
 			LiferayPortletResponse liferayPortletResponse, String className,
@@ -610,7 +609,7 @@ public class TrashImpl implements Trash {
 	protected String getOriginalTitle(
 		String title, String paramName, String prefix) {
 
-		if (!title.startsWith(prefix)) {
+		if (!isValidTrashTitle(title, prefix)) {
 			return title;
 		}
 
@@ -650,6 +649,16 @@ public class TrashImpl implements Trash {
 	protected String getTrashTitle(long trashEntryId, String prefix) {
 		return prefix.concat(String.valueOf(trashEntryId));
 	}
+
+	protected boolean isValidTrashTitle(String title, String prefix) {
+		if (title.startsWith(prefix)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected final String TRASH_PREFIX = StringPool.SLASH;
 
 	private static final Log _log = LogFactoryUtil.getLog(TrashImpl.class);
 

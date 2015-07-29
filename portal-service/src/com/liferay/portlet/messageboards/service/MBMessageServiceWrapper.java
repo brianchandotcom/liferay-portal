@@ -80,8 +80,8 @@ public class MBMessageServiceWrapper implements MBMessageService,
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #addMessage(long, String,
-	String, String, java.util.List, boolean, double, boolean,
-	com.liferay.portal.service.ServiceContext)}
+	String, String, List, boolean, double, boolean,
+	ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -120,8 +120,8 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
-	long)}
+	* @deprecated As of 7.0.0, replaced by {@link
+	#deleteDiscussionMessage(long)}
 	*/
 	@Deprecated
 	@Override

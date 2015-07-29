@@ -770,10 +770,11 @@ public class PortletRequestModel implements Serializable {
 	}
 
 	private static boolean _isValidAttributeName(String name) {
-		if (StringUtil.equalsIgnoreCase(name, "j_password") ||
+		if (StringUtil.equalsIgnoreCase(
+				name, WebKeys.PORTLET_RENDER_PARAMETERS) ||
+			StringUtil.equalsIgnoreCase(name, "j_password") ||
 			StringUtil.equalsIgnoreCase(name, "LAYOUT_CONTENT") ||
 			StringUtil.equalsIgnoreCase(name, "LAYOUTS") ||
-			StringUtil.equalsIgnoreCase(name, "PORTLET_RENDER_PARAMETERS") ||
 			StringUtil.equalsIgnoreCase(name, "USER_PASSWORD") ||
 			name.startsWith("javax.") || name.startsWith("liferay-ui:")) {
 

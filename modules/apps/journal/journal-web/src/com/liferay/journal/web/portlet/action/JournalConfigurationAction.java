@@ -14,21 +14,23 @@
 
 package com.liferay.journal.web.portlet.action;
 
-import com.liferay.journal.web.constants.JournalPortletKeys;
+import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
+import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.web.context.util.JournalWebRequestHelper;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.util.ContentUtil;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.RenderRequest;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,95 +44,94 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
 	service = ConfigurationAction.class
 )
-public class JournalConfigurationAction extends DefaultConfigurationAction {
+public class JournalConfigurationAction
+	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
-	public String getJspPath(RenderRequest renderRequest) {
+	public String getJspPath(HttpServletRequest request) {
 		return "/configuration.jsp";
 	}
 
 	@Override
 	public void postProcess(
-		long companyId, PortletRequest portletRequest,
-		PortletPreferences portletPreferences) {
+			long companyId, PortletRequest portletRequest, Settings settings)
+		throws PortalException {
 
-		String languageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getSiteDefault());
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		JournalWebRequestHelper journalWebRequestHelper =
+			new JournalWebRequestHelper(request);
+
+		JournalGroupServiceConfiguration journalGroupServiceConfiguration =
+			journalWebRequestHelper.getJournalGroupServiceConfiguration();
 
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleAddedBody_" + languageId,
-			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_ADDED_BODY));
+			portletRequest, modifiableSettings, "emailArticleAddedBody",
+			journalGroupServiceConfiguration.emailArticleAddedBody());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleAddedSubject_" + languageId,
-			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_ADDED_SUBJECT));
+			portletRequest, modifiableSettings, "emailArticleAddedSubject",
+			journalGroupServiceConfiguration.emailArticleAddedSubject());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleApprovalDeniedBody_" + languageId,
-			ContentUtil.get(
-				PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_BODY));
+			portletRequest, modifiableSettings,
+			"emailArticleApprovalDeniedBody",
+			journalGroupServiceConfiguration.emailArticleApprovalDeniedBody());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleApprovalDeniedSubject_" + languageId,
-			ContentUtil.get(
-				PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_SUBJECT));
+			portletRequest, modifiableSettings,
+			"emailArticleApprovalDeniedSubject",
+			journalGroupServiceConfiguration.
+				emailArticleApprovalDeniedSubject());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleApprovalGrantedBody_" + languageId,
-			ContentUtil.get(
-				PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_BODY));
+			portletRequest, modifiableSettings,
+			"emailArticleApprovalGrantedBody",
+			journalGroupServiceConfiguration.emailArticleApprovalGrantedBody());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleApprovalGrantedSubject_" + languageId,
-			ContentUtil.get(
-				PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_SUBJECT));
+			portletRequest, modifiableSettings,
+			"emailArticleApprovalGrantedSubject",
+			journalGroupServiceConfiguration.
+				emailArticleApprovalGrantedSubject());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleApprovalRequestedBody_" + languageId,
-			ContentUtil.get(
-				PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_BODY));
+			portletRequest, modifiableSettings,
+			"emailArticleApprovalRequestedBody",
+			journalGroupServiceConfiguration.
+				emailArticleApprovalRequestedBody());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleApprovalRequestedSubject_" + languageId,
-			ContentUtil.get(
-				PropsValues.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT));
+			portletRequest, modifiableSettings,
+			"emailArticleApprovalRequestedSubject",
+			journalGroupServiceConfiguration.
+				emailArticleApprovalRequestedSubject());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleMovedFromFolderBody_" + languageId,
-			ContentUtil.get(
-				PropsValues.JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_BODY));
+			portletRequest, modifiableSettings,
+			"emailArticleMovedFromFolderBody",
+			journalGroupServiceConfiguration.emailArticleMovedFromFolderBody());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleMovedFromFolderSubject_" + languageId,
-			ContentUtil.get(
-				PropsValues.JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_SUBJECT));
+			portletRequest, modifiableSettings,
+			"emailArticleMovedFromFolderSubject",
+			journalGroupServiceConfiguration.
+				emailArticleMovedFromFolderSubject());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleMovedToFolderBody_" + languageId,
-			ContentUtil.get(
-				PropsValues.JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_BODY));
+			portletRequest, modifiableSettings, "emailArticleMovedToFolderBody",
+			journalGroupServiceConfiguration.emailArticleMovedToFolderBody());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleMovedToFolderSubject_" + languageId,
-			ContentUtil.get(
-				PropsValues.JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_SUBJECT));
+			portletRequest, modifiableSettings,
+			"emailArticleMovedToFolderSubject",
+			journalGroupServiceConfiguration.
+				emailArticleMovedToFolderSubject());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleReviewBody_" + languageId,
-			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_REVIEW_BODY));
+			portletRequest, modifiableSettings, "emailArticleReviewBody",
+			journalGroupServiceConfiguration.emailArticleReviewBody());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleReviewSubject_" + languageId,
-			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_REVIEW_SUBJECT));
+			portletRequest, modifiableSettings, "emailArticleReviewSubject",
+			journalGroupServiceConfiguration.emailArticleReviewSubject());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleUpdatedBody_" + languageId,
-			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_UPDATED_BODY));
+			portletRequest, modifiableSettings, "emailArticleUpdatedBody",
+			journalGroupServiceConfiguration.emailArticleUpdatedBody());
 		removeDefaultValue(
-			portletRequest, portletPreferences,
-			"emailArticleUpdatedSubject_" + languageId,
-			ContentUtil.get(PropsValues.JOURNAL_EMAIL_ARTICLE_UPDATED_SUBJECT));
+			portletRequest, modifiableSettings, "emailArticleUpdatedSubject",
+			journalGroupServiceConfiguration.emailArticleUpdatedSubject());
 	}
 
 	@Override

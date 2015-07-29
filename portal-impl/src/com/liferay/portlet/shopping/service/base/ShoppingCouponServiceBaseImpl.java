@@ -417,7 +417,7 @@ public abstract class ShoppingCouponServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingCouponLocalService.class)
 	protected com.liferay.portlet.shopping.service.ShoppingCouponLocalService shoppingCouponLocalService;
-	@BeanReference(type = ShoppingCouponService.class)
+	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingCouponService.class)
 	protected ShoppingCouponService shoppingCouponService;
 	@BeanReference(type = ShoppingCouponPersistence.class)
 	protected ShoppingCouponPersistence shoppingCouponPersistence;

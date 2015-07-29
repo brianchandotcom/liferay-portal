@@ -16,8 +16,8 @@ package com.liferay.portal.template.freemarker;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
@@ -84,20 +84,26 @@ public class FreeMarkerTemplateResourceLoader
 		_defaultTemplateResourceLoader = new DefaultTemplateResourceLoader(
 			TemplateConstants.LANG_TYPE_FTL,
 			_freemarkerEngineConfiguration.templateParsers(),
-			_freemarkerEngineConfiguration.resourceModificationCheck());
+			_freemarkerEngineConfiguration.resourceModificationCheck(),
+			_multiVMPool, _singleVMPool);
 	}
 
 	@Reference(unbind = "-")
-	protected void setMultiVMPoolUtil(MultiVMPoolUtil multiVMPoolUtil) {
+	protected void setMultiVMPool(MultiVMPool multiVMPool) {
+		_multiVMPool = multiVMPool;
 	}
 
 	@Reference(unbind = "-")
-	protected void setSingleVMPoolUtil(SingleVMPoolUtil singleVMPoolUtil) {
+	protected void setSingleVMPool(SingleVMPool singleVMPool) {
+		_singleVMPool = singleVMPool;
 	}
 
 	private static volatile DefaultTemplateResourceLoader
 		_defaultTemplateResourceLoader;
 	private static volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
+
+	private MultiVMPool _multiVMPool;
+	private SingleVMPool _singleVMPool;
 
 }

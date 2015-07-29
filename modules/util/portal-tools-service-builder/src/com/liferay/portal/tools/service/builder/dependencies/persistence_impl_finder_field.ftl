@@ -6,44 +6,44 @@
 	<#assign finderColConjunction = " AND " + finder.where>
 </#if>
 
+<#if entity.hasCompoundPK() && finderCol.isPrimary()>
+	<#assign finderFieldName = entity.alias + ".id." + finderColName>
+<#else>
+	<#assign finderFieldName = entity.alias + "." + finderColName>
+</#if>
+
+<#if serviceBuilder.getSqlType(packagePath + ".model." + entity.getName(), finderCol.getName(), finderCol.getType()) == "CLOB">
+	<#assign textFinderFieldName = "CAST_CLOB_TEXT(" + finderFieldName + ")">
+<#else>
+	<#assign textFinderFieldName = finderFieldName>
+</#if>
+
 <#if !finderCol.isPrimitiveType()>
 	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_1${finderFieldSuffix} =
 
 	<#if finderCol.comparator == "=">
-		"${entity.alias}<#if entity.hasCompoundPK() && finderCol.isPrimary()>.id</#if>.${finderColName} IS NULL${finderColConjunction}"
+		"${finderFieldName} IS NULL${finderColConjunction}"
 	<#elseif finderCol.comparator == "<>" || finderCol.comparator = "!=">
-		"${entity.alias}<#if entity.hasCompoundPK() && finderCol.isPrimary()>.id</#if>.${finderColName} IS NOT NULL${finderColConjunction}"
+		"${finderFieldName} IS NOT NULL${finderColConjunction}"
 	<#else>
-		"${entity.alias}<#if entity.hasCompoundPK() && finderCol.isPrimary()>.id</#if>.${finderColName} ${finderCol.comparator} NULL${finderColConjunction}"
+		"${finderFieldName} ${finderCol.comparator} NULL${finderColConjunction}"
 	</#if>
 
 	;
 </#if>
 
 <#if finderCol.type == "String" && !finderCol.isCaseSensitive()>
-	<#if entity.hasCompoundPK() && finderCol.isPrimary()>
-		<#assign finderColExpression = "lower(" + entity.alias + ".id." + finderColName + ") " + finderCol.comparator + " ?">
-	<#else>
-		<#assign finderColExpression = "lower(" + entity.alias + "." + finderColName + ") " + finderCol.comparator + " ?">
-	</#if>
+	<#assign finderColExpression = "lower(" + textFinderFieldName + ") " + finderCol.comparator + " ?">
 <#else>
-	<#if entity.hasCompoundPK() && finderCol.isPrimary()>
-		<#assign finderColExpression = entity.alias + ".id." + finderColName + " " + finderCol.comparator + " ?">
-	<#else>
-		<#assign finderColExpression = entity.alias + "." + finderColName + " " + finderCol.comparator + " ?">
-	</#if>
+	<#assign finderColExpression = textFinderFieldName + " " + finderCol.comparator + " ?">
 </#if>
 
 private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_2${finderFieldSuffix} = "${finderColExpression}${finderColConjunction}";
 
 <#if finderCol.type == "String">
-	<#if entity.hasCompoundPK() && finderCol.isPrimary()>
-		<#assign finderColExpression = entity.alias + ".id." + finderColName + " " + finderCol.comparator + " ''">
-	<#else>
-		<#assign finderColExpression = entity.alias + "." + finderColName + " " + finderCol.comparator + " ''">
-	</#if>
+	<#assign finderColExpression = textFinderFieldName + " " + finderCol.comparator + " ''">
 
-	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_3${finderFieldSuffix} = "(${entity.alias}<#if entity.hasCompoundPK() && finderCol.isPrimary()>.id</#if>.${finderColName} IS NULL OR ${finderColExpression})${finderColConjunction}";
+	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_3${finderFieldSuffix} = "(${finderFieldName} IS NULL OR ${finderColExpression})${finderColConjunction}";
 </#if>
 
 <#if finderCol.hasArrayableOperator() && (finderColConjunction != "") && (finderCol.type == "String")>
@@ -55,11 +55,5 @@ private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol
 </#if>
 
 <#if finderCol.hasArrayableOperator() && (finderCol.type != "String")>
-	<#if entity.hasCompoundPK() && finderCol.isPrimary()>
-		<#assign finderColExpression = entity.alias + ".id." + finderColName>
-	<#else>
-		<#assign finderColExpression = entity.alias + "." + finderColName>
-	</#if>
-
-	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_7${finderFieldSuffix} = "${finderColExpression}<#if finderCol.isArrayableAndOperator()> NOT IN (<#else> IN (</#if>";
+	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_7${finderFieldSuffix} = "${finderFieldName}<#if finderCol.isArrayableAndOperator()> NOT IN (<#else> IN (</#if>";
 </#if>

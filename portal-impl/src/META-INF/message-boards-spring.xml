@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+	<bean id="com.liferay.portlet.messageboards.action.BanUserMVCActionCommand" class="com.liferay.portlet.messageboards.action.BanUserMVCActionCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.CaptchaMVCResourceCommand" class="com.liferay.portlet.messageboards.action.CaptchaMVCResourceCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.DeleteThreadMVCActionCommand" class="com.liferay.portlet.messageboards.action.DeleteThreadMVCActionCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.EditCategoryMVCActionCommand" class="com.liferay.portlet.messageboards.action.EditCategoryMVCActionCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.EditCategoryMVCRenderCommand" class="com.liferay.portlet.messageboards.action.EditCategoryMVCRenderCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.EditMessageAttachmentsMVCActionCommand" class="com.liferay.portlet.messageboards.action.EditMessageAttachmentsMVCActionCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.EditMessageAttachmentsMVCRenderCommand" class="com.liferay.portlet.messageboards.action.EditMessageAttachmentsMVCRenderCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.EditMessageMVCActionCommand" class="com.liferay.portlet.messageboards.action.EditMessageMVCActionCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.EditMessageMVCRenderCommand" class="com.liferay.portlet.messageboards.action.EditMessageMVCRenderCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.FindCategoryAction" class="com.liferay.portlet.messageboards.action.FindCategoryAction" />
+	<bean id="com.liferay.portlet.messageboards.action.FindMessageAction" class="com.liferay.portlet.messageboards.action.FindMessageAction" />
+	<bean id="com.liferay.portlet.messageboards.action.FindRecentPostsAction" class="com.liferay.portlet.messageboards.action.FindRecentPostsAction" />
+	<bean id="com.liferay.portlet.messageboards.action.FindThreadAction" class="com.liferay.portlet.messageboards.action.FindThreadAction" />
+	<bean id="com.liferay.portlet.messageboards.action.MoveCategoryMVCActionCommand" class="com.liferay.portlet.messageboards.action.MoveCategoryMVCActionCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.MoveCategoryMVCRenderAction" class="com.liferay.portlet.messageboards.action.MoveCategoryMVCRenderAction" />
+	<bean id="com.liferay.portlet.messageboards.action.MoveThreadMVCActionCommand" class="com.liferay.portlet.messageboards.action.MoveThreadMVCActionCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.MoveThreadMVCRenderCommand" class="com.liferay.portlet.messageboards.action.MoveThreadMVCRenderCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.RestoreEntryMVCRenderCommand" class="com.liferay.portlet.messageboards.action.RestoreEntryMVCRenderCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.RSSAction" class="com.liferay.portlet.messageboards.action.RSSAction" />
+	<bean id="com.liferay.portlet.messageboards.action.SearchMVCRenderCommand" class="com.liferay.portlet.messageboards.action.SearchMVCRenderCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.SelectCategoryMVCRenderCommand" class="com.liferay.portlet.messageboards.action.SelectCategoryMVCRenderCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.SplitThreadMVCActionCommand" class="com.liferay.portlet.messageboards.action.SplitThreadMVCActionCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.SplitThreadMVCRenderCommand" class="com.liferay.portlet.messageboards.action.SplitThreadMVCRenderCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.ViewMessageMVCRenderCommand" class="com.liferay.portlet.messageboards.action.ViewMessageMVCRenderCommand" />
+	<bean id="com.liferay.portlet.messageboards.action.ViewMVCRenderCommand" class="com.liferay.portlet.messageboards.action.ViewMVCRenderCommand" />
+</beans>

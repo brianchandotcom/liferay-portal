@@ -8,11 +8,18 @@
  * @param label
  * @param name
  * @param options
+ * @param required
  * @param visible
  */
 {template .radio}
 	<div class="form-group field-wrapper{$visible ? '' : ' hide'}" data-fieldname="{$name}">
-		<span class="control-label">{$label}</span>
+		<span class="control-label">
+			{$label}
+
+			{if $required}
+				<b>&nbsp;*</b>
+			{/if}
+		</span>
 
 		{foreach $option in $options}
 			<div class="radio">

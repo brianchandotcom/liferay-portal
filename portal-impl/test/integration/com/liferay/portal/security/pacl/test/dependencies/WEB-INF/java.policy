@@ -1,4 +1,4 @@
-grant codeBase "file:${a-test-hook}${/}-" {
+grant {
 	permission java.lang.RuntimePermission "loadLibrary.test_b";
 	permission java.net.NetPermission "specifyStreamHandler";
 };

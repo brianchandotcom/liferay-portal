@@ -6092,8 +6092,9 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		}
 	}
 
-	protected void cacheUniqueFindersCache(SocialRequest socialRequest) {
-		if (socialRequest.isNew()) {
+	protected void cacheUniqueFindersCache(SocialRequest socialRequest,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					socialRequest.getUuid(), socialRequest.getGroupId()
 				};
@@ -6557,7 +6558,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 			socialRequest, false);
 
 		clearUniqueFindersCache(socialRequest);
-		cacheUniqueFindersCache(socialRequest);
+		cacheUniqueFindersCache(socialRequest, isNew);
 
 		socialRequest.resetOriginalValues();
 
@@ -6947,6 +6948,11 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return SocialRequestModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

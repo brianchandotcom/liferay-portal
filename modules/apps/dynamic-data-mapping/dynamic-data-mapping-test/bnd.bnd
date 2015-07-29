@@ -3,4 +3,7 @@ Bundle-SymbolicName: com.liferay.dynamic.data.mapping.test
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
-	../../../../portal-impl/test/test-portal-impl.properties
+	test-classes/integration,\
+	../../../../portal-impl/test/test-portal-impl.properties,\
+	@lib/json.jar,\
+	@lib/jsonassert.jar

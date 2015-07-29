@@ -151,7 +151,8 @@ public class ExportPageAction extends PortletAction {
 		catch (Exception e) {
 			_log.error(
 				"Error formatting the wiki page " + page.getPageId() +
-					" with the format " + page.getFormat(), e);
+					" with the format " + page.getFormat(),
+				e);
 		}
 
 		StringBundler sb = new StringBundler(17);

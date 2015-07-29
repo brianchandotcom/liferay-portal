@@ -11,7 +11,7 @@
 <!--USER_SEARCH-->
 <tr>
 	<td>USER_SEARCH_FIELD</td>
-	<td>//div[contains(@class,'input-group')]/input[contains(@name,'_174_keywords')]</td>
+	<td>//div[contains(@class,'input-group')]/input[contains(@name,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -7867,6 +7867,11 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		return count.intValue();
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return BackgroundTaskModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the background task persistence.
 	 */

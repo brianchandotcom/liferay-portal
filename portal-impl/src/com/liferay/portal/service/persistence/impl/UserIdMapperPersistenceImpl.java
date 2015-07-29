@@ -1196,8 +1196,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		}
 	}
 
-	protected void cacheUniqueFindersCache(UserIdMapper userIdMapper) {
-		if (userIdMapper.isNew()) {
+	protected void cacheUniqueFindersCache(UserIdMapper userIdMapper,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					userIdMapper.getUserId(), userIdMapper.getType()
 				};
@@ -1445,7 +1446,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 			false);
 
 		clearUniqueFindersCache(userIdMapper);
-		cacheUniqueFindersCache(userIdMapper);
+		cacheUniqueFindersCache(userIdMapper, isNew);
 
 		userIdMapper.resetOriginalValues();
 
@@ -1828,6 +1829,11 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return UserIdMapperModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

@@ -26,6 +26,9 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -81,6 +84,15 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 	@Override
 	public String getType() {
 		return TYPE;
+	}
+
+	@Override
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response,
+			String template)
+		throws Exception {
+
+		return false;
 	}
 
 	private final WikiNode _node;

@@ -5,9 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="KaleoWebSmoke" priority="5">
-		<property name="web.plugins.includes" value="kaleo-web" />
-
+	<command name="KaleoWebSmoke" priority="4">
 		<var name="appName" value="Kaleo Workflow" />
 
 		<execute macro="Page#gotoCP">

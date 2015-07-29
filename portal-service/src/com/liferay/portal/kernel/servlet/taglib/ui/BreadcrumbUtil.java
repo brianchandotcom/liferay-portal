@@ -188,6 +188,9 @@ public class BreadcrumbUtil {
 
 		String name = WebKeys.PORTLET_BREADCRUMBS;
 
+		List<BreadcrumbEntry> breadcrumbEntries =
+			(List<BreadcrumbEntry>)request.getAttribute(name);
+
 		if (Validator.isNotNull(portletDisplay.getId()) &&
 			!portletDisplay.isFocused() &&
 			!Validator.equals(
@@ -198,18 +201,21 @@ public class BreadcrumbUtil {
 
 			name = name.concat(
 				StringPool.UNDERLINE.concat(portletDisplay.getId()));
+
+			List<BreadcrumbEntry> portletBreadcrumbEntries =
+				(List<BreadcrumbEntry>)request.getAttribute(name);
+
+			if (portletBreadcrumbEntries != null) {
+				breadcrumbEntries = portletBreadcrumbEntries;
+			}
 		}
 
-		List<BreadcrumbEntry> portletBreadcrumbEntries =
-			(List<BreadcrumbEntry>)request.getAttribute(name);
-
-		if (portletBreadcrumbEntries == null) {
+		if (breadcrumbEntries == null) {
 			return Collections.emptyList();
 		}
 
-		for (int i = 0; i < portletBreadcrumbEntries.size() - 1; i++) {
-			BreadcrumbEntry portletBreadcrumbEntry =
-				portletBreadcrumbEntries.get(i);
+		for (int i = 0; i < breadcrumbEntries.size() - 1; i++) {
+			BreadcrumbEntry portletBreadcrumbEntry = breadcrumbEntries.get(i);
 
 			String url = portletBreadcrumbEntry.getURL();
 
@@ -221,7 +227,7 @@ public class BreadcrumbUtil {
 			}
 		}
 
-		return portletBreadcrumbEntries;
+		return breadcrumbEntries;
 	}
 
 	public static BreadcrumbEntry getScopeGroupBreadcrumbEntry(

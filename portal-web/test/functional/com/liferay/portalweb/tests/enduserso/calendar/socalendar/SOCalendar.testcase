@@ -29,7 +29,7 @@
 		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 
-	<command name="AddCalendarEvent" priority="5">
+	<command name="AddCalendarEvent" priority="4">
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
 
@@ -41,6 +41,7 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -79,6 +80,7 @@
 		<execute macro="CalendarEvent#addSetTime">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="setEndDateTime" value="${setEndDateTime}" />
 			<var name="setStartDateTime" value="${setStartDateTime}" />
 			<var name="siteName" value="${siteName}" />
@@ -107,6 +109,7 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -147,6 +150,7 @@
 			<var name="calendarName" value="${siteName}" />
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="site" value="${siteName}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -160,6 +164,7 @@
 			<var name="eventCommentEnabled" value="true" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="user" value="${adminName}" />
@@ -190,7 +195,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCalendarEventCommentSOUser" priority="5">
+	<command name="AddCalendarEventCommentSOUser" priority="4">
 		<var name="eventComment" value="Calendar Event Comment" />
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
@@ -221,6 +226,7 @@
 			<var name="calendarName" value="${siteName}" />
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="site" value="${siteName}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -233,6 +239,7 @@
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="roleName" value="Site Member" />
 			<var name="site" value="${siteName}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -242,8 +249,10 @@
 
 		<execute macro="CalendarEvent#add">
 			<var name="calendarName" value="${siteName}" />
+			<var name="eventComment" value="${eventComment}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="user" value="${adminName}" />
@@ -328,6 +337,7 @@
 			<var name="calendarName" value="${siteName2}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -373,6 +383,7 @@
 			<var name="eventType" value="${eventType}" />
 			<var name="frequency" value="Daily" />
 			<var name="numberOfOccurrences" value="1" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -411,6 +422,7 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle1}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -423,6 +435,7 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle2}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -435,6 +448,7 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle3}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -511,6 +525,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="optionSet" value="true" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="tag" value="true" />
@@ -535,6 +550,7 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewDetailsTags">
@@ -588,6 +604,7 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 		</execute>
 	</command>
 
@@ -609,6 +626,7 @@
 			<var name="number1" value="5" />
 			<var name="number2" value="10" />
 			<var name="optionSet" value="true" />
+			<var name="pageName" value="${pageName}" />
 			<var name="reminders" value="true" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -666,6 +684,7 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -687,6 +706,7 @@
 		</execute>
 
 		<execute macro="Calendar#viewColor">
+			<var name="calendarType" value="${calendarType}" />
 			<var name="myCalendarColor" value="${siteCalendarColor}" />
 		</execute>
 
@@ -697,7 +717,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCalendarEvent" priority="5">
+	<command name="DeleteCalendarEvent" priority="4">
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
 
@@ -709,6 +729,7 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -723,7 +744,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCalendarEventCommentSOUser" priority="5">
+	<command name="DeleteCalendarEventCommentSOUser" priority="4">
 		<var name="eventComment" value="Calendar Event Comment" />
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
@@ -776,9 +797,11 @@
 
 		<execute macro="CalendarEvent#add">
 			<var name="calendarName" value="${siteName}" />
+			<var name="eventComment" value="${eventComment}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="optionSet" value="true" />
+			<var name="pageName" value="${pageName}" />
 			<var name="permissionDefinitonKey" value="${permissionDefinitonKey}" />
 			<var name="permissions" value="true" />
 			<var name="roleName" value="${roleName}" />
@@ -832,7 +855,7 @@
 		<execute function="AssertTextNotPresent" value1="${eventComment}" />
 	</command>
 
-	<command name="DeleteCalendarResource" priority="5">
+	<command name="DeleteCalendarResource" priority="4">
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 
 		<execute macro="Page#gotoPG">
@@ -863,7 +886,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarEvent" priority="5">
+	<command name="EditCalendarEvent" priority="4">
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventTitleEdit" value="Calendar Event Title Edit" />
 		<var name="eventType" value="Regular" />
@@ -876,6 +899,7 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -889,6 +913,7 @@
 			<var name="endDateTimeEdit" value="11:59 PM" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
+			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="startDateTimeEdit" value="11:00 PM" />
@@ -935,6 +960,7 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -958,6 +984,7 @@
 			<var name="calendarDefaultName" value="${siteName}" />
 			<var name="calendarName" value="${siteName2}" />
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 		</execute>
 
 		<execute macro="Page#openURL">
@@ -987,7 +1014,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCalendarEventCommentSOUser" priority="5">
+	<command name="EditCalendarEventCommentSOUser" priority="4">
 		<var name="eventComment" value="Calendar Event Comment" />
 		<var name="eventCommentEdit" value="Calendar Event Comment Edit" />
 		<var name="eventTitle" value="Calendar Event Title" />
@@ -1021,6 +1048,7 @@
 			<var name="calendarName" value="${siteName}" />
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="site" value="${siteName}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1033,6 +1061,7 @@
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="roleName" value="Site Member" />
 			<var name="site" value="${siteName}" />
+			<var name="user" value="${user}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1042,9 +1071,11 @@
 
 		<execute macro="CalendarEvent#add">
 			<var name="calendarName" value="${siteName}" />
+			<var name="eventComment" value="${eventComment}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="optionSet" value="true" />
+			<var name="pageName" value="${pageName}" />
 			<var name="permissionDefinitonKey" value="${permissionDefinitonKey}" />
 			<var name="permissions" value="true" />
 			<var name="roleName" value="${roleName}" />
@@ -1173,10 +1204,11 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitleEdit}" />
+			<var name="eventType" value="${eventType}" />
 		</execute>
 	</command>
 
-	<command name="EditCalendarResource" priority="5">
+	<command name="EditCalendarResource" priority="4">
 		<var name="calendarResourceName" value="Calendar Resource Name" />
 		<var name="calendarResourceNameEdit" value="Calendar Resource Name Edit" />
 
@@ -1282,6 +1314,7 @@
 			<var name="eventCommentList" value="${eventComment1},${eventComment2}" />
 			<var name="eventTitle" value="${eventTitle1}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="user" value="${adminName}" />
@@ -1310,6 +1343,7 @@
 			<var name="endDateTimeEdit" value="11:59 PM" />
 			<var name="eventTitle" value="${eventTitle1}" />
 			<var name="eventTitleEdit" value="${eventTitle1Edit}" />
+			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="startDateTimeEdit" value="11:00 PM" />
@@ -1325,6 +1359,7 @@
 			<var name="eventTitle" value="${eventTitle2}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="optionSet" value="true" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="tag" value="true" />
@@ -1429,6 +1464,7 @@
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventType" value="${eventType}" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewDetailsTags">
@@ -1447,18 +1483,20 @@
 
 		<execute macro="CalendarScheduler#viewDefault">
 			<var name="eventTitle" value="${eventTitle1Edit}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewDefault">
 			<var name="eventTitle" value="${eventTitle2}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
 	</command>
 
-	<command name="InviteSOUserToCalendarEvent" priority="5">
+	<command name="InviteSOUserToCalendarEvent" priority="4">
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -1486,6 +1524,7 @@
 			<var name="eventType" value="${eventType}" />
 			<var name="inviteResource" value="true" />
 			<var name="optionSet" value="true" />
+			<var name="pageName" value="${pageName}" />
 			<var name="resourceNameList" value="${userName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -1558,6 +1597,7 @@
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 			<var name="user" value="${adminName}" />
@@ -1598,7 +1638,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewCalendarEventAsGuestAndSiteMember" priority="5">
+	<command name="ViewCalendarEventAsGuestAndSiteMember" priority="4">
 		<var name="eventTitle" value="Calendar Event Title" />
 		<var name="eventType" value="Regular" />
 		<var name="userEmailAddress1" value="socialoffice01@liferay.com" />
@@ -1666,6 +1706,7 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -1799,6 +1840,7 @@
 			<var name="eventType" value="${eventType}" />
 			<var name="inviteResource" value="true" />
 			<var name="optionSet" value="true" />
+			<var name="pageName" value="${pageName}" />
 			<var name="resourceNameList" value="${userName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />

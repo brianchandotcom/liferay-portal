@@ -21,7 +21,6 @@ import com.liferay.gradle.util.StringUtil;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -112,10 +111,10 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	@OutputDirectories
-	public Iterable<File> getCSSCacheDirs() {
+	public FileCollection getCSSCacheDirs() {
 		Set<File> cssCacheDirs = new HashSet<>();
 
-		Iterable<File> cssFiles = getCSSFiles();
+		FileCollection cssFiles = getCSSFiles();
 
 		for (File cssFile : cssFiles) {
 			File cssCacheDir = _project.file(cssFile + "/../.sass-cache");
@@ -123,16 +122,16 @@ public class BuildCSSTask extends JavaExec {
 			cssCacheDirs.add(cssCacheDir);
 		}
 
-		return cssCacheDirs;
+		return _project.files(cssCacheDirs);
 	}
 
 	@InputFiles
 	@SkipWhenEmpty
-	public Iterable<File> getCSSFiles() {
+	public FileCollection getCSSFiles() {
 		String[] dirNames = getDirNames();
 
 		if (ArrayUtil.isEmpty(dirNames)) {
-			return Collections.emptyList();
+			return _project.files();
 		}
 
 		Map<String, Object> args = new HashMap<>();
@@ -153,7 +152,12 @@ public class BuildCSSTask extends JavaExec {
 				dirName += "/";
 			}
 
-			args.put("include", dirName + "**/*.css");
+			List<String> includes = new ArrayList<>(2);
+
+			includes.add(dirName + "**/*.css");
+			includes.add(dirName + "**/*.scss");
+
+			args.put("includes", includes);
 		}
 
 		return _project.fileTree(args);

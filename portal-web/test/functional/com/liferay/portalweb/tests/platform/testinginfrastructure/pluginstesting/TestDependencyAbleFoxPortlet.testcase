@@ -10,7 +10,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ViewDependencyAbleFox" priority="5">
+	<command name="ViewDependencyAbleFox" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Dependency Page" />
 		</execute>

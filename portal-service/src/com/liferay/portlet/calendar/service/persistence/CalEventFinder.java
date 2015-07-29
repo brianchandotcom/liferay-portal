@@ -18,8 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface CalEventFinder {
 	public int countByG_SD_T(long groupId, java.util.Date startDateGT,

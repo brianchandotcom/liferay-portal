@@ -43,9 +43,9 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil
 import com.liferay.portlet.documentlibrary.service.DLFileVersionServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.StorageEngineManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 
@@ -116,7 +116,7 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 			if (dlFileEntryMetadata != null) {
 				DDMFormValues ddmFormValues =
-					StorageEngineUtil.getDDMFormValues(
+					StorageEngineManagerUtil.getDDMFormValues(
 						dlFileEntryMetadata.getDDMStorageId());
 
 				ddmFormValuesMap.put(

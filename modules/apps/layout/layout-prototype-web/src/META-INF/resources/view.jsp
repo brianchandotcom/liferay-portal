@@ -52,8 +52,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			>
 				<liferay-portlet:renderURL varImpl="rowURL">
 					<portlet:param name="mvcPath" value="/edit_layout_prototype.jsp" />
-					<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
-					<portlet:param name="backURL" value="<%= searchContainer.getIteratorURL().toString() %>" />
 					<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
 				</liferay-portlet:renderURL>
 

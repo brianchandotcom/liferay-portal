@@ -39,8 +39,7 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getCl
 	<c:when test="<%= !trashHandler.isRestorable(entry.getClassPK()) && trashHandler.isMovable() %>">
 		<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/view_container_model.jsp" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="className" value="<%= entry.getClassName() %>" />
+			<portlet:param name="classNameId" value="<%= String.valueOf(entry.getClassNameId()) %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(entry.getClassPK()) %>" />
 			<portlet:param name="containerModelClassName" value="<%= trashHandler.getRootContainerModelClassName() %>" />
 			<portlet:param name="containerModelId" value="<%= String.valueOf(trashHandler.getRootContainerModelId(entry.getClassPK())) %>" />

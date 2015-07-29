@@ -17,6 +17,7 @@ package com.liferay.sync.engine.session;
 import com.btr.proxy.search.ProxySearch;
 
 import com.liferay.sync.engine.documentlibrary.handler.Handler;
+import com.liferay.sync.engine.util.OSDetector;
 import com.liferay.sync.engine.util.PropsValues;
 import com.liferay.sync.engine.util.ReleaseInfo;
 
@@ -48,6 +49,7 @@ import oauth.signpost.OAuthConsumer;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 
 import org.apache.commons.io.output.CountingOutputStream;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
@@ -77,6 +79,7 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
@@ -104,6 +107,31 @@ public class Session {
 
 		builder.setConnectTimeout(connectionTimeout);
 		builder.setSocketTimeout(socketTimeout);
+
+		List<Header> headers = new ArrayList<>(2);
+
+		Header syncBuildHeader = new BasicHeader(
+			"Sync-Build", String.valueOf(ReleaseInfo.getBuildNumber()));
+
+		headers.add(syncBuildHeader);
+
+		String syncDevice = null;
+
+		if (OSDetector.isApple()) {
+			syncDevice = "desktop-mac";
+		}
+		else if (OSDetector.isLinux()) {
+			syncDevice = "desktop-linux";
+		}
+		else if (OSDetector.isWindows()) {
+			syncDevice = "desktop-windows";
+		}
+
+		Header syncDeviceHeader = new BasicHeader("Sync-Device", syncDevice);
+
+		headers.add(syncDeviceHeader);
+
+		httpClientBuilder.setDefaultHeaders(headers);
 
 		httpClientBuilder.setDefaultRequestConfig(builder.build());
 		httpClientBuilder.setMaxConnPerRoute(maxConnections);
@@ -529,9 +557,6 @@ public class Session {
 	}
 
 	private void _prepareHttpRequest(HttpRequest httpRequest) throws Exception {
-		httpRequest.setHeader(
-			"Sync-Build", String.valueOf(ReleaseInfo.getBuildNumber()));
-
 		if (_oAuthEnabled) {
 			_oAuthConsumer.sign(httpRequest);
 		}

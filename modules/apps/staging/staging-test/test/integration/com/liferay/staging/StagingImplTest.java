@@ -15,6 +15,9 @@
 package com.liferay.staging;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -39,7 +42,6 @@ import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -51,8 +53,6 @@ import com.liferay.portlet.exportimport.lar.ExportImportDateUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
 import com.liferay.portlet.exportimport.service.StagingLocalServiceUtil;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -126,7 +126,7 @@ public class StagingImplTest {
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				layout, PortletKeys.JOURNAL);
+				layout, JournalPortletKeys.JOURNAL);
 
 		Assert.assertNull(
 			ExportImportDateUtil.getLastPublishDate(portletPreferences));
@@ -135,7 +135,7 @@ public class StagingImplTest {
 
 		portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				layout, PortletKeys.JOURNAL);
+				layout, JournalPortletKeys.JOURNAL);
 
 		Assert.assertNotNull(
 			ExportImportDateUtil.getLastPublishDate(portletPreferences));
@@ -279,25 +279,26 @@ public class StagingImplTest {
 
 		parameters.put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION +
-				StringPool.UNDERLINE + PortletKeys.JOURNAL,
+				StringPool.UNDERLINE + JournalPortletKeys.JOURNAL,
 			new String[] {String.valueOf(stageJournal)});
 		parameters.put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
 			new String[] {Boolean.FALSE.toString()});
 		parameters.put(
 			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
-				PortletKeys.JOURNAL,
+				JournalPortletKeys.JOURNAL,
 			new String[] {String.valueOf(stageJournal)});
 		parameters.put(
 			PortletDataHandlerKeys.PORTLET_DATA_ALL,
 			new String[] {Boolean.FALSE.toString()});
 		parameters.put(
 			PortletDataHandlerKeys.PORTLET_SETUP + StringPool.UNDERLINE +
-				PortletKeys.JOURNAL,
+				JournalPortletKeys.JOURNAL,
 			new String[] {String.valueOf(stageJournal)});
 
 		serviceContext.setAttribute(
-			StagingUtil.getStagedPortletId(PortletKeys.JOURNAL), stageJournal);
+			StagingUtil.getStagedPortletId(JournalPortletKeys.JOURNAL),
+			stageJournal);
 
 		for (String parameterName : parameters.keySet()) {
 			serviceContext.setAttribute(

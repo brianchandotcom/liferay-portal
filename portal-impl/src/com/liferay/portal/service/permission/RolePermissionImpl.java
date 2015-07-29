@@ -29,7 +29,8 @@ public class RolePermissionImpl implements RolePermission {
 		throws PrincipalException {
 
 		if (!contains(permissionChecker, roleId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, Role.class.getName(), roleId, actionId);
 		}
 	}
 

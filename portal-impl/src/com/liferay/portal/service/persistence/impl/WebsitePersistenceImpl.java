@@ -4564,6 +4564,11 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		return _badColumnNames;
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return WebsiteModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the website persistence.
 	 */

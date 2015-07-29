@@ -126,17 +126,6 @@ public class ServiceTestUtil {
 		_deleteDirectories();
 	}
 
-	public static void initPermissions() {
-		try {
-			PortalInstances.addCompanyId(TestPropsValues.getCompanyId());
-
-			setUser(TestPropsValues.getUser());
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
-
 	public static void initMainServletServices() {
 
 		// Upgrade
@@ -199,12 +188,44 @@ public class ServiceTestUtil {
 		}
 	}
 
-	private static Filter _registerDestinationFilter(String destinationName) {
-		Registry registry = RegistryUtil.getRegistry();
+	public static void initPermissions() {
+		try {
+			PortalInstances.addCompanyId(TestPropsValues.getCompanyId());
 
-		return registry.getFilter(
-			"(&(destination.name=" + destinationName +
-				")(objectClass=" + Destination.class.getName() + "))");
+			setUser(TestPropsValues.getUser());
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
+
+	public static void initServices() {
+
+		// JCR
+
+		try {
+			JCRFactoryUtil.prepare();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		// Thread locals
+
+		_setThreadLocals();
+
+		// Directories
+
+		_deleteDirectories();
+
+		// Search engine
+
+		try {
+			SearchEngineUtil.initialize(TestPropsValues.getCompanyId());
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 	}
 
 	public static void initStaticServices() {
@@ -284,35 +305,6 @@ public class ServiceTestUtil {
 		}
 	}
 
-	public static void initServices() {
-
-		// JCR
-
-		try {
-			JCRFactoryUtil.prepare();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		// Thread locals
-
-		_setThreadLocals();
-
-		// Directories
-
-		_deleteDirectories();
-
-		// Search engine
-
-		try {
-			SearchEngineUtil.initialize(TestPropsValues.getCompanyId());
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
-
 	public static Date newDate() throws Exception {
 		return new Date();
 	}
@@ -377,6 +369,14 @@ public class ServiceTestUtil {
 
 		FileUtil.deltree(
 			PropsUtil.get(PropsKeys.JCR_JACKRABBIT_REPOSITORY_ROOT));
+	}
+
+	private static Filter _registerDestinationFilter(String destinationName) {
+		Registry registry = RegistryUtil.getRegistry();
+
+		return registry.getFilter(
+			"(&(destination.name=" + destinationName +
+				")(objectClass=" + Destination.class.getName() + "))");
 	}
 
 	private static void _replaceWithSynchronousDestination(String name) {

@@ -141,7 +141,7 @@ public abstract class SocialRequestInterpreterLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = SocialRequestInterpreterLocalService.class)
+	@BeanReference(type = com.liferay.portlet.social.service.SocialRequestInterpreterLocalService.class)
 	protected SocialRequestInterpreterLocalService socialRequestInterpreterLocalService;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;

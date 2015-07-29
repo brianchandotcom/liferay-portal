@@ -1,0 +1,39 @@
+buildscript {
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.jasper.jspc", version: "+"
+	}
+}
+
+apply plugin: "com.liferay.jasper.jspc"
+apply plugin: "java"
+
+File liferayHome = file("../../../../../bundles")
+String tomcatVersion = "7.0.62"
+File tomcatPortalDir = new File(liferayHome, "tomcat-${tomcatVersion}/webapps/ROOT")
+
+dependencies {
+	jspC fileTree(dir: new File(liferayHome, "osgi/modules"), include: "*.jar")
+	jspC fileTree(dir: new File(liferayHome, "tomcat-${tomcatVersion}/lib/ext"), include: "*.jar")
+	jspC fileTree(dir: new File(tomcatPortalDir, "WEB-INF/lib"), include: "*.jar")
+}
+
+jspC {
+	moduleWeb = true
+	portalDir = tomcatPortalDir
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+	}
+}

@@ -803,7 +803,7 @@ public abstract class SocialActivityServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portlet.social.service.SocialActivityLocalService.class)
 	protected com.liferay.portlet.social.service.SocialActivityLocalService socialActivityLocalService;
-	@BeanReference(type = SocialActivityService.class)
+	@BeanReference(type = com.liferay.portlet.social.service.SocialActivityService.class)
 	protected SocialActivityService socialActivityService;
 	@BeanReference(type = SocialActivityPersistence.class)
 	protected SocialActivityPersistence socialActivityPersistence;

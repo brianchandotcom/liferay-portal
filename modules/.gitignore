@@ -1,5 +1,7 @@
+tmp
 uptodate.properties
 
+/*/*/.js_cache
 /*/*/bin
 /*/*/build
 /*/*/docroot/WEB-INF/classes
@@ -10,8 +12,10 @@ uptodate.properties
 /*/*/javadoc
 /*/*/lib
 /*/*/test-classes
+/*/*/test-coverage
 /*/*/test-results
 /*/*/tmp
+/*/*/*/.js_cache
 /*/*/*/bin
 /*/*/*/build
 /*/*/*/docroot/WEB-INF/classes
@@ -22,8 +26,10 @@ uptodate.properties
 /*/*/*/javadoc
 /*/*/*/lib
 /*/*/*/test-classes
+/*/*/*/test-coverage
 /*/*/*/test-results
 /*/*/*/tmp
+/*/*/*/*/.js_cache
 /*/*/*/*/bin
 /*/*/*/*/docroot/WEB-INF/classes
 /*/*/*/*/docroot/WEB-INF/lib
@@ -33,6 +39,7 @@ uptodate.properties
 /*/*/*/*/javadoc
 /*/*/*/*/lib
 /*/*/*/*/test-classes
+/*/*/*/*/test-coverage
 /*/*/*/*/test-results
 /*/*/*/*/tmp
 /*/*/*/*/*/favicon.ico
@@ -40,6 +47,16 @@ uptodate.properties
 /*/*/*/*/*/html/css/portal/bootstrap.css
 /*/*/*/*/*/html/themes/_unstyled/css/aui
 /*/*/*/*/*/html/themes/_unstyled/images/aui
+/*/*/*/*/*/html/themes/admin/css
+/*/*/*/*/*/html/themes/admin/images
+/*/*/*/*/*/html/themes/admin/javascript
+/*/*/*/*/*/html/themes/admin/js
+/*/*/*/*/*/html/themes/admin/templates
+/*/*/*/*/*/html/themes/atlas/css
+/*/*/*/*/*/html/themes/atlas/images
+/*/*/*/*/*/html/themes/atlas/javascript
+/*/*/*/*/*/html/themes/atlas/js
+/*/*/*/*/*/html/themes/atlas/templates
 /*/*/*/*/*/html/themes/classic/_diffs/css/alloy.css
 /*/*/*/*/*/html/themes/classic/css
 /*/*/*/*/*/html/themes/classic/images
@@ -52,3 +69,4 @@ uptodate.properties
 /*/*/*/*/*/html/themes/control_panel/js
 /*/*/*/*/*/html/themes/control_panel/templates
 /*/*/*/*/*/html/themes/genesis
+/*/*/*/*/*/*/*/*/npm-debug.log

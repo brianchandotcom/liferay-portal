@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class FolderSearcher extends BaseSearcher {
 
-	public static Indexer getInstance() {
+	public static Indexer<?> getInstance() {
 		return new FolderSearcher();
 	}
 
@@ -37,7 +37,7 @@ public class FolderSearcher extends BaseSearcher {
 
 		List<String> folderClassNames = new ArrayList<>();
 
-		for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
+		for (Indexer<?> indexer : IndexerRegistryUtil.getIndexers()) {
 			if (indexer instanceof FolderIndexer) {
 				FolderIndexer folderIndexer = (FolderIndexer)indexer;
 

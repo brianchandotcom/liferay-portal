@@ -14,15 +14,17 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryMetadataLocalServiceBaseImpl;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.StorageEngineManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageException;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -32,6 +34,28 @@ import java.util.Map;
  */
 public class DLFileEntryMetadataLocalServiceImpl
 	extends DLFileEntryMetadataLocalServiceBaseImpl {
+
+	@Override
+	public void deleteFileEntryMetadata(DLFileEntryMetadata fileEntryMetadata)
+		throws PortalException {
+
+		// File entry metadata
+
+		dlFileEntryMetadataPersistence.remove(fileEntryMetadata);
+
+		// Dynamic data mapping storage
+
+		StorageEngineManagerUtil.deleteByClass(
+			fileEntryMetadata.getDDMStorageId());
+
+		// Dynamic data mapping structure link
+
+		long classNameId = classNameLocalService.getClassNameId(
+			DLFileEntryMetadata.class);
+
+		ddmStructureLinkLocalService.deleteStructureLinks(
+			classNameId, fileEntryMetadata.getFileEntryMetadataId());
+	}
 
 	@Override
 	public void deleteFileEntryMetadata(long fileEntryId)
@@ -164,27 +188,6 @@ public class DLFileEntryMetadataLocalServiceImpl
 			fileVersionId, ddmFormValuesMap, serviceContext);
 	}
 
-	protected void deleteFileEntryMetadata(
-			DLFileEntryMetadata fileEntryMetadata)
-		throws PortalException {
-
-		// FileEntry metadata
-
-		dlFileEntryMetadataPersistence.remove(fileEntryMetadata);
-
-		// Dynamic data mapping storage
-
-		StorageEngineUtil.deleteByClass(fileEntryMetadata.getDDMStorageId());
-
-		// Dynamic data mapping structure link
-
-		long classNameId = classNameLocalService.getClassNameId(
-			DLFileEntryMetadata.class);
-
-		ddmStructureLinkLocalService.deleteStructureLinks(
-			classNameId, fileEntryMetadata.getFileEntryMetadataId());
-	}
-
 	protected void updateFileEntryMetadata(
 			long companyId, DDMStructure ddmStructure, long fileEntryId,
 			long fileVersionId, DDMFormValues ddmFormValues,
@@ -196,7 +199,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 				ddmStructure.getStructureId(), fileVersionId);
 
 		if (fileEntryMetadata != null) {
-			StorageEngineUtil.update(
+			StorageEngineManagerUtil.update(
 				fileEntryMetadata.getDDMStorageId(), ddmFormValues,
 				serviceContext);
 		}
@@ -209,7 +212,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 			fileEntryMetadata = dlFileEntryMetadataPersistence.create(
 				fileEntryMetadataId);
 
-			long ddmStorageId = StorageEngineUtil.create(
+			long ddmStorageId = StorageEngineManagerUtil.create(
 				companyId, ddmStructure.getStructureId(), ddmFormValues,
 				serviceContext);
 
@@ -231,5 +234,8 @@ public class DLFileEntryMetadataLocalServiceImpl
 				ddmStructure.getStructureId());
 		}
 	}
+
+	@BeanReference(type = DDMStructureLinkLocalService.class)
+	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
 
 }

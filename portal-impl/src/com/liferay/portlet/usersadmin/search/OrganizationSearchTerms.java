@@ -56,7 +56,7 @@ public class OrganizationSearchTerms extends OrganizationDisplayTerms {
 			return null;
 		}
 		else {
-			return new Long(countryId);
+			return Long.valueOf(countryId);
 		}
 	}
 
@@ -86,7 +86,7 @@ public class OrganizationSearchTerms extends OrganizationDisplayTerms {
 			return null;
 		}
 		else {
-			return new Long(regionId);
+			return Long.valueOf(regionId);
 		}
 	}
 

@@ -1,13 +1,43 @@
+import com.liferay.gradle.util.FileUtil
+
+buildscript {
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "latest.release"
+	}
+}
+
 apply plugin: "com.liferay.plugin"
+apply plugin: "eclipse"
 
 liferay {
-	appServerParentDir = rootProject.file("../../bundles")
+	appServerParentDir = System.properties["appServerParentDir"] ?: rootProject.file("../../bundles")
+
+	if (deployDir == new File(appServerParentDir, "deploy")) {
+		deployDir = new File(liferayHome, "osgi/apps")
+	}
+
+	String liferayHomeSystemProperty = System.properties["liferayHome"]
+
+	if (liferayHomeSystemProperty) {
+		liferayHome = liferayHomeSystemProperty
+	}
 }
 
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")
 File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 File moduleFrameworkBaseDir = new File(liferay.liferayHome, "osgi")
-File sdkDir = rootProject.file("../tools/sdk")
+
+group = "com.liferay"
+distsDirName = FileUtil.relativize(rootProject.file("../tools/sdk/dist2"), buildDir)
+libsDirName = distsDirName
 
 afterEvaluate {
 	project.ext.set("app.server.lib.portal.dir", project.relativePath(appServerLibPortalDir))
@@ -15,33 +45,20 @@ afterEvaluate {
 	project.ext.set("plugin.full.version", project.version.toString())
 }
 
-bundle {
-	instruction "-jsp", "*.jsp"
-	instruction "-jsp", "*.jspf"
-	instruction "-metatype", "*"
-	instruction "-plugin", "com.liferay.ant.bnd.plugin.JspAnalyzerPlugin"
-	instruction "-plugin", "com.liferay.ant.bnd.plugin.SassAnalyzerPlugin"
-	instruction "-sass", "*"
-}
-
-compileJava {
-	options.encoding = "ISO-8859-1"
-	options.warnings = false
+buildCSS {
+	portalCommonDirName = new File(rootDir, "../portal-web/docroot/html/css/common")
 }
 
 configurations {
 	portal
+	portalTest
+}
 
-	portalTest {
-		extendsFrom portal
-	}
-
-	testCompile {
-		extendsFrom portalTest
-	}
-
-	testIntegrationCompile {
-		extendsFrom portalTest
+if (FileUtil.exists(project, "docroot")) {
+	copyLibs {
+		from(appServerLibPortalDir) {
+			include "util-bridges.jar", "util-java.jar", "util-taglib.jar"
+		}
 	}
 }
 
@@ -49,30 +66,85 @@ dependencies {
 	portal files(appServerClassesPortalDir)
 	portal fileTree(dir: appServerLibPortalDir, include: "*.jar")
 	portal fileTree(dir: liferay.appServerLibGlobalDir, include: "*.jar")
-	portal fileTree(dir: new File(sdkDir, "lib"), includes: ["activation.jar", "javax.servlet-api.jar", "jsp-api.jar", "net.sf.jargs.jar", "qdox.jar"])
+	portal group: "com.liferay", name: "net.sf.jargs", version: "1.0"
+	portal group: "com.thoughtworks.qdox", name: "qdox", version: "1.12.1"
+	portal group: "javax.activation", name: "activation", version: "1.1"
+	portal group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	portal group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 
 	portalTest fileTree(dir: new File(moduleFrameworkBaseDir, "test"), include: "portal-test*.jar")
 }
 
-jar {
-	destinationDir = new File(sdkDir, "dist2")
+eclipseClasspath {
+	ext {
+		autoClean = false
+	}
+}
+
+eclipseProject {
+	ext {
+		autoClean = false
+	}
 }
 
 repositories {
 	mavenLocal()
+
+	maven {
+		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+	}
 }
 
 sourceSets {
 	main {
 		compileClasspath += configurations.portal
 	}
+
+	test {
+		compileClasspath += configurations.portal + configurations.portalTest
+		runtimeClasspath += configurations.portal + configurations.portalTest
+	}
+
+	testIntegration {
+		compileClasspath = configurations.portal + compileClasspath + configurations.portalTest
+		runtimeClasspath = configurations.portal + runtimeClasspath + configurations.portalTest
+	}
 }
 
-group = "com.liferay"
+test {
+	jvmArgs "-XX:MaxNewSize=32m"
+	jvmArgs "-XX:MaxPermSize=64m"
+	jvmArgs "-XX:MaxTenuringThreshold=0"
+	jvmArgs "-XX:NewSize=32m"
+	jvmArgs "-XX:ParallelGCThreads=2"
+	jvmArgs "-XX:PermSize=64m"
+	jvmArgs "-XX:SurvivorRatio=65536"
+	jvmArgs "-XX:TargetSurvivorRatio=0"
+	jvmArgs "-XX:-UseAdaptiveSizePolicy"
+	jvmArgs "-XX:+UseParallelOldGC"
+	jvmArgs "-XX:-UseSplitVerifier"
 
-if (project.path in [":util:css-builder"]) {
-	apply plugin: "com.liferay.maven.plugin.builder"
+	maxHeapSize = "256m"
+	minHeapSize = "256m"
+}
 
+testIntegration {
+	jvmArgs "-XX:MaxNewSize=32m"
+	jvmArgs "-XX:MaxPermSize=200m"
+	jvmArgs "-XX:MaxTenuringThreshold=0"
+	jvmArgs "-XX:NewSize=32m"
+	jvmArgs "-XX:ParallelGCThreads=2"
+	jvmArgs "-XX:PermSize=200m"
+	jvmArgs "-XX:SurvivorRatio=65536"
+	jvmArgs "-XX:TargetSurvivorRatio=0"
+	jvmArgs "-XX:-UseAdaptiveSizePolicy"
+	jvmArgs "-XX:+UseParallelOldGC"
+
+	maxHeapSize = "512m"
+	minHeapSize = "512m"
+}
+
+pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
 	afterEvaluate {
 		buildPluginDescriptor {
 			pomArtifactId = bundle.instructions["Bundle-SymbolicName"]
@@ -81,5 +153,62 @@ if (project.path in [":util:css-builder"]) {
 
 	buildPluginDescriptor {
 		configurationScopeMapping "provided", "provided"
+
+		ext {
+			autoClean = false
+		}
+	}
+}
+
+pluginManager.withPlugin("com.moowork.node") {
+	File nodejsDir = new File(liferay.tmpDir, "nodejs")
+
+	task setupNpmCache(type: NpmTask)
+
+	node {
+		download = true
+		nodeModulesDir = nodejsDir
+		npmVersion = project.properties["nodejs.npm.version"]
+		version = project.properties["nodejs.version"]
+		workDir = nodejsDir
+	}
+
+	npmSetup {
+		finalizedBy setupNpmCache
+	}
+
+	setupNpmCache {
+		args = ["config", "set", "cache", new File(nodejsDir, ".cache"), "--global"]
+	}
+
+	tasks.withType(NpmTask) {
+		if (it != npmSetup) {
+			dependsOn npmSetup
+		}
+	}
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = "UTF-8"
+	options.warnings = false
+}
+
+if (project.hasProperty("testClassGroupIndex")) {
+	Properties properties = new Properties()
+
+	File file = new File(rootDir, "../test.class.file.names.properties")
+
+	properties.load(new StringReader(file.text.replace("\\", "/")))
+
+	String testClassGroup = properties["TEST_CLASS_GROUP_" + testClassGroupIndex]
+	String testClassGroups = properties["TEST_CLASS_GROUPS"]
+
+	List<String> testClasses = testClassGroup.tokenize(",")
+
+	configure([test, testIntegration]) {
+		include testClasses
+
+		jvmArgs "-Dtest.class.group.index=" + testClassGroupIndex
+		jvmArgs "-Dtest.class.groups=" + testClassGroups
 	}
 }

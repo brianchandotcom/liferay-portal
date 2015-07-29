@@ -40,6 +40,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryConstants;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -142,7 +143,8 @@ public class RuntimeTag extends TagSupport {
 		String portletId = portletName;
 
 		RestrictPortletServletRequest restrictPortletServletRequest =
-			new RestrictPortletServletRequest(request);
+			new RestrictPortletServletRequest(
+				PortalUtil.getOriginalServletRequest(request));
 
 		queryString = PortletParameterUtil.addNamespace(portletId, queryString);
 

@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GZipFilter extends BasePortalFilter {
 
 	public static final String SKIP_FILTER =
-		GZipFilter.class.getName() + "SKIP_FILTER";
+		GZipFilter.class.getName() + "#SKIP_FILTER";
 
 	public GZipFilter() {
 

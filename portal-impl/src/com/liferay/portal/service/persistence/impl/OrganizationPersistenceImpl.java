@@ -6476,8 +6476,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Organization organization) {
-		if (organization.isNew()) {
+	protected void cacheUniqueFindersCache(Organization organization,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					organization.getCompanyId(), organization.getName()
 				};
@@ -6802,7 +6803,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			false);
 
 		clearUniqueFindersCache(organization);
-		cacheUniqueFindersCache(organization);
+		cacheUniqueFindersCache(organization, isNew);
 
 		organization.resetOriginalValues();
 
@@ -7726,6 +7727,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return OrganizationModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

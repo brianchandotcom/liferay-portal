@@ -26,8 +26,16 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.DefaultWhenIsAssetable;
+import com.liferay.portlet.trash.test.DefaultWhenIsIndexableBaseModel;
+import com.liferay.portlet.trash.test.WhenCanBeDuplicatedInTrash;
+import com.liferay.portlet.trash.test.WhenHasParent;
+import com.liferay.portlet.trash.test.WhenIsAssetable;
+import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
+import com.liferay.portlet.trash.test.WhenIsUpdatableBaseModel;
 import com.liferay.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -48,7 +56,10 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 @Sync
 public class WikiPageTrashHandlerTest
-	extends BaseTrashHandlerTestCase implements WhenIsIndexableBaseModel {
+	extends BaseTrashHandlerTestCase
+	implements WhenCanBeDuplicatedInTrash, WhenHasParent,
+			   WhenIsAssetableBaseModel, WhenIsIndexableBaseModel,
+			   WhenIsUpdatableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -56,6 +67,58 @@ public class WikiPageTrashHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Override
+	public AssetEntry fetchAssetEntry(ClassedModel classedModel)
+		throws Exception {
+
+		return _whenIsAssetable.fetchAssetEntry(classedModel);
+	}
+
+	@Override
+	public String getBaseModelName(ClassedModel classedModel) {
+		return WikiPageTrashHandlerTestUtil.getBaseModelName(classedModel);
+	}
+
+	@Override
+	public String getParentBaseModelClassName() {
+		Class<WikiNode> wikiNodeClass = WikiNode.class;
+
+		return wikiNodeClass.getName();
+	}
+
+	@Override
+	public String getSearchKeywords() {
+		return WikiPageTrashHandlerTestUtil.getSearchKeywords();
+	}
+
+	@Override
+	public boolean isAssetEntryVisible(ClassedModel classedModel, long classPK)
+		throws Exception {
+
+		return _whenIsAssetable.isAssetEntryVisible(classedModel, classPK);
+	}
+
+	@Override
+	public void moveParentBaseModelToTrash(long primaryKey) throws Exception {
+		WikiPageTrashHandlerTestUtil.moveParentBaseModelToTrash(primaryKey);
+	}
+
+	@Override
+	public int searchBaseModelsCount(Class<?> clazz, long groupId)
+		throws Exception {
+
+		return _whenIsIndexableBaseModel.searchBaseModelsCount(clazz, groupId);
+	}
+
+	@Override
+	public int searchTrashEntriesCount(
+			String keywords, ServiceContext serviceContext)
+		throws Exception {
+
+		return _whenIsIndexableBaseModel.searchTrashEntriesCount(
+			keywords, serviceContext);
+	}
 
 	@Before
 	@Override
@@ -74,170 +137,28 @@ public class WikiPageTrashHandlerTest
 		PortalRunMode.setTestMode(_testMode);
 	}
 
-	@Override
-	@Test
-	public void testAddBaseModelWithDraftStatus() throws Exception {
-	}
-
 	@Ignore
 	@Override
 	@Test
-	public void testAddBaseModelWithDraftStatusIndexable() throws Exception {
+	public void testTrashParentIndexable() throws Exception {
 	}
 
-	@Ignore
 	@Override
-	@Test
-	public void testAddBaseModelWithDraftStatusIsNotVisible() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashAndDeleteWithDraftStatus() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashAndDeleteWithDraftStatusIndexable() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashAndRestoreWithDraftStatus() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashAndRestoreWithDraftStatusIndexable() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashAndRestoreWithDraftStatusIsNotVisible()
+	public BaseModel<?> updateBaseModel(
+			long primaryKey, ServiceContext serviceContext)
 		throws Exception {
-	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testTrashAndRestoreWithDraftStatusRestoreStatus()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashAndRestoreWithDraftStatusRestoreUniqueTitle()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashBaseModelAndDeleteWithParentIsNotRestorable()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashBaseModelAndTrashParentAndDeleteParentIsNotRestorable()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashBaseModelAndTrashParentIsNotRestorable()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashBaseModelWithParentIsRestorable() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashGrandparentBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashGrandparentBaseModelAndRestoreParentModel()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashIsRestorableBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashMoveBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashMoveBaseModelIndexable() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashMyBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashRecentBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashVersionParentBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashVersionParentBaseModelIndexable() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testTrashVersionParentBaseModelIsNotVisible() throws Exception {
+		return WikiPageTrashHandlerTestUtil.updateBaseModel(
+			primaryKey, serviceContext);
 	}
 
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
-			BaseModel<?> parentBaseModel, boolean approved,
-			ServiceContext serviceContext)
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
 		throws Exception {
 
 		return WikiPageTrashHandlerTestUtil.addBaseModelWithWorkflow(
-			parentBaseModel, approved, serviceContext);
+			parentBaseModel, true, serviceContext);
 	}
 
 	@Override
@@ -253,11 +174,6 @@ public class WikiPageTrashHandlerTest
 	@Override
 	protected Class<?> getBaseModelClass() {
 		return WikiPageTrashHandlerTestUtil.getBaseModelClass();
-	}
-
-	@Override
-	protected String getBaseModelName(ClassedModel classedModel) {
-		return WikiPageTrashHandlerTestUtil.getBaseModelName(classedModel);
 	}
 
 	@Override
@@ -278,16 +194,6 @@ public class WikiPageTrashHandlerTest
 	}
 
 	@Override
-	protected Class<?> getParentBaseModelClass() {
-		return WikiNode.class;
-	}
-
-	@Override
-	protected String getSearchKeywords() {
-		return WikiPageTrashHandlerTestUtil.getSearchKeywords();
-	}
-
-	@Override
 	protected long getTrashEntryClassPK(ClassedModel classedModel) {
 		return WikiPageTrashHandlerTestUtil.getTrashEntryClassPK(classedModel);
 	}
@@ -298,31 +204,14 @@ public class WikiPageTrashHandlerTest
 	}
 
 	@Override
-	protected boolean isBaseModelMoveableFromTrash() {
-		return false;
-	}
-
-	@Override
 	protected void moveBaseModelToTrash(long primaryKey) throws Exception {
 		WikiPageTrashHandlerTestUtil.moveBaseModelToTrash(primaryKey);
 	}
 
-	@Override
-	protected void moveParentBaseModelToTrash(long primaryKey)
-		throws Exception {
-
-		WikiPageTrashHandlerTestUtil.moveParentBaseModelToTrash(primaryKey);
-	}
-
-	@Override
-	protected BaseModel<?> updateBaseModel(
-			long primaryKey, ServiceContext serviceContext)
-		throws Exception {
-
-		return WikiPageTrashHandlerTestUtil.updateBaseModel(
-			primaryKey, serviceContext);
-	}
-
 	private boolean _testMode;
+	private final WhenIsAssetable _whenIsAssetable =
+		new DefaultWhenIsAssetable();
+	private final WhenIsIndexableBaseModel _whenIsIndexableBaseModel =
+		new DefaultWhenIsIndexableBaseModel();
 
 }

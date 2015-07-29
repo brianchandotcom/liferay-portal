@@ -44,11 +44,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INFO_MESSAGE</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BACK</td>
 	<td>//a[contains(@id,'TabsBack')]/span[contains(.,'Back')]</td>
 	<td></td>

@@ -43,8 +43,11 @@ import com.liferay.taglib.FileAvailabilityUtil;
 import com.liferay.taglib.servlet.JspWriterHttpServletResponse;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
+import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -295,11 +298,6 @@ public class IncludeTag extends AttributesTagSupport {
 		return _page;
 	}
 
-	protected RequestDispatcher getRequestDispatcher(String page) {
-		return DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
-			servletContext, page);
-	}
-
 	protected String getStartPage() {
 		return null;
 	}
@@ -345,14 +343,12 @@ public class IncludeTag extends AttributesTagSupport {
 			}
 		}
 
-		RequestDispatcher requestDispatcher = getRequestDispatcher(page);
-
 		request.setAttribute(
 			WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_STRICT, _strict);
 
 		HttpServletResponse response = new PipingServletResponse(pageContext);
 
-		requestDispatcher.include(request, response);
+		includePage(page, response);
 
 		request.removeAttribute(WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_STRICT);
 
@@ -361,6 +357,16 @@ public class IncludeTag extends AttributesTagSupport {
 				request, jspWriterHttpServletResponse, tagClassName,
 				tagDynamicId, tagPointPrefix + "after", doStartTag);
 		}
+	}
+
+	protected void includePage(String page, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		RequestDispatcher requestDispatcher =
+			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+				servletContext, page);
+
+		requestDispatcher.include(request, response);
 	}
 
 	protected boolean isCleanUpSetAttributes() {

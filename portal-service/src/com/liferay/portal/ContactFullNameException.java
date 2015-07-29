@@ -17,7 +17,7 @@ package com.liferay.portal;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Amos Fong
+ * @author     Amos Fong
  * @deprecated As of 7.0.0, replaced by {@link
  *             ContactNameException.MustHaveValidFullName}
  */

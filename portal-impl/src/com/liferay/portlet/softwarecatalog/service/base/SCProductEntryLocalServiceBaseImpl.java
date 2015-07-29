@@ -1127,7 +1127,7 @@ public abstract class SCProductEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = SCProductEntryLocalService.class)
+	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductEntryLocalService.class)
 	protected SCProductEntryLocalService scProductEntryLocalService;
 	@BeanReference(type = com.liferay.portlet.softwarecatalog.service.SCProductEntryService.class)
 	protected com.liferay.portlet.softwarecatalog.service.SCProductEntryService scProductEntryService;

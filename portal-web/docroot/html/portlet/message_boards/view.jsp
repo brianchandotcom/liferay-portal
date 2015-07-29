@@ -45,7 +45,7 @@ boolean useAssetEntryQuery = Validator.isNotNull(assetTagName);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/message_boards/view");
+portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 portletURL.setParameter("topLink", topLink);
 portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
@@ -59,8 +59,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<portlet:actionURL var="restoreTrashEntriesURL">
-	<portlet:param name="struts_action" value="/message_boards/edit_category" />
+<portlet:actionURL name="/message_boards/edit_category" var="restoreTrashEntriesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
@@ -98,7 +97,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			<div class="category-buttons">
 				<c:if test="<%= showAddCategoryButton %>">
 					<portlet:renderURL var="editCategoryURL">
-						<portlet:param name="struts_action" value="/message_boards/edit_category" />
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_category" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
 					</portlet:renderURL>
@@ -108,7 +107,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 				<c:if test="<%= showAddMessageButton %>">
 					<portlet:renderURL var="editMessageURL">
-						<portlet:param name="struts_action" value="/message_boards/edit_message" />
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(categoryId) %>" />
 					</portlet:renderURL>
@@ -148,29 +147,18 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<c:if test="<%= category != null %>">
 			<div class="category-subscription category-subscription-types">
 				<c:if test="<%= enableRSS %>">
-
-					<%
-					if (category.getCategoryId() > 0) {
-						rssURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));
-					}
-					else {
-						rssURL.setParameter("groupId", String.valueOf(scopeGroupId));
-					}
-					%>
-
 					<liferay-ui:rss
 						delta="<%= rssDelta %>"
 						displayStyle="<%= rssDisplayStyle %>"
 						feedType="<%= rssFeedType %>"
-						resourceURL="<%= rssURL %>"
+						url="<%= MBUtil.getRSSURL(plid, category.getCategoryId(), 0, 0, themeDisplay) %>"
 					/>
 				</c:if>
 
 				<c:if test="<%= MBCategoryPermission.contains(permissionChecker, category, ActionKeys.SUBSCRIBE) && (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) %>">
 					<c:choose>
 						<c:when test="<%= (categorySubscriptionClassPKs != null) && categorySubscriptionClassPKs.contains(category.getCategoryId()) %>">
-							<portlet:actionURL var="unsubscribeURL">
-								<portlet:param name="struts_action" value="/message_boards/edit_category" />
+							<portlet:actionURL name="/message_boards/edit_category" var="unsubscribeURL">
 								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
@@ -184,8 +172,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							/>
 						</c:when>
 						<c:otherwise>
-							<portlet:actionURL var="subscribeURL">
-								<portlet:param name="struts_action" value="/message_boards/edit_category" />
+							<portlet:actionURL name="/message_boards/edit_category" var="subscribeURL">
 								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
@@ -215,7 +202,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			%>
 
 			<portlet:renderURL var="backURL">
-				<portlet:param name="struts_action" value="/message_boards/view" />
+				<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
 				<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
 			</portlet:renderURL>
 
@@ -281,7 +268,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					<liferay-ui:search-container-row-parameter name="categorySubscriptionClassPKs" value="<%= categorySubscriptionClassPKs %>" />
 
 					<liferay-portlet:renderURL varImpl="rowURL">
-						<portlet:param name="struts_action" value="/message_boards/view" />
+						<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(curCategory.getCategoryId()) %>" />
 					</liferay-portlet:renderURL>
 
@@ -295,17 +282,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<%@ include file="/html/portlet/message_boards/view_threads.jspf" %>
 
 		<c:if test='<%= enableRSS && topLink.equals("recent-posts") %>'>
-
-			<%
-			rssURL.setParameter("groupId", String.valueOf(scopeGroupId));
-
-			if (groupThreadsUserId > 0) {
-				rssURL.setParameter("userId", String.valueOf(groupThreadsUserId));
-			}
-
-			rssURL.setParameter("mbCategoryId", StringPool.BLANK);
-			%>
-
 			<br />
 
 			<liferay-ui:rss
@@ -313,7 +289,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				displayStyle="<%= rssDisplayStyle %>"
 				feedType="<%= rssFeedType %>"
 				message="subscribe-to-recent-posts"
-				resourceURL="<%= rssURL %>"
+				url="<%= MBUtil.getRSSURL(plid, 0, 0, groupThreadsUserId, themeDisplay) %>"
 			/>
 		</c:if>
 

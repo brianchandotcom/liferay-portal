@@ -21,10 +21,8 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
-import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -64,17 +62,8 @@ public class IndexableAdvice
 			return;
 		}
 
-		if (StagedModel.class.isAssignableFrom(returnType) &&
-			ExportImportThreadLocal.isImportInProcess()) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Skipping indexing until the import is finished");
-			}
-
-			return;
-		}
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(returnType.getName());
+		Indexer<Object> indexer = IndexerRegistryUtil.getIndexer(
+			returnType.getName());
 
 		if (indexer == null) {
 			serviceBeanAopCacheManager.removeMethodInterceptor(

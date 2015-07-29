@@ -426,7 +426,7 @@ public abstract class AccountLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = AccountLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.AccountLocalService.class)
 	protected AccountLocalService accountLocalService;
 	@BeanReference(type = com.liferay.portal.service.AccountService.class)
 	protected com.liferay.portal.service.AccountService accountService;

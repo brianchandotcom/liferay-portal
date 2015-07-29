@@ -47,7 +47,7 @@ import javax.portlet.PortletResponse;
  * @author Hugo Huijser
  */
 @OSGiBeanProperties
-public class ContactIndexer extends BaseIndexer {
+public class ContactIndexer extends BaseIndexer<Contact> {
 
 	public static final String CLASS_NAME = Contact.class.getName();
 
@@ -91,16 +91,12 @@ public class ContactIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		Contact contact = (Contact)obj;
-
+	protected void doDelete(Contact contact) throws Exception {
 		deleteDocument(contact.getCompanyId(), contact.getContactId());
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		Contact contact = (Contact)obj;
-
+	protected Document doGetDocument(Contact contact) throws Exception {
 		if (contact.isUser()) {
 			User user = UserLocalServiceUtil.fetchUserByContactId(
 				contact.getContactId());
@@ -157,9 +153,7 @@ public class ContactIndexer extends BaseIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		Contact contact = (Contact)obj;
-
+	protected void doReindex(Contact contact) throws Exception {
 		Document document = getDocument(contact);
 
 		if (document != null) {

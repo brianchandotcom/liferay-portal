@@ -548,7 +548,7 @@ public abstract class PortletItemLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = PortletItemLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.PortletItemLocalService.class)
 	protected PortletItemLocalService portletItemLocalService;
 	@BeanReference(type = PortletItemPersistence.class)
 	protected PortletItemPersistence portletItemPersistence;

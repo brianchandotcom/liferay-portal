@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.AuditedModel;
@@ -60,6 +60,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import javax.sql.DataSource;
@@ -198,8 +199,6 @@ public class ResourceBlockLocalServiceImpl
 		resourceBlockPermissionLocalService.addResourceBlockPermissions(
 			resourceBlockId, resourceBlockPermissionsContainer);
 
-		PermissionCacheUtil.clearResourceBlockCache(companyId, groupId, name);
-
 		return resourceBlock;
 	}
 
@@ -219,10 +218,6 @@ public class ResourceBlockLocalServiceImpl
 			resourceBlock.getPrimaryKey());
 
 		resourceBlockPersistence.remove(resourceBlock);
-
-		PermissionCacheUtil.clearResourceBlockCache(
-			resourceBlock.getCompanyId(), resourceBlock.getGroupId(),
-			resourceBlock.getName());
 
 		return resourceBlock;
 	}
@@ -359,6 +354,34 @@ public class ResourceBlockLocalServiceImpl
 
 		return resourceBlockFinder.findByC_G_N_R(
 			companyId, groupId, name, roleIds);
+	}
+
+	@Override
+	public List<Role> getRoles(String name, long primKey, String actionId)
+		throws PortalException {
+
+		long actionIdLong = getActionId(name, actionId);
+
+		ResourceBlock resourceBlock = getResourceBlock(name, primKey);
+
+		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer =
+			resourceBlockPermissionLocalService.
+				getResourceBlockPermissionsContainer(
+					resourceBlock.getResourceBlockId());
+
+		Set<Long> roleIds = resourceBlockPermissionsContainer.getRoleIds();
+
+		List<Role> roles = new ArrayList<>(roleIds.size());
+
+		for (long roleId : roleIds) {
+			if (resourceBlockPermissionsContainer.hasPermission(
+					roleId, actionIdLong)) {
+
+				roles.add(roleLocalService.getRole(roleId));
+			}
+		}
+
+		return roles;
 	}
 
 	@Override
@@ -767,7 +790,7 @@ public class ResourceBlockLocalServiceImpl
 			updateGroupScopeResourceTypePermissions(
 				companyId, groupId, name, roleId, actionIdsLong, operator);
 
-		PermissionCacheUtil.clearResourceBlockCache(companyId, groupId, name);
+		PermissionCacheUtil.clearResourceCache();
 	}
 
 	@Override
@@ -952,7 +975,7 @@ public class ResourceBlockLocalServiceImpl
 
 		};
 
-		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
+		TransactionCommitCallbackUtil.registerCallback(callable);
 
 		return resourceBlock;
 	}

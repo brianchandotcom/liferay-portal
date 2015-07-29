@@ -164,6 +164,7 @@ create table AssetLink (
 );
 
 create table AssetTag (
+	uuid_ VARCHAR(75) null,
 	tagId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -422,7 +423,7 @@ create table DDMStructure (
 	structureKey VARCHAR(75) null,
 	version VARCHAR(75) null,
 	name STRING null,
-	description STRING null,
+	description TEXT null,
 	definition TEXT null,
 	storageType VARCHAR(75) null,
 	type_ INTEGER
@@ -459,7 +460,7 @@ create table DDMStructureVersion (
 	version VARCHAR(75) null,
 	parentStructureId LONG,
 	name STRING null,
-	description STRING null,
+	description TEXT null,
 	definition TEXT null,
 	storageType VARCHAR(75) null,
 	type_ INTEGER,
@@ -486,7 +487,7 @@ create table DDMTemplate (
 	templateKey VARCHAR(75) null,
 	version VARCHAR(75) null,
 	name STRING null,
-	description STRING null,
+	description TEXT null,
 	type_ VARCHAR(75) null,
 	mode_ VARCHAR(75) null,
 	language VARCHAR(75) null,
@@ -516,7 +517,7 @@ create table DDMTemplateVersion (
 	templateId LONG,
 	version VARCHAR(75) null,
 	name STRING null,
-	description STRING null,
+	description TEXT null,
 	language VARCHAR(75) null,
 	script TEXT null,
 	status INTEGER,
@@ -589,12 +590,6 @@ create table DLFileEntryType (
 	fileEntryTypeKey VARCHAR(75) null,
 	name STRING null,
 	description STRING null
-);
-
-create table DLFileEntryTypes_DDMStructures (
-	structureId LONG not null,
-	fileEntryTypeId LONG not null,
-	primary key (structureId, fileEntryTypeId)
 );
 
 create table DLFileEntryTypes_DLFolders (
@@ -818,121 +813,6 @@ create table Image (
 	height INTEGER,
 	width INTEGER,
 	size_ INTEGER
-);
-
-create table JournalArticle (
-	uuid_ VARCHAR(75) null,
-	id_ LONG not null primary key,
-	resourcePrimKey LONG,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	folderId LONG,
-	classNameId LONG,
-	classPK LONG,
-	treePath STRING null,
-	articleId VARCHAR(75) null,
-	version DOUBLE,
-	title STRING null,
-	urlTitle VARCHAR(150) null,
-	description TEXT null,
-	content TEXT null,
-	DDMStructureKey VARCHAR(75) null,
-	DDMTemplateKey VARCHAR(75) null,
-	layoutUuid VARCHAR(75) null,
-	displayDate DATE null,
-	expirationDate DATE null,
-	reviewDate DATE null,
-	indexable BOOLEAN,
-	smallImage BOOLEAN,
-	smallImageId LONG,
-	smallImageURL STRING null,
-	status INTEGER,
-	statusByUserId LONG,
-	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
-);
-
-create table JournalArticleImage (
-	articleImageId LONG not null primary key,
-	groupId LONG,
-	articleId VARCHAR(75) null,
-	version DOUBLE,
-	elInstanceId VARCHAR(75) null,
-	elName VARCHAR(75) null,
-	languageId VARCHAR(75) null,
-	tempImage BOOLEAN
-);
-
-create table JournalArticleResource (
-	uuid_ VARCHAR(75) null,
-	resourcePrimKey LONG not null primary key,
-	groupId LONG,
-	articleId VARCHAR(75) null
-);
-
-create table JournalContentSearch (
-	contentSearchId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	privateLayout BOOLEAN,
-	layoutId LONG,
-	portletId VARCHAR(200) null,
-	articleId VARCHAR(75) null
-);
-
-create table JournalFeed (
-	uuid_ VARCHAR(75) null,
-	id_ LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	feedId VARCHAR(75) null,
-	name VARCHAR(75) null,
-	description STRING null,
-	DDMStructureKey VARCHAR(75) null,
-	DDMTemplateKey VARCHAR(75) null,
-	DDMRendererTemplateKey VARCHAR(75) null,
-	delta INTEGER,
-	orderByCol VARCHAR(75) null,
-	orderByType VARCHAR(75) null,
-	targetLayoutFriendlyUrl VARCHAR(255) null,
-	targetPortletId VARCHAR(75) null,
-	contentField VARCHAR(75) null,
-	feedFormat VARCHAR(75) null,
-	feedVersion DOUBLE
-);
-
-create table JournalFolder (
-	uuid_ VARCHAR(75) null,
-	folderId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	parentFolderId LONG,
-	treePath STRING null,
-	name VARCHAR(100) null,
-	description STRING null,
-	restrictionType INTEGER,
-	status INTEGER,
-	statusByUserId LONG,
-	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
-);
-
-create table JournalFolders_DDMStructures (
-	structureId LONG not null,
-	folderId LONG not null,
-	primary key (structureId, folderId)
 );
 
 create table Layout (
@@ -1742,14 +1622,6 @@ create table ServiceComponent (
 	data_ TEXT null
 );
 
-create table Shard (
-	mvccVersion LONG default 0,
-	shardId LONG not null primary key,
-	classNameId LONG,
-	classPK LONG,
-	name VARCHAR(75) null
-);
-
 create table ShoppingCart (
 	cartId LONG not null primary key,
 	groupId LONG,
@@ -2062,6 +1934,7 @@ create table SystemEvent (
 
 create table Team (
 	mvccVersion LONG default 0,
+	uuid_ VARCHAR(75) null,
 	teamId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

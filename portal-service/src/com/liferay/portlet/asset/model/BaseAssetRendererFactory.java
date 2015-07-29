@@ -74,8 +74,13 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	}
 
 	@Override
+	public String getClassName() {
+		return _className;
+	}
+
+	@Override
 	public long getClassNameId() {
-		return PortalUtil.getClassNameId(_className);
+		return PortalUtil.getClassNameId(getClassName());
 	}
 
 	@Deprecated

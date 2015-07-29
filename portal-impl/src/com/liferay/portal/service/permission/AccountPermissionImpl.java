@@ -32,7 +32,9 @@ public class AccountPermissionImpl implements AccountPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, account, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, Account.class.getName(),
+				account.getAccountId(), actionId);
 		}
 	}
 
@@ -43,7 +45,9 @@ public class AccountPermissionImpl implements AccountPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, accountId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, Account.class.getName(), accountId,
+				actionId);
 		}
 	}
 

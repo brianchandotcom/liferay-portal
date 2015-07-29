@@ -14,7 +14,7 @@
 
 package com.liferay.portal.verify.model;
 
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -23,7 +23,9 @@ public class DDMStructureVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return DDMStructure.class.getName();
+		Class<?> clazz = DDMStructureManagerUtil.getDDMStructureModelClass();
+
+		return clazz.getName();
 	}
 
 	@Override

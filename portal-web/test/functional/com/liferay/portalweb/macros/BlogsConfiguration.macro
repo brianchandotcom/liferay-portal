@@ -75,6 +75,7 @@
 			</then>
 			<else>
 				<execute macro="Portlet#gotoPortletOptions">
+					<var name="portletNameBorderless" value="${portletNameBorderless}" />
 					<var name="portletOption" value="Configuration" />
 				</execute>
 			</else>
@@ -91,6 +92,18 @@
 
 		<execute function="AssertTextEquals" locator1="PGBlogsConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute function="AssertTextEquals" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
+	</command>
+
+	<command name="disableSocialBookmarkSites">
+		<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
+
+		<execute function="Uncheck" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_CONFIGURATION_CHECKBOX" />
+	</command>
+
+	<command name="enableSocialBookmarkSites">
+		<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
+
+		<execute function="Check" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_CONFIGURATION_CHECKBOX" />
 	</command>
 
 	<command name="saveConfigurationIFrame">
@@ -244,6 +257,7 @@
 			</then>
 			<else>
 				<execute macro="Portlet#gotoPortletOptions">
+					<var name="portletNameBorderless" value="${portletNameBorderless}" />
 					<var name="portletOption" value="Configuration" />
 				</execute>
 			</else>

@@ -16,6 +16,8 @@ package com.liferay.portal.bean;
 
 import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
@@ -25,6 +27,9 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -84,6 +89,38 @@ public class BeanPropertiesImpl implements BeanProperties {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+	}
+
+	@Override
+	public <T> T deepCopyProperties(Object source) throws Exception {
+		ObjectInputStream objectInputStream = null;
+		ObjectOutputStream objectOutputStream = null;
+
+		try {
+			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream();
+
+			objectOutputStream = new ObjectOutputStream(
+				unsyncByteArrayOutputStream);
+
+			objectOutputStream.writeObject(source);
+
+			objectOutputStream.flush();
+
+			UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+				new UnsyncByteArrayInputStream(
+					unsyncByteArrayOutputStream.toByteArray());
+
+			objectInputStream = new ObjectInputStream(
+				unsyncByteArrayInputStream);
+
+			return (T)objectInputStream.readObject();
+		}
+		finally {
+			objectInputStream.close();
+
+			objectOutputStream.close();
 		}
 	}
 

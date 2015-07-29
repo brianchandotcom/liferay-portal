@@ -16,11 +16,8 @@ package com.liferay.portlet.exportimport.configuration;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.exportimport.lar.ExportImportDateUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
@@ -77,21 +74,19 @@ public class ExportImportConfigurationFactory {
 				boolean privateLayout, Map<String, String[]> parameterMap)
 		throws PortalException {
 
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-					user.getUserId(), sourceGroupId, targetGroupId,
-					privateLayout,
+		Map<String, Serializable> publishLayoutLocalSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildPublishLayoutLocalSettingsMap(
+					user, sourceGroupId, targetGroupId, privateLayout,
 					ExportImportHelperUtil.getAllLayoutIds(
-							sourceGroupId, privateLayout),
-					parameterMap, user.getLocale(), user.getTimeZone());
+						sourceGroupId, privateLayout),
+					parameterMap);
 
 		return ExportImportConfigurationLocalServiceUtil.
-			addExportImportConfiguration(
-				user.getUserId(), sourceGroupId, StringPool.BLANK,
-				StringPool.BLANK, ExportImportConfigurationConstants.
-					TYPE_PUBLISH_LAYOUT_LOCAL,
-				settingsMap, WorkflowConstants.STATUS_DRAFT,
-				new ServiceContext());
+			addDraftExportImportConfiguration(
+				user.getUserId(),
+				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL,
+				publishLayoutLocalSettingsMap);
 	}
 
 	public static ExportImportConfiguration
@@ -191,22 +186,21 @@ public class ExportImportConfigurationFactory {
 				Map<String, String[]> parameterMap)
 		throws PortalException {
 
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				user.getUserId(), sourceGroupId, privateLayout,
-				ExportImportHelperUtil.getAllLayoutIdsMap(
-					sourceGroupId, privateLayout),
-				parameterMap, remoteAddress, remotePort, remotePathContext,
-				secureConnection, remoteGroupId, privateLayout,
-				user.getLocale(), user.getTimeZone());
+		Map<String, Serializable> publishLayoutRemoteSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.
+				buildPublishLayoutRemoteSettingsMap(
+					user.getUserId(), sourceGroupId, privateLayout,
+					ExportImportHelperUtil.getAllLayoutIdsMap(
+						sourceGroupId, privateLayout),
+					parameterMap, remoteAddress, remotePort, remotePathContext,
+					secureConnection, remoteGroupId, privateLayout,
+					user.getLocale(), user.getTimeZone());
 
 		return ExportImportConfigurationLocalServiceUtil.
-			addExportImportConfiguration(
-				user.getUserId(), sourceGroupId, StringPool.BLANK,
-				StringPool.BLANK, ExportImportConfigurationConstants.
-					TYPE_PUBLISH_LAYOUT_REMOTE,
-				settingsMap, WorkflowConstants.STATUS_DRAFT,
-				new ServiceContext());
+			addDraftExportImportConfiguration(
+				user.getUserId(),
+				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE,
+				publishLayoutRemoteSettingsMap);
 	}
 
 	protected static Map<String, String[]> getDefaultPublishingParameters() {

@@ -825,7 +825,7 @@ public class ShoppingUtil {
 
 				String[] vArray = values.get(j);
 
-				int arrayPos;
+				int arrayPos = 0;
 
 				for (arrayPos = i / numOfRepeats; arrayPos >= vArray.length;
 					 arrayPos = arrayPos - vArray.length) {

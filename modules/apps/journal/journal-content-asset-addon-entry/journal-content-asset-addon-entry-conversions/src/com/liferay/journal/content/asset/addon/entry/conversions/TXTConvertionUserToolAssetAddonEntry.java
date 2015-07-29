@@ -51,7 +51,8 @@ public class TXTConvertionUserToolAssetAddonEntry
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.conversions)"
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.conversions)",
+		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

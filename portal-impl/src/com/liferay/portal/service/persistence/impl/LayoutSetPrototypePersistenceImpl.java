@@ -4483,6 +4483,11 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		return _badColumnNames;
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return LayoutSetPrototypeModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the layout set prototype persistence.
 	 */

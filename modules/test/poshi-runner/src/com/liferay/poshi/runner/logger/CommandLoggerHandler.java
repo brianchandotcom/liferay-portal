@@ -97,9 +97,9 @@ public final class CommandLoggerHandler {
 		LoggerElement xmlLoggerElement = XMLLoggerHandler.getXMLLoggerElement(
 			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
 
-		_updateStatus(xmlLoggerElement, "pending");
-
 		_linkLoggerElements(xmlLoggerElement);
+
+		_updateStatus(xmlLoggerElement, "pending");
 	}
 
 	public static void startRunning() throws Exception {
@@ -140,29 +140,6 @@ public final class CommandLoggerHandler {
 		return loggerElement;
 	}
 
-	private static LoggerElement _getCauseHeaderLoggerElement() {
-		LoggerElement loggerElement = new LoggerElement();
-
-		loggerElement.setClassName("cause-header");
-		loggerElement.setName("h4");
-		loggerElement.setText("Cause:");
-
-		return loggerElement;
-	}
-
-	private static LoggerElement _getCauseLoggerElement() {
-		LoggerElement loggerElement = new LoggerElement();
-
-		loggerElement.setClassName("cause");
-
-		loggerElement.addChildLoggerElement(_getCauseHeaderLoggerElement());
-
-		loggerElement.addChildLoggerElement(
-			SummaryLoggerHandler.getCauseBodyLoggerElement());
-
-		return loggerElement;
-	}
-
 	private static LoggerElement _getChildContainerLoggerElement(
 		int btnLinkId) {
 
@@ -182,19 +159,8 @@ public final class CommandLoggerHandler {
 			"data-errorlinkid", "console-" + errorLinkId);
 		loggerElement.setClassName("console errorPanel toggle");
 
-		loggerElement.addChildLoggerElement(_getConsoleLogLoggerElement());
-
-		return loggerElement;
-	}
-
-	private static LoggerElement _getConsoleLogLoggerElement() {
-		LoggerElement loggerElement = new LoggerElement();
-
-		loggerElement.setClassName("console-log");
-
-		loggerElement.addChildLoggerElement(_getStepsLoggerElement());
-
-		loggerElement.addChildLoggerElement(_getCauseLoggerElement());
+		loggerElement.addChildLoggerElement(
+			SummaryLoggerHandler.getSummaryLogLoggerElement());
 
 		return loggerElement;
 	}
@@ -416,31 +382,10 @@ public final class CommandLoggerHandler {
 		return loggerElement;
 	}
 
-	private static LoggerElement _getStepsHeaderLoggerElement() {
-		LoggerElement loggerElement = new LoggerElement();
-
-		loggerElement.setClassName("steps-header");
-		loggerElement.setName("h4");
-		loggerElement.setText("Steps:");
-
-		return loggerElement;
-	}
-
-	private static LoggerElement _getStepsLoggerElement() {
-		LoggerElement loggerElement = new LoggerElement();
-
-		loggerElement.setClassName("steps");
-
-		loggerElement.addChildLoggerElement(_getStepsHeaderLoggerElement());
-
-		loggerElement.addChildLoggerElement(
-			SummaryLoggerHandler.getMajorStepsLoggerElement());
-
-		return loggerElement;
-	}
-
 	private static boolean _isCommand(Element element) {
-		if (!Validator.equals(element.getName(), "execute")) {
+		if (!Validator.equals(element.getName(), "condition") &&
+			!Validator.equals(element.getName(), "execute")) {
+
 			return false;
 		}
 
@@ -460,8 +405,6 @@ public final class CommandLoggerHandler {
 	}
 
 	private static void _linkLoggerElements(LoggerElement xmlLoggerElement) {
-		xmlLoggerElement.setAttribute("data-status01", "pending");
-
 		String functionLinkID = xmlLoggerElement.getAttributeValue(
 			"data-functionlinkid");
 
@@ -499,8 +442,8 @@ public final class CommandLoggerHandler {
 		loggerElement.setAttribute("data-status01", status);
 
 		LoggerUtil.executeJavaScript(
-			"loggerInterface.fire('command-complete', " +
-				loggerElement.getID() + ")");
+			"loggerInterface.fire('command-complete', '" +
+				loggerElement.getID() + "')");
 	}
 
 	private static int _btnLinkId;

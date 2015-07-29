@@ -19,6 +19,7 @@
 	<command name="signOutOfSite">
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
 		</execute>
 
 		<execute macro="SignOut#_signOut" />

@@ -25,15 +25,20 @@ import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.url.ServletContextURLContainer;
+import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -184,8 +189,8 @@ public class HotDeployImpl implements HotDeploy {
 	public interface PACL {
 
 		public void initPolicy(
-			String servletContextName, ClassLoader classLoader,
-			Properties properties);
+			String contextName, URLContainer urlContainer,
+			ClassLoader classLoader, Properties properties);
 
 		public void unregister(ClassLoader classLoader);
 
@@ -336,8 +341,8 @@ public class HotDeployImpl implements HotDeploy {
 
 		@Override
 		public void initPolicy(
-			String servletContextName, ClassLoader classLoader,
-			Properties properties) {
+			String contextName, URLContainer urlContainer,
+			ClassLoader classLoader, Properties properties) {
 		}
 
 		@Override
@@ -375,8 +380,16 @@ public class HotDeployImpl implements HotDeploy {
 				properties = new Properties();
 			}
 
+			File tempDir = (File)_servletContext.getAttribute(
+				JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
+
+			properties.put(
+				JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR,
+				tempDir.getAbsolutePath());
+
 			_pacl.initPolicy(
-				_servletContext.getServletContextName(), _classLoader,
+				_servletContext.getServletContextName(),
+				new ServletContextURLContainer(_servletContext), _classLoader,
 				properties);
 		}
 

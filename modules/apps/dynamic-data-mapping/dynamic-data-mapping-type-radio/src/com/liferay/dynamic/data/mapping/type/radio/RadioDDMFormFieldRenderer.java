@@ -74,6 +74,7 @@ public class RadioDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 		return radioDDMFormFieldContextHelper.getOptions();
 	}
 
+	@Override
 	protected void populateRequiredContext(
 		Template template, DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {

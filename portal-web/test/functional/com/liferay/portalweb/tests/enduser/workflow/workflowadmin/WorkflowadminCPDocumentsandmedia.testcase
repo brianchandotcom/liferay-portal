@@ -1,5 +1,4 @@
 <definition component-name="portal-workflow">
-	<property name="web.plugins.includes" value="kaleo-web" />
 	<property name="testray.main.component.name" value="Workflow" />
 
 	<set-up>
@@ -20,7 +19,7 @@
 		<execute macro="DMDocumentType#tearDownCP" />
 	</tear-down>
 
-	<command name="AddDocumentsAndMediaNoWorkflowCP" priority="5">
+	<command name="AddDocumentsAndMediaNoWorkflowCP" priority="4">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
 
@@ -47,7 +46,7 @@
 		<execute macro="Workflow#viewDefaultMySubmissionsCP" />
 	</command>
 
-	<command known-issues="LPS-53334" name="ApproveDMDocumentCP" priority="5">
+	<command known-issues="LPS-53334" name="ApproveDMDocumentCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -196,7 +195,7 @@
 		</execute>
 	</command>
 
-	<command name="ApproveInDMFolderSingleApproverTypeSpecificWorkflowCP" priority="4">
+	<command known-issues="LPS-56092" name="ApproveInDMFolderSingleApproverTypeSpecificWorkflowCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -333,7 +332,7 @@
 		</execute>
 	</command>
 
-	<command name="ApproveInDMFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="4">
+	<command known-issues="LPS-56092" name="ApproveInDMFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -572,7 +571,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-53334" name="RejectDMDocumentCP" priority="5">
+	<command known-issues="LPS-53334" name="RejectDMDocumentCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -737,7 +736,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectInDMFolderSingleApproverTypeSpecificWorkflowCP" priority="4">
+	<command known-issues="LPS-56092" name="RejectInDMFolderSingleApproverTypeSpecificWorkflowCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -874,7 +873,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectInDMFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="4">
+	<command known-issues="LPS-56092" name="RejectInDMFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>

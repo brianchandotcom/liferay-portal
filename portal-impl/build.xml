@@ -183,6 +183,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<ant dir="../portal-web" target="build-css" />
 	</target>
 
+	<target name="build-db">
+		<ant dir="../sql" target="build-db" />
+	</target>
+
 	<target name="build-ehcache-xsd">
 		<mirrors-get dest="ehcache.xsd" src="http://ehcache.org/ehcache.xsd" />
 
@@ -201,10 +205,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</replace>
 
 		<delete file="ehcache.xsd" />
-	</target>
-
-	<target name="build-db">
-		<ant dir="../sql" target="build-db" />
 	</target>
 
 	<target name="build-iw">
@@ -384,40 +384,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<copy file="${liferay.doclet.dir}/liferay-doclet.jar" todir="${project.dir}/lib/development" />
 	</target>
 
-	<target name="build-r2-js">
-		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-		</tstamp>
-
-		<property name="r2.version" value="liferay-0.3" />
-
-		<property name="r2.dir" value="${tstamp.value}/R2-${r2.version}" />
-
-		<unzip
-			dest="${tstamp.value}"
-			src="${project.dir}/portal-web/third-party/R2-${r2.version}.zip"
-		/>
-
-		<exec dir="${r2.dir}" executable="npm">
-			<arg value="install" />
-		</exec>
-
-		<property name="dynamic.css.dependencies.dir" value="${project.dir}/portal-impl/src/com/liferay/portal/servlet/filters/dynamiccss/dependencies" />
-
-		<copy
-			file="${dynamic.css.dependencies.dir}/r2_liferay.js"
-			tofile="${r2.dir}/r2_liferay.js"
-		/>
-
-		<exec dir="${r2.dir}" executable="browserify">
-			<arg value="r2_liferay.js" />
-			<arg value="-o" />
-			<arg value="${dynamic.css.dependencies.dir}/r2.js" />
-		</exec>
-
-		<delete dir="${tstamp.value}" />
-	</target>
-
 	<target name="build-releaseinfo" if="release.info">
 		<java
 			classname="com.liferay.portal.tools.ReleaseInfoBuilder"
@@ -554,13 +520,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<fileset
 				dir="${tstamp.value}"
 				includes="org/apache/commons/logging/**"
-			/>
-
-			<!-- ecj.jar -->
-
-			<fileset
-				dir="${tstamp.value}"
-				includes="org/eclipse/jdt/**"
 			/>
 
 			<!-- hamcrest*.jar -->
@@ -782,12 +741,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</antcall>
 	</target>
 
-	<target name="build-service-portlet-journal">
-		<antcall target="build-service">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/journal/service.xml" />
-		</antcall>
-	</target>
-
 	<target name="build-service-portlet-messageboards">
 		<antcall target="build-service">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/messageboards/service.xml" />
@@ -840,7 +793,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<antcall target="build-service-portlet-expando" />
 		<antcall target="build-service-portlet-exportimport" />
 		<antcall target="build-service-portlet-flags" />
-		<antcall target="build-service-portlet-journal" />
 		<antcall target="build-service-portlet-messageboards" />
 		<antcall target="build-service-portlet-mobiledevicerules" />
 		<antcall target="build-service-portlet-ratings" />
@@ -854,6 +806,8 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<antcall target="build-service-counter" />
 		<antcall target="build-service-portal" />
 		<antcall target="build-service-portlets" />
+
+		<ant dir="../modules" target="build-service" />
 	</target>
 
 	<target name="build-themes">
@@ -979,12 +933,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</antcall>
 	</target>
 
-	<target name="build-wsdd-portlet-journal">
-		<antcall target="build-wsdd">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/journal/service.xml" />
-		</antcall>
-	</target>
-
 	<target name="build-wsdd-portlet-messageboards">
 		<antcall target="build-wsdd">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/messageboards/service.xml" />
@@ -1036,7 +984,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<antcall target="build-wsdd-portlet-expando" />
 		<antcall target="build-wsdd-portlet-exportimport" />
 		<antcall target="build-wsdd-portlet-flags" />
-		<antcall target="build-wsdd-portlet-journal" />
 		<antcall target="build-wsdd-portlet-messageboards" />
 		<antcall target="build-wsdd-portlet-mobiledevicerules" />
 		<antcall target="build-wsdd-portlet-ratings" />

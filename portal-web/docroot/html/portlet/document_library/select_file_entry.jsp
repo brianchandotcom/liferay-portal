@@ -39,7 +39,7 @@ if (folder != null) {
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/document_library/select_file_entry");
+	portletURL.setParameter("mvcRenderCommandName", "/document_library/select_file_entry");
 	portletURL.setParameter("groupId", String.valueOf(groupId));
 	portletURL.setParameter("folderId", String.valueOf(folderId));
 	%>
@@ -59,7 +59,7 @@ if (folder != null) {
 			rowVar="row"
 		>
 			<liferay-portlet:renderURL varImpl="rowURL">
-				<portlet:param name="struts_action" value="/document_library/select_file_entry" />
+				<portlet:param name="mvcRenderCommandName" value="/document_library/select_file_entry" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 			</liferay-portlet:renderURL>

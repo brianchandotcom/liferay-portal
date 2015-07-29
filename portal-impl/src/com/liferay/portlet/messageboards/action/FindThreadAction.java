@@ -14,52 +14,39 @@
 
 package com.liferay.portlet.messageboards.action;
 
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
-
-import javax.portlet.PortletURL;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.struts.FindActionHelper;
+import com.liferay.portal.util.PortletKeys;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class FindThreadAction extends FindMessageAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
+		"path=/message_boards/find_thread"
+	},
+	service = StrutsAction.class
+)
+public class FindThreadAction extends BaseStrutsAction {
 
 	@Override
-	protected long getGroupId(long primaryKey) throws Exception {
-		MBThread thread = MBThreadLocalServiceUtil.getThread(primaryKey);
-
-		return thread.getGroupId();
-	}
-
-	@Override
-	protected String getPrimaryKeyParameterName() {
-		return "threadId";
-	}
-
-	@Override
-	protected String getStrutsAction(
-		HttpServletRequest request, String portletId) {
-
-		return "/message_boards/view_message";
-	}
-
-	@Override
-	protected PortletURL processPortletURL(
-			HttpServletRequest request, PortletURL portletURL)
+	public String execute(
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		long threadId = ParamUtil.getLong(
-			request, getPrimaryKeyParameterName());
+		_findActionHelper.execute(request, response);
 
-		MBThread thread = MBThreadLocalServiceUtil.getThread(threadId);
-
-		portletURL.setParameter(
-			"messageId", String.valueOf(thread.getRootMessageId()));
-
-		return portletURL;
+		return null;
 	}
+
+	private final FindActionHelper _findActionHelper =
+		new ThreadFindActionHelper();
 
 }

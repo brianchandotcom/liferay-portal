@@ -188,6 +188,11 @@ public class RatingsStatsLocalServiceUtil {
 		return getService().fetchRatingsStats(statsId);
 	}
 
+	public static com.liferay.portlet.ratings.model.RatingsStats fetchStats(
+		java.lang.String className, long classPK) {
+		return getService().fetchStats(className, classPK);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

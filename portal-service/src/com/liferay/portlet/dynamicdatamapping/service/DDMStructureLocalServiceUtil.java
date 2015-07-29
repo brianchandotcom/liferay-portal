@@ -52,40 +52,18 @@ public class DDMStructureLocalServiceUtil {
 		return getService().addDDMStructure(ddmStructure);
 	}
 
-	public static void addDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure) {
-		getService()
-			.addDLFileEntryTypeDDMStructure(fileEntryTypeId, ddmStructure);
-	}
-
-	public static void addDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId) {
-		getService().addDLFileEntryTypeDDMStructure(fileEntryTypeId, structureId);
-	}
-
-	public static void addDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures) {
-		getService()
-			.addDLFileEntryTypeDDMStructures(fileEntryTypeId, DDMStructures);
-	}
-
-	public static void addDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds) {
-		getService()
-			.addDLFileEntryTypeDDMStructures(fileEntryTypeId, structureIds);
-	}
-
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
 		long userId, long groupId, long classNameId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
 		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		java.lang.String storageType,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addStructure(userId, groupId, classNameId, nameMap,
-			descriptionMap, ddmForm, ddmFormLayout, serviceContext);
+			descriptionMap, ddmForm, ddmFormLayout, storageType, serviceContext);
 	}
 
 	/**
@@ -147,7 +125,7 @@ public class DDMStructureLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @param parentStructureId the primary key of the parent structure
 	(optionally {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants#DEFAULT_PARENT_STRUCTURE_ID})
+	DDMStructureConstants#DEFAULT_PARENT_STRUCTURE_ID})
 	* @param classNameId the primary key of the class name for the
 	structure's related model
 	* @param structureKey the unique string identifying the structure
@@ -157,10 +135,9 @@ public class DDMStructureLocalServiceUtil {
 	descriptions
 	* @param definition the structure's XML schema definition
 	* @param storageType the structure's storage type. It can be "xml" or
-	"expando". For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	"expando". For more information, see {@link StorageType}.
 	* @param type the structure's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	DDMStructureConstants}.
 	* @param serviceContext the service context to be applied. Can set the
 	UUID, creation date, modification date, guest permissions,
 	and group permissions for the structure.
@@ -220,10 +197,9 @@ public class DDMStructureLocalServiceUtil {
 	descriptions
 	* @param definition the structure's XML schema definition
 	* @param storageType the structure's storage type. It can be "xml" or
-	"expando". For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	"expando". For more information, see {@link StorageType}.
 	* @param type the structure's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	DDMStructureConstants}.
 	* @param serviceContext the service context to be applied. Can set the
 	UUID, creation date, modification date, guest permissions and
 	group permissions for the structure.
@@ -271,20 +247,14 @@ public class DDMStructureLocalServiceUtil {
 	* Adds the model resources with the permissions to the structure.
 	*
 	* @param structure the structure to add resources to
-	* @param groupPermissions the group permissions to be added
-	* @param guestPermissions the guest permissions to be added
+	* @param modelPermissions the model permissions to be added
 	* @throws PortalException if a portal exception occurred
 	*/
 	public static void addStructureResources(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure structure,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addStructureResources(structure, groupPermissions, guestPermissions);
-	}
-
-	public static void clearDLFileEntryTypeDDMStructures(long fileEntryTypeId) {
-		getService().clearDLFileEntryTypeDDMStructures(fileEntryTypeId);
+		getService().addStructureResources(structure, modelPermissions);
 	}
 
 	/**
@@ -354,31 +324,6 @@ public class DDMStructureLocalServiceUtil {
 		long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteDDMStructure(structureId);
-	}
-
-	public static void deleteDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure) {
-		getService()
-			.deleteDLFileEntryTypeDDMStructure(fileEntryTypeId, ddmStructure);
-	}
-
-	public static void deleteDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId) {
-		getService()
-			.deleteDLFileEntryTypeDDMStructure(fileEntryTypeId, structureId);
-	}
-
-	public static void deleteDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures) {
-		getService()
-			.deleteDLFileEntryTypeDDMStructures(fileEntryTypeId, DDMStructures);
-	}
-
-	public static void deleteDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId, long[] structureIds) {
-		getService()
-			.deleteDLFileEntryTypeDDMStructures(fileEntryTypeId, structureIds);
 	}
 
 	/**
@@ -672,8 +617,7 @@ public class DDMStructureLocalServiceUtil {
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -771,51 +715,6 @@ public class DDMStructureLocalServiceUtil {
 	*/
 	public static int getDDMStructuresCount() {
 		return getService().getDDMStructuresCount();
-	}
-
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId) {
-		return getService().getDLFileEntryTypeDDMStructures(fileEntryTypeId);
-	}
-
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId, int start, int end) {
-		return getService()
-				   .getDLFileEntryTypeDDMStructures(fileEntryTypeId, start, end);
-	}
-
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator) {
-		return getService()
-				   .getDLFileEntryTypeDDMStructures(fileEntryTypeId, start,
-			end, orderByComparator);
-	}
-
-	public static int getDLFileEntryTypeDDMStructuresCount(long fileEntryTypeId) {
-		return getService().getDLFileEntryTypeDDMStructuresCount(fileEntryTypeId);
-	}
-
-	/**
-	* Returns the fileEntryTypeIds of the document library file entry types associated with the d d m structure.
-	*
-	* @param structureId the structureId of the d d m structure
-	* @return long[] the fileEntryTypeIds of document library file entry types associated with the d d m structure
-	*/
-	public static long[] getDLFileEntryTypePrimaryKeys(long structureId) {
-		return getService().getDLFileEntryTypePrimaryKeys(structureId);
-	}
-
-	/**
-	* Returns all the structures for the document library file entry type.
-	*
-	* @param dlFileEntryTypeId the primary key of the document library file
-	entry type
-	* @return the structures for the document library file entry type
-	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeStructures(
-		long dlFileEntryTypeId) {
-		return getService().getDLFileEntryTypeStructures(dlFileEntryTypeId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -945,8 +844,7 @@ public class DDMStructureLocalServiceUtil {
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -972,8 +870,7 @@ public class DDMStructureLocalServiceUtil {
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -1008,8 +905,7 @@ public class DDMStructureLocalServiceUtil {
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -1058,8 +954,7 @@ public class DDMStructureLocalServiceUtil {
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -1111,16 +1006,6 @@ public class DDMStructureLocalServiceUtil {
 		return getService().getStructuresCount(groupIds, classNameId);
 	}
 
-	public static boolean hasDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId) {
-		return getService()
-				   .hasDLFileEntryTypeDDMStructure(fileEntryTypeId, structureId);
-	}
-
-	public static boolean hasDLFileEntryTypeDDMStructures(long fileEntryTypeId) {
-		return getService().hasDLFileEntryTypeDDMStructures(fileEntryTypeId);
-	}
-
 	public static void revertStructure(long userId, long structureId,
 		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -1139,8 +1024,7 @@ public class DDMStructureLocalServiceUtil {
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -1175,8 +1059,7 @@ public class DDMStructureLocalServiceUtil {
 	* start</code> instances. <code>start</code> and <code>end</code> are not
 	* primary keys, they are indexes in the result set. Thus, <code>0</code>
 	* refers to the first result in the set. Setting both <code>start</code>
-	* and <code>end</code> to {@link
-	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
 	* result set.
 	* </p>
 	*
@@ -1187,10 +1070,9 @@ public class DDMStructureLocalServiceUtil {
 	* @param name the name keywords
 	* @param description the description keywords
 	* @param storageType the structure's storage type. It can be "xml" or
-	"expando". For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	"expando". For more information, see {@link StorageType}.
 	* @param type the structure's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	DDMStructureConstants}.
 	* @param andOperator whether every field must match its keywords, or just
 	one field
 	* @param start the lower bound of the range of structures to return
@@ -1235,13 +1117,13 @@ public class DDMStructureLocalServiceUtil {
 	*
 	* @param companyId the primary key of the structure's company
 	* @param groupIds the primary keys of the groups
+	* @param classNameId
 	* @param name the name keywords
 	* @param description the description keywords
 	* @param storageType the structure's storage type. It can be "xml" or
-	"expando". For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	"expando". For more information, see {@link StorageType}.
 	* @param type the structure's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	DDMStructureConstants}.
 	* @param andOperator whether every field must match its keywords, or just
 	one field
 	* @return the number of matching structures
@@ -1261,12 +1143,6 @@ public class DDMStructureLocalServiceUtil {
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static void setDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds) {
-		getService()
-			.setDLFileEntryTypeDDMStructures(fileEntryTypeId, structureIds);
 	}
 
 	/**

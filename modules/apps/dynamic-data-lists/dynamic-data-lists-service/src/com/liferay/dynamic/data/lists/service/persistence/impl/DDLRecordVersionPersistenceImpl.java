@@ -1431,8 +1431,9 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DDLRecordVersion ddlRecordVersion) {
-		if (ddlRecordVersion.isNew()) {
+	protected void cacheUniqueFindersCache(DDLRecordVersion ddlRecordVersion,
+		boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					ddlRecordVersion.getRecordId(),
 					ddlRecordVersion.getVersion()
@@ -1664,7 +1665,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 			ddlRecordVersion, false);
 
 		clearUniqueFindersCache(ddlRecordVersion);
-		cacheUniqueFindersCache(ddlRecordVersion);
+		cacheUniqueFindersCache(ddlRecordVersion, isNew);
 
 		ddlRecordVersion.resetOriginalValues();
 
@@ -2054,6 +2055,11 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		}
 
 		return count.intValue();
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return DDLRecordVersionModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

@@ -1,5 +1,4 @@
 <definition component-name="portal-workflow">
-	<property name="web.plugins.includes" value="kaleo-web" />
 	<property name="testray.main.component.name" value="Workflow" />
 
 	<var name="siteName" value="Site Name" />
@@ -50,7 +49,15 @@
 		</execute>
 	</set-up>
 
-	<command name="ApprovePageRevisionPG" priority="5">
+	<tear-down>
+		<execute macro="Site#tearDownCP" />
+
+		<execute macro="Workflow#tearDownPortalWorkflow" />
+
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+	</tear-down>
+
+	<command name="ApprovePageRevisionPG" priority="4">
 		<var name="pageName" value="Page Revision Page" />
 
 		<execute macro="Page#addWithWorkflowPG">
@@ -141,7 +148,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectPageRevisionPG" priority="5">
+	<command name="RejectPageRevisionPG" priority="4">
 		<var name="pageName" value="Page Revision Page" />
 
 		<execute macro="Page#addWithWorkflowPG">
@@ -240,12 +247,4 @@
 			<var name="workflowStatus" value="Pending (Update)" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="Site#tearDownCP" />
-
-		<execute macro="Workflow#tearDownPortalWorkflow" />
-
-		<execute macro="Workflow#tearDownSiteWorkflow" />
-	</tear-down>
 </definition>

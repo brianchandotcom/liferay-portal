@@ -668,7 +668,7 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = PollsChoiceLocalService.class)
+	@BeanReference(type = com.liferay.polls.service.PollsChoiceLocalService.class)
 	protected PollsChoiceLocalService pollsChoiceLocalService;
 	@BeanReference(type = com.liferay.polls.service.PollsChoiceService.class)
 	protected com.liferay.polls.service.PollsChoiceService pollsChoiceService;

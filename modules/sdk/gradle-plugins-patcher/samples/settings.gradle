@@ -1,0 +1,3 @@
+include "samples"
+
+rootProject.name = "com.googlecode.json-simple.json-simple"

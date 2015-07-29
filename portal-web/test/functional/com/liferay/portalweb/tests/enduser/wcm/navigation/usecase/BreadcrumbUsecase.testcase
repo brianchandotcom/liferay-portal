@@ -11,7 +11,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="BreadcrumbConfiguration" priority="3">
+	<command known-issues="LPS-55813" name="BreadcrumbConfiguration" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -211,8 +211,6 @@
 	</command>
 
 	<command name="BreadcrumbLinkPointsToLocalhost" priority="4">
-		<property name="custom.properties" value="show.guest.group=true" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -231,21 +229,26 @@
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
+			<var name="url" value="http://localhost:8080/web/site-name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Breadcrumb" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="checkSetupName" value="Show Guest Site" />
+		</execute>
+
+		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
-			<var name="virtualHostsURL" value="http://127.0.0.1:8080/web/site-name" />
+			<var name="url" value="http://127.0.0.1:8080/web/site-name" />
 		</execute>
 
 		<execute function="AssertLocation" value1="http://127.0.0.1:8080/web/site-name/site-page-name" />
@@ -256,9 +259,9 @@
 		</execute>
 
 		<var name="key_URL" value="http://localhost:8080" />
-		<execute function="AssertElementNotPresent" locator1="PGBreadcrumb#BREADCRUMB_PAGE_LINK" />
+		<execute function="AssertElementNotPresent" locator1="Breadcrumb#BREADCRUMB_PAGE_LINK" />
 
 		<var name="key_URL" value="/web/guest" />
-		<execute function="AssertTextEquals" locator1="PGBreadcrumb#BREADCRUMB_PAGE_LINK" value1="Liferay" />
+		<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_PAGE_LINK" value1="Liferay" />
 	</command>
 </definition>

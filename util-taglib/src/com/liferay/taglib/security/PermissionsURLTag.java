@@ -15,18 +15,17 @@
 package com.liferay.taglib.security;
 
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.portletconfiguration.util.PortletConfigurationApplicationType;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
@@ -95,10 +94,6 @@ public class PermissionsURLTag extends TagSupport {
 			resourceGroupId = String.valueOf(themeDisplay.getScopeGroupId());
 		}
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		Layout layout = themeDisplay.getLayout();
-
 		if (Validator.isNull(redirect) &&
 			(Validator.isNull(windowState) ||
 			 !windowState.equals(LiferayWindowState.POP_UP.toString()))) {
@@ -106,9 +101,10 @@ public class PermissionsURLTag extends TagSupport {
 			redirect = PortalUtil.getCurrentURL(request);
 		}
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.PORTLET_CONFIGURATION, layout.getPlid(),
-			PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			request,
+			PortletConfigurationApplicationType.PortletConfiguration.CLASS_NAME,
+			PortletProvider.Action.VIEW);
 
 		if (Validator.isNotNull(windowState)) {
 			portletURL.setWindowState(
@@ -121,9 +117,7 @@ public class PermissionsURLTag extends TagSupport {
 			portletURL.setWindowState(WindowState.MAXIMIZED);
 		}
 
-		portletURL.setParameter(
-			"mvcPath",
-			"/html/portlet/portlet_configuration/edit_permissions.jsp");
+		portletURL.setParameter("mvcPath", "/edit_permissions.jsp");
 
 		if (Validator.isNotNull(redirect)) {
 			portletURL.setParameter("redirect", redirect);
@@ -133,7 +127,13 @@ public class PermissionsURLTag extends TagSupport {
 			}
 		}
 
+		portletURL.setParameter(
+			"portletConfiguration", Boolean.TRUE.toString());
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		portletURL.setParameter("portletResource", portletDisplay.getId());
+
 		portletURL.setParameter("modelResource", modelResource);
 		portletURL.setParameter(
 			"modelResourceDescription", modelResourceDescription);

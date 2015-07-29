@@ -29,7 +29,7 @@ Group group = GroupLocalServiceUtil.getGroup(groupId);
 		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ASSIGN_MEMBERS) %>">
 			<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-plus" label="add-members" selected='<%= toolbarItem.equals("add-members") %>'>
 				<liferay-portlet:renderURL varImpl="assignMembersURL">
-					<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
+					<liferay-portlet:param name="mvcPath" value="/view.jsp" />
 				</liferay-portlet:renderURL>
 
 				<%
@@ -65,7 +65,7 @@ Group group = GroupLocalServiceUtil.getGroup(groupId);
 				assignUserRolesURL.setWindowState(LiferayWindowState.POP_UP);
 				%>
 
-				<aui:nav-item href="<%= assignUserRolesURL %>" iconCssClass="icon-user" label="users" useDialog="<%= true %>" />
+				<aui:nav-item href="<%= assignUserRolesURL.toString() %>" iconCssClass="icon-user" label="users" useDialog="<%= true %>" />
 
 				<%
 				PortletURL assignUserGroupRolesURL = PortletProviderUtil.getPortletURL(request, UserGroupRole.class.getName(), PortletProvider.Action.EDIT);
@@ -74,14 +74,13 @@ Group group = GroupLocalServiceUtil.getGroup(groupId);
 				assignUserGroupRolesURL.setWindowState(LiferayWindowState.POP_UP);
 				%>
 
-				<aui:nav-item href="<%= assignUserGroupRolesURL %>" iconCssClass="icon-globe" label="user-groups" useDialog="<%= true %>" />
+				<aui:nav-item href="<%= assignUserGroupRolesURL.toString() %>" iconCssClass="icon-globe" label="user-groups" useDialog="<%= true %>" />
 			</aui:nav-item>
 		</c:if>
 
 		<c:if test="<%= group.getType() == GroupConstants.TYPE_SITE_RESTRICTED %>">
 			<portlet:renderURL var="viewMembershipRequestsURL">
 				<portlet:param name="mvcPath" value="/view_membership_requests.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>
 
 			<aui:nav-item href="<%= viewMembershipRequestsURL %>" label="view-membership-requests" selected='<%= toolbarItem.equals("view-membership-requests") %>' />

@@ -225,12 +225,12 @@
 <!--ORGANIZATION_SEARCH-->
 <tr>
 	<td>ORGANIZATION_SEARCH_FIELD</td>
-	<td>//button[contains(.,'Search')]/../input[contains(@name,'_174_keywords')]</td>
+	<td>//button[contains(.,'Search')]/../input[contains(@name,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_SEARCH_BUTTON</td>
-	<td>//input[contains(@name,'_174_keywords')]/../button[contains(.,'Search')]</td>
+	<td>//input[contains(@name,'keywords')]/../button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -257,12 +257,12 @@
 <!--USER_GROUP_SEARCH-->
 <tr>
 	<td>USER_GROUP_SEARCH_FIELD</td>
-	<td>//button[contains(.,'Search')]/../input[contains(@name,'_174_keywords')]</td>
+	<td>//button[contains(.,'Search')]/../input[contains(@name,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_GROUP_SEARCH_BUTTON</td>
-	<td>//input[contains(@name,'_174_keywords')]/../button[contains(.,'Search')]</td>
+	<td>//input[contains(@name,'keywords')]/../button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 </tbody>

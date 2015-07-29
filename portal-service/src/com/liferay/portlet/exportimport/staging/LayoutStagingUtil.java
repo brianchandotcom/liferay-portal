@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.exportimport.staging;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutRevision;
@@ -29,45 +29,34 @@ import com.liferay.portal.model.LayoutStagingHandler;
 public class LayoutStagingUtil {
 
 	public static LayoutRevision getLayoutRevision(Layout layout) {
-		return getLayoutStaging().getLayoutRevision(layout);
+		return _layoutStaging.getLayoutRevision(layout);
 	}
 
 	public static LayoutSetBranch getLayoutSetBranch(LayoutSet layoutSet) {
-		return getLayoutStaging().getLayoutSetBranch(layoutSet);
+		return _layoutStaging.getLayoutSetBranch(layoutSet);
 	}
 
 	public static LayoutSetStagingHandler getLayoutSetStagingHandler(
 		LayoutSet layoutSet) {
 
-		return getLayoutStaging().getLayoutSetStagingHandler(layoutSet);
-	}
-
-	public static LayoutStaging getLayoutStaging() {
-		PortalRuntimePermission.checkGetBeanProperty(LayoutStagingUtil.class);
-
-		return _layoutStaging;
+		return _layoutStaging.getLayoutSetStagingHandler(layoutSet);
 	}
 
 	public static LayoutStagingHandler getLayoutStagingHandler(Layout layout) {
-		return getLayoutStaging().getLayoutStagingHandler(layout);
+		return _layoutStaging.getLayoutStagingHandler(layout);
 	}
 
 	public static boolean isBranchingLayout(Layout layout) {
-		return getLayoutStaging().isBranchingLayout(layout);
+		return _layoutStaging.isBranchingLayout(layout);
 	}
 
 	public static boolean isBranchingLayoutSet(
 		Group group, boolean privateLayout) {
 
-		return getLayoutStaging().isBranchingLayoutSet(group, privateLayout);
+		return _layoutStaging.isBranchingLayoutSet(group, privateLayout);
 	}
 
-	public void setLayoutStaging(LayoutStaging layoutStaging) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_layoutStaging = layoutStaging;
-	}
-
-	private static LayoutStaging _layoutStaging;
+	private static final LayoutStaging _layoutStaging =
+		ProxyFactory.newServiceTrackedInstance(LayoutStaging.class);
 
 }

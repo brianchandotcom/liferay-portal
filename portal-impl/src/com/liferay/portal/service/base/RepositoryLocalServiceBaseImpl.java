@@ -1429,7 +1429,7 @@ public abstract class RepositoryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = RepositoryLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.RepositoryLocalService.class)
 	protected RepositoryLocalService repositoryLocalService;
 	@BeanReference(type = com.liferay.portal.service.RepositoryService.class)
 	protected com.liferay.portal.service.RepositoryService repositoryService;

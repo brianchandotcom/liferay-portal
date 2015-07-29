@@ -18,12 +18,12 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 
@@ -192,21 +192,25 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 
 	private static final boolean _X_CONTENT_TYPE_OPTIONS =
 		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.HTTP_HEADER_SECURE_X_CONTENT_TYPE_OPTIONS),
+			SystemProperties.get("http.header.secure.x.content.type.options"),
 			true);
 
 	private static final String[] _X_CONTENT_TYPE_OPTIONS_URLS_EXCLUDES =
-		PropsUtil.getArray(
-			PropsKeys.HTTP_HEADER_SECURE_X_CONTENT_TYPE_OPTIONS_URLS_EXCLUDES);
+		StringUtil.split(
+			SystemProperties.get(
+				"http.header.secure.x.content.type.options.urls.excludes"));
 
 	private static final boolean _X_FRAME_OPTIONS;
 
-	private static final String _X_XSS_PROTECTION = PropsUtil.get(
-		PropsKeys.HTTP_HEADER_SECURE_X_XSS_PROTECTION);
+	private static final String _X_XSS_PROTECTION = SystemProperties.get(
+		"http.header.secure.x.xss.protection");
 
 	private static final KeyValuePair[] _xFrameOptionKVPs;
 
 	static {
+		String httpHeaderSecureXFrameOptionsKey =
+			"http.header.secure.x.frame.options";
+
 		Properties properties = new SortedProperties(
 			new Comparator<String>() {
 
@@ -217,9 +221,9 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 				}
 
 			},
-			PropsUtil.getProperties(
-				PropsKeys.HTTP_HEADER_SECURE_X_FRAME_OPTIONS +
-					StringPool.PERIOD,
+			PropertiesUtil.getProperties(
+				SystemProperties.getProperties(),
+				httpHeaderSecureXFrameOptionsKey.concat(StringPool.PERIOD),
 				true));
 
 		List<KeyValuePair> xFrameOptionKVPs = new ArrayList<>(
@@ -264,8 +268,7 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 		}
 		else {
 			_X_FRAME_OPTIONS = GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.HTTP_HEADER_SECURE_X_FRAME_OPTIONS),
-				true);
+				SystemProperties.get(httpHeaderSecureXFrameOptionsKey), true);
 		}
 	}
 

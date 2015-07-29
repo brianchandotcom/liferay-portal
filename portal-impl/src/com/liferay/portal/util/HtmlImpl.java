@@ -718,7 +718,7 @@ public class HtmlImpl implements Html {
 
 	protected boolean isTag(char[] tag, String text, int pos) {
 		if ((pos + tag.length + 1) <= text.length()) {
-			char item;
+			char item = '\0';
 
 			for (int i = 0; i < tag.length; i++) {
 				item = text.charAt(pos++);

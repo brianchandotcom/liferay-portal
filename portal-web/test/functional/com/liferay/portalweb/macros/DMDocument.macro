@@ -161,7 +161,14 @@
 
 	<command name="addDocumentTypeCP">
 		<execute macro="DMDocument#addDocumentTypeCmdCP">
+			<var name="booleanField" value="${booleanField}" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
+			<var name="numberField" value="${numberField}" />
+			<var name="selectOption" value="${selectOption}" />
+			<var name="textField" value="${textField}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="CPDocumentsandmediaAdddocumenttype#PUBLISH_BUTTON" value1="Publish" />
@@ -218,7 +225,14 @@
 
 	<command name="addDocumentTypeWithWorkflowCP">
 		<execute macro="DMDocument#addDocumentTypeCmdCP">
+			<var name="booleanField" value="${booleanField}" />
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
+			<var name="numberField" value="${numberField}" />
+			<var name="selectOption" value="${selectOption}" />
+			<var name="textField" value="${textField}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="CPDocumentsandmediaAdddocumenttype#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
@@ -898,6 +912,7 @@
 			<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentFileEdit" value="${dmDocumentFileEdit}" />
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
+			<var name="sharepointRepository" value="${sharepointRepository}" />
 		</execute>
 
 		<if>
@@ -915,12 +930,15 @@
 
 	<command name="editPG">
 		<execute macro="DMDocument#editCmdPG">
+			<var name="changeLog" value="${changeLog}" />
+			<var name="checkedOut" value="${checkedOut}" />
 			<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentFileEdit" value="${dmDocumentFileEdit}" />
 			<var name="dmDocumentTagName" value="${dmDocumentTagName}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
 			<var name="revision" value="${revision}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="PGDocumentsandmediaEditdocument#PUBLISH_BUTTON" value1="Publish" />
@@ -967,12 +985,15 @@
 
 	<command name="editPublishPG">
 		<execute macro="DMDocument#editCmdPG">
+			<var name="changeLog" value="${changeLog}" />
+			<var name="checkedOut" value="${checkedOut}" />
 			<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentFileEdit" value="${dmDocumentFileEdit}" />
 			<var name="dmDocumentTagName" value="${dmDocumentTagName}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
 			<var name="revision" value="${revision}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="PGDocumentsandmediaEditdocument#PUBLISH_BUTTON" value1="Publish" />
@@ -981,12 +1002,15 @@
 
 	<command name="editSaveAndCheckinPG">
 		<execute macro="DMDocument#editCmdPG">
+			<var name="changeLog" value="${changeLog}" />
+			<var name="checkedOut" value="${checkedOut}" />
 			<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentFileEdit" value="${dmDocumentFileEdit}" />
 			<var name="dmDocumentTagName" value="${dmDocumentTagName}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
 			<var name="revision" value="${revision}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<if>
@@ -1003,12 +1027,15 @@
 
 	<command name="editSaveAsDraftPG">
 		<execute macro="DMDocument#editCmdPG">
+			<var name="changeLog" value="${changeLog}" />
+			<var name="checkedOut" value="${checkedOut}" />
 			<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescriptionEdit}" />
 			<var name="dmDocumentFileEdit" value="${dmDocumentFileEdit}" />
 			<var name="dmDocumentTagName" value="${dmDocumentTagName}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="dmDocumentTitleEdit" value="${dmDocumentTitleEdit}" />
 			<var name="revision" value="${revision}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<if>
@@ -1514,7 +1541,11 @@
 
 	<command name="tearDownPG">
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="${pageName}" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<if>
@@ -1543,8 +1574,11 @@
 
 	<command name="viewAllPG">
 		<execute macro="DMDocument#viewPG">
+			<var name="categoryName" value="${categoryName}" />
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="tagName" value="${tagName}" />
+			<var name="tagNameList" value="${tagNameList}" />
 		</execute>
 
 		<if>
@@ -1580,6 +1614,12 @@
 		</execute>
 
 		<execute macro="DMDocument#viewDocumentDetailsCmdPG" />
+	</command>
+
+	<command name="viewCannotAddRepository">
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="PGDocumentsandmedia#TOOLBAR_ADD" value1="Add" />
+
+		<execute function="AssertElementNotPresent" locator1="HOME_MENULIST_ADD_REPOSITORY" />
 	</command>
 
 	<command name="viewCheckedinCP">
@@ -1760,7 +1800,6 @@
 	</command>
 
 	<command name="viewDocumentNoCommentsCmdPG">
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#COMMENTS_BE_THE_FIRST" value1="Be the first." />
 		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#COMMENTS_SUBSCRIBE_TO_COMMENTS" value1="Subscribe to Comments" />
 	</command>
 
@@ -1774,6 +1813,19 @@
 				<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_HEADER_TITLE" value1="${dmDocumentTitle}" />
 			</else>
 		</if>
+	</command>
+
+	<command name="viewDocumentToolbarCmdAsGuestPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute function="AssertClick" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
+		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#TOOLBAR_DOWNLOAD_BUTTON" value1="Download" />
+		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmediaDocument#TOOLBAR_EDIT_BUTTON" value1="Edit" />
+		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmediaDocument#TOOLBAR_MOVE_BUTTON" value1="Move" />
+		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmediaDocument#TOOLBAR_CHECKOUT_BUTTON" value1="Checkout" />
+		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmediaDocument#TOOLBAR_PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmediaDocument#TOOLBAR_MOVE_TO_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
 	</command>
 
 	<command name="viewDocumentToolbarCmdPG">
@@ -1927,7 +1979,6 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#COMMENTS_BE_THE_FIRST" value1="Be the first." />
 		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#COMMENTS_SUBSCRIBE_TO_COMMENTS" value1="Subscribe to Comments" />
 		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_DETAILS_VERSION" value1="Version ${dmDocumentVersionNumberEdit}" />
 		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_DETAILS_UPLOADER" value1="Last Updated by ${dmDocumentUploader}" />
@@ -2077,7 +2128,6 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#COMMENTS_BE_THE_FIRST" value1="Be the first." />
 		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#COMMENTS_SUBSCRIBE_TO_COMMENTS" value1="Subscribe to Comments" />
 		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_DETAILS_VERSION" value1="Version ${dmDocumentVersionNumber}" />
 		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_DETAILS_UPLOADER" value1="Last Updated by ${dmDocumentUploader}" />
@@ -2101,8 +2151,11 @@
 
 	<command name="viewPGNonAuthor">
 		<execute macro="DMDocument#viewPG">
+			<var name="categoryName" value="${categoryName}" />
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="tagName" value="${tagName}" />
+			<var name="tagNameList" value="${tagNameList}" />
 		</execute>
 
 		<if>
@@ -2254,9 +2307,13 @@
 		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
 		<execute macro="Page#gotoPG">
+			<var name="defaultURL" value="${defaultURL}" />
+			<var name="nodePort" value="${nodePort}" />
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
+			<var name="soDashboard" value="${soDashboard}" />
+			<var name="soPage" value="${soPage}" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmedia#TOOLBAR_ADD" />

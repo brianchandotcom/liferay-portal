@@ -14,15 +14,16 @@
 
 package com.liferay.item.selector.web;
 
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -33,8 +34,7 @@ import javax.servlet.ServletResponse;
  * @author Iván Zaera
  */
 public class MediaItemSelectorView
-	implements ItemSelectorView
-		<MediaItemSelectorCriterion, TestItemSelectorReturnType> {
+	implements ItemSelectorView<MediaItemSelectorCriterion> {
 
 	@Override
 	public Class<MediaItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -42,7 +42,7 @@ public class MediaItemSelectorView
 	}
 
 	@Override
-	public Set<TestItemSelectorReturnType>
+	public List<ItemSelectorReturnType>
 		getSupportedItemSelectorReturnTypes() {
 
 		return _supportedItemSelectorReturnTypes;
@@ -51,6 +51,11 @@ public class MediaItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		return MediaItemSelectorView.class.getName();
+	}
+
+	@Override
+	public boolean isShowSearch() {
+		return false;
 	}
 
 	@Override
@@ -66,11 +71,11 @@ public class MediaItemSelectorView
 			"<html>" + MediaItemSelectorView.class.getName() + "</html>");
 	}
 
-	private static final Set<TestItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
-			SetUtil.fromArray(
-				new TestItemSelectorReturnType[] {
-					TestItemSelectorReturnType.URL
+	private static final List<ItemSelectorReturnType>
+		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
+			ListUtil.fromArray(
+				new ItemSelectorReturnType[] {
+					new TestURLItemSelectorReturnType()
 				}));
 
 }

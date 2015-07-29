@@ -1,0 +1,77 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.OSDetector
+
+configurations {
+	jruby
+}
+
+ext {
+	compassVersion = "1.0.1"
+
+	compassUrl = "http://rubygems.org/gems/compass-${compassVersion}.gem"
+}
+
+dependencies {
+	jruby group: "org.jruby", name: "jruby-complete", version: "1.6.5"
+}
+
+task downloadGems
+
+classes {
+	dependsOn downloadGems
+}
+
+downloadGems {
+	doLast {
+		File compassFile = FileUtil.get(project, compassUrl, temporaryDir)
+
+		javaexec {
+			args configurations.jruby.singleFile
+			args "-S"
+			args "gem", "install"
+			args "-i", "./classes"
+			args relativePath(compassFile)
+			args "--no-rdoc"
+			args "--no-ri"
+
+			main = "-jar"
+		}
+
+		if (OSDetector.windows) {
+			ant.replace(dir: "classes/bin") {
+				replacetoken "#! jruby"
+				replacevalue "#!/usr/bin/env jruby"
+			}
+		}
+
+		File readmeFile = file("readme.txt")
+
+		readmeFile.withWriter {
+			BufferedWriter bufferedWriter ->
+
+			bufferedWriter.writeLine("Included gems:")
+			bufferedWriter.writeLine("")
+
+			List<String> gemNames = []
+
+			File gemsDir = file("classes/gems")
+
+			gemsDir.eachDir {
+				gemNames << it.name
+			}
+
+			gemNames.each {
+				if (it != gemNames.last()) {
+					bufferedWriter.writeLine(it)
+				}
+				else {
+					bufferedWriter.write(it)
+				}
+			}
+		}
+	}
+
+	onlyIf {
+		!FileUtil.exists(project, "classes/gems")
+	}
+}

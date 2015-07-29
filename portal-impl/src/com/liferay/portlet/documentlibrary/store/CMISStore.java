@@ -180,7 +180,8 @@ public class CMISStore extends BaseStore {
 			document.delete(true);
 		}
 		catch (NoSuchFileException nsfe) {
-			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
+			logFailedDeletion(
+				companyId, repositoryId, fileName, versionLabel, nsfe);
 		}
 	}
 

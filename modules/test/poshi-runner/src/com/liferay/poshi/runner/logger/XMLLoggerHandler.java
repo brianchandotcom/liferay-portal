@@ -330,8 +330,15 @@ public final class XMLLoggerHandler {
 	private static LoggerElement _getConditionalLoggerElement(Element element)
 		throws Exception {
 
-		LoggerElement loggerElement = _getLineGroupLoggerElement(
-			"conditional", element);
+		LoggerElement loggerElement = null;
+
+		if (_isExecutingFunction(element)) {
+			loggerElement = _getLineGroupLoggerElement(
+				"conditional-function", element);
+		}
+		else {
+			loggerElement = _getLineGroupLoggerElement("conditional", element);
+		}
 
 		List<Element> childElements = element.elements();
 

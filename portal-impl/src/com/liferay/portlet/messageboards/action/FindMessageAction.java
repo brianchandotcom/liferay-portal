@@ -14,50 +14,39 @@
 
 package com.liferay.portlet.messageboards.action;
 
-import com.liferay.portal.struts.FindAction;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.struts.FindActionHelper;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class FindMessageAction extends FindAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
+		"path=/message_boards/find_message"
+	},
+	service = StrutsAction.class
+)
+public class FindMessageAction extends BaseStrutsAction {
 
 	@Override
-	protected long getGroupId(long primaryKey) throws Exception {
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(primaryKey);
+	public String execute(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
 
-		return message.getGroupId();
+		_findActionHelper.execute(request, response);
+
+		return null;
 	}
 
-	@Override
-	protected String getPrimaryKeyParameterName() {
-		return "messageId";
-	}
-
-	@Override
-	protected String getStrutsAction(
-		HttpServletRequest request, String portletId) {
-
-		if (portletId.equals(PortletKeys.MESSAGE_BOARDS_ADMIN)) {
-			return "/message_boards_admin/view_message";
-		}
-		else {
-			return "/message_boards/view_message";
-		}
-	}
-
-	@Override
-	protected String[] initPortletIds() {
-
-		// Order is important. See LPS-23770.
-
-		return new String[] {
-			PortletKeys.MESSAGE_BOARDS_ADMIN, PortletKeys.MESSAGE_BOARDS
-		};
-	}
+	private final FindActionHelper _findActionHelper =
+		new MessageFindActionHelper();
 
 }

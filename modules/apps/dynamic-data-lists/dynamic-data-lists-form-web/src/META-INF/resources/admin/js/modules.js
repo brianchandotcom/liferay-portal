@@ -21,29 +21,20 @@
 							path: 'form_definition_serializer.js',
 							requires: [
 								'json',
-								'liferay-ddl-form-builder-layout-visitor',
-								'liferay-ddm-form-renderer-field'
+								'liferay-ddl-form-builder-layout-visitor'
 							]
 						},
 						'liferay-ddl-form-builder-field-support': {
 							path: 'form_builder_field_support.js',
 							requires: [
-								'aui-form-field',
-								'liferay-ddm-form-field-checkbox-template',
-								'liferay-ddm-form-field-options-template',
-								'liferay-ddm-form-field-radio-template',
-								'liferay-ddm-form-field-select-template',
-								'liferay-ddm-form-field-text-template',
-								'liferay-ddm-form-field-types',
-								'liferay-ddm-form-renderer',
-								'liferay-ddm-form-renderer-field'
+								'aui-form-field'
 							]
 						},
 						'liferay-ddl-form-builder-layout-deserializer': {
 							path: 'form_layout_deserializer.js',
 							requires: [
-								'aui-layout',
 								'aui-form-builder-field-list',
+								'aui-layout',
 								'liferay-ddl-form-builder-field-support',
 								'liferay-ddm-form-field-types'
 							]
@@ -52,8 +43,7 @@
 							path: 'form_layout_serializer.js',
 							requires: [
 								'json',
-								'liferay-ddl-form-builder-layout-visitor',
-								'liferay-ddm-form-renderer-field'
+								'liferay-ddl-form-builder-layout-visitor'
 							]
 						},
 						'liferay-ddl-form-builder-layout-visitor': {
@@ -71,11 +61,6 @@
 							]
 						},
 						'liferay-ddl-portlet': {
-							condition: {
-								name: 'liferay-ddl-portlet',
-								trigger: 'liferay-form',
-								when: 'before'
-							},
 							path: 'form_portlet.js',
 							requires: [
 								'liferay-ddl-form-builder',
@@ -90,14 +75,38 @@
 				ddm: {
 					base: '/o/ddm-form-renderer/js/',
 					modules: {
+						'liferay-ddm-form-renderer': {
+							path: 'form.js',
+							requires: [
+								'aui-component',
+								'aui-tabview',
+								'liferay-ddm-form-renderer-field-types',
+								'liferay-ddm-form-renderer-util'
+							]
+						},
+						'liferay-ddm-form-renderer-definition': {
+							path: 'form_definition_support.js',
+							requires: [
+								'liferay-ddm-form-renderer-field-types',
+								'liferay-ddm-form-renderer-util'
+							]
+						},
 						'liferay-ddm-form-renderer-field': {
 							path: 'field.js',
 							requires: [
-								'aui-form-builder-field-base',
-								'aui-form-field',
-								'liferay-checkbox-field',
-								'liferay-ddm-form-field-types',
-								'liferay-text-field'
+								'aui-datatype',
+								'aui-node',
+								'liferay-ddm-form-renderer',
+								'liferay-ddm-form-renderer-field-types',
+								'liferay-ddm-form-renderer-util'
+							]
+						},
+						'liferay-ddm-form-renderer-field-repetition': {
+							path: 'field_repetition_support.js',
+							requires: [
+								'aui-datatype',
+								'liferay-ddm-form-renderer-field-types',
+								'liferay-ddm-form-renderer-util'
 							]
 						},
 						'liferay-ddm-form-renderer-field-types': {
@@ -105,24 +114,20 @@
 							requires: [
 								'array-extras',
 								'aui-form-builder-field-type',
-								'liferay-ddm-form-field',
 								'liferay-ddm-form-renderer-util'
 							]
 						},
-						'liferay-ddm-form-renderer': {
-							path: 'form.js',
+						'liferay-ddm-form-renderer-nested-fields': {
+							path: 'nested_fields_support.js',
 							requires: [
-								'array-extras',
-								'liferay-ddm-form-field',
-								'liferay-ddm-form-field-types',
+								'liferay-ddm-form-renderer-field-types',
 								'liferay-ddm-form-renderer-util'
 							]
 						},
 						'liferay-ddm-form-renderer-util': {
 							path: 'util.js',
 							requires: [
-								'array-extras',
-								'liferay-ddm-form-field'
+								'array-extras'
 							]
 						}
 					},
@@ -152,6 +157,7 @@
 						'liferay-ddm-form-field-options': {
 							path: 'options_field.js',
 							requires: [
+								'liferay-auto-fields',
 								'liferay-ddm-form-renderer-field'
 							]
 						},

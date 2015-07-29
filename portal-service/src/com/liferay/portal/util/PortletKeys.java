@@ -21,8 +21,6 @@ public class PortletKeys {
 
 	public static final String ADMIN = "9";
 
-	public static final String ADMIN_INSTANCE = "135";
-
 	public static final String ADMIN_PLUGINS = "136";
 
 	public static final String ADMIN_SERVER = "137";
@@ -33,17 +31,15 @@ public class PortletKeys {
 
 	public static final String BACKGROUND_TASK = "189";
 
-	public static final String BLOGS = "33";
+	public static final String BLOGS =
+		"com_liferay_blogs_web_portlet_BlogsPortlet";
 
-	public static final String BLOGS_ADMIN = "161";
-
-	public static final String BLOGS_AGGREGATOR = "115";
+	public static final String BLOGS_AGGREGATOR =
+		"com_liferay_blogs_web_portlet_BlogsAgreggatorPortlet";
 
 	public static final String CALENDAR = "8";
 
 	public static final String CHAT = "1_WAR_chatportlet";
-
-	public static final String COMMENTS = "196";
 
 	public static final String CONTROL_PANEL_HOME = "190";
 
@@ -57,16 +53,14 @@ public class PortletKeys {
 
 	public static final String DOCUMENT_LIBRARY_DISPLAY = "110";
 
-	public static final String DYNAMIC_DATA_LISTS =
-		"com_liferay_dynamic_data_lists_web_portlet_DDLPortlet";
-
 	public static final String DYNAMIC_DATA_MAPPING =
-		"com_liferay_dynamic_data_mapping_web_portlet_" +
-			"DynamicDataMappingPortlet";
+		"com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet";
 
-	public static final String EXPANDO = "139";
+	public static final String EXPANDO =
+		"com_liferay_expando_web_portlet_ExpandoPortlet";
 
-	public static final String EXPORT_IMPORT = "200";
+	public static final String EXPORT_IMPORT =
+		"com_liferay_exportimport_web_portlet_ExportImportPortlet";
 
 	public static final String FAST_LOGIN = "164";
 
@@ -81,11 +75,10 @@ public class PortletKeys {
 	public static final String ITEM_SELECTOR =
 		"com_liferay_item_selector_web_portlet_ItemSelectorPortlet";
 
-	public static final String JOURNAL =
-		"com_liferay_journal_web_portlet_JournalPortlet";
-
 	public static final String LAYOUTS_ADMIN =
 		"com_liferay_layout_admin_web_portlet_LayoutAdminPortlet";
+
+	public static final String LICENSE_MANAGER = "176";
 
 	public static final String LIFERAY_PORTAL = "LIFERAY_PORTAL";
 
@@ -104,7 +97,8 @@ public class PortletKeys {
 
 	public static final String MESSAGE_BOARDS_ADMIN = "162";
 
-	public static final String MOBILE_DEVICE_SITE_ADMIN = "178";
+	public static final String MOBILE_DEVICE_RULES =
+		"com_liferay_mobile_device_rules_web_portlet_MDRPortlet";
 
 	public static final String MONITORING = "131";
 
@@ -124,17 +118,11 @@ public class PortletKeys {
 	public static final String NESTED_PORTLETS =
 		"com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet";
 
-	public static final String PAGE_COMMENTS = "107";
-
-	public static final String PAGE_RATINGS = "108";
-
 	public static final String PLUGINS_ADMIN = "132";
 
 	public static final String PORTAL = "90";
 
 	public static final String PORTAL_SETTINGS = "130";
-
-	public static final String PORTLET_CONFIGURATION = "86";
 
 	public static final String PORTLET_DISPLAY_TEMPLATE =
 		"com_liferay_dynamic_data_mapping_web_portlet_" +
@@ -158,8 +146,6 @@ public class PortletKeys {
 
 	public static final long PREFS_PLID_SHARED = 0;
 
-	public static final String RECENT_BLOGGERS = "114";
-
 	public static final String RECENT_DOCUMENTS = "64";
 
 	public static final String REQUESTS = "121";
@@ -177,7 +163,8 @@ public class PortletKeys {
 
 	public static final String SOFTWARE_CATALOG = "98";
 
-	public static final String STAGING_BAR = "170";
+	public static final String STAGING_BAR =
+		"com_liferay_staging_bar_web_portlet_StagingBarPortlet";
 
 	public static final String STOCKS = "12";
 
@@ -185,11 +172,13 @@ public class PortletKeys {
 
 	public static final String UNIT_CONVERTER = "27";
 
-	public static final String USER_GROUPS_ADMIN = "127";
+	public static final String USER_GROUPS_ADMIN =
+		"com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet";
 
 	public static final String USER_STATISTICS = "180";
 
-	public static final String USERS_ADMIN = "125";
+	public static final String USERS_ADMIN =
+		"com_liferay_users_admin_web_portlet_UsersAdminPortlet";
 
 	public static final String WORKFLOW_DEFINITION =
 		"com_liferay_workflow_definition_web_portlet_WorkflowDefinitionPortlet";

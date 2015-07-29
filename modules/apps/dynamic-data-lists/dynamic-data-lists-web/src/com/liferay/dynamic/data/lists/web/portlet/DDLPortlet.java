@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.web.portlet;
 
+import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordException;
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
@@ -21,6 +22,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
+import com.liferay.portal.PortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,7 +30,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.util.WebKeys;
 
 import java.io.IOException;
 
@@ -126,7 +127,10 @@ public class DDLPortlet extends MVCPortlet {
 			SessionErrors.contains(
 				renderRequest, NoSuchRecordSetException.class.getName()) ||
 			SessionErrors.contains(
-				renderRequest, PrincipalException.class.getName())) {
+				renderRequest,
+				PortletPreferencesException.MustBeStrict.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.getNestedClasses())) {
 
 			include("/error.jsp", renderRequest, renderResponse);
 		}
@@ -146,7 +150,8 @@ public class DDLPortlet extends MVCPortlet {
 			record = _ddlRecordService.getRecord(recordId);
 		}
 
-		renderRequest.setAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD, record);
+		renderRequest.setAttribute(
+			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD, record);
 	}
 
 	protected void setDDLRecordSetRequestAttribute(RenderRequest renderRequest)
@@ -161,7 +166,7 @@ public class DDLPortlet extends MVCPortlet {
 		}
 
 		renderRequest.setAttribute(
-			WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
+			DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DDLPortlet.class);

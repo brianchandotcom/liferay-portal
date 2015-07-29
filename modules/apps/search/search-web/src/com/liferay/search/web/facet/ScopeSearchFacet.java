@@ -24,22 +24,20 @@ import com.liferay.search.web.util.SearchFacet;
 
 import javax.portlet.ActionRequest;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = SearchFacet.class)
-public class ScopeSearchFacet extends BaseSearchFacet {
+public class ScopeSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
-	public String getClassName() {
-		return ScopeSearchFacet.class.getName();
-	}
-
-	@Override
-	public String getConfigurationView() {
-		return "/facets/configuration/scopes.jsp";
+	public String getConfigurationJspPath() {
+		return "/META-INF/resources/facets/configuration/scopes.jsp";
 	}
 
 	@Override
@@ -66,8 +64,8 @@ public class ScopeSearchFacet extends BaseSearchFacet {
 	}
 
 	@Override
-	public String getDisplayView() {
-		return "/facets/view/scopes.jsp";
+	public String getDisplayJspPath() {
+		return "/META-INF/resources/facets/view/scopes.jsp";
 	}
 
 	public String getFacetClassName() {
@@ -77,11 +75,6 @@ public class ScopeSearchFacet extends BaseSearchFacet {
 	@Override
 	public String getFieldName() {
 		return Field.GROUP_ID;
-	}
-
-	@Override
-	public String getId() {
-		return ScopeSearchFacet.class.getName();
 	}
 
 	@Override
@@ -110,6 +103,14 @@ public class ScopeSearchFacet extends BaseSearchFacet {
 	@Override
 	public String getTitle() {
 		return "sites";
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.search.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

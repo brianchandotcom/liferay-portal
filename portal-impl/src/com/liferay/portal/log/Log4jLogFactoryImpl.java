@@ -17,7 +17,6 @@ package com.liferay.portal.log;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactory;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.util.log4j.Log4JUtil;
 
 import org.apache.log4j.LogManager;
 
@@ -35,11 +34,6 @@ public class Log4jLogFactoryImpl implements LogFactory {
 	@Override
 	public Log getLog(String name) {
 		return new Log4jLogImpl(LogManager.getLogger(name));
-	}
-
-	@Override
-	public void setLevel(String name, String priority, boolean custom) {
-		Log4JUtil.setLevel(name, priority, custom);
 	}
 
 }

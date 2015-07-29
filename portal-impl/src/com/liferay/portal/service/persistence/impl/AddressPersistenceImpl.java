@@ -5194,6 +5194,11 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		return _badColumnNames;
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return AddressModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the address persistence.
 	 */

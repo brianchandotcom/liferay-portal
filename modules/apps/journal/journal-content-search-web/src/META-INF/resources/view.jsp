@@ -18,11 +18,9 @@
 
 <portlet:renderURL var="searchURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 	<portlet:param name="mvcPath" value="/search.jsp" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="showListed" value="<%= String.valueOf(showListed) %>" />
 
-	<c:if test="<%= Validator.isNotNull(targetPortletId) %>">
-		<portlet:param name="targetPortletId" value="<%= targetPortletId %>" />
+	<c:if test="<%= Validator.isNotNull(journalContentSearchPortletInstanceConfiguration.targetPortletId()) %>">
+		<portlet:param name="targetPortletId" value="<%= journalContentSearchPortletInstanceConfiguration.targetPortletId() %>" />
 	</c:if>
 </portlet:renderURL>
 

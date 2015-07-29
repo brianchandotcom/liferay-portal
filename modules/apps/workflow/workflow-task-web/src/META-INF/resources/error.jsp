@@ -18,5 +18,6 @@
 
 <liferay-ui:error-header />
 
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
 <liferay-ui:error exception="<%= WorkflowException.class %>" message="an-unexpected-error-occurred" />
+
+<liferay-ui:error-principal />

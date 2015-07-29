@@ -15,29 +15,45 @@ buildscript {
 apply plugin: "com.liferay.poshi.runner"
 
 poshiRunner {
-	baseDir = file("test/functional")
-
 	if (project.hasProperty("componentNames")) {
 		poshiProperty "component.names", project.properties["componentNames"]
+	}
+
+	poshiProperty "ignore.errors.file.name", "test-ignorable-error-lines.xml"
+
+	if (project.hasProperty("poshiTestName")) {
+		poshiProperty "test.name", project.properties["poshiTestName"]
 	}
 
 	if (project.hasProperty("productNames")) {
 		poshiProperty "product.names", project.properties["productNames"]
 	}
 
+	if (project.hasProperty("saveScreenshot")) {
+		poshiProperty "save.screenshot", project.properties["saveScreenshot"]
+	}
+
 	if (project.hasProperty("seleniumLoggerEnabled")) {
 		poshiProperty "selenium.logger.enabled", project.properties["seleniumLoggerEnabled"]
 	}
+
+	poshiProperty "test.base.dir.name", "test/functional"
 
 	if (project.hasProperty("testCaseAvailablePropertyNames")) {
 		poshiProperty "test.case.available.property.names", project.properties["testCaseAvailablePropertyNames"]
 	}
 
+	if (project.hasProperty("testConsoleLogFileName")) {
+		poshiProperty "test.console.log.file.name", project.properties["testConsoleLogFileName"]
+	}
+
+	poshiProperty "test.dependencies.dir.name", "com/liferay/portalweb/dependencies"
+
 	if (project.hasProperty("testSkipTearDown")) {
 		poshiProperty "test.skip.tear.down", project.properties["testSkipTearDown"]
 	}
 
-	version = "1.0.4"
+	version = "1.0.9"
 }
 
 repositories {

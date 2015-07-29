@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Tools Service Builder
 Bundle-SymbolicName: com.liferay.portal.tools.service.builder
-Bundle-Version: 1.0.11
+Bundle-Version: 1.0.26
 Import-Package:\
 	!javax.portlet.*,\
 	!javax.servlet.*,\
@@ -19,6 +19,10 @@ Include-Resource:\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ImportPackage.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ImportsFormatter.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/JavaImportsFormatter.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ToolsUtil.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/sourceformatter/ImportPackage.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/sourceformatter/ImportsFormatter.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/sourceformatter/JavaImportsFormatter.class,\
@@ -110,6 +114,7 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/auth/PrincipalException.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/xml/SecureXMLFactoryProvider.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/security/xml/SecureXMLFactoryProviderUtil.class,\
-	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLFormatter.class,\
-	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLSafeReader.class
+	@../../../util-java/util-java.jar!/com/liferay/util/xml/Dom4jUtil.class,\
+	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLSafeReader.class,\
+	@../../../util-java/util-java.jar!/com/liferay/util/xml/XMLUtil.class
 Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder

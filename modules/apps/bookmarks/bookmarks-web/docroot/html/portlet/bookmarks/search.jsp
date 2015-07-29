@@ -63,7 +63,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 	>
 
 		<%
-		Indexer indexer = BookmarksSearcher.getInstance();
+		Indexer<?> indexer = BookmarksSearcher.getInstance();
 
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 

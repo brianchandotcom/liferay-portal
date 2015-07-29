@@ -310,7 +310,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 		if (!isWARFile()) {
 			contextPath = PortalWebResourcesUtil.getContextPath(
-				PortalWebResourceConstants.RESOURCE_TYPE_CSS);
+				PortalWebResourceConstants.RESOURCE_TYPE_THEMES);
 		}
 		else {
 			return getContextPath();

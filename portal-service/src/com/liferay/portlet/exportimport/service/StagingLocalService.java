@@ -111,7 +111,7 @@ public interface StagingLocalService extends BaseLocalService {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
-	long, boolean, java.util.Map)}
+	long, boolean, Map)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portlet.exportimport.lar.MissingReferences validateStagingRequest(

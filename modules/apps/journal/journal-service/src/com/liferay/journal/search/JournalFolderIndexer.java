@@ -14,6 +14,9 @@
 
 package com.liferay.journal.search;
 
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -33,9 +36,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portlet.journal.model.JournalFolder;
-import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 
 import java.util.Locale;
 
@@ -43,12 +43,14 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
 @Component(immediate = true, service = Indexer.class)
-public class JournalFolderIndexer extends BaseIndexer implements FolderIndexer {
+public class JournalFolderIndexer
+	extends BaseIndexer<JournalFolder> implements FolderIndexer {
 
 	public static final String CLASS_NAME = JournalFolder.class.getName();
 
@@ -76,7 +78,7 @@ public class JournalFolderIndexer extends BaseIndexer implements FolderIndexer {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
+		JournalFolder folder = _journalFolderLocalService.getFolder(
 			entryClassPK);
 
 		return JournalFolderPermission.contains(
@@ -92,37 +94,35 @@ public class JournalFolderIndexer extends BaseIndexer implements FolderIndexer {
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		JournalFolder folder = (JournalFolder)obj;
-
+	protected void doDelete(JournalFolder journalFolder) throws Exception {
 		Document document = new DocumentImpl();
 
-		document.addUID(CLASS_NAME, folder.getFolderId());
+		document.addUID(CLASS_NAME, journalFolder.getFolderId());
 
 		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), folder.getCompanyId(), document.get(Field.UID),
-			isCommitImmediately());
+			getSearchEngineId(), journalFolder.getCompanyId(),
+			document.get(Field.UID), isCommitImmediately());
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		JournalFolder folder = (JournalFolder)obj;
+	protected Document doGetDocument(JournalFolder journalFolder)
+		throws Exception {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing folder " + folder);
+			_log.debug("Indexing journalFolder " + journalFolder);
 		}
 
-		Document document = getBaseModelDocument(CLASS_NAME, folder);
+		Document document = getBaseModelDocument(CLASS_NAME, journalFolder);
 
-		document.addText(Field.DESCRIPTION, folder.getDescription());
-		document.addKeyword(Field.FOLDER_ID, folder.getParentFolderId());
-		document.addText(Field.TITLE, folder.getName());
+		document.addText(Field.DESCRIPTION, journalFolder.getDescription());
+		document.addKeyword(Field.FOLDER_ID, journalFolder.getParentFolderId());
+		document.addText(Field.TITLE, journalFolder.getName());
 		document.addKeyword(
 			Field.TREE_PATH,
-			StringUtil.split(folder.getTreePath(), CharPool.SLASH));
+			StringUtil.split(journalFolder.getTreePath(), CharPool.SLASH));
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + folder + " indexed successfully");
+			_log.debug("Document " + journalFolder + " indexed successfully");
 		}
 
 		return document;
@@ -142,19 +142,17 @@ public class JournalFolderIndexer extends BaseIndexer implements FolderIndexer {
 	}
 
 	@Override
-	protected void doReindex(Object obj) throws Exception {
-		JournalFolder folder = (JournalFolder)obj;
-
-		Document document = getDocument(folder);
+	protected void doReindex(JournalFolder journalFolder) throws Exception {
+		Document document = getDocument(journalFolder);
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), folder.getCompanyId(), document,
+			getSearchEngineId(), journalFolder.getCompanyId(), document,
 			isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(classPK);
+		JournalFolder folder = _journalFolderLocalService.getFolder(classPK);
 
 		doReindex(folder);
 	}
@@ -168,7 +166,7 @@ public class JournalFolderIndexer extends BaseIndexer implements FolderIndexer {
 
 	protected void reindexFolders(long companyId) throws PortalException {
 		final ActionableDynamicQuery actionableDynamicQuery =
-			JournalFolderLocalServiceUtil.getActionableDynamicQuery();
+			_journalFolderLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
@@ -201,7 +199,16 @@ public class JournalFolderIndexer extends BaseIndexer implements FolderIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
+	@Reference
+	protected void setJournalFolderLocalService(
+		JournalFolderLocalService journalFolderLocalService) {
+
+		_journalFolderLocalService = journalFolderLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalFolderIndexer.class);
+
+	private JournalFolderLocalService _journalFolderLocalService;
 
 }

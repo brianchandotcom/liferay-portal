@@ -14,6 +14,7 @@
 
 package com.liferay.osgi.service.tracker.map.test;
 
+import com.liferay.osgi.service.tracker.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
@@ -21,6 +22,7 @@ import com.liferay.osgi.service.tracker.map.internal.BundleContextWrapper;
 import com.liferay.osgi.service.tracker.map.internal.TrackedOne;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -146,6 +148,59 @@ public class ListServiceTrackerMapTest {
 	}
 
 	@Test
+	public void testGestServiceWithUnregisteringAndCustomComparator() {
+		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
+			createServiceTrackerMap(
+				_bundleContext, new Comparator<ServiceReference<TrackedOne>>() {
+
+				@Override
+				public int compare(
+					ServiceReference<TrackedOne> serviceReference1,
+					ServiceReference<TrackedOne> serviceReference2) {
+
+					return 0;
+				}
+
+			});
+
+		TrackedOne trackedOne1 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration1 = registerService(
+			trackedOne1);
+
+		TrackedOne trackedOne2 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration2 = registerService(
+			trackedOne2);
+
+		TrackedOne trackedOne3 = new TrackedOne();
+
+		ServiceRegistration<TrackedOne> serviceRegistration3 = registerService(
+			trackedOne3);
+
+		serviceRegistration2.unregister();
+
+		List<TrackedOne> services = serviceTrackerMap.getService("aTarget");
+
+		// Getting the list of services should return a list with the affected
+		// changes
+
+		Assert.assertEquals(2, services.size());
+		Assert.assertTrue(services.contains(trackedOne1));
+		Assert.assertTrue(services.contains(trackedOne3));
+
+		serviceRegistration3.unregister();
+
+		services = serviceTrackerMap.getService("aTarget");
+
+		Assert.assertEquals(1, services.size());
+
+		Assert.assertTrue(services.contains(trackedOne1));
+
+		serviceRegistration1.unregister();
+	}
+
+	@Test
 	public void testGetServicesIsNullAfterDeregistration() {
 		ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
 			createServiceTrackerMap(_bundleContext);
@@ -184,6 +239,36 @@ public class ListServiceTrackerMapTest {
 
 		Assert.assertNotNull(anotherTargetList);
 		Assert.assertEquals(3, anotherTargetList.size());
+	}
+
+	@Test
+	public void testGetServiceWithCustomComparatorReturningZero()
+		throws InvalidSyntaxException {
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+			_bundleContext, TrackedOne.class, null,
+			new PropertyServiceReferenceMapper<String, TrackedOne>("target"),
+			new Comparator<ServiceReference<TrackedOne>>() {
+
+				@Override
+				public int compare(
+					ServiceReference<TrackedOne> serviceReference1,
+					ServiceReference<TrackedOne> serviceReference2) {
+
+					return 0;
+				}
+
+			}
+		);
+
+		_serviceTrackerMap.open();
+
+		registerService(new TrackedOne());
+		registerService(new TrackedOne());
+
+		List<TrackedOne> services = _serviceTrackerMap.getService("aTarget");
+
+		Assert.assertEquals(2, services.size());
 	}
 
 	@Test
@@ -299,6 +384,27 @@ public class ListServiceTrackerMapTest {
 		try {
 			_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
 				bundleContext, TrackedOne.class, "target");
+		}
+		catch (InvalidSyntaxException ise) {
+			throw new RuntimeException(ise);
+		}
+
+		_serviceTrackerMap.open();
+
+		return _serviceTrackerMap;
+	}
+
+	protected ServiceTrackerMap<String, List<TrackedOne>>
+		createServiceTrackerMap(
+			BundleContext bundleContext,
+			Comparator<ServiceReference<TrackedOne>> comparator) {
+
+		try {
+			_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+				bundleContext, TrackedOne.class, null,
+				new PropertyServiceReferenceMapper<String, TrackedOne>(
+					"target"),
+				comparator);
 		}
 		catch (InvalidSyntaxException ise) {
 			throw new RuntimeException(ise);

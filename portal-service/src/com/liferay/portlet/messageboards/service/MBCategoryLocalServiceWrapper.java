@@ -77,10 +77,9 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	@Override
 	public void addCategoryResources(
 		com.liferay.portlet.messageboards.model.MBCategory category,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbCategoryLocalService.addCategoryResources(category,
-			groupPermissions, guestPermissions);
+		_mbCategoryLocalService.addCategoryResources(category, modelPermissions);
 	}
 
 	@Override
@@ -93,10 +92,10 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 
 	@Override
 	public void addCategoryResources(long categoryId,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_mbCategoryLocalService.addCategoryResources(categoryId,
-			groupPermissions, guestPermissions);
+			modelPermissions);
 	}
 
 	/**
@@ -654,10 +653,28 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	}
 
 	@Override
+	public com.liferay.portlet.messageboards.model.MBCategory updateMessageCount(
+		long categoryId) {
+		return _mbCategoryLocalService.updateMessageCount(categoryId);
+	}
+
+	@Override
+	public com.liferay.portlet.messageboards.model.MBCategory updateStatistics(
+		long categoryId) {
+		return _mbCategoryLocalService.updateStatistics(categoryId);
+	}
+
+	@Override
 	public com.liferay.portlet.messageboards.model.MBCategory updateStatus(
 		long userId, long categoryId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryLocalService.updateStatus(userId, categoryId, status);
+	}
+
+	@Override
+	public com.liferay.portlet.messageboards.model.MBCategory updateThreadCount(
+		long categoryId) {
+		return _mbCategoryLocalService.updateThreadCount(categoryId);
 	}
 
 	/**

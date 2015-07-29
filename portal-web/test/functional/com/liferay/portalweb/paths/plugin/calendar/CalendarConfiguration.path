@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>CALENDAR_CONFIGURATION_IFRAME</td>
-	<td>//iframe[contains(@class,'dialog-iframe-node') and contains(@src,'_1_WAR_calendarportlet')]</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node') and contains(@name,'configurationIframe')]</td>
 	<td></td>
 </tr>
 <tr>

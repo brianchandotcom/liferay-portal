@@ -16,8 +16,6 @@ package com.liferay.frontend.editors.web;
 
 import com.liferay.portal.kernel.editor.Editor;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -30,11 +28,6 @@ public class AlloyEditorEditor extends BaseEditor {
 	@Override
 	public String getName() {
 		return "alloyeditor";
-	}
-
-	@Override
-	@SuppressWarnings("unused")
-	public void setItemSelectorAttribute(HttpServletRequest request) {
 	}
 
 	@Override

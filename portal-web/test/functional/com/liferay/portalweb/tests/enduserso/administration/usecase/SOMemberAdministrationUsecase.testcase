@@ -3,7 +3,7 @@
 	<property name="portlet.plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
 	<property name="testray.main.component.name" value="Social Office EE" />
 	<property name="theme.plugins.includes" value="so-theme" />
-	<property name="web.plugins.includes" value="kaleo-web,resources-importer-web" />
+	<property name="web.plugins.includes" value="resources-importer-web" />
 
 	<var name="adminEmailAddress" value="test@liferay.com" />
 	<var name="adminFirstName" value="Test" />
@@ -29,7 +29,7 @@
 		<execute macro="Workflow#tearDownPortalWorkflow" />
 	</tear-down>
 
-	<command name="ConfirmMemberInviteSiteByEmailNonUserViaWorkflow" priority="5">
+	<command name="ConfirmMemberInviteSiteByEmailNonUserViaWorkflow" priority="4">
 		<var name="siteDescription" value="Workflow Site Description" />
 		<var name="siteName" value="Workflow Site Name" />
 		<var name="siteType" value="Open" />
@@ -73,6 +73,7 @@
 
 		<execute macro="SOMembersPortlet#inviteMemberByEmail">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userName" value="${userName}" />
 		</execute>
 
 		<execute macro="SOMembersAdministration#createAccountViaSiteInviteEmail">
@@ -93,6 +94,7 @@
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="${adminEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">

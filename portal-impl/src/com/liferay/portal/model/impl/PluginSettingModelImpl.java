@@ -72,6 +72,18 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 			{ "roles", Types.VARCHAR },
 			{ "active_", Types.BOOLEAN }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("pluginSettingId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("pluginId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("pluginType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("roles", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table PluginSetting (mvccVersion LONG default 0,pluginSettingId LONG not null primary key,companyId LONG,pluginId VARCHAR(75) null,pluginType VARCHAR(75) null,roles STRING null,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table PluginSetting";
 	public static final String ORDER_BY_JPQL = " ORDER BY pluginSetting.pluginSettingId ASC";

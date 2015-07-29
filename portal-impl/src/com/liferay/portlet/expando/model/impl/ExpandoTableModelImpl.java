@@ -66,6 +66,15 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 			{ "classNameId", Types.BIGINT },
 			{ "name", Types.VARCHAR }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("tableId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table ExpandoTable (tableId LONG not null primary key,companyId LONG,classNameId LONG,name VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table ExpandoTable";
 	public static final String ORDER_BY_JPQL = " ORDER BY expandoTable.tableId ASC";

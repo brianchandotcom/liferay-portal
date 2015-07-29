@@ -28,7 +28,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddDraftNotApproved" priority="5">
+	<command name="AddDraftNotApproved" priority="4">
 		<execute macro="WebContent#addPGViaWCD">
 			<var name="draft" value="true" />
 			<var name="webContentContent" value="WC WebContent Content" />
@@ -45,7 +45,7 @@
 		</execute>
 	</command>
 
-	<command name="AddNewWebContentViaAddContentPanel" priority="5">
+	<command name="AddNewWebContentViaAddContentPanel" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Page" />
 		</execute>
@@ -73,7 +73,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978,LPS-53627" name="AddPortletWCDSite" priority="5">
+	<command name="AddPortletWCDSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -114,7 +114,11 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentPortalScopeCurrentPage" priority="5">
+	<command name="AddWebContentPortalScopeCurrentPage" priority="4">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Display Page1" />
 		</execute>
@@ -231,7 +235,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentViaAddContentPanel" priority="5">
+	<command name="AddWebContentViaAddContentPanel" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -264,7 +268,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWithStructure" priority="5">
+	<command known-issues="LPS-56568" name="AddWithStructure" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -308,7 +312,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertExpired" priority="5">
+	<command name="AssertExpired" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -332,7 +336,7 @@
 		</execute>
 	</command>
 
-	<command name="ChangeTemplate" priority="5">
+	<command known-issues="LPS-56568" name="ChangeTemplate" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -379,7 +383,7 @@
 		</execute>
 	</command>
 
-	<command name="EditWebContent" priority="5">
+	<command name="EditWebContent" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -397,7 +401,7 @@
 		</execute>
 	</command>
 
-	<command name="LocalizeWebContent" priority="5">
+	<command name="LocalizeWebContent" priority="4">
 		<var name="languageKey" value="zh_CN" />
 
 		<execute macro="Page#gotoPG">
@@ -447,7 +451,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContent" priority="5">
+	<command name="SearchWebContent" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -531,7 +535,7 @@
 		</execute>
 	</command>
 
-	<command name="SelectWebContentScopeGlobal" priority="5">
+	<command name="SelectWebContentScopeGlobal" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -583,7 +587,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-53627" name="ViewAllFileTypesEnabled" priority="5">
+	<command name="ViewAllFileTypesEnabled" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -605,24 +609,27 @@
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
-		<execute macro="WebContentDisplayPortlet#configureSetupPG">
-			<var name="enableFileTypes" value="DOC,ODT,PDF,RTF,SXW,TXT" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="Web Content Display" />
+			<var name="portletOption" value="Configuration" />
 		</execute>
+
+		<execute macro="WebContentDisplayPortlet#configureSetupPG">
+			<var name="userToolNameList" value="DOC,ODT,PDF,TXT" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#saveConfiguration" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#viewEnabledFileTypesPGViaWCD">
-			<var name="fileTypes" value="DOC,ODT,PDF,RTF,SXW,TXT" />
+			<var name="fileTypes" value="DOC,ODT,PDF,TXT" />
 		</execute>
 	</command>
 
-	<command known-issues="LPS-53627" name="ViewAllSettingsEnabledWCDConfiguration" priority="5">
-		<execute macro="WebContentDisplayPortlet#configureSetupPG">
-			<var name="wcdConfigurationSettings" value="Enable Print,Enable Related Assets,Enable Ratings,Enable Comments,Enable Comment Ratings,Enable View Count Increment" />
-		</execute>
-
+	<command name="ViewAllSettingsEnabledWCDConfiguration" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -662,7 +669,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentTitle" value="Web Content Content 1" />
+			<var name="webContentTitle" value="Web Content Title 1" />
 		</execute>
 
 		<execute macro="WebContent#addExistingRelatedAssetCP">
@@ -684,13 +691,30 @@
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="Web Content Display" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#configureSetupPG">
+			<var name="enableViewCountIncrement" value="true" />
+			<var name="metadataNameList" value="Related Assets,Comment Ratings,Comments,Ratings" />
+			<var name="userToolNameList" value="Print" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#saveConfiguration" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
 		<execute macro="WebContentDisplayPortlet#viewAllSettingsEnabledPG">
 			<var name="relatedAssetTitle" value="Web Content Title 2" />
 			<var name="webContentContent" value="Web Content Content 1" />
 		</execute>
 	</command>
 
-	<command name="ViewArticleWithGuestViewPermission" priority="5">
+	<command known-issues="LPS-56722" name="ViewArticleWithGuestViewPermission" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -803,7 +827,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54964" name="ViewEditTemplate" priority="5">
+	<command known-issues="LPS-54964" name="ViewEditTemplate" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -822,11 +846,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-53627" name="ViewPortletWCDShowAvailableLocales" priority="5">
-		<execute macro="WebContentDisplayPortlet#configureSetupPG">
-			<var name="wcdConfigurationSettings" value="Show Available Locales" />
-		</execute>
-
+	<command name="ViewPortletWCDShowAvailableLocales" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -850,6 +870,21 @@
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="Web Content Display" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#configureSetupPG">
+			<var name="userToolNameList" value="Translations" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#saveConfiguration" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
 		<execute function="Click" locator1="PGWebcontentdisplay#LANGUAGE_MENU_CHINESE" />
 
 		<execute macro="WebContent#viewPGViaWCD">
@@ -863,7 +898,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWCDWithDeletedWCArticle" priority="5">
+	<command name="ViewWCDWithDeletedWCArticle" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -890,7 +925,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWithPaginationScript" priority="5">
+	<command name="ViewWithPaginationScript" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>

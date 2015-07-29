@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -54,6 +55,7 @@ import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -122,13 +124,15 @@ import net.fortuna.ical4j.model.property.Version;
 import net.fortuna.ical4j.model.property.XProperty;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Bruno Farache
- * @author Samuel Kong
- * @author Ganesh Ram
- * @author Brett Swaim
- * @author Mate Thurzo
+ * @author     Brian Wing Shun Chan
+ * @author     Bruno Farache
+ * @author     Samuel Kong
+ * @author     Ganesh Ram
+ * @author     Brett Swaim
+ * @author     Mate Thurzo
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -220,9 +224,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 				serviceContext.isAddGuestPermissions());
 		}
 		else {
-			addEventResources(
-				event, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
+			addEventResources(event, serviceContext.getModelPermissions());
 		}
 
 		// Asset
@@ -289,14 +291,12 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 	@Override
 	public void addEventResources(
-			CalEvent event, String[] groupPermissions,
-			String[] guestPermissions)
+			CalEvent event, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			event.getCompanyId(), event.getGroupId(), event.getUserId(),
-			CalEvent.class.getName(), event.getEventId(), groupPermissions,
-			guestPermissions);
+			CalEvent.class.getName(), event.getEventId(), modelPermissions);
 	}
 
 	@Override
@@ -312,12 +312,12 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 	@Override
 	public void addEventResources(
-			long eventId, String[] groupPermissions, String[] guestPermissions)
+			long eventId, ModelPermissions modelPermissions)
 		throws PortalException {
 
 		CalEvent event = calEventPersistence.findByPrimaryKey(eventId);
 
-		addEventResources(event, groupPermissions, guestPermissions);
+		addEventResources(event, modelPermissions);
 	}
 
 	@Override
@@ -1463,7 +1463,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			int[] byMonthDay = recurrence.getByMonthDay();
 
 			if (byMonthDay != null) {
-				Integer monthDay = new Integer(byMonthDay[0]);
+				Integer monthDay = Integer.valueOf(byMonthDay[0]);
 
 				recur.getMonthDayList().add(monthDay);
 			}
@@ -1474,7 +1474,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 				recur.getDayList().add(weekDay);
 
-				Integer position = new Integer(byDay[0].getDayPosition());
+				Integer position = Integer.valueOf(byDay[0].getDayPosition());
 
 				recur.getSetPosList().add(position);
 			}
@@ -1743,15 +1743,37 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
-			throw new EventTitleException();
+			throw new EventTitleException("Title is null");
 		}
 
 		if (!Validator.isDate(startDateMonth, startDateDay, startDateYear)) {
-			throw new EventStartDateException();
+			StringBundler sb = new StringBundler(9);
+
+			sb.append("Invalid date for {startDateDay=");
+			sb.append(startDateDay);
+			sb.append(", startDateMonth=");
+			sb.append(startDateMonth);
+			sb.append(", startDateYear=");
+			sb.append(startDateYear);
+			sb.append(", title=");
+			sb.append(title);
+			sb.append(StringPool.CLOSE_BRACKET);
+
+			throw new EventStartDateException(sb.toString());
 		}
 
 		if (!allDay && (durationHour <= 0) && (durationMinute <= 0)) {
-			throw new EventDurationException();
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("Invalid date for {durationHour=");
+			sb.append(durationHour);
+			sb.append(", durationMinute=");
+			sb.append(durationMinute);
+			sb.append(", title=");
+			sb.append(title);
+			sb.append(StringPool.CLOSE_BRACKET);
+
+			throw new EventDurationException(sb.toString());
 		}
 
 		Calendar startDate = CalendarFactoryUtil.getCalendar(
@@ -1761,7 +1783,14 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			Calendar until = recurrence.getUntil();
 
 			if ((until != null) && startDate.after(until)) {
-				throw new EventEndDateException();
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("Start date time ");
+				sb.append(startDate.getTimeInMillis());
+				sb.append(" must be before recurrence end date time ");
+				sb.append(until.getTimeInMillis());
+
+				throw new EventEndDateException(sb.toString());
 			}
 		}
 	}

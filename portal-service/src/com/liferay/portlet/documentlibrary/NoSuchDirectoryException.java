@@ -17,8 +17,10 @@ package com.liferay.portlet.documentlibrary;
 import com.liferay.portal.NoSuchModelException;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author     Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class NoSuchDirectoryException extends NoSuchModelException {
 
 	public NoSuchDirectoryException() {

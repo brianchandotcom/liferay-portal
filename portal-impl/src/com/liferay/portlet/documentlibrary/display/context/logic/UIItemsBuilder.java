@@ -218,7 +218,8 @@ public class UIItemsBuilder {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/document_library/view");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_fileEntry.getFolderId()));
 
@@ -322,11 +323,12 @@ public class UIItemsBuilder {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"struts_action", "/document_library/move_entry");
+			"mvcRenderCommandName", "/document_library/move_entry");
 
 		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
-		redirectURL.setParameter("struts_action", "/document_library/view");
+		redirectURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view");
 		redirectURL.setParameter("folderId", String.valueOf(_folderId));
 
 		portletURL.setParameter("redirect", redirectURL.toString());
@@ -366,7 +368,8 @@ public class UIItemsBuilder {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/document_library/view");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_fileEntry.getFolderId()));
 
@@ -660,13 +663,13 @@ public class UIItemsBuilder {
 		return urlUIItem;
 	}
 
-	private String _getActionURL(String strutsAction, String cmd) {
+	private String _getActionURL(String mvcActionCommandName, String cmd) {
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
 
 		PortletURL portletURL = liferayPortletResponse.createActionURL();
 
-		portletURL.setParameter("struts_action", strutsAction);
+		portletURL.setParameter("javax.portlet.action", mvcActionCommandName);
 		portletURL.setParameter(Constants.CMD, cmd);
 		portletURL.setParameter("redirect", _getCurrentURL());
 		portletURL.setParameter(
@@ -709,13 +712,13 @@ public class UIItemsBuilder {
 		return PortalUtil.getLiferayPortletResponse(portletResponse);
 	}
 
-	private PortletURL _getRenderURL(String strutsAction) {
+	private PortletURL _getRenderURL(String mvcRenderCommandName) {
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", strutsAction);
+		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
 		portletURL.setParameter("redirect", _getCurrentURL());
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));

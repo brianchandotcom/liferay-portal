@@ -43,6 +43,7 @@
 
 	<command name="configureGeneralPG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -142,6 +143,7 @@
 
 	<command name="configureMessageUpdatedEmailPG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -164,6 +166,7 @@
 
 	<command name="configureScopePG">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -175,6 +178,10 @@
 		<execute function="Click" locator1="PGMessageboardsConfigurationScope#SCOPE_DROPDOWN" />
 		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="PGMessageboardsConfigurationScope#SCOPE_MENULIST" value1="${scopeName}" />
 		<execute function="AssertTextEquals" locator1="PGMessageboardsConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+
+	<command name="gotoInlinePermissionsPG">
+		<execute function="AssertClick" locator1="Button#PERMISSIONS" value1="Permissions" />
 	</command>
 
 	<command name="gotoRecentPostsPG">
@@ -314,6 +321,7 @@
 
 	<command name="viewRecentPostsConfigurationCP">
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="${portletNameBorderless}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

@@ -795,7 +795,7 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = LayoutSetLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.LayoutSetLocalService.class)
 	protected LayoutSetLocalService layoutSetLocalService;
 	@BeanReference(type = com.liferay.portal.service.LayoutSetService.class)
 	protected com.liferay.portal.service.LayoutSetService layoutSetService;

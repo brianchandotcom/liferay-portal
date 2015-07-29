@@ -18,8 +18,6 @@ import com.liferay.sass.compiler.SassCompiler;
 
 import java.io.File;
 
-import java.net.URL;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -52,11 +50,9 @@ public class RubySassCompilerTest {
 
 		Assert.assertNotNull(sassCompiler);
 
-		Class<?> clazz = getClass();
-
-		URL url = clazz.getResource("dependencies/sass-spec");
-
-		File sassSpecDir = new File(url.toURI());
+		File sassSpecDir = new File(
+			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
+				"/internal/dependencies/sass-spec");
 
 		for (File testDir : sassSpecDir.listFiles()) {
 			File inputFile = new File(testDir, "input.scss");

@@ -115,7 +115,7 @@ public class ColorUtil {
 				}
 				else {
 					hexArray[i] = GetterUtil.getInteger(
-						new Character(c[i]).toString());
+						Character.valueOf(c[i]).toString());
 				}
 			}
 		}

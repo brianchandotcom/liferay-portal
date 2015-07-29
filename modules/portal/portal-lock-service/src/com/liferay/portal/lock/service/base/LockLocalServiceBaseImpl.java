@@ -509,7 +509,7 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = LockLocalService.class)
+	@BeanReference(type = com.liferay.portal.lock.service.LockLocalService.class)
 	protected LockLocalService lockLocalService;
 	@BeanReference(type = LockPersistence.class)
 	protected LockPersistence lockPersistence;

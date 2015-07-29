@@ -26,7 +26,9 @@ import com.liferay.portlet.dynamicdatamapping.registry.annotations.DDMFormField;
 public interface RadioDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
-	@DDMFormField(dataType = "ddm-options", type = "options")
+	@DDMFormField(
+		dataType = "ddm-options", label = "%options", type = "options"
+	)
 	public DDMFormFieldOptions options();
 
 }

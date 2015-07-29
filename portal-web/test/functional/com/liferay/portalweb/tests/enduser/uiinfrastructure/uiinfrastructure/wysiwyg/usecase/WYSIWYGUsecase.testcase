@@ -78,7 +78,7 @@
 		<execute function="AssertElementPresent" locator1="PGWikiWikipage#WIKI_PAGE_HTML_BODY" />
 	</command>
 
-	<command name="ViewCKEditorsInheritanceNo" priority="5">
+	<command name="ViewCKEditorsInheritanceNo" priority="4">
 		<var name="ckEditorFormatOptionsInvalid" value="Heading,Heading 2,Heading 3,Heading 4,Heading 5,Heading 6" />
 		<var name="ckEditorFormatOptionsValid" value="Normal,Formatted" />
 		<var name="invalidSubstring" value="Heading" />

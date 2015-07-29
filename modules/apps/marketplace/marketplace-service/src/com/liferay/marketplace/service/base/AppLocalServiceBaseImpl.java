@@ -685,7 +685,7 @@ public abstract class AppLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = AppLocalService.class)
+	@BeanReference(type = com.liferay.marketplace.service.AppLocalService.class)
 	protected AppLocalService appLocalService;
 	@BeanReference(type = com.liferay.marketplace.service.AppService.class)
 	protected com.liferay.marketplace.service.AppService appService;

@@ -38,7 +38,7 @@ public class WikiOpenSearchImpl extends HitsOpenSearchImpl {
 	}
 
 	@Override
-	public Indexer getIndexer() {
+	public Indexer<WikiPage> getIndexer() {
 		return IndexerRegistryUtil.getIndexer(WikiPage.class);
 	}
 

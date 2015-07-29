@@ -191,11 +191,12 @@ public class CSSBuilder {
 
 		directoryScanner.setExcludes(
 			new String[] {
-				"**\\_diffs\\**", "**\\.sass-cache*\\**",
+				"**\\_*.scss", "**\\_diffs\\**", "**\\.sass-cache*\\**",
 				"**\\.sass_cache_*\\**", "**\\_sass_cache_*\\**",
-				"**\\_styled\\**", "**\\_unstyled\\**", "**\\tmp\\**"
+				"**\\_styled\\**", "**\\_unstyled\\**", "**\\css\\aui\\**",
+				"**\\tmp\\**"
 			});
-		directoryScanner.setIncludes(new String[] {"**\\*.css"});
+		directoryScanner.setIncludes(new String[] {"**\\*.css", "**\\*.scss"});
 
 		directoryScanner.scan();
 
@@ -245,6 +246,8 @@ public class CSSBuilder {
 
 			try {
 				_sassCompiler = new JniSassCompiler();
+
+				System.out.println("Using native Sass compiler");
 			}
 			catch (Throwable t) {
 				System.out.println(
@@ -256,6 +259,8 @@ public class CSSBuilder {
 		else {
 			try {
 				_sassCompiler = new RubySassCompiler();
+
+				System.out.println("Using ruby Sass compiler");
 			}
 			catch (Exception e) {
 				System.out.println(
@@ -300,16 +305,23 @@ public class CSSBuilder {
 
 		String filePath = _docrootDirName.concat(fileName);
 
-		String cssThemePath = filePath;
+		String cssBasePath = filePath;
 
 		int pos = filePath.lastIndexOf("/css/");
 
 		if (pos >= 0) {
-			cssThemePath = filePath.substring(0, pos + 4);
+			cssBasePath = filePath.substring(0, pos + 4);
+		}
+		else {
+			pos = filePath.lastIndexOf("/resources/");
+
+			if (pos >= 0) {
+				cssBasePath = filePath.substring(0, pos + 10);
+			}
 		}
 
 		return _sassCompiler.compileString(
-			content, _portalCommonDirName + File.pathSeparator + cssThemePath,
+			content, _portalCommonDirName + File.pathSeparator + cssBasePath,
 			StringPool.BLANK);
 	}
 

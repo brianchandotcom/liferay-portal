@@ -1334,7 +1334,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = MBCategoryLocalService.class)
+	@BeanReference(type = com.liferay.portlet.messageboards.service.MBCategoryLocalService.class)
 	protected MBCategoryLocalService mbCategoryLocalService;
 	@BeanReference(type = com.liferay.portlet.messageboards.service.MBCategoryService.class)
 	protected com.liferay.portlet.messageboards.service.MBCategoryService mbCategoryService;

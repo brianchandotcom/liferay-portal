@@ -2030,8 +2030,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Lock lock) {
-		if (lock.isNew()) {
+	protected void cacheUniqueFindersCache(Lock lock, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] { lock.getClassName(), lock.getKey() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_K, args,
@@ -2255,7 +2255,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			LockImpl.class, lock.getPrimaryKey(), lock, false);
 
 		clearUniqueFindersCache(lock);
-		cacheUniqueFindersCache(lock);
+		cacheUniqueFindersCache(lock, isNew);
 
 		lock.resetOriginalValues();
 
@@ -2642,6 +2642,11 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return LockModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

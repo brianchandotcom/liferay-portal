@@ -31,13 +31,6 @@ public class GCUtil {
 	public static void fullGC(boolean ensureEnqueuedReferences)
 		throws InterruptedException {
 
-		fullGC(true, ensureEnqueuedReferences);
-	}
-
-	public static void fullGC(
-			boolean actively, boolean ensureEnqueuedReferences)
-		throws InterruptedException {
-
 		ReferenceQueue<Object> referenceQueue = new ReferenceQueue<>();
 
 		SoftReference<Object> softReference = new SoftReference<>(
@@ -62,7 +55,7 @@ public class GCUtil {
 		Assert.assertSame(softReference, referenceQueue.remove());
 
 		if (ensureEnqueuedReferences) {
-			fullGC(actively, false);
+			fullGC(false);
 		}
 	}
 

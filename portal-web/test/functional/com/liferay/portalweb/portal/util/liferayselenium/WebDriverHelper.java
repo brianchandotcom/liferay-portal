@@ -528,7 +528,7 @@ public class WebDriverHelper {
 		webElement.sendKeys(value);
 	}
 
-	public static void typeCKEditor(
+	public static void typeAlloyEditor(
 		WebDriver webDriver, String locator, String value) {
 
 		WebElement webElement = getWebElement(webDriver, locator);

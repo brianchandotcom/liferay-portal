@@ -2458,8 +2458,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DLFileRank dlFileRank) {
-		if (dlFileRank.isNew()) {
+	protected void cacheUniqueFindersCache(DLFileRank dlFileRank, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					dlFileRank.getCompanyId(), dlFileRank.getUserId(),
 					dlFileRank.getFileEntryId()
@@ -2733,7 +2733,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			DLFileRankImpl.class, dlFileRank.getPrimaryKey(), dlFileRank, false);
 
 		clearUniqueFindersCache(dlFileRank);
-		cacheUniqueFindersCache(dlFileRank);
+		cacheUniqueFindersCache(dlFileRank, isNew);
 
 		dlFileRank.resetOriginalValues();
 
@@ -3117,6 +3117,11 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return DLFileRankModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

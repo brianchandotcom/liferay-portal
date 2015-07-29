@@ -16,9 +16,10 @@ package com.liferay.item.selector.criteria.layout.handler;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.item.selector.criteria.layout.criterion.LayoutItemSelectorCriterion;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -26,12 +27,16 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = ItemSelectorCriterionHandler.class)
 public class LayoutItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler
-		<LayoutItemSelectorCriterion, DefaultItemSelectorReturnType> {
+	extends BaseItemSelectorCriterionHandler<LayoutItemSelectorCriterion> {
 
 	@Override
 	public Class<LayoutItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return LayoutItemSelectorCriterion.class;
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		super.activate(bundleContext);
 	}
 
 }

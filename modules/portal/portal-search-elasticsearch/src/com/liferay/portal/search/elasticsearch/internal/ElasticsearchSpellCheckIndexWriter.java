@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.elasticsearch.internal;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
@@ -177,9 +175,6 @@ public class ElasticsearchSpellCheckIndexWriter
 	protected void unsetIndexWriter(IndexWriter indexWriter) {
 		_searchHitsProcessor = null;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ElasticsearchSpellCheckIndexWriter.class);
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ElasticsearchUpdateDocumentCommand

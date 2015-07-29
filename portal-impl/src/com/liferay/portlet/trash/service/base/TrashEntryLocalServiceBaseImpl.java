@@ -739,7 +739,7 @@ public abstract class TrashEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = TrashEntryLocalService.class)
+	@BeanReference(type = com.liferay.portlet.trash.service.TrashEntryLocalService.class)
 	protected TrashEntryLocalService trashEntryLocalService;
 	@BeanReference(type = com.liferay.portlet.trash.service.TrashEntryService.class)
 	protected com.liferay.portlet.trash.service.TrashEntryService trashEntryService;

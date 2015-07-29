@@ -17653,8 +17653,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(BlogsEntry blogsEntry) {
-		if (blogsEntry.isNew()) {
+	protected void cacheUniqueFindersCache(BlogsEntry blogsEntry, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 					blogsEntry.getUuid(), blogsEntry.getGroupId()
 				};
@@ -17895,13 +17895,15 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 			try {
 				blogsEntry.setTitle(SanitizerUtil.sanitize(companyId, groupId,
-						userId, BlogsEntry.class.getName(), entryId,
-						ContentTypes.TEXT_PLAIN, Sanitizer.MODE_ALL,
+						userId,
+						com.liferay.portlet.blogs.model.BlogsEntry.class.getName(),
+						entryId, ContentTypes.TEXT_PLAIN, Sanitizer.MODE_ALL,
 						blogsEntry.getTitle(), null));
 
 				blogsEntry.setContent(SanitizerUtil.sanitize(companyId,
-						groupId, userId, BlogsEntry.class.getName(), entryId,
-						ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+						groupId, userId,
+						com.liferay.portlet.blogs.model.BlogsEntry.class.getName(),
+						entryId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
 						blogsEntry.getContent(), null));
 			}
 			catch (SanitizerException se) {
@@ -18125,7 +18127,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			BlogsEntryImpl.class, blogsEntry.getPrimaryKey(), blogsEntry, false);
 
 		clearUniqueFindersCache(blogsEntry);
-		cacheUniqueFindersCache(blogsEntry);
+		cacheUniqueFindersCache(blogsEntry, isNew);
 
 		blogsEntry.resetOriginalValues();
 
@@ -18530,6 +18532,11 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return BlogsEntryModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

@@ -414,8 +414,8 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Release release) {
-		if (release.isNew()) {
+	protected void cacheUniqueFindersCache(Release release, boolean isNew) {
+		if (isNew) {
 			Object[] args = new Object[] { release.getServletContextName() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME,
@@ -619,7 +619,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 			ReleaseImpl.class, release.getPrimaryKey(), release, false);
 
 		clearUniqueFindersCache(release);
-		cacheUniqueFindersCache(release);
+		cacheUniqueFindersCache(release, isNew);
 
 		release.resetOriginalValues();
 
@@ -1005,6 +1005,11 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return ReleaseModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**

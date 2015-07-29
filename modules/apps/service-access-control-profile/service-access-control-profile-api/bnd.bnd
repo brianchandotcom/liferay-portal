@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Service Access Control Profile API
-Bundle-SymbolicName: com.liferay.service.access.control.profile.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.service.access.control.profile.*
-Include-Resource: classes

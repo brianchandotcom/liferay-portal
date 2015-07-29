@@ -12,7 +12,7 @@
 		<execute macro="WSRP#tearDownCP" />
 	</tear-down>
 
-	<command name="AddWSRPUnitConverter" priority="5">
+	<command name="AddWSRPUnitConverter" priority="4">
 		<var name="consumerName" value="Consumer Demo" />
 		<var name="consumerPortletName" value="WSRP Unit Converter" />
 		<var name="consumerPortletType" value="Unit Converter" />

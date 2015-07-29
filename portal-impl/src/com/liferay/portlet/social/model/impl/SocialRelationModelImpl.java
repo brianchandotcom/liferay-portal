@@ -68,6 +68,18 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 			{ "userId2", Types.BIGINT },
 			{ "type_", Types.INTEGER }
 		};
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("relationId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("createDate", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId1", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("userId2", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
+	}
+
 	public static final String TABLE_SQL_CREATE = "create table SocialRelation (uuid_ VARCHAR(75) null,relationId LONG not null primary key,companyId LONG,createDate LONG,userId1 LONG,userId2 LONG,type_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table SocialRelation";
 	public static final String ORDER_BY_JPQL = " ORDER BY socialRelation.relationId ASC";

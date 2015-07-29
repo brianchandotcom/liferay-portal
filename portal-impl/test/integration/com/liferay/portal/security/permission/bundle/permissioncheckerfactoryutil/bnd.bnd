@@ -1,4 +1,4 @@
-Bundle-Description: Test Bundle for PermissionCheckerFactoryUtil
+Bundle-Description: Test Bundle for PermissionCheckerFactoryUtilTest
 Bundle-Version: 1.0.0
 Private-Package: $(bundle.package).*
 

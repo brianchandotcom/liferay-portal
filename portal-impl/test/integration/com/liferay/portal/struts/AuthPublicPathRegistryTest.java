@@ -15,7 +15,6 @@
 package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.struts.bundle.authpublicpathregistry.TestAuthPublicPath;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
@@ -39,10 +38,8 @@ public class AuthPublicPathRegistryTest {
 
 	@Test
 	public void testContains() {
-		TestAuthPublicPath testAuthPublicPath = new TestAuthPublicPath();
-
 		Assert.assertTrue(
-			AuthPublicPathRegistry.contains(testAuthPublicPath.path()));
+			AuthPublicPathRegistry.contains("testAuthPublicPath"));
 		Assert.assertFalse(
 			AuthPublicPathRegistry.contains("/unregistered/unknown/path"));
 	}

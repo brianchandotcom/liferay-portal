@@ -1194,6 +1194,11 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		return count.intValue();
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return OrgLaborModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the org labor persistence.
 	 */

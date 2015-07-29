@@ -30,7 +30,7 @@ public class DLSearcher extends BaseSearcher {
 		DLFileEntry.class.getName(), DLFolder.class.getName()
 	};
 
-	public static Indexer getInstance() {
+	public static Indexer<?> getInstance() {
 		return new DLSearcher();
 	}
 

@@ -31,10 +31,14 @@ import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.test.rule.ExpectedLog;
+import com.liferay.portal.test.rule.ExpectedLogs;
+import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.store.BaseStore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -111,6 +115,15 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		}
 	}
 
+	@ExpectedLogs(
+		expectedLogs = {
+			@ExpectedLog(
+				expectedLog = "Unable to delete file {companyId=",
+				expectedType = ExpectedType.PREFIX
+			)
+		},
+		level = "WARN", loggerClass = BaseStore.class
+	)
 	@Test
 	public void testMSOffice1Create() throws Exception {
 		Tuple tuple = null;
@@ -209,6 +222,15 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		}
 	}
 
+	@ExpectedLogs(
+		expectedLogs = {
+			@ExpectedLog(
+				expectedLog = "Unable to delete file {companyId=",
+				expectedType = ExpectedType.PREFIX
+			)
+		},
+		level = "WARN", loggerClass = BaseStore.class
+	)
 	@Test
 	public void testMSOffice2Open() throws Exception {
 		Tuple tuple = null;
@@ -234,6 +256,15 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		Assert.assertArrayEquals(_testFileBytes, getResponseBody(tuple));
 	}
 
+	@ExpectedLogs(
+		expectedLogs = {
+			@ExpectedLog(
+				expectedLog = "Unable to delete file {companyId=",
+				expectedType = ExpectedType.PREFIX
+			)
+		},
+		level = "WARN", loggerClass = BaseStore.class
+	)
 	@Test
 	public void testMSOffice3Modify() throws Exception {
 		Tuple tuple = null;

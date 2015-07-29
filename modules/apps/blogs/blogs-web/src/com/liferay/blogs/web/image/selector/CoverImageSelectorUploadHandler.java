@@ -39,7 +39,7 @@ public class CoverImageSelectorUploadHandler
 
 	@Override
 	protected long getMaxFileSize() {
-		return PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_COVER_MAX_SIZE);
+		return PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_MAX_SIZE);
 	}
 
 }

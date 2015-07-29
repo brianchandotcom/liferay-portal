@@ -31,18 +31,7 @@ import java.io.InputStream;
 /**
  * @author Roberto Díaz
  */
-public class ImageUploadHandler extends BaseBlogsImageSelectorUploadHandler {
-
-	@Override
-	public void validateFile(String fileName, String contentType, long size)
-		throws PortalException {
-
-		if (size > getMaxFileSize()) {
-			throw new BlogImageSizeException();
-		}
-
-		super.validateFile(fileName, contentType, size);
-	}
+public class ImageUploadHandler extends TempImageUploadHandler {
 
 	@Override
 	protected FileEntry addFileEntry(
@@ -74,11 +63,6 @@ public class ImageUploadHandler extends BaseBlogsImageSelectorUploadHandler {
 		catch (PortalException pe) {
 			return null;
 		}
-	}
-
-	@Override
-	protected long getMaxFileSize() {
-		return PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_MAX_SIZE);
 	}
 
 }

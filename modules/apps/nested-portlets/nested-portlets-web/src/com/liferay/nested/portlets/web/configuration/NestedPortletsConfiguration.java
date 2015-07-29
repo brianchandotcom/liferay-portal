@@ -25,10 +25,6 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface NestedPortletsConfiguration {
 
-	public static final String TEMPLATE_CONTENT = "TEMPLATE_CONTENT";
-
-	public static final String TEMPLATE_ID = "TEMPLATE_ID";
-
 	@Meta.AD(
 		deflt = "2_columns_i", id = "layout.template.default", required = false
 	)

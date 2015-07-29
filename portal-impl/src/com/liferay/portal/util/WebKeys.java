@@ -17,6 +17,7 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Distributed;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.MatchType;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Brian Wing Shun Chan
@@ -415,5 +416,9 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 	public static final String WSRP_NEW_SESSION = "WSRP_NEW_SESSION";
 
 	public static final String WSRP_PRODUCER = "WSRP_PRODUCER";
+
+	public static final String getVMVariablesKey(String portletId) {
+		return VM_VARIABLES + StringPool.POUND + portletId;
+	}
 
 }

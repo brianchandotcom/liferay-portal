@@ -14,6 +14,8 @@
 
 package com.liferay.nested.portlets.web.constants;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -21,5 +23,17 @@ public class NestedPortletsPortletKeys {
 
 	public static final String NESTED_PORTLETS =
 		"com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet";
+
+	public static final String TEMPLATE_CONTENT = "TEMPLATE_CONTENT";
+
+	public static final String TEMPLATE_ID = "TEMPLATE_ID";
+
+	public static String getTemplateContentKey(String portletId) {
+		return TEMPLATE_CONTENT + StringPool.POUND + portletId;
+	}
+
+	public static String getTemplateIdKey(String portletId) {
+		return TEMPLATE_ID + StringPool.POUND + portletId;
+	}
 
 }

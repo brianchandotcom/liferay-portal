@@ -112,3 +112,15 @@ body {
 	height: 20px;
 	top: 22px;
 }
+
+.add-page-editor {
+	margin-top: 20px;
+
+	.btn {
+		padding: 3px 10px;
+	}
+}
+
+.lfr-portlet-title-editable .btn {
+	padding: 3px 10px;
+}

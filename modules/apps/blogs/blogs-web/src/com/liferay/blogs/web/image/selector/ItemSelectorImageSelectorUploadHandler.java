@@ -79,9 +79,7 @@ public class ItemSelectorImageSelectorUploadHandler
 
 	@Override
 	protected long getMaxFileSize() {
-		return PrefsPropsUtil.getLong(
-			PropsKeys.BLOGS_IMAGE_ALLOY_EDITOR_MAX_SIZE);
-
+		return PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_MAX_SIZE);
 	}
 
 }

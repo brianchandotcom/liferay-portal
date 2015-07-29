@@ -17,11 +17,8 @@ package com.liferay.blogs.web.image.selector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.blogs.BlogImageSizeException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsConstants;
@@ -31,7 +28,7 @@ import java.io.InputStream;
 /**
  * @author Roberto Díaz
  */
-public class ImageUploadHandler extends TempImageUploadHandler {
+public class ImageUploadHandler extends BaseBlogsImageSelectorUploadHandler {
 
 	@Override
 	protected FileEntry addFileEntry(

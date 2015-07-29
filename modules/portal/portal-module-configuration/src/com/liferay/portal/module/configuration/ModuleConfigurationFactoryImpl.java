@@ -44,24 +44,25 @@ public class ModuleConfigurationFactoryImpl
 			Settings settings = SettingsFactoryUtil.getSettings(
 				settingsLocator);
 
-			Class<?> settingsOverrideClass = getOverrideClass(clazz);
+			Class<?> configurationOverrideClass = getOverrideClass(clazz);
 
 			TypedSettings typedSettings = new TypedSettings(settings);
 
-			Object settingsOverrideInstance = null;
+			Object configurationOverrideInstance = null;
 
-			if (settingsOverrideClass != null) {
+			if (configurationOverrideClass != null) {
 				Constructor<?> constructor =
-					settingsOverrideClass.getConstructor(TypedSettings.class);
+					configurationOverrideClass.getConstructor(
+						TypedSettings.class);
 
-				settingsOverrideInstance = constructor.newInstance(
+				configurationOverrideInstance = constructor.newInstance(
 					typedSettings);
 			}
 
 			ModuleConfigurationInvocationHandler<T>
 				moduleConfigurationInvocationHandler =
 					new ModuleConfigurationInvocationHandler<>(
-						clazz, settingsOverrideInstance, typedSettings);
+						clazz, configurationOverrideInstance, typedSettings);
 
 			return moduleConfigurationInvocationHandler.createProxy();
 		}

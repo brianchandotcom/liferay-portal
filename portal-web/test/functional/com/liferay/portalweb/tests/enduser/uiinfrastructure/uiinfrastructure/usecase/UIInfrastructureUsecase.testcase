@@ -76,6 +76,48 @@
 		<take-screenshot />
 	</command>
 
+	<command name="Smoke" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Hello World" />
+		</execute>
+
+		<execute function="Click" locator1="Icon#CLOSE" />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Hello World" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+		<execute function="AssertTextEquals" locator1="NavPill#PERMISSIONS" value1="Permissions" />
+		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="Click" locator1="Icon#CLOSE" />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Hello World" />
+			<var name="portletOption" value="Look and Feel" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="NavTab#PORTLET_CONFIGURATION" value1="Portlet Configuration" />
+		<execute function="Click" locator1="Icon#CLOSE" />
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="1" />
+			<var name="columnNumberTo" value="2" />
+			<var name="portletName" value="Hello World" />
+		</execute>
+
+		<execute macro="Portlet#dragAndDropPortletToColumnPG">
+			<var name="columnNumberFrom" value="2" />
+			<var name="columnNumberTo" value="1" />
+			<var name="portletName" value="Hello World" />
+		</execute>
+	</command>
+
 	<command name="ViewControlPanelTooltipsCP" priority="4">
 		<execute macro="Page#gotoCP" />
 

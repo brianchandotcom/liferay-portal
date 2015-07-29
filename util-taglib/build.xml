@@ -29,18 +29,6 @@
 						<replacevalue><![CDATA[<uri>http://liferay.com/tld/aui</uri>]]></replacevalue>
 					</replace>
 
-					<copy file="classes/META-INF/ddm.tld" overwrite="true" tofile="classes/META-INF/liferay-ddm.tld" preservelastmodified="true" />
-
-					<replace file="classes/META-INF/liferay-ddm.tld">
-						<replacetoken><![CDATA[<short-name>ddm</short-name>]]></replacetoken>
-						<replacevalue><![CDATA[<short-name>liferay-ddm</short-name>]]></replacevalue>
-					</replace>
-
-					<replace file="classes/META-INF/liferay-ddm.tld">
-						<replacetoken><![CDATA[<uri>http://alloy.liferay.com/tld/ddm</uri>]]></replacetoken>
-						<replacevalue><![CDATA[<uri>http://liferay.com/tld/ddm</uri>]]></replacevalue>
-					</replace>
-
 					<copy file="classes/META-INF/liferay-portlet.tld" tofile="classes/META-INF/liferay-portlet_2_0.tld" preservelastmodified="true" />
 
 					<replace file="classes/META-INF/liferay-portlet_2_0.tld">
@@ -104,7 +92,6 @@
 
 	<target name="build-taglibs">
 		<delete file="${project.dir}/util-taglib/src/META-INF/aui.tld" failonerror="false" />
-		<delete file="${project.dir}/util-taglib/src/META-INF/ddm.tld" failonerror="false" />
 
 		<java
 			classname="com.liferay.alloy.tools.tagbuilder.TagBuilder"
@@ -113,7 +100,7 @@
 			maxmemory="256m"
 			newenvironment="true"
 		>
-			<jvmarg value="-Dtagbuilder.components.xml=${project.dir}/util-taglib/src/com/liferay/taglib/aui.xml,${project.dir}/util-taglib/src/com/liferay/taglib/liferay-aui.xml,${project.dir}/util-taglib/src/com/liferay/taglib/liferay-ddm.xml" />
+			<jvmarg value="-Dtagbuilder.components.xml=${project.dir}/util-taglib/src/com/liferay/taglib/aui.xml,${project.dir}/util-taglib/src/com/liferay/taglib/liferay-aui.xml" />
 			<jvmarg value="-Dtagbuilder.copyright.year=present" />
 			<jvmarg value="-Dtagbuilder.docroot.dir=${project.dir}/portal-web/docroot/" />
 			<jvmarg value="-Dtagbuilder.java.dir=${project.dir}/util-taglib/src/com/liferay/taglib/" />
@@ -139,7 +126,6 @@
 		>
 			<arg line="-d ${doc.taglibs.dir}" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/aui.tld" />
-			<arg value="${project.dir}/util-taglib/src/META-INF/ddm.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-portlet-ext.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-portlet.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-security.tld" />

@@ -16,6 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
+<%@ taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %>
+
 <%@ page import="com.liferay.wiki.configuration.WikiGroupServiceConfiguration" %><%@
 page import="com.liferay.wiki.constants.WikiConstants" %><%@
 page import="com.liferay.wiki.constants.WikiPortletKeys" %><%@

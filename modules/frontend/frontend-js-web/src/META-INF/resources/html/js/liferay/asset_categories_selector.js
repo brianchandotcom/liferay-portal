@@ -549,7 +549,7 @@ AUI.add(
 							);
 						}
 						else {
-							var message = Lang.sub(TPL_MESSAGE, [Liferay.Language.get('no-categories-found')]);
+							var message = Lang.sub(TPL_MESSAGE, [Liferay.Language.get('no-categories-were-found')]);
 
 							buffer.push(message);
 						}

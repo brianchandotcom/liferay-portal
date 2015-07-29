@@ -5749,7 +5749,7 @@ if (ppstate.equals("normal")) {
 		<get-poshi-test-name />
 
 		<tstamp>
-			<format property="current.date" pattern="yyyy-MM-dd" />
+			<format property="current.date" pattern="yyyy-MM-dd" timezone="GMT" />
 		</tstamp>
 
 		<property name="test.console.log.file.name" value="${liferay.home}/logs/liferay.${current.date}.xml" />

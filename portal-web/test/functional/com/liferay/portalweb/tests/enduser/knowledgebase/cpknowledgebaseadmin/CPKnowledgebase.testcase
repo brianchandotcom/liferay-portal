@@ -1,7 +1,6 @@
 <definition component-name="portal-knowledge-base">
 	<property name="portlet.plugins.includes" value="knowledge-base-portlet" />
 	<property name="testray.main.component.name" value="Knowledge Base" />
-	<property name="web.plugins.includes" value="kaleo-web" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

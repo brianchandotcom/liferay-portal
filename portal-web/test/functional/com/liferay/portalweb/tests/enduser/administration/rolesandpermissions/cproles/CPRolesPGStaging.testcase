@@ -140,8 +140,6 @@
 	</command>
 
 	<command name="StagingBlogsRolesWorkflow" priority="4">
-		<property name="web.plugins.includes" value="kaleo-web" />
-
 		<var name="pageName" value="Blogs Test Page" />
 
 		<execute macro="Page#gotoCP">

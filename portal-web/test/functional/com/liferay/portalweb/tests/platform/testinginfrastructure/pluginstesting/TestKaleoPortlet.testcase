@@ -1,7 +1,6 @@
 <definition component-name="portal-test-plugins">
 	<property name="testray.main.component.name" value="Test Plugins" />
 	<property name="portlet.plugins.includes" value="test-kaleo-portlet" />
-	<property name="web.plugins.includes" value="kaleo-web" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

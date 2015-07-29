@@ -1903,8 +1903,6 @@
 	</command>
 
 	<command known-issues="LRQA-16325" name="StagingKaleoPageRevision" priority="4">
-		<property name="web.plugins.includes" value="kaleo-web" />
-
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Page Name 1" />
 			<var name="siteName" value="Community Site Name" />
@@ -1997,8 +1995,6 @@
 	</command>
 
 	<command known-issues="LRQA-16325" name="StagingKaleoWebContentLinkingUnapprovedContent" priority="4">
-		<property name="web.plugins.includes" value="kaleo-web" />
-
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Workflow Configuration" />
 			<var name="siteScopeName" value="Site Name" />
@@ -2163,8 +2159,6 @@
 	</command>
 
 	<command known-issues="LRQA-16325" name="StagingLocalLiveWorkflow" priority="4">
-		<property name="web.plugins.includes" value="kaleo-web" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -2618,8 +2612,6 @@
 	</command>
 
 	<command known-issues="LRQA-16325" name="StagingOnlyApprovedPublishToLive" priority="4">
-		<property name="web.plugins.includes" value="kaleo-web" />
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />

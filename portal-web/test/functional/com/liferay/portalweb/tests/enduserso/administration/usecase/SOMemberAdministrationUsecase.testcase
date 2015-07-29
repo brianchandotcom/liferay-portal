@@ -3,7 +3,7 @@
 	<property name="portlet.plugins.includes" value="calendar-portlet,chat-portlet,contacts-portlet,events-display-portlet,marketplace-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-announcements-portlet,so-configurations-portlet,so-portlet,tasks-portlet,wysiwyg-portlet" />
 	<property name="testray.main.component.name" value="Social Office EE" />
 	<property name="theme.plugins.includes" value="so-theme" />
-	<property name="web.plugins.includes" value="kaleo-web,resources-importer-web" />
+	<property name="web.plugins.includes" value="resources-importer-web" />
 
 	<var name="adminEmailAddress" value="test@liferay.com" />
 	<var name="adminFirstName" value="Test" />

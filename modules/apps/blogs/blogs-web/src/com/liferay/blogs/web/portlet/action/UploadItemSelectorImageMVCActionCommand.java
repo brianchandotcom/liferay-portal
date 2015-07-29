@@ -15,7 +15,7 @@
 package com.liferay.blogs.web.portlet.action;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.blogs.web.image.selector.EditorImageSelectorUploadHandler;
+import com.liferay.blogs.web.image.selector.ItemSelectorImageSelectorUploadHandler;
 import com.liferay.portal.kernel.image.selector.ImageSelectorUploadHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -33,11 +33,12 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
-		"mvc.command.name=/blogs/upload_editor_image"
+		"mvc.command.name=/blogs/upload_item_selector_image"
 	},
 	service = MVCActionCommand.class
 )
-public class UploadEditorImageMVCActionCommand extends BaseMVCActionCommand {
+public class UploadItemSelectorImageMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -49,6 +50,6 @@ public class UploadEditorImageMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private final ImageSelectorUploadHandler _imageSelectorUploadHandler =
-		new EditorImageSelectorUploadHandler();
+		new ItemSelectorImageSelectorUploadHandler();
 
 }

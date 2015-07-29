@@ -12,11 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.webdav;
+package com.liferay.document.library.webdav.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -28,10 +31,14 @@ import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.test.rule.ExpectedLog;
+import com.liferay.portal.test.rule.ExpectedLogs;
+import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.store.BaseStore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +50,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * <p>
@@ -51,6 +59,8 @@ import org.junit.Test;
  *
  * @author Alexander Chow
  */
+@RunWith(Arquillian.class)
+@Sync
 public class WebDAVOSXTest extends BaseWebDAVTestCase {
 
 	@ClassRule
@@ -58,7 +68,8 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			WebDAVEnvironmentConfigTestRule.INSTANCE);
+			WebDAVEnvironmentConfigTestRule.INSTANCE,
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -104,6 +115,15 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		}
 	}
 
+	@ExpectedLogs(
+		expectedLogs = {
+			@ExpectedLog(
+				expectedLog = "Unable to delete file {companyId=",
+				expectedType = ExpectedType.PREFIX
+			)
+		},
+		level = "WARN", loggerClass = BaseStore.class
+	)
 	@Test
 	public void testMSOffice1Create() throws Exception {
 		Tuple tuple = null;
@@ -202,6 +222,15 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		}
 	}
 
+	@ExpectedLogs(
+		expectedLogs = {
+			@ExpectedLog(
+				expectedLog = "Unable to delete file {companyId=",
+				expectedType = ExpectedType.PREFIX
+			)
+		},
+		level = "WARN", loggerClass = BaseStore.class
+	)
 	@Test
 	public void testMSOffice2Open() throws Exception {
 		Tuple tuple = null;
@@ -227,6 +256,15 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		Assert.assertArrayEquals(_testFileBytes, getResponseBody(tuple));
 	}
 
+	@ExpectedLogs(
+		expectedLogs = {
+			@ExpectedLog(
+				expectedLog = "Unable to delete file {companyId=",
+				expectedType = ExpectedType.PREFIX
+			)
+		},
+		level = "WARN", loggerClass = BaseStore.class
+	)
 	@Test
 	public void testMSOffice3Modify() throws Exception {
 		Tuple tuple = null;
@@ -406,13 +444,13 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	}
 
 	private static final String _OFFICE_TEST_DELTA_DOCX =
-		"dependencies/OSX_Test_Delta.docx";
+		"/com/liferay/document/library/dependencies/OSX_Test_Delta.docx";
 
 	private static final String _OFFICE_TEST_DOCX =
-		"dependencies/OSX_Test.docx";
+		"/com/liferay/document/library/dependencies/OSX_Test.docx";
 
 	private static final String _OFFICE_TEST_META_DOCX =
-		"dependencies/OSX_Test_Meta.docx";
+		"/com/liferay/document/library/dependencies/OSX_Test_Meta.docx";
 
 	private static final String _TEMP_FILE_NAME_1 = "Word Work File D_1.tmp";
 

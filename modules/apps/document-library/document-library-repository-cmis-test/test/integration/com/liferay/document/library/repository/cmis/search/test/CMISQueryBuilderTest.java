@@ -35,7 +35,6 @@ import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import org.apache.chemistry.opencmis.commons.enums.CapabilityQuery;
@@ -70,7 +69,7 @@ public class CMISQueryBuilderTest {
 			ClassNameLocalServiceUtil.getClassNameId(_REPOSITORY_CLASS_NAME),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			StringUtil.randomString(), new UnicodeProperties(), true,
 			serviceContext);
 
 		_repositoryEntry =

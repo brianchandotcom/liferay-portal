@@ -1440,9 +1440,7 @@ ${tomcat-gc-log}
 						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
 					</antelope:stringutil>
 
-					<antelope:stringutil property="test.app.server.liferay.home" string="${liferay.home}">
-						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
-					</antelope:stringutil>
+					<var name="test.app.server.liferay.home" value="${app.server.parent.dir}-@{app.server.bundle.index}" />
 
 					<antelope:stringutil property="test.app.server.parent.dir" string="${app.server.parent.dir}">
 						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />

@@ -37,12 +37,20 @@ public class DefaultCommentSectionDisplayContext
 		_discussionRequestHelper = discussionRequestHelper;
 		_discussionTaglibHelper = discussionTaglibHelper;
 		_discussionPermission = discussionPermission;
-		_rootDiscussionComment = discussion.getRootDiscussionComment();
+
+		if (discussion == null) {
+			_rootDiscussionComment = null;
+		}
+		else {
+			_rootDiscussionComment = discussion.getRootDiscussionComment();
+		}
 	}
 
 	@Override
 	public boolean isControlsVisible() throws PortalException {
-		if (_discussionTaglibHelper.isHideControls()) {
+		if ((_discussionPermission == null) ||
+			_discussionTaglibHelper.isHideControls()) {
+
 			return false;
 		}
 

@@ -22,6 +22,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
+import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.lang.reflect.Array;
@@ -317,7 +318,7 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 	private final Filter _filter;
 	private final Map<String, Object> _properties;
 	private final ServiceRegistrationMap<S> _serviceRegistrations =
-		new ServiceRegistrationMap<>();
+		new ServiceRegistrationMapImpl<>();
 	private final List<EntryWrapper> _services = new CopyOnWriteArrayList<>();
 	private final ServiceTracker<S, S> _serviceTracker;
 

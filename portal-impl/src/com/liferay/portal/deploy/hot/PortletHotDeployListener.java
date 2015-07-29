@@ -64,6 +64,7 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.collections.ServiceRegistrationMap;
+import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 import com.liferay.util.bridges.php.PHPPortlet;
 
 import java.util.HashMap;
@@ -637,6 +638,6 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 	private static final Map<String, List<Portlet>> _portlets = new HashMap<>();
 
 	private final ServiceRegistrationMap<ResourceBundle>
-		_serviceRegistrations = new ServiceRegistrationMap<>();
+		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
 
 }

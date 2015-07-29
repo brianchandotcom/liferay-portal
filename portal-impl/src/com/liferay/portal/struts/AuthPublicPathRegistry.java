@@ -22,6 +22,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.StringServiceRegistrationMap;
+import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 import com.liferay.registry.util.StringPlus;
 
 import java.util.HashMap;
@@ -95,7 +96,7 @@ public class AuthPublicPathRegistry {
 
 	private final Set<String> _paths = new ConcurrentHashSet<>();
 	private final StringServiceRegistrationMap<Object>
-		_serviceRegistrations = new StringServiceRegistrationMap<>();
+		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();
 	private final ServiceTracker<Object, Object> _serviceTracker;
 
 	private class AuthPublicTrackerCustomizer

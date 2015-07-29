@@ -36,6 +36,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
+import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -275,7 +276,7 @@ public class SocialRequestInterpreterLocalServiceImpl
 	private final List<SocialRequestInterpreter> _requestInterpreters =
 		new CopyOnWriteArrayList<>();
 	private final ServiceRegistrationMap<SocialRequestInterpreter>
-		_serviceRegistrations = new ServiceRegistrationMap<>();
+		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
 	private ServiceTracker<SocialRequestInterpreter, SocialRequestInterpreter>
 		_serviceTracker;
 

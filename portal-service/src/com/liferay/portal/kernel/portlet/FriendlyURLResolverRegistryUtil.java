@@ -24,6 +24,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
+import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 
 import java.util.List;
 import java.util.Map;
@@ -107,7 +108,7 @@ public class FriendlyURLResolverRegistryUtil {
 	private final Map<String, FriendlyURLResolver> _friendlyURLResolvers =
 		new ConcurrentHashMap<>();
 	private final ServiceRegistrationMap<FriendlyURLResolver>
-		_serviceRegistrations = new ServiceRegistrationMap<>();
+		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
 	private final ServiceTracker<FriendlyURLResolver, FriendlyURLResolver>
 		_serviceTracker;
 

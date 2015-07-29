@@ -24,6 +24,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.StringServiceRegistrationMap;
+import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -146,10 +147,10 @@ public class StrutsActionRegistryUtil {
 	private final ServiceTracker<?, Action> _serviceTracker;
 	private final StringServiceRegistrationMap<StrutsAction>
 		_strutsActionServiceRegistrations =
-			new StringServiceRegistrationMap<>();
+			new StringServiceRegistrationMapImpl<>();
 	private final StringServiceRegistrationMap<StrutsPortletAction>
 		_strutsPortletActionServiceRegistrations =
-			new StringServiceRegistrationMap<>();
+			new StringServiceRegistrationMapImpl<>();
 
 	private class ActionServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, Action> {

@@ -26,6 +26,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.StringServiceRegistrationMap;
+import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
 import java.io.Closeable;
 
@@ -106,7 +107,7 @@ public class ResourceBundleTracker implements Closeable {
 	private final Map<String, ResourceBundle> _resourceBundles =
 		new ConcurrentHashMap<>();
 	private final StringServiceRegistrationMap<ResourceBundle>
-		_serviceRegistrations = new StringServiceRegistrationMap<>();
+		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();
 	private final ServiceTracker<ResourceBundle, ResourceBundle>
 		_serviceTracker;
 

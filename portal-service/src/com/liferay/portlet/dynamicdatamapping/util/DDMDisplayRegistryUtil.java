@@ -24,6 +24,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
+import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 
 import java.util.List;
 import java.util.Map;
@@ -103,7 +104,7 @@ public class DDMDisplayRegistryUtil {
 	private final Map<String, DDMDisplay> _ddmDisplays =
 		new ConcurrentHashMap<>();
 	private final ServiceRegistrationMap<DDMDisplay> _serviceRegistrations =
-		new ServiceRegistrationMap<>();
+		new ServiceRegistrationMapImpl<>();
 	private final ServiceTracker<DDMDisplay, DDMDisplay> _serviceTracker;
 
 	private class DDMDisplayServiceTrackerCustomizer

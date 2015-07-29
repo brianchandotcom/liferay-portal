@@ -43,6 +43,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
+import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -402,7 +403,7 @@ public class WebDAVUtil {
 	private static final WebDAVUtil _instance = new WebDAVUtil();
 
 	private final ServiceRegistrationMap<WebDAVStorage> _serviceRegistrations =
-		new ServiceRegistrationMap<>();
+		new ServiceRegistrationMapImpl<>();
 	private final ServiceTracker<WebDAVStorage, WebDAVStorage> _serviceTracker;
 	private final Map<String, WebDAVStorage> _storageMap =
 		new ConcurrentSkipListMap<>();

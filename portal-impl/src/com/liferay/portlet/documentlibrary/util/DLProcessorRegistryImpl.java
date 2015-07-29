@@ -35,6 +35,7 @@ import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.registry.collections.StringServiceRegistrationMap;
+import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
 /**
  * @author Mika Koivisto
@@ -295,6 +296,6 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 			});
 
 	private final StringServiceRegistrationMap<DLProcessor>
-		_serviceRegistrations = new StringServiceRegistrationMap<>();
+		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();
 
 }

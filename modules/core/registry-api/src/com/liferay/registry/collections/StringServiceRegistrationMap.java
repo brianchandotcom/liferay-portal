@@ -16,11 +16,11 @@ package com.liferay.registry.collections;
 
 import com.liferay.registry.ServiceRegistration;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
-public class StringServiceRegistrationMap<T>
-	extends ConcurrentHashMap<String, ServiceRegistration<T>> {
+public interface StringServiceRegistrationMap<T>
+	extends ConcurrentMap<String, ServiceRegistration<T>> {
 }

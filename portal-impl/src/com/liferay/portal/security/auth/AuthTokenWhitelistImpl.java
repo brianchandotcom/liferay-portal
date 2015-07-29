@@ -31,6 +31,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.StringServiceRegistrationMap;
+import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 import com.liferay.registry.util.StringPlus;
 import com.liferay.util.Encryptor;
 
@@ -271,7 +272,7 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 	private Set<String> _portletInvocationWhitelist;
 	private Set<String> _portletInvocationWhitelistActions;
 	private final StringServiceRegistrationMap<Object> _serviceRegistrations =
-		new StringServiceRegistrationMap<>();
+		new StringServiceRegistrationMapImpl<>();
 	private final ServiceTracker<Object, Object> _serviceTracker;
 
 	private class AuthTokenIgnoreActionsServiceTrackerCustomizer

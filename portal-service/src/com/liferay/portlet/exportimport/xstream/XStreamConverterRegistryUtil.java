@@ -21,6 +21,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
+import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -78,7 +79,7 @@ public class XStreamConverterRegistryUtil {
 		new XStreamConverterRegistryUtil();
 
 	private final ServiceRegistrationMap<XStreamConverter>
-		_serviceRegistrations = new ServiceRegistrationMap<>();
+		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
 	private final ServiceTracker <XStreamConverter, XStreamConverter>
 		_serviceTracker;
 	private final Set<XStreamConverter> _xStreamConverters = new HashSet<>();

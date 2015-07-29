@@ -21,6 +21,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
+import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 
 import java.util.HashSet;
 import java.util.List;
@@ -118,7 +119,7 @@ public class ExportImportLifecycleEventListenerRegistryUtil {
 	private final Set<ExportImportLifecycleListener>
 		_asyncExportImportLifecycleListeners = new HashSet<>();
 	private final ServiceRegistrationMap<ExportImportLifecycleListener>
-		_serviceRegistrations = new ServiceRegistrationMap<>();
+		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
 	private final ServiceTracker
 		<ExportImportLifecycleListener, ExportImportLifecycleListener>
 			_serviceTracker;

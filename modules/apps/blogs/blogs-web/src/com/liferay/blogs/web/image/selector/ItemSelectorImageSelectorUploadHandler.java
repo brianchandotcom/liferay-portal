@@ -15,15 +15,23 @@
 package com.liferay.blogs.web.image.selector;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.blogs.CoverImageSizeException;
+import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.util.BlogsConstants;
+
+import java.io.InputStream;
 
 /**
- * @author Sergio González
- * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
-public class EditorImageSelectorUploadHandler
+public class ItemSelectorImageSelectorUploadHandler
 	extends BaseBlogsImageSelectorUploadHandler {
 
 	@Override
@@ -35,6 +43,39 @@ public class EditorImageSelectorUploadHandler
 		}
 
 		super.validateFile(fileName, contentType, size);
+	}
+
+	@Override
+	protected FileEntry addFileEntry(
+			ThemeDisplay themeDisplay, String uniqueFileName,
+			InputStream inputStream, String contentType)
+		throws PortalException {
+
+		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
+			themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
+
+		return PortletFileRepositoryUtil.addPortletFileEntry(
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			BlogsEntry.class.getName(), 0, BlogsConstants.SERVICE_NAME,
+			folder.getFolderId(), inputStream, uniqueFileName, contentType,
+			true);
+	}
+
+	@Override
+	protected FileEntry fetchTempFileEntry(
+			ThemeDisplay themeDisplay, String fileName)
+		throws PortalException {
+
+		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
+			themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
+
+		try {
+			return PortletFileRepositoryUtil.getPortletFileEntry(
+				themeDisplay.getScopeGroupId(), folder.getFolderId(), fileName);
+		}
+		catch (PortalException pe) {
+			return null;
+		}
 	}
 
 	@Override

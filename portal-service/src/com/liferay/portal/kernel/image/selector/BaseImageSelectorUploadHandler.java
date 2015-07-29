@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -105,8 +104,17 @@ public abstract class BaseImageSelectorUploadHandler
 		}
 	}
 
+	protected abstract FileEntry addFileEntry(
+			ThemeDisplay themeDisplay, String uniqueFileName,
+			InputStream inputStream, String contentType)
+		throws PortalException;
+
 	protected abstract void checkPermission(
 			long groupId, PermissionChecker permissionChecker)
+		throws PortalException;
+
+	protected abstract FileEntry fetchTempFileEntry(
+			ThemeDisplay themeDisplay, String fileName)
 		throws PortalException;
 
 	protected JSONObject getImageJSONObject(PortletRequest portletRequest)
@@ -140,9 +148,8 @@ public abstract class BaseImageSelectorUploadHandler
 
 			String uniqueFileName = getUniqueFileName(themeDisplay, fileName);
 
-			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				_TEMP_FOLDER_NAME, uniqueFileName, inputStream, contentType);
+			FileEntry fileEntry = addFileEntry(
+				themeDisplay, uniqueFileName, inputStream, contentType);
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 
@@ -165,7 +172,7 @@ public abstract class BaseImageSelectorUploadHandler
 			ThemeDisplay themeDisplay, String fileName)
 		throws PortalException {
 
-		FileEntry fileEntry = _fetchTempFileEntry(themeDisplay, fileName);
+		FileEntry fileEntry = fetchTempFileEntry(themeDisplay, fileName);
 
 		if (fileEntry == null) {
 			return fileName;
@@ -177,7 +184,7 @@ public abstract class BaseImageSelectorUploadHandler
 			String curFileName = FileUtil.appendParentheticalSuffix(
 				fileName, String.valueOf(suffix));
 
-			fileEntry = _fetchTempFileEntry(themeDisplay, curFileName);
+			fileEntry = fetchTempFileEntry(themeDisplay, curFileName);
 
 			if (fileEntry == null) {
 				return curFileName;
@@ -199,20 +206,7 @@ public abstract class BaseImageSelectorUploadHandler
 			String fileName, String contentType, long size)
 		throws PortalException;
 
-	private FileEntry _fetchTempFileEntry(
-		ThemeDisplay themeDisplay, String fileName) {
-
-		try {
-			return TempFileEntryUtil.getTempFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				_TEMP_FOLDER_NAME, fileName);
-		}
-		catch (PortalException pe) {
-			return null;
-		}
-	}
-
-	private static final String _TEMP_FOLDER_NAME =
+	protected static final String _TEMP_FOLDER_NAME =
 		BaseImageSelectorUploadHandler.class.getName();
 
 	private static final int _UNIQUE_FILE_NAME_TRIES = 50;

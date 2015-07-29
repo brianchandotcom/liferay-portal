@@ -172,7 +172,7 @@
 				}
 			}
 
-			if (pos >= 0 && instance._isValidTag(tagName)) {
+			if (pos >= 0) {
 				var tokenTagEnd = Parser.TOKEN_TAG_END;
 
 				for (var i = stack.length - 1; i >= pos; i--) {

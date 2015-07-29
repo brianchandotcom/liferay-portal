@@ -198,6 +198,13 @@ public class TemplateHandlerRegistryUtil {
 					classLoader, group.getGroupId(),
 					templateElement.elementText("description"));
 				String language = templateElement.elementText("language");
+
+				String type = templateElement.elementText("type");
+
+				if (type == null) {
+					type = DDMTemplateManager.TEMPLATE_TYPE_DISPLAY;
+				}
+
 				String scriptFileName = templateElement.elementText(
 					"script-file");
 
@@ -210,8 +217,7 @@ public class TemplateHandlerRegistryUtil {
 					userId, group.getGroupId(), classNameId, 0,
 					PortalUtil.getClassNameId(
 						_PORTLET_DISPLAY_TEMPLATE_CLASS_NAME),
-					templateKey, nameMap, descriptionMap,
-					DDMTemplateManager.TEMPLATE_TYPE_DISPLAY, null, language,
+					templateKey, nameMap, descriptionMap, type, null, language,
 					script, cacheable, false, null, null, serviceContext);
 			}
 		}

@@ -14,7 +14,19 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.theme.NavItem;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,6 +39,14 @@ public class NavigationTag extends IncludeTag {
 
 	public void setBulletStyle(String bulletStyle) {
 		_bulletStyle = bulletStyle;
+	}
+
+	public void setDdmTemplateGroupId(long ddmTemplateGroupId) {
+		_ddmTemplateGroupId = ddmTemplateGroupId;
+	}
+
+	public void setDdmTemplateKey(String ddmTemplateKey) {
+		_ddmTemplateKey = ddmTemplateKey;
 	}
 
 	public void setDisplayStyleDefinition(String[] displayStyleDefinition) {
@@ -69,6 +89,38 @@ public class NavigationTag extends IncludeTag {
 		_rootLayoutType = "absolute";
 	}
 
+	protected List<NavItem> getBranchNavItems(HttpServletRequest request)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		List<Layout> layoutAncestors = layout.getAncestors();
+
+		NavItem navItem = new NavItem(request, layout, null);
+
+		List<NavItem> branchNavItems = new ArrayList<>();
+
+		branchNavItems.add(navItem);
+
+		for (Layout layoutAncestor : layoutAncestors) {
+			branchNavItems.add(0, new NavItem(request, layoutAncestor, null));
+		}
+
+		return branchNavItems;
+	}
+
+	protected String getDisplayStyle() {
+		if (Validator.isNotNull(_ddmTemplateKey)) {
+			return PortletDisplayTemplateManagerUtil.getDisplayStyle(
+				_ddmTemplateKey);
+		}
+
+		return null;
+	}
+
 	@Override
 	protected String getPage() {
 		return _PAGE;
@@ -78,8 +130,10 @@ public class NavigationTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:navigation:bulletStyle", _bulletStyle);
 		request.setAttribute(
-			"liferay-ui:navigation:displayStyleDefinition",
-			_displayStyleDefinition);
+			"liferay-ui:navigation:displayStyle", getDisplayStyle());
+		request.setAttribute(
+			"liferay-ui:navigation:displayStyleGroupId",
+			String.valueOf(_ddmTemplateGroupId));
 		request.setAttribute("liferay-ui:navigation:headerType", _headerType);
 		request.setAttribute(
 			"liferay-ui:navigation:includedLayouts", _includedLayouts);
@@ -93,11 +147,25 @@ public class NavigationTag extends IncludeTag {
 			String.valueOf(_rootLayoutLevel));
 		request.setAttribute(
 			"liferay-ui:navigation:rootLayoutType", _rootLayoutType);
+
+		try {
+			List<NavItem> branchNavItems = getBranchNavItems(request);
+
+			request.setAttribute(
+				"liferay-ui:navigation:navItems", branchNavItems);
+		}
+		catch (PortalException e) {
+			_log.error(e);
+		}
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/navigation/page.jsp";
 
+	private static final Log _log = LogFactoryUtil.getLog(NavigationTag.class);
+
 	private String _bulletStyle = "1";
+	private long _ddmTemplateGroupId;
+	private String _ddmTemplateKey;
 	private String[] _displayStyleDefinition;
 	private String _headerType = "none";
 	private String _includedLayouts = "auto";

@@ -85,6 +85,28 @@ public class NavItem implements Serializable {
 		_contextObjects = contextObjects;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof NavItem)) {
+			return false;
+		}
+
+		NavItem navItem = (NavItem)obj;
+
+		Layout layout = navItem.getLayout();
+
+		if (getLayoutId() == layout.getLayoutId()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	/**
 	 * Returns all of child layouts that the current user has permission to
 	 * access from this navigation item's layout.
@@ -233,6 +255,11 @@ public class NavItem implements Serializable {
 		}
 	}
 
+	@Override
+	public int hashCode() {
+		return _layout.hashCode();
+	}
+
 	public void icon() throws Exception {
 		Object velocityTaglib = _contextObjects.get("theme");
 
@@ -245,6 +272,14 @@ public class NavItem implements Serializable {
 	public boolean isChildSelected() throws PortalException {
 		return _layout.isChildSelected(
 			_themeDisplay.isTilesSelectable(), _themeDisplay.getLayout());
+	}
+
+	public boolean isInNavigation(List<NavItem> navItems) {
+		if (navItems == null) {
+			return false;
+		}
+
+		return navItems.contains(this);
 	}
 
 	public boolean isSelected() throws Exception {

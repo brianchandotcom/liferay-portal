@@ -64,6 +64,8 @@ public interface WikiEngine {
 	public Map<String, Boolean> getOutgoingLinks(WikiPage page)
 		throws PageContentException;
 
+	public String getToolbarSet();
+
 	public void renderEditPage(
 			ServletRequest servletRequest, ServletResponse servletResponse,
 			WikiPage page)

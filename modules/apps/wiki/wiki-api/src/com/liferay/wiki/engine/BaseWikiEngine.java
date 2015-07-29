@@ -74,6 +74,11 @@ public abstract class BaseWikiEngine implements WikiEngine {
 	}
 
 	@Override
+	public String getToolbarSet() {
+		return "creole";
+	}
+
+	@Override
 	public void renderEditPage(
 			ServletRequest servletRequest, ServletResponse servletResponse,
 			WikiPage page)

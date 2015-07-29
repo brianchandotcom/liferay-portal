@@ -45,7 +45,7 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 				contents="<%= content %>"
 				editorName="<%= baseInputEditorWikiEngine.getEditorName() %>"
 				fileBrowserParams="<%= fileBrowserParams %>"
-				toolbarSet="creole"
+				toolbarSet="<%= baseInputEditorWikiEngine.getToolbarSet() %>"
 				width="100%"
 			/>
 

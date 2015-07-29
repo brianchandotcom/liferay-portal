@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.blogs.CoverImageSizeException;
+import com.liferay.portlet.blogs.BlogImageSizeException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsConstants;
@@ -39,7 +39,7 @@ public class ItemSelectorImageSelectorUploadHandler
 		throws PortalException {
 
 		if (size > getMaxFileSize()) {
-			throw new CoverImageSizeException();
+			throw new BlogImageSizeException();
 		}
 
 		super.validateFile(fileName, contentType, size);

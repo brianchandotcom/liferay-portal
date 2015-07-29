@@ -271,8 +271,6 @@ List resultRows = searchContainer.getResultRows();
 for (int i = 0; i < results.size(); i++) {
 	WikiPage curWikiPage = results.get(i);
 
-	curWikiPage = curWikiPage.toEscapedModel();
-
 	ResultRow row = new ResultRow(curWikiPage, String.valueOf(curWikiPage.getVersion()), i);
 
 	PortletURL rowURL = renderResponse.createRenderURL();
@@ -294,7 +292,7 @@ for (int i = 0; i < results.size(); i++) {
 		rowURL.setParameter("nodeId", String.valueOf(curWikiPage.getNodeId()));
 	}
 
-	rowURL.setParameter("title", HtmlUtil.unescape(curWikiPage.getTitle()));
+	rowURL.setParameter("title", curWikiPage.getTitle());
 
 	if (type.equals("history")) {
 		rowURL.setParameter("version", String.valueOf(curWikiPage.getVersion()));
@@ -302,7 +300,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Title
 
-	row.addText(curWikiPage.getTitle(), rowURL);
+	row.addText(HtmlUtil.escape(curWikiPage.getTitle()), rowURL);
 
 	// Status
 
@@ -326,7 +324,7 @@ for (int i = 0; i < results.size(); i++) {
 	// User
 
 	if (!curWikiPage.isNew()) {
-		row.addText(PortalUtil.getUserName(curWikiPage), rowURL);
+		row.addText(HtmlUtil.escape(PortalUtil.getUserName(curWikiPage)), rowURL);
 	}
 	else {
 		row.addText(StringPool.BLANK);
@@ -345,7 +343,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	if (type.equals("history") || type.equals("recent_changes")) {
 		if (Validator.isNotNull(curWikiPage.getSummary())) {
-			row.addText(curWikiPage.getSummary());
+			row.addText(HtmlUtil.escape(curWikiPage.getSummary()));
 		}
 		else {
 			row.addText(StringPool.BLANK);

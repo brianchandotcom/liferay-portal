@@ -17,7 +17,9 @@ package com.liferay.blogs.web.image.selector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -28,6 +30,8 @@ import com.liferay.portlet.blogs.util.BlogsConstants;
 
 import java.io.InputStream;
 
+import javax.portlet.PortletRequest;
+
 /**
  * @author Roberto Díaz
  */
@@ -35,14 +39,16 @@ public class ItemSelectorImageSelectorUploadHandler
 	extends BaseBlogsImageSelectorUploadHandler {
 
 	@Override
-	public void validateFile(String fileName, String contentType, long size)
+	public void validateFile(
+			PortletRequest portletRequest, String fileName, String contentType,
+			long size)
 		throws PortalException {
 
-		if (size > getMaxFileSize()) {
+		if (size > getMaxFileSize(portletRequest)) {
 			throw new CoverImageSizeException();
 		}
 
-		super.validateFile(fileName, contentType, size);
+		super.validateFile(portletRequest, fileName, contentType, size);
 	}
 
 	@Override
@@ -79,9 +85,19 @@ public class ItemSelectorImageSelectorUploadHandler
 	}
 
 	@Override
-	protected long getMaxFileSize() {
-		return PrefsPropsUtil.getLong(
-			PropsKeys.BLOGS_IMAGE_ALLOY_EDITOR_MAX_SIZE);
+	protected long getMaxFileSize(PortletRequest portletRequest) {
+		String itemSelectorCaller = ParamUtil.getString(
+			portletRequest, "itemSelectorCaller");
+
+		if (Validator.isNotNull(itemSelectorCaller) &&
+			itemSelectorCaller.equals("coverImage")) {
+
+			return PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_COVER_MAX_SIZE);
+		}
+		else {
+			return PrefsPropsUtil.getLong(
+				PropsKeys.BLOGS_IMAGE_ALLOY_EDITOR_MAX_SIZE);
+		}
 	}
 
 }

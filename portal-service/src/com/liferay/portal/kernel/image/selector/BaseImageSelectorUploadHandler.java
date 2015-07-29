@@ -141,7 +141,7 @@ public abstract class BaseImageSelectorUploadHandler
 				"imageSelectorFileName");
 			long size = uploadPortletRequest.getSize("imageSelectorFileName");
 
-			validateFile(fileName, contentType, size);
+			validateFile(portletRequest, fileName, contentType, size);
 
 			inputStream = uploadPortletRequest.getFileAsStream(
 				"imageSelectorFileName");
@@ -203,7 +203,8 @@ public abstract class BaseImageSelectorUploadHandler
 		throws PortalException;
 
 	protected abstract void validateFile(
-			String fileName, String contentType, long size)
+			PortletRequest portletRequest, String fileName, String contentType,
+			long size)
 		throws PortalException;
 
 	protected static final String _TEMP_FOLDER_NAME =

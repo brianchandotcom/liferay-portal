@@ -24,6 +24,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
+import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 import com.liferay.registry.util.StringPlus;
 
 import java.util.Collection;
@@ -113,7 +114,7 @@ public class ExportImportControllerRegistryUtil {
 	private final Map<String, ImportController> _importControllers =
 		new ConcurrentHashMap<>();
 	private final ServiceRegistrationMap<ExportImportController>
-		_serviceRegistrations = new ServiceRegistrationMap<>();
+		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
 	private final ServiceTracker<ExportImportController, ExportImportController>
 		_serviceTracker;
 

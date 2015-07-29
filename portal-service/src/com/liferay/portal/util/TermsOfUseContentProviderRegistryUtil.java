@@ -24,6 +24,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
+import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 
 import java.util.List;
 import java.util.Map;
@@ -133,7 +134,7 @@ public class TermsOfUseContentProviderRegistryUtil {
 		new TermsOfUseContentProviderRegistryUtil();
 
 	private final ServiceRegistrationMap<TermsOfUseContentProvider>
-		_serviceRegistrations = new ServiceRegistrationMap<>();
+		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
 	private final ServiceTracker<TermsOfUseContentProvider,
 		TermsOfUseContentProvider> _serviceTracker;
 	private final Map<String, TermsOfUseContentProvider>

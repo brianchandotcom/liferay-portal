@@ -24,6 +24,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
+import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 
 import java.util.Collection;
 import java.util.List;
@@ -149,7 +150,7 @@ public class StagedModelDataHandlerRegistryUtil {
 		new StagedModelDataHandlerRegistryUtil();
 
 	private final ServiceRegistrationMap<StagedModelDataHandler<?>>
-		_serviceRegistrations = new ServiceRegistrationMap<>();
+		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
 	private final
 		ServiceTracker<StagedModelDataHandler<?>, StagedModelDataHandler<?>>
 			_serviceTracker;

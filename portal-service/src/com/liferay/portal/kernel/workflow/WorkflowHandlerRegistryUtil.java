@@ -34,6 +34,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
+import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 
 import java.io.Serializable;
 
@@ -321,7 +322,7 @@ public class WorkflowHandlerRegistryUtil {
 	private final Map<String, WorkflowHandler<?>> _scopeableWorkflowHandlerMap =
 		new ConcurrentSkipListMap<>();
 	private final ServiceRegistrationMap<WorkflowHandler<?>>
-		_serviceRegistrations = new ServiceRegistrationMap<>();
+		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
 	private final ServiceTracker<WorkflowHandler<?>, WorkflowHandler<?>>
 		_serviceTracker;
 	private final Map<String, WorkflowHandler<?>> _workflowHandlerMap =

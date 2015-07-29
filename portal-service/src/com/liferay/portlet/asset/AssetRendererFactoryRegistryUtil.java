@@ -28,6 +28,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
+import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 
 import java.util.List;
 import java.util.Map;
@@ -236,7 +237,7 @@ public class AssetRendererFactoryRegistryUtil {
 	private final Map<String, AssetRendererFactory>
 		_assetRenderFactoriesMapByClassType = new ConcurrentHashMap<>();
 	private final ServiceRegistrationMap<AssetRendererFactory>
-		_serviceRegistrations = new ServiceRegistrationMap<>();
+		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
 	private final ServiceTracker<AssetRendererFactory, AssetRendererFactory>
 		_serviceTracker;
 

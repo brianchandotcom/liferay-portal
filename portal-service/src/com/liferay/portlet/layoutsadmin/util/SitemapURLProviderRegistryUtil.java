@@ -24,6 +24,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
+import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 
 import java.util.Collection;
 import java.util.List;
@@ -103,7 +104,7 @@ public class SitemapURLProviderRegistryUtil {
 		new SitemapURLProviderRegistryUtil();
 
 	private final ServiceRegistrationMap<SitemapURLProvider>
-		_serviceRegistrations = new ServiceRegistrationMap<>();
+		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
 	private final
 		ServiceTracker<SitemapURLProvider, SitemapURLProvider> _serviceTracker;
 	private final Map<String, SitemapURLProvider>

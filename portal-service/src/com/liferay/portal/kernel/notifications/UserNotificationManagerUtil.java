@@ -28,6 +28,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
+import com.liferay.registry.collections.ServiceRegistrationMapImpl;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
@@ -313,7 +314,7 @@ public class UserNotificationManagerUtil {
 		_userNotificationHandlers = new ConcurrentHashMap<>();
 	private final ServiceRegistrationMap<UserNotificationHandler>
 		_userNotificationHandlerServiceRegistrations =
-			new ServiceRegistrationMap<>();
+			new ServiceRegistrationMapImpl<>();
 	private final
 		ServiceTracker<UserNotificationHandler, UserNotificationHandler>
 			_userNotificationHandlerServiceTracker;

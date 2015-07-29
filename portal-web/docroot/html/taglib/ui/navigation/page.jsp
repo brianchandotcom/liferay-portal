@@ -17,8 +17,6 @@
 <%@ include file="/html/taglib/ui/navigation/init.jsp" %>
 
 <%
-String renderedDDMTemplate = StringPool.BLANK;
-
 DDMTemplate portletDisplayDDMTemplate = PortletDisplayTemplateManagerUtil.getDDMTemplate(displayStyleGroupId, PortalUtil.getClassNameId(NavItem.class), displayStyle, true);
 
 if (portletDisplayDDMTemplate != null) {
@@ -30,9 +28,10 @@ if (portletDisplayDDMTemplate != null) {
 	contextObjects.put("nestedChildren", nestedChildren);
 	contextObjects.put("rootLayoutLevel", rootLayoutLevel);
 	contextObjects.put("rootLayoutType", rootLayoutType);
-
-	renderedDDMTemplate = PortletDisplayTemplateManagerUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplate.getTemplateId(), navItems, contextObjects);
-}
 %>
 
-<%= renderedDDMTemplate %>
+	<%= PortletDisplayTemplateManagerUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplate.getTemplateId(), navItems, contextObjects) %>
+
+<%
+}
+%>

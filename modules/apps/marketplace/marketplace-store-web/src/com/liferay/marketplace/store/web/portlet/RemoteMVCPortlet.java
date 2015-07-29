@@ -94,7 +94,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		throws Exception {
 
 		OAuthRequest oAuthRequest = new OAuthRequest(
-			Verb.GET, getRemotePortletURL());
+			Verb.GET, getServerPortletURL());
 
 		setRequestParameters(portletRequest, portletResponse, oAuthRequest);
 
@@ -112,7 +112,11 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		return oAuthRequest;
 	}
 
-	protected String getRemotePortletURL() {
+	protected String getServerNamespace() {
+		return StringPool.BLANK;
+	}
+
+	protected String getServerPortletURL() {
 		return StringPool.BLANK;
 	}
 
@@ -139,6 +143,10 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		OAuthRequest oAuthRequest = getGetOAuthRequest(
 			resourceRequest, resourceResponse);
 
+		oAuthRequest.addQuerystringParameter("p_p_lifecycle", "2");
+		oAuthRequest.addQuerystringParameter(
+			"p_p_resource_id", resourceRequest.getResourceID());
+
 		Response response = oAuthRequest.send();
 
 		PortletResponseUtil.write(resourceResponse, response.getStream());
@@ -155,10 +163,11 @@ public class RemoteMVCPortlet extends MVCPortlet {
 
 		String currentURL = PortalUtil.getCurrentURL(portletRequest);
 
-		oAuthRequest.addQuerystringParameter("remoteURL", currentURL);
-
+		oAuthRequest.addQuerystringParameter("clientURL", currentURL);
 		oAuthRequest.addQuerystringParameter(
-			"remotePortletNamespace", portletResponse.getNamespace());
+			"clientPortletNamespace", portletResponse.getNamespace());
+
+		String serverNamespace = getServerNamespace();
 
 		Map<String, String[]> parameterMap = portletRequest.getParameterMap();
 
@@ -169,7 +178,8 @@ public class RemoteMVCPortlet extends MVCPortlet {
 				continue;
 			}
 
-			oAuthRequest.addQuerystringParameter(entry.getKey(), values[0]);
+			oAuthRequest.addQuerystringParameter(
+				serverNamespace.concat(entry.getKey()), values[0]);
 		}
 	}
 

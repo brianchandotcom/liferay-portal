@@ -15,31 +15,44 @@
 package com.liferay.blogs.web.image.selector;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.blogs.BlogImageSizeException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+
+import java.io.InputStream;
 
 /**
  * @author Sergio González
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 public class TempImageUploadHandler
 	extends BaseBlogsImageSelectorUploadHandler {
 
 	@Override
-	public void validateFile(String fileName, String contentType, long size)
+	protected FileEntry addFileEntry(
+			ThemeDisplay themeDisplay, String fileName, InputStream inputStream,
+			String contentType)
 		throws PortalException {
 
-		if (size > getMaxFileSize()) {
-			throw new BlogImageSizeException();
-		}
-
-		super.validateFile(fileName, contentType, size);
+		return TempFileEntryUtil.addTempFileEntry(
+			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			_TEMP_FOLDER_NAME, fileName, inputStream, contentType);
 	}
 
 	@Override
-	protected long getMaxFileSize() {
-		return PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_MAX_SIZE);
+	protected FileEntry fetchFileEntry(
+			ThemeDisplay themeDisplay, String fileName)
+		throws PortalException {
+
+		try {
+			return TempFileEntryUtil.getTempFileEntry(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				_TEMP_FOLDER_NAME, fileName);
+		}
+		catch (PortalException pe) {
+			return null;
+		}
 	}
 
 }

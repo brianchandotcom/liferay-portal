@@ -113,7 +113,7 @@ public abstract class BaseImageSelectorUploadHandler
 			long groupId, PermissionChecker permissionChecker)
 		throws PortalException;
 
-	protected abstract FileEntry fetchTempFileEntry(
+	protected abstract FileEntry fetchFileEntry(
 			ThemeDisplay themeDisplay, String fileName)
 		throws PortalException;
 
@@ -172,7 +172,7 @@ public abstract class BaseImageSelectorUploadHandler
 			ThemeDisplay themeDisplay, String fileName)
 		throws PortalException {
 
-		FileEntry fileEntry = fetchTempFileEntry(themeDisplay, fileName);
+		FileEntry fileEntry = fetchFileEntry(themeDisplay, fileName);
 
 		if (fileEntry == null) {
 			return fileName;
@@ -184,7 +184,7 @@ public abstract class BaseImageSelectorUploadHandler
 			String curFileName = FileUtil.appendParentheticalSuffix(
 				fileName, String.valueOf(suffix));
 
-			fileEntry = fetchTempFileEntry(themeDisplay, curFileName);
+			fileEntry = fetchFileEntry(themeDisplay, curFileName);
 
 			if (fileEntry == null) {
 				return curFileName;

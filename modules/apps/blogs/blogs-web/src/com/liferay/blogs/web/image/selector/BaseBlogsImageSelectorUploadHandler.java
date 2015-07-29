@@ -102,7 +102,7 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 	}
 
 	@Override
-	protected FileEntry fetchTempFileEntry(
+	protected FileEntry fetchFileEntry(
 			ThemeDisplay themeDisplay, String fileName)
 		throws PortalException {
 

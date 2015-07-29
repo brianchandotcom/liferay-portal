@@ -31,8 +31,7 @@ import java.io.InputStream;
 /**
  * @author Roberto Díaz
  */
-public class ItemSelectorImageSelectorUploadHandler
-	extends BaseBlogsImageSelectorUploadHandler {
+public class ImageUploadHandler extends BaseBlogsImageSelectorUploadHandler {
 
 	@Override
 	public void validateFile(String fileName, String contentType, long size)

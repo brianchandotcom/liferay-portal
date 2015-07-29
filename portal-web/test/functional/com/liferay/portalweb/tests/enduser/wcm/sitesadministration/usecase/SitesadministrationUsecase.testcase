@@ -362,7 +362,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56668" name="OnlySiteOwnersCanAssignSiteRolesToUserGroups" priority="4">
+	<command name="OnlySiteOwnersCanAssignSiteRolesToUserGroups" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>

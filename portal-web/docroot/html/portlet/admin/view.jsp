@@ -40,7 +40,7 @@
 		</portlet:renderURL>
 
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-		    <aui:input name="<%= Constants.CMD %>" type="hidden" />
+			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 			<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 			<aui:input name="tabs3" type="hidden" value="<%= tabs3 %>" />

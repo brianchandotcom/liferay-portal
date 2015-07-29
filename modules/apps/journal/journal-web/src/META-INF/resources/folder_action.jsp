@@ -52,8 +52,8 @@ else {
 }
 %>
 
-<span class="entry-action overlay">
-	<liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<span class="<%= row != null ? StringPool.BLANK : "entry-action overlay" %>">
+	<liferay-ui:icon-menu direction='<%= row != null ? "left-side" : "right-side" %>' icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" scroll="<%= row != null %>" showWhenSingleIcon="<%= true %>" view='<%= row != null ? "lexicon" : null %>'>
 		<c:choose>
 			<c:when test="<%= folder != null %>">
 				<c:if test="<%= JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE) %>">

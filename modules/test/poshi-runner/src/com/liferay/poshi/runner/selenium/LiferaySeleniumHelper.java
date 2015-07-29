@@ -692,7 +692,7 @@ public class LiferaySeleniumHelper {
 
 			Matcher matcher = pattern.matcher(messageText);
 
-			if (matcher.matches()) {
+			if (matcher.find()) {
 				return true;
 			}
 		}

@@ -18,13 +18,13 @@ apply plugin: "com.liferay.plugin"
 apply plugin: "eclipse"
 
 liferay {
-	appServerParentDir = System.properties["appServerParentDir"] ?: rootProject.file("../../bundles")
+	appServerParentDir = System.properties["app.server.parent.dir"] ?: rootProject.file("../../bundles")
 
 	if (deployDir == new File(appServerParentDir, "deploy")) {
 		deployDir = new File(liferayHome, "osgi/apps")
 	}
 
-	String liferayHomeSystemProperty = System.properties["liferayHome"]
+	String liferayHomeSystemProperty = System.properties["liferay.home"]
 
 	if (liferayHomeSystemProperty) {
 		liferayHome = liferayHomeSystemProperty

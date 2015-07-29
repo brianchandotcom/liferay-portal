@@ -862,8 +862,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<args />
 				<arg value="--project-cache-dir=${project.dir}/.gradle" />
 				<arg value="--stacktrace" />
-				<arg value="-DappServerParentDir=${app.server.parent.dir}" />
-				<arg value="-DliferayHome=${liferay.home}" />
+				<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
+				<arg value="-Dliferay.home=${liferay.home}" />
 				<arg value="@{task}" />
 				<env key="GRADLE_OPTS" value="${env.ANT_OPTS}" />
 			</exec>

@@ -105,7 +105,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 
 					<li>
 						<liferay-ui:icon
-							iconCssClass="icon-edit"
+							iconCssClass="icon-cog"
 							label="edit"
 							linkCssClass="control-menu-icon"
 							url="<%= editPageURLString %>"

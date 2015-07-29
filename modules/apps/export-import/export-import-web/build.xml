@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="export-import-api,export-import-service,../application-list/application-list-api" />
+	<property name="import.shared" value="export-import-api,export-import-service,../application-list/application-list-api,../staging/staging-taglib" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

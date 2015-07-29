@@ -21,7 +21,8 @@ import com.liferay.portal.util.PrefsPropsUtil;
  * @author Sergio González
  * @author Adolfo Pérez
  */
-public class SmallImageSelectorUploadHandler extends TempImageUploadHandler {
+public class BlogsSmallImageSelectorUploadHandler
+	extends BlogsTempImageSelectorUploadHandler {
 
 	@Override
 	protected long getMaxFileSize() {

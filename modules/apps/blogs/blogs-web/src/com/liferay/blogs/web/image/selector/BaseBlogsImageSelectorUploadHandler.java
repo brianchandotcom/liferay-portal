@@ -92,13 +92,13 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 
 	@Override
 	protected FileEntry addFileEntry(
-			ThemeDisplay themeDisplay, String uniqueFileName,
-			InputStream inputStream, String contentType)
+			ThemeDisplay themeDisplay, String fileName, InputStream inputStream,
+			String contentType)
 		throws PortalException {
 
 		return TempFileEntryUtil.addTempFileEntry(
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-			_TEMP_FOLDER_NAME, uniqueFileName, inputStream, contentType);
+			_TEMP_FOLDER_NAME, fileName, inputStream, contentType);
 	}
 
 	@Override

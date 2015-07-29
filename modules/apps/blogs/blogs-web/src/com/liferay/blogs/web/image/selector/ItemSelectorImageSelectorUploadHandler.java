@@ -47,8 +47,8 @@ public class ItemSelectorImageSelectorUploadHandler
 
 	@Override
 	protected FileEntry addFileEntry(
-			ThemeDisplay themeDisplay, String uniqueFileName,
-			InputStream inputStream, String contentType)
+			ThemeDisplay themeDisplay, String fileName, InputStream inputStream,
+			String contentType)
 		throws PortalException {
 
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
@@ -57,8 +57,7 @@ public class ItemSelectorImageSelectorUploadHandler
 		return PortletFileRepositoryUtil.addPortletFileEntry(
 			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			BlogsEntry.class.getName(), 0, BlogsConstants.SERVICE_NAME,
-			folder.getFolderId(), inputStream, uniqueFileName, contentType,
-			true);
+			folder.getFolderId(), inputStream, fileName, contentType, true);
 	}
 
 	@Override

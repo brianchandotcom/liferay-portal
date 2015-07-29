@@ -97,14 +97,11 @@ public class NavItem implements Serializable {
 
 		NavItem navItem = (NavItem)obj;
 
-		Layout layout = navItem.getLayout();
-
-		if (getLayoutId() == layout.getLayoutId()) {
+		if (Validator.equals(getLayoutId(), navItem.getLayoutId())) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	/**

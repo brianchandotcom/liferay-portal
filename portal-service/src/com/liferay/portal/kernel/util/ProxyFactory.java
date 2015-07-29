@@ -20,6 +20,7 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -107,7 +108,12 @@ public class ProxyFactory {
 			T service = _serviceTracker.getService();
 
 			if (service != null) {
-				return method.invoke(service, arguments);
+				try {
+					return method.invoke(service, arguments);
+				}
+				catch (InvocationTargetException ite) {
+					throw ite.getTargetException();
+				}
 			}
 
 			Class<?> returnType = method.getReturnType();

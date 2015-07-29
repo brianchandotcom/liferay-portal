@@ -15,9 +15,7 @@
 package com.liferay.portal.kernel.lock;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 /**
  * @author Tina Tian
@@ -25,48 +23,47 @@ import com.liferay.registry.ServiceTracker;
 public class LockManagerUtil {
 
 	public static void clear() {
-		_getLockManager().clear();
+		_lockManager.clear();
 	}
 
 	public static Lock createLock(
 		long lockId, long companyId, long userId, String userName) {
 
-		return _getLockManager().createLock(
-			lockId, companyId, userId, userName);
+		return _lockManager.createLock(lockId, companyId, userId, userName);
 	}
 
 	public static Lock getLock(String className, long key)
 		throws PortalException {
 
-		return _getLockManager().getLock(className, key);
+		return _lockManager.getLock(className, key);
 	}
 
 	public static Lock getLock(String className, String key)
 		throws PortalException {
 
-		return _getLockManager().getLock(className, key);
+		return _lockManager.getLock(className, key);
 	}
 
 	public static Lock getLockByUuidAndCompanyId(String uuid, long companyId)
 		throws PortalException {
 
-		return _getLockManager().getLockByUuidAndCompanyId(uuid, companyId);
+		return _lockManager.getLockByUuidAndCompanyId(uuid, companyId);
 	}
 
 	public static boolean hasLock(long userId, String className, long key) {
-		return _getLockManager().hasLock(userId, className, key);
+		return _lockManager.hasLock(userId, className, key);
 	}
 
 	public static boolean hasLock(long userId, String className, String key) {
-		return _getLockManager().hasLock(userId, className, key);
+		return _lockManager.hasLock(userId, className, key);
 	}
 
 	public static boolean isLocked(String className, long key) {
-		return _getLockManager().isLocked(className, key);
+		return _lockManager.isLocked(className, key);
 	}
 
 	public static boolean isLocked(String className, String key) {
-		return _getLockManager().isLocked(className, key);
+		return _lockManager.isLocked(className, key);
 	}
 
 	public static Lock lock(
@@ -74,7 +71,7 @@ public class LockManagerUtil {
 			boolean inheritable, long expirationTime)
 		throws PortalException {
 
-		return _getLockManager().lock(
+		return _lockManager.lock(
 			userId, className, key, owner, inheritable, expirationTime);
 	}
 
@@ -83,54 +80,40 @@ public class LockManagerUtil {
 			boolean inheritable, long expirationTime)
 		throws PortalException {
 
-		return _getLockManager().lock(
+		return _lockManager.lock(
 			userId, className, key, owner, inheritable, expirationTime);
 	}
 
 	public static Lock lock(String className, String key, String owner) {
-		return _getLockManager().lock(className, key, owner);
+		return _lockManager.lock(className, key, owner);
 	}
 
 	public static Lock lock(
 		String className, String key, String expectedOwner,
 		String updatedOwner) {
 
-		return _getLockManager().lock(
-			className, key, expectedOwner, updatedOwner);
+		return _lockManager.lock(className, key, expectedOwner, updatedOwner);
 	}
 
 	public static Lock refresh(String uuid, long companyId, long expirationTime)
 		throws PortalException {
 
-		return _getLockManager().refresh(uuid, companyId, expirationTime);
+		return _lockManager.refresh(uuid, companyId, expirationTime);
 	}
 
 	public static void unlock(String className, long key) {
-		_getLockManager().unlock(className, key);
+		_lockManager.unlock(className, key);
 	}
 
 	public static void unlock(String className, String key) {
-		_getLockManager().unlock(className, key);
+		_lockManager.unlock(className, key);
 	}
 
 	public static void unlock(String className, String key, String owner) {
-		_getLockManager().unlock(className, key, owner);
+		_lockManager.unlock(className, key, owner);
 	}
 
-	private static LockManager _getLockManager() {
-		return _instance._serviceTracker.getService();
-	}
-
-	private LockManagerUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(LockManager.class);
-
-		_serviceTracker.open();
-	}
-
-	private static final LockManagerUtil _instance = new LockManagerUtil();
-
-	private final ServiceTracker<LockManager, LockManager> _serviceTracker;
+	private static final LockManager _lockManager =
+		ProxyFactory.newServiceTrackedInstance(LockManager.class);
 
 }

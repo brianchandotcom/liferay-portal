@@ -1413,7 +1413,8 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"social.activity.participation.increments",
 			"participation.increments", "com.liferay.social.activity"
-		},new String[] {
+		},
+		new String[] {
 			"social.activity.participation.limit.values",
 			"participation.limit.values", "com.liferay.social.activity"
 		},

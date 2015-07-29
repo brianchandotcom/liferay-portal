@@ -30,6 +30,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.StringServiceRegistrationMap;
+import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -156,7 +157,7 @@ public class PollerProcessorUtil {
 			});
 
 	private final StringServiceRegistrationMap<PollerProcessor>
-		_serviceRegistrations = new StringServiceRegistrationMap<>();
+		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();
 	private final ServiceTracker<PollerProcessor, PollerProcessor>
 		_serviceTracker;
 

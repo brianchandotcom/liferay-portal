@@ -29,6 +29,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.StringServiceRegistrationMap;
+import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
 import java.util.Collection;
 import java.util.List;
@@ -149,7 +150,7 @@ public class RepositoryClassDefinitionCatalogImpl
 		_repositoryClassDefinitions = new ConcurrentHashMap<>();
 	private List<RepositoryDefiner> _repositoryDefiners;
 	private final StringServiceRegistrationMap<RepositoryDefiner>
-		_serviceRegistrations = new StringServiceRegistrationMap<>();
+		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();
 	private ServiceTracker<RepositoryDefiner, RepositoryDefiner>
 		_serviceTracker;
 

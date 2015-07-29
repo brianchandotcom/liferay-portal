@@ -26,6 +26,7 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.StringServiceRegistrationMap;
+import com.liferay.registry.collections.StringServiceRegistrationMapImpl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -126,7 +127,7 @@ public class TestIndexerRegistry implements IndexerRegistry {
 	private final Map<String, Indexer<? extends Object>> _indexers =
 		new ConcurrentHashMap<>();
 	private final StringServiceRegistrationMap<Indexer<?>>
-		_serviceRegistrations = new StringServiceRegistrationMap<>();
+		_serviceRegistrations = new StringServiceRegistrationMapImpl<>();
 	private ServiceTracker<Indexer<?>, Indexer<?>> _serviceTracker;
 
 	private class IndexerServiceTrackerCustomizer

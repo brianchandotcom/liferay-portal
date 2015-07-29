@@ -26,7 +26,7 @@ import java.io.InputStream;
  * @author Adolfo Pérez
  * @author Roberto Díaz
  */
-public class TempImageUploadHandler
+public class BlogsTempImageSelectorUploadHandler
 	extends BaseBlogsImageSelectorUploadHandler {
 
 	@Override

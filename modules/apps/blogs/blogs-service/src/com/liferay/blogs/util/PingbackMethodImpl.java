@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.portlet.FriendlyURLMapperThreadLocal;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.xmlrpc.Response;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcConstants;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcUtil;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.IdentityServiceContextFunction;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -377,21 +377,5 @@ public class PingbackMethodImpl implements Method {
 		CommentManagerUtil.getCommentManager();
 	private String _sourceURI;
 	private String _targetURI;
-
-	private static class IdentityServiceContextFunction
-		implements Function<String, ServiceContext> {
-
-		public IdentityServiceContextFunction(ServiceContext serviceContext) {
-			_serviceContext = serviceContext;
-		}
-
-		@Override
-		public ServiceContext apply(String s) {
-			return _serviceContext;
-		}
-
-		private final ServiceContext _serviceContext;
-
-	}
 
 }

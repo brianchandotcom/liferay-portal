@@ -34,7 +34,7 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 			for (PanelCategory childPanelCategory : panelCategoryRegistry.getChildPanelCategories(panelCategory)) {
 			%>
 
-				<liferay-application-list:panel-category panelCategory="<%= childPanelCategory %>" />
+				<liferay-application-list:panel-category-content panelCategory="<%= childPanelCategory %>" />
 
 			<%
 			}

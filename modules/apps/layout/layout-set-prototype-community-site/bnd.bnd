@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Layout Set Prototype Community Site
-Bundle-SymbolicName: com.liferay.layout.set.prototype.community.site
+Bundle-Name: Liferay Message Boards Layout Set Prototype
+Bundle-SymbolicName: com.liferay.message.boards.layout.set.prototype
 Bundle-Version: 1.0.0
 Include-Resource: classes

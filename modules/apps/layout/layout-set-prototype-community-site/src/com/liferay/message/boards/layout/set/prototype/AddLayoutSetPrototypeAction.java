@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.set.prototype.community.site.action;
+package com.liferay.message.boards.layout.set.prototype;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.portlet.Portlet;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
@@ -41,10 +42,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(
-	immediate = true, service = AddCommunitySiteLayoutSetPrototypeAction.class
-)
-public class AddCommunitySiteLayoutSetPrototypeAction {
+@Component(immediate = true, service = AddLayoutSetPrototypeAction.class)
+public class AddLayoutSetPrototypeAction {
 
 	@Activate
 	protected void activate() throws Exception {
@@ -130,7 +129,8 @@ public class AddCommunitySiteLayoutSetPrototypeAction {
 
 	@Reference(
 		target = "(javax.portlet.name=com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet)",
-		unbind = "-")
+		unbind = "-"
+	)
 	protected void setPortlet(Portlet portlet) {
 	}
 

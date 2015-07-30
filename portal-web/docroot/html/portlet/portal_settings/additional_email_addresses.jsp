@@ -14,4 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/common/additional_email_addresses.jsp" %>
+<%@ include file="/html/portlet/portal_settings/init.jsp" %>
+
+<liferay-util:include page="/common/additional_email_addresses.jsp" portletId="<%= PortletKeys.USERS_ADMIN %>" />

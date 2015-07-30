@@ -96,7 +96,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			{ "description", Types.CLOB },
 			{ "definition", Types.CLOB },
 			{ "storageType", Types.VARCHAR },
-			{ "type_", Types.INTEGER }
+			{ "type_", Types.INTEGER },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -120,9 +121,10 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		TABLE_COLUMNS_MAP.put("definition", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("storageType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,version VARCHAR(75) null,name STRING null,description TEXT null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,version VARCHAR(75) null,name STRING null,description TEXT null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMStructure";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmStructure.structureId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMStructure.structureId ASC";
@@ -180,6 +182,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		model.setDefinition(soapModel.getDefinition());
 		model.setStorageType(soapModel.getStorageType());
 		model.setType(soapModel.getType());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -263,6 +266,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		attributes.put("definition", getDefinition());
 		attributes.put("storageType", getStorageType());
 		attributes.put("type", getType());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -384,6 +388,12 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -955,6 +965,17 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		_type = type;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getDDMForm() {
 		return null;
 	}
@@ -1109,6 +1130,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		ddmStructureImpl.setDefinition(getDefinition());
 		ddmStructureImpl.setStorageType(getStorageType());
 		ddmStructureImpl.setType(getType());
+		ddmStructureImpl.setLastPublishDate(getLastPublishDate());
 
 		ddmStructureImpl.resetOriginalValues();
 
@@ -1314,6 +1336,15 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 		ddmStructureCacheModel.type = getType();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			ddmStructureCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			ddmStructureCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		ddmStructureCacheModel._ddmForm = getDDMForm();
 
 		ddmStructureCacheModel._fullHierarchyDDMForm = getFullHierarchyDDMForm();
@@ -1323,7 +1354,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1363,6 +1394,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		sb.append(getStorageType());
 		sb.append(", type=");
 		sb.append(getType());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1370,7 +1403,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(64);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.dynamicdatamapping.model.DDMStructure");
@@ -1452,6 +1485,10 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			"<column><column-name>type</column-name><column-value><![CDATA[");
 		sb.append(getType());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1496,6 +1533,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	private String _definition;
 	private String _storageType;
 	private int _type;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private DDMStructure _escapedModel;
 }

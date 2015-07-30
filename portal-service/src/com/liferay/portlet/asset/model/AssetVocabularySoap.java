@@ -46,6 +46,7 @@ public class AssetVocabularySoap implements Serializable {
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setSettings(model.getSettings());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -196,6 +197,14 @@ public class AssetVocabularySoap implements Serializable {
 		_settings = settings;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _vocabularyId;
 	private long _groupId;
@@ -208,4 +217,5 @@ public class AssetVocabularySoap implements Serializable {
 	private String _title;
 	private String _description;
 	private String _settings;
+	private Date _lastPublishDate;
 }

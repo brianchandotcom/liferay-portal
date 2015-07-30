@@ -5033,6 +5033,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 		mdrRuleGroupInstanceImpl.setClassPK(mdrRuleGroupInstance.getClassPK());
 		mdrRuleGroupInstanceImpl.setRuleGroupId(mdrRuleGroupInstance.getRuleGroupId());
 		mdrRuleGroupInstanceImpl.setPriority(mdrRuleGroupInstance.getPriority());
+		mdrRuleGroupInstanceImpl.setLastPublishDate(mdrRuleGroupInstance.getLastPublishDate());
 
 		return mdrRuleGroupInstanceImpl;
 	}

@@ -144,6 +144,8 @@ public class RepositoryPersistenceTest {
 
 		newRepository.setDlFolderId(RandomTestUtil.nextLong());
 
+		newRepository.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_repositories.add(_persistence.update(newRepository));
 
 		Repository existingRepository = _persistence.findByPrimaryKey(newRepository.getPrimaryKey());
@@ -180,6 +182,9 @@ public class RepositoryPersistenceTest {
 			newRepository.getTypeSettings());
 		Assert.assertEquals(existingRepository.getDlFolderId(),
 			newRepository.getDlFolderId());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingRepository.getLastPublishDate()),
+			Time.getShortTimestamp(newRepository.getLastPublishDate()));
 	}
 
 	@Test
@@ -254,7 +259,7 @@ public class RepositoryPersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "classNameId", true, "name", true,
 			"description", true, "portletId", true, "typeSettings", true,
-			"dlFolderId", true);
+			"dlFolderId", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -511,6 +516,8 @@ public class RepositoryPersistenceTest {
 		repository.setTypeSettings(RandomTestUtil.randomString());
 
 		repository.setDlFolderId(RandomTestUtil.nextLong());
+
+		repository.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_repositories.add(_persistence.update(repository));
 

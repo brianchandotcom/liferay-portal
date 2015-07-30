@@ -569,6 +569,20 @@ public interface DDMStructureModel extends BaseModel<DDMStructure>,
 	 */
 	public void setType(int type);
 
+	/**
+	 * Returns the last publish date of this d d m structure.
+	 *
+	 * @return the last publish date of this d d m structure
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this d d m structure.
+	 *
+	 * @param lastPublishDate the last publish date of this d d m structure
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

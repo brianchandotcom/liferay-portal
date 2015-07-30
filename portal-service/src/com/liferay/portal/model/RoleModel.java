@@ -494,6 +494,20 @@ public interface RoleModel extends AttachedModel, BaseModel<Role>, LocalizedMode
 	 */
 	public void setSubtype(String subtype);
 
+	/**
+	 * Returns the last publish date of this role.
+	 *
+	 * @return the last publish date of this role
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this role.
+	 *
+	 * @param lastPublishDate the last publish date of this role
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

@@ -79,7 +79,7 @@ public class LayoutFriendlyURLCacheModel implements CacheModel<LayoutFriendlyURL
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -107,6 +107,8 @@ public class LayoutFriendlyURLCacheModel implements CacheModel<LayoutFriendlyURL
 		sb.append(friendlyURL);
 		sb.append(", languageId=");
 		sb.append(languageId);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -168,6 +170,13 @@ public class LayoutFriendlyURLCacheModel implements CacheModel<LayoutFriendlyURL
 			layoutFriendlyURLImpl.setLanguageId(languageId);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			layoutFriendlyURLImpl.setLastPublishDate(null);
+		}
+		else {
+			layoutFriendlyURLImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		layoutFriendlyURLImpl.resetOriginalValues();
 
 		return layoutFriendlyURLImpl;
@@ -188,6 +197,7 @@ public class LayoutFriendlyURLCacheModel implements CacheModel<LayoutFriendlyURL
 		privateLayout = objectInput.readBoolean();
 		friendlyURL = objectInput.readUTF();
 		languageId = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -232,6 +242,8 @@ public class LayoutFriendlyURLCacheModel implements CacheModel<LayoutFriendlyURL
 		else {
 			objectOutput.writeUTF(languageId);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public long mvccVersion;
@@ -247,4 +259,5 @@ public class LayoutFriendlyURLCacheModel implements CacheModel<LayoutFriendlyURL
 	public boolean privateLayout;
 	public String friendlyURL;
 	public String languageId;
+	public long lastPublishDate;
 }

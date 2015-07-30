@@ -51,6 +51,7 @@ public class MBThreadSoap implements Serializable {
 		soapModel.setLastPostDate(model.getLastPostDate());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setQuestion(model.getQuestion());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -247,6 +248,14 @@ public class MBThreadSoap implements Serializable {
 		_question = question;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -296,6 +305,7 @@ public class MBThreadSoap implements Serializable {
 	private Date _lastPostDate;
 	private double _priority;
 	private boolean _question;
+	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

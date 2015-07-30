@@ -24,6 +24,7 @@
 		<!-- Other fields -->
 
 		<column name="banUserId" type="long" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -73,6 +74,7 @@
 		<column name="threadCount" type="int" />
 		<column name="messageCount" type="int" />
 		<column name="lastPostDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -161,6 +163,7 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="threadId" type="long" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -270,6 +273,7 @@
 		<column name="priority" type="double" />
 		<column name="allowPingbacks" type="boolean" />
 		<column name="answer" type="boolean" />
+		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -489,6 +493,7 @@
 		<column name="lastPostDate" type="Date" />
 		<column name="priority" type="double" />
 		<column name="question" type="boolean" />
+		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -592,6 +597,7 @@
 		<!-- Other fields -->
 
 		<column name="threadId" type="long" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 

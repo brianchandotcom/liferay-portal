@@ -67,6 +67,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("settings", getSettings());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -143,6 +144,12 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 
 		if (settings != null) {
 			setSettings(settings);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -288,6 +295,16 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	@Override
 	public long getGroupId() {
 		return _assetVocabulary.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this asset vocabulary.
+	*
+	* @return the last publish date of this asset vocabulary
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _assetVocabulary.getLastPublishDate();
 	}
 
 	/**
@@ -691,6 +708,16 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	@Override
 	public void setGroupId(long groupId) {
 		_assetVocabulary.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this asset vocabulary.
+	*
+	* @param lastPublishDate the last publish date of this asset vocabulary
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_assetVocabulary.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

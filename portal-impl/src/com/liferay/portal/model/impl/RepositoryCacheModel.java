@@ -79,7 +79,7 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -111,6 +111,8 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 		sb.append(typeSettings);
 		sb.append(", dlFolderId=");
 		sb.append(dlFolderId);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -187,6 +189,13 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 
 		repositoryImpl.setDlFolderId(dlFolderId);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			repositoryImpl.setLastPublishDate(null);
+		}
+		else {
+			repositoryImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		repositoryImpl.resetOriginalValues();
 
 		return repositoryImpl;
@@ -209,6 +218,7 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 		portletId = objectInput.readUTF();
 		typeSettings = objectInput.readUTF();
 		dlFolderId = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -268,6 +278,7 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 		}
 
 		objectOutput.writeLong(dlFolderId);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public long mvccVersion;
@@ -285,4 +296,5 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 	public String portletId;
 	public String typeSettings;
 	public long dlFolderId;
+	public long lastPublishDate;
 }

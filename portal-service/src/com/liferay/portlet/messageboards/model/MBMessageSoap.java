@@ -55,6 +55,7 @@ public class MBMessageSoap implements Serializable {
 		soapModel.setPriority(model.getPriority());
 		soapModel.setAllowPingbacks(model.getAllowPingbacks());
 		soapModel.setAnswer(model.getAnswer());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -291,6 +292,14 @@ public class MBMessageSoap implements Serializable {
 		_answer = answer;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -344,6 +353,7 @@ public class MBMessageSoap implements Serializable {
 	private double _priority;
 	private boolean _allowPingbacks;
 	private boolean _answer;
+	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

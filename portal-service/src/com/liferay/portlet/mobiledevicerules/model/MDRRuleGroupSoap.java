@@ -44,6 +44,7 @@ public class MDRRuleGroupSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -176,6 +177,14 @@ public class MDRRuleGroupSoap implements Serializable {
 		_description = description;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _ruleGroupId;
 	private long _groupId;
@@ -186,4 +195,5 @@ public class MDRRuleGroupSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private String _description;
+	private Date _lastPublishDate;
 }

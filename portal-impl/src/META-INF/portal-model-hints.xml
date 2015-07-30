@@ -77,6 +77,7 @@
 		<field name="typeId" type="long" />
 		<field name="mailing" type="boolean" />
 		<field name="primary" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.BackgroundTask">
 		<field name="mvccVersion" type="long" />
@@ -219,6 +220,7 @@
 		</field>
 		<field name="typeId" type="long" />
 		<field name="primary" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.Group">
 		<field name="mvccVersion" type="long" />
@@ -322,6 +324,7 @@
 		<field name="layoutPrototypeUuid" type="String" />
 		<field name="layoutPrototypeLinkEnabled" type="boolean" />
 		<field name="sourcePrototypeLayoutUuid" type="String" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.LayoutBranch">
 		<field name="mvccVersion" type="long" />
@@ -357,6 +360,7 @@
 			<hint name="max-length">255</hint>
 		</field>
 		<field name="languageId" type="String" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.LayoutPrototype">
 		<field name="mvccVersion" type="long" />
@@ -377,6 +381,7 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="active" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.LayoutRevision">
 		<field name="mvccVersion" type="long" />
@@ -497,6 +502,7 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="active" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.ListType">
 		<field name="mvccVersion" type="long" />
@@ -551,6 +557,7 @@
 			<hint name="display-width">400</hint>
 		</field>
 		<field name="logoId" type="long" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.OrgGroupRole">
 		<field name="mvccVersion" type="long" />
@@ -632,6 +639,7 @@
 		<field name="requireUnlock" type="boolean" />
 		<field name="resetFailureCount" type="long" />
 		<field name="resetTicketMaxAge" type="long" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.PasswordPolicyRel">
 		<field name="mvccVersion" type="long" />
@@ -666,6 +674,7 @@
 		</field>
 		<field name="typeId" type="long" />
 		<field name="primary" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.PluginSetting">
 		<field name="mvccVersion" type="long" />
@@ -771,6 +780,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="dlFolderId" type="long" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.RepositoryEntry">
 		<field name="mvccVersion" type="long" />
@@ -787,6 +797,7 @@
 			<hint name="max-length">255</hint>
 		</field>
 		<field name="manualCheckInRequired" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.ResourceAction">
 		<field name="mvccVersion" type="long" />
@@ -860,6 +871,7 @@
 		</field>
 		<field name="type" type="int" />
 		<field name="subtype" type="String" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.ServiceComponent">
 		<field name="mvccVersion" type="long" />
@@ -994,6 +1006,7 @@
 		<field name="lockoutDate" type="Date" />
 		<field name="agreedToTermsOfUse" type="boolean" />
 		<field name="emailAddressVerified" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.portal.model.UserGroup">
@@ -1014,6 +1027,7 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="addedByLDAPImport" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.UserGroupGroupRole">
 		<field name="mvccVersion" type="long" />
@@ -1131,6 +1145,7 @@
 		</field>
 		<field name="typeId" type="long" />
 		<field name="primary" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.model.WorkflowDefinitionLink">
 		<field name="mvccVersion" type="long" />
@@ -1223,6 +1238,7 @@
 			<hint name="display-width">350</hint>
 		</field>
 		<field name="vocabularyId" type="long" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.asset.model.AssetCategoryProperty">
 		<field name="categoryPropertyId" type="long" />
@@ -1300,6 +1316,7 @@
 			<validator name="required" />
 		</field>
 		<field name="assetCount" type="int" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.asset.model.AssetTagStats">
 		<field name="tagStatsId" type="long" />
@@ -1327,6 +1344,7 @@
 		<field name="settings" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.blogs.model.BlogsEntry">
 		<field name="uuid" type="String" />
@@ -1376,6 +1394,7 @@
 			<hint-collection name="URL" />
 			<hint name="display-width">210</hint>
 		</field>
+		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
@@ -1481,6 +1500,7 @@
 		<field name="custom1ImageId" type="long" />
 		<field name="custom2ImageId" type="long" />
 		<field name="manualCheckInRequired" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata">
 		<field name="uuid" type="String" />
@@ -1507,6 +1527,7 @@
 		<field name="description" type="String" localized="true">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.documentlibrary.model.DLFileRank">
 		<field name="fileRankId" type="long" />
@@ -1533,6 +1554,7 @@
 			<hint name="max-length">4000</hint>
 		</field>
 		<field name="active" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
@@ -1603,6 +1625,7 @@
 		<field name="defaultFileEntryTypeId" type="long" />
 		<field name="hidden" type="boolean" />
 		<field name="restrictionType" type="int" />
+		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
@@ -1670,6 +1693,7 @@
 		</field>
 		<field name="storageType" type="String" />
 		<field name="type" type="int" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout">
 		<field name="uuid" type="String" />
@@ -1753,6 +1777,7 @@
 		<field name="smallImage" type="boolean" />
 		<field name="smallImageId" type="long" />
 		<field name="smallImageURL" type="String" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink">
 		<field name="templateLinkId" type="long" />
@@ -1861,6 +1886,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="banUserId" type="long" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.messageboards.model.MBCategory">
 		<field name="uuid" type="String" />
@@ -1882,6 +1908,7 @@
 		<field name="threadCount" type="int" />
 		<field name="messageCount" type="int" />
 		<field name="lastPostDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
@@ -1899,6 +1926,7 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="threadId" type="long" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.messageboards.model.MBMailingList">
 		<field name="uuid" type="String" />
@@ -1960,6 +1988,7 @@
 		<field name="priority" type="double" />
 		<field name="allowPingbacks" type="boolean" />
 		<field name="answer" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
@@ -1990,6 +2019,7 @@
 		<field name="lastPostDate" type="Date" />
 		<field name="priority" type="double" />
 		<field name="question" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
@@ -2005,6 +2035,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="threadId" type="long" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.mobiledevicerules.model.MDRAction">
 		<field name="uuid" type="String" />
@@ -2032,6 +2063,7 @@
 		<field name="typeSettings" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.mobiledevicerules.model.MDRRule">
 		<field name="uuid" type="String" />
@@ -2057,6 +2089,7 @@
 		<field name="typeSettings" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup">
 		<field name="uuid" type="String" />
@@ -2075,6 +2108,7 @@
 		<field name="description" type="String" localized="true">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance">
 		<field name="uuid" type="String" />
@@ -2089,6 +2123,7 @@
 		<field name="classPK" type="long" />
 		<field name="ruleGroupId" type="long" />
 		<field name="priority" type="int" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.ratings.model.RatingsEntry">
 		<field name="uuid" type="String" />
@@ -2101,6 +2136,7 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="score" type="double" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.ratings.model.RatingsStats">
 		<field name="statsId" type="long" />

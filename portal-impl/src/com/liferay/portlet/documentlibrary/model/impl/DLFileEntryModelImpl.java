@@ -108,7 +108,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			{ "largeImageId", Types.BIGINT },
 			{ "custom1ImageId", Types.BIGINT },
 			{ "custom2ImageId", Types.BIGINT },
-			{ "manualCheckInRequired", Types.BOOLEAN }
+			{ "manualCheckInRequired", Types.BOOLEAN },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -142,9 +143,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		TABLE_COLUMNS_MAP.put("custom1ImageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("custom2ImageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("manualCheckInRequired", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileEntry.folderId ASC, dlFileEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileEntry.folderId ASC, DLFileEntry.name ASC";
@@ -214,6 +216,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		model.setCustom1ImageId(soapModel.getCustom1ImageId());
 		model.setCustom2ImageId(soapModel.getCustom2ImageId());
 		model.setManualCheckInRequired(soapModel.getManualCheckInRequired());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -307,6 +310,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		attributes.put("custom1ImageId", getCustom1ImageId());
 		attributes.put("custom2ImageId", getCustom2ImageId());
 		attributes.put("manualCheckInRequired", getManualCheckInRequired());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -489,6 +493,12 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		if (manualCheckInRequired != null) {
 			setManualCheckInRequired(manualCheckInRequired);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -1033,6 +1043,17 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_manualCheckInRequired = manualCheckInRequired;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -1230,6 +1251,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		dlFileEntryImpl.setCustom1ImageId(getCustom1ImageId());
 		dlFileEntryImpl.setCustom2ImageId(getCustom2ImageId());
 		dlFileEntryImpl.setManualCheckInRequired(getManualCheckInRequired());
+		dlFileEntryImpl.setLastPublishDate(getLastPublishDate());
 
 		dlFileEntryImpl.resetOriginalValues();
 
@@ -1485,12 +1507,21 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		dlFileEntryCacheModel.manualCheckInRequired = getManualCheckInRequired();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			dlFileEntryCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			dlFileEntryCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return dlFileEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1550,6 +1581,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		sb.append(getCustom2ImageId());
 		sb.append(", manualCheckInRequired=");
 		sb.append(getManualCheckInRequired());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1557,7 +1590,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(91);
+		StringBundler sb = new StringBundler(94);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileEntry");
@@ -1679,6 +1712,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			"<column><column-name>manualCheckInRequired</column-name><column-value><![CDATA[");
 		sb.append(getManualCheckInRequired());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1736,6 +1773,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	private long _custom1ImageId;
 	private long _custom2ImageId;
 	private boolean _manualCheckInRequired;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private DLFileEntry _escapedModel;
 }

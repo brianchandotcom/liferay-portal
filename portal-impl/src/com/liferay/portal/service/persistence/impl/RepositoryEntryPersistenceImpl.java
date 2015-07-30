@@ -2622,6 +2622,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		repositoryEntryImpl.setRepositoryId(repositoryEntry.getRepositoryId());
 		repositoryEntryImpl.setMappedId(repositoryEntry.getMappedId());
 		repositoryEntryImpl.setManualCheckInRequired(repositoryEntry.isManualCheckInRequired());
+		repositoryEntryImpl.setLastPublishDate(repositoryEntry.getLastPublishDate());
 
 		return repositoryEntryImpl;
 	}

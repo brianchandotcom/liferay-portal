@@ -4203,6 +4203,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		websiteImpl.setUrl(website.getUrl());
 		websiteImpl.setTypeId(website.getTypeId());
 		websiteImpl.setPrimary(website.isPrimary());
+		websiteImpl.setLastPublishDate(website.getLastPublishDate());
 
 		return websiteImpl;
 	}

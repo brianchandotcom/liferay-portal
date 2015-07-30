@@ -18168,6 +18168,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		blogsEntryImpl.setSmallImageFileEntryId(blogsEntry.getSmallImageFileEntryId());
 		blogsEntryImpl.setSmallImageId(blogsEntry.getSmallImageId());
 		blogsEntryImpl.setSmallImageURL(blogsEntry.getSmallImageURL());
+		blogsEntryImpl.setLastPublishDate(blogsEntry.getLastPublishDate());
 		blogsEntryImpl.setStatus(blogsEntry.getStatus());
 		blogsEntryImpl.setStatusByUserId(blogsEntry.getStatusByUserId());
 		blogsEntryImpl.setStatusByUserName(blogsEntry.getStatusByUserName());

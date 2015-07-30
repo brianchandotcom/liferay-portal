@@ -66,7 +66,7 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -90,6 +90,8 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -153,6 +155,13 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 			dlFileEntryTypeImpl.setDescription(description);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			dlFileEntryTypeImpl.setLastPublishDate(null);
+		}
+		else {
+			dlFileEntryTypeImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		dlFileEntryTypeImpl.resetOriginalValues();
 
 		return dlFileEntryTypeImpl;
@@ -171,6 +180,7 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 		fileEntryTypeKey = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -218,6 +228,8 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 		else {
 			objectOutput.writeUTF(description);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -231,4 +243,5 @@ public class DLFileEntryTypeCacheModel implements CacheModel<DLFileEntryType>,
 	public String fileEntryTypeKey;
 	public String name;
 	public String description;
+	public long lastPublishDate;
 }

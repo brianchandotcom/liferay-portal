@@ -49,6 +49,7 @@ public class RepositorySoap implements Serializable {
 		soapModel.setPortletId(model.getPortletId());
 		soapModel.setTypeSettings(model.getTypeSettings());
 		soapModel.setDlFolderId(model.getDlFolderId());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -221,6 +222,14 @@ public class RepositorySoap implements Serializable {
 		_dlFolderId = dlFolderId;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _repositoryId;
@@ -236,4 +245,5 @@ public class RepositorySoap implements Serializable {
 	private String _portletId;
 	private String _typeSettings;
 	private long _dlFolderId;
+	private Date _lastPublishDate;
 }

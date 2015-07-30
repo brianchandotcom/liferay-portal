@@ -75,6 +75,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 		attributes.put("priority", getPriority());
 		attributes.put("allowPingbacks", getAllowPingbacks());
 		attributes.put("answer", getAnswer());
+		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -209,6 +210,12 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 
 		if (answer != null) {
 			setAnswer(answer);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -445,6 +452,16 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	@Override
 	public long getGroupId() {
 		return _mbMessage.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this message-boards message.
+	*
+	* @return the last publish date of this message-boards message
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _mbMessage.getLastPublishDate();
 	}
 
 	/**
@@ -996,6 +1013,16 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	@Override
 	public void setGroupId(long groupId) {
 		_mbMessage.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this message-boards message.
+	*
+	* @param lastPublishDate the last publish date of this message-boards message
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_mbMessage.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

@@ -2285,6 +2285,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		mdrRuleImpl.setDescription(mdrRule.getDescription());
 		mdrRuleImpl.setType(mdrRule.getType());
 		mdrRuleImpl.setTypeSettings(mdrRule.getTypeSettings());
+		mdrRuleImpl.setLastPublishDate(mdrRule.getLastPublishDate());
 
 		return mdrRuleImpl;
 	}

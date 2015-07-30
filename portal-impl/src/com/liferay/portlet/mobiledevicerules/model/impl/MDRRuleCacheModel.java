@@ -65,7 +65,7 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -93,6 +93,8 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 		sb.append(type);
 		sb.append(", typeSettings=");
 		sb.append(typeSettings);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -165,6 +167,13 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 			mdrRuleImpl.setTypeSettings(typeSettings);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			mdrRuleImpl.setLastPublishDate(null);
+		}
+		else {
+			mdrRuleImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		mdrRuleImpl.resetOriginalValues();
 
 		return mdrRuleImpl;
@@ -185,6 +194,7 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 		description = objectInput.readUTF();
 		type = objectInput.readUTF();
 		typeSettings = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -240,6 +250,8 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 		else {
 			objectOutput.writeUTF(typeSettings);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -255,4 +267,5 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 	public String description;
 	public String type;
 	public String typeSettings;
+	public long lastPublishDate;
 }

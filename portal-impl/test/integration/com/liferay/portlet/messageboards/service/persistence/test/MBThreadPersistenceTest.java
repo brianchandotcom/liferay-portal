@@ -150,6 +150,8 @@ public class MBThreadPersistenceTest {
 
 		newMBThread.setQuestion(RandomTestUtil.randomBoolean());
 
+		newMBThread.setLastPublishDate(RandomTestUtil.nextDate());
+
 		newMBThread.setStatus(RandomTestUtil.nextInt());
 
 		newMBThread.setStatusByUserId(RandomTestUtil.nextLong());
@@ -198,6 +200,9 @@ public class MBThreadPersistenceTest {
 			newMBThread.getPriority());
 		Assert.assertEquals(existingMBThread.getQuestion(),
 			newMBThread.getQuestion());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMBThread.getLastPublishDate()),
+			Time.getShortTimestamp(newMBThread.getLastPublishDate()));
 		Assert.assertEquals(existingMBThread.getStatus(),
 			newMBThread.getStatus());
 		Assert.assertEquals(existingMBThread.getStatusByUserId(),
@@ -385,8 +390,8 @@ public class MBThreadPersistenceTest {
 			"categoryId", true, "rootMessageId", true, "rootMessageUserId",
 			true, "messageCount", true, "viewCount", true, "lastPostByUserId",
 			true, "lastPostDate", true, "priority", true, "question", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -639,6 +644,8 @@ public class MBThreadPersistenceTest {
 		mbThread.setPriority(RandomTestUtil.nextDouble());
 
 		mbThread.setQuestion(RandomTestUtil.randomBoolean());
+
+		mbThread.setLastPublishDate(RandomTestUtil.nextDate());
 
 		mbThread.setStatus(RandomTestUtil.nextInt());
 

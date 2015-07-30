@@ -435,6 +435,20 @@ public interface MBMessageModel extends AttachedModel, BaseModel<MBMessage>,
 	public void setAnswer(boolean answer);
 
 	/**
+	 * Returns the last publish date of this message-boards message.
+	 *
+	 * @return the last publish date of this message-boards message
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this message-boards message.
+	 *
+	 * @param lastPublishDate the last publish date of this message-boards message
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the status of this message-boards message.
 	 *
 	 * @return the status of this message-boards message

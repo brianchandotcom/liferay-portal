@@ -143,6 +143,8 @@ public class AssetCategoryPersistenceTest {
 
 		newAssetCategory.setVocabularyId(RandomTestUtil.nextLong());
 
+		newAssetCategory.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_assetCategories.add(_persistence.update(newAssetCategory));
 
 		AssetCategory existingAssetCategory = _persistence.findByPrimaryKey(newAssetCategory.getPrimaryKey());
@@ -179,6 +181,9 @@ public class AssetCategoryPersistenceTest {
 			newAssetCategory.getDescription());
 		Assert.assertEquals(existingAssetCategory.getVocabularyId(),
 			newAssetCategory.getVocabularyId());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingAssetCategory.getLastPublishDate()),
+			Time.getShortTimestamp(newAssetCategory.getLastPublishDate()));
 	}
 
 	@Test
@@ -349,7 +354,7 @@ public class AssetCategoryPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "parentCategoryId", true, "leftCategoryId",
 			true, "rightCategoryId", true, "name", true, "title", true,
-			"description", true, "vocabularyId", true);
+			"description", true, "vocabularyId", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -603,6 +608,8 @@ public class AssetCategoryPersistenceTest {
 
 		assetCategory.setVocabularyId(RandomTestUtil.nextLong());
 
+		assetCategory.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_assetCategories.add(_persistence.update(assetCategory));
 
 		return assetCategory;
@@ -850,6 +857,8 @@ public class AssetCategoryPersistenceTest {
 		assetCategory.setDescription(RandomTestUtil.randomString());
 
 		assetCategory.setVocabularyId(RandomTestUtil.nextLong());
+
+		assetCategory.setLastPublishDate(RandomTestUtil.nextDate());
 
 		if (parentCategoryId != null) {
 			assetCategory.setParentCategoryId(parentCategoryId);

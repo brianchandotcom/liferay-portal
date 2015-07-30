@@ -52,6 +52,7 @@ public class DLFolderSoap implements Serializable {
 		soapModel.setDefaultFileEntryTypeId(model.getDefaultFileEntryTypeId());
 		soapModel.setHidden(model.getHidden());
 		soapModel.setRestrictionType(model.getRestrictionType());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -260,6 +261,14 @@ public class DLFolderSoap implements Serializable {
 		_restrictionType = restrictionType;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -310,6 +319,7 @@ public class DLFolderSoap implements Serializable {
 	private long _defaultFileEntryTypeId;
 	private boolean _hidden;
 	private int _restrictionType;
+	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

@@ -87,7 +87,8 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR }
+			{ "description", Types.VARCHAR },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -102,9 +103,10 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MDRRuleGroup (uuid_ VARCHAR(75) null,ruleGroupId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table MDRRuleGroup (uuid_ VARCHAR(75) null,ruleGroupId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table MDRRuleGroup";
 	public static final String ORDER_BY_JPQL = " ORDER BY mdrRuleGroup.ruleGroupId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MDRRuleGroup.ruleGroupId ASC";
@@ -148,6 +150,7 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -222,6 +225,7 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -289,6 +293,12 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -646,6 +656,17 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -775,6 +796,7 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 		mdrRuleGroupImpl.setModifiedDate(getModifiedDate());
 		mdrRuleGroupImpl.setName(getName());
 		mdrRuleGroupImpl.setDescription(getDescription());
+		mdrRuleGroupImpl.setLastPublishDate(getLastPublishDate());
 
 		mdrRuleGroupImpl.resetOriginalValues();
 
@@ -914,12 +936,21 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 			mdrRuleGroupCacheModel.description = null;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			mdrRuleGroupCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			mdrRuleGroupCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return mdrRuleGroupCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -941,6 +972,8 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -948,7 +981,7 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup");
@@ -994,6 +1027,10 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1022,6 +1059,7 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 	private String _nameCurrentLanguageId;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private MDRRuleGroup _escapedModel;
 }

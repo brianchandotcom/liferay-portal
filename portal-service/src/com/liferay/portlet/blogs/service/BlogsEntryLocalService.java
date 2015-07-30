@@ -709,7 +709,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	public void updateEntryResources(
 		com.liferay.portlet.blogs.model.BlogsEntry entry,
 		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,

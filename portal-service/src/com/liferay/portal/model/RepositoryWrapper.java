@@ -68,6 +68,7 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 		attributes.put("portletId", getPortletId());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("dlFolderId", getDlFolderId());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -163,6 +164,12 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 		if (dlFolderId != null) {
 			setDlFolderId(dlFolderId);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
 	}
 
 	@Override
@@ -248,6 +255,16 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	@Override
 	public long getGroupId() {
 		return _repository.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this repository.
+	*
+	* @return the last publish date of this repository
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _repository.getLastPublishDate();
 	}
 
 	/**
@@ -480,6 +497,16 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	@Override
 	public void setGroupId(long groupId) {
 		_repository.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this repository.
+	*
+	* @param lastPublishDate the last publish date of this repository
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_repository.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

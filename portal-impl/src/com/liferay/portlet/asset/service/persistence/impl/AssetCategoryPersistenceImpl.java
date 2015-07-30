@@ -10885,6 +10885,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		assetCategoryImpl.setTitle(assetCategory.getTitle());
 		assetCategoryImpl.setDescription(assetCategory.getDescription());
 		assetCategoryImpl.setVocabularyId(assetCategory.getVocabularyId());
+		assetCategoryImpl.setLastPublishDate(assetCategory.getLastPublishDate());
 
 		return assetCategoryImpl;
 	}

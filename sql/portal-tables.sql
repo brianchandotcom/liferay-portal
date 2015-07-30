@@ -38,7 +38,8 @@ create table Address (
 	countryId LONG,
 	typeId LONG,
 	mailing BOOLEAN,
-	primary_ BOOLEAN
+	primary_ BOOLEAN,
+	lastPublishDate DATE null
 );
 
 create table AnnouncementsDelivery (
@@ -94,7 +95,8 @@ create table AssetCategory (
 	name VARCHAR(75) null,
 	title STRING null,
 	description STRING null,
-	vocabularyId LONG
+	vocabularyId LONG,
+	lastPublishDate DATE null
 );
 
 create table AssetCategoryProperty (
@@ -173,7 +175,8 @@ create table AssetTag (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
-	assetCount INTEGER
+	assetCount INTEGER,
+	lastPublishDate DATE null
 );
 
 create table AssetTagStats (
@@ -195,7 +198,8 @@ create table AssetVocabulary (
 	name VARCHAR(75) null,
 	title STRING null,
 	description STRING null,
-	settings_ STRING null
+	settings_ STRING null,
+	lastPublishDate DATE null
 );
 
 create table BackgroundTask (
@@ -242,6 +246,7 @@ create table BlogsEntry (
 	smallImageFileEntryId LONG,
 	smallImageId LONG,
 	smallImageURL STRING null,
+	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
@@ -426,7 +431,8 @@ create table DDMStructure (
 	description TEXT null,
 	definition TEXT null,
 	storageType VARCHAR(75) null,
-	type_ INTEGER
+	type_ INTEGER,
+	lastPublishDate DATE null
 );
 
 create table DDMStructureLayout (
@@ -495,7 +501,8 @@ create table DDMTemplate (
 	cacheable BOOLEAN,
 	smallImage BOOLEAN,
 	smallImageId LONG,
-	smallImageURL VARCHAR(75) null
+	smallImageURL VARCHAR(75) null,
+	lastPublishDate DATE null
 );
 
 create table DDMTemplateLink (
@@ -566,7 +573,8 @@ create table DLFileEntry (
 	largeImageId LONG,
 	custom1ImageId LONG,
 	custom2ImageId LONG,
-	manualCheckInRequired BOOLEAN
+	manualCheckInRequired BOOLEAN,
+	lastPublishDate DATE null
 );
 
 create table DLFileEntryMetadata (
@@ -589,7 +597,8 @@ create table DLFileEntryType (
 	modifiedDate DATE null,
 	fileEntryTypeKey VARCHAR(75) null,
 	name STRING null,
-	description STRING null
+	description STRING null,
+	lastPublishDate DATE null
 );
 
 create table DLFileEntryTypes_DLFolders (
@@ -622,6 +631,7 @@ create table DLFileShortcut (
 	toFileEntryId LONG,
 	treePath STRING null,
 	active_ BOOLEAN,
+	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
@@ -677,6 +687,7 @@ create table DLFolder (
 	defaultFileEntryTypeId LONG,
 	hidden_ BOOLEAN,
 	restrictionType INTEGER,
+	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
@@ -704,7 +715,8 @@ create table EmailAddress (
 	classPK LONG,
 	address VARCHAR(75) null,
 	typeId LONG,
-	primary_ BOOLEAN
+	primary_ BOOLEAN,
+	lastPublishDate DATE null
 );
 
 create table ExpandoColumn (
@@ -846,7 +858,8 @@ create table Layout (
 	priority INTEGER,
 	layoutPrototypeUuid VARCHAR(75) null,
 	layoutPrototypeLinkEnabled BOOLEAN,
-	sourcePrototypeLayoutUuid VARCHAR(75) null
+	sourcePrototypeLayoutUuid VARCHAR(75) null,
+	lastPublishDate DATE null
 );
 
 create table LayoutBranch (
@@ -876,7 +889,8 @@ create table LayoutFriendlyURL (
 	plid LONG,
 	privateLayout BOOLEAN,
 	friendlyURL VARCHAR(255) null,
-	languageId VARCHAR(75) null
+	languageId VARCHAR(75) null,
+	lastPublishDate DATE null
 );
 
 create table LayoutPrototype (
@@ -891,7 +905,8 @@ create table LayoutPrototype (
 	name STRING null,
 	description STRING null,
 	settings_ STRING null,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	lastPublishDate DATE null
 );
 
 create table LayoutRevision (
@@ -984,7 +999,8 @@ create table LayoutSetPrototype (
 	name STRING null,
 	description STRING null,
 	settings_ STRING null,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	lastPublishDate DATE null
 );
 
 create table ListType (
@@ -1003,7 +1019,8 @@ create table MBBan (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	banUserId LONG
+	banUserId LONG,
+	lastPublishDate DATE null
 );
 
 create table MBCategory (
@@ -1022,6 +1039,7 @@ create table MBCategory (
 	threadCount INTEGER,
 	messageCount INTEGER,
 	lastPostDate DATE null,
+	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
@@ -1039,7 +1057,8 @@ create table MBDiscussion (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	threadId LONG
+	threadId LONG,
+	lastPublishDate DATE null
 );
 
 create table MBMailingList (
@@ -1093,6 +1112,7 @@ create table MBMessage (
 	priority DOUBLE,
 	allowPingbacks BOOLEAN,
 	answer BOOLEAN,
+	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
@@ -1125,6 +1145,7 @@ create table MBThread (
 	lastPostDate DATE null,
 	priority DOUBLE,
 	question BOOLEAN,
+	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
@@ -1140,7 +1161,8 @@ create table MBThreadFlag (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	threadId LONG
+	threadId LONG,
+	lastPublishDate DATE null
 );
 
 create table MDRAction (
@@ -1158,7 +1180,8 @@ create table MDRAction (
 	name STRING null,
 	description STRING null,
 	type_ VARCHAR(255) null,
-	typeSettings TEXT null
+	typeSettings TEXT null,
+	lastPublishDate DATE null
 );
 
 create table MDRRule (
@@ -1174,7 +1197,8 @@ create table MDRRule (
 	name STRING null,
 	description STRING null,
 	type_ VARCHAR(255) null,
-	typeSettings TEXT null
+	typeSettings TEXT null,
+	lastPublishDate DATE null
 );
 
 create table MDRRuleGroup (
@@ -1187,7 +1211,8 @@ create table MDRRuleGroup (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name STRING null,
-	description STRING null
+	description STRING null,
+	lastPublishDate DATE null
 );
 
 create table MDRRuleGroupInstance (
@@ -1202,7 +1227,8 @@ create table MDRRuleGroupInstance (
 	classNameId LONG,
 	classPK LONG,
 	ruleGroupId LONG,
-	priority INTEGER
+	priority INTEGER,
+	lastPublishDate DATE null
 );
 
 create table MembershipRequest (
@@ -1237,7 +1263,8 @@ create table Organization_ (
 	countryId LONG,
 	statusId LONG,
 	comments STRING null,
-	logoId LONG
+	logoId LONG,
+	lastPublishDate DATE null
 );
 
 create table OrgGroupRole (
@@ -1304,7 +1331,8 @@ create table PasswordPolicy (
 	lockoutDuration LONG,
 	requireUnlock BOOLEAN,
 	resetFailureCount LONG,
-	resetTicketMaxAge LONG
+	resetTicketMaxAge LONG,
+	lastPublishDate DATE null
 );
 
 create table PasswordPolicyRel (
@@ -1337,7 +1365,8 @@ create table Phone (
 	number_ VARCHAR(75) null,
 	extension VARCHAR(75) null,
 	typeId LONG,
-	primary_ BOOLEAN
+	primary_ BOOLEAN,
+	lastPublishDate DATE null
 );
 
 create table PluginSetting (
@@ -1401,7 +1430,8 @@ create table RatingsEntry (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	score DOUBLE
+	score DOUBLE,
+	lastPublishDate DATE null
 );
 
 create table RatingsStats (
@@ -1450,7 +1480,8 @@ create table Repository (
 	description STRING null,
 	portletId VARCHAR(200) null,
 	typeSettings TEXT null,
-	dlFolderId LONG
+	dlFolderId LONG,
+	lastPublishDate DATE null
 );
 
 create table RepositoryEntry (
@@ -1465,7 +1496,8 @@ create table RepositoryEntry (
 	modifiedDate DATE null,
 	repositoryId LONG,
 	mappedId VARCHAR(255) null,
-	manualCheckInRequired BOOLEAN
+	manualCheckInRequired BOOLEAN,
+	lastPublishDate DATE null
 );
 
 create table ResourceAction (
@@ -1531,7 +1563,8 @@ create table Role_ (
 	title STRING null,
 	description STRING null,
 	type_ INTEGER,
-	subtype VARCHAR(75) null
+	subtype VARCHAR(75) null,
+	lastPublishDate DATE null
 );
 
 create table SCFrameworkVersi_SCProductVers (
@@ -2035,6 +2068,7 @@ create table User_ (
 	lockoutDate DATE null,
 	agreedToTermsOfUse BOOLEAN,
 	emailAddressVerified BOOLEAN,
+	lastPublishDate DATE null,
 	status INTEGER
 );
 
@@ -2050,7 +2084,8 @@ create table UserGroup (
 	parentUserGroupId LONG,
 	name VARCHAR(75) null,
 	description STRING null,
-	addedByLDAPImport BOOLEAN
+	addedByLDAPImport BOOLEAN,
+	lastPublishDate DATE null
 );
 
 create table UserGroupGroupRole (
@@ -2182,7 +2217,8 @@ create table Website (
 	classPK LONG,
 	url STRING null,
 	typeId LONG,
-	primary_ BOOLEAN
+	primary_ BOOLEAN,
+	lastPublishDate DATE null
 );
 
 create table WorkflowDefinitionLink (

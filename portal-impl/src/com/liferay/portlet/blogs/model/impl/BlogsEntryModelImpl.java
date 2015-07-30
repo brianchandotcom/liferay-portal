@@ -105,6 +105,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 			{ "smallImageFileEntryId", Types.BIGINT },
 			{ "smallImageId", Types.BIGINT },
 			{ "smallImageURL", Types.VARCHAR },
+			{ "lastPublishDate", Types.TIMESTAMP },
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
@@ -137,13 +138,14 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		TABLE_COLUMNS_MAP.put("smallImageFileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("smallImageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("smallImageURL", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table BlogsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(150) null,subtitle STRING null,urlTitle VARCHAR(150) null,description STRING null,content TEXT null,displayDate DATE null,allowPingbacks BOOLEAN,allowTrackbacks BOOLEAN,trackbacks TEXT null,coverImageCaption STRING null,coverImageFileEntryId LONG,coverImageURL STRING null,smallImage BOOLEAN,smallImageFileEntryId LONG,smallImageId LONG,smallImageURL STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table BlogsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(150) null,subtitle STRING null,urlTitle VARCHAR(150) null,description STRING null,content TEXT null,displayDate DATE null,allowPingbacks BOOLEAN,allowTrackbacks BOOLEAN,trackbacks TEXT null,coverImageCaption STRING null,coverImageFileEntryId LONG,coverImageURL STRING null,smallImage BOOLEAN,smallImageFileEntryId LONG,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table BlogsEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY blogsEntry.displayDate DESC, blogsEntry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY BlogsEntry.displayDate DESC, BlogsEntry.createDate DESC";
@@ -205,6 +207,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		model.setSmallImageFileEntryId(soapModel.getSmallImageFileEntryId());
 		model.setSmallImageId(soapModel.getSmallImageId());
 		model.setSmallImageURL(soapModel.getSmallImageURL());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
@@ -297,6 +300,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		attributes.put("smallImageFileEntryId", getSmallImageFileEntryId());
 		attributes.put("smallImageId", getSmallImageId());
 		attributes.put("smallImageURL", getSmallImageURL());
+		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -454,6 +458,12 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 		if (smallImageURL != null) {
 			setSmallImageURL(smallImageURL);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -905,6 +915,17 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	@JSON
 	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -1256,6 +1277,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		blogsEntryImpl.setSmallImageFileEntryId(getSmallImageFileEntryId());
 		blogsEntryImpl.setSmallImageId(getSmallImageId());
 		blogsEntryImpl.setSmallImageURL(getSmallImageURL());
+		blogsEntryImpl.setLastPublishDate(getLastPublishDate());
 		blogsEntryImpl.setStatus(getStatus());
 		blogsEntryImpl.setStatusByUserId(getStatusByUserId());
 		blogsEntryImpl.setStatusByUserName(getStatusByUserName());
@@ -1496,6 +1518,15 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 			blogsEntryCacheModel.smallImageURL = null;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			blogsEntryCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			blogsEntryCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		blogsEntryCacheModel.status = getStatus();
 
 		blogsEntryCacheModel.statusByUserId = getStatusByUserId();
@@ -1522,7 +1553,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1572,6 +1603,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		sb.append(getSmallImageId());
 		sb.append(", smallImageURL=");
 		sb.append(getSmallImageURL());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append(", statusByUserId=");
@@ -1587,7 +1620,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(88);
+		StringBundler sb = new StringBundler(91);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.blogs.model.BlogsEntry");
@@ -1690,6 +1723,10 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		sb.append(getSmallImageURL());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
@@ -1749,6 +1786,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	private long _smallImageFileEntryId;
 	private long _smallImageId;
 	private String _smallImageURL;
+	private Date _lastPublishDate;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

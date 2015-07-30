@@ -66,7 +66,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -116,6 +116,8 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		sb.append(smallImageId);
 		sb.append(", smallImageURL=");
 		sb.append(smallImageURL);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -245,6 +247,13 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 			blogsEntryImpl.setSmallImageURL(smallImageURL);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			blogsEntryImpl.setLastPublishDate(null);
+		}
+		else {
+			blogsEntryImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		blogsEntryImpl.setStatus(status);
 		blogsEntryImpl.setStatusByUserId(statusByUserId);
 
@@ -293,6 +302,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		smallImageFileEntryId = objectInput.readLong();
 		smallImageId = objectInput.readLong();
 		smallImageURL = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 		status = objectInput.readInt();
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
@@ -397,6 +407,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 			objectOutput.writeUTF(smallImageURL);
 		}
 
+		objectOutput.writeLong(lastPublishDate);
 		objectOutput.writeInt(status);
 		objectOutput.writeLong(statusByUserId);
 
@@ -434,6 +445,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 	public long smallImageFileEntryId;
 	public long smallImageId;
 	public String smallImageURL;
+	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

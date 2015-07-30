@@ -79,7 +79,7 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -107,6 +107,8 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 		sb.append(typeId);
 		sb.append(", primary=");
 		sb.append(primary);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -163,6 +165,13 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 		websiteImpl.setTypeId(typeId);
 		websiteImpl.setPrimary(primary);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			websiteImpl.setLastPublishDate(null);
+		}
+		else {
+			websiteImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		websiteImpl.resetOriginalValues();
 
 		return websiteImpl;
@@ -183,6 +192,7 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 		url = objectInput.readUTF();
 		typeId = objectInput.readLong();
 		primary = objectInput.readBoolean();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -222,6 +232,7 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 
 		objectOutput.writeLong(typeId);
 		objectOutput.writeBoolean(primary);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public long mvccVersion;
@@ -237,4 +248,5 @@ public class WebsiteCacheModel implements CacheModel<Website>, Externalizable,
 	public String url;
 	public long typeId;
 	public boolean primary;
+	public long lastPublishDate;
 }

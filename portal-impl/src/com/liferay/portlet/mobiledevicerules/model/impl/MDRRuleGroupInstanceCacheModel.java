@@ -66,7 +66,7 @@ public class MDRRuleGroupInstanceCacheModel implements CacheModel<MDRRuleGroupIn
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -92,6 +92,8 @@ public class MDRRuleGroupInstanceCacheModel implements CacheModel<MDRRuleGroupIn
 		sb.append(ruleGroupId);
 		sb.append(", priority=");
 		sb.append(priority);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -139,6 +141,14 @@ public class MDRRuleGroupInstanceCacheModel implements CacheModel<MDRRuleGroupIn
 		mdrRuleGroupInstanceImpl.setRuleGroupId(ruleGroupId);
 		mdrRuleGroupInstanceImpl.setPriority(priority);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			mdrRuleGroupInstanceImpl.setLastPublishDate(null);
+		}
+		else {
+			mdrRuleGroupInstanceImpl.setLastPublishDate(new Date(
+					lastPublishDate));
+		}
+
 		mdrRuleGroupInstanceImpl.resetOriginalValues();
 
 		return mdrRuleGroupInstanceImpl;
@@ -158,6 +168,7 @@ public class MDRRuleGroupInstanceCacheModel implements CacheModel<MDRRuleGroupIn
 		classPK = objectInput.readLong();
 		ruleGroupId = objectInput.readLong();
 		priority = objectInput.readInt();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -188,6 +199,7 @@ public class MDRRuleGroupInstanceCacheModel implements CacheModel<MDRRuleGroupIn
 		objectOutput.writeLong(classPK);
 		objectOutput.writeLong(ruleGroupId);
 		objectOutput.writeInt(priority);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -202,4 +214,5 @@ public class MDRRuleGroupInstanceCacheModel implements CacheModel<MDRRuleGroupIn
 	public long classPK;
 	public long ruleGroupId;
 	public int priority;
+	public long lastPublishDate;
 }

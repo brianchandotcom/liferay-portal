@@ -61,7 +61,7 @@ public class OpenIdLoginDynamicInclude extends BaseDynamicInclude {
 	public void register(
 		DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
 
-		dynamicIncludeRegistry.register("/html/portlet/login/open_id.jsp");
+		dynamicIncludeRegistry.register("/html/portlet/login/open_id.jsp#pre");
 	}
 
 	@Reference(

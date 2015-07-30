@@ -14,14 +14,8 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.servlet.PortalSessionContext" %><%@
-page import="com.liferay.portal.liveusers.LiveUsers" %><%@
-page import="com.liferay.portal.util.comparator.UserTrackerModifiedDateComparator" %>
+<liferay-ui:error-header />
 
-<%
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
-%>
-
-<%@ include file="/html/portlet/monitoring/init-ext.jsp" %>
+<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />

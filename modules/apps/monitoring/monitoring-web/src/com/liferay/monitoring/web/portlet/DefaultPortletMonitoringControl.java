@@ -12,11 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.kernel.monitoring;
+package com.liferay.monitoring.web.portlet;
+
+import com.liferay.portal.kernel.monitoring.PortletMonitoringControl;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
+ * @author Philip Jones
  */
+@Component(immediate = true, service = PortletMonitoringControl.class)
+
 public class DefaultPortletMonitoringControl
 	implements PortletMonitoringControl {
 

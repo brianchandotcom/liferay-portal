@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.monitoring.web.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.monitoring.PortletRequestType;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.monitoring.statistics.DataSampleFactoryUtil;
+import com.liferay.portlet.InvokerFilterContainer;
+import com.liferay.portlet.InvokerPortlet;
 
 import java.io.IOException;
 
@@ -46,9 +48,7 @@ import javax.portlet.filter.RenderFilter;
 import javax.portlet.filter.ResourceFilter;
 
 /**
- * @author Michael C. Han
- * @author Karthik Sudarshan
- * @author Raymond Augé
+ * @author Philip Jones
  */
 @ProviderType
 public class MonitoringPortlet

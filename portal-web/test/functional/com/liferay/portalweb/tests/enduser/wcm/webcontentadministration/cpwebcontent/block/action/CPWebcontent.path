@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_MANAGE</td>
-	<td>//li/a[contains(.,'Manage')]</td>
+	<td>//li/a/span[contains(.,'Manage')]</td>
 	<td></td>
 </tr>
 <tr>

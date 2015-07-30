@@ -109,7 +109,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	}
 
 	@Override
-	public void addPageAttachment(
+	public FileEntry addPageAttachment(
 			long nodeId, String title, String fileName, File file,
 			String mimeType)
 		throws PortalException {
@@ -117,12 +117,12 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		WikiNodePermissionChecker.check(
 			getPermissionChecker(), nodeId, ActionKeys.ADD_ATTACHMENT);
 
-		wikiPageLocalService.addPageAttachment(
+		return wikiPageLocalService.addPageAttachment(
 			getUserId(), nodeId, title, fileName, file, mimeType);
 	}
 
 	@Override
-	public void addPageAttachment(
+	public FileEntry addPageAttachment(
 			long nodeId, String title, String fileName, InputStream inputStream,
 			String mimeType)
 		throws PortalException {
@@ -130,12 +130,12 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		WikiNodePermissionChecker.check(
 			getPermissionChecker(), nodeId, ActionKeys.ADD_ATTACHMENT);
 
-		wikiPageLocalService.addPageAttachment(
+		return wikiPageLocalService.addPageAttachment(
 			getUserId(), nodeId, title, fileName, inputStream, mimeType);
 	}
 
 	@Override
-	public void addPageAttachments(
+	public List<FileEntry> addPageAttachments(
 			long nodeId, String title,
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
 		throws PortalException {
@@ -143,12 +143,12 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		WikiNodePermissionChecker.check(
 			getPermissionChecker(), nodeId, ActionKeys.ADD_ATTACHMENT);
 
-		wikiPageLocalService.addPageAttachments(
+		return wikiPageLocalService.addPageAttachments(
 			getUserId(), nodeId, title, inputStreamOVPs);
 	}
 
 	@Override
-	public void addTempFileEntry(
+	public FileEntry addTempFileEntry(
 			long nodeId, String folderName, String fileName,
 			InputStream inputStream, String mimeType)
 		throws PortalException {
@@ -158,7 +158,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		WikiNodePermissionChecker.check(
 			getPermissionChecker(), node, ActionKeys.ADD_ATTACHMENT);
 
-		wikiPageLocalService.addTempFileEntry(
+		return wikiPageLocalService.addTempFileEntry(
 			node.getGroupId(), getUserId(), folderName, fileName, inputStream,
 			mimeType);
 	}

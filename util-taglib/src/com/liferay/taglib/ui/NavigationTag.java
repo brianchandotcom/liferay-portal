@@ -86,6 +86,15 @@ public class NavigationTag extends IncludeTag {
 		_rootLayoutType = "absolute";
 	}
 
+	protected String getDisplayStyle() {
+		if (Validator.isNotNull(_ddmTemplateKey)) {
+			return PortletDisplayTemplateManagerUtil.getDisplayStyle(
+				_ddmTemplateKey);
+		}
+
+		return null;
+	}
+
 	protected List<NavItem> getNavItems(HttpServletRequest request)
 		throws PortalException {
 
@@ -105,15 +114,6 @@ public class NavigationTag extends IncludeTag {
 		}
 
 		return navItems;
-	}
-
-	protected String getDisplayStyle() {
-		if (Validator.isNotNull(_ddmTemplateKey)) {
-			return PortletDisplayTemplateManagerUtil.getDisplayStyle(
-				_ddmTemplateKey);
-		}
-
-		return null;
 	}
 
 	@Override

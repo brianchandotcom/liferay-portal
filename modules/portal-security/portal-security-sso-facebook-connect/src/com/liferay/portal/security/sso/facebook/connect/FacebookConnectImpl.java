@@ -244,7 +244,7 @@ public class FacebookConnectImpl implements FacebookConnect {
 		return null;
 	}
 
-	@Reference(unset = "-")
+	@Reference(unbind = "-")
 	protected void setModuleConfigurationFactory(
 		ModuleConfigurationFactory moduleConfigurationFactory) {
 

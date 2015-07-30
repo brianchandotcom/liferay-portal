@@ -223,7 +223,7 @@ public class CASFilter extends BaseFilter {
 		processFilter(CASFilter.class, request, response, filterChain);
 	}
 
-	@Reference(unset = "-")
+	@Reference(unbind = "-")
 	protected void setModuleConfigurationFactory(
 		ModuleConfigurationFactory moduleConfigurationFactory) {
 

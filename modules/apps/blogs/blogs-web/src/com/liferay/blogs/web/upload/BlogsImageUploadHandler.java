@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.image.selector;
+package com.liferay.blogs.web.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -28,8 +28,7 @@ import java.io.InputStream;
 /**
  * @author Roberto Díaz
  */
-public class BlogsImageSelectorUploadHandler
-	extends BaseBlogsImageSelectorUploadHandler {
+public class BlogsImageUploadHandler extends BaseBlogsImageUploadHandler {
 
 	@Override
 	protected FileEntry addFileEntry(

@@ -138,7 +138,7 @@ AUI.add(
 					updateCurrentImage: function(imageData) {
 						var instance = this;
 
-						var imageUrl = imageData.image.url;
+						var imageUrl = imageData.file.url;
 
 						var image = instance._getCurrentImage();
 
@@ -147,7 +147,7 @@ AUI.add(
 						var link = instance.get('links').item(instance.get('currentIndex'));
 
 						var imageValue = {
-							fileEntryId: imageData.image.fileEntryId,
+							fileEntryId: imageData.file.fileEntryId,
 							url: imageUrl
 						};
 

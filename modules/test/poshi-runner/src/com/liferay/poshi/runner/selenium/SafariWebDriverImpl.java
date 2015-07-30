@@ -14,6 +14,8 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.liferay.poshi.runner.util.PropsValues;
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -144,6 +146,28 @@ public class SafariWebDriverImpl extends BaseWebDriverImpl {
 		sb.append("element.dispatchEvent(event)");
 
 		javascriptExecutor.executeScript(sb.toString(), webElement);
+	}
+
+	@Override
+	public void waitForElementPresent(String locator) throws Exception {
+
+		if (!(locator.contains(".js"))) {
+			for (int second = 0;; second++) {
+				if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+					super.assertElementPresent(locator);
+				}
+
+				try {
+					if (super.isElementPresent(locator)) {
+						break;
+					}
+				}
+				catch (Exception e) {
+				}
+
+				Thread.sleep(1000);
+			}
+		}
 	}
 
 }

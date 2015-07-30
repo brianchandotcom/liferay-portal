@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.persistence;
+package com.liferay.dynamic.data.mapping.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion;
 
 import java.util.List;
 
@@ -167,7 +166,7 @@ public class DDMTemplateVersionUtil {
 	*/
 	public static DDMTemplateVersion findByTemplateId_First(long templateId,
 		OrderByComparator<DDMTemplateVersion> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException {
 		return getPersistence()
 				   .findByTemplateId_First(templateId, orderByComparator);
 	}
@@ -195,7 +194,7 @@ public class DDMTemplateVersionUtil {
 	*/
 	public static DDMTemplateVersion findByTemplateId_Last(long templateId,
 		OrderByComparator<DDMTemplateVersion> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException {
 		return getPersistence()
 				   .findByTemplateId_Last(templateId, orderByComparator);
 	}
@@ -225,7 +224,7 @@ public class DDMTemplateVersionUtil {
 	public static DDMTemplateVersion[] findByTemplateId_PrevAndNext(
 		long templateVersionId, long templateId,
 		OrderByComparator<DDMTemplateVersion> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException {
 		return getPersistence()
 				   .findByTemplateId_PrevAndNext(templateVersionId, templateId,
 			orderByComparator);
@@ -260,7 +259,7 @@ public class DDMTemplateVersionUtil {
 	*/
 	public static DDMTemplateVersion findByT_V(long templateId,
 		java.lang.String version)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException {
 		return getPersistence().findByT_V(templateId, version);
 	}
 
@@ -299,7 +298,7 @@ public class DDMTemplateVersionUtil {
 	*/
 	public static DDMTemplateVersion removeByT_V(long templateId,
 		java.lang.String version)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException {
 		return getPersistence().removeByT_V(templateId, version);
 	}
 
@@ -375,7 +374,7 @@ public class DDMTemplateVersionUtil {
 	*/
 	public static DDMTemplateVersion findByT_S_First(long templateId,
 		int status, OrderByComparator<DDMTemplateVersion> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException {
 		return getPersistence()
 				   .findByT_S_First(templateId, status, orderByComparator);
 	}
@@ -405,7 +404,7 @@ public class DDMTemplateVersionUtil {
 	*/
 	public static DDMTemplateVersion findByT_S_Last(long templateId,
 		int status, OrderByComparator<DDMTemplateVersion> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException {
 		return getPersistence()
 				   .findByT_S_Last(templateId, status, orderByComparator);
 	}
@@ -437,7 +436,7 @@ public class DDMTemplateVersionUtil {
 	public static DDMTemplateVersion[] findByT_S_PrevAndNext(
 		long templateVersionId, long templateId, int status,
 		OrderByComparator<DDMTemplateVersion> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException {
 		return getPersistence()
 				   .findByT_S_PrevAndNext(templateVersionId, templateId,
 			status, orderByComparator);
@@ -500,7 +499,7 @@ public class DDMTemplateVersionUtil {
 	* @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
 	*/
 	public static DDMTemplateVersion remove(long templateVersionId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException {
 		return getPersistence().remove(templateVersionId);
 	}
 
@@ -517,7 +516,7 @@ public class DDMTemplateVersionUtil {
 	* @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
 	*/
 	public static DDMTemplateVersion findByPrimaryKey(long templateVersionId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException {
 		return getPersistence().findByPrimaryKey(templateVersionId);
 	}
 

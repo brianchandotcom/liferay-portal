@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service;
+package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -55,10 +55,10 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 	* @return the d d m template link that was added
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink addDDMTemplateLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink ddmTemplateLink);
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink addDDMTemplateLink(
+		com.liferay.dynamic.data.mapping.model.DDMTemplateLink ddmTemplateLink);
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink addTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink addTemplateLink(
 		long classNameId, long classPK, long templateId);
 
 	/**
@@ -67,7 +67,7 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 	* @param templateLinkId the primary key for the new d d m template link
 	* @return the new d d m template link
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink createDDMTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink createDDMTemplateLink(
 		long templateLinkId);
 
 	/**
@@ -77,8 +77,8 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 	* @return the d d m template link that was removed
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink deleteDDMTemplateLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink ddmTemplateLink);
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink deleteDDMTemplateLink(
+		com.liferay.dynamic.data.mapping.model.DDMTemplateLink ddmTemplateLink);
 
 	/**
 	* Deletes the d d m template link with the primary key from the database. Also notifies the appropriate model listeners.
@@ -88,7 +88,7 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 	* @throws PortalException if a d d m template link with the primary key could not be found
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink deleteDDMTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink deleteDDMTemplateLink(
 		long templateLinkId) throws PortalException;
 
 	/**
@@ -99,13 +99,13 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 		com.liferay.portal.model.PersistedModel persistedModel)
 		throws PortalException;
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink deleteTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink deleteTemplateLink(
 		long classNameId, long classPK);
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink deleteTemplateLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink templateLink);
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink deleteTemplateLink(
+		com.liferay.dynamic.data.mapping.model.DDMTemplateLink templateLink);
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink deleteTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink deleteTemplateLink(
 		long templateLinkId) throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
@@ -174,7 +174,7 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink fetchDDMTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink fetchDDMTemplateLink(
 		long templateLinkId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -195,7 +195,7 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 	* @throws PortalException if a d d m template link with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink getDDMTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink getDDMTemplateLink(
 		long templateLinkId) throws PortalException;
 
 	/**
@@ -210,7 +210,7 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 	* @return the range of d d m template links
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> getDDMTemplateLinks(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateLink> getDDMTemplateLinks(
 		int start, int end);
 
 	/**
@@ -227,15 +227,15 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink getTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink getTemplateLink(
 		long classNameId, long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink getTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink getTemplateLink(
 		long templateLinkId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> getTemplateLinks(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateLink> getTemplateLinks(
 		long classNameId);
 
 	/**
@@ -252,12 +252,12 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 	* @return the d d m template link that was updated
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink updateDDMTemplateLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink ddmTemplateLink);
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink updateDDMTemplateLink(
+		com.liferay.dynamic.data.mapping.model.DDMTemplateLink ddmTemplateLink);
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink updateTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink updateTemplateLink(
 		long classNameId, long classPK, long templateId);
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink updateTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink updateTemplateLink(
 		long templateLinkId, long templateId) throws PortalException;
 }

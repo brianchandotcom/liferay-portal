@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -94,7 +94,7 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 
 	@Override
 	public int compareTo(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink) {
+		com.liferay.dynamic.data.mapping.model.DDMStructureLink ddmStructureLink) {
 		return _ddmStructureLink.compareTo(ddmStructureLink);
 	}
 
@@ -149,7 +149,7 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure()
+	public com.liferay.dynamic.data.mapping.model.DDMStructure getStructure()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLink.getStructure();
 	}
@@ -288,12 +288,12 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.dynamic.data.mapping.model.DDMStructureLink> toCacheModel() {
 		return _ddmStructureLink.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink toEscapedModel() {
+	public com.liferay.dynamic.data.mapping.model.DDMStructureLink toEscapedModel() {
 		return new DDMStructureLinkWrapper(_ddmStructureLink.toEscapedModel());
 	}
 
@@ -303,7 +303,7 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink toUnescapedModel() {
+	public com.liferay.dynamic.data.mapping.model.DDMStructureLink toUnescapedModel() {
 		return new DDMStructureLinkWrapper(_ddmStructureLink.toUnescapedModel());
 	}
 

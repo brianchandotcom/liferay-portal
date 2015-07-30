@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.PersistedModel;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 
 /**
  * The extended model interface for the DDMStructure service. Represents a row in the &quot;DDMStructure&quot; database table, with each column mapped to a property of this class.
@@ -94,13 +96,13 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 
 	public java.util.List<java.lang.String> getRootFieldNames();
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getStructureVersion()
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion getStructureVersion()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates();
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates();
 
 	public java.lang.String getUnambiguousName(
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> structures,
+		java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> structures,
 		long groupId, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

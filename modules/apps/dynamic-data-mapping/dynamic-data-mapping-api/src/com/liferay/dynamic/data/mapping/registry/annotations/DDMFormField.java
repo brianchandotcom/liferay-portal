@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.registry.annotations;
+package com.liferay.dynamic.data.mapping.registry.annotations;
 
 import com.liferay.portal.kernel.util.StringPool;
 

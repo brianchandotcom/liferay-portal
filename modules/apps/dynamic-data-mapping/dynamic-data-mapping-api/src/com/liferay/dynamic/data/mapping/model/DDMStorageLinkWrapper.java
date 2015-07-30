@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -101,7 +101,7 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 
 	@Override
 	public int compareTo(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink) {
+		com.liferay.dynamic.data.mapping.model.DDMStorageLink ddmStorageLink) {
 		return _ddmStorageLink.compareTo(ddmStorageLink);
 	}
 
@@ -172,7 +172,7 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure()
+	public com.liferay.dynamic.data.mapping.model.DDMStructure getStructure()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStorageLink.getStructure();
 	}
@@ -321,12 +321,12 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.dynamic.data.mapping.model.DDMStorageLink> toCacheModel() {
 		return _ddmStorageLink.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink toEscapedModel() {
+	public com.liferay.dynamic.data.mapping.model.DDMStorageLink toEscapedModel() {
 		return new DDMStorageLinkWrapper(_ddmStorageLink.toEscapedModel());
 	}
 
@@ -336,7 +336,7 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink toUnescapedModel() {
+	public com.liferay.dynamic.data.mapping.model.DDMStorageLink toUnescapedModel() {
 		return new DDMStorageLinkWrapper(_ddmStorageLink.toUnescapedModel());
 	}
 

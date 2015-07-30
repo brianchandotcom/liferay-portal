@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service;
+package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -55,8 +55,8 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	* @return the d d m structure version that was added
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion addDDMStructureVersion(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion ddmStructureVersion);
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion addDDMStructureVersion(
+		com.liferay.dynamic.data.mapping.model.DDMStructureVersion ddmStructureVersion);
 
 	/**
 	* Creates a new d d m structure version with the primary key. Does not add the d d m structure version to the database.
@@ -64,7 +64,7 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	* @param structureVersionId the primary key for the new d d m structure version
 	* @return the new d d m structure version
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion createDDMStructureVersion(
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion createDDMStructureVersion(
 		long structureVersionId);
 
 	/**
@@ -74,8 +74,8 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	* @return the d d m structure version that was removed
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion deleteDDMStructureVersion(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion ddmStructureVersion);
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion deleteDDMStructureVersion(
+		com.liferay.dynamic.data.mapping.model.DDMStructureVersion ddmStructureVersion);
 
 	/**
 	* Deletes the d d m structure version with the primary key from the database. Also notifies the appropriate model listeners.
@@ -85,7 +85,7 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	* @throws PortalException if a d d m structure version with the primary key could not be found
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion deleteDDMStructureVersion(
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion deleteDDMStructureVersion(
 		long structureVersionId) throws PortalException;
 
 	/**
@@ -162,7 +162,7 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion fetchDDMStructureVersion(
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion fetchDDMStructureVersion(
 		long structureVersionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -183,7 +183,7 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	* @throws PortalException if a d d m structure version with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getDDMStructureVersion(
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion getDDMStructureVersion(
 		long structureVersionId) throws PortalException;
 
 	/**
@@ -198,7 +198,7 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	* @return the range of d d m structure versions
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> getDDMStructureVersions(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> getDDMStructureVersions(
 		int start, int end);
 
 	/**
@@ -210,7 +210,7 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	public int getDDMStructureVersionsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getLatestStructureVersion(
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion getLatestStructureVersion(
 		long structureId) throws PortalException;
 
 	@Override
@@ -219,21 +219,21 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getStructureVersion(
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion getStructureVersion(
 		long structureId, java.lang.String version) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getStructureVersion(
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion getStructureVersion(
 		long structureVersionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> getStructureVersions(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> getStructureVersions(
 		long structureId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> getStructureVersions(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> getStructureVersions(
 		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getStructureVersionsCount(long structureId);
@@ -252,6 +252,6 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	* @return the d d m structure version that was updated
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion updateDDMStructureVersion(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion ddmStructureVersion);
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion updateDDMStructureVersion(
+		com.liferay.dynamic.data.mapping.model.DDMStructureVersion ddmStructureVersion);
 }

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.util.comparator;
+package com.liferay.dynamic.data.mapping.util.comparator;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
 /**
  * @author Eduardo Garcia

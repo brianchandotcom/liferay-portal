@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
-
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.util.Date;
@@ -209,7 +210,7 @@ public class DDMStructureWrapper implements DDMStructure,
 
 	@Override
 	public int compareTo(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure) {
+		com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure) {
 		return _ddmStructure.compareTo(ddmStructure);
 	}
 
@@ -636,13 +637,13 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getStructureVersion()
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion getStructureVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructure.getStructureVersion();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates() {
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates() {
 		return _ddmStructure.getTemplates();
 	}
 
@@ -658,7 +659,7 @@ public class DDMStructureWrapper implements DDMStructure,
 
 	@Override
 	public java.lang.String getUnambiguousName(
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> structures,
+		java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> structures,
 		long groupId, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructure.getUnambiguousName(structures, groupId, locale);
@@ -1201,12 +1202,12 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.dynamic.data.mapping.model.DDMStructure> toCacheModel() {
 		return _ddmStructure.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure toEscapedModel() {
+	public com.liferay.dynamic.data.mapping.model.DDMStructure toEscapedModel() {
 		return new DDMStructureWrapper(_ddmStructure.toEscapedModel());
 	}
 
@@ -1216,7 +1217,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure toUnescapedModel() {
+	public com.liferay.dynamic.data.mapping.model.DDMStructure toUnescapedModel() {
 		return new DDMStructureWrapper(_ddmStructure.toUnescapedModel());
 	}
 

@@ -58,7 +58,7 @@ public class MentionsTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register("/html/common/themes/top_head-ext.jsp");
+		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
 	}
 
 }

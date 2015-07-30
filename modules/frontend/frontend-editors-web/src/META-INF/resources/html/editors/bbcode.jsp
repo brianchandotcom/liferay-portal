@@ -34,7 +34,7 @@ String name = namespace + GetterUtil.getString((String)request.getAttribute("lif
 		}
 	);
 
-	<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editors.web#" + editorName + "#js#onEditorCreate" %>' />
+	<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editors.web#" + editorName + "#onEditorCreate" %>' />
 
 	window['<%= name %>'] = bbCodeEditor;
 

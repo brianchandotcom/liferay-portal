@@ -16,7 +16,7 @@
 
 <%@ include file="/html/common/themes/init.jsp" %>
 
-<liferay-util:dynamic-include key="/html/common/themes/top_head-ext.jsp" />
+<liferay-util:dynamic-include key="/html/common/themes/top_head.jsp#pre" />
 
 <%@ include file="/html/common/themes/top_meta.jspf" %>
 <%@ include file="/html/common/themes/top_meta-ext.jsp" %>

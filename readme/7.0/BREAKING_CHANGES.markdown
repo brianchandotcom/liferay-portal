@@ -2000,7 +2000,7 @@ Depending on the changes, different extension methods are available:
 parameters.
 - For CKEditor instance manipulation (setting attributes, adding listeners,
 etc.), the `DynamicInclude` extension point
-`js#ckeditor[_creole|_bbcode]#onEditorCreated` has been added to provide the
+`#ckeditor[_creole|_bbcode]#onEditorCreated` has been added to provide the
 possibility of injecting JavaScript, when needed.
 
 #### Why was this change made?

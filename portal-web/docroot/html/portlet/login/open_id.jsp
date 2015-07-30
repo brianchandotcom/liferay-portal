@@ -16,6 +16,6 @@
 
 <%@ include file="/html/portlet/login/init.jsp" %>
 
-<liferay-util:dynamic-include key="/html/portlet/login/open_id.jsp" />
+<liferay-util:dynamic-include key="/html/portlet/login/open_id.jsp#pre" />
 
 <liferay-util:include page="/html/portlet/login/navigation.jsp" />

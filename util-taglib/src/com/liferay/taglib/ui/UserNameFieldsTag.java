@@ -14,6 +14,8 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.model.Contact;
+import com.liferay.portal.model.User;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +29,19 @@ public class UserNameFieldsTag extends IncludeTag {
 		_bean = bean;
 	}
 
+	public void setContact(Contact contact) {
+		_contact = contact;
+	}
+
+	public void setUser(User user) {
+		_user = user;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_bean = null;
+		_contact = null;
+		_user = null;
 	}
 
 	@Override
@@ -43,12 +55,24 @@ public class UserNameFieldsTag extends IncludeTag {
 			_bean = pageContext.getAttribute("aui:model-context:bean");
 		}
 
+		if (_contact == null) {
+			_contact = (Contact)request.getAttribute("user.selContact");
+		}
+
+		if (_user == null) {
+			_user = (User)request.getAttribute("user.selUser");
+		}
+
 		request.setAttribute("liferay-ui:user-name-fields:bean", _bean);
+		request.setAttribute("liferay-ui:user-name-fields:contact", _contact);
+		request.setAttribute("liferay-ui:user-name-fields:user", _user);
 	}
 
 	private static final String _PAGE =
 		"/html/taglib/ui/user_name_fields/page.jsp";
 
 	private Object _bean;
+	private Contact _contact;
+	private User _user;
 
 }

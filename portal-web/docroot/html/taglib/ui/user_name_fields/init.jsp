@@ -24,8 +24,8 @@ page import="com.liferay.portal.security.auth.FullNameField" %>
 
 <%
 Object bean = request.getAttribute("liferay-ui:user-name-fields:bean");
-Contact selContact = (Contact)request.getAttribute("user.selContact");
-User selUser = (User)request.getAttribute("user.selUser");
+Contact selContact = (Contact)request.getAttribute("liferay-ui:user-name-fields:contact");
+User selUser = (User)request.getAttribute("liferay-ui:user-name-fields:user");
 
 if (selUser == null) {
 	selUser = PortalUtil.getSelectedUser(request);

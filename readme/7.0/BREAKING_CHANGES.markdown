@@ -2167,3 +2167,39 @@ it originated from the old Admin portlet. Since the Portal Instances portlet
 is now extracted to its own module, the old name no longer resembles its usage.
 
 ---------------------------------------
+
+### Replaced the Navigation Menu Portlet's Display Styles with ADTs
+- **Date:** 2015-Jul-30
+- **JIRA Ticket:** LPS-27113
+
+#### What changed?
+
+The custom display styles of the navigation tag added using JSPs no longer work.
+They have been replaced by Application Display Templates (ADT).
+
+#### Who is affected?
+
+This affects developers that use the following portlet properties:
+
+    navigation.display.style
+
+This also affects developers that use the following attribute in the navigation
+taglib:
+
+     displayStyleDefinition
+
+#### How should I update my code?
+
+To style the Navigation portlet, you should use ADTs instead of using custom
+styles in your JSPs. ADTs can be created from the UI of the portal by navigating
+to *Site Settings* &rarr; *Application Display Templates*. ADTs can also be
+created programatically.
+
+Developers should use the `ddmTemplateGroupId` and `ddmTemplateKey` attributes
+of the navigation taglib to set the ADT that defines the style of the
+navigation.
+
+#### Why was this change made?
+
+ADTs allow you to change an application's look and feel without changing its JSP
+code.

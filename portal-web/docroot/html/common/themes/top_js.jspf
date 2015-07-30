@@ -14,6 +14,7 @@
  */
 --%>
 
+
 <script type="text/javascript">
 	// <![CDATA[
 		var Liferay = {
@@ -119,7 +120,7 @@
 
 			PortletKeys: {
 				DOCUMENT_LIBRARY: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
-				DYNAMIC_DATA_MAPPING: '<%= PortletKeys.DYNAMIC_DATA_MAPPING %>',
+				DYNAMIC_DATA_MAPPING: 'com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet',
 				ITEM_SELECTOR: '<%= PortletKeys.ITEM_SELECTOR %>',
 				PORTLET_SHARING: '<%= PortletKeys.PORTLET_SHARING %>'
 			},

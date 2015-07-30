@@ -68,8 +68,7 @@ public class CKEditorCreoleOnEditorCreateDynamicInclude
 		DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
 
 		dynamicIncludeRegistry.register(
-			"com.liferay.frontend.editors.web#ckeditor_creole#js#" +
-				"onEditorCreate");
+			"com.liferay.frontend.editors.web#ckeditor_creole#onEditorCreate");
 	}
 
 	@Activate

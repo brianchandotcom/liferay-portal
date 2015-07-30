@@ -12,29 +12,21 @@
  * details.
  */
 
-package com.liferay.bookmarks.settings.internal;
-
-import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
-import com.liferay.bookmarks.constants.BookmarksConstants;
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.bookmarks.configuration;
 
 /**
  * @author Iván Zaera
  */
-@Component
-public class BookmarksGroupServiceSettingsIdMapping
-	implements SettingsIdMapping {
+public interface BookmarksGroupServiceConfigurationOverride {
 
-	@Override
-	public Class<?> getConfigurationBeanClass() {
-		return BookmarksGroupServiceConfiguration.class;
-	}
+	public String emailEntryAddedBodyXml();
 
-	@Override
-	public String getSettingsId() {
-		return BookmarksConstants.SERVICE_NAME;
-	}
+	public String emailEntryAddedSubjectXml();
+
+	public String emailEntryUpdatedBodyXml();
+
+	public String emailEntryUpdatedSubjectXml();
+
+	public long rootFolderId();
 
 }

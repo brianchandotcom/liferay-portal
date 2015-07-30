@@ -52,9 +52,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 		expectedLogs = {
 			@ExpectedLog(
 				dbType = DB.TYPE_DB2,
-				expectedLog =
-					"Unable to process runnable: DB2 SQL error: SQLCODE: " +
-						"-206, SQLSTATE: 42703",
+				expectedLog = "Unable to process runnable:",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
@@ -103,9 +101,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 		expectedLogs = {
 			@ExpectedLog(
 				dbType = DB.TYPE_DB2,
-				expectedLog =
-					"Unable to process runnable: DB2 SQL error: SQLCODE: " +
-						"-204, SQLSTATE: 42704",
+				expectedLog = "Unable to process runnable:",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
@@ -164,14 +160,12 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 			@ExpectedLog(
 				dbType = DB.TYPE_DB2,
 				expectedLog =
-					"Unable to process runnable: DB2 SQL error: SQLCODE: " +
-						"-204, SQLSTATE: 42704",
+					"Unable to process runnable:",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
 				dbType = DB.TYPE_MYSQL,
-				expectedLog =
-					"Unable to process runnable: Table ",
+				expectedLog = "Unable to process runnable: Table ",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(

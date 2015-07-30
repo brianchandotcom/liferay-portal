@@ -16,8 +16,10 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for DDMTemplate. This utility wraps
@@ -38,7 +40,7 @@ public class DDMTemplateLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.dynamicdatamapping.service.impl.DDMTemplateLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMTemplateLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -1270,14 +1272,7 @@ public class DDMTemplateLocalServiceUtil {
 	}
 
 	public static DDMTemplateLocalService getService() {
-		if (_service == null) {
-			_service = (DDMTemplateLocalService)PortalBeanLocatorUtil.locate(DDMTemplateLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(DDMTemplateLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -1287,5 +1282,14 @@ public class DDMTemplateLocalServiceUtil {
 	public void setService(DDMTemplateLocalService service) {
 	}
 
-	private static DDMTemplateLocalService _service;
+	private static ServiceTracker<DDMTemplateLocalService, DDMTemplateLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDMTemplateLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<DDMTemplateLocalService, DDMTemplateLocalService>(bundle.getBundleContext(),
+				DDMTemplateLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

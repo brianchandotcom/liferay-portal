@@ -16,8 +16,10 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for DDMContent. This utility wraps
@@ -38,7 +40,7 @@ public class DDMContentLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.dynamicdatamapping.service.impl.DDMContentLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMContentLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.dynamic.data.mapping.model.DDMContent addContent(
 		long userId, long groupId, java.lang.String name,
@@ -365,14 +367,7 @@ public class DDMContentLocalServiceUtil {
 	}
 
 	public static DDMContentLocalService getService() {
-		if (_service == null) {
-			_service = (DDMContentLocalService)PortalBeanLocatorUtil.locate(DDMContentLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(DDMContentLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -382,5 +377,14 @@ public class DDMContentLocalServiceUtil {
 	public void setService(DDMContentLocalService service) {
 	}
 
-	private static DDMContentLocalService _service;
+	private static ServiceTracker<DDMContentLocalService, DDMContentLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDMContentLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<DDMContentLocalService, DDMContentLocalService>(bundle.getBundleContext(),
+				DDMContentLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

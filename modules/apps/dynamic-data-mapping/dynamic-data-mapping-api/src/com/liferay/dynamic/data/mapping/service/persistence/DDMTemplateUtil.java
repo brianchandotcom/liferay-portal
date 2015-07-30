@@ -17,11 +17,15 @@ package com.liferay.dynamic.data.mapping.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
@@ -159,7 +163,7 @@ public class DDMTemplateUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByUuid_First(java.lang.String uuid,
 		OrderByComparator<DDMTemplate> orderByComparator)
@@ -185,7 +189,7 @@ public class DDMTemplateUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<DDMTemplate> orderByComparator)
@@ -212,7 +216,7 @@ public class DDMTemplateUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByUuid_PrevAndNext(long templateId,
 		java.lang.String uuid, OrderByComparator<DDMTemplate> orderByComparator)
@@ -241,12 +245,12 @@ public class DDMTemplateUtil {
 	}
 
 	/**
-	* Returns the d d m template where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchTemplateException} if it could not be found.
+	* Returns the d d m template where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.dynamic.data.mapping.NoSuchTemplateException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
@@ -358,7 +362,7 @@ public class DDMTemplateUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<DDMTemplate> orderByComparator)
@@ -388,7 +392,7 @@ public class DDMTemplateUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<DDMTemplate> orderByComparator)
@@ -419,7 +423,7 @@ public class DDMTemplateUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByUuid_C_PrevAndNext(long templateId,
 		java.lang.String uuid, long companyId,
@@ -503,7 +507,7 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByGroupId_First(long groupId,
 		OrderByComparator<DDMTemplate> orderByComparator)
@@ -529,7 +533,7 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByGroupId_Last(long groupId,
 		OrderByComparator<DDMTemplate> orderByComparator)
@@ -556,7 +560,7 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByGroupId_PrevAndNext(long templateId,
 		long groupId, OrderByComparator<DDMTemplate> orderByComparator)
@@ -619,7 +623,7 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] filterFindByGroupId_PrevAndNext(
 		long templateId, long groupId,
@@ -711,7 +715,7 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByClassPK_First(long classPK,
 		OrderByComparator<DDMTemplate> orderByComparator)
@@ -737,7 +741,7 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByClassPK_Last(long classPK,
 		OrderByComparator<DDMTemplate> orderByComparator)
@@ -764,7 +768,7 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByClassPK_PrevAndNext(long templateId,
 		long classPK, OrderByComparator<DDMTemplate> orderByComparator)
@@ -847,7 +851,7 @@ public class DDMTemplateUtil {
 	* @param templateKey the template key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByTemplateKey_First(
 		java.lang.String templateKey,
@@ -877,7 +881,7 @@ public class DDMTemplateUtil {
 	* @param templateKey the template key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByTemplateKey_Last(
 		java.lang.String templateKey,
@@ -908,7 +912,7 @@ public class DDMTemplateUtil {
 	* @param templateKey the template key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByTemplateKey_PrevAndNext(long templateId,
 		java.lang.String templateKey,
@@ -989,7 +993,7 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByType_First(java.lang.String type,
 		OrderByComparator<DDMTemplate> orderByComparator)
@@ -1015,7 +1019,7 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByType_Last(java.lang.String type,
 		OrderByComparator<DDMTemplate> orderByComparator)
@@ -1042,7 +1046,7 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByType_PrevAndNext(long templateId,
 		java.lang.String type, OrderByComparator<DDMTemplate> orderByComparator)
@@ -1122,7 +1126,7 @@ public class DDMTemplateUtil {
 	* @param language the language
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByLanguage_First(java.lang.String language,
 		OrderByComparator<DDMTemplate> orderByComparator)
@@ -1149,7 +1153,7 @@ public class DDMTemplateUtil {
 	* @param language the language
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByLanguage_Last(java.lang.String language,
 		OrderByComparator<DDMTemplate> orderByComparator)
@@ -1176,7 +1180,7 @@ public class DDMTemplateUtil {
 	* @param language the language
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByLanguage_PrevAndNext(long templateId,
 		java.lang.String language,
@@ -1207,11 +1211,11 @@ public class DDMTemplateUtil {
 	}
 
 	/**
-	* Returns the d d m template where smallImageId = &#63; or throws a {@link NoSuchTemplateException} if it could not be found.
+	* Returns the d d m template where smallImageId = &#63; or throws a {@link com.liferay.dynamic.data.mapping.NoSuchTemplateException} if it could not be found.
 	*
 	* @param smallImageId the small image ID
 	* @return the matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findBySmallImageId(long smallImageId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
@@ -1319,7 +1323,7 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByG_C_First(long groupId, long classNameId,
 		OrderByComparator<DDMTemplate> orderByComparator)
@@ -1349,7 +1353,7 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByG_C_Last(long groupId, long classNameId,
 		OrderByComparator<DDMTemplate> orderByComparator)
@@ -1380,7 +1384,7 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByG_C_PrevAndNext(long templateId,
 		long groupId, long classNameId,
@@ -1451,7 +1455,7 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] filterFindByG_C_PrevAndNext(long templateId,
 		long groupId, long classNameId,
@@ -1550,7 +1554,7 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByG_CPK_First(long groupId, long classPK,
 		OrderByComparator<DDMTemplate> orderByComparator)
@@ -1580,7 +1584,7 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByG_CPK_Last(long groupId, long classPK,
 		OrderByComparator<DDMTemplate> orderByComparator)
@@ -1611,7 +1615,7 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByG_CPK_PrevAndNext(long templateId,
 		long groupId, long classPK,
@@ -1681,7 +1685,7 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] filterFindByG_CPK_PrevAndNext(long templateId,
 		long groupId, long classPK,
@@ -1915,7 +1919,7 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByG_C_C_First(long groupId, long classNameId,
 		long classPK, OrderByComparator<DDMTemplate> orderByComparator)
@@ -1950,7 +1954,7 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByG_C_C_Last(long groupId, long classNameId,
 		long classPK, OrderByComparator<DDMTemplate> orderByComparator)
@@ -1985,7 +1989,7 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByG_C_C_PrevAndNext(long templateId,
 		long groupId, long classNameId, long classPK,
@@ -2061,7 +2065,7 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] filterFindByG_C_C_PrevAndNext(long templateId,
 		long groupId, long classNameId, long classPK,
@@ -2253,13 +2257,13 @@ public class DDMTemplateUtil {
 	}
 
 	/**
-	* Returns the d d m template where groupId = &#63; and classNameId = &#63; and templateKey = &#63; or throws a {@link NoSuchTemplateException} if it could not be found.
+	* Returns the d d m template where groupId = &#63; and classNameId = &#63; and templateKey = &#63; or throws a {@link com.liferay.dynamic.data.mapping.NoSuchTemplateException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param templateKey the template key
 	* @return the matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByG_C_T(long groupId, long classNameId,
 		java.lang.String templateKey)
@@ -2387,7 +2391,7 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByC_C_T_First(long classNameId, long classPK,
 		java.lang.String type, OrderByComparator<DDMTemplate> orderByComparator)
@@ -2422,7 +2426,7 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByC_C_T_Last(long classNameId, long classPK,
 		java.lang.String type, OrderByComparator<DDMTemplate> orderByComparator)
@@ -2457,7 +2461,7 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByC_C_T_PrevAndNext(long templateId,
 		long classNameId, long classPK, java.lang.String type,
@@ -2564,7 +2568,7 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByG_C_C_T_First(long groupId,
 		long classNameId, long classPK, java.lang.String type,
@@ -2602,7 +2606,7 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByG_C_C_T_Last(long groupId,
 		long classNameId, long classPK, java.lang.String type,
@@ -2641,7 +2645,7 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByG_C_C_T_PrevAndNext(long templateId,
 		long groupId, long classNameId, long classPK, java.lang.String type,
@@ -2724,7 +2728,7 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] filterFindByG_C_C_T_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
@@ -2855,7 +2859,7 @@ public class DDMTemplateUtil {
 	* @param mode the mode
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByG_C_C_T_M_First(long groupId,
 		long classNameId, long classPK, java.lang.String type,
@@ -2895,7 +2899,7 @@ public class DDMTemplateUtil {
 	* @param mode the mode
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
-	* @throws NoSuchTemplateException if a matching d d m template could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByG_C_C_T_M_Last(long groupId,
 		long classNameId, long classPK, java.lang.String type,
@@ -2936,7 +2940,7 @@ public class DDMTemplateUtil {
 	* @param mode the mode
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] findByG_C_C_T_M_PrevAndNext(long templateId,
 		long groupId, long classNameId, long classPK, java.lang.String type,
@@ -3026,7 +3030,7 @@ public class DDMTemplateUtil {
 	* @param mode the mode
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate[] filterFindByG_C_C_T_M_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
@@ -3119,7 +3123,7 @@ public class DDMTemplateUtil {
 	*
 	* @param templateId the primary key of the d d m template
 	* @return the d d m template that was removed
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate remove(long templateId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
@@ -3131,11 +3135,11 @@ public class DDMTemplateUtil {
 	}
 
 	/**
-	* Returns the d d m template with the primary key or throws a {@link NoSuchTemplateException} if it could not be found.
+	* Returns the d d m template with the primary key or throws a {@link com.liferay.dynamic.data.mapping.NoSuchTemplateException} if it could not be found.
 	*
 	* @param templateId the primary key of the d d m template
 	* @return the d d m template
-	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
+	* @throws com.liferay.dynamic.data.mapping.NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate findByPrimaryKey(long templateId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
@@ -3215,14 +3219,7 @@ public class DDMTemplateUtil {
 	}
 
 	public static DDMTemplatePersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (DDMTemplatePersistence)PortalBeanLocatorUtil.locate(DDMTemplatePersistence.class.getName());
-
-			ReferenceRegistry.registerReference(DDMTemplateUtil.class,
-				"_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -3232,5 +3229,14 @@ public class DDMTemplateUtil {
 	public void setPersistence(DDMTemplatePersistence persistence) {
 	}
 
-	private static DDMTemplatePersistence _persistence;
+	private static ServiceTracker<DDMTemplatePersistence, DDMTemplatePersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDMTemplateUtil.class);
+
+		_serviceTracker = new ServiceTracker<DDMTemplatePersistence, DDMTemplatePersistence>(bundle.getBundleContext(),
+				DDMTemplatePersistence.class, null);
+
+		_serviceTracker.open();
+	}
 }

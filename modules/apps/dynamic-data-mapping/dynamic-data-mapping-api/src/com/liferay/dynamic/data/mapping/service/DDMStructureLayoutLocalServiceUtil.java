@@ -16,8 +16,10 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for DDMStructureLayout. This utility wraps
@@ -38,7 +40,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.dynamicdatamapping.service.impl.DDMStructureLayoutLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMStructureLayoutLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -358,14 +360,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 	}
 
 	public static DDMStructureLayoutLocalService getService() {
-		if (_service == null) {
-			_service = (DDMStructureLayoutLocalService)PortalBeanLocatorUtil.locate(DDMStructureLayoutLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(DDMStructureLayoutLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -375,5 +370,14 @@ public class DDMStructureLayoutLocalServiceUtil {
 	public void setService(DDMStructureLayoutLocalService service) {
 	}
 
-	private static DDMStructureLayoutLocalService _service;
+	private static ServiceTracker<DDMStructureLayoutLocalService, DDMStructureLayoutLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDMStructureLayoutLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<DDMStructureLayoutLocalService, DDMStructureLayoutLocalService>(bundle.getBundleContext(),
+				DDMStructureLayoutLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

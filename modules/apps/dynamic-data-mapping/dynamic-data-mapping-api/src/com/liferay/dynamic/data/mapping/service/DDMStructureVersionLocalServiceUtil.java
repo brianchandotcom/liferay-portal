@@ -16,8 +16,10 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for DDMStructureVersion. This utility wraps
@@ -38,7 +40,7 @@ public class DDMStructureVersionLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.dynamicdatamapping.service.impl.DDMStructureVersionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMStructureVersionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -292,14 +294,7 @@ public class DDMStructureVersionLocalServiceUtil {
 	}
 
 	public static DDMStructureVersionLocalService getService() {
-		if (_service == null) {
-			_service = (DDMStructureVersionLocalService)PortalBeanLocatorUtil.locate(DDMStructureVersionLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(DDMStructureVersionLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -309,5 +304,14 @@ public class DDMStructureVersionLocalServiceUtil {
 	public void setService(DDMStructureVersionLocalService service) {
 	}
 
-	private static DDMStructureVersionLocalService _service;
+	private static ServiceTracker<DDMStructureVersionLocalService, DDMStructureVersionLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDMStructureVersionLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<DDMStructureVersionLocalService, DDMStructureVersionLocalService>(bundle.getBundleContext(),
+				DDMStructureVersionLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

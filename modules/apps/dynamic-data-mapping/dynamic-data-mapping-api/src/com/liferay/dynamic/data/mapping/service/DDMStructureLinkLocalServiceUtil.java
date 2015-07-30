@@ -16,8 +16,10 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for DDMStructureLink. This utility wraps
@@ -38,7 +40,7 @@ public class DDMStructureLinkLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.dynamicdatamapping.service.impl.DDMStructureLinkLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMStructureLinkLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -332,14 +334,7 @@ public class DDMStructureLinkLocalServiceUtil {
 	}
 
 	public static DDMStructureLinkLocalService getService() {
-		if (_service == null) {
-			_service = (DDMStructureLinkLocalService)PortalBeanLocatorUtil.locate(DDMStructureLinkLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(DDMStructureLinkLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -349,5 +344,14 @@ public class DDMStructureLinkLocalServiceUtil {
 	public void setService(DDMStructureLinkLocalService service) {
 	}
 
-	private static DDMStructureLinkLocalService _service;
+	private static ServiceTracker<DDMStructureLinkLocalService, DDMStructureLinkLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDMStructureLinkLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<DDMStructureLinkLocalService, DDMStructureLinkLocalService>(bundle.getBundleContext(),
+				DDMStructureLinkLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

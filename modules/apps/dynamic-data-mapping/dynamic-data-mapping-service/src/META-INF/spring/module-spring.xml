@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="com.liferay.dynamic.data.mapping.service.DDMContentLocalService" class="com.liferay.dynamic.data.mapping.service.impl.DDMContentLocalServiceImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMContentPersistence" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMContentPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService" class="com.liferay.dynamic.data.mapping.service.impl.DDMStorageLinkLocalServiceImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkPersistence" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMStorageLinkPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.dynamic.data.mapping.service.DDMStructureLocalService" class="com.liferay.dynamic.data.mapping.service.impl.DDMStructureLocalServiceImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.service.DDMStructureService" class="com.liferay.dynamic.data.mapping.service.impl.DDMStructureServiceImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMStructurePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMStructureFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService" class="com.liferay.dynamic.data.mapping.service.impl.DDMStructureLayoutLocalServiceImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLayoutPersistence" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMStructureLayoutPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService" class="com.liferay.dynamic.data.mapping.service.impl.DDMStructureLinkLocalServiceImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMStructureLinkPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService" class="com.liferay.dynamic.data.mapping.service.impl.DDMStructureVersionLocalServiceImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.service.DDMStructureVersionService" class="com.liferay.dynamic.data.mapping.service.impl.DDMStructureVersionServiceImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionPersistence" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMStructureVersionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService" class="com.liferay.dynamic.data.mapping.service.impl.DDMTemplateLocalServiceImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.service.DDMTemplateService" class="com.liferay.dynamic.data.mapping.service.impl.DDMTemplateServiceImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplatePersistence" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMTemplatePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMTemplateFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService" class="com.liferay.dynamic.data.mapping.service.impl.DDMTemplateLinkLocalServiceImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersistence" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMTemplateLinkPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService" class="com.liferay.dynamic.data.mapping.service.impl.DDMTemplateVersionLocalServiceImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.service.DDMTemplateVersionService" class="com.liferay.dynamic.data.mapping.service.impl.DDMTemplateVersionServiceImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionPersistence" class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMTemplateVersionPersistenceImpl" parent="basePersistence" />
+</beans>

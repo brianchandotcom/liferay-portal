@@ -17,11 +17,13 @@ package com.liferay.dynamic.data.mapping.service.http;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.rmi.RemoteException;
+
 import java.util.Locale;
 import java.util.Map;
 
@@ -110,10 +112,9 @@ public class DDMTemplateServiceSoap {
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
 					descriptionMapValues);
 
-			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue =
-				DDMTemplateServiceUtil.addTemplate(groupId, classNameId,
-					classPK, resourceClassNameId, nameMap, descriptionMap,
-					type, mode, language, script, serviceContext);
+			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue = DDMTemplateServiceUtil.addTemplate(groupId,
+					classNameId, classPK, resourceClassNameId, nameMap,
+					descriptionMap, type, mode, language, script, serviceContext);
 
 			return com.liferay.dynamic.data.mapping.model.DDMTemplateSoap.toSoapModel(returnValue);
 		}
@@ -154,9 +155,8 @@ public class DDMTemplateServiceSoap {
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
 					descriptionMapValues);
 
-			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue =
-				DDMTemplateServiceUtil.copyTemplate(templateId, nameMap,
-					descriptionMap, serviceContext);
+			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue = DDMTemplateServiceUtil.copyTemplate(templateId,
+					nameMap, descriptionMap, serviceContext);
 
 			return com.liferay.dynamic.data.mapping.model.DDMTemplateSoap.toSoapModel(returnValue);
 		}
@@ -172,8 +172,8 @@ public class DDMTemplateServiceSoap {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue =
-				DDMTemplateServiceUtil.copyTemplate(templateId, serviceContext);
+			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue = DDMTemplateServiceUtil.copyTemplate(templateId,
+					serviceContext);
 
 			return com.liferay.dynamic.data.mapping.model.DDMTemplateSoap.toSoapModel(returnValue);
 		}
@@ -259,9 +259,8 @@ public class DDMTemplateServiceSoap {
 		long groupId, long classNameId, java.lang.String templateKey)
 		throws RemoteException {
 		try {
-			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue =
-				DDMTemplateServiceUtil.fetchTemplate(groupId, classNameId,
-					templateKey);
+			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue = DDMTemplateServiceUtil.fetchTemplate(groupId,
+					classNameId, templateKey);
 
 			return com.liferay.dynamic.data.mapping.model.DDMTemplateSoap.toSoapModel(returnValue);
 		}
@@ -283,8 +282,7 @@ public class DDMTemplateServiceSoap {
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap getTemplate(
 		long templateId) throws RemoteException {
 		try {
-			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue =
-				DDMTemplateServiceUtil.getTemplate(templateId);
+			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue = DDMTemplateServiceUtil.getTemplate(templateId);
 
 			return com.liferay.dynamic.data.mapping.model.DDMTemplateSoap.toSoapModel(returnValue);
 		}
@@ -309,9 +307,8 @@ public class DDMTemplateServiceSoap {
 		long groupId, long classNameId, java.lang.String templateKey)
 		throws RemoteException {
 		try {
-			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue =
-				DDMTemplateServiceUtil.getTemplate(groupId, classNameId,
-					templateKey);
+			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue = DDMTemplateServiceUtil.getTemplate(groupId,
+					classNameId, templateKey);
 
 			return com.liferay.dynamic.data.mapping.model.DDMTemplateSoap.toSoapModel(returnValue);
 		}
@@ -348,9 +345,8 @@ public class DDMTemplateServiceSoap {
 		long groupId, long classNameId, java.lang.String templateKey,
 		boolean includeAncestorTemplates) throws RemoteException {
 		try {
-			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue =
-				DDMTemplateServiceUtil.getTemplate(groupId, classNameId,
-					templateKey, includeAncestorTemplates);
+			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue = DDMTemplateServiceUtil.getTemplate(groupId,
+					classNameId, templateKey, includeAncestorTemplates);
 
 			return com.liferay.dynamic.data.mapping.model.DDMTemplateSoap.toSoapModel(returnValue);
 		}
@@ -1040,10 +1036,9 @@ public class DDMTemplateServiceSoap {
 			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
 					descriptionMapValues);
 
-			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue =
-				DDMTemplateServiceUtil.updateTemplate(templateId, classPK,
-					nameMap, descriptionMap, type, mode, language, script,
-					cacheable, serviceContext);
+			com.liferay.dynamic.data.mapping.model.DDMTemplate returnValue = DDMTemplateServiceUtil.updateTemplate(templateId,
+					classPK, nameMap, descriptionMap, type, mode, language,
+					script, cacheable, serviceContext);
 
 			return com.liferay.dynamic.data.mapping.model.DDMTemplateSoap.toSoapModel(returnValue);
 		}

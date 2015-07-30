@@ -33,13 +33,13 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
-import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.display.context.WikiListPagesDisplayContext;
 import com.liferay.wiki.display.context.WikiUIItemKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
+import com.liferay.wiki.settings.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 
 import java.util.ArrayList;
@@ -334,7 +334,7 @@ public class DefaultWikiListPagesDisplayContext
 	protected void addSubscriptionMenuItem(
 		List<MenuItem> menuItems, WikiPage wikiPage) {
 
-		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
+		WikiGroupServiceOverriddenConfiguration wikiGroupServiceConfiguration =
 			_wikiRequestHelper.getWikiGroupServiceSettings();
 
 		if (!WikiPagePermissionChecker.contains(

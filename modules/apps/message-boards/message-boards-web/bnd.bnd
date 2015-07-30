@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Message Boards Web
+Bundle-SymbolicName: com.liferay.message.boards.web
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.message.boards.web.lar,\
+	com.liferay.message.boards.web.social,\
+	com.liferay.message.boards.web.trash
+Include-Resource: classes
+Web-ContextPath: /message-boards-web

@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portlet.trash.RestoreEntryException;
-import com.liferay.portlet.trash.model.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.model.TrashEntryConstants;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
 import javax.portlet.PortletRequest;

@@ -3477,6 +3477,8 @@
 	</command>
 
 	<command name="SearchCalendarEventInSearchPortletWithTag" priority="3">
+		<description message="This is a use case for LPS-54548." />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Calendar Page" />
 		</execute>

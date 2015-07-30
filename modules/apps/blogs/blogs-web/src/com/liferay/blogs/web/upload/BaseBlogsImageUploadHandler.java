@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.blogs.web.image.selector;
+package com.liferay.blogs.web.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.image.selector.BaseImageSelectorUploadHandler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
+import com.liferay.portal.kernel.upload.BaseUploadHandler;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -31,8 +31,8 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourcePermissionCheckerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.blogs.CoverImageNameException;
-import com.liferay.portlet.blogs.CoverImageSizeException;
+import com.liferay.portlet.blogs.EntryImageNameException;
+import com.liferay.portlet.blogs.EntryImageSizeException;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
@@ -46,8 +46,7 @@ import javax.portlet.PortletResponse;
  * @author Sergio González
  * @author Adolfo Pérez
  */
-public abstract class BaseBlogsImageSelectorUploadHandler
-	extends BaseImageSelectorUploadHandler {
+public abstract class BaseBlogsImageUploadHandler extends BaseUploadHandler {
 
 	@Override
 	public void checkPermission(
@@ -70,6 +69,10 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 	public void validateFile(String fileName, String contentType, long size)
 		throws PortalException {
 
+		if (size > getMaxFileSize()) {
+			throw new EntryImageSizeException();
+		}
+
 		String extension = FileUtil.getExtension(fileName);
 
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(
@@ -83,11 +86,18 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 			}
 		}
 
-		throw new CoverImageNameException(
-			"Invalid cover image for file name " + fileName);
+		throw new EntryImageNameException(
+			"Invalid image for file name " + fileName);
 	}
 
-	protected abstract long getMaxFileSize();
+	protected long getMaxFileSize() {
+		return PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_MAX_SIZE);
+	}
+
+	@Override
+	protected String getParameterName() {
+		return "imageSelectorFileName";
+	}
 
 	@Override
 	protected void handleUploadException(
@@ -98,8 +108,8 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 		jsonObject.put("success", Boolean.FALSE);
 
 		if (pe instanceof AntivirusScannerException ||
-			pe instanceof CoverImageNameException ||
-			pe instanceof CoverImageSizeException ||
+			pe instanceof EntryImageNameException ||
+			pe instanceof EntryImageSizeException ||
 			pe instanceof FileNameException) {
 
 			String errorMessage = StringPool.BLANK;
@@ -116,11 +126,11 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 
 				errorMessage = themeDisplay.translate(ase.getMessageKey());
 			}
-			else if (pe instanceof CoverImageNameException) {
+			else if (pe instanceof EntryImageNameException) {
 				errorType =
 					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 			}
-			else if (pe instanceof CoverImageSizeException) {
+			else if (pe instanceof EntryImageSizeException) {
 				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 			}
 			else if (pe instanceof FileNameException) {

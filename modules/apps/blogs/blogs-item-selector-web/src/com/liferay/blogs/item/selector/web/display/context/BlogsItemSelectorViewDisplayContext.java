@@ -84,7 +84,7 @@ public class BlogsItemSelectorViewDisplayContext {
 			PortletKeys.BLOGS);
 
 		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "/blogs/upload_editor_image");
+			ActionRequest.ACTION_NAME, "/blogs/upload_image");
 
 		return portletURL;
 	}

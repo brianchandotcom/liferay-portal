@@ -109,6 +109,12 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getTemplateType(DDMTemplate template, Locale locale) {
+		String type = template.getType();
+
+		if (!type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) {
+			return type;
+		}
+
 		TemplateHandler templateHandler =
 			TemplateHandlerRegistryUtil.getTemplateHandler(
 				template.getClassNameId());

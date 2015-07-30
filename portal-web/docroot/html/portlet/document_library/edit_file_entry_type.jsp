@@ -23,7 +23,7 @@ DLFileEntryType fileEntryType = (DLFileEntryType)request.getAttribute(WebKeys.DO
 
 long fileEntryTypeId = BeanParamUtil.getLong(fileEntryType, request, "fileEntryTypeId");
 
-DDMStructure ddmStructure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
+DDMStructure ddmStructure = (DDMStructure)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
 
 long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId");
 

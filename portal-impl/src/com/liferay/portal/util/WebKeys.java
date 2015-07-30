@@ -81,6 +81,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String DIFF_VERSION = "DIFF_VERSION";
 
+	public static final String DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE = "DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE";
+	
 	public static final String DOCUMENT_LIBRARY_FILE_ENTRIES = "DOCUMENT_LIBRARY_FILE_ENTRIES";
 
 	public static final String DOCUMENT_LIBRARY_FILE_ENTRY = "DOCUMENT_LIBRARY_FILE_ENTRY";

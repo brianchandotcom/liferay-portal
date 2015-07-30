@@ -82,7 +82,7 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 				}
 
 				renderRequest.setAttribute(
-					WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE, ddmStructure);
+					WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE, ddmStructure);
 			}
 		}
 		catch (Exception e) {

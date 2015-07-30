@@ -16,7 +16,7 @@ package com.liferay.journal.content.search.web.settings.internal;
 
 import com.liferay.journal.content.search.web.configuration.JournalContentSearchPortletInstanceConfiguration;
 import com.liferay.journal.content.search.web.constants.JournalContentSearchPortletKeys;
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component
 public class JournalContentSearchPortletInstanceSettingsIdMapping
-	implements SettingsIdMapping {
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

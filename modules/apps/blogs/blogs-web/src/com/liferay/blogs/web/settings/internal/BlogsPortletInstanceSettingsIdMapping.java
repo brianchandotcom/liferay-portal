@@ -16,7 +16,7 @@ package com.liferay.blogs.web.settings.internal;
 
 import com.liferay.blogs.web.configuration.BlogsPortletInstanceConfiguration;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component
 public class BlogsPortletInstanceSettingsIdMapping
-	implements SettingsIdMapping {
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.facebook.connect.settings;
 
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.security.sso.facebook.connect.configuration.FacebookConnectConfiguration;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component
 public class FacebookConnectCompanyServiceSettingsIdMapping
-	implements SettingsIdMapping {
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

@@ -15,10 +15,10 @@
 package com.liferay.blogs.web.portlet.action;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.blogs.web.image.selector.BlogsSmallImageSelectorUploadHandler;
-import com.liferay.portal.kernel.image.selector.ImageSelectorUploadHandler;
+import com.liferay.blogs.web.upload.BlogsSmallImageUploadHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.upload.UploadHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -44,11 +44,10 @@ public class UploadSmallImageMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_imageSelectorUploadHandler.uploadSelectedImage(
-			actionRequest, actionResponse);
+		_uploadHandler.upload(actionRequest, actionResponse);
 	}
 
-	private final ImageSelectorUploadHandler _imageSelectorUploadHandler =
-		new BlogsSmallImageSelectorUploadHandler();
+	private final UploadHandler _uploadHandler =
+		new BlogsSmallImageUploadHandler();
 
 }

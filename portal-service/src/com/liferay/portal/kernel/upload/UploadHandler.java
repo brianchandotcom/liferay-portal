@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.image.selector;
+package com.liferay.portal.kernel.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -22,9 +22,9 @@ import javax.portlet.PortletResponse;
 /**
  * @author Adolfo Pérez
  */
-public interface ImageSelectorUploadHandler {
+public interface UploadHandler {
 
-	public void uploadSelectedImage(
+	public void upload(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException;
 

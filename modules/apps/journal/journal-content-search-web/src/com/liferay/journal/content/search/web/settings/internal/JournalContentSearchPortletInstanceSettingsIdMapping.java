@@ -33,7 +33,7 @@ public class JournalContentSearchPortletInstanceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return JournalContentSearchPortletKeys.JOURNAL_CONTENT_SEARCH;
 	}
 

@@ -33,7 +33,7 @@ public class WikiAdminPortletInstanceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return WikiPortletKeys.WIKI_ADMIN;
 	}
 

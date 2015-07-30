@@ -33,7 +33,7 @@ public class NestedPortletsPortletInstanceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return NestedPortletsPortletKeys.NESTED_PORTLETS;
 	}
 

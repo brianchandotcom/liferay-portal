@@ -33,7 +33,7 @@ public class ShoppingGroupServiceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return ShoppingConstants.SERVICE_NAME;
 	}
 

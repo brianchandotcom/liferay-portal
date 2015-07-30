@@ -20,7 +20,7 @@ ${theme.include(body_top_include)}
 
 <div class="open sidenav-container" id="sidenavContainerId">
 	<div class="sidenav-menu-slider">
-		<div class="product-menu sidebar sidenav-menu sidebar-inverse">
+		<div class="product-menu sidebar sidebar-inverse sidenav-menu">
 			<#if is_signed_in>
 				<@liferay.product_menu />
 			</#if>

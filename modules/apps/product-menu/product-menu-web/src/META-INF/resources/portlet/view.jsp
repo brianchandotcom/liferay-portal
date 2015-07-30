@@ -39,16 +39,14 @@ if (Validator.isNotNull(portletId)) {
 }
 %>
 
-<div class="sidebar-header">
-	<h4>
-		<span>
-			<span class="icon-monospaced"><img alt="" height="25px" src="<%= themeDisplay.getCompanyLogo() %>" width="25px" /></span>
-			<span><%= company.getName() %></span>
-		</span>
+<h4 class="sidebar-header">
+	<span class="company-details">
+		<img alt="" class="company-logo" src="<%= themeDisplay.getCompanyLogo() %>" />
+		<span class="company-name"><%= company.getName() %></span>
+	</span>
 
-		<span class="icon-monospaced icon-remove sidenav-close"></span>
-	</h4>
-</div>
+	<aui:icon cssClass="sidenav-close" image="remove" url="javascript:;" />
+</h4>
 
 <ul class="nav nav-tabs product-menu-tabs">
 
@@ -58,8 +56,13 @@ if (Validator.isNotNull(portletId)) {
 
 		<li class="col-xs-4 <%= rootPanelCategoryKey.equals(curPanelCategory.getKey()) ? "active" : StringPool.BLANK %>">
 			<a aria-expanded="true" data-toggle="tab" href="#<%= curPanelCategory.getKey() %>">
-				<div class="product-menu-tab-icon"><span class="<%= curPanelCategory.getIconCssClass() %> icon-monospaced"></span></div>
-				<div class="product-menu-tab-text"><%= curPanelCategory.getLabel(locale) %></div>
+				<div class="product-menu-tab-icon">
+					<span class="<%= curPanelCategory.getIconCssClass() %> icon-monospaced"></span>
+				</div>
+
+				<div class="product-menu-tab-text">
+					<%= curPanelCategory.getLabel(locale) %>
+				</div>
 			</a>
 		</li>
 
@@ -76,7 +79,7 @@ if (Validator.isNotNull(portletId)) {
 		for (PanelCategory curPanelCategory : panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.ROOT)) {
 		%>
 
-			<div class="fade tab-pane <%= rootPanelCategoryKey.equals(curPanelCategory.getKey()) ? "active" : StringPool.BLANK %> in" id="<%= curPanelCategory.getKey() %>">
+			<div class="fade in tab-pane <%= rootPanelCategoryKey.equals(curPanelCategory.getKey()) ? "active" : StringPool.BLANK %>" id="<%= curPanelCategory.getKey() %>">
 				<liferay-application-list:panel-content panelCategory="<%= curPanelCategory %>" />
 			</div>
 
@@ -90,7 +93,7 @@ if (Validator.isNotNull(portletId)) {
 <div class="sidebar-footer">
 	<div class="nameplate">
 		<div class="nameplate-field">
-			<div class="user-icon user-icon-lg user-icon-warning">
+			<div class="user-icon user-icon-lg">
 				<img alt="<%= HtmlUtil.escapeAttribute(user.getFullName()) %>" src="<%= HtmlUtil.escape(user.getPortraitURL(themeDisplay)) %>" />
 			</div>
 		</div>
@@ -98,9 +101,6 @@ if (Validator.isNotNull(portletId)) {
 		<div class="nameplate-content">
 			<h4 class="user-heading">
 				<%= HtmlUtil.escape(user.getFullName()) %>
-				<small class="user-subheading">
-
-				</small>
 			</h4>
 		</div>
 

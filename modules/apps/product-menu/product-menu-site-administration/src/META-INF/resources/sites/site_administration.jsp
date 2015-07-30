@@ -56,7 +56,7 @@ if (showSiteSelector) {
 	String selectSiteURL = HttpUtil.addParameter(currentURL, liferayPortletResponse.getNamespace() + "showSiteSelector", true);
 	%>
 
-	<aui:a cssClass="icon-arrow-left" href="<%= selectSiteURL.toString() %>" label="<%= themeDisplay.getScopeGroupName() %>" />
+	<aui:icon image="arrow-left" label="<%= themeDisplay.getScopeGroupName() %>" url="<%= selectSiteURL.toString() %>" />
 </c:if>
 
 <liferay-application-list:panel panelCategory="<%= panelCategory %>" />

@@ -15,7 +15,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="createDate" type="long" />
 
@@ -117,7 +116,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="createDate" type="long" />
 
@@ -169,10 +167,6 @@
 		<!-- Group instance -->
 
 		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 
@@ -247,7 +241,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 
 		<!-- Other fields -->
@@ -296,7 +289,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="createDate" type="long" />
 		<column name="modifiedDate" type="long" />
@@ -360,10 +352,6 @@
 
 		<column name="groupId" type="long" />
 
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Other fields -->
 
 		<column name="classNameId" type="long" />
@@ -409,7 +397,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="createDate" type="long" />
 
 		<!-- Other fields -->
@@ -471,7 +458,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="createDate" type="long" />
 		<column name="modifiedDate" type="long" />

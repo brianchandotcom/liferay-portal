@@ -45,10 +45,10 @@ public class AssetRendererFactoryRegistryUtilTest {
 	public void testGetAssetRendererFactories() {
 		String className = TestAssetRendererFactory.class.getName();
 
-		List<AssetRendererFactory> assetRendererFactories =
+		List<AssetRendererFactory<?>> assetRendererFactories =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(1);
 
-		for (AssetRendererFactory assetRendererFactory :
+		for (AssetRendererFactory<?> assetRendererFactory :
 				assetRendererFactories) {
 
 			Class<?> clazz = assetRendererFactory.getClass();
@@ -67,7 +67,7 @@ public class AssetRendererFactoryRegistryUtilTest {
 	public void testGetAssetRendererFactoryByClassName() {
 		String className = TestAssetRendererFactory.class.getName();
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 
@@ -83,7 +83,7 @@ public class AssetRendererFactoryRegistryUtilTest {
 		long classNameId = portalImpl.getClassNameId(
 			TestAssetRendererFactory.class);
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
 				getAssetRendererFactoryByClassNameId(classNameId);
 
@@ -95,7 +95,7 @@ public class AssetRendererFactoryRegistryUtilTest {
 
 	@Test
 	public void testGetAssetRendererFactoryByType() {
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(
 				TestAssetRendererFactory.class.getName());
 

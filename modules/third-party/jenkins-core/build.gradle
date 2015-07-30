@@ -1,0 +1,55 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+import com.liferay.gradle.util.FileUtil
+
+apply plugin: "com.liferay.patcher"
+
+String jenkinsCoreName = "jenkins-core"
+String jenkinsCoreVersion = "1.565.1"
+
+dependencies {
+	compile group: "org.jenkins-ci.main", name: jenkinsCoreName, optional, version: jenkinsCoreVersion
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+repositories {
+	maven {
+		url "http://repo.jenkins-ci.org/releases"
+	}
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+task patch(type: PatchTask)
+task war(type: Zip, overwrite: true)
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "hudson/tasks/junit/JUnitResultArchiver.java"
+	originalLibModuleName = jenkinsCoreName
+	originalLibSrcBaseUrl = "http://repo.jenkins-ci.org/releases/org/jenkins-ci/main"
+}
+
+war {
+	baseName = "jenkins-war"
+
+	exclude "META-INF/JENKINS.RSA"
+	exclude "WEB-INF/lib/${jenkinsCoreName}-${jenkinsCoreVersion}.jar"
+
+	extension = "war"
+
+	from zipTree(
+		{
+			FileUtil.get(project, "http://repo.jenkins-ci.org/releases/org/jenkins-ci/main/jenkins-war/${jenkinsCoreVersion}/jenkins-war-${jenkinsCoreVersion}.war")
+		})
+
+	into("WEB-INF/lib") {
+		from jar
+	}
+}

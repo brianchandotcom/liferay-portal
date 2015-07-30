@@ -13,6 +13,7 @@ FileTree fileTree = fileTree(rootDir) {
 
 		include "addons/portlet-configuration-icon/*/build.gradle"
 		include "apps/amazon-rankings/*/build.gradle"
+		include "apps/announcements/*/build.gradle"
 		include "apps/application-list/*/build.gradle"
 		include "apps/asset/*/build.gradle"
 		include "apps/blogs/*/build.gradle"
@@ -77,6 +78,7 @@ FileTree fileTree = fileTree(rootDir) {
 		include "core/*/build.gradle"
 		include "frontend/*/build.gradle"
 		include "portal-security/*/build.gradle"
+		include "portal-store/*/build.gradle"
 		include "portal/*/build.gradle"
 		include "util/pmd/build.gradle"
 		include "util/portal-tools-sample-sql-builder/build.gradle"

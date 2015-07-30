@@ -16,9 +16,6 @@ package com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
-
-import com.liferay.dynamic.data.mapping.taglib.servlet.ServletContextUtil;
 
 /**
  * @author Bruno Basto
@@ -123,19 +120,6 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("showEmptyFieldLabel", showEmptyFieldLabel);
 	}
 	
-	public void setServletContext(java.lang.Object servletContext) {
-		_servletContext = servletContext;
-
-		setScopedAttribute("servletContext", servletContext);
-	}
-	
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-
-		setServletContext(ServletContextUtil.getServletContext());
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -149,7 +133,6 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_repeatable = true;
 		_requestedLocale = null;
 		_showEmptyFieldLabel = true;
-		_servletContext = null;
 	}
 
 	@Override
@@ -173,7 +156,6 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "repeatable", _repeatable);
 		setNamespacedAttribute(request, "requestedLocale", _requestedLocale);
 		setNamespacedAttribute(request, "showEmptyFieldLabel", _showEmptyFieldLabel);
-		setNamespacedAttribute(request, "servletContext", _servletContext);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-ddm:html:";
@@ -193,6 +175,5 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _repeatable = true;
 	private java.util.Locale _requestedLocale = null;
 	private boolean _showEmptyFieldLabel = true;
-	private java.lang.Object _servletContext = null;
 
 }

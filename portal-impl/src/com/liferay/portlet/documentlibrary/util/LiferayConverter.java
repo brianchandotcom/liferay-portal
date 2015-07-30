@@ -421,15 +421,7 @@ public abstract class LiferayConverter {
 			originalBitRate = AUDIO_BIT_RATE_DEFAULT;
 		}
 
-		ICodec.ID iCodecID = outputICodec.getID();
-
-		if (iCodecID.equals(ICodec.ID.CODEC_ID_VORBIS)) {
-			if (originalBitRate < 64000) {
-				originalBitRate = 64000;
-			}
-		}
-
-		return originalBitRate;
+		return getVorbisBitRate(outputICodec, originalBitRate);
 	}
 
 	protected int getAudioEncodingChannels(
@@ -488,6 +480,15 @@ public abstract class LiferayConverter {
 	}
 
 	protected abstract IContainer getInputIContainer();
+
+	protected int getProperty(
+		ICodec outputICodec, int originalValue, int defaultValue,
+		int maxValue) {
+
+		originalValue = getProperty(originalValue, defaultValue, maxValue);
+
+		return getVorbisBitRate(outputICodec, originalValue);
+	}
 
 	protected int getProperty(
 		int originalValue, int defaultValue, int maxValue) {
@@ -571,6 +572,18 @@ public abstract class LiferayConverter {
 		}
 
 		return timeStampOffset;
+	}
+
+	protected int getVorbisBitRate(ICodec outputICodec, int originalValue) {
+		ICodec.ID iCodecID = outputICodec.getID();
+
+		if (iCodecID.equals(ICodec.ID.CODEC_ID_VORBIS)) {
+			if (originalValue < 64000) {
+				originalValue = 64000;
+			}
+		}
+
+		return originalValue;
 	}
 
 	protected boolean isKeyPacketFound(

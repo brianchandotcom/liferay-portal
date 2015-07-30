@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.util.impl;
 
+import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
@@ -38,7 +39,6 @@ import com.liferay.portal.util.WebKeys;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -171,7 +171,7 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 			WebKeys.THEME_DISPLAY);
 
 		DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute(
-			WebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE);
+			DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE);
 
 		long classPK = BeanParamUtil.getLong(ddmTemplate, request, "classPK");
 		long classNameId = BeanParamUtil.getLong(

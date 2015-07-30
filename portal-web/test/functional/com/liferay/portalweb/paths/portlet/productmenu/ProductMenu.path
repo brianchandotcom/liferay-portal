@@ -19,48 +19,10 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!-- PRODUCT MENU HEADER -->
-<tr>
 	<td>SITE_NAME_HEADER</td>
 	<td>//div[contains(@class,'sidebar-header')]//span[contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!-- PRODUCT MENU TABS -->
-<tr>
-	<td>TAB_ICON</td>
-	<td>//div[contains(.,'${tabName}')]/../div[contains(@class,'tab-icon')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITES_NAVIGATION</td>
-	<td>//div[contains(.,'Sites')]/../div[contains(@class,'tab-text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MY_SPACE_NAVIGATION</td>
-	<td>//div[contains(.,'My Space')]/../div[contains(@class,'tab-text')]</td>
-	<td></td>
-</tr>	
-<tr>
-	<td>CONTROL_PANEL_NAVIGATION</td>
-	<td>//div[contains(.,'Control Panel')]/../div[contains(@class,'tab-text')]</td>
-	<td></td>
-</tr>		
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!-- PRODUCT MENU FOOTER -->
 <tr>
 	<td>USER_PROFILE_PICTURE</td>
 	<td>//div[contains(@class,'user-icon')]</td>
@@ -76,34 +38,60 @@
 	<td></td>
 	<td></td>
 </tr>
-<!-- PRODUCT MENU PANEL -->
+<!--PRODUCT_MENU_TABS-->
 <tr>
-	<td>SITES_PANEL_TITLE</td>
+	<td>PRODUCT_MENU_TABS_TAB_ICON</td>
+	<td>//div[contains(.,'${tabName}')]/../div[contains(@class,'tab-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_MENU_TABS_SITES_NAVIGATION</td>
+	<td>//div[contains(.,'Sites')]/../div[contains(@class,'tab-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_MENU_TABS_MY_SPACE_NAVIGATION</td>
+	<td>//div[contains(.,'My Space')]/../div[contains(@class,'tab-text')]</td>
+	<td></td>
+</tr>	
+<tr>
+	<td>PRODUCT_MENU_TABS_CONTROL_PANEL_NAVIGATION</td>
+	<td>//div[contains(.,'Control Panel')]/../div[contains(@class,'tab-text')]</td>
+	<td></td>
+</tr>		
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PRODUCT_MENU_PANEL-->
+<tr>
+	<td>PRODUCT_MENU_PANEL_SITES_PANEL_TITLE</td>
 	<td>//div[contains(@id,'site_administration')]//h5[contains(.,'${key_portletCategoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MY_SPACE_PANEL_TITLE</td>
+	<td>PRODUCT_MENU_PANEL_MY_SPACE_PANEL_TITLE</td>
 	<td>//div[contains(@id,'my_space')]//h5[contains(.,'${key_portletCategoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CONTROL_PANEL_PANEL_TITLE</td>
+	<td>PRODUCT_MENU_PANEL_CONTROL_PANEL_PANEL_TITLE</td>
 	<td>//div[contains(@id,'control_panel')]//h5[contains(.,'${key_portletCategoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MENU_ITEM</td>
+	<td>PRODUCT_MENU_PANEL_MENU_ITEM</td>
 	<td>//div[contains(@class,'collapse in')]//a[contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_NAME</td>
+	<td>PRODUCT_MENU_PANEL_SITE_NAME</td>
 	<td>//div[contains(@id,'site_administration')]//a[contains(.,'${siteName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_SELECTOR</td>
+	<td>PRODUCT_MENU_PANEL_SITE_SELECTOR</td>
 	<td>//a[contains(@class,'arrow-left')]</td>
 	<td></td>
 </tr>

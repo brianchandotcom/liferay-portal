@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -41,6 +42,7 @@ import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.Serializable;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -64,7 +66,7 @@ public abstract class DDMTemplateLinkLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLinkLocalServiceUtil} to access the d d m template link local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalServiceUtil} to access the d d m template link local service.
 	 */
 
 	/**
@@ -354,13 +356,13 @@ public abstract class DDMTemplateLinkLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink",
+		persistedModelLocalServiceRegistry.register("com.liferay.dynamic.data.mapping.model.DDMTemplateLink",
 			ddmTemplateLinkLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink");
+			"com.liferay.dynamic.data.mapping.model.DDMTemplateLink");
 	}
 
 	/**

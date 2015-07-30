@@ -32,6 +32,6 @@ public interface DDMContent extends DDMContentModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.dynamic.data.mapping.model.impl.DDMContentImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 }

@@ -16,8 +16,10 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for DDMStructure. This utility wraps
@@ -38,7 +40,7 @@ public class DDMStructureServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.dynamicdatamapping.service.impl.DDMStructureServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMStructureServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.dynamic.data.mapping.model.DDMStructure addStructure(
 		long groupId, long parentStructureId, long classNameId,
@@ -655,14 +657,7 @@ public class DDMStructureServiceUtil {
 	}
 
 	public static DDMStructureService getService() {
-		if (_service == null) {
-			_service = (DDMStructureService)PortalBeanLocatorUtil.locate(DDMStructureService.class.getName());
-
-			ReferenceRegistry.registerReference(DDMStructureServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -672,5 +667,14 @@ public class DDMStructureServiceUtil {
 	public void setService(DDMStructureService service) {
 	}
 
-	private static DDMStructureService _service;
+	private static ServiceTracker<DDMStructureService, DDMStructureService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDMStructureServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<DDMStructureService, DDMStructureService>(bundle.getBundleContext(),
+				DDMStructureService.class, null);
+
+		_serviceTracker.open();
+	}
 }

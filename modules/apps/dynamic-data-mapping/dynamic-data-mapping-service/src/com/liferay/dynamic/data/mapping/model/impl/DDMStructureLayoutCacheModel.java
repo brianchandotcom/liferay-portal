@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
+
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -26,6 +27,7 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+
 import java.util.Date;
 
 /**
@@ -158,7 +160,7 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 		structureVersionId = objectInput.readLong();
 		definition = objectInput.readUTF();
 
-		_ddmFormLayout = (com.liferay.dynamic.data.mapping.model.DDMFormLayout)objectInput.readObject();
+		_ddmFormLayout = (com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout)objectInput.readObject();
 	}
 
 	@Override
@@ -207,5 +209,5 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 	public long modifiedDate;
 	public long structureVersionId;
 	public String definition;
-	public com.liferay.dynamic.data.mapping.model.DDMFormLayout _ddmFormLayout;
+	public com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout _ddmFormLayout;
 }

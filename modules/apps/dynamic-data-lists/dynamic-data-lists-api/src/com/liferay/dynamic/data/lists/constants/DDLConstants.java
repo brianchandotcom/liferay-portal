@@ -12,13 +12,27 @@
  * details.
  */
 
-package com.liferay.portlet.trash;
+package com.liferay.dynamic.data.lists.constants;
 
 /**
- * @author Zsolt Berentey
+ * @author Marcellus Tavares
+ * @author Eduardo Lundgren
  */
-public class TrashEntryConstants {
+public class DDLConstants {
 
-	public static final int DEFAULT_CONTAINER_ID = -1;
+	public static final String RESERVED_DDM_STRUCTURE_ID =
+		"reserved_ddm_structure_id";
+
+	public static final String RESERVED_DDM_TEMPLATE_ID =
+		"reserved_ddm_template_id";
+
+	public static final String RESERVED_RECORD_SET_DESCRIPTION =
+		"reserved_record_set_description";
+
+	public static final String RESERVED_RECORD_SET_ID =
+		"reserved_record_set_id";
+
+	public static final String RESERVED_RECORD_SET_NAME =
+		"reserved_record_set_name";
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.util;
+package com.liferay.portlet.shopping.constants;
 
 /**
  * @author Eduardo Garcia

@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.portlet.trash.model;
 
 /**
- * @author Adolfo Pérez
+ * @author Zsolt Berentey
  */
-public class DLConstants {
+public class TrashEntryConstants {
 
-	public static final String SERVICE_NAME =
-		"com.liferay.portlet.documentlibrary";
+	public static final int DEFAULT_CONTAINER_ID = -1;
 
 }

@@ -12,27 +12,13 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.util;
+package com.liferay.portlet.blogs.constants;
 
 /**
- * @author Marcellus Tavares
- * @author Eduardo Lundgren
+ * @author Iván Zaera
  */
-public class DDLConstants {
+public class BlogsConstants {
 
-	public static final String RESERVED_DDM_STRUCTURE_ID =
-		"reserved_ddm_structure_id";
-
-	public static final String RESERVED_DDM_TEMPLATE_ID =
-		"reserved_ddm_template_id";
-
-	public static final String RESERVED_RECORD_SET_DESCRIPTION =
-		"reserved_record_set_description";
-
-	public static final String RESERVED_RECORD_SET_ID =
-		"reserved_record_set_id";
-
-	public static final String RESERVED_RECORD_SET_NAME =
-		"reserved_record_set_name";
+	public static final String SERVICE_NAME = "com.liferay.portlet.blogs";
 
 }

@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.util;
+package com.liferay.portlet.documentlibrary.constants;
 
 /**
- * @author Iván Zaera
+ * @author Adolfo Pérez
  */
-public class BlogsConstants {
+public class DLConstants {
 
-	public static final String SERVICE_NAME = "com.liferay.portlet.blogs";
+	public static final String SERVICE_NAME =
+		"com.liferay.portlet.documentlibrary";
 
 }

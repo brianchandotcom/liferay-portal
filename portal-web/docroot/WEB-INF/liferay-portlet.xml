@@ -322,12 +322,6 @@
 		<system>true</system>
 	</portlet>
 	<portlet>
-		<portlet-name>162</portlet-name>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
-		<control-panel-entry-weight>6.0</control-panel-entry-weight>
-	</portlet>
-	<portlet>
 		<portlet-name>164</portlet-name>
 		<icon>/html/icons/login.png</icon>
 		<parent-struts-path>login</parent-struts-path>

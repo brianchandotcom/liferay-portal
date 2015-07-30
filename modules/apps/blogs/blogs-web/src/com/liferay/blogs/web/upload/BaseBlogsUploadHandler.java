@@ -49,7 +49,7 @@ import javax.portlet.PortletResponse;
 public abstract class BaseBlogsUploadHandler extends BaseUploadHandler {
 
 	@Override
-	public void checkPermission(
+	protected void checkPermission(
 			long groupId, PermissionChecker permissionChecker)
 		throws PortalException {
 

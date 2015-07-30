@@ -1,6 +1,13 @@
 AUI.add(
 	'liferay-social-bookmarks',
 	function(A) {
+
+		/**
+		 * The Social Bookmarks Component. 
+		 *
+		 * @module liferay-social-bookmarks
+		 */
+
 		var NAME = 'social-bookmarks';
 
 		var SHARE_WINDOW_HEIGHT = 436;
@@ -9,19 +16,67 @@ AUI.add(
 
 		var WIN = A.getWin();
 
+		/**
+		 * A base class for `A.SocialBookmarks`.
+		 *
+		 * @class A.SocialBookmarks
+		 * @extends Base
+		 * @param {Object} config object literal specifying
+		 * widget configuration properties.
+		 * @constructor
+		 */
 		var SocialBookmarks = A.Component.create(
 			{
+
+				/**
+				 * A static property used to define the default attribute
+				 * configuration for `SocialBookmarks`.
+				 *
+				 * @property ATTRS
+				 * @type Object
+				 * @static
+				 */
 				ATTRS: {
+
+					/**
+					 * The direct descendant of a widget's bounding box
+					 * and houses its content.
+					 *
+					 * @attribute contentBox 
+					 * @type Object
+					 */
 					contentBox: {
 						setter: A.one
 					}
 				},
 
+				/**
+				 * Extend the AUI Base module. 
+				 *
+				 * @property EXTENDS
+				 * @type Object
+				 * @static
+				 */
 				EXTENDS: A.Base,
 
+				/**
+				 * Static property provides a string to identify the class. 
+				 *
+				 * @property NAME
+				 * @type String
+				 * @static
+				 */
 				NAME: NAME,
 
 				prototype: {
+
+					/**
+				 	 * Construction lifecycle implementation executed during 
+                                         * `SocialBookmarks` instantiation.
+				 	 *
+				 	 * @method initializer
+				 	 * @protected
+				 	 */
 					initializer: function() {
 						var instance = this;
 

@@ -13,7 +13,6 @@
 	<classpathentry kind="lib" path="/portal-master/lib/portal/bnd.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-logging.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/log4j.jar" />
-	<classpathentry kind="lib" path="/portal-master/lib/portal/spring-context.jar" />
 	<classpathentry kind="lib" path="/portal-master/portal-service/portal-service.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />

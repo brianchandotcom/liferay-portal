@@ -128,7 +128,7 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 		return basicAuthHeaderAutoLoginConfiguration.enabled();
 	}
 
-	@Reference(unset = "-")
+	@Reference(unbind = "-")
 	protected void setModuleConfigurationFactory(
 		ModuleConfigurationFactory moduleConfigurationFactory) {
 
@@ -150,7 +150,7 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 			return basicAuthHeaderAutoLoginConfiguration;
 		}
 		catch (ModuleConfigurationException mce) {
-			_log.error("Unable to get basic auth header configuration", se);
+			_log.error("Unable to get basic auth header configuration", mce);
 		}
 
 		return null;

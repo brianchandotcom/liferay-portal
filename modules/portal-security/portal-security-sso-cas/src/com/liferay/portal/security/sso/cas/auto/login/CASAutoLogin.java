@@ -166,7 +166,7 @@ public class CASAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	@Reference(unset = "-")
+	@Reference(unbind = "-")
 	protected void setModuleConfigurationFactory(
 		ModuleConfigurationFactory moduleConfigurationFactory) {
 

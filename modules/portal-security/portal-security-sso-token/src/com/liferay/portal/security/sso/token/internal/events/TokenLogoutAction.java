@@ -14,12 +14,12 @@
 
 package com.liferay.portal.security.sso.token.internal.events;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.token.events.LogoutProcessor;
@@ -57,7 +57,7 @@ public class TokenLogoutAction extends Action {
 			long companyId = PortalUtil.getCompanyId(request);
 
 			TokenConfiguration tokenCompanyServiceSettings =
-				_settingsFactory.getSettings(
+				_moduleConfigurationFactory.getConfiguration(
 					TokenConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, TokenConstants.SERVICE_NAME));
@@ -107,9 +107,11 @@ public class TokenLogoutAction extends Action {
 			logoutProcessor.getLogoutProcessorType(), logoutProcessor);
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setModuleConfigurationFactory(
+		ModuleConfigurationFactory moduleConfigurationFactory) {
+
+		_moduleConfigurationFactory = moduleConfigurationFactory;
 	}
 
 	protected void unsetLogoutProcessor(LogoutProcessor logoutProcessor) {
@@ -121,6 +123,6 @@ public class TokenLogoutAction extends Action {
 
 	private final Map<LogoutProcessorType, LogoutProcessor> _logoutProcessors =
 		new ConcurrentHashMap<>();
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
 
 }

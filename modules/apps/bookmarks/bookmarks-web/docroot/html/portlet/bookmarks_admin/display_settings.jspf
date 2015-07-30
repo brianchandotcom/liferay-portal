@@ -33,11 +33,11 @@
 				<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
 			</div>
 
-			<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= bookmarksGroupServiceSettings.showFoldersSearch() %>" />
+			<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= bookmarksGroupServiceConfiguration.showFoldersSearch() %>" />
 
-			<aui:input name="preferences--showSubfolders--" type="checkbox" value="<%= bookmarksGroupServiceSettings.showSubfolders() %>" />
+			<aui:input name="preferences--showSubfolders--" type="checkbox" value="<%= bookmarksGroupServiceConfiguration.showSubfolders() %>" />
 
-			<aui:input name="preferences--foldersPerPage--" size="2" type="text" value="<%= bookmarksGroupServiceSettings.foldersPerPage() %>" />
+			<aui:input name="preferences--foldersPerPage--" size="2" type="text" value="<%= bookmarksGroupServiceConfiguration.foldersPerPage() %>" />
 
 			<aui:field-wrapper label="show-columns">
 
@@ -82,9 +82,9 @@
 
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="bookmarksListingPanel" persistState="<%= true %>" title="bookmarks-listing">
 		<aui:fieldset>
-			<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= bookmarksGroupServiceSettings.enableRelatedAssets() %>" />
+			<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= bookmarksGroupServiceConfiguration.enableRelatedAssets() %>" />
 
-			<aui:input label="documents-per-page" name="preferences--entriesPerPage--" size="2" type="text" value="<%= bookmarksGroupServiceSettings.entriesPerPage() %>" />
+			<aui:input label="documents-per-page" name="preferences--entriesPerPage--" size="2" type="text" value="<%= bookmarksGroupServiceConfiguration.entriesPerPage() %>" />
 
 			<aui:field-wrapper label="show-columns">
 

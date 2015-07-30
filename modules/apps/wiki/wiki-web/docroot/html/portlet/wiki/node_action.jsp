@@ -69,16 +69,16 @@ WikiNode node = (WikiNode)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= wikiGroupServiceSettings.enableRss() %>">
+	<c:if test="<%= wikiGroupServiceOverriddenConfiguration.enableRss() %>">
 		<liferay-ui:rss
-			delta="<%= GetterUtil.getInteger(wikiGroupServiceSettings.rssDelta()) %>"
-			displayStyle="<%= wikiGroupServiceSettings.rssDisplayStyle() %>"
-			feedType="<%= wikiGroupServiceSettings.rssFeedType() %>"
+			delta="<%= GetterUtil.getInteger(wikiGroupServiceOverriddenConfiguration.rssDelta()) %>"
+			displayStyle="<%= wikiGroupServiceOverriddenConfiguration.rssDisplayStyle() %>"
+			feedType="<%= wikiGroupServiceOverriddenConfiguration.rssFeedType() %>"
 			url='<%= themeDisplay.getPathMain() + "/wiki/rss?nodeId=" + node.getNodeId() %>'
 		/>
 	</c:if>
 
-	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) && (wikiGroupServiceSettings.emailPageAddedEnabled() || wikiGroupServiceSettings.emailPageUpdatedEnabled()) %>">
+	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) && (wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() || wikiGroupServiceOverriddenConfiguration.emailPageUpdatedEnabled()) %>">
 		<c:choose>
 			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), WikiNode.class.getName(), node.getNodeId()) %>">
 				<portlet:actionURL var="unsubscribeURL">

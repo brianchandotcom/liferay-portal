@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.auto.login.request.parameter.settings;
 
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.security.auto.login.request.parameter.configuration.RequestParameterAutoLoginConfiguration;
 import com.liferay.portal.security.auto.login.request.parameter.constants.RequestParameterAutoLoginConstants;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component
 public class RequestParameterAutoLoginCompanyServiceSettingsIdMapping
-	implements SettingsIdMapping {
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
@@ -33,7 +33,7 @@ public class RequestParameterAutoLoginCompanyServiceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return RequestParameterAutoLoginConstants.SERVICE_NAME;
 	}
 

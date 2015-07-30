@@ -647,7 +647,7 @@
 			<finder-column name="kaleoDefinitionId" />
 		</finder>
 		<finder name="KaleoInstanceId" return-type="Collection">
-			<finder-column name="kaleoInstanceId" />
+			<finder-column name="kaleoInstanceId" />f
 		</finder>
 		<finder name="kaleoTaskInstanceTokenId" return-type="Collection">
 			<finder-column name="kaleoTaskInstanceTokenId" />

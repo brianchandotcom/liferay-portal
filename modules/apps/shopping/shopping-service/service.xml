@@ -212,13 +212,13 @@
 		<finder name="LargeImageId" return-type="ShoppingItem">
 			<finder-column name="largeImageId" />
 		</finder>
-		<finder name="G_C" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="categoryId" />
-		</finder>
 		<finder name="C_S" return-type="ShoppingItem" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="sku" />
+		</finder>
+		<finder name="G_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="categoryId" />
 		</finder>
 
 		<!-- References -->

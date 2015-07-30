@@ -149,11 +149,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
+		</finder>
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
 		</finder>
 		<finder name="RepositoryId" return-type="Collection">
 			<finder-column name="repositoryId" />
@@ -353,15 +353,15 @@
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
 		</finder>
-		<finder name="G_U_A" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="userId" />
-			<finder-column name="active" />
-		</finder>
 		<finder name="C_U_F" return-type="DLFileRank">
 			<finder-column name="companyId" />
 			<finder-column name="userId" />
 			<finder-column name="fileEntryId" />
+		</finder>
+		<finder name="G_U_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="active" />
 		</finder>
 
 		<!-- References -->
@@ -407,13 +407,13 @@
 		<finder name="ToFileEntryId" return-type="Collection">
 			<finder-column name="toFileEntryId" />
 		</finder>
-		<finder name="G_F" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="folderId" />
-		</finder>
 		<finder name="C_NotS" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="status" comparator="!=" />
+		</finder>
+		<finder name="G_F" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="folderId" />
 		</finder>
 		<finder name="G_F_A" return-type="Collection">
 			<finder-column name="groupId" />
@@ -573,22 +573,22 @@
 
 		<!-- Finder methods -->
 
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
+		</finder>
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
 		</finder>
 		<finder name="RepositoryId" return-type="Collection">
 			<finder-column name="repositoryId" />
 		</finder>
-		<finder name="G_P" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="parentFolderId" />
-		</finder>
 		<finder name="C_NotS" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="status" comparator="!=" />
+		</finder>
+		<finder name="G_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="parentFolderId" />
 		</finder>
 		<finder name="R_M" return-type="DLFolder">
 			<finder-column name="repositoryId" />

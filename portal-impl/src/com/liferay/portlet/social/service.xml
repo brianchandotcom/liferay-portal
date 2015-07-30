@@ -41,9 +41,6 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
@@ -58,6 +55,9 @@
 		</finder>
 		<finder name="ReceiverUserId" return-type="Collection">
 			<finder-column name="receiverUserId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
 		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />
@@ -407,9 +407,6 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
 		<finder name="UserId1" return-type="Collection">
 			<finder-column name="userId1" />
 		</finder>
@@ -419,9 +416,8 @@
 		<finder name="Type" return-type="Collection">
 			<finder-column name="type" />
 		</finder>
-		<finder name="C_T" return-type="Collection">
+		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="type" />
 		</finder>
 		<finder name="U1_U2" return-type="Collection">
 			<finder-column name="userId1" />
@@ -433,6 +429,10 @@
 		</finder>
 		<finder name="U2_T" return-type="Collection">
 			<finder-column name="userId2" />
+			<finder-column name="type" />
+		</finder>
+		<finder name="C_T" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column name="type" />
 		</finder>
 		<finder name="U1_U2_T" return-type="SocialRelation" unique="true">
@@ -479,14 +479,14 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
 		<finder name="ReceiverUserId" return-type="Collection">
 			<finder-column name="receiverUserId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
 		</finder>
 		<finder name="U_S" return-type="Collection">
 			<finder-column name="userId" />

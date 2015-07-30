@@ -32,11 +32,11 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
 		<finder name="RecordSetId" return-type="Collection">
 			<finder-column name="recordSetId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
 		</finder>
 		<finder name="R_U" return-type="Collection">
 			<finder-column name="recordSetId" />

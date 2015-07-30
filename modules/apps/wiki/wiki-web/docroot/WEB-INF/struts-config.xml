@@ -67,6 +67,8 @@
 			<forward name="portlet.wiki.view_page" path="/portlet/wiki/select_version.jsp" />
 		</action>
 
+		<action path="/wiki/upload_image" type="com.liferay.wiki.web.wiki.portlet.action.UploadImageAction" />
+
 		<action path="/wiki/view" type="com.liferay.wiki.web.wiki.portlet.action.ViewPageAction">
 			<forward name="portlet.wiki.error" path="/portlet/wiki/error.jsp" />
 			<forward name="portlet.wiki.view_categorized_pages" path="/portlet/wiki/view_categorized_pages.jsp" />

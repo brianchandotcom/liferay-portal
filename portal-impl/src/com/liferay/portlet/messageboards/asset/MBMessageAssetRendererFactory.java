@@ -43,7 +43,8 @@ import javax.portlet.WindowStateException;
 		"search.asset.type=com.liferay.portlet.messageboards.model.MBMessage"
 	}
 )
-public class MBMessageAssetRendererFactory extends BaseAssetRendererFactory {
+public class MBMessageAssetRendererFactory
+	extends BaseAssetRendererFactory<MBMessage> {
 
 	public static final String TYPE = "message";
 
@@ -53,7 +54,7 @@ public class MBMessageAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<MBMessage> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);

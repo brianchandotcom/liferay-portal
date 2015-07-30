@@ -69,6 +69,8 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
+		<execute function="AssertClick" locator1="CPSitepages#NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
+
 		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_ADD_PAGE" value1="Add Page" />
 
 		<execute function="Type#mouseOverFocusType" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${pageName}" />
@@ -196,6 +198,18 @@
 		<execute function="AssertTextEquals" locator1="CPSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="changeSiteScope">
+		<execute function="AssertClick" locator1="ProductMenu#SITES_NAVIGATION" value1="Sites" />
+
+		<execute function="Click" locator1="ProductMenu#SITE_SELECTOR" />
+
+		<var name="key_portletCategoryName" value="${portletCategoryName}" />
+
+		<execute function="AssertClick" locator1="ProductMenu#SITES_PANEL_TITLE" value1="${portletCategoryName}" />
+
+		<execute function="AssertClick" locator1="ProductMenu#SITE_NAME" value1="${siteName}" />
+	</command>
+
 	<command name="deleteFriendlyURLPG">
 		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
 
@@ -288,21 +302,23 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN_DROP_DOWN_BUTTON" value1="Admin" />
-		<execute function="AssertClick" locator1="Dockbar#${portletCategoryKey}" value1="${portletCategoryName}" />
+		<execute function="AssertClick" locator1="ProductMenu#SITES_NAVIGATION" value1="Sites" />
 
 		<if>
 			<isset var="siteScopeName" />
 			<then>
-				<execute function="Click" locator1="Home#SCOPE_SELECTOR" />
-
-				<var name="key_siteScopeName" value="${siteScopeName}" />
-
-				<execute function="Click" locator1="Home#SCOPE_SELECTOR_MENULIST_ITEM" />
+				<execute macro="Page#changeSiteScope">
+					<var name="portletCategoryName" value="My Sites" />
+					<var name="siteName" value="{siteScopeName}" />
+				</execute>
 			</then>
 		</if>
 
+		<execute function="AssertClick" locator1="ProductMenu#SITES_NAVIGATION" value1="Sites" />
+
 		<var name="key_portletCategoryName" value="${portletCategoryName}" />
+
+		<execute function="AssertClick" locator1="ProductMenu#SITES_PANEL_TITLE" value1="${portletCategoryName}" />
 
 		<if>
 			<not>
@@ -324,7 +340,7 @@
 					<then>
 						<var name="key_portletName" value="${portletName}" />
 
-						<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+						<execute function="AssertClick" locator1="ProductMenu#MENU_ITEM" value1="${portletName}" />
 					</then>
 				</if>
 			</then>
@@ -448,15 +464,69 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
-		<execute function="AssertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<var name="appsPortletList" value="App Manager,Purchased,Store,Plugins Configuration,License Manager" />
+		<var name="configurationPortletList" value="Portal Settings,Custom Fields,Server Administration,Portal Instances,Configuration Admin,Server Access Control Panel" />
+		<var name="sitesPortletList" value="Sites,Site Templates,Page Templates" />
+		<var name="usersPortletList" value="Users and Organizations,User Groups,Roles,Password Policies,Monitoring" />
+
+		<for list="${usersPortletList}" param="usersPortletName">
+			<if>
+				<equals arg1="${portletName}" arg2="${usersPortletName}" />
+				<then>
+					<var name="portletCategoryName" value="Users" />
+				</then>
+			</if>
+		</for>
+
+		<for list="${sitesPortletList}" param="sitesPortletName">
+			<if>
+				<equals arg1="${portletName}" arg2="${sitesPortletName}" />
+				<then>
+					<var name="portletCategoryName" value="Administration" />
+				</then>
+			</if>
+		</for>
+
+		<for list="${appsPortletList}" param="appsPortletName">
+			<if>
+				<equals arg1="${portletName}" arg2="${appsPortletName}" />
+				<then>
+					<var name="portletCategoryName" value="Apps" />
+				</then>
+			</if>
+		</for>
+
+		<for list="${configurationPortletList}" param="configurationPortletName">
+			<if>
+				<equals arg1="${portletName}" arg2="${configurationPortletName}" />
+				<then>
+					<var name="portletCategoryName" value="Configuration" />
+				</then>
+			</if>
+		</for>
+
+		<var name="key_portletCategoryName" value="${portletCategoryName}" />
+
+		<if>
+			<equals arg1="${portletCategoryName}" arg2="Administration" />
+			<then>
+				<execute function="Click" locator1="ProductMenu#SITE_SELECTOR" />
+
+				<execute function="AssertClick" locator1="ProductMenu#SITES_PANEL_TITLE" value1="Administration" />
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="ProductMenu#CONTROL_PANEL_NAVIGATION" value1="Sites" />
+
+				<execute function="AssertClick" locator1="ProductMenu#CONTROL_PANEL_PANEL_TITLE" value1="${portletCategoryName}" />
+			</else>
+		</if>
 
 		<if>
 			<isset var="portletName" />
 			<then>
 				<var name="key_portletName" value="${portletName}" />
 
-				<execute function="Click#click" locator1="Home#CONTROL_PANEL_NAVIGATION" />
+				<execute function="AssertClick" locator1="ProductMenu#MENU_ITEM" value1="${portletName}" />
 			</then>
 		</if>
 	</command>
@@ -795,6 +865,33 @@
 				</execute>
 			</then>
 		</if>
+	</command>
+
+	<command name="tearDownCP" summary="Delete all pages except the Welcome Page">
+		<execute macro="Page#gotoPagesCP">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="portletName" value="Site Pages" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="CPSitepages#NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
+
+		<while>
+			<condition function="IsElementPresent" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_2" />
+			<then>
+				<execute function="Click" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_2" />
+
+				<execute function="ClickNoError" locator1="CPSitepages#TOOLBAR_DELETE" />
+
+				<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete the selected page?" />
+			</then>
+		</while>
 	</command>
 
 	<command name="tearDownPG" summary="Delete all pages except the Welcome Page">

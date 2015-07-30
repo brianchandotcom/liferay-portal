@@ -14,13 +14,23 @@
 
 package com.liferay.shopping.model.impl;
 
+import com.liferay.portal.configuration.ConfigurationFactoryImpl;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Raymond Augé
  */
 public class ShoppingItemImplTest {
+
+	@Before
+	public void setup() {
+		ConfigurationFactoryUtil.setConfigurationFactory(
+			new ConfigurationFactoryImpl());
+	}
 
 	@Test
 	public void testInfiniteStock() {

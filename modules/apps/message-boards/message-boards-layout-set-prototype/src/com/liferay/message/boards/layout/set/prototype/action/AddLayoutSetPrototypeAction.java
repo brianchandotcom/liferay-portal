@@ -135,7 +135,14 @@ public class AddLayoutSetPrototypeAction {
 		target = "(javax.portlet.name=com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet)",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	protected void setLayoutSetPrototypePortlet(Portlet portlet) {
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_message_boards_web_portlet_MessageBoardsPortlet)",
+		unbind = "-"
+	)
+	protected void setMessageBoardsPortlet(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")

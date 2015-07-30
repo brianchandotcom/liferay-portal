@@ -2167,3 +2167,26 @@ it originated from the old Admin portlet. Since the Portal Instances portlet
 is now extracted to its own module, the old name no longer resembles its usage.
 
 ---------------------------------------
+
+### Remove Vaadin 6 from Liferay core
+- **Date:** 2015-Jul-31
+- **JIRA Ticket:** LPS-57525
+
+#### What changed?
+
+Bundled Vaadin 6.xx jar file removed from portal core.
+
+#### Who is affected?
+
+Developer who are creating Vaadin portlet applications
+
+#### How should I update my code?
+
+You should upgrade to Vaadin 7 or bundle your vaadin.jar to your plugin or 
+deploy Vaadin libraries to Liferay's OSGi container.
+
+#### Why was this change made?
+
+Vaadin 6.x is out dated. Everyone should use Vaadin 7.x
+
+---------------------------------------

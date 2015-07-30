@@ -82,7 +82,7 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 		%>
 
 		<liferay-ui:search-container-results>
-			<%@ include file="/user_search_results.jspf" %>
+			<%@ include file="/user_search_results_database.jspf" %>
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row

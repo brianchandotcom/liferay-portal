@@ -94,7 +94,7 @@ portletURL.setParameter("tabs3", tabs3);
 				%>
 
 				<liferay-ui:search-container-results>
-					<%@ include file="/user_search_results.jspf" %>
+					<%@ include file="/user_search_results_database.jspf" %>
 				</liferay-ui:search-container-results>
 
 				<liferay-ui:search-container-row
@@ -180,7 +180,7 @@ portletURL.setParameter("tabs3", tabs3);
 				%>
 
 				<liferay-ui:search-container-results>
-					<%@ include file="/organization_search_results.jspf" %>
+					<%@ include file="/organization_search_results_database.jspf" %>
 				</liferay-ui:search-container-results>
 
 				<liferay-ui:search-container-row

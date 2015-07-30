@@ -39,7 +39,7 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
-import com.liferay.wiki.settings.WikiGroupServiceSettings;
+import com.liferay.wiki.settings.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 
 import java.util.ArrayList;
@@ -334,14 +334,14 @@ public class DefaultWikiListPagesDisplayContext
 	protected void addSubscriptionMenuItem(
 		List<MenuItem> menuItems, WikiPage wikiPage) {
 
-		WikiGroupServiceSettings wikiGroupServiceSettings =
+		WikiGroupServiceOverriddenConfiguration wikiGroupServiceConfiguration =
 			_wikiRequestHelper.getWikiGroupServiceSettings();
 
 		if (!WikiPagePermissionChecker.contains(
 				_wikiRequestHelper.getPermissionChecker(), wikiPage,
 				ActionKeys.SUBSCRIBE) ||
-			(!wikiGroupServiceSettings.emailPageAddedEnabled() &&
-			 !wikiGroupServiceSettings.emailPageUpdatedEnabled())) {
+			(!wikiGroupServiceConfiguration.emailPageAddedEnabled() &&
+			 !wikiGroupServiceConfiguration.emailPageUpdatedEnabled())) {
 
 			return;
 		}

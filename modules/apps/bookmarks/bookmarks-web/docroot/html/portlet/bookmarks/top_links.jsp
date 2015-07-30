@@ -61,7 +61,7 @@ portletURL.setParameter("tag", StringPool.BLANK);
 		</c:if>
 	</aui:nav>
 
-	<c:if test="<%= bookmarksGroupServiceSettings.showFoldersSearch() %>">
+	<c:if test="<%= bookmarksGroupServiceConfiguration.showFoldersSearch() %>">
 		<liferay-portlet:renderURL varImpl="searchURL">
 			<portlet:param name="struts_action" value="/bookmarks/search" />
 		</liferay-portlet:renderURL>

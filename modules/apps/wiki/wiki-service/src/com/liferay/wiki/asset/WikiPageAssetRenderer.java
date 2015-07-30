@@ -14,11 +14,11 @@
 
 package com.liferay.wiki.asset;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -28,6 +28,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
@@ -35,8 +36,7 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
-import com.liferay.wiki.service.util.WikiServiceComponentProvider;
-import com.liferay.wiki.settings.WikiGroupServiceSettings;
+import com.liferay.wiki.settings.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.util.WikiUtil;
 
 import java.util.Date;
@@ -74,14 +74,9 @@ public class WikiPageAssetRenderer
 	public WikiPageAssetRenderer(WikiPage page) throws PortalException {
 		_page = page;
 
-		WikiServiceComponentProvider wikiServiceComponentProvider =
-			WikiServiceComponentProvider.getWikiServiceComponentProvider();
-
-		SettingsFactory settingsFactory =
-			wikiServiceComponentProvider.getSettingsFactory();
-
-		_wikiGroupServiceSettings = settingsFactory.getSettings(
-			WikiGroupServiceSettings.class,
+		_wikiGroupServiceConfiguration =
+			ModuleConfigurationFactoryUtil.getConfiguration(
+				WikiGroupServiceOverriddenConfiguration.class,
 			new GroupServiceSettingsLocator(
 				page.getGroupId(), WikiConstants.SERVICE_NAME));
 	}
@@ -98,7 +93,7 @@ public class WikiPageAssetRenderer
 
 	@Override
 	public String getDiscussionPath() {
-		if (_wikiGroupServiceSettings.pageCommentsEnabled()) {
+		if (_wikiGroupServiceConfiguration.pageCommentsEnabled()) {
 			return "edit_page_discussion";
 		}
 		else {
@@ -331,6 +326,6 @@ public class WikiPageAssetRenderer
 	}
 
 	private final WikiPage _page;
-	private final WikiGroupServiceSettings _wikiGroupServiceSettings;
+	private final WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

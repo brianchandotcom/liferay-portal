@@ -37,7 +37,6 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.impl.JournalArticleDisplayImpl;
 import com.liferay.journal.service.base.JournalArticleLocalServiceBaseImpl;
 import com.liferay.journal.service.permission.JournalPermission;
-import com.liferay.journal.service.util.JournalServiceComponentProvider;
 import com.liferay.journal.social.JournalActivityKeys;
 import com.liferay.journal.util.JournalContentUtil;
 import com.liferay.journal.util.comparator.ArticleIDComparator;
@@ -45,6 +44,8 @@ import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -78,8 +79,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
@@ -7000,16 +6999,9 @@ public class JournalArticleLocalServiceImpl
 
 	protected JournalGroupServiceConfiguration
 			getJournalGroupServiceConfiguration(long groupId)
-		throws SettingsException {
+		throws ModuleConfigurationException {
 
-		JournalServiceComponentProvider journalServiceComponentProvider =
-			JournalServiceComponentProvider.
-				getJournalServiceComponentProvider();
-
-		SettingsFactory settingsFactory =
-			journalServiceComponentProvider.getSettingsFactory();
-
-		return settingsFactory.getSettings(
+		return moduleConfigurationFactory.getConfiguration(
 			JournalGroupServiceConfiguration.class,
 			new GroupServiceSettingsLocator(
 				groupId, JournalConstants.SERVICE_NAME));
@@ -7794,6 +7786,9 @@ public class JournalArticleLocalServiceImpl
 
 	@ServiceReference(type = DDMTemplateLocalService.class)
 	protected DDMTemplateLocalService ddmTemplateLocalService;
+
+	@ServiceReference(type = ModuleConfigurationFactory.class)
+	protected ModuleConfigurationFactory moduleConfigurationFactory;
 
 	private static final long _JOURNAL_ARTICLE_CHECK_INTERVAL =
 		JournalServiceConfigurationValues.JOURNAL_ARTICLE_CHECK_INTERVAL

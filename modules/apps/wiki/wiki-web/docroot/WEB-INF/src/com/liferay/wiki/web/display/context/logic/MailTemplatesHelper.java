@@ -31,7 +31,7 @@ public class MailTemplatesHelper {
 	public MailTemplatesHelper(WikiRequestHelper wikiRequestHelper) {
 		_wikiRequestHelper = wikiRequestHelper;
 
-		_wikiGroupServiceConfiguration =
+		_wikiGroupServiceOverriddenConfiguration =
 			wikiRequestHelper.getWikiGroupServiceSettings();
 	}
 
@@ -102,10 +102,12 @@ public class MailTemplatesHelper {
 					"previous-version"));
 		definitionTerms.put(
 			"[$FROM_ADDRESS$]",
-			HtmlUtil.escape(_wikiGroupServiceConfiguration.emailFromAddress()));
+			HtmlUtil.escape(
+				_wikiGroupServiceOverriddenConfiguration.emailFromAddress()));
 		definitionTerms.put(
 			"[$FROM_NAME$]",
-			HtmlUtil.escape(_wikiGroupServiceConfiguration.emailFromName()));
+			HtmlUtil.escape(
+				_wikiGroupServiceOverriddenConfiguration.emailFromName()));
 		definitionTerms.put(
 			"[$NODE_NAME$]",
 			LanguageUtil.get(
@@ -176,7 +178,7 @@ public class MailTemplatesHelper {
 	}
 
 	private final WikiGroupServiceOverriddenConfiguration
-		_wikiGroupServiceConfiguration;
+		_wikiGroupServiceOverriddenConfiguration;
 	private final WikiRequestHelper _wikiRequestHelper;
 
 }

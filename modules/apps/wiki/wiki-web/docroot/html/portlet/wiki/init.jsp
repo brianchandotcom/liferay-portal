@@ -48,6 +48,7 @@ page import="com.liferay.wiki.service.WikiPageServiceUtil" %><%@
 page import="com.liferay.wiki.service.permission.WikiNodePermissionChecker" %><%@
 page import="com.liferay.wiki.service.permission.WikiPagePermissionChecker" %><%@
 page import="com.liferay.wiki.service.permission.WikiResourcePermissionChecker" %><%@
+page import="com.liferay.wiki.settings.WikiGroupServiceOverriddenConfiguration" %><%@
 page import="com.liferay.wiki.social.WikiActivityKeys" %><%@
 page import="com.liferay.wiki.util.WikiCacheUtil" %><%@
 page import="com.liferay.wiki.util.WikiPageAttachmentsUtil" %><%@
@@ -66,7 +67,7 @@ page import="com.liferay.wiki.web.util.WikiWebComponentProvider" %>
 WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);
 
 WikiPortletInstanceOverriddenConfiguration wikiPortletInstanceConfiguration = wikiRequestHelper.getWikiPortletInstanceConfiguration();
-WikiGroupServiceConfiguration wikiGroupServiceOverriddenConfiguration = wikiRequestHelper.getWikiGroupServiceSettings();
+WikiGroupServiceOverriddenConfiguration wikiGroupServiceOverriddenConfiguration = wikiRequestHelper.getWikiGroupServiceSettings();
 
 WikiPortletInstanceSettingsHelper wikiPortletInstanceSettingsHelper = new WikiPortletInstanceSettingsHelper(wikiRequestHelper);
 

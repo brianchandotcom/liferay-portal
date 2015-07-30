@@ -26,9 +26,9 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.settings.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 
@@ -104,7 +104,7 @@ public class RSSAction extends BaseRSSStrutsAction {
 
 		WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);
 
-		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
+		WikiGroupServiceOverriddenConfiguration wikiGroupServiceConfiguration =
 			wikiRequestHelper.getWikiGroupServiceSettings();
 
 		return wikiGroupServiceConfiguration.enableRss();

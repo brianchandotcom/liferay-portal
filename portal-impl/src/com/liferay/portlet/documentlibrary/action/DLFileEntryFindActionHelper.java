@@ -41,6 +41,9 @@ public class DLFileEntryFindActionHelper extends DLFolderFindActionHelper {
 	@Override
 	public void setPrimaryKeyParameter(PortletURL portletURL, long primaryKey)
 		throws Exception {
+
+		portletURL.setParameter(
+			getPrimaryKeyParameterName(), String.valueOf(primaryKey));
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping;
 
+import com.liferay.dynamic.data.mapping.configuration.DDMServiceConfigurationKeys;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.impl.DDMFormJSONDeserializerImpl;
@@ -650,13 +651,13 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		Props props = mock(Props.class);
 
 		when(
-			props.get(PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS)
+			props.get(DDMServiceConfigurationKeys.DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS)
 		).thenReturn(
 			".gif,.jpeg,.jpg,.png"
 		);
 
 		when(
-			props.get(PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE)
+			props.get(DDMServiceConfigurationKeys.DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE)
 		).thenReturn(
 			"51200"
 		);

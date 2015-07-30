@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
+import com.liferay.dynamic.data.mapping.configuration.DDMServiceConfigurationKeys;
 import com.liferay.dynamic.data.mapping.exception.InvalidTemplateVersionException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
 import com.liferay.dynamic.data.mapping.exception.RequiredTemplateException;
@@ -55,7 +56,6 @@ import com.liferay.util.xml.XMLUtil;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -1531,7 +1531,8 @@ public class DDMTemplateLocalServiceImpl
 		validate(nameMap, script);
 
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(
-			PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS, StringPool.COMMA);
+			DDMServiceConfigurationKeys.DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS,
+			StringPool.COMMA);
 
 		if (!smallImage || Validator.isNotNull(smallImageURL) ||
 			(smallImageFile == null) || (smallImageBytes == null)) {
@@ -1559,7 +1560,8 @@ public class DDMTemplateLocalServiceImpl
 		}
 
 		long smallImageMaxSize = PrefsPropsUtil.getLong(
-			PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE);
+			DDMServiceConfigurationKeys.
+				DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE);
 
 		if ((smallImageMaxSize > 0) &&
 			(smallImageBytes.length > smallImageMaxSize)) {

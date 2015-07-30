@@ -46,7 +46,7 @@ if ((structure == null) && (template != null)) {
 
 String type = BeanParamUtil.getString(template, request, "type", DDMTemplateConstants.TEMPLATE_TYPE_FORM);
 String mode = BeanParamUtil.getString(template, request, "mode", DDMTemplateConstants.TEMPLATE_MODE_CREATE);
-String language = BeanParamUtil.getString(template, request, "language", PropsValues.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_DEFAULT);
+String language = BeanParamUtil.getString(template, request, "language", DDMWebConfigurationValues.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_DEFAULT);
 String script = BeanParamUtil.getString(template, request, "script");
 
 if (Validator.isNull(script) && type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) {
@@ -60,7 +60,7 @@ if (Validator.isNull(script) && type.equals(DDMTemplateConstants.TEMPLATE_TYPE_D
 		script = templateHandler.getTemplatesHelpContent(language);
 	}
 	else {
-		script = ContentUtil.get(PropsUtil.get(PropsKeys.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_CONTENT, new Filter(language)));
+		script = ContentUtil.get(DDMWebConfigurationUtil.class.getClassLoader(), DDMWebConfigurationUtil.get(DDMWebConfigurationKeys.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_CONTENT, new Filter(language)));
 	}
 }
 
@@ -108,7 +108,7 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 	<liferay-ui:error exception="<%= TemplateSmallImageNameException.class %>">
 
 		<%
-		String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS, ",");
+		String[] imageExtensions = PrefsPropsUtil.getStringArray(DDMServiceConfigurationKeys.DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS, ",");
 		%>
 
 		<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, StringPool.COMMA) %>.
@@ -117,7 +117,7 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 	<liferay-ui:error exception="<%= TemplateSmallImageSizeException.class %>">
 
 		<%
-		long imageMaxSize = PrefsPropsUtil.getLong(PropsKeys.DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE);
+		long imageMaxSize = PrefsPropsUtil.getLong(DDMServiceConfigurationKeys.DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE);
 		%>
 
 		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
@@ -226,7 +226,7 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 					</aui:select>
 				</c:if>
 
-				<c:if test="<%= !PropsValues.DYNAMIC_DATA_MAPPING_TEMPLATE_FORCE_AUTOGENERATE_KEY %>">
+				<c:if test="<%= !DDMWebConfigurationValues.DYNAMIC_DATA_MAPPING_TEMPLATE_FORCE_AUTOGENERATE_KEY %>">
 					<aui:input disabled="<%= (template != null) ? true : false %>" name="templateKey" />
 				</c:if>
 

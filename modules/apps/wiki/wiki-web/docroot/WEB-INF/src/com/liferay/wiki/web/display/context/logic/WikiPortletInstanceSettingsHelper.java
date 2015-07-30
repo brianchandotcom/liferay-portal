@@ -20,8 +20,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.util.WikiUtil;
-import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 import com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration;
+import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 
 import java.util.List;
 

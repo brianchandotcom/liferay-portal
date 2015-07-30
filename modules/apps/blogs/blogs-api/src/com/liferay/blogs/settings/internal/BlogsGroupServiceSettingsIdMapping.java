@@ -16,7 +16,7 @@ package com.liferay.blogs.settings.internal;
 
 import com.liferay.blogs.configuration.BlogsGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
-import com.liferay.portlet.blogs.util.BlogsConstants;
+import com.liferay.portlet.blogs.constants.BlogsConstants;
 
 import org.osgi.service.component.annotations.Component;
 

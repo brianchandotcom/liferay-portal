@@ -53,7 +53,7 @@ import com.liferay.portlet.messageboards.service.MBStatsUserLocalService;
 import com.liferay.portlet.messageboards.service.MBThreadFlagLocalService;
 import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 import com.liferay.portlet.messageboards.service.permission.MBPermission;
-import com.liferay.portlet.messageboards.util.MBConstants;
+import com.liferay.portlet.messageboards.constants.MBConstants;
 
 import java.util.List;
 

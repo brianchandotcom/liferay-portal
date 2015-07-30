@@ -27,7 +27,7 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.util.BlogsConstants;
+import com.liferay.portlet.blogs.constants.BlogsConstants;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.subscriptions.test.BaseSubscriptionLocalizedContentTestCase;
 

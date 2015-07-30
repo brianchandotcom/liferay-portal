@@ -27,7 +27,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.util.MBConstants;
+import com.liferay.portlet.messageboards.constants.MBConstants;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.subscriptions.test.BaseSubscriptionLocalizedContentTestCase;
 

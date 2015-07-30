@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.lists.web.template;
 
+import com.liferay.dynamic.data.lists.constants.DDLConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.util.DDLConstants;
 import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfigurationKeys;
 import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfigurationUtil;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;

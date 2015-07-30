@@ -49,7 +49,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = AssetRendererFactory.class
 )
-public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
+public class DDLRecordAssetRendererFactory
+	extends BaseAssetRendererFactory<DDLRecord> {
 
 	public static final String TYPE = "record";
 
@@ -61,7 +62,7 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<DDLRecord> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
 		DDLRecord record = null;

@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib;
 
+import com.liferay.dynamic.data.mapping.taglib.servlet.ServletContextUtil;
 import com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base.BaseTemplateSelectorTag;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -24,6 +25,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Juan Fernández
@@ -69,6 +71,13 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 			WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getScopeGroupId();
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	protected DDMTemplate getPortletDisplayDDMTemplate() {

@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib;
 
+import com.liferay.dynamic.data.mapping.taglib.servlet.ServletContextUtil;
 import com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base.BaseHTMLTag;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -30,11 +31,19 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverte
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Bruno Basto
  */
 public class HTMLTag extends BaseHTMLTag {
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
+	}
 
 	protected DDMForm getDDMForm() {
 		try {

@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib;
 
+import com.liferay.dynamic.data.mapping.taglib.servlet.ServletContextUtil;
 import com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base.BaseTemplateRendererTag;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -27,6 +28,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eduardo Garcia
@@ -63,6 +65,13 @@ public class TemplateRendererTag extends BaseTemplateRendererTag {
 		catch (Exception e) {
 			throw new JspException(e);
 		}
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	@Override

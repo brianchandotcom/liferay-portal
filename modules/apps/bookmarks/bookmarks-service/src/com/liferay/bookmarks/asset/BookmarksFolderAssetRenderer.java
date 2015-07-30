@@ -122,7 +122,8 @@ public class BookmarksFolderAssetRenderer
 
 	@Override
 	public String getPortletId() {
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<BookmarksFolder> assetRendererFactory =
+			getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
 	}
@@ -193,7 +194,8 @@ public class BookmarksFolderAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<BookmarksFolder> assetRendererFactory =
+			getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);

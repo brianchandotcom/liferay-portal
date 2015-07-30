@@ -1,0 +1,55 @@
+diff --git a/hudson/tasks/junit/JUnitResultArchiver.java b/hudson/tasks/junit/JUnitResultArchiver.java
+index d3804a9..add9d9b 100644
+--- a/hudson/tasks/junit/JUnitResultArchiver.java
++++ b/hudson/tasks/junit/JUnitResultArchiver.java
+@@ -58,6 +58,8 @@ import java.util.Collection;
+ import java.util.Collections;
+ import java.util.List;
+ 
++/* @generated */
++
+ /**
+  * Generates HTML report from JUnit test result XML files.
+  * 
+@@ -122,7 +124,9 @@ public class JUnitResultArchiver extends Recorder {
+ 			BuildListener listener) throws InterruptedException, IOException {
+ 		listener.getLogger().println(Messages.JUnitResultArchiver_Recording());
+ 		TestResultAction action;
+-		
++
++		listener.getLogger().println("Liferay patched " + JUnitResultArchiver.class);
++
+ 		final String testResults = build.getEnvironment(listener).expand(this.testResults);
+ 
+ 		try {
+@@ -152,9 +156,6 @@ public class JUnitResultArchiver extends Recorder {
+ 			}
+ 
+ 			action.setData(data);
+-
+-			CHECKPOINT.block(listener, getDescriptor().getDisplayName());
+-
+ 		} catch (AbortException e) {
+ 			if (build.getResult() == Result.FAILURE)
+ 				// most likely a build failed before it gets to the test phase.
+@@ -171,7 +172,6 @@ public class JUnitResultArchiver extends Recorder {
+ 		}
+ 
+ 		build.addAction(action);
+-		CHECKPOINT.report();
+ 
+ 		if (action.getResult().getFailCount() > 0)
+ 			build.setResult(Result.UNSTABLE);
+@@ -216,12 +216,6 @@ public class JUnitResultArchiver extends Recorder {
+ 		return keepLongStdio;
+ 	}
+ 
+-	/**
+-	 * Test result tracks the diff from the previous run, hence the checkpoint.
+-	 */
+-	private static final CheckPoint CHECKPOINT = new CheckPoint(
+-			"JUnit result archiving");
+-
+ 	private static final long serialVersionUID = 1L;
+ 
+     @Extension

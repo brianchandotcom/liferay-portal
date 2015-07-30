@@ -49,7 +49,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = AssetRendererFactory.class
 )
-public class MBMessageAssetRendererFactory extends BaseAssetRendererFactory {
+public class MBMessageAssetRendererFactory
+	extends BaseAssetRendererFactory<MBMessage> {
 
 	public static final String TYPE = "message";
 
@@ -60,7 +61,7 @@ public class MBMessageAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<MBMessage> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
 		MBMessage message = _mbMessageLocalService.getMessage(classPK);

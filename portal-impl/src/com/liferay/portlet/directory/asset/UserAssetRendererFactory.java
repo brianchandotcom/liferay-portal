@@ -32,7 +32,7 @@ import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 @OSGiBeanProperties(
 	property = {"search.asset.type=com.liferay.portal.model.User"}
 )
-public class UserAssetRendererFactory extends BaseAssetRendererFactory {
+public class UserAssetRendererFactory extends BaseAssetRendererFactory<User> {
 
 	public static final String TYPE = "user";
 
@@ -41,7 +41,7 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<User> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
 		User user = UserLocalServiceUtil.getUserById(classPK);
@@ -54,7 +54,7 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long groupId, String urlTitle)
+	public AssetRenderer<User> getAssetRenderer(long groupId, String urlTitle)
 		throws PortalException {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);

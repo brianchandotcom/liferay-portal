@@ -16,7 +16,7 @@ package com.liferay.journal.settings.internal;
 
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.constants.JournalConstants;
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,7 +24,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Juergen Kappler
  */
 @Component
-public class JournalGroupServiceSettingsIdMapping implements SettingsIdMapping {
+public class JournalGroupServiceSettingsIdMapping
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

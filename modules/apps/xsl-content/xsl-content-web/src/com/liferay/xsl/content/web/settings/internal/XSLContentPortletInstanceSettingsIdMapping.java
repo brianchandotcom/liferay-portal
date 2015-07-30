@@ -14,7 +14,7 @@
 
 package com.liferay.xsl.content.web.settings.internal;
 
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration;
 import com.liferay.xsl.content.web.constants.XSLContentPortletKeys;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component
 public class XSLContentPortletInstanceSettingsIdMapping
-	implements SettingsIdMapping {
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

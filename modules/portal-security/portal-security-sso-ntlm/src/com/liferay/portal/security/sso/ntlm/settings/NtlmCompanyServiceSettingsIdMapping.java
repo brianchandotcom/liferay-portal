@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.ntlm.settings;
 
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
 
@@ -24,7 +24,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Mika Koivisto
  */
 @Component
-public class NtlmCompanyServiceSettingsIdMapping implements SettingsIdMapping {
+public class NtlmCompanyServiceSettingsIdMapping
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

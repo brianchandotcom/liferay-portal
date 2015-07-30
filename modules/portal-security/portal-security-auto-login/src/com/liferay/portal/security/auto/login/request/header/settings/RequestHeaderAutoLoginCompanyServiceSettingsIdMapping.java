@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.auto.login.request.header.settings;
 
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.security.auto.login.request.header.configuration.RequestHeaderAutoLoginConfiguration;
 import com.liferay.portal.security.auto.login.request.header.constants.RequestHeaderAutoLoginConstants;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component
 public class RequestHeaderAutoLoginCompanyServiceSettingsIdMapping
-	implements SettingsIdMapping {
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

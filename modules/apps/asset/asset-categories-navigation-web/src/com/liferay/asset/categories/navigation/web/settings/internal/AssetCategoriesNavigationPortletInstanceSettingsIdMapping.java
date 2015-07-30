@@ -33,7 +33,7 @@ public class AssetCategoriesNavigationPortletInstanceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION;
 	}
 

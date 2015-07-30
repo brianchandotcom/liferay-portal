@@ -33,7 +33,7 @@ public class SiteNavigationLanguagePortletInstanceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE;
 	}
 

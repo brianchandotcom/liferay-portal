@@ -33,7 +33,7 @@ public class SocialGroupStatisticsPortletInstanceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return SocialGroupStatisticsPortletKeys.SOCIAL_GROUP_STATISTICS;
 	}
 

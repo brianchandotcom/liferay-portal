@@ -33,7 +33,7 @@ public class BookmarksGroupServiceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return BookmarksConstants.SERVICE_NAME;
 	}
 

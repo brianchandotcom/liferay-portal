@@ -33,7 +33,7 @@ public class BlogsPortletInstanceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return BlogsPortletKeys.BLOGS;
 	}
 

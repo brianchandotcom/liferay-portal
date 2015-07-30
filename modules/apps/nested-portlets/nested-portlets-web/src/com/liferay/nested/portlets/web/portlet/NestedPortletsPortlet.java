@@ -17,6 +17,7 @@ package com.liferay.nested.portlets.web.portlet;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.nested.portlets.web.configuration.NestedPortletsConfiguration;
+import com.liferay.nested.portlets.web.constants.NestedPortletsPortletKeys;
 import com.liferay.nested.portlets.web.display.context.NestedPortletsDisplayContext;
 import com.liferay.nested.portlets.web.upgrade.NestedPortletWebUpgrade;
 import com.liferay.portal.kernel.log.Log;
@@ -36,6 +37,7 @@ import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -161,20 +163,26 @@ public class NestedPortletsPortlet extends MVCPortlet {
 
 		checkLayout(themeDisplay.getLayout(), columnIds.values());
 
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletId = portletDisplay.getId();
+
 		renderRequest.setAttribute(
-			NestedPortletsConfiguration.TEMPLATE_ID, templateId);
+			NestedPortletsPortletKeys.getTemplateIdKey(portletId), templateId);
 		renderRequest.setAttribute(
-			NestedPortletsConfiguration.TEMPLATE_CONTENT, templateContent);
+			NestedPortletsPortletKeys.getTemplateContentKey(portletId),
+			templateContent);
 
 		Map<String, Object> vmVariables =
 			(Map<String, Object>)renderRequest.getAttribute(
-				WebKeys.VM_VARIABLES);
+				WebKeys.getVMVariablesKey(portletId));
 
 		if (vmVariables != null) {
 			vmVariables.putAll(columnIds);
 		}
 		else {
-			renderRequest.setAttribute(WebKeys.VM_VARIABLES, columnIds);
+			renderRequest.setAttribute(
+				WebKeys.getVMVariablesKey(portletId), columnIds);
 		}
 
 		renderRequest.setAttribute(

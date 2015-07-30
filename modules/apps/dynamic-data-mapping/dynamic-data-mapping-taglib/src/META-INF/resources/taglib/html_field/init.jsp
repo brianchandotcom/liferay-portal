@@ -16,7 +16,7 @@
 @generated
 --%>
 
-<%@ include file="/taglib/common/taglib-init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long classNameId = GetterUtil.getLong(String.valueOf(request.getAttribute("liferay-ddm:html-field:classNameId")));

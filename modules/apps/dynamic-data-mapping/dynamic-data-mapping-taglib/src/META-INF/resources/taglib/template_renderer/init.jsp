@@ -16,7 +16,7 @@
 @generated
 --%>
 
-<%@ include file="/taglib/common/taglib-init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 java.lang.String className = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-ddm:template-renderer:className"));

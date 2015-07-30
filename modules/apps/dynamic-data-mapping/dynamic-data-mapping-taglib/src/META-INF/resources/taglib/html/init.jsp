@@ -16,7 +16,7 @@
 @generated
 --%>
 
-<%@ include file="/taglib/common/taglib-init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 boolean checkRequired = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-ddm:html:checkRequired")), true);

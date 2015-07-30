@@ -9,7 +9,6 @@
 	<property name="alloy.version" value="3.0.1" />
 	<property name="alloy-font-awesome.version" value="2.0" />
 	<property name="frontend.js.web.dir" value="../modules/frontend/frontend-js-web" />
-	<property name="vaadin.file" value="vaadin-6.8.12-liferay.zip" />
 
 	<path id="jspc.common.classpath">
 		<pathelement path="docroot/WEB-INF/classes" />
@@ -50,7 +49,7 @@
 		<pathelement location="${project.dir}/lib/portal/struts-tiles.jar" />
 	</path>
 
-	<extension-point name="build-portal-web-dependencies" depends="build-css,build-dtd,build-vaadin" />
+	<extension-point name="build-portal-web-dependencies" depends="build-css,build-dtd" />
 
 	<target name="build-common-css">
 		<property name="portal.common.dir" value="${basedir}/docroot/html/css/common" />
@@ -231,47 +230,10 @@
 		<echo file="${project.dir}/tools/selenium/extensions/ide.${user.name}.js">${ide.js.content}</echo>
 	</target>
 
-	<target name="build-vaadin">
-		<if>
-			<not>
-				<uptodate
-					srcfile="third-party/${vaadin.file}"
-					targetfile="docroot/html/VAADIN"
-				/>
-			</not>
-			<then>
-				<delete dir="docroot/html/VAADIN_ZIP" />
-
-				<unzip src="third-party/${vaadin.file}" dest="docroot/html/VAADIN_ZIP" />
-
-				<delete dir="docroot/html/VAADIN" />
-
-				<copy todir="docroot/html/VAADIN/themes" preservelastmodified="true">
-					<fileset dir="docroot/html/VAADIN_ZIP/VAADIN/themes">
-						<include name="default/**" />
-						<include name="base/**" />
-						<include name="runo/**" />
-						<include name="reindeer/**" />
-						<include name="liferay/**" />
-					</fileset>
-				</copy>
-
-				<copy todir="docroot/html/VAADIN/widgetsets" preservelastmodified="true">
-					<fileset dir="docroot/html/VAADIN_ZIP/VAADIN/widgetsets">
-						<include name="com.vaadin.portal.gwt.PortalDefaultWidgetSet/**" />
-					</fileset>
-				</copy>
-
-				<delete dir="docroot/html/VAADIN_ZIP" />
-			</then>
-		</if>
-	</target>
-
 	<target name="clean" depends="build-common-web.clean,clean-css,clean-tlds">
 		<delete dir="classes" />
 		<delete dir="docroot/dtd" />
 		<delete dir="docroot/html/portal/aui" />
-		<delete dir="docroot/html/VAADIN" />
 		<delete dir="docroot/WEB-INF/classes" />
 		<delete dir="docroot/WEB-INF/lib" />
 		<delete dir="test-classes" />
@@ -621,7 +583,6 @@ Please set the property "jdk.7.home" in build.properties.
 			<exclude name="**/editors/**" />
 			<exclude name="**/misc/**" />
 			<exclude name="**/selenium/**" />
-			<exclude name="**/VAADIN/**" />
 			<include name="**/*.js" />
 		</jshint>
 	</target>

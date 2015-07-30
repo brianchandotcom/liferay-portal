@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.messageboards.util.MBConstants;
+import com.liferay.portlet.messageboards.constants.MBConstants;
 import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.util.Map;

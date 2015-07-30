@@ -99,7 +99,7 @@ page import="com.liferay.portlet.shopping.service.permission.ShoppingCategoryPer
 page import="com.liferay.portlet.shopping.service.permission.ShoppingItemPermission" %><%@
 page import="com.liferay.portlet.shopping.service.permission.ShoppingOrderPermission" %><%@
 page import="com.liferay.portlet.shopping.service.permission.ShoppingPermission" %><%@
-page import="com.liferay.portlet.shopping.util.ShoppingConstants" %><%@
+page import="com.liferay.portlet.shopping.constants.ShoppingConstants" %><%@
 page import="com.liferay.portlet.shopping.util.ShoppingUtil" %>
 
 <%

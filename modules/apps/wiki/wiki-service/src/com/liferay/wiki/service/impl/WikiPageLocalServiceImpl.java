@@ -111,6 +111,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -272,7 +273,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void addPageAttachment(
+	public FileEntry addPageAttachment(
 			long userId, long nodeId, String title, String fileName, File file,
 			String mimeType)
 		throws PortalException {
@@ -300,10 +301,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		SocialActivityManagerUtil.addActivity(
 			userId, page, SocialActivityConstants.TYPE_ADD_ATTACHMENT,
 			extraDataJSONObject.toString(), 0);
+
+		return fileEntry;
 	}
 
 	@Override
-	public void addPageAttachment(
+	public FileEntry addPageAttachment(
 			long userId, long nodeId, String title, String fileName,
 			InputStream inputStream, String mimeType)
 		throws PortalException {
@@ -331,16 +334,20 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		SocialActivityManagerUtil.addActivity(
 			userId, page, SocialActivityConstants.TYPE_ADD_ATTACHMENT,
 			extraDataJSONObject.toString(), 0);
+
+		return fileEntry;
 	}
 
 	@Override
-	public void addPageAttachments(
+	public List<FileEntry> addPageAttachments(
 			long userId, long nodeId, String title,
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
 		throws PortalException {
 
+		List<FileEntry> fileEntries = new ArrayList<>();
+
 		if (inputStreamOVPs.isEmpty()) {
-			return;
+			return Collections.emptyList();
 		}
 
 		for (int i = 0; i < inputStreamOVPs.size(); i++) {
@@ -357,8 +364,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 				String mimeType = MimeTypesUtil.getContentType(file, fileName);
 
-				addPageAttachment(
-					userId, nodeId, title, fileName, file, mimeType);
+				fileEntries.add(
+					addPageAttachment(
+						userId, nodeId, title, fileName, file, mimeType));
 			}
 			catch (IOException ioe) {
 				throw new SystemException(
@@ -368,6 +376,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				FileUtil.delete(file);
 			}
 		}
+
+		return fileEntries;
 	}
 
 	@Override
@@ -416,12 +426,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void addTempFileEntry(
+	public FileEntry addTempFileEntry(
 			long groupId, long userId, String folderName, String fileName,
 			InputStream inputStream, String mimeType)
 		throws PortalException {
 
-		TempFileEntryUtil.addTempFileEntry(
+		return TempFileEntryUtil.addTempFileEntry(
 			groupId, userId, folderName, fileName, inputStream, mimeType);
 	}
 

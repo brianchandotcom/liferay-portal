@@ -67,14 +67,12 @@ public class LockLocalServiceTest {
 	@ExpectedLogs(
 		expectedLogs = {
 			@ExpectedLog(
-				dbType = DB.TYPE_DB2,
-				expectedLog =
-					"Error for batch element #0: DB2 SQL error: SQLCODE: " +
-						"-803, SQLSTATE: 23505",
+				dbType = DB.TYPE_DB2, expectedLog = "Error for batch element",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
-				dbType = DB.TYPE_DB2, expectedLog = "Non-atomic batch failure.",
+				dbType = DB.TYPE_DB2,
+				expectedLog = "[jcc][t4][102][10040][4.16.53] Batch failure.",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(

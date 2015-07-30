@@ -16,7 +16,7 @@ package com.liferay.mentions.settings.internal;
 
 import com.liferay.mentions.configuration.MentionsGroupServiceConfiguration;
 import com.liferay.mentions.constants.MentionsConstants;
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component
 public class MentionsGroupServiceSettingsIdMapping
-	implements SettingsIdMapping {
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

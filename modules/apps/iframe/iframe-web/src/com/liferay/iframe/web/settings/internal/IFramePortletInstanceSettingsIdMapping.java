@@ -16,7 +16,7 @@ package com.liferay.iframe.web.settings.internal;
 
 import com.liferay.iframe.web.configuration.IFramePortletInstanceConfiguration;
 import com.liferay.iframe.web.constants.IFramePortletKeys;
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component
 public class IFramePortletInstanceSettingsIdMapping
-	implements SettingsIdMapping {
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

@@ -67,7 +67,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 		return StringPool.BLANK;
 	}
 
-	public AssetRendererFactory getAssetRendererFactory() {
+	public AssetRendererFactory<T> getAssetRendererFactory() {
 		if (_assetRendererFactory != null) {
 			return _assetRendererFactory;
 		}
@@ -427,7 +427,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	private static final DDMFormValuesReader _nullDDMFormValuesReader =
 		new NullDDMFormValuesReader();
 
-	private AssetRendererFactory _assetRendererFactory;
+	private AssetRendererFactory<T> _assetRendererFactory;
 	private int _assetRendererType = AssetRendererFactory.TYPE_LATEST_APPROVED;
 
 	private static final class NullDDMFormValuesReader

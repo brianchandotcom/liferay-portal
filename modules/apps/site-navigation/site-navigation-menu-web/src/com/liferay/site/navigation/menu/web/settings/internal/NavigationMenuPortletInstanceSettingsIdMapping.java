@@ -14,7 +14,7 @@
 
 package com.liferay.site.navigation.menu.web.settings.internal;
 
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.site.navigation.menu.web.configuration.NavigationMenuPortletInstanceConfiguration;
 import com.liferay.site.navigation.menu.web.constants.NavigationMenuPortletKeys;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component
 public class NavigationMenuPortletInstanceSettingsIdMapping
-	implements SettingsIdMapping {
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

@@ -14,7 +14,7 @@
 
 package com.liferay.site.navigation.language.web.settings.internal;
 
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.site.navigation.language.web.configuration.LanguagePortletInstanceConfiguration;
 import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component
 public class LanguagePortletInstanceSettingsIdMapping
-	implements SettingsIdMapping {
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

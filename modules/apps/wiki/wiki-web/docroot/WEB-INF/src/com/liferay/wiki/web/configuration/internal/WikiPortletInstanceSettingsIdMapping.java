@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.web.configuration.internal;
 
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.web.configuration.WikiPortletInstanceConfiguration;
 
@@ -24,7 +24,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Iván Zaera
  */
 @Component
-public class WikiPortletInstanceSettingsIdMapping implements SettingsIdMapping {
+public class WikiPortletInstanceSettingsIdMapping
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

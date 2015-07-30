@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.settings.definition;
 /**
  * @author Iván Zaera
  */
-public interface SettingsIdMapping {
+public interface ConfigurationPidMapping {
 
 	public Class<?> getConfigurationBeanClass();
 

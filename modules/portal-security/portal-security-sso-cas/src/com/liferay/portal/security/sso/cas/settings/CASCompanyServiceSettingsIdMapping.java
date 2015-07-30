@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.cas.settings;
 
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
 
@@ -24,7 +24,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Mika Koivisto
  */
 @Component
-public class CASCompanyServiceSettingsIdMapping implements SettingsIdMapping {
+public class CASCompanyServiceSettingsIdMapping
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

@@ -14,7 +14,7 @@
 
 package com.liferay.shopping.configuration.internal;
 
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration;
 import com.liferay.shopping.constants.ShoppingConstants;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component
 public class ShoppingGroupServiceSettingsIdMapping
-	implements SettingsIdMapping {
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

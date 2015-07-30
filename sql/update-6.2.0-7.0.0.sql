@@ -85,7 +85,7 @@ create table DDMTemplateVersion (
 	classPK LONG,
 	templateId LONG,
 	version VARCHAR(75) null,
-	name STRING null,
+	name TEXT null,
 	description TEXT null,
 	language VARCHAR(75) null,
 	script TEXT null,

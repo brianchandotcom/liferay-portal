@@ -36,7 +36,7 @@ public class WikiPortletInstanceSettingsHelper {
 		_wikiRequestHelper = wikiRequestHelper;
 
 		_wikiPortletInstanceConfiguration =
-			_wikiRequestHelper.getWikiPortletInstanceSettings();
+			_wikiRequestHelper.getWikiPortletInstanceConfiguration();
 	}
 
 	public List<String> getAllNodeNames() throws PortalException {

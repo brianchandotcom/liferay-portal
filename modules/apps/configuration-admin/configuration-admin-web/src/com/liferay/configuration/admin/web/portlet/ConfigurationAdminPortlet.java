@@ -18,6 +18,7 @@ import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.ConfigurationHelper;
 import com.liferay.configuration.admin.web.util.ConfigurationModelIterator;
 import com.liferay.configuration.admin.web.util.DDMFormRendererHelper;
+import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -153,7 +154,7 @@ public class ConfigurationAdminPortlet extends FreeMarkerPortlet {
 					_ddmFormRenderer);
 
 			renderRequest.setAttribute(
-				WebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML,
+				DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML,
 				ddmFormRendererHelper.getDDMFormHTML());
 		}
 		else {

@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormWebKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
+import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
@@ -212,7 +213,7 @@ public class DDLFormPortlet extends MVCPortlet {
 			renderRequest, renderResponse, recordSet.getDDMStructure());
 
 		renderRequest.setAttribute(
-			WebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML, ddmFormHTML);
+			DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML, ddmFormHTML);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DDLFormPortlet.class);

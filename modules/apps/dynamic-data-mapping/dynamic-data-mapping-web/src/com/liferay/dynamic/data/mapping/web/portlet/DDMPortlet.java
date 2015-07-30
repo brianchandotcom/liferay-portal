@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet;
 
+import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
@@ -198,7 +199,7 @@ public class DDMPortlet extends MVCPortlet {
 			}
 
 			renderRequest.setAttribute(
-				WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE, structure);
+				DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE, structure);
 		}
 	}
 
@@ -212,7 +213,7 @@ public class DDMPortlet extends MVCPortlet {
 				templateId);
 
 			renderRequest.setAttribute(
-				WebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE, template);
+				DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE, template);
 		}
 	}
 

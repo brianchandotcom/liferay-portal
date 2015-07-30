@@ -1315,11 +1315,7 @@ public class VerifyProperties extends VerifyProcess {
 		// Navigation
 
 		new String[] {
-			"navigation.display.style", "display.style",
-			"com.liferay.site.navigation.menu.web"
-		},
-		new String[] {
-			"navigation.display.style.default", "display.style.default",
+			"navigation.display.style.default", "ddm.template.key.default",
 			"com.liferay.site.navigation.menu.web"
 		},
 		new String[] {

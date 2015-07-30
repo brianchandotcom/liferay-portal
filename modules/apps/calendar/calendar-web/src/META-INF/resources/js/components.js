@@ -1060,16 +1060,8 @@
 					}
 
 					key = parts.join(STR_DASH);
-					mask = instance.RECURRENCE_SUMMARIES[key];
 
-					if (mask) {
-						summary = A.Lang.sub(mask, params);
-					}
-					else {
-						summary = Liferay.Language.get(key, params);
-					}
-
-					return summary;
+					return A.Lang.sub(instance.RECURRENCE_SUMMARIES[key], params);
 				},
 
 				openConfirmationPanel: function(actionName, onlyThisInstanceFn, allFollowingFn, allEventsInFn, cancelFn) {

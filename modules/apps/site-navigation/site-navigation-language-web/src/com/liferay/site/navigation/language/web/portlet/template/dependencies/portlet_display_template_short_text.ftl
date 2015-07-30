@@ -1,4 +1,4 @@
-<#assign aui = taglibLiferayHash["/WEB-INF/tld/aui.tld"] />
+<#assign aui = taglibLiferayHash["/WEB-INF/tld/liferay-aui.tld"] />
 
 <style>
 	.language-entry-short-text {

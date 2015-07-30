@@ -1398,7 +1398,7 @@
 		</if>
 
 		<if>
-			<condition function="IsElementPresent" locator1="Dockbar#USER_NAME" />
+			<condition function="IsElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 			<then>
 				<execute macro="User#logoutPG" />
 				<execute macro="User#loginPG">
@@ -1634,7 +1634,7 @@
 		</if>
 
 		<if>
-			<condition function="IsElementPresent" locator1="Dockbar#USER_NAME" />
+			<condition function="IsElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 			<then>
 				<execute function="Click" locator1="Dockbar#USER_NAME" />
 				<execute function="Click" locator1="Dockbar#USER_SIGN_OUT" />
@@ -1657,7 +1657,7 @@
 		</execute>
 
 		<if>
-			<condition function="IsElementPresent" locator1="Dockbar#USER_NAME" />
+			<condition function="IsElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 			<then>
 				<execute function="Click" locator1="Dockbar#USER_NAME" />
 				<execute function="Click" locator1="Dockbar#USER_SIGN_OUT" />

@@ -56,9 +56,11 @@ public class RandomTestUtil {
 	}
 
 	public static byte[] randomBytes() {
-		String string = randomString();
+		byte[] bytes = new byte[8];
 
-		return string.getBytes();
+		_random.nextBytes(bytes);
+
+		return bytes;
 	}
 
 	public static double randomDouble() {

@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.render;
+package com.liferay.dynamic.data.mapping.render.impl;
 
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistry;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;

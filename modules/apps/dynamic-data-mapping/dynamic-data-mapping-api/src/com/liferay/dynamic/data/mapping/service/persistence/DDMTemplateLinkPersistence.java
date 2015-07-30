@@ -27,7 +27,7 @@ import com.liferay.portal.service.persistence.BasePersistence;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.portlet.dynamicdatamapping.service.persistence.impl.DDMTemplateLinkPersistenceImpl
+ * @see com.liferay.dynamic.data.mapping.service.persistence.impl.DDMTemplateLinkPersistenceImpl
  * @see DDMTemplateLinkUtil
  * @generated
  */

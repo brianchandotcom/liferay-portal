@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model.impl;
+package com.liferay.dynamic.data.mapping.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
+import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalServiceUtil;
 
 /**
  * The extended model base implementation for the DDMStorageLink service. Represents a row in the &quot;DDMStorageLink&quot; database table, with each column mapped to a property of this class.

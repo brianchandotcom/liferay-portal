@@ -12,10 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.persistence.impl;
+package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
+import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionPersistence;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -32,14 +37,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateVersionException;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion;
-import com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateVersionImpl;
-import com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateVersionModelImpl;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateVersionPersistence;
-
 import java.io.Serializable;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -57,7 +55,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see DDMTemplateVersionPersistence
- * @see com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateVersionUtil
+ * @see com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionUtil
  * @generated
  */
 @ProviderType

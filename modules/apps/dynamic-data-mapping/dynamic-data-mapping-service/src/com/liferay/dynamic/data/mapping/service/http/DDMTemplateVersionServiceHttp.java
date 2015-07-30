@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.http;
+package com.liferay.dynamic.data.mapping.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.http.TunnelUtil;
-
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -55,7 +54,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionServiceU
  */
 @ProviderType
 public class DDMTemplateVersionServiceHttp {
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion getLatestTemplateVersion(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getLatestTemplateVersion(
 		HttpPrincipal httpPrincipal, long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -79,7 +78,7 @@ public class DDMTemplateVersionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion)returnObj;
+			return (com.liferay.dynamic.data.mapping.model.DDMTemplateVersion)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -88,7 +87,7 @@ public class DDMTemplateVersionServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion getTemplateVersion(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getTemplateVersion(
 		HttpPrincipal httpPrincipal, long templateVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -111,7 +110,7 @@ public class DDMTemplateVersionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion)returnObj;
+			return (com.liferay.dynamic.data.mapping.model.DDMTemplateVersion)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -120,9 +119,9 @@ public class DDMTemplateVersionServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> getTemplateVersions(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> getTemplateVersions(
 		HttpPrincipal httpPrincipal, long templateId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateVersionServiceUtil.class,
@@ -144,7 +143,7 @@ public class DDMTemplateVersionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

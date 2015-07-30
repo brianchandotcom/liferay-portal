@@ -12,15 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model.impl;
+package com.liferay.dynamic.data.mapping.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
-
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
 
 import java.io.Externalizable;
 import java.io.IOException;

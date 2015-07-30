@@ -12,18 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.storage;
+package com.liferay.dynamic.data.mapping.storage.impl;
 
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMContent;
+import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMContentLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.storage.BaseStorageAdapter;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONDeserializerUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.util.List;
 

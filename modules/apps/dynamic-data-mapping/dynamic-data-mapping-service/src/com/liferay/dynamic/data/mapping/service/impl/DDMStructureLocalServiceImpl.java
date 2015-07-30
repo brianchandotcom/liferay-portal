@@ -12,8 +12,25 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.impl;
+package com.liferay.dynamic.data.mapping.service.impl;
 
+import com.liferay.dynamic.data.mapping.exception.InvalidStructureVersionException;
+import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
+import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
+import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
+import com.liferay.dynamic.data.mapping.exception.StructureDuplicateElementException;
+import com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException;
+import com.liferay.dynamic.data.mapping.exception.StructureNameException;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.base.DDMStructureLocalServiceBaseImpl;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.util.DDMUtil;
+import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
+import com.liferay.dynamic.data.mapping.util.impl.DDMFormTemplateSynchonizer;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,28 +56,11 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.InvalidStructureVersionException;
-import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
-import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
-import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
-import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
-import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
-import com.liferay.portlet.dynamicdatamapping.StructureNameException;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
-import com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureLocalServiceBaseImpl;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormTemplateSynchonizer;
-import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;

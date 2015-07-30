@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model.impl;
+package com.liferay.dynamic.data.mapping.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
-import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.model.DDMContent;
+import com.liferay.dynamic.data.mapping.service.DDMContentLocalServiceUtil;
 
 /**
  * The extended model base implementation for the DDMContent service. Represents a row in the &quot;DDMContent&quot; database table, with each column mapped to a property of this class.

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.search;
+package com.liferay.dynamic.data.mapping.search;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.util.ParamUtil;

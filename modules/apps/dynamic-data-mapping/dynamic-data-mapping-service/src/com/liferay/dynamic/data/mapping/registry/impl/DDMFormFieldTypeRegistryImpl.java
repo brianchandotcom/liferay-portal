@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.registry;
+package com.liferay.dynamic.data.mapping.registry.impl;
 
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeRegistry;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;

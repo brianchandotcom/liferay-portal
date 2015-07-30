@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.http;
+package com.liferay.dynamic.data.mapping.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -33,10 +32,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersionSoap}.
+ * is translated to an array of {@link com.liferay.dynamic.data.mapping.model.DDMTemplateVersionSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion}, that is translated to a
- * {@link com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersionSoap}. Methods that SOAP cannot
+ * {@link com.liferay.dynamic.data.mapping.model.DDMTemplateVersion}, that is translated to a
+ * {@link com.liferay.dynamic.data.mapping.model.DDMTemplateVersionSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -59,19 +58,19 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see DDMTemplateVersionServiceHttp
- * @see com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersionSoap
+ * @see com.liferay.dynamic.data.mapping.model.DDMTemplateVersionSoap
  * @see DDMTemplateVersionServiceUtil
  * @generated
  */
 @ProviderType
 public class DDMTemplateVersionServiceSoap {
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersionSoap getLatestTemplateVersion(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersionSoap getLatestTemplateVersion(
 		long templateId) throws RemoteException {
 		try {
-			com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion returnValue =
+			com.liferay.dynamic.data.mapping.model.DDMTemplateVersion returnValue =
 				DDMTemplateVersionServiceUtil.getLatestTemplateVersion(templateId);
 
-			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersionSoap.toSoapModel(returnValue);
+			return com.liferay.dynamic.data.mapping.model.DDMTemplateVersionSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -80,13 +79,13 @@ public class DDMTemplateVersionServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersionSoap getTemplateVersion(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersionSoap getTemplateVersion(
 		long templateVersionId) throws RemoteException {
 		try {
-			com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion returnValue =
+			com.liferay.dynamic.data.mapping.model.DDMTemplateVersion returnValue =
 				DDMTemplateVersionServiceUtil.getTemplateVersion(templateVersionId);
 
-			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersionSoap.toSoapModel(returnValue);
+			return com.liferay.dynamic.data.mapping.model.DDMTemplateVersionSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -95,16 +94,16 @@ public class DDMTemplateVersionServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersionSoap[] getTemplateVersions(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersionSoap[] getTemplateVersions(
 		long templateId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> orderByComparator)
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> returnValue =
+			java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> returnValue =
 				DDMTemplateVersionServiceUtil.getTemplateVersions(templateId,
 					start, end, orderByComparator);
 
-			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersionSoap.toSoapModels(returnValue);
+			return com.liferay.dynamic.data.mapping.model.DDMTemplateVersionSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

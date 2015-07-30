@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.storage;
+package com.liferay.dynamic.data.mapping.storage.impl;
 
+import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
+import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;

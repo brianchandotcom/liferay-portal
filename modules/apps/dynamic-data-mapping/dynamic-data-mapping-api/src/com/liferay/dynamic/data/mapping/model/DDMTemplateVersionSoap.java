@@ -23,10 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.dynamicdatamapping.service.http.DDMTemplateVersionServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.dynamic.data.mapping.service.http.DDMTemplateVersionServiceSoap}.
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.portlet.dynamicdatamapping.service.http.DDMTemplateVersionServiceSoap
+ * @see com.liferay.dynamic.data.mapping.service.http.DDMTemplateVersionServiceSoap
  * @generated
  */
 @ProviderType

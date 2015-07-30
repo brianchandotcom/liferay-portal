@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.impl;
+package com.liferay.dynamic.data.mapping.service.impl;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.base.DDMTemplateServiceBaseImpl;
+import com.liferay.dynamic.data.mapping.service.permission.DDMPermission;
+import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
+import com.liferay.dynamic.data.mapping.util.DDMPermissionHandler;
+import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.service.base.DDMTemplateServiceBaseImpl;
-import com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission;
-import com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission;
-import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
-import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.io.File;
 
@@ -41,7 +41,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
  * @author Marcellus Tavares
- * @see    com.liferay.portlet.dynamicdatamapping.service.impl.DDMTemplateLocalServiceImpl
+ * @see    com.liferay.dynamic.data.mapping.service.impl.DDMTemplateLocalServiceImpl
  */
 public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 

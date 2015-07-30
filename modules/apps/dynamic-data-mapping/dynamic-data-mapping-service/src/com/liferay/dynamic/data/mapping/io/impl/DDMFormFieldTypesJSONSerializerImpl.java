@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.io;
+package com.liferay.dynamic.data.mapping.io.impl;
 
+import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFactory;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFactory;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldRenderer;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSettings;
 
 import java.util.List;
 

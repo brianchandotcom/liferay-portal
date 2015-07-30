@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.template;
+package com.liferay.dynamic.data.mapping.template;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.ClassLoaderTemplateResource;

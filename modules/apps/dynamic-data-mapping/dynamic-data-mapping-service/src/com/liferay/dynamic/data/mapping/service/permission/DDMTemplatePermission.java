@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.permission;
+package com.liferay.dynamic.data.mapping.service.permission;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
 
 /**

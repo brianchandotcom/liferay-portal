@@ -67,6 +67,7 @@
 
 <#assign user_id = user.getUserId() />
 <#assign is_default_user = user.isDefaultUser() />
+<#assign is_setup_complete = user.isSetupComplete() />
 <#assign user_first_name = user.getFirstName() />
 <#assign user_middle_name = user.getMiddleName() />
 <#assign user_last_name = user.getLastName() />

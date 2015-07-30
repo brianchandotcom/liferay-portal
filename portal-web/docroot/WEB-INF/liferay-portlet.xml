@@ -77,12 +77,6 @@
 		<css-class-wrapper>portlet-directory</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>19</portlet-name>
-		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
-		<friendly-url-mapping>message_boards</friendly-url-mapping>
-		<friendly-url-routes>com/liferay/portlet/messageboards/message-boards-friendly-url-routes.xml</friendly-url-routes>
-	</portlet>
-	<portlet>
 		<portlet-name>34</portlet-name>
 		<icon>/html/icons/shopping.png</icon>
 		<struts-path>shopping</struts-path>

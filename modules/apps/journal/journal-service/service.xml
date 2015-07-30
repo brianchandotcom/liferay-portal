@@ -67,9 +67,6 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
 		<finder name="DDMStructureKey" return-type="Collection">
 			<finder-column name="DDMStructureKey" arrayable-operator="OR" />
 		</finder>
@@ -81,6 +78,9 @@
 		</finder>
 		<finder name="SmallImageId" return-type="Collection">
 			<finder-column name="smallImageId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
 		</finder>
 		<finder name="R_I" return-type="Collection">
 			<finder-column name="resourcePrimKey" />
@@ -122,6 +122,14 @@
 			<finder-column name="groupId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="C_DDMTK" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="DDMTemplateKey" />
+		</finder>
+		<finder name="LtD_S" return-type="Collection">
+			<finder-column name="displayDate" comparator="&lt;" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="C_V" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="version" />
@@ -133,14 +141,6 @@
 		<finder name="C_NotST" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="status" comparator="!=" />
-		</finder>
-		<finder name="C_DDMTK" return-type="Collection">
-			<finder-column name="classNameId" />
-			<finder-column name="DDMTemplateKey" />
-		</finder>
-		<finder name="LtD_S" return-type="Collection">
-			<finder-column name="displayDate" comparator="&lt;" />
-			<finder-column name="status" />
 		</finder>
 		<finder name="R_I_S" return-type="Collection">
 			<finder-column name="resourcePrimKey" />

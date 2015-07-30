@@ -46,29 +46,29 @@ public class AssetRendererFactoryRegistryUtil {
 	 *             #getAssetRendererFactories(long)}
 	 */
 	@Deprecated
-	public static List<AssetRendererFactory> getAssetRendererFactories() {
+	public static List<AssetRendererFactory<?>> getAssetRendererFactories() {
 		return _instance._getAssetRendererFactories();
 	}
 
-	public static List<AssetRendererFactory> getAssetRendererFactories(
+	public static List<AssetRendererFactory<?>> getAssetRendererFactories(
 		long companyId) {
 
 		return _instance._getAssetRendererFactories(companyId);
 	}
 
-	public static AssetRendererFactory getAssetRendererFactoryByClassName(
+	public static AssetRendererFactory<?> getAssetRendererFactoryByClassName(
 		String className) {
 
 		return _instance._getAssetRendererFactoryByClassName(className);
 	}
 
-	public static AssetRendererFactory getAssetRendererFactoryByClassNameId(
+	public static AssetRendererFactory<?> getAssetRendererFactoryByClassNameId(
 		long classNameId) {
 
 		return _instance._getAssetRendererFactoryByClassNameId(classNameId);
 	}
 
-	public static AssetRendererFactory getAssetRendererFactoryByType(
+	public static AssetRendererFactory<?> getAssetRendererFactoryByType(
 		String type) {
 
 		return _instance._getAssetRendererFactoryByType(type);
@@ -92,54 +92,58 @@ public class AssetRendererFactoryRegistryUtil {
 		return _instance._getClassNameIds(companyId, filterSelectable);
 	}
 
-	public static void register(AssetRendererFactory assetRendererFactory) {
+	public static void register(AssetRendererFactory<?> assetRendererFactory) {
 		_instance._register(assetRendererFactory);
 	}
 
 	public static void register(
-		List<AssetRendererFactory> assetRendererFactories) {
+		List<AssetRendererFactory<?>> assetRendererFactories) {
 
-		for (AssetRendererFactory assetRendererFactory :
+		for (AssetRendererFactory<?> assetRendererFactory :
 				assetRendererFactories) {
 
 			register(assetRendererFactory);
 		}
 	}
 
-	public static void unregister(AssetRendererFactory assetRendererFactory) {
+	public static void unregister(
+		AssetRendererFactory<?> assetRendererFactory) {
+
 		_instance._unregister(assetRendererFactory);
 	}
 
 	public static void unregister(
-		List<AssetRendererFactory> assetRendererFactories) {
+		List<AssetRendererFactory<?>> assetRendererFactories) {
 
-		for (AssetRendererFactory assetRendererFactory :
+		for (AssetRendererFactory<?> assetRendererFactory :
 				assetRendererFactories) {
 
 			unregister(assetRendererFactory);
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private AssetRendererFactoryRegistryUtil() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
-			AssetRendererFactory.class,
+			(Class<AssetRendererFactory<?>>)(Class<?>)
+				AssetRendererFactory.class,
 			new AssetRendererFactoryServiceTrackerCustomizer());
 
 		_serviceTracker.open();
 	}
 
-	private Map<String, AssetRendererFactory> _filterAssetRendererFactories(
+	private Map<String, AssetRendererFactory<?>> _filterAssetRendererFactories(
 		long companyId,
-		Map<String, AssetRendererFactory> assetRendererFactories,
+		Map<String, AssetRendererFactory<?>> assetRendererFactories,
 		boolean filterSelectable) {
 
-		Map<String, AssetRendererFactory> filteredAssetRendererFactories =
+		Map<String, AssetRendererFactory<?>> filteredAssetRendererFactories =
 			new ConcurrentHashMap<>();
 
 		for (String className : assetRendererFactories.keySet()) {
-			AssetRendererFactory assetRendererFactory =
+			AssetRendererFactory<?> assetRendererFactory =
 				assetRendererFactories.get(className);
 
 			if (assetRendererFactory.isActive(companyId) &&
@@ -153,11 +157,11 @@ public class AssetRendererFactoryRegistryUtil {
 		return filteredAssetRendererFactories;
 	}
 
-	private List<AssetRendererFactory> _getAssetRendererFactories() {
+	private List<AssetRendererFactory<?>> _getAssetRendererFactories() {
 		return ListUtil.fromMapValues(_assetRenderFactoriesMapByClassName);
 	}
 
-	private List<AssetRendererFactory> _getAssetRendererFactories(
+	private List<AssetRendererFactory<?>> _getAssetRendererFactories(
 		long companyId) {
 
 		return ListUtil.fromMapValues(
@@ -165,25 +169,27 @@ public class AssetRendererFactoryRegistryUtil {
 				companyId, _assetRenderFactoriesMapByClassName, false));
 	}
 
-	private AssetRendererFactory _getAssetRendererFactoryByClassName(
+	private AssetRendererFactory<?> _getAssetRendererFactoryByClassName(
 		String className) {
 
 		return _assetRenderFactoriesMapByClassName.get(className);
 	}
 
-	private AssetRendererFactory _getAssetRendererFactoryByClassNameId(
+	private AssetRendererFactory<?> _getAssetRendererFactoryByClassNameId(
 		long classNameId) {
 
 		return _getAssetRendererFactoryByClassName(
 			PortalUtil.getClassName(classNameId));
 	}
 
-	private AssetRendererFactory _getAssetRendererFactoryByType(String type) {
+	private AssetRendererFactory<?> _getAssetRendererFactoryByType(
+		String type) {
+
 		return _assetRenderFactoriesMapByClassType.get(type);
 	}
 
 	private long[] _getClassNameIds(long companyId, boolean filterSelectable) {
-		Map<String, AssetRendererFactory> assetRenderFactories =
+		Map<String, AssetRendererFactory<?>> assetRenderFactories =
 			_assetRenderFactoriesMapByClassName;
 
 		if (companyId > 0) {
@@ -196,7 +202,7 @@ public class AssetRendererFactoryRegistryUtil {
 
 		int i = 0;
 
-		for (AssetRendererFactory assetRendererFactory :
+		for (AssetRendererFactory<?> assetRendererFactory :
 				assetRenderFactories.values()) {
 
 			classNameIds[i] = assetRendererFactory.getClassNameId();
@@ -207,18 +213,20 @@ public class AssetRendererFactoryRegistryUtil {
 		return classNameIds;
 	}
 
-	private void _register(AssetRendererFactory assetRendererFactory) {
+	@SuppressWarnings("unchecked")
+	private void _register(AssetRendererFactory<?> assetRendererFactory) {
 		Registry registry = RegistryUtil.getRegistry();
 
-		ServiceRegistration<AssetRendererFactory> serviceRegistration =
+		ServiceRegistration<AssetRendererFactory<?>> serviceRegistration =
 			registry.registerService(
-				AssetRendererFactory.class, assetRendererFactory);
+				(Class<AssetRendererFactory<?>>)(Class<?>)
+					AssetRendererFactory.class, assetRendererFactory);
 
 		_serviceRegistrations.put(assetRendererFactory, serviceRegistration);
 	}
 
-	private void _unregister(AssetRendererFactory assetRendererFactory) {
-		ServiceRegistration<AssetRendererFactory> serviceRegistration =
+	private void _unregister(AssetRendererFactory<?> assetRendererFactory) {
+		ServiceRegistration<AssetRendererFactory<?>> serviceRegistration =
 			_serviceRegistrations.remove(assetRendererFactory);
 
 		if (serviceRegistration != null) {
@@ -232,31 +240,32 @@ public class AssetRendererFactoryRegistryUtil {
 	private static final AssetRendererFactoryRegistryUtil _instance =
 		new AssetRendererFactoryRegistryUtil();
 
-	private final Map<String, AssetRendererFactory>
+	private final Map<String, AssetRendererFactory<?>>
 		_assetRenderFactoriesMapByClassName = new ConcurrentHashMap<>();
-	private final Map<String, AssetRendererFactory>
+	private final Map<String, AssetRendererFactory<?>>
 		_assetRenderFactoriesMapByClassType = new ConcurrentHashMap<>();
-	private final ServiceRegistrationMap<AssetRendererFactory>
+	private final ServiceRegistrationMap<AssetRendererFactory<?>>
 		_serviceRegistrations = new ServiceRegistrationMapImpl<>();
-	private final ServiceTracker<AssetRendererFactory, AssetRendererFactory>
-		_serviceTracker;
+	private final
+		ServiceTracker<AssetRendererFactory<?>, AssetRendererFactory<?>>
+			_serviceTracker;
 
 	private class AssetRendererFactoryServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
-			<AssetRendererFactory, AssetRendererFactory> {
+			<AssetRendererFactory<?>, AssetRendererFactory<?>> {
 
 		@Override
-		public AssetRendererFactory addingService(
-			ServiceReference<AssetRendererFactory> serviceReference) {
+		public AssetRendererFactory<?> addingService(
+			ServiceReference<AssetRendererFactory<?>> serviceReference) {
 
 			Registry registry = RegistryUtil.getRegistry();
 
-			AssetRendererFactory assetRendererFactory = registry.getService(
+			AssetRendererFactory<?> assetRendererFactory = registry.getService(
 				serviceReference);
 
 			String className = assetRendererFactory.getClassName();
 
-			AssetRendererFactory classNameAssetRendererFactory =
+			AssetRendererFactory<?> classNameAssetRendererFactory =
 				_assetRenderFactoriesMapByClassName.put(
 					className, assetRendererFactory);
 
@@ -271,7 +280,7 @@ public class AssetRendererFactoryRegistryUtil {
 
 			String type = assetRendererFactory.getType();
 
-			AssetRendererFactory typeAssetRendererFactory =
+			AssetRendererFactory<?> typeAssetRendererFactory =
 				_assetRenderFactoriesMapByClassType.put(
 					type, assetRendererFactory);
 
@@ -286,14 +295,14 @@ public class AssetRendererFactoryRegistryUtil {
 
 		@Override
 		public void modifiedService(
-			ServiceReference<AssetRendererFactory> serviceReference,
-			AssetRendererFactory assetRendererFactory) {
+			ServiceReference<AssetRendererFactory<?>> serviceReference,
+			AssetRendererFactory<?> assetRendererFactory) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<AssetRendererFactory> serviceReference,
-			AssetRendererFactory assetRendererFactory) {
+			ServiceReference<AssetRendererFactory<?>> serviceReference,
+			AssetRendererFactory<?> assetRendererFactory) {
 
 			Registry registry = RegistryUtil.getRegistry();
 

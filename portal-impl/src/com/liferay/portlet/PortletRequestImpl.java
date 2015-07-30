@@ -703,9 +703,10 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			}
 		}
 
-		request = new SharedSessionServletRequest(
-			PortalUtil.getOriginalServletRequest(request),
-			!portlet.isPrivateSessionAttributes());
+		if (warFile) {
+			request = new SharedSessionServletRequest(
+				request, !portlet.isPrivateSessionAttributes());
+		}
 
 		String dynamicQueryString = (String)request.getAttribute(
 			DynamicServletRequest.DYNAMIC_QUERY_STRING);
@@ -833,6 +834,15 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 		mergePublicRenderParameters(dynamicRequest, preferences, plid);
 
+		HttpServletRequest originalRequest =
+			PortalUtil.getOriginalServletRequest(dynamicRequest);
+
+		HttpSession session = originalRequest.getSession();
+
+		if (Validator.isNull(session)) {
+			session = dynamicRequest.getSession();
+		}
+
 		_request = dynamicRequest;
 		_originalRequest = request;
 		_wapTheme = BrowserSnifferUtil.isWap(_request);
@@ -843,7 +853,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		_portletMode = portletMode;
 		_preferences = preferences;
 		_session = new PortletSessionImpl(
-			_request.getSession(), _portletContext, _portletName, plid);
+			session, _portletContext, _portletName, plid);
 
 		String remoteUser = request.getRemoteUser();
 

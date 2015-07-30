@@ -16,9 +16,6 @@ package com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
-
-import com.liferay.dynamic.data.mapping.taglib.servlet.ServletContextUtil;
 
 /**
  * @author Bruno Basto
@@ -83,19 +80,6 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 		setScopedAttribute("entries", entries);
 	}
 	
-	public void setServletContext(java.lang.Object servletContext) {
-		_servletContext = servletContext;
-
-		setScopedAttribute("servletContext", servletContext);
-	}
-	
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-
-		setServletContext(ServletContextUtil.getServletContext());
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -105,7 +89,6 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 		_displayStyle = null;
 		_displayStyleGroupId = 0;
 		_entries = null;
-		_servletContext = null;
 	}
 
 	@Override
@@ -125,7 +108,6 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 		setNamespacedAttribute(request, "displayStyle", _displayStyle);
 		setNamespacedAttribute(request, "displayStyleGroupId", _displayStyleGroupId);
 		setNamespacedAttribute(request, "entries", _entries);
-		setNamespacedAttribute(request, "servletContext", _servletContext);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-ddm:template-renderer:";
@@ -141,6 +123,5 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 	private java.lang.String _displayStyle = null;
 	private long _displayStyleGroupId = 0;
 	private java.util.List<?> _entries = null;
-	private java.lang.Object _servletContext = null;
 
 }

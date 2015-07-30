@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.taglib.base;
+package com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;

@@ -6,7 +6,7 @@
 	<uri>http://liferay.com/tld/ddm</uri>
 	<tag>
 		<name>html</name>
-		<tag-class>com.liferay.dynamic.data.mapping.taglib.HTMLTag</tag-class>
+		<tag-class>com.liferay.dynamic.data.mapping.taglib.servlet.taglib.HTMLTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>checkRequired</name>
@@ -72,7 +72,7 @@
 	</tag>
 	<tag>
 		<name>html-field</name>
-		<tag-class>com.liferay.dynamic.data.mapping.taglib.HTMLFieldTag</tag-class>
+		<tag-class>com.liferay.dynamic.data.mapping.taglib.servlet.taglib.HTMLFieldTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>classNameId</name>
@@ -132,7 +132,7 @@
 	</tag>
 	<tag>
 		<name>template-renderer</name>
-		<tag-class>com.liferay.dynamic.data.mapping.taglib.TemplateRendererTag</tag-class>
+		<tag-class>com.liferay.dynamic.data.mapping.taglib.servlet.taglib.TemplateRendererTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>className</name>
@@ -174,7 +174,7 @@
 	</tag>
 	<tag>
 		<name>template-selector</name>
-		<tag-class>com.liferay.dynamic.data.mapping.taglib.TemplateSelectorTag</tag-class>
+		<tag-class>com.liferay.dynamic.data.mapping.taglib.servlet.taglib.TemplateSelectorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>className</name>

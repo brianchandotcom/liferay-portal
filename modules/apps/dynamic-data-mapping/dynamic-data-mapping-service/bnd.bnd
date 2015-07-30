@@ -1,4 +1,31 @@
 Bundle-Name: Liferay Dynamic Data Mapping Service
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.service
 Bundle-Version: 1.0.0
-Include-Resource: classes
+Import-Package:\
+	com.liferay.portal.xml,\
+	*
+Export-Package:\
+	com.liferay.dynamic.data.mapping.internal,\
+	com.liferay.dynamic.data.mapping.io.impl,\
+	com.liferay.dynamic.data.mapping.model.impl,\
+	com.liferay.dynamic.data.mapping.registry.impl,\
+	com.liferay.dynamic.data.mapping.render.impl,\
+	com.liferay.dynamic.data.mapping.service.base,\
+	com.liferay.dynamic.data.mapping.service.impl,\
+	com.liferay.dynamic.data.mapping.service.persistence.impl,\
+	com.liferay.dynamic.data.mapping.storage.impl,\
+	com.liferay.dynamic.data.mapping.util.impl,\
+	com.liferay.dynamic.data.mapping.validator.impl
+Include-Resource:\
+	classes,\
+	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
+	META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/xml/XMLUtil.class
+Liferay-Service: true
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+Spring-Context: META-INF/spring
+-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

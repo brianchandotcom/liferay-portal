@@ -701,7 +701,7 @@
 			<jvmarg value="-Ddeployer.base.dir=${lp.plugins.dir}/dist" />
 			<jvmarg value="-Ddeployer.dest.dir=${deployer.dest.dir}" />
 			<jvmarg value="-Ddeployer.app.server.type=${deployer.app.server.type}" />
-			<jvmarg value="-Ddeployer.aui.taglib.dtd=util-taglib/classes/META-INF/aui.tld" />
+			<jvmarg value="-Ddeployer.aui.taglib.dtd=util-taglib/classes/META-INF/liferay-aui.tld" />
 			<jvmarg value="-Ddeployer.portlet.taglib.dtd=util-taglib/classes/META-INF/liferay-portlet.tld" />
 			<jvmarg value="-Ddeployer.portlet-ext.taglib.dtd=util-taglib/classes/META-INF/liferay-portlet-ext.tld" />
 			<jvmarg value="-Ddeployer.security.taglib.dtd=util-taglib/classes/META-INF/liferay-security.tld" />

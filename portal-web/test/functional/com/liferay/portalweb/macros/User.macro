@@ -1636,7 +1636,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 			<then>
-				<execute function="Click" locator1="Dockbar#USER_NAME" />
+				<execute function="Click" locator1="Dockbar#USER_AVATAR_IMAGE" />
 				<execute function="Click" locator1="Dockbar#USER_SIGN_OUT" />
 			</then>
 		</if>
@@ -1659,7 +1659,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 			<then>
-				<execute function="Click" locator1="Dockbar#USER_NAME" />
+				<execute function="Click" locator1="Dockbar#USER_AVATAR_IMAGE" />
 				<execute function="Click" locator1="Dockbar#USER_SIGN_OUT" />
 			</then>
 		</if>

@@ -17,6 +17,7 @@ package com.liferay.wiki.web.item.selector.view.display.context;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portlet.PortletURLUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
@@ -67,6 +68,21 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 
 	public String getTitle(Locale locale) {
 		return _wikiAttachmentItemSelectorView.getTitle(locale);
+	}
+
+	public PortletURL getUploadURL(
+		LiferayPortletResponse liferayPortletResponse) {
+
+		PortletURL portletURL = liferayPortletResponse.createActionURL(
+			WikiPortletKeys.WIKI);
+
+		portletURL.setParameter("struts_action", "/wiki/upload_image");
+		portletURL.setParameter(
+			"resourcePrimKey",
+			String.valueOf(
+				_wikiAttachmentItemSelectorCriterion.getWikiPageResourceId()));
+
+		return portletURL;
 	}
 
 	public WikiAttachmentItemSelectorCriterion

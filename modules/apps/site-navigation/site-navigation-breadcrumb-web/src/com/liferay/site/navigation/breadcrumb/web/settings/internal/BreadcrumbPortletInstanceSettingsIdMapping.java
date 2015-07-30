@@ -33,7 +33,7 @@ public class BreadcrumbPortletInstanceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return BreadcrumbPortletKeys.BREADCRUMB;
 	}
 

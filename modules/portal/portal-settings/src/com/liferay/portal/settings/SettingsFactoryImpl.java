@@ -225,7 +225,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	protected void setConfigurationPidMapping(
 		ConfigurationPidMapping configurationPidMapping) {
 
-		String settingsId = configurationPidMapping.getSettingsId();
+		String settingsId = configurationPidMapping.getConfigurationPid();
 
 		Class<?> configurationBeanClass =
 			configurationPidMapping.getConfigurationBeanClass();
@@ -266,7 +266,7 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	protected void unsetConfigurationPidMapping(
 		ConfigurationPidMapping configurationPidMapping) {
 
-		unregister(configurationPidMapping.getSettingsId());
+		unregister(configurationPidMapping.getConfigurationPid());
 	}
 
 	private final ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =

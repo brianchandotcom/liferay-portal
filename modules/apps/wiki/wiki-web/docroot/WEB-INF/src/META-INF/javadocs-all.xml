@@ -1325,7 +1325,7 @@
 			</return>
 		</method>
 		<method>
-			<name>getSettingsId</name>
+			<name>getConfigurationPid</name>
 			<return>
 				<comment><![CDATA[]]></comment>
 			</return>
@@ -1342,7 +1342,7 @@
 			</return>
 		</method>
 		<method>
-			<name>getSettingsId</name>
+			<name>getConfigurationPid</name>
 			<return>
 				<comment><![CDATA[]]></comment>
 			</return>
@@ -1370,7 +1370,7 @@
 			</return>
 		</method>
 		<method>
-			<name>getSettingsId</name>
+			<name>getConfigurationPid</name>
 			<return>
 				<comment><![CDATA[]]></comment>
 			</return>

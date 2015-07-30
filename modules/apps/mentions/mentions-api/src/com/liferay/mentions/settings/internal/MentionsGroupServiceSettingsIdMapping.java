@@ -33,7 +33,7 @@ public class MentionsGroupServiceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return MentionsConstants.SERVICE_NAME;
 	}
 

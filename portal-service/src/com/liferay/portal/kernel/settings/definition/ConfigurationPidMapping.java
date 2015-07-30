@@ -21,6 +21,6 @@ public interface ConfigurationPidMapping {
 
 	public Class<?> getConfigurationBeanClass();
 
-	public String getSettingsId();
+	public String getConfigurationPid();
 
 }

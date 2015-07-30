@@ -834,15 +834,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 		mergePublicRenderParameters(dynamicRequest, preferences, plid);
 
-		HttpServletRequest originalRequest =
-			PortalUtil.getOriginalServletRequest(dynamicRequest);
-
-		HttpSession session = originalRequest.getSession();
-
-		if (Validator.isNull(session)) {
-			session = dynamicRequest.getSession();
-		}
-
 		_request = dynamicRequest;
 		_originalRequest = request;
 		_wapTheme = BrowserSnifferUtil.isWap(_request);
@@ -853,7 +844,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		_portletMode = portletMode;
 		_preferences = preferences;
 		_session = new PortletSessionImpl(
-			session, _portletContext, _portletName, plid);
+			_request.getSession(), _portletContext, _portletName, plid);
 
 		String remoteUser = request.getRemoteUser();
 

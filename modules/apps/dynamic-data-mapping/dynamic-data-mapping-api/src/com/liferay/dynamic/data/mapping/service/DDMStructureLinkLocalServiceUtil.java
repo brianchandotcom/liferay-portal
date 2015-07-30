@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service;
+package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -47,12 +47,12 @@ public class DDMStructureLinkLocalServiceUtil {
 	* @param ddmStructureLink the d d m structure link
 	* @return the d d m structure link that was added
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink addDDMStructureLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink) {
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLink addDDMStructureLink(
+		com.liferay.dynamic.data.mapping.model.DDMStructureLink ddmStructureLink) {
 		return getService().addDDMStructureLink(ddmStructureLink);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink addStructureLink(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLink addStructureLink(
 		long classNameId, long classPK, long structureId) {
 		return getService().addStructureLink(classNameId, classPK, structureId);
 	}
@@ -63,7 +63,7 @@ public class DDMStructureLinkLocalServiceUtil {
 	* @param structureLinkId the primary key for the new d d m structure link
 	* @return the new d d m structure link
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink createDDMStructureLink(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLink createDDMStructureLink(
 		long structureLinkId) {
 		return getService().createDDMStructureLink(structureLinkId);
 	}
@@ -74,8 +74,8 @@ public class DDMStructureLinkLocalServiceUtil {
 	* @param ddmStructureLink the d d m structure link
 	* @return the d d m structure link that was removed
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink deleteDDMStructureLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink) {
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLink deleteDDMStructureLink(
+		com.liferay.dynamic.data.mapping.model.DDMStructureLink ddmStructureLink) {
 		return getService().deleteDDMStructureLink(ddmStructureLink);
 	}
 
@@ -86,7 +86,7 @@ public class DDMStructureLinkLocalServiceUtil {
 	* @return the d d m structure link that was removed
 	* @throws PortalException if a d d m structure link with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink deleteDDMStructureLink(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLink deleteDDMStructureLink(
 		long structureLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteDDMStructureLink(structureLinkId);
@@ -108,7 +108,7 @@ public class DDMStructureLinkLocalServiceUtil {
 	}
 
 	public static void deleteStructureLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink structureLink) {
+		com.liferay.dynamic.data.mapping.model.DDMStructureLink structureLink) {
 		getService().deleteStructureLink(structureLink);
 	}
 
@@ -203,7 +203,7 @@ public class DDMStructureLinkLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink fetchDDMStructureLink(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLink fetchDDMStructureLink(
 		long structureLinkId) {
 		return getService().fetchDDMStructureLink(structureLinkId);
 	}
@@ -221,7 +221,7 @@ public class DDMStructureLinkLocalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> getClassNameStructureLinks(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureLink> getClassNameStructureLinks(
 		long classNameId) {
 		return getService().getClassNameStructureLinks(classNameId);
 	}
@@ -233,7 +233,7 @@ public class DDMStructureLinkLocalServiceUtil {
 	* @return the d d m structure link
 	* @throws PortalException if a d d m structure link with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink getDDMStructureLink(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLink getDDMStructureLink(
 		long structureLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDDMStructureLink(structureLinkId);
@@ -250,7 +250,7 @@ public class DDMStructureLinkLocalServiceUtil {
 	* @param end the upper bound of the range of d d m structure links (not inclusive)
 	* @return the range of d d m structure links
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> getDDMStructureLinks(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureLink> getDDMStructureLinks(
 		int start, int end) {
 		return getService().getDDMStructureLinks(start, end);
 	}
@@ -270,34 +270,34 @@ public class DDMStructureLinkLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink getStructureLink(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLink getStructureLink(
 		long structureLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getStructureLink(structureLinkId);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureLinkStructures(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructureLinkStructures(
 		long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getStructureLinkStructures(classNameId, classPK);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> getStructureLinks(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureLink> getStructureLinks(
 		long classNameId, long classPK) {
 		return getService().getStructureLinks(classNameId, classPK);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> getStructureLinks(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureLink> getStructureLinks(
 		long structureId) {
 		return getService().getStructureLinks(structureId);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> getStructureLinks(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureLink> getStructureLinks(
 		long structureId, int start, int end) {
 		return getService().getStructureLinks(structureId, start, end);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink getUniqueStructureLink(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLink getUniqueStructureLink(
 		long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getUniqueStructureLink(classNameId, classPK);
@@ -318,12 +318,12 @@ public class DDMStructureLinkLocalServiceUtil {
 	* @param ddmStructureLink the d d m structure link
 	* @return the d d m structure link that was updated
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink updateDDMStructureLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink) {
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLink updateDDMStructureLink(
+		com.liferay.dynamic.data.mapping.model.DDMStructureLink ddmStructureLink) {
 		return getService().updateDDMStructureLink(ddmStructureLink);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink updateStructureLink(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLink updateStructureLink(
 		long structureLinkId, long classNameId, long classPK, long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

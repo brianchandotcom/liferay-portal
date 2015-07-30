@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service;
+package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -47,12 +47,12 @@ public class DDMStructureLayoutLocalServiceUtil {
 	* @param ddmStructureLayout the d d m structure layout
 	* @return the d d m structure layout that was added
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout addDDMStructureLayout(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout ddmStructureLayout) {
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout addDDMStructureLayout(
+		com.liferay.dynamic.data.mapping.model.DDMStructureLayout ddmStructureLayout) {
 		return getService().addDDMStructureLayout(ddmStructureLayout);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout addStructureLayout(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout addStructureLayout(
 		long userId, long groupId, long structureVersionId,
 		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -68,7 +68,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 	* @param structureLayoutId the primary key for the new d d m structure layout
 	* @return the new d d m structure layout
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout createDDMStructureLayout(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout createDDMStructureLayout(
 		long structureLayoutId) {
 		return getService().createDDMStructureLayout(structureLayoutId);
 	}
@@ -79,8 +79,8 @@ public class DDMStructureLayoutLocalServiceUtil {
 	* @param ddmStructureLayout the d d m structure layout
 	* @return the d d m structure layout that was removed
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout deleteDDMStructureLayout(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout ddmStructureLayout) {
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout deleteDDMStructureLayout(
+		com.liferay.dynamic.data.mapping.model.DDMStructureLayout ddmStructureLayout) {
 		return getService().deleteDDMStructureLayout(ddmStructureLayout);
 	}
 
@@ -91,7 +91,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 	* @return the d d m structure layout that was removed
 	* @throws PortalException if a d d m structure layout with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout deleteDDMStructureLayout(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout deleteDDMStructureLayout(
 		long structureLayoutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteDDMStructureLayout(structureLayoutId);
@@ -107,7 +107,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 	}
 
 	public static void deleteStructureLayout(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout structureLayout) {
+		com.liferay.dynamic.data.mapping.model.DDMStructureLayout structureLayout) {
 		getService().deleteStructureLayout(structureLayout);
 	}
 
@@ -194,7 +194,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout fetchDDMStructureLayout(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout fetchDDMStructureLayout(
 		long structureLayoutId) {
 		return getService().fetchDDMStructureLayout(structureLayoutId);
 	}
@@ -206,7 +206,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching d d m structure layout, or <code>null</code> if a matching d d m structure layout could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout fetchDDMStructureLayoutByUuidAndGroupId(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout fetchDDMStructureLayoutByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
 		return getService()
 				   .fetchDDMStructureLayoutByUuidAndGroupId(uuid, groupId);
@@ -232,7 +232,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 	* @return the d d m structure layout
 	* @throws PortalException if a d d m structure layout with the primary key could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout getDDMStructureLayout(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout getDDMStructureLayout(
 		long structureLayoutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDDMStructureLayout(structureLayoutId);
@@ -246,7 +246,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 	* @return the matching d d m structure layout
 	* @throws PortalException if a matching d d m structure layout could not be found
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout getDDMStructureLayoutByUuidAndGroupId(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout getDDMStructureLayoutByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDDMStructureLayoutByUuidAndGroupId(uuid, groupId);
@@ -263,7 +263,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 	* @param end the upper bound of the range of d d m structure layouts (not inclusive)
 	* @return the range of d d m structure layouts
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout> getDDMStructureLayouts(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureLayout> getDDMStructureLayouts(
 		int start, int end) {
 		return getService().getDDMStructureLayouts(start, end);
 	}
@@ -275,7 +275,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching d d m structure layouts, or an empty list if no matches were found
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout> getDDMStructureLayoutsByUuidAndCompanyId(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureLayout> getDDMStructureLayoutsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
 		return getService()
 				   .getDDMStructureLayoutsByUuidAndCompanyId(uuid, companyId);
@@ -291,9 +291,9 @@ public class DDMStructureLayoutLocalServiceUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the range of matching d d m structure layouts, or an empty list if no matches were found
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout> getDDMStructureLayoutsByUuidAndCompanyId(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureLayout> getDDMStructureLayoutsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructureLayout> orderByComparator) {
 		return getService()
 				   .getDDMStructureLayoutsByUuidAndCompanyId(uuid, companyId,
 			start, end, orderByComparator);
@@ -314,13 +314,13 @@ public class DDMStructureLayoutLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout getStructureLayout(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout getStructureLayout(
 		long structureLayoutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getStructureLayout(structureLayoutId);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout getStructureLayoutByStructureVersionId(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout getStructureLayoutByStructureVersionId(
 		long structureVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -342,12 +342,12 @@ public class DDMStructureLayoutLocalServiceUtil {
 	* @param ddmStructureLayout the d d m structure layout
 	* @return the d d m structure layout that was updated
 	*/
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout updateDDMStructureLayout(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout ddmStructureLayout) {
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout updateDDMStructureLayout(
+		com.liferay.dynamic.data.mapping.model.DDMStructureLayout ddmStructureLayout) {
 		return getService().updateDDMStructureLayout(ddmStructureLayout);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout updateStructureLayout(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureLayout updateStructureLayout(
 		long structureLayoutId,
 		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)

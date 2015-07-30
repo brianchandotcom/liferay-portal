@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.persistence;
+package com.liferay.dynamic.data.mapping.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout;
 
 import java.util.List;
 
@@ -166,7 +165,7 @@ public class DDMStructureLayoutUtil {
 	*/
 	public static DDMStructureLayout findByUuid_First(java.lang.String uuid,
 		OrderByComparator<DDMStructureLayout> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -192,7 +191,7 @@ public class DDMStructureLayoutUtil {
 	*/
 	public static DDMStructureLayout findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<DDMStructureLayout> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -220,7 +219,7 @@ public class DDMStructureLayoutUtil {
 	public static DDMStructureLayout[] findByUuid_PrevAndNext(
 		long structureLayoutId, java.lang.String uuid,
 		OrderByComparator<DDMStructureLayout> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(structureLayoutId, uuid,
 			orderByComparator);
@@ -255,7 +254,7 @@ public class DDMStructureLayoutUtil {
 	*/
 	public static DDMStructureLayout findByUUID_G(java.lang.String uuid,
 		long groupId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -293,7 +292,7 @@ public class DDMStructureLayoutUtil {
 	*/
 	public static DDMStructureLayout removeByUUID_G(java.lang.String uuid,
 		long groupId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -370,7 +369,7 @@ public class DDMStructureLayoutUtil {
 	*/
 	public static DDMStructureLayout findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<DDMStructureLayout> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -401,7 +400,7 @@ public class DDMStructureLayoutUtil {
 	*/
 	public static DDMStructureLayout findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<DDMStructureLayout> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -433,7 +432,7 @@ public class DDMStructureLayoutUtil {
 	public static DDMStructureLayout[] findByUuid_C_PrevAndNext(
 		long structureLayoutId, java.lang.String uuid, long companyId,
 		OrderByComparator<DDMStructureLayout> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(structureLayoutId, uuid,
 			companyId, orderByComparator);
@@ -469,7 +468,7 @@ public class DDMStructureLayoutUtil {
 	*/
 	public static DDMStructureLayout findByStructureVersionId(
 		long structureVersionId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException {
 		return getPersistence().findByStructureVersionId(structureVersionId);
 	}
 
@@ -506,7 +505,7 @@ public class DDMStructureLayoutUtil {
 	*/
 	public static DDMStructureLayout removeByStructureVersionId(
 		long structureVersionId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException {
 		return getPersistence().removeByStructureVersionId(structureVersionId);
 	}
 
@@ -556,7 +555,7 @@ public class DDMStructureLayoutUtil {
 	* @throws NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
 	*/
 	public static DDMStructureLayout remove(long structureLayoutId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException {
 		return getPersistence().remove(structureLayoutId);
 	}
 
@@ -573,7 +572,7 @@ public class DDMStructureLayoutUtil {
 	* @throws NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
 	*/
 	public static DDMStructureLayout findByPrimaryKey(long structureLayoutId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutException {
 		return getPersistence().findByPrimaryKey(structureLayoutId);
 	}
 

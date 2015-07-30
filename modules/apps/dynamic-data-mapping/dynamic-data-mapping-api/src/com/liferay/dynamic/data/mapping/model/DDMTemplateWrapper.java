@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -251,7 +251,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 
 	@Override
 	public int compareTo(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate) {
+		com.liferay.dynamic.data.mapping.model.DDMTemplate ddmTemplate) {
 		return _ddmTemplate.compareTo(ddmTemplate);
 	}
 
@@ -633,7 +633,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion getTemplateVersion()
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getTemplateVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplate.getTemplateVersion();
 	}
@@ -1241,12 +1241,12 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.dynamic.data.mapping.model.DDMTemplate> toCacheModel() {
 		return _ddmTemplate.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate toEscapedModel() {
+	public com.liferay.dynamic.data.mapping.model.DDMTemplate toEscapedModel() {
 		return new DDMTemplateWrapper(_ddmTemplate.toEscapedModel());
 	}
 
@@ -1256,7 +1256,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate toUnescapedModel() {
+	public com.liferay.dynamic.data.mapping.model.DDMTemplate toUnescapedModel() {
 		return new DDMTemplateWrapper(_ddmTemplate.toUnescapedModel());
 	}
 

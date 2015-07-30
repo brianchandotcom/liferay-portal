@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.persistence;
+package com.liferay.dynamic.data.mapping.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
 
 import java.util.List;
 
@@ -164,7 +163,7 @@ public class DDMContentUtil {
 	*/
 	public static DDMContent findByUuid_First(java.lang.String uuid,
 		OrderByComparator<DDMContent> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -190,7 +189,7 @@ public class DDMContentUtil {
 	*/
 	public static DDMContent findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<DDMContent> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -217,7 +216,7 @@ public class DDMContentUtil {
 	*/
 	public static DDMContent[] findByUuid_PrevAndNext(long contentId,
 		java.lang.String uuid, OrderByComparator<DDMContent> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(contentId, uuid, orderByComparator);
 	}
@@ -250,7 +249,7 @@ public class DDMContentUtil {
 	* @throws NoSuchContentException if a matching d d m content could not be found
 	*/
 	public static DDMContent findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -286,7 +285,7 @@ public class DDMContentUtil {
 	* @return the d d m content that was removed
 	*/
 	public static DDMContent removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -363,7 +362,7 @@ public class DDMContentUtil {
 	*/
 	public static DDMContent findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<DDMContent> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -393,7 +392,7 @@ public class DDMContentUtil {
 	*/
 	public static DDMContent findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<DDMContent> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -425,7 +424,7 @@ public class DDMContentUtil {
 	public static DDMContent[] findByUuid_C_PrevAndNext(long contentId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<DDMContent> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(contentId, uuid, companyId,
 			orderByComparator);
@@ -508,7 +507,7 @@ public class DDMContentUtil {
 	*/
 	public static DDMContent findByGroupId_First(long groupId,
 		OrderByComparator<DDMContent> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -534,7 +533,7 @@ public class DDMContentUtil {
 	*/
 	public static DDMContent findByGroupId_Last(long groupId,
 		OrderByComparator<DDMContent> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -561,7 +560,7 @@ public class DDMContentUtil {
 	*/
 	public static DDMContent[] findByGroupId_PrevAndNext(long contentId,
 		long groupId, OrderByComparator<DDMContent> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(contentId, groupId,
 			orderByComparator);
@@ -642,7 +641,7 @@ public class DDMContentUtil {
 	*/
 	public static DDMContent findByCompanyId_First(long companyId,
 		OrderByComparator<DDMContent> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -670,7 +669,7 @@ public class DDMContentUtil {
 	*/
 	public static DDMContent findByCompanyId_Last(long companyId,
 		OrderByComparator<DDMContent> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -699,7 +698,7 @@ public class DDMContentUtil {
 	*/
 	public static DDMContent[] findByCompanyId_PrevAndNext(long contentId,
 		long companyId, OrderByComparator<DDMContent> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(contentId, companyId,
 			orderByComparator);
@@ -760,7 +759,7 @@ public class DDMContentUtil {
 	* @throws NoSuchContentException if a d d m content with the primary key could not be found
 	*/
 	public static DDMContent remove(long contentId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
 		return getPersistence().remove(contentId);
 	}
 
@@ -776,7 +775,7 @@ public class DDMContentUtil {
 	* @throws NoSuchContentException if a d d m content with the primary key could not be found
 	*/
 	public static DDMContent findByPrimaryKey(long contentId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchContentException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
 		return getPersistence().findByPrimaryKey(contentId);
 	}
 

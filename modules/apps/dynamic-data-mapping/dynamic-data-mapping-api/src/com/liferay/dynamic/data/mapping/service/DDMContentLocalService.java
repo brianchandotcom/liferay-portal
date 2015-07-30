@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service;
+package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -47,7 +47,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DDMContentLocalServiceUtil} to access the d d m content local service. Add custom service methods to {@link com.liferay.portlet.dynamicdatamapping.service.impl.DDMContentLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portlet.dynamicdatamapping.model.DDMContent addContent(
+	public com.liferay.dynamic.data.mapping.model.DDMContent addContent(
 		long userId, long groupId, java.lang.String name,
 		java.lang.String description, java.lang.String data,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -60,8 +60,8 @@ public interface DDMContentLocalService extends BaseLocalService,
 	* @return the d d m content that was added
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMContent addDDMContent(
-		com.liferay.portlet.dynamicdatamapping.model.DDMContent ddmContent);
+	public com.liferay.dynamic.data.mapping.model.DDMContent addDDMContent(
+		com.liferay.dynamic.data.mapping.model.DDMContent ddmContent);
 
 	/**
 	* Creates a new d d m content with the primary key. Does not add the d d m content to the database.
@@ -69,11 +69,11 @@ public interface DDMContentLocalService extends BaseLocalService,
 	* @param contentId the primary key for the new d d m content
 	* @return the new d d m content
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMContent createDDMContent(
+	public com.liferay.dynamic.data.mapping.model.DDMContent createDDMContent(
 		long contentId);
 
 	public void deleteContent(
-		com.liferay.portlet.dynamicdatamapping.model.DDMContent content);
+		com.liferay.dynamic.data.mapping.model.DDMContent content);
 
 	public void deleteContents(long groupId);
 
@@ -85,7 +85,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 	* @throws PortalException if a d d m content with the primary key could not be found
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMContent deleteDDMContent(
+	public com.liferay.dynamic.data.mapping.model.DDMContent deleteDDMContent(
 		long contentId) throws PortalException;
 
 	/**
@@ -95,8 +95,8 @@ public interface DDMContentLocalService extends BaseLocalService,
 	* @return the d d m content that was removed
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMContent deleteDDMContent(
-		com.liferay.portlet.dynamicdatamapping.model.DDMContent ddmContent);
+	public com.liferay.dynamic.data.mapping.model.DDMContent deleteDDMContent(
+		com.liferay.dynamic.data.mapping.model.DDMContent ddmContent);
 
 	/**
 	* @throws PortalException
@@ -172,7 +172,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchDDMContent(
+	public com.liferay.dynamic.data.mapping.model.DDMContent fetchDDMContent(
 		long contentId);
 
 	/**
@@ -183,7 +183,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 	* @return the matching d d m content, or <code>null</code> if a matching d d m content could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMContent fetchDDMContentByUuidAndGroupId(
+	public com.liferay.dynamic.data.mapping.model.DDMContent fetchDDMContentByUuidAndGroupId(
 		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -197,18 +197,18 @@ public interface DDMContentLocalService extends BaseLocalService,
 	public java.lang.String getBeanIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMContent getContent(
+	public com.liferay.dynamic.data.mapping.model.DDMContent getContent(
 		long contentId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> getContents();
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMContent> getContents();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> getContents(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMContent> getContents(
 		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> getContents(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMContent> getContents(
 		long groupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -222,7 +222,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 	* @throws PortalException if a d d m content with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMContent getDDMContent(
+	public com.liferay.dynamic.data.mapping.model.DDMContent getDDMContent(
 		long contentId) throws PortalException;
 
 	/**
@@ -234,7 +234,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 	* @throws PortalException if a matching d d m content could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMContent getDDMContentByUuidAndGroupId(
+	public com.liferay.dynamic.data.mapping.model.DDMContent getDDMContentByUuidAndGroupId(
 		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
@@ -249,7 +249,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 	* @return the range of d d m contents
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> getDDMContents(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMContent> getDDMContents(
 		int start, int end);
 
 	/**
@@ -260,7 +260,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 	* @return the matching d d m contents, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> getDDMContentsByUuidAndCompanyId(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMContent> getDDMContentsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
@@ -274,9 +274,9 @@ public interface DDMContentLocalService extends BaseLocalService,
 	* @return the range of matching d d m contents, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMContent> getDDMContentsByUuidAndCompanyId(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMContent> getDDMContentsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMContent> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMContent> orderByComparator);
 
 	/**
 	* Returns the number of d d m contents.
@@ -298,7 +298,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMContent updateContent(
+	public com.liferay.dynamic.data.mapping.model.DDMContent updateContent(
 		long contentId, java.lang.String name, java.lang.String description,
 		java.lang.String data,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -311,6 +311,6 @@ public interface DDMContentLocalService extends BaseLocalService,
 	* @return the d d m content that was updated
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMContent updateDDMContent(
-		com.liferay.portlet.dynamicdatamapping.model.DDMContent ddmContent);
+	public com.liferay.dynamic.data.mapping.model.DDMContent updateDDMContent(
+		com.liferay.dynamic.data.mapping.model.DDMContent ddmContent);
 }

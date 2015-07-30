@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.persistence;
+package com.liferay.dynamic.data.mapping.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.portal.service.persistence.BasePersistence;
-
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
 
 /**
  * The persistence interface for the d d m structure link service.
@@ -90,7 +89,7 @@ public interface DDMStructureLinkPersistence extends BasePersistence<DDMStructur
 	*/
 	public DDMStructureLink findByClassNameId_First(long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException;
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 
 	/**
 	* Returns the first d d m structure link in the ordered set where classNameId = &#63;.
@@ -112,7 +111,7 @@ public interface DDMStructureLinkPersistence extends BasePersistence<DDMStructur
 	*/
 	public DDMStructureLink findByClassNameId_Last(long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException;
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 
 	/**
 	* Returns the last d d m structure link in the ordered set where classNameId = &#63;.
@@ -136,7 +135,7 @@ public interface DDMStructureLinkPersistence extends BasePersistence<DDMStructur
 	public DDMStructureLink[] findByClassNameId_PrevAndNext(
 		long structureLinkId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException;
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 
 	/**
 	* Removes all the d d m structure links where classNameId = &#63; from the database.
@@ -203,7 +202,7 @@ public interface DDMStructureLinkPersistence extends BasePersistence<DDMStructur
 	*/
 	public DDMStructureLink findByStructureId_First(long structureId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException;
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 
 	/**
 	* Returns the first d d m structure link in the ordered set where structureId = &#63;.
@@ -225,7 +224,7 @@ public interface DDMStructureLinkPersistence extends BasePersistence<DDMStructur
 	*/
 	public DDMStructureLink findByStructureId_Last(long structureId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException;
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 
 	/**
 	* Returns the last d d m structure link in the ordered set where structureId = &#63;.
@@ -249,7 +248,7 @@ public interface DDMStructureLinkPersistence extends BasePersistence<DDMStructur
 	public DDMStructureLink[] findByStructureId_PrevAndNext(
 		long structureLinkId, long structureId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException;
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 
 	/**
 	* Removes all the d d m structure links where structureId = &#63; from the database.
@@ -321,7 +320,7 @@ public interface DDMStructureLinkPersistence extends BasePersistence<DDMStructur
 	*/
 	public DDMStructureLink findByC_C_First(long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException;
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 
 	/**
 	* Returns the first d d m structure link in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -345,7 +344,7 @@ public interface DDMStructureLinkPersistence extends BasePersistence<DDMStructur
 	*/
 	public DDMStructureLink findByC_C_Last(long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException;
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 
 	/**
 	* Returns the last d d m structure link in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -371,7 +370,7 @@ public interface DDMStructureLinkPersistence extends BasePersistence<DDMStructur
 	public DDMStructureLink[] findByC_C_PrevAndNext(long structureLinkId,
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureLink> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException;
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 
 	/**
 	* Removes all the d d m structure links where classNameId = &#63; and classPK = &#63; from the database.
@@ -401,7 +400,7 @@ public interface DDMStructureLinkPersistence extends BasePersistence<DDMStructur
 	*/
 	public DDMStructureLink findByC_C_S(long classNameId, long classPK,
 		long structureId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException;
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 
 	/**
 	* Returns the d d m structure link where classNameId = &#63; and classPK = &#63; and structureId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -436,7 +435,7 @@ public interface DDMStructureLinkPersistence extends BasePersistence<DDMStructur
 	*/
 	public DDMStructureLink removeByC_C_S(long classNameId, long classPK,
 		long structureId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException;
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 
 	/**
 	* Returns the number of d d m structure links where classNameId = &#63; and classPK = &#63; and structureId = &#63;.
@@ -478,7 +477,7 @@ public interface DDMStructureLinkPersistence extends BasePersistence<DDMStructur
 	* @throws NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
 	*/
 	public DDMStructureLink remove(long structureLinkId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException;
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 
 	public DDMStructureLink updateImpl(DDMStructureLink ddmStructureLink);
 
@@ -490,7 +489,7 @@ public interface DDMStructureLinkPersistence extends BasePersistence<DDMStructur
 	* @throws NoSuchStructureLinkException if a d d m structure link with the primary key could not be found
 	*/
 	public DDMStructureLink findByPrimaryKey(long structureLinkId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException;
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
 
 	/**
 	* Returns the d d m structure link with the primary key or returns <code>null</code> if it could not be found.

@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.PersistedModel;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
 /**
  * The extended model interface for the DDMStructureVersion service. Represents a row in the &quot;DDMStructureVersion&quot; database table, with each column mapped to a property of this class.
@@ -40,7 +41,7 @@ public interface DDMStructureVersion extends DDMStructureVersionModel,
 	public com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout getDDMFormLayout()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure()
+	public com.liferay.dynamic.data.mapping.model.DDMStructure getStructure()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void setDDMForm(

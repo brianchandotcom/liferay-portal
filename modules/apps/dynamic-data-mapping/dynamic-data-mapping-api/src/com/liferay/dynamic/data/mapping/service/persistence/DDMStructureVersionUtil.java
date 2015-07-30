@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.persistence;
+package com.liferay.dynamic.data.mapping.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion;
 
 import java.util.List;
 
@@ -168,7 +167,7 @@ public class DDMStructureVersionUtil {
 	public static DDMStructureVersion findByStructureId_First(
 		long structureId,
 		OrderByComparator<DDMStructureVersion> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionException {
 		return getPersistence()
 				   .findByStructureId_First(structureId, orderByComparator);
 	}
@@ -197,7 +196,7 @@ public class DDMStructureVersionUtil {
 	*/
 	public static DDMStructureVersion findByStructureId_Last(long structureId,
 		OrderByComparator<DDMStructureVersion> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionException {
 		return getPersistence()
 				   .findByStructureId_Last(structureId, orderByComparator);
 	}
@@ -228,7 +227,7 @@ public class DDMStructureVersionUtil {
 	public static DDMStructureVersion[] findByStructureId_PrevAndNext(
 		long structureVersionId, long structureId,
 		OrderByComparator<DDMStructureVersion> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionException {
 		return getPersistence()
 				   .findByStructureId_PrevAndNext(structureVersionId,
 			structureId, orderByComparator);
@@ -263,7 +262,7 @@ public class DDMStructureVersionUtil {
 	*/
 	public static DDMStructureVersion findByS_V(long structureId,
 		java.lang.String version)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionException {
 		return getPersistence().findByS_V(structureId, version);
 	}
 
@@ -302,7 +301,7 @@ public class DDMStructureVersionUtil {
 	*/
 	public static DDMStructureVersion removeByS_V(long structureId,
 		java.lang.String version)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionException {
 		return getPersistence().removeByS_V(structureId, version);
 	}
 
@@ -379,7 +378,7 @@ public class DDMStructureVersionUtil {
 	*/
 	public static DDMStructureVersion findByS_S_First(long structureId,
 		int status, OrderByComparator<DDMStructureVersion> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionException {
 		return getPersistence()
 				   .findByS_S_First(structureId, status, orderByComparator);
 	}
@@ -409,7 +408,7 @@ public class DDMStructureVersionUtil {
 	*/
 	public static DDMStructureVersion findByS_S_Last(long structureId,
 		int status, OrderByComparator<DDMStructureVersion> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionException {
 		return getPersistence()
 				   .findByS_S_Last(structureId, status, orderByComparator);
 	}
@@ -441,7 +440,7 @@ public class DDMStructureVersionUtil {
 	public static DDMStructureVersion[] findByS_S_PrevAndNext(
 		long structureVersionId, long structureId, int status,
 		OrderByComparator<DDMStructureVersion> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionException {
 		return getPersistence()
 				   .findByS_S_PrevAndNext(structureVersionId, structureId,
 			status, orderByComparator);
@@ -505,7 +504,7 @@ public class DDMStructureVersionUtil {
 	* @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
 	*/
 	public static DDMStructureVersion remove(long structureVersionId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionException {
 		return getPersistence().remove(structureVersionId);
 	}
 
@@ -522,7 +521,7 @@ public class DDMStructureVersionUtil {
 	* @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
 	*/
 	public static DDMStructureVersion findByPrimaryKey(long structureVersionId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStructureVersionException {
 		return getPersistence().findByPrimaryKey(structureVersionId);
 	}
 

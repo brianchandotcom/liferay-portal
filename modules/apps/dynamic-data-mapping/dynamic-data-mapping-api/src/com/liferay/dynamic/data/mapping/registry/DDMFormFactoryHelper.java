@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.registry;
+package com.liferay.dynamic.data.mapping.registry;
 
+import com.liferay.dynamic.data.mapping.registry.annotations.DDMForm;
+import com.liferay.dynamic.data.mapping.registry.annotations.DDMFormField;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UTF8Control;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -24,8 +26,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.registry.annotations.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.registry.annotations.DDMFormField;
 
 import java.lang.reflect.Method;
 

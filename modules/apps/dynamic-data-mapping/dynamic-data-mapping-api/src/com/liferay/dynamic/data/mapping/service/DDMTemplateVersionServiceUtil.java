@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service;
+package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -50,21 +50,21 @@ public class DDMTemplateVersionServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion getLatestTemplateVersion(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getLatestTemplateVersion(
 		long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLatestTemplateVersion(templateId);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion getTemplateVersion(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getTemplateVersion(
 		long templateVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTemplateVersion(templateVersionId);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> getTemplateVersions(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> getTemplateVersions(
 		long templateId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getTemplateVersions(templateId, start, end,

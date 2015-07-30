@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.persistence;
+package com.liferay.dynamic.data.mapping.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
 import java.util.List;
 
@@ -164,7 +163,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByUuid_First(java.lang.String uuid,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -190,7 +189,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -217,7 +216,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate[] findByUuid_PrevAndNext(long templateId,
 		java.lang.String uuid, OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(templateId, uuid, orderByComparator);
 	}
@@ -250,7 +249,7 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -286,7 +285,7 @@ public class DDMTemplateUtil {
 	* @return the d d m template that was removed
 	*/
 	public static DDMTemplate removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -363,7 +362,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -393,7 +392,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -425,7 +424,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate[] findByUuid_C_PrevAndNext(long templateId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(templateId, uuid, companyId,
 			orderByComparator);
@@ -508,7 +507,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByGroupId_First(long groupId,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -534,7 +533,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByGroupId_Last(long groupId,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -561,7 +560,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate[] findByGroupId_PrevAndNext(long templateId,
 		long groupId, OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(templateId, groupId,
 			orderByComparator);
@@ -625,7 +624,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate[] filterFindByGroupId_PrevAndNext(
 		long templateId, long groupId,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(templateId, groupId,
 			orderByComparator);
@@ -716,7 +715,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByClassPK_First(long classPK,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByClassPK_First(classPK, orderByComparator);
 	}
 
@@ -742,7 +741,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByClassPK_Last(long classPK,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByClassPK_Last(classPK, orderByComparator);
 	}
 
@@ -769,7 +768,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate[] findByClassPK_PrevAndNext(long templateId,
 		long classPK, OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByClassPK_PrevAndNext(templateId, classPK,
 			orderByComparator);
@@ -853,7 +852,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate findByTemplateKey_First(
 		java.lang.String templateKey,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByTemplateKey_First(templateKey, orderByComparator);
 	}
@@ -883,7 +882,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate findByTemplateKey_Last(
 		java.lang.String templateKey,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByTemplateKey_Last(templateKey, orderByComparator);
 	}
@@ -914,7 +913,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate[] findByTemplateKey_PrevAndNext(long templateId,
 		java.lang.String templateKey,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByTemplateKey_PrevAndNext(templateId, templateKey,
 			orderByComparator);
@@ -994,7 +993,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByType_First(java.lang.String type,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByType_First(type, orderByComparator);
 	}
 
@@ -1020,7 +1019,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByType_Last(java.lang.String type,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByType_Last(type, orderByComparator);
 	}
 
@@ -1047,7 +1046,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate[] findByType_PrevAndNext(long templateId,
 		java.lang.String type, OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByType_PrevAndNext(templateId, type, orderByComparator);
 	}
@@ -1127,7 +1126,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByLanguage_First(java.lang.String language,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByLanguage_First(language, orderByComparator);
 	}
 
@@ -1154,7 +1153,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByLanguage_Last(java.lang.String language,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByLanguage_Last(language, orderByComparator);
 	}
 
@@ -1182,7 +1181,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate[] findByLanguage_PrevAndNext(long templateId,
 		java.lang.String language,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByLanguage_PrevAndNext(templateId, language,
 			orderByComparator);
@@ -1215,7 +1214,7 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a matching d d m template could not be found
 	*/
 	public static DDMTemplate findBySmallImageId(long smallImageId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findBySmallImageId(smallImageId);
 	}
 
@@ -1249,7 +1248,7 @@ public class DDMTemplateUtil {
 	* @return the d d m template that was removed
 	*/
 	public static DDMTemplate removeBySmallImageId(long smallImageId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().removeBySmallImageId(smallImageId);
 	}
 
@@ -1324,7 +1323,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByG_C_First(long groupId, long classNameId,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_First(groupId, classNameId, orderByComparator);
 	}
@@ -1354,7 +1353,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByG_C_Last(long groupId, long classNameId,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_Last(groupId, classNameId, orderByComparator);
 	}
@@ -1386,7 +1385,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate[] findByG_C_PrevAndNext(long templateId,
 		long groupId, long classNameId,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_PrevAndNext(templateId, groupId, classNameId,
 			orderByComparator);
@@ -1457,7 +1456,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate[] filterFindByG_C_PrevAndNext(long templateId,
 		long groupId, long classNameId,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .filterFindByG_C_PrevAndNext(templateId, groupId,
 			classNameId, orderByComparator);
@@ -1555,7 +1554,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByG_CPK_First(long groupId, long classPK,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_CPK_First(groupId, classPK, orderByComparator);
 	}
@@ -1585,7 +1584,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByG_CPK_Last(long groupId, long classPK,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_CPK_Last(groupId, classPK, orderByComparator);
 	}
@@ -1617,7 +1616,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate[] findByG_CPK_PrevAndNext(long templateId,
 		long groupId, long classPK,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_CPK_PrevAndNext(templateId, groupId, classPK,
 			orderByComparator);
@@ -1687,7 +1686,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate[] filterFindByG_CPK_PrevAndNext(long templateId,
 		long groupId, long classPK,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .filterFindByG_CPK_PrevAndNext(templateId, groupId, classPK,
 			orderByComparator);
@@ -1920,7 +1919,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByG_C_C_First(long groupId, long classNameId,
 		long classPK, OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_First(groupId, classNameId, classPK,
 			orderByComparator);
@@ -1955,7 +1954,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByG_C_C_Last(long groupId, long classNameId,
 		long classPK, OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_Last(groupId, classNameId, classPK,
 			orderByComparator);
@@ -1991,7 +1990,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate[] findByG_C_C_PrevAndNext(long templateId,
 		long groupId, long classNameId, long classPK,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_PrevAndNext(templateId, groupId, classNameId,
 			classPK, orderByComparator);
@@ -2067,7 +2066,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate[] filterFindByG_C_C_PrevAndNext(long templateId,
 		long groupId, long classNameId, long classPK,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .filterFindByG_C_C_PrevAndNext(templateId, groupId,
 			classNameId, classPK, orderByComparator);
@@ -2264,7 +2263,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByG_C_T(long groupId, long classNameId,
 		java.lang.String templateKey)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByG_C_T(groupId, classNameId, templateKey);
 	}
 
@@ -2307,7 +2306,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate removeByG_C_T(long groupId, long classNameId,
 		java.lang.String templateKey)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().removeByG_C_T(groupId, classNameId, templateKey);
 	}
 
@@ -2392,7 +2391,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByC_C_T_First(long classNameId, long classPK,
 		java.lang.String type, OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByC_C_T_First(classNameId, classPK, type,
 			orderByComparator);
@@ -2427,7 +2426,7 @@ public class DDMTemplateUtil {
 	*/
 	public static DDMTemplate findByC_C_T_Last(long classNameId, long classPK,
 		java.lang.String type, OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByC_C_T_Last(classNameId, classPK, type,
 			orderByComparator);
@@ -2463,7 +2462,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate[] findByC_C_T_PrevAndNext(long templateId,
 		long classNameId, long classPK, java.lang.String type,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByC_C_T_PrevAndNext(templateId, classNameId, classPK,
 			type, orderByComparator);
@@ -2570,7 +2569,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate findByG_C_C_T_First(long groupId,
 		long classNameId, long classPK, java.lang.String type,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_T_First(groupId, classNameId, classPK, type,
 			orderByComparator);
@@ -2608,7 +2607,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate findByG_C_C_T_Last(long groupId,
 		long classNameId, long classPK, java.lang.String type,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_T_Last(groupId, classNameId, classPK, type,
 			orderByComparator);
@@ -2647,7 +2646,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate[] findByG_C_C_T_PrevAndNext(long templateId,
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_T_PrevAndNext(templateId, groupId, classNameId,
 			classPK, type, orderByComparator);
@@ -2730,7 +2729,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate[] filterFindByG_C_C_T_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
 		java.lang.String type, OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .filterFindByG_C_C_T_PrevAndNext(templateId, groupId,
 			classNameId, classPK, type, orderByComparator);
@@ -2861,7 +2860,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate findByG_C_C_T_M_First(long groupId,
 		long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode, OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_T_M_First(groupId, classNameId, classPK, type,
 			mode, orderByComparator);
@@ -2901,7 +2900,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate findByG_C_C_T_M_Last(long groupId,
 		long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode, OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_T_M_Last(groupId, classNameId, classPK, type,
 			mode, orderByComparator);
@@ -2942,7 +2941,7 @@ public class DDMTemplateUtil {
 	public static DDMTemplate[] findByG_C_C_T_M_PrevAndNext(long templateId,
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode, OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_T_M_PrevAndNext(templateId, groupId,
 			classNameId, classPK, type, mode, orderByComparator);
@@ -3033,7 +3032,7 @@ public class DDMTemplateUtil {
 		long templateId, long groupId, long classNameId, long classPK,
 		java.lang.String type, java.lang.String mode,
 		OrderByComparator<DDMTemplate> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence()
 				   .filterFindByG_C_C_T_M_PrevAndNext(templateId, groupId,
 			classNameId, classPK, type, mode, orderByComparator);
@@ -3123,7 +3122,7 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate remove(long templateId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().remove(templateId);
 	}
 
@@ -3139,7 +3138,7 @@ public class DDMTemplateUtil {
 	* @throws NoSuchTemplateException if a d d m template with the primary key could not be found
 	*/
 	public static DDMTemplate findByPrimaryKey(long templateId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException {
 		return getPersistence().findByPrimaryKey(templateId);
 	}
 

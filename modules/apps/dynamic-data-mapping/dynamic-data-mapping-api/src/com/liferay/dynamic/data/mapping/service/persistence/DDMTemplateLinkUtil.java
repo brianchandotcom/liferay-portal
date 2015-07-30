@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.persistence;
+package com.liferay.dynamic.data.mapping.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
-
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink;
 
 import java.util.List;
 
@@ -165,7 +164,7 @@ public class DDMTemplateLinkUtil {
 	*/
 	public static DDMTemplateLink findByClassNameId_First(long classNameId,
 		OrderByComparator<DDMTemplateLink> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateLinkException {
 		return getPersistence()
 				   .findByClassNameId_First(classNameId, orderByComparator);
 	}
@@ -193,7 +192,7 @@ public class DDMTemplateLinkUtil {
 	*/
 	public static DDMTemplateLink findByClassNameId_Last(long classNameId,
 		OrderByComparator<DDMTemplateLink> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateLinkException {
 		return getPersistence()
 				   .findByClassNameId_Last(classNameId, orderByComparator);
 	}
@@ -223,7 +222,7 @@ public class DDMTemplateLinkUtil {
 	public static DDMTemplateLink[] findByClassNameId_PrevAndNext(
 		long templateLinkId, long classNameId,
 		OrderByComparator<DDMTemplateLink> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateLinkException {
 		return getPersistence()
 				   .findByClassNameId_PrevAndNext(templateLinkId, classNameId,
 			orderByComparator);
@@ -304,7 +303,7 @@ public class DDMTemplateLinkUtil {
 	*/
 	public static DDMTemplateLink findByTemplateId_First(long templateId,
 		OrderByComparator<DDMTemplateLink> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateLinkException {
 		return getPersistence()
 				   .findByTemplateId_First(templateId, orderByComparator);
 	}
@@ -332,7 +331,7 @@ public class DDMTemplateLinkUtil {
 	*/
 	public static DDMTemplateLink findByTemplateId_Last(long templateId,
 		OrderByComparator<DDMTemplateLink> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateLinkException {
 		return getPersistence()
 				   .findByTemplateId_Last(templateId, orderByComparator);
 	}
@@ -362,7 +361,7 @@ public class DDMTemplateLinkUtil {
 	public static DDMTemplateLink[] findByTemplateId_PrevAndNext(
 		long templateLinkId, long templateId,
 		OrderByComparator<DDMTemplateLink> orderByComparator)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateLinkException {
 		return getPersistence()
 				   .findByTemplateId_PrevAndNext(templateLinkId, templateId,
 			orderByComparator);
@@ -396,7 +395,7 @@ public class DDMTemplateLinkUtil {
 	* @throws NoSuchTemplateLinkException if a matching d d m template link could not be found
 	*/
 	public static DDMTemplateLink findByC_C(long classNameId, long classPK)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateLinkException {
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
 
@@ -433,7 +432,7 @@ public class DDMTemplateLinkUtil {
 	* @return the d d m template link that was removed
 	*/
 	public static DDMTemplateLink removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateLinkException {
 		return getPersistence().removeByC_C(classNameId, classPK);
 	}
 
@@ -484,7 +483,7 @@ public class DDMTemplateLinkUtil {
 	* @throws NoSuchTemplateLinkException if a d d m template link with the primary key could not be found
 	*/
 	public static DDMTemplateLink remove(long templateLinkId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateLinkException {
 		return getPersistence().remove(templateLinkId);
 	}
 
@@ -500,7 +499,7 @@ public class DDMTemplateLinkUtil {
 	* @throws NoSuchTemplateLinkException if a d d m template link with the primary key could not be found
 	*/
 	public static DDMTemplateLink findByPrimaryKey(long templateLinkId)
-		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateLinkException {
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateLinkException {
 		return getPersistence().findByPrimaryKey(templateLinkId);
 	}
 

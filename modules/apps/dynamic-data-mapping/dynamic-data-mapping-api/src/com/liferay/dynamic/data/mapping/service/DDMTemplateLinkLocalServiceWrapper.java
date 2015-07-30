@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service;
+package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -41,13 +41,13 @@ public class DDMTemplateLinkLocalServiceWrapper
 	* @return the d d m template link that was added
 	*/
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink addDDMTemplateLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink ddmTemplateLink) {
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink addDDMTemplateLink(
+		com.liferay.dynamic.data.mapping.model.DDMTemplateLink ddmTemplateLink) {
 		return _ddmTemplateLinkLocalService.addDDMTemplateLink(ddmTemplateLink);
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink addTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink addTemplateLink(
 		long classNameId, long classPK, long templateId) {
 		return _ddmTemplateLinkLocalService.addTemplateLink(classNameId,
 			classPK, templateId);
@@ -60,7 +60,7 @@ public class DDMTemplateLinkLocalServiceWrapper
 	* @return the new d d m template link
 	*/
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink createDDMTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink createDDMTemplateLink(
 		long templateLinkId) {
 		return _ddmTemplateLinkLocalService.createDDMTemplateLink(templateLinkId);
 	}
@@ -72,8 +72,8 @@ public class DDMTemplateLinkLocalServiceWrapper
 	* @return the d d m template link that was removed
 	*/
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink deleteDDMTemplateLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink ddmTemplateLink) {
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink deleteDDMTemplateLink(
+		com.liferay.dynamic.data.mapping.model.DDMTemplateLink ddmTemplateLink) {
 		return _ddmTemplateLinkLocalService.deleteDDMTemplateLink(ddmTemplateLink);
 	}
 
@@ -85,7 +85,7 @@ public class DDMTemplateLinkLocalServiceWrapper
 	* @throws PortalException if a d d m template link with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink deleteDDMTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink deleteDDMTemplateLink(
 		long templateLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLinkLocalService.deleteDDMTemplateLink(templateLinkId);
@@ -102,20 +102,20 @@ public class DDMTemplateLinkLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink deleteTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink deleteTemplateLink(
 		long classNameId, long classPK) {
 		return _ddmTemplateLinkLocalService.deleteTemplateLink(classNameId,
 			classPK);
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink deleteTemplateLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink templateLink) {
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink deleteTemplateLink(
+		com.liferay.dynamic.data.mapping.model.DDMTemplateLink templateLink) {
 		return _ddmTemplateLinkLocalService.deleteTemplateLink(templateLink);
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink deleteTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink deleteTemplateLink(
 		long templateLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLinkLocalService.deleteTemplateLink(templateLinkId);
@@ -208,7 +208,7 @@ public class DDMTemplateLinkLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink fetchDDMTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink fetchDDMTemplateLink(
 		long templateLinkId) {
 		return _ddmTemplateLinkLocalService.fetchDDMTemplateLink(templateLinkId);
 	}
@@ -236,7 +236,7 @@ public class DDMTemplateLinkLocalServiceWrapper
 	* @throws PortalException if a d d m template link with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink getDDMTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink getDDMTemplateLink(
 		long templateLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLinkLocalService.getDDMTemplateLink(templateLinkId);
@@ -254,7 +254,7 @@ public class DDMTemplateLinkLocalServiceWrapper
 	* @return the range of d d m template links
 	*/
 	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> getDDMTemplateLinks(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateLink> getDDMTemplateLinks(
 		int start, int end) {
 		return _ddmTemplateLinkLocalService.getDDMTemplateLinks(start, end);
 	}
@@ -277,21 +277,21 @@ public class DDMTemplateLinkLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink getTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink getTemplateLink(
 		long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLinkLocalService.getTemplateLink(classNameId, classPK);
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink getTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink getTemplateLink(
 		long templateLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLinkLocalService.getTemplateLink(templateLinkId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink> getTemplateLinks(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateLink> getTemplateLinks(
 		long classNameId) {
 		return _ddmTemplateLinkLocalService.getTemplateLinks(classNameId);
 	}
@@ -313,20 +313,20 @@ public class DDMTemplateLinkLocalServiceWrapper
 	* @return the d d m template link that was updated
 	*/
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink updateDDMTemplateLink(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink ddmTemplateLink) {
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink updateDDMTemplateLink(
+		com.liferay.dynamic.data.mapping.model.DDMTemplateLink ddmTemplateLink) {
 		return _ddmTemplateLinkLocalService.updateDDMTemplateLink(ddmTemplateLink);
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink updateTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink updateTemplateLink(
 		long classNameId, long classPK, long templateId) {
 		return _ddmTemplateLinkLocalService.updateTemplateLink(classNameId,
 			classPK, templateId);
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink updateTemplateLink(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateLink updateTemplateLink(
 		long templateLinkId, long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateLinkLocalService.updateTemplateLink(templateLinkId,

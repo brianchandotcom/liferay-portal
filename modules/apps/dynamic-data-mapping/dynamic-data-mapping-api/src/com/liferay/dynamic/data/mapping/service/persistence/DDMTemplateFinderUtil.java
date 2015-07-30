@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.persistence;
+package com.liferay.dynamic.data.mapping.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -160,180 +160,180 @@ public class DDMTemplateFinderUtil {
 		return getFinder().filterCountByG_SC(groupIds, structureClassNameId);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByKeywords(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByKeywords(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String keywords,
 		java.lang.String type, java.lang.String mode, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getFinder()
 				   .filterFindByKeywords(companyId, groupId, classNameId,
 			classPK, resourceClassNameId, keywords, type, mode, start, end,
 			orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByKeywords(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByKeywords(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String keywords,
 		java.lang.String type, java.lang.String mode, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getFinder()
 				   .filterFindByKeywords(companyId, groupIds, classNameIds,
 			classPKs, resourceClassNameId, keywords, type, mode, start, end,
 			orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByC_G_C_C_R_N_D_T_M_L(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByC_G_C_C_R_N_D_T_M_L(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
 		java.lang.String mode, java.lang.String language, boolean andOperator,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getFinder()
 				   .filterFindByC_G_C_C_R_N_D_T_M_L(companyId, groupId,
 			classNameId, classPK, resourceClassNameId, name, description, type,
 			mode, language, andOperator, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByC_G_C_C_R_N_D_T_M_L(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByC_G_C_C_R_N_D_T_M_L(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String[] names,
 		java.lang.String[] descriptions, java.lang.String[] types,
 		java.lang.String[] modes, java.lang.String[] languages,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getFinder()
 				   .filterFindByC_G_C_C_R_N_D_T_M_L(companyId, groupId,
 			classNameId, classPK, resourceClassNameId, names, descriptions,
 			types, modes, languages, andOperator, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByC_G_C_C_R_N_D_T_M_L(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByC_G_C_C_R_N_D_T_M_L(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
 		java.lang.String mode, java.lang.String language, boolean andOperator,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getFinder()
 				   .filterFindByC_G_C_C_R_N_D_T_M_L(companyId, groupIds,
 			classNameIds, classPKs, resourceClassNameId, name, description,
 			type, mode, language, andOperator, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByC_G_C_C_R_N_D_T_M_L(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByC_G_C_C_R_N_D_T_M_L(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String[] names,
 		java.lang.String[] descriptions, java.lang.String[] types,
 		java.lang.String[] modes, java.lang.String[] languages,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getFinder()
 				   .filterFindByC_G_C_C_R_N_D_T_M_L(companyId, groupIds,
 			classNameIds, classPKs, resourceClassNameId, names, descriptions,
 			types, modes, languages, andOperator, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_SC(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByG_SC(
 		long groupId, long structureClassNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getFinder()
 				   .filterFindByG_SC(groupId, structureClassNameId, start, end,
 			orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_SC(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByG_SC(
 		long[] groupIds, long structureClassNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getFinder()
 				   .filterFindByG_SC(groupIds, structureClassNameId, start,
 			end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByKeywords(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByKeywords(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String keywords,
 		java.lang.String type, java.lang.String mode, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getFinder()
 				   .findByKeywords(companyId, groupId, classNameId, classPK,
 			resourceClassNameId, keywords, type, mode, start, end,
 			orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByKeywords(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByKeywords(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String keywords,
 		java.lang.String type, java.lang.String mode, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getFinder()
 				   .findByKeywords(companyId, groupIds, classNameIds, classPKs,
 			resourceClassNameId, keywords, type, mode, start, end,
 			orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_SC(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByG_SC(
 		long groupId, long structureClassNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getFinder()
 				   .findByG_SC(groupId, structureClassNameId, start, end,
 			orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_SC(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByG_SC(
 		long[] groupIds, long structureClassNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getFinder()
 				   .findByG_SC(groupIds, structureClassNameId, start, end,
 			orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_G_C_C_R_N_D_T_M_L(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByC_G_C_C_R_N_D_T_M_L(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
 		java.lang.String mode, java.lang.String language, boolean andOperator,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getFinder()
 				   .findByC_G_C_C_R_N_D_T_M_L(companyId, groupId, classNameId,
 			classPK, resourceClassNameId, name, description, type, mode,
 			language, andOperator, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_G_C_C_R_N_D_T_M_L(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByC_G_C_C_R_N_D_T_M_L(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String[] names,
 		java.lang.String[] descriptions, java.lang.String[] types,
 		java.lang.String[] modes, java.lang.String[] languages,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getFinder()
 				   .findByC_G_C_C_R_N_D_T_M_L(companyId, groupId, classNameId,
 			classPK, resourceClassNameId, names, descriptions, types, modes,
 			languages, andOperator, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_G_C_C_R_N_D_T_M_L(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByC_G_C_C_R_N_D_T_M_L(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
 		java.lang.String mode, java.lang.String language, boolean andOperator,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getFinder()
 				   .findByC_G_C_C_R_N_D_T_M_L(companyId, groupIds,
 			classNameIds, classPKs, resourceClassNameId, name, description,
 			type, mode, language, andOperator, start, end, orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_G_C_C_R_N_D_T_M_L(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByC_G_C_C_R_N_D_T_M_L(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String[] names,
 		java.lang.String[] descriptions, java.lang.String[] types,
 		java.lang.String[] modes, java.lang.String[] languages,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getFinder()
 				   .findByC_G_C_C_R_N_D_T_M_L(companyId, groupIds,
 			classNameIds, classPKs, resourceClassNameId, names, descriptions,

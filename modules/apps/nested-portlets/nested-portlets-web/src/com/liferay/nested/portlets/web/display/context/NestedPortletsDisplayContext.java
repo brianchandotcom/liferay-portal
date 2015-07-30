@@ -16,7 +16,7 @@ package com.liferay.nested.portlets.web.display.context;
 
 import com.liferay.nested.portlets.web.configuration.NestedPortletsConfiguration;
 import com.liferay.nested.portlets.web.configuration.NestedPortletsPortletInstanceConfiguration;
-import com.liferay.portal.kernel.settings.SettingsException;
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
@@ -40,7 +40,7 @@ public class NestedPortletsDisplayContext {
 	public NestedPortletsDisplayContext(
 			HttpServletRequest request,
 			NestedPortletsConfiguration nestedPortletsConfiguration)
-		throws SettingsException {
+		throws ModuleConfigurationException {
 
 		_request = request;
 		_nestedPortletsConfiguration = nestedPortletsConfiguration;

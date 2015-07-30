@@ -27,6 +27,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
+		"com.liferay.portlet.control-panel-entry-category=site_administration.content",
+		"com.liferay.portlet.control-panel-entry-weight=6.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-message-boards",
 		"com.liferay.portlet.footer-portlet-javascript=/html/portlet/message_boards/js/main.js",
 		"com.liferay.portlet.header-portlet-css=/html/portlet/message_boards/css/main.css",

@@ -16,8 +16,8 @@ package com.liferay.dynamic.data.lists.web.ddm;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
+import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.util.DDMPermissionHandler;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 
 /**
@@ -31,12 +31,12 @@ public class DDLDDMPermissionHandler implements DDMPermissionHandler {
 
 	@Override
 	public String getAddStructureActionId() {
-		return ActionKeys.ADD_STRUCTURE;
+		return DDMActionKeys.ADD_STRUCTURE;
 	}
 
 	@Override
 	public String getAddTemplateActionId() {
-		return ActionKeys.ADD_TEMPLATE;
+		return DDMActionKeys.ADD_TEMPLATE;
 	}
 
 	@Override

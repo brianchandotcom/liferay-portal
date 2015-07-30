@@ -117,13 +117,15 @@ repositories {
 }
 
 sourceSets {
+	FileCollection portalJarsFileCollection = fileTree(dir: appServerLibPortalDir, include: "util-slf4j.jar")
+
 	main {
 		compileClasspath += configurations.portal
 	}
 
 	test {
-		compileClasspath += configurations.portal + configurations.portalTest
-		runtimeClasspath += configurations.portal + configurations.portalTest
+		compileClasspath = portalJarsFileCollection + compileClasspath + configurations.portal + configurations.portalTest
+		runtimeClasspath = portalJarsFileCollection + runtimeClasspath + configurations.portal + configurations.portalTest
 	}
 
 	testIntegration {

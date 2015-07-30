@@ -9,10 +9,6 @@
 
 		<column name="columnId" type="long" primary="true" />
 
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Other fields -->
 
 		<column name="tableId" type="long" />
@@ -45,7 +41,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="modifiedDate" type="Date" />
 
 		<!-- Other fields -->
@@ -72,10 +67,6 @@
 
 		<column name="tableId" type="long" primary="true" />
 
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-
 		<!-- Other fields -->
 
 		<column name="classNameId" type="long" />
@@ -98,10 +89,6 @@
 		<!-- PK fields -->
 
 		<column name="valueId" type="long" primary="true" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
 
 		<!-- Other fields -->
 

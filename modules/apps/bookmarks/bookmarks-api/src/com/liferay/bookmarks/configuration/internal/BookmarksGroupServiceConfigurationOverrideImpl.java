@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.bookmarks.settings.internal;
+package com.liferay.bookmarks.configuration.internal;
 
+import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfigurationOverride;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.settings.BookmarksGroupServiceConfigurationOverride;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 

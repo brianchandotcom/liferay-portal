@@ -51,6 +51,10 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="C_NotS" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
 		<finder name="G_F" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="folderId" arrayable-operator="OR" />
@@ -61,10 +65,6 @@
 		</finder>
 		<finder name="G_NotS" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="status" comparator="!=" />
-		</finder>
-		<finder name="C_NotS" return-type="Collection">
-			<finder-column name="companyId" />
 			<finder-column name="status" comparator="!=" />
 		</finder>
 		<finder name="G_U_S" return-type="Collection">
@@ -150,19 +150,19 @@
 
 		<!-- Finder methods -->
 
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="G_P" return-type="Collection">
+		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="parentFolderId" />
 		</finder>
 		<finder name="C_NotS" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="status" comparator="!=" />
+		</finder>
+		<finder name="G_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="parentFolderId" />
 		</finder>
 		<finder name="G_P_S" return-type="Collection">
 			<finder-column name="groupId" />

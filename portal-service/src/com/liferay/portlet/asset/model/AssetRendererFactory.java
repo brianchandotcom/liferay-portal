@@ -34,7 +34,7 @@ import javax.portlet.WindowState;
  * @author Raymond Augé
  * @author Sergio González
  */
-public interface AssetRendererFactory {
+public interface AssetRendererFactory<T> {
 
 	public static final int TYPE_LATEST = 0;
 
@@ -45,12 +45,13 @@ public interface AssetRendererFactory {
 	public AssetEntry getAssetEntry(String classNameId, long classPK)
 		throws PortalException;
 
-	public AssetRenderer getAssetRenderer(long classPK) throws PortalException;
-
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<T> getAssetRenderer(long classPK)
 		throws PortalException;
 
-	public AssetRenderer getAssetRenderer(long groupId, String urlTitle)
+	public AssetRenderer<T> getAssetRenderer(long classPK, int type)
+		throws PortalException;
+
+	public AssetRenderer<T> getAssetRenderer(long groupId, String urlTitle)
 		throws PortalException;
 
 	public String getClassName();

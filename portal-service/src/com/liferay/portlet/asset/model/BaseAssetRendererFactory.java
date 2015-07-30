@@ -46,7 +46,8 @@ import javax.portlet.WindowState;
  * @author Raymond Augé
  * @author Sergio González
  */
-public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
+public abstract class BaseAssetRendererFactory<T>
+	implements AssetRendererFactory<T> {
 
 	@Override
 	public AssetEntry getAssetEntry(long assetEntryId) throws PortalException {
@@ -61,13 +62,15 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK) throws PortalException {
+	public AssetRenderer<T> getAssetRenderer(long classPK)
+		throws PortalException {
+
 		return getAssetRenderer(classPK, TYPE_LATEST_APPROVED);
 	}
 
 	@Override
 	@SuppressWarnings("unused")
-	public AssetRenderer getAssetRenderer(long groupId, String urlTitle)
+	public AssetRenderer<T> getAssetRenderer(long groupId, String urlTitle)
 		throws PortalException {
 
 		return null;

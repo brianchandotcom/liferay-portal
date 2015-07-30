@@ -27,7 +27,7 @@ import org.junit.Test;
 public class ShoppingItemImplTest {
 
 	@Before
-	public void setup() {
+	public void setUp() {
 		ConfigurationFactoryUtil.setConfigurationFactory(
 			new ConfigurationFactoryImpl());
 	}

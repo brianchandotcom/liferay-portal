@@ -47,7 +47,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS},
 	service = AssetRendererFactory.class
 )
-public class MBCategoryAssetRendererFactory extends BaseAssetRendererFactory {
+public class MBCategoryAssetRendererFactory
+	extends BaseAssetRendererFactory<MBCategory> {
 
 	public static final String TYPE = "category";
 
@@ -57,7 +58,7 @@ public class MBCategoryAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<MBCategory> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
 		MBCategory category = _mbCategoryLocalService.getMBCategory(classPK);

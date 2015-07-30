@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = AssetRendererFactory.class
 )
 public class LayoutRevisionAssetRendererFactory
-	extends BaseAssetRendererFactory {
+	extends BaseAssetRendererFactory<LayoutRevision> {
 
 	public static final String TYPE = "layout_revision";
 
@@ -101,7 +101,8 @@ public class LayoutRevisionAssetRendererFactory
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long layoutRevisionId, int type)
+	public AssetRenderer<LayoutRevision> getAssetRenderer(
+			long layoutRevisionId, int type)
 		throws PortalException {
 
 		LayoutRevision layoutRevision =

@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.portlet.messageboards.constants;
 
 /**
- * @author Adolfo Pérez
+ * @author Sergio González
  */
-public class DLConstants {
+public class MBConstants {
 
 	public static final String SERVICE_NAME =
-		"com.liferay.portlet.documentlibrary";
+		"com.liferay.portlet.messageboards";
 
 }

@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.util;
+package com.liferay.portlet.social.constants;
 
 /**
- * @author Sergio González
+ * @author Roberto Díaz
  */
-public class MBConstants {
+public class SocialConstants {
 
-	public static final String SERVICE_NAME =
-		"com.liferay.portlet.messageboards";
+	public static final String SERVICE_NAME = "com.liferay.portlet.social";
 
 }

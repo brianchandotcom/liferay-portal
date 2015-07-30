@@ -14,6 +14,7 @@
 
 package com.liferay.shopping.service.impl;
 
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
@@ -139,13 +139,12 @@ public class ShoppingOrderLocalServiceImpl
 
 		shoppingOrderPersistence.update(order);
 
-		// Message boards
+		// Comments
 
 		if (PropsValues.SHOPPING_ORDER_COMMENTS_ENABLED) {
-			mbMessageLocalService.addDiscussionMessage(
-				userId, order.getUserName(), groupId,
-				ShoppingOrder.class.getName(), orderId,
-				WorkflowConstants.ACTION_PUBLISH);
+			CommentManagerUtil.addDiscussion(
+				userId, groupId, ShoppingOrder.class.getName(), orderId,
+				order.getUserName());
 		}
 
 		return order;
@@ -255,9 +254,9 @@ public class ShoppingOrderLocalServiceImpl
 
 		shoppingOrderItemPersistence.removeByOrderId(order.getOrderId());
 
-		// Message boards
+		// Comments
 
-		mbMessageLocalService.deleteDiscussionMessages(
+		CommentManagerUtil.deleteDiscussion(
 			ShoppingOrder.class.getName(), order.getOrderId());
 	}
 

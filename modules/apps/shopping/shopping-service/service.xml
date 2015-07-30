@@ -389,7 +389,6 @@
 		<reference package-path="com.liferay.portal" entity="Company" />
 		<reference package-path="com.liferay.portal" entity="Subscription" />
 		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.shopping" entity="ShoppingItem" />
 		<reference package-path="com.liferay.shopping" entity="ShoppingItemField" />
 		<reference package-path="com.liferay.shopping" entity="ShoppingOrderItem" />

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<bean id="com.liferay.shopping.service.ShoppingCartLocalService" class="com.liferay.shopping.service.impl.ShoppingCartLocalServiceImpl" />
 	<bean id="com.liferay.shopping.service.persistence.ShoppingCartPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingCartPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.shopping.service.ShoppingCategoryLocalService" class="com.liferay.shopping.service.impl.ShoppingCategoryLocalServiceImpl" />

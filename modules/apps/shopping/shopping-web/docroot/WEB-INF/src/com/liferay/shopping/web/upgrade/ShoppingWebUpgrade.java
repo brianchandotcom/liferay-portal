@@ -17,7 +17,6 @@ package com.liferay.shopping.web.upgrade;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
-import com.liferay.shopping.service.configuration.configurator.ShoppingServiceConfigurator;
 import com.liferay.shopping.web.upgrade.v1_0_0.UpgradeAdminPortlets;
 
 import java.util.ArrayList;
@@ -38,11 +37,6 @@ public class ShoppingWebUpgrade {
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setShoppingServiceConfigurator(
-		ShoppingServiceConfigurator shoppingServiceConfigurator) {
 	}
 
 	@Activate

@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 import com.liferay.site.navigation.menu.web.configuration.NavigationMenuPortletInstanceConfiguration;
 import com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration;
 
@@ -70,6 +73,21 @@ public class NavigationMenuDisplayContext {
 		return _bulletStyle;
 	}
 
+	public String getDDMTemplateKey() {
+		if (_ddmTemplateKey != null) {
+			return _ddmTemplateKey;
+		}
+
+		String displayStyle = getDisplayStyle();
+
+		if (displayStyle != null) {
+			_ddmTemplateKey = getPortletDisplayTemplate().getDDMTemplateKey(
+				displayStyle);
+		}
+
+		return _ddmTemplateKey;
+	}
+
 	public String getDisplayStyle() {
 		if (_displayStyle != null) {
 			return _displayStyle;
@@ -85,6 +103,28 @@ public class NavigationMenuDisplayContext {
 		}
 
 		return _displayStyle;
+	}
+
+	public long getDisplayStyleGroupId() {
+		if (_displayStyleGroupId != 0) {
+			return _displayStyleGroupId;
+		}
+
+		_displayStyleGroupId =
+			_navigationMenuPortletInstanceConfiguration.displayStyleGroupId();
+
+		_displayStyleGroupId = ParamUtil.getLong(
+			_request, "displayStyleGroupId",
+			_navigationMenuPortletInstanceConfiguration.displayStyleGroupId());
+
+		if (_displayStyleGroupId <= 0) {
+			ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			_displayStyleGroupId = themeDisplay.getSiteGroupId();
+		}
+
+		return _displayStyleGroupId;
 	}
 
 	public String getHeaderType() {
@@ -159,8 +199,16 @@ public class NavigationMenuDisplayContext {
 		return _preview;
 	}
 
+	protected PortletDisplayTemplate getPortletDisplayTemplate() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		return registry.getService(PortletDisplayTemplate.class);
+	}
+
 	private String _bulletStyle;
+	private String _ddmTemplateKey;
 	private String _displayStyle;
+	private long _displayStyleGroupId;
 	private String _headerType;
 	private String _includedLayouts;
 	private final NavigationMenuPortletInstanceConfiguration

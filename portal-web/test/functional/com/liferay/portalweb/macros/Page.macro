@@ -598,7 +598,7 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="Click" locator1="Dockbar#USER_NAME" />
+		<execute function="Click" locator1="Dockbar#USER_AVATAR_IMAGE" />
 		<execute function="AssertClick" locator1="Dockbar#USER_MY_DASHBOARD" value1="My Dashboard" />
 	</command>
 
@@ -616,7 +616,7 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="Click" locator1="Dockbar#USER_NAME" />
+		<execute function="Click" locator1="Dockbar#USER_AVATAR_IMAGE" />
 		<execute function="AssertClick" locator1="Dockbar#USER_MY_PROFILE" value1="My Profile" />
 	</command>
 
@@ -1139,7 +1139,7 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="Click" locator1="Dockbar#USER_NAME" />
+		<execute function="Click" locator1="Dockbar#USER_AVATAR_IMAGE" />
 		<execute function="AssertTextNotPresent" locator1="Dockbar#USER_MY_PROFILE" value1="My Profile" />
 		<execute function="AssertTextNotPresent" locator1="Dockbar#USER_MY_DASHBOARD" value1="My Dashboard" />
 	</command>

@@ -32,8 +32,8 @@ import com.liferay.portal.service.BaseService;
  *
  * @author Brian Wing Shun Chan
  * @see DDMTemplateServiceUtil
- * @see com.liferay.portlet.dynamicdatamapping.service.base.DDMTemplateServiceBaseImpl
- * @see com.liferay.portlet.dynamicdatamapping.service.impl.DDMTemplateServiceImpl
+ * @see com.liferay.dynamic.data.mapping.service.base.DDMTemplateServiceBaseImpl
+ * @see com.liferay.dynamic.data.mapping.service.impl.DDMTemplateServiceImpl
  * @generated
  */
 @AccessControlled

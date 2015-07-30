@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.http;
+package com.liferay.dynamic.data.mapping.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.http.TunnelUtil;
-
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -55,7 +54,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
  */
 @ProviderType
 public class DDMTemplateServiceHttp {
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplate addTemplate(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,
 		long classPK, long resourceClassNameId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -85,7 +84,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatamapping.model.DDMTemplate)returnObj;
+			return (com.liferay.dynamic.data.mapping.model.DDMTemplate)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -94,7 +93,7 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplate addTemplate(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,
 		long classPK, long resourceClassNameId, java.lang.String templateKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -128,7 +127,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatamapping.model.DDMTemplate)returnObj;
+			return (com.liferay.dynamic.data.mapping.model.DDMTemplate)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -137,7 +136,7 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate copyTemplate(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplate copyTemplate(
 		HttpPrincipal httpPrincipal, long templateId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -163,7 +162,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatamapping.model.DDMTemplate)returnObj;
+			return (com.liferay.dynamic.data.mapping.model.DDMTemplate)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -172,7 +171,7 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate copyTemplate(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplate copyTemplate(
 		HttpPrincipal httpPrincipal, long templateId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -196,7 +195,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatamapping.model.DDMTemplate)returnObj;
+			return (com.liferay.dynamic.data.mapping.model.DDMTemplate)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -205,7 +204,7 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> copyTemplates(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> copyTemplates(
 		HttpPrincipal httpPrincipal, long classNameId, long oldClassPK,
 		long resourceClassNameId, long newClassPK, java.lang.String type,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -231,7 +230,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -268,7 +267,7 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchTemplate(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplate fetchTemplate(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,
 		java.lang.String templateKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -292,7 +291,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatamapping.model.DDMTemplate)returnObj;
+			return (com.liferay.dynamic.data.mapping.model.DDMTemplate)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -301,7 +300,7 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplate getTemplate(
 		HttpPrincipal httpPrincipal, long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -324,7 +323,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatamapping.model.DDMTemplate)returnObj;
+			return (com.liferay.dynamic.data.mapping.model.DDMTemplate)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -333,7 +332,7 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplate getTemplate(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,
 		java.lang.String templateKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -357,7 +356,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatamapping.model.DDMTemplate)returnObj;
+			return (com.liferay.dynamic.data.mapping.model.DDMTemplate)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -366,7 +365,7 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplate getTemplate(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,
 		java.lang.String templateKey, boolean includeAncestorTemplates)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -390,7 +389,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatamapping.model.DDMTemplate)returnObj;
+			return (com.liferay.dynamic.data.mapping.model.DDMTemplate)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -399,7 +398,7 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
@@ -417,7 +416,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -426,7 +425,7 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,
 		long classPK) {
 		try {
@@ -445,7 +444,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -454,7 +453,7 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,
 		long classPK, boolean includeAncestorTemplates)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -478,7 +477,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -487,7 +486,7 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,
 		long classPK, java.lang.String type) {
 		try {
@@ -506,7 +505,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -515,7 +514,7 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
 		HttpPrincipal httpPrincipal, long groupId, long classNameId,
 		long classPK, java.lang.String type, java.lang.String mode) {
 		try {
@@ -534,7 +533,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -543,7 +542,7 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplatesByClassPK(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplatesByClassPK(
 		HttpPrincipal httpPrincipal, long groupId, long classPK) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
@@ -562,7 +561,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -571,10 +570,10 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplatesByStructureClassNameId(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplatesByStructureClassNameId(
 		HttpPrincipal httpPrincipal, long groupId, long structureClassNameId,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"getTemplatesByStructureClassNameId",
@@ -592,7 +591,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -658,12 +657,12 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> search(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
 		long classNameId, long classPK, long resourceClassNameId,
 		java.lang.String keywords, java.lang.String type,
 		java.lang.String mode, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"search", _searchParameterTypes19);
@@ -682,7 +681,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -691,13 +690,13 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> search(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
 		long classNameId, long classPK, long resourceClassNameId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String type, java.lang.String mode,
 		java.lang.String language, boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"search", _searchParameterTypes20);
@@ -716,7 +715,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -725,12 +724,12 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> search(
 		HttpPrincipal httpPrincipal, long companyId, long[] groupIds,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
 		java.lang.String keywords, java.lang.String type,
 		java.lang.String mode, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"search", _searchParameterTypes21);
@@ -749,7 +748,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -758,13 +757,13 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> search(
 		HttpPrincipal httpPrincipal, long companyId, long[] groupIds,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String type, java.lang.String mode,
 		java.lang.String language, boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMTemplateServiceUtil.class,
 					"search", _searchParameterTypes22);
@@ -783,7 +782,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -915,7 +914,7 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateTemplate(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplate updateTemplate(
 		HttpPrincipal httpPrincipal, long templateId, long classPK,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -947,7 +946,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatamapping.model.DDMTemplate)returnObj;
+			return (com.liferay.dynamic.data.mapping.model.DDMTemplate)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -956,7 +955,7 @@ public class DDMTemplateServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateTemplate(
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplate updateTemplate(
 		HttpPrincipal httpPrincipal, long templateId, long classPK,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -985,7 +984,7 @@ public class DDMTemplateServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatamapping.model.DDMTemplate)returnObj;
+			return (com.liferay.dynamic.data.mapping.model.DDMTemplate)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

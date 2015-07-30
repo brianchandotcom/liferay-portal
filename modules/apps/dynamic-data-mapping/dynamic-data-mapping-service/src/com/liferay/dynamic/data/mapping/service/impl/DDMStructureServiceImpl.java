@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.impl;
+package com.liferay.dynamic.data.mapping.service.impl;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.base.DDMStructureServiceBaseImpl;
+import com.liferay.dynamic.data.mapping.service.permission.DDMPermission;
+import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
+import com.liferay.dynamic.data.mapping.util.DDMPermissionHandler;
+import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureServiceBaseImpl;
-import com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission;
-import com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePermission;
-import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
-import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -38,7 +38,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Bruno Basto
  * @author Marcellus Tavares
- * @see    com.liferay.portlet.dynamicdatamapping.service.impl.DDMStructureLocalServiceImpl
+ * @see    com.liferay.dynamic.data.mapping.service.impl.DDMStructureLocalServiceImpl
  */
 public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 
@@ -148,7 +148,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @param      xsd the structure's XML schema definition
 	 * @param      storageType the structure's storage type. It can be "xml" or
 	 *             "expando". For more information, see {@link
-	 *             com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	 *             com.liferay.dynamic.data.mapping.storage.StorageType}.
 	 * @param      type the structure's type. For more information, see {@link
 	 *             com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	 * @param      serviceContext the service context to be applied. Can set the
@@ -226,7 +226,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @param      xsd the XML schema definition of the structure
 	 * @param      storageType the storage type of the structure. It can be XML
 	 *             or expando. For more information, see {@link
-	 *             com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	 *             com.liferay.dynamic.data.mapping.storage.StorageType}.
 	 * @param      type the structure's type. For more information, see {@link
 	 *             com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	 * @param      serviceContext the service context to be applied. Must have
@@ -584,7 +584,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @param  description the description keywords
 	 * @param  storageType the structure's storage type. It can be "xml" or
 	 *         "expando". For more information, see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	 *         com.liferay.dynamic.data.mapping.storage.StorageType}.
 	 * @param  type the structure's type. For more information, see {@link
 	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	 * @param  andOperator whether every field must match its keywords, or just
@@ -639,7 +639,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	 * @param  description the description keywords
 	 * @param  storageType the structure's storage type. It can be "xml" or
 	 *         "expando". For more information, see {@link
-	 *         com.liferay.portlet.dynamicdatamapping.storage.StorageType}.
+	 *         com.liferay.dynamic.data.mapping.storage.StorageType}.
 	 * @param  type the structure's type. For more information, see {@link
 	 *         com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
 	 * @param  andOperator whether every field must match its keywords, or just

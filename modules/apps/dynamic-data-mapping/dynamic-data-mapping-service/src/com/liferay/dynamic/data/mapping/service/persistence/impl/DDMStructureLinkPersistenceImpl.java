@@ -12,10 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.persistence.impl;
+package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.exception.NoSuchStructureLinkException;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
+import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkModelImpl;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -31,14 +36,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.dynamicdatamapping.NoSuchStructureLinkException;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
-import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkImpl;
-import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureLinkModelImpl;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureLinkPersistence;
-
 import java.io.Serializable;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -56,7 +54,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see DDMStructureLinkPersistence
- * @see com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureLinkUtil
+ * @see com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkUtil
  * @generated
  */
 @ProviderType

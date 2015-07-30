@@ -24,8 +24,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
  *
  * @author Brian Wing Shun Chan
  * @see DDMStructureVersionModel
- * @see com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureVersionImpl
- * @see com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureVersionModelImpl
+ * @see com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionImpl
+ * @see com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl
  * @generated
  */
 @ProviderType

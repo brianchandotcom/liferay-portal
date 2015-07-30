@@ -32,8 +32,8 @@ import com.liferay.portal.service.BaseService;
  *
  * @author Brian Wing Shun Chan
  * @see DDMStructureServiceUtil
- * @see com.liferay.portlet.dynamicdatamapping.service.base.DDMStructureServiceBaseImpl
- * @see com.liferay.portlet.dynamicdatamapping.service.impl.DDMStructureServiceImpl
+ * @see com.liferay.dynamic.data.mapping.service.base.DDMStructureServiceBaseImpl
+ * @see com.liferay.dynamic.data.mapping.service.impl.DDMStructureServiceImpl
  * @generated
  */
 @AccessControlled

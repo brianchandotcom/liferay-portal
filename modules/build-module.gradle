@@ -52,6 +52,14 @@ buildCSS {
 configurations {
 	portal
 	portalTest
+
+	whenObjectAdded {
+		Configuration configuration ->
+
+		if (configuration.name == "portalToolsThumbnailBuilder") {
+			configuration.extendsFrom portal
+		}
+	}
 }
 
 if (FileUtil.exists(project, "docroot")) {

@@ -1,4 +1,4 @@
-<#assign aui = taglibLiferayHash["/WEB-INF/tld/aui.tld"] />
+<#assign aui = taglibLiferayHash["/WEB-INF/tld/liferay-aui.tld"] />
 <#assign liferay_portlet = taglibLiferayHash["/WEB-INF/tld/liferay-portlet.tld"] />
 <#assign liferay_ui = taglibLiferayHash["/WEB-INF/tld/liferay-ui.tld"] />
 

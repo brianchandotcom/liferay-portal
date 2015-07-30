@@ -42,8 +42,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -56,7 +54,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.store.BaseStore;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
@@ -78,9 +75,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.apache.log4j.Level;
-import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -156,9 +150,6 @@ public class DLFileVersionTest {
 
 		_fileVersion = DLFileVersionLocalServiceUtil.getFileVersion(
 			fileEntry.getFileEntryId(), DLFileEntryConstants.VERSION_DEFAULT);
-
-		_captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
-			BaseStore.class.getName(), Level.WARN);
 	}
 
 	@After
@@ -172,12 +163,6 @@ public class DLFileVersionTest {
 		tearDownPermissionThreadLocal();
 		tearDownPrincipalThreadLocal();
 		tearDownResourcePermission();
-
-		List<LoggingEvent> loggingEvents = _captureAppender.getLoggingEvents();
-
-		Assert.assertTrue(loggingEvents.isEmpty());
-
-		_captureAppender.close();
 	}
 
 	@Test
@@ -207,8 +192,6 @@ public class DLFileVersionTest {
 		fileEntry = DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId());
 
 		Assert.assertEquals("2.0", fileEntry.getVersion());
-
-		checkLogForFileDeletion(4);
 	}
 
 	@Test
@@ -221,8 +204,6 @@ public class DLFileVersionTest {
 
 		Assert.assertNotEquals(
 			DLFileEntryConstants.VERSION_DEFAULT, fileEntry.getVersion());
-
-		checkLogForFileDeletion(1);
 	}
 
 	@Test
@@ -235,8 +216,6 @@ public class DLFileVersionTest {
 
 		Assert.assertNotEquals(
 			DLFileEntryConstants.VERSION_DEFAULT, fileEntry.getVersion());
-
-		checkLogForFileDeletion(1);
 	}
 
 	@Test
@@ -252,8 +231,6 @@ public class DLFileVersionTest {
 
 		Assert.assertNotEquals(
 			DLFileEntryConstants.VERSION_DEFAULT, fileEntry.getVersion());
-
-		checkLogForFileDeletion(1);
 	}
 
 	@Test
@@ -271,8 +248,6 @@ public class DLFileVersionTest {
 
 		Assert.assertNotEquals(
 			DLFileEntryConstants.VERSION_DEFAULT, fileEntry.getVersion());
-
-		checkLogForFileDeletion(1);
 	}
 
 	@Test
@@ -288,8 +263,6 @@ public class DLFileVersionTest {
 
 		Assert.assertNotEquals(
 			DLFileEntryConstants.VERSION_DEFAULT, fileEntry.getVersion());
-
-		checkLogForFileDeletion(1);
 	}
 
 	@Test
@@ -302,8 +275,6 @@ public class DLFileVersionTest {
 
 		Assert.assertEquals(
 			DLFileEntryConstants.VERSION_DEFAULT, fileEntry.getVersion());
-
-		checkLogForFileDeletion(1);
 	}
 
 	@Test
@@ -316,8 +287,6 @@ public class DLFileVersionTest {
 
 		Assert.assertNotEquals(
 			DLFileEntryConstants.VERSION_DEFAULT, fileEntry.getVersion());
-
-		checkLogForFileDeletion(1);
 	}
 
 	@Test
@@ -330,28 +299,6 @@ public class DLFileVersionTest {
 
 		Assert.assertNotEquals(
 			DLFileEntryConstants.VERSION_DEFAULT, fileEntry.getVersion());
-
-		checkLogForFileDeletion(1);
-	}
-
-	protected void checkLogForFileDeletion(int size) {
-		List<LoggingEvent> loggingEvents = _captureAppender.getLoggingEvents();
-
-		Assert.assertEquals(size, loggingEvents.size());
-
-		for (LoggingEvent loggingEvent : loggingEvents) {
-			String message = (String)loggingEvent.getMessage();
-
-			Assert.assertTrue(
-				message.startsWith(
-					"Unable to delete file {companyId=" +
-						_fileVersion.getCompanyId()));
-			Assert.assertTrue(
-				message.endsWith(
-					"versionLabel=PWC} because it does not exist"));
-		}
-
-		loggingEvents.clear();
 	}
 
 	protected Field createField(DDMStructure ddmStructure, String name) {
@@ -590,7 +537,6 @@ public class DLFileVersionTest {
 		}
 	}
 
-	private CaptureAppender _captureAppender;
 	private long _contractDLFileEntryTypeId;
 	private DLFileVersion _fileVersion;
 

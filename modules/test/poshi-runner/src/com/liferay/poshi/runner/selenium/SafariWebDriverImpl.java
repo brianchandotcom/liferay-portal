@@ -30,6 +30,10 @@ public class SafariWebDriverImpl extends BaseWebDriverImpl {
 	}
 
 	@Override
+	public void assertConfirmation(String pattern) throws Exception {
+	}
+
+	@Override
 	public void click(String locator) {
 		if (locator.contains("x:")) {
 			String url = getHtmlNodeHref(locator);

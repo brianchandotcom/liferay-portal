@@ -33,7 +33,7 @@ public class TokenCompanyServiceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return TokenConstants.SERVICE_NAME;
 	}
 

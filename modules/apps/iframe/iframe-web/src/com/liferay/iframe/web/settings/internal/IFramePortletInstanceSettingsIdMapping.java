@@ -33,7 +33,7 @@ public class IFramePortletInstanceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return IFramePortletKeys.IFRAME;
 	}
 

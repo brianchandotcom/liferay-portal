@@ -33,7 +33,7 @@ public class SiteNavigationMenuPortletInstanceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU;
 	}
 

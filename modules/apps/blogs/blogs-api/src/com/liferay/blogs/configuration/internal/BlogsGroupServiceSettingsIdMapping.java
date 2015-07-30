@@ -33,7 +33,7 @@ public class BlogsGroupServiceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return BlogsConstants.SERVICE_NAME;
 	}
 

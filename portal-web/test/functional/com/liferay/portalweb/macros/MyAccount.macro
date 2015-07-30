@@ -2,7 +2,7 @@
 	<command name="configureDisplaySettingsLanguage">
 		<var name="key_myAccount" value="${myAccount}" />
 
-		<execute function="Click" locator1="Dockbar#USER_NAME" />
+		<execute function="Click" locator1="Dockbar#USER_AVATAR_IMAGE" />
 		<execute function="AssertClick" locator1="Dockbar#USER_MY_ACCOUNT_LOCALIZED" value1="${myAccount}" />
 
 		<execute function="Select" locator1="Myaccount#LANGUAGE_SELECT" value1="${languageName}" />

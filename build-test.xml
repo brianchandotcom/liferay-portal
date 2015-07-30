@@ -1209,6 +1209,7 @@ tell application "Safari" to quit
 	</macrodef>
 
 	<macrodef name="prepare-test-bundles">
+		<attribute name="unit" />
 		<sequential>
 			<if>
 				<matches pattern="http" string="${test.build.bundle.glassfish.zip.url}" />
@@ -1364,15 +1365,33 @@ tell application "Safari" to quit
 					</antcall>
 				</then>
 				<else>
-					<ant antfile="build-dist.xml" target="build-dist-tomcat" inheritAll="false" />
+					<if>
+						<equals arg1="@{unit}" arg2="true" />
+						<then>
+							<ant antfile="build-dist.xml" target="build-dist-tomcat-bare" inheritAll="false" />
 
-					<setup-testable-tomcat />
+							<antcall target="deploy-additional-jars" />
+
+							<ant dir="portal-service" target="deploy" inheritAll="false" />
+
+							<ant dir="util-java" target="deploy" inheritAll="false" />
+
+							<ant dir="portal-impl" target="deploy" inheritAll="false" />
+
+							<ant dir="${project.dir}/modules/core" target="deploy" inheritAll="false" />
+						</then>
+						<else>
+							<ant antfile="build-dist.xml" target="build-dist-tomcat" inheritAll="false" />
+
+							<setup-testable-tomcat />
+
+							<prepare-elasticsearch-configuration />
+						</else>
+					</if>
 
 					<antcall target="prepare-portal-ext-properties" />
 
 					<antcall target="prepare-system-ext-properties" />
-
-					<prepare-elasticsearch-configuration />
 				</else>
 			</if>
 
@@ -5189,7 +5208,7 @@ module.framework.properties.osgi.console=11312</echo>
 
 		<antcall target="compile" inheritAll="false" />
 
-		<prepare-test-bundles />
+		<prepare-test-bundles unit="false" />
 
 		<if>
 			<not>
@@ -5250,6 +5269,23 @@ plugins.includes=marketplace-portlet</echo>
 				<delete file="${lp.plugins.dir}/build.${user.name}.properties" />
 			</then>
 		</if>
+	</target>
+
+	<target name="prepare-test-build-unit">
+		<record-git-commit-portal />
+
+		<antcall target="compile" inheritAll="false" />
+
+		<prepare-test-bundles unit="true" />
+
+		<antcall target="compile-test" inheritAll="false" />
+
+		<record-test-class-file-names />
+
+		<echo if:set="env.JENKINS_HOME">
+ANT_OPTS=${env.ANT_OPTS}</echo>
+
+		<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
 	</target>
 
 	<target name="prepare-test-bundle">

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -185,19 +185,19 @@ public interface DDMStorageLinkModel extends AttachedModel,
 
 	@Override
 	public int compareTo(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink ddmStorageLink);
+		com.liferay.dynamic.data.mapping.model.DDMStorageLink ddmStorageLink);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink> toCacheModel();
+	public CacheModel<com.liferay.dynamic.data.mapping.model.DDMStorageLink> toCacheModel();
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink toEscapedModel();
+	public com.liferay.dynamic.data.mapping.model.DDMStorageLink toEscapedModel();
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink toUnescapedModel();
+	public com.liferay.dynamic.data.mapping.model.DDMStorageLink toUnescapedModel();
 
 	@Override
 	public String toString();

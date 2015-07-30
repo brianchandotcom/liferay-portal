@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service;
+package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -50,21 +50,21 @@ public class DDMStructureVersionServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getLatestStructureVersion(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureVersion getLatestStructureVersion(
 		long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLatestStructureVersion(structureId);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getStructureVersion(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureVersion getStructureVersion(
 		long structureVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getStructureVersion(structureVersionId);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> getStructureVersions(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> getStructureVersions(
 		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getStructureVersions(structureId, start, end,

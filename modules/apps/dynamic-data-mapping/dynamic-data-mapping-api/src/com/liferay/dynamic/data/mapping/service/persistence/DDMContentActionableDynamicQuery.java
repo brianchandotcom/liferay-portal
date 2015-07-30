@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.persistence;
+package com.liferay.dynamic.data.mapping.service.persistence;
 
+import com.liferay.dynamic.data.mapping.model.DDMContent;
+import com.liferay.dynamic.data.mapping.service.DDMContentLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-
-import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
-import com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan

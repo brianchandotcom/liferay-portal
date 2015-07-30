@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.render;
+package com.liferay.dynamic.data.mapping.render;
 
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.storage.Field;
+import com.liferay.dynamic.data.mapping.storage.Fields;
 
 import java.util.Locale;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -657,19 +657,19 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 
 	@Override
 	public int compareTo(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion ddmStructureVersion);
+		com.liferay.dynamic.data.mapping.model.DDMStructureVersion ddmStructureVersion);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> toCacheModel();
+	public CacheModel<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> toCacheModel();
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion toEscapedModel();
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion toEscapedModel();
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion toUnescapedModel();
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion toUnescapedModel();
 
 	@Override
 	public String toString();

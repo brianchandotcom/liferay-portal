@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service;
+package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -55,8 +55,8 @@ public interface DDMTemplateVersionLocalService extends BaseLocalService,
 	* @return the d d m template version that was added
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion addDDMTemplateVersion(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion ddmTemplateVersion);
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion addDDMTemplateVersion(
+		com.liferay.dynamic.data.mapping.model.DDMTemplateVersion ddmTemplateVersion);
 
 	/**
 	* Creates a new d d m template version with the primary key. Does not add the d d m template version to the database.
@@ -64,7 +64,7 @@ public interface DDMTemplateVersionLocalService extends BaseLocalService,
 	* @param templateVersionId the primary key for the new d d m template version
 	* @return the new d d m template version
 	*/
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion createDDMTemplateVersion(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion createDDMTemplateVersion(
 		long templateVersionId);
 
 	/**
@@ -74,8 +74,8 @@ public interface DDMTemplateVersionLocalService extends BaseLocalService,
 	* @return the d d m template version that was removed
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion deleteDDMTemplateVersion(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion ddmTemplateVersion);
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion deleteDDMTemplateVersion(
+		com.liferay.dynamic.data.mapping.model.DDMTemplateVersion ddmTemplateVersion);
 
 	/**
 	* Deletes the d d m template version with the primary key from the database. Also notifies the appropriate model listeners.
@@ -85,7 +85,7 @@ public interface DDMTemplateVersionLocalService extends BaseLocalService,
 	* @throws PortalException if a d d m template version with the primary key could not be found
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion deleteDDMTemplateVersion(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion deleteDDMTemplateVersion(
 		long templateVersionId) throws PortalException;
 
 	/**
@@ -162,7 +162,7 @@ public interface DDMTemplateVersionLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion fetchDDMTemplateVersion(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion fetchDDMTemplateVersion(
 		long templateVersionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -183,7 +183,7 @@ public interface DDMTemplateVersionLocalService extends BaseLocalService,
 	* @throws PortalException if a d d m template version with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion getDDMTemplateVersion(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getDDMTemplateVersion(
 		long templateVersionId) throws PortalException;
 
 	/**
@@ -198,7 +198,7 @@ public interface DDMTemplateVersionLocalService extends BaseLocalService,
 	* @return the range of d d m template versions
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> getDDMTemplateVersions(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> getDDMTemplateVersions(
 		int start, int end);
 
 	/**
@@ -210,7 +210,7 @@ public interface DDMTemplateVersionLocalService extends BaseLocalService,
 	public int getDDMTemplateVersionsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion getLatestTemplateVersion(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getLatestTemplateVersion(
 		long templateId) throws PortalException;
 
 	@Override
@@ -219,17 +219,17 @@ public interface DDMTemplateVersionLocalService extends BaseLocalService,
 		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion getTemplateVersion(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getTemplateVersion(
 		long templateId, java.lang.String version) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion getTemplateVersion(
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getTemplateVersion(
 		long templateVersionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> getTemplateVersions(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> getTemplateVersions(
 		long templateId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTemplateVersionsCount(long templateId);
@@ -248,6 +248,6 @@ public interface DDMTemplateVersionLocalService extends BaseLocalService,
 	* @return the d d m template version that was updated
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion updateDDMTemplateVersion(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion ddmTemplateVersion);
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion updateDDMTemplateVersion(
+		com.liferay.dynamic.data.mapping.model.DDMTemplateVersion ddmTemplateVersion);
 }

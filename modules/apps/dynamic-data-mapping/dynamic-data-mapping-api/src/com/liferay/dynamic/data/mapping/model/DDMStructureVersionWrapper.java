@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -193,7 +194,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 
 	@Override
 	public int compareTo(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion ddmStructureVersion) {
+		com.liferay.dynamic.data.mapping.model.DDMStructureVersion ddmStructureVersion) {
 		return _ddmStructureVersion.compareTo(ddmStructureVersion);
 	}
 
@@ -513,7 +514,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure()
+	public com.liferay.dynamic.data.mapping.model.DDMStructure getStructure()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureVersion.getStructure();
 	}
@@ -1061,12 +1062,12 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> toCacheModel() {
 		return _ddmStructureVersion.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion toEscapedModel() {
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion toEscapedModel() {
 		return new DDMStructureVersionWrapper(_ddmStructureVersion.toEscapedModel());
 	}
 
@@ -1076,7 +1077,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion toUnescapedModel() {
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion toUnescapedModel() {
 		return new DDMStructureVersionWrapper(_ddmStructureVersion.toUnescapedModel());
 	}
 

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.test;
 
-import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseDestination;
@@ -29,9 +28,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
@@ -49,8 +46,6 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -120,10 +115,6 @@ public class ServiceTestUtil {
 
 		return RoleTestUtil.addRole(
 			roleName, roleType, resourceName, scope, primKey, actionId);
-	}
-
-	public static void destroyServices() {
-		_deleteDirectories();
 	}
 
 	public static void initMainServletServices() {
@@ -201,22 +192,9 @@ public class ServiceTestUtil {
 
 	public static void initServices() {
 
-		// JCR
-
-		try {
-			JCRFactoryUtil.prepare();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
 		// Thread locals
 
 		_setThreadLocals();
-
-		// Directories
-
-		_deleteDirectories();
 
 		// Search engine
 
@@ -362,13 +340,6 @@ public class ServiceTestUtil {
 					modelName, modelActions);
 			}
 		}
-	}
-
-	private static void _deleteDirectories() {
-		FileUtil.deltree(PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR);
-
-		FileUtil.deltree(
-			PropsUtil.get(PropsKeys.JCR_JACKRABBIT_REPOSITORY_ROOT));
 	}
 
 	private static Filter _registerDestinationFilter(String destinationName) {

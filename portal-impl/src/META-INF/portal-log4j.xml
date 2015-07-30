@@ -1160,10 +1160,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="org.apache.jackrabbit">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="org.apache.pdfbox">
 		<priority value="ERROR" />
 	</category>

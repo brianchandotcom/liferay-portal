@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Portal Store S3
+Bundle-SymbolicName: com.liferay.portal.store.s3
+Bundle-Version: 1.0.0
+Import-Package:\
+	!net.iharder,\
+	!org.codehaus.jackson.map,\
+	*
+Include-Resource:\
+	classes,\
+	@lib/httpclient.jar,\
+	@lib/httpcore.jar,\
+	@lib/java-xmlbuilder.jar,\
+	@lib/jets3t.jar

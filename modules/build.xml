@@ -71,6 +71,7 @@
 		<dirset dir="frontend" includes="*" />
 		<dirset dir="portal" excludes="portal-cache-memory,portal-search-solr,portal-taglib-aui-form-extension-sample" includes="*" />
 		<dirset dir="portal-security" includes="*" />
+		<dirset dir="portal-store" includes="*" />
 		<dirset dir="util" includes="pmd,portal-tools-sample-sql-builder,sass-compiler-jni" />
 	</path>
 

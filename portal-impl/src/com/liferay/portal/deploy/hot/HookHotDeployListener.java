@@ -120,7 +120,6 @@ import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScanner;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerWrapper;
-import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.DLProcessor;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
@@ -428,7 +427,9 @@ public class HookHotDeployListener
 		}
 
 		if (portalProperties.containsKey(PropsKeys.DL_STORE_IMPL)) {
-			StoreFactory.setInstance(null);
+			StoreFactory storeFactory = StoreFactory.getInstance();
+
+			storeFactory.setStore(null);
 		}
 
 		Set<String> liferayFilterClassNames =
@@ -1536,13 +1537,12 @@ public class HookHotDeployListener
 		}
 
 		if (portalProperties.containsKey(PropsKeys.DL_STORE_IMPL)) {
+			StoreFactory storeFactory = StoreFactory.getInstance();
+
 			String storeClassName = portalProperties.getProperty(
 				PropsKeys.DL_STORE_IMPL);
 
-			Store store = (Store)newInstance(
-				portletClassLoader, Store.class, storeClassName);
-
-			StoreFactory.setInstance(store);
+			storeFactory.setStore(storeClassName);
 		}
 
 		if (portalProperties.containsKey(

@@ -104,12 +104,16 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static void addPageAttachments(long nodeId, java.lang.String title,
+	public static com.liferay.portal.kernel.repository.model.FileEntrySoap[] addPageAttachments(
+		long nodeId, java.lang.String title,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs)
 		throws RemoteException {
 		try {
-			WikiPageServiceUtil.addPageAttachments(nodeId, title,
-				inputStreamOVPs);
+			java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> returnValue =
+				WikiPageServiceUtil.addPageAttachments(nodeId, title,
+					inputStreamOVPs);
+
+			return com.liferay.portal.kernel.repository.model.FileEntrySoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -62,17 +62,18 @@ public interface WikiPageLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public void addPageAttachment(long userId, long nodeId,
-		java.lang.String title, java.lang.String fileName, java.io.File file,
-		java.lang.String mimeType) throws PortalException;
-
-	public void addPageAttachment(long userId, long nodeId,
-		java.lang.String title, java.lang.String fileName,
-		java.io.InputStream inputStream, java.lang.String mimeType)
+	public com.liferay.portal.kernel.repository.model.FileEntry addPageAttachment(
+		long userId, long nodeId, java.lang.String title,
+		java.lang.String fileName, java.io.File file, java.lang.String mimeType)
 		throws PortalException;
 
-	public void addPageAttachments(long userId, long nodeId,
-		java.lang.String title,
+	public com.liferay.portal.kernel.repository.model.FileEntry addPageAttachment(
+		long userId, long nodeId, java.lang.String title,
+		java.lang.String fileName, java.io.InputStream inputStream,
+		java.lang.String mimeType) throws PortalException;
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> addPageAttachments(
+		long userId, long nodeId, java.lang.String title,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs)
 		throws PortalException;
 
@@ -92,10 +93,10 @@ public interface WikiPageLocalService extends BaseLocalService,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 
-	public void addTempFileEntry(long groupId, long userId,
-		java.lang.String folderName, java.lang.String fileName,
-		java.io.InputStream inputStream, java.lang.String mimeType)
-		throws PortalException;
+	public com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
+		long groupId, long userId, java.lang.String folderName,
+		java.lang.String fileName, java.io.InputStream inputStream,
+		java.lang.String mimeType) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0 replaced by {@link #addTempFileEntry(long, long,

@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.internal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManager;
-import com.liferay.portlet.dynamicdatamapping.StorageException;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
 import com.liferay.portlet.dynamicdatamapping.util.DDM;
@@ -35,28 +34,26 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	public long create(
 			long companyId, long ddmStructureId, DDMFormValues ddmFormValues,
 			ServiceContext serviceContext)
-		throws StorageException {
+		throws PortalException {
 
 		return _storageEngine.create(
 			companyId, ddmStructureId, ddmFormValues, serviceContext);
 	}
 
 	@Override
-	public void deleteByClass(long classPK) throws StorageException {
+	public void deleteByClass(long classPK) throws PortalException {
 		_storageEngine.deleteByClass(classPK);
 	}
 
 	@Override
 	public void deleteByDDMStructure(long ddmStructureId)
-		throws StorageException {
+		throws PortalException {
 
 		_storageEngine.deleteByDDMStructure(ddmStructureId);
 	}
 
 	@Override
-	public DDMFormValues getDDMFormValues(long classPK)
-		throws StorageException {
-
+	public DDMFormValues getDDMFormValues(long classPK) throws PortalException {
 		return _storageEngine.getDDMFormValues(classPK);
 	}
 
@@ -74,7 +71,7 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	public void update(
 			long classPK, DDMFormValues ddmFormValues,
 			ServiceContext serviceContext)
-		throws StorageException {
+		throws PortalException {
 
 		_storageEngine.update(classPK, ddmFormValues, serviceContext);
 	}

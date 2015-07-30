@@ -84,6 +84,7 @@ searchContainer.setResults(results);
 	portletURL="<%= wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	searchContainer="<%= searchContainer %>"
 	tabName="<%= wikiAttachmentItemSelectorViewDisplayContext.getTitle(locale) %>"
+	uploadURL="<%= wikiAttachmentItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>"
 />
 
 <%!

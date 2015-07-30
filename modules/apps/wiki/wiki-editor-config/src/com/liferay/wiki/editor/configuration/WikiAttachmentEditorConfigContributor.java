@@ -18,9 +18,12 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UploadableFileReturnType;
+import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.RequestBackedPortletURLFactory;
@@ -38,6 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 @Component(
 	property = {
@@ -86,10 +90,32 @@ public class WikiAttachmentEditorConfigContributor
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
 
+		desiredItemSelectorReturnTypes.add(new UploadableFileReturnType());
 		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
 
 		attachmentItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
+
+		PortletURL uploadURL = requestBackedPortletURLFactory.createActionURL(
+			WikiPortletKeys.WIKI);
+
+		uploadURL.setParameter("struts_action", "/wiki/upload_image");
+		uploadURL.setParameter(
+			"resourcePrimKey", String.valueOf(wikiPageResourcePrimKey));
+
+		ItemSelectorCriterion uploadItemSelectorCriterion =
+			new UploadItemSelectorCriterion(
+				uploadURL.toString(),
+				LanguageUtil.get(themeDisplay.getLocale(), "wiki"));
+
+		List<ItemSelectorReturnType> uploadDesiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		uploadDesiredItemSelectorReturnTypes.add(
+			new UploadableFileReturnType());
+
+		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			uploadDesiredItemSelectorReturnTypes);
 
 		String name = GetterUtil.getString(
 			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
@@ -108,7 +134,7 @@ public class WikiAttachmentEditorConfigContributor
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, name + "selectItem",
-			attachmentItemSelectorCriterion);
+			attachmentItemSelectorCriterion, uploadItemSelectorCriterion);
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());

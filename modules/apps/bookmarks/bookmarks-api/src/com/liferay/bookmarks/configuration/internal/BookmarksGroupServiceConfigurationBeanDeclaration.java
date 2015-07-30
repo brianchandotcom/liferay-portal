@@ -12,17 +12,23 @@
  * details.
  */
 
-package com.liferay.bookmarks.settings;
+package com.liferay.bookmarks.configuration.internal;
 
 import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
-import com.liferay.bookmarks.settings.internal.BookmarksGroupServiceConfigurationOverrideImpl;
-import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Iván Zaera
  */
-@Settings.OverrideClass(BookmarksGroupServiceConfigurationOverrideImpl.class)
-public interface BookmarksGroupServiceOverriddenConfiguration
-	extends BookmarksGroupServiceConfiguration,
-		BookmarksGroupServiceConfigurationOverride {
+@Component
+public class BookmarksGroupServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
+
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return BookmarksGroupServiceConfiguration.class;
+	}
+
 }

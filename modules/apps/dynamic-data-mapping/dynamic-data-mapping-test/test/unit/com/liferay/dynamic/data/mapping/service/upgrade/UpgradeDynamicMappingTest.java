@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.dynamic.data.mapping.service.upgrade.v1_0_0;
 
+import com.liferay.dynamic.data.mapping.io.impl.DDMFormValuesJSONSerializerImpl;
+import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeData;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -32,7 +34,6 @@ import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.util.LocalizationImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerImpl;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
@@ -183,15 +184,12 @@ public class UpgradeDynamicMappingTest extends PowerMockito {
 		String expectedJSON = DDMFormValuesJSONSerializerUtil.serialize(
 			ddmFormValues);
 
-		UpgradeDynamicDataMapping upgradeDynamicDataMapping =
-			new UpgradeDynamicDataMapping();
+		UpgradeData upgradeData = new UpgradeData();
 
-		DDMFormValues actualDDMFormValues =
-			upgradeDynamicDataMapping.getDDMFormValues(
-				ddmForm, document.asXML());
+		DDMFormValues actualDDMFormValues = upgradeData.getDDMFormValues(
+			ddmForm, document.asXML());
 
-		String actualJSON = upgradeDynamicDataMapping.toJSON(
-			actualDDMFormValues);
+		String actualJSON = upgradeData.toJSON(actualDDMFormValues);
 
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
 	}
@@ -309,15 +307,12 @@ public class UpgradeDynamicMappingTest extends PowerMockito {
 		String expectedJSON = DDMFormValuesJSONSerializerUtil.serialize(
 			ddmFormValues);
 
-		UpgradeDynamicDataMapping upgradeDynamicDataMapping =
-			new UpgradeDynamicDataMapping();
+		UpgradeData upgradeData = new UpgradeData();
 
-		DDMFormValues actualDDMFormValues =
-			upgradeDynamicDataMapping.getDDMFormValues(
-				ddmForm, document.asXML());
+		DDMFormValues actualDDMFormValues = upgradeData.getDDMFormValues(
+			ddmForm, document.asXML());
 
-		String actualJSON = upgradeDynamicDataMapping.toJSON(
-			actualDDMFormValues);
+		String actualJSON = upgradeData.toJSON(actualDDMFormValues);
 
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
 	}
@@ -396,15 +391,12 @@ public class UpgradeDynamicMappingTest extends PowerMockito {
 		String expectedJSON = DDMFormValuesJSONSerializerUtil.serialize(
 			ddmFormValues);
 
-		UpgradeDynamicDataMapping upgradeDynamicDataMapping =
-			new UpgradeDynamicDataMapping();
+		UpgradeData upgradeData = new UpgradeData();
 
-		DDMFormValues actualDDMFormValues =
-			upgradeDynamicDataMapping.getDDMFormValues(
-				ddmForm, document.asXML());
+		DDMFormValues actualDDMFormValues = upgradeData.getDDMFormValues(
+			ddmForm, document.asXML());
 
-		String actualJSON = upgradeDynamicDataMapping.toJSON(
-			actualDDMFormValues);
+		String actualJSON = upgradeData.toJSON(actualDDMFormValues);
 
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
 	}

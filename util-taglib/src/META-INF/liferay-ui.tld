@@ -3479,11 +3479,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>displayStyleDefinition</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>headerType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -63,32 +63,36 @@ public class WikiPageServiceUtil {
 			serviceContext);
 	}
 
-	public static void addPageAttachment(long nodeId, java.lang.String title,
-		java.lang.String fileName, java.io.File file, java.lang.String mimeType)
+	public static com.liferay.portal.kernel.repository.model.FileEntry addPageAttachment(
+		long nodeId, java.lang.String title, java.lang.String fileName,
+		java.io.File file, java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addPageAttachment(nodeId, title, fileName, file, mimeType);
+		return getService()
+				   .addPageAttachment(nodeId, title, fileName, file, mimeType);
 	}
 
-	public static void addPageAttachment(long nodeId, java.lang.String title,
-		java.lang.String fileName, java.io.InputStream inputStream,
-		java.lang.String mimeType)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addPageAttachment(nodeId, title, fileName, inputStream, mimeType);
-	}
-
-	public static void addPageAttachments(long nodeId, java.lang.String title,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addPageAttachments(nodeId, title, inputStreamOVPs);
-	}
-
-	public static void addTempFileEntry(long nodeId,
-		java.lang.String folderName, java.lang.String fileName,
+	public static com.liferay.portal.kernel.repository.model.FileEntry addPageAttachment(
+		long nodeId, java.lang.String title, java.lang.String fileName,
 		java.io.InputStream inputStream, java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addTempFileEntry(nodeId, folderName, fileName, inputStream,
+		return getService()
+				   .addPageAttachment(nodeId, title, fileName, inputStream,
+			mimeType);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> addPageAttachments(
+		long nodeId, java.lang.String title,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addPageAttachments(nodeId, title, inputStreamOVPs);
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
+		long nodeId, java.lang.String folderName, java.lang.String fileName,
+		java.io.InputStream inputStream, java.lang.String mimeType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addTempFileEntry(nodeId, folderName, fileName, inputStream,
 			mimeType);
 	}
 

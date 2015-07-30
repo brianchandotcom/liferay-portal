@@ -63,21 +63,24 @@ public interface WikiPageService extends BaseService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public void addPageAttachment(long nodeId, java.lang.String title,
-		java.lang.String fileName, java.io.File file, java.lang.String mimeType)
+	public com.liferay.portal.kernel.repository.model.FileEntry addPageAttachment(
+		long nodeId, java.lang.String title, java.lang.String fileName,
+		java.io.File file, java.lang.String mimeType) throws PortalException;
+
+	public com.liferay.portal.kernel.repository.model.FileEntry addPageAttachment(
+		long nodeId, java.lang.String title, java.lang.String fileName,
+		java.io.InputStream inputStream, java.lang.String mimeType)
 		throws PortalException;
 
-	public void addPageAttachment(long nodeId, java.lang.String title,
-		java.lang.String fileName, java.io.InputStream inputStream,
-		java.lang.String mimeType) throws PortalException;
-
-	public void addPageAttachments(long nodeId, java.lang.String title,
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> addPageAttachments(
+		long nodeId, java.lang.String title,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs)
 		throws PortalException;
 
-	public void addTempFileEntry(long nodeId, java.lang.String folderName,
-		java.lang.String fileName, java.io.InputStream inputStream,
-		java.lang.String mimeType) throws PortalException;
+	public com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
+		long nodeId, java.lang.String folderName, java.lang.String fileName,
+		java.io.InputStream inputStream, java.lang.String mimeType)
+		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0 replaced by {@link #addTempFileEntry(long,

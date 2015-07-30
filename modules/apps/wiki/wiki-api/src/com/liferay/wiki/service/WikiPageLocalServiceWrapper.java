@@ -57,29 +57,30 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
-	public void addPageAttachment(long userId, long nodeId,
-		java.lang.String title, java.lang.String fileName, java.io.File file,
-		java.lang.String mimeType)
+	public com.liferay.portal.kernel.repository.model.FileEntry addPageAttachment(
+		long userId, long nodeId, java.lang.String title,
+		java.lang.String fileName, java.io.File file, java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiPageLocalService.addPageAttachment(userId, nodeId, title,
+		return _wikiPageLocalService.addPageAttachment(userId, nodeId, title,
 			fileName, file, mimeType);
 	}
 
 	@Override
-	public void addPageAttachment(long userId, long nodeId,
-		java.lang.String title, java.lang.String fileName,
-		java.io.InputStream inputStream, java.lang.String mimeType)
+	public com.liferay.portal.kernel.repository.model.FileEntry addPageAttachment(
+		long userId, long nodeId, java.lang.String title,
+		java.lang.String fileName, java.io.InputStream inputStream,
+		java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiPageLocalService.addPageAttachment(userId, nodeId, title,
+		return _wikiPageLocalService.addPageAttachment(userId, nodeId, title,
 			fileName, inputStream, mimeType);
 	}
 
 	@Override
-	public void addPageAttachments(long userId, long nodeId,
-		java.lang.String title,
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> addPageAttachments(
+		long userId, long nodeId, java.lang.String title,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiPageLocalService.addPageAttachments(userId, nodeId, title,
+		return _wikiPageLocalService.addPageAttachments(userId, nodeId, title,
 			inputStreamOVPs);
 	}
 
@@ -116,12 +117,13 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
-	public void addTempFileEntry(long groupId, long userId,
-		java.lang.String folderName, java.lang.String fileName,
-		java.io.InputStream inputStream, java.lang.String mimeType)
+	public com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
+		long groupId, long userId, java.lang.String folderName,
+		java.lang.String fileName, java.io.InputStream inputStream,
+		java.lang.String mimeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiPageLocalService.addTempFileEntry(groupId, userId, folderName,
-			fileName, inputStream, mimeType);
+		return _wikiPageLocalService.addTempFileEntry(groupId, userId,
+			folderName, fileName, inputStream, mimeType);
 	}
 
 	/**

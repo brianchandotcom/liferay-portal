@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -41,6 +42,7 @@ import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.Serializable;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -64,7 +66,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalServiceUtil} to access the d d m storage link local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalServiceUtil} to access the d d m storage link local service.
 	 */
 
 	/**
@@ -352,13 +354,13 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink",
+		persistedModelLocalServiceRegistry.register("com.liferay.dynamic.data.mapping.model.DDMStorageLink",
 			ddmStorageLinkLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink");
+			"com.liferay.dynamic.data.mapping.model.DDMStorageLink");
 	}
 
 	/**

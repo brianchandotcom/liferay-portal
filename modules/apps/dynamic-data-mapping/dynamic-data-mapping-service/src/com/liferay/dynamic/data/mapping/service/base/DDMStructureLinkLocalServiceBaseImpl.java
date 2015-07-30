@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -41,6 +42,7 @@ import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.Serializable;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -64,7 +66,7 @@ public abstract class DDMStructureLinkLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServiceUtil} to access the d d m structure link local service.
+	 * Never modify or reference this class directly. Always use {@link com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalServiceUtil} to access the d d m structure link local service.
 	 */
 
 	/**
@@ -355,13 +357,13 @@ public abstract class DDMStructureLinkLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink",
+		persistedModelLocalServiceRegistry.register("com.liferay.dynamic.data.mapping.model.DDMStructureLink",
 			ddmStructureLinkLocalService);
 	}
 
 	public void destroy() {
 		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink");
+			"com.liferay.dynamic.data.mapping.model.DDMStructureLink");
 	}
 
 	/**

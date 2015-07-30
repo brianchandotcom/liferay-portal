@@ -16,8 +16,10 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for DDMTemplateVersion. This utility wraps
@@ -38,7 +40,7 @@ public class DDMTemplateVersionServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.dynamicdatamapping.service.impl.DDMTemplateVersionServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMTemplateVersionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -86,14 +88,7 @@ public class DDMTemplateVersionServiceUtil {
 	}
 
 	public static DDMTemplateVersionService getService() {
-		if (_service == null) {
-			_service = (DDMTemplateVersionService)PortalBeanLocatorUtil.locate(DDMTemplateVersionService.class.getName());
-
-			ReferenceRegistry.registerReference(DDMTemplateVersionServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -103,5 +98,14 @@ public class DDMTemplateVersionServiceUtil {
 	public void setService(DDMTemplateVersionService service) {
 	}
 
-	private static DDMTemplateVersionService _service;
+	private static ServiceTracker<DDMTemplateVersionService, DDMTemplateVersionService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDMTemplateVersionServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<DDMTemplateVersionService, DDMTemplateVersionService>(bundle.getBundleContext(),
+				DDMTemplateVersionService.class, null);
+
+		_serviceTracker.open();
+	}
 }

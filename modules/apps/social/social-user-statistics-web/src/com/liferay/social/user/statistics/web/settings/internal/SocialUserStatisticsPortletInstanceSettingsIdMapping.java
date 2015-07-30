@@ -14,7 +14,7 @@
 
 package com.liferay.social.user.statistics.web.settings.internal;
 
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.social.user.statistics.web.configuration.SocialUserStatisticsPortletInstanceConfiguration;
 import com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPortletKeys;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component
 public class SocialUserStatisticsPortletInstanceSettingsIdMapping
-	implements SettingsIdMapping {
+	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {

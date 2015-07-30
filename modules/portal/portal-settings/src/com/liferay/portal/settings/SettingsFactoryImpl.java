@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletItem;
@@ -222,11 +222,13 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC
 	)
-	protected void setSettingsIdMapping(SettingsIdMapping settingsIdMapping) {
-		String settingsId = settingsIdMapping.getSettingsId();
+	protected void setConfigurationPidMapping(
+		ConfigurationPidMapping configurationPidMapping) {
+
+		String settingsId = configurationPidMapping.getSettingsId();
 
 		Class<?> configurationBeanClass =
-			settingsIdMapping.getConfigurationBeanClass();
+			configurationPidMapping.getConfigurationBeanClass();
 
 		ConfigurationBeanClassSettingsDescriptor
 			configurationBeanClassSettingsDescriptor =
@@ -261,8 +263,10 @@ public class SettingsFactoryImpl implements SettingsFactory {
 		unregister(settingsId);
 	}
 
-	protected void unsetSettingsIdMapping(SettingsIdMapping settingsIdMapping) {
-		unregister(settingsIdMapping.getSettingsId());
+	protected void unsetConfigurationPidMapping(
+		ConfigurationPidMapping configurationPidMapping) {
+
+		unregister(configurationPidMapping.getSettingsId());
 	}
 
 	private final ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =

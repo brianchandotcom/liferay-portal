@@ -92,7 +92,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 	}
 
 	public WikiPortletInstanceConfiguration
-		getWikiPortletInstanceSettings() {
+		getWikiPortletInstanceConfiguration() {
 
 		try {
 			if (_wikiPortletInstanceConfiguration == null) {

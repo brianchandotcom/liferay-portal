@@ -84,8 +84,6 @@
 	</macrodef>
 
 	<target name="build-taglibs">
-		<delete file="${project.dir}/util-taglib/src/META-INF/aui.tld" failonerror="false" />
-
 		<java
 			classname="com.liferay.alloy.tools.tagbuilder.TagBuilder"
 			classpathref="project.classpath"
@@ -118,7 +116,7 @@
 			maxmemory="256m"
 		>
 			<arg line="-d ${doc.taglibs.dir}" />
-			<arg value="${project.dir}/util-taglib/src/META-INF/aui.tld" />
+			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-aui.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-portlet-ext.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-portlet.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-security.tld" />

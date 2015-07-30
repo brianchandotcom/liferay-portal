@@ -28,8 +28,8 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.struts.BaseRSSStrutsAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.portlet.blogs.constants.BlogsConstants;
+import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 
 import java.util.Date;
 

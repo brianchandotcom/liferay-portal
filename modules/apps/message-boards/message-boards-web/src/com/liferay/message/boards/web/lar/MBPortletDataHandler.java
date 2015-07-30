@@ -35,6 +35,7 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
+import com.liferay.portlet.messageboards.constants.MBConstants;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -53,7 +54,6 @@ import com.liferay.portlet.messageboards.service.MBStatsUserLocalService;
 import com.liferay.portlet.messageboards.service.MBThreadFlagLocalService;
 import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 import com.liferay.portlet.messageboards.service.permission.MBPermission;
-import com.liferay.portlet.messageboards.constants.MBConstants;
 
 import java.util.List;
 

@@ -42,8 +42,8 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.trash.RestoreEntryException;
-import com.liferay.portlet.trash.model.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.model.TrashEntryConstants;
 
 import java.util.List;
 

@@ -60,7 +60,7 @@ StringBundler pageBottomSB = OutputTag.getData(request, WebKeys.PAGE_BOTTOM);
 
 <script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathThemeJavaScript() + "/main.js")) %>" type="text/javascript"></script>
 
-<liferay-util:dynamic-include key="/html/common/themes/bottom-ext.jsp" />
+<liferay-util:dynamic-include key="/html/common/themes/bottom.jsp#post" />
 
 <liferay-util:include page="/html/common/themes/bottom-ext.jsp" />
 <liferay-util:include page="/html/common/themes/bottom-test.jsp" />

@@ -14,13 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.internal;
 
+import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplateManager;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalService;
-import com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission;
 
 import java.io.File;
 

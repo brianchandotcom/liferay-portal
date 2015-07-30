@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.http;
+package com.liferay.dynamic.data.mapping.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.http.TunnelUtil;
-
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -55,7 +54,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionService
  */
 @ProviderType
 public class DDMStructureVersionServiceHttp {
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getLatestStructureVersion(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureVersion getLatestStructureVersion(
 		HttpPrincipal httpPrincipal, long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -79,7 +78,7 @@ public class DDMStructureVersionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion)returnObj;
+			return (com.liferay.dynamic.data.mapping.model.DDMStructureVersion)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -88,7 +87,7 @@ public class DDMStructureVersionServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion getStructureVersion(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureVersion getStructureVersion(
 		HttpPrincipal httpPrincipal, long structureVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -111,7 +110,7 @@ public class DDMStructureVersionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion)returnObj;
+			return (com.liferay.dynamic.data.mapping.model.DDMStructureVersion)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -120,9 +119,9 @@ public class DDMStructureVersionServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> getStructureVersions(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> getStructureVersions(
 		HttpPrincipal httpPrincipal, long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructureVersion> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMStructureVersionServiceUtil.class,
@@ -144,7 +143,7 @@ public class DDMStructureVersionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureVersion>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

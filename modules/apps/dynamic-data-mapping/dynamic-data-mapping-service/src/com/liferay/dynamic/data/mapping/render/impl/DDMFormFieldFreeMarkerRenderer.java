@@ -12,8 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.render;
+package com.liferay.dynamic.data.mapping.render.impl;
 
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.dynamic.data.mapping.storage.Field;
+import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.util.impl.DDMFieldsCounter;
+import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -36,10 +42,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFieldsCounter;
-import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 
 import java.io.Writer;
 

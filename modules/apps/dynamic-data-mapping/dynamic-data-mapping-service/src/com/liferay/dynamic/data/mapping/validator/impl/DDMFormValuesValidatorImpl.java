@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.validator;
+package com.liferay.dynamic.data.mapping.validator.impl;
 
+import com.liferay.dynamic.data.mapping.exception.StorageException;
+import com.liferay.dynamic.data.mapping.exception.StorageFieldNameException;
+import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
+import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.dynamicdatamapping.StorageException;
-import com.liferay.portlet.dynamicdatamapping.StorageFieldNameException;
-import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
-import com.liferay.portlet.dynamicdatamapping.StorageFieldValueException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.Value;

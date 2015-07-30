@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model.impl;
+package com.liferay.dynamic.data.mapping.model.impl;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -29,8 +31,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionLocalServiceUtil;
 
 import java.util.Locale;
 

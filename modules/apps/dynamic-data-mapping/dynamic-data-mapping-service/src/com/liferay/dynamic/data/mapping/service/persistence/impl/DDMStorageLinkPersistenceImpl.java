@@ -12,10 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.persistence.impl;
+package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.exception.NoSuchStorageLinkException;
+import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
+import com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkModelImpl;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkPersistence;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -34,14 +39,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.dynamicdatamapping.NoSuchStorageLinkException;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
-import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkImpl;
-import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStorageLinkModelImpl;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStorageLinkPersistence;
-
 import java.io.Serializable;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -59,7 +57,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see DDMStorageLinkPersistence
- * @see com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStorageLinkUtil
+ * @see com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkUtil
  * @generated
  */
 @ProviderType

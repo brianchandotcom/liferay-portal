@@ -23,8 +23,8 @@ import com.liferay.portal.model.PersistedModel;
  *
  * @author Brian Wing Shun Chan
  * @see DDMTemplateLinkModel
- * @see com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateLinkImpl
- * @see com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateLinkModelImpl
+ * @see com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkImpl
+ * @see com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl
  * @generated
  */
 @ProviderType

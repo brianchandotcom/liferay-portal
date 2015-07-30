@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * Provides the remote service utility for DDMTemplateVersion. This utility wraps
- * {@link com.liferay.portlet.dynamicdatamapping.service.impl.DDMTemplateVersionServiceImpl} and is the
+ * {@link com.liferay.dynamic.data.mapping.service.impl.DDMTemplateVersionServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on a remote server. Methods of this service are expected to have security
  * checks based on the propagated JAAS credentials because this service can be
@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  *
  * @author Brian Wing Shun Chan
  * @see DDMTemplateVersionService
- * @see com.liferay.portlet.dynamicdatamapping.service.base.DDMTemplateVersionServiceBaseImpl
- * @see com.liferay.portlet.dynamicdatamapping.service.impl.DDMTemplateVersionServiceImpl
+ * @see com.liferay.dynamic.data.mapping.service.base.DDMTemplateVersionServiceBaseImpl
+ * @see com.liferay.dynamic.data.mapping.service.impl.DDMTemplateVersionServiceImpl
  * @generated
  */
 @ProviderType

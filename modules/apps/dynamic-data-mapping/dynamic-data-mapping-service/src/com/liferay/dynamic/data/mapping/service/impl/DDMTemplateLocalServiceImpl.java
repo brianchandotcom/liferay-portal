@@ -12,8 +12,20 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.impl;
+package com.liferay.dynamic.data.mapping.service.impl;
 
+import com.liferay.dynamic.data.mapping.exception.InvalidTemplateVersionException;
+import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
+import com.liferay.dynamic.data.mapping.exception.RequiredTemplateException;
+import com.liferay.dynamic.data.mapping.exception.TemplateDuplicateTemplateKeyException;
+import com.liferay.dynamic.data.mapping.exception.TemplateNameException;
+import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
+import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageNameException;
+import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageSizeException;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
+import com.liferay.dynamic.data.mapping.service.base.DDMTemplateLocalServiceBaseImpl;
+import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,19 +50,7 @@ import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.service.persistence.ImageUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.dynamicdatamapping.InvalidTemplateVersionException;
-import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
-import com.liferay.portlet.dynamicdatamapping.RequiredTemplateException;
-import com.liferay.portlet.dynamicdatamapping.TemplateDuplicateTemplateKeyException;
-import com.liferay.portlet.dynamicdatamapping.TemplateNameException;
-import com.liferay.portlet.dynamicdatamapping.TemplateScriptException;
-import com.liferay.portlet.dynamicdatamapping.TemplateSmallImageNameException;
-import com.liferay.portlet.dynamicdatamapping.TemplateSmallImageSizeException;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion;
-import com.liferay.portlet.dynamicdatamapping.service.base.DDMTemplateLocalServiceBaseImpl;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.util.xml.XMLUtil;
 
 import java.io.File;

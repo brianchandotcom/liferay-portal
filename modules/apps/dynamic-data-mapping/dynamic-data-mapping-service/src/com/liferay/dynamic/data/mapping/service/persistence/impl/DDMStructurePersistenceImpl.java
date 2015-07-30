@@ -12,10 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.persistence.impl;
+package com.liferay.dynamic.data.mapping.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
+import com.liferay.dynamic.data.mapping.model.impl.DDMStructureModelImpl;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -40,14 +45,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
-import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureModelImpl;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePersistence;
-
 import java.io.Serializable;
-
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -66,7 +64,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see DDMStructurePersistence
- * @see com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil
+ * @see com.liferay.dynamic.data.mapping.service.persistence.DDMStructureUtil
  * @generated
  */
 @ProviderType

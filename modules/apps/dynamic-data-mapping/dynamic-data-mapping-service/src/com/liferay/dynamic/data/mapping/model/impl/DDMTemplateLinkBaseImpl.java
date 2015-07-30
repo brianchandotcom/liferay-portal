@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model.impl;
+package com.liferay.dynamic.data.mapping.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLinkLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalServiceUtil;
 
 /**
  * The extended model base implementation for the DDMTemplateLink service. Represents a row in the &quot;DDMTemplateLink&quot; database table, with each column mapped to a property of this class.

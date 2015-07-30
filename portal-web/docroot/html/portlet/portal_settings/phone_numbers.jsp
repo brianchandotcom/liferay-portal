@@ -14,4 +14,6 @@
  */
 --%>
 
-<%@ include file="/html/portlet/users_admin/common/phone_numbers.jsp" %>
+<%@ include file="/html/portlet/portal_settings/init.jsp" %>
+
+<liferay-util:include page="/common/phone_numbers.jsp" portletId="<%= PortletKeys.USERS_ADMIN %>" />

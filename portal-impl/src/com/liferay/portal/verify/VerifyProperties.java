@@ -751,6 +751,39 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.dynamic.data.lists.web"
 		},
 
+		// Dynamic Data Mapping
+		
+		new String[] {
+			"dynamic.data.mapping.image.extensions",
+			"dynamic.data.mapping.image.extensions",
+			"com.liferay.dynamic.data.mapping.service"
+		},
+		new String[]{
+			"dynamic.data.mapping.image.small.max.size",
+			"dynamic.data.mapping.image.small.max.size",
+			"com.liferay.dynamic.data.mapping.service"
+		},
+		new String[]{
+			"dynamic.data.mapping.structure.force.autogenerate.key",
+			"dynamic.data.mapping.structure.force.autogenerate.key",
+			"com.liferay.dynamic.data.mapping.web"
+		},
+		new String[]{
+			"dynamic.data.mapping.template.force.autogenerate.key",
+			"dynamic.data.mapping.template.force.autogenerate.key",
+			"com.liferay.dynamic.data.mapping.web"
+		},
+		new String[]{
+			"dynamic.data.mapping.template.language.default",
+			"dynamic.data.mapping.template.language.default",
+			"com.liferay.dynamic.data.mapping.web"
+		},
+		new String[]{
+			"dynamic.data.mapping.template.language.content",
+			"dynamic.data.mapping.template.language.content",
+			"com.liferay.dynamic.data.mapping.web"
+		},
+
 		// Facebook Connect
 
 		new String[] {

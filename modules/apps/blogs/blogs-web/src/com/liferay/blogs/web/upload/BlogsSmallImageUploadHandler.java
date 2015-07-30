@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.image.selector;
+package com.liferay.blogs.web.upload;
 
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -21,8 +21,7 @@ import com.liferay.portal.util.PrefsPropsUtil;
  * @author Sergio González
  * @author Adolfo Pérez
  */
-public class BlogsSmallImageSelectorUploadHandler
-	extends BlogsTempImageSelectorUploadHandler {
+public class BlogsSmallImageUploadHandler extends BlogsTempImageUploadHandler {
 
 	@Override
 	protected long getMaxFileSize() {

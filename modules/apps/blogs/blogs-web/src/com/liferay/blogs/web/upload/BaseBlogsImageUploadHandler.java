@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.blogs.web.image.selector;
+package com.liferay.blogs.web.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.image.selector.BaseImageSelectorUploadHandler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
+import com.liferay.portal.kernel.upload.BaseUploadHandler;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -46,8 +46,7 @@ import javax.portlet.PortletResponse;
  * @author Sergio González
  * @author Adolfo Pérez
  */
-public abstract class BaseBlogsImageSelectorUploadHandler
-	extends BaseImageSelectorUploadHandler {
+public abstract class BaseBlogsImageUploadHandler extends BaseUploadHandler {
 
 	@Override
 	public void checkPermission(
@@ -93,6 +92,11 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 
 	protected long getMaxFileSize() {
 		return PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_MAX_SIZE);
+	}
+
+	@Override
+	protected String getParameterName() {
+		return "imageSelectorFileName";
 	}
 
 	@Override

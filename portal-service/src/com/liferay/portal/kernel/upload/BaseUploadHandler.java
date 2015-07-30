@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.image.selector;
+package com.liferay.portal.kernel.upload;
 
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,9 +21,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.upload.LiferayFileItemException;
-import com.liferay.portal.kernel.upload.UploadException;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -46,11 +43,10 @@ import javax.portlet.PortletResponse;
  * @author Adolfo Pérez
  * @author Roberto Díaz
  */
-public abstract class BaseImageSelectorUploadHandler
-	implements ImageSelectorUploadHandler {
+public abstract class BaseUploadHandler implements UploadHandler {
 
 	@Override
-	public void uploadSelectedImage(
+	public void upload(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException {
 
@@ -90,7 +86,7 @@ public abstract class BaseImageSelectorUploadHandler
 
 			imageJSONObject.put("randomId", randomId);
 
-			jsonObject.put("image", imageJSONObject);
+			jsonObject.put("file", imageJSONObject);
 
 			JSONPortletResponseUtil.writeJSON(
 				portletRequest, portletResponse, jsonObject);
@@ -135,16 +131,16 @@ public abstract class BaseImageSelectorUploadHandler
 				"attributeDataImageId",
 				EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 
-			String fileName = uploadPortletRequest.getFileName(
-				"imageSelectorFileName");
+			String parameterName = getParameterName();
+
+			String fileName = uploadPortletRequest.getFileName(parameterName);
 			String contentType = uploadPortletRequest.getContentType(
-				"imageSelectorFileName");
-			long size = uploadPortletRequest.getSize("imageSelectorFileName");
+				parameterName);
+			long size = uploadPortletRequest.getSize(parameterName);
 
 			validateFile(fileName, contentType, size);
 
-			inputStream = uploadPortletRequest.getFileAsStream(
-				"imageSelectorFileName");
+			inputStream = uploadPortletRequest.getFileAsStream(parameterName);
 
 			String uniqueFileName = getUniqueFileName(themeDisplay, fileName);
 
@@ -167,6 +163,8 @@ public abstract class BaseImageSelectorUploadHandler
 			StreamUtil.cleanUp(inputStream);
 		}
 	}
+
+	protected abstract String getParameterName();
 
 	protected String getUniqueFileName(
 			ThemeDisplay themeDisplay, String fileName)
@@ -207,7 +205,7 @@ public abstract class BaseImageSelectorUploadHandler
 		throws PortalException;
 
 	protected static final String _TEMP_FOLDER_NAME =
-		BaseImageSelectorUploadHandler.class.getName();
+		BaseUploadHandler.class.getName();
 
 	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
 

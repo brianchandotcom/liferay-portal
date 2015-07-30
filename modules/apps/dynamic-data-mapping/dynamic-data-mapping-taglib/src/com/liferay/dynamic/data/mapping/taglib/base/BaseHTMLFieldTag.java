@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
-import com.liferay.dynamic.data.mapping.taglib.util.ServletContextUtil;
+import com.liferay.dynamic.data.mapping.taglib.servlet.ServletContextUtil;
 
 /**
  * @author Bruno Basto

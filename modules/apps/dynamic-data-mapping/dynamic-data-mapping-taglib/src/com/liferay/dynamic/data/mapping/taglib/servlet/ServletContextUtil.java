@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.taglib.util;
+package com.liferay.dynamic.data.mapping.taglib.servlet;
 
 import com.liferay.portal.kernel.util.Validator;
 

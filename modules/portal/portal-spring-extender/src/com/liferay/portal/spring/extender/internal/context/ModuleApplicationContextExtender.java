@@ -175,9 +175,13 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 			List<ContextDependency> contextDependencies = new ArrayList<>();
 
-			List<String> lines = new ArrayList<>();
-
 			URL url = bundle.getEntry("OSGI-INF/context/context.dependencies");
+
+			if (url == null) {
+				return contextDependencies;
+			}
+
+			List<String> lines = new ArrayList<>();
 
 			StringUtil.readLines(url.openStream(), lines);
 

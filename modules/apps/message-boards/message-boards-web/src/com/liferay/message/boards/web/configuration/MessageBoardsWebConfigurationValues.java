@@ -12,21 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.messaging;
+package com.liferay.message.boards.web.configuration;
 
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
- * @author Michael Young
- * @author Tina Tian
+ * @author Adolfo Pérez
  */
-public class ExpireBanMessageListener extends BaseMessageListener {
+public class MessageBoardsWebConfigurationValues {
 
-	@Override
-	protected void doReceive(Message message) throws Exception {
-		MBBanLocalServiceUtil.expireBans();
-	}
+	public static final String EXPIRE_BAN_JOB_INTERVAL = GetterUtil.getString(
+		MessageBoardsWebConfigurationUtil.get("expire.ban.job.interval"));
 
 }

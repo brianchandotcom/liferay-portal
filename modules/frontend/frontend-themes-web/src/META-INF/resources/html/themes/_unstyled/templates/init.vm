@@ -67,6 +67,7 @@
 
 #set ($user_id = $user.getUserId())
 #set ($is_default_user = $user.isDefaultUser())
+#set ($is_setup_complete = $user.isSetupComplete())
 #set ($user_first_name = $user.getFirstName())
 #set ($user_middle_name = $user.getMiddleName())
 #set ($user_last_name = $user.getLastName())

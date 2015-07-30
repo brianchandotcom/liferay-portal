@@ -21,7 +21,7 @@ ${theme.include(body_top_include)}
 <div class="open sidenav-container" id="sidenavContainerId">
 	<div class="sidenav-menu-slider">
 		<div class="product-menu sidebar sidebar-inverse sidenav-menu">
-			<#if is_signed_in>
+			<#if is_signed_in && is_setup_complete>
 				<@liferay.product_menu />
 			</#if>
 		</div>

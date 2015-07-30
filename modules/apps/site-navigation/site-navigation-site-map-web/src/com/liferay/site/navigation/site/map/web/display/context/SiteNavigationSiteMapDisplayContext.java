@@ -14,7 +14,7 @@
 
 package com.liferay.site.navigation.site.map.web.display.context;
 
-import com.liferay.portal.kernel.settings.SettingsException;
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -43,7 +43,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteNavigationSiteMapDisplayContext {
 
 	public SiteNavigationSiteMapDisplayContext(HttpServletRequest request)
-		throws SettingsException {
+		throws ModuleConfigurationException {
 
 		_request = request;
 

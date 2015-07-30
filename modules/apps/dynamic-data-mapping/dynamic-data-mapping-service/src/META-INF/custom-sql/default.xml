@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder.countByC_G_C_N_D_S_T">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.countByC_G_C_N_D_S_T">
 		<![CDATA[
 			SELECT
 				COUNT(DDMStructure.structureId) AS COUNT_VALUE
@@ -19,7 +19,7 @@
 				(type_ = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D_S_T">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D_S_T">
 		<![CDATA[
 			SELECT
 				{DDMStructure.*}
@@ -39,7 +39,7 @@
 				DDMStructure.structureId DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.countByG_C_SC">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder.countByG_C_SC">
 		<![CDATA[
 			SELECT
 				COUNT(DDMTemplate.templateId) AS COUNT_VALUE
@@ -61,7 +61,7 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.countByC_G_C_C_R_N_D_T_M_L">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder.countByC_G_C_C_R_N_D_T_M_L">
 		<![CDATA[
 			SELECT
 				COUNT(DDMTemplate.templateId) AS COUNT_VALUE
@@ -82,7 +82,7 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByG_C_SC">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder.findByG_C_SC">
 		<![CDATA[
 			SELECT
 				{DDMTemplate.*}
@@ -106,7 +106,7 @@
 				DDMTemplate.templateId DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder.findByC_G_C_C_R_N_D_T_M_L">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder.findByC_G_C_C_R_N_D_T_M_L">
 		<![CDATA[
 			SELECT
 				{DDMTemplate.*}

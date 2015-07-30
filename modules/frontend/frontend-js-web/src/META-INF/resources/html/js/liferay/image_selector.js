@@ -317,7 +317,7 @@ AUI.add(
 
 						var data = JSON.parse(event.data);
 
-						var image = data.image;
+						var image = data.file;
 						var success = data.success;
 
 						var fireEvent = STR_IMAGE_DELETED;

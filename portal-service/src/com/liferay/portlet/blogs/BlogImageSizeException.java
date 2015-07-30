@@ -22,20 +22,20 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class CoverImageSizeException extends PortalException {
+public class BlogImageSizeException extends PortalException {
 
-	public CoverImageSizeException() {
+	public BlogImageSizeException() {
 	}
 
-	public CoverImageSizeException(String msg) {
+	public BlogImageSizeException(String msg) {
 		super(msg);
 	}
 
-	public CoverImageSizeException(String msg, Throwable cause) {
+	public BlogImageSizeException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public CoverImageSizeException(Throwable cause) {
+	public BlogImageSizeException(Throwable cause) {
 		super(cause);
 	}
 

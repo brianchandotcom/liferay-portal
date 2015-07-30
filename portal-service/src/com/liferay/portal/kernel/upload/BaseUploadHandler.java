@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.image.selector;
+package com.liferay.portal.kernel.upload;
 
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,14 +21,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.upload.LiferayFileItemException;
-import com.liferay.portal.kernel.upload.UploadException;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -47,11 +43,10 @@ import javax.portlet.PortletResponse;
  * @author Adolfo Pérez
  * @author Roberto Díaz
  */
-public abstract class BaseImageSelectorUploadHandler
-	implements ImageSelectorUploadHandler {
+public abstract class BaseUploadHandler implements UploadHandler {
 
 	@Override
-	public void uploadSelectedImage(
+	public void upload(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException {
 
@@ -91,7 +86,7 @@ public abstract class BaseImageSelectorUploadHandler
 
 			imageJSONObject.put("randomId", randomId);
 
-			jsonObject.put("image", imageJSONObject);
+			jsonObject.put("file", imageJSONObject);
 
 			JSONPortletResponseUtil.writeJSON(
 				portletRequest, portletResponse, jsonObject);
@@ -105,8 +100,17 @@ public abstract class BaseImageSelectorUploadHandler
 		}
 	}
 
+	protected abstract FileEntry addFileEntry(
+			ThemeDisplay themeDisplay, String fileName, InputStream inputStream,
+			String contentType)
+		throws PortalException;
+
 	protected abstract void checkPermission(
 			long groupId, PermissionChecker permissionChecker)
+		throws PortalException;
+
+	protected abstract FileEntry fetchFileEntry(
+			ThemeDisplay themeDisplay, String fileName)
 		throws PortalException;
 
 	protected JSONObject getImageJSONObject(PortletRequest portletRequest)
@@ -127,22 +131,21 @@ public abstract class BaseImageSelectorUploadHandler
 				"attributeDataImageId",
 				EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 
-			String fileName = uploadPortletRequest.getFileName(
-				"imageSelectorFileName");
+			String parameterName = getParameterName();
+
+			String fileName = uploadPortletRequest.getFileName(parameterName);
 			String contentType = uploadPortletRequest.getContentType(
-				"imageSelectorFileName");
-			long size = uploadPortletRequest.getSize("imageSelectorFileName");
+				parameterName);
+			long size = uploadPortletRequest.getSize(parameterName);
 
 			validateFile(fileName, contentType, size);
 
-			inputStream = uploadPortletRequest.getFileAsStream(
-				"imageSelectorFileName");
+			inputStream = uploadPortletRequest.getFileAsStream(parameterName);
 
 			String uniqueFileName = getUniqueFileName(themeDisplay, fileName);
 
-			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				_TEMP_FOLDER_NAME, uniqueFileName, inputStream, contentType);
+			FileEntry fileEntry = addFileEntry(
+				themeDisplay, uniqueFileName, inputStream, contentType);
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 
@@ -161,11 +164,13 @@ public abstract class BaseImageSelectorUploadHandler
 		}
 	}
 
+	protected abstract String getParameterName();
+
 	protected String getUniqueFileName(
 			ThemeDisplay themeDisplay, String fileName)
 		throws PortalException {
 
-		FileEntry fileEntry = _fetchTempFileEntry(themeDisplay, fileName);
+		FileEntry fileEntry = fetchFileEntry(themeDisplay, fileName);
 
 		if (fileEntry == null) {
 			return fileName;
@@ -177,7 +182,7 @@ public abstract class BaseImageSelectorUploadHandler
 			String curFileName = FileUtil.appendParentheticalSuffix(
 				fileName, String.valueOf(suffix));
 
-			fileEntry = _fetchTempFileEntry(themeDisplay, curFileName);
+			fileEntry = fetchFileEntry(themeDisplay, curFileName);
 
 			if (fileEntry == null) {
 				return curFileName;
@@ -199,21 +204,8 @@ public abstract class BaseImageSelectorUploadHandler
 			String fileName, String contentType, long size)
 		throws PortalException;
 
-	private FileEntry _fetchTempFileEntry(
-		ThemeDisplay themeDisplay, String fileName) {
-
-		try {
-			return TempFileEntryUtil.getTempFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				_TEMP_FOLDER_NAME, fileName);
-		}
-		catch (PortalException pe) {
-			return null;
-		}
-	}
-
-	private static final String _TEMP_FOLDER_NAME =
-		BaseImageSelectorUploadHandler.class.getName();
+	protected static final String _TEMP_FOLDER_NAME =
+		BaseUploadHandler.class.getName();
 
 	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
 

@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@page import="com.liferay.portal.kernel.portlet.PortletProviderUtil"%>
+<%@page import="com.liferay.portal.kernel.portlet.PortletProvider"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>

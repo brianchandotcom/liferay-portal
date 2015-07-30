@@ -80,7 +80,10 @@ page import="com.liferay.portlet.dynamicdatamapping.StorageEngineManagerUtil" %>
 page import="com.liferay.portlet.dynamicdatamapping.StructureDefinitionException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.StructureNameException" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues" %>
+page import="com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletProviderUtil"%><%@
+page import="com.liferay.portal.kernel.portlet.PortletProvider"%>
+
 
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);

@@ -27,7 +27,6 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 		upgradeAssetCategoriesAdmin();
 		upgradeBlogs();
 		upgradeDocumentLibrary();
-		upgradeDynamicDataMapping();
 		upgradeLayoutsAdmin();
 		upgradeMessageBoards();
 		upgradeMobileDeviceRules();
@@ -85,17 +84,6 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 		runSQL("alter table RepositoryEntry add lastPublishDate DATE null");
 
 		updateLastPublishDates(PortletKeys.DOCUMENT_LIBRARY, "RepositoryEntry");
-	}
-
-	protected void upgradeDynamicDataMapping() throws Exception {
-		runSQL("alter table DDMStructure add lastPublishDate DATE null");
-
-		updateLastPublishDates(
-			PortletKeys.DYNAMIC_DATA_MAPPING, "DDMStructure");
-
-		runSQL("alter table DDMTemplate add lastPublishDate DATE null");
-
-		updateLastPublishDates(PortletKeys.DYNAMIC_DATA_MAPPING, "DDMTemplate");
 	}
 
 	protected void upgradeLayoutsAdmin() throws Exception {

@@ -36,6 +36,7 @@
 	<classpathentry kind="lib" path="lib/com.liferay.dynamic.data.lists.web.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.dynamic.data.mapping.api.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.dynamic.data.mapping.service.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.dynamic.data.mapping.web.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.item.selector.api.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.item.selector.criteria.api.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.item.selector.web.jar" />
@@ -44,6 +45,7 @@
 	<classpathentry kind="lib" path="lib/com.liferay.osgi.service.tracker.map.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.portal.settings.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.portal.spring.extender.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.portlet.display.template.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.wiki.api.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.wiki.service.jar" />
 	<classpathentry kind="lib" path="lib/commons-lang.jar" />

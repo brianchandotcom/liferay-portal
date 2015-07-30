@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
@@ -224,9 +226,12 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			LiferayPortletResponse liferayPortletResponse, long classPK)
 		throws Exception {
 
+		String portletId = PortletProviderUtil.getPortletId(
+			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
+
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			getControlPanelPlid(liferayPortletRequest),
-			PortletKeys.DYNAMIC_DATA_MAPPING, PortletRequest.RENDER_PHASE);
+			portletId, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
 
@@ -272,7 +277,10 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	public boolean isShowAddStructureButton() {
 		String portletId = getPortletId();
 
-		if (portletId.equals(PortletKeys.DYNAMIC_DATA_MAPPING)) {
+		String ddmPortletId = PortletProviderUtil.getPortletId(
+				DDMStructure.class.getName(), PortletProvider.Action.VIEW);
+
+		if (portletId.equals(ddmPortletId)) {
 			return false;
 		}
 
@@ -305,9 +313,12 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			long classPK)
 		throws Exception {
 
+		String portletId = PortletProviderUtil.getPortletId(
+			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
+
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			getControlPanelPlid(liferayPortletRequest),
-			PortletKeys.DYNAMIC_DATA_MAPPING, PortletRequest.RENDER_PHASE);
+			portletId, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view_template.jsp");
 		portletURL.setParameter("classNameId", String.valueOf(classNameId));

@@ -92,7 +92,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 		</liferay-ui:panel>
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="mainMetadataFields" persistState="<%= true %>" title="main-metadata-fields">
-			<liferay-util:include page="/form_builder.jsp" portletId="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>">
+			<liferay-util:include page="/form_builder.jsp" portletId="<%= PortletProviderUtil.getPortletId(DDMStructureManagerUtil.getDDMStructureModelClass().getName(), PortletProvider.Action.VIEW) %>">
 				<portlet:param name="refererPortletName" value="<%= PortletKeys.DOCUMENT_LIBRARY %>" />
 				<portlet:param name="portletResourceNamespace" value="<%= renderResponse.getNamespace() %>" />
 				<portlet:param name="script" value="<%= script %>" />
@@ -158,7 +158,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 	function <portlet:namespace />openDDMStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructureManagerUtil.getDDMStructureModelClass().getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 				classPK: '<%= ddmStructureId %>',
 				dialog: {
 					destroyOnHide: true

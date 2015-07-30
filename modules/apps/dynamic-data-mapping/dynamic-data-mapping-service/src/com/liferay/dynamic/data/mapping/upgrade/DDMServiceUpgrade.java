@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.upgrade;
 
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeData;
+import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -52,6 +53,7 @@ public class DDMServiceUpgrade {
 
 		upgradeProcesses.add(new UpgradeClassNames());
 		upgradeProcesses.add(new UpgradeData());
+		upgradeProcesses.add(new UpgradeLastPublishDate());
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.dynamic.data.mapping.service", upgradeProcesses, 1, 1,

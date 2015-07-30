@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = AssetRendererFactory.class
 )
 public class JournalFolderAssetRendererFactory
-	extends BaseAssetRendererFactory {
+	extends BaseAssetRendererFactory<JournalFolder> {
 
 	public static final String TYPE = "content_folder";
 
@@ -60,7 +60,7 @@ public class JournalFolderAssetRendererFactory
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<JournalFolder> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
 		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(classPK);

@@ -167,7 +167,8 @@ public class DLFolderAssetRenderer
 
 	@Override
 	public String getPortletId() {
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<Folder> assetRendererFactory =
+			getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
 	}
@@ -240,7 +241,8 @@ public class DLFolderAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<Folder> assetRendererFactory =
+			getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);

@@ -357,7 +357,7 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
-	<model-resource>
+	<model-resource portal="true">
 		<model-name>com.liferay.portal.model.LayoutPrototype</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_layout_prototype_web_portlet_LayoutPrototypePortlet</portlet-name>
@@ -381,7 +381,7 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
-	<model-resource>
+	<model-resource portal="true">
 		<model-name>com.liferay.portal.model.LayoutSetPrototype</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet</portlet-name>
@@ -405,7 +405,7 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
-	<model-resource>
+	<model-resource organization="true" portal="true">
 		<model-name>com.liferay.portal.model.Organization</model-name>
 		<portlet-ref>
 			<portlet-name>125</portlet-name>
@@ -442,7 +442,7 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
-	<model-resource>
+	<model-resource organization="true" portal="true">
 		<model-name>com.liferay.portal.model.PasswordPolicy</model-name>
 		<portlet-ref>
 			<portlet-name>129</portlet-name>
@@ -467,7 +467,7 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
-	<model-resource>
+	<model-resource portal="true">
 		<model-name>com.liferay.portal.model.Role</model-name>
 		<portlet-ref>
 			<portlet-name>128</portlet-name>
@@ -496,7 +496,7 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
-	<model-resource>
+	<model-resource organization="true" portal="true">
 		<model-name>com.liferay.portal.model.User</model-name>
 		<portlet-ref>
 			<portlet-name>125</portlet-name>
@@ -521,7 +521,7 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
-	<model-resource>
+	<model-resource portal="true">
 		<model-name>com.liferay.portal.model.UserGroup</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet</portlet-name>

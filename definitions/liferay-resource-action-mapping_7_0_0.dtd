@@ -91,6 +91,17 @@ The model-resource element defines the permissions of the model.
 <!ELEMENT model-resource (model-name, portlet-ref, root?, weight?, permissions?) >
 
 <!--
+The organization value specifies if the model resource is an organization model
+resource. The default value is false.
+
+The portal value specifies if the model resource is an portal model resource.
+The default value is false.
+-->
+<!ATTLIST model-resource
+	organization CDATA #IMPLIED
+	portal CDATA #IMPLIED
+>
+<!--
 The model-name element is the name of the model.
 -->
 <!ELEMENT model-name (#PCDATA) >

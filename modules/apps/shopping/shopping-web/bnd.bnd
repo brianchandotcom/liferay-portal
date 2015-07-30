@@ -29,7 +29,6 @@ Import-Package:\
 	com.liferay.shopping.settings,\
 	com.liferay.shopping.service,\
 	com.liferay.shopping.service.base,\
-	com.liferay.shopping.service.configuration.configurator,\
 	com.liferay.shopping.service.http,\
 	com.liferay.shopping.service.impl,\
 	com.liferay.shopping.service.permission,\

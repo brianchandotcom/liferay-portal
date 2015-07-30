@@ -5,7 +5,6 @@ Export-Package:	\
 	com.liferay.shopping.lar,\
 	com.liferay.shopping.model.impl,\
 	com.liferay.shopping.service.base,\
-	com.liferay.shopping.service.configuration.configurator,\
 	com.liferay.shopping.service.http,\
 	com.liferay.shopping.service.impl,\
 	com.liferay.shopping.service.permission,\
@@ -22,9 +21,9 @@ Include-Resource:\
 	@../../../../util-java/util-java.jar!/com/liferay/util/CreditCard.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
-
 Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
-Spring-Context: META-INF/*-spring.xml;timeout:=${spring.extender.time.to.wait}
+Spring-Context: META-INF/spring
+-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

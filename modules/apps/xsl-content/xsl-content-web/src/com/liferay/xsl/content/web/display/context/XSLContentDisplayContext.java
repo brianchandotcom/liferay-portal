@@ -14,7 +14,7 @@
 
 package com.liferay.xsl.content.web.display.context;
 
-import com.liferay.portal.kernel.settings.SettingsException;
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -34,7 +34,7 @@ public class XSLContentDisplayContext {
 	public XSLContentDisplayContext(
 			HttpServletRequest request,
 			XSLContentConfiguration xslContentConfiguration)
-		throws SettingsException {
+		throws ModuleConfigurationException {
 
 		_xslContentConfiguration = xslContentConfiguration;
 

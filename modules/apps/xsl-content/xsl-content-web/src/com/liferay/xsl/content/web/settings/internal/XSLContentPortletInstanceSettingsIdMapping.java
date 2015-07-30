@@ -33,7 +33,7 @@ public class XSLContentPortletInstanceSettingsIdMapping
 	}
 
 	@Override
-	public String getSettingsId() {
+	public String getConfigurationPid() {
 		return XSLContentPortletKeys.XSL_CONTENT;
 	}
 

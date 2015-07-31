@@ -143,9 +143,9 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				JournalFolder.class.getName());
+		AssetRendererFactory<JournalFolder> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalFolder.class);
 
 		return (TrashRenderer)assetRendererFactory.getAssetRenderer(classPK);
 	}

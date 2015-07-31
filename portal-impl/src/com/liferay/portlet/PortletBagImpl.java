@@ -81,7 +81,7 @@ public class PortletBagImpl implements PortletBag {
 		List<WebDAVStorage> webDAVStorageInstances,
 		List<Method> xmlRpcMethodInstances,
 		List<ControlPanelEntry> controlPanelEntryInstances,
-		List<AssetRendererFactory> assetRendererFactoryInstances,
+		List<AssetRendererFactory<?>> assetRendererFactoryInstances,
 		List<AtomCollectionAdapter<?>> atomCollectionAdapters,
 		List<CustomAttributesDisplay> customAttributesDisplayInstances,
 		List<PermissionPropagator> permissionPropagatorInstances,
@@ -178,7 +178,7 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public List<AssetRendererFactory> getAssetRendererFactoryInstances() {
+	public List<AssetRendererFactory<?>> getAssetRendererFactoryInstances() {
 		return _assetRendererFactoryInstances;
 	}
 
@@ -378,7 +378,7 @@ public class PortletBagImpl implements PortletBag {
 		}
 	}
 
-	private final List<AssetRendererFactory> _assetRendererFactoryInstances;
+	private final List<AssetRendererFactory<?>> _assetRendererFactoryInstances;
 	private final List<AtomCollectionAdapter<?>>
 		_atomCollectionAdapterInstances;
 	private final List<ConfigurationAction> _configurationActionInstances;

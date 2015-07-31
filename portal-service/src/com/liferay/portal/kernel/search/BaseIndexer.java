@@ -682,7 +682,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	protected void addAssetFields(
 		Document document, String className, long classPK) {
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 

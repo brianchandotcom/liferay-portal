@@ -557,7 +557,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the asset type instances of the portlet
 	 */
 	@Override
-	public List<AssetRendererFactory> getAssetRendererFactoryInstances() {
+	public List<AssetRendererFactory<?>> getAssetRendererFactoryInstances() {
 		if (_assetRendererFactoryClasses.isEmpty()) {
 			return null;
 		}

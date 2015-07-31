@@ -357,11 +357,12 @@ public abstract class BaseTrashHandler implements TrashHandler {
 
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<?> assetRendererFactory =
+			getAssetRendererFactory();
 
 		if (assetRendererFactory != null) {
-			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-				classPK);
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(classPK);
 
 			if (assetRenderer instanceof TrashRenderer) {
 				return (TrashRenderer)assetRenderer;
@@ -465,7 +466,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	public void updateTitle(long classPK, String title) throws PortalException {
 	}
 
-	protected AssetRendererFactory getAssetRendererFactory() {
+	protected AssetRendererFactory<?> getAssetRendererFactory() {
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassName(getClassName());
 	}

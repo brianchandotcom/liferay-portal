@@ -127,7 +127,7 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 		actualParams.put(
 			namespace + "mvcPath", new String[] {"/view_content.jsp"});
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				JournalArticle.class.getName());
 

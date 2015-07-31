@@ -40,7 +40,7 @@ public class MicroblogsUserNotificationHandler
 
 	@Override
 	protected String getTitle(
-		JSONObject jsonObject, AssetRenderer assetRenderer,
+		JSONObject jsonObject, AssetRenderer<?> assetRenderer,
 		ServiceContext serviceContext) {
 
 		MicroblogsEntry microblogsEntry =

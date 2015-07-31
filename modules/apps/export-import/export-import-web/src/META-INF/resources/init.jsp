@@ -25,7 +25,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.exportimport.web.constants.ExportImportWebKeys" %><%@
+<%@ page import="com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException" %><%@
+page import="com.liferay.exportimport.web.constants.ExportImportWebKeys" %><%@
 page import="com.liferay.exportimport.web.portlet.action.ExportImportMVCActionCommand" %><%@
 page import="com.liferay.exportimport.web.search.ExportImportConfigurationDisplayTerms" %><%@
 page import="com.liferay.exportimport.web.search.ExportImportConfigurationSearchTerms" %><%@
@@ -114,7 +115,6 @@ page import="com.liferay.portlet.PortalPreferences" %><%@
 page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.backgroundtask.util.comparator.BackgroundTaskComparatorFactoryUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException" %><%@
 page import="com.liferay.portlet.exportimport.LARFileException" %><%@
 page import="com.liferay.portlet.exportimport.LARFileNameException" %><%@
 page import="com.liferay.portlet.exportimport.LARFileSizeException" %><%@

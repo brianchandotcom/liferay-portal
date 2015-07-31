@@ -3505,6 +3505,16 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>organization-search-container-results</name>
+		<tag-class>com.liferay.taglib.ui.OrganizationSearchContainerResultsTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>organizationParams</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>organization-search-form</name>
 		<tag-class>com.liferay.taglib.ui.OrganizationSearchFormTag</tag-class>
 		<body-content>JSP</body-content>

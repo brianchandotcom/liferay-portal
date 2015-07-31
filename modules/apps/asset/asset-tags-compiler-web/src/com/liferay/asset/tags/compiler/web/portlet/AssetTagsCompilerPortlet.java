@@ -14,6 +14,7 @@
 
 package com.liferay.asset.tags.compiler.web.portlet;
 
+import com.liferay.asset.tags.compiler.web.constants.AssetTagsCompilerPortletKeys;
 import com.liferay.asset.tags.compiler.web.upgrade.AssetTagsCompilerWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
@@ -42,6 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.info.keywords=Tags Compiler",
 		"javax.portlet.info.short-title=Tags Compiler",
 		"javax.portlet.info.title=Tags Compiler",
+		"javax.portlet.name=" + AssetTagsCompilerPortletKeys.ASSET_TAGS_COMPILER,
 		"javax.portlet.supported-public-render-parameter=tags",
 		"javax.portlet.supports.mime-type=text/html"
 	},

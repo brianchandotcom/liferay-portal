@@ -18,6 +18,7 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.rss.web.configuration.RSSWebConfiguration;
+import com.liferay.rss.web.constants.RSSPortletKeys;
 import com.liferay.rss.web.upgrade.RSSWebUpgrade;
 
 import java.io.IOException;
@@ -55,6 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=RSS", "javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + RSSPortletKeys.RSS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},

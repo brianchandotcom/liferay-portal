@@ -17,6 +17,7 @@ package com.liferay.social.networking.web.map.portlet;
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.util.Portal;
+import com.liferay.social.networking.web.constants.SocialNetworkingPortletKeys;
 import com.liferay.social.networking.web.constants.SocialNetworkingWebKeys;
 
 import java.io.IOException;
@@ -42,6 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.info.keywords=Map", "javax.portlet.info.short-title=Map",
 		"javax.portlet.info.title=Map",
 		"javax.portlet.init-param.view-template=/map/view.jsp",
+		"javax.portlet.name=" + SocialNetworkingPortletKeys.MAP,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

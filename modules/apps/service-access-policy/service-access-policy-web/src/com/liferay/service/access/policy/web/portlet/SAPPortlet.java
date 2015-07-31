@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.service.access.policy.service.SAPEntryService;
+import com.liferay.service.access.policy.web.constants.SAPPortletKeys;
 
 import java.util.Locale;
 import java.util.Map;
@@ -49,6 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.clear-request-parameters=true",
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + SAPPortletKeys.SAP,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"

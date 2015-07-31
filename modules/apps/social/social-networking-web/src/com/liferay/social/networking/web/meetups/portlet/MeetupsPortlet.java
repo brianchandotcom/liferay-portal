@@ -24,6 +24,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.social.networking.service.MeetupsEntryLocalService;
 import com.liferay.social.networking.service.MeetupsRegistrationLocalService;
+import com.liferay.social.networking.web.constants.SocialNetworkingPortletKeys;
 
 import java.io.File;
 
@@ -52,6 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.info.title=Meetups",
 		"javax.portlet.init-param.clear-request-parameters=true",
 		"javax.portlet.init-param.view-template=/meetups/view.jsp",
+		"javax.portlet.name=" + SocialNetworkingPortletKeys.MEETUPS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

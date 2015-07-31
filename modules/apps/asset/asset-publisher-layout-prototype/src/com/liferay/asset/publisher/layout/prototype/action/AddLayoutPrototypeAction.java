@@ -111,7 +111,7 @@ public class AddLayoutPrototypeAction {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=com.liferay.asset.publisher.web.portlet.AssetPublisherPortlet)"
+		target = "(javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER + ")"
 	)
 	protected void setPortlet(Portlet portlet) {
 	}

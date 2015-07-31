@@ -45,6 +45,7 @@ import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.portlet.social.service.SocialRequestLocalService;
 import com.liferay.social.networking.friends.social.FriendsRequestKeys;
 import com.liferay.social.networking.members.social.MembersRequestKeys;
+import com.liferay.social.networking.web.constants.SocialNetworkingPortletKeys;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -71,6 +72,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.info.title=Summary",
 		"javax.portlet.init-param.clear-request-parameters=true",
 		"javax.portlet.init-param.view-template=/summary/view.jsp",
+		"javax.portlet.name=" + SocialNetworkingPortletKeys.SUMMARY,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

@@ -14,6 +14,7 @@
 
 package com.liferay.loan.calculator.web.portlet;
 
+import com.liferay.loan.calculator.web.constants.LoanCalculatorPortletKeys;
 import com.liferay.loan.calculator.web.upgrade.LoanCalculatorWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
@@ -40,6 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + LoanCalculatorPortletKeys.LOAN_CALCULATOR,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},

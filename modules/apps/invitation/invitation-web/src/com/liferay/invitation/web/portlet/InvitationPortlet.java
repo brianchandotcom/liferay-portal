@@ -14,6 +14,7 @@
 
 package com.liferay.invitation.web.portlet;
 
+import com.liferay.invitation.web.constants.InvitationPortletKeys;
 import com.liferay.invitation.web.upgrade.InvitationWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
@@ -40,6 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + InvitationPortletKeys.INVITATION,
 		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"

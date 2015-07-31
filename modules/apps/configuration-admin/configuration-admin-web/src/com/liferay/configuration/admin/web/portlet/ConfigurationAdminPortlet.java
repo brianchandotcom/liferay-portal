@@ -14,6 +14,7 @@
 
 package com.liferay.configuration.admin.web.portlet;
 
+import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.util.ConfigurationHelper;
 import com.liferay.configuration.admin.web.util.ConfigurationModelIterator;
@@ -64,6 +65,7 @@ import org.osgi.service.metatype.MetaTypeService;
 		"javax.portlet.info.keywords=osgi,configuration,admin",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.ftl",
+		"javax.portlet.name=" + ConfigurationAdminPortletKeys.CONFIGURATION_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},

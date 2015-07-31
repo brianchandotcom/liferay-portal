@@ -16,6 +16,7 @@ package com.liferay.mentions.web.portlet;
 
 import com.liferay.mentions.util.MentionsUserFinder;
 import com.liferay.mentions.util.MentionsUtil;
+import com.liferay.mentions.web.constants.MentionsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -60,6 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.social-interactions-configuration=true",
 		"javax.portlet.display-name=Mentions",
 		"javax.portlet.expiration-cache=0",
+		"javax.portlet.name=" + MentionsPortletKeys.MENTIONS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"

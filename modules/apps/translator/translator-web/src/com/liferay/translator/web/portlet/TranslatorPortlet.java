@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.translator.web.configuration.TranslatorConfiguration;
 import com.liferay.translator.web.model.Translation;
+import com.liferay.translator.web.portlet.constants.TranslatorPortletKeys;
 import com.liferay.translator.web.upgrade.TranslatorWebUpgrade;
 import com.liferay.translator.web.util.TranslatorUtil;
 
@@ -64,6 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + TranslatorPortletKeys.TRANSLATOR,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},

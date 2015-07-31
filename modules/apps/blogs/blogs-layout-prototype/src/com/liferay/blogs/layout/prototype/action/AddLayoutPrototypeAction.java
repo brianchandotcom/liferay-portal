@@ -101,9 +101,7 @@ public class AddLayoutPrototypeAction {
 		_layoutPrototypeLocalService = layoutPrototypeLocalService;
 	}
 
-	@Reference(
-		target = "(javax.portlet.name=com.liferay.blogs.web.portlet.BlogsPortlet)"
-	)
+	@Reference(target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")")
 	protected void setPortlet(Portlet portlet) {
 	}
 

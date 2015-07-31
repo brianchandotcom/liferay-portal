@@ -121,10 +121,14 @@ body {
 	}
 
 	#footer {
-		background-color: #29343D;
+		background-color: $solid-color;
 		color: #FFF;
 		margin-bottom: 60px;
 		padding: 40px 20px;
+
+		a {
+			color: #FFF;
+		}
 	}
 }
 

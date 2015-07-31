@@ -56,6 +56,12 @@ public class AssetRendererFactoryRegistryUtil {
 		return _instance._getAssetRendererFactories(companyId);
 	}
 
+	public static <T> AssetRendererFactory<T> getAssetRendererFactoryByClass(
+		Class<T> clazz) {
+
+		return _instance._getAssetRendererFactoryByClass(clazz);
+	}
+
 	public static AssetRendererFactory<?> getAssetRendererFactoryByClassName(
 		String className) {
 
@@ -167,6 +173,14 @@ public class AssetRendererFactoryRegistryUtil {
 		return ListUtil.fromMapValues(
 			_filterAssetRendererFactories(
 				companyId, _assetRenderFactoriesMapByClassName, false));
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T> AssetRendererFactory<T> _getAssetRendererFactoryByClass(
+		Class<T> clazz) {
+
+		return (AssetRendererFactory<T>)_assetRenderFactoriesMapByClassName.get(
+			clazz.getName());
 	}
 
 	private AssetRendererFactory<?> _getAssetRendererFactoryByClassName(

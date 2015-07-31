@@ -881,7 +881,7 @@ public class JavaClass {
 		}
 
 		JavaTerm javaTerm = new JavaTerm(
-			name, type, javaTermContent, lineCount);
+			name, type, javaTermContent, lineCount, _indent);
 
 		if (javaTerm.isConstructor()) {
 			_constructorCount++;

@@ -15,6 +15,7 @@
 package com.liferay.asset.categories.navigation.web.lar;
 
 import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavigationPortletKeys;
+import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -36,8 +37,6 @@ import java.util.Enumeration;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -140,8 +139,11 @@ public class AssetCategoriesNavigationPortletDataHandler
 		return null;
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference(
+		target = "(" + ServiceLifecycle.SERVICE_LIFECYCLE + "=" + ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED + ")",
+		unbind = "-"
+	)
+	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
 	}
 
 	protected PortletPreferences updateExportPortletPreferences(

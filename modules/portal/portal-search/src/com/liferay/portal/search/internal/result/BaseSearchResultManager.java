@@ -12,14 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.search.internal.result;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultManager;
+import com.liferay.portal.kernel.search.SummaryFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetRenderer;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
 
 import java.util.Locale;
 
@@ -30,8 +32,6 @@ import javax.portlet.PortletResponse;
  * @author Adolfo Pérez
  */
 public abstract class BaseSearchResultManager implements SearchResultManager {
-
-	public static final int SUMMARY_MAX_CONTENT_LENGTH = 200;
 
 	@Override
 	public SearchResult createSearchResult(Document document) {
@@ -69,11 +69,12 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 				portletResponse);
 
 			if (searchResult.getSummary() == null) {
-				Summary summary = getSummary(
-					searchResult.getClassName(), searchResult.getClassPK(),
-					locale);
+				SummaryFactory summaryFactory = getSummaryFactory();
 
-				searchResult.setSummary(summary);
+				searchResult.setSummary(
+					summaryFactory.getSummary(
+						searchResult.getClassName(), searchResult.getClassPK(),
+						locale));
 			}
 		}
 		else {
@@ -82,65 +83,23 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 			long entryClassPK = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
 
+			SummaryFactory summaryFactory = getSummaryFactory();
+
 			searchResult.setSummary(
-				getSummary(
+				summaryFactory.getSummary(
 					document, entryClassName, entryClassPK, locale,
 					portletRequest, portletResponse));
 		}
 	}
 
-	protected static Summary getSummary(
-			Document document, String className, long classPK, Locale locale,
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws PortalException {
-
-		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(className);
-
-		if (indexer != null) {
-			String snippet = document.get(Field.SNIPPET);
-
-			return indexer.getSummary(
-				document, snippet, portletRequest, portletResponse);
-		}
-
-		return getSummary(className, classPK, locale);
-	}
-
-	protected static Summary getSummary(
-			String className, long classPK, Locale locale)
-		throws PortalException {
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
-
-		if (assetRendererFactory == null) {
-			return null;
-		}
-
-		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-			classPK);
-
-		if (assetRenderer == null) {
-			return null;
-		}
-
-		Summary summary = new Summary(
-			assetRenderer.getTitle(locale),
-			assetRenderer.getSearchSummary(locale));
-
-		summary.setMaxContentLength(SUMMARY_MAX_CONTENT_LENGTH);
-
-		return summary;
-	}
-
 	/**
 	 * @throws PortalException
 	 */
-	protected void addRelatedModel(
+	protected abstract void addRelatedModel(
 			SearchResult searchResult, Document document, Locale locale,
 			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws PortalException {
-	}
+		throws PortalException;
+
+	protected abstract SummaryFactory getSummaryFactory();
 
 }

@@ -653,11 +653,6 @@ public class TestGroup implements Group {
 	}
 
 	@Override
-	public boolean isUserPersonalPanel() {
-		return false;
-	}
-
-	@Override
 	public boolean isUserPersonalSite() {
 		return false;
 	}

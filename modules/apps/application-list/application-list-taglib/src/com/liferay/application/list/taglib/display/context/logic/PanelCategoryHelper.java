@@ -17,6 +17,7 @@ package com.liferay.application.list.taglib.display.context.logic;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
+import com.liferay.application.list.PanelCategoryRegistry;
 
 /**
  * @author Adolfo Pérez
@@ -24,15 +25,34 @@ import com.liferay.application.list.PanelCategory;
 public class PanelCategoryHelper {
 
 	public PanelCategoryHelper(
-		PanelAppRegistry panelAppRegistry, PanelCategory panelCategory) {
+		PanelAppRegistry panelAppRegistry,
+		PanelCategoryRegistry panelCategoryRegistry) {
 
 		_panelAppRegistry = panelAppRegistry;
-		_panelCategory = panelCategory;
+		_panelCategoryRegistry = panelCategoryRegistry;
 	}
 
-	public boolean containsPortlet(String portletId) {
+	public boolean containsPortlet(
+		String portletId, PanelCategory panelCategory) {
+
+		for (PanelCategory curPanelCategory :
+				_panelCategoryRegistry.getChildPanelCategories(panelCategory)) {
+
+			if (hasPortlet(portletId, curPanelCategory)) {
+				return true;
+			}
+
+			if (containsPortlet(portletId, curPanelCategory)) {
+				return true;
+			}
+		}
+
+		return hasPortlet(portletId, panelCategory);
+	}
+
+	private boolean hasPortlet(String portletId, PanelCategory panelCategory) {
 		Iterable<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
-			_panelCategory);
+			panelCategory);
 
 		for (PanelApp panelApp : panelApps) {
 			if (portletId.equals(panelApp.getPortletId())) {
@@ -44,6 +64,6 @@ public class PanelCategoryHelper {
 	}
 
 	private final PanelAppRegistry _panelAppRegistry;
-	private final PanelCategory _panelCategory;
+	private final PanelCategoryRegistry _panelCategoryRegistry;
 
 }

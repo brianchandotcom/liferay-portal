@@ -20,45 +20,57 @@ $theme.include($body_top_include)
 
 #set ($scope_group = $theme_display.getScopeGroup())
 
-#set ($show_dockbar = $scope_group.isUserPersonalPanel() || ($control_panel_category != "my") || !$getterUtil.getBoolean($propsUtil.get("dockbar.administrative.links.show.in.pop.up")))
+#set ($show_dockbar = ($control_panel_category != "my") || !$getterUtil.getBoolean($propsUtil.get("dockbar.administrative.links.show.in.pop.up")))
 
-#if ($show_dockbar)
-	#dockbar()
-#end
-
-<div class="container-fluid" id="wrapper">
-	#if ($show_dockbar)
-		<ul class="list-unstyled pull-right user-personal-bar">
-			#user_personal_bar()
-		</ul>
-	#end
-
-	<div class="row">
-		<div class="col-md-12" id="content-wrapper">
-			<div id="content">
-				#if ($selectable)
-					$theme.include($content_include)
-				#else
-					$portletDisplay.recycle()
-
-					$portletDisplay.setTitle($the_title)
-
-					$theme.wrapPortlet("portlet.vm", $content_include)
-				#end
-
-				<div class="clear"></div>
-			</div>
+<div class="open sidenav-container" id="sidenavContainerId">
+	<div class="sidenav-menu-slider">
+		<div class="product-menu sidebar sidebar-inverse sidenav-menu">
+			#product_menu()
 		</div>
 	</div>
-</div>
 
-#if ($show_dockbar)
-	#control_menu()
-#end
+	<div class="sidenav-content">
+		<div class="container-fluid" id="wrapper">
+			<div class="row">
+				<div class="col-md-12" id="content-wrapper">
+					<div id="content">
+						#if ($selectable)
+							$theme.include($content_include)
+						#else
+							$portletDisplay.recycle()
+
+							$portletDisplay.setTitle($the_title)
+
+							$theme.wrapPortlet("portlet.vm", $content_include)
+						#end
+
+						<div class="clear"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		#if ($show_dockbar)
+			#control_menu()
+		#end
+	</div>
+</div>
 
 $theme.include($body_bottom_include)
 
 $theme.include($bottom_include)
+
+<script>
+	AUI.$('#sidenavContainerId').sideNavigation(
+		{
+			gutter: '0',
+			toggler: '#sidenavToggleId',
+			type: 'fixed-push',
+			typeMobile: 'fixed',
+			width: '320px'
+		}
+	);
+</script>
 
 </body>
 

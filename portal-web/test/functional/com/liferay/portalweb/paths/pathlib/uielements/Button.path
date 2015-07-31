@@ -149,6 +149,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLOSE_SIDE_NAVIGATION</td>
+	<td>//span[contains(@class,'sidenav-close')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMPARE_VERSIONS</td>
 	<td>//button[contains(@id,'compare')]</td>
 	<td></td>

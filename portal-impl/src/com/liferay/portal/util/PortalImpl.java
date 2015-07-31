@@ -7832,7 +7832,7 @@ public class PortalImpl implements Portal {
 						curLayoutSet.getLayoutSetId()) &&
 					 (group.getClassPK() != themeDisplay.getUserId()))) {
 
-					if (group.isControlPanel() || group.isUserPersonalPanel()) {
+					if (group.isControlPanel()) {
 						virtualHostname = themeDisplay.getServerName();
 
 						if (Validator.isNull(virtualHostname) ||

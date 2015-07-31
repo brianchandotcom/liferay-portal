@@ -432,8 +432,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 	public boolean isTypeURL();
 
-	public boolean isTypeUserPersonalPanel();
-
 	public boolean matches(javax.servlet.http.HttpServletRequest request,
 		java.lang.String friendlyURL);
 

@@ -901,9 +901,7 @@ public class GroupImpl extends GroupBaseImpl {
 			PermissionChecker permissionChecker, boolean privateSite)
 		throws PortalException {
 
-		if (!isControlPanel() && !isSite() && !isUser() &&
-			!isUserPersonalPanel()) {
-
+		if (!isControlPanel() && !isSite() && !isUser()) {
 			return false;
 		}
 
@@ -1058,18 +1056,6 @@ public class GroupImpl extends GroupBaseImpl {
 	@Override
 	public boolean isUserGroup() {
 		return hasClassName(UserGroup.class);
-	}
-
-	@Override
-	public boolean isUserPersonalPanel() {
-		String groupKey = getGroupKey();
-
-		if (groupKey.equals(GroupConstants.USER_PERSONAL_PANEL)) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	@Override

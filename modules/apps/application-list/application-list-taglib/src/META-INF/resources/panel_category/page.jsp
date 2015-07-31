@@ -18,40 +18,37 @@
 
 <%
 PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
+PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-application-list:panel-category:panelCategory");
 
-PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategory);
+PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
 
 String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.getKey(), StringPool.PERIOD, StringPool.UNDERLINE);
 %>
 
-<liferay-ui:panel
-	collapsible="<%= true %>"
-	cssClass="list-unstyled panel-page-category"
-	extended="<%= true %>"
-	id="<%= panelPageCategoryId %>"
-	parentId="<%= StringUtil.replace(panelCategory.getParentCategoryKey(), StringPool.PERIOD, StringPool.UNDERLINE) %>"
-	persistState="<%= true %>"
-	state='<%= panelCategoryHelper.containsPortlet(themeDisplay.getPpid()) ? "open" : "closed" %>'
-	title="<%= panelCategory.getLabel(themeDisplay.getLocale()) %>"
->
+<a aria-expanded="false" class="collapse-icon collapsed list-group-heading" data-toggle="collapse" href="#<%= panelPageCategoryId %>">
+	<h5><%= panelCategory.getLabel(themeDisplay.getLocale()) %></h5>
+</a>
 
-	<ul aria-labelledby="<%= panelPageCategoryId %>" class="category-portlets list-unstyled" role="menu">
+<div class="collapse <%= panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), panelCategory) ? "in" : StringPool.BLANK %>" id="<%= panelPageCategoryId %>">
+	<div class="list-group-item">
+		<ul aria-labelledby="<%= panelPageCategoryId %>" class="category-portlets list-unstyled" role="menu">
 
-		<%
-		for (PanelApp panelApp : panelAppRegistry.getPanelApps(panelCategory)) {
-		%>
+			<%
+			for (PanelApp panelApp : panelAppRegistry.getPanelApps(panelCategory)) {
+			%>
 
-			<c:if test="<%= panelApp.hasAccessPermission(permissionChecker, themeDisplay.getScopeGroup()) %>">
-				<liferay-application-list:panel-app
-					panelApp="<%= panelApp %>"
-					panelCategory="<%= panelCategory %>"
-				/>
-			</c:if>
+				<c:if test="<%= panelApp.hasAccessPermission(permissionChecker, themeDisplay.getScopeGroup()) %>">
+					<liferay-application-list:panel-app
+						panelApp="<%= panelApp %>"
+						panelCategory="<%= panelCategory %>"
+					/>
+				</c:if>
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
-	</ul>
-</liferay-ui:panel>
+		</ul>
+	</div>
+</div>

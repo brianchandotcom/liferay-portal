@@ -47,6 +47,4 @@ public class LayoutConstants {
 
 	public static final String TYPE_URL = "url";
 
-	public static final String TYPE_USER_PERSONAL_PANEL = "user_personal_panel";
-
 }

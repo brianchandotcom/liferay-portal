@@ -255,7 +255,7 @@ public class BreadcrumbUtil {
 
 		Group group = layoutSet.getGroup();
 
-		if (group.isControlPanel() || group.isUserPersonalPanel()) {
+		if (group.isControlPanel()) {
 			return;
 		}
 

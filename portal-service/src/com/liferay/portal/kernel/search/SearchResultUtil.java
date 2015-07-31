@@ -14,12 +14,9 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.search.result.SearchResultTranslator;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -41,48 +38,11 @@ public class SearchResultUtil {
 		Hits hits, Locale locale, PortletRequest portletRequest,
 		PortletResponse portletResponse) {
 
-		List<SearchResult> searchResults = new ArrayList<>();
-
-		for (Document document : hits.getDocs()) {
-			try {
-				SearchResult searchResult =
-					SearchResultManagerUtil.createSearchResult(document);
-
-				int index = searchResults.indexOf(searchResult);
-
-				if (index < 0) {
-					searchResults.add(searchResult);
-				}
-				else {
-					searchResult = searchResults.get(index);
-				}
-
-				String version = document.get(Field.VERSION);
-
-				if (Validator.isNotNull(version)) {
-					searchResult.addVersion(version);
-				}
-
-				SearchResultManagerUtil.updateSearchResult(
-					searchResult, document, locale, portletRequest,
-					portletResponse);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					long entryClassPK = GetterUtil.getLong(
-						document.get(Field.ENTRY_CLASS_PK));
-
-					_log.warn(
-						"Search index is stale and contains entry {" +
-							entryClassPK + "}");
-				}
-			}
-		}
-
-		return searchResults;
+		return _searchResultTranslator.translate(
+			hits, locale, portletRequest, portletResponse);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SearchResultUtil.class);
+	private static final SearchResultTranslator _searchResultTranslator =
+		ProxyFactory.newServiceTrackedInstance(SearchResultTranslator.class);
 
 }

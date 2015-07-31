@@ -139,11 +139,6 @@
 	<classpathentry kind="lib" path="lib/portal/chemistry-opencmis-commons-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/chemistry-opencmis-commons-impl.jar"/>
 	<classpathentry kind="lib" path="lib/portal/closure-compiler.jar"/>
-	<classpathentry kind="lib" path="lib/portal/com.liferay.rtl.css.jar"/>
-	<classpathentry kind="lib" path="lib/portal/com.liferay.ruby.gems.jar"/>
-	<classpathentry kind="lib" path="lib/portal/com.liferay.sass.compiler.api.jar"/>
-	<classpathentry kind="lib" path="lib/portal/com.liferay.sass.compiler.jni.jar"/>
-	<classpathentry kind="lib" path="lib/portal/com.liferay.sass.compiler.ruby.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-chain.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-codec.jar"/>

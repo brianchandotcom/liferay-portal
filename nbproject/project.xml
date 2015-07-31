@@ -365,11 +365,6 @@
 				<classpath mode="compile">lib/portal/chemistry-opencmis-commons-api.jar</classpath>
 				<classpath mode="compile">lib/portal/chemistry-opencmis-commons-impl.jar</classpath>
 				<classpath mode="compile">lib/portal/closure-compiler.jar</classpath>
-				<classpath mode="compile">lib/portal/com.liferay.rtl.css.jar</classpath>
-				<classpath mode="compile">lib/portal/com.liferay.ruby.gems.jar</classpath>
-				<classpath mode="compile">lib/portal/com.liferay.sass.compiler.api.jar</classpath>
-				<classpath mode="compile">lib/portal/com.liferay.sass.compiler.jni.jar</classpath>
-				<classpath mode="compile">lib/portal/com.liferay.sass.compiler.ruby.jar</classpath>
 				<classpath mode="compile">lib/portal/commons-beanutils.jar</classpath>
 				<classpath mode="compile">lib/portal/commons-chain.jar</classpath>
 				<classpath mode="compile">lib/portal/commons-codec.jar</classpath>

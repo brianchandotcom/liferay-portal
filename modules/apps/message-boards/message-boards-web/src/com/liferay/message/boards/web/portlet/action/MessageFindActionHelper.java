@@ -14,8 +14,8 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
+import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
 import com.liferay.portal.struts.BaseFindActionHelper;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
@@ -46,7 +46,8 @@ public class MessageFindActionHelper extends BaseFindActionHelper {
 		// Order is important. See LPS-23770.
 
 		return new String[] {
-			PortletKeys.MESSAGE_BOARDS_ADMIN, PortletKeys.MESSAGE_BOARDS
+			MessageBoardsPortletKeys.MESSAGE_BOARDS_ADMIN,
+			MessageBoardsPortletKeys.MESSAGE_BOARDS
 		};
 	}
 

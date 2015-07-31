@@ -12,45 +12,39 @@
  * details.
  */
 
-package com.liferay.message.boards.web.application.list;
+package com.liferay.message.boards.web.portlet;
 
-import com.liferay.application.list.BaseControlPanelEntryPanelApp;
-import com.liferay.application.list.PanelApp;
-import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
-import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.kernel.portlet.BasePortletProvider;
+import com.liferay.portal.kernel.portlet.EditPortletProvider;
+import com.liferay.portal.kernel.portlet.ManagePortletProvider;
+import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
+ * @author Adolfo Pérez
  */
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,
-		"service.ranking:Integer=600"
+		"model.class.name=com.liferay.portlet.messageboards.model.MBCategory",
+		"model.class.name=com.liferay.portlet.messageboards.model.MBDiscussion",
+		"model.class.name=com.liferay.portlet.messageboards.model.MBMessage",
+		"model.class.name=com.liferay.portlet.messageboards.model.MBThread"
 	},
-	service = PanelApp.class
-)
-public class MessageBoardsPanelApp extends BaseControlPanelEntryPanelApp {
-
-	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT;
+	service = {
+		EditPortletProvider.class, ManagePortletProvider.class,
+		ViewPortletProvider.class
 	}
+)
+public class MessageBoardsAdminPortletProvider
+	extends BasePortletProvider
+	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
 		return MessageBoardsPortletKeys.MESSAGE_BOARDS_ADMIN;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
 	}
 
 }

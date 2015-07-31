@@ -121,6 +121,6 @@ public class ShoppingCategoryServiceImpl
 	}
 
 	@ServiceReference(type = ShoppingCategoryPermission.class)
-	private ShoppingCategoryPermission shoppingCategoryPermission;
+	protected ShoppingCategoryPermission shoppingCategoryPermission;
 
 }

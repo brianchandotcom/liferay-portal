@@ -58,7 +58,7 @@ buildAlloyEditor {
 	duplicatesStrategy = "exclude"
 
 	from(zipTree(alloyEditorZipFile)) {
-		eachFile new StripPathSegmentsAction(2)
+		eachFile new StripPathSegmentsAction(1)
 		include "alloy-editor/**"
 	}
 

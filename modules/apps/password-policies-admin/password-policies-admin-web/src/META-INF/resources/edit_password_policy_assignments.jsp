@@ -168,8 +168,6 @@ portletURL.setParameter("tabs3", tabs3);
 				<%
 				OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearchContainer.getSearchTerms();
 
-				long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
-
 				LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
 				if (tabs3.equals("current")) {
@@ -177,9 +175,7 @@ portletURL.setParameter("tabs3", tabs3);
 				}
 				%>
 
-				<liferay-ui:search-container-results>
-					<%@ include file="/organization_search_results_database.jspf" %>
-				</liferay-ui:search-container-results>
+				<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" />
 
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.model.Organization"

@@ -30,6 +30,8 @@ public interface DDMStructureLinkManager {
 			long classNameId, long classPK, long structureId)
 		throws PortalException;
 
+	public void deleteStructureLinks(long classNameId, long classPK);
+
 	public List<DDMStructureLink> getClassNameStructureLinks(long classNameId);
 
 	public List<DDMStructureLink> getStructureLinks(

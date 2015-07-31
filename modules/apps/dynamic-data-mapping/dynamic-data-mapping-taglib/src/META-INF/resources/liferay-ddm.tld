@@ -84,7 +84,7 @@
 			<name>field</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>com.liferay.portlet.dynamicdatamapping.storage.Field</type>
+			<type>com.liferay.dynamic.data.mapping.storage.Field</type>
 		</attribute>
 		<attribute>
 			<name>fieldsNamespace</name>

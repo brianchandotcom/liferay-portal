@@ -77,7 +77,7 @@ portletURL.setParameter("tabs1", tabs1);
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.dynamicdatamapping.model.DDMStructure"
+			className="com.liferay.dynamic.data.mapping.model.DDMStructure"
 			keyProperty="structureId"
 			modelVar="structure"
 		>

@@ -67,7 +67,7 @@ public interface DDMStructureService extends BaseService {
 	* @param groupId the primary key of the group
 	* @param parentStructureId the primary key of the parent structure
 	(optionally {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants#DEFAULT_PARENT_STRUCTURE_ID})
+	com.liferay.dynamic.data.mapping.model.DDMStructureConstants#DEFAULT_PARENT_STRUCTURE_ID})
 	* @param classNameId the primary key of the class name for the
 	structure's related model
 	* @param structureKey the unique string identifying the structure
@@ -80,7 +80,7 @@ public interface DDMStructureService extends BaseService {
 	"expando". For more information, see {@link
 	com.liferay.dynamic.data.mapping.storage.StorageType}.
 	* @param type the structure's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	com.liferay.dynamic.data.mapping.model.DDMStructureConstants}.
 	* @param serviceContext the service context to be applied. Can set the
 	UUID, creation date, modification date, guest permissions,
 	and group permissions for the structure.
@@ -177,7 +177,7 @@ public interface DDMStructureService extends BaseService {
 	or expando. For more information, see {@link
 	com.liferay.dynamic.data.mapping.storage.StorageType}.
 	* @param type the structure's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	com.liferay.dynamic.data.mapping.model.DDMStructureConstants}.
 	* @param serviceContext the service context to be applied. Must have
 	the <code>ddmResource</code> attribute to check permissions.
 	Can set the UUID, creation date, modification date, guest
@@ -432,7 +432,7 @@ public interface DDMStructureService extends BaseService {
 	"expando". For more information, see {@link
 	com.liferay.dynamic.data.mapping.storage.StorageType}.
 	* @param type the structure's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	com.liferay.dynamic.data.mapping.model.DDMStructureConstants}.
 	* @param andOperator whether every field must match its keywords, or just
 	one field
 	* @param start the lower bound of the range of structures to return
@@ -480,7 +480,7 @@ public interface DDMStructureService extends BaseService {
 	"expando". For more information, see {@link
 	com.liferay.dynamic.data.mapping.storage.StorageType}.
 	* @param type the structure's type. For more information, see {@link
-	com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants}.
+	com.liferay.dynamic.data.mapping.model.DDMStructureConstants}.
 	* @param andOperator whether every field must match its keywords, or just
 	one field
 	* @return the number of matching structures

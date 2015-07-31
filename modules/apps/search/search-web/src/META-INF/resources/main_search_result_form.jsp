@@ -24,9 +24,9 @@ Document document = (Document)row.getObject();
 String className = document.get(Field.ENTRY_CLASS_NAME);
 long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
 
-AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
-AssetRenderer assetRenderer = null;
+AssetRenderer<?> assetRenderer = null;
 
 if (assetRendererFactory != null) {
 	long resourcePrimKey = GetterUtil.getLong(document.get(Field.ROOT_ENTRY_CLASS_PK));

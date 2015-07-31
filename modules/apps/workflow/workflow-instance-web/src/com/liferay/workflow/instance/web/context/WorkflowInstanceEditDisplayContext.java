@@ -65,13 +65,14 @@ public class WorkflowInstanceEditDisplayContext
 	}
 
 	public AssetEntry getAssetEntry() throws PortalException {
-		AssetRenderer assetRenderer = getAssetRenderer();
+		AssetRenderer<?> assetRenderer = getAssetRenderer();
 
 		if (assetRenderer == null) {
 			return null;
 		}
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<?> assetRendererFactory =
+			getAssetRendererFactory();
 
 		return assetRendererFactory.getAssetEntry(
 			assetRendererFactory.getClassName(), assetRenderer.getClassPK());
@@ -87,14 +88,14 @@ public class WorkflowInstanceEditDisplayContext
 		return HtmlUtil.escape(getWorkflowDefinitionName());
 	}
 
-	public AssetRenderer getAssetRenderer() throws PortalException {
+	public AssetRenderer<?> getAssetRenderer() throws PortalException {
 		WorkflowHandler<?> workflowHandler = getWorkflowHandler();
 
 		return workflowHandler.getAssetRenderer(
 			getWorkflowContextEntryClassPK());
 	}
 
-	public AssetRendererFactory getAssetRendererFactory() {
+	public AssetRendererFactory<?> getAssetRendererFactory() {
 		WorkflowHandler<?> workflowHandler = getWorkflowHandler();
 
 		return workflowHandler.getAssetRendererFactory();

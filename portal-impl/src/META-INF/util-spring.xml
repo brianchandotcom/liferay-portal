@@ -1027,20 +1027,11 @@
 			<bean class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.layoutprototypes.lar.LayoutPrototypeStagedModelDataHandler" class="com.liferay.portlet.layoutprototypes.lar.LayoutPrototypeStagedModelDataHandler" />
-	<bean id="com.liferay.portlet.layoutsadmin.lar.LayoutFriendlyURLStagedModelDataHandler" class="com.liferay.portlet.layoutsadmin.lar.LayoutFriendlyURLStagedModelDataHandler" />
-	<bean id="com.liferay.portlet.layoutsadmin.lar.LayoutStagedModelDataHandler" class="com.liferay.portlet.layoutsadmin.lar.LayoutStagedModelDataHandler">
-		<property name="LayoutLocalServiceHelper">
-			<bean class="com.liferay.portal.service.impl.LayoutLocalServiceHelper" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portlet.layoutsadmin.lar.StagedThemeStagedModelDataHandler" class="com.liferay.portlet.layoutsadmin.lar.StagedThemeStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.layoutsadmin.util.SitemapUtil" class="com.liferay.portlet.layoutsadmin.util.SitemapUtil">
 		<property name="sitemap">
 			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.layoutsetprototypes.lar.LayoutSetPrototypeStagedModelDataHandler" class="com.liferay.portlet.layoutsetprototypes.lar.LayoutSetPrototypeStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory" class="com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory" />
 	<bean id="com.liferay.portlet.messageboards.social.MBMessageSocialActivityManager" class="com.liferay.portlet.messageboards.social.MBMessageSocialActivityManager" />
 	<bean id="com.liferay.portlet.messageboards.social.MBThreadSocialActivityManager" class="com.liferay.portlet.messageboards.social.MBThreadSocialActivityManager" />

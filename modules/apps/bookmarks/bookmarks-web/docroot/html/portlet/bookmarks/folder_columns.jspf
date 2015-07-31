@@ -72,7 +72,7 @@ for (int j = 0; j < folderColumns.length; j++) {
 					</c:if>
 				</a>
 
-				<c:if test="<%= bookmarksGroupServiceSettings.showSubfolders() %>">
+				<c:if test="<%= bookmarksGroupServiceConfiguration.showSubfolders() %>">
 
 					<%
 					List<BookmarksFolder> subfolders = BookmarksFolderServiceUtil.getFolders(scopeGroupId, curFolder.getFolderId(), 0, 5);

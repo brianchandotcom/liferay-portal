@@ -108,6 +108,16 @@ public class JavaClass {
 
 			checkUnusedParameters(javaTerm);
 
+			if (_fileName.endsWith("LocalServiceImpl.java") &&
+				javaTerm.hasAnnotation("Indexable") &&
+				!javaTerm.hasReturnType()) {
+
+				_javaSourceProcessor.processErrorMessage(
+					_fileName,
+					"Missing return type for method with @Indexable: " +
+						_fileName + " " + javaTerm.getLineCount());
+			}
+
 			if (!BaseSourceProcessor.isExcludedFile(
 					checkJavaFieldTypesExclusionFiles, _absolutePath)) {
 

@@ -133,9 +133,9 @@ public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 	}
 
 	@ServiceReference(type = ShoppingCategoryPermission.class)
-	private ShoppingCategoryPermission shoppingCategoryPermission;
+	protected ShoppingCategoryPermission shoppingCategoryPermission;
 
 	@ServiceReference(type = ShoppingItemPermission.class)
-	private ShoppingItemPermission shoppingItemPermission;
+	protected ShoppingItemPermission shoppingItemPermission;
 
 }

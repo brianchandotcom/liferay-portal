@@ -20,6 +20,13 @@
 long groupId = ParamUtil.getLong(request, "groupId");
 long[] selectedGroupIds = StringUtil.split(ParamUtil.getString(request, "selectedGroupIds"), 0L);
 
+Boolean privateLayout = null;
+String privateLayoutValue = ParamUtil.getString(request, "privateLayout", null);
+
+if (Validator.isNotNull(privateLayoutValue)) {
+	privateLayout = GetterUtil.getBoolean(privateLayoutValue, false);
+}
+
 String type = ParamUtil.getString(request, "type");
 String[] types = ParamUtil.getParameterValues(request, "types");
 
@@ -188,6 +195,8 @@ portletURL.setParameter("target", target);
 
 			if (type.equals("layoutScopes")) {
 				groups = GroupLocalServiceUtil.getGroups(company.getCompanyId(), Layout.class.getName(), groupId, start, end);
+
+				groups = _filterLayoutGroups(groups, privateLayout);
 			}
 			else if (type.equals("parent-sites")) {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
@@ -270,6 +279,23 @@ portletURL.setParameter("target", target);
 </aui:form>
 
 <%!
+
+private List<Group> _filterLayoutGroups(List<Group> groups, Boolean privateLayout) throws Exception {
+	List<Group> filteredGroups = new ArrayList();
+
+	if (privateLayout == null) {
+		return groups;
+	}
+
+	for (Group group : groups) {
+		if (group.isLayout() && LayoutLocalServiceUtil.getLayout(group.getClassPK()).isPrivateLayout() == privateLayout) {
+			filteredGroups.add(group);
+		}
+	}
+
+	return filteredGroups;
+}
+
 private List<Group> _filterGroups(List<Group> groups, String filter) throws Exception {
 	List<Group> filteredGroups = new ArrayList();
 

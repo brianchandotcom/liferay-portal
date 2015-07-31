@@ -12,13 +12,31 @@
  * details.
  */
 
-package com.liferay.portlet.trash;
+package com.liferay.portlet.blogs;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Zsolt Berentey
+ * @author Brian Wing Shun Chan
  */
-public class TrashEntryConstants {
+@ProviderType
+public class BlogImageSizeException extends PortalException {
 
-	public static final int DEFAULT_CONTAINER_ID = -1;
+	public BlogImageSizeException() {
+	}
+
+	public BlogImageSizeException(String msg) {
+		super(msg);
+	}
+
+	public BlogImageSizeException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public BlogImageSizeException(Throwable cause) {
+		super(cause);
+	}
 
 }

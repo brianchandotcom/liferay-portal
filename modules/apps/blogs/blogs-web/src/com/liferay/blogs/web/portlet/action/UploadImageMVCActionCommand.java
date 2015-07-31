@@ -15,10 +15,10 @@
 package com.liferay.blogs.web.portlet.action;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.blogs.web.image.selector.CoverImageSelectorUploadHandler;
-import com.liferay.portal.kernel.image.selector.ImageSelectorUploadHandler;
+import com.liferay.blogs.web.upload.BlogsImageUploadHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.upload.UploadHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -26,29 +26,27 @@ import javax.portlet.ActionResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Roberto Díaz
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
-		"mvc.command.name=/blogs/cover_image_selector"
+		"mvc.command.name=/blogs/upload_image"
 	},
 	service = MVCActionCommand.class
 )
-public class CoverImageSelectorMVCActionCommand extends BaseMVCActionCommand {
+public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_imageSelectorUploadHandler.uploadSelectedImage(
-			actionRequest, actionResponse);
+		_uploadHandler.upload(actionRequest, actionResponse);
 	}
 
-	private final ImageSelectorUploadHandler _imageSelectorUploadHandler =
-		new CoverImageSelectorUploadHandler();
+	private final UploadHandler _uploadHandler = new BlogsImageUploadHandler();
 
 }

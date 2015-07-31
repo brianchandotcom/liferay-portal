@@ -12,19 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.lar;
-
-import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
-import com.liferay.portlet.shopping.constants.ShoppingConstants;
+package com.liferay.portlet.trash.model;
 
 /**
- * @author Iván Zaera
+ * @author Zsolt Berentey
  */
-public class ShoppingPortletDataHandler extends BasePortletDataHandler {
+public class TrashEntryConstants {
 
-	@Override
-	public String getServiceName() {
-		return ShoppingConstants.SERVICE_NAME;
-	}
+	public static final int DEFAULT_CONTAINER_ID = -1;
 
 }

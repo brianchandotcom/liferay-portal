@@ -60,7 +60,7 @@ public class BlogsContentEditorOptionsContributor
 			portletDisplay.getId());
 
 		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "/blogs/upload_editor_image");
+			ActionRequest.ACTION_NAME, "/blogs/upload_temp_image");
 
 		editorOptions.setUploadURL(portletURL.toString());
 	}

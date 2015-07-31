@@ -25,9 +25,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v7_0_0.util.PortletPreferencesRow;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.documentlibrary.util.DLConstants;
-import com.liferay.portlet.messageboards.util.MBConstants;
-import com.liferay.portlet.shopping.util.ShoppingConstants;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
+import com.liferay.portlet.messageboards.constants.MBConstants;
+import com.liferay.portlet.shopping.constants.ShoppingConstants;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

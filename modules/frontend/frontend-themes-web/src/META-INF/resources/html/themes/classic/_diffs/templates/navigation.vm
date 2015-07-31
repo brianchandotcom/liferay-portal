@@ -1,7 +1,7 @@
 <div aria-expanded="false" class="collapse navbar-collapse" id="navigationCollapse">
 	<nav class="$nav_css_class site-navigation" id="navigation" role="navigation">
 		<div class="navbar-form navbar-right" role="search">
-			$theme.runtime('com_liferay_search_web_portlet_SearchPortlet', '', '')
+			#search()
 		</div>
 
 		<ul aria-label="#language ("site-pages")" class="nav navbar-nav navbar-right navbar-site" role="menubar">

@@ -63,6 +63,10 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 	#set ($foo = $foo)
 #end
 
+#macro (search)
+	$theme.runtime("com.liferay.portlet.admin.util.PortalSearchApplicationType$Search", $portletProviderAction.VIEW)
+#end
+
 #macro (user_personal_bar)
 	#set ($render_portlet_boundary = $request.getAttribute("RENDER_PORTLET_BOUNDARY"))
 

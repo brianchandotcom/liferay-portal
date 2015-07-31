@@ -35,7 +35,7 @@ pageContext.setAttribute("portletURL", portletURL);
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 
 	<aui:fieldset>
-		<aui:input cssClass="search-input" inlineField="<%= true %>" label="" name="keywords" size="30" title="search" type="text" value="<%= HtmlUtil.escapeAttribute(keywords) %>" />
+		<aui:input cssClass="search-input" inlineField="<%= true %>" label="" name="keywords" placeholder="search" size="30" title="search" type="text" value="<%= HtmlUtil.escapeAttribute(keywords) %>" />
 
 		<%
 		String taglibOnClick = "Liferay.Util.focusFormField('#" + renderResponse.getNamespace() + "keywords');";
@@ -57,7 +57,13 @@ pageContext.setAttribute("portletURL", portletURL);
 		</aui:select>
 
 		<aui:field-wrapper inlineField="<%= true %>">
-			<aui:button cssClass="search-button" icon="icon-search" onClick='<%= renderResponse.getNamespace() + "search();" %>' value="search" />
+			<a class="btn btn-default" href="javascript:;" onclick="<%= renderResponse.getNamespace() + "search();" %>">
+				<i class="icon-search"></i>
+
+				<span class="search-button">
+					<liferay-ui:message key="search" />
+				</span>
+			</a>
 		</aui:field-wrapper>
 	</aui:fieldset>
 

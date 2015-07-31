@@ -97,6 +97,10 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 	${theme.quickAccess(content_id)}
 </#macro>
 
+<#macro search>
+	${theme.runtime("com.liferay.portlet.admin.util.PortalSearchApplicationType$Search", portletProviderAction.VIEW)}
+</#macro>
+
 <#macro silently
 	foo
 >

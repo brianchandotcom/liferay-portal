@@ -83,7 +83,6 @@ buildCKEditor {
 
 	from(zipTree(ckEditorZipFile)) {
 		eachFile new StripPathSegmentsAction(1)
-
 		include "ckeditor/**"
 	}
 
@@ -159,7 +158,6 @@ buildTinyMCE {
 
 	from(zipTree(tinyMCEZipFile)) {
 		eachFile new StripPathSegmentsAction(3)
-
 		include "tinymce/js/tinymce/**"
 	}
 

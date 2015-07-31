@@ -129,6 +129,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	public static final String AUTO_CLEAN_PROPERTY_NAME = "autoClean";
 
+	public static final String CLEAN_DEPLOYED_PROPERTY_NAME = "cleanDeployed";
+
 	public static final String DEPLOY_TASK_NAME = "deploy";
 
 	public static final String EXPAND_PORTAL_WEB_TASK_NAME = "expandPortalWeb";
@@ -204,9 +206,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected File addCleanDeployedFile(Project project, File sourceFile) {
+	protected void addCleanDeployedFile(Project project, File sourceFile) {
 		Delete delete = (Delete)GradleUtil.getTask(
 			project, BasePlugin.CLEAN_TASK_NAME);
+
+		boolean cleanDeployed = GradleUtil.getProperty(
+			delete, CLEAN_DEPLOYED_PROPERTY_NAME, true);
+
+		if (!cleanDeployed) {
+			return;
+		}
 
 		Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
 
@@ -214,8 +223,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			copy.getDestinationDir(), getDeployedFileName(project, sourceFile));
 
 		delete.delete(deployedFile);
-
-		return deployedFile;
 	}
 
 	protected Configuration addConfigurationPortalWeb(final Project project) {

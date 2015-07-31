@@ -119,6 +119,14 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-test-build-unit">
+		<sequential>
+			<antcall target="prepare-test-build-unit">
+				<param name="test.class.groups.size" value="${test.batch.size}" />
+			</antcall>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="print-test-class-group">
 		<attribute name="test.class.group.index" />
 		<sequential>
@@ -132,6 +140,7 @@
 
 	<macrodef name="run-batch-test">
 		<attribute name="test.class.group.index" />
+		<attribute name="unit.test" default="false" />
 		<element name="test-action" />
 		<sequential>
 			<if>
@@ -139,7 +148,9 @@
 					<equals arg1="@{test.class.group.index}" arg2="default" />
 				</not>
 				<then>
-					<prepare-test-build />
+					<prepare-test-build unless:true="@{unit.test}" />
+
+					<prepare-test-build-unit if:true="@{unit.test}" />
 
 					<test-action />
 
@@ -357,7 +368,7 @@
 	</target>
 
 	<target name="unit">
-		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}" unit.test="true">
 			<test-action>
 				<ant dir="portal-service" target="test-class-group" inheritAll="false">
 					<property name="test.class.group.index" value="@{test.class.group.index}" />

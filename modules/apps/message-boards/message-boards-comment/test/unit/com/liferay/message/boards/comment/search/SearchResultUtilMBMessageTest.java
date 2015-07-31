@@ -12,14 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.message.boards.comment.search;
 
 import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.RelatedSearchResult;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SummaryFactory;
+import com.liferay.portal.kernel.search.result.SearchResultContributor;
+import com.liferay.portal.kernel.search.result.SearchResultTranslator;
+import com.liferay.portal.search.internal.result.SearchResultManagerImpl;
+import com.liferay.portal.search.internal.result.SearchResultTranslatorImpl;
+import com.liferay.portal.search.internal.result.SummaryFactoryImpl;
 import com.liferay.portal.search.test.BaseSearchResultUtilTestCase;
 import com.liferay.portal.search.test.SearchTestUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.util.List;
@@ -30,7 +41,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.mockito.Mock;
-import org.mockito.internal.stubbing.answers.ThrowsExceptionClass;
+import org.mockito.Mockito;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -39,8 +50,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author André de Oliveira
  */
 @PrepareForTest( {
-	AssetRendererFactoryRegistryUtil.class, CommentManagerUtil.class,
-	IndexerRegistryUtil.class, ServiceTrackerCollections.class
+	AssetRendererFactoryRegistryUtil.class, ServiceTrackerCollections.class
 })
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilMBMessageTest
@@ -51,9 +61,9 @@ public class SearchResultUtilMBMessageTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		stub(
-			method(CommentManagerUtil.class, "fetchComment", long.class)
-		).toReturn(
+		when(
+			_commentManager.fetchComment(Mockito.anyLong())
+		).thenReturn(
 			_comment
 		);
 
@@ -70,13 +80,13 @@ public class SearchResultUtilMBMessageTest
 		);
 
 		when(
-			mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK)
+			_mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			_mbMessage
 		);
 
 		when(
-			mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK + 1)
+			_mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK + 1)
 		).thenReturn(
 			_mbMessage
 		);
@@ -97,7 +107,7 @@ public class SearchResultUtilMBMessageTest
 
 		Assert.assertTrue(commentRelatedSearchResults.isEmpty());
 
-		verifyZeroInteractions(mbMessageLocalService);
+		verifyZeroInteractions(_mbMessageLocalService);
 
 		Assert.assertNull(searchResult.getSummary());
 
@@ -107,10 +117,6 @@ public class SearchResultUtilMBMessageTest
 
 	@Test
 	public void testMBMessageAttachment() throws Exception {
-		mockStatic(
-			IndexerRegistryUtil.class,
-			new ThrowsExceptionClass(IllegalStateException.class));
-
 		SearchResult searchResult = assertOneSearchResult(
 			SearchTestUtil.createAttachmentDocument(_MB_MESSAGE_CLASS_NAME));
 
@@ -145,7 +151,7 @@ public class SearchResultUtilMBMessageTest
 			_MB_MESSAGE_CLASS_NAME, SearchTestUtil.ENTRY_CLASS_PK + 1);
 
 		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
-			document1, document2);
+			searchResultTranslator, document1, document2);
 
 		Assert.assertEquals(1, searchResults.size());
 
@@ -159,6 +165,49 @@ public class SearchResultUtilMBMessageTest
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK);
 	}
 
+	protected SearchResultContributor createSearchResultContributor() {
+		MBMessageCommentSearchResultContributor
+			mbMessageCommentSearchResultContributor =
+				new MBMessageCommentSearchResultContributor();
+
+		mbMessageCommentSearchResultContributor.setCommentManager(
+			_commentManager);
+		mbMessageCommentSearchResultContributor.setMBMessageLocalService(
+			_mbMessageLocalService);
+
+		return mbMessageCommentSearchResultContributor;
+	}
+
+	protected SearchResultManagerImpl createSearchResultManager() {
+		SearchResultManagerImpl searchResultManagerImpl =
+			new SearchResultManagerImpl();
+
+		searchResultManagerImpl.addSearchResultContributor(
+			createSearchResultContributor());
+		searchResultManagerImpl.setSummaryFactory(createSummaryFactory());
+
+		return searchResultManagerImpl;
+	}
+
+	@Override
+	protected SearchResultTranslator createSearchResultTranslator() {
+		SearchResultTranslatorImpl searchResultTranslatorImpl =
+			new SearchResultTranslatorImpl();
+
+		searchResultTranslatorImpl.setSearchResultManager(
+			createSearchResultManager());
+
+		return searchResultTranslatorImpl;
+	}
+
+	protected SummaryFactory createSummaryFactory() {
+		SummaryFactoryImpl summaryFactoryImpl = new SummaryFactoryImpl();
+
+		summaryFactoryImpl.setIndexerRegistry(_indexerRegistry);
+
+		return summaryFactoryImpl;
+	}
+
 	private static final String _MB_MESSAGE_CLASS_NAME =
 		MBMessage.class.getName();
 
@@ -166,6 +215,15 @@ public class SearchResultUtilMBMessageTest
 	private Comment _comment;
 
 	@Mock
+	private CommentManager _commentManager;
+
+	@Mock
+	private IndexerRegistry _indexerRegistry;
+
+	@Mock
 	private MBMessage _mbMessage;
+
+	@Mock
+	private MBMessageLocalService _mbMessageLocalService;
 
 }

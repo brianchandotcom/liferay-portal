@@ -26,9 +26,9 @@ DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(reque
 
 Discussion discussion = CommentManagerUtil.getDiscussion(discussionTaglibHelper.getUserId(), discussionRequestHelper.getScopeGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK(), new ServiceContextFunction(request));
 
-DiscussionComment rootDiscussionComment = discussion == null ? null : discussion.getRootDiscussionComment();
+DiscussionComment rootDiscussionComment = (discussion == null) ? null : discussion.getRootDiscussionComment();
 
-DiscussionCommentIterator discussionCommentIterator = rootDiscussionComment == null ? null : rootDiscussionComment.getThreadDiscussionCommentIterator(rootIndexPage - 1);
+DiscussionCommentIterator discussionCommentIterator = (rootDiscussionComment == null) ? null : rootDiscussionComment.getThreadDiscussionCommentIterator(rootIndexPage - 1);
 
 if (discussionCommentIterator != null) {
 	while (discussionCommentIterator.hasNext()) {
@@ -57,7 +57,7 @@ if (discussionCommentIterator != null) {
 	rootIndexPage.val('<%= String.valueOf(rootIndexPage) %>');
 	index.val('<%= String.valueOf(index) %>');
 
-	<c:if test="<%= rootDiscussionComment.getThreadCommentsCount() <= (index + 1) %>">
+	<c:if test="<%= (rootDiscussionComment != null) && (rootDiscussionComment.getThreadCommentsCount() <= (index + 1)) %>">
 		var moreCommentsLink = $('#<%= namespace %>moreComments');
 
 		moreCommentsLink.hide();

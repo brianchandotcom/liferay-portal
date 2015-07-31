@@ -30,7 +30,7 @@
 
 <#assign userGroupModel = dataFactory.newGroupModel(userModel)>
 
-<#assign layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "33,")>
+<#assign layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "")>
 
 <@insertLayout
 	_layoutModel = layoutModel

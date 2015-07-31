@@ -40,7 +40,7 @@ List<DDMStructure> ddmStructures = JournalFolderServiceUtil.getDDMStructures(Por
 		</portlet:renderURL>
 
 		<%
-		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
+		AssetRendererFactory<JournalFolder> assetRendererFactory = (AssetRendererFactory<JournalFolder>)AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
 		%>
 
 		<aui:nav-item href="<%= addFolderURL %>" iconCssClass="<%= assetRendererFactory.getIconCssClass() %>" label='<%= (folder != null) ? "subfolder" : "folder" %>' />
@@ -61,7 +61,7 @@ List<DDMStructure> ddmStructures = JournalFolderServiceUtil.getDDMStructures(Por
 			</liferay-portlet:renderURL>
 
 			<%
-			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+			AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);
 			%>
 
 			<aui:nav-item href="<%= addArticleURL %>" iconCssClass="<%= assetRendererFactory.getIconCssClass() %>" label="<%= HtmlUtil.escape(ddmStructure.getUnambiguousName(ddmStructures, themeDisplay.getScopeGroupId(), locale)) %>" localizeLabel="<%= false %>" />

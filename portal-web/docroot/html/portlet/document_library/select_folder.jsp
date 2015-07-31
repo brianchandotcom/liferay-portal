@@ -97,9 +97,9 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 			</liferay-portlet:renderURL>
 
 			<%
-			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+			AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
 
-			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
+			AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
 
 			int foldersCount = 0;
 			int fileEntriesCount = 0;

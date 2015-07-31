@@ -24,7 +24,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
-import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
 import com.liferay.portlet.exportimport.LARFileNameException;
 import com.liferay.portlet.exportimport.backgroundtask.LayoutExportBackgroundTaskExecutor;
 import com.liferay.portlet.exportimport.backgroundtask.LayoutImportBackgroundTaskExecutor;
@@ -387,10 +386,7 @@ public class ExportImportLocalServiceImpl
 					break;
 				}
 
-				if ((cause instanceof LocaleException) ||
-					(cause instanceof
-						StructureDuplicateStructureKeyException)) {
-
+				if (cause instanceof LocaleException) {
 					throw (PortalException)cause;
 				}
 

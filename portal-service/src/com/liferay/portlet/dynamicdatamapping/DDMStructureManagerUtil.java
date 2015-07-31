@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+
 /**
  * @author Leonardo Barros
  */
@@ -120,6 +122,12 @@ public class DDMStructureManagerUtil {
 
 		return _ddmStructureManager.getClassStructures(
 			companyId, classNameId, start, end);
+	}
+
+	public static DDMForm getDDMForm(PortletRequest portletRequest)
+		throws PortalException {
+
+		return _ddmStructureManager.getDDMForm(portletRequest);
 	}
 
 	public static JSONArray getDDMFormFieldsJSONArray(

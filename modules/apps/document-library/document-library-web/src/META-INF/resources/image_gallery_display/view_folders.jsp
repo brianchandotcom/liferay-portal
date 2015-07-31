@@ -64,9 +64,9 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 			<a href="<%= rowURL %>">
 
 				<%
-				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+				AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
 
-				AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
+				AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
 				%>
 
 				<i class="<%= assetRenderer.getIconCssClass() %>"></i>

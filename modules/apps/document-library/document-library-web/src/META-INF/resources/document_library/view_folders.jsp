@@ -302,7 +302,7 @@ else {
 						for (DLFileEntryType fileEntryType : fileEntryTypes) {
 							request.setAttribute("view_folders.jsp-fileEntryType", fileEntryType);
 
-							AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+							AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 						%>
 
 							<portlet:renderURL var="viewFileEntryTypeURL">

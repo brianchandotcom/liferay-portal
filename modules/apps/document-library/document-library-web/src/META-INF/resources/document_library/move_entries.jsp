@@ -125,9 +125,9 @@ for (FileShortcut curFileShortcut : fileShortcuts) {
 
 				<%
 				for (Folder folder : validMoveFolders) {
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
 
-					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
+					AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
 				%>
 
 					<li class="move-folder">
@@ -156,9 +156,9 @@ for (FileShortcut curFileShortcut : fileShortcuts) {
 
 				<%
 				for (Folder folder : invalidMoveFolders) {
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
 
-					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
+					AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
 				%>
 
 					<li class="icon-warning-sign move-error move-folder">
@@ -200,9 +200,9 @@ for (FileShortcut curFileShortcut : fileShortcuts) {
 
 				<%
 				for (FileEntry validMoveFileEntry : validMoveFileEntries) {
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 
-					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(validMoveFileEntry.getFileEntryId());
+					AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(validMoveFileEntry.getFileEntryId());
 				%>
 
 					<li class="move-file">
@@ -231,9 +231,9 @@ for (FileShortcut curFileShortcut : fileShortcuts) {
 
 				<%
 				for (FileEntry invalidMoveFileEntry : invalidMoveFileEntries) {
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 
-					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(invalidMoveFileEntry.getFileEntryId());
+					AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(invalidMoveFileEntry.getFileEntryId());
 
 					com.liferay.portal.kernel.lock.Lock lock = invalidMoveFileEntry.getLock();
 				%>

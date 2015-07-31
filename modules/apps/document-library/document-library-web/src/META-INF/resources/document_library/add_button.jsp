@@ -53,7 +53,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 		</portlet:renderURL>
 
 		<%
-		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+		AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
 		%>
 
 		<aui:nav-item href="<%= addFolderURL %>" iconCssClass="<%= assetRendererFactory.getIconCssClass() %>" label='<%= (folder != null) ? "subfolder" : "folder" %>' />
@@ -120,7 +120,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 				</portlet:renderURL>
 
 				<%
-				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+				AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 				%>
 
 				<aui:nav-item href="<%= addFileEntryTypeURL %>" iconCssClass="<%= assetRendererFactory.getIconCssClass() %>" label="<%= HtmlUtil.escape(fileEntryType.getUnambiguousName(fileEntryTypes, themeDisplay.getScopeGroupId(), locale)) %>" localizeLabel="<%= false %>" />

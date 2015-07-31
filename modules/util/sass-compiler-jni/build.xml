@@ -7,6 +7,8 @@
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
+	<property name="auto.deploy.dir" value="../../../lib/development" />
+
 	<macrodef name="build-libsass">
 		<attribute default="lib" name="libsass.lib.input.dir" />
 		<attribute name="libsass.lib.input.file" />

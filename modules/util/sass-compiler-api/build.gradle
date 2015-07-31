@@ -1,0 +1,9 @@
+clean  {
+	ext {
+		cleanDeployed = false
+	}
+}
+
+liferay {
+	deployDir = file("../../../lib/development")
+}

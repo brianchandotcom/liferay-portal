@@ -44,14 +44,18 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author David Mendez Gonzalez
  * @author Michael C. Han
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class RoleStagedModelDataHandler
 	extends BaseStagedModelDataHandler<Role> {
 

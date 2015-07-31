@@ -52,6 +52,12 @@ public class DDMStructureLinkManagerImpl implements DDMStructureLinkManager {
 	}
 
 	@Override
+	public void deleteStructureLinks(long classNameId, long classPK) {
+		_ddmStructureLinkLocalService.deleteStructureLinks(
+			classNameId, classPK);
+	}
+
+	@Override
 	public List<DDMStructureLink> getClassNameStructureLinks(long classNameId) {
 		List<DDMStructureLink> ddmStructureLinks = new ArrayList<>();
 

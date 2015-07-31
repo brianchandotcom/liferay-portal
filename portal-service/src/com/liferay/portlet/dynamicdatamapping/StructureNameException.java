@@ -12,35 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.portlet.dynamicdatamapping;
 
-import com.liferay.portlet.dynamicdatamapping.DDMTemplateManagerUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Rafael Praxedes
  */
-public class DDMTemplateVerifiableModel implements VerifiableResourcedModel {
+public class StructureNameException extends PortalException {
 
-	@Override
-	public String getModelName() {
-		Class<?> clazz = DDMTemplateManagerUtil.getDDMTemplateModelClass();
-
-		return clazz.getName();
+	public StructureNameException() {
 	}
 
-	@Override
-	public String getPrimaryKeyColumnName() {
-		return "templateId";
+	public StructureNameException(String msg) {
+		super(msg);
 	}
 
-	@Override
-	public String getTableName() {
-		return "DDMTemplate";
+	public StructureNameException(String msg, Throwable cause) {
+		super(msg, cause);
 	}
 
-	@Override
-	public String getUserIdColumnName() {
-		return "userId";
+	public StructureNameException(Throwable cause) {
+		super(cause);
 	}
 
 }

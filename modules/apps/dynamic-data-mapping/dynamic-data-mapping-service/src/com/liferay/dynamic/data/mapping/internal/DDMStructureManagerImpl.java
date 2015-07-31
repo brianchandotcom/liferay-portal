@@ -42,6 +42,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -211,6 +213,13 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 		}
 
 		return ddmStructures;
+	}
+
+	@Override
+	public DDMForm getDDMForm(PortletRequest portletRequest)
+		throws PortalException {
+
+		return _ddm.getDDMForm(portletRequest);
 	}
 
 	@Override

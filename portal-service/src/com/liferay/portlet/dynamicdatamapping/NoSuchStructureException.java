@@ -12,35 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.portlet.dynamicdatamapping;
 
-import com.liferay.portlet.dynamicdatamapping.DDMTemplateManagerUtil;
+import com.liferay.portal.NoSuchModelException;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Leonardo Barros
  */
-public class DDMTemplateVerifiableModel implements VerifiableResourcedModel {
+public class NoSuchStructureException extends NoSuchModelException {
 
-	@Override
-	public String getModelName() {
-		Class<?> clazz = DDMTemplateManagerUtil.getDDMTemplateModelClass();
-
-		return clazz.getName();
+	public NoSuchStructureException() {
 	}
 
-	@Override
-	public String getPrimaryKeyColumnName() {
-		return "templateId";
+	public NoSuchStructureException(String msg) {
+		super(msg);
 	}
 
-	@Override
-	public String getTableName() {
-		return "DDMTemplate";
+	public NoSuchStructureException(String msg, Throwable cause) {
+		super(msg, cause);
 	}
 
-	@Override
-	public String getUserIdColumnName() {
-		return "userId";
+	public NoSuchStructureException(Throwable cause) {
+		super(cause);
 	}
 
 }

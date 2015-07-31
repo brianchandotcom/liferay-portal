@@ -4,6 +4,8 @@
 @import url(custom_responsive.css);
 
 $bg-color: #F5F7F8;
+$solid-color: #47647A;
+
 body {
 	background-color: $bg-color;
 }
@@ -29,8 +31,11 @@ body {
 		}
 
 		#heading .site-name {
-			font-size: 145%;
+			color: $solid-color;
+			font-size: 150%;
+			letter-spacing: 2px;
 			margin-left: 20px;
+			vertical-align: middle;
 		}
 
 		.navbar-toggle {

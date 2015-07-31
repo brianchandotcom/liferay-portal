@@ -44,7 +44,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 <c:if test="<%= liveGroupRemoteStaging %>">
 	<div class="alert alert-info">
 		<liferay-ui:message key="live-group-remote-staging-alert" />
-		<liferay-ui:message arguments='<%= "javascript:" + renderResponse.getNamespace() + "saveGroup(true);" %>' key="you-also-have-the-option-to-forcibly-disable-remote-staging" />
+		<liferay-ui:message arguments='<%= "javascript:" + renderResponse.getNamespace() + "saveGroup(true);" %>' key="you-can-also-forcibly-disable-remote-staging" />
 	</div>
 </c:if>
 

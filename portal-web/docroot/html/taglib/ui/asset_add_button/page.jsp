@@ -47,7 +47,7 @@ for (long groupId : groupIds) {
 
 					Map.Entry<String, PortletURL> entry = iterator.next();
 
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(_getClassName(entry.getKey()));
+					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(_getClassName(entry.getKey()));
 
 					String message = _getMessage(entry.getKey(), addPortletURLs, locale);
 
@@ -76,7 +76,7 @@ for (long groupId : groupIds) {
 
 						<%
 						for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
-							AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(_getClassName(entry.getKey()));
+							AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(_getClassName(entry.getKey()));
 
 							String message = _getMessage(entry.getKey(), addPortletURLs, locale);
 
@@ -134,7 +134,7 @@ private String _getMessage(String className, Map<String, PortletURL> addPortletU
 		className = className.substring(0, pos);
 	}
 
-	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+	AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
 	if (pos == -1) {
 		message = assetRendererFactory.getTypeName(locale);

@@ -20,13 +20,13 @@ for (int assetEntryIndex = 0; assetEntryIndex < assetEntries.size(); assetEntryI
 
 	long classPK = assetEntry.getClassPK();
 
-	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(assetEntry.getClassNameId());
+	AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(assetEntry.getClassNameId());
 
 	if (assetRendererFactory == null) {
 		continue;
 	}
 
-	AssetRenderer assetRenderer = null;
+	AssetRenderer<?> assetRenderer = null;
 
 	try {
 		assetRenderer = assetRendererFactory.getAssetRenderer(classPK);

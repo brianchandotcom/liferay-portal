@@ -104,9 +104,9 @@ summary.setQueryTerms(queryTerms);
 		for (RelatedSearchResult<FileEntry> fileEntryRelatedSearchResult : fileEntryRelatedSearchResults) {
 			FileEntry fileEntry = fileEntryRelatedSearchResult.getModel();
 
-			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+			AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 
-			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
+			AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
 
 			summary = fileEntryRelatedSearchResult.getSummary();
 

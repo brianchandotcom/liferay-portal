@@ -24,8 +24,8 @@ String[] metadataFields = (String[])request.getAttribute("liferay-ui:asset-metad
 
 AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
 
-AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
-AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 %>
 
 <div class="taglib-asset-metadata">

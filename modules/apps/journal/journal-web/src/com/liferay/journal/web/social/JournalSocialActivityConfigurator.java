@@ -14,10 +14,9 @@
 
 package com.liferay.journal.web.social;
 
+import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portlet.social.util.SocialConfigurationUtil;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -41,8 +40,11 @@ public class JournalSocialActivityConfigurator {
 			clazz.getClassLoader(), new String[] {xml});
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference(
+		target = "(" + ServiceLifecycle.SERVICE_LIFECYCLE + "=" + ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED + ")",
+		unbind = "-"
+	)
+	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
 	}
 
 }

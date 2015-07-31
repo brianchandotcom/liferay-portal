@@ -15,14 +15,13 @@
 package com.liferay.trash.web.upgrade;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 import com.liferay.trash.web.constants.TrashPortletKeys;
 
 import java.util.Collections;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -41,8 +40,11 @@ public class TrashWebUpgrade {
 		_releaseLocalService = releaseLocalService;
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference(
+		target = "(" + ServiceLifecycle.SERVICE_LIFECYCLE + "=" + ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED + ")",
+		unbind = "-"
+	)
+	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
 	}
 
 	@Activate

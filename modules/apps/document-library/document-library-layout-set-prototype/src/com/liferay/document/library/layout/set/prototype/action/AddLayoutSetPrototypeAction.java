@@ -16,6 +16,7 @@ package com.liferay.document.library.layout.set.prototype.action;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
@@ -32,8 +33,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -120,8 +119,11 @@ public class AddLayoutSetPrototypeAction {
 		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference(
+		target = "(" + ServiceLifecycle.SERVICE_LIFECYCLE + "=" + ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED + ")",
+		unbind = "-"
+	)
+	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
 	}
 
 	@Reference(unbind = "-")

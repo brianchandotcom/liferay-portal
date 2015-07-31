@@ -17,6 +17,7 @@ package com.liferay.marketplace.store.web.oauth.util;
 import com.liferay.marketplace.store.web.configuration.MarketplaceStoreWebConfigurationValues;
 import com.liferay.marketplace.store.web.oauth.api.MarketplaceApi;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Company;
@@ -32,8 +33,6 @@ import com.liferay.portlet.expando.service.ExpandoTableLocalService;
 import com.liferay.portlet.expando.service.ExpandoValueLocalService;
 
 import java.util.List;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -140,8 +139,11 @@ public class OAuthManager {
 		_expandoValueLocalService = expandoValueLocalService;
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference(
+		target = "(" + ServiceLifecycle.SERVICE_LIFECYCLE + "=" + ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED + ")",
+		unbind = "-"
+	)
+	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
 	}
 
 	private void _setupExpando(long companyId) throws Exception {

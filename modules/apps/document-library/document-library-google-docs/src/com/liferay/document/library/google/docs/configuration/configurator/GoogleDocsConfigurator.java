@@ -18,6 +18,7 @@ import com.liferay.document.library.google.docs.migration.LegacyGoogleDocsMigrat
 import com.liferay.document.library.google.docs.util.GoogleDocsDLFileEntryTypeHelper;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.service.CompanyLocalService;
@@ -27,8 +28,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServi
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -137,8 +136,11 @@ public class GoogleDocsConfigurator {
 		_userLocalService = userLocalService;
 	}
 
-	@Reference(target = "(original.bean=true)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference(
+		target = "(" + ServiceLifecycle.SERVICE_LIFECYCLE + "=" + ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED + ")",
+		unbind = "-"
+	)
+	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
 	}
 
 	private ClassNameLocalService _classNameLocalService;

@@ -16,6 +16,7 @@ package com.liferay.portlet.tck.bridge;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -89,8 +90,11 @@ public class PortletTCKBridge {
 		StrutsActionRegistryUtil.unregister(_PATH);
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference(
+		target = "(" + ServiceLifecycle.SERVICE_LIFECYCLE + "=" + ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED + ")",
+		unbind = "-"
+	)
+	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
 	}
 
 	private static final String _PATH = "/portal/tck";

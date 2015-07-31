@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UTF8Control;
+import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -81,7 +82,6 @@ import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
 import javax.servlet.Servlet;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
 
 import org.osgi.framework.Bundle;
@@ -1235,8 +1235,11 @@ public class PortletTracker
 		_resourceActions = resourceActions;
 	}
 
-	@Reference(target = "(original.bean=true)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference(
+		target = "(" + ServiceLifecycle.SERVICE_LIFECYCLE + "=" + ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED + ")",
+		unbind = "-"
+	)
+	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
 	}
 
 	protected String toLowerCase(Object object) {

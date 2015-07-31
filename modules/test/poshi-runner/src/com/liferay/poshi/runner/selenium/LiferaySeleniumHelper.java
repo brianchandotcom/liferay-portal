@@ -895,6 +895,21 @@ public class LiferaySeleniumHelper {
 		return !liferaySelenium.isVisible(locator);
 	}
 
+	public static boolean isSikuliImagePresent(
+			LiferaySelenium liferaySelenium, String image)
+		throws Exception {
+
+		ScreenRegion screenRegion = new DesktopScreenRegion();
+
+		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
+
+		if (screenRegion.find(imageTarget) != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isTCatEnabled() {
 		return PropsValues.TCAT_ENABLED;
 	}
@@ -1011,7 +1026,9 @@ public class LiferaySeleniumHelper {
 
 		ScreenRegion imageTargetScreenRegion = screenRegion.find(imageTarget);
 
-		mouse.click(imageTargetScreenRegion.getCenter());
+		if (imageTargetScreenRegion != null) {
+			mouse.click(imageTargetScreenRegion.getCenter());
+		}
 	}
 
 	public static void sikuliClickByIndex(
@@ -1030,7 +1047,9 @@ public class LiferaySeleniumHelper {
 		ScreenRegion imageTargetScreenRegion = imageTargetScreenRegions.get(
 			Integer.parseInt(index));
 
-		mouse.click(imageTargetScreenRegion.getCenter());
+		if (imageTargetScreenRegion != null) {
+			mouse.click(imageTargetScreenRegion.getCenter());
+		}
 	}
 
 	public static void sikuliDragAndDrop(

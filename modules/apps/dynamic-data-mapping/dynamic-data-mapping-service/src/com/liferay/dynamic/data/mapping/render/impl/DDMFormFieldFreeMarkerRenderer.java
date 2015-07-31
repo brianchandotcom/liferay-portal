@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.template.ClassLoaderTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
@@ -65,17 +66,12 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 	public DDMFormFieldFreeMarkerRenderer() {
 		String defaultTemplateId = _TPL_PATH + "alloy/text.ftl";
 
-		URL defaultTemplateURL = getResource(defaultTemplateId);
-
-		_defaultTemplateResource = new URLTemplateResource(
-			defaultTemplateId, defaultTemplateURL);
+		_defaultTemplateResource = getTemplateResource(defaultTemplateId);
 
 		String defaultReadOnlyTemplateId = _TPL_PATH + "readonly/default.ftl";
 
-		URL defaultReadOnlyTemplateURL = getResource(defaultReadOnlyTemplateId);
-
-		_defaultReadOnlyTemplateResource = new URLTemplateResource(
-			defaultReadOnlyTemplateId, defaultReadOnlyTemplateURL);
+		_defaultReadOnlyTemplateResource = getTemplateResource(
+			defaultReadOnlyTemplateId);
 	}
 
 	@Override
@@ -153,6 +149,13 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		fieldContext.put(
 			"showLabel", Boolean.toString(ddmFormField.isShowLabel()));
 		fieldContext.put("type", ddmFormField.getType());
+	}
+	
+	private TemplateResource getTemplateResource(String resource) {
+		TemplateResource templateResource = new ClassLoaderTemplateResource(
+				getClass().getClassLoader(), resource);
+
+		return templateResource;
 	}
 
 	protected int countFieldRepetition(
@@ -587,7 +590,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		URL url = getResource(resource);
 
 		if (url != null) {
-			templateResource = new URLTemplateResource(resource, url);
+			templateResource = getTemplateResource(resource);
 		}
 
 		if (templateResource == null) {

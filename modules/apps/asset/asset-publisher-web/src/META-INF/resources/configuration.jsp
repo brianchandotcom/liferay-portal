@@ -157,6 +157,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 						layoutSiteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(assetPublisherDisplayContext.getGroupIds()));
 						layoutSiteBrowserURL.setParameter("type", "layoutScopes");
 						layoutSiteBrowserURL.setParameter("eventName", eventName);
+						layoutSiteBrowserURL.setParameter("privateLayout", String.valueOf(layout.isPrivateLayout()));
 						layoutSiteBrowserURL.setPortletMode(PortletMode.VIEW);
 						layoutSiteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 

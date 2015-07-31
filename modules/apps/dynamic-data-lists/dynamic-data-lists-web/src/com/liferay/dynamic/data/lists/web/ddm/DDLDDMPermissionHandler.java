@@ -16,9 +16,9 @@ package com.liferay.dynamic.data.lists.web.ddm;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
+import com.liferay.dynamic.data.mapping.util.DDMPermissionHandler;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
 
 /**
  * @author Marcellus Tavares

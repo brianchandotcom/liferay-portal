@@ -29,6 +29,8 @@ page import="com.liferay.dynamic.data.lists.form.web.context.DDLFormAdminDisplay
 page import="com.liferay.dynamic.data.lists.form.web.search.RecordSetDisplayTerms" %><%@
 page import="com.liferay.dynamic.data.lists.form.web.search.RecordSetSearch" %><%@
 page import="com.liferay.dynamic.data.lists.model.DDLRecordSet" %><%@
+page import="com.liferay.dynamic.data.mapping.exception.StructureDefinitionException" %><%@
+page import="com.liferay.dynamic.data.mapping.exception.StructureLayoutException" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.util.LocalizationUtil" %><%@
@@ -38,8 +40,6 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.WebKeys" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.StructureDefinitionException" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.StructureLayoutException" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@

@@ -40,7 +40,7 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 				"alter table ResourcePermission add primKeyId LONG default -1");
 			runSQL(
 				"alter table ResourcePermission add viewPermission BOOLEAN " +
-					"default [$TRUE$]");
+					"default [$FALSE$]");
 		}
 		catch (SQLException sqle)
 		{

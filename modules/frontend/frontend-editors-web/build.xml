@@ -199,4 +199,12 @@
 
 		<build-tinymce />
 	</target>
+
+	<target name="build-ckeditor-plugins">
+		<build-ckeditor-plugins-bbcode />
+
+		<build-ckeditor-plugins-scayt />
+
+		<build-ckeditor-plugins-wsc />
+	</target>
 </project>

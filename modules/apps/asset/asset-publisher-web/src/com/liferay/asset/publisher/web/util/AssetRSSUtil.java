@@ -244,7 +244,7 @@ public class AssetRSSUtil {
 			AssetEntry assetEntry)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				assetEntry.getClassName());
 
@@ -263,11 +263,11 @@ public class AssetRSSUtil {
 			AssetEntry assetEntry)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				assetEntry.getClassName());
 
-		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
 			assetEntry.getClassPK());
 
 		String viewInContextURL = assetRenderer.getURLViewInContext(

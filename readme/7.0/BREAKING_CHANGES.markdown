@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `dd4de87`.*
+*This document has been reviewed through commit `bfabcf8`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2168,25 +2168,27 @@ is now extracted to its own module, the old name no longer resembles its usage.
 
 ---------------------------------------
 
-### Remove Vaadin 6 from Liferay core
+### Removed Vaadin 6 from Liferay Core
 - **Date:** 2015-Jul-31
 - **JIRA Ticket:** LPS-57525
 
 #### What changed?
 
-Bundled Vaadin 6.xx jar file removed from portal core.
+The bundled Vaadin 6.x JAR file has been removed from portal core.
 
 #### Who is affected?
 
-Developer who are creating Vaadin portlet applications
+This affects developers who are creating Vaadin portlet applications in Liferay
+Portal.
 
 #### How should I update my code?
 
-You should upgrade to Vaadin 7 or bundle your vaadin.jar to your plugin or 
+You should upgrade to Vaadin 7, bundle your `vaadin.jar` with your plugin, or 
 deploy Vaadin libraries to Liferay's OSGi container.
 
 #### Why was this change made?
 
-Vaadin 6.x is out dated. Everyone should use Vaadin 7.x
+Vaadin 6.x is outdated and there are no plans for any new projects to be
+created with it. Therefore, developers should begin using Vaadin 7.x.
 
 ---------------------------------------

@@ -49,7 +49,7 @@ public class MentionsUserNotificationHandler
 	}
 
 	@Override
-	protected AssetRenderer getAssetRenderer(JSONObject jsonObject) {
+	protected AssetRenderer<?> getAssetRenderer(JSONObject jsonObject) {
 		MBMessage mbMessage = MBMessageLocalServiceUtil.fetchMBMessage(
 			jsonObject.getLong("classPK"));
 
@@ -66,13 +66,13 @@ public class MentionsUserNotificationHandler
 
 	@Override
 	protected String getTitle(
-		JSONObject jsonObject, AssetRenderer assetRenderer,
+		JSONObject jsonObject, AssetRenderer<?> assetRenderer,
 		ServiceContext serviceContext) {
 
 		MBMessage mbMessage = MBMessageLocalServiceUtil.fetchMBMessage(
 			jsonObject.getLong("classPK"));
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				assetRenderer.getClassName());
 

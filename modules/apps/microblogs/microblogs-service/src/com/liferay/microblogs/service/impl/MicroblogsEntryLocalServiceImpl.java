@@ -441,12 +441,13 @@ public class MicroblogsEntryLocalServiceImpl
 				StringUtil.shorten(microblogsEntry.getContent(), 50),
 			serviceContext));
 
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				MicroblogsEntry.class.getName());
+		AssetRendererFactory<MicroblogsEntry> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				MicroblogsEntry.class);
 
-		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-			microblogsEntry.getMicroblogsEntryId());
+		AssetRenderer<MicroblogsEntry> assetRenderer =
+			assetRendererFactory.getAssetRenderer(
+				microblogsEntry.getMicroblogsEntryId());
 
 		String entryURL = StringPool.BLANK;
 

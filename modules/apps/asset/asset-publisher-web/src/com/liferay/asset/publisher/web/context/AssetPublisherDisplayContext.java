@@ -392,7 +392,7 @@ public class AssetPublisherDisplayContext {
 		return _extensions;
 	}
 
-	public String[] getExtensions(AssetRenderer assetRenderer) {
+	public String[] getExtensions(AssetRenderer<?> assetRenderer) {
 		final String[] supportedConversions =
 			assetRenderer.getSupportedConversions();
 
@@ -1103,7 +1103,7 @@ public class AssetPublisherDisplayContext {
 			return;
 		}
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
 				getAssetRendererFactoryByClassNameId(classNameIds[0]);
 
@@ -1155,7 +1155,7 @@ public class AssetPublisherDisplayContext {
 				baseModelSearchResult.getBaseModels();
 
 			if (!assetEntries.isEmpty() && (start < groupTotal)) {
-				AssetRendererFactory groupAssetRendererFactory =
+				AssetRendererFactory<?> groupAssetRendererFactory =
 					AssetRendererFactoryRegistryUtil.
 						getAssetRendererFactoryByClassNameId(classNameId);
 
@@ -1356,7 +1356,7 @@ public class AssetPublisherDisplayContext {
 		if (Validator.isNotNull(_ddmStructureFieldName) &&
 			Validator.isNotNull(_ddmStructureFieldValue)) {
 
-			AssetRendererFactory assetRendererFactory =
+			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
 					getAssetRendererFactoryByClassNameId(classNameIds[0]);
 

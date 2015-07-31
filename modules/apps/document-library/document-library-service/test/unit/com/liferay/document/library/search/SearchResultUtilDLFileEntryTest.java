@@ -12,18 +12,35 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.document.library.search;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.RelatedSearchResult;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultManager;
+import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.SummaryFactory;
+import com.liferay.portal.kernel.search.result.SearchResultContributor;
+import com.liferay.portal.kernel.search.result.SearchResultTranslator;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.model.ClassName;
+import com.liferay.portal.search.internal.result.SearchResultManagerImpl;
+import com.liferay.portal.search.internal.result.SearchResultTranslatorImpl;
+import com.liferay.portal.search.internal.result.SummaryFactoryImpl;
 import com.liferay.portal.search.test.BaseSearchResultUtilTestCase;
 import com.liferay.portal.search.test.SearchTestUtil;
+import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.lang.reflect.InvocationHandler;
@@ -38,6 +55,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -52,12 +70,19 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author André de Oliveira
  */
 @PrepareForTest( {
-	AssetRendererFactoryRegistryUtil.class, IndexerRegistryUtil.class,
-	ServiceTrackerCollections.class
+	AssetRendererFactoryRegistryUtil.class, ServiceTrackerCollections.class
 })
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilDLFileEntryTest
 	extends BaseSearchResultUtilTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		setUpClassNameLocalService();
+	}
 
 	@Test
 	public void testDLFileEntry() throws Exception {
@@ -73,7 +98,7 @@ public class SearchResultUtilDLFileEntryTest
 
 		Assert.assertNull(searchResult.getSummary());
 
-		verifyZeroInteractions(dlAppLocalService);
+		verifyZeroInteractions(_dlAppLocalService);
 
 		assertEmptyCommentRelatedSearchResults(searchResult);
 		assertEmptyVersions(searchResult);
@@ -81,13 +106,13 @@ public class SearchResultUtilDLFileEntryTest
 
 	@Test
 	public void testDLFileEntryAttachment() throws Exception {
-		when(
+		Mockito.when(
 			assetRenderer.getSearchSummary((Locale)Matchers.any())
 		).thenReturn(
 			SearchTestUtil.SUMMARY_CONTENT
 		);
 
-		when(
+		Mockito.when(
 			assetRenderer.getTitle((Locale)Matchers.any())
 		).thenReturn(
 			SearchTestUtil.SUMMARY_TITLE
@@ -123,47 +148,42 @@ public class SearchResultUtilDLFileEntryTest
 			}
 		);
 
-		when(
-			assetRendererFactory.getAssetRenderer(
-				SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK)
-		).thenReturn(
+		Mockito.doReturn(
 			assetRenderer
+		).when(
+			assetRendererFactory
+		).getAssetRenderer(
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK
 		);
 
-		when(
-			dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
+		Mockito.when(
+			_dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			_fileEntry
 		);
 
-		final Indexer<?> indexer = Mockito.mock(Indexer.class);
+		Mockito.doThrow(
+			new IllegalArgumentException()
+		).when(
+			_indexerRegistry
+		).getIndexer(
+			Mockito.anyString()
+		);
 
-		replace(
-			method(IndexerRegistryUtil.class, "getIndexer", String.class)
-		).with(
-			new InvocationHandler() {
+		Mockito.doReturn(
+			_indexer
+		).when(
+			_indexerRegistry
+		).getIndexer(
+			_DL_FILE_ENTRY_CLASS_NAME
+		);
 
-				@Override
-				public Indexer<?> invoke(
-						Object proxy, Method method, Object[] args)
-					throws Throwable {
-
-					String className = (String)args[0];
-
-					if (_DL_FILE_ENTRY_CLASS_NAME.equals(className)) {
-						return indexer;
-					}
-
-					if (SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME.equals(
-							className)) {
-
-						return null;
-					}
-
-					throw new IllegalArgumentException();
-				}
-
-			}
+		Mockito.doReturn(
+			null
+		).when(
+			_indexerRegistry
+		).getIndexer(
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME
 		);
 
 		String title = RandomTestUtil.randomString();
@@ -171,10 +191,10 @@ public class SearchResultUtilDLFileEntryTest
 
 		Summary summary = new Summary(null, title, content);
 
-		doReturn(
+		Mockito.doReturn(
 			summary
 		).when(
-			indexer
+			_indexer
 		).getSummary(
 			(Document)Matchers.any(), Matchers.anyString(),
 			(PortletRequest)Matchers.isNull(),
@@ -223,7 +243,7 @@ public class SearchResultUtilDLFileEntryTest
 	@Test
 	public void testDLFileEntryMissing() throws Exception {
 		when(
-			dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
+			_dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			null
 		);
@@ -241,21 +261,22 @@ public class SearchResultUtilDLFileEntryTest
 		assertEmptyFileEntryRelatedSearchResults(searchResult);
 
 		Mockito.verify(
-			dlAppLocalService
+			_dlAppLocalService
 		).getFileEntry(
 			SearchTestUtil.ENTRY_CLASS_PK
 		);
 
 		Assert.assertNull(searchResult.getSummary());
 
+		Mockito.verify(
+			_indexerRegistry
+		).getIndexer(
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME
+		);
+
 		verifyStatic(Mockito.atLeastOnce());
 
 		AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME);
-
-		verifyStatic();
-
-		IndexerRegistryUtil.getIndexer(
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME);
 
 		assertEmptyCommentRelatedSearchResults(searchResult);
@@ -264,26 +285,24 @@ public class SearchResultUtilDLFileEntryTest
 
 	@Test
 	public void testDLFileEntryWithBrokenIndexer() throws Exception {
-		when(
-			dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
+		Mockito.when(
+			_dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			_fileEntry
 		);
 
-		Indexer<?> indexer = Mockito.mock(Indexer.class);
-
 		Mockito.doThrow(
-			IllegalArgumentException.class
+			new IllegalArgumentException()
 		).when(
-			indexer
+			_indexer
 		).getSummary(
 			(Document)Matchers.any(), Matchers.anyString(),
 			(PortletRequest)Matchers.any(), (PortletResponse)Matchers.any());
 
-		stub(
-			method(IndexerRegistryUtil.class, "getIndexer", String.class)
-		).toReturn(
-			indexer
+		Mockito.when(
+			_indexerRegistry.getIndexer(Mockito.anyString())
+		).thenReturn(
+			_indexer
 		);
 
 		Document document = SearchTestUtil.createAttachmentDocument(
@@ -295,7 +314,8 @@ public class SearchResultUtilDLFileEntryTest
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
-					SearchResultUtil.class.getName(), Level.WARNING)) {
+					SearchResultTranslatorImpl.class.getName(),
+					Level.WARNING)) {
 
 			SearchResult searchResult = assertOneSearchResult(document);
 
@@ -321,12 +341,14 @@ public class SearchResultUtilDLFileEntryTest
 				searchResult.getClassPK());
 			Assert.assertNull(searchResult.getSummary());
 
-			verifyStatic();
-
-			IndexerRegistryUtil.getIndexer(_DL_FILE_ENTRY_CLASS_NAME);
+			Mockito.verify(
+				_indexerRegistry
+			).getIndexer(
+				_DL_FILE_ENTRY_CLASS_NAME
+			);
 
 			Mockito.verify(
-				indexer
+				_indexer
 			).getSummary(
 				document, snippet, null, null
 			);
@@ -334,7 +356,7 @@ public class SearchResultUtilDLFileEntryTest
 			assertEmptyFileEntryRelatedSearchResults(searchResult);
 
 			Mockito.verify(
-				dlAppLocalService
+				_dlAppLocalService
 			).getFileEntry(
 				SearchTestUtil.ENTRY_CLASS_PK
 			);
@@ -344,10 +366,83 @@ public class SearchResultUtilDLFileEntryTest
 		}
 	}
 
+	protected SearchResultContributor createSearchResultContributor() {
+		DLFileEntrySearchResultContributor dlFileEntrySearchResultContributor =
+			new DLFileEntrySearchResultContributor();
+
+		dlFileEntrySearchResultContributor.setClassNameLocalService(
+			_classNameLocalService);
+		dlFileEntrySearchResultContributor.setDLAppLocalService(
+			_dlAppLocalService);
+		dlFileEntrySearchResultContributor.setSummaryFactory(
+			createSummaryFactory());
+
+		return dlFileEntrySearchResultContributor;
+	}
+
+	protected SearchResultManager createSearchResultManager() {
+		SearchResultManagerImpl searchResultManagerImpl =
+			new SearchResultManagerImpl();
+
+		searchResultManagerImpl.addSearchResultContributor(
+			createSearchResultContributor());
+		searchResultManagerImpl.setSummaryFactory(createSummaryFactory());
+
+		return searchResultManagerImpl;
+	}
+
+	@Override
+	protected SearchResultTranslator createSearchResultTranslator() {
+		SearchResultTranslatorImpl searchResultTranslatorImpl =
+			new SearchResultTranslatorImpl();
+
+		searchResultTranslatorImpl.setSearchResultManager(
+			createSearchResultManager());
+
+		return searchResultTranslatorImpl;
+	}
+
+	protected SummaryFactory createSummaryFactory() {
+		SummaryFactoryImpl summaryFactoryImpl = new SummaryFactoryImpl();
+
+		summaryFactoryImpl.setIndexerRegistry(_indexerRegistry);
+
+		return summaryFactoryImpl;
+	}
+
+	protected void setUpClassNameLocalService() throws Exception {
+		ClassName className = Mockito.mock(ClassName.class);
+
+		when(
+			_classNameLocalService.getClassName(
+				SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME_ID)
+		).thenReturn(
+			className
+		);
+
+		when(
+			className.getClassName()
+		).thenReturn(
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME
+		);
+	}
+
 	private static final String _DL_FILE_ENTRY_CLASS_NAME =
 		DLFileEntry.class.getName();
 
 	@Mock
+	private ClassNameLocalService _classNameLocalService;
+
+	@Mock
+	private DLAppLocalService _dlAppLocalService;
+
+	@Mock
 	private FileEntry _fileEntry;
+
+	@Mock
+	private Indexer<Object> _indexer;
+
+	@Mock
+	private IndexerRegistry _indexerRegistry;
 
 }

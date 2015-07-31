@@ -1262,15 +1262,8 @@ jdbc.default.password=${database.password}]]></echo>
 				</then>
 				<else>
 					<if>
-						<not>
-							<equals arg1="@{unit}" arg2="true" />
-						</not>
+						<equals arg1="@{unit}" arg2="true" />
 						<then>
-							<ant antfile="build-dist.xml" target="build-dist-tomcat" inheritAll="false" />
-
-							<setup-testable-tomcat />
-						</then>
-						<else>
 							<ant antfile="build-dist.xml" target="build-dist-tomcat-bare" inheritAll="false" />
 
 							<antcall target="deploy-additional-jars" />
@@ -1282,6 +1275,11 @@ jdbc.default.password=${database.password}]]></echo>
 							<ant dir="portal-impl" target="deploy" inheritAll="false" />
 
 							<ant dir="${project.dir}/modules/core" target="deploy" inheritAll="false" />
+						</then>
+						<else>
+							<ant antfile="build-dist.xml" target="build-dist-tomcat" inheritAll="false" />
+
+							<setup-testable-tomcat />
 						</else>
 					</if>
 

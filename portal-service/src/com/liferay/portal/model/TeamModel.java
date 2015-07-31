@@ -250,6 +250,20 @@ public interface TeamModel extends BaseModel<Team>, MVCCModel, StagedGroupedMode
 	 */
 	public void setDescription(String description);
 
+	/**
+	 * Returns the last publish date of this team.
+	 *
+	 * @return the last publish date of this team
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this team.
+	 *
+	 * @param lastPublishDate the last publish date of this team
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

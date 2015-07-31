@@ -136,6 +136,8 @@ public class TeamPersistenceTest {
 
 		newTeam.setDescription(RandomTestUtil.randomString());
 
+		newTeam.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_teams.add(_persistence.update(newTeam));
 
 		Team existingTeam = _persistence.findByPrimaryKey(newTeam.getPrimaryKey());
@@ -156,6 +158,9 @@ public class TeamPersistenceTest {
 		Assert.assertEquals(existingTeam.getName(), newTeam.getName());
 		Assert.assertEquals(existingTeam.getDescription(),
 			newTeam.getDescription());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingTeam.getLastPublishDate()),
+			Time.getShortTimestamp(newTeam.getLastPublishDate()));
 	}
 
 	@Test
@@ -233,7 +238,8 @@ public class TeamPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("Team", "mvccVersion", true,
 			"uuid", true, "teamId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"groupId", true, "name", true, "description", true);
+			"groupId", true, "name", true, "description", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -473,6 +479,8 @@ public class TeamPersistenceTest {
 		team.setName(RandomTestUtil.randomString());
 
 		team.setDescription(RandomTestUtil.randomString());
+
+		team.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_teams.add(_persistence.update(team));
 

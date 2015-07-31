@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.trash;
+package com.liferay.message.boards.web.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.BaseJSPTrashRenderer;

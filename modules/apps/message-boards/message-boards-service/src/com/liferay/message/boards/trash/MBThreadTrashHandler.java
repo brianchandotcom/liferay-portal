@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.trash.TrashRendererFactory;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.LayoutConstants;
@@ -167,9 +168,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
-		MBThread thread = _mbThreadLocalService.getThread(classPK);
-
-		return new MBThreadTrashRenderer(thread);
+		return _trashRendererFactory.getTrashRenderer(classPK);
 	}
 
 	@Override
@@ -306,7 +305,18 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		_mbThreadLocalService = mbThreadLocalService;
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.portlet.messageboards.model.MBThread)",
+		unbind = "-"
+	)
+	protected void setTrashRendererFactory(
+		TrashRendererFactory trashRendererFactory) {
+
+		_trashRendererFactory = trashRendererFactory;
+	}
+
 	private MBCategoryLocalService _mbCategoryLocalService;
 	private MBThreadLocalService _mbThreadLocalService;
+	private TrashRendererFactory _trashRendererFactory;
 
 }

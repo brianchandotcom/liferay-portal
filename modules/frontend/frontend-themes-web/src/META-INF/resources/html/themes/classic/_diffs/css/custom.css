@@ -4,14 +4,13 @@
 @import url(custom_responsive.css);
 
 $bg-color: #F5F7F8;
+body {
+	background-color: $bg-color;
+}
 
 .container-fluid-1280 .row {
 	margin-left: 15px;
 	margin-right: 15px;
-}
-
-body {
-	background-color: $bg-color;
 }
 
 .form-control {

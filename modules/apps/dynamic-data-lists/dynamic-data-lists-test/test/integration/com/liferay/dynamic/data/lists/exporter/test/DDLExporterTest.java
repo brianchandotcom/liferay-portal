@@ -46,6 +46,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -243,7 +244,9 @@ public class DDLExporterTest {
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "file.txt",
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
+			ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomBytes(
+				TikaSafeRandomizerBumper.TEXT_PLAIN_INSTANCE),
 			serviceContext);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

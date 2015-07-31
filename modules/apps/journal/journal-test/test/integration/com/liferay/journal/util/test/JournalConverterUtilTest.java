@@ -44,6 +44,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -358,7 +359,9 @@ public class JournalConverterUtilTest {
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1.txt",
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
+			ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomBytes(
+				TikaSafeRandomizerBumper.TEXT_PLAIN_INSTANCE),
 			serviceContext);
 
 		Field documentLibraryField = getDocumentLibraryField(

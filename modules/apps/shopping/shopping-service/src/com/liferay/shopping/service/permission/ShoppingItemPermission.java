@@ -32,7 +32,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	property = {"model.class.name=com.liferay.shopping.model.ShoppingItem"}
+	immediate = true,
+	property = {"model.class.name=com.liferay.shopping.model.ShoppingItem"},
+	service = ShoppingItemPermission.class
 )
 public class ShoppingItemPermission implements BaseModelPermissionChecker {
 

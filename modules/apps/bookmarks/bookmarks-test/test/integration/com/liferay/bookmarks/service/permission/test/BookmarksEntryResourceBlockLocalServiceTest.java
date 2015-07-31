@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -34,8 +35,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,6 +57,18 @@ public class BookmarksEntryResourceBlockLocalServiceTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_previousCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CompanyThreadLocal.setCompanyId(_previousCompanyId);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -102,6 +117,8 @@ public class BookmarksEntryResourceBlockLocalServiceTest {
 		Assert.assertTrue(roles.contains(_role1));
 		Assert.assertFalse(roles.contains(_role2));
 	}
+
+	private static long _previousCompanyId;
 
 	private BookmarksEntry _bookmarksEntry1;
 	private BookmarksEntry _bookmarksEntry2;

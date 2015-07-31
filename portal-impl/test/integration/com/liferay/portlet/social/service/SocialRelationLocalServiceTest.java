@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -194,6 +195,10 @@ public class SocialRelationLocalServiceTest {
 
 	@Test
 	public void testGetMultipleGroups() throws Exception {
+		long previousCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+
 		User dlc3User = UserLocalServiceUtil.getUserByScreenName(
 			TestPropsValues.getCompanyId(), "dlc3");
 
@@ -225,6 +230,8 @@ public class SocialRelationLocalServiceTest {
 			dlc3User.getUserId(), TestPropsValues.getGroupId());
 		GroupLocalServiceUtil.deleteUserGroup(
 			dlc4User.getUserId(), TestPropsValues.getGroupId());
+
+		CompanyThreadLocal.setCompanyId(previousCompanyId);
 	}
 
 	@Test

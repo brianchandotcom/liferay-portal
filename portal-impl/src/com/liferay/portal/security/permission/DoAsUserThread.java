@@ -17,6 +17,7 @@ package com.liferay.portal.security.permission;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
@@ -39,6 +40,8 @@ public abstract class DoAsUserThread extends Thread {
 			PrincipalThreadLocal.setName(_userId);
 
 			User user = UserLocalServiceUtil.getUserById(_userId);
+
+			CompanyThreadLocal.setCompanyId(user.getCompanyId());
 
 			PermissionChecker permissionChecker =
 				PermissionCheckerFactoryUtil.create(user);

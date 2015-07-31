@@ -16,6 +16,8 @@ package com.liferay.message.boards.workflow;
 
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 
@@ -31,7 +33,14 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"model.class.name=com.liferay.portlet.messageboards.model.MBDiscussion"},
 	service = WorkflowHandler.class
 )
-public class MBDiscussionWorkflowHandler extends BaseMBWorkflowHandler {
+public class MBDiscussionWorkflowHandler extends MBMessageWorkflowHandler {
+
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	public AssetRendererFactory getAssetRendererFactory() {
+		return AssetRendererFactoryRegistryUtil.
+			getAssetRendererFactoryByClassName(getClassName());
+	}
 
 	@Override
 	public String getClassName() {

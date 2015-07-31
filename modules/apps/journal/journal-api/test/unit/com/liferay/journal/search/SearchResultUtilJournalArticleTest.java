@@ -18,13 +18,18 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchResult;
-import com.liferay.portal.kernel.search.SearchResultUtil;
+import com.liferay.portal.kernel.search.SearchResultManager;
+import com.liferay.portal.kernel.search.SummaryFactory;
+import com.liferay.portal.kernel.search.result.SearchResultTranslator;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.search.internal.result.SearchResultManagerImpl;
+import com.liferay.portal.search.internal.result.SearchResultTranslatorImpl;
+import com.liferay.portal.search.internal.result.SummaryFactoryImpl;
 import com.liferay.portal.search.test.BaseSearchResultUtilTestCase;
 import com.liferay.portal.search.test.SearchTestUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -41,6 +46,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -49,7 +55,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({IndexerRegistryUtil.class, ServiceTrackerCollections.class})
+@PrepareForTest({ServiceTrackerCollections.class})
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilJournalArticleTest
 	extends BaseSearchResultUtilTestCase {
@@ -65,27 +71,26 @@ public class SearchResultUtilJournalArticleTest
 
 	@Test
 	public void testJournalArticleWithDefectiveIndexer() throws Exception {
-		Indexer<JournalArticle> indexer = Mockito.mock(Indexer.class);
-
 		Mockito.doThrow(
 			IllegalArgumentException.class
 		).when(
-			indexer
+			_indexer
 		).getSummary(
 			(Document)Matchers.any(), Matchers.anyString(),
 			(PortletRequest)Matchers.any(), (PortletResponse)Matchers.any());
 
-		stub(
-			method(IndexerRegistryUtil.class, "getIndexer", String.class)
-		).toReturn(
-			indexer
+		Mockito.when(
+			_indexerRegistry.getIndexer(Mockito.anyString())
+		).thenReturn(
+			_indexer
 		);
 
 		Document document = createDocument();
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
-					SearchResultUtil.class.getName(), Level.WARNING)) {
+					SearchResultTranslatorImpl.class.getName(),
+					Level.WARNING)) {
 
 			SearchResult searchResult = assertOneSearchResult(document);
 
@@ -94,7 +99,7 @@ public class SearchResultUtilJournalArticleTest
 			Assert.assertNull(searchResult.getSummary());
 
 			Mockito.verify(
-				indexer
+				_indexer
 			).getSummary(
 				document, StringPool.BLANK, null, null
 			);
@@ -136,10 +141,44 @@ public class SearchResultUtilJournalArticleTest
 		return document;
 	}
 
+	protected SearchResultManager createSearchResultManager() {
+		SearchResultManagerImpl searchResultManagerImpl =
+			new SearchResultManagerImpl();
+
+		searchResultManagerImpl.setSummaryFactory(createSummaryFactory());
+
+		return searchResultManagerImpl;
+	}
+
+	@Override
+	protected SearchResultTranslator createSearchResultTranslator() {
+		SearchResultTranslatorImpl searchResultTranslatorImpl =
+			new SearchResultTranslatorImpl();
+
+		searchResultTranslatorImpl.setSearchResultManager(
+			createSearchResultManager());
+
+		return searchResultTranslatorImpl;
+	}
+
+	protected SummaryFactory createSummaryFactory() {
+		SummaryFactoryImpl summaryFactoryImpl = new SummaryFactoryImpl();
+
+		summaryFactoryImpl.setIndexerRegistry(_indexerRegistry);
+
+		return summaryFactoryImpl;
+	}
+
 	private static final String _DOCUMENT_VERSION = String.valueOf(
 		RandomTestUtil.randomInt());
 
 	private static final String _JOURNAL_ARTICLE_CLASS_NAME =
 		JournalArticle.class.getName();
+
+	@Mock
+	private Indexer<Object> _indexer;
+
+	@Mock
+	private IndexerRegistry _indexerRegistry;
 
 }

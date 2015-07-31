@@ -299,9 +299,10 @@ if (organization != null) {
 								organizationParams.put("excludedOrganizationIds", excludedOrganizationIds);
 								%>
 
-								<liferay-ui:search-container-results>
-									<c:choose>
-										<c:when test="<%= !searchTerms.hasSearchTerms() && (parentOrganizationId <= 0) && (filterManageableOrganizations) %>">
+								<c:choose>
+									<c:when test="<%= !searchTerms.hasSearchTerms() && (parentOrganizationId <= 0) && (filterManageableOrganizations) %>">
+
+										<liferay-ui:search-container-results>
 
 											<%
 											total = organizations.size();
@@ -313,43 +314,37 @@ if (organization != null) {
 											searchContainer.setResults(results);
 											%>
 
-										</c:when>
-										<c:otherwise>
+										</liferay-ui:search-container-results>
 
-											<%
-											if (searchTerms.hasSearchTerms()) {
-												if (filterManageableOrganizations) {
-													organizationParams.put("organizationsTree", organizations);
-												}
-												else if (parentOrganizationId > 0) {
-													List<Organization> organizationsTree = new ArrayList<Organization>();
+									</c:when>
+									<c:otherwise>
 
-													Organization parentOrganization = OrganizationLocalServiceUtil.getOrganization(parentOrganizationId);
-
-													organizationsTree.add(parentOrganization);
-
-													organizationParams.put("organizationsTree", organizationsTree);
-												}
-
-												parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
+										<%
+										if (searchTerms.hasSearchTerms()) {
+											if (filterManageableOrganizations) {
+												organizationParams.put("organizationsTree", organizations);
 											}
-											%>
+											else if (parentOrganizationId > 0) {
+												List<Organization> organizationsTree = new ArrayList<Organization>();
 
-											<c:choose>
-												<c:when test="<%= PropsValues.ORGANIZATIONS_INDEXER_ENABLED && PropsValues.ORGANIZATIONS_SEARCH_WITH_INDEX %>">
-													<%@ include file="/organization_search_results_index.jspf" %>
-												</c:when>
-												<c:otherwise>
-													<%@ include file="/organization_search_results_database.jspf" %>
-												</c:otherwise>
-											</c:choose>
-										</c:otherwise>
-									</c:choose>
+												Organization parentOrganization = OrganizationLocalServiceUtil.getOrganization(parentOrganizationId);
 
-									<c:if test="<%= !results.isEmpty() %>">
-										<aui:button cssClass="delete-organizations" disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
-									</c:if>
-								</liferay-ui:search-container-results>
+												organizationsTree.add(parentOrganization);
+
+												organizationParams.put("organizationsTree", organizationsTree);
+											}
+
+											parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
+										}
+										%>
+
+										<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" />
+									</c:otherwise>
+								</c:choose>
+
+								<c:if test="<%= !results.isEmpty() %>">
+									<aui:button cssClass="delete-organizations" disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
+								</c:if>
 
 								<liferay-ui:search-container-row
 									className="com.liferay.portal.model.Organization"

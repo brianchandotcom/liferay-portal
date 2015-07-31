@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.directory.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.site.navigation.directory.web.constants.SitesDirectoryPortletKeys;
 import com.liferay.site.navigation.directory.web.upgrade.SitesDirectoryWebUpgrade;
 
 import javax.portlet.Portlet;
@@ -43,6 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + SitesDirectoryPortletKeys.SITES_DIRECTORY,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user"
 	},

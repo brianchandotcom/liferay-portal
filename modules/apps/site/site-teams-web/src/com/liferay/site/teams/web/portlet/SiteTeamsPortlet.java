@@ -31,6 +31,7 @@ import com.liferay.portal.service.TeamServiceUtil;
 import com.liferay.portal.service.UserGroupServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.site.teams.web.constants.SiteTeamsPortletKeys;
 import com.liferay.site.teams.web.upgrade.SiteTeamsWebUpgrade;
 
 import java.io.IOException;
@@ -66,6 +67,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + SiteTeamsPortletKeys.SITE_TEAMS_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"

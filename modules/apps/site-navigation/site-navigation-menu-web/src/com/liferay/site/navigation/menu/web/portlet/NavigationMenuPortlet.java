@@ -18,6 +18,7 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration;
+import com.liferay.site.navigation.menu.web.constants.NavigationMenuPortletKeys;
 import com.liferay.site.navigation.menu.web.upgrade.NavigationMenuWebUpgrade;
 
 import java.io.IOException;
@@ -57,6 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + NavigationMenuPortletKeys.NAVIGATION,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

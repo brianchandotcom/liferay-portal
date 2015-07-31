@@ -17,6 +17,7 @@ package com.liferay.currency.converter.web.portlet;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.currency.converter.web.configuration.CurrencyConverterConfiguration;
+import com.liferay.currency.converter.web.constants.CurrencyConverterPortletKeys;
 import com.liferay.currency.converter.web.upgrade.CurrencyConverterWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
@@ -59,6 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.edit-template=/edit.jsp",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + CurrencyConverterPortletKeys.CURRENCY_CONVERTER,
 		"javax.portlet.portlet-mode=text/html;edit,edit-guest",
 		"javax.portlet.resource-bundle=content.Language"
 	},

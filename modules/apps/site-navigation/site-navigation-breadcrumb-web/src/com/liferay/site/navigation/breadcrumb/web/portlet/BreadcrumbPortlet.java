@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.breadcrumb.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.site.navigation.breadcrumb.web.constants.BreadcrumbPortletKeys;
 import com.liferay.site.navigation.breadcrumb.web.upgrade.BreadcrumbWebUpgrade;
 
 import javax.portlet.Portlet;
@@ -43,6 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + BreadcrumbPortletKeys.BREADCRUMB,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

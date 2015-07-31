@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.PortalOpenSearchImpl;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.search.web.constants.SearchPortletKeys;
 import com.liferay.search.web.upgrade.SearchWebUpgrade;
 
 import java.io.IOException;
@@ -59,6 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Search", "javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + SearchPortletKeys.SEARCH,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

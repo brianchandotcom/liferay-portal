@@ -34,6 +34,7 @@ import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.taglib.util.RestoreEntryUtil;
 import com.liferay.taglib.util.TrashUndoUtil;
+import com.liferay.trash.web.constants.TrashPortletKeys;
 import com.liferay.trash.web.upgrade.TrashWebUpgrade;
 
 import java.io.IOException;
@@ -70,6 +71,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Trash",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + TrashPortletKeys.TRASH,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"

@@ -15,6 +15,7 @@
 package com.liferay.social.networking.web.membersactivities.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.social.networking.web.constants.SocialNetworkingPortletKeys;
 
 import javax.portlet.Portlet;
 
@@ -33,6 +34,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.info.short-title=Members' Activities",
 		"javax.portlet.info.title=Members' Activities",
 		"javax.portlet.init-param.view-template=/members_activities/view.jsp",
+		"javax.portlet.name=" + SocialNetworkingPortletKeys.MEMBERS_ACTIVITIES,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

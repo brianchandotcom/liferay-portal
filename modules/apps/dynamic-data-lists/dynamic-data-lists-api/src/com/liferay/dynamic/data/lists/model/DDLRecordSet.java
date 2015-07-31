@@ -34,10 +34,10 @@ public interface DDLRecordSet extends DDLRecordSetModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordSetImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructure()
+	public com.liferay.dynamic.data.mapping.model.DDMStructure getDDMStructure()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructure(
+	public com.liferay.dynamic.data.mapping.model.DDMStructure getDDMStructure(
 		long formDDMTemplateId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

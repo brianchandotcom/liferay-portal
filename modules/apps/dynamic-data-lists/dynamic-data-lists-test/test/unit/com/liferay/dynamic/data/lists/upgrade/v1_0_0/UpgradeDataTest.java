@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.service.upgrade.v1_0_0;
+package com.liferay.dynamic.data.lists.upgrade.v1_0_0;
 
-import com.liferay.dynamic.data.lists.upgrade.v1_0_0.UpgradeData;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;

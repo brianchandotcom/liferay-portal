@@ -204,13 +204,13 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructure()
+	public com.liferay.dynamic.data.mapping.model.DDMStructure getDDMStructure()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSet.getDDMStructure();
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructure(
+	public com.liferay.dynamic.data.mapping.model.DDMStructure getDDMStructure(
 		long formDDMTemplateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSet.getDDMStructure(formDDMTemplateId);

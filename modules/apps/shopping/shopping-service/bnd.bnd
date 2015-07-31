@@ -16,7 +16,6 @@ Export-Package:	\
 	com.liferay.shopping.verify.model
 Include-Resource:\
 	classes,\
-	custom-sql/default.xml=classes/META-INF/custom-sql/shopping.xml,\
 	META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/CreditCard.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\

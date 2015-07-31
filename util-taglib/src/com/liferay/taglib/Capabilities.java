@@ -74,13 +74,6 @@ public class Capabilities {
 
 	@ProvideCapability(
 		name = "jsp.taglib", ns = "osgi.extender",
-		value = "uri=http://liferay.com/tld/staging", version = "${@version}"
-	)
-	public class LiferayStaging {
-	}
-
-	@ProvideCapability(
-		name = "jsp.taglib", ns = "osgi.extender",
 		value = "uri=http://liferay.com/tld/theme", version = "${@version}"
 	)
 	public class LiferayTheme {

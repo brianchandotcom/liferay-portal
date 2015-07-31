@@ -120,7 +120,6 @@
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-portlet-ext.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-portlet.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-security.tld" />
-			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-staging.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-theme.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-ui.tld" />
 			<arg value="${project.dir}/util-taglib/src/META-INF/liferay-util.tld" />

@@ -14,9 +14,12 @@
 
 package com.liferay.message.boards.layout.set.prototype.action;
 
+import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
@@ -29,6 +32,7 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.util.DefaultLayoutSetPrototypesUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -89,8 +93,10 @@ public class AddLayoutSetPrototypeAction {
 		Layout layout = DefaultLayoutPrototypesUtil.addLayout(
 			layoutSet, "home", "/home", "2_columns_iii");
 
-		DefaultLayoutPrototypesUtil.addPortletId(
-			layout, PortletKeys.MESSAGE_BOARDS, "column-1");
+		String portletId = PortletProviderUtil.getPortletId(
+			MBMessage.class.getName(), PortletProvider.Action.EDIT);
+
+		DefaultLayoutPrototypesUtil.addPortletId(layout, portletId, "column-1");
 
 		DefaultLayoutPrototypesUtil.addPortletId(
 			layout, PortletKeys.USER_STATISTICS, "column-2");
@@ -133,7 +139,7 @@ public class AddLayoutSetPrototypeAction {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS + ")",
+		target = "(javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS + ")",
 		unbind = "-"
 	)
 	protected void setMessageBoardsPortlet(Portlet portlet) {

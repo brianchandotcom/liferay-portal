@@ -67,7 +67,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
@@ -372,10 +371,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (ListUtil.isNotEmpty(inputStreamOVPs)) {
 			Folder folder = message.addAttachmentsFolder();
 
+			String portletId = PortletProviderUtil.getPortletId(
+				MBMessage.class.getName(), PortletProvider.Action.VIEW);
+
 			PortletFileRepositoryUtil.addPortletFileEntries(
 				message.getGroupId(), userId, MBMessage.class.getName(),
-				message.getMessageId(), PortletKeys.MESSAGE_BOARDS,
-				folder.getFolderId(), inputStreamOVPs);
+				message.getMessageId(), portletId, folder.getFolderId(),
+				inputStreamOVPs);
 		}
 
 		// Resources
@@ -514,10 +516,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		Folder folder = message.addAttachmentsFolder();
 
+		String portletId = PortletProviderUtil.getPortletId(
+			MBMessage.class.getName(), PortletProvider.Action.VIEW);
+
 		PortletFileRepositoryUtil.addPortletFileEntry(
 			message.getGroupId(), userId, MBMessage.class.getName(),
-			message.getMessageId(), PortletKeys.MESSAGE_BOARDS,
-			folder.getFolderId(), file, fileName, mimeType, true);
+			message.getMessageId(), portletId, folder.getFolderId(), file,
+			fileName, mimeType, true);
 	}
 
 	@Override
@@ -1661,10 +1666,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 				Folder folder = message.addAttachmentsFolder();
 
+				String portletId = PortletProviderUtil.getPortletId(
+					MBMessage.class.getName(), PortletProvider.Action.VIEW);
+
 				PortletFileRepositoryUtil.addPortletFileEntries(
 					message.getGroupId(), userId, MBMessage.class.getName(),
-					message.getMessageId(), PortletKeys.MESSAGE_BOARDS,
-					folder.getFolderId(), inputStreamOVPs);
+					message.getMessageId(), portletId, folder.getFolderId(),
+					inputStreamOVPs);
 			}
 			else {
 				if (TrashUtil.isTrashEnabled(message.getGroupId())) {
@@ -1965,8 +1973,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					message.getMessageId();
 		}
 
+		String portletId = PortletProviderUtil.getPortletId(
+			MBMessage.class.getName(), PortletProvider.Action.VIEW);
+
 		String layoutURL = LayoutURLUtil.getLayoutURL(
-			message.getGroupId(), PortletKeys.MESSAGE_BOARDS, serviceContext);
+			message.getGroupId(), portletId, serviceContext);
 
 		if (Validator.isNotNull(layoutURL)) {
 			return layoutURL + Portal.FRIENDLY_URL_SEPARATOR +
@@ -1976,8 +1987,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long controlPanelPlid = PortalUtil.getControlPanelPlid(
 				serviceContext.getCompanyId());
 
+			portletId = PortletProviderUtil.getPortletId(
+				MBMessage.class.getName(), PortletProvider.Action.MANAGE);
+
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				request, PortletKeys.MESSAGE_BOARDS_ADMIN, controlPanelPlid,
+				request, portletId, controlPanelPlid,
 				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
@@ -2054,7 +2068,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		subscriptionSender.setNotificationType(notificationType);
 
-		subscriptionSender.setPortletId(PortletKeys.MESSAGE_BOARDS);
+		String portletId = PortletProviderUtil.getPortletId(
+			MBMessage.class.getName(), PortletProvider.Action.VIEW);
+
+		subscriptionSender.setPortletId(portletId);
 		subscriptionSender.setReplyToAddress(replyToAddress);
 		subscriptionSender.setScopeGroupId(message.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);

@@ -15,6 +15,8 @@
 package com.liferay.portlet.messageboards.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
@@ -83,9 +85,12 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 			return false;
 		}
 
+		String portletId = PortletProviderUtil.getPortletId(
+			MBDiscussion.class.getName(), PortletProvider.Action.VIEW);
+
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, groupId, className, classPK,
-			PortletKeys.MESSAGE_BOARDS, actionId);
+			permissionChecker, groupId, className, classPK, portletId,
+			actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

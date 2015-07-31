@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lar.test;
 
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,6 +37,7 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.IdentityServiceContextFunction;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -57,8 +59,6 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBMessageDisplay;
-import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
@@ -294,22 +294,15 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			stagedModel);
 		long classPK = ExportImportClassedModelUtil.getClassPK(stagedModel);
 
-		MBMessageDisplay messageDisplay =
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				user.getUserId(), stagingGroup.getGroupId(), className, classPK,
-				WorkflowConstants.STATUS_APPROVED);
-
-		MBThread thread = messageDisplay.getThread();
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				stagingGroup.getGroupId(), user.getUserId());
 
-		MBMessageLocalServiceUtil.addDiscussionMessage(
-			user.getUserId(), user.getFullName(), stagingGroup.getGroupId(),
-			className, classPK, thread.getThreadId(), thread.getRootMessageId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(50),
-			serviceContext);
+		CommentManagerUtil.addComment(
+			user.getUserId(), stagingGroup.getGroupId(), className, classPK,
+			user.getFullName(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(50),
+			new IdentityServiceContextFunction(serviceContext));
 	}
 
 	protected List<StagedModel> addDependentStagedModel(

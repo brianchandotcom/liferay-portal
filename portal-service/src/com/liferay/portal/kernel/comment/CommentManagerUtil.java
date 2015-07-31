@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.comment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 
@@ -147,12 +148,7 @@ public class CommentManagerUtil {
 			serviceContextFunction);
 	}
 
-	public void setCommentManager(CommentManager commentManager) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_commentManager = commentManager;
-	}
-
-	private static CommentManager _commentManager;
+	private static final CommentManager _commentManager =
+		ProxyFactory.newServiceTrackedInstance(CommentManager.class);
 
 }

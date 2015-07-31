@@ -26,25 +26,27 @@ DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(reque
 
 Discussion discussion = CommentManagerUtil.getDiscussion(discussionTaglibHelper.getUserId(), discussionRequestHelper.getScopeGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK(), new ServiceContextFunction(request));
 
-DiscussionComment rootDiscussionComment = discussion.getRootDiscussionComment();
+DiscussionComment rootDiscussionComment = (discussion == null) ? null : discussion.getRootDiscussionComment();
 
-DiscussionCommentIterator discussionCommentIterator = rootDiscussionComment.getThreadDiscussionCommentIterator(rootIndexPage - 1);
+DiscussionCommentIterator discussionCommentIterator = (rootDiscussionComment == null) ? null : rootDiscussionComment.getThreadDiscussionCommentIterator(rootIndexPage - 1);
 
-while (discussionCommentIterator.hasNext()) {
-	rootIndexPage = discussionCommentIterator.getIndexPage();
+if (discussionCommentIterator != null) {
+	while (discussionCommentIterator.hasNext()) {
+		rootIndexPage = discussionCommentIterator.getIndexPage();
 
-	if (index >= (initialIndex + PropsValues.DISCUSSION_COMMENTS_DELTA_VALUE)) {
-		break;
-	}
+		if (index >= (initialIndex + PropsValues.DISCUSSION_COMMENTS_DELTA_VALUE)) {
+			break;
+		}
 
-	request.setAttribute("liferay-ui:discussion:discussion", discussion);
-	request.setAttribute("liferay-ui:discussion:discussionComment", discussionCommentIterator.next());
+		request.setAttribute("liferay-ui:discussion:discussion", discussion);
+		request.setAttribute("liferay-ui:discussion:discussionComment", discussionCommentIterator.next());
 %>
 
-	<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />
+		<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />
 
 <%
-	index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
+		index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
+	}
 }
 %>
 
@@ -55,7 +57,7 @@ while (discussionCommentIterator.hasNext()) {
 	rootIndexPage.val('<%= String.valueOf(rootIndexPage) %>');
 	index.val('<%= String.valueOf(index) %>');
 
-	<c:if test="<%= rootDiscussionComment.getThreadCommentsCount() <= (index + 1) %>">
+	<c:if test="<%= (rootDiscussionComment != null) && (rootDiscussionComment.getThreadCommentsCount() <= (index + 1)) %>">
 		var moreCommentsLink = $('#<%= namespace %>moreComments');
 
 		moreCommentsLink.hide();

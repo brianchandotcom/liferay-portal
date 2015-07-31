@@ -203,7 +203,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 
 	@Test
 	public void testBuildServiceContext() throws Exception {
-		PingbackMethodImpl pingbackMethodImpl = new PingbackMethodImpl();
+		PingbackMethodImpl pingbackMethodImpl = new PingbackMethodImpl(
+			_commentManager);
 
 		ServiceContext serviceContext = pingbackMethodImpl.buildServiceContext(
 			_COMPANY_ID, _GROUP_ID, _URL_TITLE);
@@ -355,10 +356,10 @@ public class PingbackMethodImplTest extends PowerMockito {
 	}
 
 	protected void execute(String targetURI) {
-		PingbackMethodImpl pingbackMethodImpl = new PingbackMethodImpl();
+		PingbackMethodImpl pingbackMethodImpl = new PingbackMethodImpl(
+			_commentManager);
 
 		pingbackMethodImpl.setArguments(new Object[] {_SOURCE_URI, targetURI});
-		pingbackMethodImpl.setCommentManager(_commentManager);
 
 		pingbackMethodImpl.execute(_COMPANY_ID);
 	}

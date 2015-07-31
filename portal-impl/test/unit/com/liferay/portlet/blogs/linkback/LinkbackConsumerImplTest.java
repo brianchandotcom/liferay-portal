@@ -50,9 +50,7 @@ public class LinkbackConsumerImplTest extends PowerMockito {
 		setUpBlogsUtil();
 		setUpHttpUtil();
 
-		_linkbackConsumer = new LinkbackConsumerImpl();
-
-		_linkbackConsumer.setCommentManager(_commentManager);
+		_linkbackConsumer = new LinkbackConsumerImpl(_commentManager);
 	}
 
 	@Test

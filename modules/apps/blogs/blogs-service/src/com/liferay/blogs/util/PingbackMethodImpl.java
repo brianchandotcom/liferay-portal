@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.portlet.FriendlyURLMapperThreadLocal;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.xmlrpc.Response;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcConstants;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcUtil;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.IdentityServiceContextFunction;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -86,6 +86,14 @@ public class PingbackMethodImpl implements Method {
 	public static final int TARGET_URI_DOES_NOT_EXIST = 32;
 
 	public static final int TARGET_URI_INVALID = 33;
+
+	public PingbackMethodImpl() {
+		this(CommentManagerUtil.getCommentManager());
+	}
+
+	public PingbackMethodImpl(CommentManager commentManager) {
+		_commentManager = commentManager;
+	}
 
 	@Override
 	public Response execute(long companyId) {
@@ -145,10 +153,6 @@ public class PingbackMethodImpl implements Method {
 
 			return false;
 		}
-	}
-
-	public void setCommentManager(CommentManager commentManager) {
-		_commentManager = commentManager;
 	}
 
 	protected long addPingback(long companyId) throws Exception {
@@ -373,25 +377,8 @@ public class PingbackMethodImpl implements Method {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PingbackMethodImpl.class);
 
-	private CommentManager _commentManager =
-		CommentManagerUtil.getCommentManager();
+	private final CommentManager _commentManager;
 	private String _sourceURI;
 	private String _targetURI;
-
-	private static class IdentityServiceContextFunction
-		implements Function<String, ServiceContext> {
-
-		public IdentityServiceContextFunction(ServiceContext serviceContext) {
-			_serviceContext = serviceContext;
-		}
-
-		@Override
-		public ServiceContext apply(String s) {
-			return _serviceContext;
-		}
-
-		private final ServiceContext _serviceContext;
-
-	}
 
 }

@@ -25,7 +25,7 @@ DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(reque
 DiscussionPermission discussionPermission = CommentManagerUtil.getDiscussionPermission(discussionRequestHelper.getPermissionChecker());
 Discussion discussion = CommentManagerUtil.getDiscussion(discussionTaglibHelper.getUserId(), discussionRequestHelper.getScopeGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK(), new ServiceContextFunction(renderRequest));
 
-DiscussionComment rootDiscussionComment = discussion.getRootDiscussionComment();
+DiscussionComment rootDiscussionComment = (discussion == null) ? null : discussion.getRootDiscussionComment();
 
 CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContextProviderUtil.getCommentSectionDisplayContext(request, response, discussionPermission, discussion);
 %>
@@ -33,7 +33,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 <section>
 	<div class="hide lfr-message-response" id="<%= namespace %>discussionStatusMessages"></div>
 
-	<c:if test="<%= discussion.isMaxCommentsLimitExceeded() %>">
+	<c:if test="<%= (discussion != null) && discussion.isMaxCommentsLimitExceeded() %>">
 		<div class="alert alert-warning">
 			<liferay-ui:message key="maximum-number-of-comments-has-been-reached" />
 		</div>

@@ -75,7 +75,9 @@ public class DefaultCommentTreeDisplayContext
 
 	@Override
 	public boolean isActionControlsVisible() throws PortalException {
-		if (_discussionTaglibHelper.isHideControls()) {
+		if ((_discussionComment == null) ||
+			_discussionTaglibHelper.isHideControls()) {
+
 			return false;
 		}
 
@@ -86,6 +88,10 @@ public class DefaultCommentTreeDisplayContext
 
 	@Override
 	public boolean isDeleteActionControlVisible() throws PortalException {
+		if (_discussionPermission == null) {
+			return false;
+		}
+
 		return _discussionPermission.hasDeletePermission(
 			_discussionComment.getCommentId());
 	}
@@ -101,6 +107,10 @@ public class DefaultCommentTreeDisplayContext
 
 	@Override
 	public boolean isEditActionControlVisible() throws PortalException {
+		if (_discussionPermission == null) {
+			return false;
+		}
+
 		return _discussionPermission.hasUpdatePermission(
 			_discussionComment.getCommentId());
 	}
@@ -116,7 +126,9 @@ public class DefaultCommentTreeDisplayContext
 
 	@Override
 	public boolean isRatingsVisible() throws PortalException {
-		if (!_discussionTaglibHelper.isRatingsEnabled()) {
+		if ((_discussionComment == null) ||
+			!_discussionTaglibHelper.isRatingsEnabled()) {
+
 			return false;
 		}
 
@@ -127,6 +139,10 @@ public class DefaultCommentTreeDisplayContext
 
 	@Override
 	public boolean isReplyActionControlVisible() throws PortalException {
+		if (_discussionPermission == null) {
+			return false;
+		}
+
 		return _discussionPermission.hasAddPermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
@@ -155,11 +171,19 @@ public class DefaultCommentTreeDisplayContext
 	}
 
 	protected boolean hasUpdatePermission() throws PortalException {
+		if (_discussionPermission == null) {
+			return false;
+		}
+
 		return _discussionPermission.hasUpdatePermission(
 			_discussionComment.getCommentId());
 	}
 
 	protected boolean hasViewPermission() throws PortalException {
+		if (_discussionPermission == null) {
+			return false;
+		}
+
 		return _discussionPermission.hasViewPermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
@@ -190,7 +214,8 @@ public class DefaultCommentTreeDisplayContext
 	protected boolean isCommentAuthor() {
 		User user = getUser();
 
-		if ((_discussionComment.getUserId() == user.getUserId()) &&
+		if ((_discussionComment != null) &&
+			(_discussionComment.getUserId() == user.getUserId()) &&
 			!user.isDefaultUser()) {
 
 			return true;

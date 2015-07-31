@@ -31,6 +31,14 @@ import java.util.List;
  */
 public class LinkbackConsumerImpl implements LinkbackConsumer {
 
+	public LinkbackConsumerImpl() {
+		this(CommentManagerUtil.getCommentManager());
+	}
+
+	public LinkbackConsumerImpl(CommentManager commentManager) {
+		_commentManager = commentManager;
+	}
+
 	@Override
 	public void addNewTrackback(long commentId, String url, String entryURL) {
 		_trackbacks.add(new Tuple(commentId, url, entryURL));
@@ -73,15 +81,10 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 		}
 	}
 
-	protected void setCommentManager(CommentManager commentManager) {
-		_commentManager = commentManager;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		LinkbackConsumerImpl.class);
 
-	private CommentManager _commentManager =
-		CommentManagerUtil.getCommentManager();
+	private final CommentManager _commentManager;
 	private final List<Tuple> _trackbacks = Collections.synchronizedList(
 		new ArrayList<Tuple>());
 

@@ -101,18 +101,18 @@ public class InputAssetLinksDisplayContext {
 		return assetLinks.size();
 	}
 
-	public List<AssetRendererFactory> getAssetRendererFactories() {
-		List<AssetRendererFactory> assetRendererFactories =
+	public List<AssetRendererFactory<?>> getAssetRendererFactories() {
+		List<AssetRendererFactory<?>> assetRendererFactories =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
 				_themeDisplay.getCompanyId());
 
 		assetRendererFactories = ListUtil.filter(
 			assetRendererFactories,
-			new PredicateFilter<AssetRendererFactory>() {
+			new PredicateFilter<AssetRendererFactory<?>>() {
 
 				@Override
 				public boolean filter(
-					AssetRendererFactory assetRendererFactory) {
+					AssetRendererFactory<?> assetRendererFactory) {
 
 					if (assetRendererFactory.isLinkable() &&
 						assetRendererFactory.isSelectable()) {
@@ -132,7 +132,7 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	public String getAssetType(AssetEntry entry) {
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			entry.getAssetRendererFactory();
 
 		return assetRendererFactory.getTypeName(_themeDisplay.getLocale());
@@ -171,7 +171,7 @@ public class InputAssetLinksDisplayContext {
 	public List<Map<String, Object>> getSelectorEntries() throws Exception {
 		List<Map<String, Object>> selectorEntries = new ArrayList<>();
 
-		for (AssetRendererFactory assetRendererFactory :
+		for (AssetRendererFactory<?> assetRendererFactory :
 				getAssetRendererFactories()) {
 
 			if (assetRendererFactory.isSupportsClassTypes()) {
@@ -215,7 +215,7 @@ public class InputAssetLinksDisplayContext {
 			for (AssetLink assetLink : directAssetLinks) {
 				AssetEntry assetLinkEntry = getAssetLinkEntry(assetLink);
 
-				AssetRendererFactory assetRendererFactory =
+				AssetRendererFactory<?> assetRendererFactory =
 					AssetRendererFactoryRegistryUtil.
 						getAssetRendererFactoryByClassName(
 							assetLinkEntry.getClassName());
@@ -258,7 +258,7 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	private Map<String, Object> _geSelectorEntryData(
-			AssetRendererFactory assetRendererFactory)
+			AssetRendererFactory<?> assetRendererFactory)
 		throws Exception {
 
 		Map<String, Object> selectorEntryData = new HashMap<>();
@@ -282,7 +282,7 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	private long _getAssetBrowserGroupId(
-		AssetRendererFactory assetRendererFactory) {
+		AssetRendererFactory<?> assetRendererFactory) {
 
 		Group scopeGroup = _themeDisplay.getScopeGroup();
 
@@ -301,7 +301,7 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	private PortletURL _getAssetBrowserPortletURL(
-			AssetRendererFactory assetRendererFactory)
+			AssetRendererFactory<?> assetRendererFactory)
 		throws Exception {
 
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
@@ -333,7 +333,7 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	private List<Map<String, Object>> _getSelectorEntries(
-			AssetRendererFactory assetRendererFactory)
+			AssetRendererFactory<?> assetRendererFactory)
 		throws Exception {
 
 		long groupId = _getAssetBrowserGroupId(assetRendererFactory);
@@ -374,7 +374,7 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	private Map<String, Object> _getSelectorEntryData(
-			AssetRendererFactory assetRendererFactory, ClassType classType)
+			AssetRendererFactory<?> assetRendererFactory, ClassType classType)
 		throws Exception {
 
 		Map<String, Object> selectorEntryData = new HashMap<>();
@@ -399,21 +399,21 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	private String _getSelectorEntryIconCssClass(
-			AssetRendererFactory assetRendererFactory)
+			AssetRendererFactory<?> assetRendererFactory)
 		throws Exception {
 
 		return assetRendererFactory.getIconCssClass();
 	}
 
 	private String _getSelectorEntryId(
-		AssetRendererFactory assetRendererFactory) {
+		AssetRendererFactory<?> assetRendererFactory) {
 
 		return FriendlyURLNormalizerUtil.normalize(
 			assetRendererFactory.getTypeName(_themeDisplay.getLocale()));
 	}
 
 	private String _getSelectorEntryId(
-		AssetRendererFactory assetRendererFactory, ClassType classType) {
+		AssetRendererFactory<?> assetRendererFactory, ClassType classType) {
 
 		String selectorEntryId = String.valueOf(
 			_getAssetBrowserGroupId(assetRendererFactory));
@@ -425,7 +425,7 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	private String _getSelectorEntryMessage(
-		AssetRendererFactory assetRendererFactory) {
+		AssetRendererFactory<?> assetRendererFactory) {
 
 		return assetRendererFactory.getTypeName(_themeDisplay.getLocale());
 	}
@@ -435,7 +435,7 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	private String _getSelectorEntrySrc(
-		AssetRendererFactory assetRendererFactory) {
+		AssetRendererFactory<?> assetRendererFactory) {
 
 		return assetRendererFactory.getIconPath(_portletRequest);
 	}
@@ -466,7 +466,7 @@ public class InputAssetLinksDisplayContext {
 			String className = (String)_request.getAttribute(
 				"liferay-ui:input-asset-links:className");
 
-			AssetRendererFactory assetRendererFactory =
+			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
 					getAssetRendererFactoryByClassName(className);
 

@@ -24,6 +24,9 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
@@ -53,6 +56,28 @@ import org.osgi.service.component.annotations.Component;
 )
 public class DLFileEntryWorkflowHandler
 	extends BaseWorkflowHandler<DLFileEntry> {
+
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	public AssetRenderer getAssetRenderer(long classPK) throws PortalException {
+		AssetRendererFactory<?> assetRendererFactory =
+			getAssetRendererFactory();
+
+		if (assetRendererFactory != null) {
+			return assetRendererFactory.getAssetRenderer(
+				classPK, AssetRendererFactory.TYPE_LATEST);
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	public AssetRendererFactory getAssetRendererFactory() {
+		return AssetRendererFactoryRegistryUtil.
+			getAssetRendererFactoryByClassName(getClassName());
+	}
 
 	@Override
 	public String getClassName() {

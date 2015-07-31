@@ -10,7 +10,7 @@ dependencies {
 }
 
 ext {
-	alloyEditorVersion = "0.2.7"
+	alloyEditorVersion = "0.4.0-alpha.1"
 	ckEditorVersion = "4.4.8"
 	tinyMCEVersion = "4.1.7"
 
@@ -59,7 +59,7 @@ buildAlloyEditor {
 
 	from(zipTree(alloyEditorZipFile)) {
 		eachFile new StripPathSegmentsAction(2)
-		include "alloy-editor-${alloyEditorVersion}/alloy-editor/**"
+		include "alloy-editor/**"
 	}
 
 	from alloyEditorSrcDir

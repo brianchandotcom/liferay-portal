@@ -6,7 +6,7 @@
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
 
-	<property name="alloyeditor.version" value="0.2.7" />
+	<property name="alloyeditor.version" value="0.4.0-alpha.1" />
 	<property name="ckeditor.file" value="ckeditor_4.4.8_liferay.zip" />
 	<property name="html.editor.dir" value="src/META-INF/resources/html/editors" />
 	<property name="import.shared" value="../apps/item-selector/item-selector-api,../apps/item-selector/item-selector-criteria-api,../apps/layout/layout-item-selector-api" />
@@ -42,7 +42,7 @@
 					<unzip src="${third.party.dir}/${alloyeditor.file}" dest="tmp/META-INF/resources/html/editors/_tmp" />
 
 					<copy todir="tmp/META-INF/resources/html/editors/alloyeditor" overwrite="true" preservelastmodified="true">
-						<fileset dir="tmp/META-INF/resources/html/editors/_tmp/alloy-editor-${alloyeditor.version}/alloy-editor" />
+						<fileset dir="tmp/META-INF/resources/html/editors/_tmp/alloy-editor" />
 					</copy>
 
 					<delete dir="tmp/META-INF/resources/html/editors/_tmp" />

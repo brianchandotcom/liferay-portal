@@ -21,6 +21,7 @@ long groupId = ParamUtil.getLong(request, "groupId");
 long[] selectedGroupIds = StringUtil.split(ParamUtil.getString(request, "selectedGroupIds"), 0L);
 
 Boolean privateLayout = null;
+
 String privateLayoutValue = ParamUtil.getString(request, "privateLayout", null);
 
 if (Validator.isNotNull(privateLayoutValue)) {
@@ -288,7 +289,7 @@ private List<Group> _filterLayoutGroups(List<Group> groups, Boolean privateLayou
 	}
 
 	for (Group group : groups) {
-		if (group.isLayout() && LayoutLocalServiceUtil.getLayout(group.getClassPK()).isPrivateLayout() == privateLayout) {
+		if (group.isLayout() && (LayoutLocalServiceUtil.getLayout(group.getClassPK()).isPrivateLayout() == privateLayout)) {
 			filteredGroups.add(group);
 		}
 	}

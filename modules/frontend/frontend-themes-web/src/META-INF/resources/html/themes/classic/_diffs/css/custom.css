@@ -64,8 +64,23 @@ body {
 			}
 		}
 
-		.nav > li > a.dropdown-lft {
-			margin-left: -20px;
+		#navigation .nav > li {
+			& > a {
+				color: $solid-color;
+			}
+
+			&:hover > a, &.hover > a, &.active > a {
+				background-color: none;
+				color: #000;
+			}
+
+			.dropdown-menu {
+				margin-left: -20px;
+
+				.active > a {
+					color: #FFF;
+				}
+			}
 		}
 
 		.user-personal-bar {

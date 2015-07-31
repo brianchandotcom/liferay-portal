@@ -849,7 +849,8 @@ public abstract class BaseWebDriverImpl
 
 		uploadFile(
 			location,
-			_TEST_BASE_DIR_NAME + slash + _testDependenciesDirName + value);
+			_TEST_BASE_DIR_NAME + slash + _testDependenciesDirName + slash +
+				value);
 	}
 
 	@Override

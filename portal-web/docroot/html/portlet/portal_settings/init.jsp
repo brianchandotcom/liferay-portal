@@ -27,7 +27,6 @@ page import="com.liferay.portal.kernel.ldap.LDAPUtil" %><%@
 page import="com.liferay.portal.security.ldap.LDAPSettingsUtil" %><%@
 page import="com.liferay.portal.security.ldap.PortalLDAPUtil" %><%@
 page import="com.liferay.portal.security.sso.OpenSSOUtil" %><%@
-page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portal.util.TermsOfUseContentProvider" %><%@
 page import="com.liferay.portal.util.TermsOfUseContentProviderRegistryUtil" %><%@
 page import="com.liferay.portlet.ratings.display.context.CompanyPortletRatingsDefinitionDisplayContext" %><%@

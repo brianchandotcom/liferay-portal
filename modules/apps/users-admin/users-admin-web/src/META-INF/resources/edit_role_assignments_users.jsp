@@ -54,9 +54,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 	}
 	%>
 
-	<liferay-ui:search-container-results>
-		<%@ include file="/user_search_results_database.jspf" %>
-	</liferay-ui:search-container-results>
+	<liferay-ui:user-search-container-results userParams="<%= userParams %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.User"

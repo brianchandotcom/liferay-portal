@@ -54,7 +54,6 @@ page import="com.liferay.portal.service.LayoutSetLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.LayoutSetPrototypeServiceUtil" %><%@
 page import="com.liferay.portal.service.UserGroupServiceUtil" %><%@
-page import="com.liferay.portal.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.GroupPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.UserGroupPermissionUtil" %><%@

@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="../../portal/portal-expression" />
+	<property name="import.shared" value="dynamic-data-mapping-api,../../portal/portal-expression" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

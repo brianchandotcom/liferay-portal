@@ -1169,6 +1169,23 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	}
 
 	protected void updateResourcePermissions(
+			long groupId, Resource resource, ModelPermissions modelPermissions)
+		throws PortalException {
+
+		for (String roleName : modelPermissions.getRoleNames()) {
+			Role role = getRole(resource.getCompanyId(), groupId, roleName);
+
+			List<String> actionIds = modelPermissions.getActionIdsList(
+				roleName);
+
+			resourcePermissionLocalService.setResourcePermissions(
+				resource.getCompanyId(), resource.getName(),
+				resource.getScope(), resource.getPrimKey(), role.getRoleId(),
+				actionIds.toArray(new String[actionIds.size()]));
+		}
+	}
+
+	protected void updateResourcePermissions(
 		long companyId, String name, int scope, String primKey,
 		String newPrimKey) {
 
@@ -1180,23 +1197,6 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 			resourcePermission.setPrimKey(newPrimKey);
 
 			resourcePermissionPersistence.update(resourcePermission);
-		}
-	}
-
-	protected void updateResourcePermissions(
-			Resource resource, ModelPermissions modelPermissions)
-		throws PortalException {
-
-		for (String roleName : modelPermissions.getRoleNames()) {
-			Role role = getRole(resource.getCompanyId(), 0, roleName);
-
-			List<String> actionIds = modelPermissions.getActionIdsList(
-				roleName);
-
-			resourcePermissionLocalService.setResourcePermissions(
-				resource.getCompanyId(), resource.getName(),
-				resource.getScope(), resource.getPrimKey(), role.getRoleId(),
-				actionIds.toArray(new String[actionIds.size()]));
 		}
 	}
 
@@ -1214,7 +1214,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 				groupId, resource, modelPermissions, permissionedModel);
 		}
 		else {
-			updateResourcePermissions(resource, modelPermissions);
+			updateResourcePermissions(groupId, resource, modelPermissions);
 		}
 	}
 

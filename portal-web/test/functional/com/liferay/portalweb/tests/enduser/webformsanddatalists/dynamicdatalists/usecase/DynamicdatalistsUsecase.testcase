@@ -343,6 +343,7 @@
 
 		<execute macro="DDLRecord#editCP">
 			<var name="ddlListName" value="Dynamic Data List" />
+			<var name="ddlRecordFieldData" value="Content" />
 		</execute>
 
 		<execute macro="DDLRecord#addTranslation">
@@ -361,6 +362,7 @@
 
 		<execute macro="DDLRecord#editCP">
 			<var name="ddlListName" value="Dynamic Data List" />
+			<var name="ddlRecordFieldData" value="Content" />
 		</execute>
 
 		<execute macro="DDLRecord#addRepeatableField">
@@ -380,6 +382,7 @@
 
 		<execute macro="DDLRecord#editCP">
 			<var name="ddlListName" value="Dynamic Data List" />
+			<var name="ddlRecordFieldData" value="Content" />
 		</execute>
 
 		<execute macro="DDLRecord#editTranslation">
@@ -1756,6 +1759,7 @@
 
 		<execute macro="DDLRecord#editCP">
 			<var name="ddlListName" value="Dynamic Data List" />
+			<var name="ddlRecordFieldData" value="Content" />
 		</execute>
 
 		<execute macro="DDLRecord#addTranslation">
@@ -1774,6 +1778,7 @@
 
 		<execute macro="DDLRecord#editCP">
 			<var name="ddlListName" value="Dynamic Data List" />
+			<var name="ddlRecordFieldData" value="Content" />
 		</execute>
 
 		<execute macro="DDLRecord#deleteRepeatableField">
@@ -1789,6 +1794,7 @@
 
 		<execute macro="DDLRecord#editCP">
 			<var name="ddlListName" value="Dynamic Data List" />
+			<var name="ddlRecordFieldData" value="Content" />
 		</execute>
 
 		<execute macro="DDLRecord#editTranslation">

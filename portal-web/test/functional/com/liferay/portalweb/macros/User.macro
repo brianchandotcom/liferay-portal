@@ -1083,7 +1083,7 @@
 	</command>
 
 	<command name="editEmailViaMyAccount">
-		<execute function="Click" locator1="Dockbar#USER_NAME" />
+		<execute function="Click" locator1="Dockbar#USER_AVATAR_IMAGE" />
 		<execute function="AssertClick" locator1="Dockbar#USER_MY_ACCOUNT" value1="My Account" />
 
 		<execute function="Type" locator1="Myaccount#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
@@ -1387,7 +1387,7 @@
 		</if>
 
 		<if>
-			<condition function="IsElementPresent" locator1="Dockbar#USER_NAME" />
+			<condition function="IsElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 			<then>
 				<execute macro="User#logoutPG" />
 				<execute macro="User#loginPG">
@@ -1623,9 +1623,9 @@
 		</if>
 
 		<if>
-			<condition function="IsElementPresent" locator1="Dockbar#USER_NAME" />
+			<condition function="IsElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 			<then>
-				<execute function="Click" locator1="Dockbar#USER_NAME" />
+				<execute function="Click" locator1="Dockbar#USER_AVATAR_IMAGE" />
 				<execute function="Click" locator1="Dockbar#USER_SIGN_OUT" />
 			</then>
 		</if>
@@ -1646,9 +1646,9 @@
 		</execute>
 
 		<if>
-			<condition function="IsElementPresent" locator1="Dockbar#USER_NAME" />
+			<condition function="IsElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 			<then>
-				<execute function="Click" locator1="Dockbar#USER_NAME" />
+				<execute function="Click" locator1="Dockbar#USER_AVATAR_IMAGE" />
 				<execute function="Click" locator1="Dockbar#USER_SIGN_OUT" />
 			</then>
 		</if>

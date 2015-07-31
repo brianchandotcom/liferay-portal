@@ -3327,6 +3327,7 @@
 
 		<execute macro="DDLRecord#editCP">
 			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlRecordFieldData" value="Record Text" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldText">

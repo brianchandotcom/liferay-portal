@@ -104,6 +104,14 @@
 		</sequential>
 	</macrodef>
 
+	<target name="build-ckeditor-plugins">
+		<build-ckeditor-plugins-bbcode />
+
+		<build-ckeditor-plugins-scayt />
+
+		<build-ckeditor-plugins-wsc />
+	</target>
+
 	<macrodef name="build-ckeditor-plugins-bbcode">
 		<sequential>
 			<concat destfile="${html.editor.dir}/ckeditor_diffs/plugins/bbcode/bbcode_parser.js">
@@ -198,13 +206,5 @@
 		<build-ckeditor />
 
 		<build-tinymce />
-	</target>
-
-	<target name="build-ckeditor-plugins">
-		<build-ckeditor-plugins-bbcode />
-
-		<build-ckeditor-plugins-scayt />
-
-		<build-ckeditor-plugins-wsc />
 	</target>
 </project>

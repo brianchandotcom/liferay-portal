@@ -194,7 +194,7 @@ if (feed != null) {
 						<aui:field-wrapper label="template">
 							<liferay-ui:table-iterator
 								list="<%= ddmTemplates %>"
-								listType="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate"
+								listType="com.liferay.dynamic.data.mapping.model.DDMTemplate"
 								rowLength="3"
 								rowPadding="30"
 							>

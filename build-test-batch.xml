@@ -114,6 +114,7 @@
 		<sequential>
 			<antcall target="prepare-test-build">
 				<param name="test.class.groups.size" value="${test.batch.size}" />
+				<param name="test.plugin.groups.size" value="${test.batch.size}" />
 			</antcall>
 		</sequential>
 	</macrodef>

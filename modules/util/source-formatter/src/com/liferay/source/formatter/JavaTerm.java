@@ -70,11 +70,14 @@ public class JavaTerm {
 
 	public static final int TYPE_VARIABLE_PUBLIC_STATIC = 1;
 
-	public JavaTerm(String name, int type, String content, int lineCount) {
+	public JavaTerm(
+		String name, int type, String content, int lineCount, String indent) {
+
 		_name = name;
 		_type = type;
 		_content = content;
 		_lineCount = lineCount;
+		_indent = indent;
 	}
 
 	public String getContent() {
@@ -381,6 +384,7 @@ public class JavaTerm {
 	}
 
 	private String _content;
+	private String _indent;
 	private int _lineCount;
 	private String _name;
 	private List<String> _parameterNames;

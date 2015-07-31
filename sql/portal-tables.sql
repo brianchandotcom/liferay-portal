@@ -1976,7 +1976,8 @@ create table Team (
 	modifiedDate DATE null,
 	groupId LONG,
 	name VARCHAR(75) null,
-	description STRING null
+	description STRING null,
+	lastPublishDate DATE null
 );
 
 create table Ticket (

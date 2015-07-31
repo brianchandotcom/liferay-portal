@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v7_0_0.util.ResourcePermissionTable;
 
 import java.sql.Connection;
@@ -34,12 +35,12 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 		try {
 			runSQL(
 				"alter table ResourcePermission add mvccVersion LONG " +
-				"default 0");
+					"default 0");
 			runSQL(
 				"alter table ResourcePermission add primKeyId LONG default -1");
 			runSQL(
 				"alter table ResourcePermission add viewPermission BOOLEAN " +
-				"default [$TRUE$]");
+					"default [$TRUE$]");
 		}
 		catch (SQLException sqle)
 		{
@@ -63,7 +64,7 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 			ps = con.prepareStatement(
 				"SELECT resourcePermissionId, primKey, primKeyId, actionIds, " +
-				"viewPermission FROM ResourcePermission");
+					"viewPermission FROM ResourcePermission");
 
 			rs = ps.executeQuery();
 
@@ -75,21 +76,27 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 				long newPrimKeyId = GetterUtil.getLong(rs.getString("primKey"));
 				boolean newViewPermission = (actionIds % 2 == 1);
-				String newViewPermissionStr = "[$FALSE$]";
 
-				if (newViewPermission) {
-					newViewPermissionStr = "[$TRUE$]";
-				}
+				if ((newViewPermission != viewPermission) ||
+					(primKeyId != newPrimKeyId)) {
 
-				if ((newViewPermission!= viewPermission) ||
-					(primKeyId!= newPrimKeyId)) {
+					StringBundler sb = new StringBundler();
 
-					runSQL(
-						"update ResourcePermission set primKeyId = " +
-						newPrimKeyId + ", viewPermission = " +
-						newViewPermissionStr +
-						" where resourcePermissionId = " +
-						resourcePermissionId);
+					sb.append("update ResourcePermission set primKeyId = ");
+					sb.append(newPrimKeyId);
+					sb.append(", viewPermission = ");
+
+					if (newViewPermission) {
+						sb.append("[$TRUE$]");
+					}
+					else {
+						sb.append("[$FALSE$]");
+					}
+
+					sb.append(" where resourcePermissionId = ");
+					sb.append(resourcePermissionId);
+
+					runSQL(sb.toString());
 				}
 			}
 		}

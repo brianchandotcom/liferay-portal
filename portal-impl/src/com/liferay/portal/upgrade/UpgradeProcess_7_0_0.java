@@ -79,9 +79,9 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradePortletDisplayTemplatePreferences.class);
 		upgrade(UpgradeRatings.class);
 		upgrade(UpgradeRepositoryEntry.class);
+		upgrade(UpgradeResourcePermission.class);
 		upgrade(UpgradeSubscription.class);
 		upgrade(UpgradeWebsite.class);
-		upgrade(UpgradeResourcePermission.class);
 	}
 
 }

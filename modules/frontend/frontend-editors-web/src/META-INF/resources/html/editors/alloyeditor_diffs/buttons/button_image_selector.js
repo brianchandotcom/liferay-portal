@@ -30,7 +30,7 @@
 				return React.createElement(
 					'button',
 					{
-						className: 'alloy-editor-button',
+						className: 'ae-button',
 						'data-type': 'button-image',
 						onClick: this._handleClick,
 						tabIndex: this.props.tabIndex
@@ -38,7 +38,7 @@
 					React.createElement(
 						'span',
 						{
-							className: 'alloy-editor-icon-image'
+							className: 'ae-icon-image'
 						}
 					)
 				);

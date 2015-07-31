@@ -1163,6 +1163,48 @@ Unsupported operating system.
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-safari-driver">
+		<sequential>
+			<if>
+				<os family="mac" />
+				<then>
+					<mirrors-get
+						dest="tools/selenium/extensions"
+						src="http://selenium-release.storage.googleapis.com/2.45/SafariDriver.safariextz"
+					/>
+
+					<execute>
+						open ${basedir.unix}/tools/selenium/extensions/SafariDriver.safariextz
+					</execute>
+
+					<echo file="tools/selenium/safaridriver.scpt">
+						<![CDATA[
+tell application "System Events"
+	tell process "Safari"
+		set frontmost to true
+		repeat until (exists window 1) and subrole of window 1 is "AXDialog" -- wait until the dialog is displayed.
+			delay 1
+		end repeat
+		click button 1 of front window -- install
+	end tell
+end tell
+tell application "Safari" to quit
+						]]>
+					</echo>
+
+					<execute>
+						osascript ${basedir.unix}/tools/selenium/safaridriver.scpt
+					</execute>
+
+					<delete file="tools/selenium/safaridriver.scpt" />
+				</then>
+				<else>
+					<fail message="Operating system not supported." />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-test-cluster-properties">
 		<sequential>
 			<if>
@@ -6208,6 +6250,13 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<equals arg1="${browser.type}" arg2="ie" />
 			<then>
 				<antcall target="start-ie-driver" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="safari" />
+			<then>
+				<prepare-safari-driver />
 			</then>
 		</if>
 

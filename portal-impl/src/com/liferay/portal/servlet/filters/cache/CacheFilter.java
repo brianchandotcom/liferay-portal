@@ -398,9 +398,10 @@ public class CacheFilter extends BasePortalFilter {
 		CacheResponseData cacheResponseData = CacheUtil.getCacheResponseData(
 			companyId, key);
 
-		if (cacheResponseData == null || !cacheResponseData.isValid()) {
-			if ((cacheResponseData != null && !cacheResponseData.isValid()) ||
-					!isCacheableData(companyId, request)) {
+		if ((cacheResponseData == null) || !cacheResponseData.isValid()) {
+			if (((cacheResponseData != null) && !cacheResponseData.isValid()) ||
+				!isCacheableData(companyId, request)) {
+
 				if (_log.isDebugEnabled()) {
 					_log.debug("Request is not cacheable " + key);
 				}
@@ -409,6 +410,7 @@ public class CacheFilter extends BasePortalFilter {
 					if (_log.isInfoEnabled()) {
 						_log.info("Caching request with invalid state " + key);
 					}
+
 					CacheUtil.putCacheResponseData(
 						companyId, key, new CacheResponseData());
 				}

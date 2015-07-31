@@ -688,7 +688,7 @@ public class LayoutTypePortletImpl
 		}
 
 		List<Portlet> staticPortlets = getStaticPortlets(
-				PropsKeys.LAYOUT_STATIC_PORTLETS_ALL);
+			PropsKeys.LAYOUT_STATIC_PORTLETS_ALL);
 
 		for (Portlet portlet : staticPortlets) {
 			Portlet rootPortlet = portlet.getRootPortlet();

@@ -73,12 +73,12 @@ public class CacheResponseData implements Serializable {
 		return _headers;
 	}
 
-	public void setAttribute(String name, Object value) {
-		_attributes.put(name, value);
-	}
-
 	public boolean isValid() {
 		return _valid;
+	}
+
+	public void setAttribute(String name, Object value) {
+		_attributes.put(name, value);
 	}
 
 	private void readObject(ObjectInputStream objectInputStream)

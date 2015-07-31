@@ -52,7 +52,7 @@ backURL.setParameter("classPK", String.valueOf(structure.getStructureId()));
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion"
+			className="com.liferay.dynamic.data.mapping.model.DDMStructureVersion"
 			keyProperty="structureVersionId"
 			modelVar="structureVersion"
 		>

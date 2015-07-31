@@ -14,15 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.storage;
 
+import com.liferay.dynamic.data.mapping.storage.impl.GeolocationFieldRenderer;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.FieldRenderer;
-import com.liferay.portlet.dynamicdatamapping.storage.GeolocationFieldRenderer;
 
 import java.util.Locale;
 

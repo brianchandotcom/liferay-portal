@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.dynamic.data.mapping.model;
 
 /**
  * @author Alexander Chow

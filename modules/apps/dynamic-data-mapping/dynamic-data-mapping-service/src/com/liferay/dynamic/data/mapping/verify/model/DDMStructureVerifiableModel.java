@@ -12,30 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.dynamic.data.mapping.verify.model;
 
-import com.liferay.portlet.dynamicdatamapping.DDMTemplateManagerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.portal.verify.model.VerifiableResourcedModel;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DDMTemplateVerifiableModel implements VerifiableResourcedModel {
+public class DDMStructureVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		Class<?> clazz = DDMTemplateManagerUtil.getDDMTemplateModelClass();
-
-		return clazz.getName();
+		return DDMStructure.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "templateId";
+		return "structureId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "DDMTemplate";
+		return "DDMStructure";
 	}
 
 	@Override

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.validator;
+package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;

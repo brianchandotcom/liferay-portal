@@ -72,6 +72,7 @@ public class DLFileEntrySearchResultContributor
 		else {
 			long classNameId = GetterUtil.getLong(
 				document.get(Field.CLASS_NAME_ID));
+
 			long classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
 
 			ClassName className = _classNameLocalService.getClassName(

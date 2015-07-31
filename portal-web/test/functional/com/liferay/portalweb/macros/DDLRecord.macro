@@ -60,6 +60,7 @@
 		<execute function="AssertTextEquals" locator1="CPDynamicdatalists#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 		<execute function="Click" locator1="CPDynamicdatalists#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
+		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsList#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />
 		<execute function="Click" locator1="CPDynamicdatalistsList#RECORD_TABLE_ACTIONS_1" />
 		<execute function="AssertClick" locator1="CPDynamicdatalistsList#RECORD_MENULIST_EDIT" value1="Edit" />
 	</command>

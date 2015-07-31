@@ -14,12 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.internal;
 
+import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManager;
+import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
-import com.liferay.portlet.dynamicdatamapping.util.DDM;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,8 +37,13 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return _storageEngine.create(
-			companyId, ddmStructureId, ddmFormValues, serviceContext);
+		try {
+			return _storageEngine.create(
+				companyId, ddmStructureId, ddmFormValues, serviceContext);
+		}
+		catch (PortalException pe) {
+			throw translate(pe);
+		}
 	}
 
 	@Override
@@ -73,7 +79,12 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_storageEngine.update(classPK, ddmFormValues, serviceContext);
+		try {
+			_storageEngine.update(classPK, ddmFormValues, serviceContext);
+		}
+		catch (PortalException pe) {
+			throw translate(pe);
+		}
 	}
 
 	@Reference
@@ -84,6 +95,18 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	@Reference
 	protected void setStorageEngine(StorageEngine storageEngine) {
 		_storageEngine = storageEngine;
+	}
+
+	protected PortalException translate(PortalException portalException) {
+		if (portalException instanceof
+				com.liferay.dynamic.data.mapping.exception.
+					StorageFieldRequiredException) {
+
+			return new StorageFieldRequiredException(
+				portalException.getMessage(), portalException.getCause());
+		}
+
+		return portalException;
 	}
 
 	private DDM _ddm;

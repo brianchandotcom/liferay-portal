@@ -30,7 +30,7 @@ import java.util.Locale;
 public class DDMTemplateImpl implements DDMTemplate {
 
 	public DDMTemplateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate) {
+		com.liferay.dynamic.data.mapping.model.DDMTemplate ddmTemplate) {
 
 		_ddmTemplate = ddmTemplate;
 	}
@@ -38,7 +38,7 @@ public class DDMTemplateImpl implements DDMTemplate {
 	@Override
 	public Object clone() {
 		DDMTemplateImpl ddmTemplateImpl = new DDMTemplateImpl(
-			(com.liferay.portlet.dynamicdatamapping.model.DDMTemplate)
+			(com.liferay.dynamic.data.mapping.model.DDMTemplate)
 				_ddmTemplate.clone());
 
 		return ddmTemplateImpl;
@@ -279,7 +279,7 @@ public class DDMTemplateImpl implements DDMTemplate {
 		_ddmTemplate.setUuid(uuid);
 	}
 
-	private final com.liferay.portlet.dynamicdatamapping.model.DDMTemplate
+	private final com.liferay.dynamic.data.mapping.model.DDMTemplate
 		_ddmTemplate;
 
 }

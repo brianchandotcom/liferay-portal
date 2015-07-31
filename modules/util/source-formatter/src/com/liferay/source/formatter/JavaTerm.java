@@ -124,6 +124,18 @@ public class JavaTerm {
 		return false;
 	}
 
+	public boolean hasReturnType() {
+		if (!isMethod()) {
+			return false;
+		}
+
+		int i = _content.indexOf(_name);
+
+		String methodSignature = StringUtil.trim(_content.substring(0, i));
+
+		return !methodSignature.endsWith(" void");
+	}
+
 	public boolean isClass() {
 		if ((_type == TYPE_CLASS_PRIVATE) ||
 			(_type == TYPE_CLASS_PRIVATE_STATIC) ||

@@ -14,13 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.internal;
 
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplateManager;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalService;
 
 import java.io.File;
 
@@ -48,7 +48,7 @@ public class DDMTemplateManagerImpl implements DDMTemplateManager {
 			File smallImageFile, ServiceContext serviceContext)
 		throws PortalException {
 
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate =
+		com.liferay.dynamic.data.mapping.model.DDMTemplate ddmTemplate =
 			_ddmTemplateLocalService.addTemplate(
 				userId, groupId, classNameId, classPK, resourceClassNameId,
 				templateKey, nameMap, descriptionMap, type, mode, language,
@@ -62,7 +62,7 @@ public class DDMTemplateManagerImpl implements DDMTemplateManager {
 	public DDMTemplate fetchTemplate(
 		long groupId, long classNameId, String templateKey) {
 
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate =
+		com.liferay.dynamic.data.mapping.model.DDMTemplate ddmTemplate =
 			_ddmTemplateLocalService.fetchTemplate(
 				groupId, classNameId, templateKey);
 
@@ -75,12 +75,12 @@ public class DDMTemplateManagerImpl implements DDMTemplateManager {
 
 	@Override
 	public Class<?> getDDMTemplateModelClass() {
-		return com.liferay.portlet.dynamicdatamapping.model.DDMTemplate.class;
+		return com.liferay.dynamic.data.mapping.model.DDMTemplate.class;
 	}
 
 	@Override
 	public DDMTemplate getTemplate(long templateId) throws PortalException {
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate =
+		com.liferay.dynamic.data.mapping.model.DDMTemplate ddmTemplate =
 			_ddmTemplateLocalService.getTemplate(templateId);
 
 		return new DDMTemplateImpl(ddmTemplate);
@@ -92,10 +92,9 @@ public class DDMTemplateManagerImpl implements DDMTemplateManager {
 
 		List<DDMTemplate> ddmTemplates = new ArrayList<>();
 
-		for (com.liferay.portlet.dynamicdatamapping.model.DDMTemplate
-				ddmTemplate :
-					_ddmTemplateLocalService.getTemplates(
-							groupIds, classNameId, classPK)) {
+		for (com.liferay.dynamic.data.mapping.model.DDMTemplate ddmTemplate :
+				_ddmTemplateLocalService.getTemplates(
+					groupIds, classNameId, classPK)) {
 
 			ddmTemplates.add(new DDMTemplateImpl(ddmTemplate));
 		}

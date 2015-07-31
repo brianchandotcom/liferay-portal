@@ -23,7 +23,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jorge Ferrer
  */
-@Component(immediate = true, property = {"resource.name=com.liferay.shopping"})
+@Component(
+	immediate = true, property = {"resource.name=com.liferay.shopping"},
+	service = ShoppingPermission.class
+)
 public class ShoppingPermission {
 
 	public static final String RESOURCE_NAME = "com.liferay.shopping";

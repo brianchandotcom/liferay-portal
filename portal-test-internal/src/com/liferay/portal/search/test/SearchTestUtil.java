@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.SearchResult;
-import com.liferay.portal.kernel.search.SearchResultUtil;
+import com.liferay.portal.kernel.search.result.SearchResultTranslator;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.List;
@@ -78,12 +78,14 @@ public class SearchTestUtil {
 		return document;
 	}
 
-	public static List<SearchResult> getSearchResults(Document... documents) {
+	public static List<SearchResult> getSearchResults(
+		SearchResultTranslator searchResultTranslator, Document... documents) {
+
 		Hits hits = new HitsImpl();
 
 		hits.setDocs(documents);
 
-		return SearchResultUtil.getSearchResults(hits, null);
+		return searchResultTranslator.translate(hits, null, null, null);
 	}
 
 }

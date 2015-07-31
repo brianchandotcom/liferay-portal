@@ -12,8 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.search.internal.result;
 
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.SummaryFactory;
+import com.liferay.portal.kernel.search.result.SearchResultTranslator;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.test.BaseSearchResultUtilTestCase;
@@ -32,6 +40,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -41,8 +50,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author André de Oliveira
  */
 @PrepareForTest( {
-	AssetRendererFactoryRegistryUtil.class, IndexerRegistryUtil.class,
-	ServiceTrackerCollections.class
+	AssetRendererFactoryRegistryUtil.class, ServiceTrackerCollections.class
 })
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
@@ -58,7 +66,8 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 	@Test
 	public void testNoDocuments() {
-		List<SearchResult> searchResults = SearchTestUtil.getSearchResults();
+		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
+			searchResultTranslator);
 
 		Assert.assertEquals(0, searchResults.size());
 	}
@@ -98,7 +107,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		Assert.assertEquals(
 			SearchTestUtil.SUMMARY_CONTENT, summary.getContent());
 		Assert.assertEquals(
-			BaseSearchResultManager.SUMMARY_MAX_CONTENT_LENGTH,
+			SummaryFactoryImpl.SUMMARY_MAX_CONTENT_LENGTH,
 			summary.getMaxContentLength());
 		Assert.assertEquals(SearchTestUtil.SUMMARY_TITLE, summary.getTitle());
 
@@ -107,13 +116,11 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 
 	@Test
 	public void testSummaryFromIndexer() throws Exception {
-		Indexer<?> indexer = Mockito.mock(Indexer.class);
-
 		Summary summary = new Summary(
 			null, SearchTestUtil.SUMMARY_TITLE, SearchTestUtil.SUMMARY_CONTENT);
 
-		when(
-			indexer.getSummary(
+		Mockito.when(
+			_indexer.getSummary(
 				(Document)Matchers.any(), Matchers.anyString(),
 				(PortletRequest)Matchers.isNull(),
 				(PortletResponse)Matchers.isNull())
@@ -121,10 +128,10 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 			summary
 		);
 
-		stub(
-			method(IndexerRegistryUtil.class, "getIndexer", String.class)
-		).toReturn(
-			indexer
+		Mockito.when(
+			_indexerRegistry.getIndexer(Mockito.anyString())
+		).thenReturn(
+			_indexer
 		);
 
 		SearchResult searchResult = assertOneSearchResult(new DocumentImpl());
@@ -142,7 +149,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		Document document2 = SearchTestUtil.createDocument(className);
 
 		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
-			document1, document2);
+			searchResultTranslator, document1, document2);
 
 		Assert.assertEquals(1, searchResults.size());
 
@@ -161,5 +168,39 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		assertEmptyFileEntryRelatedSearchResults(searchResult);
 		assertEmptyVersions(searchResult);
 	}
+
+	protected SearchResultManagerImpl createSearchResultManager() {
+		SearchResultManagerImpl searchResultManagerImpl =
+			new SearchResultManagerImpl();
+
+		searchResultManagerImpl.setSummaryFactory(createSummaryFactory());
+
+		return searchResultManagerImpl;
+	}
+
+	@Override
+	protected SearchResultTranslator createSearchResultTranslator() {
+		SearchResultTranslatorImpl searchResultTranslatorImpl =
+			new SearchResultTranslatorImpl();
+
+		searchResultTranslatorImpl.setSearchResultManager(
+			createSearchResultManager());
+
+		return searchResultTranslatorImpl;
+	}
+
+	protected SummaryFactory createSummaryFactory() {
+		SummaryFactoryImpl summaryFactoryImpl = new SummaryFactoryImpl();
+
+		summaryFactoryImpl.setIndexerRegistry(_indexerRegistry);
+
+		return summaryFactoryImpl;
+	}
+
+	@Mock
+	private Indexer<Object> _indexer;
+
+	@Mock
+	private IndexerRegistry _indexerRegistry;
 
 }

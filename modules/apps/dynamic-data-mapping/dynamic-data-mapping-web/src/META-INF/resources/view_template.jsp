@@ -117,7 +117,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate"
+			className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
 			keyProperty="templateId"
 			modelVar="template"
 		>

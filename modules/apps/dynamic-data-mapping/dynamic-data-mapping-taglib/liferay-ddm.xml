@@ -75,8 +75,8 @@
 			</attribute>
 			<attribute>
 				<name>field</name>
-				<inputType>com.liferay.portlet.dynamicdatamapping.storage.Field</inputType>
-				<outputType>com.liferay.portlet.dynamicdatamapping.storage.Field</outputType>
+				<inputType>com.liferay.dynamic.data.mapping.storage.Field</inputType>
+				<outputType>com.liferay.dynamic.data.mapping.storage.Field</outputType>
 			</attribute>
 			<attribute>
 				<name>fieldsNamespace</name>

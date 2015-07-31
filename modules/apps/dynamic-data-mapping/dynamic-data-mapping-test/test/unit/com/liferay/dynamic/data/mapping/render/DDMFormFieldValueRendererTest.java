@@ -15,6 +15,15 @@
 package com.liferay.dynamic.data.mapping.render;
 
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
+import com.liferay.dynamic.data.mapping.render.impl.CheckboxDDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.render.impl.DateDDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.render.impl.DecimalDDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.render.impl.DocumentLibraryDDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.render.impl.GeolocationDDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.render.impl.IntegerDDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.render.impl.LinkToPageDDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.render.impl.SelectDDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.render.impl.TextDDMFormFieldValueRenderer;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -35,17 +44,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.render.CheckboxDDMFormFieldValueRenderer;
-import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldValueRenderer;
-import com.liferay.portlet.dynamicdatamapping.render.DateDDMFormFieldValueRenderer;
-import com.liferay.portlet.dynamicdatamapping.render.DecimalDDMFormFieldValueRenderer;
-import com.liferay.portlet.dynamicdatamapping.render.DocumentLibraryDDMFormFieldValueRenderer;
-import com.liferay.portlet.dynamicdatamapping.render.GeolocationDDMFormFieldValueRenderer;
-import com.liferay.portlet.dynamicdatamapping.render.IntegerDDMFormFieldValueRenderer;
-import com.liferay.portlet.dynamicdatamapping.render.LinkToPageDDMFormFieldValueRenderer;
-import com.liferay.portlet.dynamicdatamapping.render.SelectDDMFormFieldValueRenderer;
-import com.liferay.portlet.dynamicdatamapping.render.TextDDMFormFieldValueRenderer;
-import com.liferay.portlet.dynamicdatamapping.render.ValueAccessorException;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 

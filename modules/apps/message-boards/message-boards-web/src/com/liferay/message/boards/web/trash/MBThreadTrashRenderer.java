@@ -14,12 +14,12 @@
 
 package com.liferay.message.boards.web.trash;
 
+import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.BaseJSPTrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
@@ -78,7 +78,7 @@ public class MBThreadTrashRenderer extends BaseJSPTrashRenderer {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.MESSAGE_BOARDS;
+		return MessageBoardsPortletKeys.MESSAGE_BOARDS;
 	}
 
 	@Override

@@ -14,12 +14,12 @@
 
 package com.liferay.document.library.ddm;
 
+import com.liferay.dynamic.data.mapping.util.DDMPermissionHandler;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
-import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
 
 /**
  * @author Marcellus Tavares

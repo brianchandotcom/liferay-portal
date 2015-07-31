@@ -68,7 +68,7 @@ public class AssetEntryPermission {
 
 		String className = PortalUtil.getClassName(entry.getClassNameId());
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 

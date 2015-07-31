@@ -235,22 +235,6 @@ public class JavaTerm {
 		}
 	}
 
-	public void setContent(String content) {
-		_content = content;
-	}
-
-	public void setLineCount(int lineCount) {
-		_lineCount = lineCount;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
-	public void setParameterTypes(List<String> parameterTypes) {
-		_parameterTypes = parameterTypes;
-	}
-
 	public void setType(int type) {
 		_type = type;
 	}

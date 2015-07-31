@@ -3477,51 +3477,6 @@
 	</command>
 
 	<command name="SearchCalendarEventInSearchPortletWithTag" priority="3">
-		<var name="advancedSearchConfiguration">
-			<![CDATA[
-				{"facets": [
-				    {
-				        "className": "com.liferay.portal.kernel.search.facet.ScopeFacet",
-				        "data": {
-				            "frequencyThreshold": 1,
-				            "maxTerms": 10,
-				            "showAssetCount": true
-				        },
-				        "displayStyle": "scopes",
-				        "fieldName": "groupId",
-				        "label": "site",
-				        "order": "OrderHitsDesc",
-				        "static": false,
-				        "weight": 1.6
-				    },
-				    {
-				        "className": "com.liferay.portal.kernel.search.facet.AssetEntriesFacet",
-				        "data": {
-				            "frequencyThreshold": 1,
-				            "values": [
-				                "com.liferay.portal.model.User",
-				                "com.liferay.portlet.blogs.model.BlogsEntry",
-				                "com.liferay.portlet.documentlibrary.model.DLFileEntry",
-				                "com.liferay.portlet.documentlibrary.model.DLFolder",
-				                "com.liferay.portlet.journal.model.JournalArticle",
-				                "com.liferay.portlet.journal.model.JournalFolder",
-				                "com.liferay.knowledgebase.model.KBArticle",
-				                "com.liferay.portlet.messageboards.model.MBMessage",
-				                "com.liferay.portlet.wiki.model.WikiPage"
-				                "com.liferay.calendar.model.CalendarBooking"
-				            ]
-				        },
-				        "displayStyle": "asset_entries",
-				        "fieldName": "entryClassName",
-				        "label": "asset-type",
-				        "order": "OrderHitsDesc",
-				        "static": false,
-				        "weight": 1.5
-				    }
-				]}
-			]]>
-		</var>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Calendar Page" />
 		</execute>
@@ -3552,13 +3507,8 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Calendar Page" />
-			<var name="portletName" value="Search" />
-		</execute>
-
-		<execute macro="SearchPortlet#configureAdvancedSearchPG">
-			<var name="advancedSearchConfiguration" value="${advancedSearchConfiguration}" />
+		<execute macro="SearchPortlet#configureDisplaySettingsSearchPG">
+			<var name="searchAssetType" value="Calendar Event" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

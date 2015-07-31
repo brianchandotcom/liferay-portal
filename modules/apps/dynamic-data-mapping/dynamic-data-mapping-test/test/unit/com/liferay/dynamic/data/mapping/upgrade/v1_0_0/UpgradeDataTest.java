@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.service.upgrade.v1_0_0;
+package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
 
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.impl.DDMFormValuesJSONSerializerImpl;
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeData;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -34,7 +34,6 @@ import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.util.LocalizationImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
@@ -67,7 +66,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
  */
 @PrepareForTest({LocaleUtil.class})
 @RunWith(PowerMockRunner.class)
-public class UpgradeDynamicMappingTest extends PowerMockito {
+public class UpgradeDataTest extends PowerMockito {
 
 	@Before
 	public void setUp() {

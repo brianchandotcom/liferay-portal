@@ -3,6 +3,10 @@
 @include respond-to(phone) {
 	body #wrapper #banner {
 		padding: 20px 0;
+
+		.navbar-form .field-wrapper a {
+			padding: 2px 6px;
+		}
 	}
 
 	#navigationCollapse {

@@ -3374,19 +3374,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/vaadin.jar</file-name>
-				<version>6.8.12</version>
-				<project-name>Vaadin</project-name>
-				<project-url>http://vaadin.com</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2012 Vaadin Ltd</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/vorbis-java-core.jar</file-name>
 				<version>0.6</version>
 				<project-name>Vorbis</project-name>

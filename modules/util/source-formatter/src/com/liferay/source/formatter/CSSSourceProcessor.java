@@ -56,7 +56,7 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 			"**/js/editor/**", "**/js/misc/**", "**/themes/_unstyled/css/**",
 			"**/themes/admin/css/**", "**/themes/atlas/css/**",
 			"**/themes/classic/css/**", "**/themes/control_panel/css/**",
-			"**/tools/node**", "**/VAADIN/**"
+			"**/tools/node**"
 		};
 
 		return getFileNames(excludes, getIncludes());

@@ -290,7 +290,6 @@
 	<classpathentry kind="lib" path="lib/portal/truezip.jar"/>
 	<classpathentry kind="lib" path="lib/portal/unoil.jar"/>
 	<classpathentry kind="lib" path="lib/portal/urlrewritefilter.jar"/>
-	<classpathentry kind="lib" path="lib/portal/vaadin.jar"/>
 	<classpathentry kind="lib" path="lib/portal/vorbis-java-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/vorbis-java-tika.jar"/>
 	<classpathentry kind="lib" path="lib/portal/wsdl4j.jar"/>

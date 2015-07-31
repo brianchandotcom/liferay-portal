@@ -49,7 +49,7 @@ if (assetEntryId > 0) {
 
 				assetLinkEntry = assetLinkEntry.toEscapedModel();
 
-				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(assetLinkEntry.getClassNameId());
+				AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(assetLinkEntry.getClassNameId());
 
 				if (Validator.isNull(assetRendererFactory)) {
 					if (_log.isWarnEnabled()) {
@@ -63,7 +63,7 @@ if (assetEntryId > 0) {
 					continue;
 				}
 
-				AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetLinkEntry.getClassPK());
+				AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(assetLinkEntry.getClassPK());
 
 				if (assetRenderer.hasViewPermission(permissionChecker)) {
 					String asseLinktEntryTitle = assetLinkEntry.getTitle(locale);

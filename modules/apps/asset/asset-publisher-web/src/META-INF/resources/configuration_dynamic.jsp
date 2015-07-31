@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-List<AssetRendererFactory> classTypesAssetRendererFactories = (List<AssetRendererFactory>)request.getAttribute("configuration.jsp-classTypesAssetRendererFactories");
+List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRendererFactory<?>>)request.getAttribute("configuration.jsp-classTypesAssetRendererFactories");
 PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configuration.jsp-configurationRenderURL");
 String redirect = (String)request.getAttribute("configuration.jsp-redirect");
 String selectScope = (String)request.getAttribute("configuration.jsp-selectScope");
@@ -108,9 +108,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					</div>
 
 					<%
-					List<AssetRendererFactory> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
+					List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
 
-					for (AssetRendererFactory assetRendererFactory : assetRendererFactories) {
+					for (AssetRendererFactory<?> assetRendererFactory : assetRendererFactories) {
 						ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
 
 						List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(assetPublisherDisplayContext.getReferencedModelsGroupIds(), locale);
@@ -543,7 +543,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	var sourcePanel = $('#assetPublisherSourcePanel');
 
 	<%
-	for (AssetRendererFactory curRendererFactory : classTypesAssetRendererFactories) {
+	for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
 		String className = AssetPublisherUtil.getClassName(curRendererFactory);
 	%>
 
@@ -685,7 +685,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	function <portlet:namespace />toggleSubclasses(removeOrderBySubtype) {
 
 		<%
-		for (AssetRendererFactory curRendererFactory : classTypesAssetRendererFactories) {
+		for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
 			String className = AssetPublisherUtil.getClassName(curRendererFactory);
 		%>
 

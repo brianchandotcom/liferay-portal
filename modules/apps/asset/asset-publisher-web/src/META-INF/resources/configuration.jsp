@@ -23,7 +23,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortletResource()) + "_selectSite";
 
-List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<AssetRendererFactory>();
+List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>();
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -323,7 +323,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 		form.fm('classNameIds').val(Util.listSelect(form.fm('currentClassNameIds')));
 
 		<%
-		for (AssetRendererFactory curRendererFactory : classTypesAssetRendererFactories) {
+		for (AssetRendererFactory<?> curRendererFactory : classTypesAssetRendererFactories) {
 			String className = AssetPublisherUtil.getClassName(curRendererFactory);
 		%>
 

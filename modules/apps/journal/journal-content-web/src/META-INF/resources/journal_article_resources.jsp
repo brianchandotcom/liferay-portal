@@ -18,7 +18,7 @@
 
 <%
 JournalArticle article = journalContentDisplayContext.getArticle();
-AssetRenderer assetRenderer = journalContentDisplayContext.getAssetRenderer();
+AssetRenderer<JournalArticle> assetRenderer = journalContentDisplayContext.getAssetRenderer();
 %>
 
 <div class="article-preview-content">

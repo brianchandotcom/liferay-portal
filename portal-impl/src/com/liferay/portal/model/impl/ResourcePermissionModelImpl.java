@@ -70,9 +70,11 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 			{ "name", Types.VARCHAR },
 			{ "scope", Types.INTEGER },
 			{ "primKey", Types.VARCHAR },
+			{ "primKeyId", Types.BIGINT },
 			{ "roleId", Types.BIGINT },
 			{ "ownerId", Types.BIGINT },
-			{ "actionIds", Types.BIGINT }
+			{ "actionIds", Types.BIGINT },
+			{ "viewPermission", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -83,12 +85,14 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("scope", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("primKey", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("primKeyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("roleId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ownerId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("actionIds", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("viewPermission", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ResourcePermission (mvccVersion LONG default 0,resourcePermissionId LONG not null primary key,companyId LONG,name VARCHAR(255) null,scope INTEGER,primKey VARCHAR(255) null,roleId LONG,ownerId LONG,actionIds LONG)";
+	public static final String TABLE_SQL_CREATE = "create table ResourcePermission (mvccVersion LONG default 0,resourcePermissionId LONG not null primary key,companyId LONG,name VARCHAR(255) null,scope INTEGER,primKey VARCHAR(255) null,primKeyId LONG,roleId LONG,ownerId LONG,actionIds LONG,viewPermission BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table ResourcePermission";
 	public static final String ORDER_BY_JPQL = " ORDER BY resourcePermission.resourcePermissionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ResourcePermission.resourcePermissionId ASC";
@@ -107,9 +111,11 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long NAME_COLUMN_BITMASK = 2L;
 	public static final long PRIMKEY_COLUMN_BITMASK = 4L;
-	public static final long ROLEID_COLUMN_BITMASK = 8L;
-	public static final long SCOPE_COLUMN_BITMASK = 16L;
-	public static final long RESOURCEPERMISSIONID_COLUMN_BITMASK = 32L;
+	public static final long PRIMKEYID_COLUMN_BITMASK = 8L;
+	public static final long ROLEID_COLUMN_BITMASK = 16L;
+	public static final long SCOPE_COLUMN_BITMASK = 32L;
+	public static final long VIEWPERMISSION_COLUMN_BITMASK = 64L;
+	public static final long RESOURCEPERMISSIONID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -130,9 +136,11 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		model.setName(soapModel.getName());
 		model.setScope(soapModel.getScope());
 		model.setPrimKey(soapModel.getPrimKey());
+		model.setPrimKeyId(soapModel.getPrimKeyId());
 		model.setRoleId(soapModel.getRoleId());
 		model.setOwnerId(soapModel.getOwnerId());
 		model.setActionIds(soapModel.getActionIds());
+		model.setViewPermission(soapModel.getViewPermission());
 
 		return model;
 	}
@@ -204,9 +212,11 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		attributes.put("name", getName());
 		attributes.put("scope", getScope());
 		attributes.put("primKey", getPrimKey());
+		attributes.put("primKeyId", getPrimKeyId());
 		attributes.put("roleId", getRoleId());
 		attributes.put("ownerId", getOwnerId());
 		attributes.put("actionIds", getActionIds());
+		attributes.put("viewPermission", getViewPermission());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -252,6 +262,12 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 			setPrimKey(primKey);
 		}
 
+		Long primKeyId = (Long)attributes.get("primKeyId");
+
+		if (primKeyId != null) {
+			setPrimKeyId(primKeyId);
+		}
+
 		Long roleId = (Long)attributes.get("roleId");
 
 		if (roleId != null) {
@@ -268,6 +284,12 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 
 		if (actionIds != null) {
 			setActionIds(actionIds);
+		}
+
+		Boolean viewPermission = (Boolean)attributes.get("viewPermission");
+
+		if (viewPermission != null) {
+			setViewPermission(viewPermission);
 		}
 	}
 
@@ -393,6 +415,29 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 
 	@JSON
 	@Override
+	public long getPrimKeyId() {
+		return _primKeyId;
+	}
+
+	@Override
+	public void setPrimKeyId(long primKeyId) {
+		_columnBitmask |= PRIMKEYID_COLUMN_BITMASK;
+
+		if (!_setOriginalPrimKeyId) {
+			_setOriginalPrimKeyId = true;
+
+			_originalPrimKeyId = _primKeyId;
+		}
+
+		_primKeyId = primKeyId;
+	}
+
+	public long getOriginalPrimKeyId() {
+		return _originalPrimKeyId;
+	}
+
+	@JSON
+	@Override
 	public long getRoleId() {
 		return _roleId;
 	}
@@ -436,6 +481,34 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		_actionIds = actionIds;
 	}
 
+	@JSON
+	@Override
+	public boolean getViewPermission() {
+		return _viewPermission;
+	}
+
+	@Override
+	public boolean isViewPermission() {
+		return _viewPermission;
+	}
+
+	@Override
+	public void setViewPermission(boolean viewPermission) {
+		_columnBitmask |= VIEWPERMISSION_COLUMN_BITMASK;
+
+		if (!_setOriginalViewPermission) {
+			_setOriginalViewPermission = true;
+
+			_originalViewPermission = _viewPermission;
+		}
+
+		_viewPermission = viewPermission;
+	}
+
+	public boolean getOriginalViewPermission() {
+		return _originalViewPermission;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -473,9 +546,11 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		resourcePermissionImpl.setName(getName());
 		resourcePermissionImpl.setScope(getScope());
 		resourcePermissionImpl.setPrimKey(getPrimKey());
+		resourcePermissionImpl.setPrimKeyId(getPrimKeyId());
 		resourcePermissionImpl.setRoleId(getRoleId());
 		resourcePermissionImpl.setOwnerId(getOwnerId());
 		resourcePermissionImpl.setActionIds(getActionIds());
+		resourcePermissionImpl.setViewPermission(getViewPermission());
 
 		resourcePermissionImpl.resetOriginalValues();
 
@@ -550,9 +625,17 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 
 		resourcePermissionModelImpl._originalPrimKey = resourcePermissionModelImpl._primKey;
 
+		resourcePermissionModelImpl._originalPrimKeyId = resourcePermissionModelImpl._primKeyId;
+
+		resourcePermissionModelImpl._setOriginalPrimKeyId = false;
+
 		resourcePermissionModelImpl._originalRoleId = resourcePermissionModelImpl._roleId;
 
 		resourcePermissionModelImpl._setOriginalRoleId = false;
+
+		resourcePermissionModelImpl._originalViewPermission = resourcePermissionModelImpl._viewPermission;
+
+		resourcePermissionModelImpl._setOriginalViewPermission = false;
 
 		resourcePermissionModelImpl._columnBitmask = 0;
 	}
@@ -585,18 +668,22 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 			resourcePermissionCacheModel.primKey = null;
 		}
 
+		resourcePermissionCacheModel.primKeyId = getPrimKeyId();
+
 		resourcePermissionCacheModel.roleId = getRoleId();
 
 		resourcePermissionCacheModel.ownerId = getOwnerId();
 
 		resourcePermissionCacheModel.actionIds = getActionIds();
 
+		resourcePermissionCacheModel.viewPermission = getViewPermission();
+
 		return resourcePermissionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -610,12 +697,16 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		sb.append(getScope());
 		sb.append(", primKey=");
 		sb.append(getPrimKey());
+		sb.append(", primKeyId=");
+		sb.append(getPrimKeyId());
 		sb.append(", roleId=");
 		sb.append(getRoleId());
 		sb.append(", ownerId=");
 		sb.append(getOwnerId());
 		sb.append(", actionIds=");
 		sb.append(getActionIds());
+		sb.append(", viewPermission=");
+		sb.append(getViewPermission());
 		sb.append("}");
 
 		return sb.toString();
@@ -623,7 +714,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.ResourcePermission");
@@ -654,6 +745,10 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		sb.append(getPrimKey());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>primKeyId</column-name><column-value><![CDATA[");
+		sb.append(getPrimKeyId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>roleId</column-name><column-value><![CDATA[");
 		sb.append(getRoleId());
 		sb.append("]]></column-value></column>");
@@ -664,6 +759,10 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		sb.append(
 			"<column><column-name>actionIds</column-name><column-value><![CDATA[");
 		sb.append(getActionIds());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>viewPermission</column-name><column-value><![CDATA[");
+		sb.append(getViewPermission());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -687,11 +786,17 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	private boolean _setOriginalScope;
 	private String _primKey;
 	private String _originalPrimKey;
+	private long _primKeyId;
+	private long _originalPrimKeyId;
+	private boolean _setOriginalPrimKeyId;
 	private long _roleId;
 	private long _originalRoleId;
 	private boolean _setOriginalRoleId;
 	private long _ownerId;
 	private long _actionIds;
+	private boolean _viewPermission;
+	private boolean _originalViewPermission;
+	private boolean _setOriginalViewPermission;
 	private long _columnBitmask;
 	private ResourcePermission _escapedModel;
 }

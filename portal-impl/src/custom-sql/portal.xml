@@ -41,22 +41,12 @@
 	</sql>
 	<sql id="com.liferay.portal.security.permission.InlineSQLHelper.joinResourcePermission">
 		<![CDATA[
-			INNER JOIN
-				(
-					SELECT
-						primKey
-					FROM
-						ResourcePermission
-					WHERE
-						(ResourcePermission.companyId = [$COMPANY_ID$]) AND
-						(ResourcePermission.name = '[$CLASS_NAME$]') AND
-						(ResourcePermission.scope = [$RESOURCE_SCOPE_INDIVIDUAL$]) AND
-						(MOD(ResourcePermission.actionIds, 2) = 1) AND
-						[$ROLE_IDS_OR_OWNER_ID$]
-					GROUP BY
-						primKey
-				)
-			InlineSQLResourcePermission ON
+			INNER JOIN ResourcePermission ON
+				(ResourcePermission.companyId = [$COMPANY_ID$]) AND
+				(ResourcePermission.name = '[$CLASS_NAME$]') AND
+				(ResourcePermission.scope = [$RESOURCE_SCOPE_INDIVIDUAL$]) AND
+				(ResourcePermission.viewPermission = [$TRUE$]) AND
+				[$ROLE_IDS_OR_OWNER_ID$] AND
 				[$PRIM_KEYS$]
 		]]>
 	</sql>

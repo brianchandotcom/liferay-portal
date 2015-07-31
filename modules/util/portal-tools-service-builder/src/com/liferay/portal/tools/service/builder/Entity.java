@@ -17,6 +17,7 @@ package com.liferay.portal.tools.service.builder;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -744,7 +745,9 @@ public class Entity {
 			return false;
 		}
 
-		return true;
+		EntityColumn col = _getPKColumn();
+
+		return StringUtil.equalsIgnoreCase("long", col.getType());
 	}
 
 	public boolean isPermissionedModel() {

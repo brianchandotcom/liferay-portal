@@ -372,7 +372,7 @@ public interface ResourceLocalService extends BaseLocalService {
 	public void updateResources(long companyId, long groupId,
 		java.lang.String name, long primKey,
 		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates resources matching the group, name, and primary key string at the
@@ -389,7 +389,7 @@ public interface ResourceLocalService extends BaseLocalService {
 	public void updateResources(long companyId, long groupId,
 		java.lang.String name, java.lang.String primKey,
 		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws PortalException;
 
 	/**
 	* Updates resources matching the name, primary key string and scope,

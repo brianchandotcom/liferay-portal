@@ -40,7 +40,7 @@ public class DDLClassNamesUpgradeProcess extends UpgradeProcess {
 		upgradeDDLClassName(classNameDependencies);
 		upgradeDDLRecordClassName(classNameDependencies);
 		upgradeDDLRecordSetClassName(classNameDependencies);
-		upgradeDDLRecordSetClassName(classNameDependencies);
+		upgradeDDLRecordVersionClassName(classNameDependencies);
 	}
 
 	protected void upgradeDDLClassName(

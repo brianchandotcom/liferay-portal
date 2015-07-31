@@ -49,7 +49,7 @@ public class BlogsCoverImageCaptionEditorConfigContributor
 
 		jsonObject.put("allowedContent", "a");
 		jsonObject.put("disallowedContent", "br");
-		jsonObject.put("extraPlugins", "placeholder,selectionregion,uicore");
+		jsonObject.put("extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore");
 		jsonObject.put("toolbars", getToolbarsJSONObject());
 	}
 

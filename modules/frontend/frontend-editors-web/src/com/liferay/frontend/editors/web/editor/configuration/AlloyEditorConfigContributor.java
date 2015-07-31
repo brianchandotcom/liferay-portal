@@ -73,8 +73,8 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 
 		jsonObject.put(
 			"extraPlugins",
-			"autolink,dragresize,dropimages,placeholder,selectionregion," +
-				"tableresize,tabletools,uicore");
+			"ae_autolink,ae_dragresize,ae_addimages,ae_placeholder,ae_" +
+				"selectionregion,ae_tableresize,ae_tabletools,ae_uicore");
 
 		String languageId = getLanguageId(themeDisplay);
 
@@ -270,13 +270,14 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		jsonObject.put(
 			"buttons",
 			toJSONArray(
-				"['tableRow', 'tableColumn', 'tableCell', 'tableRemove']"));
+				"['tableHeading', 'tableRow', 'tableColumn', 'tableCell', " +
+					"'tableRemove']"));
 		jsonObject.put(
 			"getArrowBoxClasses",
 			"AlloyEditor.SelectionGetArrowBoxClasses.table");
 		jsonObject.put("name", "table");
 		jsonObject.put("setPosition", "AlloyEditor.SelectionSetPosition.table");
-		jsonObject.put("test", "AlloyEeditor.SelectionTest.table");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.table");
 
 		return jsonObject;
 	}

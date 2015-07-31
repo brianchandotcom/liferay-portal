@@ -49,12 +49,12 @@ import org.osgi.service.component.annotations.Reference;
 public class TestWorkflowHandler implements WorkflowHandler<Object> {
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK) {
+	public AssetRenderer<Object> getAssetRenderer(long classPK) {
 		return null;
 	}
 
 	@Override
-	public AssetRendererFactory getAssetRendererFactory() {
+	public AssetRendererFactory<Object> getAssetRendererFactory() {
 		return null;
 	}
 

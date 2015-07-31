@@ -112,6 +112,18 @@ public class JavaTerm {
 		return _type;
 	}
 
+	public boolean hasAnnotation(String annotation) {
+		if (_content.contains(_indent + StringPool.AT + annotation + "\n") ||
+			_content.contains(
+				_indent + StringPool.AT + annotation + 
+					StringPool.OPEN_PARENTHESIS)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isClass() {
 		if ((_type == TYPE_CLASS_PRIVATE) ||
 			(_type == TYPE_CLASS_PRIVATE_STATIC) ||

@@ -60,7 +60,7 @@ String defaultLogoutPagePath = PrefsPropsUtil.getString(company.getCompanyId(), 
 
 		<aui:input label="cdn-host-https" name='<%= "settings--" + PropsKeys.CDN_HOST_HTTPS + "--" %>' type="text" value="<%= cdnHostHttps %>" />
 
-		<aui:input label="cdn-dynamic-resources-enabled" name='<%= "settings--" + PropsKeys.CDN_DYNAMIC_RESOURCES_ENABLED + "--" %>' type="checkbox" value="<%= cdnDynamicResourcesEnabled %>" />
+		<aui:input label="enable-cdn-dynamic-resources" name='<%= "settings--" + PropsKeys.CDN_DYNAMIC_RESOURCES_ENABLED + "--" %>' type="checkbox" value="<%= cdnDynamicResourcesEnabled %>" />
 	</aui:col>
 </aui:row>
 

@@ -36,7 +36,7 @@ String facebookConnectRedirectURL = FacebookConnectUtil.getRedirectURL(company.g
 <aui:fieldset>
 	<aui:input label="enabled" name='<%= "settings--" + PropsKeys.FACEBOOK_CONNECT_AUTH_ENABLED + "--" %>' type="checkbox" value="<%= facebookConnectAuthEnabled %>" />
 
-	<aui:input label="verified-account-required" name='<%= "settings--" + PropsKeys.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED + "--" %>' type="checkbox" value="<%= facebookConnectVerifiedAccountRequired %>" />
+	<aui:input label="require-verified-account" name='<%= "settings--" + PropsKeys.FACEBOOK_CONNECT_VERIFIED_ACCOUNT_REQUIRED + "--" %>' type="checkbox" value="<%= facebookConnectVerifiedAccountRequired %>" />
 
 	<aui:input cssClass="lfr-input-text-container" label="application-id" name='<%= "settings--" + PropsKeys.FACEBOOK_CONNECT_APP_ID + "--" %>' type="text" value="<%= facebookConnectAppId %>" />
 

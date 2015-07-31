@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
@@ -145,6 +146,7 @@ public class MainServlet extends ActionServlet {
 			_log.debug("Destroy plugins");
 		}
 
+		_serviceLifecycleRegistration.unregister();
 		_servletContextRegistration.unregister();
 
 		PortalLifecycleUtil.flushDestroys();
@@ -363,7 +365,7 @@ public class MainServlet extends ActionServlet {
 
 		StartupHelperUtil.setStartupFinished(true);
 
-		registerServletContextWithModuleFramework();
+		notifyToContainerPortalContextIsReady();
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 	}
@@ -1083,6 +1085,28 @@ public class MainServlet extends ActionServlet {
 		return userId;
 	}
 
+	protected void notifyToContainerPortalContextIsReady() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("service.lifecycle", "portal.context.initialized");
+		properties.put("service.vendor", ReleaseInfo.getVendor());
+		properties.put("service.version", ReleaseInfo.getVersion());
+
+		_serviceLifecycleRegistration = registry.registerService(
+			ServiceLifecycle.class, new ServiceLifecycle() { }, properties);
+
+		properties = new HashMap<>();
+
+		properties.put("bean.id", ServletContext.class.getName());
+		properties.put("original.bean", Boolean.TRUE);
+		properties.put("service.vendor", ReleaseInfo.getVendor());
+
+		_servletContextRegistration = registry.registerService(
+			ServletContext.class, getServletContext(), properties);
+	}
+
 	protected boolean processCompanyInactiveRequest(
 			HttpServletRequest request, HttpServletResponse response,
 			long companyId)
@@ -1325,19 +1349,6 @@ public class MainServlet extends ActionServlet {
 		return new ProtectedServletRequest(request, remoteUser);
 	}
 
-	protected void registerServletContextWithModuleFramework() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("bean.id", ServletContext.class.getName());
-		properties.put("original.bean", Boolean.TRUE);
-		properties.put("service.vendor", ReleaseInfo.getVendor());
-
-		_servletContextRegistration = registry.registerService(
-			ServletContext.class, getServletContext(), properties);
-	}
-
 	protected void sendError(
 			int status, Throwable t, HttpServletRequest request,
 			HttpServletResponse response)
@@ -1408,6 +1419,7 @@ public class MainServlet extends ActionServlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(MainServlet.class);
 
+	private ServiceRegistration<ServiceLifecycle> _serviceLifecycleRegistration;
 	private ServiceRegistration<ServletContext> _servletContextRegistration;
 
 }

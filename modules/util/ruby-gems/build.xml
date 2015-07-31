@@ -52,12 +52,4 @@
 			</then>
 		</if>
 	</target>
-
-	<target name="deploy">
-		<deploy
-			module.dir="${basedir}"
-		/>
-
-		<copy file="${plugin.file}" tofile="../../../lib/development/${plugin.name}.jar" />
-	</target>
 </project>

@@ -202,8 +202,7 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference(
-		target = "(" + ServiceLifecycle.SERVICE_LIFECYCLE + "=" + ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED + ")",
-		unbind = "-"
+		target = ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED, unbind = "-"
 	)
 	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
 	}

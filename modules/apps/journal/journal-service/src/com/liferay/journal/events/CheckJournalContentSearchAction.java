@@ -93,8 +93,7 @@ public class CheckJournalContentSearchAction extends SimpleAction {
 	}
 
 	@Reference(
-		target = "(" + ServiceLifecycle.SERVICE_LIFECYCLE + "=" + ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED + ")",
-		unbind = "-"
+		target = ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED, unbind = "-"
 	)
 	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
 	}

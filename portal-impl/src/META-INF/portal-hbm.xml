@@ -1551,6 +1551,7 @@
 		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" column="size_" />
 		<property name="checksum" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />

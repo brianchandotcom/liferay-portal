@@ -272,11 +272,6 @@ public class AppLocalServiceUtil {
 		return getService().getBundledApps();
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
 	public static java.util.List<com.liferay.marketplace.model.App> getInstalledApps() {
 		return getService().getInstalledApps();
 	}

@@ -662,6 +662,7 @@ create table DLFileVersion (
 	version VARCHAR(75) null,
 	size_ LONG,
 	checksum VARCHAR(75) null,
+	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,

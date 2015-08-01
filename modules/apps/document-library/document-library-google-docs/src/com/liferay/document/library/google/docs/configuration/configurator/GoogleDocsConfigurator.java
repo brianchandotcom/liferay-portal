@@ -28,6 +28,7 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureLinkManager;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -85,54 +86,59 @@ public class GoogleDocsConfigurator {
 	}
 
 	@Reference
-	public void setClassNameLocalService(
+	protected void setClassNameLocalService(
 		ClassNameLocalService classNameLocalService) {
 
 		_classNameLocalService = classNameLocalService;
 	}
 
 	@Reference
-	public void setCompanyLocalService(
+	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
 
 		_companyLocalService = companyLocalService;
 	}
 
 	@Reference
-	public void setDDMStructureLocalService(
+	protected void setDDMStructureLinkManager(
+		DDMStructureLinkManager ddmStructureLinkManager) {
+	}
+
+	@Reference
+	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
 		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
 	@Reference
-	public void setDLFileEntryLocalService(
+	protected void setDLFileEntryLocalService(
 		DLFileEntryLocalService dlFileEntryLocalService) {
 
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 	}
 
 	@Reference
-	public void setDLFileEntryMetadataLocalService(
+	protected void setDLFileEntryMetadataLocalService(
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
 
 		_dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
 	}
 
 	@Reference
-	public void setDLFileEntryTypeLocalService(
+	protected void setDLFileEntryTypeLocalService(
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
 
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 	}
 
 	@Reference
-	public void setStorageEngine(StorageEngine storageEngine) {
+	protected void setStorageEngine(StorageEngine storageEngine) {
 		_storageEngine = storageEngine;
 	}
 
 	@Reference
-	public void setUserLocalService(UserLocalService userLocalService) {
+	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
 

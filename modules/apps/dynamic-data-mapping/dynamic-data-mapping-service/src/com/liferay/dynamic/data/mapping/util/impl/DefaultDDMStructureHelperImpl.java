@@ -12,17 +12,20 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.util;
+package com.liferay.dynamic.data.mapping.util.impl;
 
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializerUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.DDMXML;
+import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
@@ -47,12 +50,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
-public class DefaultDDMStructureUtil {
+@Component(immediate = true)
+public class DefaultDDMStructureHelperImpl
+	implements DefaultDDMStructureHelper {
 
-	public static void addDDMStructures(
+	public void addDDMStructures(
 			long userId, long groupId, long classNameId,
 			ClassLoader classLoader, String fileName,
 			ServiceContext serviceContext)
@@ -78,7 +86,7 @@ public class DefaultDDMStructureUtil {
 			String ddmStructureKey = name;
 
 			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.fetchStructure(
+				_ddmStructureLocalService.fetchStructure(
 					groupId, classNameId, ddmStructureKey);
 
 			if (ddmStructure != null) {
@@ -108,7 +116,7 @@ public class DefaultDDMStructureUtil {
 			serviceContext.setAttribute(
 				"status", WorkflowConstants.STATUS_APPROVED);
 
-			ddmStructure = DDMStructureLocalServiceUtil.addStructure(
+			ddmStructure = _ddmStructureLocalService.addStructure(
 				userId, groupId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
 				ddmStructureKey, nameMap, descriptionMap, ddmForm,
@@ -131,7 +139,7 @@ public class DefaultDDMStructureUtil {
 			boolean cacheable = GetterUtil.getBoolean(
 				templateElement.elementText("cacheable"));
 
-			DDMTemplateLocalServiceUtil.addTemplate(
+			_ddmTemplateLocalService.addTemplate(
 				userId, groupId, PortalUtil.getClassNameId(DDMStructure.class),
 				ddmStructure.getStructureId(), ddmStructure.getClassNameId(),
 				null, nameMap, null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
@@ -141,7 +149,7 @@ public class DefaultDDMStructureUtil {
 		}
 	}
 
-	public static String getDynamicDDMStructureDefinition(
+	public String getDynamicDDMStructureDefinition(
 			ClassLoader classLoader, String fileName,
 			String dynamicDDMStructureName, Locale locale)
 		throws Exception {
@@ -172,14 +180,14 @@ public class DefaultDDMStructureUtil {
 		return null;
 	}
 
-	protected static DDMForm getDDMForm(Element structureElement, Locale locale)
+	protected DDMForm getDDMForm(Element structureElement, Locale locale)
 		throws Exception {
 
 		Element structureElementDefinitionElement = structureElement.element(
 			"definition");
 
 		if (structureElementDefinitionElement != null) {
-			return DDMFormJSONDeserializerUtil.deserialize(
+			return _ddmFormJSONDeserializer.deserialize(
 				structureElementDefinitionElement.getTextTrim());
 		}
 
@@ -193,13 +201,13 @@ public class DefaultDDMStructureUtil {
 		Locale ddmStructureDefaultLocale = LocaleUtil.fromLanguageId(
 			defaultLocaleAttribute.getValue());
 
-		definition = DDMXMLUtil.updateXMLDefaultLocale(
+		definition = _ddmXML.updateXMLDefaultLocale(
 			definition, ddmStructureDefaultLocale, locale);
 
-		return DDMFormXSDDeserializerUtil.deserialize(definition);
+		return _ddmFormXSDDeserializer.deserialize(definition);
 	}
 
-	protected static DDMFormLayout getDDMFormLayout(
+	protected DDMFormLayout getDDMFormLayout(
 			Element structureElement, DDMForm ddmForm)
 		throws Exception {
 
@@ -207,14 +215,14 @@ public class DefaultDDMStructureUtil {
 			"layout");
 
 		if (structureElementLayoutElement != null) {
-			return DDMFormLayoutJSONDeserializerUtil.deserialize(
+			return _ddmFormLayoutJSONDeserializer.deserialize(
 				structureElementLayoutElement.getTextTrim());
 		}
 
-		return DDMUtil.getDefaultDDMFormLayout(ddmForm);
+		return _ddm.getDefaultDDMFormLayout(ddmForm);
 	}
 
-	protected static List<Element> getDDMStructures(
+	protected List<Element> getDDMStructures(
 			ClassLoader classLoader, String fileName, Locale locale)
 		throws Exception {
 
@@ -228,5 +236,58 @@ public class DefaultDDMStructureUtil {
 
 		return rootElement.elements("structure");
 	}
+
+	@Reference
+	protected void setDDM(DDM ddm) {
+		_ddm = ddm;
+	}
+
+	@Reference
+	protected void setDDMFormJSONDeserializer(
+		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
+
+		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
+	}
+
+	@Reference
+	protected void setDDMFormLayoutJSONDeserializer(
+		DDMFormLayoutJSONDeserializer ddmFormLayoutJSONDeserializer) {
+
+		_ddmFormLayoutJSONDeserializer = ddmFormLayoutJSONDeserializer;
+	}
+
+	@Reference
+	protected void setDDMFormXSDDeserializer(
+		DDMFormXSDDeserializer ddmFormXSDDeserializer) {
+
+		_ddmFormXSDDeserializer = ddmFormXSDDeserializer;
+	}
+
+	@Reference
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	@Reference
+	protected void setDDMTemplateLocalService(
+		DDMTemplateLocalService ddmTemplateLocalService) {
+
+		_ddmTemplateLocalService = ddmTemplateLocalService;
+	}
+
+	@Reference
+	protected void setDDMXML(DDMXML ddmXML) {
+		_ddmXML = ddmXML;
+	}
+
+	private DDM _ddm;
+	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;
+	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
+	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private DDMXML _ddmXML;
 
 }

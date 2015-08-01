@@ -58,10 +58,6 @@ Import-Package:\
 	com.liferay.portlet.documentlibrary.model,\
 	com.liferay.portlet.documentlibrary.service,\
 	com.liferay.portlet.documentlibrary.util,\
-	com.liferay.portlet.dynamicdatamapping,\
-	com.liferay.portlet.dynamicdatamapping.model,\
-	com.liferay.portlet.dynamicdatamapping.service.permission,\
-	com.liferay.portlet.dynamicdatamapping.storage,\
 	com.liferay.portlet.expando.model,\
 	com.liferay.portlet.exportimport.lar,\
 	com.liferay.portlet.exportimport.staging,\

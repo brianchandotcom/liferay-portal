@@ -19,10 +19,13 @@ package com.liferay.dynamic.data.mapping.constants;
  */
 public class DDMWebKeys {
 
-	public static final String DYNAMIC_DATA_MAPPING_FORM_HTML = "DYNAMIC_DATA_MAPPING_FORM_HTML";
+	public static final String DYNAMIC_DATA_MAPPING_FORM_HTML =
+		"DYNAMIC_DATA_MAPPING_FORM_HTML";
 
-	public static final String DYNAMIC_DATA_MAPPING_STRUCTURE = "DYNAMIC_DATA_MAPPING_STRUCTURE";
+	public static final String DYNAMIC_DATA_MAPPING_STRUCTURE =
+		"DYNAMIC_DATA_MAPPING_STRUCTURE";
 
-	public static final String DYNAMIC_DATA_MAPPING_TEMPLATE = "DYNAMIC_DATA_MAPPING_TEMPLATE";
+	public static final String DYNAMIC_DATA_MAPPING_TEMPLATE =
+		"DYNAMIC_DATA_MAPPING_TEMPLATE";
 
 }

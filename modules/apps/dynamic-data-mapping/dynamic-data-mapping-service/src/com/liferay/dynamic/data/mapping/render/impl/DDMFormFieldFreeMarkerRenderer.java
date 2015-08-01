@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -149,13 +148,6 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		fieldContext.put(
 			"showLabel", Boolean.toString(ddmFormField.isShowLabel()));
 		fieldContext.put("type", ddmFormField.getType());
-	}
-	
-	private TemplateResource getTemplateResource(String resource) {
-		TemplateResource templateResource = new ClassLoaderTemplateResource(
-				getClass().getClassLoader(), resource);
-
-		return templateResource;
 	}
 
 	protected int countFieldRepetition(
@@ -633,6 +625,13 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		template.processTemplate(writer);
 
 		return writer.toString();
+	}
+
+	private TemplateResource getTemplateResource(String resource) {
+		TemplateResource templateResource = new ClassLoaderTemplateResource(
+			getClass().getClassLoader(), resource);
+
+		return templateResource;
 	}
 
 	private static final String _DEFAULT_NAMESPACE = "alloy";

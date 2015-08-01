@@ -15,6 +15,7 @@
 package com.liferay.document.library.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.verify.DLServiceVerifyProcess;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
@@ -44,7 +45,6 @@ import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.VerifyDocumentLibrary;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -63,6 +63,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.ByteArrayInputStream;
 
@@ -87,7 +89,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
+public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -443,7 +445,9 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return new VerifyDocumentLibrary();
+		Registry registry = RegistryUtil.getRegistry();
+
+		return registry.getService(DLServiceVerifyProcess.class);
 	}
 
 	protected void setUpPermissionThreadLocal() throws Exception {

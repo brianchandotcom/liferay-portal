@@ -16,22 +16,23 @@ package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.upload.UploadHandler;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.upload.DLImageUploadHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Roberto Díaz
  */
-@Component(
-	immediate = true,
+@OSGiBeanProperties(
 	property = {
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
+		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
 		"mvc.command.name=/document_library/upload_image"
 	},
 	service = MVCActionCommand.class
@@ -42,6 +43,10 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		_uploadHandler.upload(actionRequest, actionResponse);
 	}
+
+	private UploadHandler _uploadHandler = new DLImageUploadHandler();
 
 }

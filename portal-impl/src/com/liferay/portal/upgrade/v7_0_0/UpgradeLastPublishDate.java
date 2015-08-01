@@ -44,9 +44,9 @@ public class UpgradeLastPublishDate extends UpgradeProcess {
 		upgradeLayoutsAdmin();
 		upgradeMessageBoards();
 		upgradeMobileDeviceRules();
-		upgradeSitesAdmin();
 		upgradeRatings();
 		upgradeRolesAdmin();
+		upgradeSitesAdmin();
 		upgradeUsersAdmin();
 	}
 

@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DEACTIVATE</td>
 	<td>//button[contains(.,'Deactivate')]</td>
 	<td></td>
@@ -31,27 +26,6 @@
 <tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--BASIC_SEARCH-->
-<tr>
-	<td>BASIC_SEARCH_FIELD</td>
-	<td>//input[@name='_125_keywords']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASIC_SEARCH_BUTTON</td>
-	<td>//button[contains(.,'Search')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>BASIC_SEARCH_ADVANCED</td>
-	<td>//a[contains(@id,'toggle') and contains(@id,'searchtoggleAdvanced')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -103,7 +77,7 @@
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_ALL_CHECKBOX</td>
-	<td>//input[@name='_125_allRowIds']</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>

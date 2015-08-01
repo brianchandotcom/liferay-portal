@@ -465,7 +465,7 @@
 		</execute>
 
 		<var name="appsPortletList" value="App Manager,Purchased,Store,Plugins Configuration,License Manager" />
-		<var name="configurationPortletList" value="Portal Settings,Custom Fields,Server Administration,Portal Instances,Configuration Admin,Server Access Control Panel" />
+		<var name="configurationPortletList" value="Portal Settings,Custom Fields,Server Administration,Portal Instances,Workflow Configuration,Workflow Definition, Configuration Admin,Server Access Policy" />
 		<var name="sitesPortletList" value="Sites,Site Templates,Page Templates" />
 		<var name="usersPortletList" value="Users and Organizations,User Groups,Roles,Password Policies,Monitoring" />
 
@@ -573,12 +573,15 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="Click" locator1="Dockbar#USER_NAME" />
-		<execute function="AssertClick" locator1="Dockbar#USER_MY_ACCOUNT" value1="My Account" />
+		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_MY_SPACE_NAVIGATION" value1="My Space" />
+
+		<var name="key_portletCategoryName" value="My Account" />
+
+		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MY_SPACE_PANEL_TITLE" value1="My Account" />
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="AssertClick" locator1="MyAccount#NAVIGATION_PRODUCTIVITY_CENTER" value1="${portletName}" />
+		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${portletName}" />
 	</command>
 
 	<command name="gotoMyDashboard">

@@ -1,9 +1,8 @@
 <definition>
 	<command name="configureDisplaySettingsLanguage">
-		<var name="key_myAccount" value="${myAccount}" />
-
-		<execute function="Click" locator1="Dockbar#USER_NAME" />
-		<execute function="AssertClick" locator1="Dockbar#USER_MY_ACCOUNT_LOCALIZED" value1="${myAccount}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
 
 		<execute function="Select" locator1="Myaccount#LANGUAGE_SELECT" value1="${languageName}" />
 

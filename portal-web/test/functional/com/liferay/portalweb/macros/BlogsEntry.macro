@@ -2139,6 +2139,8 @@
 	</command>
 
 	<command name="viewWithWorkflowCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
 		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_STATUS" value1="Pending" />
 	</command>

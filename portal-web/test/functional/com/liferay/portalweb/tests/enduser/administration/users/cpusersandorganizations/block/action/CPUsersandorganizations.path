@@ -34,16 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_ALL_ORGANIZATIONS</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'All Organizations')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_ALL_USERS</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'All Users')]/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

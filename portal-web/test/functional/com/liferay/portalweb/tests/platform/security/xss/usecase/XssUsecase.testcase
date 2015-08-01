@@ -258,8 +258,9 @@
 		<execute function="Open" locator1="${maliciousURL2}" />
 		<execute function="AssertAlertNotPresent" />
 
-		<execute function="Click" locator1="Dockbar#USER_NAME" />
-		<execute function="AssertClick" locator1="Dockbar#USER_MY_ACCOUNT" value1="My Account" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
 
 		<execute function="Open" locator1="${maliciousURL3}" />
 		<execute function="AssertAlertNotPresent" />

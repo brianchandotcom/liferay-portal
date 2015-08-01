@@ -55,8 +55,9 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#addWithWorkflowCP">
+		<execute macro="Blogs#addWithWorkflow">
 			<var name="entryContent" value="Blogs Entry Content - Liferay" />
+			<var name="entrySubtitle" value="Subtitle" />
 			<var name="entryTitle" value="Blogs Entry Title - Liferay" />
 		</execute>
 
@@ -112,8 +113,9 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="BlogsEntry#addWithWorkflowCP">
+		<execute macro="Blogs#addWithWorkflow">
 			<var name="entryContent" value="Blogs Entry Content - Site Name" />
+			<var name="entrySubtitle" value="Subtitle" />
 			<var name="entryTitle" value="Blogs Entry Title - Site Name" />
 		</execute>
 
@@ -533,17 +535,9 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#addWithWorkflowPG">
+		<execute macro="Blogs#addWithWorkflow">
 			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Blogs Page" />
-		</execute>
-
-		<execute macro="BlogsEntry#viewWithWorkflowPG">
-			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySubtitle" value="Subtitle"  />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
@@ -625,8 +619,9 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#addWithWorkflowCP">
+		<execute macro="Blogs#addWithWorkflow">
 			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="Subtitle" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 

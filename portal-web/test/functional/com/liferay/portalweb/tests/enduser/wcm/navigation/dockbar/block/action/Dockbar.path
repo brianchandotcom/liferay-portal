@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//a/i[@class='icon-edit']</td>
+	<td>//a/i[@class='icon-cog']</td>
 	<td></td>
 </tr>
 <tr>

@@ -12,23 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.kernel.lifecycle;
+package com.liferay.portal.kernel.module.framework;
 
 /**
- * Marker interface used to notify to the OSGi container when different
- * services of the core are ready
- *
  * @author Miguel Ángel Pastor Olivar
  */
-public interface ServiceLifecycle {
+public interface ModuleServiceLifecycle {
 
-	public String DATABASE_SERVICE_INITIALIZED =
-		"(service.lifecycle=database.service.initialized)";
+	public String DATABASE_INITIALIZED =
+		"(module.service.lifecycle=database.initialized)";
 
-	public String PORTAL_CONTEXT_INITIALIZED =
-		"(service.lifecycle=portal.context.initialized)";
+	public String PORTAL_INITIALIZED =
+		"(module.service.lifecycle=portal.initialized)";
 
-	public String SPRING_CONTEXT_INITIALIZED =
-		"(service.lifecycle=spring.context.initialized)";
+	public String SPRING_INITIALIZED =
+		"(module.service.lifecycle=spring.initialized)";
 
 }

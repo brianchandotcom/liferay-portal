@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
@@ -146,7 +146,7 @@ public class MainServlet extends ActionServlet {
 			_log.debug("Destroy plugins");
 		}
 
-		_serviceLifecycleServiceRegistration.unregister();
+		_moduleServiceLifecycleServiceRegistration.unregister();
 		_servletContextServiceRegistration.unregister();
 
 		PortalLifecycleUtil.flushDestroys();
@@ -365,7 +365,7 @@ public class MainServlet extends ActionServlet {
 
 		StartupHelperUtil.setStartupFinished(true);
 
-		registerPortalContextInitialized();
+		registerPortalInitialized();
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 	}
@@ -1327,17 +1327,18 @@ public class MainServlet extends ActionServlet {
 		return new ProtectedServletRequest(request, remoteUser);
 	}
 
-	protected void registerPortalContextInitialized() {
+	protected void registerPortalInitialized() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Map<String, Object> properties = new HashMap<>();
 
-		properties.put("service.lifecycle", "portal.context.initialized");
+		properties.put("module.service.lifecycle", "portal.initialized");
 		properties.put("service.vendor", ReleaseInfo.getVendor());
 		properties.put("service.version", ReleaseInfo.getVersion());
 
-		_serviceLifecycleServiceRegistration = registry.registerService(
-			ServiceLifecycle.class, new ServiceLifecycle() {}, properties);
+		_moduleServiceLifecycleServiceRegistration = registry.registerService(
+			ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
+			properties);
 
 		properties = new HashMap<>();
 
@@ -1419,8 +1420,8 @@ public class MainServlet extends ActionServlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(MainServlet.class);
 
-	private ServiceRegistration<ServiceLifecycle>
-		_serviceLifecycleServiceRegistration;
+	private ServiceRegistration<ModuleServiceLifecycle>
+		_moduleServiceLifecycleServiceRegistration;
 	private ServiceRegistration<ServletContext>
 		_servletContextServiceRegistration;
 

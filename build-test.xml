@@ -1168,6 +1168,8 @@ jdbc.default.password=${database.password}]]></echo>
 	</macrodef>
 
 	<macrodef name="print-gc-logs">
+		<attribute name="tomcat.gc.log" />
+		<attribute name="tsant.gc.log" />
 		<sequential>
 			<if>
 				<available file="/tmp/ant-gc.log" />
@@ -1185,7 +1187,7 @@ ${ant-gc-log}
 				</else>
 			</if>
 
-			<if>
+			<if if:true="@{tomcat.gc.log}">
 				<available file="/tmp/tomcat-gc.log" />
 				<then>
 					<loadfile property="tomcat-gc-log" srcFile="/tmp/tomcat-gc.log" />
@@ -1201,7 +1203,7 @@ ${tomcat-gc-log}
 				</else>
 			</if>
 
-			<if>
+			<if if:true="@{tsant.gc.log}">
 				<available file="/tmp/tsant-gc.log" />
 				<then>
 					<loadfile property="tsant-gc-log" srcFile="/tmp/tsant-gc.log" />

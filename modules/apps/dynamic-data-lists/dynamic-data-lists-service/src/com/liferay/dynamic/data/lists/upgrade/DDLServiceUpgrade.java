@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.lists.upgrade;
 
-import com.liferay.dynamic.data.lists.upgrade.v1_0_0.DDLClassNamesUpgradeProcess;
+import com.liferay.dynamic.data.lists.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.dynamic.data.lists.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -50,7 +50,7 @@ public class DDLServiceUpgrade {
 	protected void upgrade() throws PortalException {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
-		upgradeProcesses.add(new DDLClassNamesUpgradeProcess());
+		upgradeProcesses.add(new UpgradeClassNames());
 		upgradeProcesses.add(new UpgradeLastPublishDate());
 
 		_releaseLocalService.updateRelease(

@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * @author Marcellus Tavares
  */
-public class DDLClassNamesUpgradeProcess extends UpgradeProcess {
+public class UpgradeClassNames extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

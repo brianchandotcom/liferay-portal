@@ -2,9 +2,9 @@
 <ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
 	<info organisation="com.liferay"
 		module="com.liferay.portal.tools.service.builder"
-		revision="1.0.25"
+		revision="1.0.26"
 		status="release"
-		publication="20150723223747"
+		publication="20150801162453"
 	>
 		<license name="LGPL 2.1" url="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt" />
 		<description homepage="">

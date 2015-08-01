@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.util.DDMPermissionHandler;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.permission.JournalPermission;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 
 /**

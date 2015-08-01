@@ -18,7 +18,7 @@ package com.liferay.dynamic.data.mapping.configuration;
  * @author Rafael Praxedes
  */
 public class DDMServiceConfigurationKeys {
-	
+
 	public static final String DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS =
 		"dynamic.data.mapping.image.extensions";
 

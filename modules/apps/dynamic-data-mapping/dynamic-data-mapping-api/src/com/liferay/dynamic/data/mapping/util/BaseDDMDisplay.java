@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -230,8 +229,8 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest),
-			portletId, PortletRequest.RENDER_PHASE);
+			getControlPanelPlid(liferayPortletRequest), portletId,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
 
@@ -278,7 +277,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		String portletId = getPortletId();
 
 		String ddmPortletId = PortletProviderUtil.getPortletId(
-				DDMStructure.class.getName(), PortletProvider.Action.VIEW);
+			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
 
 		if (portletId.equals(ddmPortletId)) {
 			return false;
@@ -317,8 +316,8 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest),
-			portletId, PortletRequest.RENDER_PHASE);
+			getControlPanelPlid(liferayPortletRequest), portletId,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view_template.jsp");
 		portletURL.setParameter("classNameId", String.valueOf(classNameId));

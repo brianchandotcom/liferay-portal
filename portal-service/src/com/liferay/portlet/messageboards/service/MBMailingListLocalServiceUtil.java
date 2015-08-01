@@ -250,11 +250,6 @@ public class MBMailingListLocalServiceUtil {
 		return getService().getCategoryMailingList(groupId, categoryId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
 	/**
 	* Returns the message boards mailing list with the primary key.
 	*

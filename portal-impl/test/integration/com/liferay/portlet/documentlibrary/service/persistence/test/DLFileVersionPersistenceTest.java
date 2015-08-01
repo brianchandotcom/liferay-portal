@@ -161,6 +161,8 @@ public class DLFileVersionPersistenceTest {
 
 		newDLFileVersion.setChecksum(RandomTestUtil.randomString());
 
+		newDLFileVersion.setLastPublishDate(RandomTestUtil.nextDate());
+
 		newDLFileVersion.setStatus(RandomTestUtil.nextInt());
 
 		newDLFileVersion.setStatusByUserId(RandomTestUtil.nextLong());
@@ -221,6 +223,9 @@ public class DLFileVersionPersistenceTest {
 			newDLFileVersion.getSize());
 		Assert.assertEquals(existingDLFileVersion.getChecksum(),
 			newDLFileVersion.getChecksum());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDLFileVersion.getLastPublishDate()),
+			Time.getShortTimestamp(newDLFileVersion.getLastPublishDate()));
 		Assert.assertEquals(existingDLFileVersion.getStatus(),
 			newDLFileVersion.getStatus());
 		Assert.assertEquals(existingDLFileVersion.getStatusByUserId(),
@@ -355,9 +360,9 @@ public class DLFileVersionPersistenceTest {
 			"fileEntryId", true, "treePath", true, "fileName", true,
 			"extension", true, "mimeType", true, "title", true, "description",
 			true, "changeLog", true, "extraSettings", true, "fileEntryTypeId",
-			true, "version", true, "size", true, "checksum", true, "status",
-			true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			true, "version", true, "size", true, "checksum", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -627,6 +632,8 @@ public class DLFileVersionPersistenceTest {
 		dlFileVersion.setSize(RandomTestUtil.nextLong());
 
 		dlFileVersion.setChecksum(RandomTestUtil.randomString());
+
+		dlFileVersion.setLastPublishDate(RandomTestUtil.nextDate());
 
 		dlFileVersion.setStatus(RandomTestUtil.nextInt());
 

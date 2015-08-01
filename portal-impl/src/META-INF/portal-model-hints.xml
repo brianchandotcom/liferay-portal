@@ -1595,6 +1595,7 @@
 		<field name="version" type="String" />
 		<field name="size" type="long" />
 		<field name="checksum" type="String" />
+		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />

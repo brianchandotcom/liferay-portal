@@ -21,6 +21,7 @@ import com.liferay.portal.CompanyWebIdException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchVirtualHostException;
 import com.liferay.portal.RequiredCompanyException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -70,6 +71,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.base.CompanyLocalServiceBaseImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProvider;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
@@ -273,130 +276,146 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Search engine
 
-		long companyId = company.getCompanyId();
+		CompanyProvider companyProvider =
+			_serviceCompanyProvider.getCompanyProvider();
 
-		SearchEngineUtil.initialize(companyId);
+		try {
+			long companyId = company.getCompanyId();
 
-		// Key
+			_serviceCompanyProvider.setCompanyProvider(
+				new CustomCompanyProvider(companyId));
 
-		checkCompanyKey(companyId);
+			SearchEngineUtil.initialize(companyId);
 
-		// Default user
+			// Key
 
-		User defaultUser = userPersistence.fetchByC_DU(companyId, true);
+			checkCompanyKey(companyId);
 
-		if (defaultUser != null) {
-			if (!defaultUser.isAgreedToTermsOfUse()) {
+			// Default user
+
+			User defaultUser = userPersistence.fetchByC_DU(companyId, true);
+
+			if (defaultUser != null) {
+				if (!defaultUser.isAgreedToTermsOfUse()) {
+					defaultUser.setAgreedToTermsOfUse(true);
+
+					userPersistence.update(defaultUser);
+				}
+			}
+			else {
+				long userId = counterLocalService.increment();
+
+				defaultUser = userPersistence.create(userId);
+
+				defaultUser.setCompanyId(companyId);
+				defaultUser.setDefaultUser(true);
+				defaultUser.setContactId(counterLocalService.increment());
+				defaultUser.setPassword("password");
+				defaultUser.setScreenName(
+					String.valueOf(defaultUser.getUserId()));
+				defaultUser.setEmailAddress("default@" + company.getMx());
+
+				if (Validator.isNotNull(PropsValues.COMPANY_DEFAULT_LOCALE)) {
+					defaultUser.setLanguageId(
+						PropsValues.COMPANY_DEFAULT_LOCALE);
+				}
+				else {
+					Locale locale = LocaleUtil.getDefault();
+
+					defaultUser.setLanguageId(locale.toString());
+				}
+
+				if (Validator.isNotNull(
+						PropsValues.COMPANY_DEFAULT_TIME_ZONE)) {
+
+					defaultUser.setTimeZoneId(
+						PropsValues.COMPANY_DEFAULT_TIME_ZONE);
+				}
+				else {
+					TimeZone timeZone = TimeZoneUtil.getDefault();
+
+					defaultUser.setTimeZoneId(timeZone.getID());
+				}
+
+				String greeting = LanguageUtil.format(
+					defaultUser.getLocale(), "welcome", null, false);
+
+				defaultUser.setGreeting(greeting + StringPool.EXCLAMATION);
+				defaultUser.setLoginDate(now);
+				defaultUser.setFailedLoginAttempts(0);
 				defaultUser.setAgreedToTermsOfUse(true);
+				defaultUser.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 				userPersistence.update(defaultUser);
+
+				// Contact
+
+				Contact defaultContact = contactPersistence.create(
+					defaultUser.getContactId());
+
+				defaultContact.setCompanyId(defaultUser.getCompanyId());
+				defaultContact.setUserId(defaultUser.getUserId());
+				defaultContact.setUserName(StringPool.BLANK);
+				defaultContact.setClassName(User.class.getName());
+				defaultContact.setClassPK(defaultUser.getUserId());
+				defaultContact.setAccountId(company.getAccountId());
+				defaultContact.setParentContactId(
+					ContactConstants.DEFAULT_PARENT_CONTACT_ID);
+				defaultContact.setEmailAddress(defaultUser.getEmailAddress());
+				defaultContact.setFirstName(StringPool.BLANK);
+				defaultContact.setMiddleName(StringPool.BLANK);
+				defaultContact.setLastName(StringPool.BLANK);
+				defaultContact.setMale(true);
+				defaultContact.setBirthday(now);
+
+				contactPersistence.update(defaultContact);
 			}
+
+			// System roles
+
+			roleLocalService.checkSystemRoles(companyId);
+
+			// System groups
+
+			groupLocalService.checkSystemGroups(companyId);
+
+			// Company group
+
+			groupLocalService.checkCompanyGroup(companyId);
+
+			// Default password policy
+
+			passwordPolicyLocalService.checkDefaultPasswordPolicy(companyId);
+
+			// Default user must have the Guest role
+
+			Role guestRole = roleLocalService.getRole(
+				companyId, RoleConstants.GUEST);
+
+			roleLocalService.setUserRoles(
+				defaultUser.getUserId(), new long[] {guestRole.getRoleId()});
+
+			// Default admin
+
+			if (userPersistence.countByCompanyId(companyId) == 1) {
+				String emailAddress =
+					PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" + mx;
+
+				userLocalService.addDefaultAdminUser(
+					companyId, PropsValues.DEFAULT_ADMIN_SCREEN_NAME,
+					emailAddress, defaultUser.getLocale(),
+					PropsValues.DEFAULT_ADMIN_FIRST_NAME,
+					PropsValues.DEFAULT_ADMIN_MIDDLE_NAME,
+					PropsValues.DEFAULT_ADMIN_LAST_NAME);
+			}
+
+			// Portlets
+
+			portletLocalService.checkPortlets(companyId);
 		}
-		else {
-			long userId = counterLocalService.increment();
-
-			defaultUser = userPersistence.create(userId);
-
-			defaultUser.setCompanyId(companyId);
-			defaultUser.setDefaultUser(true);
-			defaultUser.setContactId(counterLocalService.increment());
-			defaultUser.setPassword("password");
-			defaultUser.setScreenName(String.valueOf(defaultUser.getUserId()));
-			defaultUser.setEmailAddress("default@" + company.getMx());
-
-			if (Validator.isNotNull(PropsValues.COMPANY_DEFAULT_LOCALE)) {
-				defaultUser.setLanguageId(PropsValues.COMPANY_DEFAULT_LOCALE);
-			}
-			else {
-				Locale locale = LocaleUtil.getDefault();
-
-				defaultUser.setLanguageId(locale.toString());
-			}
-
-			if (Validator.isNotNull(PropsValues.COMPANY_DEFAULT_TIME_ZONE)) {
-				defaultUser.setTimeZoneId(
-					PropsValues.COMPANY_DEFAULT_TIME_ZONE);
-			}
-			else {
-				TimeZone timeZone = TimeZoneUtil.getDefault();
-
-				defaultUser.setTimeZoneId(timeZone.getID());
-			}
-
-			String greeting = LanguageUtil.format(
-				defaultUser.getLocale(), "welcome", null, false);
-
-			defaultUser.setGreeting(greeting + StringPool.EXCLAMATION);
-			defaultUser.setLoginDate(now);
-			defaultUser.setFailedLoginAttempts(0);
-			defaultUser.setAgreedToTermsOfUse(true);
-			defaultUser.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-			userPersistence.update(defaultUser);
-
-			// Contact
-
-			Contact defaultContact = contactPersistence.create(
-				defaultUser.getContactId());
-
-			defaultContact.setCompanyId(defaultUser.getCompanyId());
-			defaultContact.setUserId(defaultUser.getUserId());
-			defaultContact.setUserName(StringPool.BLANK);
-			defaultContact.setClassName(User.class.getName());
-			defaultContact.setClassPK(defaultUser.getUserId());
-			defaultContact.setAccountId(company.getAccountId());
-			defaultContact.setParentContactId(
-				ContactConstants.DEFAULT_PARENT_CONTACT_ID);
-			defaultContact.setEmailAddress(defaultUser.getEmailAddress());
-			defaultContact.setFirstName(StringPool.BLANK);
-			defaultContact.setMiddleName(StringPool.BLANK);
-			defaultContact.setLastName(StringPool.BLANK);
-			defaultContact.setMale(true);
-			defaultContact.setBirthday(now);
-
-			contactPersistence.update(defaultContact);
+		finally {
+			_serviceCompanyProvider.setCompanyProvider(companyProvider);
 		}
-
-		// System roles
-
-		roleLocalService.checkSystemRoles(companyId);
-
-		// System groups
-
-		groupLocalService.checkSystemGroups(companyId);
-
-		// Company group
-
-		groupLocalService.checkCompanyGroup(companyId);
-
-		// Default password policy
-
-		passwordPolicyLocalService.checkDefaultPasswordPolicy(companyId);
-
-		// Default user must have the Guest role
-
-		Role guestRole = roleLocalService.getRole(
-			companyId, RoleConstants.GUEST);
-
-		roleLocalService.setUserRoles(
-			defaultUser.getUserId(), new long[] {guestRole.getRoleId()});
-
-		// Default admin
-
-		if (userPersistence.countByCompanyId(companyId) == 1) {
-			String emailAddress =
-				PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" + mx;
-
-			userLocalService.addDefaultAdminUser(
-				companyId, PropsValues.DEFAULT_ADMIN_SCREEN_NAME, emailAddress,
-				defaultUser.getLocale(), PropsValues.DEFAULT_ADMIN_FIRST_NAME,
-				PropsValues.DEFAULT_ADMIN_MIDDLE_NAME,
-				PropsValues.DEFAULT_ADMIN_LAST_NAME);
-		}
-
-		// Portlets
-
-		portletLocalService.checkPortlets(companyId);
 
 		return company;
 	}
@@ -1675,5 +1694,28 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyLocalServiceImpl.class);
+
+	@BeanReference(type = ServiceCompanyProvider.class)
+	private ServiceCompanyProvider _serviceCompanyProvider;
+
+	private class CustomCompanyProvider implements CompanyProvider {
+
+		public CustomCompanyProvider(long companyId) {
+			_companyId = companyId;
+		}
+
+		@Override
+		public long getCompanyId() {
+			return _companyId;
+		}
+
+		@Override
+		public String getCompanyIdName() {
+			return "companyId";
+		}
+
+		private final long _companyId;
+
+	}
 
 }

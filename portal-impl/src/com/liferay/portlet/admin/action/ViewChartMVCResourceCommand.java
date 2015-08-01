@@ -14,26 +14,26 @@
 
 package com.liferay.portlet.admin.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 
+import java.io.IOException;
 import java.io.OutputStream;
 
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
 
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -45,16 +45,21 @@ import org.jfree.data.general.DefaultValueDataset;
 import org.jfree.data.general.ValueDataset;
 
 /**
- * @author Matthew Kong
+ * @author Philip Jones
  */
-public class ViewChartAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.ADMIN_SERVER,
+		"mvc.command.name=/admin_server/view_chart"
+	},
+	service = MVCResourceCommand.class
+)
+public class ViewChartMVCResourceCommand implements MVCResourceCommand {
 
 	@Override
-	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws Exception {
+	public boolean serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortletException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -92,12 +97,20 @@ public class ViewChartAction extends PortletAction {
 
 		resourceResponse.setContentType(ContentTypes.IMAGE_PNG);
 
-		OutputStream outputStream = resourceResponse.getPortletOutputStream();
+		try {
+			OutputStream outputStream =
+				resourceResponse.getPortletOutputStream();
 
-		ChartUtilities.writeChartAsPNG(outputStream, jFreeChart, 280, 180);
+			ChartUtilities.writeChartAsPNG(outputStream, jFreeChart, 280, 180);
+		}
+		catch (IOException ioe) {
+			throw new PortletException(ioe);
+		}
+
+		return true;
 	}
 
-	protected JFreeChart getJFreeChart(String title, MeterPlot meterPlot) {
+	private JFreeChart getJFreeChart(String title, MeterPlot meterPlot) {
 		JFreeChart jFreeChart = new JFreeChart(
 			title, new Font(null, Font.PLAIN, 13), meterPlot, true);
 
@@ -107,7 +120,7 @@ public class ViewChartAction extends PortletAction {
 		return jFreeChart;
 	}
 
-	protected MeterPlot getMeterPlot(
+	private MeterPlot getMeterPlot(
 		ThemeDisplay themeDisplay, ValueDataset valueDataset) {
 
 		MeterPlot meterPlot = new MeterPlot(valueDataset);
@@ -147,12 +160,5 @@ public class ViewChartAction extends PortletAction {
 
 		return meterPlot;
 	}
-
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
-	}
-
-	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
 
 }

@@ -12,9 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.admin.action;
+package com.liferay.portlet.admin;
 
 import com.liferay.mail.service.MailServiceUtil;
+import com.liferay.portal.DuplicatePasswordPolicyException;
+import com.liferay.portal.NoSuchPasswordPolicyException;
+import com.liferay.portal.PasswordPolicyNameException;
+import com.liferay.portal.RequiredPasswordPolicyException;
 import com.liferay.portal.captcha.CaptchaImpl;
 import com.liferay.portal.captcha.recaptcha.ReCaptchaImpl;
 import com.liferay.portal.captcha.simplecaptcha.SimpleCaptchaImpl;
@@ -25,6 +29,7 @@ import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.GhostscriptUtil;
 import com.liferay.portal.kernel.image.ImageMagickUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -37,17 +42,18 @@ import com.liferay.portal.kernel.log.SanitizerLogWrapper;
 import com.liferay.portal.kernel.mail.Account;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingHelperUtil;
 import com.liferay.portal.kernel.scripting.ScriptingUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ProgressStatusConstants;
@@ -71,24 +77,23 @@ import com.liferay.portal.security.membershippolicy.SiteMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryUtil;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
-import com.liferay.portal.struts.ActionConstants;
-import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
+import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.admin.util.CleanUpPermissionsUtil;
 import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -99,49 +104,34 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
+import javax.portlet.ReadOnlyException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ValidatorException;
 import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
 
 import org.apache.log4j.Level;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Shuyang Zhou
+ * @author Philip Jones
  */
-public class EditServerAction extends PortletAction {
+public class ServerAdministrationPortlet extends MVCPortlet {
 
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	public void editServer(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		String cmd = ParamUtil.getString(actionRequest, "cmd");
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (!permissionChecker.isOmniadmin()) {
-			SessionErrors.add(
-				actionRequest,
-				PrincipalException.MustBeOmniadmin.class.getName());
-
-			setForward(actionRequest, "portlet.admin.error");
-
-			return;
-		}
+		PortletConfig portletConfig = PortletConfigFactoryUtil.get(
+			PortletKeys.ADMIN);
 
 		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences();
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		String redirect = null;
 
 		if (cmd.equals("addLogLevel")) {
 			addLogLevel(actionRequest);
@@ -162,7 +152,7 @@ public class EditServerAction extends PortletAction {
 			CleanUpPermissionsUtil.cleanUpAddToPagePermissions(actionRequest);
 		}
 		else if (cmd.startsWith("convertProcess.")) {
-			redirect = convertProcess(actionRequest, actionResponse, cmd);
+			convertProcess(actionRequest, actionResponse, cmd);
 		}
 		else if (cmd.equals("dlPreviews")) {
 			DLPreviewableProcessor.deleteFiles();
@@ -172,16 +162,12 @@ public class EditServerAction extends PortletAction {
 		}
 		else if (cmd.equals("installXuggler")) {
 			installXuggler(actionRequest, actionResponse);
-
-			setForward(actionRequest, ActionConstants.COMMON_NULL);
-
-			return;
 		}
 		else if (cmd.equals("reindex")) {
 			reindex(actionRequest);
 		}
 		else if (cmd.equals("reindexDictionaries")) {
-			reindexDictionaries(actionRequest);
+			reindexDictionaries();
 		}
 		else if (cmd.equals("runScript")) {
 			runScript(portletConfig, actionRequest, actionResponse);
@@ -213,37 +199,65 @@ public class EditServerAction extends PortletAction {
 		else if (cmd.equals("verifyPluginTables")) {
 			verifyPluginTables();
 		}
-
-		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
-	protected void addLogLevel(ActionRequest actionRequest) throws Exception {
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, NoSuchPasswordPolicyException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.getNestedClasses())) {
+
+			include("/error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof DuplicatePasswordPolicyException ||
+			cause instanceof NoSuchPasswordPolicyException ||
+			cause instanceof PasswordPolicyNameException ||
+			cause instanceof PrincipalException ||
+			cause instanceof RequiredPasswordPolicyException) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private void addLogLevel(ActionRequest actionRequest) {
 		String loggerName = ParamUtil.getString(actionRequest, "loggerName");
 		String priority = ParamUtil.getString(actionRequest, "priority");
 
 		Log4JUtil.setLevel(loggerName, priority, true);
 	}
 
-	protected void cacheDb() throws Exception {
+	private void cacheDb() {
 		CacheRegistryUtil.clear();
 	}
 
-	protected void cacheMulti() throws Exception {
+	private void cacheMulti() {
 		MultiVMPoolUtil.clear();
 	}
 
-	protected void cacheServlet() throws Exception {
+	private void cacheServlet() {
 		DirectServletRegistryUtil.clearServlets();
 	}
 
-	protected void cacheSingle() throws Exception {
+	private void cacheSingle() {
 		SingleVMPoolUtil.clear();
 	}
 
-	protected String convertProcess(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			String cmd)
-		throws Exception {
+	private String convertProcess(
+		ActionRequest actionRequest, ActionResponse actionResponse,
+		String cmd) throws WindowStateException {
 
 		ActionResponseImpl actionResponseImpl =
 			(ActionResponseImpl)actionResponse;
@@ -306,21 +320,21 @@ public class EditServerAction extends PortletAction {
 		return null;
 	}
 
-	protected void gc() throws Exception {
+	private void gc() {
 		Runtime.getRuntime().gc();
 	}
 
-	protected String getFileExtensions(
-		ActionRequest actionRequest, String name) {
+	private String getFileExtensions(
+		ActionRequest actionRequest, String name ) {
 
 		String value = ParamUtil.getString(actionRequest, name);
 
 		return value.replace(", .", ",.");
 	}
 
-	protected void installXuggler(
+	private void installXuggler(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws IOException {
 
 		ProgressTracker progressTracker = new ProgressTracker(
 			WebKeys.XUGGLER_INSTALL_STATUS);
@@ -355,7 +369,7 @@ public class EditServerAction extends PortletAction {
 		progressTracker.finish(actionRequest);
 	}
 
-	protected void reindex(ActionRequest actionRequest) throws Exception {
+	private void reindex(ActionRequest actionRequest) throws SearchException {
 		String className = ParamUtil.getString(actionRequest, "className");
 
 		long[] companyIds = PortalInstances.getCompanyIds();
@@ -409,9 +423,7 @@ public class EditServerAction extends PortletAction {
 		}
 	}
 
-	protected void reindexDictionaries(ActionRequest actionRequest)
-		throws Exception {
-
+	private void reindexDictionaries() throws SearchException {
 		long[] companyIds = PortalInstances.getCompanyIds();
 
 		for (long companyId : companyIds) {
@@ -420,10 +432,9 @@ public class EditServerAction extends PortletAction {
 		}
 	}
 
-	protected void runScript(
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
+	private void runScript(
+		PortletConfig portletConfig, ActionRequest actionRequest,
+		ActionResponse actionResponse) {
 
 		String language = ParamUtil.getString(actionRequest, "language");
 		String script = ParamUtil.getString(actionRequest, "script");
@@ -465,7 +476,7 @@ public class EditServerAction extends PortletAction {
 		}
 	}
 
-	protected void shutdown(ActionRequest actionRequest) throws Exception {
+	private void shutdown(ActionRequest actionRequest) {
 		if (ShutdownUtil.isInProcess()) {
 			ShutdownUtil.cancel();
 		}
@@ -484,7 +495,7 @@ public class EditServerAction extends PortletAction {
 		}
 	}
 
-	protected void threadDump() throws Exception {
+	private void threadDump() {
 		if (_log.isInfoEnabled()) {
 			Log log = SanitizerLogWrapper.allowCRLF(_log);
 
@@ -499,7 +510,7 @@ public class EditServerAction extends PortletAction {
 		}
 	}
 
-	protected void updateCaptcha(
+	private void updateCaptcha(
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -551,7 +562,7 @@ public class EditServerAction extends PortletAction {
 		}
 	}
 
-	protected void updateExternalServices(
+	private void updateExternalServices(
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws Exception {
 
@@ -599,9 +610,9 @@ public class EditServerAction extends PortletAction {
 		ImageMagickUtil.reset();
 	}
 
-	protected void updateFileUploads(
+	private void updateFileUploads(
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
-		throws Exception {
+		throws IOException, ReadOnlyException, ValidatorException {
 
 		long dlFileEntryPreviewableProcessorMaxSize = ParamUtil.getLong(
 			actionRequest, "dlFileEntryPreviewableProcessorMaxSize");
@@ -693,9 +704,7 @@ public class EditServerAction extends PortletAction {
 		portletPreferences.store();
 	}
 
-	protected void updateLogLevels(ActionRequest actionRequest)
-		throws Exception {
-
+	private void updateLogLevels(ActionRequest actionRequest) {
 		Enumeration<String> enu = actionRequest.getParameterNames();
 
 		while (enu.hasMoreElements()) {
@@ -712,9 +721,9 @@ public class EditServerAction extends PortletAction {
 		}
 	}
 
-	protected void updateMail(
+	private void updateMail(
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
-		throws Exception {
+		throws IOException, ReadOnlyException, ValidatorException {
 
 		String advancedProperties = ParamUtil.getString(
 			actionRequest, "advancedProperties");
@@ -781,9 +790,7 @@ public class EditServerAction extends PortletAction {
 		MailServiceUtil.clearSession();
 	}
 
-	protected void validateCaptcha(ActionRequest actionRequest)
-		throws Exception {
-
+	private void validateCaptcha(ActionRequest actionRequest) {
 		boolean reCaptchaEnabled = ParamUtil.getBoolean(
 			actionRequest, "reCaptchaEnabled");
 
@@ -804,7 +811,7 @@ public class EditServerAction extends PortletAction {
 		}
 	}
 
-	protected void verifyMembershipPolicies() throws Exception {
+	private void verifyMembershipPolicies() throws PortalException {
 		OrganizationMembershipPolicy organizationMembershipPolicy =
 			OrganizationMembershipPolicyFactoryUtil.
 				getOrganizationMembershipPolicy();
@@ -827,11 +834,11 @@ public class EditServerAction extends PortletAction {
 		userGroupMembershipPolicy.verifyPolicy();
 	}
 
-	protected void verifyPluginTables() throws Exception {
+	private void verifyPluginTables() {
 		ServiceComponentLocalServiceUtil.verifyDB();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditServerAction.class);
+		ServerAdministrationPortlet.class);
 
 }

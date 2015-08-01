@@ -104,12 +104,8 @@
 		</sequential>
 	</macrodef>
 
-	<target name="build-ckeditor-plugins">
+	<target name="build-ckeditor-plugins-bbcode">
 		<build-ckeditor-plugins-bbcode />
-
-		<build-ckeditor-plugins-scayt />
-
-		<build-ckeditor-plugins-wsc />
 	</target>
 
 	<macrodef name="build-ckeditor-plugins-bbcode">

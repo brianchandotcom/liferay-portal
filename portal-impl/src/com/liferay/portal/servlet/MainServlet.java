@@ -146,8 +146,8 @@ public class MainServlet extends ActionServlet {
 			_log.debug("Destroy plugins");
 		}
 
-		_serviceLifecycleRegistration.unregister();
-		_servletContextRegistration.unregister();
+		_serviceLifecycleServiceRegistration.unregister();
+		_servletContextServiceRegistration.unregister();
 
 		PortalLifecycleUtil.flushDestroys();
 
@@ -365,7 +365,7 @@ public class MainServlet extends ActionServlet {
 
 		StartupHelperUtil.setStartupFinished(true);
 
-		notifyToContainerPortalContextIsReady();
+		registerPortalContextInitialized();
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 	}
@@ -1085,28 +1085,6 @@ public class MainServlet extends ActionServlet {
 		return userId;
 	}
 
-	protected void notifyToContainerPortalContextIsReady() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("service.lifecycle", "portal.context.initialized");
-		properties.put("service.vendor", ReleaseInfo.getVendor());
-		properties.put("service.version", ReleaseInfo.getVersion());
-
-		_serviceLifecycleRegistration = registry.registerService(
-			ServiceLifecycle.class, new ServiceLifecycle() { }, properties);
-
-		properties = new HashMap<>();
-
-		properties.put("bean.id", ServletContext.class.getName());
-		properties.put("original.bean", Boolean.TRUE);
-		properties.put("service.vendor", ReleaseInfo.getVendor());
-
-		_servletContextRegistration = registry.registerService(
-			ServletContext.class, getServletContext(), properties);
-	}
-
 	protected boolean processCompanyInactiveRequest(
 			HttpServletRequest request, HttpServletResponse response,
 			long companyId)
@@ -1349,6 +1327,28 @@ public class MainServlet extends ActionServlet {
 		return new ProtectedServletRequest(request, remoteUser);
 	}
 
+	protected void registerPortalContextInitialized() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("service.lifecycle", "portal.context.initialized");
+		properties.put("service.vendor", ReleaseInfo.getVendor());
+		properties.put("service.version", ReleaseInfo.getVersion());
+
+		_serviceLifecycleServiceRegistration = registry.registerService(
+			ServiceLifecycle.class, new ServiceLifecycle() {}, properties);
+
+		properties = new HashMap<>();
+
+		properties.put("bean.id", ServletContext.class.getName());
+		properties.put("original.bean", Boolean.TRUE);
+		properties.put("service.vendor", ReleaseInfo.getVendor());
+
+		_servletContextServiceRegistration = registry.registerService(
+			ServletContext.class, getServletContext(), properties);
+	}
+
 	protected void sendError(
 			int status, Throwable t, HttpServletRequest request,
 			HttpServletResponse response)
@@ -1419,7 +1419,9 @@ public class MainServlet extends ActionServlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(MainServlet.class);
 
-	private ServiceRegistration<ServiceLifecycle> _serviceLifecycleRegistration;
-	private ServiceRegistration<ServletContext> _servletContextRegistration;
+	private ServiceRegistration<ServiceLifecycle>
+		_serviceLifecycleServiceRegistration;
+	private ServiceRegistration<ServletContext>
+		_servletContextServiceRegistration;
 
 }

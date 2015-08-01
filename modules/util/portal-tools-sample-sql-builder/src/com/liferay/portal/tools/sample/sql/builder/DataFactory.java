@@ -1499,6 +1499,7 @@ public class DataFactory {
 			dlFileEntryModel.getFileEntryTypeId());
 		dlFileVersionModel.setVersion(dlFileEntryModel.getVersion());
 		dlFileVersionModel.setSize(dlFileEntryModel.getSize());
+		dlFileVersionModel.setLastPublishDate(nextFutureDate());
 
 		return dlFileVersionModel;
 	}

@@ -115,6 +115,11 @@ public class FolderProxyBean
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _folder.getLastPublishDate();
+	}
+
+	@Override
 	public Object getModel() {
 		return _folder.getModel();
 	}
@@ -269,6 +274,11 @@ public class FolderProxyBean
 	@Override
 	public void setGroupId(long groupId) {
 		_folder.setGroupId(groupId);
+	}
+
+	@Override
+	public void setLastPublishDate(Date date) {
+		_folder.setLastPublishDate(date);
 	}
 
 	@Override

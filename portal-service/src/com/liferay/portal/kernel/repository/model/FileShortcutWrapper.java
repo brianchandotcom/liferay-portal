@@ -102,6 +102,11 @@ public class FileShortcutWrapper
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _fileShortcut.getLastPublishDate();
+	}
+
+	@Override
 	public Object getModel() {
 		return _fileShortcut.getModel();
 	}
@@ -189,6 +194,11 @@ public class FileShortcutWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		_fileShortcut.setGroupId(groupId);
+	}
+
+	@Override
+	public void setLastPublishDate(Date date) {
+		_fileShortcut.setLastPublishDate(date);
 	}
 
 	@Override

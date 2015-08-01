@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureUtil;
+import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -130,7 +130,7 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
 
 		String definition =
-			DefaultDDMStructureUtil.getDynamicDDMStructureDefinition(
+			_defaultDDMStructureHelper.getDynamicDDMStructureDefinition(
 				AddDefaultDocumentLibraryStructuresAction.class.
 					getClassLoader(),
 				"com/liferay/document/library/events/dependencies" +
@@ -348,7 +348,7 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 
 		serviceContext.setUserId(defaultUserId);
 
-		DefaultDDMStructureUtil.addDDMStructures(
+		_defaultDDMStructureHelper.addDDMStructures(
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(DLFileEntryMetadata.class),
 			AddDefaultDocumentLibraryStructuresAction.class.getClassLoader(),
@@ -407,6 +407,13 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 	}
 
 	@Reference
+	protected void setDefaultDDMStructureHelper(
+		DefaultDDMStructureHelper defaultDDMStructureHelper) {
+
+		_defaultDDMStructureHelper = defaultDDMStructureHelper;
+	}
+
+	@Reference
 	protected void setDLFileEntryTypeLocalService(
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
 
@@ -432,6 +439,7 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 	private DDM _ddm;
 	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private DDMStructureLocalService _ddmStructureLocalService;
+	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private GroupLocalService _groupLocalService;
 	private UserLocalService _userLocalService;

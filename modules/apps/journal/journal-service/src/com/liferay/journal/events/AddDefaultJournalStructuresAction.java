@@ -14,7 +14,7 @@
 
 package com.liferay.journal.events;
 
-import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureUtil;
+import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
@@ -81,7 +81,7 @@ public class AddDefaultJournalStructuresAction extends SimpleAction {
 
 		serviceContext.setUserId(defaultUserId);
 
-		DefaultDDMStructureUtil.addDDMStructures(
+		_defaultDDMStructureHelper.addDDMStructures(
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			PortalClassLoaderUtil.getClassLoader(),
@@ -95,6 +95,13 @@ public class AddDefaultJournalStructuresAction extends SimpleAction {
 		CompanyLocalService companyLocalService) {
 
 		_companyLocalService = companyLocalService;
+	}
+
+	@Reference
+	protected void setDefaultDDMStructureHelper(
+		DefaultDDMStructureHelper defaultDDMStructureHelper) {
+
+		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 	}
 
 	@Reference
@@ -113,6 +120,7 @@ public class AddDefaultJournalStructuresAction extends SimpleAction {
 	}
 
 	private CompanyLocalService _companyLocalService;
+	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private GroupLocalService _groupLocalService;
 	private UserLocalService _userLocalService;
 

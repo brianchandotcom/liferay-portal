@@ -4,14 +4,15 @@
 @import url(custom_responsive.css);
 
 $bg-color: #F5F7F8;
+$solid-color: #47647A;
+
+body {
+	background-color: $bg-color;
+}
 
 .container-fluid-1280 .row {
 	margin-left: 15px;
 	margin-right: 15px;
-}
-
-body {
-	background-color: $bg-color;
 }
 
 .form-control {
@@ -30,8 +31,11 @@ body {
 		}
 
 		#heading .site-name {
-			font-size: 145%;
+			color: $solid-color;
+			font-size: 150%;
+			letter-spacing: 2px;
 			margin-left: 20px;
+			vertical-align: middle;
 		}
 
 		.navbar-toggle {
@@ -49,19 +53,51 @@ body {
 				font-size: 16px;
 				height: auto;
 				margin-top: 4px;
+				padding-right: 40px;
 
 				@include respond-to(desktop, tablet) {
 					max-width: 200px;
 				}
 			}
 
-			.input-select-wrapper, .field-wrapper {
+			.input-select-wrapper {
 				display: none;
+			}
+
+			.field-wrapper {
+				position: absolute;
+				right: 0;
+				top: 0;
+
+				a {
+					background-color: transparent;
+					border-width: 0;
+					margin-top: 4px;
+
+					span {
+						display: none;
+					}
+				}
 			}
 		}
 
-		.nav > li > a.dropdown-lft {
-			margin-left: -20px;
+		#navigation .nav > li {
+			& > a {
+				color: $solid-color;
+			}
+
+			&:hover > a, &.hover > a, &.active > a {
+				background-color: none;
+				color: #000;
+			}
+
+			.dropdown-menu {
+				margin-left: -20px;
+
+				.active > a {
+					color: #FFF;
+				}
+			}
 		}
 
 		.user-personal-bar {
@@ -98,13 +134,18 @@ body {
 	#content .row {
 		margin-left: -15px;
 		margin-right: -15px;
+		min-height: 200px;
 	}
 
 	#footer {
-		background-color: #29343D;
+		background-color: $solid-color;
 		color: #FFF;
 		margin-bottom: 60px;
 		padding: 40px 20px;
+
+		a {
+			color: #FFF;
+		}
 	}
 }
 

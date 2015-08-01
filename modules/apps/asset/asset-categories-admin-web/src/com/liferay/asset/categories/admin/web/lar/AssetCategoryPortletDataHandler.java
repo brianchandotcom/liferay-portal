@@ -16,7 +16,7 @@ package com.liferay.asset.categories.admin.web.lar;
 
 import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
@@ -202,9 +202,10 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference(
-		target = ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED, unbind = "-"
+		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
 	)
-	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

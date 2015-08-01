@@ -16,7 +16,7 @@ package com.liferay.document.library.layout.set.prototype.action;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
@@ -120,9 +120,10 @@ public class AddLayoutSetPrototypeAction {
 	}
 
 	@Reference(
-		target = ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED, unbind = "-"
+		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
 	)
-	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Reference(unbind = "-")

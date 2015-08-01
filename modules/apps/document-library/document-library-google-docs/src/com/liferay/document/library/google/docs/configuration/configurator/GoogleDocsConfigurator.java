@@ -18,7 +18,7 @@ import com.liferay.document.library.google.docs.migration.LegacyGoogleDocsMigrat
 import com.liferay.document.library.google.docs.util.GoogleDocsDLFileEntryTypeHelper;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.service.CompanyLocalService;
@@ -137,9 +137,10 @@ public class GoogleDocsConfigurator {
 	}
 
 	@Reference(
-		target = ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED, unbind = "-"
+		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
 	)
-	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	private ClassNameLocalService _classNameLocalService;

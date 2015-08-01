@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.lists.upgrade;
 import com.liferay.dynamic.data.lists.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.dynamic.data.lists.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 
@@ -34,17 +34,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = DDLServiceUpgrade.class)
 public class DDLServiceUpgrade {
 
+	@Reference(
+		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
+	)
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
 	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
-	}
-
-	@Reference(
-		target = ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED, unbind = "-"
-	)
-	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
 	}
 
 	@Activate

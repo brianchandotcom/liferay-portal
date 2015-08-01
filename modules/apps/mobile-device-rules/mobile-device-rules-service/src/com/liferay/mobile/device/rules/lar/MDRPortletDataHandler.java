@@ -17,7 +17,7 @@ package com.liferay.mobile.device.rules.lar;
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
-import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PortalUtil;
@@ -219,9 +219,10 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference(
-		target = ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED, unbind = "-"
+		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
 	)
-	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

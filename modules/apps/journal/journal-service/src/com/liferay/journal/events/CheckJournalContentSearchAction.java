@@ -18,9 +18,9 @@ import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
-import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
@@ -93,9 +93,10 @@ public class CheckJournalContentSearchAction extends SimpleAction {
 	}
 
 	@Reference(
-		target = ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED, unbind = "-"
+		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
 	)
-	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

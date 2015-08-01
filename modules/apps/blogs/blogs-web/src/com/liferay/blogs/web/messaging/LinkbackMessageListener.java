@@ -18,9 +18,9 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.blogs.configuration.BlogsSystemConfiguration;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerType;
@@ -66,14 +66,15 @@ public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 		LinkbackProducerUtil.sendQueuedPingbacks();
 	}
 
-	@Reference(target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")")
-	protected void setPortlet(Portlet portlet) {
+	@Reference(
+		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
+	)
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(
-		target = ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED, unbind = "-"
-	)
-	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
+	@Reference(target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")")
+	protected void setPortlet(Portlet portlet) {
 	}
 
 	private volatile BlogsSystemConfiguration _blogsSystemConfiguration;

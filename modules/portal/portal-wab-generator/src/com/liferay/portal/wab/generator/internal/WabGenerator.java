@@ -14,7 +14,7 @@
 
 package com.liferay.portal.wab.generator.internal;
 
-import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.wab.generator.internal.artifact.WarArtifactUrlTransformer;
 import com.liferay.portal.wab.generator.internal.handler.WabURLStreamHandlerService;
@@ -87,12 +87,15 @@ public class WabGenerator {
 	 * startup.
 	 */
 	@Reference(
-		target = ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED, unbind = "-"
+		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
 	)
-	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	protected void unsetServiceLifecycle(ServiceLifecycle serviceLifecycle) {
+	protected void unsetModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+
 		_servletContext = null;
 	}
 

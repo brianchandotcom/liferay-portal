@@ -16,7 +16,7 @@ package com.liferay.iframe.web.upgrade;
 
 import com.liferay.iframe.web.constants.IFramePortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lifecycle.ServiceLifecycle;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
@@ -34,17 +34,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = IFrameWebUpgrade.class)
 public class IFrameWebUpgrade {
 
+	@Reference(
+		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
+	)
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
 	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
-	}
-
-	@Reference(
-		target = ServiceLifecycle.PORTAL_CONTEXT_INITIALIZED, unbind = "-"
-	)
-	protected void setServiceLifecycle(ServiceLifecycle serviceLifecycle) {
 	}
 
 	@Activate

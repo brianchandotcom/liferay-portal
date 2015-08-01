@@ -44,6 +44,7 @@ public class UpgradeLastPublishDate extends UpgradeProcess {
 		upgradeLayoutsAdmin();
 		upgradeMessageBoards();
 		upgradeMobileDeviceRules();
+		upgradeSitesAdmin();
 		upgradeRatings();
 		upgradeRolesAdmin();
 		upgradeUsersAdmin();
@@ -327,6 +328,12 @@ public class UpgradeLastPublishDate extends UpgradeProcess {
 		runSQL("alter table Role_ add lastPublishDate DATE null");
 
 		updateLastPublishDates(PortletKeys.ROLES_ADMIN, "Role_");
+	}
+
+	protected void upgradeSitesAdmin() throws Exception {
+		runSQL("alter table Team add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.SITE_ADMIN, "Team");
 	}
 
 	protected void upgradeUsersAdmin() throws Exception {

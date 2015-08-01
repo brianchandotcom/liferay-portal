@@ -124,6 +124,8 @@ public interface DDMStructureManager {
 
 	public List<DDMStructure> getStructures(long[] groupIds, long classNameId);
 
+	public int getStructureStorageLinksCount(long structureId);
+
 	public DDMStructure updateStructure(
 			long userId, long structureId, long parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,

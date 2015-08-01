@@ -180,6 +180,10 @@ public class DDMStructureManagerUtil {
 		return _ddmStructureManager.getStructures(groupIds, classNameId);
 	}
 
+	public static int getStructureStorageLinksCount(long structureId) {
+		return _ddmStructureManager.getStructureStorageLinksCount(structureId);
+	}
+
 	public static DDMStructure updateStructure(
 			long userId, long structureId, long parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,

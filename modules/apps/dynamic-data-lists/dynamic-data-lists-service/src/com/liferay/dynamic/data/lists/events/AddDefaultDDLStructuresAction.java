@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.lists.events;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureUtil;
+import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,11 +31,11 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import org.springframework.context.ApplicationContext;
 
 /**
  * @author Michael C. Han
@@ -83,23 +83,13 @@ public class AddDefaultDDLStructuresAction extends SimpleAction {
 
 		serviceContext.setUserId(defaultUserId);
 
-		DefaultDDMStructureUtil.addDDMStructures(
+		_defaultDDMStructureHelper.addDDMStructures(
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(DDLRecordSet.class),
 			AddDefaultDDLStructuresAction.class.getClassLoader(),
 			"com/liferay/dynamic/data/lists/events/dependencies" +
 				"/default-dynamic-data-lists-structures.xml",
 			serviceContext);
-	}
-
-	@Reference(
-		target =
-			"(org.springframework.context.service.name=" +
-				"com.liferay.dynamic.data.lists.service)",
-		unbind = "-"
-	)
-	protected void setApplicationContext(
-		ApplicationContext applicationContext) {
 	}
 
 	@Reference
@@ -110,8 +100,19 @@ public class AddDefaultDDLStructuresAction extends SimpleAction {
 	}
 
 	@Reference
+	protected void setDefaultDDMStructureHelper(
+		DefaultDDMStructureHelper defaultDDMStructureHelper) {
+
+		_defaultDDMStructureHelper = defaultDDMStructureHelper;
+	}
+
+	@Reference
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(target = "(original.bean=true)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	@Reference
@@ -120,6 +121,7 @@ public class AddDefaultDDLStructuresAction extends SimpleAction {
 	}
 
 	private CompanyLocalService _companyLocalService;
+	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private GroupLocalService _groupLocalService;
 	private UserLocalService _userLocalService;
 

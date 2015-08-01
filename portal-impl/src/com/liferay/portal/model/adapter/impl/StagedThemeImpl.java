@@ -98,16 +98,16 @@ public class StagedThemeImpl extends ThemeImpl implements StagedTheme {
 	}
 
 	@Override
-	public void setCreateDate(Date date) {
+	public void setCreateDate(Date createDate) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void setLastPublishDate(Date date) {
+	public void setLastPublishDate(Date lastPublishDate) {
 	}
 
 	@Override
-	public void setModifiedDate(Date date) {
+	public void setModifiedDate(Date modifiedDate) {
 		throw new UnsupportedOperationException();
 	}
 

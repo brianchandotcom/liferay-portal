@@ -188,8 +188,8 @@ public class FileShortcutProxyBean extends RepositoryModelProxyBean
 	}
 
 	@Override
-	public void setCreateDate(Date date) {
-		_fileShortcut.setCreateDate(date);
+	public void setCreateDate(Date createDate) {
+		_fileShortcut.setCreateDate(createDate);
 	}
 
 	@Override
@@ -198,13 +198,13 @@ public class FileShortcutProxyBean extends RepositoryModelProxyBean
 	}
 
 	@Override
-	public void setLastPublishDate(Date date) {
-		_fileShortcut.setLastPublishDate(date);
+	public void setLastPublishDate(Date lastPublishDate) {
+		_fileShortcut.setLastPublishDate(lastPublishDate);
 	}
 
 	@Override
-	public void setModifiedDate(Date date) {
-		_fileShortcut.setModifiedDate(date);
+	public void setModifiedDate(Date modifiedDate) {
+		_fileShortcut.setModifiedDate(modifiedDate);
 	}
 
 	@Override

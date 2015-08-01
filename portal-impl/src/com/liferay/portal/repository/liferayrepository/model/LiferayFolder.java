@@ -343,8 +343,8 @@ public class LiferayFolder extends LiferayModel implements Folder {
 	}
 
 	@Override
-	public void setCreateDate(Date date) {
-		_dlFolder.setCreateDate(date);
+	public void setCreateDate(Date createDate) {
+		_dlFolder.setCreateDate(createDate);
 	}
 
 	@Override
@@ -352,13 +352,13 @@ public class LiferayFolder extends LiferayModel implements Folder {
 		_dlFolder.setGroupId(groupId);
 	}
 
-	public void setLastPublishDate(Date date) {
-		_dlFolder.setLastPublishDate(date);
+	public void setLastPublishDate(Date lastPublishDate) {
+		_dlFolder.setLastPublishDate(lastPublishDate);
 	}
 
 	@Override
-	public void setModifiedDate(Date date) {
-		_dlFolder.setModifiedDate(date);
+	public void setModifiedDate(Date modifiedDate) {
+		_dlFolder.setModifiedDate(modifiedDate);
 	}
 
 	public void setPrimaryKey(long primaryKey) {

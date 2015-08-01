@@ -668,7 +668,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	@Override
-	public void setCreateDate(Date date) {
+	public void setCreateDate(Date createDate) {
 	}
 
 	public void setFileEntryId(long fileEntryId) {
@@ -681,11 +681,11 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	@Override
-	public void setLastPublishDate(Date date) {
+	public void setLastPublishDate(Date lastPublishDate) {
 	}
 
 	@Override
-	public void setModifiedDate(Date date) {
+	public void setModifiedDate(Date modifiedDate) {
 	}
 
 	public void setPrimaryKey(long primaryKey) {

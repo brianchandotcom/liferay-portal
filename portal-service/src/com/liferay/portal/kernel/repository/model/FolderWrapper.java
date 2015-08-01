@@ -286,8 +286,8 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	}
 
 	@Override
-	public void setCreateDate(Date date) {
-		_folder.setCreateDate(date);
+	public void setCreateDate(Date createDate) {
+		_folder.setCreateDate(createDate);
 	}
 
 	@Override
@@ -296,13 +296,13 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	}
 
 	@Override
-	public void setLastPublishDate(Date date) {
-		_folder.setLastPublishDate(date);
+	public void setLastPublishDate(Date lastPublishDate) {
+		_folder.setLastPublishDate(lastPublishDate);
 	}
 
 	@Override
-	public void setModifiedDate(Date date) {
-		_folder.setModifiedDate(date);
+	public void setModifiedDate(Date modifiedDate) {
+		_folder.setModifiedDate(modifiedDate);
 	}
 
 	@Override

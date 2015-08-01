@@ -300,8 +300,8 @@ public class FileVersionWrapper
 	}
 
 	@Override
-	public void setCreateDate(Date date) {
-		_fileVersion.setCreateDate(date);
+	public void setCreateDate(Date createDate) {
+		_fileVersion.setCreateDate(createDate);
 	}
 
 	@Override
@@ -310,13 +310,13 @@ public class FileVersionWrapper
 	}
 
 	@Override
-	public void setLastPublishDate(Date date) {
-		_fileVersion.setLastPublishDate(date);
+	public void setLastPublishDate(Date lastPublishDate) {
+		_fileVersion.setLastPublishDate(lastPublishDate);
 	}
 
 	@Override
-	public void setModifiedDate(Date date) {
-		_fileVersion.setModifiedDate(date);
+	public void setModifiedDate(Date modifiedDate) {
+		_fileVersion.setModifiedDate(modifiedDate);
 	}
 
 	@Override

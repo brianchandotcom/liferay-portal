@@ -411,6 +411,7 @@ public interface AddressModel extends AttachedModel, BaseModel<Address>,
 	 *
 	 * @return the last publish date of this address
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -418,6 +419,7 @@ public interface AddressModel extends AttachedModel, BaseModel<Address>,
 	 *
 	 * @param lastPublishDate the last publish date of this address
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

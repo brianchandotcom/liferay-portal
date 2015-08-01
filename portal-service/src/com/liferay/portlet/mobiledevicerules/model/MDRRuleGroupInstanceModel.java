@@ -284,6 +284,7 @@ public interface MDRRuleGroupInstanceModel extends AttachedModel,
 	 *
 	 * @return the last publish date of this m d r rule group instance
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -291,6 +292,7 @@ public interface MDRRuleGroupInstanceModel extends AttachedModel,
 	 *
 	 * @param lastPublishDate the last publish date of this m d r rule group instance
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

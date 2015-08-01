@@ -255,6 +255,7 @@ public interface TeamModel extends BaseModel<Team>, MVCCModel, StagedGroupedMode
 	 *
 	 * @return the last publish date of this team
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -262,6 +263,7 @@ public interface TeamModel extends BaseModel<Team>, MVCCModel, StagedGroupedMode
 	 *
 	 * @param lastPublishDate the last publish date of this team
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

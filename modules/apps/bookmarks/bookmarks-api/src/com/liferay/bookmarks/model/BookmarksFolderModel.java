@@ -292,6 +292,7 @@ public interface BookmarksFolderModel extends BaseModel<BookmarksFolder>,
 	 *
 	 * @return the last publish date of this bookmarks folder
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -299,6 +300,7 @@ public interface BookmarksFolderModel extends BaseModel<BookmarksFolder>,
 	 *
 	 * @param lastPublishDate the last publish date of this bookmarks folder
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

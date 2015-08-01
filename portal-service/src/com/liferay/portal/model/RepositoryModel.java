@@ -326,6 +326,7 @@ public interface RepositoryModel extends BaseModel<Repository>, MVCCModel,
 	 *
 	 * @return the last publish date of this repository
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -333,6 +334,7 @@ public interface RepositoryModel extends BaseModel<Repository>, MVCCModel,
 	 *
 	 * @param lastPublishDate the last publish date of this repository
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

@@ -654,6 +654,7 @@ public interface PasswordPolicyModel extends BaseModel<PasswordPolicy>, MVCCMode
 	 *
 	 * @return the last publish date of this password policy
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -661,6 +662,7 @@ public interface PasswordPolicyModel extends BaseModel<PasswordPolicy>, MVCCMode
 	 *
 	 * @param lastPublishDate the last publish date of this password policy
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

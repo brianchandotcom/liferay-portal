@@ -399,6 +399,7 @@ public interface WikiPageModel extends BaseModel<WikiPage>, ContainerModel,
 	 *
 	 * @return the last publish date of this wiki page
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -406,6 +407,7 @@ public interface WikiPageModel extends BaseModel<WikiPage>, ContainerModel,
 	 *
 	 * @param lastPublishDate the last publish date of this wiki page
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

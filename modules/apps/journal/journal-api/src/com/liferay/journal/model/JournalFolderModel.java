@@ -292,6 +292,7 @@ public interface JournalFolderModel extends BaseModel<JournalFolder>,
 	 *
 	 * @return the last publish date of this journal folder
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -299,6 +300,7 @@ public interface JournalFolderModel extends BaseModel<JournalFolder>,
 	 *
 	 * @param lastPublishDate the last publish date of this journal folder
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

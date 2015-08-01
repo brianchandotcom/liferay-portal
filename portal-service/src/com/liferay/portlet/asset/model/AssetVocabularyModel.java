@@ -447,6 +447,7 @@ public interface AssetVocabularyModel extends BaseModel<AssetVocabulary>,
 	 *
 	 * @return the last publish date of this asset vocabulary
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -454,6 +455,7 @@ public interface AssetVocabularyModel extends BaseModel<AssetVocabulary>,
 	 *
 	 * @param lastPublishDate the last publish date of this asset vocabulary
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

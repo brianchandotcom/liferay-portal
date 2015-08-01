@@ -574,6 +574,7 @@ public interface DDMStructureModel extends BaseModel<DDMStructure>,
 	 *
 	 * @return the last publish date of this d d m structure
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -581,6 +582,7 @@ public interface DDMStructureModel extends BaseModel<DDMStructure>,
 	 *
 	 * @param lastPublishDate the last publish date of this d d m structure
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

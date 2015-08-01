@@ -432,6 +432,7 @@ public interface DLFileEntryTypeModel extends BaseModel<DLFileEntryType>,
 	 *
 	 * @return the last publish date of this document library file entry type
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -439,6 +440,7 @@ public interface DLFileEntryTypeModel extends BaseModel<DLFileEntryType>,
 	 *
 	 * @param lastPublishDate the last publish date of this document library file entry type
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

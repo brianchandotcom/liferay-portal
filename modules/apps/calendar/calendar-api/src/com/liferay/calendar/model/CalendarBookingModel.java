@@ -630,6 +630,7 @@ public interface CalendarBookingModel extends BaseModel<CalendarBooking>,
 	 *
 	 * @return the last publish date of this calendar booking
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -637,6 +638,7 @@ public interface CalendarBookingModel extends BaseModel<CalendarBooking>,
 	 *
 	 * @param lastPublishDate the last publish date of this calendar booking
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

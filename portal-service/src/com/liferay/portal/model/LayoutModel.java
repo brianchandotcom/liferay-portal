@@ -997,6 +997,7 @@ public interface LayoutModel extends BaseModel<Layout>, LocalizedModel, MVCCMode
 	 *
 	 * @return the last publish date of this layout
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -1004,6 +1005,7 @@ public interface LayoutModel extends BaseModel<Layout>, LocalizedModel, MVCCMode
 	 *
 	 * @param lastPublishDate the last publish date of this layout
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

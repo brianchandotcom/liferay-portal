@@ -709,6 +709,7 @@ public interface UserModel extends BaseModel<User>, MVCCModel, StagedModel {
 	 *
 	 * @return the last publish date of this user
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -716,6 +717,7 @@ public interface UserModel extends BaseModel<User>, MVCCModel, StagedModel {
 	 *
 	 * @param lastPublishDate the last publish date of this user
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

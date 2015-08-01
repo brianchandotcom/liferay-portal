@@ -677,6 +677,7 @@ public interface DDMTemplateModel extends AttachedModel, BaseModel<DDMTemplate>,
 	 *
 	 * @return the last publish date of this d d m template
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -684,6 +685,7 @@ public interface DDMTemplateModel extends AttachedModel, BaseModel<DDMTemplate>,
 	 *
 	 * @param lastPublishDate the last publish date of this d d m template
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

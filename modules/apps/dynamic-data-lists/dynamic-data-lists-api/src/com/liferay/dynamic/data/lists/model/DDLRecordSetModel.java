@@ -473,6 +473,7 @@ public interface DDLRecordSetModel extends BaseModel<DDLRecordSet>,
 	 *
 	 * @return the last publish date of this d d l record set
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -480,6 +481,7 @@ public interface DDLRecordSetModel extends BaseModel<DDLRecordSet>,
 	 *
 	 * @param lastPublishDate the last publish date of this d d l record set
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

@@ -461,6 +461,7 @@ public interface MDRRuleModel extends BaseModel<MDRRule>, LocalizedModel,
 	 *
 	 * @return the last publish date of this m d r rule
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -468,6 +469,7 @@ public interface MDRRuleModel extends BaseModel<MDRRule>, LocalizedModel,
 	 *
 	 * @param lastPublishDate the last publish date of this m d r rule
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

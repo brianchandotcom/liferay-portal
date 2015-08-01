@@ -417,6 +417,7 @@ public interface MDRRuleGroupModel extends BaseModel<MDRRuleGroup>,
 	 *
 	 * @return the last publish date of this m d r rule group
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -424,6 +425,7 @@ public interface MDRRuleGroupModel extends BaseModel<MDRRuleGroup>,
 	 *
 	 * @param lastPublishDate the last publish date of this m d r rule group
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

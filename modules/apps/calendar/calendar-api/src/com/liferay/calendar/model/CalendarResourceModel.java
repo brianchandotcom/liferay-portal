@@ -525,6 +525,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @return the last publish date of this calendar resource
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -532,6 +533,7 @@ public interface CalendarResourceModel extends AttachedModel,
 	 *
 	 * @param lastPublishDate the last publish date of this calendar resource
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

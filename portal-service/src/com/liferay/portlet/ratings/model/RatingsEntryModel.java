@@ -254,6 +254,7 @@ public interface RatingsEntryModel extends AttachedModel, BaseModel<RatingsEntry
 	 *
 	 * @return the last publish date of this ratings entry
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -261,6 +262,7 @@ public interface RatingsEntryModel extends AttachedModel, BaseModel<RatingsEntry
 	 *
 	 * @param lastPublishDate the last publish date of this ratings entry
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

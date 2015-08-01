@@ -376,6 +376,7 @@ public interface DLFolderModel extends BaseModel<DLFolder>, ContainerModel,
 	 *
 	 * @return the last publish date of this document library folder
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -383,6 +384,7 @@ public interface DLFolderModel extends BaseModel<DLFolder>, ContainerModel,
 	 *
 	 * @param lastPublishDate the last publish date of this document library folder
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

@@ -334,6 +334,7 @@ public interface BookmarksEntryModel extends BaseModel<BookmarksEntry>,
 	 *
 	 * @return the last publish date of this bookmarks entry
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -341,6 +342,7 @@ public interface BookmarksEntryModel extends BaseModel<BookmarksEntry>,
 	 *
 	 * @param lastPublishDate the last publish date of this bookmarks entry
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

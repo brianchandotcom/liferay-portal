@@ -320,6 +320,7 @@ public interface MBCategoryModel extends BaseModel<MBCategory>, ContainerModel,
 	 *
 	 * @return the last publish date of this message boards category
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -327,6 +328,7 @@ public interface MBCategoryModel extends BaseModel<MBCategory>, ContainerModel,
 	 *
 	 * @param lastPublishDate the last publish date of this message boards category
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

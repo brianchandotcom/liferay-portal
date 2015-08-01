@@ -312,6 +312,7 @@ public interface DDLRecordModel extends BaseModel<DDLRecord>, StagedGroupedModel
 	 *
 	 * @return the last publish date of this d d l record
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -319,6 +320,7 @@ public interface DDLRecordModel extends BaseModel<DDLRecord>, StagedGroupedModel
 	 *
 	 * @param lastPublishDate the last publish date of this d d l record
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

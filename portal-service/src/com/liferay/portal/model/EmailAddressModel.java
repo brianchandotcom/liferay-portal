@@ -302,6 +302,7 @@ public interface EmailAddressModel extends AttachedModel, BaseModel<EmailAddress
 	 *
 	 * @return the last publish date of this email address
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -309,6 +310,7 @@ public interface EmailAddressModel extends AttachedModel, BaseModel<EmailAddress
 	 *
 	 * @param lastPublishDate the last publish date of this email address
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

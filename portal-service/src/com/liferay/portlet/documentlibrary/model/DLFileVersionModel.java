@@ -434,6 +434,7 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	 *
 	 * @return the last publish date of this document library file version
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -441,6 +442,7 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	 *
 	 * @param lastPublishDate the last publish date of this document library file version
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

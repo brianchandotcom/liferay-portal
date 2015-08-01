@@ -708,6 +708,7 @@
 		<exception>FileShortcutPermission</exception>
 		<exception>FileSize</exception>
 		<exception>FolderName</exception>
+		<exception>ImageName</exception>
 		<exception>ImageSize</exception>
 		<exception>InvalidFileEntryType</exception>
 		<exception>InvalidFileVersion</exception>

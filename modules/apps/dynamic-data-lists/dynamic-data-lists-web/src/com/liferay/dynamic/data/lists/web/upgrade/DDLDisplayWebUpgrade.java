@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.lists.web.upgrade;
 
-import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
+import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
@@ -62,7 +62,7 @@ public class DDLDisplayWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.dynamic.data.lists.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}
 

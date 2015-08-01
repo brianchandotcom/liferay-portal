@@ -14,17 +14,16 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 

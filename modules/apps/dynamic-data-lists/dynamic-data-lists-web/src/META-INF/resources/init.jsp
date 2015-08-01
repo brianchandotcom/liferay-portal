@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@page import="com.liferay.portal.kernel.portlet.PortletProviderUtil"%>
-<%@page import="com.liferay.portal.kernel.portlet.PortletProvider"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
@@ -55,6 +53,7 @@ page import="com.liferay.dynamic.data.mapping.exception.NoSuchStructureException
 page import="com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMTemplate" %><%@
+page import="com.liferay.dynamic.data.mapping.model.DDMTemplateConstants" %><%@
 page import="com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRenderer" %><%@
 page import="com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalServiceUtil" %><%@
@@ -70,6 +69,8 @@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.search.BaseModelSearchResult" %><%@
 page import="com.liferay.portal.kernel.search.Field" %><%@
 page import="com.liferay.portal.kernel.search.SearchContext" %><%@
@@ -95,7 +96,6 @@ page import="com.liferay.portal.model.impl.*" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.service.*" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.util.WebKeys" %><%@
 page import="com.liferay.portlet.PortletURLFactoryUtil" %><%@
@@ -104,7 +104,6 @@ page import="com.liferay.portlet.documentlibrary.DuplicateFileException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileSizeException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMForm" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMFormField" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.LocalizedValue" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues" %><%@

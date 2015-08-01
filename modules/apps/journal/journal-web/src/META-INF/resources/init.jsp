@@ -160,7 +160,6 @@ page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.service.*" %><%@
 page import="com.liferay.portal.upload.LiferayFileItem" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.util.WebKeys" %><%@
 page import="com.liferay.portlet.PortalPreferences" %><%@

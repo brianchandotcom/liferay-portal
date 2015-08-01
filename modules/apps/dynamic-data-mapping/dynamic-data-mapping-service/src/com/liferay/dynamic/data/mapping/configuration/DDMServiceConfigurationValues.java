@@ -14,11 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.configuration;
 
-import com.liferay.dynamic.data.mapping.util.DDM;
-
 /**
  * @author Rafael Praxedes
  */
 public class DDMServiceConfigurationValues {
-
 }

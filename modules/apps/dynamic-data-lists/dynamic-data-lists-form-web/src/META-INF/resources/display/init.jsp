@@ -41,7 +41,6 @@ page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
-page import="com.liferay.portal.util.WebKeys" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %>
 
 <%@ page import="javax.portlet.PortletURL" %>

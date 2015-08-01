@@ -15,8 +15,6 @@
 package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.portal.util.PortletKeys;
-
 
 /**
  * @author Rafael Praxedes
@@ -24,7 +22,6 @@ import com.liferay.portal.util.PortletKeys;
 public class UpgradeLastPublishDate
 	extends com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate {
 
-	
 	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL("alter table DDMStructure add lastPublishDate DATE null");
@@ -34,7 +31,8 @@ public class UpgradeLastPublishDate
 
 		runSQL("alter table DDMTemplate add lastPublishDate DATE null");
 
-		updateLastPublishDates(DDMPortletKeys.DYNAMIC_DATA_MAPPING, "DDMTemplate");
+		updateLastPublishDates(
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING, "DDMTemplate");
 	}
 
 }

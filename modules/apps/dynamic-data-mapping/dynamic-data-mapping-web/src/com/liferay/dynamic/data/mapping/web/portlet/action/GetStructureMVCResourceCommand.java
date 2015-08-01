@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -26,6 +26,7 @@ import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

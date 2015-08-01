@@ -20,20 +20,25 @@ import com.liferay.portal.kernel.util.GetterUtil;
  * @author Rafael Praxedes
  */
 public class DDMWebConfigurationValues {
-	
-	public static final boolean DYNAMIC_DATA_MAPPING_STRUCTURE_FORCE_AUTOGENERATE_KEY = 
-		GetterUtil.getBoolean(
-			DDMWebConfigurationUtil.get(
-				DDMWebConfigurationKeys.DYNAMIC_DATA_MAPPING_STRUCTURE_FORCE_AUTOGENERATE_KEY));
 
-	public static final boolean DYNAMIC_DATA_MAPPING_TEMPLATE_FORCE_AUTOGENERATE_KEY = 
-		GetterUtil.getBoolean(
-			DDMWebConfigurationUtil.get(
-				DDMWebConfigurationKeys.DYNAMIC_DATA_MAPPING_TEMPLATE_FORCE_AUTOGENERATE_KEY));
+	public static final boolean
+		DYNAMIC_DATA_MAPPING_STRUCTURE_FORCE_AUTOGENERATE_KEY =
+			GetterUtil.getBoolean(
+				DDMWebConfigurationUtil.get(
+					DDMWebConfigurationKeys.
+						DYNAMIC_DATA_MAPPING_STRUCTURE_FORCE_AUTOGENERATE_KEY));
+
+	public static final boolean
+		DYNAMIC_DATA_MAPPING_TEMPLATE_FORCE_AUTOGENERATE_KEY =
+			GetterUtil.getBoolean(
+				DDMWebConfigurationUtil.get(
+					DDMWebConfigurationKeys.
+						DYNAMIC_DATA_MAPPING_TEMPLATE_FORCE_AUTOGENERATE_KEY));
 
 	public static final String DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_DEFAULT =
 		GetterUtil.getString(
 			DDMWebConfigurationUtil.get(
-				DDMWebConfigurationKeys.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_DEFAULT));
+				DDMWebConfigurationKeys.
+					DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_DEFAULT));
 
 }

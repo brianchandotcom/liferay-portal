@@ -70,6 +70,10 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 
 		updateLastPublishDates(PortletKeys.DOCUMENT_LIBRARY, "DLFileShortcut");
 
+		runSQL("alter table DLFileVersion add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.DOCUMENT_LIBRARY, "DLFileVersion");
+
 		runSQL("alter table DLFolder add lastPublishDate DATE null");
 
 		updateLastPublishDates(PortletKeys.DOCUMENT_LIBRARY, "DLFolder");

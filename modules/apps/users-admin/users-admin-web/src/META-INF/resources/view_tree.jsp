@@ -342,6 +342,10 @@ if (organization != null) {
 									</c:otherwise>
 								</c:choose>
 
+								<%
+								List<Organization> results = searchContainer.getResults();
+								%>
+
 								<c:if test="<%= !results.isEmpty() %>">
 									<aui:button cssClass="delete-organizations" disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
 								</c:if>

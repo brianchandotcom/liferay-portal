@@ -1013,6 +1013,19 @@ jdbc.default.password=${database.password}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-elasticsearch-configuration" >
+		<sequential>
+			<echo file="${liferay.home}/osgi/portal/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.cfg">
+				additionalConfigurations=\
+					index.indexing.slowlog.threshold.index.warn: 600s,\
+					index.search.slowlog.threshold.fetch.warn: 600s,\
+					index.search.slowlog.threshold.query.warn: 600s,\
+					monitor.jvm.gc.old.warn: 600s,\
+					monitor.jvm.gc.young.warn: 600s
+			</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-fix-pack-bundle" >
 		<sequential>
 			<if>
@@ -5001,6 +5014,8 @@ module.framework.properties.osgi.console=11312</echo>
 				<antcall target="prepare-portal-ext-properties" />
 
 				<antcall target="prepare-system-ext-properties" />
+
+				<prepare-elasticsearch-configuration />
 			</else>
 		</if>
 

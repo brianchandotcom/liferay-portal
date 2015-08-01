@@ -133,15 +133,15 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMStructureLayout" />
+		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMStructureLink" />
+		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMStructureVersion" />
+		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMTemplate" />
 		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMStructureLayout" />
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMStructureLink" />
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMStructureVersion" />
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMTemplate" />
 	</entity>
 	<entity name="DDMStructureLayout" uuid="true" local-service="true" remote-service="false">
 
@@ -350,15 +350,15 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMStructure" />
+		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMTemplateLink" />
+		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMTemplateVersion" />
 		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Image" />
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMStructure" />
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMTemplateLink" />
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMTemplateVersion" />
 	</entity>
 	<entity name="DDMTemplateLink" local-service="true" remote-service="false">
 

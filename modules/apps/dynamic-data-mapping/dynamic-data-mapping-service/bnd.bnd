@@ -5,17 +5,12 @@ Import-Package:\
 	com.liferay.portal.xml,\
 	*
 Export-Package:\
-	com.liferay.dynamic.data.mapping.internal,\
-	com.liferay.dynamic.data.mapping.io.impl,\
 	com.liferay.dynamic.data.mapping.model.impl,\
-	com.liferay.dynamic.data.mapping.registry.impl,\
-	com.liferay.dynamic.data.mapping.render.impl,\
-	com.liferay.dynamic.data.mapping.service.base,\
-	com.liferay.dynamic.data.mapping.service.impl,\
-	com.liferay.dynamic.data.mapping.service.persistence.impl,\
+	com.liferay.dynamic.data.mapping.search,\
+	com.liferay.dynamic.data.mapping.service.permission,\
 	com.liferay.dynamic.data.mapping.storage.impl,\
+	com.liferay.dynamic.data.mapping.template,\
 	com.liferay.dynamic.data.mapping.util.impl,\
-	com.liferay.dynamic.data.mapping.validator.impl,\
 	com.liferay.dynamic.data.mapping.webdav
 Include-Resource:\
 	classes,\

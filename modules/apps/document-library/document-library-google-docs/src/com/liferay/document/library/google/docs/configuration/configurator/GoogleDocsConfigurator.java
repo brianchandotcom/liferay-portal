@@ -132,6 +132,11 @@ public class GoogleDocsConfigurator {
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 	}
 
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
 	@Reference
 	protected void setStorageEngine(StorageEngine storageEngine) {
 		_storageEngine = storageEngine;
@@ -140,11 +145,6 @@ public class GoogleDocsConfigurator {
 	@Reference
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	private ClassNameLocalService _classNameLocalService;

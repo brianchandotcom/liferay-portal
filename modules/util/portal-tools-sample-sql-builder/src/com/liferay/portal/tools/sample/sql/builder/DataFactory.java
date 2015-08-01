@@ -28,7 +28,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecordVersionModel;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetModelImpl;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl;
-import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMContentModel;

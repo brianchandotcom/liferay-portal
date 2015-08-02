@@ -33,7 +33,9 @@ import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldTypeSettingsTestUtil;
 import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
+import com.liferay.portal.configuration.ConfigurationFactoryImpl;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -447,6 +449,11 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 			"dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
+	}
+
+	protected void setUpConfigurationFactoryUtil() {
+		ConfigurationFactoryUtil.setConfigurationFactory(
+			new ConfigurationFactoryImpl());
 	}
 
 	protected void setUpDDMFormFieldTypeRegistryUtil() {

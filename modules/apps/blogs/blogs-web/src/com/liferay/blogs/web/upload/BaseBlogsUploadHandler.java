@@ -69,7 +69,9 @@ public abstract class BaseBlogsUploadHandler extends BaseUploadHandler {
 	public void validateFile(String fileName, String contentType, long size)
 		throws PortalException {
 
-		if (size > getMaxFileSize()) {
+		long maxSize = getMaxFileSize();
+
+		if ((maxSize > 0) && (size > maxSize)) {
 			throw new EntryImageSizeException();
 		}
 

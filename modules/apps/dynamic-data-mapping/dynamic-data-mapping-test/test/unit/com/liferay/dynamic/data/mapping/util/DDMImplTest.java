@@ -37,15 +37,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 
 /**
  * @author Marcellus Tavares
  */
 @PrepareForTest({DDMStructureLocalServiceUtil.class, LocaleUtil.class})
+@SuppressStaticInitializationFor(
+	"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil"
+)
 public class DDMImplTest extends BaseDDMTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpConfigurationFactoryUtil();
 		setUpDDMFormFieldTypeRegistryUtil();
 		setUpDDMFormJSONDeserializerUtil();
 		setUpDDMFormJSONSerializerUtil();

@@ -169,7 +169,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		assertEmptyVersions(searchResult);
 	}
 
-	protected SearchResultManagerImpl createSearchResultManager() {
+	protected SearchResultManagerImpl createSearchResultManagerImpl() {
 		SearchResultManagerImpl searchResultManagerImpl =
 			new SearchResultManagerImpl();
 
@@ -184,7 +184,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 			new SearchResultTranslatorImpl();
 
 		searchResultTranslatorImpl.setSearchResultManager(
-			createSearchResultManager());
+			createSearchResultManagerImpl());
 
 		return searchResultTranslatorImpl;
 	}

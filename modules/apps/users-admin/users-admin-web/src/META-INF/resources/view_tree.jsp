@@ -60,7 +60,7 @@ if (organization != null) {
 }
 %>
 
-<c:if test="<%= portletName.equals(PortletKeys.USERS_ADMIN) && usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
+<c:if test="<%= portletName.equals(UsersAdminPortletKeys.USERS_ADMIN) && usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
 	<aui:nav cssClass="nav-tabs">
 		<portlet:renderURL var="viewUsersTreeURL">
 			<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />

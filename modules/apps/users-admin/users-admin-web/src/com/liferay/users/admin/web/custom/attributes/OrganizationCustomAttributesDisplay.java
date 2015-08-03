@@ -16,9 +16,9 @@ package com.liferay.users.admin.web.custom.attributes;
 
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + PortletKeys.USERS_ADMIN},
+	property = {"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN},
 	service = CustomAttributesDisplay.class
 )
 public class OrganizationCustomAttributesDisplay

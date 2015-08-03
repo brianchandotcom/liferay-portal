@@ -38,13 +38,13 @@ import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
+import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.USERS_ADMIN,
+		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
 		"mvc.command.name=/users_admin/export_users"
 	},
 	service = MVCActionCommand.class
@@ -161,7 +161,7 @@ public class ExportUsersMVCActionCommand extends BaseMVCActionCommand {
 
 		if (!exportAllUsers &&
 			!PortletPermissionUtil.contains(
-				permissionChecker, PortletKeys.USERS_ADMIN,
+				permissionChecker, UsersAdminPortletKeys.USERS_ADMIN,
 				ActionKeys.EXPORT_USER)) {
 
 			return Collections.emptyList();
@@ -169,7 +169,7 @@ public class ExportUsersMVCActionCommand extends BaseMVCActionCommand {
 
 		PortletURL portletURL =
 			((ActionResponseImpl)actionResponse).createRenderURL(
-				PortletKeys.USERS_ADMIN);
+				UsersAdminPortletKeys.USERS_ADMIN);
 
 		UserSearch userSearch = new UserSearch(actionRequest, portletURL);
 

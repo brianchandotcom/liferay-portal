@@ -12,30 +12,14 @@
  * details.
  */
 
-package com.liferay.users.admin.web.portlet.action;
-
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.users.admin.web.constants;
 
 /**
  * @author Pei-Jung Lan
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
-		"mvc.command.name=/users_admin/edit_organization"
-	},
-	service = MVCRenderCommand.class
-)
-public class EditOrganizationMVCRenderCommand
-	extends GetOrganizationMVCRenderCommand {
+public class UsersAdminPortletKeys {
 
-	@Override
-	protected String getPath() {
-		return "/edit_organization.jsp";
-	}
+	public static final String USERS_ADMIN =
+		"com_liferay_users_admin_web_portlet_UsersAdminPortlet";
 
 }

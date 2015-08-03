@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/group_statistics/init.jsp" %>
+<%@ include file="/group_statistics/init.jsp" %>
 
 <%
 for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
@@ -86,13 +86,13 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 					<c:when test="<%= dataSize > 0 %>">
 						<c:choose>
 							<c:when test='<%= chartType.equals("pie") %>'>
-								<%@ include file="/html/portlet/group_statistics/chart/pie.jspf" %>
+								<%@ include file="/group_statistics/chart/pie.jspf" %>
 							</c:when>
 							<c:when test='<%= chartType.equals("tag-cloud") %>'>
-								<%@ include file="/html/portlet/group_statistics/chart/tag_cloud.jspf" %>
+								<%@ include file="/group_statistics/chart/tag_cloud.jspf" %>
 							</c:when>
 							<c:otherwise>
-								<%@ include file="/html/portlet/group_statistics/chart/other.jspf" %>
+								<%@ include file="/group_statistics/chart/other.jspf" %>
 							</c:otherwise>
 						</c:choose>
 					</c:when>

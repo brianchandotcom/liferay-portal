@@ -78,8 +78,13 @@ if (layoutSetPrototypeId > 0) {
 }
 
 boolean showPrototypes = ParamUtil.getBoolean(request, "showPrototypes", true);
+%>
 
-if (!portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS)) {
+<liferay-ui:success key='<%= SiteAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
+
+<c:if test="<%= !portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS) %>">
+
+	<%
 	if (group != null) {
 		PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
@@ -89,12 +94,11 @@ if (!portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS)) {
 
 		PortalUtil.addPortletBreadcrumbEntry(request, parentGroup.getDescriptiveName(locale), null);
 	}
-}
-%>
+	%>
 
-<liferay-ui:success key='<%= SiteAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
-
-<c:if test="<%= (group == null) || !layout.isTypeControlPanel() %>">
+	<div id="breadcrumb">
+		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+	</div>
 
 	<%
 	boolean localizeTitle = true;
@@ -110,13 +114,6 @@ if (!portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS)) {
 	}
 	else if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 		title = "new-child-site";
-	%>
-
-		<div id="breadcrumb">
-			<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-		</div>
-
-	<%
 	}
 	%>
 

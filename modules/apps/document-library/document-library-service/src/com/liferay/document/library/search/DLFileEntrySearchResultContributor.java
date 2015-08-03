@@ -73,10 +73,10 @@ public class DLFileEntrySearchResultContributor
 			long classNameId = GetterUtil.getLong(
 				document.get(Field.CLASS_NAME_ID));
 
-			long classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
-
 			ClassName className = _classNameLocalService.getClassName(
 				classNameId);
+
+			long classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
 
 			Summary summary = _summaryFactory.getSummary(
 				document, className.getClassName(), classPK, locale,

@@ -17,7 +17,7 @@ package com.liferay.users.admin.web.portlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.BrowsePortletProvider;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
 
 import javax.portlet.PortletURL;
 
@@ -38,7 +38,7 @@ public class OrganizationBrowsePortletProvider
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.USERS_ADMIN;
+		return UsersAdminPortletKeys.USERS_ADMIN;
 	}
 
 	@Override

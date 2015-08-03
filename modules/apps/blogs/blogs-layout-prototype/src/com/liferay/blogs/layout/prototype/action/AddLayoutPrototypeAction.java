@@ -86,6 +86,10 @@ public class AddLayoutPrototypeAction {
 			layout, RecentBloggersPortletKeys.RECENT_BLOGGERS, "column-2");
 	}
 
+	@Reference(target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")")
+	protected void setBlogsPortlet(Portlet portlet) {
+	}
+
 	@Reference(unbind = "-")
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
@@ -106,9 +110,9 @@ public class AddLayoutPrototypeAction {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=com.liferay.blogs.web.portlet.BlogsPortlet)"
+		target = "(javax.portlet.name=" + RecentBloggersPortletKeys.RECENT_BLOGGERS + ")"
 	)
-	protected void setPortlet(Portlet portlet) {
+	protected void setRecentBloggersPortlet(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")

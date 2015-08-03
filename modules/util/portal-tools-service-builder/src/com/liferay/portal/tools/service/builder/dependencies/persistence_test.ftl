@@ -533,15 +533,19 @@ public class ${entity.name}PersistenceTest {
 			return OrderByComparatorFactoryUtil.create(
 				"${entity.table}",
 
+				<#assign appendComma = false>
+
 				<#list entity.regularColList as column>
 					<#assign columnType = serviceBuilder.getSqlType(packagePath + ".model." + entity.getName(), column.getName(), column.getType())>
 
 					<#if (columnType != "BLOB") && (columnType != "CLOB")>
-						"${column.name}", true
-
-						<#if column_has_next>
+						<#if appendComma>
 							,
 						</#if>
+
+						<#assign appendComma = true>
+
+						"${column.name}", true
 					</#if>
 				</#list>
 

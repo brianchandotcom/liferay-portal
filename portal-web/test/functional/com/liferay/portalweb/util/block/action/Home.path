@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>SITE_NAME</td>
-	<td>//h1[@class='site-title']/a/span</td>
+	<td>//div[@id='heading']/span[@class='site-name']</td>
 	<td></td>
 </tr>
 <tr>

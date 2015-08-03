@@ -260,12 +260,16 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Breadcrumb" />
+		</execute>
+
 		<execute macro="Breadcrumb#viewADTApplied">
 			<var name="breadcrumbADTType" value="horizontal" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="Breadcrumb" />
+			<var name="portletName" value="Breadcrumb" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

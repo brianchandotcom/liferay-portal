@@ -300,7 +300,7 @@
 	</command>
 
 	<command name="advancedSearchCP">
-		<execute function="AssertClick" locator1="CPUsersandorganizations#SEARCH_ALL_ORGANIZATIONS" value1="All Organizations" />
+		<execute function="AssertClick" locator1="NavTab#ALL_ORGANIZATIONS" value1="All Organizations" />
 		<execute function="AssertClick" locator1="CPUsersandorganizationsVieworganizations#BASIC_SEARCH_ADVANCED" />
 
 		<if>

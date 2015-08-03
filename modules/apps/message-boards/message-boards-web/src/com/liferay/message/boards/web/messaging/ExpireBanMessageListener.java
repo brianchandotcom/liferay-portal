@@ -14,7 +14,9 @@
 
 package com.liferay.message.boards.web.messaging;
 
-import com.liferay.message.boards.web.configuration.MessageBoardsWebConfigurationValues;
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.message.boards.configuration.MessageBoardsSystemConfiguration;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
@@ -24,10 +26,13 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
 
+import java.util.Map;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -43,11 +48,16 @@ public class ExpireBanMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
 	@Activate
-	protected void activate() {
+	@Modified
+	protected void activate(Map<String, Object> properties) {
 		schedulerEntry.setTimeUnit(TimeUnit.MINUTE);
 		schedulerEntry.setTriggerType(TriggerType.SIMPLE);
+
+		_messageBoardsSystemConfiguration = Configurable.createConfigurable(
+			MessageBoardsSystemConfiguration.class, properties);
+
 		schedulerEntry.setTriggerValue(
-			MessageBoardsWebConfigurationValues.EXPIRE_BAN_JOB_INTERVAL);
+			_messageBoardsSystemConfiguration.expireBanJobInterval());
 	}
 
 	@Override
@@ -65,5 +75,8 @@ public class ExpireBanMessageListener
 	@Reference(target = "(original.bean=*)", unbind = "*")
 	protected void setServletContext(ServletContext servletContext) {
 	}
+
+	private volatile MessageBoardsSystemConfiguration
+		_messageBoardsSystemConfiguration;
 
 }

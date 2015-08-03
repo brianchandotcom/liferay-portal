@@ -12,16 +12,22 @@
  * details.
  */
 
-package com.liferay.message.boards.web.configuration;
+package com.liferay.message.boards.configuration;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import aQute.bnd.annotation.metatype.Meta;
 
 /**
- * @author Adolfo Pérez
+ * @author Sergio González
  */
-public class MessageBoardsWebConfigurationValues {
+@Meta.OCD(id = "com.liferay.message.boards.configuration.MessageBoardsSystemConfiguration")
+public interface MessageBoardsSystemConfiguration {
 
-	public static final String EXPIRE_BAN_JOB_INTERVAL = GetterUtil.getString(
-		MessageBoardsWebConfigurationUtil.get("expire.ban.job.interval"));
+	/**
+	 * Enter time in minutes on how often this job is run. If a user's ban is
+	 * set to expire at 12:05 PM and the job runs at 2 PM, the expire will occur
+	 * during the 2 PM run.
+	 */
+	@Meta.AD(deflt = "120", required = false)
+	public int expireBanJobInterval();
 
 }

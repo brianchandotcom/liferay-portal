@@ -14,6 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -22,10 +26,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING,
+		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING,
 		"mvc.command.name=getTemplate"
 	},
 	service = MVCResourceCommand.class

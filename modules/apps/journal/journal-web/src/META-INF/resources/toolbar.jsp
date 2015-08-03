@@ -130,7 +130,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 	function <portlet:namespace />openStructuresView() {
 		Liferay.Util.openDDMPortlet(
 			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 				dialog: {
 					destroyOnHide: true,
 					on: {
@@ -154,7 +154,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 	function <portlet:namespace />openTemplatesView() {
 		Liferay.Util.openDDMPortlet(
 			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 				dialog: {
 					destroyOnHide: true

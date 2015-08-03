@@ -15,6 +15,7 @@
 package com.liferay.configuration.admin.web.util;
 
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
+import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -25,7 +26,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 
 import java.io.Serializable;
 

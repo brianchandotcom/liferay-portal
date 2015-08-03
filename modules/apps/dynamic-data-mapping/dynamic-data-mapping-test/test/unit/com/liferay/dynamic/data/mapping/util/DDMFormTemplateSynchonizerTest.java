@@ -15,19 +15,18 @@
 package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
+import com.liferay.dynamic.data.mapping.util.impl.DDMFormTemplateSynchonizer;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormTemplateSynchonizer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -43,21 +42,15 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest(
-	{
-		DDMStructureLocalServiceUtil.class, DDMTemplateLocalServiceUtil.class,
-		LocaleUtil.class
-	}
-)
+@PrepareForTest(LocaleUtil.class)
 public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpConfigurationFactoryUtil();
 		setUpDDMFormFieldTypeRegistryUtil();
 		setUpDDMFormJSONSerializerUtil();
 		setUpDDMFormJSONDeserializerUtil();
-		setUpDDMStructureLocalServiceUtil();
-		setUpDDMTemplateLocalServiceUtil();
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
 		setUpLocaleUtil();
@@ -160,6 +153,19 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 			RandomTestUtil.randomLong(), "Test Edit Mode Form Template",
 			DDMTemplateConstants.TEMPLATE_MODE_EDIT,
 			DDMFormJSONSerializerUtil.serialize(ddmForm));
+	}
+
+	protected DDMTemplate createTemplate(
+		long templateId, String name, String mode, String script) {
+
+		DDMTemplate template = new DDMTemplateImpl();
+
+		template.setTemplateId(templateId);
+		template.setName(name);
+		template.setMode(mode);
+		template.setScript(script);
+
+		return template;
 	}
 
 	protected DDMFormField createTextDDMFormField(

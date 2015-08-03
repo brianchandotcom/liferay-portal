@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+
 /**
  * @author Leonardo Barros
  */
@@ -97,6 +99,9 @@ public interface DDMStructureManager {
 	public List<DDMStructure> getClassStructures(
 		long companyId, long classNameId, int start, int end);
 
+	public DDMForm getDDMForm(PortletRequest portletRequest)
+		throws PortalException;
+
 	public JSONArray getDDMFormFieldsJSONArray(long structureId, String script)
 		throws PortalException;
 
@@ -118,6 +123,8 @@ public interface DDMStructureManager {
 		throws PortalException;
 
 	public List<DDMStructure> getStructures(long[] groupIds, long classNameId);
+
+	public int getStructureStorageLinksCount(long structureId);
 
 	public DDMStructure updateStructure(
 			long userId, long structureId, long parentStructureId,

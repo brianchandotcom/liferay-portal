@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer" class="com.liferay.dynamic.data.mapping.io.impl.DDMFormFieldTypesJSONSerializerImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializerUtil">
+		<property name="DDMFormFieldTypesJSONSerializer" ref="com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer" />
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer" class="com.liferay.dynamic.data.mapping.io.impl.DDMFormJSONDeserializerImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil">
+		<property name="DDMFormJSONDeserializer" ref="com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer" />
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil">
+		<property name="DDMFormJSONSerializer">
+			<bean class="com.liferay.dynamic.data.mapping.io.impl.DDMFormJSONSerializerImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer" class="com.liferay.dynamic.data.mapping.io.impl.DDMFormLayoutJSONDeserializerImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializerUtil">
+		<property name="DDMFormLayoutJSONDeserializer" ref="com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer" />
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil">
+		<property name="DDMFormLayoutJSONSerializer">
+			<bean class="com.liferay.dynamic.data.mapping.io.impl.DDMFormLayoutJSONSerializerImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer" class="com.liferay.dynamic.data.mapping.io.impl.DDMFormValuesJSONDeserializerImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil">
+		<property name="DDMFormValuesJSONDeserializer" ref="com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer" />
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil">
+		<property name="DDMFormValuesJSONSerializer">
+			<bean class="com.liferay.dynamic.data.mapping.io.impl.DDMFormValuesJSONSerializerImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer" class="com.liferay.dynamic.data.mapping.io.impl.DDMFormXSDDeserializerImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil">
+		<property name="DDMFormXSDDeserializer" ref="com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer" />
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeRegistryUtil" class="com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeRegistryUtil">
+		<property name="DDMFormFieldTypeRegistry">
+			<bean class="com.liferay.dynamic.data.mapping.registry.impl.DDMFormFieldTypeRegistryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry" class="com.liferay.dynamic.data.mapping.render.impl.DDMFormFieldRendererRegistryImpl">
+		<property name="defaultDDMFormFieldRenderer">
+			<bean class="com.liferay.dynamic.data.mapping.render.impl.DDMFormFieldFreeMarkerRenderer" />
+		</property>
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistryUtil" class="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistryUtil">
+		<property name="DDMFormFieldRendererRegistry" ref="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry" />
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryImpl" class="com.liferay.dynamic.data.mapping.render.impl.DDMFormFieldValueRendererRegistryImpl">
+		<property name="defaultDDMFormFieldValueRenderers">
+			<list>
+				<bean class="com.liferay.dynamic.data.mapping.render.impl.CheckboxDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.render.impl.DateDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.render.impl.DecimalDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.render.impl.DocumentLibraryDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.render.impl.GeolocationDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.render.impl.IntegerDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.render.impl.LinkToPageDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.render.impl.NumberDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.render.impl.RadioDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.render.impl.SelectDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.render.impl.TextAreaDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.render.impl.TextDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.render.impl.TextHTMLDDMFormFieldValueRenderer" />
+			</list>
+		</property>
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryUtil" class="com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryUtil">
+		<property name="DDMFormFieldValueRendererRegistry" ref="com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryImpl" />
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.render.DDMFormRendererUtil" class="com.liferay.dynamic.data.mapping.render.DDMFormRendererUtil">
+		<property name="DDMFormRenderer">
+			<bean class="com.liferay.dynamic.data.mapping.render.impl.DDMFormRendererImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.storage.FieldRendererFactory" class="com.liferay.dynamic.data.mapping.storage.FieldRendererFactory">
+		<property name="fieldRenderers">
+			<map>
+				<entry key="date">
+					<bean class="com.liferay.dynamic.data.mapping.storage.impl.DateFieldRenderer" />
+				</entry>
+				<entry key="document-library">
+					<bean class="com.liferay.dynamic.data.mapping.storage.impl.DocumentLibraryFieldRenderer" />
+				</entry>
+				<entry key="geolocation">
+					<bean class="com.liferay.dynamic.data.mapping.storage.impl.GeolocationFieldRenderer" />
+				</entry>
+				<entry key="link-to-page">
+					<bean class="com.liferay.dynamic.data.mapping.storage.impl.LinkToPageFieldRenderer" />
+				</entry>
+				<entry key="string">
+					<bean class="com.liferay.dynamic.data.mapping.storage.impl.StringFieldRenderer" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry" class="com.liferay.dynamic.data.mapping.storage.impl.StorageAdapterRegistryImpl">
+		<property name="defaultStorageType" value="json" />
+		<property name="storageAdapters">
+			<list>
+				<bean class="com.liferay.dynamic.data.mapping.storage.impl.JSONStorageAdapter" />
+			</list>
+		</property>
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistryUtil" class="com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistryUtil">
+		<property name="storageAdapterRegistry" ref="com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry" />
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.storage.StorageEngine" class="com.liferay.dynamic.data.mapping.storage.impl.StorageEngineImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.storage.StorageEngineUtil" class="com.liferay.dynamic.data.mapping.storage.StorageEngineUtil">
+		<property name="storageEngine" ref="com.liferay.dynamic.data.mapping.storage.StorageEngine" />
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.util.DDM" class="com.liferay.dynamic.data.mapping.util.impl.DDMImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.util.DDMFormValuesValidatorUtil" class="com.liferay.dynamic.data.mapping.util.DDMFormValuesValidatorUtil">
+		<property name="DDMFormValuesValidator">
+			<bean class="com.liferay.dynamic.data.mapping.util.impl.DDMFormValuesValidatorImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter" class="com.liferay.dynamic.data.mapping.util.impl.DDMFormValuesToFieldsConverterImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverterUtil" class="com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverterUtil">
+		<property name="DDMFormValuesToFieldsConverter" ref="com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter" />
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.util.DDMIndexer" class="com.liferay.dynamic.data.mapping.util.impl.DDMIndexerImpl" />
+	<bean id="com.liferay.dynamic.data.mapping.util.DDMIndexerUtil" class="com.liferay.dynamic.data.mapping.util.DDMIndexerUtil">
+		<property name="DDMIndexer" ref="com.liferay.dynamic.data.mapping.util.DDMIndexer" />
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.util.DDMTemplateHelperUtil" class="com.liferay.dynamic.data.mapping.util.DDMTemplateHelperUtil">
+		<property name="DDMTemplateHelper">
+			<bean class="com.liferay.dynamic.data.mapping.util.impl.DDMTemplateHelperImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.util.DDMUtil" class="com.liferay.dynamic.data.mapping.util.DDMUtil">
+		<property name="DDM" ref="com.liferay.dynamic.data.mapping.util.DDM" />
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.util.DDMXML" class="com.liferay.dynamic.data.mapping.util.impl.DDMXMLImpl">
+		<property name="XMLSchema">
+			<bean class="com.liferay.portal.xml.XMLSchemaImpl">
+				<property name="schemaLanguage" value="http://www.w3.org/2001/XMLSchema" />
+				<property name="systemId" value="http://www.liferay.com/dtd/liferay-ddm-structure_7_0_0.xsd" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.util.DDMXMLUtil" class="com.liferay.dynamic.data.mapping.util.DDMXMLUtil">
+		<property name="DDMXML" ref="com.liferay.dynamic.data.mapping.util.DDMXML" />
+	</bean>
+	<bean id="com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil" class="com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil">
+		<property name="FieldsToDDMFormValuesConverter">
+			<bean class="com.liferay.dynamic.data.mapping.util.impl.FieldsToDDMFormValuesConverterImpl" />
+		</property>
+	</bean>
+</beans>

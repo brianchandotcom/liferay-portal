@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="../../core/osgi-service-tracker-map" />
+	<property name="import.shared" value="../dynamic-data-mapping/dynamic-data-mapping-api,../../core/osgi-service-tracker-map" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

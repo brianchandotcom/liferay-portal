@@ -38,7 +38,7 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 		return _classPK;
 	}
 
-	public com.liferay.portlet.dynamicdatamapping.storage.Field getField() {
+	public com.liferay.dynamic.data.mapping.storage.Field getField() {
 		return _field;
 	}
 
@@ -74,7 +74,7 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 		setScopedAttribute("classPK", classPK);
 	}
 
-	public void setField(com.liferay.portlet.dynamicdatamapping.storage.Field field) {
+	public void setField(com.liferay.dynamic.data.mapping.storage.Field field) {
 		_field = field;
 
 		setScopedAttribute("field", field);
@@ -154,7 +154,7 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 
 	private long _classNameId = 0;
 	private long _classPK = 0;
-	private com.liferay.portlet.dynamicdatamapping.storage.Field _field = null;
+	private com.liferay.dynamic.data.mapping.storage.Field _field = null;
 	private java.lang.String _fieldsNamespace = null;
 	private boolean _readOnly = false;
 	private boolean _repeatable = true;

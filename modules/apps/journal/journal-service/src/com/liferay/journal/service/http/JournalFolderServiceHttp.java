@@ -172,7 +172,7 @@ public class JournalFolderServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getDDMStructures(
 		HttpPrincipal httpPrincipal, long[] groupIds, long folderId,
 		int restrictionType)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -196,7 +196,7 @@ public class JournalFolderServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

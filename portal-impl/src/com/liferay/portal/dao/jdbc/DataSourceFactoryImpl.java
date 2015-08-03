@@ -408,6 +408,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			StringUtil.equalsIgnoreCase(key, "acquireRetryDelay") ||
 			StringUtil.equalsIgnoreCase(key, "connectionCustomizerClassName") ||
 			StringUtil.equalsIgnoreCase(key, "idleConnectionTestPeriod") ||
+			StringUtil.equalsIgnoreCase(key, "initialPoolSize") ||
 			StringUtil.equalsIgnoreCase(key, "maxIdleTime") ||
 			StringUtil.equalsIgnoreCase(key, "maxPoolSize") ||
 			StringUtil.equalsIgnoreCase(key, "minPoolSize") ||

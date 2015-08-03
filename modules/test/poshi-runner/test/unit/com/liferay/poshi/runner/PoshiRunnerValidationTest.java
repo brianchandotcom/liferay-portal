@@ -50,7 +50,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 	@Override
 	public void tearDown() throws Exception {
 		PoshiRunnerContext.clear();
-		PoshiRunnerValidation.clearExceptions();
 	}
 
 	@Test
@@ -71,8 +70,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 			"getPrimaryAttributeName is failing", "function",
 			primaryAttributeName);
 
-		PoshiRunnerValidation.clearExceptions();
-
 		Assert.assertNotEquals(
 			"getPrimaryAttributeName is failing", "value1",
 			primaryAttributeName);
@@ -91,8 +88,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		Assert.assertEquals(
 			"validateClassCommandName is failing", "", _getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		PoshiRunnerValidation.validateClassCommandName(
 			element, "ValidateClassCommandName#fail", "test-case", filePath);
@@ -117,8 +112,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		Assert.assertEquals(
 			"validateCommandElement is failing", "", _getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		document = DocumentHelper.createDocument();
 
@@ -158,8 +151,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateConditionElement is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		element = document.addElement("and");
@@ -190,8 +181,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateDefinitionElement is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		filePath = _getFilePath("ValidateDefinitionElement2.macro");
 
 		rootElement = PoshiRunnerGetterUtil.getRootElementFromFilePath(
@@ -220,8 +209,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		Assert.assertEquals(
 			"validateElementName is failing", "", _getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		document = DocumentHelper.createDocument();
 
@@ -257,8 +244,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		Assert.assertEquals(
 			"validateElseElement is failing", "", _getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		Element secondElseElement = element.addElement("else");
 
@@ -300,8 +285,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		Assert.assertEquals(
 			"validateElseIfElement is failing", "", _getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		document = DocumentHelper.createDocument();
 
@@ -350,8 +333,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateExecuteElement is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		element = document.addElement("execute");
@@ -394,8 +375,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateForElement is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		element = document.addElement("for");
@@ -415,8 +394,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateForElement is failing", "Missing param attribute",
 			_getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		document = DocumentHelper.createDocument();
 
@@ -451,8 +428,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"ValidateFunctionContext is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		element = PoshiRunnerContext.getMacroCommandElement(
 			"ValidateFunctionContext#validateFunctionContextFail1");
 
@@ -466,8 +441,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateFunctionContext is failing", "Invalid path name ClickAt",
 			_getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		element = PoshiRunnerContext.getMacroCommandElement(
 			"ValidateFunctionContext#validateFunctionContextFail2");
@@ -511,8 +484,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		Assert.assertEquals(
 			"validateFunctionFile is failing", "", _getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		document = DocumentHelper.createDocument();
 
@@ -562,8 +533,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateHasChildElements is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		element = document.addElement("execute");
@@ -603,8 +572,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateHasMultiplePrimaryAttributeNames is failing", "",
 			_getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		document = DocumentHelper.createDocument();
 
@@ -646,8 +613,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateHasNoAttributes is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		element = document.addElement("while");
@@ -677,8 +642,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateHasNoChildElements is failing", "",
 			_getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		Element childElement = element.addElement("var");
 
@@ -710,8 +673,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 			"validateHasPrimaryAttributeName is failing", "",
 			_getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		element = document.addElement("execute");
@@ -727,8 +688,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 			"validateHasPrimaryAttributeName is failing", "Too many attributes",
 			_getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		element = document.addElement("execute");
@@ -740,8 +699,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateHasPrimaryAttributeName is failing",
 			"Invalid or missing attribute", _getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		document = DocumentHelper.createDocument();
 
@@ -785,8 +742,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateIfElement is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		element = document.addElement("if");
@@ -810,8 +765,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 			"validateIfElement is failing",
 			"Missing or invalid if condition element",
 			_getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		document = DocumentHelper.createDocument();
 
@@ -859,8 +812,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateMacroContext is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		element = document.addElement("execute");
@@ -901,8 +852,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateMacroFile is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		rootElement = document.addElement("definition");
@@ -937,8 +886,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateMessageElement is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		element = document.addElement("echo");
@@ -967,8 +914,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 			"validateNumberOfAttributes is failing", "",
 			_getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		PoshiRunnerValidation.validateNumberOfAttributes(
 			element, 1, "ValidateNumberOfAttributes.macro");
 
@@ -976,16 +921,12 @@ public class PoshiRunnerValidationTest extends TestCase {
 			"validateNumberOfAttributes is failing", "Too many attributes",
 			_getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		PoshiRunnerValidation.validateNumberOfAttributes(
 			element, 3, "ValidateNumberOfAttributes.macro");
 
 		Assert.assertEquals(
 			"validateNumberOfAttributes is failing", "Too few attributes",
 			_getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		document = DocumentHelper.createDocument();
 
@@ -1017,8 +958,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 			"validateNumberofChildElements is failing", "",
 			_getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		element = document.addElement("execute");
@@ -1029,8 +968,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateNumberofChildElements is failing",
 			"Missing child elements", _getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		document = DocumentHelper.createDocument();
 
@@ -1052,8 +989,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateNumberofChildElements is failing",
 			"Too many child elements", _getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		document = DocumentHelper.createDocument();
 
@@ -1084,8 +1019,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validatePathFile is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		filePath = _getFilePath("ValidatePathFile1.path");
 
 		element = PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
@@ -1095,8 +1028,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validatePathFile is failing", "Invalid definition element",
 			_getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		filePath = _getFilePath("ValidatePathFile2.path");
 
@@ -1108,8 +1039,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 			"validatePathFile is failing", "Missing locator",
 			_getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		filePath = _getFilePath("ValidatePathFile3.path");
 
 		element = PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
@@ -1119,8 +1048,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validatePathFile is failing", "Missing thead class name",
 			_getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		filePath = _getFilePath("ValidatePathFile4.path");
 
@@ -1132,8 +1059,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 			"validatePathFile is failing",
 			"Thead class name does not match file name",
 			_getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		filePath = _getFilePath("ValidatePathFile5.path");
 
@@ -1163,8 +1088,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validatePossibleAttributeNames is failing", "",
 			_getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		document = DocumentHelper.createDocument();
 
@@ -1199,8 +1122,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validatePropertyElement is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		element = document.addElement("property");
@@ -1234,8 +1155,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateRequiredAttributeNames is failing", "",
 			_getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		document = DocumentHelper.createDocument();
 
@@ -1277,8 +1196,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 			"validateRequiredChildElementName is failing", "",
 			_getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		element = document.addElement("execute");
@@ -1319,8 +1236,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 			"validateRequiredChildElementNames is failing", "",
 			_getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		PoshiRunnerValidation.validateRequiredChildElementNames(
 			element, Arrays.asList("condition", "contains", "equals"),
 			"ValidateRequiredChildElementNames.macro");
@@ -1342,8 +1257,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateTestCaseFile is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		filePath = _getFilePath("ValidateTestCaseFile2.testcase");
 
 		element = PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
@@ -1361,8 +1274,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		Assert.assertEquals(
 			"validateTestName is failing", "", _getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		PoshiRunnerValidation.validateTestName("ValidateTestName#fail");
 
@@ -1390,8 +1301,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateThenElement is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		element = document.addElement("if");
@@ -1402,8 +1311,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateThenElement is failing", "Missing then element",
 			_getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		document = DocumentHelper.createDocument();
 
@@ -1447,8 +1354,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateVarElement is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		element = document.addElement("var");
@@ -1462,8 +1367,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		Assert.assertEquals(
 			"validateVarElement is failing", "", _getExceptionMessage());
-
-		PoshiRunnerValidation.clearExceptions();
 
 		document = DocumentHelper.createDocument();
 
@@ -1503,8 +1406,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateWhileElement is failing", "", _getExceptionMessage());
 
-		PoshiRunnerValidation.clearExceptions();
-
 		document = DocumentHelper.createDocument();
 
 		element = document.addElement("while");
@@ -1541,6 +1442,8 @@ public class PoshiRunnerValidationTest extends TestCase {
 				sb.append(message.substring(0, newLineIndex));
 			}
 		}
+
+		PoshiRunnerValidation.clearExceptions();
 
 		return sb.toString();
 	}

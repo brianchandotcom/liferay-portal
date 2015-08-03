@@ -206,12 +206,12 @@ String rssDisplayStyle = mbGroupServiceSettings.getRSSDisplayStyle();
 String rssFeedType = mbGroupServiceSettings.getRSSFeedType();
 
 boolean categoriesPanelCollapsible = true;
-	boolean categoriesPanelExtended = true;
+boolean categoriesPanelExtended = true;
 boolean threadsPanelCollapsible = true;
-	boolean threadsPanelExtended = true;
+boolean threadsPanelExtended = true;
 
 boolean childrenMessagesTaggable = true;
-	boolean includeFormTag = true;
+boolean includeFormTag = true;
 boolean showSearch = true;
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);

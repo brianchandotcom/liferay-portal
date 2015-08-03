@@ -23,32 +23,34 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 
 PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
 
+List<PanelApp> panelApps = panelAppRegistry.getPanelApps(panelCategory, permissionChecker, themeDisplay.getScopeGroup());
+
 String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.getKey(), StringPool.PERIOD, StringPool.UNDERLINE);
 %>
 
-<a aria-expanded="false" class="collapse-icon collapsed list-group-heading" data-toggle="collapse" href="#<%= panelPageCategoryId %>">
-	<h5><%= panelCategory.getLabel(themeDisplay.getLocale()) %></h5>
-</a>
+<c:if test="<%= !panelApps.isEmpty() %>">
+	<a aria-expanded="false" class="collapse-icon collapsed list-group-heading" data-toggle="collapse" href="#<%= panelPageCategoryId %>">
+		<h5><%= panelCategory.getLabel(themeDisplay.getLocale()) %></h5>
+	</a>
 
-<div class="collapse <%= panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), panelCategory) ? "in" : StringPool.BLANK %>" id="<%= panelPageCategoryId %>">
-	<div class="list-group-item">
-		<ul aria-labelledby="<%= panelPageCategoryId %>" class="category-portlets list-unstyled" role="menu">
+	<div class="collapse <%= panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), panelCategory) ? "in" : StringPool.BLANK %>" id="<%= panelPageCategoryId %>">
+		<div class="list-group-item">
+			<ul aria-labelledby="<%= panelPageCategoryId %>" class="category-portlets list-unstyled" role="menu">
 
-			<%
-			for (PanelApp panelApp : panelAppRegistry.getPanelApps(panelCategory)) {
-			%>
+				<%
+				for (PanelApp panelApp : panelApps) {
+				%>
 
-				<c:if test="<%= panelApp.hasAccessPermission(permissionChecker, themeDisplay.getScopeGroup()) %>">
 					<liferay-application-list:panel-app
 						panelApp="<%= panelApp %>"
 						panelCategory="<%= panelCategory %>"
 					/>
-				</c:if>
 
-			<%
-			}
-			%>
+				<%
+				}
+				%>
 
-		</ul>
+			</ul>
+		</div>
 	</div>
-</div>
+</c:if>

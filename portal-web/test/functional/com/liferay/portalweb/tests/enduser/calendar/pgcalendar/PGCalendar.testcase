@@ -172,8 +172,8 @@
 			<var name="number1" value="5" />
 			<var name="number2" value="10" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="reminders" />
 			<var name="pageName" value="${pageName}" />
-			<var name="reminders" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -199,9 +199,9 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="tag" />
 			<var name="pageName" value="${pageName}" />
-			<var name="tag" value="true" />
-			<var name="tagText" value="tag1" />
+			<var name="specificOptionSetValue" value="tag1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -233,10 +233,10 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="inviteResource" value="true" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
 			<var name="pageName" value="${pageName}" />
-			<var name="resourceNameList" value="${resourceNameList}" />
+			<var name="specificOptionSetValue" value="${resourceNameList}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -303,11 +303,11 @@
 			<var name="addRSVPEnabled" value="true" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="inviteResource" value="true" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
 			<var name="pageName" value="${pageName}" />
-			<var name="resourceNameList" value="${resourceNameList}" />
 			<var name="rsvp" value="Yes" />
+			<var name="specificOptionSetValue" value="${resourceNameList}" />
 			<var name="user" value="userfn userln" />
 		</execute>
 
@@ -650,8 +650,8 @@
 			<var name="number1" value="5" />
 			<var name="number2" value="10" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="reminders" />
 			<var name="pageName" value="${pageName}" />
-			<var name="reminders" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -681,9 +681,9 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="tag" />
 			<var name="pageName" value="${pageName}" />
-			<var name="tag" value="true" />
-			<var name="tagText" value="tag1" />
+			<var name="specificOptionSetValue" value="tag1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -715,7 +715,7 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="inviteResource" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
 			<var name="pageName" value="${pageName}" />
 			<var name="resourceNameList" value="${resourceNameList}" />
 		</execute>
@@ -788,11 +788,11 @@
 			<var name="addRSVPEnabled" value="true" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="inviteResource" value="true" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
 			<var name="pageName" value="${pageName}" />
-			<var name="resourceNameList" value="${resourceNameList}" />
 			<var name="rsvp" value="Yes" />
+			<var name="specificOptionSetValue" value="${resourceNameList}" />
 			<var name="user" value="userfn userln" />
 		</execute>
 
@@ -1018,8 +1018,8 @@
 			<var name="number2" value="10" />
 			<var name="numberOfOccurrences" value="1" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="reminders" />
 			<var name="pageName" value="${pageName}" />
-			<var name="reminders" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1051,9 +1051,9 @@
 			<var name="frequency" value="Daily" />
 			<var name="numberOfOccurrences" value="1" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="tag" />
 			<var name="pageName" value="${pageName}" />
-			<var name="tag" value="true" />
-			<var name="tagText" value="tag1" />
+			<var name="specificOptionSetValue" value="tag1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1086,11 +1086,11 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="frequency" value="Daily" />
-			<var name="inviteResource" value="true" />
 			<var name="numberOfOccurrences" value="1" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
 			<var name="pageName" value="${pageName}" />
-			<var name="resourceNameList" value="${resourceNameList}" />
+			<var name="specificOptionSetValue" value="${resourceNameList}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1162,12 +1162,12 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="frequency" value="Daily" />
-			<var name="inviteResource" value="true" />
 			<var name="numberOfOccurrences" value="1" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
 			<var name="pageName" value="${pageName}" />
-			<var name="resourceNameList" value="${resourceNameList}" />
 			<var name="rsvp" value="Yes" />
+			<var name="specificOptionSetValue" value="${resourceNameList}" />
 			<var name="user" value="userfn userln" />
 		</execute>
 
@@ -2361,8 +2361,8 @@
 			<var name="number1" value="5" />
 			<var name="number2" value="10" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="reminders" />
 			<var name="pageName" value="${pageName}" />
-			<var name="reminders" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2378,7 +2378,7 @@
 			<var name="number1" value="2" />
 			<var name="number2" value="4" />
 			<var name="optionSet" value="true" />
-			<var name="reminders" value="true" />
+			<var name="optionSetValue" value="reminders" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventWithReminders">
@@ -2405,10 +2405,10 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="inviteResource" value="true" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
 			<var name="pageName" value="${pageName}" />
-			<var name="resourceNameList" value="${resourceNameList}" />
+			<var name="specificOptionSetValue" value="${resourceNameList}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2420,7 +2420,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="inviteResource" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">
@@ -2479,8 +2479,8 @@
 			<var name="number1" value="5" />
 			<var name="number2" value="10" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="reminders" />
 			<var name="pageName" value="${pageName}" />
-			<var name="reminders" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2496,7 +2496,7 @@
 			<var name="number1" value="2" />
 			<var name="number2" value="4" />
 			<var name="optionSet" value="true" />
-			<var name="reminders" value="true" />
+			<var name="optionSetValue" value="reminders" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventWithReminders">
@@ -2523,10 +2523,10 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="inviteResource" value="true" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
 			<var name="pageName" value="${pageName}" />
-			<var name="resourceNameList" value="${resourceNameList}" />
+			<var name="specificOptionSetValue" value="${resourceNameList}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2538,7 +2538,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="inviteResource" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">
@@ -2601,8 +2601,8 @@
 			<var name="number2" value="10" />
 			<var name="numberOfOccurrences" value="1" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="reminders" />
 			<var name="pageName" value="${pageName}" />
-			<var name="reminders" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2618,7 +2618,7 @@
 			<var name="number1" value="2" />
 			<var name="number2" value="4" />
 			<var name="optionSet" value="true" />
-			<var name="reminders" value="true" />
+			<var name="optionSetValue" value="reminders" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventWithReminders">
@@ -2646,11 +2646,11 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="frequency" value="Daily" />
-			<var name="inviteResource" value="true" />
 			<var name="numberOfOccurrences" value="1" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
 			<var name="pageName" value="${pageName}" />
-			<var name="resourceNameList" value="${resourceNameList}" />
+			<var name="specificOptionSetValue" value="${resourceNameList}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -3315,10 +3315,10 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="inviteResource" value="true" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
 			<var name="pageName" value="${pageName}" />
-			<var name="resourceNameList" value="${resourceNameList}" />
+			<var name="specificOptionSetValue" value="${resourceNameList}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -3398,10 +3398,10 @@
 		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="Calendar Event Title" />
 			<var name="eventType" value="Regular" />
-			<var name="inviteResource" value="true" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
 			<var name="pageName" value="${pageName}" />
-			<var name="resourceNameList" value="userfn1 userln1,userfn2 userln2,userfn3 userln3" />
+			<var name="specificOptionSetValue" value="userfn1 userln1,userfn2 userln2,userfn3 userln3" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -4488,11 +4488,10 @@
 			<var name="calendarName" value="${userFirstName} ${userLastName}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="inviteResource" value="true" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
 			<var name="pageName" value="${pageName}" />
-			<var name="resourceNameList" value="Test Test,Calendar Resource Name" />
-			<var name="resourcesAvailability" value="true" />
+			<var name="specificOptionSetValue" value="Test Test,Calendar Resource Name" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

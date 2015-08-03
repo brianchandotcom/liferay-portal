@@ -13,6 +13,26 @@
 		</else>
 	</if>
 
+	<macrodef name="build-dist-tomcat-bare" >
+		<sequential>
+			<if>
+				<equals arg1="${tomcat.keep.app.server.properties}" arg2="true" />
+				<then>
+					<antcall target="unzip-tomcat" inheritAll="false" />
+				</then>
+				<else>
+					<antcall target="unzip-tomcat" />
+
+					<app-server-properties-update>
+						app.server.type=tomcat
+					</app-server-properties-update>
+				</else>
+			</if>
+
+			<delete dir="${project.dir}/portal-web/classes" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="download-dynamic-jars">
 		<attribute name="app.server.lib.portal.dir" />
 
@@ -563,21 +583,7 @@
 	</target>
 
 	<target name="build-dist-tomcat">
-		<if>
-			<equals arg1="${tomcat.keep.app.server.properties}" arg2="true" />
-			<then>
-				<antcall target="unzip-tomcat" inheritAll="false" />
-			</then>
-			<else>
-				<antcall target="unzip-tomcat" />
-
-				<app-server-properties-update>
-					app.server.type=tomcat
-				</app-server-properties-update>
-			</else>
-		</if>
-
-		<delete dir="${project.dir}/portal-web/classes" />
+		<build-dist-tomcat-bare />
 
 		<ant target="deploy" inheritAll="false" />
 
@@ -597,6 +603,10 @@
 			<param name="deployer.app.server.type" value="tomcat" />
 			<param name="deployer.app.server.lib.portal.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps/ROOT/WEB-INF/lib" />
 		</antcall>
+	</target>
+
+	<target name="build-dist-tomcat-bare">
+		<build-dist-tomcat-bare />
 	</target>
 
 	<target name="deploy-plugins">

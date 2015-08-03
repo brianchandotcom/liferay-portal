@@ -54,11 +54,11 @@ public class ComboServletStaticURLGenerator {
 						continue;
 					}
 
-					String portletResourceURL =
-						portlet.getContextPath() + portletResource;
+					String portletResourceURL = portletResource;
 
-					if (HttpUtil.hasProtocol(portletResource)) {
-						portletResourceURL = portletResource;
+					if (!HttpUtil.hasProtocol(portletResource)) {
+						portletResourceURL =
+							portlet.getContextPath() + portletResource;
 					}
 
 					if (_visitedURLs.contains(portletResourceURL)) {

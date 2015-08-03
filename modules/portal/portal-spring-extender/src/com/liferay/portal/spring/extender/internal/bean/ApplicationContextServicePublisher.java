@@ -213,7 +213,7 @@ public class ApplicationContextServicePublisher {
 		if (names.isEmpty()) {
 			_log.log(
 				Logger.LOG_DEBUG,
-				"Empty set of interfaces. No registration will take place");
+				"Skipping registration because of an empty list of interfaces");
 
 			return;
 		}

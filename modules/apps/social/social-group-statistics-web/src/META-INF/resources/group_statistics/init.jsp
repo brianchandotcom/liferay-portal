@@ -14,14 +14,17 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.portlet.social.model.SocialActivityCounter" %><%@
-page import="com.liferay.portlet.social.model.SocialActivityCounterConstants" %><%@
 page import="com.liferay.portlet.social.service.SocialActivityCounterLocalServiceUtil" %><%@
-page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %><%@
-page import="com.liferay.portlet.social.util.SocialCounterPeriodUtil" %><%@
-page import="com.liferay.portlet.social.util.comparator.SocialActivityCounterNameComparator" %>
+page import="com.liferay.portlet.social.util.SocialCounterPeriodUtil" %>
+
+<%@ page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %>
+<%@ page import="com.liferay.portlet.social.model.SocialActivityCounterConstants" %>
+<%@ page import="com.liferay.portlet.social.util.comparator.SocialActivityCounterNameComparator" %>
+
+<%@ page import="com.liferay.social.group.statistics.web.constants.GroupStatisticsPortletKeys " %>
 
 <%
 int[] displayActivityCounterNameIndexes = null;
@@ -35,5 +38,3 @@ else {
 	displayActivityCounterNameIndexes = new int[] {0};
 }
 %>
-
-<%@ include file="/html/portlet/group_statistics/init-ext.jsp" %>

@@ -37,7 +37,6 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 	public SearchResult createSearchResult(Document document) {
 		long classNameId = GetterUtil.getLong(
 			document.get(Field.CLASS_NAME_ID));
-
 		long classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
 
 		if ((classPK > 0) && (classNameId > 0)) {
@@ -48,7 +47,6 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 
 		String entryClassName = GetterUtil.getString(
 			document.get(Field.ENTRY_CLASS_NAME));
-
 		long entryClassPK = GetterUtil.getLong(
 			document.get(Field.ENTRY_CLASS_PK));
 
@@ -63,7 +61,6 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 
 		long classNameId = GetterUtil.getLong(
 			document.get(Field.CLASS_NAME_ID));
-
 		long classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
 
 		if ((classPK > 0) && (classNameId > 0)) {
@@ -81,13 +78,12 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 			}
 		}
 		else {
+			SummaryFactory summaryFactory = getSummaryFactory();
+
 			String entryClassName = GetterUtil.getString(
 				document.get(Field.ENTRY_CLASS_NAME));
-
 			long entryClassPK = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
-
-			SummaryFactory summaryFactory = getSummaryFactory();
 
 			searchResult.setSummary(
 				summaryFactory.getSummary(

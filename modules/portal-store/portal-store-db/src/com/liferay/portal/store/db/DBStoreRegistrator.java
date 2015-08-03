@@ -99,9 +99,7 @@ public class DBStoreRegistrator {
 		return new DelegatorDBStore(store);
 	}
 
-	@Reference(
-		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
-	)
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}

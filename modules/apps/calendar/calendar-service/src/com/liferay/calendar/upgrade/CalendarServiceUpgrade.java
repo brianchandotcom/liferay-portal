@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CalendarServiceUpgrade.class)
 public class CalendarServiceUpgrade {
 
-	@Reference(
-		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
-	)
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}

@@ -139,9 +139,7 @@ public class OAuthManager {
 		_expandoValueLocalService = expandoValueLocalService;
 	}
 
-	@Reference(
-		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
-	)
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}

@@ -81,9 +81,7 @@ public class StrutsPortletToolbarContributorLocator
 		return "struts.action";
 	}
 
-	@Reference(
-		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
-	)
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}

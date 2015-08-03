@@ -97,9 +97,7 @@ public class StartupAction extends SimpleAction {
 		_expandoTableLocalService = expandoTableLocalService;
 	}
 
-	@Reference(
-		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
-	)
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}

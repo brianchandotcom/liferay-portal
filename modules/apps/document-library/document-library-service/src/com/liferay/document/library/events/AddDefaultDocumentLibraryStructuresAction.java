@@ -418,9 +418,7 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 		_groupLocalService = groupLocalService;
 	}
 
-	@Reference(
-		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
-	)
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}

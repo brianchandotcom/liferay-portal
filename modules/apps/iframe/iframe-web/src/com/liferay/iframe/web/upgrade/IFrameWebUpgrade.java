@@ -34,9 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = IFrameWebUpgrade.class)
 public class IFrameWebUpgrade {
 
-	@Reference(
-		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
-	)
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}

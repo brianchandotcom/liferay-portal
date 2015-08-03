@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = LanguageWebUpgrade.class)
 public class LanguageWebUpgrade {
 
-	@Reference(
-		target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-"
-	)
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}

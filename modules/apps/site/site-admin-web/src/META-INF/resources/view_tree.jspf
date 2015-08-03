@@ -199,7 +199,6 @@ if (group != null) {
 				rowIdProperty="friendlyURL"
 				rowVar="row"
 			>
-
 				<portlet:renderURL var="siteAdministrationURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 					<portlet:param name="mvcPath" value="/edit_site.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />

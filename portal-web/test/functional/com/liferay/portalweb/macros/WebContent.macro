@@ -959,7 +959,6 @@
 		<execute function="Type" locator1="CPWebcontent#TOOLBAR_SEARCH_FIELD" value1="${webContentTitle}" />
 		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_SEARCH_BUTTON" value1="Search" />
 		<execute function="AssertTextEquals" locator1="CPWebcontent#SEARCH_RESULTS_TITLE" value1="${webContentTitle}" />
-		<execute function="AssertTextEquals" locator1="CPWebcontent#SEARCH_RESULTS_BODY" value1="${webContentContent}" />
 		<execute function="AssertTextEquals" locator1="CPWebcontent#SEARCH_RESULTS_FOLDER" value1="${webContentFolder}" />
 	</command>
 

@@ -582,6 +582,8 @@
 	<command name="viewCompletedTask">
 		<execute function="Click" locator1="CPMyworkflowtasks#NAVIGATION_COMPLETED" value1="Completed" />
 
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasksCompleted#COMPLETED_TABLE_TASK" value1="${workflowTask}" />
 
 		<if>

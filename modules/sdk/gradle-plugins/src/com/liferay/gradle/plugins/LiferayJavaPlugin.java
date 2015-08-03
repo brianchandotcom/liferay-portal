@@ -1199,6 +1199,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskBuildServiceSqlDirName(buildServiceTask);
 		configureTaskBuildServiceSqlFileName(buildServiceTask);
 		configureTaskBuildServiceTestDirName(buildServiceTask);
+
+		configureTaskBuildServiceModelHintsConfigs(buildServiceTask);
 	}
 
 	protected void configureTaskBuildServiceApiDirName(
@@ -1253,6 +1255,30 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		File inputFile = new File(getServiceBaseDir(project), "service.xml");
 
 		buildServiceTask.setInputFileName(project.relativePath(inputFile));
+	}
+
+	protected void configureTaskBuildServiceModelHintsConfigs(
+		BuildServiceTask buildServiceTask) {
+
+		String fileName = buildServiceTask.getModelHintsFileName();
+
+		Project project = buildServiceTask.getProject();
+
+		File file = project.file(fileName);
+
+		for (String config : buildServiceTask.getModelHintsConfigs()) {
+			if (config.startsWith("classpath*:")) {
+				continue;
+			}
+
+			File configFile = project.file(config);
+
+			if (configFile.equals(file)) {
+				return;
+			}
+		}
+
+		buildServiceTask.modelHintsConfigs(fileName);
 	}
 
 	protected void configureTaskBuildServiceModelHintsFileName(

@@ -96,7 +96,7 @@ public class GoogleGadgetServlet extends HttpServlet {
 
 		String widgetJsURL =
 			PortalUtil.getPortalURL(request) + PortalUtil.getPathContext() +
-				"/html/js/liferay/widget.js";
+				"/liferay/widget.js";
 
 		String widgetURL = request.getRequestURL().toString();
 

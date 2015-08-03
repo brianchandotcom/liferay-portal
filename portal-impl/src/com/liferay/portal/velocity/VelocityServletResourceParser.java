@@ -78,7 +78,7 @@ public class VelocityServletResourceParser extends URLResourceParser {
 				PortalUtil.getServletContextName());
 
 			url = portalServletContext.getResource(
-				"/html/themes/_unstyled/templates/init_custom.vm");
+				"/_unstyled/templates/init_custom.vm");
 		}
 
 		return url;

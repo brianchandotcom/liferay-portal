@@ -27,14 +27,14 @@
 				<not>
 					<uptodate
 						srcfile="${third.party.dir}/${alloy.file}"
-						targetfile="tmp/META-INF/resources/html/js/aui"
+						targetfile="tmp/META-INF/resources/aui"
 					/>
 				</not>
 				<then>
 
 					<!-- Prepare -->
 
-					<delete dir="tmp/META-INF/resources/html/js/aui" />
+					<delete dir="tmp/META-INF/resources/aui" />
 
 					<echo>${alloy.file}</echo>
 
@@ -110,13 +110,13 @@
 
 					<copy
 						file="${alloy.temp.dir}/aui_deprecated.css"
-						tofile="tmp/META-INF/resources/html/js/aui/aui_deprecated.css"
+						tofile="tmp/META-INF/resources/aui/aui_deprecated.css"
 						overwrite="true"
 					/>
 
 					<!-- JavaScript -->
 
-					<copy todir="tmp/META-INF/resources/html/js/aui" overwrite="true" preservelastmodified="true">
+					<copy todir="tmp/META-INF/resources/aui" overwrite="true" preservelastmodified="true">
 						<fileset dir="${alloy.build.dir}/" />
 					</copy>
 
@@ -144,15 +144,15 @@
 				<not>
 					<uptodate
 						srcfile="${third.party.dir}/${alloy.bootstrap.file}"
-						targetfile="tmp/META-INF/resources/html/js/bootstrap"
+						targetfile="tmp/META-INF/resources/bootstrap"
 					/>
 				</not>
 				<then>
 
 					<!-- Prepare -->
 
-					<delete dir="tmp/META-INF/resources/html/bootstrap-assets" />
-					<delete dir="tmp/META-INF/resources/html/js/bootstrap" />
+					<delete dir="tmp/META-INF/resources/bootstrap-assets" />
+					<delete dir="tmp/META-INF/resources/bootstrap" />
 
 					<echo>${alloy.bootstrap.file}</echo>
 
@@ -173,7 +173,7 @@
 						/>
 					</delete>
 
-					<copy todir="tmp/META-INF/resources/html/js/bootstrap" overwrite="true" preservelastmodified="true">
+					<copy todir="tmp/META-INF/resources/bootstrap" overwrite="true" preservelastmodified="true">
 						<fileset dir="${alloy.bootstrap.assets.dir}/javascripts/" />
 					</copy>
 
@@ -181,7 +181,7 @@
 
 					<!-- Assets -->
 
-					<copy todir="tmp/META-INF/resources/html/bootstrap-assets" overwrite="true" preservelastmodified="true">
+					<copy todir="tmp/META-INF/resources/bootstrap-assets" overwrite="true" preservelastmodified="true">
 						<fileset dir="${alloy.bootstrap.assets.dir}/" />
 					</copy>
 
@@ -209,15 +209,15 @@
 				<not>
 					<uptodate
 						srcfile="${third.party.dir}/${lexicon.file}"
-						targetfile="tmp/META-INF/resources/html/js/lexicon"
+						targetfile="tmp/META-INF/resources/lexicon"
 					/>
 				</not>
 				<then>
 
 					<!-- Prepare -->
 
-					<delete dir="tmp/META-INF/resources/html/lexicon-assets" />
-					<delete dir="tmp/META-INF/resources/html/js/lexicon" />
+					<delete dir="tmp/META-INF/resources/lexicon-assets" />
+					<delete dir="tmp/META-INF/resources/lexicon" />
 
 					<echo>${lexicon.file}</echo>
 
@@ -231,7 +231,7 @@
 
 					<!-- JavaScript -->
 
-					<copy todir="tmp/META-INF/resources/html/js/lexicon" overwrite="true" preservelastmodified="true">
+					<copy todir="tmp/META-INF/resources/lexicon" overwrite="true" preservelastmodified="true">
 						<fileset dir="${tstamp.value}/js/" />
 					</copy>
 
@@ -239,7 +239,7 @@
 
 					<!-- Assets -->
 
-					<copy todir="tmp/META-INF/resources/html/lexicon-assets" overwrite="true" preservelastmodified="true">
+					<copy todir="tmp/META-INF/resources/lexicon-assets" overwrite="true" preservelastmodified="true">
 						<fileset dir="${tstamp.value}/" />
 					</copy>
 
@@ -260,7 +260,7 @@
 
 			<copy
 				file="${sdk.tools.dir}/node-v${nodejs.version}/node_modules/lfr-amd-loader/dist/loader.js"
-				todir="tmp/META-INF/resources/html/js/loader"
+				todir="tmp/META-INF/resources/loader"
 			/>
 		</sequential>
 	</macrodef>

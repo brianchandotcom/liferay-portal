@@ -112,7 +112,10 @@ public class ServletPaths {
 			path = path.substring(0, path.length() - 1);
 		}
 
-		if (path.charAt(0) != CharPool.SLASH) {
+		if ((path.charAt(0) != CharPool.SLASH) &&
+			(_resourcePath.charAt(_resourcePath.length() - 1) !=
+				CharPool.SLASH)) {
+
 			path = StringPool.SLASH.concat(path);
 		}
 

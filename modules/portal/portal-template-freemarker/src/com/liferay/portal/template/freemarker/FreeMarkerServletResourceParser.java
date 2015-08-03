@@ -84,7 +84,7 @@ public class FreeMarkerServletResourceParser extends URLResourceParser {
 					PortalWebResourceConstants.RESOURCE_TYPE_THEMES);
 
 			url = themesServletContext.getResource(
-				"/html/themes/_unstyled/templates/init_custom.ftl");
+				"/_unstyled/templates/init_custom.ftl");
 		}
 
 		return url;

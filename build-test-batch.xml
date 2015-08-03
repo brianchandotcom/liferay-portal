@@ -48,6 +48,7 @@
 
 	<macrodef name="database-test-run-test">
 		<attribute name="database.type" />
+		<attribute name="stop.app.server" default="false" />
 		<element name="test-action" />
 
 		<sequential>
@@ -86,6 +87,15 @@
 					</antcall>
 
 					<test-action />
+
+					<if if:true="@{stop.app.server}">
+						<available file=".testable.portal.started" />
+						<then>
+							<antcall target="stop-app-server" />
+
+							<delete file=".testable.portal.started" failonerror="false" />
+						</then>
+					</if>
 
 					<exec executable="${database.service.executable}" failonerror="true">
 						<arg line="${database.service.cmd.stop}" />
@@ -203,7 +213,7 @@
 		<sequential>
 			<run-batch-test test.class.group.index="${jenkins.axis.variable}" tomcat.gc.log="true">
 				<test-action>
-					<database-test-run-test database.type="@{database.type}">
+					<database-test-run-test database.type="@{database.type}" stop.app.server="true">
 						<test-action>
 							<print-test-class-group test.class.group.index="@{test.class.group.index}" />
 
@@ -221,15 +231,6 @@
 							<ant dir="portal-service" target="test-class" inheritAll="false">
 								<property name="test.class" value="PortalLogAssertorTest" />
 							</ant>
-
-							<if>
-								<available file=".testable.portal.started" />
-								<then>
-									<antcall target="stop-app-server" />
-
-									<delete file=".testable.portal.started" failonerror="false" />
-								</then>
-							</if>
 						</test-action>
 					</database-test-run-test>
 				</test-action>
@@ -342,7 +343,7 @@
 	<target name="tck">
 		<run-batch-test test.class.group.index="${jenkins.axis.variable}" tomcat.gc.log="true" tsant.gc.log="true">
 			<test-action>
-				<database-test-run-test database.type="mysql">
+				<database-test-run-test database.type="mysql" stop.app.server="true">
 					<test-action>
 						<ant antfile="build-test-tck.xml" target="record-test-tck-package-names">
 							<property name="test.class.groups.size" value="${test.batch.size}" />
@@ -351,15 +352,6 @@
 						<ant antfile="build-test-tck.xml" target="test-class-group">
 							<property name="test.class.group.index" value="@{test.class.group.index}" />
 						</ant>
-
-						<if>
-							<available file=".testable.portal.started" />
-							<then>
-								<antcall target="stop-app-server" />
-
-								<delete file=".testable.portal.started" failonerror="false" />
-							</then>
-						</if>
 					</test-action>
 				</database-test-run-test>
 			</test-action>

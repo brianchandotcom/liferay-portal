@@ -39,21 +39,12 @@
 					</copy>
 
 					<delete dir="${bourbon.tmp.dir}" />
+
+					<copy todir="${app.server.portal.dir}/html/css/common" overwrite="true" preservelastmodified="true">
+						<fileset dir="${common.css.dir}/" />
+					</copy>
 				</then>
 			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="build-css">
-		<attribute name="module.dir" />
-		<attribute name="sass.docroot.dir" />
-
-		<sequential>
-			<build-bourbon />
-
-			<copy todir="${app.server.portal.dir}/html/css/common" overwrite="true" preservelastmodified="true">
-				<fileset dir="${common.css.dir}" />
-			</copy>
 		</sequential>
 	</macrodef>
 
@@ -62,6 +53,14 @@
 		<delete dir="${app.server.portal.dir}/html/css/common" />
 
 		<clean
+			module.dir="${basedir}"
+		/>
+	</target>
+
+	<target name="compile">
+		<build-bourbon />
+
+		<compile
 			module.dir="${basedir}"
 		/>
 	</target>

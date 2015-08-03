@@ -170,7 +170,7 @@ public class PortalPreferencesPersistenceTest {
 	protected OrderByComparator<PortalPreferences> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PortalPreferences",
 			"mvccVersion", true, "portalPreferencesId", true, "ownerId", true,
-			"ownerType", true, "preferences", true);
+			"ownerType", true);
 	}
 
 	@Test

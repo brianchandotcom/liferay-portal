@@ -442,10 +442,10 @@ public class DLFileEntryPersistenceTest {
 			"classNameId", true, "classPK", true, "repositoryId", true,
 			"folderId", true, "treePath", true, "name", true, "fileName", true,
 			"extension", true, "mimeType", true, "title", true, "description",
-			true, "extraSettings", true, "fileEntryTypeId", true, "version",
-			true, "size", true, "readCount", true, "smallImageId", true,
-			"largeImageId", true, "custom1ImageId", true, "custom2ImageId",
-			true, "manualCheckInRequired", true, "lastPublishDate", true);
+			true, "fileEntryTypeId", true, "version", true, "size", true,
+			"readCount", true, "smallImageId", true, "largeImageId", true,
+			"custom1ImageId", true, "custom2ImageId", true,
+			"manualCheckInRequired", true, "lastPublishDate", true);
 	}
 
 	@Test

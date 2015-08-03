@@ -236,7 +236,7 @@ public class MDRRulePersistenceTest {
 			"ruleId", true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"ruleGroupId", true, "name", true, "description", true, "type",
-			true, "typeSettings", true, "lastPublishDate", true);
+			true, "lastPublishDate", true);
 	}
 
 	@Test

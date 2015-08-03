@@ -191,9 +191,9 @@ public class ShoppingOrderItemPersistenceTest {
 
 	protected OrderByComparator<ShoppingOrderItem> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ShoppingOrderItem",
-			"orderItemId", true, "orderId", true, "itemId", true, "sku", true,
-			"name", true, "description", true, "properties", true, "price",
-			true, "quantity", true, "shippedDate", true);
+			"orderItemId", true, "orderId", true, "sku", true, "name", true,
+			"description", true, "properties", true, "price", true, "quantity",
+			true, "shippedDate", true);
 	}
 
 	@Test

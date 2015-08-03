@@ -266,7 +266,7 @@ public class CalendarNotificationTemplatePersistenceTest {
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "calendarId", true,
 			"notificationType", true, "notificationTypeSettings", true,
-			"notificationTemplateType", true, "subject", true, "body", true,
+			"notificationTemplateType", true, "subject", true,
 			"lastPublishDate", true);
 	}
 

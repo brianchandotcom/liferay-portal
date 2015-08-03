@@ -275,7 +275,7 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 			true, "kaleoInstanceTokenId", true, "kaleoTaskId", true,
 			"kaleoTaskName", true, "className", true, "classPK", true,
 			"completionUserId", true, "completed", true, "completionDate",
-			true, "dueDate", true, "workflowContext", true);
+			true, "dueDate", true);
 	}
 
 	@Test

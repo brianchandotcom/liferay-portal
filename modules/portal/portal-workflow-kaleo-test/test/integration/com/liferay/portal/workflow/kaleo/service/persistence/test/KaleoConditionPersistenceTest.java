@@ -221,8 +221,7 @@ public class KaleoConditionPersistenceTest {
 			"kaleoConditionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "kaleoDefinitionId", true, "kaleoNodeId",
-			true, "script", true, "scriptLanguage", true,
-			"scriptRequiredContexts", true);
+			true, "scriptLanguage", true, "scriptRequiredContexts", true);
 	}
 
 	@Test

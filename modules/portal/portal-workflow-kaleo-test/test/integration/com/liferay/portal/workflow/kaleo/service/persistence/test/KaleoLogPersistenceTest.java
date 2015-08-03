@@ -329,8 +329,7 @@ public class KaleoLogPersistenceTest {
 			"previousKaleoNodeId", true, "previousKaleoNodeName", true,
 			"previousAssigneeClassName", true, "previousAssigneeClassPK", true,
 			"currentAssigneeClassName", true, "currentAssigneeClassPK", true,
-			"type", true, "comment", true, "startDate", true, "endDate", true,
-			"duration", true, "workflowContext", true);
+			"type", true, "startDate", true, "endDate", true, "duration", true);
 	}
 
 	@Test

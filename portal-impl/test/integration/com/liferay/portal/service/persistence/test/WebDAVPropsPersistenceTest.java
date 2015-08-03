@@ -186,7 +186,7 @@ public class WebDAVPropsPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("WebDAVProps",
 			"mvccVersion", true, "webDavPropsId", true, "companyId", true,
 			"createDate", true, "modifiedDate", true, "classNameId", true,
-			"classPK", true, "props", true);
+			"classPK", true);
 	}
 
 	@Test

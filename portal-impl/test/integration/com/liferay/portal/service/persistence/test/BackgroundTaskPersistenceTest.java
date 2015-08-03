@@ -339,9 +339,8 @@ public class BackgroundTaskPersistenceTest {
 			"mvccVersion", true, "backgroundTaskId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "name", true, "servletContextNames",
-			true, "taskExecutorClassName", true, "taskContextMap", true,
-			"completed", true, "completionDate", true, "status", true,
-			"statusMessage", true);
+			true, "taskExecutorClassName", true, "completed", true,
+			"completionDate", true, "status", true);
 	}
 
 	@Test

@@ -186,7 +186,7 @@ public class ServiceComponentPersistenceTest {
 	protected OrderByComparator<ServiceComponent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ServiceComponent",
 			"mvccVersion", true, "serviceComponentId", true, "buildNamespace",
-			true, "buildNumber", true, "buildDate", true, "data", true);
+			true, "buildNumber", true, "buildDate", true);
 	}
 
 	@Test

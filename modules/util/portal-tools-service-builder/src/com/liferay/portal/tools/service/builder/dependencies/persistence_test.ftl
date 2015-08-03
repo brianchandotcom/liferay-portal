@@ -534,7 +534,9 @@ public class ${entity.name}PersistenceTest {
 				"${entity.table}",
 
 				<#list entity.regularColList as column>
-					<#if column.type != "Blob">
+					<#assign columnType = serviceBuilder.getSqlType(packagePath + ".model." + entity.getName(), column.getName(), column.getType())>
+
+					<#if (columnType != "BLOB") && (columnType != "CLOB")>
 						"${column.name}", true
 
 						<#if column_has_next>

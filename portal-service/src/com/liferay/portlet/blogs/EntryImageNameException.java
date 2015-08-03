@@ -12,14 +12,31 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.portlet.blogs;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Adolfo Pérez
+ * @author Brian Wing Shun Chan
  */
-public class DLConstants {
+@ProviderType
+public class EntryImageNameException extends PortalException {
 
-	public static final String SERVICE_NAME =
-		"com.liferay.portlet.documentlibrary";
+	public EntryImageNameException() {
+	}
+
+	public EntryImageNameException(String msg) {
+		super(msg);
+	}
+
+	public EntryImageNameException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public EntryImageNameException(Throwable cause) {
+		super(cause);
+	}
 
 }

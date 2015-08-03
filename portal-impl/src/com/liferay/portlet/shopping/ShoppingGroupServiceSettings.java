@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.shopping.util.ShoppingConstants;
+import com.liferay.portlet.shopping.constants.ShoppingConstants;
 
 import java.util.Currency;
 import java.util.Locale;

@@ -12,31 +12,20 @@
  * details.
  */
 
-package com.liferay.portlet.blogs;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.portal.kernel.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
 /**
- * @author Brian Wing Shun Chan
+ * @author Adolfo Pérez
  */
-@ProviderType
-public class CoverImageNameException extends PortalException {
+public interface UploadHandler {
 
-	public CoverImageNameException() {
-	}
-
-	public CoverImageNameException(String msg) {
-		super(msg);
-	}
-
-	public CoverImageNameException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public CoverImageNameException(Throwable cause) {
-		super(cause);
-	}
+	public void upload(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws PortalException;
 
 }

@@ -12,20 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.kernel.image.selector;
+package com.liferay.portlet.blogs;
+
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
 /**
- * @author Adolfo Pérez
+ * @author Brian Wing Shun Chan
  */
-public interface ImageSelectorUploadHandler {
+@ProviderType
+public class BlogImageNameException extends PortalException {
 
-	public void uploadSelectedImage(
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws PortalException;
+	public BlogImageNameException() {
+	}
+
+	public BlogImageNameException(String msg) {
+		super(msg);
+	}
+
+	public BlogImageNameException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public BlogImageNameException(Throwable cause) {
+		super(cause);
+	}
 
 }

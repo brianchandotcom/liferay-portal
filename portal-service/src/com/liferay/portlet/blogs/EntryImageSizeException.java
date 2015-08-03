@@ -12,19 +12,31 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.lar;
+package com.liferay.portlet.blogs;
 
-import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
-import com.liferay.portlet.shopping.constants.ShoppingConstants;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Iván Zaera
+ * @author Brian Wing Shun Chan
  */
-public class ShoppingPortletDataHandler extends BasePortletDataHandler {
+@ProviderType
+public class EntryImageSizeException extends PortalException {
 
-	@Override
-	public String getServiceName() {
-		return ShoppingConstants.SERVICE_NAME;
+	public EntryImageSizeException() {
+	}
+
+	public EntryImageSizeException(String msg) {
+		super(msg);
+	}
+
+	public EntryImageSizeException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public EntryImageSizeException(Throwable cause) {
+		super(cause);
 	}
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.util;
+package com.liferay.portlet.messageboards.constants;
 
 /**
  * @author Sergio González

@@ -12,31 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.blogs;
-
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.portal.kernel.exception.PortalException;
+package com.liferay.portlet.blogs.constants;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Iván Zaera
  */
-@ProviderType
-public class CoverImageSizeException extends PortalException {
+public class BlogsConstants {
 
-	public CoverImageSizeException() {
-	}
-
-	public CoverImageSizeException(String msg) {
-		super(msg);
-	}
-
-	public CoverImageSizeException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public CoverImageSizeException(Throwable cause) {
-		super(cause);
-	}
+	public static final String SERVICE_NAME = "com.liferay.portlet.blogs";
 
 }

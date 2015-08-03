@@ -342,21 +342,17 @@
 	<target name="tck">
 		<run-batch-test test.class.group.index="${jenkins.axis.variable}" tomcat.gc.log="true" tsant.gc.log="true">
 			<test-action>
-				<exec executable="${database.mysql.service.executable}" failonerror="true">
-					<arg line="${database.mysql.service.cmd.start}" />
-				</exec>
+				<database-test-run-test database.type="mysql">
+					<test-action>
+						<ant antfile="build-test-tck.xml" target="record-test-tck-package-names">
+							<property name="test.class.groups.size" value="${test.batch.size}" />
+						</ant>
 
-				<antcall target="rebuild-database" inheritAll="false" />
-
-				<antcall target="delete-liferay-home" />
-
-				<ant antfile="build-test-tck.xml" target="record-test-tck-package-names">
-					<property name="test.class.groups.size" value="${test.batch.size}" />
-				</ant>
-
-				<ant antfile="build-test-tck.xml" target="test-class-group">
-					<property name="test.class.group.index" value="@{test.class.group.index}" />
-				</ant>
+						<ant antfile="build-test-tck.xml" target="test-class-group">
+							<property name="test.class.group.index" value="@{test.class.group.index}" />
+						</ant>
+					</test-action>
+				</database-test-run-test>
 			</test-action>
 		</run-batch-test>
 	</target>

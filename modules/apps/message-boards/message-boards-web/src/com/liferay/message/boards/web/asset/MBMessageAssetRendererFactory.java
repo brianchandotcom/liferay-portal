@@ -56,6 +56,7 @@ public class MBMessageAssetRendererFactory extends BaseAssetRendererFactory {
 	public MBMessageAssetRendererFactory() {
 		setCategorizable(false);
 		setLinkable(true);
+		setPortletId(PortletKeys.MESSAGE_BOARDS);
 	}
 
 	@Override

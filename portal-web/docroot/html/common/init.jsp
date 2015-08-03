@@ -35,7 +35,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.portal.GroupFriendlyURLException" %><%@
 page import="com.liferay.portal.LocaleException" %><%@
 page import="com.liferay.portal.NoSuchOrganizationException" %><%@
-page import="com.liferay.portal.NoSuchRoleException" %><%@
 page import="com.liferay.portal.NoSuchUserException" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
@@ -146,7 +145,6 @@ page import="com.liferay.portal.plugin.PluginUtil" %><%@
 page import="com.liferay.portal.security.auth.AuthException" %><%@
 page import="com.liferay.portal.security.auth.AuthTokenUtil" %><%@
 page import="com.liferay.portal.security.auth.PrincipalException" %><%@
-page import="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUtil" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portal.security.sso.SSOUtil" %><%@

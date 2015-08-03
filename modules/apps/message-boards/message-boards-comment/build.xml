@@ -2,8 +2,9 @@
 <!DOCTYPE project>
 
 <project>
+	<property name="import.shared" value="../../portal/portal-search" />
+
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
-	<property name="import.shared" value="../../portal/portal-search" />
 </project>

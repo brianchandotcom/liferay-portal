@@ -149,15 +149,6 @@
 
 					<check-deprecated-method />
 
-					<if>
-						<available file=".testable.portal.started" />
-						<then>
-							<antcall target="stop-app-server" />
-
-							<delete file=".testable.portal.started" failonerror="false" />
-						</then>
-					</if>
-
 					<print-gc-logs
 						tomcat.gc.log="@{tomcat.gc.log}"
 						tsant.gc.log="@{tsant.gc.log}"
@@ -230,6 +221,15 @@
 							<ant dir="portal-service" target="test-class" inheritAll="false">
 								<property name="test.class" value="PortalLogAssertorTest" />
 							</ant>
+
+							<if>
+								<available file=".testable.portal.started" />
+								<then>
+									<antcall target="stop-app-server" />
+
+									<delete file=".testable.portal.started" failonerror="false" />
+								</then>
+							</if>
 						</test-action>
 					</database-test-run-test>
 				</test-action>
@@ -351,6 +351,15 @@
 						<ant antfile="build-test-tck.xml" target="test-class-group">
 							<property name="test.class.group.index" value="@{test.class.group.index}" />
 						</ant>
+
+						<if>
+							<available file=".testable.portal.started" />
+							<then>
+								<antcall target="stop-app-server" />
+
+								<delete file=".testable.portal.started" failonerror="false" />
+							</then>
+						</if>
 					</test-action>
 				</database-test-run-test>
 			</test-action>

@@ -126,7 +126,7 @@ public class SeleniumUtil extends TestPropsValues {
 					System.setProperty(
 						"webdriver.chrome.driver",
 						TestPropsValues.SELENIUM_EXECUTABLE_DIR_NAME +
-							"\\chromedriver.exe");
+							TestPropsValues.SELENIUM_CHROME_DRIVER_EXECUTABLE);
 
 					if (SELENIUM_LOGGER_ENABLED) {
 						_selenium = _wrapWithLoggerHandler(

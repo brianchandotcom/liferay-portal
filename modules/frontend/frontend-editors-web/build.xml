@@ -104,10 +104,6 @@
 		</sequential>
 	</macrodef>
 
-	<target name="build-ckeditor-plugins-bbcode">
-		<build-ckeditor-plugins-bbcode />
-	</target>
-
 	<macrodef name="build-ckeditor-plugins-bbcode">
 		<sequential>
 			<concat destfile="${html.editor.dir}/ckeditor_diffs/plugins/bbcode/bbcode_parser.js">
@@ -191,6 +187,10 @@
 			</if>
 		</sequential>
 	</macrodef>
+
+	<target name="build-ckeditor-plugins-bbcode">
+		<build-ckeditor-plugins-bbcode />
+	</target>
 
 	<target name="compile">
 		<compile

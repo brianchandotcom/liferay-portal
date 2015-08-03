@@ -35,14 +35,14 @@
 
 	<command name="_options">
 		<if>
-			<equals arg1="${viewPermission}" arg2="true" />
+			<equals arg1="${optionSetValue}" arg2="viewPermission" />
 			<then>
 				<execute function="Select" locator1="PGCalendarAddevent#DETAILS_PERMISSIONS_VIEWABLE_BY_SELECT" value1="${viewPermissionValue}" />
 			</then>
 		</if>
 
 		<if>
-			<equals arg1="${permissions}" arg2="true" />
+			<equals arg1="${optionSetValue}" arg2="permissions" />
 			<then>
 				<var name="key_permissionDefinitionKey" value="${permissionDefinitionKey}" />
 				<var name="key_roleName" value="${roleName}" />
@@ -52,30 +52,34 @@
 		</if>
 
 		<if>
-			<equals arg1="${inviteResource}" arg2="true" />
+			<equals arg1="${optionSetValue}" arg2="inviteResource" />
 			<then>
-				<execute macro="CalendarEvent#inviteResource" />
+				<execute macro="CalendarEvent#inviteResource">
+					<var name="resourceNameList" value="${specificOptionSetValue}" />
+				</execute>
 			</then>
 		</if>
 
 		<if>
-			<equals arg1="${reminders}" arg2="true" />
+			<equals arg1="${optionSetValue}" arg2="reminders" />
 			<then>
 				<execute macro="CalendarEvent#configureReminders" />
 			</then>
 		</if>
 
 		<if>
-			<equals arg1="${resourcesAvailability}" arg2="true" />
+			<equals arg1="${optionSetValue}" arg2="resourcesAvailability" />
 			<then>
 				<execute macro="CalendarEvent#resourcesAvailability" />
 			</then>
 		</if>
 
 		<if>
-			<equals arg1="${tag}" arg2="true" />
+			<equals arg1="${optionSetValue}" arg2="tag" />
 			<then>
-				<execute macro="CalendarEvent#tag" />
+				<execute macro="CalendarEvent#tag">
+					<var name="tagText" value="${specificOptionSetValue}" />
+				</execute>
 			</then>
 		</if>
 	</command>
@@ -114,7 +118,10 @@
 				<if>
 					<equals arg1="${optionSet}" arg2="true" />
 					<then>
-						<execute macro="CalendarEvent#_options" />
+						<execute macro="CalendarEvent#_options">
+							<var name="optionSetValue" value="${optionSetValue}" />
+							<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
+						</execute>
 					</then>
 				</if>
 
@@ -156,7 +163,10 @@
 					<if>
 						<equals arg1="${optionSet}" arg2="true" />
 						<then>
-							<execute macro="CalendarEvent#_options" />
+							<execute macro="CalendarEvent#_options">
+								<var name="optionSetValue" value="${optionSetValue}" />
+								<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
+							</execute>
 						</then>
 					</if>
 
@@ -211,7 +221,10 @@
 					<if>
 						<equals arg1="${optionSet}" arg2="true" />
 						<then>
-							<execute macro="CalendarEvent#_options" />
+							<execute macro="CalendarEvent#_options">
+								<var name="optionSetValue" value="${optionSetValue}" />
+								<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
+							</execute>
 						</then>
 					</if>
 
@@ -417,7 +430,10 @@
 				<if>
 					<equals arg1="${optionSet}" arg2="true" />
 					<then>
-						<execute macro="CalendarEvent#_options" />
+						<execute macro="CalendarEvent#_options">
+							<var name="optionSetValue" value="${optionSetValue}" />
+							<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
+						</execute>
 					</then>
 				</if>
 
@@ -788,7 +804,10 @@
 				<if>
 					<equals arg1="${optionSet}" arg2="true" />
 					<then>
-						<execute macro="CalendarEvent#_options" />
+						<execute macro="CalendarEvent#_options">
+							<var name="optionSetValue" value="${optionSetValue}" />
+							<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
+						</execute>
 					</then>
 				</if>
 			</then>
@@ -814,7 +833,10 @@
 					<if>
 						<equals arg1="${optionSet}" arg2="true" />
 						<then>
-							<execute macro="CalendarEvent#_options" />
+							<execute macro="CalendarEvent#_options">
+								<var name="optionSetValue" value="${optionSetValue}" />
+								<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
+							</execute>
 						</then>
 					</if>
 				</then>
@@ -851,7 +873,10 @@
 					<if>
 						<equals arg1="${optionSet}" arg2="true" />
 						<then>
-							<execute macro="CalendarEvent#_options" />
+							<execute macro="CalendarEvent#_options">
+								<var name="optionSetValue" value="${optionSetValue}" />
+								<var name="specificOptionSetValue" value="${specificOptionSetValue}" />
+							</execute>
 						</then>
 					</if>
 				</then>

@@ -620,13 +620,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected void configureTaskBuildServiceSpringNamespaces(
-		BuildServiceTask buildServiceTask) {
-
-		buildServiceTask.setSpringNamespaces(new String[] {"beans", "osgi"});
-	}
-
-	@Override
 	protected void configureTaskBuildServiceSqlDirName(
 		BuildServiceTask buildServiceTask) {
 

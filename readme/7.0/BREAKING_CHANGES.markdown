@@ -2048,6 +2048,57 @@ configure any editor in Liferay Portal in a coherent and extensible way.
 
 ---------------------------------------
 
+### Renamed ActionCommand Classes Used in the MVCPortlet Framework
+- **Date:** 2015-Jun-16
+- **JIRA Ticket:** LPS-56372
+
+#### What changed?
+
+The classes located in the `com.liferay.portal.kernel.portlet.bridges.mvc`
+package have been renamed to include the *MVC* prefix.
+
+Old Classes:
+
+- `BaseActionCommand`
+- `BaseTransactionalActionCommand`
+- `ActionCommand`
+- `ActionCommandCache`
+
+New Classes:
+
+- `BaseMVCActionCommand`
+- `BaseMVCTransactionalActionCommand`
+- `MVCActionCommand`
+- `MVCActionCommandCache`
+
+Also, the property `action.command.name` has been renamed to `mvc.command.name`.
+The code snippet below shows the new property in its context.
+
+    @Component(
+        immediate = true,
+        property = {
+                "javax.portlet.name=" + InvitationPortletKeys.INVITATION,
+                "mvc.command.name=view"
+        },
+        service = MVCActionCommand.class
+    )
+
+#### Who is affected?
+
+This affects any Java code calling the `ActionCommand` classes used in the
+`MVCPortlet` framework.
+
+#### How should I update my code?
+
+You should update the old `ActionCommand` class names with the new *MVC* prefix.
+
+#### Why was this change made?
+
+This change adds consistency to the MVC framework, and makes it self-explanatory
+what classes should be used for the MVC portlet.
+
+---------------------------------------
+
 ### Removed the liferay-ui:journal-article Tag
 - **Date:** 2015-Jun-29
 - **JIRA Ticket:** LPS-56383

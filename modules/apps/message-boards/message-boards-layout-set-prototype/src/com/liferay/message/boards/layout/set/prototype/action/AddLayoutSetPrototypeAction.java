@@ -126,16 +126,20 @@ public class AddLayoutSetPrototypeAction {
 		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	@Reference(
 		target = "(javax.portlet.name=com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet)",
 		unbind = "-"
 	)
-	protected void setPortlet(Portlet portlet) {
+	protected void setLayoutSetPrototypePortlet(Portlet portlet) {
+	}
+
+	@Reference(target = "(javax.portlet.name=19)", unbind = "-")
+	protected void setMessageBoardsPortlet(Portlet portlet) {
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Reference(unbind = "-")

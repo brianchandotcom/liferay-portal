@@ -14,7 +14,13 @@
  */
 --%>
 
-<div class="facet-configuration-container">
+<aui:select label="scope" name="preferences--searchScope--" value="<%= searchDisplayContext.getSearchScope() %>">
+	<aui:option label="this-site" value="" />
+	<aui:option label="everything" />
+	<aui:option label="let-the-user-choose" />
+</aui:select>
+
+<aui:fieldset cssClass="facet-configuration-container" label="facets">
 
 	<%
 	List<SearchFacet> searchFacets = ListUtil.copy(SearchFacetTracker.getSearchFacets());
@@ -51,4 +57,4 @@
 	}
 	%>
 
-</div>
+</aui:fieldset>

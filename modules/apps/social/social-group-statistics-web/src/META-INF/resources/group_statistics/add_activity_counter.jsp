@@ -14,10 +14,10 @@
  */
 --%>
 
-<%@ include file="/html/portlet/group_statistics/init.jsp" %>
+<%@ include file="/group_statistics/init.jsp" %>
 
 <%
-int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String)request.getAttribute("configuration.jsp-index")));
+int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String) request.getAttribute("configuration.jsp-index")));
 
 String displayActivityCounterName = PrefsParamUtil.getString(portletPreferences, request, "displayActivityCounterName" + index);
 String chartType = PrefsParamUtil.getString(portletPreferences, request, "chartType" + index);

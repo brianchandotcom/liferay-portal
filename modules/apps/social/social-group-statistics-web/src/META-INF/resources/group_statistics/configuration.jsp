@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/group_statistics/init.jsp" %>
+<%@ include file="/group_statistics/init.jsp" %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
@@ -35,7 +35,7 @@
 
 					<div class="lfr-form-row">
 						<div class="row-fields">
-							<liferay-util:include page="/html/portlet/group_statistics/add_activity_counter.jsp" />
+							<liferay-util:include page="/group_statistics/add_activity_counter.jsp" servletContext="<%= application %>" />
 						</div>
 					</div>
 

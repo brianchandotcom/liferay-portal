@@ -165,11 +165,13 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		try {
 			Registry registry = RegistryUtil.getRegistry();
 
-			Collection<PortletDataHandler> services = registry.getServices(
-				PortletDataHandler.class,
-				"(javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS + ")");
+			Collection<PortletDataHandler> portletDataHandlers =
+				registry.getServices(
+					PortletDataHandler.class,
+					"(javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS + ")");
 
-			Iterator<PortletDataHandler> iterator = services.iterator();
+			Iterator<PortletDataHandler> iterator =
+				portletDataHandlers.iterator();
 
 			return iterator.next();
 		}

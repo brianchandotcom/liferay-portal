@@ -273,7 +273,7 @@ if (showSource) {
 			var data = '';
 
 			if (alloyEditor && alloyEditor.instanceReady) {
-				data = alloyEditor.getText();
+				data = A.Lang.String.escape(alloyEditor.getText());
 			}
 			else {
 				data = getInitialContent();

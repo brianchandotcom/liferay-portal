@@ -15,6 +15,7 @@ Export-Package:\
 	com.liferay.portlet.asset.search.test,\
 	com.liferay.portlet.asset.util.test,\
 	com.liferay.portlet.documentlibrary.store.test,\
+	com.liferay.portlet.documentlibrary.util.test,\
 	com.liferay.portlet.dynamicdatamapping.service.test,\
 	com.liferay.portlet.notifications.test,\
 	com.liferay.portlet.social.test,\
@@ -23,4 +24,7 @@ Export-Package:\
 Import-Package: *;resolution:=optional
 Include-Resource:\
 	classes,\
-	@${project.dir}/../lib/development/dumbster.jar
+	@${project.dir}/../lib/development/dumbster.jar,\
+	@${project.dir}/../lib/portal/juniversalchardet.jar,\
+	@${project.dir}/../lib/portal/tika-core.jar,\
+	@${project.dir}/../lib/portal/tika-parsers.jar

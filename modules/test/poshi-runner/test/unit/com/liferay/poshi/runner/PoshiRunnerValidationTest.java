@@ -69,7 +69,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"getPrimaryAttributeName is failing", "function",
 			primaryAttributeName);
-
 		Assert.assertNotEquals(
 			"getPrimaryAttributeName is failing", "value1",
 			primaryAttributeName);

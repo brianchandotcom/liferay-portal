@@ -29,7 +29,7 @@
 		<developerConnection>scm:git:git@github.com:liferay/liferay-portal.git</developerConnection>
 		<url>http://github.com/liferay/liferay-portal</url>
 	</scm>
-	<version>1.0.26</version>
+	<version>1.0.27</version>
  <dependencies>
   <dependency>
    <groupId>log4j</groupId>

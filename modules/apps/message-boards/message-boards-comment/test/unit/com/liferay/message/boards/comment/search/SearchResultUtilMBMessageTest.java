@@ -178,7 +178,7 @@ public class SearchResultUtilMBMessageTest
 		return mbMessageCommentSearchResultContributor;
 	}
 
-	protected SearchResultManagerImpl createSearchResultManager() {
+	protected SearchResultManagerImpl createSearchResultManagerImpl() {
 		SearchResultManagerImpl searchResultManagerImpl =
 			new SearchResultManagerImpl();
 
@@ -195,7 +195,7 @@ public class SearchResultUtilMBMessageTest
 			new SearchResultTranslatorImpl();
 
 		searchResultTranslatorImpl.setSearchResultManager(
-			createSearchResultManager());
+			createSearchResultManagerImpl());
 
 		return searchResultTranslatorImpl;
 	}

@@ -2099,6 +2099,48 @@ what classes should be used for the MVC portlet.
 
 ---------------------------------------
 
+### Extended MVC Framework to Use Same Key for Registering ActionURL and ResourceURL
+- **Date:** 2015-Jun-16
+- **JIRA Ticket:** LPS-56372
+
+#### What changed?
+
+Previously, a single `ActionCommand` was valid for both `ActionURL` and
+`ResourceURL`. Now you must distinguish both an `ActionURL` and `ResourceURL` as
+different actions, which means you can register both with the same key.
+
+#### Who is affected?
+
+This affects developers that were using the `ActionCommand` for `actionURLs` and
+`resourceURLs`.
+
+#### How should I update my code?
+
+You should replace the `ActionCommand`s used for `actionURLs` and `resourceURLs`
+to use `MVCActionCommand` and `MVCResourceCommand`, respectively. For example,
+for the new `MVCResourceCommand`, you'll need to use the `resourceID` of the
+`resourceURL` instead of using `ActionRequest.ACTION_NAME`.
+
+Old Code:
+
+    <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="exportRecordSetURL">
+        <portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="exportRecordSet" />
+        <portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+    </liferay-portlet:resourceURL>
+
+New Code:
+
+    <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportRecordSet" var="exportRecordSetURL">
+        <portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+    </liferay-portlet:resourceURL>
+
+#### Why was this change made?
+
+This change was made to extend the MVC framework to have better support for
+`actionURLs` and `resourceURLs`.
+
+---------------------------------------
+
 ### Removed the liferay-ui:journal-article Tag
 - **Date:** 2015-Jun-29
 - **JIRA Ticket:** LPS-56383

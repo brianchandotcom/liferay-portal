@@ -200,18 +200,14 @@ if (group != null) {
 				rowVar="row"
 			>
 
+				<portlet:renderURL var="siteAdministrationURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+					<portlet:param name="mvcPath" value="/edit_site.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
+				</portlet:renderURL>
+
 				<%
-				String rowURL = null;
-
-				ThemeDisplay siteThemeDisplay = (ThemeDisplay)themeDisplay.clone();
-
-				siteThemeDisplay.setScopeGroupId(curGroup.getGroupId());
-
-				PortletURL siteAdministrationURL = PortalUtil.getSiteAdministrationURL(renderResponse, siteThemeDisplay);
-
-				if (siteAdministrationURL != null) {
-					rowURL = siteAdministrationURL.toString();
-				}
+				String rowURL = siteAdministrationURL.toString();
 				%>
 
 				<%@ include file="/site_columns.jspf" %>

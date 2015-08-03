@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -154,6 +156,24 @@ public class ApplicationContextServicePublisher {
 		return clazz;
 	}
 
+	protected boolean isIgnoredInterface(String interfaceClassName) {
+		for (String ignoredClass :
+				PropsValues.MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES) {
+
+			if (!ignoredClass.startsWith(StringPool.EXCLAMATION) &&
+				(ignoredClass.equals(interfaceClassName) ||
+				 (ignoredClass.endsWith(StringPool.STAR) &&
+				  interfaceClassName.startsWith(
+					  ignoredClass.substring(
+						  0, ignoredClass.length() - 1))))) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected void registerApplicationContext(
 		ApplicationContext applicationContext, String bundleSymbolicName) {
 
@@ -183,7 +203,19 @@ public class ApplicationContextServicePublisher {
 		List<String> names = new ArrayList<>(interfaces.size());
 
 		for (Class<?> interfaceClass : interfaces) {
-			names.add(interfaceClass.getName());
+			String interfaceClassName = interfaceClass.getName();
+
+			if (!isIgnoredInterface(interfaceClassName)) {
+				names.add(interfaceClassName);
+			}
+		}
+
+		if (names.isEmpty()) {
+			_log.log(
+				Logger.LOG_DEBUG,
+				"Empty set of interfaces. No registration will take place");
+
+			return;
 		}
 
 		registerService(bundleContext, bean, names, getBeanProperties(bean));

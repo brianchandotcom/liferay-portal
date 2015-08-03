@@ -22,6 +22,7 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.service.UserLocalService;
@@ -122,6 +123,12 @@ public class AddLayoutSetPrototypeAction {
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY + ")"
+	)
+	protected void setPortlet(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")

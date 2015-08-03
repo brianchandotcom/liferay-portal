@@ -445,7 +445,7 @@ if (recurrence != null) {
 		'yearly-on-x-x-of-x-x-times': '<liferay-ui:message key="yearly-on-x-x-of-x-x-times" />',
 		'yearly-until-x-x-x': '<liferay-ui:message key="yearly-until-x-x-x" />',
 		'yearly-x-times': '<liferay-ui:message key="yearly-x-times" />',
-		'you-are-about-to-make-changes-that-will-only-effect-your-calendar-x': '<liferay-ui:message key="you-are-about-to-make-changes-that-will-only-effect-your-calendar-x" />'
+		'you-are-about-to-make-changes-that-will-only-affect-your-calendar-x': '<liferay-ui:message key="you-are-about-to-make-changes-that-will-only-affect-your-calendar-x" />'
 	};
 
 	Liferay.RecurrenceUtil.WEEKDAY_LABELS = {

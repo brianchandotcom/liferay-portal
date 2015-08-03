@@ -408,6 +408,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			StringUtil.equalsIgnoreCase(key, "acquireRetryDelay") ||
 			StringUtil.equalsIgnoreCase(key, "connectionCustomizerClassName") ||
 			StringUtil.equalsIgnoreCase(key, "idleConnectionTestPeriod") ||
+			StringUtil.equalsIgnoreCase(key, "initialPoolSize") ||
 			StringUtil.equalsIgnoreCase(key, "maxIdleTime") ||
 			StringUtil.equalsIgnoreCase(key, "maxPoolSize") ||
 			StringUtil.equalsIgnoreCase(key, "minPoolSize") ||
@@ -416,9 +417,8 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected boolean isPropertyDBCP(String key) {
@@ -429,9 +429,8 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected boolean isPropertyHikariCP(String key) {
@@ -447,9 +446,8 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected boolean isPropertyLiferay(String key) {
@@ -458,9 +456,8 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected boolean isPropertyTomcat(String key) {
@@ -472,9 +469,8 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	protected void testDatabaseClass(Properties properties) throws Exception {

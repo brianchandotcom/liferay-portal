@@ -62,7 +62,7 @@ public class SocialActivityWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.social.activity.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
 			false);
 	}
 

@@ -61,7 +61,7 @@ public class BlogsWebUpgrade {
 		upgradeProcesses.add(new UpgradePortletSettings(_settingsFactory));
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.blogs.web", upgradeProcesses, 1, 0, false);
+			"com.liferay.blogs.web", upgradeProcesses, 1, 1, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

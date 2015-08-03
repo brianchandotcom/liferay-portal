@@ -50,6 +50,9 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 
 	<%
 	for (PanelCategory childPanelCategory : panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.ROOT)) {
+		if (!childPanelCategory.hasAccessPermission(permissionChecker, themeDisplay.getScopeGroup())) {
+			continue;
+		}
 	%>
 
 		<li class="col-xs-4 <%= rootPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>">

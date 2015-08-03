@@ -38,6 +38,8 @@ page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.HashMap" %>
 
+<%@ page import="java.util.List" %>
+
 <%@ page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />

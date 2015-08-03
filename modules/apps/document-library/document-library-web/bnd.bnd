@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.document.library.web
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.document.library.web.asset,\
-	com.liferay.document.library.web.constants,\
 	com.liferay.document.library.web.lar
 Include-Resource:\
 	classes,\

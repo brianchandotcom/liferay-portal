@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.marketplace.store.web.portlet;
+package com.liferay.marketplace.app.manager.web.application.list;
 
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys;
+import com.liferay.marketplace.app.manager.web.constants.MarketplaceAppManagerPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class MarketplacePurchasedControlPanelEntry
+public class MarketplaceAppManagerPanelApp
 	extends BaseControlPanelEntryPanelApp {
 
 	@Override
@@ -48,7 +48,7 @@ public class MarketplacePurchasedControlPanelEntry
 
 	@Override
 	public String getPortletId() {
-		return MarketplaceStorePortletKeys.MARKETPLACE_PURCHASED;
+		return MarketplaceAppManagerPortletKeys.MARKETPLACE_APP_MANAGER;
 	}
 
 	@Override

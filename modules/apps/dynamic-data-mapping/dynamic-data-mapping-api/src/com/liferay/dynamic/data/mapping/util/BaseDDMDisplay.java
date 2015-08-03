@@ -276,10 +276,10 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	public boolean isShowAddStructureButton() {
 		String portletId = getPortletId();
 
-		String ddmPortletId = PortletProviderUtil.getPortletId(
+		String ddmStructurePortletId = PortletProviderUtil.getPortletId(
 			DDMStructure.class.getName(), PortletProvider.Action.VIEW);
 
-		if (portletId.equals(ddmPortletId)) {
+		if (portletId.equals(ddmStructurePortletId)) {
 			return false;
 		}
 

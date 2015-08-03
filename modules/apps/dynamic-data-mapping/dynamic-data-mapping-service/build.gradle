@@ -1,3 +1,9 @@
+buildService {
+	apiDirName = "../dynamic-data-mapping-api/src"
+	autoNamespaceTables = false
+	testDirName = "../dynamic-data-mapping-test/test/integration"
+}
+
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"

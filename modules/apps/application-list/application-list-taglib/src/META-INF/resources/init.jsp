@@ -36,6 +36,8 @@ page import="com.liferay.portal.model.Portlet" %><%@
 page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %>
 
+<%@ page import="java.util.List" %>
+
 <%@ page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />

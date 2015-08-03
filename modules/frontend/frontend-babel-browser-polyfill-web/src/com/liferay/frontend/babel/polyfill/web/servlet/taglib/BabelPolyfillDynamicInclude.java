@@ -43,8 +43,7 @@ public class BabelPolyfillDynamicInclude implements DynamicInclude {
 
 		Bundle bundle = _bundleContext.getBundle();
 
-		URL entryURL = bundle.getEntry(
-			"/META-INF/resources/config.js");
+		URL entryURL = bundle.getEntry("/META-INF/resources/config.js");
 
 		StreamUtil.transfer(entryURL.openStream(), response.getOutputStream());
 	}

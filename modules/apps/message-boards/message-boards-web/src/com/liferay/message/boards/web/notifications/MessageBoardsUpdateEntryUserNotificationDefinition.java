@@ -42,7 +42,6 @@ public class MessageBoardsUpdateEntryUserNotificationDefinition
 			new UserNotificationDeliveryType(
 				"email", UserNotificationDeliveryConstants.TYPE_EMAIL, true,
 				true));
-
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(
 				"website", UserNotificationDeliveryConstants.TYPE_WEBSITE, true,

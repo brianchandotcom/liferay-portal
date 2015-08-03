@@ -15,7 +15,6 @@
 package com.liferay.portal.service.test;
 
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -26,14 +25,7 @@ import com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory
 import com.liferay.portlet.documentlibrary.asset.DLFolderAssetRendererFactory;
 import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 import com.liferay.portlet.documentlibrary.util.DLFolderIndexer;
-import com.liferay.portlet.messageboards.asset.MBCategoryAssetRendererFactory;
-import com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory;
-import com.liferay.portlet.messageboards.trash.MBCategoryTrashHandler;
-import com.liferay.portlet.messageboards.trash.MBMessageTrashHandler;
-import com.liferay.portlet.messageboards.trash.MBThreadTrashHandler;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
-import com.liferay.portlet.messageboards.workflow.MBDiscussionWorkflowHandler;
-import com.liferay.portlet.messageboards.workflow.MBMessageWorkflowHandler;
 import com.liferay.portlet.trash.util.TrashIndexer;
 import com.liferay.portlet.usersadmin.util.ContactIndexer;
 import com.liferay.portlet.usersadmin.util.OrganizationIndexer;
@@ -87,25 +79,11 @@ public class PortalRegisterTestUtil {
 		_indexersRegistered = true;
 	}
 
-	protected static void registerTrashHandlers() {
-		if (_trashHandlersRegistered) {
-			return;
-		}
-
-		TrashHandlerRegistryUtil.register(new MBCategoryTrashHandler());
-		TrashHandlerRegistryUtil.register(new MBMessageTrashHandler());
-		TrashHandlerRegistryUtil.register(new MBThreadTrashHandler());
-
-		_trashHandlersRegistered = true;
-	}
-
 	protected static void registerWorkflowHandlers() {
 		if (_workflowHandlersRegistered) {
 			return;
 		}
 
-		WorkflowHandlerRegistryUtil.register(new MBDiscussionWorkflowHandler());
-		WorkflowHandlerRegistryUtil.register(new MBMessageWorkflowHandler());
 		WorkflowHandlerRegistryUtil.register(new UserWorkflowHandler());
 
 		_workflowHandlersRegistered = true;
@@ -113,14 +91,11 @@ public class PortalRegisterTestUtil {
 
 	private static final Class<?>[] _ASSET_RENDERER_FACTORY_CLASSES = {
 		DLFileEntryAssetRendererFactory.class,
-		DLFolderAssetRendererFactory.class,
-		MBCategoryAssetRendererFactory.class,
-		MBMessageAssetRendererFactory.class, UserAssetRendererFactory.class
+		DLFolderAssetRendererFactory.class, UserAssetRendererFactory.class
 	};
 
 	private static boolean _assetRendererFactoriesRegistered;
 	private static boolean _indexersRegistered;
-	private static boolean _trashHandlersRegistered;
 	private static boolean _workflowHandlersRegistered;
 
 }

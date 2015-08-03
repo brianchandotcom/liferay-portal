@@ -75,8 +75,8 @@ import javax.portlet.PortletRequest;
  * com.liferay.portlet.documentlibrary.trash.DLFolderTrashHandler}
  * </li>
  * <li>
- * MBThread via {@link
- * com.liferay.portlet.messageboards.trash.MBThreadTrashHandler}
+ * MBThread via <code>com.liferay.message.boards.trash.MBThreadTrashHandler
+ * </code> located in Liferay Portal's external <code>modules</code> directory.
  * </li>
  * <li>
  * WikiNode via <code>com.liferay.wiki.trash.WikiNodeTrashHandler</code> located

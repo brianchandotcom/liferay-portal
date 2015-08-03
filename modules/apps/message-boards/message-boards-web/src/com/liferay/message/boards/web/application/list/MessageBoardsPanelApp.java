@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.blogs.web.application.list;
+package com.liferay.message.boards.web.application.list;
 
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,11 +30,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,
-		"service.ranking:Integer=300"
+		"service.ranking:Integer=400"
 	},
 	service = PanelApp.class
 )
-public class BlogsPanelApp extends BaseControlPanelEntryPanelApp {
+public class MessageBoardsPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getParentCategoryKey() {
@@ -43,7 +43,7 @@ public class BlogsPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return BlogsPortletKeys.BLOGS_ADMIN;
+		return PortletKeys.MESSAGE_BOARDS_ADMIN;
 	}
 
 	@Reference(unbind = "-")

@@ -12,10 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.search.internal.result;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SummaryFactory;
+import com.liferay.portal.kernel.search.result.SearchResultContributor;
 
 import java.util.Locale;
 
@@ -23,40 +26,34 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Adolfo Pérez
+ * @author André de Oliveira
  */
-public class SearchResultManagerUtil {
+public class ContributedSearchResultManager extends BaseSearchResultManager {
 
-	public static SearchResult createSearchResult(Document document)
-		throws PortalException {
+	public ContributedSearchResultManager(
+		SearchResultContributor searchResultContributor,
+		SummaryFactory summaryFactory) {
 
-		return getSearchResultManager().createSearchResult(document);
+		_searchResultContributor = searchResultContributor;
+		_summaryFactory = summaryFactory;
 	}
 
-	public static SearchResultManager getSearchResultManager() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			SearchResultManagerUtil.class);
-
-		return _searchResultManager;
-	}
-
-	public static void updateSearchResult(
+	@Override
+	protected void addRelatedModel(
 			SearchResult searchResult, Document document, Locale locale,
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException {
 
-		getSearchResultManager().updateSearchResult(
+		_searchResultContributor.addRelatedModel(
 			searchResult, document, locale, portletRequest, portletResponse);
 	}
 
-	public void setSearchResultManager(
-		SearchResultManager searchResultManager) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_searchResultManager = searchResultManager;
+	@Override
+	protected SummaryFactory getSummaryFactory() {
+		return _summaryFactory;
 	}
 
-	private static SearchResultManager _searchResultManager;
+	private final SearchResultContributor _searchResultContributor;
+	private final SummaryFactory _summaryFactory;
 
 }

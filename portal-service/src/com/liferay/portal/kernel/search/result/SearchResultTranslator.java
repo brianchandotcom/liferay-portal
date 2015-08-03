@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.kernel.search.result;
 
-import com.liferay.portal.kernel.search.result.SearchResultTranslator;
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SearchResult;
 
 import java.util.List;
 import java.util.Locale;
@@ -24,25 +24,12 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Eudaldo Alonso
+ * @author André de Oliveira
  */
-public class SearchResultUtil {
+public interface SearchResultTranslator {
 
-	public static List<SearchResult> getSearchResults(
-		Hits hits, Locale locale) {
-
-		return getSearchResults(hits, locale, null, null);
-	}
-
-	public static List<SearchResult> getSearchResults(
+	public List<SearchResult> translate(
 		Hits hits, Locale locale, PortletRequest portletRequest,
-		PortletResponse portletResponse) {
-
-		return _searchResultTranslator.translate(
-			hits, locale, portletRequest, portletResponse);
-	}
-
-	private static final SearchResultTranslator _searchResultTranslator =
-		ProxyFactory.newServiceTrackedInstance(SearchResultTranslator.class);
+		PortletResponse portletResponse);
 
 }

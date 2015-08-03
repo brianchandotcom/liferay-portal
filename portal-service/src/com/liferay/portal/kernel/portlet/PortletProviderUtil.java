@@ -17,6 +17,9 @@ package com.liferay.portal.kernel.portlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
@@ -72,47 +75,54 @@ public class PortletProviderUtil {
 		PortletProvider portletProvider = null;
 
 		if (action.equals(PortletProvider.Action.ADD)) {
-			portletProvider = _addServiceTrackerMap.getService(className);
-
-			if (portletProvider == null) {
-				portletProvider = _addServiceTrackerMap.getService(
-					PortletProvider.CLASS_NAME_ANY);
-			}
+			return getPortletProvider(
+				className, (ServiceTrackerMap) _addServiceTrackerMap);
 		}
 		else if (action.equals(PortletProvider.Action.BROWSE)) {
-			portletProvider = _browseServiceTrackerMap.getService(className);
-
-			if (portletProvider == null) {
-				portletProvider = _browseServiceTrackerMap.getService(
-					PortletProvider.CLASS_NAME_ANY);
-			}
+			return getPortletProvider(
+				className, (ServiceTrackerMap)_browseServiceTrackerMap);
 		}
 		else if (action.equals(PortletProvider.Action.EDIT)) {
-			portletProvider = _editServiceTrackerMap.getService(className);
-
-			if (portletProvider == null) {
-				portletProvider = _editServiceTrackerMap.getService(
-					PortletProvider.CLASS_NAME_ANY);
-			}
+			return getPortletProvider(
+				className, (ServiceTrackerMap)_editServiceTrackerMap);
 		}
 		else if (action.equals(PortletProvider.Action.MANAGE)) {
-			portletProvider = _manageServiceTrackerMap.getService(className);
-
-			if (portletProvider == null) {
-				portletProvider = _manageServiceTrackerMap.getService(
-					PortletProvider.CLASS_NAME_ANY);
-			}
+			return getPortletProvider(
+				className, (ServiceTrackerMap)_manageServiceTrackerMap);
 		}
 		else if (action.equals(PortletProvider.Action.VIEW)) {
-			portletProvider = _viewServiceTrackerMap.getService(className);
-
-			if (portletProvider == null) {
-				portletProvider = _viewServiceTrackerMap.getService(
-					PortletProvider.CLASS_NAME_ANY);
-			}
+			return getPortletProvider(
+				className, (ServiceTrackerMap)_viewServiceTrackerMap);
 		}
 
 		return portletProvider;
+	}
+
+	protected static PortletProvider getPortletProvider(
+		String className,
+		ServiceTrackerMap<String, PortletProvider> serviceTrackerMap) {
+
+		PortletProvider portletProvider = serviceTrackerMap.getService(
+			className);
+
+		if ((portletProvider == null) && isAsset(className)) {
+			portletProvider = serviceTrackerMap.getService(
+				AssetEntry.class.getName());
+		}
+
+		return portletProvider;
+	}
+
+	protected static boolean isAsset(String className) {
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
+
+		if (assetRendererFactory != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final ServiceTrackerMap<String, AddPortletProvider>

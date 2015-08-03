@@ -15,13 +15,20 @@
 package com.liferay.product.menu.control.panel.application.list;
 
 import com.liferay.application.list.BasePanelCategory;
+import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.security.permission.PermissionChecker;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -55,5 +62,23 @@ public class ControlPanelCategory extends BasePanelCategory {
 	public String getParentCategoryKey() {
 		return PanelCategoryKeys.ROOT;
 	}
+
+	@Override
+	public boolean hasAccessPermission(
+			PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
+			this, permissionChecker, group);
+
+		return !panelApps.isEmpty();
+	}
+
+	@Reference(unbind = "-")
+	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
+		_panelAppRegistry = panelAppRegistry;
+	}
+
+	private PanelAppRegistry _panelAppRegistry;
 
 }

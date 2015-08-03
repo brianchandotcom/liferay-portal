@@ -53,8 +53,8 @@ public class MBCategoryAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public MBCategoryAssetRendererFactory() {
 		setCategorizable(false);
-		setSelectable(false);
 		setPortletId(PortletKeys.MESSAGE_BOARDS);
+		setSelectable(false);
 	}
 
 	@Override

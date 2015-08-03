@@ -88,10 +88,6 @@ public class VerifyProperties extends VerifyProcess {
 			verifyObsoletePortalProperty(portalProperties, key);
 		}
 
-		for (String key : _OBSOLETE_PORTAL_VAADIN_KEYS) {
-			verifyObsoleteVaadinProperty(portalProperties, key);
-		}
-
 		for (String[] keys : _MODULARIZED_PORTAL_KEYS) {
 			String oldKey = keys[0];
 			String newKey = keys[1];
@@ -232,19 +228,6 @@ public class VerifyProperties extends VerifyProcess {
 
 		if (value != null) {
 			_log.error("System property \"" + key + "\" is obsolete");
-		}
-	}
-
-	protected void verifyObsoleteVaadinProperty(
-			Properties portalProperties, String key)
-		throws Exception {
-
-		if (portalProperties.containsKey(key)) {
-			_log.error(
-				"Vaadin framework is not bundled with portal anymore, so " +
-					"portal property \"" + key + "\" might be obsolete. " +
-					"Please refer to Vaadin documentation, how to configure " +
-					"Vaadin with the portal.");
 		}
 	}
 
@@ -1748,10 +1731,6 @@ public class VerifyProperties extends VerifyProcess {
 		"webdav.storage.show.edit.url", "webdav.storage.show.view.url",
 		"webdav.storage.tokens", "wiki.email.page.added.signature",
 		"wiki.email.page.updated.signature", "xss.allow"
-	};
-
-	private static final String[] _OBSOLETE_PORTAL_VAADIN_KEYS = new String[] {
-		"vaadin.resources.path", "vaadin.theme", "vaadin.widgetset"
 	};
 
 	private static final String[] _OBSOLETE_SYSTEM_KEYS = new String[] {

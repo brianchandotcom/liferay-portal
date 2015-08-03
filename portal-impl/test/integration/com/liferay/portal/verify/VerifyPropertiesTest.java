@@ -38,7 +38,6 @@ import org.junit.Test;
 
 /**
  * @author Manuel de la Peña
- * @author Sampsa Sohlman
  */
 public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
@@ -110,11 +109,6 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
-
-			for ( int i = 0; i < loggingEvents.size(); i++ ) {
-				LoggingEvent loggingEvent = loggingEvents.get(i);
-				System.out.println(loggingEvent.getMessage());
-			}
 
 			Assert.assertEquals(1, loggingEvents.size());
 
@@ -245,44 +239,6 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			ReflectionTestUtil.setFieldValue(
 				VerifyProperties.class, "_OBSOLETE_SYSTEM_KEYS",
 				originalObsoleteSystemKeys);
-		}
-	}
-
-	@Test
-	public void testObsoleteVaadinKeys() throws Exception {
-		String[] originalObsoletePortalKeys = ReflectionTestUtil.getFieldValue(
-			VerifyProperties.class, "_OBSOLETE_PORTAL_VAADIN_KEYS");
-
-		String obsoletePortalKey = getFirstPortalPropertyKey();
-
-		ReflectionTestUtil.setFieldValue(
-			VerifyProperties.class, "_OBSOLETE_PORTAL_VAADIN_KEYS",
-			new String[] {obsoletePortalKey});
-
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					VerifyProperties.class.getName(), Level.ERROR)) {
-
-			doVerify();
-
-			List<LoggingEvent> loggingEvents =
-				captureAppender.getLoggingEvents();
-
-			Assert.assertEquals(1, loggingEvents.size());
-
-			LoggingEvent loggingEvent = loggingEvents.get(0);
-
-			Assert.assertEquals(
-				"Vaadin framework is not bundled with portal anymore, "+
-					"so portal property \"" + obsoletePortalKey + "\" might " +
-					"be obsolete. Please refer to Vaadin documentation, how " +
-					"to configure Vaadin with the portal.",
-				loggingEvent.getMessage());
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				VerifyProperties.class, "_OBSOLETE_PORTAL_VAADIN_KEYS",
-				originalObsoletePortalKeys);
 		}
 	}
 

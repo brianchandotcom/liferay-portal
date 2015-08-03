@@ -1727,7 +1727,8 @@ public class VerifyProperties extends VerifyProcess {
 		"users.form.add.miscellaneous", "users.form.my.account.identification",
 		"users.form.my.account.main", "users.form.my.account.miscellaneous",
 		"users.form.update.identification", "users.form.update.main",
-		"users.form.update.miscellaneous", "webdav.storage.class",
+		"users.form.update.miscellaneous", "vaadin.resources.path",
+		"vaadin.theme", "vaadin.widgetset", "webdav.storage.class",
 		"webdav.storage.show.edit.url", "webdav.storage.show.view.url",
 		"webdav.storage.tokens", "wiki.email.page.added.signature",
 		"wiki.email.page.updated.signature", "xss.allow"

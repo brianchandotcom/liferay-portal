@@ -33,7 +33,7 @@ public class SocialActivityPermissionImpl implements SocialActivityPermission {
 
 		if (!contains(permissionChecker, groupId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, _getPortletId(), groupId, actionId);
+				permissionChecker, getPortletId(), groupId, actionId);
 		}
 	}
 
@@ -48,7 +48,7 @@ public class SocialActivityPermissionImpl implements SocialActivityPermission {
 		}
 
 		if (permissionChecker.hasPermission(
-				groupId, _getPortletId(), 0, actionId)) {
+				groupId, getPortletId(), 0, actionId)) {
 
 			return true;
 		}
@@ -56,7 +56,7 @@ public class SocialActivityPermissionImpl implements SocialActivityPermission {
 		return false;
 	}
 
-	private String _getPortletId() {
+	protected String getPortletId() {
 		return PortletProviderUtil.getPortletId(
 			SocialActivitySetting.class.getName(), PortletProvider.Action.EDIT);
 	}

@@ -15,10 +15,9 @@
 package com.liferay.portal.test.randomizerbumpers;
 
 import com.liferay.portal.kernel.io.DummyWriter;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.test.randomizerbumpers.RandomizerBumper;
 import com.liferay.portal.kernel.util.ContentTypes;
-
-import java.io.ByteArrayInputStream;
 
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.metadata.Metadata;
@@ -32,7 +31,7 @@ import org.apache.tika.sax.WriteOutContentHandler;
  */
 public class TikaSafeRandomizerBumper implements RandomizerBumper<byte[]> {
 
-	public static TikaSafeRandomizerBumper TEXT_PLAIN_INSTANCE =
+	public static final TikaSafeRandomizerBumper TEXT_PLAIN_INSTANCE =
 		new TikaSafeRandomizerBumper(ContentTypes.TEXT_PLAIN);
 
 	public TikaSafeRandomizerBumper(String contentType) {
@@ -41,17 +40,17 @@ public class TikaSafeRandomizerBumper implements RandomizerBumper<byte[]> {
 
 	@Override
 	public boolean accept(byte[] randomValue) {
-		Metadata metadata = new Metadata();
-
 		try {
-			Parser parser = new AutoDetectParser(new TikaConfig());
-
 			ParseContext parserContext = new ParseContext();
+
+			Parser parser = new AutoDetectParser(new TikaConfig());
 
 			parserContext.set(Parser.class, parser);
 
+			Metadata metadata = new Metadata();
+
 			parser.parse(
-				new ByteArrayInputStream(randomValue),
+				new UnsyncByteArrayInputStream(randomValue),
 				new WriteOutContentHandler(new DummyWriter()), metadata,
 				parserContext);
 

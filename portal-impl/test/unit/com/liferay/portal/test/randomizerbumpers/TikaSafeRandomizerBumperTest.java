@@ -29,7 +29,7 @@ public class TikaSafeRandomizerBumperTest {
 		TikaSafeRandomizerBumper tikaSafeRandomizerBumper =
 			new TikaSafeRandomizerBumper("application/x-msdownload");
 
-		Assert.assertTrue(tikaSafeRandomizerBumper.accept(EXE_BYTE_ARRAY));
+		Assert.assertTrue(tikaSafeRandomizerBumper.accept(_EXE_BYTE_ARRAY));
 
 		String randomString = RandomTestUtil.randomString();
 
@@ -60,16 +60,16 @@ public class TikaSafeRandomizerBumperTest {
 				randomString.getBytes()));
 	}
 
-	private static final String _EXE_MAGIC_HEADER = "MZ";
-
 	// http://www.phreedom.org/research/tinype/
 
-	private static final byte[] EXE_BYTE_ARRAY = new byte[] {
+	private static final byte[] _EXE_BYTE_ARRAY = new byte[] {
 		77, 90, 0, 0, 80, 69, 0, 0, 76, 1, 1, 0, 106, 42, 88, -61, 0, 0, 0, 0,
 		0, 0, 0, 0, 4, 0, 3, 1, 11, 1, 8, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0,
 		12, 0, 0, 0, 4, 0, 0, 0, 12, 0, 0, 0, 0, 0, 64, 0, 4, 0, 0, 0, 4, 0, 0,
 		0, 4, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 104, 0, 0, 0, 100, 0,
 		0, 0, 0, 0, 0, 0, 2
 	};
+
+	private static final String _EXE_MAGIC_HEADER = "MZ";
 
 }

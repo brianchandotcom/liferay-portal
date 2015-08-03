@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.set.prototype.lar;
+package com.liferay.layout.set.prototype.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;

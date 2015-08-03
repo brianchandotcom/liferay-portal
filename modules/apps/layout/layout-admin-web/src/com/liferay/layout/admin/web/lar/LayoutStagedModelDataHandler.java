@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.lar;
+package com.liferay.layout.admin.web.lar;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchLayoutException;
@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
@@ -69,6 +68,7 @@ import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 import com.liferay.portlet.exportimport.staging.LayoutStagingUtil;
@@ -83,10 +83,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mate Thurzo
  */
-@OSGiBeanProperties
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class LayoutStagedModelDataHandler
 	extends BaseStagedModelDataHandler<Layout> {
 
@@ -190,12 +193,6 @@ public class LayoutStagedModelDataHandler
 			referenceElement.attributeValue("class-pk"));
 
 		layoutPlids.put(plid, existingLayout.getPlid());
-	}
-
-	public void setLayoutLocalServiceHelper(
-		LayoutLocalServiceHelper layoutLocalServiceHelper) {
-
-		_layoutLocalServiceHelper = layoutLocalServiceHelper;
 	}
 
 	@Override
@@ -1236,6 +1233,13 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setLayoutLocalServiceHelper(
+		LayoutLocalServiceHelper layoutLocalServiceHelper) {
+
+		_layoutLocalServiceHelper = layoutLocalServiceHelper;
+	}
+
 	protected void updateTypeSettings(Layout importedLayout, Layout layout)
 		throws PortalException {
 
@@ -1277,6 +1281,6 @@ public class LayoutStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutStagedModelDataHandler.class);
 
-	private static LayoutLocalServiceHelper _layoutLocalServiceHelper;
+	private LayoutLocalServiceHelper _layoutLocalServiceHelper;
 
 }

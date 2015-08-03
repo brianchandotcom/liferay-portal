@@ -22,6 +22,7 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.service.UserLocalService;
@@ -31,8 +32,6 @@ import com.liferay.portal.util.PortletKeys;
 
 import java.util.List;
 import java.util.ResourceBundle;
-
-import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -126,11 +125,6 @@ public class AddLayoutSetPrototypeAction {
 		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
 	@Reference(
 		target = "(javax.portlet.name=com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet)",
 		unbind = "-"
@@ -139,10 +133,15 @@ public class AddLayoutSetPrototypeAction {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=com_liferay_message_boards_web_portlet_MessageBoardsPortlet)",
+		target = "(javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS + ")",
 		unbind = "-"
 	)
 	protected void setMessageBoardsPortlet(Portlet portlet) {
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Reference(unbind = "-")

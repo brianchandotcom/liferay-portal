@@ -8,9 +8,6 @@
 		<portlet id="64" />
 		<portlet id="110" />
 	</category>
-	<category name="category.collaboration">
-		<portlet id="19" />
-	</category>
 	<category name="category.community">
 		<portlet id="11" />
 		<portlet id="186" />
@@ -32,7 +29,6 @@
 		<portlet id="137" />
 		<portlet id="157" />
 		<portlet id="158" />
-		<portlet id="162" />
 		<portlet id="164" />
 		<portlet id="176" />
 		<portlet id="195" />

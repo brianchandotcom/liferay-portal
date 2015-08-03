@@ -31,7 +31,7 @@ public class TikaSafeRandomizerBumperTest {
 
 		Assert.assertTrue(tikaSafeRandomizerBumper.accept(_EXE_BYTE_ARRAY));
 
-		String randomString = _getNoneExeRandomString();
+		String randomString = getRegularRandomString();
 
 		Assert.assertFalse(
 			tikaSafeRandomizerBumper.accept(randomString.getBytes()));
@@ -39,7 +39,7 @@ public class TikaSafeRandomizerBumperTest {
 
 	@Test
 	public void testAcceptText() {
-		String randomString = _getNoneExeRandomString();
+		String randomString = getRegularRandomString();
 
 		Assert.assertTrue(
 			TikaSafeRandomizerBumper.TEXT_PLAIN_INSTANCE.accept(
@@ -52,7 +52,7 @@ public class TikaSafeRandomizerBumperTest {
 				randomString.getBytes()));
 	}
 
-	private static String _getNoneExeRandomString() {
+	protected static String getRegularRandomString() {
 		String randomString = RandomTestUtil.randomString();
 
 		while (randomString.startsWith(_EXE_MAGIC_HEADER)) {
@@ -62,7 +62,7 @@ public class TikaSafeRandomizerBumperTest {
 		return randomString;
 	}
 
-	// http://www.phreedom.org/research/tinype/
+	// http://www.phreedom.org/research/tinype
 
 	private static final byte[] _EXE_BYTE_ARRAY = new byte[] {
 		77, 90, 0, 0, 80, 69, 0, 0, 76, 1, 1, 0, 106, 42, 88, -61, 0, 0, 0, 0,

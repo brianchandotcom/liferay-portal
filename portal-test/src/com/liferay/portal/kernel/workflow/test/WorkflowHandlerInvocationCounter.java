@@ -63,6 +63,7 @@ public class WorkflowHandlerInvocationCounter<T> implements AutoCloseable {
 		return count.get();
 	}
 
+	@SuppressWarnings("unchecked")
 	private WorkflowHandler<T> _createInvocationCounterWorkflowHandler(
 		final WorkflowHandler<T> workflowHandler) {
 

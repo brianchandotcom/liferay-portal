@@ -59,7 +59,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 					long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
 
 					for (long classNameId : availableClassNameIds) {
-						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(classNameId);
+						AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(classNameId);
 
 						if (!assetRendererFactory.isSelectable()) {
 							availableClassNameIds = ArrayUtil.remove(availableClassNameIds, classNameId);
@@ -84,13 +84,13 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 						String className = PortalUtil.getClassName(assetEntry.getClassNameId());
 						long classPK = assetEntry.getClassPK();
 
-						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+						AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
 						if (assetRendererFactory == null) {
 							continue;
 						}
 
-						AssetRenderer assetRenderer = null;
+						AssetRenderer<?> assetRenderer = null;
 
 						try {
 							assetRenderer = assetRendererFactory.getAssetRenderer(classPK);

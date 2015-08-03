@@ -41,7 +41,8 @@ import javax.portlet.WindowStateException;
 		"search.asset.type=com.liferay.portlet.documentlibrary.model.DLFolder"
 	}
 )
-public class DLFolderAssetRendererFactory extends BaseAssetRendererFactory {
+public class DLFolderAssetRendererFactory
+	extends BaseAssetRendererFactory<Folder> {
 
 	public static final String TYPE = "document_folder";
 
@@ -50,7 +51,7 @@ public class DLFolderAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<Folder> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
 		Folder folder = DLAppLocalServiceUtil.getFolder(classPK);

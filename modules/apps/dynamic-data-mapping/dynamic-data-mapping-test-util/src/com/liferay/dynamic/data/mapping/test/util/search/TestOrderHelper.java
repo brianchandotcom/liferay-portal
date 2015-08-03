@@ -234,7 +234,7 @@ public abstract class TestOrderHelper {
 		return assetEntryQuery;
 	}
 
-	protected AssetRendererFactory getAssetRendererFactory() {
+	protected AssetRendererFactory<?> getAssetRendererFactory() {
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassName(
 				getSearchableAssetEntryClassName());
@@ -247,7 +247,7 @@ public abstract class TestOrderHelper {
 
 	protected abstract String getSearchableAssetEntryStructureClassName();
 
-	protected String getValue(AssetRenderer assetRenderer) throws Exception {
+	protected String getValue(AssetRenderer<?> assetRenderer) throws Exception {
 		DDMFormValuesReader ddmFormValuesReader =
 			assetRenderer.getDDMFormValuesReader();
 
@@ -274,15 +274,16 @@ public abstract class TestOrderHelper {
 	protected String[] getValues(List<AssetEntry> assetEntries)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<?> assetRendererFactory =
+			getAssetRendererFactory();
 
 		String[] values = new String[assetEntries.size()];
 
 		for (int i = 0; i < assetEntries.size(); i++) {
 			AssetEntry assetEntry = assetEntries.get(i);
 
-			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-				assetEntry.getClassPK());
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 
 			values[i] = getValue(assetRenderer);
 		}

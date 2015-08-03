@@ -43,8 +43,8 @@ public class PortalRegisterTestUtil {
 
 		for (Class<?> clazz : _ASSET_RENDERER_FACTORY_CLASSES) {
 			try {
-				AssetRendererFactory assetRendererFactory =
-					(AssetRendererFactory)clazz.newInstance();
+				AssetRendererFactory<?> assetRendererFactory =
+					(AssetRendererFactory<?>)clazz.newInstance();
 
 				assetRendererFactory.setClassName(
 					assetRendererFactory.getClassName());

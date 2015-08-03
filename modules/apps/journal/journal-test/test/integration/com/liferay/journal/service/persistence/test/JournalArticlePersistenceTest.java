@@ -662,13 +662,12 @@ public class JournalArticlePersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "folderId", true, "classNameId", true,
 			"classPK", true, "treePath", true, "articleId", true, "version",
-			true, "title", true, "urlTitle", true, "description", true,
-			"content", true, "DDMStructureKey", true, "DDMTemplateKey", true,
-			"layoutUuid", true, "displayDate", true, "expirationDate", true,
-			"reviewDate", true, "indexable", true, "smallImage", true,
-			"smallImageId", true, "smallImageURL", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			true, "title", true, "urlTitle", true, "DDMStructureKey", true,
+			"DDMTemplateKey", true, "layoutUuid", true, "displayDate", true,
+			"expirationDate", true, "reviewDate", true, "indexable", true,
+			"smallImage", true, "smallImageId", true, "smallImageURL", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.USERS_ADMIN,
+		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
 		"mvc.command.name=/users_admin/edit_user"
 	},
 	service = MVCRenderCommand.class

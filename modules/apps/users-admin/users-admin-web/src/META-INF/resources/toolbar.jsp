@@ -75,7 +75,7 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 		<c:when test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.EXPORT_USER) %>">
 			<aui:nav-item href='<%= "javascript:" + renderResponse.getNamespace() + "exportUsers();" %>' label="export-users" selected='<%= toolbarItem.equals("export-users") %>' />
 		</c:when>
-		<c:when test="<%= PortletPermissionUtil.contains(permissionChecker, PortletKeys.USERS_ADMIN, ActionKeys.EXPORT_USER) %>">
+		<c:when test="<%= PortletPermissionUtil.contains(permissionChecker, UsersAdminPortletKeys.USERS_ADMIN, ActionKeys.EXPORT_USER) %>">
 			<aui:nav-item href='<%= "javascript:" + renderResponse.getNamespace() + "exportUsers();" %>' label="export-organization-users" selected='<%= toolbarItem.equals("export-organization-users") %>' />
 		</c:when>
 	</c:choose>

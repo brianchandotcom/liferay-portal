@@ -55,11 +55,11 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
+import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
 
 import java.util.List;
 
@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.USERS_ADMIN,
+		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
 		"mvc.command.name=/users_admin/edit_organization"
 	},
 	service = MVCActionCommand.class

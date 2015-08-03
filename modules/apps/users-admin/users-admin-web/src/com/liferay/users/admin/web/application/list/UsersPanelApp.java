@@ -18,7 +18,7 @@ import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.service.PortletLocalService;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,7 +43,7 @@ public class UsersPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.USERS_ADMIN;
+		return UsersAdminPortletKeys.USERS_ADMIN;
 	}
 
 	@Reference(unbind = "-")

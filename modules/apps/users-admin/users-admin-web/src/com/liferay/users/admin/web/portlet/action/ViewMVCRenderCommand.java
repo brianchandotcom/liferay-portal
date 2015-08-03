@@ -15,7 +15,7 @@
 package com.liferay.users.admin.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.USERS_ADMIN, "mvc.command.name=/",
+		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN, "mvc.command.name=/",
 		"mvc.command.name=/users_admin/view"
 	},
 	service = MVCRenderCommand.class

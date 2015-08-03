@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.OrgLaborServiceUtil;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.USERS_ADMIN,
+		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
 		"mvc.command.name=/users_admin/edit_org_labor"
 	},
 	service = MVCActionCommand.class

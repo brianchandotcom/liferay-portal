@@ -4,7 +4,7 @@
 <project>
 	<property name="alloy.bootstrap.version" value="3.2.0-2" />
 	<property name="alloy.version" value="3.0.1" />
-	<property name="lexicon.version" value="0.1.8" />
+	<property name="lexicon.version" value="0.1.9" />
 	<property name="third.party.dir" value="../../../portal-web/third-party" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />

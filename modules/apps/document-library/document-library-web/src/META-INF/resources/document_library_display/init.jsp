@@ -14,18 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
-
-<%@ page import="com.liferay.portal.kernel.repository.RepositoryException" %><%@
-page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
-page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
-page import="com.liferay.portlet.documentlibrary.display.context.logic.DLPortletInstanceSettingsHelper" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFileEntryType" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants" %><%@
-page import="com.liferay.portlet.documentlibrary.search.EntriesChecker" %><%@
-page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
-page import="com.liferay.portlet.documentlibrarydisplay.display.context.util.DLDisplayRequestHelper" %>
+<%@ include file="/init.jsp" %>
 
 <%
 if (layout.isTypeControlPanel()) {
@@ -59,8 +48,6 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 }
 
 boolean mergedView = false;
-
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <%@ include file="/document_library_display/init-ext.jsp" %>

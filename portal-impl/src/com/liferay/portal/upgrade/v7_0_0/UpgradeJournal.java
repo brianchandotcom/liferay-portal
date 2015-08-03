@@ -200,7 +200,7 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 				ddmStructureVersionId, layout);
 
 			Map<String, Long> bitwiseValues = getBitwiseValues(
-				_DDM_STRUCTURE_CLASS_NAME);
+				_CLASS_NAME_DDM_STRUCTURE);
 
 			List<String> actionIds = new ArrayList<>();
 
@@ -209,10 +209,10 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 			long bitwiseValue = getBitwiseValue(bitwiseValues, actionIds);
 
 			addResourcePermission(
-				companyId, _DDM_STRUCTURE_CLASS_NAME, ddmStructureId,
+				companyId, _CLASS_NAME_DDM_STRUCTURE, ddmStructureId,
 				getRoleId(companyId, RoleConstants.GUEST), bitwiseValue);
 			addResourcePermission(
-				companyId, _DDM_STRUCTURE_CLASS_NAME, ddmStructureId,
+				companyId, _CLASS_NAME_DDM_STRUCTURE, ddmStructureId,
 				getRoleId(companyId, RoleConstants.SITE_MEMBER), bitwiseValue);
 		}
 		catch (Exception e) {
@@ -372,7 +372,7 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 			ps.setString(6, StringPool.BLANK);
 			ps.setTimestamp(7, now);
 			ps.setTimestamp(8, now);
-			ps.setLong(9, PortalUtil.getClassNameId(_DDM_STRUCTURE_CLASS_NAME));
+			ps.setLong(9, PortalUtil.getClassNameId(_CLASS_NAME_DDM_STRUCTURE));
 			ps.setLong(10, ddmStructureId);
 			ps.setString(11, templateKey);
 			ps.setString(12, DDMTemplateManager.TEMPLATE_VERSION_DEFAULT);
@@ -392,14 +392,14 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 			addDDMTemplateVersion(
 				increment(), groupId, companyId, getDefaultUserId(companyId),
 				StringPool.BLANK, now,
-				PortalUtil.getClassNameId(_DDM_STRUCTURE_CLASS_NAME),
+				PortalUtil.getClassNameId(_CLASS_NAME_DDM_STRUCTURE),
 				ddmStructureId, ddmTemplateId, localizedName,
 				localizedDescription, TemplateConstants.LANG_TYPE_FTL, script,
 				WorkflowConstants.STATUS_APPROVED, getDefaultUserId(companyId),
 				StringPool.BLANK, now);
 
 			Map<String, Long> bitwiseValues = getBitwiseValues(
-				_DDM_TEMPLATE_CLASS_NAME);
+				_CLASS_NAME_DDM_TEMPLATE);
 
 			List<String> actionIds = new ArrayList<>();
 
@@ -408,10 +408,10 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 			long bitwiseValue = getBitwiseValue(bitwiseValues, actionIds);
 
 			addResourcePermission(
-				companyId, _DDM_TEMPLATE_CLASS_NAME, ddmTemplateId,
+				companyId, _CLASS_NAME_DDM_TEMPLATE, ddmTemplateId,
 				getRoleId(companyId, RoleConstants.GUEST), bitwiseValue);
 			addResourcePermission(
-				companyId, _DDM_TEMPLATE_CLASS_NAME, ddmTemplateId,
+				companyId, _CLASS_NAME_DDM_TEMPLATE, ddmTemplateId,
 				getRoleId(companyId, RoleConstants.SITE_MEMBER), bitwiseValue);
 		}
 		catch (Exception e) {
@@ -458,7 +458,7 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 	}
 
 	protected void addDDMTemplateLinks() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(_DDM_STRUCTURE_CLASS_NAME);
+		long classNameId = PortalUtil.getClassNameId(_CLASS_NAME_DDM_STRUCTURE);
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -802,10 +802,10 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 		}
 	}
 
-	private static final String _DDM_STRUCTURE_CLASS_NAME =
+	private static final String _CLASS_NAME_DDM_STRUCTURE =
 		"com.liferay.dynamic.data.mapping.model.DDMStructure";
 
-	private static final String _DDM_TEMPLATE_CLASS_NAME =
+	private static final String _CLASS_NAME_DDM_TEMPLATE =
 		"com.liferay.dynamic.data.mapping.model.DDMTemplate";
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);

@@ -108,7 +108,7 @@
 								<liferay-ui:message key="do-you-want-to-create-a-user" />
 							</p>
 
-							<liferay-portlet:renderURL portletName="<%= PortletKeys.USERS_ADMIN %>" var="addUserURL">
+							<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW) %>" var="addUserURL">
 								<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
 								<portlet:param name="redirect" value="<%= PortalUtil.getCurrentURL(request) %>" />
 							</liferay-portlet:renderURL>

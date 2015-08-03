@@ -66,7 +66,12 @@ if (organizationId > 0) {
 									constrain: true,
 									modal: true
 								},
-								id: '<%= PortalUtil.getPortletNamespace(PortletKeys.USERS_ADMIN) %>selectOrganization',
+
+								<%
+								String portletId = PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW);
+								%>
+
+								id: '<%= portletId %>selectOrganization',
 								title: '<liferay-ui:message arguments="organization" key="select-x" />',
 
 								<%

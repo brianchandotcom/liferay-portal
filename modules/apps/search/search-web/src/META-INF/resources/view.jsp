@@ -44,7 +44,7 @@ pageContext.setAttribute("portletURL", portletURL);
 		<liferay-ui:quick-access-entry label="skip-to-search" onClick="<%= taglibOnClick %>" />
 
 		<c:choose>
-			<c:when test="<%= Validator.equals(searchDisplayContext.getSearchScope(), "let-the-user-choose") %>">
+			<c:when test='<%= Validator.equals(searchDisplayContext.getSearchScope(), "let-the-user-choose") %>'>
 				<aui:select cssClass="search-select" inlineField="<%= true %>" label="" name="groupId" title="scope">
 
 					<%
@@ -58,7 +58,7 @@ pageContext.setAttribute("portletURL", portletURL);
 					<aui:option label="this-site" selected="<%= (groupId != 0) %>" value="<%= group.getGroupId() %>" />
 				</aui:select>
 			</c:when>
-			<c:when test="<%= Validator.equals(searchDisplayContext.getSearchScope(), "everything") %>">
+			<c:when test='<%= Validator.equals(searchDisplayContext.getSearchScope(), "everything") %>'>
 				<aui:input name="groupId" type="hidden" value="0" />
 			</c:when>
 			<c:otherwise>

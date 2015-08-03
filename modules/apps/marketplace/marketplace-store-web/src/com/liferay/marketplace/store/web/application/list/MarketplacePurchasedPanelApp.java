@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.marketplace.store.web.portlet;
+package com.liferay.marketplace.store.web.application.list;
 
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class MarketplaceStoreControlPanelEntry
+public class MarketplacePurchasedPanelApp
 	extends BaseControlPanelEntryPanelApp {
 
 	@Override
@@ -48,7 +48,7 @@ public class MarketplaceStoreControlPanelEntry
 
 	@Override
 	public String getPortletId() {
-		return MarketplaceStorePortletKeys.MARKETPLACE_STORE;
+		return MarketplaceStorePortletKeys.MARKETPLACE_PURCHASED;
 	}
 
 	@Override

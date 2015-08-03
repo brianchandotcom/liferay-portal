@@ -3799,7 +3799,7 @@ public class StringUtil {
 	 *
 	 * <p>
 	 * Example:
-	 * <p>
+	 * </p>
 	 *
 	 * <p>
 	 * <pre>
@@ -3856,7 +3856,7 @@ public class StringUtil {
 	 *
 	 * <p>
 	 * Example:
-	 * <p>
+	 * </p>
 	 *
 	 * <p>
 	 * <pre>

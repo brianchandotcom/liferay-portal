@@ -26,8 +26,6 @@ AUI.add(
 			return Lang.toInt(value, 10, 0);
 		};
 
-		var COMPANY_ID = toInt(themeDisplay.getCompanyId());
-
 		var CONTROLS_NODE = 'controlsNode';
 
 		var ICON_ADD_EVENT_NODE = 'iconAddEventNode';
@@ -2076,8 +2074,6 @@ AUI.add(
 
 					_handleViewEvent: function(event) {
 						var instance = this;
-
-						var scheduler = instance.get('scheduler');
 
 						var viewCalendarBookingURL = decodeURIComponent(instance.get('viewCalendarBookingURL'));
 

@@ -538,6 +538,15 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		return classLoader.getResource(name);
 	}
 
+	protected TemplateResource getTemplateResource(String resource) {
+		Class<?> clazz = getClass();
+
+		TemplateResource templateResource = new ClassLoaderTemplateResource(
+			clazz.getClassLoader(), resource);
+
+		return templateResource;
+	}
+
 	protected String processFTL(
 			HttpServletRequest request, HttpServletResponse response,
 			String fieldNamespace, String type, String mode, boolean readOnly,
@@ -625,15 +634,6 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		template.processTemplate(writer);
 
 		return writer.toString();
-	}
-
-	protected TemplateResource getTemplateResource(String resource) {
-		Class<?> clazz = getClass();
-
-		TemplateResource templateResource = new ClassLoaderTemplateResource(
-			clazz.getClassLoader(), resource);
-
-		return templateResource;
 	}
 
 	private static final String _DEFAULT_NAMESPACE = "alloy";

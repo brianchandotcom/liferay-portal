@@ -66,7 +66,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
  */
 @PrepareForTest({LocaleUtil.class})
 @RunWith(PowerMockRunner.class)
-public class UpgradeDataTest extends PowerMockito {
+public class UpgradeDynamicDataMappingTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
@@ -183,12 +183,12 @@ public class UpgradeDataTest extends PowerMockito {
 		String expectedJSON = DDMFormValuesJSONSerializerUtil.serialize(
 			ddmFormValues);
 
-		UpgradeData upgradeData = new UpgradeData();
+		UpgradeDynamicDataMapping upgradeDynamicDataMapping = new UpgradeDynamicDataMapping();
 
-		DDMFormValues actualDDMFormValues = upgradeData.getDDMFormValues(
+		DDMFormValues actualDDMFormValues = upgradeDynamicDataMapping.getDDMFormValues(
 			ddmForm, document.asXML());
 
-		String actualJSON = upgradeData.toJSON(actualDDMFormValues);
+		String actualJSON = upgradeDynamicDataMapping.toJSON(actualDDMFormValues);
 
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
 	}
@@ -306,12 +306,12 @@ public class UpgradeDataTest extends PowerMockito {
 		String expectedJSON = DDMFormValuesJSONSerializerUtil.serialize(
 			ddmFormValues);
 
-		UpgradeData upgradeData = new UpgradeData();
+		UpgradeDynamicDataMapping upgradeDynamicDataMapping = new UpgradeDynamicDataMapping();
 
-		DDMFormValues actualDDMFormValues = upgradeData.getDDMFormValues(
+		DDMFormValues actualDDMFormValues = upgradeDynamicDataMapping.getDDMFormValues(
 			ddmForm, document.asXML());
 
-		String actualJSON = upgradeData.toJSON(actualDDMFormValues);
+		String actualJSON = upgradeDynamicDataMapping.toJSON(actualDDMFormValues);
 
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
 	}
@@ -390,12 +390,12 @@ public class UpgradeDataTest extends PowerMockito {
 		String expectedJSON = DDMFormValuesJSONSerializerUtil.serialize(
 			ddmFormValues);
 
-		UpgradeData upgradeData = new UpgradeData();
+		UpgradeDynamicDataMapping upgradeDynamicDataMapping = new UpgradeDynamicDataMapping();
 
-		DDMFormValues actualDDMFormValues = upgradeData.getDDMFormValues(
+		DDMFormValues actualDDMFormValues = upgradeDynamicDataMapping.getDDMFormValues(
 			ddmForm, document.asXML());
 
-		String actualJSON = upgradeData.toJSON(actualDDMFormValues);
+		String actualJSON = upgradeDynamicDataMapping.toJSON(actualDDMFormValues);
 
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
 	}

@@ -89,7 +89,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
  */
-public class UpgradeData extends UpgradeProcess {
+public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	protected void addStructureLayout(
 			String uuid_, long structureLayoutId, long groupId, long companyId,
@@ -792,7 +792,8 @@ public class UpgradeData extends UpgradeProcess {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(UpgradeData.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeDynamicDataMapping.class);
 
 	private final Map<Long, DDMForm> _ddmForms = new HashMap<>();
 

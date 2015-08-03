@@ -58,7 +58,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PowerMockIgnore("javax.xml.stream.*")
 @RunWith(PowerMockRunner.class)
-public class UpgradeDataTest extends PowerMockito {
+public class UpgradeDynamicDataListsTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
@@ -82,9 +82,9 @@ public class UpgradeDataTest extends PowerMockito {
 			"_fieldsDisplay",
 			createLocalizationXML(new String[] {fieldsDisplay}));
 
-		UpgradeData upgradeData = new UpgradeData();
+		UpgradeDynamicDataLists upgradeDynamicDataLists = new UpgradeDynamicDataLists();
 
-		String xml = upgradeData.toXML(expandoValuesMap);
+		String xml = upgradeDynamicDataLists.toXML(expandoValuesMap);
 
 		Document document = SAXReaderUtil.read(xml);
 
@@ -120,9 +120,9 @@ public class UpgradeDataTest extends PowerMockito {
 			"_fieldsDisplay",
 			createLocalizationXML(new String[] {fieldsDisplay}));
 
-		UpgradeData upgradeData = new UpgradeData();
+		UpgradeDynamicDataLists upgradeDynamicDataLists = new UpgradeDynamicDataLists();
 
-		String xml = upgradeData.toXML(expandoValuesMap);
+		String xml = upgradeDynamicDataLists.toXML(expandoValuesMap);
 
 		Document document = SAXReaderUtil.read(xml);
 

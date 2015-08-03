@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.lists.upgrade;
 
 import com.liferay.dynamic.data.lists.upgrade.v1_0_0.UpgradeClassNames;
-import com.liferay.dynamic.data.lists.upgrade.v1_0_0.UpgradeData;
+import com.liferay.dynamic.data.lists.upgrade.v1_0_0.UpgradeDynamicDataLists;
 import com.liferay.dynamic.data.lists.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -52,7 +52,7 @@ public class DDLServiceUpgrade {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
 		upgradeProcesses.add(new UpgradeClassNames());
-		upgradeProcesses.add(new UpgradeData());
+		upgradeProcesses.add(new UpgradeDynamicDataLists());
 		upgradeProcesses.add(new UpgradeLastPublishDate());
 
 		_releaseLocalService.updateRelease(

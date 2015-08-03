@@ -45,7 +45,7 @@ import java.util.Set;
 /**
  * @author Marcellus Tavares
  */
-public class UpgradeData extends UpgradeProcess {
+public class UpgradeDynamicDataLists extends UpgradeProcess {
 
 	protected void addDDMContent(
 			String uuid_, long contentId, long groupId, long companyId,
@@ -361,7 +361,8 @@ public class UpgradeData extends UpgradeProcess {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(UpgradeData.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeDynamicDataLists.class);
 
 	private long _ddmContentClassNameId;
 	private long _expandoStorageAdapterClassNameId;

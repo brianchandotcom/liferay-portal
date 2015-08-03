@@ -52,12 +52,9 @@ public class SafariWebDriverImpl extends BaseWebDriverImpl {
 			JavascriptExecutor javascriptExecutor =
 				(JavascriptExecutor)wrappedWebDriver;
 
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("confirm = function(){return true;};");
-
 			try {
-				javascriptExecutor.executeScript(sb.toString());
+				javascriptExecutor.executeScript(
+					"confirm = function(){return true;};");
 
 				webElement.click();
 			}
@@ -86,7 +83,7 @@ public class SafariWebDriverImpl extends BaseWebDriverImpl {
 			scrollWebElementIntoView(webElement);
 		}
 
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder(4);
 
 		sb.append("var element = arguments[0];");
 		sb.append("var event = document.createEvent('MouseEvents');");
@@ -111,7 +108,7 @@ public class SafariWebDriverImpl extends BaseWebDriverImpl {
 			scrollWebElementIntoView(webElement);
 		}
 
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder(4);
 
 		sb.append("var element = arguments[0];");
 		sb.append("var event = document.createEvent('MouseEvents');");
@@ -136,7 +133,7 @@ public class SafariWebDriverImpl extends BaseWebDriverImpl {
 			scrollWebElementIntoView(webElement);
 		}
 
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder(5);
 
 		sb.append("var element = arguments[0];");
 		sb.append("var event = document.createEvent('MouseEvents');");

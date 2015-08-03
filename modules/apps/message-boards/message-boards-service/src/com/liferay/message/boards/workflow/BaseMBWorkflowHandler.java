@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * @author Adolfo Pérez
  */
-public abstract class BaseMessageBoardsWorkflowHandler
+public abstract class BaseMBWorkflowHandler
 	extends BaseWorkflowHandler<MBMessage> {
 
 	@Override

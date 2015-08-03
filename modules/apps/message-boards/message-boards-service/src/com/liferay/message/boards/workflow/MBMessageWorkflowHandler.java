@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"model.class.name=com.liferay.portlet.messageboards.model.MBMessage"},
 	service = WorkflowHandler.class
 )
-public class MBMessageWorkflowHandler extends BaseMessageBoardsWorkflowHandler {
+public class MBMessageWorkflowHandler extends BaseMBWorkflowHandler {
 
 	@Override
 	public String getClassName() {

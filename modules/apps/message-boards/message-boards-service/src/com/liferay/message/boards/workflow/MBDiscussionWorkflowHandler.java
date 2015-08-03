@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = WorkflowHandler.class
 )
 public class MBDiscussionWorkflowHandler
-	extends BaseMessageBoardsWorkflowHandler {
+	extends BaseMBWorkflowHandler {
 
 	@Override
 	public String getClassName() {

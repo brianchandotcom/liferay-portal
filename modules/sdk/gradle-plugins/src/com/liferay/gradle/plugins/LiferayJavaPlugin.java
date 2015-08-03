@@ -427,7 +427,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 				private long _getLastModified(File file) throws Exception {
 					ProcessExecutor processExecutor = new ProcessExecutor(
-						"git", "log", "--format=%ct", "--max-count=1",
+						"git", "log", "--format=%at", "--max-count=1",
 						file.getName());
 
 					processExecutor.directory(file.getParentFile());

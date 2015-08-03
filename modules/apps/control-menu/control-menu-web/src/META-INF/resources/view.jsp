@@ -49,6 +49,18 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 					</ul>
 				</li>
 
+				<aui:script sandbox="<%= true %>">
+					$('#sidenavContainerId').sideNavigation(
+						{
+							gutter: '0',
+							toggler: '#sidenavToggleId',
+							type: 'fixed-push',
+							typeMobile: 'fixed',
+							width: '320px'
+						}
+					);
+				</aui:script>
+
 				<li class="center">
 					<ul>
 

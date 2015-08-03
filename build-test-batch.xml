@@ -22,10 +22,15 @@
 	</macrodef>
 
 	<macrodef name="database-test-action">
+		<attribute name="app.server.type" />
 		<attribute name="database.type" />
 		<element name="action" />
 
 		<sequential>
+			<local name="app.server.lib.global.dir" />
+
+			<propertycopy from="app.server.@{app.server.type}.lib.global.dir" name="app.server.lib.global.dir" />
+
 			<local name="database.type" />
 
 			<property name="database.type" value="@{database.type}" />
@@ -47,12 +52,13 @@
 	</macrodef>
 
 	<macrodef name="database-test-run-test">
+		<attribute default="tomcat" name="app.server.type" />
 		<attribute name="database.type" />
 		<attribute name="stop.app.server" default="false" />
 		<element name="test-action" />
 
 		<sequential>
-			<database-test-action database.type="@{database.type}">
+			<database-test-action app.server.type="@{app.server.type}" database.type="@{database.type}">
 				<action>
 					<exec executable="${database.service.executable}">
 						<arg line="${database.service.cmd.stop}" />
@@ -60,7 +66,7 @@
 				</action>
 			</database-test-action>
 
-			<database-test-action database.type="@{database.type}">
+			<database-test-action app.server.type="@{app.server.type}" database.type="@{database.type}">
 				<action>
 					<set-portal-impl-portal-ext-properties />
 
@@ -169,21 +175,48 @@
 	</macrodef>
 
 	<macrodef name="run-functional-test">
+		<attribute name="app.server.type" />
 		<attribute name="database.type" />
 		<sequential>
 			<property name="test.class" value="${axis.variable}" />
 
-			<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<antcall target="compile" />
+
+			<ant antfile="build-dist.xml" target="build-dist-@{app.server.type}" />
+
+			<antcall target="record-test-generated-properties" />
+
+			<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
+
+			<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
+
+			<database-test-run-test app.server.type="@{app.server.type}" database.type="@{database.type}">
 				<test-action>
 					<database-test-run-test database.type="@{database.type}">
 						<test-action>
-							<ant antfile="build-test-tomcat.xml" inheritAll="false" target="run-selenium-tomcat">
+							<ant antfile="build-test-@{app.server.type}.xml" inheritAll="false" target="run-selenium-@{app.server.type}">
+								<property name="database.type" value="@{database.type}" />
 								<property name="test.class" value="${axis.variable}" />
 							</ant>
 						</test-action>
 					</database-test-run-test>
 				</test-action>
-			</run-batch-test>
+			</database-test-run-test>
+
+			<merge-test-results />
+
+			<check-deprecated-method />
+
+			<if>
+				<available file=".testable.portal.started" />
+				<then>
+					<antcall target="stop-app-server" />
+
+					<delete file=".testable.portal.started" failonerror="false" />
+				</then>
+			</if>
+
+			<print-gc-logs />
 		</sequential>
 	</macrodef>
 
@@ -253,7 +286,7 @@
 	</macrodef>
 
 	<target name="functional-tomcat-mysql">
-		<run-functional-test database.type="mysql" />
+		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
 	<target name="integration-db2">

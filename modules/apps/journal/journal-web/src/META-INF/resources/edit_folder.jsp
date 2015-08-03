@@ -190,7 +190,7 @@ if (workflowEnabled) {
 							/>
 
 							<liferay-ui:search-container-row
-								className="com.liferay.portlet.dynamicdatamapping.model.DDMStructure"
+								className="com.liferay.dynamic.data.mapping.model.DDMStructure"
 								keyProperty="structureId"
 								modelVar="ddmStructure"
 							>
@@ -332,7 +332,7 @@ if (workflowEnabled) {
 	function <portlet:namespace />openDDMStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 				dialog: {
 					destroyOnHide: true
 				},

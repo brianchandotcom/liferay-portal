@@ -27,24 +27,24 @@ public class StorageEngineManagerUtil {
 	public static long create(
 			long companyId, long ddmStructureId, DDMFormValues ddmFormValues,
 			ServiceContext serviceContext)
-		throws StorageException {
+		throws PortalException {
 
 		return _storageEngineManager.create(
 			companyId, ddmStructureId, ddmFormValues, serviceContext);
 	}
 
-	public static void deleteByClass(long classPK) throws StorageException {
+	public static void deleteByClass(long classPK) throws PortalException {
 		_storageEngineManager.deleteByClass(classPK);
 	}
 
 	public static void deleteByDDMStructure(long ddmStructureId)
-		throws StorageException {
+		throws PortalException {
 
 		_storageEngineManager.deleteByDDMStructure(ddmStructureId);
 	}
 
 	public static DDMFormValues getDDMFormValues(long classPK)
-		throws StorageException {
+		throws PortalException {
 
 		return _storageEngineManager.getDDMFormValues(classPK);
 	}
@@ -61,7 +61,7 @@ public class StorageEngineManagerUtil {
 	public static void update(
 			long classPK, DDMFormValues ddmFormValues,
 			ServiceContext serviceContext)
-		throws StorageException {
+		throws PortalException {
 
 		_storageEngineManager.update(classPK, ddmFormValues, serviceContext);
 	}

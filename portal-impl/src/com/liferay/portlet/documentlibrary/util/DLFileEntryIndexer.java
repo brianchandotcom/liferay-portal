@@ -75,7 +75,6 @@ import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureManager;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManagerUtil;
-import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
@@ -241,9 +240,9 @@ public class DLFileEntryIndexer
 						ddmStructureFieldValue,
 						ddmStructure.getFieldType(fieldName));
 			}
-			catch (StructureFieldException sfe) {
+			catch (Exception e) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(sfe, sfe);
+					_log.debug(e, e);
 				}
 			}
 

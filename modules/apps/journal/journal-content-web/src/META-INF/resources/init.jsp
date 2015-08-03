@@ -24,7 +24,10 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.journal.constants.JournalPortletKeys" %><%@
+<%@ page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
+page import="com.liferay.dynamic.data.mapping.model.DDMTemplate" %><%@
+page import="com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil" %><%@
+page import="com.liferay.journal.constants.JournalPortletKeys" %><%@
 page import="com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration" %><%@
 page import="com.liferay.journal.content.web.constants.JournalContentPortletKeys" %><%@
 page import="com.liferay.journal.content.web.context.JournalContentDisplayContext" %><%@
@@ -47,15 +50,11 @@ page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.model.Portlet" %><%@
 page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portlet.PortletURLFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
-page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil" %>
+page import="com.liferay.portlet.asset.model.AssetRendererFactory" %>
 
 <%@ page import="java.util.List" %>
 

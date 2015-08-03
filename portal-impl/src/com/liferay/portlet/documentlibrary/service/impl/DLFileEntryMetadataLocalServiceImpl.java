@@ -14,16 +14,14 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryMetadataLocalServiceBaseImpl;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureLinkManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManagerUtil;
-import com.liferay.portlet.dynamicdatamapping.StorageException;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalService;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.util.List;
@@ -53,7 +51,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 		long classNameId = classNameLocalService.getClassNameId(
 			DLFileEntryMetadata.class);
 
-		ddmStructureLinkLocalService.deleteStructureLinks(
+		DDMStructureLinkManagerUtil.deleteStructureLinks(
 			classNameId, fileEntryMetadata.getFileEntryMetadataId());
 	}
 
@@ -192,7 +190,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 			long companyId, DDMStructure ddmStructure, long fileEntryId,
 			long fileVersionId, DDMFormValues ddmFormValues,
 			ServiceContext serviceContext)
-		throws StorageException {
+		throws PortalException {
 
 		DLFileEntryMetadata fileEntryMetadata =
 			dlFileEntryMetadataPersistence.fetchByD_F(
@@ -229,13 +227,10 @@ public class DLFileEntryMetadataLocalServiceImpl
 			long classNameId = classNameLocalService.getClassNameId(
 				DLFileEntryMetadata.class);
 
-			ddmStructureLinkLocalService.addStructureLink(
+			DDMStructureLinkManagerUtil.addStructureLink(
 				classNameId, fileEntryMetadata.getFileEntryMetadataId(),
 				ddmStructure.getStructureId());
 		}
 	}
-
-	@BeanReference(type = DDMStructureLinkLocalService.class)
-	protected DDMStructureLinkLocalService ddmStructureLinkLocalService;
 
 }

@@ -194,7 +194,7 @@ if (feed != null) {
 						<aui:field-wrapper label="template">
 							<liferay-ui:table-iterator
 								list="<%= ddmTemplates %>"
-								listType="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate"
+								listType="com.liferay.dynamic.data.mapping.model.DDMTemplate"
 								rowLength="3"
 								rowPadding="30"
 							>
@@ -337,7 +337,7 @@ if (feed != null) {
 	function <portlet:namespace />openStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 				classPK: <%= (ddmStructure != null) ? ddmStructure.getPrimaryKey(): 0 %>,
 				dialog: {
 					destroyOnHide: true

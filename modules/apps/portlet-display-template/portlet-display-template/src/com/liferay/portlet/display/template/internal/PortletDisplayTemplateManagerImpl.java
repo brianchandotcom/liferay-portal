@@ -55,7 +55,7 @@ public class PortletDisplayTemplateManagerImpl
 		long groupId, long classNameId, String displayStyle,
 		boolean useDefault) {
 
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate =
+		com.liferay.dynamic.data.mapping.model.DDMTemplate ddmTemplate =
 			_portletDisplayTemplate.getPortletDisplayTemplateDDMTemplate(
 				groupId, classNameId, displayStyle, useDefault);
 

@@ -3,6 +3,7 @@
 
 <project>
 	<property name="import.shared" value="dynamic-data-mapping-api" />
+	<property name="osgi.ide.dependencies" value="spring-context.jar" />
 	<property name="service.input.file" value="service.xml" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
@@ -14,7 +15,7 @@
 			service.api.dir="../dynamic-data-mapping-api/src"
 			service.auto.namespace.tables="false"
 			service.hbm.file.name="module-hbm.xml"
-			service.spring.file.name="module-spring.xml"
+			service.spring.file.name="spring/module-spring.xml"
 			service.sql.dir="src/META-INF/sql"
 			service.test.dir="../dynamic-data-mapping-test/test/integration"
 		/>

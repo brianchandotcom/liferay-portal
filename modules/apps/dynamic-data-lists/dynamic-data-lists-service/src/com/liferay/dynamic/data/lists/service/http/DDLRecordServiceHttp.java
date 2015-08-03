@@ -93,7 +93,7 @@ public class DDLRecordServiceHttp {
 	public static com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		HttpPrincipal httpPrincipal, long groupId, long recordSetId,
 		int displayIndex,
-		com.liferay.portlet.dynamicdatamapping.storage.Fields fields,
+		com.liferay.dynamic.data.mapping.storage.Fields fields,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -347,7 +347,7 @@ public class DDLRecordServiceHttp {
 	public static com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		HttpPrincipal httpPrincipal, long recordId, boolean majorVersion,
 		int displayIndex,
-		com.liferay.portlet.dynamicdatamapping.storage.Fields fields,
+		com.liferay.dynamic.data.mapping.storage.Fields fields,
 		boolean mergeFields,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -425,7 +425,7 @@ public class DDLRecordServiceHttp {
 		};
 	private static final Class<?>[] _addRecordParameterTypes1 = new Class[] {
 			long.class, long.class, int.class,
-			com.liferay.portlet.dynamicdatamapping.storage.Fields.class,
+			com.liferay.dynamic.data.mapping.storage.Fields.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addRecordParameterTypes2 = new Class[] {
@@ -457,7 +457,7 @@ public class DDLRecordServiceHttp {
 		};
 	private static final Class<?>[] _updateRecordParameterTypes9 = new Class[] {
 			long.class, boolean.class, int.class,
-			com.liferay.portlet.dynamicdatamapping.storage.Fields.class,
+			com.liferay.dynamic.data.mapping.storage.Fields.class,
 			boolean.class, com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateRecordParameterTypes10 = new Class[] {

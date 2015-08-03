@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="document-library-service" />
+	<property name="import.shared" value="document-library-service,../dynamic-data-mapping/dynamic-data-mapping-api" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 </project>

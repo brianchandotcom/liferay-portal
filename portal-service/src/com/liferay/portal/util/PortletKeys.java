@@ -49,9 +49,6 @@ public class PortletKeys {
 
 	public static final String DOCUMENT_LIBRARY_DISPLAY = "110";
 
-	public static final String DYNAMIC_DATA_MAPPING =
-		"com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet";
-
 	public static final String EXPANDO =
 		"com_liferay_expando_web_portlet_ExpandoPortlet";
 

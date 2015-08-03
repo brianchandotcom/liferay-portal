@@ -30,7 +30,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMIndexer;
+import com.liferay.portlet.dynamicdatamapping.DDMStructureManager;
 
 import java.io.Serializable;
 
@@ -57,7 +57,8 @@ public class AssetEntryQuery {
 	public static String checkOrderByCol(String orderByCol) {
 		if (ArrayUtil.contains(ORDER_BY_COLUMNS, orderByCol) ||
 			((orderByCol != null) &&
-			 orderByCol.startsWith(DDMIndexer.DDM_FIELD_PREFIX))) {
+			 orderByCol.startsWith(
+				 DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX))) {
 
 			return orderByCol;
 		}

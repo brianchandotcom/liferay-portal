@@ -1,7 +1,5 @@
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
-
-	testCompile group: "com.liferay", name: "com.liferay.portal.search", version: "1.0.0-SNAPSHOT"
 }
 
 liferay {

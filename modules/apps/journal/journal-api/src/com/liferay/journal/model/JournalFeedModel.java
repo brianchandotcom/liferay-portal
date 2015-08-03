@@ -213,7 +213,6 @@ public interface JournalFeedModel extends BaseModel<JournalFeed>,
 	 *
 	 * @return the feed ID of this journal feed
 	 */
-	@AutoEscape
 	public String getFeedId();
 
 	/**

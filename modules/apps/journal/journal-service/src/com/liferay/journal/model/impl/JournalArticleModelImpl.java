@@ -104,8 +104,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 			{ "version", Types.DOUBLE },
 			{ "title", Types.VARCHAR },
 			{ "urlTitle", Types.VARCHAR },
-			{ "description", Types.VARCHAR },
-			{ "content", Types.VARCHAR },
+			{ "description", Types.CLOB },
+			{ "content", Types.CLOB },
 			{ "DDMStructureKey", Types.VARCHAR },
 			{ "DDMTemplateKey", Types.VARCHAR },
 			{ "layoutUuid", Types.VARCHAR },
@@ -142,8 +142,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		TABLE_COLUMNS_MAP.put("version", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("urlTitle", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("content", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("content", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("DDMStructureKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("DDMTemplateKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutUuid", Types.VARCHAR);
@@ -161,7 +161,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table JournalArticle (uuid_ VARCHAR(75) null,id_ LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,classNameId LONG,classPK LONG,treePath VARCHAR(75) null,articleId VARCHAR(75) null,version DOUBLE,title STRING null,urlTitle VARCHAR(75) null,description STRING null,content VARCHAR(75) null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalArticle (uuid_ VARCHAR(75) null,id_ LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,classNameId LONG,classPK LONG,treePath STRING null,articleId VARCHAR(75) null,version DOUBLE,title STRING null,urlTitle VARCHAR(150) null,description TEXT null,content TEXT null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalArticle";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalArticle.articleId ASC, journalArticle.version DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalArticle.articleId ASC, JournalArticle.version DESC";

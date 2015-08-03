@@ -38,6 +38,9 @@ public abstract class BaseMBWorkflowHandler
 			int status, Map<String, Serializable> workflowContext)
 		throws PortalException {
 
+		MBMessageLocalService mbMessageLocalService =
+			getMBMessageLocalService();
+
 		long userId = GetterUtil.getLong(
 			(String)workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
 		long classPK = GetterUtil.getLong(
@@ -47,7 +50,7 @@ public abstract class BaseMBWorkflowHandler
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			"serviceContext");
 
-		return getMBMessageLocalService().updateStatus(
+		return mbMessageLocalService.updateStatus(
 			userId, classPK, status, serviceContext, workflowContext);
 	}
 

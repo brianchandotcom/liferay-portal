@@ -14,14 +14,17 @@
 
 package com.liferay.marketplace.app.manager.web.portlet;
 
+import com.liferay.application.list.BaseControlPanelEntryPanelApp;
+import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.marketplace.app.manager.web.constants.MarketplaceAppManagerPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portlet.BaseControlPanelEntry;
-import com.liferay.portlet.ControlPanelEntry;
+import com.liferay.portal.service.PortletLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ryan Park
@@ -30,19 +33,37 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + MarketplaceAppManagerPortletKeys.MARKETPLACE_APP_MANAGER
+		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_APPS,
+		"service.ranking:Integer=100"
 	},
-	service = ControlPanelEntry.class
+	service = PanelApp.class
 )
 public class MarketplaceAppManagerControlPanelEntry
-	extends BaseControlPanelEntry {
+	extends BaseControlPanelEntryPanelApp {
+
+	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.CONTROL_PANEL_APPS;
+	}
+
+	@Override
+	public String getPortletId() {
+		return MarketplaceAppManagerPortletKeys.MARKETPLACE_APP_MANAGER;
+	}
 
 	@Override
 	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group, Portlet portlet)
-		throws Exception {
+			PermissionChecker permissionChecker, Group group)
+		throws PortalException {
 
 		return permissionChecker.isOmniadmin();
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
 	}
 
 }

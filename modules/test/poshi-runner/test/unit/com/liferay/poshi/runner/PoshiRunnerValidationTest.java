@@ -135,9 +135,9 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		Element childElement1 = element.addElement("contains");
 
+		childElement1.addAttribute("line-number", "1");
 		childElement1.addAttribute("string", "hello world");
 		childElement1.addAttribute("substring", "hello");
-		childElement1.addAttribute("line-number", "1");
 
 		Element childElement2 = element.addElement("equals");
 
@@ -157,9 +157,9 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		childElement1 = element.addElement("contains");
 
+		childElement1.addAttribute("line-number", "1");
 		childElement1.addAttribute("string", "hello world");
 		childElement1.addAttribute("substring", "hello");
-		childElement1.addAttribute("line-number", "1");
 
 		PoshiRunnerValidation.validateConditionElement(
 			element, "ValidateConditionElement.macro");
@@ -232,12 +232,12 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		Element element = document.addElement("if");
 
-		Element firstElseElement = element.addElement("else");
+		Element elseElement1 = element.addElement("else");
 
-		Element firstExecuteElement = firstElseElement.addElement("execute");
+		Element executeElement1 = elseElement1.addElement("execute");
 
-		firstExecuteElement.addAttribute("function", "Click");
-		firstExecuteElement.addAttribute("locator1", "//else element");
+		executeElement1.addAttribute("function", "Click");
+		executeElement1.addAttribute("locator1", "//else element");
 
 		PoshiRunnerValidation.validateElseElement(
 			element, "ValidateElseElement.macro");
@@ -245,12 +245,12 @@ public class PoshiRunnerValidationTest extends TestCase {
 		Assert.assertEquals(
 			"validateElseElement is failing", "", _getExceptionMessage());
 
-		Element secondElseElement = element.addElement("else");
+		Element elseElement2 = element.addElement("else");
 
-		Element secondExecuteElement = secondElseElement.addElement("execute");
+		Element executeElement2 = elseElement2.addElement("execute");
 
-		secondExecuteElement.addAttribute("function", "Click");
-		secondExecuteElement.addAttribute("locator1", "//else element");
+		executeElement2.addAttribute("function", "Click");
+		executeElement2.addAttribute("locator1", "//else element");
 
 		PoshiRunnerValidation.validateElseElement(
 			element, "ValidateElseElement.macro");
@@ -274,11 +274,11 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		Element thenElement = element.addElement("then");
 
-		Element executeElement = thenElement.addElement("execute");
+		Element executeElement1 = thenElement.addElement("execute");
 
-		executeElement.addAttribute("function", "Click");
-		executeElement.addAttribute("locator1", "//else if element");
-		executeElement.addAttribute("line-number", "15");
+		executeElement1.addAttribute("function", "Click");
+		executeElement1.addAttribute("line-number", "15");
+		executeElement1.addAttribute("locator1", "//else if element");
 
 		PoshiRunnerValidation.validateElseIfElement(
 			element, "ValidateElseIfElement.macro");
@@ -290,19 +290,18 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		element = document.addElement("elseif");
 
-		Element secondExecuteElement = element.addElement("execute");
+		Element executeElement2 = element.addElement("execute");
 
-		secondExecuteElement.addAttribute("function", "Click");
-		secondExecuteElement.addAttribute("locator1", "//else if element");
-		conditionElement.addAttribute("line-number", "12");
+		executeElement2.addAttribute("function", "Click");
+		executeElement2.addAttribute("locator1", "//else if element");
 
 		thenElement = element.addElement("then");
 
-		executeElement = thenElement.addElement("execute");
+		executeElement1 = thenElement.addElement("execute");
 
-		executeElement.addAttribute("function", "Click");
-		executeElement.addAttribute("locator1", "//else if element");
-		executeElement.addAttribute("line-number", "15");
+		executeElement1.addAttribute("function", "Click");
+		executeElement1.addAttribute("line-number", "15");
+		executeElement1.addAttribute("locator1", "//else if element");
 
 		PoshiRunnerValidation.validateElseIfElement(
 			element, "ValidateElseIfElement.macro");
@@ -763,8 +762,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		Assert.assertEquals(
 			"validateIfElement is failing",
-			"Missing or invalid if condition element",
-			_getExceptionMessage());
+			"Missing or invalid if condition element", _getExceptionMessage());
 
 		document = DocumentHelper.createDocument();
 
@@ -788,8 +786,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		Assert.assertEquals(
 			"validateIfElement is failing",
-			"Missing or invalid if condition element",
-			_getExceptionMessage());
+			"Missing or invalid if condition element", _getExceptionMessage());
 	}
 
 	@Test
@@ -1116,8 +1113,8 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("name", "testray.main.component.name");
 		element.addAttribute("value", "Tools");
 
-		PoshiRunnerValidation.validatePropertyElement(element,
-			"ValidatePossibleAttributeNames.macro");
+		PoshiRunnerValidation.validatePropertyElement(
+			element, "ValidatePossibleAttributeNames.macro");
 
 		Assert.assertEquals(
 			"validatePropertyElement is failing", "", _getExceptionMessage());
@@ -1130,8 +1127,8 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("name", "property.name");
 		element.addAttribute("value", "Tools");
 
-		PoshiRunnerValidation.validatePropertyElement(element,
-			"ValidatePossibleAttributeNames.macro");
+		PoshiRunnerValidation.validatePropertyElement(
+			element, "ValidatePossibleAttributeNames.macro");
 
 		Assert.assertEquals(
 			"validatePropertyElement is failing",
@@ -1426,20 +1423,20 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 	@Test
 	private String _getExceptionMessage() {
-		Set<Exception> logExceptions = PoshiRunnerValidation.getExceptions();
+		Set<Exception> exceptions = PoshiRunnerValidation.getExceptions();
 
 		StringBuilder sb = new StringBuilder();
 
-		for (Exception logException : logExceptions) {
-			String message = logException.getMessage();
+		for (Exception exception : exceptions) {
+			String message = exception.getMessage();
 
-			int newLineIndex = message.indexOf("\n");
+			int x = message.indexOf("\n");
 
-			if (newLineIndex == -1) {
+			if (x == -1) {
 				sb.append(message);
 			}
 			else {
-				sb.append(message.substring(0, newLineIndex));
+				sb.append(message.substring(0, x));
 			}
 		}
 

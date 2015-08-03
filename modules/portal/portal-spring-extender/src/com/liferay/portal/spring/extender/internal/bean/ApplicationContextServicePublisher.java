@@ -157,15 +157,15 @@ public class ApplicationContextServicePublisher {
 	}
 
 	protected boolean isIgnoredInterface(String interfaceClassName) {
-		for (String ignoredClass :
+		for (String ignoredInterfaceClassName :
 				PropsValues.MODULE_FRAMEWORK_SERVICES_IGNORED_INTERFACES) {
 
-			if (!ignoredClass.startsWith(StringPool.EXCLAMATION) &&
-				(ignoredClass.equals(interfaceClassName) ||
-				 (ignoredClass.endsWith(StringPool.STAR) &&
+			if (!ignoredInterfaceClassName.startsWith(StringPool.EXCLAMATION) &&
+				(ignoredInterfaceClassName.equals(interfaceClassName) ||
+				 (ignoredInterfaceClassName.endsWith(StringPool.STAR) &&
 				  interfaceClassName.startsWith(
-					  ignoredClass.substring(
-						  0, ignoredClass.length() - 1))))) {
+					  ignoredInterfaceClassName.substring(
+						  0, ignoredInterfaceClassName.length() - 1))))) {
 
 				return true;
 			}

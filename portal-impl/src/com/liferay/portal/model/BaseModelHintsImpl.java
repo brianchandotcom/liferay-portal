@@ -90,7 +90,7 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 						File file = new File(config);
 
 						if (!file.exists()) {
-							return;
+							continue;
 						}
 
 						inputStream = new FileInputStream(file);

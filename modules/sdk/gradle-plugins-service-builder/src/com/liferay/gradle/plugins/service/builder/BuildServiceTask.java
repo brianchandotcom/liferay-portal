@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.service.builder;
 
 import com.liferay.gradle.util.StringUtil;
+import com.liferay.gradle.util.Validator;
 import com.liferay.portal.tools.service.builder.ServiceBuilderArgs;
 
 import java.io.File;
@@ -99,7 +100,15 @@ public class BuildServiceTask extends JavaExec {
 		args.add("service.sql.file=" + getSqlFileName());
 		args.add("service.sql.indexes.file=" + getSqlIndexesFileName());
 		args.add("service.sql.sequences.file=" + getSqlSequencesFileName());
-		args.add("service.target.entity.name=" + getTargetEntityName());
+
+		String targetEntityName = getTargetEntityName();
+
+		if (Validator.isNull(targetEntityName)) {
+			targetEntityName = "${service.target.entity.name}";
+		}
+
+		args.add("service.target.entity.name=" + targetEntityName);
+
 		args.add("service.test.dir=" + getTestDirName());
 
 		return args;

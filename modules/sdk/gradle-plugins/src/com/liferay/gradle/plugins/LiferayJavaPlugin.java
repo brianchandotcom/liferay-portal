@@ -427,7 +427,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 				private long _getLastModified(File file) throws Exception {
 					ProcessExecutor processExecutor = new ProcessExecutor(
-						"git", "log", "--format=%ct", "--max-count=1",
+						"git", "log", "--format=%at", "--max-count=1",
 						file.getName());
 
 					processExecutor.directory(file.getParentFile());
@@ -1199,6 +1199,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskBuildServiceSqlDirName(buildServiceTask);
 		configureTaskBuildServiceSqlFileName(buildServiceTask);
 		configureTaskBuildServiceTestDirName(buildServiceTask);
+
+		configureTaskBuildServiceModelHintsConfigs(buildServiceTask);
 	}
 
 	protected void configureTaskBuildServiceApiDirName(
@@ -1253,6 +1255,30 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		File inputFile = new File(getServiceBaseDir(project), "service.xml");
 
 		buildServiceTask.setInputFileName(project.relativePath(inputFile));
+	}
+
+	protected void configureTaskBuildServiceModelHintsConfigs(
+		BuildServiceTask buildServiceTask) {
+
+		String fileName = buildServiceTask.getModelHintsFileName();
+
+		Project project = buildServiceTask.getProject();
+
+		File file = project.file(fileName);
+
+		for (String config : buildServiceTask.getModelHintsConfigs()) {
+			if (config.startsWith("classpath*:")) {
+				continue;
+			}
+
+			File configFile = project.file(config);
+
+			if (configFile.equals(file)) {
+				return;
+			}
+		}
+
+		buildServiceTask.modelHintsConfigs(fileName);
 	}
 
 	protected void configureTaskBuildServiceModelHintsFileName(

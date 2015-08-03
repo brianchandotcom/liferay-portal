@@ -25,7 +25,7 @@ TermsOfUseContentProvider termsOfUseContentProvider = TermsOfUseContentProviderR
 <h3><liferay-ui:message key="terms-of-use" /></h3>
 
 <aui:fieldset>
-	<aui:input label="terms-of-use-required" name='<%= "settings--" + PropsKeys.TERMS_OF_USE_REQUIRED + "--" %>' type="checkbox" value="<%= termsOfUseRequired %>" />
+	<aui:input label="require-terms-of-use" name='<%= "settings--" + PropsKeys.TERMS_OF_USE_REQUIRED + "--" %>' type="checkbox" value="<%= termsOfUseRequired %>" />
 
 	<c:if test="<%= termsOfUseContentProvider != null %>">
 

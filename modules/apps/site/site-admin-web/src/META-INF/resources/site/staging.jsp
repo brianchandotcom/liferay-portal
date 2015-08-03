@@ -44,7 +44,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 <c:if test="<%= liveGroupRemoteStaging %>">
 	<div class="alert alert-info">
 		<liferay-ui:message key="live-group-remote-staging-alert" />
-		<liferay-ui:message arguments='<%= "javascript:" + renderResponse.getNamespace() + "saveGroup(true);" %>' key="you-also-have-the-option-to-forcibly-disable-remote-staging" />
+		<liferay-ui:message arguments='<%= "javascript:" + renderResponse.getNamespace() + "saveGroup(true);" %>' key="you-can-also-forcibly-disable-remote-staging" />
 	</div>
 </c:if>
 
@@ -195,9 +195,9 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 
 			<c:if test="<%= !liveGroup.isCompany() && !liveGroupRemoteStaging %>">
 				<aui:fieldset helpMessage="page-versioning-help" label="page-versioning">
-					<aui:input label="enabled-on-public-pages" name="branchingPublic" type="checkbox" value='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPublic")) %>' />
+					<aui:input label="enable-on-public-pages" name="branchingPublic" type="checkbox" value='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPublic")) %>' />
 
-					<aui:input label="enabled-on-private-pages" name="branchingPrivate" type="checkbox" value='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPrivate")) %>' />
+					<aui:input label="enable-on-private-pages" name="branchingPrivate" type="checkbox" value='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPrivate")) %>' />
 				</aui:fieldset>
 			</c:if>
 

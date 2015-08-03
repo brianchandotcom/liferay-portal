@@ -122,7 +122,7 @@ public class SetupWizardAction extends Action {
 
 			putMessage(
 				request, jsonObject,
-				"database-connection-was-established-sucessfully");
+				"database-connection-was-established-successfully");
 		}
 		catch (ClassNotFoundException cnfe) {
 			putMessage(

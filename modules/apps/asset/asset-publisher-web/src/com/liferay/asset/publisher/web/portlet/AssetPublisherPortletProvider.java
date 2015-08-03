@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=" + PortletProvider.CLASS_NAME_ANY},
+	property = {"model.class.name=com.liferay.portlet.asset.model.AssetEntry"},
 	service = {AddPortletProvider.class, ViewPortletProvider.class}
 )
 public class AssetPublisherPortletProvider extends BasePortletProvider

@@ -30,6 +30,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.control-panel-entry-category=site_administration.content",
 		"com.liferay.portlet.control-panel-entry-weight=6.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-message-boards",
+		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.footer-portlet-javascript=/message_boards/js/main.js",
 		"com.liferay.portlet.header-portlet-css=/message_boards/css/main.css",
 		"com.liferay.portlet.icon=/icons/message_boards.png",

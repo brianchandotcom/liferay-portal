@@ -1782,10 +1782,11 @@ public class ServicePreAction extends Action {
 			}
 
 			if (controlPanelCategory.startsWith(
-					PortletCategoryKeys.CURRENT_SITE)) {
+					PortletCategoryKeys.CURRENT_SITE) ||
+				controlPanelCategory.startsWith(PortletCategoryKeys.SITES)) {
 
 				if (doAsGroupId <= 0) {
-					return false;
+					doAsGroupId = layout.getGroupId();
 				}
 
 				Group group = GroupLocalServiceUtil.getGroup(doAsGroupId);

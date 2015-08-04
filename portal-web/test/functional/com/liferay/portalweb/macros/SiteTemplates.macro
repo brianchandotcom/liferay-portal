@@ -45,7 +45,7 @@
 
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="CPSitetemplatesConfiguration#SITE_TEMPLATE_NAME" value1="${siteTemplateName}" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplatesAdd#NAME_FIELD" value1="${siteTemplateName}" />
 	</command>
 
 	<command name="addSitePageViaSiteTemplateCP">

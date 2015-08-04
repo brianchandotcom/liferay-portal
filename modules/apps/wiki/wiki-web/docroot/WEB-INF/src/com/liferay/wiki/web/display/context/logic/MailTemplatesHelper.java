@@ -17,7 +17,7 @@ package com.liferay.wiki.web.display.context.logic;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.model.Company;
-import com.liferay.wiki.settings.WikiGroupServiceOverriddenConfiguration;
+import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 
 import java.util.LinkedHashMap;

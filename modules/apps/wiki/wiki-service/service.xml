@@ -329,8 +329,6 @@
 		<exception>NodeName</exception>
 		<exception>NoSuchNode</exception>
 		<exception>NoSuchPage</exception>
-		<exception>PageAttachmentName</exception>
-		<exception>PageAttachmentSize</exception>
 		<exception>PageContent</exception>
 		<exception>PageTitle</exception>
 		<exception>PageVersion</exception>

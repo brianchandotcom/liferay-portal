@@ -95,12 +95,6 @@ public interface WikiGroupServiceConfiguration {
 	@Meta.AD(deflt = "simple", required = false)
 	public String getMediaWikiEditor();
 
-	@Meta.AD(deflt = ".gif|.jpeg|.jpg|.png", required = false)
-	public String[] imageExtensions();
-
-	@Meta.AD(deflt = "1048576", required = false)
-	public long imageMaxSize();
-
 	/**
 	 * Set the name of the default node that will be automatically created when
 	 * the Wiki portlet is first used in a site.

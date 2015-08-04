@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.SITES,
+		"panel.category.key=" + PanelCategoryKeys.ALL_SITES,
 		"service.ranking:Integer=200"
 	},
 	service = PanelCategory.class
@@ -61,7 +61,7 @@ public class MySitesPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
 	public String getParentCategoryKey() {
-		return PanelCategoryKeys.SITES;
+		return PanelCategoryKeys.ALL_SITES;
 	}
 
 	@Override

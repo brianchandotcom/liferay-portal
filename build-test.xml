@@ -2909,6 +2909,37 @@ go]]></replacevalue>
 		</delete>
 	</target>
 
+	<target name="clean-up-db2-processes">
+		<if>
+			<os family="unix" />
+			<then>
+				<echo file="cleandb2.sh">
+					<![CDATA[
+						#!/bin/bash
+
+						db2 db2stop force
+
+						for i in "m" "q" "s"
+						do
+							for j in `ipcs -$i | grep db2 | cut -c12-21`
+							do
+								echo "ipcrm -$i $j"
+
+								ipcrm -$i $j
+							done
+						done
+					]]>
+				</echo>
+
+				<chmod file="cleandb2.sh" perm="a+x" />
+
+				<exec executable="${basedir}/cleandb2.sh" />
+
+				<delete file="cleandb2.sh" />
+			</then>
+		</if>
+	</target>
+
 	<target name="clean-up-java-processes">
 		<if>
 			<os family="unix" />
@@ -5236,6 +5267,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<echo if:set="env.JENKINS_HOME">
 ANT_OPTS=${env.ANT_OPTS}</echo>
 
+		<antcall if:set="env.JENKINS_HOME" target="clean-up-db2-processes" inheritAll="false" />
 		<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
 	</target>
 
@@ -5285,6 +5317,7 @@ plugins.includes=marketplace-portlet</echo>
 		<echo if:set="env.JENKINS_HOME">
 ANT_OPTS=${env.ANT_OPTS}</echo>
 
+		<antcall if:set="env.JENKINS_HOME" target="clean-up-db2-processes" inheritAll="false" />
 		<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
 	</target>
 
@@ -6168,6 +6201,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
+		<antcall target="clean-up-db2-processes" inheritAll="false" />
 		<antcall target="clean-up-java-processes" inheritAll="false" />
 
 		<get-testcase-property property.name="portal.version" />

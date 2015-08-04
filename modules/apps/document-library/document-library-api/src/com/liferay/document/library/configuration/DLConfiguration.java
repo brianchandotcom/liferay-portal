@@ -19,10 +19,8 @@ import aQute.bnd.annotation.metatype.Meta;
 /**
  * @author Sergio González
  */
-@Meta.OCD(
-	id = "com.liferay.document.library.configuration.DLSystemConfiguration"
-)
-public interface DLSystemConfiguration {
+@Meta.OCD(id = "com.liferay.document.library.configuration.DLConfiguration")
+public interface DLConfiguration {
 
 	/**
 	 * Set the location of the XML file containing the configuration of the

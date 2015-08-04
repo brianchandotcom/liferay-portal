@@ -17,6 +17,7 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.wiki.configuration.WikiGroupServiceConfiguration" %><%@
+page import="com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration" %><%@
 page import="com.liferay.wiki.constants.WikiConstants" %><%@
 page import="com.liferay.wiki.constants.WikiPortletKeys" %><%@
 page import="com.liferay.wiki.constants.WikiWebKeys" %><%@
@@ -48,7 +49,6 @@ page import="com.liferay.wiki.service.WikiPageServiceUtil" %><%@
 page import="com.liferay.wiki.service.permission.WikiNodePermissionChecker" %><%@
 page import="com.liferay.wiki.service.permission.WikiPagePermissionChecker" %><%@
 page import="com.liferay.wiki.service.permission.WikiResourcePermissionChecker" %><%@
-page import="com.liferay.wiki.settings.WikiGroupServiceOverriddenConfiguration" %><%@
 page import="com.liferay.wiki.social.WikiActivityKeys" %><%@
 page import="com.liferay.wiki.util.WikiCacheUtil" %><%@
 page import="com.liferay.wiki.util.WikiPageAttachmentsUtil" %><%@

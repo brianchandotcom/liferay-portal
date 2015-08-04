@@ -224,17 +224,17 @@
 <!--DIALOG_BOX-->
 <tr>
 	<td>DIALOG_BOX_DUE_DATE</td>
-	<td>//input[contains(@id,'_153_') and contains(@id,'_dueDate')]</td>
+	<td>//input[contains(@id,'_dueDate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DIALOG_BOX_DUE_DATE_TIME</td>
-	<td>//input[contains(@id,'_153_') and contains(@id,'_dueDateTime')]</td>
+	<td>//input[contains(@id,'_dueDateTime')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DIALOG_BOX_COMMENT_FIELD</td>
-	<td>//textarea[@id='_153_comment']</td>
+	<td>//textarea[contains(@id,'_comment')]</td>
 	<td></td>
 </tr>
 <tr>

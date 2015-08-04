@@ -17,12 +17,26 @@
 <%@ include file="/group_statistics/init.jsp" %>
 
 <%
-int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String) request.getAttribute("configuration.jsp-index")));
+groupStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(GroupStatisticsPortletInstanceConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource())));
 
-String displayActivityCounterName = PrefsParamUtil.getString(portletPreferences, request, "displayActivityCounterName" + index);
-String chartType = PrefsParamUtil.getString(portletPreferences, request, "chartType" + index);
-int chartWidth = PrefsParamUtil.getInteger(portletPreferences, request, "chartWidth" + index, 35);
-String dataRange = PrefsParamUtil.getString(portletPreferences, request, "dataRange" + index);
+int index = ParamUtil.getInteger(request, "index");
+
+String[] displayActivityCounterNames = groupStatisticsPortletInstanceConfiguration.displayActivityCounterName();
+String[] chartTypes = groupStatisticsPortletInstanceConfiguration.chartType();
+String[] chartWidths = groupStatisticsPortletInstanceConfiguration.chartWidth();
+String[] dataRanges = groupStatisticsPortletInstanceConfiguration.dataRange();
+
+String displayActivityCounterName = "";
+String chartType = "";
+int chartWidth = 35;
+String dataRange = "";
+
+if (index < displayActivityCounterNames.length) {
+	displayActivityCounterName = displayActivityCounterNames[index];
+	chartType = chartTypes[index];
+	chartWidth = GetterUtil.getInteger(chartWidths[index], chartWidth);
+	dataRange = dataRanges[index];
+}
 
 List<String> activityCounterNames = SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_ACTOR);
 
@@ -40,7 +54,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="group-statistics-add-counter-first-text" />
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--displayActivityCounterName" + index + "--" %>' title="display-activity-counter-name">
+	<aui:select inlineField="<%= true %>" label="" name='<%= "displayActivityCounterName" + index %>' title="display-activity-counter-name">
 
 		<%
 		for (String activityCounterName : activityCounterNames) {
@@ -61,7 +75,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="group-statistics-add-counter-second-text" />
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--chartType" + index + "--" %>' title="chart-type" value="<%= chartType %>">
+	<aui:select inlineField="<%= true %>" label="" name='<%= "chartType" + index %>' title="chart-type" value="<%= chartType %>">
 		<aui:option label="group-statistics-chart-type-area-diagram" value="area" />
 		<aui:option label="group-statistics-chart-type-column-diagram" value="column" />
 		<aui:option label="group-statistics-chart-type-activity-distribution" value="pie" />
@@ -72,7 +86,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="group-statistics-add-counter-third-text" />
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--dataRange" + index + "--" %>' title="date-range" value="<%= dataRange %>">
+	<aui:select inlineField="<%= true %>" label="" name='<%= "dataRange" + index %>' title="date-range" value="<%= dataRange %>">
 		<aui:option label="group-statistics-data-range-this-year" value="year" />
 		<aui:option label="group-statistics-data-range-last-12-months" value="12months" />
 	</aui:select>
@@ -83,7 +97,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="chart-width" />:
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--chartWidth" + index + "--" %>' title="chart-width">
+	<aui:select inlineField="<%= true %>" label="" name='<%= "chartWidth" + index %>' title="chart-width">
 
 		<%
 		for (int i = 5; i < 100; i = i + 5) {

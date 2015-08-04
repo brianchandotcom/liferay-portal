@@ -17,16 +17,18 @@
 <%@ include file="/group_statistics/init.jsp" %>
 
 <%
-for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
-	String displayActivityCounterName = PrefsParamUtil.getString(portletPreferences, request, "displayActivityCounterName" + displayActivityCounterNameIndex);
+int displayActivityCounterNameIndexCount = groupStatisticsPortletInstanceConfiguration.displayActivityCounterName().length;
+
+for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < displayActivityCounterNameIndexCount; displayActivityCounterNameIndex++) {
+	String displayActivityCounterName = groupStatisticsPortletInstanceConfiguration.displayActivityCounterName()[displayActivityCounterNameIndex];//PrefsParamUtil.getString(portletPreferences, request, "displayActivityCounterName" + displayActivityCounterNameIndex);
 
 	if (Validator.isNull(displayActivityCounterName)) {
 		continue;
 	}
 
-	String chartType = PrefsParamUtil.getString(portletPreferences, request, "chartType" + displayActivityCounterNameIndex, "area");
-	int chartWidth = PrefsParamUtil.getInteger(portletPreferences, request, "chartWidth" + displayActivityCounterNameIndex, 35);
-	String dataRange = PrefsParamUtil.getString(portletPreferences, request, "dataRange" + displayActivityCounterNameIndex, "year");
+	String chartType = GetterUtil.getString(groupStatisticsPortletInstanceConfiguration.chartType()[displayActivityCounterNameIndex], "area");//PrefsParamUtil.getString(portletPreferences, request, "chartType" + displayActivityCounterNameIndex, "area");
+	int chartWidth = GetterUtil.getInteger(groupStatisticsPortletInstanceConfiguration.chartWidth()[displayActivityCounterNameIndex], 35);//PrefsParamUtil.getInteger(portletPreferences, request, "chartWidth" + displayActivityCounterNameIndex, 35);
+	String dataRange = GetterUtil.getString(groupStatisticsPortletInstanceConfiguration.dataRange()[displayActivityCounterNameIndex], "year");//PrefsParamUtil.getString(portletPreferences, request, "dataRange" + displayActivityCounterNameIndex, "year");
 
 	List<AssetTag> assetTags = null;
 
@@ -110,7 +112,7 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 }
 %>
 
-<c:if test="<%= Validator.isNull(displayActivityCounterNameIndexesParam) %>">
+<c:if test="<%= displayActivityCounterNameIndexCount == 0 %>">
 	<div class="alert alert-info portlet-configuration">
 		<a href="<%= portletDisplay.getURLConfiguration() %>" onClick="<%= portletDisplay.getURLConfigurationJS() %>">
 			<liferay-ui:message key="please-configure-this-portlet-and-select-at-least-one-activity-counter" />

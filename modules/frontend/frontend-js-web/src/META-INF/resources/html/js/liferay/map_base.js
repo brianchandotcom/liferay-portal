@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-map-base',
 	function(A) {
-		var AArray = A.Array;
-
 		var Lang = A.Lang;
 
 		var STR_CONTROLS = 'controls';

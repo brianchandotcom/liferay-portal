@@ -44,6 +44,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STAGING_ICON</td>
+	<td>//a[contains(@id,'stagingBarButton')]/i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING_HELP_MESSAGE</td>
+	<td>//span[contains(@class,'staging-live-help')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

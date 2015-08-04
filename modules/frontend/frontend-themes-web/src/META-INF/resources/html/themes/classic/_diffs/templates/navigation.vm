@@ -12,7 +12,12 @@
 					#set ($nav_item_attr_has_popup="")
 					#set ($nav_item_caret="")
 					#set ($nav_item_css_class="lfr-nav-item")
+					#set ($nav_item_href_link="")
 					#set ($nav_item_link_css_class="")
+
+				#if ($nav_item.isBrowsable())
+					#set ($nav_item_href_link="href='$nav_item.getURL()'")
+				#end
 
 				#if ($nav_item.isSelected())
 					#set ($nav_item_attr_selected="aria-selected='true'")
@@ -27,7 +32,8 @@
 				#end
 
 				<li class="$nav_item_css_class" id="layout_$nav_item.getLayoutId()" $nav_item_attr_selected role="presentation">
-					<a aria-labelledby="layout_$nav_item.getLayoutId()" $nav_item_attr_has_popup class="$nav_item_link_css_class" href="$nav_item.getURL()" $nav_item.getTarget() role="menuitem">
+
+					<a aria-labelledby="layout_$nav_item.getLayoutId()" $nav_item_attr_has_popup class="$nav_item_link_css_class" $nav_item_href_link $nav_item.getTarget() role="menuitem">
 						<span>$nav_item.icon() $nav_item.getName() $nav_item_caret</span>
 					</a>
 
@@ -36,6 +42,11 @@
 							#foreach ($nav_child in $nav_item.getChildren())
 								#set ($nav_child_attr_selected="")
 								#set ($nav_child_css_class="lfr-nav-item")
+								#set ($nav_child_href_link="")
+
+								#if ($nav_child.isBrowsable())
+									#set ($nav_child_href_link="href='$nav_child.getURL()'")
+								#end
 
 								#if ($nav_child.isSelected())
 									#set ($nav_child_attr_selected="aria-selected='true'")
@@ -43,7 +54,7 @@
 								#end
 
 								<li class="$nav_child_css_class" id="layout_$nav_child.getLayoutId()" $nav_child_attr_selected role="presentation">
-									<a aria-labelledby="layout_$nav_child.getLayoutId()" href="$nav_child.getURL()" $nav_child.getTarget() role="menuitem">$nav_child.getName()</a>
+									<a aria-labelledby="layout_$nav_child.getLayoutId()" $nav_child_href_link $nav_child.getTarget() role="menuitem">$nav_child.getName()</a>
 								</li>
 							#end
 						</ul>

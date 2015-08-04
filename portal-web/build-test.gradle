@@ -63,3 +63,7 @@ repositories {
 		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 	}
 }
+
+runPoshi {
+	jvmArgs "-Dfile.encoding=UTF-8"
+}

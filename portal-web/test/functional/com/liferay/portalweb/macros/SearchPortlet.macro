@@ -14,8 +14,9 @@
 	</command>
 
 	<command name="configureDisplaySettingsSearchPG">
-		<execute macro="SearchPortlet#gotoPortletOptions">
-			<var name="searchPortletOption" value="Configuration" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="Search" />
+			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
@@ -30,13 +31,5 @@
 
 		<execute function="AssertClick" locator1="PGSearchConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
-	<command name="gotoPortletOptions">
-		<var name="key_searchPortletOption" value="${searchPortletOption}" />
-
-		<execute function="AssertClick" locator1="Search#SEARCH_PORTLET_OPTIONS_WRENCH" />
-
-		<execute function="AssertClick" locator1="Search#SEARCH_PORTLET_OPTIONS_MENULIST" value1="${searchPortletOption}" />
 	</command>
 </definition>

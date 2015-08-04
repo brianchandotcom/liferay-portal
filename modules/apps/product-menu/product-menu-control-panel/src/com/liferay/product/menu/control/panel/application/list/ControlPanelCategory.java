@@ -15,16 +15,16 @@
 package com.liferay.product.menu.control.panel.application.list;
 
 import com.liferay.application.list.BasePanelCategory;
-import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.permission.PortalPermissionUtil;
 
-import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -68,10 +68,13 @@ public class ControlPanelCategory extends BasePanelCategory {
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
-			this, permissionChecker, group);
+		if (PortalPermissionUtil.contains(
+				permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
 
-		return !panelApps.isEmpty();
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference(unbind = "-")

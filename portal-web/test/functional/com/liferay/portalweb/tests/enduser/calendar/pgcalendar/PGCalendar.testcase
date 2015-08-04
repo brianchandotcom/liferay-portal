@@ -3509,7 +3509,7 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#configureDisplaySettingsSearchPG">
+		<execute macro="SearchPortlet#configureAssetType">
 			<var name="searchAssetType" value="Calendar Event" />
 		</execute>
 

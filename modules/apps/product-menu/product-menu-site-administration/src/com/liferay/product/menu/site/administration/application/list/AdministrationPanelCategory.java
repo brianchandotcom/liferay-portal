@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.ALL_SITES,
+		"panel.category.key=" + PanelCategoryKeys.SITES_ALL_SITES,
 		"service.ranking:Integer=100"
 	},
 	service = PanelCategory.class
@@ -53,7 +53,7 @@ public class AdministrationPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getParentCategoryKey() {
-		return PanelCategoryKeys.ALL_SITES;
+		return PanelCategoryKeys.SITES_ALL_SITES;
 	}
 
 }

@@ -43,7 +43,7 @@ public class AllSitesPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return PanelCategoryKeys.ALL_SITES;
+		return PanelCategoryKeys.SITES_ALL_SITES;
 	}
 
 	@Override

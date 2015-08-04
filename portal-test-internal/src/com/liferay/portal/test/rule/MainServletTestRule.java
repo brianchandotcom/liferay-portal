@@ -21,7 +21,7 @@ import com.liferay.portal.test.rule.callback.MainServletTestCallback;
  * @author Miguel Pastor
  * @author Shuyang Zhou
  */
-public class MainServletTestRule extends BaseTestRule<Object, Object> {
+public class MainServletTestRule extends BaseTestRule<Long, Long> {
 
 	public static final MainServletTestRule INSTANCE =
 		new MainServletTestRule();

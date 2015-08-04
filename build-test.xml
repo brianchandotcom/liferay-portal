@@ -2913,7 +2913,7 @@ go]]></replacevalue>
 		<if>
 			<os family="unix" />
 			<then>
-				<echo file="cleandb2.sh">
+				<echo file="clean_up_db2_processes.sh">
 					<![CDATA[
 						#!/bin/bash
 
@@ -2931,11 +2931,11 @@ go]]></replacevalue>
 					]]>
 				</echo>
 
-				<chmod file="cleandb2.sh" perm="a+x" />
+				<chmod file="clean_up_db2_processes.sh" perm="a+x" />
 
-				<exec executable="${basedir}/cleandb2.sh" />
+				<exec executable="${basedir}/clean_up_db2_processes.sh" />
 
-				<delete file="cleandb2.sh" />
+				<delete file="clean_up_db2_processes.sh" />
 			</then>
 		</if>
 	</target>

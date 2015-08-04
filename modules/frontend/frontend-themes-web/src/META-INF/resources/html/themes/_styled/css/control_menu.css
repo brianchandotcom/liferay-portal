@@ -1,8 +1,6 @@
 @import "bourbon";
 @import "mixins";
 
-@import "aui/lexicon/lexicon-base-variables";
-
 @import "control_menu/variables";
 
 @import "control_menu/add_panel";

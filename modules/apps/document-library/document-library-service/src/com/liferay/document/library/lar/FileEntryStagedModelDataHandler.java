@@ -268,7 +268,8 @@ public class FileEntryStagedModelDataHandler
 		}
 
 		if (portletDataContext.getBooleanParameter(
-				"document_library", "previews-and-thumbnails")) {
+				_DL_PORTLET_DATA_HANDLER_NAMESPACE,
+				"previews-and-thumbnails")) {
 
 			DLProcessorRegistryUtil.exportGeneratedFiles(
 				portletDataContext, fileEntry, fileEntryElement);
@@ -793,6 +794,12 @@ public class FileEntryStagedModelDataHandler
 			throw pde;
 		}
 	}
+
+	/**
+	 * @see com.liferay.document.library.web.lar.DLPortletDataHandler#NAMESPACE
+	 */
+	private static final String _DL_PORTLET_DATA_HANDLER_NAMESPACE =
+		"document_library";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileEntryStagedModelDataHandler.class);

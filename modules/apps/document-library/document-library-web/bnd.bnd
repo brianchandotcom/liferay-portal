@@ -3,7 +3,9 @@ Bundle-SymbolicName: com.liferay.document.library.web
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.document.library.web.asset,\
-	com.liferay.document.library.web.lar
+	com.liferay.document.library.web.lar,\
+	com.liferay.document.library.web.social,\
+	com.liferay.document.library.web.webdav
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources

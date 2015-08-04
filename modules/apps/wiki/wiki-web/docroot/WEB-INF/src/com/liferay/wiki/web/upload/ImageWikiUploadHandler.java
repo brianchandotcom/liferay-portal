@@ -50,13 +50,13 @@ import javax.portlet.PortletResponse;
 /**
  * @author Roberto Díaz
  */
-public class WikiImageUploadHandler extends BaseUploadHandler {
+public class ImageWikiUploadHandler extends BaseUploadHandler {
 
-	public WikiImageUploadHandler(long classPK) {
+	public ImageWikiUploadHandler(long classPK) {
 		_classPK = classPK;
 	}
 
-	protected WikiImageUploadHandler() {
+	protected ImageWikiUploadHandler() {
 		this(0);
 	}
 

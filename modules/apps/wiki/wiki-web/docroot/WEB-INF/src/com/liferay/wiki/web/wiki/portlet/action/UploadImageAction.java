@@ -17,7 +17,7 @@ package com.liferay.wiki.web.wiki.portlet.action;
 import com.liferay.portal.kernel.upload.UploadHandler;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.wiki.web.upload.WikiImageUploadHandler;
+import com.liferay.wiki.web.upload.ImageWikiUploadHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -41,7 +41,7 @@ public class UploadImageAction extends PortletAction {
 		long resourcePrimKey = ParamUtil.getLong(
 			actionRequest, "resourcePrimKey");
 
-		UploadHandler uploadHandler = new WikiImageUploadHandler(
+		UploadHandler uploadHandler = new ImageWikiUploadHandler(
 			resourcePrimKey);
 
 		uploadHandler.upload(actionRequest, actionResponse);

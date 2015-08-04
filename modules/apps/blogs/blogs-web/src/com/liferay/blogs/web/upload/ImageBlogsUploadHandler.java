@@ -28,7 +28,7 @@ import java.io.InputStream;
 /**
  * @author Roberto Díaz
  */
-public class BlogsImageUploadHandler extends BaseBlogsImageUploadHandler {
+public class ImageBlogsUploadHandler extends BaseBlogsUploadHandler {
 
 	@Override
 	protected FileEntry addFileEntry(

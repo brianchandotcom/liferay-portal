@@ -46,7 +46,7 @@ import javax.portlet.PortletResponse;
  * @author Sergio González
  * @author Adolfo Pérez
  */
-public abstract class BaseBlogsImageUploadHandler extends BaseUploadHandler {
+public abstract class BaseBlogsUploadHandler extends BaseUploadHandler {
 
 	@Override
 	public void checkPermission(

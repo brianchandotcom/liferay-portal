@@ -15,7 +15,7 @@
 package com.liferay.blogs.web.portlet.action;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.blogs.web.upload.BlogsTempImageUploadHandler;
+import com.liferay.blogs.web.upload.TempImageBlogsUploadHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.upload.UploadHandler;
@@ -48,6 +48,6 @@ public class UploadTempImageMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private final UploadHandler _uploadHandler =
-		new BlogsTempImageUploadHandler();
+		new TempImageBlogsUploadHandler();
 
 }

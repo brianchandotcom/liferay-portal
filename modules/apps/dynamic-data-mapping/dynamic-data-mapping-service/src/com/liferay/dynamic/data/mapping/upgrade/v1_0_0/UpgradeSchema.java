@@ -29,9 +29,8 @@ public class UpgradeSchema extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		String template = StringUtil.read(
-			UpgradeSchema.class.getClassLoader(),
-			"/com/liferay/dynamic/data/mapping/upgrade/v1_0_0/dependencies/" +
-			"upgrade-schema.sql");
+			UpgradeSchema.class.getResourceAsStream(
+				"dependencies/upgrade-schema.sql"));
 
 		runSQL(template);
 

@@ -43,7 +43,6 @@ Import-Package:\
 	com.liferay.wiki.notifications,\
 	com.liferay.wiki.search,\
 	com.liferay.wiki.service.permission,\
-	com.liferay.wiki.settings,\
 	com.liferay.wiki.social,\
 	com.liferay.wiki.trash,\
 	com.liferay.wiki.util,\

@@ -194,7 +194,7 @@
 		<execute function="Select" locator1="CPDocumentsandmediaEditWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT" value1="${workflowDefinition}" />
 		<execute function="AssertClick" locator1="CPDocumentsandmediaEditWorkflow#SAVE_BUTTON" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="configurePortalWorkflow">

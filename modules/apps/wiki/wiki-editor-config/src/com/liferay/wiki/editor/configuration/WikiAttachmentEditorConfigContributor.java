@@ -99,7 +99,7 @@ public class WikiAttachmentEditorConfigContributor
 		PortletURL uploadURL = requestBackedPortletURLFactory.createActionURL(
 			WikiPortletKeys.WIKI);
 
-		uploadURL.setParameter("struts_action", "/wiki/upload_image");
+		uploadURL.setParameter("struts_action", "/wiki/upload_page_attachment");
 		uploadURL.setParameter(
 			"resourcePrimKey", String.valueOf(wikiPageResourcePrimKey));
 

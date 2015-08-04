@@ -195,11 +195,18 @@ public class ExportImportConfigurationSettingsMapFactory {
 	}
 
 	/**
-	 * @return An <code>exportLayoutSettingsMap</code> if the <code>type ==
-	 *         ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT</code>,
-	 *         otherwise a <code>publishLayoutLocalSettingsMap</code> or a
-	 *         <code>publishLayoutRemoteSettingsMap</code> depending on the type
-	 *         of Staging.
+	 * Returns an export layout settings map if the type is {@link
+	 * ExportImportConfigurationConstants#TYPE_EXPORT_LAYOUT}; otherwise,
+	 * returns either a local or remote publish layout settings map, depending
+	 * on the staging type.
+	 *
+	 * @param  portletRequest the portlet request
+	 * @param  groupId the primary key of the group
+	 * @param  type the export/import option type
+	 * @return an export layout settings map if the type is an export layout;
+	 *         otherwise, returns either a local or remote publish layout
+	 *         settings map, depending on the staging type
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public static Map<String, Serializable> buildSettingsMap(
 			PortletRequest portletRequest, long groupId, int type)

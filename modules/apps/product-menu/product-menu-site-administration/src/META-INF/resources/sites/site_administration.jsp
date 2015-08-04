@@ -21,14 +21,14 @@ PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(Appli
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
 PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 
-boolean containsPortlet = false;
+boolean isSiteAdministrationPortlet = false;
 
 if (Validator.isNotNull(themeDisplay.getPpid())) {
 	PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
 
 	PanelCategory siteAdministrationPanelCategory = panelCategoryRegistry.getPanelCategory(PanelCategoryKeys.SITE_ADMINISTRATION);
 
-	containsPortlet = panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), siteAdministrationPanelCategory);
+	isSiteAdministrationPortlet = panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), siteAdministrationPanelCategory);
 }
 
 Group group = layout.getGroup();
@@ -41,7 +41,7 @@ if (layout instanceof VirtualLayout) {
 	group = sourceLayout.getGroup();
 }
 
-boolean showSiteSelector = ParamUtil.getBoolean(request, "showSiteSelector", group.isControlPanel() && !containsPortlet);
+boolean showSiteSelector = ParamUtil.getBoolean(request, "showSiteSelector", group.isControlPanel() && !isSiteAdministrationPortlet);
 
 if (showSiteSelector) {
 	panelCategory = panelCategoryRegistry.getPanelCategory(PanelCategoryKeys.SITES);

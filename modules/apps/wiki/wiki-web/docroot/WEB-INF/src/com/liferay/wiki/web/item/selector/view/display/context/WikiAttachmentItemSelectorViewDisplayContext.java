@@ -76,7 +76,8 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		PortletURL portletURL = liferayPortletResponse.createActionURL(
 			WikiPortletKeys.WIKI);
 
-		portletURL.setParameter("struts_action", "/wiki/upload_image");
+		portletURL.setParameter(
+			"struts_action", "/wiki/upload_page_attachment");
 		portletURL.setParameter(
 			"resourcePrimKey",
 			String.valueOf(

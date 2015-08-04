@@ -17,7 +17,7 @@ package com.liferay.wiki.web.wiki.portlet.action;
 import com.liferay.portal.kernel.upload.UploadHandler;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.wiki.web.upload.ImageWikiUploadHandler;
+import com.liferay.wiki.web.upload.PageAttachmentWikiUploadHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -29,7 +29,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Roberto Díaz
  */
-public class UploadImageAction extends PortletAction {
+public class UploadPageAttachmentAction extends PortletAction {
 
 	@Override
 	public void processAction(
@@ -41,7 +41,7 @@ public class UploadImageAction extends PortletAction {
 		long resourcePrimKey = ParamUtil.getLong(
 			actionRequest, "resourcePrimKey");
 
-		UploadHandler uploadHandler = new ImageWikiUploadHandler(
+		UploadHandler uploadHandler = new PageAttachmentWikiUploadHandler(
 			resourcePrimKey);
 
 		uploadHandler.upload(actionRequest, actionResponse);

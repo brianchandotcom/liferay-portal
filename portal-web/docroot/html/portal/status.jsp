@@ -101,7 +101,7 @@ if (Validator.isNotNull(exception)) {
 			<liferay-ui:message key="not-found" />
 		</h3>
 
-		<liferay-ui:message key="the-requested-resource-could-not-be-found" />
+		<liferay-ui:message key="the-requested-resource-was-not-found" />
 
 		<br /><br />
 

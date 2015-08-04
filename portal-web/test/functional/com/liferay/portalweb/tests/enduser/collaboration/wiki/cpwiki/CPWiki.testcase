@@ -205,8 +205,8 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute macro="WikiNode#viewNoCP">
-			<var name="wikiNodeName" value="Wiki Node Name" />
+		<execute macro="WikiNode#viewMainNode">
+			<var name="wikiNodeName" value="Main" />
 		</execute>
 	</command>
 

@@ -16,13 +16,8 @@ package com.liferay.portal.service.test;
 
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.util.AssetEntryIndexer;
-import com.liferay.portlet.directory.asset.UserAssetRendererFactory;
 import com.liferay.portlet.directory.workflow.UserWorkflowHandler;
-import com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory;
-import com.liferay.portlet.documentlibrary.asset.DLFolderAssetRendererFactory;
 import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 import com.liferay.portlet.documentlibrary.util.DLFolderIndexer;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
@@ -35,32 +30,6 @@ import com.liferay.portlet.usersadmin.util.UserIndexer;
  * @author Roberto Díaz
  */
 public class PortalRegisterTestUtil {
-
-	protected static void registerAssetRendererFactories() {
-		if (_assetRendererFactoriesRegistered) {
-			return;
-		}
-
-		for (Class<?> clazz : _ASSET_RENDERER_FACTORY_CLASSES) {
-			try {
-				AssetRendererFactory assetRendererFactory =
-					(AssetRendererFactory)clazz.newInstance();
-
-				assetRendererFactory.setClassName(
-					assetRendererFactory.getClassName());
-
-				AssetRendererFactoryRegistryUtil.register(assetRendererFactory);
-			}
-			catch (IllegalAccessException iae) {
-				iae.printStackTrace();
-			}
-			catch (InstantiationException ie) {
-				ie.printStackTrace();
-			}
-		}
-
-		_assetRendererFactoriesRegistered = true;
-	}
 
 	protected static void registerIndexers() {
 		if (_indexersRegistered) {
@@ -89,12 +58,6 @@ public class PortalRegisterTestUtil {
 		_workflowHandlersRegistered = true;
 	}
 
-	private static final Class<?>[] _ASSET_RENDERER_FACTORY_CLASSES = {
-		DLFileEntryAssetRendererFactory.class,
-		DLFolderAssetRendererFactory.class, UserAssetRendererFactory.class
-	};
-
-	private static boolean _assetRendererFactoriesRegistered;
 	private static boolean _indexersRegistered;
 	private static boolean _workflowHandlersRegistered;
 

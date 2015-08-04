@@ -58,7 +58,6 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.DLFileVersionVersionComparator;
-import com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl;
 
 import java.io.InputStream;
 
@@ -294,8 +293,7 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 	protected void checkMimeTypes() throws Exception {
 		String[] mimeTypes = {
-			ContentTypes.APPLICATION_OCTET_STREAM,
-			DLWebDAVStorageImpl.MS_OFFICE_2010_TEXT_XML_UTF8
+			ContentTypes.APPLICATION_OCTET_STREAM, _MS_OFFICE_2010_TEXT_XML_UTF8
 		};
 
 		checkFileVersionMimeTypes(mimeTypes);
@@ -673,6 +671,9 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 			DLFolderLocalServiceUtil.rebuildTree(companyId);
 		}
 	}
+
+	private static final String _MS_OFFICE_2010_TEXT_XML_UTF8 =
+		"text/xml; charset=\"utf-8\"";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLServiceVerifyProcess.class);

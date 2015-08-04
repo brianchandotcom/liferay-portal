@@ -3,10 +3,7 @@
 
 <display>
 	<category name="category.cms">
-		<portlet id="20" />
-		<portlet id="31" />
 		<portlet id="64" />
-		<portlet id="110" />
 	</category>
 	<category name="category.collaboration">
 		<portlet id="19" />
@@ -38,7 +35,6 @@
 		<portlet id="195" />
 		<portlet id="196" />
 		<portlet id="197" />
-		<portlet id="199" />
 	</category>
 	<category name="category.sample">
 		<portlet id="47" />

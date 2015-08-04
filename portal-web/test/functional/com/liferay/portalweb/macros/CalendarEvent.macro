@@ -266,22 +266,6 @@
 				</execute>
 			</then>
 		</if>
-
-		<if>
-			<equals arg1="${addRSVPEnabled}" arg2="true" />
-			<then>
-				<execute macro="CalendarEvent#addRSVP">
-					<var name="endDate" value="${endDate}" />
-					<var name="endDateTime" value="${endDateTime}" />
-					<var name="eventTitle" value="${eventTitle}" />
-					<var name="eventType" value="${eventType}" />
-					<var name="rsvp" value="${rsvp}" />
-					<var name="startDate" value="${startDate}" />
-					<var name="startDateTime" value="${startDateTime}" />
-					<var name="user" value="${user}" />
-				</execute>
-			</then>
-		</if>
 	</command>
 
 	<command name="addComment">

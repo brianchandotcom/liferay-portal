@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.upgrade;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeDynamicDataMapping;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeLastPublishDate;
+import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeSchema;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -51,6 +52,7 @@ public class DDMServiceUpgrade {
 	protected void upgrade() throws PortalException {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
+		upgradeProcesses.add(new UpgradeSchema());
 		upgradeProcesses.add(new UpgradeClassNames());
 		upgradeProcesses.add(new UpgradeDynamicDataMapping());
 		upgradeProcesses.add(new UpgradeLastPublishDate());

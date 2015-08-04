@@ -179,9 +179,8 @@
 			<var name="eventType" value="${eventType}" />
 			<var name="number1" value="5" />
 			<var name="number2" value="10" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="reminders" />
 			<var name="pageName" value="${pageName}" />
+			<var name="reminders" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -674,9 +673,8 @@
 			<var name="eventType" value="${eventType}" />
 			<var name="number1" value="5" />
 			<var name="number2" value="10" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="reminders" />
 			<var name="pageName" value="${pageName}" />
+			<var name="reminders" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1059,9 +1057,8 @@
 			<var name="number1" value="5" />
 			<var name="number2" value="10" />
 			<var name="numberOfOccurrences" value="1" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="reminders" />
 			<var name="pageName" value="${pageName}" />
+			<var name="reminders" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2411,9 +2408,8 @@
 			<var name="eventType" value="${eventType}" />
 			<var name="number1" value="5" />
 			<var name="number2" value="10" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="reminders" />
 			<var name="pageName" value="${pageName}" />
+			<var name="reminders" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2428,8 +2424,7 @@
 			<var name="eventType" value="${eventType}" />
 			<var name="number1" value="2" />
 			<var name="number2" value="4" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="reminders" />
+			<var name="reminders" value="true" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventWithReminders">
@@ -2529,9 +2524,8 @@
 			<var name="eventType" value="${eventType}" />
 			<var name="number1" value="5" />
 			<var name="number2" value="10" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="reminders" />
 			<var name="pageName" value="${pageName}" />
+			<var name="reminders" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2546,8 +2540,7 @@
 			<var name="eventType" value="${eventType}" />
 			<var name="number1" value="2" />
 			<var name="number2" value="4" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="reminders" />
+			<var name="reminders" value="true" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventWithReminders">
@@ -2651,9 +2644,8 @@
 			<var name="number1" value="5" />
 			<var name="number2" value="10" />
 			<var name="numberOfOccurrences" value="1" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="reminders" />
 			<var name="pageName" value="${pageName}" />
+			<var name="reminders" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -2668,8 +2660,7 @@
 			<var name="eventType" value="${eventType}" />
 			<var name="number1" value="2" />
 			<var name="number2" value="4" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="reminders" />
+			<var name="reminders" value="true" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventWithReminders">

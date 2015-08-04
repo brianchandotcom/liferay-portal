@@ -86,20 +86,6 @@ ${theme.include(body_bottom_include)}
 
 ${theme.include(bottom_include)}
 
-<#if is_signed_in>
-	<script>
-		AUI.$('#sidenavContainerId').sideNavigation(
-			{
-				gutter: '0',
-				toggler: '#sidenavToggleId',
-				type: 'fixed-push',
-				typeMobile: 'fixed',
-				width: '320px'
-			}
-		);
-	</script>
-</#if>
-
 </body>
 
 </html>

@@ -2,7 +2,7 @@
 	background-color: #FFF;
 	bottom: 0;
 	overflow: auto;
-	padding: 10px;
+	padding: 0 20px;
 	position: fixed;
 	right: 0;
 	top: 0;
@@ -50,16 +50,18 @@
 	}
 }
 
-.lfr-has-add-content {
-	padding-right: $addContentPanelWidth;
-}
+@include respond-to(desktop) {
+	.lfr-has-add-content {
+		padding-right: $addContentPanelWidth;
+	}
 
-.lfr-has-device-preview {
-	padding-right: $devicePreviewPanelWidth;
-}
+	.lfr-has-device-preview {
+		padding-right: $devicePreviewPanelWidth;
+	}
 
-.lfr-has-edit-layout {
-	padding-right: $editLayoutPanelWidth;
+	.lfr-has-edit-layout {
+		padding-right: $editLayoutPanelWidth;
+	}
 }
 
 .lfr-has-add-content, .lfr-has-device-preview, .lfr-has-edit-layout {

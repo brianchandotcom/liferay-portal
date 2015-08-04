@@ -54,7 +54,14 @@
 
 	<div class="breadcrumb breadcrumb-arrows">
 		<#list entries as entry>
-			<a href="${entry.getURL()!""}">${htmlUtil.escape(entry.getTitle())}</a>
+			<#assign entryHrefLink = "">
+
+			<#if entry.isBrowsable()>
+				<#assign entryURL = entry.getURL()!"">
+				<#assign entryHrefLink = "href='${entryURL}'">
+			</#if>
+
+			<a ${entryHrefLink}>${htmlUtil.escape(entry.getTitle())}</a>
 		</#list>
 	</div>
 </#if>

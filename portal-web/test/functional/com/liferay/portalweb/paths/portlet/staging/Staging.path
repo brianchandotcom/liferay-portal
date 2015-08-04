@@ -62,7 +62,7 @@
 <!--PG-->
 <tr>
 	<td>LIVE_BUTTON</td>
-	<td>//li[contains(@class,'live-link staging-toggle')]/a/span</td>
+	<td>//a[contains(.,'Live')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>STAGING_BUTTON</td>
-	<td>//li[contains(@class,'staging-toggle')]/a/span</td>
+	<td>//a[contains(.,'Staging')]</td>
 	<td></td>
 </tr>
 <tr>

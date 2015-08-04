@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.rss.web.configuration.internal;
+package com.liferay.wiki.web.configuration.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration;
-import com.liferay.rss.web.constants.RSSPortletKeys;
+import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.web.configuration.WikiPortletInstanceConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Iván Zaera
  */
 @Component
-public class RSSPortletInstanceSettingsIdMapping
+public class WikiAdminPortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return RSSPortletInstanceConfiguration.class;
+		return WikiPortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return RSSPortletKeys.RSS;
+		return WikiPortletKeys.WIKI_ADMIN;
 	}
 
 }

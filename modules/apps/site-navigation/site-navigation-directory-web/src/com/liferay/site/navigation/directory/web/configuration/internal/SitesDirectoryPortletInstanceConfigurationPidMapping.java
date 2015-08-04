@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.wiki.configuration.internal;
+package com.liferay.site.navigation.directory.web.configuration.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
-import com.liferay.wiki.constants.WikiConstants;
+import com.liferay.site.navigation.directory.web.configuration.SitesDirectoryPortletInstanceConfiguration;
+import com.liferay.site.navigation.directory.web.constants.SitesDirectoryPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Iván Zaera
+ * @author Juergen Kappler
  */
 @Component
-public class WikiGroupServiceSettingsIdMapping
+public class SitesDirectoryPortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return WikiGroupServiceConfiguration.class;
+		return SitesDirectoryPortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return WikiConstants.SERVICE_NAME;
+		return SitesDirectoryPortletKeys.SITES_DIRECTORY;
 	}
 
 }

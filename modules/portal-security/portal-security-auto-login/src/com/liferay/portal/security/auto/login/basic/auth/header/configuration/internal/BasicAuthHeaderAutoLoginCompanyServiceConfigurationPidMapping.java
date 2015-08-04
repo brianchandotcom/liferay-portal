@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.site.navigation.site.map.web.configuration.internal;
+package com.liferay.portal.security.auto.login.basic.auth.header.configuration.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.site.navigation.site.map.web.configuration.SiteMapPortletInstanceConfiguration;
-import com.liferay.site.navigation.site.map.web.constants.SiteMapPortletKeys;
+import com.liferay.portal.security.auto.login.basic.auth.header.configuration.BasicAuthHeaderAutoLoginConfiguration;
+import com.liferay.portal.security.auto.login.basic.auth.header.constants.BasicAuthHeaderAutoLoginConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Juergen Kappler
+ * @author Tomas Polesovsky
  */
 @Component
-public class SiteMapPortletInstanceSettingsIdMapping
+public class BasicAuthHeaderAutoLoginCompanyServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return SiteMapPortletInstanceConfiguration.class;
+		return BasicAuthHeaderAutoLoginConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return SiteMapPortletKeys.SITE_MAP;
+		return BasicAuthHeaderAutoLoginConstants.SERVICE_NAME;
 	}
 
 }

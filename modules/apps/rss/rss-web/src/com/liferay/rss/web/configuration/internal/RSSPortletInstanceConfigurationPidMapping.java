@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.service.access.policy.configuration.internal;
+package com.liferay.rss.web.configuration.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.service.access.policy.configuration.SAPConfiguration;
-import com.liferay.service.access.policy.constants.SAPConstants;
+import com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration;
+import com.liferay.rss.web.constants.RSSPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mika Koivisto
+ * @author Iván Zaera
  */
 @Component
-public class SAPCompanyServiceSettingsIdMapping
+public class RSSPortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return SAPConfiguration.class;
+		return RSSPortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return SAPConstants.SERVICE_NAME;
+		return RSSPortletKeys.RSS;
 	}
 
 }

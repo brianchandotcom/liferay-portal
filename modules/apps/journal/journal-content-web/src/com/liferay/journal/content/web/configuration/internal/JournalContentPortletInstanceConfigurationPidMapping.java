@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.journal.content.search.web.configuration.internal;
+package com.liferay.journal.content.web.configuration.internal;
 
-import com.liferay.journal.content.search.web.configuration.JournalContentSearchPortletInstanceConfiguration;
-import com.liferay.journal.content.search.web.constants.JournalContentSearchPortletKeys;
+import com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration;
+import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
@@ -24,17 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Juergen Kappler
  */
 @Component
-public class JournalContentSearchPortletInstanceSettingsIdMapping
+public class JournalContentPortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return JournalContentSearchPortletInstanceConfiguration.class;
+		return JournalContentPortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return JournalContentSearchPortletKeys.JOURNAL_CONTENT_SEARCH;
+		return JournalContentPortletKeys.JOURNAL_CONTENT;
 	}
 
 }

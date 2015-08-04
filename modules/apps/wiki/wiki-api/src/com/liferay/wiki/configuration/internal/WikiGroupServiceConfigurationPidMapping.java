@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.cas.configuration.internal;
+package com.liferay.wiki.configuration.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;
-import com.liferay.portal.security.sso.cas.constants.CASConstants;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
+import com.liferay.wiki.constants.WikiConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mika Koivisto
+ * @author Iván Zaera
  */
 @Component
-public class CASCompanyServiceSettingsIdMapping
+public class WikiGroupServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return CASConfiguration.class;
+		return WikiGroupServiceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return CASConstants.SERVICE_NAME;
+		return WikiConstants.SERVICE_NAME;
 	}
 
 }

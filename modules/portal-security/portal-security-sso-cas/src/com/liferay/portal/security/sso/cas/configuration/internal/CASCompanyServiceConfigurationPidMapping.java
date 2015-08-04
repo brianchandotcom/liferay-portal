@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.mentions.configuration.internal;
+package com.liferay.portal.security.sso.cas.configuration.internal;
 
-import com.liferay.mentions.configuration.MentionsGroupServiceConfiguration;
-import com.liferay.mentions.constants.MentionsConstants;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;
+import com.liferay.portal.security.sso.cas.constants.CASConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Mika Koivisto
  */
 @Component
-public class MentionsGroupServiceSettingsIdMapping
+public class CASCompanyServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return MentionsGroupServiceConfiguration.class;
+		return CASConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return MentionsConstants.SERVICE_NAME;
+		return CASConstants.SERVICE_NAME;
 	}
 
 }

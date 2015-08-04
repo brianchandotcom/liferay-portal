@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.security.auto.login.request.parameter.configuration.internal;
+package com.liferay.portal.security.sso.opensso.configuration.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.security.auto.login.request.parameter.configuration.RequestParameterAutoLoginConfiguration;
-import com.liferay.portal.security.auto.login.request.parameter.constants.RequestParameterAutoLoginConstants;
+import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
+import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Tomas Polesovsky
+ * @author Mika Koivisto
  */
 @Component
-public class RequestParameterAutoLoginCompanyServiceSettingsIdMapping
+public class OpenSSOCompanyServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return RequestParameterAutoLoginConfiguration.class;
+		return OpenSSOConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return RequestParameterAutoLoginConstants.SERVICE_NAME;
+		return OpenSSOConstants.SERVICE_NAME;
 	}
 
 }

@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.asset.categories.navigation.web.configuration.internal;
+package com.liferay.blogs.web.configuration.internal;
 
-import com.liferay.asset.categories.navigation.web.configuration.AssetCategoriesNavigationPortletInstanceConfiguration;
-import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavigationPortletKeys;
+import com.liferay.blogs.web.configuration.BlogsPortletInstanceConfiguration;
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Juergen Kappler
+ * @author Sergio González
  */
 @Component
-public class AssetCategoriesNavigationPortletInstanceSettingsIdMapping
+public class BlogsPortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return AssetCategoriesNavigationPortletInstanceConfiguration.class;
+		return BlogsPortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION;
+		return BlogsPortletKeys.BLOGS;
 	}
 
 }

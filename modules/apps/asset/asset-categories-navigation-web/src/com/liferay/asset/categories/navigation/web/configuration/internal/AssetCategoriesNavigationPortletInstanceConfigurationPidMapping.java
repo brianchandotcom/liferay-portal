@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.nested.portlets.web.configuration.internal;
+package com.liferay.asset.categories.navigation.web.configuration.internal;
 
-import com.liferay.nested.portlets.web.configuration.NestedPortletsPortletInstanceConfiguration;
-import com.liferay.nested.portlets.web.constants.NestedPortletsPortletKeys;
+import com.liferay.asset.categories.navigation.web.configuration.AssetCategoriesNavigationPortletInstanceConfiguration;
+import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavigationPortletKeys;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 
 import org.osgi.service.component.annotations.Component;
@@ -24,17 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Juergen Kappler
  */
 @Component
-public class NestedPortletsPortletInstanceSettingsIdMapping
+public class AssetCategoriesNavigationPortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return NestedPortletsPortletInstanceConfiguration.class;
+		return AssetCategoriesNavigationPortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return NestedPortletsPortletKeys.NESTED_PORTLETS;
+		return AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION;
 	}
 
 }

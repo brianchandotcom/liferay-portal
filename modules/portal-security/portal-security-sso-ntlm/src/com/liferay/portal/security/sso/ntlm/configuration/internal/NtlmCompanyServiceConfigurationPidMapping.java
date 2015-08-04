@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Mika Koivisto
  */
 @Component
-public class NtlmCompanyServiceSettingsIdMapping
+public class NtlmCompanyServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override

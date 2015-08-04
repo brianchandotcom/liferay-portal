@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.site.navigation.menu.web.configuration.internal;
+package com.liferay.portal.security.sso.token.internal.configuration.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.site.navigation.menu.web.configuration.NavigationMenuPortletInstanceConfiguration;
-import com.liferay.site.navigation.menu.web.constants.NavigationMenuPortletKeys;
+import com.liferay.portal.security.sso.token.internal.configuration.TokenConfiguration;
+import com.liferay.portal.security.sso.token.internal.constants.TokenConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Juergen Kappler
+ * @author Mika Koivisto
  */
 @Component
-public class NavigationMenuPortletInstanceSettingsIdMapping
+public class TokenCompanyServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return NavigationMenuPortletInstanceConfiguration.class;
+		return TokenConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return NavigationMenuPortletKeys.NAVIGATION;
+		return TokenConstants.SERVICE_NAME;
 	}
 
 }

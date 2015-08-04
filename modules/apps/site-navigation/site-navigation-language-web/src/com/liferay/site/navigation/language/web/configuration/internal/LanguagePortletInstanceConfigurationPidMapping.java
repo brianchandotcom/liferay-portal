@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.journal.content.web.configuration.internal;
+package com.liferay.site.navigation.language.web.configuration.internal;
 
-import com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration;
-import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+import com.liferay.site.navigation.language.web.configuration.LanguagePortletInstanceConfiguration;
+import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Juergen Kappler
  */
 @Component
-public class JournalContentPortletInstanceSettingsIdMapping
+public class LanguagePortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return JournalContentPortletInstanceConfiguration.class;
+		return LanguagePortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return JournalContentPortletKeys.JOURNAL_CONTENT;
+		return LanguagePortletKeys.LANGUAGE;
 	}
 
 }

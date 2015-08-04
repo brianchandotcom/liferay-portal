@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.configuration.internal;
+package com.liferay.site.navigation.breadcrumb.web.configuration.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.security.sso.openid.configuration.OpenIdConfiguration;
-import com.liferay.portal.security.sso.openid.constants.OpenIdConstants;
+import com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbPortletInstanceConfiguration;
+import com.liferay.site.navigation.breadcrumb.web.constants.BreadcrumbPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mika Koivisto
+ * @author Juergen Kappler
  */
 @Component
-public class OpenIdCompanyServiceSettingsIdMapping
+public class BreadcrumbPortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return OpenIdConfiguration.class;
+		return BreadcrumbPortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return OpenIdConstants.SERVICE_NAME;
+		return BreadcrumbPortletKeys.BREADCRUMB;
 	}
 
 }

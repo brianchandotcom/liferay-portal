@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Juergen Kappler
  */
 @Component
-public class JournalGroupServiceSettingsIdMapping
+public class JournalGroupServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override

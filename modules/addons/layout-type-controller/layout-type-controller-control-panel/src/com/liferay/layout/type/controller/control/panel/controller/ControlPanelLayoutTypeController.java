@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.control.panel.menu.web.layout;
+package com.liferay.layout.type.controller.control.panel.controller;
 
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
@@ -20,7 +20,7 @@ import com.liferay.application.list.taglib.constants.ApplicationListWebKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypeController;
-import com.liferay.portal.model.impl.BasePanelLayoutControllerImpl;
+import com.liferay.portal.model.impl.BasePanelLayoutTypeControllerImpl;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import javax.servlet.ServletContext;
@@ -39,8 +39,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"layout.type=" + LayoutConstants.TYPE_CONTROL_PANEL},
 	service = LayoutTypeController.class
 )
-public class ControlPanelLayoutController
-	extends BasePanelLayoutControllerImpl {
+public class ControlPanelLayoutTypeController
+	extends BasePanelLayoutTypeControllerImpl {
 
 	@Override
 	public String getURL() {
@@ -112,7 +112,7 @@ public class ControlPanelLayoutController
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.control.panel.menu.web)"
+		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.control.panel)"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

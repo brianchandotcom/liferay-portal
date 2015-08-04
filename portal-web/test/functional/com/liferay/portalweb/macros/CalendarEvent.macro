@@ -1169,7 +1169,7 @@
 				<isset var="month" />
 			</and>
 			<then>
-				<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_1" value1="${frequency} On The ${position} ${weekday} Of ${month}" />
+				<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_2" value1="${frequency} On The ${position} ${weekday} Of ${month}" />
 			</then>
 			<elseif>
 				<and>
@@ -1177,19 +1177,19 @@
 					<isset var="numberOfOccurrences" />
 				</and>
 				<then>
-					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_1" value1="${frequency} On ${position} ${weekday}, ${numberOfOccurrences} Times" />
+					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_2" value1="${frequency} On ${position} ${weekday}, ${numberOfOccurrences} Times" />
 				</then>
 			</elseif>
 			<elseif>
 				<isset var="position" />
 				<then>
-					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_1" value1="${frequency} On ${position} ${weekday}" />
+					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_2" value1="${frequency} On ${position} ${weekday}" />
 				</then>
 			</elseif>
 			<elseif>
 				<isset var="numberOfOccurrences" />
 				<then>
-					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_1" value1="${frequency}, ${numberOfOccurrences} Times" />
+					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY_2" value1="${frequency}, ${numberOfOccurrences} Times" />
 				</then>
 			</elseif>
 		</if>

@@ -14,6 +14,7 @@
 
 package com.liferay.calendar.upgrade.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
@@ -29,13 +30,14 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
 
-import org.jboss.arquillian.junit.Arquillian;
-
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -44,6 +46,11 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class UpgradeCalendarTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Before
 	public void setUp() throws Exception {

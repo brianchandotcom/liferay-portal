@@ -45,8 +45,6 @@ public class UploadPageAttachmentAction extends PortletAction {
 			resourcePrimKey);
 
 		uploadHandler.upload(actionRequest, actionResponse);
-
-		return;
 	}
 
 }

@@ -364,9 +364,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 				String mimeType = MimeTypesUtil.getContentType(file, fileName);
 
-				fileEntries.add(
-					addPageAttachment(
-						userId, nodeId, title, fileName, file, mimeType));
+				FileEntry fileEntry = addPageAttachment(
+					userId, nodeId, title, fileName, file, mimeType);
+
+				fileEntries.add(fileEntry);
 			}
 			catch (IOException ioe) {
 				throw new SystemException(

@@ -13,7 +13,7 @@ dependencies {
 ext {
 	alloyBootstrapVersion = "3.2.0-2"
 	alloyVersion = "3.0.1"
-	lexiconVersion = "0.1.8"
+	lexiconVersion = "0.1.9"
 	lfrAMDLoaderVersion = "1.3.4"
 }
 

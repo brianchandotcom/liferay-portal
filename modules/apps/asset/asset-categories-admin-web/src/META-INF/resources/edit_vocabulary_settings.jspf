@@ -15,23 +15,23 @@
 --%>
 
 <%
-List<AssetRendererFactory> availableAssetRendererFactories = ListUtil.filter(
+List<AssetRendererFactory<?>> availableAssetRendererFactories = ListUtil.filter(
 	AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()),
-	new PredicateFilter<AssetRendererFactory>() {
+	new PredicateFilter<AssetRendererFactory<?>>() {
 
 		@Override
-		public boolean filter(AssetRendererFactory assetRendererFactory) {
+		public boolean filter(AssetRendererFactory<?> assetRendererFactory) {
 			return assetRendererFactory.isCategorizable();
 		}
 
 	});
 
-List<AssetRendererFactory> classTypedAssetRendererFactories = ListUtil.filter(
+List<AssetRendererFactory<?>> classTypedAssetRendererFactories = ListUtil.filter(
 	availableAssetRendererFactories,
-	new PredicateFilter<AssetRendererFactory>() {
+	new PredicateFilter<AssetRendererFactory<?>>() {
 
 		@Override
-		public boolean filter(AssetRendererFactory assetRendererFactory) {
+		public boolean filter(AssetRendererFactory<?> assetRendererFactory) {
 			return assetRendererFactory.isSupportsClassTypes();
 		}
 
@@ -67,7 +67,7 @@ if (vocabulary != null) {
 						<aui:option label="all-asset-types" value="<%= AssetCategoryConstants.ALL_CLASS_NAME_ID %>" />
 
 						<%
-						for (AssetRendererFactory assetRendererFactory : availableAssetRendererFactories) {
+						for (AssetRendererFactory<?> assetRendererFactory : availableAssetRendererFactories) {
 						%>
 
 							<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, assetRendererFactory.getClassName()) %>" selected="<%= classNameId == assetRendererFactory.getClassNameId() %>" value="<%= assetRendererFactory.getClassNameId() %>" />
@@ -79,7 +79,7 @@ if (vocabulary != null) {
 					</aui:select>
 
 					<%
-					for (AssetRendererFactory assetRendererFactory : classTypedAssetRendererFactories) {
+					for (AssetRendererFactory<?> assetRendererFactory : classTypedAssetRendererFactories) {
 					%>
 
 						<aui:select inlineField="<%= true %>" label="" name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-classNameId" + index %>' wrapperCssClass='<%= (classNameId != assetRendererFactory.getClassNameId() ? "hide " : "") + "subtype-select" %>'>

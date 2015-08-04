@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = AssetRendererFactory.class
 )
 public class JournalArticleAssetRendererFactory
-	extends BaseAssetRendererFactory {
+	extends BaseAssetRendererFactory<JournalArticle> {
 
 	public static final String TYPE = "content";
 
@@ -78,7 +78,8 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<JournalArticle> getAssetRenderer(
+			long classPK, int type)
 		throws PortalException {
 
 		JournalArticle article =
@@ -118,7 +119,8 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long groupId, String urlTitle)
+	public AssetRenderer<JournalArticle> getAssetRenderer(
+			long groupId, String urlTitle)
 		throws PortalException {
 
 		JournalArticle article =

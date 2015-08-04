@@ -42,9 +42,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface WorkflowHandler<T> {
 
-	public AssetRenderer getAssetRenderer(long classPK) throws PortalException;
+	public AssetRenderer<T> getAssetRenderer(long classPK)
+		throws PortalException;
 
-	public AssetRendererFactory getAssetRendererFactory();
+	public AssetRendererFactory<T> getAssetRendererFactory();
 
 	public String getClassName();
 

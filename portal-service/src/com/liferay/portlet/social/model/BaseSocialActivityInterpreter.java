@@ -533,7 +533,7 @@ public abstract class BaseSocialActivityInterpreter
 			String className, long classPK, ServiceContext serviceContext)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 
@@ -553,7 +553,7 @@ public abstract class BaseSocialActivityInterpreter
 				liferayPortletResponse, WindowState.MAXIMIZED);
 		}
 
-		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
 			classPK);
 
 		if (assetRenderer == null) {

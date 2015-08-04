@@ -175,7 +175,7 @@ public class SearchUtil {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 			className, classPK);
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 
@@ -193,8 +193,8 @@ public class SearchUtil {
 			viewFullContentURLString = HttpUtil.setParameter(
 				viewFullContentURLString, "redirect", currentURL);
 
-			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-				classPK);
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(classPK);
 
 			String viewURL = assetRenderer.getURLViewInContext(
 				(LiferayPortletRequest)renderRequest,

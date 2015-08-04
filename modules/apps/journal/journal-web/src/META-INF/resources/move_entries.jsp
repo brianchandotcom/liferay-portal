@@ -92,9 +92,9 @@ for (JournalArticle curArticle : articles) {
 
 				<%
 				for (JournalFolder folder : validMoveFolders) {
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
+					AssetRendererFactory<JournalFolder> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalFolder.class);
 
-					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
+					AssetRenderer<JournalFolder> assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
 				%>
 
 					<li class="move-folder">
@@ -123,9 +123,9 @@ for (JournalArticle curArticle : articles) {
 
 				<%
 				for (JournalFolder folder : invalidMoveFolders) {
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
+					AssetRendererFactory<JournalFolder> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalFolder.class);
 
-					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
+					AssetRenderer<JournalFolder> assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
 				%>
 
 					<li class="icon-warning-sign move-error move-folder">
@@ -160,9 +160,9 @@ for (JournalArticle curArticle : articles) {
 
 				<%
 				for (JournalArticle validMoveArticle : validMoveArticles) {
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+					AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);
 
-					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(validMoveArticle));
+					AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(validMoveArticle));
 				%>
 
 					<li class="move-article">
@@ -191,9 +191,9 @@ for (JournalArticle curArticle : articles) {
 
 				<%
 				for (JournalArticle invalidMoveArticle : invalidMoveArticles) {
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+					AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);
 
-					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(invalidMoveArticle));
+					AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(invalidMoveArticle));
 				%>
 
 					<li class="icon-warning-sign move-article move-error">

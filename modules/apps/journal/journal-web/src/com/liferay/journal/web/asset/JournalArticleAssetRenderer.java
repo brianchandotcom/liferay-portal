@@ -66,7 +66,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Raymond Augé
  */
 public class JournalArticleAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<JournalArticle> implements TrashRenderer {
 
 	public static final String TYPE = "journal_article";
 
@@ -86,6 +86,11 @@ public class JournalArticleAssetRenderer
 	}
 
 	public JournalArticle getArticle() {
+		return _article;
+	}
+
+	@Override
+	public JournalArticle getAssetObject() {
 		return _article;
 	}
 

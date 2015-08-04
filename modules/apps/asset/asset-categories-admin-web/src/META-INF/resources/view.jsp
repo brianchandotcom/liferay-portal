@@ -144,7 +144,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 					if (classNameId != AssetCategoryConstants.ALL_CLASS_NAME_ID) {
 						if (classTypePK != -1) {
-							AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(classNameId);
+							AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassNameId(classNameId);
 
 							ClassTypeReader classTypeReader = assetRendererFactory.getClassTypeReader();
 

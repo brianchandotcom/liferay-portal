@@ -54,7 +54,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = AssetRendererFactory.class
 )
-public class WikiPageAssetRendererFactory extends BaseAssetRendererFactory {
+public class WikiPageAssetRendererFactory
+	extends BaseAssetRendererFactory<WikiPage> {
 
 	public static final String TYPE = "wiki";
 
@@ -65,7 +66,7 @@ public class WikiPageAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<WikiPage> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
 		WikiPage page = WikiPageLocalServiceUtil.fetchWikiPage(classPK);

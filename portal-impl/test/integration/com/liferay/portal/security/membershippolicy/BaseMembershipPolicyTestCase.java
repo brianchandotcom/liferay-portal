@@ -17,16 +17,20 @@ package com.liferay.portal.security.membershippolicy;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.registry.ServiceRegistration;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 /**
  * @author Roberto Díaz
@@ -57,8 +61,20 @@ public abstract class BaseMembershipPolicyTestCase {
 		_propagateRoles = propagateRoles;
 	}
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		previousCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+	}
+
 	public static void setVerify(boolean verify) {
 		_verify = verify;
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CompanyThreadLocal.setCompanyId(previousCompanyId);
 	}
 
 	@Before
@@ -94,6 +110,8 @@ public abstract class BaseMembershipPolicyTestCase {
 
 		return _userIds;
 	}
+
+	protected static long previousCompanyId;
 
 	@DeleteAfterTestRun
 	protected Group group;

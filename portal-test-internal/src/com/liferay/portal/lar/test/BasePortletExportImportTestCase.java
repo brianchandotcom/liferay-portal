@@ -31,6 +31,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -68,7 +69,9 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -76,6 +79,18 @@ import org.junit.Test;
  */
 public abstract class BasePortletExportImportTestCase
 	extends BaseExportImportTestCase {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		previousCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CompanyThreadLocal.setCompanyId(previousCompanyId);
+	}
 
 	public String getNamespace() {
 		return null;
@@ -662,5 +677,7 @@ public abstract class BasePortletExportImportTestCase
 
 	protected void validateVersions() throws Exception {
 	}
+
+	protected static long previousCompanyId;
 
 }

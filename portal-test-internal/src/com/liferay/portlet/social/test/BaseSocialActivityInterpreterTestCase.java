@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -41,8 +42,10 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -52,6 +55,18 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Zsolt Berentey
  */
 public abstract class BaseSocialActivityInterpreterTestCase {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		previousCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CompanyThreadLocal.setCompanyId(previousCompanyId);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -221,6 +236,8 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 	protected abstract void renameModels() throws Exception;
 
 	protected abstract void restoreModelsFromTrash() throws Exception;
+
+	protected static long previousCompanyId;
 
 	@DeleteAfterTestRun
 	protected Group group;

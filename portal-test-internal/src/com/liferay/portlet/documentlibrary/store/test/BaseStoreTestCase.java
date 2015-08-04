@@ -16,8 +16,10 @@ package com.liferay.portlet.documentlibrary.store.test;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.test.rule.ExpectedLog;
 import com.liferay.portal.test.rule.ExpectedLogs;
 import com.liferay.portal.test.rule.ExpectedType;
@@ -40,8 +42,10 @@ import java.util.Arrays;
 import java.util.Set;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -49,13 +53,25 @@ import org.junit.Test;
  */
 public abstract class BaseStoreTestCase {
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		previousCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CompanyThreadLocal.setCompanyId(previousCompanyId);
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		StoreFactory storeFactory = StoreFactory.getInstance();
 
 		store = storeFactory.getStore(getStoreType());
 
-		companyId = RandomTestUtil.nextLong();
+		companyId = TestPropsValues.getCompanyId();
 		repositoryId = RandomTestUtil.nextLong();
 	}
 
@@ -729,6 +745,8 @@ public abstract class BaseStoreTestCase {
 	}
 
 	protected abstract String getStoreType();
+
+	protected static long previousCompanyId;
 
 	protected long companyId;
 	protected long repositoryId;

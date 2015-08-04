@@ -35,6 +35,7 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.IdentityServiceContextFunction;
@@ -75,8 +76,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -85,6 +88,18 @@ import org.junit.Test;
  * @author Mate Thurzo
  */
 public abstract class BaseStagedModelDataHandlerTestCase {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		previousCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CompanyThreadLocal.setCompanyId(previousCompanyId);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -808,6 +823,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		Assert.assertTrue(importedRatingsEntries.isEmpty());
 	}
+
+	protected static long previousCompanyId;
 
 	@DeleteAfterTestRun
 	protected Group liveGroup;

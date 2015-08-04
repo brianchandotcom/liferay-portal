@@ -35,6 +35,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -47,9 +48,11 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -59,6 +62,18 @@ import org.junit.Test;
  * @author Cristina González
  */
 public abstract class BaseTrashHandlerTestCase {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		previousCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CompanyThreadLocal.setCompanyId(previousCompanyId);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -3235,6 +3250,8 @@ public abstract class BaseTrashHandlerTestCase {
 
 	protected abstract void moveBaseModelToTrash(long primaryKey)
 		throws Exception;
+
+	protected static long previousCompanyId;
 
 	protected BaseModel<?> baseModel;
 

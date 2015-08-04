@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.blogs.web.configuration.internal;
+package com.liferay.portal.security.sso.openid.configuration.internal;
 
-import com.liferay.blogs.web.configuration.BlogsPortletInstanceConfiguration;
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+import com.liferay.portal.security.sso.openid.configuration.OpenIdConfiguration;
+import com.liferay.portal.security.sso.openid.constants.OpenIdConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Mika Koivisto
  */
 @Component
-public class BlogsPortletInstanceSettingsIdMapping
+public class OpenIdCompanyServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return BlogsPortletInstanceConfiguration.class;
+		return OpenIdConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return BlogsPortletKeys.BLOGS;
+		return OpenIdConstants.SERVICE_NAME;
 	}
 
 }

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.wiki.web.configuration.internal;
+package com.liferay.bookmarks.configuration.internal;
 
+import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
+import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.web.configuration.WikiPortletInstanceConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Iván Zaera
  */
 @Component
-public class WikiPortletInstanceSettingsIdMapping
+public class BookmarksGroupServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return WikiPortletInstanceConfiguration.class;
+		return BookmarksGroupServiceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return WikiPortletKeys.WIKI;
+		return BookmarksConstants.SERVICE_NAME;
 	}
 
 }

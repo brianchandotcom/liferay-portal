@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.opensso.configuration.internal;
+package com.liferay.portal.security.sso.facebook.connect.configuration.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
-import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
+import com.liferay.portal.security.sso.facebook.connect.configuration.FacebookConnectConfiguration;
+import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Mika Koivisto
  */
 @Component
-public class OpenSSOCompanyServiceSettingsIdMapping
+public class FacebookConnectCompanyServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return OpenSSOConfiguration.class;
+		return FacebookConnectConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return OpenSSOConstants.SERVICE_NAME;
+		return FacebookConnectConstants.SERVICE_NAME;
 	}
 
 }

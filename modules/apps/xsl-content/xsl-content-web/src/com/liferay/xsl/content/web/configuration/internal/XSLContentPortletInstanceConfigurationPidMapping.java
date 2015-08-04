@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.iframe.web.configuration.internal;
+package com.liferay.xsl.content.web.configuration.internal;
 
-import com.liferay.iframe.web.configuration.IFramePortletInstanceConfiguration;
-import com.liferay.iframe.web.constants.IFramePortletKeys;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+import com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration;
+import com.liferay.xsl.content.web.constants.XSLContentPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Juergen Kappler
  */
 @Component
-public class IFramePortletInstanceSettingsIdMapping
+public class XSLContentPortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return IFramePortletInstanceConfiguration.class;
+		return XSLContentPortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return IFramePortletKeys.IFRAME;
+		return XSLContentPortletKeys.XSL_CONTENT;
 	}
 
 }

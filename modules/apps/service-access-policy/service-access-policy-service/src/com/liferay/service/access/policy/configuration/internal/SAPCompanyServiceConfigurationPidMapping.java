@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.wiki.web.configuration.internal;
+package com.liferay.service.access.policy.configuration.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.web.configuration.WikiPortletInstanceConfiguration;
+import com.liferay.service.access.policy.configuration.SAPConfiguration;
+import com.liferay.service.access.policy.constants.SAPConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Iván Zaera
+ * @author Mika Koivisto
  */
 @Component
-public class WikiAdminPortletInstanceSettingsIdMapping
+public class SAPCompanyServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return WikiPortletInstanceConfiguration.class;
+		return SAPConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return WikiPortletKeys.WIKI_ADMIN;
+		return SAPConstants.SERVICE_NAME;
 	}
 
 }

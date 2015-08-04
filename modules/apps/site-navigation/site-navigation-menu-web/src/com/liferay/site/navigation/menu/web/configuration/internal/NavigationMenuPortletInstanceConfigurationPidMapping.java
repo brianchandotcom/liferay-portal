@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.bookmarks.configuration.internal;
+package com.liferay.site.navigation.menu.web.configuration.internal;
 
-import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
-import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
+import com.liferay.site.navigation.menu.web.configuration.NavigationMenuPortletInstanceConfiguration;
+import com.liferay.site.navigation.menu.web.constants.NavigationMenuPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Iván Zaera
+ * @author Juergen Kappler
  */
 @Component
-public class BookmarksGroupServiceSettingsIdMapping
+public class NavigationMenuPortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return BookmarksGroupServiceConfiguration.class;
+		return NavigationMenuPortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return BookmarksConstants.SERVICE_NAME;
+		return NavigationMenuPortletKeys.NAVIGATION;
 	}
 
 }

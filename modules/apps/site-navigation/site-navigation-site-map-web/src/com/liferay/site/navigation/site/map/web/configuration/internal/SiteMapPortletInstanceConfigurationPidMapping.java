@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.site.navigation.breadcrumb.web.configuration.internal;
+package com.liferay.site.navigation.site.map.web.configuration.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbPortletInstanceConfiguration;
-import com.liferay.site.navigation.breadcrumb.web.constants.BreadcrumbPortletKeys;
+import com.liferay.site.navigation.site.map.web.configuration.SiteMapPortletInstanceConfiguration;
+import com.liferay.site.navigation.site.map.web.constants.SiteMapPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Juergen Kappler
  */
 @Component
-public class BreadcrumbPortletInstanceSettingsIdMapping
+public class SiteMapPortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return BreadcrumbPortletInstanceConfiguration.class;
+		return SiteMapPortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return BreadcrumbPortletKeys.BREADCRUMB;
+		return SiteMapPortletKeys.SITE_MAP;
 	}
 
 }

@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.blogs.configuration.internal;
+package com.liferay.iframe.web.configuration.internal;
 
-import com.liferay.blogs.configuration.BlogsGroupServiceConfiguration;
+import com.liferay.iframe.web.configuration.IFramePortletInstanceConfiguration;
+import com.liferay.iframe.web.constants.IFramePortletKeys;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portlet.blogs.constants.BlogsConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Juergen Kappler
  */
 @Component
-public class BlogsGroupServiceSettingsIdMapping
+public class IFramePortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return BlogsGroupServiceConfiguration.class;
+		return IFramePortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return BlogsConstants.SERVICE_NAME;
+		return IFramePortletKeys.IFRAME;
 	}
 
 }

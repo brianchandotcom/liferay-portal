@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.site.navigation.language.web.configuration.internal;
+package com.liferay.blogs.configuration.internal;
 
+import com.liferay.blogs.configuration.BlogsGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.site.navigation.language.web.configuration.LanguagePortletInstanceConfiguration;
-import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
+import com.liferay.portlet.blogs.constants.BlogsConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Juergen Kappler
+ * @author Sergio González
  */
 @Component
-public class LanguagePortletInstanceSettingsIdMapping
+public class BlogsGroupServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return LanguagePortletInstanceConfiguration.class;
+		return BlogsGroupServiceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return LanguagePortletKeys.LANGUAGE;
+		return BlogsConstants.SERVICE_NAME;
 	}
 
 }

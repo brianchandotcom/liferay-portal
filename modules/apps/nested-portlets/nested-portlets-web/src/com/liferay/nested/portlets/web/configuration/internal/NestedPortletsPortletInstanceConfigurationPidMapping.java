@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.xsl.content.web.configuration.internal;
+package com.liferay.nested.portlets.web.configuration.internal;
 
+import com.liferay.nested.portlets.web.configuration.NestedPortletsPortletInstanceConfiguration;
+import com.liferay.nested.portlets.web.constants.NestedPortletsPortletKeys;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration;
-import com.liferay.xsl.content.web.constants.XSLContentPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Juergen Kappler
  */
 @Component
-public class XSLContentPortletInstanceSettingsIdMapping
+public class NestedPortletsPortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return XSLContentPortletInstanceConfiguration.class;
+		return NestedPortletsPortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return XSLContentPortletKeys.XSL_CONTENT;
+		return NestedPortletsPortletKeys.NESTED_PORTLETS;
 	}
 
 }

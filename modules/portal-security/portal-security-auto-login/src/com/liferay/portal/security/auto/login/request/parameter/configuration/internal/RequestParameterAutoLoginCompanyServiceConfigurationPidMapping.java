@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.wiki.web.configuration.internal;
+package com.liferay.portal.security.auto.login.request.parameter.configuration.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.web.configuration.WikiPortletInstanceConfiguration;
+import com.liferay.portal.security.auto.login.request.parameter.configuration.RequestParameterAutoLoginConfiguration;
+import com.liferay.portal.security.auto.login.request.parameter.constants.RequestParameterAutoLoginConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Iván Zaera
+ * @author Tomas Polesovsky
  */
 @Component
-public class WikiDisplayPortletInstanceSettingsIdMapping
+public class RequestParameterAutoLoginCompanyServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return WikiPortletInstanceConfiguration.class;
+		return RequestParameterAutoLoginConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return WikiPortletKeys.WIKI_DISPLAY;
+		return RequestParameterAutoLoginConstants.SERVICE_NAME;
 	}
 
 }

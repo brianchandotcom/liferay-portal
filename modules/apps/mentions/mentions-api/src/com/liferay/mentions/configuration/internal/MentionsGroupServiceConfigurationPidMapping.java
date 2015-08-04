@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.facebook.connect.configuration.internal;
+package com.liferay.mentions.configuration.internal;
 
+import com.liferay.mentions.configuration.MentionsGroupServiceConfiguration;
+import com.liferay.mentions.constants.MentionsConstants;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.security.sso.facebook.connect.configuration.FacebookConnectConfiguration;
-import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mika Koivisto
+ * @author Sergio González
  */
 @Component
-public class FacebookConnectCompanyServiceSettingsIdMapping
+public class MentionsGroupServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return FacebookConnectConfiguration.class;
+		return MentionsGroupServiceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return FacebookConnectConstants.SERVICE_NAME;
+		return MentionsConstants.SERVICE_NAME;
 	}
 
 }

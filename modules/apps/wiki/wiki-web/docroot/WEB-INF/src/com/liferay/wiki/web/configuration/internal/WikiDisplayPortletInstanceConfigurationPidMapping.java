@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.security.auto.login.request.header.configuration.internal;
+package com.liferay.wiki.web.configuration.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.security.auto.login.request.header.configuration.RequestHeaderAutoLoginConfiguration;
-import com.liferay.portal.security.auto.login.request.header.constants.RequestHeaderAutoLoginConstants;
+import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.web.configuration.WikiPortletInstanceConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mika Koivisto
+ * @author Iván Zaera
  */
 @Component
-public class RequestHeaderAutoLoginCompanyServiceSettingsIdMapping
+public class WikiDisplayPortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return RequestHeaderAutoLoginConfiguration.class;
+		return WikiPortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return RequestHeaderAutoLoginConstants.SERVICE_NAME;
+		return WikiPortletKeys.WIKI_DISPLAY;
 	}
 
 }

@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.security.auto.login.basic.auth.header.configuration.internal;
+package com.liferay.journal.content.search.web.configuration.internal;
 
+import com.liferay.journal.content.search.web.configuration.JournalContentSearchPortletInstanceConfiguration;
+import com.liferay.journal.content.search.web.constants.JournalContentSearchPortletKeys;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.security.auto.login.basic.auth.header.configuration.BasicAuthHeaderAutoLoginConfiguration;
-import com.liferay.portal.security.auto.login.basic.auth.header.constants.BasicAuthHeaderAutoLoginConstants;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Tomas Polesovsky
+ * @author Juergen Kappler
  */
 @Component
-public class BasicAuthHeaderAutoLoginCompanyServiceSettingsIdMapping
+public class JournalContentSearchPortletInstanceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return BasicAuthHeaderAutoLoginConfiguration.class;
+		return JournalContentSearchPortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return BasicAuthHeaderAutoLoginConstants.SERVICE_NAME;
+		return JournalContentSearchPortletKeys.JOURNAL_CONTENT_SEARCH;
 	}
 
 }

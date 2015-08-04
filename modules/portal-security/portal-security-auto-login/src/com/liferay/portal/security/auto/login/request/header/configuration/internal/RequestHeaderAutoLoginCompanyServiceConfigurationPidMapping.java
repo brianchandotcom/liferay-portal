@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.token.internal.configuration.internal;
+package com.liferay.portal.security.auto.login.request.header.configuration.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.security.sso.token.internal.configuration.TokenConfiguration;
-import com.liferay.portal.security.sso.token.internal.constants.TokenConstants;
+import com.liferay.portal.security.auto.login.request.header.configuration.RequestHeaderAutoLoginConfiguration;
+import com.liferay.portal.security.auto.login.request.header.constants.RequestHeaderAutoLoginConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Mika Koivisto
  */
 @Component
-public class TokenCompanyServiceSettingsIdMapping
+public class RequestHeaderAutoLoginCompanyServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return TokenConfiguration.class;
+		return RequestHeaderAutoLoginConfiguration.class;
 	}
 
 	@Override
 	public String getConfigurationPid() {
-		return TokenConstants.SERVICE_NAME;
+		return RequestHeaderAutoLoginConstants.SERVICE_NAME;
 	}
 
 }

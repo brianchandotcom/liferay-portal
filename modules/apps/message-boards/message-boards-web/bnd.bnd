@@ -5,5 +5,7 @@ Export-Package:\
 	com.liferay.message.boards.web.lar,\
 	com.liferay.message.boards.web.social,\
 	com.liferay.message.boards.web.trash
-Include-Resource: classes
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources
 Web-ContextPath: /message-boards-web

@@ -46,6 +46,8 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 }
+
+boolean mergedView = false;
 %>
 
 <%@ include file="/document_library_display/init-ext.jsp" %>

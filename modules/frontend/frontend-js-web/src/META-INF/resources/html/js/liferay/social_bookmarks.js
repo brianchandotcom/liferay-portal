@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 
 		/**
-		 * The Social Bookmarks Component. 
+		 * The Social Bookmarks Component.
 		 *
 		 * @module liferay-social-bookmarks
 		 */
@@ -17,9 +17,10 @@ AUI.add(
 		var WIN = A.getWin();
 
 		/**
-		 * A base class for `A.SocialBookmarks`.
+		 * A class to manage the different urls provided by the registered
+		 * social bookmarks plugins.
 		 *
-		 * @class A.SocialBookmarks
+		 * @class Liferay.SocialBookmarks
 		 * @extends Base
 		 * @param {Object} config object literal specifying
 		 * widget configuration properties.
@@ -42,8 +43,8 @@ AUI.add(
 					 * The direct descendant of a widget's bounding box
 					 * and houses its content.
 					 *
-					 * @attribute contentBox 
-					 * @type Object
+					 * @attribute contentBox
+					 * @type String | Node
 					 */
 					contentBox: {
 						setter: A.one
@@ -51,7 +52,7 @@ AUI.add(
 				},
 
 				/**
-				 * Extend the AUI Base module. 
+				 * Extend the AUI Base module.
 				 *
 				 * @property EXTENDS
 				 * @type Object
@@ -60,7 +61,7 @@ AUI.add(
 				EXTENDS: A.Base,
 
 				/**
-				 * Static property provides a string to identify the class. 
+				 * Static property provides a string to identify the class.
 				 *
 				 * @property NAME
 				 * @type String
@@ -71,8 +72,8 @@ AUI.add(
 				prototype: {
 
 					/**
-				 	 * Construction lifecycle implementation executed during 
-                                         * `SocialBookmarks` instantiation.
+				 	 * Construction lifecycle implementation executed during
+					 * `SocialBookmarks` instantiation.
 				 	 *
 				 	 * @method initializer
 				 	 * @protected

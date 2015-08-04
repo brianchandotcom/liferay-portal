@@ -179,6 +179,12 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="run-build-selenium">
+		<sequential>
+			<ant antfile="build.xml" dir="portal-web" target="build-selenium" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="run-functional-test">
 		<attribute name="database.type" />
 		<sequential>
@@ -246,12 +252,6 @@
 					</database-test-run-test>
 				</test-action>
 			</run-batch-test>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="run-build-selenium">
-		<sequential>
-			<ant antfile="build.xml" dir="portal-web" target="build-selenium" />
 		</sequential>
 	</macrodef>
 

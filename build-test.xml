@@ -2944,7 +2944,7 @@ go]]></replacevalue>
 		<if>
 			<os family="unix" />
 			<then>
-				<echo file="cleanjava.sh">
+				<echo file="clean_up_java_processes.sh">
 					<![CDATA[
 						#!/bin/bash
 
@@ -2957,11 +2957,11 @@ go]]></replacevalue>
 					]]>
 				</echo>
 
-				<chmod file="cleanjava.sh" perm="a+x" />
+				<chmod file="clean_up_java_processes.sh" perm="a+x" />
 
-				<exec executable="${basedir}/cleanjava.sh" />
+				<exec executable="${basedir}/clean_up_java_processes.sh" />
 
-				<delete file="cleanjava.sh" />
+				<delete file="clean_up_java_processes.sh" />
 			</then>
 		</if>
 	</target>

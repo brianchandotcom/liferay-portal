@@ -88,7 +88,9 @@ ${languageUtil.format(locale, key, arguments)}</#macro>
 </#macro>
 
 <#macro product_menu>
-	${theme.runtime("com.liferay.portlet.admin.util.PortalProductMenuApplicationType$ProductMenu", portletProviderAction.VIEW)}
+	<#if $is_setup_complete && $is_signed_in>
+		${theme.runtime("com.liferay.portlet.admin.util.PortalProductMenuApplicationType$ProductMenu", portletProviderAction.VIEW)}
+	</#if>
 </#macro>
 
 <#macro quick_access

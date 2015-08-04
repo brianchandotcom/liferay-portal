@@ -104,7 +104,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Group.class.getNam
 								String siteName = mySiteGroup.isUser() ? LanguageUtil.get(request, "my-profile") : mySiteGroup.getDescriptiveName(locale);
 								%>
 
-								<a href="<%= HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, false)) %>" role="menuitem">
+								<a href="<%= selectedSite ? "javascript:;" : HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, false)) %>" id="<portlet:namespace />selectedPublicSiteLink" role="menuitem">
 									<%= HtmlUtil.escape(siteName) %>
 								</a>
 
@@ -114,6 +114,17 @@ List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Group.class.getNam
 
 								<c:if test="<%= (mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging %>">
 									<small><liferay-ui:message key="public" /></small>
+								</c:if>
+
+								<c:if test="<%= selectedSite %>">
+									<aui:script sandbox="<%= true %>">
+										$('#<portlet:namespace />selectedPublicSiteLink').on(
+											'click',
+											function(event) {
+												$('#<portlet:namespace />site_administrationTabLink').tab('show');
+											}
+										);
+									</aui:script>
 								</c:if>
 							</li>
 						</c:if>
@@ -136,7 +147,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Group.class.getNam
 								String siteName = mySiteGroup.isUser() ? LanguageUtil.get(request, "my-dashboard") : mySiteGroup.getDescriptiveName(locale);
 								%>
 
-								<a href="<%= HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, true)) %>" role="menuitem">
+								<a href="<%= selectedSite ? "javascript:;" : HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, true)) %>" id="<portlet:namespace />selectedPrivateSiteLink" role="menuitem">
 									<%= HtmlUtil.escape(siteName) %>
 								</a>
 
@@ -146,6 +157,17 @@ List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Group.class.getNam
 
 								<c:if test="<%= (mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging %>">
 									<small><liferay-ui:message key="private" /></small>
+								</c:if>
+
+								<c:if test="<%= selectedSite %>">
+									<aui:script sandbox="<%= true %>">
+										$('#<portlet:namespace />selectedPrivateSiteLink').on(
+											'click',
+											function(event) {
+												$('#<portlet:namespace />site_administrationTabLink').tab('show');
+											}
+										);
+									</aui:script>
 								</c:if>
 							</li>
 						</c:if>

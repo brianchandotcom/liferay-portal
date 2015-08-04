@@ -69,6 +69,7 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public DLFileEntryAssetRendererFactory() {
 		setLinkable(true);
+		setPortletId(PortletKeys.DOCUMENT_LIBRARY);
 		setSupportsClassTypes(true);
 	}
 

@@ -52,6 +52,7 @@ public class DLFolderAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public DLFolderAssetRendererFactory() {
 		setCategorizable(false);
+		setPortletId(PortletKeys.DOCUMENT_LIBRARY);
 	}
 
 	@Override

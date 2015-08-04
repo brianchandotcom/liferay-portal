@@ -230,10 +230,14 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		List<AssetVocabulary> vocabularies = getGroupVocabularies(
 			groupId, start, end, obc);
 
-		if (!vocabularies.isEmpty() || !createDefaultVocabulary ||
-			assetVocabularyLocalService.getGroupVocabulariesCount(
-				new long[] {groupId}) > 0) {
+		if (!vocabularies.isEmpty() || !createDefaultVocabulary) {
+			return vocabularies;
+		}
 
+		int count = assetVocabularyLocalService.getGroupVocabulariesCount(
+			new long[] {groupId});
+
+		if (count> 0) {
 			return vocabularies;
 		}
 

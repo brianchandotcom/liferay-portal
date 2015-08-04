@@ -239,7 +239,7 @@ public class PoshiRunnerGetterUtil {
 					String tagName = line.substring(x + 1, y);
 
 					throw new Exception(
-						"Invaild \"" + tagName + "\" tag\n" + filePath + ":" +
+						"Invalid \"" + tagName + "\" tag\n" + filePath + ":" +
 							lineNumber);
 				}
 			}

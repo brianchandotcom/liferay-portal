@@ -52,13 +52,7 @@ public class MemoryPortalCache<K extends Serializable, V>
 
 	@Override
 	public List<K> getKeys() {
-		List<K> keys = new ArrayList<>();
-
-		for (K key : _concurrentMap.keySet()) {
-			keys.add(key);
-		}
-
-		return keys;
+		return new ArrayList<>(_concurrentMap.keySet());
 	}
 
 	@Override

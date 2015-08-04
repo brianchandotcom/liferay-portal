@@ -14,7 +14,6 @@
 
 package com.liferay.wiki.web.wiki.portlet.action;
 
-import com.liferay.document.library.web.settings.internal.DLPortletInstanceSettings;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -45,10 +43,8 @@ import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
@@ -77,9 +73,7 @@ import com.liferay.wiki.service.WikiPageServiceUtil;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -560,32 +554,8 @@ public class EditPageAttachmentsAction extends PortletAction {
 			PortletResponse portletResponse)
 		throws PortalException {
 
-		String portletName = portletConfig.getPortletName();
-
-		if (!portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
-			return PrefsPropsUtil.getStringArray(
-				PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
-		}
-		else {
-			ThemeDisplay themeDisplay = (ThemeDisplay)
-				portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			DLPortletInstanceSettings dlPortletInstanceSettings =
-				DLPortletInstanceSettings.getInstance(
-					themeDisplay.getLayout(), portletDisplay.getId());
-
-			Set<String> extensions = new HashSet<>();
-
-			String[] mimeTypes = dlPortletInstanceSettings.getMimeTypes();
-
-			for (String mimeType : mimeTypes) {
-				extensions.addAll(MimeTypesUtil.getExtensions(mimeType));
-			}
-
-			return extensions.toArray(new String[extensions.size()]);
-		}
+		return PrefsPropsUtil.getStringArray(
+			PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
 	}
 
 	/**

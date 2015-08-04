@@ -52,8 +52,6 @@ import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.upgrade.v7_0_0.util.DDMContentTable;
-import com.liferay.portal.upgrade.v7_0_0.util.DDMStructureTable;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -74,7 +72,6 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.ArrayList;
@@ -262,8 +259,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeDDMSchema();
-
 		upgradeStructuresAndAddStructureVersionsAndLayouts();
 		upgradeTemplatesAndAddTemplateVersions();
 		upgradeXMLStorageAdapter();
@@ -498,28 +493,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected void upgradeDDMSchema() throws Exception {
-		try {
-			runSQL("alter_column_name DDMContent xml data_ TEXT null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				DDMContentTable.TABLE_NAME, DDMContentTable.TABLE_COLUMNS,
-				DDMContentTable.TABLE_SQL_CREATE,
-				DDMContentTable.TABLE_SQL_ADD_INDEXES);
-		}
-
-		try {
-			runSQL("alter_column_name DDMStructure xsd definition TEXT null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				DDMStructureTable.TABLE_NAME, DDMStructureTable.TABLE_COLUMNS,
-				DDMStructureTable.TABLE_SQL_CREATE,
-				DDMStructureTable.TABLE_SQL_ADD_INDEXES);
 		}
 	}
 

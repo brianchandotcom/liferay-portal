@@ -1008,6 +1008,16 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="remake-dir">
+		<attribute name="dir" />
+
+		<sequential>
+			<delete dir="@{dir}" />
+
+			<mkdir dir="@{dir}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="report-test-coverage">
 		<attribute name="test.type" />
 
@@ -1042,16 +1052,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					</if>
 				</then>
 			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="remake-dir">
-		<attribute name="dir" />
-
-		<sequential>
-			<delete dir="@{dir}" />
-
-			<mkdir dir="@{dir}" />
 		</sequential>
 	</macrodef>
 

@@ -1865,29 +1865,6 @@ module.framework.base.dir=${project.dir}/osgi]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="setup-testable-tomcat-logging">
-		<sequential>
-			<if>
-				<and>
-					<equals arg1="@{testable.tomcat.debug.logging}" arg2="on" />
-					<not>
-						<resourcecontains resource="${app.server.tomcat.dir}/conf/logging.properties" substring="org.apache.catalina.level" />
-					</not>
-				</and>
-				<then>
-					<echo file="${app.server.tomcat.dir}/conf/logging.properties" append="true">
-						<![CDATA[
-org.apache.catalina.level=ALL
-
-org.apache.catalina.loader.WebappClassLoader.level=INFO
-org.apache.catalina.loader.WebappLoader.level=INFO
-org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
-					</echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="setup-testable-tomcat-jmx">
 		<sequential>
 			<var name="testable.tomcat.jmx.opts" value="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=${jmx.remote.authenticate} -Dcom.sun.management.jmxremote.port=${jmx.remote.port} -Dcom.sun.management.jmxremote.ssl=${jmx.remote.ssl}" />
@@ -1918,6 +1895,29 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 							CATALINA_OPTS="${CATALINA_OPTS} ${JMX_OPTS}"
 						]]>
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-tomcat-logging">
+		<sequential>
+			<if>
+				<and>
+					<equals arg1="@{testable.tomcat.debug.logging}" arg2="on" />
+					<not>
+						<resourcecontains resource="${app.server.tomcat.dir}/conf/logging.properties" substring="org.apache.catalina.level" />
+					</not>
+				</and>
+				<then>
+					<echo file="${app.server.tomcat.dir}/conf/logging.properties" append="true">
+						<![CDATA[
+org.apache.catalina.level=ALL
+
+org.apache.catalina.loader.WebappClassLoader.level=INFO
+org.apache.catalina.loader.WebappLoader.level=INFO
+org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</echo>
 				</then>
 			</if>
@@ -2090,28 +2090,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="start-appium">
-		<sequential>
-			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
-
-			<parallel>
-				<daemons>
-					<exec executable="/bin/bash" os="${os.unix}">
-						<env key="PATH" value="${env.PATH}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
-						<arg value="-c" />
-						<arg value="${appium.unix.cmd}" />
-					</exec>
-
-					<exec dir="${appium.win32.dir}" executable="cmd.exe" os="${os.windows}">
-						<env key="Path" value="${env.Path}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
-						<arg value="/c" />
-						<arg value="${appium.win32.cmd}" />
-					</exec>
-				</daemons>
-			</parallel>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="start-app-server">
 		<attribute default="0" name="app.server.bundle.index" />
 		<attribute default="" name="testable.portal.started.marker.file" />
@@ -2225,6 +2203,28 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-appium">
+		<sequential>
+			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
+
+			<parallel>
+				<daemons>
+					<exec executable="/bin/bash" os="${os.unix}">
+						<env key="PATH" value="${env.PATH}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
+						<arg value="-c" />
+						<arg value="${appium.unix.cmd}" />
+					</exec>
+
+					<exec dir="${appium.win32.dir}" executable="cmd.exe" os="${os.windows}">
+						<env key="Path" value="${env.Path}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
+						<arg value="/c" />
+						<arg value="${appium.win32.cmd}" />
+					</exec>
+				</daemons>
+			</parallel>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-lcs-app-server">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />
@@ -2287,25 +2287,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					/>
 				</else>
 			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="stop-appium">
-		<sequential>
-			<exec executable="/bin/bash" os="${os.unix}" >
-				<arg value="-c" />
-				<arg value="killall node" />
-			</exec>
-
-			<exec executable="/bin/bash" os="${os.unix}" >
-				<arg value="-c" />
-				<arg value="fuser -k 9515/tcp" />
-			</exec>
-
-			<exec executable="cmd.exe" os="${os.windows}" >
-				<arg value="/c" />
-				<arg value="tskill node" />
-			</exec>
 		</sequential>
 	</macrodef>
 
@@ -2376,6 +2357,25 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<record action="stop" name="${project.dir}/log" />
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-appium">
+		<sequential>
+			<exec executable="/bin/bash" os="${os.unix}" >
+				<arg value="-c" />
+				<arg value="killall node" />
+			</exec>
+
+			<exec executable="/bin/bash" os="${os.unix}" >
+				<arg value="-c" />
+				<arg value="fuser -k 9515/tcp" />
+			</exec>
+
+			<exec executable="cmd.exe" os="${os.windows}" >
+				<arg value="/c" />
+				<arg value="tskill node" />
+			</exec>
 		</sequential>
 	</macrodef>
 

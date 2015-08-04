@@ -616,8 +616,19 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		Document document = readXML(content);
 
 		checkOrder(
+			fileName, document.getRootElement(), "macrodef", null,
+			new ElementComparator());
+		checkOrder(
 			fileName, document.getRootElement(), "target", null,
 			new ElementComparator());
+
+		int i1 = content.lastIndexOf("</macrodef>");
+		int i2 = content.indexOf("</target>");
+
+		if ((i2 != -1) && (i1 > i2)) {
+			processErrorMessage(
+				fileName, "macrodefs go before targets: " + fileName);
+		}
 
 		return newContent;
 	}

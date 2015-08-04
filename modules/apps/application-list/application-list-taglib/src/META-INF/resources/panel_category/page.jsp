@@ -31,7 +31,7 @@ List<PanelApp> panelApps = panelAppRegistry.getPanelApps(panelCategory, permissi
 	%>
 
 	<a aria-expanded="false" class="collapse-icon collapsed list-group-heading" data-toggle="collapse" href="#<%= panelPageCategoryId %>">
-		<h5><%= panelCategory.getLabel(themeDisplay.getLocale()) %></h5>
+		<%= panelCategory.getLabel(themeDisplay.getLocale()) %>
 	</a>
 
 	<%
@@ -40,7 +40,7 @@ List<PanelApp> panelApps = panelAppRegistry.getPanelApps(panelCategory, permissi
 
 	<div class="collapse <%= panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), panelCategory) ? "in" : StringPool.BLANK %>" id="<%= panelPageCategoryId %>">
 		<div class="list-group-item">
-			<ul aria-labelledby="<%= panelPageCategoryId %>" class="category-portlets list-unstyled" role="menu">
+			<ul aria-labelledby="<%= panelPageCategoryId %>" class="nav nav-equal-height" role="menu">
 
 				<%
 				for (PanelApp panelApp : panelApps) {

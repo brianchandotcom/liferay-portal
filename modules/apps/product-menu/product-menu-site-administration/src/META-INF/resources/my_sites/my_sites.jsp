@@ -29,12 +29,12 @@ List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Group.class.getNam
 	%>
 
 	<a aria-expanded="false" class="collapse-icon collapsed list-group-heading" data-toggle="collapse" href="#<%= panelPageCategoryId %>">
-		<h5><%= LanguageUtil.get(themeDisplay.getLocale(), "my-sites") %></h5>
+		<liferay-ui:message key="my-sites" />
 	</a>
 
 	<div class="collapse" id="<%= panelPageCategoryId %>">
 		<div class="list-group-item">
-			<ul aria-labelledby="<%= panelCategory.getKey() %>" class="category-portlets list-unstyled" role="menu">
+			<ul aria-labelledby="<%= panelCategory.getKey() %>" class="nav nav-equal-height" role="menu">
 
 			<%
 			for (Group mySiteGroup : mySiteGroups) {
@@ -98,25 +98,23 @@ List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Group.class.getNam
 							themeDisplay.setDoAsGroupId(siteGroup.getGroupId());
 							%>
 
-							<li class="<%= selectedSite ? "selected" : StringPool.BLANK %>">
+							<li class="<%= selectedSite ? "active" : StringPool.BLANK %>">
 
 								<%
 								String siteName = mySiteGroup.isUser() ? LanguageUtil.get(request, "my-profile") : mySiteGroup.getDescriptiveName(locale);
 								%>
 
-								<h5>
-									<a href="<%= HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, false)) %>" role="menuitem">
-										<%= HtmlUtil.escape(siteName) %>
-									</a>
+								<a href="<%= HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, false)) %>" role="menuitem">
+									<%= HtmlUtil.escape(siteName) %>
+								</a>
 
-									<c:if test="<%= showPublicSiteStaging %>">
-										<small><liferay-ui:message key="staging" /></small>
-									</c:if>
+								<c:if test="<%= showPublicSiteStaging %>">
+									<small><liferay-ui:message key="staging" /></small>
+								</c:if>
 
-									<c:if test="<%= (mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging %>">
-										<small><liferay-ui:message key="public" /></small>
-									</c:if>
-								</h5>
+								<c:if test="<%= (mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging %>">
+									<small><liferay-ui:message key="public" /></small>
+								</c:if>
 							</li>
 						</c:if>
 
@@ -132,25 +130,23 @@ List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Group.class.getNam
 							themeDisplay.setDoAsGroupId(siteGroup.getGroupId());
 							%>
 
-							<li class="<%= selectedSite ? "selected" : StringPool.BLANK %>">
+							<li class="<%= selectedSite ? "active" : StringPool.BLANK %>">
 
 								<%
 								String siteName = mySiteGroup.isUser() ? LanguageUtil.get(request, "my-dashboard") : mySiteGroup.getDescriptiveName(locale);
 								%>
 
-								<h5>
-									<a href="<%= HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, true)) %>" role="menuitem">
-										<%= HtmlUtil.escape(siteName) %>
-									</a>
+								<a href="<%= HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, true)) %>" role="menuitem">
+									<%= HtmlUtil.escape(siteName) %>
+								</a>
 
-									<c:if test="<%= showPrivateSiteStaging %>">
-										<small><liferay-ui:message key="staging" /></small>
-									</c:if>
+								<c:if test="<%= showPrivateSiteStaging %>">
+									<small><liferay-ui:message key="staging" /></small>
+								</c:if>
 
-									<c:if test="<%= (mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging %>">
-										<small><liferay-ui:message key="private" /></small>
-									</c:if>
-								</h5>
+								<c:if test="<%= (mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging %>">
+									<small><liferay-ui:message key="private" /></small>
+								</c:if>
 							</li>
 						</c:if>
 

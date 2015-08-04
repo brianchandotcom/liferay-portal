@@ -24,7 +24,7 @@ String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.
 %>
 
 <a aria-expanded="false" class="collapse-icon collapsed list-group-heading" data-toggle="collapse" href="#<%= panelPageCategoryId %>">
-	<h5><%= LanguageUtil.get(themeDisplay.getLocale(), "content") %></h5>
+	<liferay-ui:message key="content" />
 </a>
 
 <div class="collapse" id="<%= panelPageCategoryId %>">
@@ -90,7 +90,7 @@ String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.
 			</div>
 		</c:if>
 
-		<ul aria-labelledby="<%= panelPageCategoryId %>" class="category-portlets list-unstyled" role="menu">
+		<ul aria-labelledby="<%= panelPageCategoryId %>" class="nav nav-equal-height" role="menu">
 
 			<%
 			for (PanelApp panelApp : panelAppRegistry.getPanelApps(panelCategory)) {

@@ -455,10 +455,10 @@
 		<if>
 			<and>
 				<condition function="IsElementNotPresent#isNotVisible" locator1="PGStaging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-				<condition function="IsElementPresent" locator1="PGStaging#STAGING_BUTTON" />
+				<condition function="IsElementPresent" locator1="Dockbar#STAGING_ICON" />
 			</and>
 			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="PGStaging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
+				<execute function="Click" locator1="Dockbar#STAGING_ICON" />
 				<execute function="AssertElementPresent" locator1="PGStaging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
 			</then>
 		</if>

@@ -17,7 +17,7 @@ AUI.add(
 		var WIN = A.getWin();
 
 		/**
-		 * A class to manage the different urls provided by the registered
+		 * A class to manage the different URLs provided by the registered
 		 * social bookmarks plugins.
 		 *
 		 * @class Liferay.SocialBookmarks

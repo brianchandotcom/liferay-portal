@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.auto.login.request.header.configuration.RequestHeaderAutoLoginConfiguration;
 import com.liferay.portal.security.auto.login.request.header.constants.RequestHeaderAutoLoginConstants;
+import com.liferay.portal.security.auto.login.request.header.module.configuration.RequestHeaderAutoLoginConfiguration;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Wesley Gong
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.auto.login.request.header.configuration.RequestHeaderAutoLoginConfiguration",
+	configurationPid = "com.liferay.portal.security.auto.login.request.header.module.configuration.RequestHeaderAutoLoginConfiguration",
 	immediate = true, service = AutoLogin.class
 )
 public class RequestHeaderAutoLogin extends BaseAutoLogin {

@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.auto.login.request.parameter.configuration.RequestParameterAutoLoginConfiguration;
 import com.liferay.portal.security.auto.login.request.parameter.constants.RequestParameterAutoLoginConstants;
+import com.liferay.portal.security.auto.login.request.parameter.module.configuration.RequestParameterAutoLoginConfiguration;
 import com.liferay.portal.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tomas Polesovsky
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.auto.login.request.parameter.configuration.RequestParameterAutoLoginConfiguration",
+	configurationPid = "com.liferay.portal.security.auto.login.request.parameter.module.configuration.RequestParameterAutoLoginConfiguration",
 	immediate = true, service = AutoLogin.class
 )
 public class RequestParameterAutoLogin extends BaseAutoLogin {

@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
 import com.liferay.portal.security.sso.cas.constants.CASWebKeys;
+import com.liferay.portal.security.sso.cas.module.configuration.CASConfiguration;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.HashMap;
@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Balogh
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.cas.configuration.CASConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.cas.module.configuration.CASConfiguration",
 	immediate = true,
 	property = {
 		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",

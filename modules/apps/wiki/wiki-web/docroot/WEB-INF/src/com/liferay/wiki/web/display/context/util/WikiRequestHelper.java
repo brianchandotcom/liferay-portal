@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.settings.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration;
 
 import javax.servlet.http.HttpServletRequest;

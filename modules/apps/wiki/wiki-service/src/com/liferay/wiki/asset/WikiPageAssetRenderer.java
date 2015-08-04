@@ -29,6 +29,7 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
+import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
@@ -36,7 +37,6 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
-import com.liferay.wiki.settings.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.util.WikiUtil;
 
 import java.util.Date;

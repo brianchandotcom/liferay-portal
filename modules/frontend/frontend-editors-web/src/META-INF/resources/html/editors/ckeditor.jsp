@@ -422,6 +422,10 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 		var ckEditor = CKEDITOR.instances['<%= name %>'];
 
+		ckEditor.getNextZIndex = function() {
+			return CKEDITOR.dialog._.currentZIndex ? CKEDITOR.dialog._.currentZIndex + 10 : Liferay.zIndex.OVERLAY;
+		};
+
 		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editors.web#" + editorName + "#onEditorCreate" %>' />
 
 		<c:if test="<%= inlineEdit && (Validator.isNotNull(inlineEditSaveURL)) %>">

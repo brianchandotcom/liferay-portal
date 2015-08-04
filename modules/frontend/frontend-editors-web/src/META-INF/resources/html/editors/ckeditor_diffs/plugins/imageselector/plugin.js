@@ -112,6 +112,8 @@
 				var itemSelectorDialog = instance._itemSelectorDialog;
 
 				if (itemSelectorDialog) {
+					itemSelectorDialog.set('zIndex', editor.getNextZIndex());
+
 					callback(itemSelectorDialog);
 				}
 				else {
@@ -123,7 +125,8 @@
 							itemSelectorDialog = new A.LiferayItemSelectorDialog(
 								{
 									eventName: eventName,
-									url: editor.config.filebrowserImageBrowseUrl
+									url: editor.config.filebrowserImageBrowseUrl,
+									zIndex: editor.getNextZIndex()
 								}
 							);
 

@@ -26,9 +26,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.FileNameException;
@@ -39,6 +37,7 @@ import com.liferay.wiki.exception.PageAttachmentSizeException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import java.io.IOException;
@@ -78,16 +77,10 @@ public class PageAttachmentWikiUploadHandler extends BaseUploadHandler {
 			long groupId, PermissionChecker permissionChecker)
 		throws PortalException {
 
-		boolean containsBaseModelPermission =
-			BaseModelPermissionCheckerUtil.containsBaseModelPermission(
-				permissionChecker, groupId, WikiPage.class.getName(), _classPK,
-				ActionKeys.UPDATE);
+		WikiPage page = WikiPageLocalServiceUtil.getPage(_classPK);
 
-		if (!containsBaseModelPermission) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, WikiPage.class.getName(), _classPK,
-				ActionKeys.UPDATE);
-		}
+		WikiNodePermissionChecker.check(
+			permissionChecker, page.getNodeId(), ActionKeys.ADD_ATTACHMENT);
 	}
 
 	@Override

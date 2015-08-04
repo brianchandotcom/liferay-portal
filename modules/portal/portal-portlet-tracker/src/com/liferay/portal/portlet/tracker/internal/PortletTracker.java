@@ -125,7 +125,9 @@ public class PortletTracker
 		if (Validator.isNull(portletName)) {
 			Class<?> clazz = portlet.getClass();
 
-			portletName = clazz.getName();
+			portletName = StringUtil.replace(
+				clazz.getName(), new String[] {".", "$"},
+				new String[] {"_", "_"});
 		}
 
 		String portletId = StringUtil.replace(

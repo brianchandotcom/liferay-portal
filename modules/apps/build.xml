@@ -13,7 +13,6 @@
 		<dirset dir="comment" includes="*" />
 		<dirset dir="configuration-admin" includes="*" />
 		<dirset dir="control-menu" includes="*" />
-		<dirset dir="control-panel" includes="*" />
 		<dirset dir="currency-converter" includes="*" />
 		<dirset dir="dictionary" includes="*" />
 		<dirset dir="document-library" includes="*" />

@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Control Panel Menu Web
-Bundle-SymbolicName: com.liferay.control.panel.menu.web
-Bundle-Version: 1.0.0
-Include-Resource:\
-	classes,\
-	META-INF/resources=src/META-INF/resources
-Web-ContextPath: /control-panel-menu-web

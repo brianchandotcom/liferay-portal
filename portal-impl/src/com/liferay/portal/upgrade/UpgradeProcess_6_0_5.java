@@ -33,6 +33,7 @@ public class UpgradeProcess_6_0_5 extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgrade(UpgradeSchema.class);
+
 		upgrade(UpgradeJournal.class);
 		upgrade(UpgradeLayout.class);
 	}

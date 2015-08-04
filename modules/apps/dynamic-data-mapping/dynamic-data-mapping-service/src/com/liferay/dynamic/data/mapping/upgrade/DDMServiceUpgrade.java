@@ -53,6 +53,7 @@ public class DDMServiceUpgrade {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
 		upgradeProcesses.add(new UpgradeSchema());
+
 		upgradeProcesses.add(new UpgradeClassNames());
 		upgradeProcesses.add(new UpgradeDynamicDataMapping());
 		upgradeProcesses.add(new UpgradeLastPublishDate());

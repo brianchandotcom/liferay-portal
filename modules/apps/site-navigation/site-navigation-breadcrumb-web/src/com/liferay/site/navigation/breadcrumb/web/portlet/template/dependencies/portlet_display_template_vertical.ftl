@@ -15,9 +15,16 @@
 	</style>
 
 	<div class="breadcrumb breadcrumb-vertical">
-	    <ul>
+	    <ul class="breadcrumb">
 		    <#list entries as entry>
-			    <li><a href="${entry.getURL()!""}">${htmlUtil.escape(entry.getTitle())}</a></li>
+				<#assign entryHrefLink = "">
+
+				<#if entry.isBrowsable()>
+					<#assign entryURL = entry.getURL()!"">
+					<#assign entryHrefLink = "href='${entryURL}'">
+				</#if>
+
+				<li><a ${entryHrefLink}>${htmlUtil.escape(entry.getTitle())}</a></li>
 		    </#list>
 	    </ul>
 	</div>

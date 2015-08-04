@@ -67,7 +67,7 @@
 <!--PRODUCT_MENU_PANEL-->
 <tr>
 	<td>PRODUCT_MENU_PANEL_SITES_PANEL_TITLE</td>
-	<td>//div[contains(@id,'site_administration')]//h5[contains(.,'${key_portletCategoryName}')]</td>
+	<td>//div[contains(@id,'site_administration')]//a[contains(.,'${key_portletCategoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TOOLBAR_ADD</td>
-	<td>//li[@id='_199_addButtonContainer']/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TOOLBAR_SORT_BY</td>
 	<td>//li[@id='_199_sortButtonContainer']/a</td>
 	<td></td>
@@ -66,11 +61,6 @@
 <tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[contains(@class,'entries-empty') and contains(@class,'alert') and contains(@class,'alert-info')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -154,11 +144,6 @@
 <tr>
 	<td>ADD_MENULIST_MULTIPLE_DOCUMENTS</td>
 	<td>//li[@id='_199_addButtonContainer']/ul/li/a[contains(.,'Multiple Documents')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_MENULIST_BASIC_DOCUMENT</td>
-	<td>//li[@id='_199_addButtonContainer']/ul/li/a[contains(.,'Basic Document')]</td>
 	<td></td>
 </tr>
 <tr>

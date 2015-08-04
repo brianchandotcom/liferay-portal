@@ -41,11 +41,11 @@
 
 		<execute function="AssertClick" locator1="CPSitetemplatesAdd#SAVE_BUTTON" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPSitetemplateSettings#PORTLET_TITLE" value1="Site Template Settings" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="Site Template Settings" />
 
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="CPSitetemplatesConfiguration#SITE_TEMPLATE_NAME" value1="${siteTemplateName}" />
+		<execute function="AssertTextEquals" locator1="CPSitetemplatesAdd#NAME_FIELD" value1="${siteTemplateName}" />
 	</command>
 
 	<command name="addSitePageViaSiteTemplateCP">
@@ -191,7 +191,7 @@
 		<execute function="AssertClick" locator1="CPSitetemplatesConfiguration#CONFIGURATION" value1="Configuration" />
 		<execute function="AssertClick" locator1="CPSitetemplatesConfiguration#CONFIGURATION_SITE_TEMPLATE_SETTINGS" value1="Site Template Settings" />
 
-		<execute function="AssertTextEquals" locator1="CPSitetemplateSettings#PORTLET_TITLE" value1="Site Template Settings" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="Site Template Settings" />
 	</command>
 
 	<command name="gotoViewPages">

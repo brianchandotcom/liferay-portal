@@ -309,7 +309,7 @@
 			<then>
 				<execute macro="Page#changeSiteScope">
 					<var name="portletCategoryName" value="My Sites" />
-					<var name="siteName" value="{siteScopeName}" />
+					<var name="siteName" value="${siteScopeName}" />
 				</execute>
 			</then>
 		</if>

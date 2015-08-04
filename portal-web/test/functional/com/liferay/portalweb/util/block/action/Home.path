@@ -203,7 +203,7 @@
 <!--PAGE-->
 <tr>
 	<td>PAGE</td>
-	<td>//nav[contains(@id,'navigation')]/ul/li/a/span[contains(.,'${key_pageName}')]</td>
+	<td>//nav[contains(@class,'site-navigation')]/ul/li/a[contains(.,'${key_pageName}')]</td>
 	<td>Page</td>
 </tr>
 <tr>

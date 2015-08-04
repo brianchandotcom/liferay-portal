@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
+import com.liferay.portal.security.sso.ntlm.module.configuration.NtlmConfiguration;
 import com.liferay.portal.security.sso.ntlm.msrpc.NetrServerAuthenticate3;
 import com.liferay.portal.security.sso.ntlm.msrpc.NetrServerReqChallenge;
 
@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.ntlm.module.configuration.NtlmConfiguration",
 	immediate = true, service = NetlogonConnectionManager.class
 )
 public class NetlogonConnectionManagerImpl

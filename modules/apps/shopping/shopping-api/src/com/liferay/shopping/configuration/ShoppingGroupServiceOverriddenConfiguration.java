@@ -15,7 +15,7 @@
 package com.liferay.shopping.configuration;
 
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.shopping.configuration.internal.ShoppingGroupServiceConfigurationOverrideImpl;
+import com.liferay.shopping.configuration.definition.ShoppingGroupServiceConfigurationOverrideImpl;
 
 /**
  * @author Brian Wing Shun Chan

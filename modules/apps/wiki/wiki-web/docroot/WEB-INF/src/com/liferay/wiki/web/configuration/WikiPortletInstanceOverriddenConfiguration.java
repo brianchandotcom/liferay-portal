@@ -15,7 +15,7 @@
 package com.liferay.wiki.web.configuration;
 
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.wiki.web.configuration.internal.WikiPortletInstanceConfigurationOverrideImpl;
+import com.liferay.wiki.web.configuration.definition.WikiPortletInstanceConfigurationOverrideImpl;
 
 /**
  * @author Iván Zaera

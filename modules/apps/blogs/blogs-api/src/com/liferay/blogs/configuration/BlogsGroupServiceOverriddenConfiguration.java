@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.configuration;
 
-import com.liferay.blogs.configuration.internal.BlogsGroupServiceConfigurationOverrideImpl;
+import com.liferay.blogs.configuration.definition.BlogsGroupServiceConfigurationOverrideImpl;
 import com.liferay.portal.kernel.settings.Settings;
 
 /**

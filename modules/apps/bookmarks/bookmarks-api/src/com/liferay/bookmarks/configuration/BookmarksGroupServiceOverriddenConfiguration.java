@@ -14,7 +14,7 @@
 
 package com.liferay.bookmarks.configuration;
 
-import com.liferay.bookmarks.configuration.internal.BookmarksGroupServiceConfigurationOverrideImpl;
+import com.liferay.bookmarks.configuration.definition.BookmarksGroupServiceConfigurationOverrideImpl;
 import com.liferay.portal.kernel.settings.Settings;
 
 /**

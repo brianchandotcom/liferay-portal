@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.sso.SSO;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
+import com.liferay.portal.security.sso.ntlm.module.configuration.NtlmConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.ntlm.module.configuration.NtlmConfiguration",
 	immediate = true, service = SSO.class
 )
 public class SSOImpl implements SSO {

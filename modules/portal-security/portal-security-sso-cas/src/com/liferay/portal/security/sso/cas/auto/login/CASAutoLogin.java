@@ -29,9 +29,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
-import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
 import com.liferay.portal.security.sso.cas.constants.CASWebKeys;
+import com.liferay.portal.security.sso.cas.module.configuration.CASConfiguration;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daeyoung Song
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.cas.configuration.CASConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.cas.module.configuration.CASConfiguration",
 	immediate = true, service = AutoLogin.class
 )
 public class CASAutoLogin extends BaseAutoLogin {

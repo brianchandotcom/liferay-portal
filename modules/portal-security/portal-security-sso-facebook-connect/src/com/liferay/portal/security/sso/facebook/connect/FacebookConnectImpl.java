@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.sso.facebook.connect.configuration.FacebookConnectConfiguration;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectWebKeys;
+import com.liferay.portal.security.sso.facebook.connect.module.configuration.FacebookConnectConfiguration;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mika Koivisto
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.facebook.connect.configuration.FacebookConnectConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.facebook.connect.module.configuration.FacebookConnectConfiguration",
 	immediate = true, service = FacebookConnect.class
 )
 public class FacebookConnectImpl implements FacebookConnect {

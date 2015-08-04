@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
+import com.liferay.portal.security.sso.opensso.module.configuration.OpenSSOConfiguration;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Hugo Huijser
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.opensso.module.configuration.OpenSSOConfiguration",
 	immediate = true,
 	property = {
 		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",

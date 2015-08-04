@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
-import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmWebKeys;
+import com.liferay.portal.security.sso.ntlm.module.configuration.NtlmConfiguration;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Farache
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.ntlm.module.configuration.NtlmConfiguration",
 	immediate = true, service = AutoLogin.class
 )
 public class NtlmAutoLogin extends BaseAutoLogin {

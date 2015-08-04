@@ -1315,8 +1315,8 @@
 		</method>
 	</javadoc>
 	<javadoc>
-		<name>WikiAdminPortletInstanceSettingsIdMapping</name>
-		<type>com.liferay.wiki.web.configuration.internal.WikiAdminPortletInstanceSettingsIdMapping</type>
+		<name>WikiAdminPortletInstanceConfigurationPidMapping</name>
+		<type>com.liferay.wiki.web.configuration.definition.WikiAdminPortletInstanceConfigurationPidMapping</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>getConfigurationBeanClass</name>
@@ -1332,8 +1332,8 @@
 		</method>
 	</javadoc>
 	<javadoc>
-		<name>WikiDisplayPortletInstanceSettingsIdMapping</name>
-		<type>com.liferay.wiki.web.configuration.internal.WikiDisplayPortletInstanceSettingsIdMapping</type>
+		<name>WikiDisplayPortletInstanceConfigurationPidMapping</name>
+		<type>com.liferay.wiki.web.configuration.definition.WikiDisplayPortletInstanceConfigurationPidMapping</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>getConfigurationBeanClass</name>
@@ -1350,7 +1350,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiPortletInstanceConfigurationBeanDeclaration</name>
-		<type>com.liferay.wiki.web.configuration.internal.WikiPortletInstanceConfigurationBeanDeclaration</type>
+		<type>com.liferay.wiki.web.configuration.definition.WikiPortletInstanceConfigurationBeanDeclaration</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>getConfigurationBeanClass</name>
@@ -1360,8 +1360,8 @@
 		</method>
 	</javadoc>
 	<javadoc>
-		<name>WikiPortletInstanceSettingsIdMapping</name>
-		<type>com.liferay.wiki.web.configuration.internal.WikiPortletInstanceSettingsIdMapping</type>
+		<name>WikiPortletInstanceConfigurationPidMapping</name>
+		<type>com.liferay.wiki.web.configuration.definition.WikiPortletInstanceConfigurationPidMapping</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>getConfigurationBeanClass</name>
@@ -1378,7 +1378,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiPortletInstanceSettingsOverrideImpl</name>
-		<type>com.liferay.wiki.web.configuration.internal.WikiPortletInstanceConfigurationOverrideImpl</type>
+		<type>com.liferay.wiki.web.configuration.definition.WikiPortletInstanceConfigurationOverrideImpl</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>WikiPortletInstanceSettingsOverrideImpl</name>

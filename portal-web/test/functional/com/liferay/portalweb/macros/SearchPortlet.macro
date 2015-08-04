@@ -13,7 +13,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="configureDisplaySettingsSearchPG">
+	<command name="configureAssetType">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletNameBorderless" value="Search" />
 			<var name="portletOption" value="Configuration" />

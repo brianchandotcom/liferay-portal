@@ -16,6 +16,16 @@
 
 <%@ include file="/group_statistics/init.jsp" %>
 
+<%
+groupStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(GroupStatisticsPortletInstanceConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource())));
+
+int displayActivityCounterNameIndexCount = groupStatisticsPortletInstanceConfiguration.displayActivityCounterName().length;
+
+if (displayActivityCounterNameIndexCount == 0) {
+	displayActivityCounterNameIndexCount = 1;
+}
+%>
+
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
@@ -29,13 +39,14 @@
 			<aui:fieldset label="">
 
 				<%
-				for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
-					request.setAttribute("configuration.jsp-index", String.valueOf(displayActivityCounterNameIndex));
+				for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < displayActivityCounterNameIndexCount; displayActivityCounterNameIndex++) {
 				%>
 
 					<div class="lfr-form-row">
 						<div class="row-fields">
-							<liferay-util:include page="/group_statistics/add_activity_counter.jsp" servletContext="<%= application %>" />
+							<liferay-util:include page="/group_statistics/add_activity_counter.jsp" servletContext="<%= application %>">
+								<liferay-util:param name="index" value="<%= String.valueOf(displayActivityCounterNameIndex) %>" />
+							</liferay-util:include>
 						</div>
 					</div>
 
@@ -50,9 +61,8 @@
 			var autoFields = new Liferay.AutoFields(
 				{
 					contentBox: '#<portlet:namespace />displayActivityCounterNames > fieldset',
-					fieldIndexes: '<portlet:namespace />preferences--displayActivityCounterNameIndexes--',
 					namespace: '<portlet:namespace />',
-					url: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/group_statistics/add_group_statistics_activity_counter" /></portlet:renderURL>'
+					url: '<liferay-portlet:renderURL portletName="<%= GroupStatisticsPortletKeys.GROUP_STATISTICS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><liferay-portlet:param name="mvcPath" value="/group_statistics/add_activity_counter.jsp" /><liferay-portlet:param name="index" value="<%= String.valueOf(displayActivityCounterNameIndexCount) %>" /></liferay-portlet:renderURL>'
 				}
 			).render();
 		</aui:script>

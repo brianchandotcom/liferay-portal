@@ -17,12 +17,26 @@
 <%@ include file="/group_statistics/init.jsp" %>
 
 <%
-int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String) request.getAttribute("configuration.jsp-index")));
+groupStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(GroupStatisticsPortletInstanceConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource())));
 
-String displayActivityCounterName = PrefsParamUtil.getString(portletPreferences, request, "displayActivityCounterName" + index);
-String chartType = PrefsParamUtil.getString(portletPreferences, request, "chartType" + index);
-int chartWidth = PrefsParamUtil.getInteger(portletPreferences, request, "chartWidth" + index, 35);
-String dataRange = PrefsParamUtil.getString(portletPreferences, request, "dataRange" + index);
+int index = ParamUtil.getInteger(request, "index");
+
+String[] displayActivityCounterNames = groupStatisticsPortletInstanceConfiguration.displayActivityCounterName();
+String[] chartTypes = groupStatisticsPortletInstanceConfiguration.chartType();
+String[] chartWidths = groupStatisticsPortletInstanceConfiguration.chartWidth();
+String[] dataRanges = groupStatisticsPortletInstanceConfiguration.dataRange();
+
+String displayActivityCounterName = "";
+String chartType = "";
+int chartWidth = 35;
+String dataRange = "";
+
+if (index < displayActivityCounterNames.length) {
+	displayActivityCounterName = displayActivityCounterNames[index];
+	chartType = chartTypes[index];
+	chartWidth = GetterUtil.getInteger(chartWidths[index], chartWidth);
+	dataRange = dataRanges[index];
+}
 
 List<String> activityCounterNames = SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_ACTOR);
 

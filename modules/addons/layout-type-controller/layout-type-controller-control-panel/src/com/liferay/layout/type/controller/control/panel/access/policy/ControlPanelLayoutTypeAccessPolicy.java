@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.control.panel.menu.web.layout;
+package com.liferay.layout.type.controller.control.panel.access.policy;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.WebKeys;

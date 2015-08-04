@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.upload.BaseUploadHandler;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
@@ -31,14 +30,10 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
-import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
-import com.liferay.wiki.exception.PageAttachmentNameException;
-import com.liferay.wiki.exception.PageAttachmentSizeException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
-import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -114,9 +109,7 @@ public class PageAttachmentWikiUploadHandler extends BaseUploadHandler {
 		jsonObject.put("success", Boolean.FALSE);
 
 		if (pe instanceof AntivirusScannerException ||
-			pe instanceof FileNameException ||
-			pe instanceof PageAttachmentNameException ||
-			pe instanceof PageAttachmentSizeException) {
+			pe instanceof FileNameException) {
 
 			String errorMessage = StringPool.BLANK;
 			int errorType = 0;
@@ -131,13 +124,6 @@ public class PageAttachmentWikiUploadHandler extends BaseUploadHandler {
 				AntivirusScannerException ase = (AntivirusScannerException)pe;
 
 				errorMessage = themeDisplay.translate(ase.getMessageKey());
-			}
-			else if (pe instanceof PageAttachmentNameException) {
-				errorType =
-					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
-			}
-			else if (pe instanceof PageAttachmentSizeException) {
-				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 			}
 			else if (pe instanceof FileNameException) {
 				errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
@@ -166,33 +152,6 @@ public class PageAttachmentWikiUploadHandler extends BaseUploadHandler {
 	@Override
 	protected void validateFile(String fileName, String contentType, long size)
 		throws PortalException {
-
-		WikiWebComponentProvider wikiWebComponentProvider =
-			WikiWebComponentProvider.getWikiWebComponentProvider();
-
-		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-			wikiWebComponentProvider.getWikiGroupServiceConfiguration();
-
-		long maxSize = wikiGroupServiceConfiguration.imageMaxSize();
-
-		if ((maxSize > 0) && (size > maxSize)) {
-			throw new PageAttachmentSizeException();
-		}
-
-		String extension = FileUtil.getExtension(fileName);
-
-		for (String imageExtension :
-			wikiGroupServiceConfiguration.imageExtensions()) {
-
-			if (StringPool.STAR.equals(imageExtension) ||
-				imageExtension.equals(StringPool.PERIOD + extension)) {
-
-				return;
-			}
-		}
-
-		throw new PageAttachmentNameException(
-			"Invalid image for file name " + fileName);
 	}
 
 	private final long _classPK;

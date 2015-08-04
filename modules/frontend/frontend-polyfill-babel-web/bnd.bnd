@@ -1,6 +1,6 @@
-Bundle-Name: Babel Browser Polyfill
-Bundle-SymbolicName: com.liferay.frontend.babel.browser.polyfill
+Bundle-Name: Babel Polyfill
+Bundle-SymbolicName: com.liferay.frontend.polyfill.babel
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes
-Web-ContextPath: /frontend-babel-browser-polyfill
+Web-ContextPath: /frontend-polyfill-babel-web

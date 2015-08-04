@@ -2,7 +2,7 @@ Loader.addModule(
 	{
 		dependencies: [],
 		exports: '_babelPolyfill',
-		name: 'babel-browser-polyfill',
-		path: '/o/frontend-babel-browser-polyfill/browser-polyfill.min.js'
+		name: 'polyfill-babel',
+		path: '/o/frontend-polyfill-babel-web/browser-polyfill.min.js'
 	}
 );

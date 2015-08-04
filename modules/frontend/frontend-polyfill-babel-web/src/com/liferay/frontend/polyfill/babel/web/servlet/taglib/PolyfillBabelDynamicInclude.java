@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.babel.polyfill.servlet.taglib;
+package com.liferay.frontend.polyfill.babel.web.servlet.taglib;
 
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Chema Balsas
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class BabelPolyfillDynamicInclude implements DynamicInclude {
+public class PolyfillBabelDynamicInclude implements DynamicInclude {
 
 	@Override
 	public void include(

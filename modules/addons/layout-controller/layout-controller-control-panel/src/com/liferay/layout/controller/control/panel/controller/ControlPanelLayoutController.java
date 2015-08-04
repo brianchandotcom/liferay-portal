@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.control.panel.menu.web.layout;
+package com.liferay.layout.controller.control.panel.controller;
 
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
@@ -112,7 +112,7 @@ public class ControlPanelLayoutController
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.control.panel.menu.web)"
+		target = "(osgi.web.symbolicname=com.liferay.layout.controller.control.panel)"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

@@ -17,51 +17,25 @@
 <%@ include file="/sites/init.jsp" %>
 
 <%
-PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
-PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
-
-boolean isSiteAdministrationPortlet = false;
-
-if (Validator.isNotNull(themeDisplay.getPpid())) {
-	PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
-
-	PanelCategory siteAdministrationPanelCategory = panelCategoryRegistry.getPanelCategory(PanelCategoryKeys.SITE_ADMINISTRATION);
-
-	isSiteAdministrationPortlet = panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), siteAdministrationPanelCategory);
-}
-
-Group group = layout.getGroup();
-
-if (layout instanceof VirtualLayout) {
-	VirtualLayout virtualLayout = (VirtualLayout)layout;
-
-	Layout sourceLayout = virtualLayout.getSourceLayout();
-
-	group = sourceLayout.getGroup();
-}
-
-boolean showSiteSelector = ParamUtil.getBoolean(request, "showSiteSelector", group.isControlPanel() && !isSiteAdministrationPortlet);
-
-if (showSiteSelector) {
-	panelCategory = panelCategoryRegistry.getPanelCategory(PanelCategoryKeys.SITES);
-}
 %>
 
-<c:if test="<%= !showSiteSelector %>">
-
-	<%
-	String selectSiteURL = HttpUtil.addParameter(currentURL, liferayPortletResponse.getNamespace() + "showSiteSelector", true);
-	%>
-
-	<div class="toolbar">
-		<div class="toolbar-group-field">
-			<a class="icon-angle-left icon-monospaced" href="<%= selectSiteURL.toString() %>"></a>
-		</div>
-		<div class="toolbar-group-content">
-			<%= themeDisplay.getScopeGroupName() %>
-		</div>
+<div class="toolbar">
+	<div class="toolbar-group-field">
+		<a class="icon-angle-left icon-monospaced" href="javascript:;" id="<portlet:namespace />allSitesLink"></a>
 	</div>
-</c:if>
+	<div class="toolbar-group-content">
+		<%= themeDisplay.getScopeGroupName() %>
+	</div>
+</div>
 
 <liferay-application-list:panel panelCategory="<%= panelCategory %>" />
+
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />allSitesLink').on(
+		'click',
+		function(event) {
+			$('#<portlet:namespace />all_sitesTabLink').tab('show');
+		}
+	);
+</aui:script>

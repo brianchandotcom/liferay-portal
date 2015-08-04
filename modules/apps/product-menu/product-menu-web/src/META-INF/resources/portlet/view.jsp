@@ -56,7 +56,7 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 	%>
 
 		<li class="col-xs-4 <%= rootPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>">
-			<a aria-expanded="true" data-toggle="tab" href="#<%= childPanelCategory.getKey() %>">
+			<a aria-expanded="true" data-toggle="tab" href="#<portlet:namespace /><%= childPanelCategory.getKey() %>">
 				<div class="product-menu-tab-icon">
 					<span class="<%= childPanelCategory.getIconCssClass() %> icon-monospaced"></span>
 				</div>
@@ -80,7 +80,7 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 		for (PanelCategory childPanelCategory : panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.ROOT)) {
 		%>
 
-			<div class="fade in tab-pane <%= rootPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>" id="<%= childPanelCategory.getKey() %>">
+			<div class="fade in tab-pane <%= rootPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>" id="<portlet:namespace /><%= childPanelCategory.getKey() %>">
 				<liferay-application-list:panel-content panelCategory="<%= childPanelCategory %>" />
 			</div>
 

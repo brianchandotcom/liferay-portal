@@ -1,6 +1,5 @@
 Bundle-Name: Liferay Document Library API
 Bundle-SymbolicName: com.liferay.document.library.api
 Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.document.library.*
+Export-Package: com.liferay.document.library.*
 Include-Resource: classes

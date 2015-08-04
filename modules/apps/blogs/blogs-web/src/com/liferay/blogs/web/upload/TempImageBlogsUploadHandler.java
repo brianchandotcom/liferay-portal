@@ -41,8 +41,7 @@ public class TempImageBlogsUploadHandler extends BaseBlogsUploadHandler {
 
 	@Override
 	protected FileEntry fetchFileEntry(
-			ThemeDisplay themeDisplay, String fileName)
-		throws PortalException {
+		ThemeDisplay themeDisplay, String fileName) {
 
 		try {
 			return TempFileEntryUtil.getTempFileEntry(

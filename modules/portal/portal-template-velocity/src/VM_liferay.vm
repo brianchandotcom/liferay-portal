@@ -48,7 +48,9 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 #end
 
 #macro (product_menu)
-	$theme.runtime("com.liferay.portlet.admin.util.PortalProductMenuApplicationType$ProductMenu", $portletProviderAction.VIEW)
+	#if ($is_signed_in && $is_setup_complete)
+		$theme.runtime("com.liferay.portlet.admin.util.PortalProductMenuApplicationType$ProductMenu", $portletProviderAction.VIEW)
+	#end
 #end
 
 #macro (quick_access $content_id)

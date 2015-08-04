@@ -39,6 +39,8 @@ public interface PanelCategoryKeys {
 
 	public static final String SITE_ADMINISTRATION = "site_administration";
 
+	public static final String ALL_SITES = "all_sites";
+
 	public static final String SITE_ADMINISTRATION_CONFIGURATION =
 		"site_administration.configuration";
 

@@ -28,4 +28,5 @@
 <%@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="com.liferay.portal.util.PortletKeys" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.DDMTemplate" %>
+<%@ page import="com.liferay.portlet.dynamicdatamapping.DDMTemplateManager" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.DDMTemplateManagerUtil" %>

@@ -63,12 +63,15 @@ public class SessionTreeJSClicks {
 
 		while (true) {
 			try {
-				String openNodesString = get(request, treeId);
+				PortalPreferences portalPreferences = get(request);
+
+				String openNodesString = portalPreferences.getValue(
+					SessionTreeJSClicks.class.getName(), treeId);
 
 				openNodesString = StringUtil.removeFromList(
 					openNodesString, nodeId);
 
-				put(request, treeId, openNodesString);
+				put(request, treeId, openNodesString, portalPreferences);
 
 				return;
 			}
@@ -88,7 +91,7 @@ public class SessionTreeJSClicks {
 			try {
 				String openNodesString = StringPool.BLANK;
 
-				put(request, treeId, openNodesString);
+				put(request, treeId, openNodesString, get(request));
 
 				return;
 			}
@@ -108,14 +111,17 @@ public class SessionTreeJSClicks {
 
 		while (true) {
 			try {
-				String openNodesString = get(request, treeId);
+				PortalPreferences portalPreferences = get(request);
+
+				String openNodesString = portalPreferences.getValue(
+					SessionTreeJSClicks.class.getName(), treeId);
 
 				for (String nodeId : nodeIds) {
 					openNodesString = StringUtil.removeFromList(
 						openNodesString, nodeId);
 				}
 
-				put(request, treeId, openNodesString);
+				put(request, treeId, openNodesString, portalPreferences);
 
 				return;
 			}
@@ -134,7 +140,10 @@ public class SessionTreeJSClicks {
 		HttpServletRequest request, String treeId) {
 
 		try {
-			return get(request, treeId);
+			PortalPreferences portalPreferences = get(request);
+
+			return portalPreferences.getValue(
+				SessionTreeJSClicks.class.getName(), treeId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -170,11 +179,14 @@ public class SessionTreeJSClicks {
 
 		while (true) {
 			try {
-				String openNodesString = get(request, treeId);
+				PortalPreferences portalPreferences = get(request);
+
+				String openNodesString = portalPreferences.getValue(
+					SessionTreeJSClicks.class.getName(), treeId);
 
 				openNodesString = StringUtil.add(openNodesString, nodeId);
 
-				put(request, treeId, openNodesString);
+				put(request, treeId, openNodesString, portalPreferences);
 
 				return;
 			}
@@ -194,13 +206,16 @@ public class SessionTreeJSClicks {
 
 		while (true) {
 			try {
-				String openNodesString = get(request, treeId);
+				PortalPreferences portalPreferences = get(request);
+
+				String openNodesString = portalPreferences.getValue(
+					SessionTreeJSClicks.class.getName(), treeId);
 
 				for (String nodeId : nodeIds) {
 					openNodesString = StringUtil.add(openNodesString, nodeId);
 				}
 
-				put(request, treeId, openNodesString);
+				put(request, treeId, openNodesString, portalPreferences);
 
 				return;
 			}
@@ -215,13 +230,9 @@ public class SessionTreeJSClicks {
 		}
 	}
 
-	protected static String get(HttpServletRequest request, String key) {
+	protected static PortalPreferences get(HttpServletRequest request) {
 		try {
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
-			return preferences.getValue(
-				SessionTreeJSClicks.class.getName(), key);
+			return PortletPreferencesFactoryUtil.getPortalPreferences(request);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -251,13 +262,11 @@ public class SessionTreeJSClicks {
 	}
 
 	protected static void put(
-		HttpServletRequest request, String key, String value) {
+		HttpServletRequest request, String key, String value,
+		PortalPreferences portalPreferences) {
 
 		try {
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
-			preferences.setValue(
+			portalPreferences.setValue(
 				SessionTreeJSClicks.class.getName(), key, value);
 		}
 		catch (ConcurrentModificationException cme) {

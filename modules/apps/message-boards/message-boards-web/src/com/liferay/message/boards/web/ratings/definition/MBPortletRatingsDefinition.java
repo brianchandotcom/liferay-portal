@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.message.boards.ratings.definition;
+package com.liferay.message.boards.web.ratings.definition;
 
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
 import com.liferay.portlet.ratings.RatingsType;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
 
@@ -37,7 +37,7 @@ public class MBPortletRatingsDefinition implements PortletRatingsDefinition {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.MESSAGE_BOARDS;
+		return MessageBoardsPortletKeys.MESSAGE_BOARDS;
 	}
 
 }

@@ -206,6 +206,17 @@ public class HtmlBBCodeTranslatorTest {
 		Assert.assertEquals(expected, actual);
 	}
 
+	@Test
+	public void testUnorderList() {
+		String content = "[list type=\"circle\"][*]line1[*]line2[/list]";
+
+		String expected =
+			"<ul style=\"list-style: circle outside;\">" +
+				"<li>line1</li><li>line2</li></ul>";
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(expected, actual);
+	}
 
 	private final HtmlBBCodeTranslatorImpl _htmlBBCodeTranslator =
 		new HtmlBBCodeTranslatorImpl();

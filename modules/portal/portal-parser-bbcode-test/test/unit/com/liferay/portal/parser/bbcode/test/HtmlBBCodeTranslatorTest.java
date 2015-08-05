@@ -113,6 +113,16 @@ public class HtmlBBCodeTranslatorTest {
 	}
 
 	@Test
+	public void testIncompleteTag() {
+		String content = "[b]text";
+
+		String expected = "<strong>text</strong>";
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
 	public void testItalic() {
 		String content = "[i]text[/i]";
 

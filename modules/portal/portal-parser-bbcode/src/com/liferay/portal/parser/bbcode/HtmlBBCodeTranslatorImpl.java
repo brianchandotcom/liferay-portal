@@ -712,7 +712,10 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		tags.push("</a>");
 	}
 
-	private static final String[][] _EMOTICONS = {
+	private static final Log _log = LogFactoryUtil.getLog(
+		HtmlBBCodeTranslatorImpl.class);
+
+	private final String[][] _EMOTICONS = {
 		{"happy.gif", ":)", "happy"},
 		{"smile.gif", ":D", "smile"},
 		{"cool.gif", "B)", "cool"},
@@ -750,9 +753,6 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		{"wink.gif", ":wink:", "wink"},
 		{"wub.gif", ":wub:", "wub"}
 	};
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		HtmlBBCodeTranslatorImpl.class);
 
 	private final Pattern _attributesPattern = Pattern.compile(
 		"\\s*([^=]+)\\s*=\\s*\"([^\"]+)\"\\s*");

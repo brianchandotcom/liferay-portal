@@ -134,7 +134,12 @@ public class ReleaseCacheModel implements CacheModel<Release>, Externalizable,
 			releaseImpl.setServletContextName(servletContextName);
 		}
 
-		releaseImpl.setBuildNumber(buildNumber);
+		if (buildNumber == null) {
+			releaseImpl.setBuildNumber(StringPool.BLANK);
+		}
+		else {
+			releaseImpl.setBuildNumber(buildNumber);
+		}
 
 		if (buildDate == Long.MIN_VALUE) {
 			releaseImpl.setBuildDate(null);
@@ -165,7 +170,7 @@ public class ReleaseCacheModel implements CacheModel<Release>, Externalizable,
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		servletContextName = objectInput.readUTF();
-		buildNumber = objectInput.readInt();
+		buildNumber = objectInput.readUTF();
 		buildDate = objectInput.readLong();
 		verified = objectInput.readBoolean();
 		state = objectInput.readInt();
@@ -187,7 +192,13 @@ public class ReleaseCacheModel implements CacheModel<Release>, Externalizable,
 			objectOutput.writeUTF(servletContextName);
 		}
 
-		objectOutput.writeInt(buildNumber);
+		if (buildNumber == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(buildNumber);
+		}
+
 		objectOutput.writeLong(buildDate);
 		objectOutput.writeBoolean(verified);
 		objectOutput.writeInt(state);
@@ -205,7 +216,7 @@ public class ReleaseCacheModel implements CacheModel<Release>, Externalizable,
 	public long createDate;
 	public long modifiedDate;
 	public String servletContextName;
-	public int buildNumber;
+	public String buildNumber;
 	public long buildDate;
 	public boolean verified;
 	public int state;

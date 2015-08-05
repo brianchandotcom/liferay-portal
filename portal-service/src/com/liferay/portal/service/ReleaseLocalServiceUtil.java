@@ -53,7 +53,7 @@ public class ReleaseLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.Release addRelease(
-		java.lang.String servletContextName, int buildNumber) {
+		java.lang.String servletContextName, java.lang.String buildNumber) {
 		return getService().addRelease(servletContextName, buildNumber);
 	}
 
@@ -203,7 +203,7 @@ public class ReleaseLocalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static int getBuildNumberOrCreate()
+	public static java.lang.String getBuildNumberOrCreate()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getBuildNumberOrCreate();
 	}
@@ -272,7 +272,7 @@ public class ReleaseLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.Release updateRelease(
-		long releaseId, int buildNumber, java.util.Date buildDate,
+		long releaseId, java.lang.String buildNumber, java.util.Date buildDate,
 		boolean verified)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -280,12 +280,10 @@ public class ReleaseLocalServiceUtil {
 	}
 
 	public static void updateRelease(java.lang.String servletContextName,
-		java.util.List<com.liferay.portal.kernel.upgrade.UpgradeProcess> upgradeProcesses,
-		int buildNumber, int previousBuildNumber, boolean indexOnUpgrade)
+		java.lang.String buildNumber, java.lang.String previousBuildNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
-			.updateRelease(servletContextName, upgradeProcesses, buildNumber,
-			previousBuildNumber, indexOnUpgrade);
+			.updateRelease(servletContextName, buildNumber, previousBuildNumber);
 	}
 
 	public static void updateRelease(java.lang.String servletContextName,

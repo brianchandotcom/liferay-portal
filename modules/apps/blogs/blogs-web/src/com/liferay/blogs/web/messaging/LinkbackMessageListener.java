@@ -16,7 +16,7 @@ package com.liferay.blogs.web.messaging;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.blogs.configuration.BlogsSystemConfiguration;
+import com.liferay.blogs.configuration.BlogsConfiguration;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
@@ -52,11 +52,11 @@ public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 		schedulerEntry.setTimeUnit(TimeUnit.MINUTE);
 		schedulerEntry.setTriggerType(TriggerType.SIMPLE);
 
-		_blogsSystemConfiguration = Configurable.createConfigurable(
-			BlogsSystemConfiguration.class, properties);
+		_blogsConfiguration = Configurable.createConfigurable(
+			BlogsConfiguration.class, properties);
 
 		schedulerEntry.setTriggerValue(
-			_blogsSystemConfiguration.linkbackJobInterval());
+			_blogsConfiguration.linkbackJobInterval());
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 	protected void setPortlet(Portlet portlet) {
 	}
 
-	private volatile BlogsSystemConfiguration _blogsSystemConfiguration;
+	private volatile BlogsConfiguration _blogsConfiguration;
 	private final LinkbackConsumer _linkbackConsumer =
 		LinkbackConsumerUtil.getLinkbackConsumer();
 

@@ -12,38 +12,34 @@
  * details.
  */
 
-package com.liferay.blogs.configuration;
+package com.liferay.document.library.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
 /**
  * @author Sergio González
  */
-@Meta.OCD(id = "com.liferay.blogs.configuration.BlogsSystemConfiguration")
-public interface BlogsSystemConfiguration {
+@Meta.OCD(
+	id = "com.liferay.document.library.configuration.DLConfiguration"
+)
+public interface DLConfiguration {
 
 	/**
 	 * Set the location of the XML file containing the configuration of the
-	 * default display templates for the Blogs portlet.
+	 * default display templates for the Document Library portlet.
 	 */
 	@Meta.AD(
-		deflt = "com/liferay/blogs/web/template/dependencies/portlet-display-templates.xml",
+		deflt = "com/liferay/document/library/web/template/dependencies/portlet-display-templates.xml",
 		required = false
 	)
 	public String displayTemplatesConfig();
 
 	/**
-	 * Set the interval in minutes on how often CheckEntryMessageListener will
-	 * run to check for and display blog entries scheduled to display.
+	 * Set the interval in hours on how often
+	 * TemporaryFileEntriesMessageListener will run to check for expired
+	 * temporary file entries.
 	 */
 	@Meta.AD(deflt = "1", required = false)
-	public int entryCheckInterval();
-
-	/**
-	 * Set the interval on which the LinkbackMessageListener will run. The value
-	 * is set in one minute increments.
-	 */
-	@Meta.AD(deflt = "5", required = false)
-	public int linkbackJobInterval();
+	public int temporaryFileEntriesCheckInterval();
 
 }

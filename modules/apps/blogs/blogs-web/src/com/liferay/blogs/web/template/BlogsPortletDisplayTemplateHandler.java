@@ -16,7 +16,7 @@ package com.liferay.blogs.web.template;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.blogs.configuration.BlogsSystemConfiguration;
+import com.liferay.blogs.configuration.BlogsConfiguration;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Juan Fernández
  */
 @Component(
-	configurationPid = "com.liferay.blogs.configuration.BlogsSystemConfiguration",
+	configurationPid = "com.liferay.blogs.configuration.BlogsConfiguration",
 	immediate = true,
 	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS},
 	service = TemplateHandler.class
@@ -105,15 +105,15 @@ public class BlogsPortletDisplayTemplateHandler
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_blogsSystemConfiguration = Configurable.createConfigurable(
-			BlogsSystemConfiguration.class, properties);
+		_blogsConfiguration = Configurable.createConfigurable(
+			BlogsConfiguration.class, properties);
 	}
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return _blogsSystemConfiguration.displayTemplatesConfig();
+		return _blogsConfiguration.displayTemplatesConfig();
 	}
 
-	private volatile BlogsSystemConfiguration _blogsSystemConfiguration;
+	private volatile BlogsConfiguration _blogsConfiguration;
 
 }

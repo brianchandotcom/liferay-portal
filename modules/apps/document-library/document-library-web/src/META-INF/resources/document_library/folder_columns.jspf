@@ -72,9 +72,9 @@ for (int j = 0; j < folderColumns.length; j++) {
 				<span class="entry-thumbnail">
 
 					<%
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
 
-					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
+					AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
 					%>
 
 					<i class="<%= assetRenderer.getIconCssClass() %>"></i>

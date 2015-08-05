@@ -63,7 +63,8 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = AssetRendererFactory.class
 )
-public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
+public class DLFileEntryAssetRendererFactory
+	extends BaseAssetRendererFactory<FileEntry> {
 
 	public static final String TYPE = "document";
 
@@ -74,7 +75,7 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<FileEntry> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
 		FileEntry fileEntry = null;

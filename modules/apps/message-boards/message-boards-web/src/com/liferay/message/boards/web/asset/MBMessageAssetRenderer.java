@@ -48,10 +48,15 @@ import javax.servlet.http.HttpServletResponse;
  * @author Sergio González
  */
 public class MBMessageAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<MBMessage> implements TrashRenderer {
 
 	public MBMessageAssetRenderer(MBMessage message) {
 		_message = message;
+	}
+
+	@Override
+	public MBMessage getAssetObject() {
+		return _message;
 	}
 
 	@Override
@@ -88,7 +93,8 @@ public class MBMessageAssetRenderer
 
 	@Override
 	public String getPortletId() {
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<MBMessage> assetRendererFactory =
+			getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
 	}
@@ -160,7 +166,8 @@ public class MBMessageAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<MBMessage> assetRendererFactory =
+			getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);

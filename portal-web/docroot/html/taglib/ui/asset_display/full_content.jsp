@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/ui/asset_display/init.jsp" %>
 
 <%
-AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute(WebKeys.ASSET_RENDERER);
+AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.ASSET_RENDERER);
 
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 %>

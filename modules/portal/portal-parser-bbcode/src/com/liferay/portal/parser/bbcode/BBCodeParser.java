@@ -114,6 +114,7 @@ public class BBCodeParser {
 		IntegerWrapper marker, BBCodeToken bbCodeToken, String data) {
 
 		int length = data.length();
+
 		int lastIndex = length;
 
 		if (bbCodeToken != null) {

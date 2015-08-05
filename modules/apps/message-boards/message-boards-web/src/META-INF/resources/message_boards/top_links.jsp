@@ -48,7 +48,7 @@ portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 
 		<aui:nav-item cssClass='<%= topLink.equals(label) ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= topLink.equals(label) %>" />
 
-		<c:if test="<%= themeDisplay.isSignedIn() && !portletName.equals(PortletKeys.MESSAGE_BOARDS_ADMIN) %>">
+		<c:if test="<%= themeDisplay.isSignedIn() && !portletName.equals(MessageBoardsPortletKeys.MESSAGE_BOARDS_ADMIN) %>">
 
 			<%
 			label = "my-posts";

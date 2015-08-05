@@ -16,11 +16,14 @@ package com.liferay.message.boards.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.trash.TrashRendererFactory;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.LayoutConstants;
@@ -28,7 +31,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -297,9 +299,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
-		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
-
-		return new MBCategoryTrashRenderer(category);
+		return _trashRendererFactory.getTrashRenderer(classPK);
 	}
 
 	@Override
@@ -394,15 +394,17 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		String portletId = PortletKeys.MESSAGE_BOARDS;
+		String portletId = PortletProviderUtil.getPortletId(
+			MBCategory.class.getName(), PortletProvider.Action.EDIT);
 
 		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
 		long plid = PortalUtil.getPlidFromPortletId(
-			category.getGroupId(), PortletKeys.MESSAGE_BOARDS);
+			category.getGroupId(), portletId);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			portletId = PortletKeys.MESSAGE_BOARDS_ADMIN;
+			portletId = PortletProviderUtil.getPortletId(
+				MBCategory.class.getName(), PortletProvider.Action.MANAGE);
 
 			plid = PortalUtil.getControlPanelPlid(portletRequest);
 		}
@@ -440,7 +442,18 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		_mbThreadLocalService = mbThreadLocalService;
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.portlet.messageboards.model.MBCategory)",
+		unbind = "-"
+	)
+	protected void setTrashRendererFactory(
+		TrashRendererFactory trashRendererFactory) {
+
+		_trashRendererFactory = trashRendererFactory;
+	}
+
 	private MBCategoryLocalService _mbCategoryLocalService;
 	private MBThreadLocalService _mbThreadLocalService;
+	private TrashRendererFactory _trashRendererFactory;
 
 }

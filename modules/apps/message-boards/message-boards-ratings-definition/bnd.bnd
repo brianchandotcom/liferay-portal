@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Message Boards Ratings Definition
-Bundle-SymbolicName: com.liferay.message.boards.ratings.definition
-Bundle-Version: 1.0.0
-Include-Resource: classes

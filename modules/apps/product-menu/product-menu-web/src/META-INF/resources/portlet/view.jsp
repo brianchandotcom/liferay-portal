@@ -112,3 +112,15 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 		</c:if>
 	</div>
 </div>
+
+<aui:script sandbox="<%= true %>">
+	$('#sidenavContainerId').sideNavigation(
+		{
+			gutter: '0',
+			toggler: '#sidenavToggleId',
+			type: 'fixed-push',
+			typeMobile: 'fixed',
+			width: '320px'
+		}
+	);
+</aui:script>

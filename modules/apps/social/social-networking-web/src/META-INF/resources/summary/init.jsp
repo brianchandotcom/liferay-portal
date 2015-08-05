@@ -24,21 +24,22 @@ String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYP
 
 Group guestGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyId(), GroupConstants.GUEST);
 
-String portletId = PortletProviderUtil.getPortletId(BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
+String blogsPortletId = PortletProviderUtil.getPortletId(BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
+String messageBoardsPortletId = PortletProviderUtil.getPortletId(MBMessage.class.getName(), PortletProvider.Action.VIEW);
 
-long blogsPlid = PortalUtil.getPlidFromPortletId(group.getGroupId(), portletId);
+long blogsPlid = PortalUtil.getPlidFromPortletId(group.getGroupId(), blogsPortletId);
 
 String blogsFriendlyURL = null;
 
 if (blogsPlid != LayoutConstants.DEFAULT_PLID) {
-	blogsFriendlyURL = PortalUtil.getLayoutFullURL(group.getGroupId(), portletId, request.isSecure());
+	blogsFriendlyURL = PortalUtil.getLayoutFullURL(group.getGroupId(), blogsPortletId, request.isSecure());
 }
 
-long mbPlid = PortalUtil.getPlidFromPortletId(guestGroup.getGroupId(), PortletKeys.MESSAGE_BOARDS);
+long mbPlid = PortalUtil.getPlidFromPortletId(guestGroup.getGroupId(), messageBoardsPortletId);
 
 String mbFriendlyURL = null;
 
 if (mbPlid != LayoutConstants.DEFAULT_PLID) {
-	mbFriendlyURL = PortalUtil.getLayoutFullURL(guestGroup.getGroupId(), PortletKeys.MESSAGE_BOARDS, request.isSecure());
+	mbFriendlyURL = PortalUtil.getLayoutFullURL(guestGroup.getGroupId(), messageBoardsPortletId, request.isSecure());
 }
 %>

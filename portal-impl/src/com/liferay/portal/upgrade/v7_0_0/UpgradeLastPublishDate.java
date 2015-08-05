@@ -99,23 +99,23 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 	protected void upgradeMessageBoards() throws Exception {
 		runSQL("alter table MBBan add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBBan");
+		updateLastPublishDates("19", "MBBan");
 
 		runSQL("alter table MBCategory add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBCategory");
+		updateLastPublishDates("19", "MBCategory");
 
 		runSQL("alter table MBDiscussion add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBDiscussion");
+		updateLastPublishDates("19", "MBDiscussion");
 
 		runSQL("alter table MBMessage add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBMessage");
+		updateLastPublishDates("19", "MBMessage");
 
 		runSQL("alter table MBThreadFlag add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBThreadFlag");
+		updateLastPublishDates("19", "MBThreadFlag");
 	}
 
 	protected void upgradeMobileDeviceRules() throws Exception {

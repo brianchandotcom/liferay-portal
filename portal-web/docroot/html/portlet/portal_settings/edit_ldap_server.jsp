@@ -157,7 +157,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 />
 
 <portlet:actionURL name="editLDAPServer" var="editLDAPServerURL">
-    <portlet:param name="mvcPath" value="/edit_ldap_server.jsp" />
+	<portlet:param name="mvcPath" value="/html/portlet/portal_settings/edit_ldap_server.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= editLDAPServerURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry(false);" %>'>
@@ -546,19 +546,18 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 
 			if (type == 'ldapConnection') {
 				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/portal_settings/test_ldap_connection.jsp" /></portlet:renderURL>';
-				
-				
+
 			}
 			else if (type == 'ldapGroups') {
-			    url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/portal_settings/test_ldap_group.jsp" /></portlet:renderURL>';
-			
+				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/portal_settings/test_ldap_group.jsp" /></portlet:renderURL>';
+
 				data.<portlet:namespace />importGroupSearchFilter = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix %>--'].value;
 				data.<portlet:namespace />groupMappingDescription = document.<portlet:namespace />fm['<portlet:namespace />groupMappingDescription'].value;
 				data.<portlet:namespace />groupMappingGroupName = document.<portlet:namespace />fm['<portlet:namespace />groupMappingGroupName'].value;
 				data.<portlet:namespace />groupMappingUser = document.<portlet:namespace />fm['<portlet:namespace />groupMappingUser'].value;
 			}
 			else if (type == 'ldapUsers') {
-                url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/portal_settings/test_ldap_users.jsp" /></portlet:renderURL>';
+				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/portal_settings/test_ldap_users.jsp" /></portlet:renderURL>';
 
 				data.<portlet:namespace />importUserSearchFilter = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_IMPORT_USER_SEARCH_FILTER + postfix %>--'].value;
 				data.<portlet:namespace />userMappingEmailAddress = document.<portlet:namespace />fm['<portlet:namespace />userMappingEmailAddress'].value;

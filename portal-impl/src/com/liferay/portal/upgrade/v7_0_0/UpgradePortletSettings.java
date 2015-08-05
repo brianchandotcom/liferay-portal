@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v7_0_0.util.PortletPreferencesRow;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.portlet.shopping.constants.ShoppingConstants;
 
 import java.sql.Connection;
@@ -138,20 +137,8 @@ public class UpgradePortletSettings extends UpgradeProcess {
 		// Main portlets
 
 		upgradeMainPortlet(
-			PortletKeys.DOCUMENT_LIBRARY, DLConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP, true);
-		upgradeMainPortlet(
 			PortletKeys.SHOPPING, ShoppingConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, false);
-
-		// Display portlets
-
-		upgradeDisplayPortlet(
-			PortletKeys.DOCUMENT_LIBRARY_DISPLAY, DLConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
-		upgradeDisplayPortlet(
-			PortletKeys.MEDIA_GALLERY_DISPLAY, DLConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
 	}
 
 	protected long getGroupId(long plid) throws Exception {

@@ -1,0 +1,3 @@
+Bundle-SymbolicName: gradle-resources-http
+Bundle-Version: 2.5.LIFERAY-PATCHED-1
+Include-Resource: classes

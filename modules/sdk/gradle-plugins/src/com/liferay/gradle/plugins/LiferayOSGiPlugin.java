@@ -659,9 +659,13 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 		super.configureTaskDeploy(project, liferayExtension);
 
-		Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
+		Task task = GradleUtil.getTask(project, DEPLOY_TASK_NAME);
 
-		configureTaskDeployRename(copy);
+		if (!(task instanceof Copy)) {
+			return;
+		}
+
+		configureTaskDeployRename((Copy)task);
 	}
 
 	@Override

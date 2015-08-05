@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String)request.getAttribute("configuration.jsp-index")));
+int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String) request.getAttribute("configuration.jsp-index")));
 
 String displayActivityCounterName = PrefsParamUtil.getString(portletPreferences, request, "displayActivityCounterName" + index);
 

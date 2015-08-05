@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/user_statistics/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -64,7 +64,7 @@ if (!rankingNamesList.isEmpty()) {
 
 		// User display
 
-		row.addJSP("/html/portlet/user_statistics/user_display.jsp", application, request, response);
+		row.addJSP("/user_display.jsp", application, request, response);
 
 		// Add result row
 
@@ -74,7 +74,7 @@ if (!rankingNamesList.isEmpty()) {
 	String rankingNamesMessage = LanguageUtil.format(request, rankingNames[0], StringPool.BLANK, false);
 
 	for (int i = 1; i < rankingNames.length; i++) {
-		rankingNamesMessage = LanguageUtil.format(request, "x-and-y", new Object[] {rankingNamesMessage, rankingNames[i]});
+		rankingNamesMessage = LanguageUtil.format(request, "x-and-y", new Object[]{rankingNamesMessage, rankingNames[i]});
 	}
 	%>
 

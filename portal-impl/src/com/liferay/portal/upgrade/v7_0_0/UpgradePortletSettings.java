@@ -26,7 +26,6 @@ import com.liferay.portal.upgrade.v7_0_0.util.PortletPreferencesRow;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
-import com.liferay.portlet.messageboards.constants.MBConstants;
 import com.liferay.portlet.shopping.constants.ShoppingConstants;
 
 import java.sql.Connection;
@@ -141,9 +140,6 @@ public class UpgradePortletSettings extends UpgradeProcess {
 		upgradeMainPortlet(
 			PortletKeys.DOCUMENT_LIBRARY, DLConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, true);
-		upgradeMainPortlet(
-			PortletKeys.MESSAGE_BOARDS, MBConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP, false);
 		upgradeMainPortlet(
 			PortletKeys.SHOPPING, ShoppingConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, false);

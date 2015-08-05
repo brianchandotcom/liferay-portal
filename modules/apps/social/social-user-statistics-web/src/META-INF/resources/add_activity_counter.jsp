@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/user_statistics/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String)request.getAttribute("configuration.jsp-index")));

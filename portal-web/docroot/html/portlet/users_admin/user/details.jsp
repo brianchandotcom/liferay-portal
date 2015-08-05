@@ -150,7 +150,7 @@ if (selContact != null) {
 			</c:otherwise>
 		</c:choose>
 
-		<liferay-ui:user-name-fields />
+		<liferay-ui:user-name-fields contact="<%= selContact %>" user="<%= selUser %>" />
 	</aui:fieldset>
 
 	<aui:fieldset cssClass="col-md-5">

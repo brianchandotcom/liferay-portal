@@ -55,14 +55,6 @@ public class UserNameFieldsTag extends IncludeTag {
 			_bean = pageContext.getAttribute("aui:model-context:bean");
 		}
 
-		if (_contact == null) {
-			_contact = (Contact)request.getAttribute("user.selContact");
-		}
-
-		if (_user == null) {
-			_user = (User)request.getAttribute("user.selUser");
-		}
-
 		request.setAttribute("liferay-ui:user-name-fields:bean", _bean);
 		request.setAttribute("liferay-ui:user-name-fields:contact", _contact);
 		request.setAttribute("liferay-ui:user-name-fields:user", _user);

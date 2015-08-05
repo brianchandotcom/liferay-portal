@@ -176,6 +176,17 @@ public class HtmlBBCodeTranslatorTest {
 	}
 
 	@Test
+	public void testStar() {
+		String content = "[b]type[/b] some [u]text[/u]\n" + "[*]this is a test";
+
+		String expected =
+			"<strong>type</strong> some <u>text</u><li>this is a test</li>";
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
 	public void testStrike() {
 		String content = "[s]text[/s]";
 

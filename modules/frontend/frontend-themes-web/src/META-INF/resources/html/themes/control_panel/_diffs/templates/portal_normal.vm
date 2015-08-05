@@ -22,7 +22,7 @@ $theme.include($body_top_include)
 
 #set ($show_dockbar = ($control_panel_category != "my") || !$getterUtil.getBoolean($propsUtil.get("dockbar.administrative.links.show.in.pop.up")))
 
-<div class="open sidenav-container" id="sidenavContainerId">
+<div class="$liferay_product_menu_state sidenav-container" id="sidenavContainerId">
 	<div class="sidenav-menu-slider">
 		<div class="product-menu sidebar sidebar-inverse sidenav-menu">
 			#product_menu()

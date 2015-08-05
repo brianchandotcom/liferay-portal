@@ -18,7 +18,7 @@
 
 ${theme.include(body_top_include)}
 
-<div class="open sidenav-container" id="sidenavContainerId">
+<div class="${liferay_product_menu_state} sidenav-container" id="sidenavContainerId">
 	<div class="sidenav-menu-slider">
 		<div class="product-menu sidebar sidebar-inverse sidenav-menu">
 			<@liferay.product_menu />

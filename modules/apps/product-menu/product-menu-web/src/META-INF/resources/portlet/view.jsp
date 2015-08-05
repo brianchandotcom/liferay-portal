@@ -114,13 +114,29 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 </div>
 
 <aui:script sandbox="<%= true %>">
-	$('#sidenavContainerId').sideNavigation(
+	var sidenavContainer = $('#sidenavContainerId');
+
+	sidenavContainer.sideNavigation(
 		{
 			gutter: '0',
 			toggler: '#sidenavToggleId',
 			type: 'fixed-push',
 			typeMobile: 'fixed',
 			width: '320px'
+		}
+	);
+
+	sidenavContainer.on(
+		'open.lexicon.sidenav',
+		function(event) {
+			Liferay.Store('liferay_product_menu_state', 'open');
+		}
+	);
+
+	sidenavContainer.on(
+		'closed.lexicon.sidenav',
+		function(event) {
+			Liferay.Store('liferay_product_menu_state', 'closed');
 		}
 	);
 </aui:script>

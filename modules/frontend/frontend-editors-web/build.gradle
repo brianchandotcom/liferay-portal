@@ -11,7 +11,7 @@ dependencies {
 
 ext {
 	alloyEditorVersion = "0.4.0-alpha.1"
-	ckEditorVersion = "4.4.8"
+	ckEditorVersion = "4.5.2"
 	tinyMCEVersion = "4.1.7"
 
 	ckEditorScaytUrl = "http://download.ckeditor.com/scayt/releases/scayt_${ckEditorVersion}.zip"

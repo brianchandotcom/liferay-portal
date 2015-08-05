@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" />
+	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" />
+	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLPermission" />
+	<bean id="com.liferay.portlet.documentlibrary.store.DLStore" class="com.liferay.portlet.documentlibrary.store.DLStoreImpl" />
+	<bean id="com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer" class="com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer" />
+	<bean id="com.liferay.portlet.documentlibrary.util.DLFileEntryLockListener" class="com.liferay.portlet.documentlibrary.util.DLFileEntryLockListener" />
+	<bean id="com.liferay.portlet.documentlibrary.util.DLFolderIndexer" class="com.liferay.portlet.documentlibrary.util.DLFolderIndexer" />
+	<bean id="com.liferay.portlet.documentlibrary.util.DLOpenSearchImpl" class="com.liferay.portlet.documentlibrary.util.DLOpenSearchImpl" />
+	<bean id="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil" class="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil">
+		<property name="dLProcessorRegistry">
+			<bean class="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.documentlibrary.util.DLUtil" class="com.liferay.portlet.documentlibrary.util.DLUtil">
+		<property name="DL">
+			<bean class="com.liferay.portlet.documentlibrary.util.DLImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.documentlibrary.util.DLValidatorUtil" class="com.liferay.portlet.documentlibrary.util.DLValidatorUtil">
+		<property name="DLValidator">
+			<bean class="com.liferay.portlet.documentlibrary.util.DLValidatorImpl" />
+		</property>
+	</bean>
+</beans>

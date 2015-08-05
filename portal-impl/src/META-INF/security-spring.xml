@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+>
+	<bean id="com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager" class="com.liferay.portal.backgroundtask.BackgroundTaskThreadLocalManagerImpl">
+		<property name="permissionCheckerFactory" ref="com.liferay.portal.security.permission.PermissionCheckerFactory" />
+	</bean>
+	<bean id="com.liferay.portal.kernel.xml.SAXReaderUtil" class="com.liferay.portal.kernel.xml.SAXReaderUtil" depends-on="com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil">
+		<property name="SAXReader">
+			<bean class="com.liferay.portal.xml.SAXReaderImpl">
+				<property name="secure" value="true" />
+				<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil" class="com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil">
+		<property name="SAXReader">
+			<bean class="com.liferay.portal.xml.SAXReaderImpl">
+				<property name="secure" value="false" />
+				<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.webdav.methods.MethodFactoryRegistryUtil" class="com.liferay.portal.kernel.webdav.methods.MethodFactoryRegistryUtil">
+		<property name="methodFactoryRegistry">
+			<bean class="com.liferay.portal.webdav.methods.MethodFactoryRegistryImpl">
+				<property name="defaultMethodFactory">
+					<bean class="com.liferay.portal.webdav.methods.MethodFactoryImpl" depends-on="com.liferay.portal.kernel.xml.SAXReaderUtil" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.model.ModelHintsUtil" class="com.liferay.portal.model.ModelHintsUtil">
+		<property name="modelHints">
+			<bean class="com.liferay.portal.model.DefaultModelHintsImpl" depends-on="com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.security.access.control.AccessControl" class="com.liferay.portal.security.access.control.AccessControlImpl" />
+	<bean id="com.liferay.portal.security.access.control.AllowedHostsAccessControlPolicy" class="com.liferay.portal.security.access.control.AllowedHostsAccessControlPolicy" />
+	<bean id="com.liferay.portal.security.access.control.AuthenticatedAccessControlPolicy" class="com.liferay.portal.security.access.control.AuthenticatedAccessControlPolicy" />
+	<bean id="com.liferay.portal.security.auth.AuthenticatedUserUUIDStoreUtil" class="com.liferay.portal.security.auth.AuthenticatedUserUUIDStoreUtil">
+		<property name="authenticatedUserUUIDStore">
+			<bean class="com.liferay.portal.security.auth.DefaultAuthenticatedUserUUIDStoreImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.security.auth.AuthTokenWhitelistUtil" class="com.liferay.portal.security.auth.AuthTokenWhitelistUtil">
+		<property name="authTokenWhitelist">
+			<bean class="com.liferay.portal.security.auth.AuthTokenWhitelistImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.security.auth.AuthTokenUtil" class="com.liferay.portal.security.auth.AuthTokenUtil" />
+	<bean id="com.liferay.portal.security.auth.DefaultEmailAddressGenerator" class="com.liferay.portal.security.auth.DefaultEmailAddressGenerator" />
+	<bean id="com.liferay.portal.security.auth.DefaultEmailAddressValidator" class="com.liferay.portal.security.auth.DefaultEmailAddressValidator" />
+	<bean id="com.liferay.portal.security.auth.DefaultFullNameGenerator" class="com.liferay.portal.security.auth.DefaultFullNameGenerator" />
+	<bean id="com.liferay.portal.security.auth.DefaultFullNameValidator" class="com.liferay.portal.security.auth.DefaultFullNameValidator" />
+	<bean id="com.liferay.portal.security.auth.DefaultScreenNameGenerator" class="com.liferay.portal.security.auth.DefaultScreenNameGenerator" />
+	<bean id="com.liferay.portal.security.auth.DefaultScreenNameValidator" class="com.liferay.portal.security.auth.DefaultScreenNameValidator" />
+	<bean id="com.liferay.portal.security.auth.EmailAddressGeneratorFactory" class="com.liferay.portal.security.auth.EmailAddressGeneratorFactory" />
+	<bean id="com.liferay.portal.security.auth.EmailAddressValidatorFactory" class="com.liferay.portal.security.auth.EmailAddressValidatorFactory" />
+	<bean id="com.liferay.portal.security.auth.FamilyNameFirstFullNameGenerator" class="com.liferay.portal.security.auth.FamilyNameFirstFullNameGenerator" />
+	<bean id="com.liferay.portal.security.auth.FullNameGeneratorFactory" class="com.liferay.portal.security.auth.FullNameGeneratorFactory" />
+	<bean id="com.liferay.portal.security.auth.FullNameValidatorFactory" class="com.liferay.portal.security.auth.FullNameValidatorFactory" />
+	<bean id="com.liferay.portal.security.auth.InterruptedPortletRequestWhitelistUtil" class="com.liferay.portal.security.auth.InterruptedPortletRequestWhitelistUtil">
+		<property name="interruptedPortletRequestWhitelist">
+			<bean class="com.liferay.portal.security.auth.InterruptedPortletRequestWhitelistImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.security.auth.LiberalEmailAddressValidator" class="com.liferay.portal.security.auth.LiberalEmailAddressValidator" />
+	<bean id="com.liferay.portal.security.auth.LiberalScreenNameValidator" class="com.liferay.portal.security.auth.LiberalScreenNameValidator" />
+	<bean id="com.liferay.portal.security.auth.LoginFailure" class="com.liferay.portal.security.auth.LoginFailure" />
+	<bean id="com.liferay.portal.security.auth.LoginMaxFailures" class="com.liferay.portal.security.auth.LoginMaxFailures" />
+	<bean id="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" class="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" />
+	<bean id="com.liferay.portal.security.auth.ScreenNameValidatorFactory" class="com.liferay.portal.security.auth.ScreenNameValidatorFactory" />
+	<bean id="com.liferay.portal.security.auth.SessionAuthToken" class="com.liferay.portal.security.auth.SessionAuthToken" />
+	<bean id="com.liferay.portal.security.auth.http.HttpAuthManager" class="com.liferay.portal.security.auth.http.HttpAuthManagerImpl" />
+	<bean id="com.liferay.portal.security.auth.session.AuthenticatedSessionManager" class="com.liferay.portal.security.auth.session.AuthenticatedSessionManagerImpl" />
+	<bean id="com.liferay.portal.security.auth.tunnel.TunnelAuthenticationManagerImpl" class="com.liferay.portal.security.auth.tunnel.TunnelAuthenticationManagerImpl" />
+	<bean id="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" />
+	<bean id="com.liferay.portal.security.membershippolicy.DummyOrganizationMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummyOrganizationMembershipPolicy" />
+	<bean id="com.liferay.portal.security.membershippolicy.DummyRoleMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummyRoleMembershipPolicy" />
+	<bean id="com.liferay.portal.security.membershippolicy.DummySiteMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummySiteMembershipPolicy" />
+	<bean id="com.liferay.portal.security.membershippolicy.DummyUserGroupMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummyUserGroupMembershipPolicy" />
+	<bean id="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil">
+		<property name="organizationMembershipPolicyFactory">
+			<bean class="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryUtil">
+		<property name="roleMembershipPolicyFactory">
+			<bean class="com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryUtil">
+		<property name="siteMembershipPolicyFactory">
+			<bean class="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil">
+		<property name="userGroupMembershipPolicyFactory">
+			<bean class="com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.security.permission.InlineSQLHelperUtil" class="com.liferay.portal.security.permission.InlineSQLHelperUtil">
+		<property name="inlineSQLHelper">
+			<bean class="com.liferay.portal.security.permission.InlineSQLHelperImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.security.permission.PermissionCheckerFactory" class="com.liferay.portal.security.permission.PermissionCheckerFactoryImpl" />
+	<bean id="com.liferay.portal.security.permission.PermissionConverterUtil" class="com.liferay.portal.security.permission.PermissionConverterUtil">
+		<property name="permissionConverter">
+			<bean class="com.liferay.portal.security.permission.PermissionConverterImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.security.permission.ResourceActions" class="com.liferay.portal.security.permission.ResourceActionsImpl" />
+	<bean id="com.liferay.portal.security.permission.ResourceActionsUtil" class="com.liferay.portal.security.permission.ResourceActionsUtil">
+		<property name="resourceActions" ref="com.liferay.portal.security.permission.ResourceActions" />
+	</bean>
+	<bean id="com.liferay.portal.security.pwd.PasswordPolicyToolkit" class="com.liferay.portal.security.pwd.PasswordPolicyToolkit" />
+	<bean id="com.liferay.portal.security.xml.SecureXMLFactoryProvider" class="com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl" />
+	<bean id="com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil" class="com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil">
+		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.security.xml.SecureXMLFactoryProvider" />
+	</bean>
+	<bean id="com.liferay.portal.security.pwd.CompositePasswordEncryptor" class="com.liferay.portal.security.pwd.CompositePasswordEncryptor">
+		<property name="defaultPasswordEncryptor">
+			<bean class="com.liferay.portal.security.pwd.DefaultPasswordEncryptor" />
+		</property>
+		<property name="passwordEncryptors">
+			<util:list>
+				<bean class="com.liferay.portal.security.pwd.BCryptPasswordEncryptor" />
+				<bean class="com.liferay.portal.security.pwd.CryptPasswordEncryptor" />
+				<bean class="com.liferay.portal.security.pwd.NullPasswordEncryptor" />
+				<bean class="com.liferay.portal.security.pwd.PBKDF2PasswordEncryptor" />
+				<bean class="com.liferay.portal.security.pwd.SSHAPasswordEncryptor" />
+			</util:list>
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.security.pwd.PasswordEncryptor" class="com.liferay.portal.security.pwd.LegacyAlgorithmAwarePasswordEncryptor">
+		<property name="parentPasswordEncryptor" ref="com.liferay.portal.security.pwd.CompositePasswordEncryptor" />
+	</bean>
+	<bean id="com.liferay.portal.security.pwd.PasswordEncryptorUtil" class="com.liferay.portal.security.pwd.PasswordEncryptorUtil">
+		<property name="passwordEncryptor" ref="com.liferay.portal.security.pwd.PasswordEncryptor" />
+	</bean>
+</beans>

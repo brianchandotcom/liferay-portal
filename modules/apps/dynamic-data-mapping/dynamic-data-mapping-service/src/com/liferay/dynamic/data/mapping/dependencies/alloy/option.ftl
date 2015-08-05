@@ -22,7 +22,7 @@
 
 <#assign namespacedParentFieldName = namespacedParentName + parentFieldNamespace>
 
-<#assign parentFieldRawValues = jsonFactoryUtil.looseDeserialize(parentFieldRawValue)>
+<#assign parentFieldRawValues = getterUtil.getStringValues(jsonFactoryUtil.looseDeserialize(parentFieldRawValue))>
 
 <#assign selected = paramUtil.getParameterValues(request, namespacedParentFieldName, parentFieldRawValues)?seq_contains(fieldStructure.value)>
 

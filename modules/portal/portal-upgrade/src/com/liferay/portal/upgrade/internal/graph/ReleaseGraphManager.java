@@ -23,10 +23,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.jgrapht.DirectedGraph;
-import org.jgrapht.EdgeFactory;
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultDirectedGraph;
-import org.jgrapht.graph.DefaultEdge;
 
 /**
  * @author Miguel Pastor
@@ -98,7 +96,7 @@ public class ReleaseGraphManager {
 
 				@Override
 				public UpgradeInfo get(UpgradeProcessEdge upgradeProcessEdge) {
-					return upgradeProcessEdge._upgradeInfo;
+					return upgradeProcessEdge.getUpgradeInfo();
 				}
 
 				@Override
@@ -132,48 +130,5 @@ public class ReleaseGraphManager {
 	}
 
 	private final DirectedGraph<String, UpgradeProcessEdge> _directedGraph;
-
-	private static class UpgradeProcessEdge extends DefaultEdge {
-
-		public UpgradeProcessEdge(UpgradeInfo upgradeInfo) {
-			_upgradeInfo = upgradeInfo;
-		}
-
-		public UpgradeInfo getUpgradeInfo() {
-			return _upgradeInfo;
-		}
-
-		private final UpgradeInfo _upgradeInfo;
-
-	}
-
-	private static class UpgradeProcessEdgeFactory
-		implements EdgeFactory<String, UpgradeProcessEdge> {
-
-		public UpgradeProcessEdgeFactory(List<UpgradeInfo> upgradeInfos) {
-			_upgradeInfos = upgradeInfos;
-		}
-
-		@Override
-		public UpgradeProcessEdge createEdge(
-			String sourceVertex, String targetVertex) {
-
-			for (UpgradeInfo upgradeInfo : _upgradeInfos) {
-				String fromVersionString = upgradeInfo.getFromVersionString();
-				String toVersionString = upgradeInfo.getToVersionString();
-
-				if (fromVersionString.equals(sourceVertex) &&
-					toVersionString.equals(targetVertex)) {
-
-					return new UpgradeProcessEdge(upgradeInfo);
-				}
-			}
-
-			return null;
-		}
-
-		private final List<UpgradeInfo> _upgradeInfos;
-
-	}
 
 }

@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
@@ -51,7 +53,6 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.GroupSubscriptionCheckSubscriptionSender;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -1892,7 +1893,10 @@ public class DLAppHelperLocalServiceImpl
 
 		subscriptionSender.setNotificationType(notificationType);
 
-		subscriptionSender.setPortletId(PortletKeys.DOCUMENT_LIBRARY);
+		String portletId = PortletProviderUtil.getPortletId(
+			FileEntry.class.getName(), PortletProvider.Action.VIEW);
+
+		subscriptionSender.setPortletId(portletId);
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(fileVersion.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);

@@ -20,10 +20,11 @@ import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomRequestContext;
 import com.liferay.portal.kernel.atom.BaseAtomCollectionAdapter;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FolderNameComparator;
 
@@ -96,8 +97,11 @@ public class FolderAtomCollectionAdapter
 
 	@Override
 	public String getFeedTitle(AtomRequestContext atomRequestContext) {
+		String portletId = PortletProviderUtil.getPortletId(
+			Folder.class.getName(), PortletProvider.Action.VIEW);
+
 		return AtomUtil.createFeedTitleFromPortletName(
-			atomRequestContext, PortletKeys.DOCUMENT_LIBRARY) + " folders";
+			atomRequestContext, portletId) + " folders";
 	}
 
 	@Override

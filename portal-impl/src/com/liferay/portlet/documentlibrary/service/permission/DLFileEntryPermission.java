@@ -15,6 +15,8 @@
 package com.liferay.portlet.documentlibrary.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
@@ -22,7 +24,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -85,10 +86,13 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
+		String portletId = PortletProviderUtil.getPortletId(
+			FileEntry.class.getName(), PortletProvider.Action.EDIT);
+
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, dlFileEntry.getGroupId(),
 			DLFileEntry.class.getName(), dlFileEntry.getFileEntryId(),
-			PortletKeys.DOCUMENT_LIBRARY, actionId);
+			portletId, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

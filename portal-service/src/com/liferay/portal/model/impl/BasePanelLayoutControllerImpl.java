@@ -109,6 +109,11 @@ public abstract class BasePanelLayoutControllerImpl
 	}
 
 	@Override
+	public boolean isBrowsable() {
+		return true;
+	}
+
+	@Override
 	public boolean matches(
 		HttpServletRequest request, String friendlyURL, Layout layout) {
 

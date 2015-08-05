@@ -1033,6 +1033,8 @@ public interface PropsKeys {
 
 	public static final String LAYOUT_AJAX_RENDER_ENABLE = "layout.ajax.render.enable";
 
+	public static final String LAYOUT_BROWSABLE = "layout.browsable";
+
 	public static final String LAYOUT_CLONE_IMPL = "layout.clone.impl";
 
 	public static final String LAYOUT_COMMENTS_ENABLED = "layout.comments.enabled";

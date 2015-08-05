@@ -59,7 +59,7 @@ private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory cat
 	for (int i = 0; i < ancestorCategories.size(); i++) {
 		MBCategory ancestorCategory = ancestorCategories.get(i);
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(request, PortletKeys.MESSAGE_BOARDS, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = PortletURLFactoryUtil.create(request, MessageBoardsPortletKeys.MESSAGE_BOARDS, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 		portletURL.setParameter("mbCategoryId", String.valueOf(ancestorCategory.getCategoryId()));
@@ -79,7 +79,7 @@ private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory cat
 		sb.append("</a></li>");
 	}
 
-	PortletURL portletURL = PortletURLFactoryUtil.create(request, PortletKeys.MESSAGE_BOARDS, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+	PortletURL portletURL = PortletURLFactoryUtil.create(request, MessageBoardsPortletKeys.MESSAGE_BOARDS, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 	portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 	portletURL.setParameter("mbCategoryId", String.valueOf(category.getCategoryId()));

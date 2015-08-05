@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
+import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN},
+	property = {"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS_ADMIN},
 	service = ConfigurationAction.class
 )
 public class MessageBoardsAdminConfigurationAction

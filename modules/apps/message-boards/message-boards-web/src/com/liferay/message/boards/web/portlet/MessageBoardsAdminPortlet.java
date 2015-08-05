@@ -14,8 +14,8 @@
 
 package com.liferay.message.boards.web.portlet;
 
+import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.util.PortletKeys;
 
 import javax.portlet.Portlet;
 
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.config-template=/message_boards_admin/configuration.jsp",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/message_boards/view",
-		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
+		"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"

@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
+import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
@@ -29,7 +30,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.messageboards.CategoryNameException;
@@ -60,8 +60,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
-		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
+		"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS_ADMIN,
 		"mvc.command.name=/message_boards/edit_category"
 	},
 	service = MVCActionCommand.class

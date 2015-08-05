@@ -14,11 +14,11 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
+import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLImpl;
 
 import javax.portlet.PortletMode;
@@ -36,8 +36,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
-		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN,
+		"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS_ADMIN,
 		"path=/message_boards/find_recent_posts"
 	},
 	service = StrutsAction.class
@@ -53,7 +53,7 @@ public class FindRecentPostsAction extends BaseStrutsAction {
 			long plid = ParamUtil.getLong(request, "p_l_id");
 
 			PortletURL portletURL = new PortletURLImpl(
-				request, PortletKeys.MESSAGE_BOARDS, plid,
+				request, MessageBoardsPortletKeys.MESSAGE_BOARDS, plid,
 				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(

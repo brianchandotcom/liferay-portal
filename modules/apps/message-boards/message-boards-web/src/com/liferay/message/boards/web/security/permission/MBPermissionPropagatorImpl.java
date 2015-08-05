@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.web.security.permission;
 
+import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.BasePermissionPropagator;
 import com.liferay.portal.security.permission.PermissionPropagator;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -45,8 +45,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS,
-		"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS_ADMIN
+		"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS_ADMIN
 	},
 	service = PermissionPropagator.class
 )

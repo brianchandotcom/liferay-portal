@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.pop.MessageListenerException;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Http;
@@ -34,7 +36,6 @@ import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -203,9 +204,13 @@ public class MessageListenerImpl implements MessageListener {
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setAttribute("propagatePermissions", Boolean.TRUE);
+
+			String portletId = PortletProviderUtil.getPortletId(
+				MBMessage.class.getName(), PortletProvider.Action.VIEW);
+
 			serviceContext.setLayoutFullURL(
 				PortalUtil.getLayoutFullURL(
-					groupId, PortletKeys.MESSAGE_BOARDS,
+					groupId, portletId,
 					StringUtil.equalsIgnoreCase(
 						Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL)));
 			serviceContext.setScopeGroupId(groupId);

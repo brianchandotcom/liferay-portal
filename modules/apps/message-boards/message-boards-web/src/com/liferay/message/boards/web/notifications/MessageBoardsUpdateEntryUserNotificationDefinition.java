@@ -14,10 +14,10 @@
 
 package com.liferay.message.boards.web.notifications;
 
+import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
-import com.liferay.portal.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + PortletKeys.MESSAGE_BOARDS},
+	property = {"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS},
 	service = UserNotificationDefinition.class
 )
 public class MessageBoardsUpdateEntryUserNotificationDefinition
@@ -34,7 +34,8 @@ public class MessageBoardsUpdateEntryUserNotificationDefinition
 
 	public MessageBoardsUpdateEntryUserNotificationDefinition() {
 		super(
-			PortletKeys.MESSAGE_BOARDS, 0, NOTIFICATION_TYPE_UPDATE_ENTRY,
+			MessageBoardsPortletKeys.MESSAGE_BOARDS, 0,
+			NOTIFICATION_TYPE_UPDATE_ENTRY,
 			"receive-a-notification-when-someone-updates-a-post-you-are-" +
 				"subscribed-to");
 

@@ -15,10 +15,13 @@
 package com.liferay.message.boards.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.trash.TrashRendererFactory;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.LayoutConstants;
@@ -26,7 +29,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -166,9 +168,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
-		MBThread thread = _mbThreadLocalService.getThread(classPK);
-
-		return new MBThreadTrashRenderer(thread);
+		return _trashRendererFactory.getTrashRenderer(classPK);
 	}
 
 	@Override
@@ -250,15 +250,17 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			boolean isContainerModel)
 		throws PortalException {
 
-		String portletId = PortletKeys.MESSAGE_BOARDS;
+		String portletId = PortletProviderUtil.getPortletId(
+			MBThread.class.getName(), PortletProvider.Action.EDIT);
 
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
 		long plid = PortalUtil.getPlidFromPortletId(
-			thread.getGroupId(), PortletKeys.MESSAGE_BOARDS);
+			thread.getGroupId(), portletId);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			portletId = PortletKeys.MESSAGE_BOARDS_ADMIN;
+			portletId = PortletProviderUtil.getPortletId(
+				MBThread.class.getName(), PortletProvider.Action.MANAGE);
 
 			plid = PortalUtil.getControlPanelPlid(portletRequest);
 		}
@@ -303,7 +305,18 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		_mbThreadLocalService = mbThreadLocalService;
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.portlet.messageboards.model.MBThread)",
+		unbind = "-"
+	)
+	protected void setTrashRendererFactory(
+		TrashRendererFactory trashRendererFactory) {
+
+		_trashRendererFactory = trashRendererFactory;
+	}
+
 	private MBCategoryLocalService _mbCategoryLocalService;
 	private MBThreadLocalService _mbThreadLocalService;
+	private TrashRendererFactory _trashRendererFactory;
 
 }

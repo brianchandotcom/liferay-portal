@@ -12,32 +12,28 @@
  * details.
  */
 
-package com.liferay.message.boards.ratings.definition;
+package com.liferay.message.boards.web.upgrade.v1_0_0;
 
+import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.ratings.RatingsType;
-import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portlet.messageboards.constants.MBConstants;
 
 /**
- * @author Roberto Díaz
+ * @author Sergio González
  */
-@Component(
-	property = {
-		"model.class.name=com.liferay.portlet.messageboards.model.MBMessage"
-	}
-)
-public class MBPortletRatingsDefinition implements PortletRatingsDefinition {
+public class UpgradePortletSettings
+	extends com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings {
 
-	@Override
-	public RatingsType getDefaultRatingsType() {
-		return RatingsType.THUMBS;
+	public UpgradePortletSettings(SettingsFactory settingsFactory) {
+		super(settingsFactory);
 	}
 
 	@Override
-	public String getPortletId() {
-		return PortletKeys.MESSAGE_BOARDS;
+	protected void doUpgrade() throws Exception {
+		upgradeMainPortlet(
+			MessageBoardsPortletKeys.MESSAGE_BOARDS, MBConstants.SERVICE_NAME,
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, false);
 	}
 
 }

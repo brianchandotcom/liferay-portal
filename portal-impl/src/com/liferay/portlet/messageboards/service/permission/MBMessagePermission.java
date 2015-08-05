@@ -100,7 +100,7 @@ public class MBMessagePermission implements BaseModelPermissionChecker {
 		}
 
 		String portletId = PortletProviderUtil.getPortletId(
-			MBMessage.class.getName(), PortletProvider.Action.VIEW);
+			MBMessage.class.getName(), PortletProvider.Action.EDIT);
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, message.getGroupId(), MBMessage.class.getName(),

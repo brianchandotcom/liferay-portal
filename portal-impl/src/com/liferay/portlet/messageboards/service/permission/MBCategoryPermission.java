@@ -127,7 +127,7 @@ public class MBCategoryPermission implements BaseModelPermissionChecker {
 		}
 
 		String portletId = PortletProviderUtil.getPortletId(
-			MBCategory.class.getName(), PortletProvider.Action.VIEW);
+			MBCategory.class.getName(), PortletProvider.Action.EDIT);
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, category.getGroupId(),

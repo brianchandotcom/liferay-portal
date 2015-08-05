@@ -79,3 +79,5 @@ SettingsFactory settingsFactory = SettingsFactoryUtil.getSettingsFactory();
 
 GroupStatisticsPortletInstanceConfiguration groupStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(GroupStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
 %>
+
+<%@ include file="/init-ext.jsp" %>

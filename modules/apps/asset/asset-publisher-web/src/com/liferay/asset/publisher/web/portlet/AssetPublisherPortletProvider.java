@@ -19,7 +19,6 @@ import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -37,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=" + PortletProvider.CLASS_NAME_ANY},
+	property = {"model.class.name=com.liferay.portlet.asset.model.AssetEntry"},
 	service = {AddPortletProvider.class, ViewPortletProvider.class}
 )
 public class AssetPublisherPortletProvider extends BasePortletProvider

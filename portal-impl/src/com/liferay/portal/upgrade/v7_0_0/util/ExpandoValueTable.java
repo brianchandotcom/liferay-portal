@@ -16,6 +16,9 @@ package com.liferay.portal.upgrade.v7_0_0.util;
 
 import java.sql.Types;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author	  Brian Wing Shun Chan
  * @generated
@@ -35,6 +38,26 @@ public class ExpandoValueTable {
 		{"data_", Types.CLOB}
 	};
 
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+static {
+TABLE_COLUMNS_MAP.put("valueId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("tableId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("columnId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("rowId_", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
+
+}
 	public static final String TABLE_SQL_CREATE = "create table ExpandoValue (valueId LONG not null primary key,companyId LONG,tableId LONG,columnId LONG,rowId_ LONG,classNameId LONG,classPK LONG,data_ TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ExpandoValue";

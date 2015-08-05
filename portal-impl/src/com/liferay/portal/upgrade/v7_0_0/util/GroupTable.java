@@ -16,6 +16,9 @@ package com.liferay.portal.upgrade.v7_0_0.util;
 
 import java.sql.Types;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author	  Brian Wing Shun Chan
  * @generated
@@ -49,6 +52,54 @@ public class GroupTable {
 		{"active_", Types.BOOLEAN}
 	};
 
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+static {
+TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("creatorUserId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("parentGroupId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("liveGroupId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("treePath", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("groupKey", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
+
+TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
+
+TABLE_COLUMNS_MAP.put("manualMembership", Types.BOOLEAN);
+
+TABLE_COLUMNS_MAP.put("membershipRestriction", Types.INTEGER);
+
+TABLE_COLUMNS_MAP.put("friendlyURL", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("site", Types.BOOLEAN);
+
+TABLE_COLUMNS_MAP.put("remoteStagingGroupCount", Types.INTEGER);
+
+TABLE_COLUMNS_MAP.put("inheritContent", Types.BOOLEAN);
+
+TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+
+}
 	public static final String TABLE_SQL_CREATE = "create table Group_ (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,groupId LONG not null primary key,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath STRING null,groupKey VARCHAR(150) null,name STRING null,description STRING null,type_ INTEGER,typeSettings TEXT null,manualMembership BOOLEAN,membershipRestriction INTEGER,friendlyURL VARCHAR(255) null,site BOOLEAN,remoteStagingGroupCount INTEGER,inheritContent BOOLEAN,active_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table Group_";

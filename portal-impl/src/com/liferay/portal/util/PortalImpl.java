@@ -274,6 +274,7 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.StateAwareResponse;
 import javax.portlet.ValidatorException;
 import javax.portlet.WindowState;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -1742,20 +1743,33 @@ public class PortalImpl implements Portal {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long plid = 0;
+		Layout layout = null;
 
 		try {
-			plid = getControlPanelPlid(themeDisplay.getCompanyId());
+			long plid = getControlPanelPlid(themeDisplay.getCompanyId());
+
+			layout = LayoutLocalServiceUtil.getLayout(plid);
 		}
-		catch (Exception e) {
-			_log.error("Unable to determine control panel layout id", e);
+		catch (PortalException e) {
+			_log.error("Unable to determine control panel layout", e);
+
+			return null;
 		}
+
+		VirtualLayout virtualLayout = new VirtualLayout(
+			layout, themeDisplay.getScopeGroup());
+
+		request.setAttribute(WebKeys.LAYOUT, virtualLayout);
 
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
-			request, portletId, plid, lifecycle);
+			request, portletId, virtualLayout.getPlid(), lifecycle);
 
-		liferayPortletURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
-		liferayPortletURL.setRefererPlid(themeDisplay.getPlid());
+		try {
+			liferayPortletURL.setWindowState(WindowState.MAXIMIZED);
+		}
+		catch (WindowStateException e) {
+			_log.error(e);
+		}
 
 		return liferayPortletURL;
 	}

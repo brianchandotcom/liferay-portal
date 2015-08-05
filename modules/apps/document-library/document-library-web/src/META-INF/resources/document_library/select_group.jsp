@@ -52,7 +52,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 			<%
 			int additionalSites = 0;
 
-			if (!searchTerms.hasSearchTerms() && PortalUtil.isCompanyControlPanelPortlet(PortletKeys.DOCUMENT_LIBRARY_ADMIN, themeDisplay)) {
+			if (!searchTerms.hasSearchTerms() && PortalUtil.isCompanyControlPanelPortlet(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, themeDisplay)) {
 				if (searchContainer.getStart() == 0) {
 					results.add(company.getGroup());
 				}

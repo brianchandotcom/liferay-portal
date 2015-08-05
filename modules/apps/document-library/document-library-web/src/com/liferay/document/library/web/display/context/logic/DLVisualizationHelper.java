@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.web.display.context.logic;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.display.context.util.DLRequestHelper;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.util.PortletKeys;
 
 /**
  * @author Iván Zaera
@@ -30,8 +30,8 @@ public class DLVisualizationHelper {
 	public boolean isAddFolderButtonVisible() {
 		String portletName = _dlRequestHelper.getPortletName();
 
-		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) ||
+			portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 
 			return true;
 		}
@@ -47,8 +47,8 @@ public class DLVisualizationHelper {
 	public boolean isShowMinimalActionsButton() {
 		String portletName = _dlRequestHelper.getPortletName();
 
-		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) ||
+			portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 
 			return true;
 		}
@@ -60,8 +60,8 @@ public class DLVisualizationHelper {
 	public boolean isShowWhenSingleIconActionButton() {
 		String portletName = _dlRequestHelper.getPortletName();
 
-		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) ||
+			portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 
 			return true;
 		}

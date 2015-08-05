@@ -25,7 +25,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.document.library.web.display.context.DLDisplayContextProviderUtil" %><%@
+<%@ page import="com.liferay.document.library.web.constants.DLPortletKeys" %><%@
+page import="com.liferay.document.library.web.display.context.DLDisplayContextProviderUtil" %><%@
 page import="com.liferay.document.library.web.display.context.IGDisplayContextProviderUtil" %><%@
 page import="com.liferay.document.library.web.display.context.logic.DLPortletInstanceSettingsHelper" %><%@
 page import="com.liferay.document.library.web.display.context.logic.DLVisualizationHelper" %><%@

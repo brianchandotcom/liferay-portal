@@ -33,7 +33,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
@@ -81,7 +80,7 @@ public class RepositoryStagedModelDataHandlerTest
 		_repository = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
 			mountFolder.getFolderId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), PortletKeys.DOCUMENT_LIBRARY,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new UnicodeProperties(), false, serviceContext);
 
 		RepositoryEntry repositoryEntry =

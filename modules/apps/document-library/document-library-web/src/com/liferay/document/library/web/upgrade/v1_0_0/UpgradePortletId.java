@@ -12,32 +12,24 @@
  * details.
  */
 
-package com.liferay.document.library.web.ratings.definition;
+package com.liferay.document.library.web.upgrade.v1_0_0;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.portlet.ratings.RatingsType;
-import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Roberto Díaz
+ * @author Sergio González
  */
-@Component(
-	property = {
-		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileEntry"
-	}
-)
-public class DLPortletRatingsDefinition implements PortletRatingsDefinition {
+public class UpgradePortletId
+	extends com.liferay.portal.upgrade.util.UpgradePortletId {
 
 	@Override
-	public RatingsType getDefaultRatingsType() {
-		return RatingsType.STARS;
-	}
-
-	@Override
-	public String getPortletId() {
-		return DLPortletKeys.DOCUMENT_LIBRARY;
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"20", DLPortletKeys.DOCUMENT_LIBRARY},
+			new String[] {"199", DLPortletKeys.DOCUMENT_LIBRARY_ADMIN},
+			new String[] {"110", DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY},
+			new String[] {"31", DLPortletKeys.MEDIA_GALLERY_DISPLAY}
+		};
 	}
 
 }

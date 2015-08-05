@@ -18,7 +18,7 @@
 
 <%
 if (layout.isTypeControlPanel()) {
-	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, PortletKeys.DOCUMENT_LIBRARY, null);
+	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, DLPortletKeys.DOCUMENT_LIBRARY, null);
 }
 
 DLDisplayRequestHelper dlDisplayRequestHelper = new DLDisplayRequestHelper(request);

@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.web.portlet;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.util.PortletKeys;
 
 import javax.portlet.Portlet;
 
@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.single-page-application-cacheable=false",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/document_library/view.jsp",
-		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supported-public-render-parameter=categoryId",

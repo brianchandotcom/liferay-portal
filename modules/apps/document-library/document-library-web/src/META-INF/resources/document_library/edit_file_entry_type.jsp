@@ -93,7 +93,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="mainMetadataFields" persistState="<%= true %>" title="main-metadata-fields">
 			<liferay-util:include page="/form_builder.jsp" portletId="<%= PortletProviderUtil.getPortletId(DDMStructureManagerUtil.getDDMStructureModelClass().getName(), PortletProvider.Action.VIEW) %>">
-				<portlet:param name="refererPortletName" value="<%= PortletKeys.DOCUMENT_LIBRARY %>" />
+				<portlet:param name="refererPortletName" value="<%= DLPortletKeys.DOCUMENT_LIBRARY %>" />
 				<portlet:param name="portletResourceNamespace" value="<%= renderResponse.getNamespace() %>" />
 				<portlet:param name="script" value="<%= script %>" />
 				<portlet:param name="fieldsJSONArrayString" value="<%= (fieldsJSONArray != null) ? fieldsJSONArray.toString() : StringPool.BLANK %>" />
@@ -165,7 +165,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 				},
 				eventName: '<portlet:namespace />selectDDMStructure',
 				mvcPath: '/select_structure.jsp',
-				refererPortletName: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
+				refererPortletName: '<%= DLPortletKeys.DOCUMENT_LIBRARY %>',
 				showAncestorScopes: true,
 				showManageTemplates: false,
 				showToolbar: true,

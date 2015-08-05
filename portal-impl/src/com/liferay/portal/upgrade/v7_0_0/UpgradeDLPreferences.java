@@ -15,8 +15,6 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import javax.portlet.PortletPreferences;
@@ -28,11 +26,7 @@ public class UpgradeDLPreferences extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String[] getPortletIds() {
-		return new String[] {
-			PortletKeys.DOCUMENT_LIBRARY,
-			PortletKeys.DOCUMENT_LIBRARY_DISPLAY + StringPool.PERCENT,
-			PortletKeys.MEDIA_GALLERY_DISPLAY + StringPool.PERCENT
-		};
+		return new String[] {"20", "110%", "31%"};
 	}
 
 	@Override

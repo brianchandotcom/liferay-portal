@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -54,7 +56,6 @@ import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -219,8 +220,11 @@ public class DLImpl implements DL {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String portletId = PortletProviderUtil.getPortletId(
+			FileEntry.class.getName(), PortletProvider.Action.MANAGE);
+
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletKeys.DOCUMENT_LIBRARY_ADMIN,
+			portletRequest, portletId,
 			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
 			PortletRequest.RENDER_PHASE);
 
@@ -239,8 +243,11 @@ public class DLImpl implements DL {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String portletId = PortletProviderUtil.getPortletId(
+			Folder.class.getName(), PortletProvider.Action.MANAGE);
+
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, PortletKeys.DOCUMENT_LIBRARY_ADMIN,
+			portletRequest, portletId,
 			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
 			PortletRequest.RENDER_PHASE);
 
@@ -1128,9 +1135,12 @@ public class DLImpl implements DL {
 		long controlPanelPlid = PortalUtil.getControlPanelPlid(
 			serviceContext.getCompanyId());
 
+		String portletId = PortletProviderUtil.getPortletId(
+			FileEntry.class.getName(), PortletProvider.Action.VIEW);
+
 		if (plid == controlPanelPlid) {
 			plid = PortalUtil.getPlidFromPortletId(
-				dlFileVersion.getGroupId(), PortletKeys.DOCUMENT_LIBRARY);
+				dlFileVersion.getGroupId(), portletId);
 		}
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
@@ -1138,8 +1148,7 @@ public class DLImpl implements DL {
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.DOCUMENT_LIBRARY, plid,
-			PortletRequest.RENDER_PHASE);
+			request, portletId, plid, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/view_file_entry");

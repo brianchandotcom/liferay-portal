@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/group_statistics/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 int displayActivityCounterNameIndexCount = groupStatisticsPortletInstanceConfiguration.displayActivityCounterName().length;

@@ -20,7 +20,7 @@
 							Liferay.Util.openWindow(
 								{
 									dialog: {
-										zIndex: editor.getNextZIndex()
+										zIndex: CKEDITOR.getNextZIndex()
 									},
 									height: height,
 									stack: false,

@@ -112,7 +112,7 @@
 				var itemSelectorDialog = instance._itemSelectorDialog;
 
 				if (itemSelectorDialog) {
-					itemSelectorDialog.set('zIndex', editor.getNextZIndex());
+					itemSelectorDialog.set('zIndex', CKEDITOR.getNextZIndex());
 
 					callback(itemSelectorDialog);
 				}
@@ -126,7 +126,7 @@
 								{
 									eventName: eventName,
 									url: editor.config.filebrowserImageBrowseUrl,
-									zIndex: editor.getNextZIndex()
+									zIndex: CKEDITOR.getNextZIndex()
 								}
 							);
 

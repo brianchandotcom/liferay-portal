@@ -43,7 +43,8 @@ public class PortletKeys {
 
 	public static final String DOCKBAR = "145";
 
-	public static final String DOCUMENT_LIBRARY = "20";
+	public static final String DOCUMENT_LIBRARY =
+		"com_liferay_document_library_web_portlet_DLPortlet";
 
 	public static final String EXPANDO =
 		"com_liferay_expando_web_portlet_ExpandoPortlet";

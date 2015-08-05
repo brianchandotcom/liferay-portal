@@ -497,6 +497,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NODE_TABLE_WIKI_GENERIC_2</td>
+	<td>//tr[2]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NODE_TABLE_NUMBER_OF_PAGES</td>
 	<td>//tr[contains(.,'${key_wikiNodeName}')]/td[2]/a</td>
 	<td></td>

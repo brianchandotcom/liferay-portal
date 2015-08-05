@@ -1750,8 +1750,8 @@ public class PortalImpl implements Portal {
 
 			layout = LayoutLocalServiceUtil.getLayout(plid);
 		}
-		catch (PortalException e) {
-			_log.error("Unable to determine control panel layout", e);
+		catch (PortalException pe) {
+			_log.error("Unable to determine control panel layout", pe);
 
 			return null;
 		}
@@ -1767,8 +1767,8 @@ public class PortalImpl implements Portal {
 		try {
 			liferayPortletURL.setWindowState(WindowState.MAXIMIZED);
 		}
-		catch (WindowStateException e) {
-			_log.error(e);
+		catch (WindowStateException wse) {
+			_log.error(wse);
 		}
 
 		return liferayPortletURL;

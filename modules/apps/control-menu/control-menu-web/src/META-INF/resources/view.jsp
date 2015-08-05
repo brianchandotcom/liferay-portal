@@ -95,9 +95,9 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 
 							PortletURL editPageURL = PortalUtil.getControlPanelPortletURL(request, portletId, 0, PortletRequest.RENDER_PHASE);
 
-							editPageURL.setParameter("privateLayout", String.valueOf(layout.isPrivateLayout()));
 							editPageURL.setParameter("groupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));
 							editPageURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
+							editPageURL.setParameter("privateLayout", String.valueOf(layout.isPrivateLayout()));
 							editPageURL.setParameter("treeId", "layoutsTree");
 							editPageURL.setParameter("viewLayout", Boolean.TRUE.toString());
 							%>

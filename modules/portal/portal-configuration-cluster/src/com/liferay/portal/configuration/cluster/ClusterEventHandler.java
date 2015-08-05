@@ -52,8 +52,6 @@ public class ClusterEventHandler implements SynchronousConfigurationListener {
 
 		message.put("cm.type", event.getType());
 
-		System.out.println(message);
-
 		_clusterLink.sendMulticastMessage(message, Priority.LEVEL10);
 	}
 

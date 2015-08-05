@@ -14,7 +14,9 @@
 
 package com.liferay.portlet.pluginsadmin.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -22,60 +24,52 @@ import com.liferay.portal.model.Plugin;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.PluginSettingServiceUtil;
 import com.liferay.portal.service.PortletServiceUtil;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 
 import java.util.Arrays;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
+ * @author Peter Fellwock
  */
-public class EditPluginAction extends PortletAction {
+
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.PLUGINS_ADMIN,
+		"mvc.command.name=/plugins_admin/edit_plugin"
+	}
+)
+public class EditPluginAction extends BaseMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		try {
 			updatePluginSetting(actionRequest);
 
-			sendRedirect(actionRequest, actionResponse);
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.plugins_admin.error");
+				sendRedirect(
+					actionRequest, actionResponse,
+					"/html/portlet/plugins_admin/error.jsp");
 			}
 			else {
 				throw e;
 			}
 		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.plugins_admin.edit_plugin"));
 	}
 
 	protected void updatePluginSetting(ActionRequest actionRequest)

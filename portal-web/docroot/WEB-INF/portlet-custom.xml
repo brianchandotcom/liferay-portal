@@ -352,14 +352,14 @@
 	<portlet>
 		<portlet-name>132</portlet-name>
 		<display-name>Plugins Admin</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.pluginsadmin.PluginsAdminPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/plugins_admin/</value>
 		</init-param>
 		<init-param>
 			<name>view-action</name>
-			<value>/plugins_admin/view</value>
+			<value>/plugins_admin/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

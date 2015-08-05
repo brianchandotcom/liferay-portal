@@ -49,7 +49,7 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 
 		PortletURL rowURL = renderResponse.createRenderURL();
 
-		rowURL.setParameter("struts_action", "/plugins_admin/edit_plugin");
+		rowURL.setParameter("mvcRenderCommandName", "/plugins_admin/edit_plugin");
 		rowURL.setParameter("redirect", currentURL);
 
 		if (pluginPackage != null) {

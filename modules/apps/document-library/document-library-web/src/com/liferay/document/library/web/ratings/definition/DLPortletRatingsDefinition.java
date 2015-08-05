@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.ratings.definition;
 
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portlet.ratings.RatingsType;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
 
@@ -37,7 +37,7 @@ public class DLPortletRatingsDefinition implements PortletRatingsDefinition {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.DOCUMENT_LIBRARY;
+		return DLPortletKeys.DOCUMENT_LIBRARY;
 	}
 
 }

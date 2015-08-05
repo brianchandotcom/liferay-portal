@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.web.portlet.action;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.util.PortletKeys;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY},
+	property = {"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY},
 	service = ConfigurationAction.class
 )
 public class IGDisplayConfigurationAction

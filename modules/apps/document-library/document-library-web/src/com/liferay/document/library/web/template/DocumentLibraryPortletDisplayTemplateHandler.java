@@ -17,6 +17,7 @@ package com.liferay.document.library.web.template;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.document.library.configuration.DLSystemConfiguration;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Modified;
 @Component(
 	configurationPid = "com.liferay.document.library.configuration.DLSystemConfiguration",
 	immediate = true,
-	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY},
+	property = {"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY},
 	service = TemplateHandler.class
 )
 public class DocumentLibraryPortletDisplayTemplateHandler
@@ -77,7 +77,7 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 	@Override
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
-			PortletKeys.DOCUMENT_LIBRARY, locale);
+			DLPortletKeys.DOCUMENT_LIBRARY, locale);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -85,7 +85,7 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return PortletKeys.DOCUMENT_LIBRARY;
+		return DLPortletKeys.DOCUMENT_LIBRARY;
 	}
 
 	@Override

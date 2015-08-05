@@ -17,6 +17,7 @@ package com.liferay.document.library.web.messaging;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.document.library.configuration.DLSystemConfiguration;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.util.Map;
 
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.document.library.configuration.DLSystemConfiguration",
-	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN},
+	property = {"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN},
 	service = SchedulerEntry.class
 )
 public class TempFileEntriesMessageListener
@@ -131,7 +131,7 @@ public class TempFileEntriesMessageListener
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN + ")"
+		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN + ")"
 	)
 	protected void setPortlet(Portlet portlet) {
 	}

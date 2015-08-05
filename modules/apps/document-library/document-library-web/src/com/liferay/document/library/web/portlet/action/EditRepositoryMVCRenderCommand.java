@@ -14,11 +14,11 @@
 
 package com.liferay.document.library.web.portlet.action;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.util.PortletKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -31,10 +31,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
-		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
-		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY,
+		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
 		"mvc.command.name=/document_library/edit_repository"
 	},
 	service = MVCRenderCommand.class

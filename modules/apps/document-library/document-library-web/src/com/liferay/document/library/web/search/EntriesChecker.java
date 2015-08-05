@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.search;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -29,7 +30,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -63,7 +63,7 @@ public class EntriesChecker extends RowChecker {
 
 		String portletName = portletDisplay.getPortletName();
 
-		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
+		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
 			_documentLibraryDisplayPortlet = true;
 		}
 		else {

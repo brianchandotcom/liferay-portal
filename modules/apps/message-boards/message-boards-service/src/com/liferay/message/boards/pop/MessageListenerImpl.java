@@ -213,6 +213,7 @@ public class MessageListenerImpl implements MessageListener {
 					groupId, portletId,
 					StringUtil.equalsIgnoreCase(
 						Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL)));
+
 			serviceContext.setScopeGroupId(groupId);
 
 			if (parentMessage == null) {

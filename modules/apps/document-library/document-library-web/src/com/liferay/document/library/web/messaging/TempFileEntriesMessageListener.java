@@ -16,7 +16,7 @@ package com.liferay.document.library.web.messaging;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.document.library.configuration.DLConfiguration;
+import com.liferay.document.library.configuration.DLSystemConfiguration;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  */
 @Component(
-	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
+	configurationPid = "com.liferay.document.library.configuration.DLSystemConfiguration",
 	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN},
 	service = SchedulerEntry.class
 )
@@ -57,13 +57,13 @@ public class TempFileEntriesMessageListener
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_dlConfiguration = Configurable.createConfigurable(
-			DLConfiguration.class, properties);
+		_dlSystemConfiguration = Configurable.createConfigurable(
+			DLSystemConfiguration.class, properties);
 
 		schedulerEntry.setTimeUnit(TimeUnit.HOUR);
 		schedulerEntry.setTriggerType(TriggerType.SIMPLE);
 		schedulerEntry.setTriggerValue(
-			_dlConfiguration.temporaryFileEntriesCheckInterval());
+			_dlSystemConfiguration.temporaryFileEntriesCheckInterval());
 	}
 
 	protected void deleteExpiredTemporaryFileEntries(Repository repository) {
@@ -139,6 +139,6 @@ public class TempFileEntriesMessageListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		TempFileEntriesMessageListener.class);
 
-	private volatile DLConfiguration _dlConfiguration;
+	private volatile DLSystemConfiguration _dlSystemConfiguration;
 
 }

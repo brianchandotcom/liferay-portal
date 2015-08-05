@@ -251,7 +251,7 @@ public class DDMTemplateVersionPersistenceTest {
 			"templateVersionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"classNameId", true, "classPK", true, "templateId", true,
-			"version", true, "name", true, "language", true, "status", true,
+			"version", true, "language", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 

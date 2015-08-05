@@ -2383,6 +2383,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">
@@ -2424,6 +2425,7 @@
 			<var name="eventType" value="${eventType}" />
 			<var name="number1" value="2" />
 			<var name="number2" value="4" />
+			<var name="pageName" value="${pageName}" />
 			<var name="reminders" value="true" />
 		</execute>
 
@@ -2467,6 +2469,7 @@
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="optionSetValue" value="inviteResource" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">
@@ -2499,6 +2502,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">
@@ -2540,6 +2544,7 @@
 			<var name="eventType" value="${eventType}" />
 			<var name="number1" value="2" />
 			<var name="number2" value="4" />
+			<var name="pageName" value="${pageName}" />
 			<var name="reminders" value="true" />
 		</execute>
 
@@ -2583,6 +2588,7 @@
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="optionSetValue" value="inviteResource" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">
@@ -2617,6 +2623,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
 			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">
@@ -2660,6 +2667,7 @@
 			<var name="eventType" value="${eventType}" />
 			<var name="number1" value="2" />
 			<var name="number2" value="4" />
+			<var name="pageName" value="${pageName}" />
 			<var name="reminders" value="true" />
 		</execute>
 
@@ -2705,6 +2713,7 @@
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="inviteResource" value="true" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">

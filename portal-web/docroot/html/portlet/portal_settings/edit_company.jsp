@@ -19,7 +19,7 @@
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/portal_settings/view");
+portletURL.setParameter("mvcPath", "/html/portlet/portal_settings/edit_company.jsp");
 
 request.setAttribute("addresses.className", Account.class.getName());
 request.setAttribute("emailAddresses.className", Account.class.getName());
@@ -32,14 +32,11 @@ request.setAttribute("phones.classPK", company.getAccountId());
 request.setAttribute("websites.classPK", company.getAccountId());
 %>
 
-<portlet:actionURL var="editCompanyURL">
-	<portlet:param name="struts_action" value="/portal_settings/edit_company" />
-</portlet:actionURL>
+<portlet:actionURL name="editCompany" var="editCompanyURL" />
 
 <aui:form action="<%= editCompanyURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCompany();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" />
-
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	
 	<liferay-util:buffer var="htmlTop">
 		<div class="company-info">
 			<p class="float-container">

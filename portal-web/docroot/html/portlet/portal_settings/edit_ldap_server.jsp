@@ -156,8 +156,8 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 	title='<%= (ldapServerId == 0) ? "add-ldap-server" : "edit-ldap-server" %>'
 />
 
-<portlet:actionURL var="editLDAPServerURL">
-	<portlet:param name="struts_action" value="/portal_settings/edit_ldap_server" />
+<portlet:actionURL name="editLDAPServer" var="editLDAPServerURL">
+    <portlet:param name="mvcPath" value="/edit_ldap_server.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= editLDAPServerURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry(false);" %>'>
@@ -165,7 +165,6 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 	<liferay-ui:error exception="<%= LDAPFilterException.class %>" message="please-enter-a-valid-ldap-search-filter" />
 	<liferay-ui:error exception="<%= LDAPServerNameException.class %>" message="please-enter-a-valid-ldap-server-name" />
 
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="ldapServerId" type="hidden" value="<%= ldapServerId %>" />
 
@@ -342,8 +341,6 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 		var groupMapping = <portlet:namespace />mapValues(groupMappingFields, groupMappingFieldValues);
 
 		form.fm('settings--<%= PropsKeys.LDAP_GROUP_MAPPINGS + postfix %>--').val(groupMapping);
-
-		form.fm('<%= Constants.CMD %>').val('<%= ldapServerId <= 0 ? Constants.ADD : Constants.UPDATE %>');
 
 		submitForm(form);
 	}
@@ -548,18 +545,20 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 			var data = {};
 
 			if (type == 'ldapConnection') {
-				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/portal_settings/test_ldap_connection" /></portlet:renderURL>';
+				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/portal_settings/test_ldap_connection.jsp" /></portlet:renderURL>';
+				
+				
 			}
 			else if (type == 'ldapGroups') {
-				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/portal_settings/test_ldap_groups" /></portlet:renderURL>';
-
+			    url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/portal_settings/test_ldap_group.jsp" /></portlet:renderURL>';
+			
 				data.<portlet:namespace />importGroupSearchFilter = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix %>--'].value;
 				data.<portlet:namespace />groupMappingDescription = document.<portlet:namespace />fm['<portlet:namespace />groupMappingDescription'].value;
 				data.<portlet:namespace />groupMappingGroupName = document.<portlet:namespace />fm['<portlet:namespace />groupMappingGroupName'].value;
 				data.<portlet:namespace />groupMappingUser = document.<portlet:namespace />fm['<portlet:namespace />groupMappingUser'].value;
 			}
 			else if (type == 'ldapUsers') {
-				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/portal_settings/test_ldap_users" /></portlet:renderURL>';
+                url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/portal_settings/test_ldap_users.jsp" /></portlet:renderURL>';
 
 				data.<portlet:namespace />importUserSearchFilter = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_IMPORT_USER_SEARCH_FILTER + postfix %>--'].value;
 				data.<portlet:namespace />userMappingEmailAddress = document.<portlet:namespace />fm['<portlet:namespace />userMappingEmailAddress'].value;

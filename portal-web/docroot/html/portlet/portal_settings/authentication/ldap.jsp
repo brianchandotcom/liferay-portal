@@ -117,8 +117,8 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 	<%
 	PortletURL addServerURL = renderResponse.createRenderURL();
 
-	addServerURL.setParameter("struts_action", "portal_settings/edit_ldap_server");
-	addServerURL.setParameter("redirect", authenticationURL);
+	addServerURL.setParameter("mvcPath", "/edit_ldap_server.jsp");
+    addServerURL.setParameter("redirect", authenticationURL);
 	%>
 
 	<aui:button href="<%= addServerURL.toString() %>" name="addButton" value="add" />
@@ -186,8 +186,8 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 							</c:if>
 
 							<portlet:renderURL var="editURL">
-								<portlet:param name="struts_action" value="/portal_settings/edit_ldap_server" />
-								<portlet:param name="redirect" value="<%= authenticationURL %>" />
+                                <portlet:param name="mvcPath" value="/html/portlet/portal_settings/edit_ldap_server.jsp" />
+                                <portlet:param name="redirect" value="<%= authenticationURL %>" />
 								<portlet:param name="ldapServerId" value="<%= String.valueOf(ldapServerId) %>" />
 							</portlet:renderURL>
 
@@ -197,14 +197,13 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 								url="<%= editURL %>"
 							/>
 
-							<portlet:actionURL var="deleteURL">
-								<portlet:param name="struts_action" value="/portal_settings/edit_ldap_server" />
-								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+                            <portlet:actionURL name="deleteLDAPServer" var="delete">
+                                <portlet:param name="mvcPath" value="/html/portlet/portal_settings/edit_ldap_server.jsp" />
 								<portlet:param name="redirect" value="<%= authenticationURL %>" />
 								<portlet:param name="ldapServerId" value="<%= String.valueOf(ldapServerId) %>" />
 							</portlet:actionURL>
 
-							<liferay-ui:icon-delete url="<%= deleteURL %>" />
+							<liferay-ui:icon-delete url="<%= delete %>" />
 						</div>
 					</td>
 				</tr>

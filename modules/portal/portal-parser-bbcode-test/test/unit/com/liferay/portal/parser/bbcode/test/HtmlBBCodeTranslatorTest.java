@@ -218,6 +218,18 @@ public class HtmlBBCodeTranslatorTest {
 		Assert.assertEquals(expected, actual);
 	}
 
+	@Test
+	public void testUrl() {
+		String content =
+			"[url=https://msdn.microsoft.com/aa752574(VS.85).aspx]link[/url]";
+
+		String expected = "<a href=\"" + HtmlUtil.escapeHREF(
+			"https://msdn.microsoft.com/aa752574(VS.85).aspx") + "\">link</a>";
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(expected, actual);
+	}
+
 	private final HtmlBBCodeTranslatorImpl _htmlBBCodeTranslator =
 		new HtmlBBCodeTranslatorImpl();
 

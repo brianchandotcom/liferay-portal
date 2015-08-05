@@ -1,0 +1,9 @@
+dependencies {
+	compile group: "org.apache.felix", name: "org.apache.felix.configadmin", version: "1.8.7-SNAPSHOT"
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

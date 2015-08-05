@@ -1,0 +1,8 @@
+dependencies {
+	compile group: "junit", name: "junit", version: "4.12"
+	compile group: "org.arquillian.liferay", name: "arquillian-container-liferay", version: "1.0.0.Final-SNAPSHOT"
+	compile group: "org.arquillian.liferay", name: "arquillian-deployment-generator-bnd", version: "1.0.0.Final-SNAPSHOT"
+	compile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.8.Final"
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile project(":portal:portal-configuration-persistence")
+}

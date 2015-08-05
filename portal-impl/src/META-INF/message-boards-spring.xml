@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+	<bean id="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" class="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" />
+	<bean id="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" class="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" />
+	<bean id="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" class="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" />
+	<bean id="com.liferay.portlet.messageboards.service.permission.MBThreadPermission" class="com.liferay.portlet.messageboards.service.permission.MBThreadPermission" />
+	<bean id="com.liferay.portlet.messageboards.service.permission.MBPermission" class="com.liferay.portlet.messageboards.service.permission.MBPermission" />
+	<bean id="com.liferay.portlet.messageboards.util.MBMessageIndexer" class="com.liferay.portlet.messageboards.util.MBMessageIndexer" />
+	<bean id="com.liferay.portlet.messageboards.util.MBOpenSearchImpl" class="com.liferay.portlet.messageboards.util.MBOpenSearchImpl" />
+	<bean id="com.liferay.portlet.messageboards.util.MBThreadIndexer" class="com.liferay.portlet.messageboards.util.MBThreadIndexer" />
+</beans>

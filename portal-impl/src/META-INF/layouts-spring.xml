@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+	<bean id="com.liferay.portal.service.impl.LayoutLocalServiceHelper" class="com.liferay.portal.service.impl.LayoutLocalServiceHelper" />
+	<bean id="com.liferay.portal.service.permission.LayoutBranchPermissionUtil" class="com.liferay.portal.service.permission.LayoutBranchPermissionUtil">
+		<property name="layoutBranchPermission">
+			<bean class="com.liferay.portal.service.permission.LayoutBranchPermissionImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.service.permission.LayoutPermissionImpl" class="com.liferay.portal.service.permission.LayoutPermissionImpl" />
+	<bean id="com.liferay.portal.service.permission.LayoutPermissionUtil" class="com.liferay.portal.service.permission.LayoutPermissionUtil">
+		<property name="layoutPermission" ref="com.liferay.portal.service.permission.LayoutPermissionImpl">
+
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.service.permission.LayoutPrototypePermissionUtil" class="com.liferay.portal.service.permission.LayoutPrototypePermissionUtil">
+		<property name="layoutPrototypePermission">
+			<bean class="com.liferay.portal.service.permission.LayoutPrototypePermissionImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.service.permission.LayoutSetBranchPermissionUtil" class="com.liferay.portal.service.permission.LayoutSetBranchPermissionUtil">
+		<property name="layoutSetBranchPermission">
+			<bean class="com.liferay.portal.service.permission.LayoutSetBranchPermissionImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil" class="com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil">
+		<property name="layoutSetPrototypePermission">
+			<bean class="com.liferay.portal.service.permission.LayoutSetPrototypePermissionImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.util.LayoutSitemapURLProvider" class="com.liferay.portal.util.LayoutSitemapURLProvider" />
+	<bean id="com.liferay.portal.util.LayoutTypePortletFactoryUtil" class="com.liferay.portal.util.LayoutTypePortletFactoryUtil">
+		<property name="layoutTypePortletFactory">
+			<bean class="com.liferay.portal.util.LayoutTypePortletFactoryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.layoutsadmin.util.SitemapUtil" class="com.liferay.portlet.layoutsadmin.util.SitemapUtil">
+		<property name="sitemap">
+			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />
+		</property>
+	</bean>
+</beans>

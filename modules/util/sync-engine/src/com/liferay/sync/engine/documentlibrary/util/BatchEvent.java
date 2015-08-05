@@ -22,7 +22,6 @@ import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.JSONUtil;
-import com.liferay.sync.engine.util.PropsValues;
 import com.liferay.sync.engine.util.StreamUtil;
 
 import java.io.IOException;
@@ -52,7 +51,10 @@ public class BatchEvent {
 	}
 
 	public synchronized boolean addEvent(Event event) {
-		if (!PropsValues.SYNC_BATCH_EVENTS_ENABLED) {
+		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
+			_syncAccountId);
+
+		if (syncAccount.getBatchFileMaxSize() <= 0) {
 			return false;
 		}
 
@@ -68,12 +70,18 @@ public class BatchEvent {
 			Path filePath = (Path)parameters.get("filePath");
 
 			if (deltaFilePath != null) {
-				if (!addFile(deltaFilePath, zipFileId)) {
+				if (!addFile(
+						deltaFilePath, zipFileId,
+						syncAccount.getBatchFileMaxSize())) {
+
 					return false;
 				}
 			}
 			else if (filePath != null) {
-				if (!addFile(filePath, zipFileId)) {
+				if (!addFile(
+						filePath, zipFileId,
+						syncAccount.getBatchFileMaxSize())) {
+
 					return false;
 				}
 			}
@@ -93,10 +101,8 @@ public class BatchEvent {
 
 			_handlers.put(zipFileId, event.getHandler());
 
-			if ((_eventCount >=
-					PropsValues.SYNC_BATCH_EVENTS_MAX_COUNT) ||
-				(_totalFileSize >=
-					PropsValues.SYNC_BATCH_EVENTS_MAX_TOTAL_FILE_SIZE)) {
+			if ((_eventCount >= 250) ||
+				(_totalFileSize >= syncAccount.getBatchFileMaxSize())) {
 
 				fireBatchEvent();
 			}
@@ -149,12 +155,13 @@ public class BatchEvent {
 		return _closed;
 	}
 
-	protected boolean addFile(Path filePath, String zipFileId)
+	protected boolean addFile(
+			Path filePath, String zipFileId, int batchFileMaxSize)
 		throws IOException {
 
 		long fileSize = Files.size(filePath);
 
-		if (fileSize >= PropsValues.SYNC_BATCH_EVENTS_MAX_FILE_SIZE) {
+		if (fileSize >= (batchFileMaxSize / 10)) {
 			return false;
 		}
 

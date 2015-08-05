@@ -67,7 +67,7 @@ public class UpgradeProcess_3_0_8 extends UpgradeProcess {
 			SyncFileService.getSyncFilePersistence();
 
 		syncFilePersistence.executeRaw(
-			"CREATE INDEX syncfile_checksum_idx ON SyncFile(checksum)");
+			"CREATE INDEX syncfile_checksum_idx ON SyncFile(checksum);");
 	}
 
 }

@@ -29,6 +29,9 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SyncContext {
 
+	public static final String PREFERENCE_KEY_BATCH_FILE_MAX_SIZE =
+		"sync.client.batch.file.max.size";
+
 	public static final String PREFERENCE_KEY_MAX_CONNECTIONS =
 		"sync.client.max.connections";
 

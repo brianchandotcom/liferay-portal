@@ -66,6 +66,12 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 		Map<String, String> portletPreferencesMap =
 			syncContext.getPortletPreferencesMap();
 
+		int batchFileMaxSize = Integer.parseInt(
+			portletPreferencesMap.get(
+				SyncContext.PREFERENCE_KEY_BATCH_FILE_MAX_SIZE));
+
+		syncAccount.setBatchFileMaxSize(batchFileMaxSize);
+
 		int maxConnections = Integer.parseInt(
 			portletPreferencesMap.get(
 				SyncContext.PREFERENCE_KEY_MAX_CONNECTIONS));

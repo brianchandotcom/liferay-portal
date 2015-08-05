@@ -28,17 +28,17 @@ List<PanelApp> panelApps = panelAppRegistry.getPanelApps(panelCategory, permissi
 
 	<%
 	String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.getKey(), StringPool.PERIOD, StringPool.UNDERLINE);
+
+	PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
+
+	boolean containsActivePortlet = panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), panelCategory);
 	%>
 
-	<a aria-expanded="false" class="collapse-icon collapsed list-group-heading" data-toggle="collapse" href="#<%= panelPageCategoryId %>">
+	<a aria-expanded="false" class="collapse-icon <%= containsActivePortlet ? StringPool.BLANK : "collapsed" %> list-group-heading" data-toggle="collapse" href="#<%= panelPageCategoryId %>">
 		<%= panelCategory.getLabel(themeDisplay.getLocale()) %>
 	</a>
 
-	<%
-	PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
-	%>
-
-	<div class="collapse <%= panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), panelCategory) ? "in" : StringPool.BLANK %>" id="<%= panelPageCategoryId %>">
+	<div class="collapse <%= containsActivePortlet ? "in" : StringPool.BLANK %>" id="<%= panelPageCategoryId %>">
 		<div class="list-group-item">
 			<ul aria-labelledby="<%= panelPageCategoryId %>" class="nav nav-equal-height" role="menu">
 

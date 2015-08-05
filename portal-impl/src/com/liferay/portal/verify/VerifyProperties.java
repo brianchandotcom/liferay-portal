@@ -666,11 +666,6 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.document.library.web"
 		},
 		new String[] {
-			"dl.temporary.file.entries.check.interval",
-			"temporary.file.entries.check.interval",
-			"com.liferay.document.library.web"
-		},
-		new String[] {
 			"dl.repository.cmis.delete.depth", "delete.depth",
 			"com.liferay.document.library.repository.cmis"
 		},
@@ -745,6 +740,11 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"dl.store.s3.temp.dir.clean.up.frequency",
 			"temp.dir.clean.up.frequency", "com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.temporary.file.entries.check.interval",
+			"temporary.file.entries.check.interval",
+			"com.liferay.document.library.web"
 		},
 
 		// Dynamic Data Lists

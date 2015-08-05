@@ -82,7 +82,8 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 
 		jsonObject.put(
 			"removePlugins",
-			"contextmenu,elementspath,image,link,liststyle,resize,tabletools,toolbar");
+			"contextmenu,elementspath,image,link,liststyle,resize,tabletools," +
+				"toolbar");
 
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(

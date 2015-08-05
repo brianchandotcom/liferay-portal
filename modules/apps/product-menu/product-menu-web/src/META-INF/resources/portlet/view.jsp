@@ -127,16 +127,16 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 	);
 
 	sidenavContainer.on(
-		'open.lexicon.sidenav',
+		'closed.lexicon.sidenav',
 		function(event) {
-			Liferay.Store('liferay_product_menu_state', 'open');
+			Liferay.Store('liferay_product_menu_state', 'closed');
 		}
 	);
 
 	sidenavContainer.on(
-		'closed.lexicon.sidenav',
+		'open.lexicon.sidenav',
 		function(event) {
-			Liferay.Store('liferay_product_menu_state', 'closed');
+			Liferay.Store('liferay_product_menu_state', 'open');
 		}
 	);
 </aui:script>

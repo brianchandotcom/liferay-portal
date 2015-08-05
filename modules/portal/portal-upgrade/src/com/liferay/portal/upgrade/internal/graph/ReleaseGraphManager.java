@@ -49,47 +49,51 @@ public class ReleaseGraphManager {
 		}
 	}
 
-	public List<UpgradeInfo> findUpgradePath(String from) {
-		List<String> sinkNodes = getSinkNodes();
+	public List<UpgradeInfo> getUpgradeInfos(String fromVersionString) {
+		List<String> endVertices = getEndVertices();
 
-		sinkNodes.remove(from);
+		endVertices.remove(fromVersionString);
 
-		if (sinkNodes.size() == 1) {
-			return findUpgradePath(from, sinkNodes.get(0));
+		if (endVertices.size() == 1) {
+			return getUpgradeInfos(fromVersionString, endVertices.get(0));
 		}
 
-		if (sinkNodes.size() > 1) {
+		if (endVertices.size() > 1) {
 			throw new IllegalStateException(
-				"There are more that one possible end nodes " + sinkNodes);
+				"There is more than one possible end node " + endVertices);
 		}
 
-		throw new IllegalStateException("No end nodes!");
+		throw new IllegalStateException("There are no end nodes");
 	}
 
-	public List<UpgradeInfo> findUpgradePath(String from, String to) {
-		if (!_directedGraph.containsVertex(from)) {
+	public List<UpgradeInfo> getUpgradeInfos(
+		String fromVersionString, String toVersionString) {
+
+		if (!_directedGraph.containsVertex(fromVersionString)) {
 			throw new IllegalArgumentException(
-				"There is no path starting in " + from);
+				"There is no path for " + fromVersionString);
 		}
 
-		if (!_directedGraph.containsVertex(to)) {
+		if (!_directedGraph.containsVertex(toVersionString)) {
 			throw new IllegalArgumentException(
-				"There is no path starting in " + to);
+				"There is no path for " + toVersionString);
 		}
 
 		DijkstraShortestPath<String, UpgradeProcessEdge> dijkstraShortestPath =
-			new DijkstraShortestPath<>(_directedGraph, from, to);
+			new DijkstraShortestPath<>(
+				_directedGraph, fromVersionString, toVersionString);
 
-		List<UpgradeProcessEdge> pathEdgeList =
+		List<UpgradeProcessEdge> upgradeProcessEdges =
 			dijkstraShortestPath.getPathEdgeList();
 
-		if (pathEdgeList == null) {
+		if (upgradeProcessEdges == null) {
 			throw new IllegalArgumentException(
-				"There is no path between " + from + " and " + to);
+				"There is no path between " + fromVersionString + " and " +
+					toVersionString);
 		}
 
 		return ListUtil.toList(
-			pathEdgeList,
+			upgradeProcessEdges,
 			new Accessor<UpgradeProcessEdge, UpgradeInfo>() {
 
 				@Override
@@ -106,11 +110,11 @@ public class ReleaseGraphManager {
 				public Class<UpgradeProcessEdge> getTypeClass() {
 					return UpgradeProcessEdge.class;
 				}
-			}
-		);
+
+			});
 	}
 
-	protected List<String> getSinkNodes() {
+	protected List<String> getEndVertices() {
 		final List<String> endVertices = new ArrayList<>();
 
 		Set<String> vertices = _directedGraph.vertexSet();
@@ -155,10 +159,12 @@ public class ReleaseGraphManager {
 			String sourceVertex, String targetVertex) {
 
 			for (UpgradeInfo upgradeInfo : _upgradeInfos) {
-				String from = upgradeInfo.getFromVersionString();
-				String to = upgradeInfo.getToVersionString();
+				String fromVersionString = upgradeInfo.getFromVersionString();
+				String toVersionString = upgradeInfo.getToVersionString();
 
-				if (from.equals(sourceVertex) && to.equals(targetVertex)) {
+				if (fromVersionString.equals(sourceVertex) &&
+					toVersionString.equals(targetVertex)) {
+
 					return new UpgradeProcessEdge(upgradeInfo);
 				}
 			}

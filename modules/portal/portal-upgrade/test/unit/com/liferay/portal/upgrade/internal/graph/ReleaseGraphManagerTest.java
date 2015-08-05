@@ -39,7 +39,7 @@ public class ReleaseGraphManagerTest {
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			Arrays.asList(upi1, upi2, upi3, upi4));
 
-		List<UpgradeInfo> upgradePath = releaseGraphManager.findUpgradePath(
+		List<UpgradeInfo> upgradePath = releaseGraphManager.getUpgradeInfos(
 			"0.0.0");
 
 		Assert.assertEquals(Arrays.asList(upi1, upi2, upi3, upi4), upgradePath);
@@ -57,7 +57,7 @@ public class ReleaseGraphManagerTest {
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			Arrays.asList(upi1, upi2, upi3, upi4, upi5, upi6));
 
-		List<UpgradeInfo> upgradePath = releaseGraphManager.findUpgradePath(
+		List<UpgradeInfo> upgradePath = releaseGraphManager.getUpgradeInfos(
 			"0.1.0.1");
 
 		Assert.assertEquals(Arrays.asList(upi6, upi2, upi3, upi4), upgradePath);
@@ -76,7 +76,7 @@ public class ReleaseGraphManagerTest {
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			Arrays.asList(upi1, upi2, upi3, upi4, upi5, upi6, upi7));
 
-		releaseGraphManager.findUpgradePath("0.1.0.1");
+		releaseGraphManager.getUpgradeInfos("0.1.0.1");
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -89,7 +89,7 @@ public class ReleaseGraphManagerTest {
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			Arrays.asList(upi1, upi2, upi3, upi4));
 
-		releaseGraphManager.findUpgradePath("0.0.0");
+		releaseGraphManager.getUpgradeInfos("0.0.0");
 	}
 
 	@Test
@@ -102,7 +102,7 @@ public class ReleaseGraphManagerTest {
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			Arrays.asList(upi1, upi2, upi3, upi4));
 
-		List<String> sinkNodes = releaseGraphManager.getSinkNodes();
+		List<String> sinkNodes = releaseGraphManager.getEndVertices();
 
 		Assert.assertTrue(sinkNodes.contains("2.0.0"));
 	}
@@ -118,7 +118,7 @@ public class ReleaseGraphManagerTest {
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			Arrays.asList(upi1, upi2, upi3, upi4, upi5));
 
-		List<String> sinkNodes = releaseGraphManager.getSinkNodes();
+		List<String> sinkNodes = releaseGraphManager.getEndVertices();
 
 		Assert.assertTrue(sinkNodes.contains("2.0.0"));
 		Assert.assertTrue(sinkNodes.contains("2.2.0"));
@@ -134,7 +134,7 @@ public class ReleaseGraphManagerTest {
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			Arrays.asList(upi1, upi2, upi3, upi4));
 
-		List<UpgradeInfo> upgradePath = releaseGraphManager.findUpgradePath(
+		List<UpgradeInfo> upgradePath = releaseGraphManager.getUpgradeInfos(
 			"0.0.0", "2.0.0");
 
 		Assert.assertEquals(Arrays.asList(upi1, upi2, upi3, upi4), upgradePath);
@@ -150,7 +150,7 @@ public class ReleaseGraphManagerTest {
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			Arrays.asList(upi4, upi2, upi1, upi3));
 
-		List<UpgradeInfo> upgradePath = releaseGraphManager.findUpgradePath(
+		List<UpgradeInfo> upgradePath = releaseGraphManager.getUpgradeInfos(
 			"0.0.0", "2.0.0");
 
 		Assert.assertEquals(Arrays.asList(upi1, upi2, upi3, upi4), upgradePath);
@@ -167,7 +167,7 @@ public class ReleaseGraphManagerTest {
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			Arrays.asList(upi1, upi2, upi3, upi4, upi5));
 
-		List<UpgradeInfo> upgradePath = releaseGraphManager.findUpgradePath(
+		List<UpgradeInfo> upgradePath = releaseGraphManager.getUpgradeInfos(
 			"0.0.0", "2.0.0");
 
 		Assert.assertEquals(Arrays.asList(upi5), upgradePath);
@@ -184,7 +184,7 @@ public class ReleaseGraphManagerTest {
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			Arrays.asList(upi1, upi2, upi3, upi4, upi5));
 
-		List<UpgradeInfo> upgradePath = releaseGraphManager.findUpgradePath(
+		List<UpgradeInfo> upgradePath = releaseGraphManager.getUpgradeInfos(
 			"0.1.0", "2.0.0");
 
 		Assert.assertEquals(Arrays.asList(upi2, upi3, upi4), upgradePath);
@@ -200,7 +200,7 @@ public class ReleaseGraphManagerTest {
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
 			Arrays.asList(upi4, upi2, upi1, upi3));
 
-		releaseGraphManager.findUpgradePath("0.0.0", "2.0.1");
+		releaseGraphManager.getUpgradeInfos("0.0.0", "2.0.1");
 	}
 
 	protected UpgradeInfo createUpgradeProcessInfo(String from, String to) {

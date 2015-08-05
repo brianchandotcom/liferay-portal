@@ -1,7 +1,5 @@
 @import url(base.css);
 
-@import url(control_menu.css);
-
 @import url(portal.css);
 
 @import url(taglib.css);
@@ -9,6 +7,8 @@
 @import url(application.css);
 
 @import url(layout.css);
+
+@import url(control_menu.css);
 
 @import url(navigation.css);
 

@@ -86,7 +86,7 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 		}
 
 		String portletId = PortletProviderUtil.getPortletId(
-			MBDiscussion.class.getName(), PortletProvider.Action.VIEW);
+			MBDiscussion.class.getName(), PortletProvider.Action.EDIT);
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, groupId, className, classPK, portletId,

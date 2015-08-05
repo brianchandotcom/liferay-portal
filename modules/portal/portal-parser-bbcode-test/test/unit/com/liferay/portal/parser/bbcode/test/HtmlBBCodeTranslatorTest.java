@@ -24,6 +24,7 @@ import org.junit.Test;
 
 /**
  * @author Sergio González
+ * @author John Zhao
  */
 public class HtmlBBCodeTranslatorTest {
 
@@ -35,14 +36,89 @@ public class HtmlBBCodeTranslatorTest {
 	}
 
 	@Test
-	public void testBold() throws Exception {
-		String content = "This is [b]bold[/b]";
+	public void testAlign() {
+		String content = "[center]text[/center]";
 
-		String expected = "This is <strong>bold</strong>";
+		String expected = "<p style=\"text-align: center\">text</p>";
 		String actual = _htmlBBCodeTranslator.parse(content);
 
 		Assert.assertEquals(expected, actual);
 	}
+
+	@Test
+	public void testBold() {
+		String content = "[b]text[/b]";
+
+		String expected = "<strong>text</strong>";
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testColor() {
+		String content = "[color=#ff0000]text[/color]";
+
+		String expected = "<span style=\"color: #ff0000\">text</span>";
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testFontFamily() {
+		String content = "[font=georgia, serif]text[/font]";
+
+		String expected =
+			"<span style=\"font-family: " + HtmlUtil.escapeAttribute(
+				"georgia, serif") + "\">text</span>";
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testItalic() {
+		String content = "[i]text[/i]";
+
+		String expected = "<em>text</em>";
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testQuote() {
+		String content = "[quote=citer]text[/quote]";
+
+		String expected =
+			"<div class=\"quote-title\">citer:</div><div class=\"quote\">" +
+				"<div class=\"quote-content\">text</div></div>";
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testStrike() {
+		String content = "[s]text[/s]";
+
+		String expected = "<strike>text</strike>";
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testUnderline() {
+		String content = "[u]text[/u]";
+
+		String expected = "<u>text</u>";
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(expected, actual);
+	}
+
 
 	private final HtmlBBCodeTranslatorImpl _htmlBBCodeTranslator =
 		new HtmlBBCodeTranslatorImpl();

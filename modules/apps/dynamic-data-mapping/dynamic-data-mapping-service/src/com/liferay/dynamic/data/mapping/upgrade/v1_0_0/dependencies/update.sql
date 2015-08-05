@@ -1,3 +1,5 @@
+create index IX_DB81EB42 on DDMStorageLink (uuid_, companyId);
+
 alter table DDMStructure add versionUserId LONG;
 alter table DDMStructure add versionUserName VARCHAR(75) null;
 alter table DDMStructure add version VARCHAR(75) null;
@@ -7,10 +9,10 @@ update DDMStructure set versionUserName = userName;
 update DDMStructure set version = '1.0';
 
 create table DDMStructureLayout (
+	companyId LONG,
 	uuid_ VARCHAR(75) null,
 	structureLayoutId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -22,9 +24,9 @@ create table DDMStructureLayout (
 drop index IX_C803899D on DDMStructureLink;
 
 create table DDMStructureVersion (
+	companyId LONG,
 	structureVersionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -52,6 +54,7 @@ update DDMTemplate set versionUserName = userName;
 update DDMTemplate set version = '1.0';
 
 create table DDMTemplateLink (
+	companyId LONG,
 	templateLinkId LONG not null primary key,
 	classNameId LONG,
 	classPK LONG,
@@ -59,9 +62,9 @@ create table DDMTemplateLink (
 );
 
 create table DDMTemplateVersion (
+	companyId LONG,
 	templateVersionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,

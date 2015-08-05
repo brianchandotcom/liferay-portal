@@ -65,17 +65,12 @@
 }
 
 .lfr-has-add-content, .lfr-has-device-preview, .lfr-has-edit-layout {
-	height: 100%;
-	position: fixed;
-	width: 100%;
-
 	@include prefixer(overflow-scrolling, touch, 'webkit');
 
-	@include respond-to(phone, tablet) {
-		height: auto;
-		padding-left: 0;
-		position: static;
-		width: auto;
+	@include respond-to(desktop) {
+		height: 100%;
+		position: fixed;
+		width: 100%;
 	}
 
 	#wrapper {

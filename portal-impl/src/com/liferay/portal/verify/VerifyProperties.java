@@ -1318,6 +1318,13 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.search.lucene"
 		},
 
+		// Message Boards
+
+		new String[] {
+			"message.boards.expire.ban.job.interval", "expire.ban.job.interval",
+			"com.liferay.message.boards.web"
+		},
+
 		// Monitoring
 
 		new String[] {

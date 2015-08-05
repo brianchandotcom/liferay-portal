@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.upgrade;
 
+import com.liferay.document.library.web.upgrade.v1_0_0.UpgradeAdminPortlets;
 import com.liferay.document.library.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.document.library.web.upgrade.v1_0_0.UpgradePortletSettings;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -57,6 +58,7 @@ public class DLWebUpgrade {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
 		upgradeProcesses.add(new UpgradePortletId());
+		upgradeProcesses.add(new UpgradeAdminPortlets());
 
 		upgradeProcesses.add(new UpgradePortletSettings(_settingsFactory));
 

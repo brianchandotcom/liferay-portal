@@ -103,6 +103,16 @@ public class HtmlBBCodeTranslatorTest {
 	}
 
 	@Test
+	public void testFontSize() {
+		String content = "[size=5]text[/size]";
+
+		String expected = "<span style=\"font-size: 18px;\">text</span>";
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
 	public void testItalic() {
 		String content = "[i]text[/i]";
 

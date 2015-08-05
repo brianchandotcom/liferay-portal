@@ -85,7 +85,7 @@
 			<var name="entryContent" value="${entryContent}" />
 		</execute>
 
-		<execute function="Click" locator1="PGBlogsAdd#SETTINGS_TAB" />
+		<execute function="Click" locator1="BlogsEditEntry#SETTINGS_TAB" />
 
 		<for list="${tagNameList}" param="tagName">
 			<execute function="Type#clickAtSendKeys" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
@@ -134,7 +134,7 @@
 
 		<execute function="Pause" locator1="3000" />
 
-		<execute function="Click" locator1="PGBlogsAdd#SETTINGS_TAB" />
+		<execute function="Click" locator1="BlogsEditEntry#SETTINGS_TAB" />
 
 		<execute function="Pause" locator1="3000" />
 
@@ -294,7 +294,7 @@
 
 		<execute function="AssertClick" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
 
-		<execute function="Click" locator1="PGBlogsAdd#SETTINGS_TAB" />
+		<execute function="Click" locator1="BlogsEditEntry#SETTINGS_TAB" />
 
 		<var name="key_tagName" value="${tagName1}" />
 

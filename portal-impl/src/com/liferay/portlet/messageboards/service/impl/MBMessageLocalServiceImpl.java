@@ -81,6 +81,7 @@ import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchThreadException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
+import com.liferay.portlet.messageboards.constants.MBConstants;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
@@ -371,13 +372,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (ListUtil.isNotEmpty(inputStreamOVPs)) {
 			Folder folder = message.addAttachmentsFolder();
 
-			String portletId = PortletProviderUtil.getPortletId(
-				MBMessage.class.getName(), PortletProvider.Action.VIEW);
-
 			PortletFileRepositoryUtil.addPortletFileEntries(
 				message.getGroupId(), userId, MBMessage.class.getName(),
-				message.getMessageId(), portletId, folder.getFolderId(),
-				inputStreamOVPs);
+				message.getMessageId(), MBConstants.SERVICE_NAME,
+				folder.getFolderId(), inputStreamOVPs);
 		}
 
 		// Resources
@@ -516,13 +514,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		Folder folder = message.addAttachmentsFolder();
 
-		String portletId = PortletProviderUtil.getPortletId(
-			MBMessage.class.getName(), PortletProvider.Action.VIEW);
-
 		PortletFileRepositoryUtil.addPortletFileEntry(
 			message.getGroupId(), userId, MBMessage.class.getName(),
-			message.getMessageId(), portletId, folder.getFolderId(), file,
-			fileName, mimeType, true);
+			message.getMessageId(), MBConstants.SERVICE_NAME,
+			folder.getFolderId(), file, fileName, mimeType, true);
 	}
 
 	@Override
@@ -1666,13 +1661,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 				Folder folder = message.addAttachmentsFolder();
 
-				String portletId = PortletProviderUtil.getPortletId(
-					MBMessage.class.getName(), PortletProvider.Action.VIEW);
-
 				PortletFileRepositoryUtil.addPortletFileEntries(
 					message.getGroupId(), userId, MBMessage.class.getName(),
-					message.getMessageId(), portletId, folder.getFolderId(),
-					inputStreamOVPs);
+					message.getMessageId(), MBConstants.SERVICE_NAME,
+					folder.getFolderId(), inputStreamOVPs);
 			}
 			else {
 				if (TrashUtil.isTrashEnabled(message.getGroupId())) {

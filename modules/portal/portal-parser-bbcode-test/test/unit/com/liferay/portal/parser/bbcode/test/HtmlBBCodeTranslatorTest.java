@@ -152,6 +152,18 @@ public class HtmlBBCodeTranslatorTest {
 	}
 
 	@Test
+	public void testOrderedList() {
+		String content = "[list type=\"i\" start=\"2\"][*]line1[*]line2[/list]";
+
+		String expected =
+			"<ol style=\"list-style: lower-roman outside;\" start=\"2\">" +
+				"<li>line1</li><li>line2</li></ol>";
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
 	public void testQuote() {
 		String content = "[quote=citer]text[/quote]";
 

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.jgrapht.DirectedGraph;
 import org.jgrapht.EdgeFactory;
 import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -126,8 +127,7 @@ public class ReleaseGraphManager {
 		return endVertices;
 	}
 
-	private final DefaultDirectedGraph<String, UpgradeProcessEdge>
-		_directedGraph;
+	private final DirectedGraph<String, UpgradeProcessEdge> _directedGraph;
 
 	private static class UpgradeProcessEdge extends DefaultEdge {
 

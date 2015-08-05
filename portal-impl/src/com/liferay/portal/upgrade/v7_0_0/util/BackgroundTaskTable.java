@@ -16,6 +16,9 @@ package com.liferay.portal.upgrade.v7_0_0.util;
 
 import java.sql.Types;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author	  Brian Wing Shun Chan
  * @generated
@@ -36,13 +39,49 @@ public class BackgroundTaskTable {
 		{"name", Types.VARCHAR},
 		{"servletContextNames", Types.VARCHAR},
 		{"taskExecutorClassName", Types.VARCHAR},
-		{"taskContextMap", Types.VARCHAR},
+		{"taskContextMap", Types.CLOB},
 		{"completed", Types.BOOLEAN},
 		{"completionDate", Types.TIMESTAMP},
 		{"status", Types.INTEGER},
 		{"statusMessage", Types.CLOB}
 	};
 
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+static {
+TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("backgroundTaskId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+
+TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+
+TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("servletContextNames", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("taskExecutorClassName", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("taskContextMap", Types.CLOB);
+
+TABLE_COLUMNS_MAP.put("completed", Types.BOOLEAN);
+
+TABLE_COLUMNS_MAP.put("completionDate", Types.TIMESTAMP);
+
+TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+
+TABLE_COLUMNS_MAP.put("statusMessage", Types.CLOB);
+
+}
 	public static final String TABLE_SQL_CREATE = "create table BackgroundTask (mvccVersion LONG default 0,backgroundTaskId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(255) null,servletContextNames VARCHAR(255) null,taskExecutorClassName VARCHAR(200) null,taskContextMap TEXT null,completed BOOLEAN,completionDate DATE null,status INTEGER,statusMessage TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table BackgroundTask";

@@ -59,7 +59,7 @@ public class PortletCSSBottomDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register("/html/common/themes/bottom-ext.jsp");
+		dynamicIncludeRegistry.register("/html/common/themes/bottom.jsp#post");
 	}
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.portlet.css.web)")

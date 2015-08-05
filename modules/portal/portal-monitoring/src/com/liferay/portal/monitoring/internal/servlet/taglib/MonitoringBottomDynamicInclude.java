@@ -93,7 +93,7 @@ public class MonitoringBottomDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register("/html/common/themes/bottom-ext.jsp");
+		dynamicIncludeRegistry.register("/html/common/themes/bottom.jsp#post");
 	}
 
 	@Activate

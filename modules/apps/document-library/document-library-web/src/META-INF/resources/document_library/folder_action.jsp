@@ -19,10 +19,10 @@
 <%
 String randomNamespace = null;
 
-if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY)) {
 	randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_folder_action") + StringPool.UNDERLINE;
 }
-else if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
+else if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
 	randomNamespace = PortalUtil.generateRandomKey(request, "portlet_document_library_display_folder_action") + StringPool.UNDERLINE;
 }
 else {
@@ -51,7 +51,7 @@ if (row != null) {
 	}
 }
 else {
-	if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
+	if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 		folder = (Folder)request.getAttribute("view.jsp-folder");
 
 		folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
@@ -108,7 +108,7 @@ if ((row == null) || dlVisualizationHelper.isShowWhenSingleIconActionButton()) {
 
 boolean view = false;
 
-if ((row == null) && ((portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) && !dlVisualizationHelper.isShowMinimalActionsButton()) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY))) {
+if ((row == null) && ((portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) && !dlVisualizationHelper.isShowMinimalActionsButton()) || portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY))) {
 	view = true;
 }
 
@@ -323,7 +323,7 @@ String iconMenuId = null;
 		</c:if>
 
 		<c:choose>
-			<c:when test="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) %>">
+			<c:when test="<%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) %>">
 				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && ((folder == null) || !folder.isMountPoint()) %>">
 					<c:if test="<%= ((folder == null) || folder.isSupportsMultipleUpload()) %>">
 						<portlet:renderURL var="editFileEntryURL">
@@ -337,7 +337,7 @@ String iconMenuId = null;
 						<liferay-ui:icon
 							cssClass="hide upload-multiple-documents"
 							iconCssClass="icon-copy"
-							message='<%= portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "multiple-media" : "multiple-documents" %>'
+							message='<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? "multiple-media" : "multiple-documents" %>'
 							url="<%= editFileEntryURL %>"
 						/>
 					</c:if>
@@ -363,17 +363,17 @@ String iconMenuId = null;
 					</liferay-portlet:renderURL>
 
 					<%
-					String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(request, portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "select-media-type" : "select-document-type")) + "', uri:'" + HtmlUtil.escapeJS(editFileEntryURL.toString()) + "'});";
+					String taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "selectFileEntryType', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(request, portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? "select-media-type" : "select-document-type")) + "', uri:'" + HtmlUtil.escapeJS(editFileEntryURL.toString()) + "'});";
 					%>
 
 					<liferay-ui:icon
 						iconCssClass="icon-plus"
-						message='<%= portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "add-media" : "add-document" %>'
+						message='<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? "add-media" : "add-document" %>'
 						url="<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? taglibEditURL : editFileEntryURL %>"
 					/>
 				</c:if>
 
-				<c:if test="<%= hasViewPermission && portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) && (DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status) > 0) %>">
+				<c:if test="<%= hasViewPermission && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) && (DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status) > 0) %>">
 					<liferay-ui:icon
 						cssClass='<%= randomNamespace + "-slide-show" %>'
 						iconCssClass="icon-search"
@@ -453,7 +453,7 @@ String iconMenuId = null;
 </liferay-util:buffer>
 
 <c:choose>
-	<c:when test="<%= (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) && !dlVisualizationHelper.isShowMinimalActionsButton() %>">
+	<c:when test="<%= (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) && !dlVisualizationHelper.isShowMinimalActionsButton() %>">
 
 		<%= iconMenu %>
 

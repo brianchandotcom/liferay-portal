@@ -12,18 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v6_2_0;
-
-import com.liferay.portal.upgrade.util.UpgradePortletId;
+package com.liferay.document.library.web.constants;
 
 /**
- * @author Eduardo Garcia
+ * @author Sergio González
  */
-public class UpgradeImageGallery extends UpgradePortletId {
+public class DLPortletKeys {
 
-	@Override
-	protected String[] getUninstanceablePortletIds() {
-		return new String[] {"31"};
-	}
+	public static final String DOCUMENT_LIBRARY =
+		"com_liferay_document_library_web_portlet_DLPortlet";
+
+	public static final String DOCUMENT_LIBRARY_ADMIN =
+		"com_liferay_document_library_web_portlet_DLAdminPortlet";
+
+	public static final String DOCUMENT_LIBRARY_DISPLAY =
+		"com_liferay_document_library_web_portlet_DLDisplayPortlet";
+
+	public static final String MEDIA_GALLERY_DISPLAY =
+		"com_liferay_document_library_web_portlet_IGDisplayPortlet";
 
 }

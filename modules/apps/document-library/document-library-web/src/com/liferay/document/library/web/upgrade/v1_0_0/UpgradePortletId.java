@@ -12,20 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.document.library.web.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradeAdminPortlets;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 
 /**
  * @author Sergio González
  */
-public class UpgradeAdminPortlets extends BaseUpgradeAdminPortlets {
+public class UpgradePortletId
+	extends com.liferay.portal.upgrade.util.UpgradePortletId {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		updateAccessInControlPanelPermission(
-			PortletKeys.DOCUMENT_LIBRARY, PortletKeys.DOCUMENT_LIBRARY_ADMIN);
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"20", DLPortletKeys.DOCUMENT_LIBRARY},
+			new String[] {"199", DLPortletKeys.DOCUMENT_LIBRARY_ADMIN},
+			new String[] {"110", DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY},
+			new String[] {"31", DLPortletKeys.MEDIA_GALLERY_DISPLAY}
+		};
 	}
 
 }

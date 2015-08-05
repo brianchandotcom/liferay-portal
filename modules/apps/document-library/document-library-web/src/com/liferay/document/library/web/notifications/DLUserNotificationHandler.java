@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.web.notifications;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
-import com.liferay.portal.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,14 +25,14 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY},
+	property = {"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY},
 	service = UserNotificationHandler.class
 )
 public class DLUserNotificationHandler
 	extends BaseModelUserNotificationHandler {
 
 	public DLUserNotificationHandler() {
-		setPortletId(PortletKeys.DOCUMENT_LIBRARY);
+		setPortletId(DLPortletKeys.DOCUMENT_LIBRARY);
 	}
 
 }

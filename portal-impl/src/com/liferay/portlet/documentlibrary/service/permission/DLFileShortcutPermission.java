@@ -15,10 +15,11 @@
 package com.liferay.portlet.documentlibrary.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
@@ -69,11 +70,13 @@ public class DLFileShortcutPermission {
 		PermissionChecker permissionChecker, DLFileShortcut dlFileShortcut,
 		String actionId) {
 
+		String portletId = PortletProviderUtil.getPortletId(
+			FileShortcut.class.getName(), PortletProvider.Action.EDIT);
+
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, dlFileShortcut.getGroupId(),
 			DLFileShortcutConstants.getClassName(),
-			dlFileShortcut.getFileShortcutId(), PortletKeys.DOCUMENT_LIBRARY,
-			actionId);
+			dlFileShortcut.getFileShortcutId(), portletId, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

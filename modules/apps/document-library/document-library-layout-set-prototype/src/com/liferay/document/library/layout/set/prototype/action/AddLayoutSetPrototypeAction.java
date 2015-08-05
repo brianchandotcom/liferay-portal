@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.layout.set.prototype.action;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -28,7 +29,6 @@ import com.liferay.portal.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.util.DefaultLayoutSetPrototypesUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -96,7 +96,7 @@ public class AddLayoutSetPrototypeAction {
 			layoutSet, "documents-and-media", "/documents", "1_column");
 
 		String portletId = DefaultLayoutPrototypesUtil.addPortletId(
-			layout, PortletKeys.DOCUMENT_LIBRARY, "column-1");
+			layout, DLPortletKeys.DOCUMENT_LIBRARY, "column-1");
 
 		Map<String, String> preferences = new HashMap<>();
 
@@ -126,7 +126,7 @@ public class AddLayoutSetPrototypeAction {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY + ")"
+		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY + ")"
 	)
 	protected void setPortlet(Portlet portlet) {
 	}

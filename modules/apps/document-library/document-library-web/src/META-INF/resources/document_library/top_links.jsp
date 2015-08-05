@@ -21,7 +21,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 %>
 
 <c:choose>
-	<c:when test="<%= portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) %>">
+	<c:when test="<%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) %>">
 
 		<%
 		String topLink = ParamUtil.getString(request, "topLink", "home");
@@ -101,7 +101,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 			</aui:nav-bar>
 		</c:if>
 	</c:when>
-	<c:when test="<%= (dlPortletInstanceSettingsHelper.isShowTabs() || dlPortletInstanceSettings.isShowFoldersSearch()) && portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) %>">
+	<c:when test="<%= (dlPortletInstanceSettingsHelper.isShowTabs() || dlPortletInstanceSettings.isShowFoldersSearch()) && portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) %>">
 		<liferay-ui:header
 			title="home"
 		/>

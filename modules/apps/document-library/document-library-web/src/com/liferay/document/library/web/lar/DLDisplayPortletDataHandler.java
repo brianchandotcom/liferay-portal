@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.web.lar;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
-		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY,
+		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY
 	},
 	service = PortletDataHandler.class
 )

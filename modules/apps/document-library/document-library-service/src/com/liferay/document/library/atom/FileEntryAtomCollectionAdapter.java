@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomException;
 import com.liferay.portal.kernel.atom.AtomRequestContext;
 import com.liferay.portal.kernel.atom.BaseMediaAtomCollectionAdapter;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.Base64;
@@ -28,7 +30,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelTitleComparator;
 
@@ -106,8 +107,11 @@ public class FileEntryAtomCollectionAdapter
 
 	@Override
 	public String getFeedTitle(AtomRequestContext atomRequestContext) {
+		String portletId = PortletProviderUtil.getPortletId(
+			FileEntry.class.getName(), PortletProvider.Action.VIEW);
+
 		return AtomUtil.createFeedTitleFromPortletName(
-			atomRequestContext, PortletKeys.DOCUMENT_LIBRARY) + " files";
+			atomRequestContext, portletId) + " files";
 	}
 
 	@Override

@@ -16,13 +16,15 @@ package com.liferay.document.library.web.messaging;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.document.library.configuration.DLConfiguration;
+import com.liferay.document.library.configuration.DLSystemConfiguration;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
@@ -32,11 +34,8 @@ import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.util.Map;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -47,8 +46,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  */
 @Component(
-	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
-	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN},
+	configurationPid = "com.liferay.document.library.configuration.DLSystemConfiguration",
+	property = {"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN},
 	service = SchedulerEntry.class
 )
 public class TempFileEntriesMessageListener
@@ -57,13 +56,13 @@ public class TempFileEntriesMessageListener
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_dlConfiguration = Configurable.createConfigurable(
-			DLConfiguration.class, properties);
+		_dlSystemConfiguration = Configurable.createConfigurable(
+			DLSystemConfiguration.class, properties);
 
 		schedulerEntry.setTimeUnit(TimeUnit.HOUR);
 		schedulerEntry.setTriggerType(TriggerType.SIMPLE);
 		schedulerEntry.setTriggerValue(
-			_dlConfiguration.temporaryFileEntriesCheckInterval());
+			_dlSystemConfiguration.temporaryFileEntriesCheckInterval());
 	}
 
 	protected void deleteExpiredTemporaryFileEntries(Repository repository) {
@@ -126,19 +125,20 @@ public class TempFileEntriesMessageListener
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference(
-		target = "(javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN + ")"
-	)
-	protected void setPortlet(Portlet portlet) {
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference(
+		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN + ")"
+	)
+	protected void setPortlet(Portlet portlet) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TempFileEntriesMessageListener.class);
 
-	private volatile DLConfiguration _dlConfiguration;
+	private volatile DLSystemConfiguration _dlSystemConfiguration;
 
 }

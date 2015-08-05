@@ -12,32 +12,21 @@
  * details.
  */
 
-package com.liferay.document.library.web.ratings.definition;
+package com.liferay.document.library.web.upgrade.v1_0_0;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.portlet.ratings.RatingsType;
-import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeAdminPortlets;
 
 /**
- * @author Roberto Díaz
+ * @author Sergio González
  */
-@Component(
-	property = {
-		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileEntry"
-	}
-)
-public class DLPortletRatingsDefinition implements PortletRatingsDefinition {
+public class UpgradeAdminPortlets extends BaseUpgradeAdminPortlets {
 
 	@Override
-	public RatingsType getDefaultRatingsType() {
-		return RatingsType.STARS;
-	}
-
-	@Override
-	public String getPortletId() {
-		return DLPortletKeys.DOCUMENT_LIBRARY;
+	protected void doUpgrade() throws Exception {
+		updateAccessInControlPanelPermission(
+			DLPortletKeys.DOCUMENT_LIBRARY,
+			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
 	}
 
 }

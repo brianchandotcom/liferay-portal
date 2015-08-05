@@ -40,7 +40,6 @@
 	</category>
 	<category name="category.social">
 		<portlet id="180" />
-		<portlet id="181" />
 	</category>
 	<category name="category.tools">
 		<portlet id="2" />

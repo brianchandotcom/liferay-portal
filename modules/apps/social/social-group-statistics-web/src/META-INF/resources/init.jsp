@@ -44,7 +44,15 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetTag" %><%@
-page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %>
+page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %><%@
+page import="com.liferay.portlet.social.model.SocialActivityCounter" %><%@
+page import="com.liferay.portlet.social.model.SocialActivityCounterConstants" %><%@
+page import="com.liferay.portlet.social.service.SocialActivityCounterLocalServiceUtil" %><%@
+page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %><%@
+page import="com.liferay.portlet.social.util.SocialCounterPeriodUtil" %><%@
+page import="com.liferay.portlet.social.util.comparator.SocialActivityCounterNameComparator" %><%@
+page import="com.liferay.social.group.statistics.web.configuration.GroupStatisticsPortletInstanceConfiguration" %><%@
+page import="com.liferay.social.group.statistics.web.constants.GroupStatisticsPortletKeys" %>
 
 <%@ page import="java.text.DecimalFormat" %><%@
 page import="java.text.Format" %>
@@ -66,4 +74,8 @@ WindowState windowState = liferayPortletRequest.getWindowState();
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 
 String currentURL = currentURLObj.toString();
+
+SettingsFactory settingsFactory = SettingsFactoryUtil.getSettingsFactory();
+
+GroupStatisticsPortletInstanceConfiguration groupStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(GroupStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
 %>

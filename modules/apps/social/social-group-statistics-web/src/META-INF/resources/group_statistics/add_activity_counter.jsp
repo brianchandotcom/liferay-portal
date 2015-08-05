@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/group_statistics/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 groupStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(GroupStatisticsPortletInstanceConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource())));

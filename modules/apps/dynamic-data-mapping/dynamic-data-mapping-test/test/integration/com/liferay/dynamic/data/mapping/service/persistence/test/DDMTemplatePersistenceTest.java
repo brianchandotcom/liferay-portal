@@ -421,9 +421,9 @@ public class DDMTemplatePersistenceTest {
 			true, "userName", true, "versionUserId", true, "versionUserName",
 			true, "createDate", true, "modifiedDate", true, "classNameId",
 			true, "classPK", true, "resourceClassNameId", true, "templateKey",
-			true, "version", true, "name", true, "type", true, "mode", true,
-			"language", true, "cacheable", true, "smallImage", true,
-			"smallImageId", true, "smallImageURL", true, "lastPublishDate", true);
+			true, "version", true, "type", true, "mode", true, "language",
+			true, "cacheable", true, "smallImage", true, "smallImageId", true,
+			"smallImageURL", true, "lastPublishDate", true);
 	}
 
 	@Test

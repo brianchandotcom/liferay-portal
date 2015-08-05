@@ -122,7 +122,7 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyHistoryPanel" persistState="<%= true %>" title="password-history">
 			<aui:fieldset>
 
-				<aui:input helpMessage="enable-history-help" label="enable-history" name="history" />
+				<aui:input helpMessage="history-enabled-help" label="history-enabled" name="history" />
 
 				<div class="password-policy-options" id="<portlet:namespace />historySettings">
 					<aui:select helpMessage="history-count-help" name="historyCount">

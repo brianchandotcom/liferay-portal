@@ -1063,6 +1063,7 @@ Operating system is not supported.
 		<sequential>
 			<echo file="${liferay.home}/osgi/portal/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.cfg">
 				additionalConfigurations=\
+					cluster.routing.allocation.disk.threshold_enabled: false,\
 					index.indexing.slowlog.threshold.index.warn: 600s,\
 					index.search.slowlog.threshold.fetch.warn: 600s,\
 					index.search.slowlog.threshold.query.warn: 600s,\

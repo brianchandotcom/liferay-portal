@@ -390,7 +390,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			sb.append(_fontSizes[1]);
 		}
 
-		sb.append("px\">");
+		sb.append("px;\">");
 
 		tags.push("</span>");
 	}

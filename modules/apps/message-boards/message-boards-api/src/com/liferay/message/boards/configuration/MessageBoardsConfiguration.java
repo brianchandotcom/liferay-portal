@@ -19,7 +19,9 @@ import aQute.bnd.annotation.metatype.Meta;
 /**
  * @author Sergio González
  */
-@Meta.OCD(id = "com.liferay.message.boards.configuration.MessageBoardsConfiguration")
+@Meta.OCD(
+	id = "com.liferay.message.boards.configuration.MessageBoardsConfiguration"
+)
 public interface MessageBoardsConfiguration {
 
 	/**

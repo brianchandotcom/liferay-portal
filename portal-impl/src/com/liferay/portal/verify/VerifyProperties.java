@@ -662,6 +662,15 @@ public class VerifyProperties extends VerifyProcess {
 		// Document Library
 
 		new String[] {
+			"dl.display.templates.config", "display.templates.config",
+			"com.liferay.document.library.web"
+		},
+		new String[] {
+			"dl.temporary.file.entries.check.interval",
+			"temporary.file.entries.check.interval",
+			"com.liferay.document.library.web"
+		},
+		new String[] {
 			"dl.repository.cmis.delete.depth", "delete.depth",
 			"com.liferay.document.library.repository.cmis"
 		},

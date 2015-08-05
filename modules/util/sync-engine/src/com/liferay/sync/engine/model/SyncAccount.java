@@ -69,6 +69,10 @@ public class SyncAccount extends StateAwareModel {
 		return active;
 	}
 
+	public int getBatchFileMaxSize() {
+		return batchFileMaxSize;
+	}
+
 	public String getFilePathName() {
 		return filePathName;
 	}
@@ -142,6 +146,10 @@ public class SyncAccount extends StateAwareModel {
 		this.active = active;
 	}
 
+	public void setBatchFileMaxSize(int batchFileMaxSize) {
+		this.batchFileMaxSize = batchFileMaxSize;
+	}
+
 	public void setFilePathName(String filePathName) {
 		this.filePathName = filePathName;
 	}
@@ -192,6 +200,9 @@ public class SyncAccount extends StateAwareModel {
 
 	@DatabaseField(useGetSet = true)
 	protected boolean active;
+
+	@DatabaseField(useGetSet = true)
+	protected int batchFileMaxSize;
 
 	@DatabaseField(useGetSet = true, width = 16777216)
 	protected String filePathName;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.engine.upgrade.v3_0_4;
+package com.liferay.sync.engine.upgrade.v3_0_9;
 
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
@@ -22,11 +22,11 @@ import com.liferay.sync.engine.upgrade.UpgradeProcess;
  * @author Dennis Ju
  * @author Shinn Lok
  */
-public class UpgradeProcess_3_0_4 extends UpgradeProcess {
+public class UpgradeProcess_3_0_9 extends UpgradeProcess {
 
 	@Override
 	public int getThreshold() {
-		return 3004;
+		return 3009;
 	}
 
 	@Override
@@ -35,16 +35,8 @@ public class UpgradeProcess_3_0_4 extends UpgradeProcess {
 			SyncAccountService.getSyncAccountPersistence();
 
 		syncAccountPersistence.executeRaw(
-			"ALTER TABLE `SyncAccount` ADD COLUMN oAuthEnabled " +
-				"VARCHAR(16777216) BEFORE password;");
-
-		syncAccountPersistence.executeRaw(
-			"ALTER TABLE `SyncAccount` ADD COLUMN oAuthConsumerSecret " +
-				"VARCHAR(16777216) BEFORE oAuthEnabled;");
-
-		syncAccountPersistence.executeRaw(
-			"ALTER TABLE `SyncAccount` ADD COLUMN oAuthConsumerKey " +
-				"VARCHAR(16777216) BEFORE oAuthConsumerSecret;");
+			"ALTER TABLE `SyncAccount` ADD COLUMN batchFileMaxSize " +
+				"VARCHAR(16777216) BEFORE filePathName;");
 	}
 
 }

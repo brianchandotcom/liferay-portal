@@ -56,6 +56,20 @@ public class HtmlBBCodeTranslatorTest {
 	}
 
 	@Test
+	public void testCode() {
+		String content = "[code]:)[code]";
+
+		String expected =
+			"<div class=\"lfr-code\"><table><tbody><tr>" +
+				"<td class=\"line-numbers\" data-line-number=\"1\"></td>" +
+				"<td class=\"lines\"><div class=\"line\">:)[code]</div></td>" +
+				"</tr></tbody></table></div>";
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
 	public void testColor() {
 		String content = "[color=#ff0000]text[/color]";
 

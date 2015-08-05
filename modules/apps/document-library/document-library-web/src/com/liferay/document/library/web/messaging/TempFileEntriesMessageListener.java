@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
@@ -35,8 +36,6 @@ import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 
 import java.util.Map;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -126,14 +125,15 @@ public class TempFileEntriesMessageListener
 		actionableDynamicQuery.performActions();
 	}
 
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
 	@Reference(
 		target = "(javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN + ")"
 	)
 	protected void setPortlet(Portlet portlet) {
-	}
-
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

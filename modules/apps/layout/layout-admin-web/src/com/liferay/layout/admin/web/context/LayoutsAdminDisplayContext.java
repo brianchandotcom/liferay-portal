@@ -60,12 +60,12 @@ public class LayoutsAdminDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_groupDisplayContextHelper = new GroupDisplayContextHelper(request);
-
-		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-		String tabs1 = ParamUtil.getString(request, "tabs1");
-
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		String tabs1 = ParamUtil.getString(request, "tabs1");
+
+		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 		if (Validator.isNull(tabs1)) {
 			Group group = _themeDisplay.getScopeGroup();

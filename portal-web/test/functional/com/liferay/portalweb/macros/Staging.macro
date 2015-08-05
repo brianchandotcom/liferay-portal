@@ -454,7 +454,7 @@
 	<command name="gotoPublishToLive">
 		<if>
 			<and>
-				<condition function="IsElementNotPresent#isNotVisible" locator1="PGStaging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+				<condition function="IsElementNotPresent" locator1="PGStaging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
 				<condition function="IsElementPresent" locator1="Dockbar#STAGING_ICON" />
 			</and>
 			<then>

@@ -19,18 +19,22 @@
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-application-list:panel:panelCategory");
 PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
+
+List<PanelCategory> childPanelCategories = panelCategoryRegistry.getChildPanelCategories(panelCategory);
 %>
 
-<div class="list-group">
+<c:if test="<%= !childPanelCategories.isEmpty() %>">
+	<div class="list-group">
 
-	<%
-	for (PanelCategory childPanelCategory : panelCategoryRegistry.getChildPanelCategories(panelCategory)) {
-	%>
+		<%
+		for (PanelCategory childPanelCategory : childPanelCategories) {
+		%>
 
-			<liferay-application-list:panel-category-content panelCategory="<%= childPanelCategory %>" />
+				<liferay-application-list:panel-category-content panelCategory="<%= childPanelCategory %>" />
 
-	<%
-	}
-	%>
+		<%
+		}
+		%>
 
-</div>
+	</div>
+</c:if>

@@ -20,7 +20,7 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Iván Zaera
  */
 @Meta.OCD(
-	id = "com.liferay.social.group.statistics.configuration.GroupStatisticsPortletInstanceConfiguration"
+	id = "com.liferay.social.group.statistics.web.configuration.GroupStatisticsPortletInstanceConfiguration"
 )
 public interface GroupStatisticsPortletInstanceConfiguration {
 

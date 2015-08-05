@@ -2740,6 +2740,36 @@ public class PortalImpl implements Portal {
 	public String getLayoutActualURL(Layout layout, String mainPath) {
 		Map<String, String> variables = new HashMap<>();
 
+		LayoutType layoutType = layout.getLayoutType();
+
+		if (!layoutType.isBrowsable()) {
+			List<Layout> childLayouts = layout.getAllChildren();
+
+			Layout browsableChildLayout = null;
+
+			for (Layout childLayout : childLayouts) {
+				LayoutType childLayoutType = childLayout.getLayoutType();
+
+				if (childLayoutType.isBrowsable()) {
+					browsableChildLayout = childLayout;
+
+					break;
+				}
+			}
+
+			if (browsableChildLayout != null) {
+				layout = browsableChildLayout;
+			}
+			else {
+				long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(
+					layout.getGroupId(), layout.getPrivateLayout());
+
+				layout = LayoutLocalServiceUtil.fetchLayout(defaultPlid);
+			}
+
+			layoutType = layout.getLayoutType();
+		}
+
 		variables.put("liferay:groupId", String.valueOf(layout.getGroupId()));
 		variables.put("liferay:mainPath", mainPath);
 		variables.put("liferay:plid", String.valueOf(layout.getPlid()));
@@ -2751,8 +2781,6 @@ public class PortalImpl implements Portal {
 		else {
 			variables.put("liferay:pvlsgid", "0");
 		}
-
-		LayoutType layoutType = layout.getLayoutType();
 
 		UnicodeProperties typeSettingsProperties =
 			layoutType.getTypeSettingsProperties();

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -30,7 +31,9 @@ import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -107,6 +110,11 @@ public abstract class BaseUploadHandler implements UploadHandler {
 
 	protected abstract void checkPermission(
 			long groupId, PermissionChecker permissionChecker)
+		throws PortalException;
+
+	protected abstract void doHandleUploadException(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			PortalException pe, JSONObject jsonObject)
 		throws PortalException;
 
 	protected abstract FileEntry fetchFileEntry(
@@ -195,10 +203,54 @@ public abstract class BaseUploadHandler implements UploadHandler {
 			"Unable to get a unique file name for " + fileName);
 	}
 
-	protected abstract void handleUploadException(
+	protected void handleUploadException(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortalException pe, JSONObject jsonObject)
-		throws PortalException;
+		throws PortalException {
+
+		jsonObject.put("success", Boolean.FALSE);
+
+		if (pe instanceof AntivirusScannerException ||
+			pe instanceof FileNameException) {
+
+			String errorMessage = StringPool.BLANK;
+			int errorType = 0;
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			if (pe instanceof AntivirusScannerException) {
+				errorType =
+					ServletResponseConstants.SC_FILE_ANTIVIRUS_EXCEPTION;
+				AntivirusScannerException ase = (AntivirusScannerException)pe;
+
+				errorMessage = themeDisplay.translate(ase.getMessageKey());
+			}
+			else if (pe instanceof FileNameException) {
+				errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
+			}
+
+			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
+
+			errorJSONObject.put("errorType", errorType);
+			errorJSONObject.put("message", errorMessage);
+
+			jsonObject.put("error", errorJSONObject);
+		}
+		else {
+			doHandleUploadException(
+				portletRequest, portletResponse, pe, jsonObject);
+		}
+
+		try {
+			JSONPortletResponseUtil.writeJSON(
+				portletRequest, portletResponse, jsonObject);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+	}
 
 	protected abstract void validateFile(
 			String fileName, String contentType, long size)

@@ -230,6 +230,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 
 		serviceContext.setLayoutFullURL(
 			PortalUtil.getLayoutFullURL(groupId, portletId));
+
 		serviceContext.setScopeGroupId(groupId);
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =

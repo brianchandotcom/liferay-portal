@@ -27,10 +27,6 @@ Object bean = request.getAttribute("liferay-ui:user-name-fields:bean");
 Contact selContact = (Contact)request.getAttribute("liferay-ui:user-name-fields:contact");
 User selUser = (User)request.getAttribute("liferay-ui:user-name-fields:user");
 
-if (selUser == null) {
-	selUser = PortalUtil.getSelectedUser(request);
-}
-
 Locale userLocale = null;
 
 String languageId = request.getParameter("languageId");

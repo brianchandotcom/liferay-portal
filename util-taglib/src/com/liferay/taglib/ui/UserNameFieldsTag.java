@@ -14,8 +14,12 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +53,19 @@ public class UserNameFieldsTag extends IncludeTag {
 		return _PAGE;
 	}
 
+	protected User getUser() {
+		if (_user == null) {
+			try {
+				return PortalUtil.getSelectedUser(request);
+			}
+			catch (PortalException pe) {
+				_log.error(pe, pe);
+			}
+		}
+
+		return _user;
+	}
+
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		if (_bean == null) {
@@ -57,11 +74,14 @@ public class UserNameFieldsTag extends IncludeTag {
 
 		request.setAttribute("liferay-ui:user-name-fields:bean", _bean);
 		request.setAttribute("liferay-ui:user-name-fields:contact", _contact);
-		request.setAttribute("liferay-ui:user-name-fields:user", _user);
+		request.setAttribute("liferay-ui:user-name-fields:user", getUser());
 	}
 
 	private static final String _PAGE =
 		"/html/taglib/ui/user_name_fields/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserNameFieldsTag.class);
 
 	private Object _bean;
 	private Contact _contact;

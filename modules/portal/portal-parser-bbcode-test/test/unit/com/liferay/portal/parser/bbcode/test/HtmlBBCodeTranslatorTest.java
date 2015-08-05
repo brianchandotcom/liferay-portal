@@ -80,6 +80,17 @@ public class HtmlBBCodeTranslatorTest {
 	}
 
 	@Test
+	public void testEmotion() {
+		String content = ":)";
+
+		String expected ="<img alt=\"emoticon\" " +
+			"src=\"@theme_images_path@/emoticons/happy.gif\" >";
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
 	public void testFontFamily() {
 		String content = "[font=georgia, serif]text[/font]";
 

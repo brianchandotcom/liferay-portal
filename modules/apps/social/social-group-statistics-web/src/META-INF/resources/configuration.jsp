@@ -19,7 +19,9 @@
 <%
 groupStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(GroupStatisticsPortletInstanceConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource())));
 
-int displayActivityCounterNameIndexCount = groupStatisticsPortletInstanceConfiguration.displayActivityCounterName().length;
+String[] displayActivityCounterNames = groupStatisticsPortletInstanceConfiguration.displayActivityCounterName();
+
+int displayActivityCounterNameIndexCount = displayActivityCounterNames.length;
 
 if (displayActivityCounterNameIndexCount == 0) {
 	displayActivityCounterNameIndexCount = 1;

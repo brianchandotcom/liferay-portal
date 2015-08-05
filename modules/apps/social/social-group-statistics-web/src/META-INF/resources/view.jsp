@@ -17,18 +17,28 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int displayActivityCounterNameIndexCount = groupStatisticsPortletInstanceConfiguration.displayActivityCounterName().length;
+String[] displayActivityCounterNames = groupStatisticsPortletInstanceConfiguration.displayActivityCounterName();
+
+int displayActivityCounterNameIndexCount = displayActivityCounterNames.length;
 
 for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < displayActivityCounterNameIndexCount; displayActivityCounterNameIndex++) {
-	String displayActivityCounterName = groupStatisticsPortletInstanceConfiguration.displayActivityCounterName()[displayActivityCounterNameIndex];//PrefsParamUtil.getString(portletPreferences, request, "displayActivityCounterName" + displayActivityCounterNameIndex);
+	String displayActivityCounterName = displayActivityCounterNames[displayActivityCounterNameIndex];
 
 	if (Validator.isNull(displayActivityCounterName)) {
 		continue;
 	}
 
-	String chartType = GetterUtil.getString(groupStatisticsPortletInstanceConfiguration.chartType()[displayActivityCounterNameIndex], "area");//PrefsParamUtil.getString(portletPreferences, request, "chartType" + displayActivityCounterNameIndex, "area");
-	int chartWidth = GetterUtil.getInteger(groupStatisticsPortletInstanceConfiguration.chartWidth()[displayActivityCounterNameIndex], 35);//PrefsParamUtil.getInteger(portletPreferences, request, "chartWidth" + displayActivityCounterNameIndex, 35);
-	String dataRange = GetterUtil.getString(groupStatisticsPortletInstanceConfiguration.dataRange()[displayActivityCounterNameIndex], "year");//PrefsParamUtil.getString(portletPreferences, request, "dataRange" + displayActivityCounterNameIndex, "year");
+	String[] chartTypes = groupStatisticsPortletInstanceConfiguration.chartType();
+
+	String chartType = GetterUtil.getString(chartTypes[displayActivityCounterNameIndex], "area");
+
+	String[] chartWidths = groupStatisticsPortletInstanceConfiguration.chartWidth();
+
+	int chartWidth = GetterUtil.getInteger(chartWidths[displayActivityCounterNameIndex], 35);
+
+	String[] dataRanges = groupStatisticsPortletInstanceConfiguration.dataRange();
+
+	String dataRange = GetterUtil.getString(dataRanges[displayActivityCounterNameIndex], "year");
 
 	List<AssetTag> assetTags = null;
 

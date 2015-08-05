@@ -16,7 +16,7 @@ package com.liferay.document.library.web.template;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.document.library.configuration.DLConfiguration;
+import com.liferay.document.library.configuration.DLSystemConfiguration;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Eduardo Garcia
  */
 @Component(
-	configurationPid = "com.liferay.document.library.configuration.DLConfiguration",
+	configurationPid = "com.liferay.document.library.configuration.DLSystemConfiguration",
 	immediate = true,
 	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY},
 	service = TemplateHandler.class
@@ -135,18 +135,18 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_dlConfiguration = Configurable.createConfigurable(
-			DLConfiguration.class, properties);
+		_dlSystemConfiguration = Configurable.createConfigurable(
+			DLSystemConfiguration.class, properties);
 	}
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return _dlConfiguration.displayTemplatesConfig();
+		return _dlSystemConfiguration.displayTemplatesConfig();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentLibraryPortletDisplayTemplateHandler.class);
 
-	private volatile DLConfiguration _dlConfiguration;
+	private volatile DLSystemConfiguration _dlSystemConfiguration;
 
 }

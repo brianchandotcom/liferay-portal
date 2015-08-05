@@ -218,14 +218,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	protected String buildFullPathIncludeFileName(
 		String fileName, String includeFileName) {
 
-		String topLevelDirName = null;
-
-		int x = includeFileName.indexOf(CharPool.SLASH, 1);
-
-		if (x != -1) {
-			topLevelDirName = includeFileName.substring(1, x);
-		}
-
 		String path = fileName;
 
 		while (true) {
@@ -235,18 +227,13 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				return StringPool.BLANK;
 			}
 
-			if (Validator.isNull(topLevelDirName) ||
-				path.equals(topLevelDirName) ||
-				path.endsWith(StringPool.SLASH + topLevelDirName)) {
+			String fullPathIncludeFileName =
+				path.substring(0, y) + includeFileName;
 
-				String fullPathIncludeFileName =
-					path.substring(0, y) + includeFileName;
+			if (_jspContents.containsKey(fullPathIncludeFileName) &&
+				!fullPathIncludeFileName.equals(fileName)) {
 
-				if (_jspContents.containsKey(fullPathIncludeFileName) &&
-					!fullPathIncludeFileName.equals(fileName)) {
-
-					return fullPathIncludeFileName;
-				}
+				return fullPathIncludeFileName;
 			}
 
 			path = path.substring(0, y);

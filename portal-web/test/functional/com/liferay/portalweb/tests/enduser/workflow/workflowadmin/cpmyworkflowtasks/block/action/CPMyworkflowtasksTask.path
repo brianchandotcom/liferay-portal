@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>BACK</td>
-	<td>//a[@id='_153_TabsBack']</td>
+	<td>//a[contains(@id,'TabsBack')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,27 +61,27 @@
 <!--MENU-->
 <tr>
 	<td>MENU_ASSIGN_TO_ME</td>
-	<td>//a[@id='_153_taskAssignToMeLink']</td>
+	<td>//a[contains(@id,'taskAssignToMeLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_APPROVE</td>
-	<td>//a[@id='_153_approvetaskChangeStatusLink']</td>
+	<td>//a[contains(@id,'approvetaskChangeStatusLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_REJECT</td>
-	<td>//a[@id='_153_rejecttaskChangeStatusLink']</td>
+	<td>//a[contains(@id,'rejecttaskChangeStatusLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_RESUBMIT</td>
-	<td>//a[@id='_153_resubmittaskChangeStatusLink']</td>
+	<td>//a[contains(@id,'resubmittaskChangeStatusLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MENU_UPDATE_DUE_DATE</td>
-	<td>//a[@id='_153_taskDueDateLink']</td>
+	<td>//a[contains(@id,'taskDueDateLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,7 +92,7 @@
 <!--DIALOG_BOX-->
 <tr>
 	<td>DIALOG_BOX_FIELD</td>
-	<td>//textarea[@id='_153_comment']</td>
+	<td>//textarea[contains(@id,'comment')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -165,7 +165,7 @@
 </tr>
 <tr>
 	<td>COMMENTS_SUCCESS_MESSAGE</td>
-	<td>//div[@id='_153_discussion-status-messages']</td>
+	<td>//div[contains(@id,'discussion-status-messages')]</td>
 	<td></td>
 </tr>
 <tr>

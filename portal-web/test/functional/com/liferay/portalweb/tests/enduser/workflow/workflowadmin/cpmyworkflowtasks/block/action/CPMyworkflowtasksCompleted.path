@@ -42,7 +42,7 @@
 <!--BASIC_SEARCH-->
 <tr>
 	<td>BASIC_SEARCH_FIELD</td>
-	<td>//input[@name='_153_keywords']</td>
+	<td>//input[contains(@name,'_keywords')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -69,27 +69,27 @@
 <!--COMPLETED_TABLE-->
 <tr>
 	<td>COMPLETED_TABLE_TASK</td>
-	<td>//div[@id='_153_workflowTasksSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[1]/a</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMPLETED_TABLE_ASSET_TITLE</td>
-	<td>//div[@id='_153_workflowTasksSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[2]/a</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMPLETED_TABLE_ASSET_TYPE</td>
-	<td>//div[@id='_153_workflowTasksSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[3]/a</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMPLETED_TABLE_LAST_ACTIVITY_DATE</td>
-	<td>//div[@id='_153_workflowTasksSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[4]/a</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMPLETED_TABLE_DUE_DATE</td>
-	<td>//div[@id='_153_workflowTasksSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[5]/a</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[5]/a</td>
 	<td></td>
 </tr>
 </tbody>

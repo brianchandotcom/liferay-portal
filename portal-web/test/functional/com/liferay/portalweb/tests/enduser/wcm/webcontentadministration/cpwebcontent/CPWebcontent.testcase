@@ -1570,7 +1570,6 @@
 		</execute>
 
 		<execute macro="WebContent#searchCP">
-			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentFolder" value="Home" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
@@ -1581,7 +1580,6 @@
 
 		<execute macro="WebContent#searchNoResultsCP">
 			<var name="searchQuery" value="WC2 WebContent2 Title2" />
-			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentFolder" value="Home" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>

@@ -17,11 +17,11 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency conf="test->default" name="junit" org="junit" rev="4.11" />
 		<dependency name="com.liferay.portal.spring.extender" org="com.liferay" rev="1.0.2" />
 		<dependency name="jgrapht-core" org="org.jgrapht" rev="0.9.1" />
 		<dependency name="org.apache.felix.utils" org="org.apache.felix" rev="1.6.0" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
+		<dependency conf="test->default" name="junit" org="junit" rev="4.11" />
 	</dependencies>
 </ivy-module>

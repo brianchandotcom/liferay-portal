@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-group-statistics",
-		"com.liferay.portlet.header-portlet-css=/group_statistics/css/main.css",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.config-template=/configuration.jsp",
 		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/group_statistics/view.jsp",
+		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + GroupStatisticsPortletKeys.GROUP_STATISTICS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",

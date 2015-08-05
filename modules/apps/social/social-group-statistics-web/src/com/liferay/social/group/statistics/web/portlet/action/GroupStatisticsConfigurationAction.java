@@ -44,7 +44,7 @@ public class GroupStatisticsConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
-		return "/group_statistics/configuration.jsp";
+		return "/configuration.jsp";
 	}
 
 	@Override

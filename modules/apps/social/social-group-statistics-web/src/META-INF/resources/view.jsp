@@ -88,13 +88,13 @@ for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < 
 					<c:when test="<%= dataSize > 0 %>">
 						<c:choose>
 							<c:when test='<%= chartType.equals("pie") %>'>
-								<%@ include file="/group_statistics/chart/pie.jspf" %>
+								<%@ include file="/chart/pie.jspf" %>
 							</c:when>
 							<c:when test='<%= chartType.equals("tag-cloud") %>'>
-								<%@ include file="/group_statistics/chart/tag_cloud.jspf" %>
+								<%@ include file="/chart/tag_cloud.jspf" %>
 							</c:when>
 							<c:otherwise>
-								<%@ include file="/group_statistics/chart/other.jspf" %>
+								<%@ include file="/chart/other.jspf" %>
 							</c:otherwise>
 						</c:choose>
 					</c:when>

@@ -23,9 +23,8 @@ public class UpgradeAdminPortlets extends BaseUpgradeAdminPortlets {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateAccessInControlPanelPermission("33", "161");
-
 		updateAccessInControlPanelPermission("19", "162");
+		updateAccessInControlPanelPermission("33", "161");
 	}
 
 }

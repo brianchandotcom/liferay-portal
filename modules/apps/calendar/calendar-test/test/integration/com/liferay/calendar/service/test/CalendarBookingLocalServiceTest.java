@@ -36,6 +36,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 import org.jboss.arquillian.junit.Arquillian;
@@ -123,6 +124,56 @@ public class CalendarBookingLocalServiceTest {
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, calendarBooking.getStatus());
+	}
+
+	@Test
+	public void testDeleteLastCalendarBookingInstanceRemovesCalendarBooking()
+		throws PortalException {
+
+		ServiceContext serviceContext = createServiceContext();
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getUserCalendarResource(
+				_user.getUserId(), serviceContext);
+
+		Calendar calendar = calendarResource.getDefaultCalendar();
+
+		long startTime = DateUtil.newTime();
+
+		Recurrence recurrence = new Recurrence();
+
+		recurrence.setCount(2);
+		recurrence.setFrequency(Frequency.DAILY);
+		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.addCalendarBooking(
+				_user.getUserId(), calendar.getCalendarId(), new long[0],
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startTime,
+				startTime + (Time.HOUR * 10), false,
+				RecurrenceSerializer.serialize(recurrence), 0, null, 0, null,
+				serviceContext);
+
+		long calendarBookingId = calendarBooking.getCalendarBookingId();
+
+		CalendarBookingLocalServiceUtil.deleteCalendarBookingInstance(
+			calendarBooking, 0, false);
+
+		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
+			calendarBookingId);
+
+		Assert.assertNotNull(calendarBooking);
+
+		CalendarBookingLocalServiceUtil.deleteCalendarBookingInstance(
+			calendarBooking, 0, false);
+
+		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
+			calendarBookingId);
+
+		Assert.assertNull(calendarBooking);
 	}
 
 	@Test(expected = CalendarBookingRecurrenceException.class)

@@ -2,6 +2,8 @@
 <!DOCTYPE project>
 
 <project>
+	<property name="import.shared" value="message-boards-web,../layout/layout-set-prototype-web" />
+
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />

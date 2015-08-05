@@ -119,6 +119,10 @@ if (editorOptions != null) {
 					}
 				);
 			};
+
+			CKEDITOR.getNextZIndex = function() {
+				return CKEDITOR.dialog._.currentZIndex ? CKEDITOR.dialog._.currentZIndex + 10 : Liferay.zIndex.OVERLAY;
+			};
 		</script>
 	</liferay-util:html-top>
 </c:if>

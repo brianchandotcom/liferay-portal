@@ -41,16 +41,16 @@ public class UpgradeInfo {
 		return _fromVersionString;
 	}
 
+	public int getToVersionInt() {
+		return toInt(_toVersionString);
+	}
+
 	public String getToVersionString() {
 		return _toVersionString;
 	}
 
 	public UpgradeProcess getUpgradeProcess() {
 		return _upgradeProcess;
-	}
-
-	public int getToVersionInt() {
-		return toInt(_toVersionString);
 	}
 
 	@Override

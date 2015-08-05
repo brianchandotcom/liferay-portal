@@ -42,7 +42,8 @@ public class ReleaseGraphManager {
 			_directedGraph.addVertex(upgradeInfo.getToVersionString());
 
 			_directedGraph.addEdge(
-				upgradeInfo.getFromVersionString(), upgradeInfo.getToVersionString(),
+				upgradeInfo.getFromVersionString(),
+				upgradeInfo.getToVersionString(),
 				new UpgradeProcessEdge(upgradeInfo));
 		}
 	}

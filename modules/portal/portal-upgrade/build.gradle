@@ -1,0 +1,14 @@
+dependencies {
+	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
+	compile group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
+	compile group: "org.jgrapht", name: "jgrapht-core", version: "0.9.1"
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":core:osgi-service-tracker-map")
+
+	testCompile group: "junit", name: "junit", version: "4.11"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

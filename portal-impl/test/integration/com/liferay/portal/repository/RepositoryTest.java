@@ -36,7 +36,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -75,7 +74,7 @@ public class RepositoryTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			RandomTestUtil.randomString(), new UnicodeProperties(), true,
 			new ServiceContext());
 
 		long[] primaryKeys = populateRepository(repository.getRepositoryId());
@@ -108,7 +107,7 @@ public class RepositoryTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			RandomTestUtil.randomString(), new UnicodeProperties(), true,
 			new ServiceContext());
 
 		repositoryIds[0] = repository.getRepositoryId();
@@ -122,7 +121,7 @@ public class RepositoryTest {
 		repository = RepositoryLocalServiceUtil.addRepository(
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			dlFolder.getFolderId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), PortletKeys.DOCUMENT_LIBRARY,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			new UnicodeProperties(), true, new ServiceContext());
 
 		repositoryIds[1] = repository.getRepositoryId();
@@ -151,7 +150,7 @@ public class RepositoryTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			RandomTestUtil.randomString(), new UnicodeProperties(), true,
 			new ServiceContext());
 
 		long[] fileEntryIds = new long[2];
@@ -190,7 +189,7 @@ public class RepositoryTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			RandomTestUtil.randomString(), new UnicodeProperties(), true,
 			new ServiceContext());
 
 		Assert.assertEquals(
@@ -210,7 +209,7 @@ public class RepositoryTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), false,
+			RandomTestUtil.randomString(), new UnicodeProperties(), false,
 			new ServiceContext());
 
 		Assert.assertEquals(
@@ -237,7 +236,7 @@ public class RepositoryTest {
 			PortalUtil.getClassNameId(LiferayRepository.class),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			RandomTestUtil.randomString(), new UnicodeProperties(), true,
 			new ServiceContext());
 
 		primaryKeys = populateRepository(repository.getRepositoryId());
@@ -279,7 +278,7 @@ public class RepositoryTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			RandomTestUtil.randomString(), new UnicodeProperties(), true,
 			new ServiceContext());
 
 		long[] fileEntryIds = new long[4];
@@ -293,7 +292,7 @@ public class RepositoryTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			PortletKeys.DOCUMENT_LIBRARY, new UnicodeProperties(), true,
+			RandomTestUtil.randomString(), new UnicodeProperties(), true,
 			new ServiceContext());
 
 		primaryKeys = populateRepository(repository2.getRepositoryId());

@@ -1505,7 +1505,13 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void configureTaskDeploy(
 		Project project, LiferayExtension liferayExtension) {
 
-		Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
+		Task task = GradleUtil.getTask(project, DEPLOY_TASK_NAME);
+
+		if (!(task instanceof Copy)) {
+			return;
+		}
+
+		Copy copy = (Copy)task;
 
 		configureTaskDeployInto(copy, liferayExtension);
 

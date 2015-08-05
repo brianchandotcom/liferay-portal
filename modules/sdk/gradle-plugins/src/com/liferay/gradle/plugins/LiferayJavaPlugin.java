@@ -725,6 +725,23 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		startTestableTomcatTask.doFirst(action);
 
+		startTestableTomcatTask.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					StartAppServerTask startAppServerTask =
+						(StartAppServerTask)task;
+
+					if (startAppServerTask.isAppServerReachable()) {
+						return false;
+					}
+
+					return true;
+				}
+
+			});
+
 		return startTestableTomcatTask;
 	}
 

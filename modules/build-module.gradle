@@ -52,6 +52,14 @@ buildCSS {
 configurations {
 	portal
 	portalTest
+
+	whenObjectAdded {
+		Configuration configuration ->
+
+		if (configuration.name == "portalToolsThumbnailBuilder") {
+			configuration.extendsFrom portal
+		}
+	}
 }
 
 if (FileUtil.exists(project, "docroot")) {
@@ -77,8 +85,8 @@ dependencies {
 	portal group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 
 	portalTest fileTree(dir: new File(moduleFrameworkBaseDir, "test"), include: "portal-test*.jar")
-	serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.27"
-	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.42"
+	serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.28"
+	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.43"
 	tldFormatter group: "com.liferay", name: "com.liferay.tld.formatter", version: "1.0.0"
 	wsddBuilder group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "1.0.2"
 	xmlFormatter group: "com.liferay", name: "com.liferay.xml.formatter", version: "1.0.0"
@@ -109,13 +117,15 @@ repositories {
 }
 
 sourceSets {
+	FileCollection portalJarsFileCollection = fileTree(dir: appServerLibPortalDir, include: "util-slf4j.jar")
+
 	main {
 		compileClasspath += configurations.portal
 	}
 
 	test {
-		compileClasspath += configurations.portal + configurations.portalTest
-		runtimeClasspath += configurations.portal + configurations.portalTest
+		compileClasspath = portalJarsFileCollection + compileClasspath + configurations.portal + configurations.portalTest
+		runtimeClasspath = portalJarsFileCollection + runtimeClasspath + configurations.portal + configurations.portalTest
 	}
 
 	testIntegration {

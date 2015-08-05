@@ -869,6 +869,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 			<exec dir="@{dir}" executable="${sdk.dir}/tools/gradle/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 				<args />
+				<arg value="--stacktrace" />
 				<arg value="-DappServerParentDir=${app.server.parent.dir}" />
 				<arg value="-DliferayHome=${liferay.home}" />
 				<arg value="@{task}" />

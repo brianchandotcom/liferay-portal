@@ -123,6 +123,25 @@ public class HtmlBBCodeTranslatorTest {
 	}
 
 	@Test
+	public void testInvalidTag() {
+		String content = "[x]invaildTag[/x]";
+
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(content, actual);
+	}
+
+	@Test
+	public void testInvalidTagAndValidTag() {
+		String content = "[x]bbb[u]XXX[/u]ddd[/x]";
+
+		String expected = "[x]bbb<u>XXX</u>ddd[/x]";
+		String actual = _htmlBBCodeTranslator.parse(content);
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
 	public void testItalic() {
 		String content = "[i]text[/i]";
 

@@ -19,9 +19,7 @@ import aQute.bnd.annotation.metatype.Meta;
 /**
  * @author Sergio González
  */
-@Meta.OCD(
-	id = "com.liferay.document.library.configuration.DLConfiguration"
-)
+@Meta.OCD(id = "com.liferay.document.library.configuration.DLConfiguration")
 public interface DLConfiguration {
 
 	/**

@@ -4534,6 +4534,7 @@
 			<var name="optionSet" value="true" />
 			<var name="optionSetValue" value="inviteResource" />
 			<var name="pageName" value="${pageName}" />
+			<var name="resourcesAvailability" value="true" />
 			<var name="specificOptionSetValue" value="Test Test,Calendar Resource Name" />
 		</execute>
 

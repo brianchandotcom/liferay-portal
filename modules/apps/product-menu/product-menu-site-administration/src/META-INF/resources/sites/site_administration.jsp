@@ -18,6 +18,8 @@
 
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
+
+Group group = themeDisplay.getScopeGroup();
 %>
 
 <div class="toolbar">
@@ -25,8 +27,61 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationLis
 		<a class="icon-angle-left icon-monospaced" href="javascript:;" id="<portlet:namespace />allSitesLink"></a>
 	</div>
 	<div class="toolbar-group-content">
-		<%= themeDisplay.getScopeGroupName() %>
+		<%= group.getDescriptiveName(locale) %>
 	</div>
+
+	<c:if test="<%= themeDisplay.isShowStagingIcon() %>">
+
+		<%
+		String stagingGroupURL = null;
+
+		if (group.hasStagingGroup()) {
+			Group stagingGroup = StagingUtil.getStagingGroup(group.getGroupId());
+
+			if (stagingGroup != null) {
+				LayoutSet layoutSet = themeDisplay.getLayoutSet();
+
+				if (layoutSet.isPrivateLayout()) {
+					layoutSet = stagingGroup.getPrivateLayoutSet();
+				}
+				else {
+					layoutSet = stagingGroup.getPublicLayoutSet();
+				}
+
+				stagingGroupURL = PortalUtil.getGroupFriendlyURL(layoutSet, themeDisplay);
+			}
+		}
+		%>
+
+		<div class="toolbar-group-field">
+			<aui:a cssClass="icon-fb-radio icon-monospaced" href="<%= stagingGroupURL %>" title="staging"></aui:a>
+		</div>
+
+		<%
+		String liveGroupURL = null;
+
+		if (group.isStagingGroup()) {
+			Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
+
+			if (liveGroup != null) {
+				LayoutSet layoutSet = themeDisplay.getLayoutSet();
+
+				if (layoutSet.isPrivateLayout()) {
+					layoutSet = liveGroup.getPrivateLayoutSet();
+				}
+				else {
+					layoutSet = liveGroup.getPublicLayoutSet();
+				}
+
+				liveGroupURL = PortalUtil.getGroupFriendlyURL(layoutSet, themeDisplay);
+			}
+		}
+		%>
+
+		<div class="toolbar-group-field">
+			<aui:a cssClass="icon-circle-blank icon-monospaced" href="<%= liveGroupURL %>" title="live"></aui:a>
+		</div>
+	</c:if>
 </div>
 
 <liferay-application-list:panel panelCategory="<%= panelCategory %>" />

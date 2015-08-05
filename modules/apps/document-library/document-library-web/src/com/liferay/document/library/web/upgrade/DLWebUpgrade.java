@@ -58,8 +58,8 @@ public class DLWebUpgrade {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
 		upgradeProcesses.add(new UpgradePortletId());
-		upgradeProcesses.add(new UpgradeAdminPortlets());
 
+		upgradeProcesses.add(new UpgradeAdminPortlets());
 		upgradeProcesses.add(new UpgradePortletSettings(_settingsFactory));
 
 		_releaseLocalService.updateRelease(

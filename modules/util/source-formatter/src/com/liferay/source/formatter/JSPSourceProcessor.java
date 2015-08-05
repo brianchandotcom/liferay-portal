@@ -386,7 +386,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixCompatClassImports(absolutePath, newContent);
 
-		if (_stripJSPImports && !_jspContents.isEmpty()) {
+		if (_stripJSPImports && !_jspContents.isEmpty() &&
+			!isModulesFile(absolutePath)) {
+
 			try {
 				newContent = formatJSPImportsOrTaglibs(
 					fileName, newContent, _jspImportPattern, true);
@@ -634,7 +636,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				}
 
 				if (javaSource) {
-					if (portalSource &&
+					if (portalSource && !isModulesFile(absolutePath) &&
 						!isExcludedFile(
 							_unusedVariablesExclusionFiles, absolutePath,
 							lineCount) &&

@@ -14,17 +14,14 @@
 
 package com.liferay.product.menu.site.administration.application.list;
 
-import com.liferay.application.list.BaseJSPPanelCategory;
+import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -32,45 +29,31 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.SITES_ALL_SITES,
-		"service.ranking:Integer=200"
+		"panel.category.key=" + PanelCategoryKeys.SITES,
+		"service.ranking:Integer=100"
 	},
 	service = PanelCategory.class
 )
-public class MySitesPanelCategory extends BaseJSPPanelCategory {
+public class AllSitesPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-sitemap";
-	}
-
-	@Override
-	public String getJspPath() {
-		return "/META-INF/resources/my_sites/my_sites.jsp";
+		return "icon-compass";
 	}
 
 	@Override
 	public String getKey() {
-		return PanelCategoryKeys.SITES_ADMINISTRATION_MY_SITES;
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "my-sites");
-	}
-
-	@Override
-	public String getParentCategoryKey() {
 		return PanelCategoryKeys.SITES_ALL_SITES;
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.product.menu.site.administration.service)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "all-sites");
+	}
+
+	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.SITES;
 	}
 
 }

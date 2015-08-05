@@ -17,44 +17,80 @@
 <%@ include file="/sites/init.jsp" %>
 
 <%
-PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
-PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 
-boolean containsPortlet = false;
-
-if (Validator.isNotNull(themeDisplay.getPpid())) {
-	PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
-
-	PanelCategory siteAdministrationPanelCategory = panelCategoryRegistry.getPanelCategory(PanelCategoryKeys.SITE_ADMINISTRATION);
-
-	containsPortlet = panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), siteAdministrationPanelCategory);
-}
-
-Group group = layout.getGroup();
-
-if (layout instanceof VirtualLayout) {
-	VirtualLayout virtualLayout = (VirtualLayout)layout;
-
-	Layout sourceLayout = virtualLayout.getSourceLayout();
-
-	group = sourceLayout.getGroup();
-}
-
-boolean showSiteSelector = ParamUtil.getBoolean(request, "showSiteSelector", group.isControlPanel() && !containsPortlet);
-
-if (showSiteSelector) {
-	panelCategory = panelCategoryRegistry.getPanelCategory(PanelCategoryKeys.SITES);
-}
+Group group = themeDisplay.getScopeGroup();
 %>
 
-<c:if test="<%= !showSiteSelector %>">
+<div class="toolbar">
+	<div class="toolbar-group-field">
+		<a class="icon-angle-left icon-monospaced" href="javascript:;" id="<portlet:namespace />allSitesLink"></a>
+	</div>
+	<div class="toolbar-group-content">
+		<%= group.getDescriptiveName(locale) %>
+	</div>
 
-	<%
-	String selectSiteURL = HttpUtil.addParameter(currentURL, liferayPortletResponse.getNamespace() + "showSiteSelector", true);
-	%>
+	<c:if test="<%= themeDisplay.isShowStagingIcon() %>">
 
-	<aui:icon image="arrow-left" label="<%= themeDisplay.getScopeGroupName() %>" url="<%= selectSiteURL.toString() %>" />
-</c:if>
+		<%
+		String stagingGroupURL = null;
+
+		if (group.hasStagingGroup()) {
+			Group stagingGroup = StagingUtil.getStagingGroup(group.getGroupId());
+
+			if (stagingGroup != null) {
+				LayoutSet layoutSet = themeDisplay.getLayoutSet();
+
+				if (layoutSet.isPrivateLayout()) {
+					layoutSet = stagingGroup.getPrivateLayoutSet();
+				}
+				else {
+					layoutSet = stagingGroup.getPublicLayoutSet();
+				}
+
+				stagingGroupURL = PortalUtil.getGroupFriendlyURL(layoutSet, themeDisplay);
+			}
+		}
+		%>
+
+		<div class="toolbar-group-field">
+			<aui:a cssClass="icon-fb-radio icon-monospaced" href="<%= stagingGroupURL %>" title="staging"></aui:a>
+		</div>
+
+		<%
+		String liveGroupURL = null;
+
+		if (group.isStagingGroup()) {
+			Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
+
+			if (liveGroup != null) {
+				LayoutSet layoutSet = themeDisplay.getLayoutSet();
+
+				if (layoutSet.isPrivateLayout()) {
+					layoutSet = liveGroup.getPrivateLayoutSet();
+				}
+				else {
+					layoutSet = liveGroup.getPublicLayoutSet();
+				}
+
+				liveGroupURL = PortalUtil.getGroupFriendlyURL(layoutSet, themeDisplay);
+			}
+		}
+		%>
+
+		<div class="toolbar-group-field">
+			<aui:a cssClass="icon-circle-blank icon-monospaced" href="<%= liveGroupURL %>" title="live"></aui:a>
+		</div>
+	</c:if>
+</div>
 
 <liferay-application-list:panel panelCategory="<%= panelCategory %>" />
+
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />allSitesLink').on(
+		'click',
+		function(event) {
+			$('#<portlet:namespace />all_sitesTabLink').tab('show');
+		}
+	);
+</aui:script>

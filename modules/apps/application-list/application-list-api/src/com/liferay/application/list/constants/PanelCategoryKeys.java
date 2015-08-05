@@ -60,6 +60,6 @@ public interface PanelCategoryKeys {
 	public static final String SITES_ADMINISTRATION_SITES =
 		"sites_administration.sites";
 
-	public static final String SITES_ALL_SITES = "all_sites";
+	public static final String SITES_ALL_SITES = "sites_all_sites";
 
 }

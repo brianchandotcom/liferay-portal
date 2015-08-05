@@ -45,10 +45,6 @@ public class PortletKeys {
 
 	public static final String DOCUMENT_LIBRARY = "20";
 
-	public static final String DOCUMENT_LIBRARY_ADMIN = "199";
-
-	public static final String DOCUMENT_LIBRARY_DISPLAY = "110";
-
 	public static final String EXPANDO =
 		"com_liferay_expando_web_portlet_ExpandoPortlet";
 
@@ -83,8 +79,6 @@ public class PortletKeys {
 		"3_WAR_marketplaceportlet";
 
 	public static final String MARKETPLACE_STORE = "1_WAR_marketplaceportlet";
-
-	public static final String MEDIA_GALLERY_DISPLAY = "31";
 
 	public static final String MESSAGE_BOARDS = "19";
 

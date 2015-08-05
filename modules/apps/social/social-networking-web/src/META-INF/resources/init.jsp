@@ -59,6 +59,7 @@ page import="com.liferay.portal.webserver.WebServerServletTokenUtil" %><%@
 page import="com.liferay.portlet.blogs.model.BlogsEntry" %><%@
 page import="com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil" %><%@
 page import="com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil" %><%@
+page import="com.liferay.portlet.messageboards.model.MBMessage" %><%@
 page import="com.liferay.portlet.messageboards.service.MBStatsUserLocalServiceUtil" %><%@
 page import="com.liferay.portlet.social.model.SocialActivity" %><%@
 page import="com.liferay.portlet.social.model.SocialRelationConstants" %><%@

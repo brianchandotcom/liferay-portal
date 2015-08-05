@@ -58,9 +58,8 @@ public class SiteStagingFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 			return false;
 		}
 
-		if (group.hasStagingGroup() ||
-			(group.hasRemoteStagingGroup() &&
-			 !PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED)) {
+		if (group.hasRemoteStagingGroup() &&
+			!PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED) {
 
 			return false;
 		}

@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.web.portlet.route;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
-import com.liferay.portal.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/document-library-display-routes.xml",
-		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY
 	},
 	service = FriendlyURLMapper.class
 )

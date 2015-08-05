@@ -15,6 +15,7 @@
 package com.liferay.document.library.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.lar.DLPortletDataHandler;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -241,7 +242,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.DOCUMENT_LIBRARY;
+		return DLPortletKeys.DOCUMENT_LIBRARY;
 	}
 
 }

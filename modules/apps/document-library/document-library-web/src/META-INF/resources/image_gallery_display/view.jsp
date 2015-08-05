@@ -235,7 +235,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 			if (folder != null) {
 				IGUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 
-				if (!defaultFolderView && portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
+				if (!defaultFolderView && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 					PortalUtil.setPageSubtitle(folder.getName(), request);
 					PortalUtil.setPageDescription(folder.getDescription(), request);
 				}

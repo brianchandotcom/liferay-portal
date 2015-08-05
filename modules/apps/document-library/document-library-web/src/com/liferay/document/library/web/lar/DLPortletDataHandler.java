@@ -17,6 +17,7 @@ package com.liferay.document.library.web.lar;
 import com.liferay.document.library.lar.xstream.FileEntryConverter;
 import com.liferay.document.library.lar.xstream.FileVersionConverter;
 import com.liferay.document.library.lar.xstream.FolderConverter;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Criterion;
@@ -46,7 +47,6 @@ import com.liferay.portal.repository.liferayrepository.LiferayRepositoryDefiner;
 import com.liferay.portal.repository.temporaryrepository.TemporaryFileEntryRepositoryDefiner;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -96,8 +96,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
-		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN
 	},
 	service = PortletDataHandler.class
 )

@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.display.context.logic;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.settings.internal.DLPortletInstanceSettings;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
@@ -133,8 +133,8 @@ public class DLPortletInstanceSettingsHelper {
 		if (!isShowActions()) {
 			entryColumns = ArrayUtil.remove(entryColumns, "action");
 		}
-		else if (!portletName.equals(PortletKeys.DOCUMENT_LIBRARY) &&
-				 !portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) &&
+		else if (!portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) &&
+				 !portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) &&
 				 !ArrayUtil.contains(entryColumns, "action")) {
 
 			entryColumns = ArrayUtil.append(entryColumns, "action");
@@ -173,8 +173,8 @@ public class DLPortletInstanceSettingsHelper {
 	public boolean isFolderMenuVisible() {
 		String portletName = _dlRequestHelper.getPortletName();
 
-		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) ||
+			portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 
 			return true;
 		}
@@ -189,10 +189,10 @@ public class DLPortletInstanceSettingsHelper {
 		String portletName = _dlRequestHelper.getPortletName();
 		String portletResource = _dlRequestHelper.getPortletResource();
 
-		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
-			portletResource.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletResource.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) ||
+			portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) ||
+			portletResource.equals(DLPortletKeys.DOCUMENT_LIBRARY) ||
+			portletResource.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 
 			return true;
 		}
@@ -206,8 +206,8 @@ public class DLPortletInstanceSettingsHelper {
 	public boolean isShowTabs() {
 		String portletName = _dlRequestHelper.getPortletName();
 
-		if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) ||
-			portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
+		if (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) ||
+			portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN)) {
 
 			return true;
 		}

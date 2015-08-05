@@ -44,7 +44,7 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 			Group scopeGroup = themeDisplay.getScopeGroup();
 			%>
 
-			<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY) %>">
+			<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(DLPortletKeys.DOCUMENT_LIBRARY) %>">
 
 				<%
 				String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'}); void(0);";
@@ -172,7 +172,7 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 					destroyOnHide: true
 				},
 				groupId: <%= scopeGroupId %>,
-				refererPortletName: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
+				refererPortletName: '<%= DLPortletKeys.DOCUMENT_LIBRARY %>',
 				showAncestorScopes: true,
 				showManageTemplates: false,
 				title: '<%= UnicodeLanguageUtil.get(request, "metadata-sets") %>'

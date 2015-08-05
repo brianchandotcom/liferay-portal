@@ -17,8 +17,8 @@ package com.liferay.document.library.web.application.list;
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.service.PortletLocalService;
-import com.liferay.portal.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,7 +43,7 @@ public class DocumentLibraryPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.DOCUMENT_LIBRARY_ADMIN;
+		return DLPortletKeys.DOCUMENT_LIBRARY_ADMIN;
 	}
 
 	@Reference(unbind = "-")

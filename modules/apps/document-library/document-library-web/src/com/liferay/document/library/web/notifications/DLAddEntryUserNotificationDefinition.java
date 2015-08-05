@@ -14,10 +14,10 @@
 
 package com.liferay.document.library.web.notifications;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
-import com.liferay.portal.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY},
+	property = {"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY},
 	service = UserNotificationDefinition.class
 )
 public class DLAddEntryUserNotificationDefinition
@@ -34,7 +34,7 @@ public class DLAddEntryUserNotificationDefinition
 
 	public DLAddEntryUserNotificationDefinition() {
 		super(
-			PortletKeys.DOCUMENT_LIBRARY, 0,
+			DLPortletKeys.DOCUMENT_LIBRARY, 0,
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 			"receive-a-notification-when-someone-adds-a-new-document-in-a-" +
 				"folder-you-are-subscribed-to");

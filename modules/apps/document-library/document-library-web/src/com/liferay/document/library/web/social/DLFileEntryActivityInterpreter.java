@@ -14,13 +14,13 @@
 
 package com.liferay.document.library.web.social;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY},
+	property = {"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY},
 	service = SocialActivityInterpreter.class
 )
 public class DLFileEntryActivityInterpreter

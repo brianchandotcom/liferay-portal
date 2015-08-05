@@ -54,11 +54,11 @@ String displayStyle = ParamUtil.getString(request, "displayStyle");
 String[] displayViews = dlPortletInstanceSettings.getDisplayViews();
 
 if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
+	displayStyle = portalPreferences.getValue(DLPortletKeys.DOCUMENT_LIBRARY, "display-style", PropsValues.DL_DEFAULT_DISPLAY_VIEW);
 }
 else {
 	if (ArrayUtil.contains(displayViews, displayStyle)) {
-		portalPreferences.setValue(PortletKeys.DOCUMENT_LIBRARY, "display-style", displayStyle);
+		portalPreferences.setValue(DLPortletKeys.DOCUMENT_LIBRARY, "display-style", displayStyle);
 	}
 }
 
@@ -78,12 +78,12 @@ String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
 if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-	portalPreferences.setValue(PortletKeys.DOCUMENT_LIBRARY, "order-by-col", orderByCol);
-	portalPreferences.setValue(PortletKeys.DOCUMENT_LIBRARY, "order-by-type", orderByType);
+	portalPreferences.setValue(DLPortletKeys.DOCUMENT_LIBRARY, "order-by-col", orderByCol);
+	portalPreferences.setValue(DLPortletKeys.DOCUMENT_LIBRARY, "order-by-type", orderByType);
 }
 else {
-	orderByCol = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "order-by-col", StringPool.BLANK);
-	orderByType = portalPreferences.getValue(PortletKeys.DOCUMENT_LIBRARY, "order-by-type", "asc");
+	orderByCol = portalPreferences.getValue(DLPortletKeys.DOCUMENT_LIBRARY, "order-by-col", StringPool.BLANK);
+	orderByType = portalPreferences.getValue(DLPortletKeys.DOCUMENT_LIBRARY, "order-by-type", "asc");
 }
 
 request.setAttribute("view.jsp-folder", folder);
@@ -162,7 +162,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 </div>
 
 <%
-if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN))) {
+if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY) || portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_ADMIN))) {
 	PortalUtil.setPageSubtitle(folder.getName(), request);
 	PortalUtil.setPageDescription(folder.getDescription(), request);
 }

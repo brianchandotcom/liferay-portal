@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.web.portlet.action;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
+		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
 		"mvc.command.name=/image_gallery_display/view_slide_show"
 	},
 	service = MVCRenderCommand.class

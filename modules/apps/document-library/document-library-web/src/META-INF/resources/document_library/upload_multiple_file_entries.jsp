@@ -39,7 +39,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
-	title='<%= portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) ? "add-multiple-media" : "add-multiple-documents" %>'
+	title='<%= portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) ? "add-multiple-media" : "add-multiple-documents" %>'
 />
 
 <c:choose>

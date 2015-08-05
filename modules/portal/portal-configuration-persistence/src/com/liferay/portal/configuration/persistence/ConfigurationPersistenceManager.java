@@ -452,8 +452,14 @@ public class ConfigurationPersistenceManager
 		resultSet.updateString(2, outputStream.toString());
 	}
 
+	@SuppressWarnings("resource")
 	protected void storeInDB(String pid, Dictionary<?, ?> dictionary)
 		throws IOException {
+
+		UnsyncByteArrayOutputStream outputStream =
+			new UnsyncByteArrayOutputStream();
+
+		ConfigurationHandler.write(outputStream, dictionary);
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -472,18 +478,16 @@ public class ConfigurationPersistenceManager
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
-				store(rs, dictionary);
-
+				rs.updateString(2, outputStream.toString());
 				rs.updateRow();
 			}
 			else {
-				rs.moveToInsertRow();
-				rs.updateString(1, pid);
+				ps = con.prepareStatement(
+					buildSQL(_INSERT_INTO_CONFIGURATION_SQL));
 
-				store(rs, dictionary);
-
-				rs.insertRow();
-				rs.moveToCurrentRow();
+				ps.setString(1, pid);
+				ps.setString(2, outputStream.toString());
+				ps.executeUpdate();
 			}
 
 			con.commit();
@@ -493,6 +497,8 @@ public class ConfigurationPersistenceManager
 		}
 		finally {
 			cleanUp(con, ps, rs);
+
+			outputStream.close();
 		}
 	}
 
@@ -538,6 +544,10 @@ public class ConfigurationPersistenceManager
 		"delete from Configuration_ where configurationId = ?";
 
 	private static final Dictionary<?, ?> _EMPTY_DICTIONARY = new Hashtable<>();
+
+	private static final String _INSERT_INTO_CONFIGURATION_SQL =
+		"insert into Configuration_ (configurationId, dictionary) values " +
+			"(?, ?)";
 
 	private static final String _RETRIEVE_ALL_CONFIGURATION_SQL =
 		"select configurationId, dictionary from Configuration_ ORDER BY " +

@@ -44,7 +44,7 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 
 	@Override
 	public com.liferay.portal.model.Release addRelease(
-		java.lang.String servletContextName, int buildNumber) {
+		java.lang.String servletContextName, java.lang.String buildNumber) {
 		return _releaseLocalService.addRelease(servletContextName, buildNumber);
 	}
 
@@ -210,7 +210,7 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	}
 
 	@Override
-	public int getBuildNumberOrCreate()
+	public java.lang.String getBuildNumberOrCreate()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _releaseLocalService.getBuildNumberOrCreate();
 	}
@@ -286,7 +286,7 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 
 	@Override
 	public com.liferay.portal.model.Release updateRelease(long releaseId,
-		int buildNumber, java.util.Date buildDate, boolean verified)
+		java.lang.String buildNumber, java.util.Date buildDate, boolean verified)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _releaseLocalService.updateRelease(releaseId, buildNumber,
 			buildDate, verified);
@@ -294,11 +294,10 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 
 	@Override
 	public void updateRelease(java.lang.String servletContextName,
-		java.util.List<com.liferay.portal.kernel.upgrade.UpgradeProcess> upgradeProcesses,
-		int buildNumber, int previousBuildNumber, boolean indexOnUpgrade)
+		java.lang.String buildNumber, java.lang.String previousBuildNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_releaseLocalService.updateRelease(servletContextName,
-			upgradeProcesses, buildNumber, previousBuildNumber, indexOnUpgrade);
+		_releaseLocalService.updateRelease(servletContextName, buildNumber,
+			previousBuildNumber);
 	}
 
 	@Override

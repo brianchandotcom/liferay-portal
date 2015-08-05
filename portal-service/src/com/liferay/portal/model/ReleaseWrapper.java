@@ -97,7 +97,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 			setServletContextName(servletContextName);
 		}
 
-		Integer buildNumber = (Integer)attributes.get("buildNumber");
+		String buildNumber = (String)attributes.get("buildNumber");
 
 		if (buildNumber != null) {
 			setBuildNumber(buildNumber);
@@ -154,7 +154,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	* @return the build number of this release
 	*/
 	@Override
-	public int getBuildNumber() {
+	public java.lang.String getBuildNumber() {
 		return _release.getBuildNumber();
 	}
 
@@ -309,7 +309,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	* @param buildNumber the build number of this release
 	*/
 	@Override
-	public void setBuildNumber(int buildNumber) {
+	public void setBuildNumber(java.lang.String buildNumber) {
 		_release.setBuildNumber(buildNumber);
 	}
 

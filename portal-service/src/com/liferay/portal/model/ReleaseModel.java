@@ -138,14 +138,15 @@ public interface ReleaseModel extends BaseModel<Release>, MVCCModel {
 	 *
 	 * @return the build number of this release
 	 */
-	public int getBuildNumber();
+	@AutoEscape
+	public String getBuildNumber();
 
 	/**
 	 * Sets the build number of this release.
 	 *
 	 * @param buildNumber the build number of this release
 	 */
-	public void setBuildNumber(int buildNumber);
+	public void setBuildNumber(String buildNumber);
 
 	/**
 	 * Returns the build date of this release.

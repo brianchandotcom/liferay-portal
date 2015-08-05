@@ -347,16 +347,6 @@
 		<css-class-wrapper>license-manager</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>180</portlet-name>
-		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<header-portlet-css>/html/portlet/user_statistics/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-user-statistics</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>186</portlet-name>
 		<icon>/html/icons/directory.png</icon>
 		<parent-struts-path>directory</parent-struts-path>

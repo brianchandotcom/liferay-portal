@@ -38,9 +38,7 @@
 	<category name="category.shopping">
 		<portlet id="34" />
 	</category>
-	<category name="category.social">
-		<portlet id="180" />
-	</category>
+	<category name="category.social" />
 	<category name="category.tools">
 		<portlet id="2" />
 		<portlet id="58" />

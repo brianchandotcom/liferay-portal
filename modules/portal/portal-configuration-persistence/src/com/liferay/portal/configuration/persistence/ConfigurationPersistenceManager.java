@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.io.IOException;
+import java.io.StringReader;
 
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
-import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -366,20 +366,6 @@ public class ConfigurationPersistenceManager
 		}
 	}
 
-	protected Dictionary<?, ?> load(Clob clob)
-		throws IOException, SQLException {
-
-		ReaderInputStream readerInputStream = new ReaderInputStream(
-			clob.getCharacterStream());
-
-		Dictionary<?, ?> dictionary = ConfigurationHandler.read(
-			readerInputStream);
-
-		clob.free();
-
-		return dictionary;
-	}
-
 	protected void loadAllRecords() {
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -396,8 +382,9 @@ public class ConfigurationPersistenceManager
 
 			while (rs.next()) {
 				String pid = rs.getString(1);
+				String configuration = rs.getString(2);
 
-				_dictionaryMap.putIfAbsent(pid, load(rs.getClob(2)));
+				_dictionaryMap.putIfAbsent(pid, read(configuration));
 			}
 		}
 		catch (IOException | SQLException e) {
@@ -423,7 +410,7 @@ public class ConfigurationPersistenceManager
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
-				return load(rs.getClob(1));
+				return read(rs.getString(1));
 			}
 
 			return _EMPTY_DICTIONARY;
@@ -434,6 +421,15 @@ public class ConfigurationPersistenceManager
 		finally {
 			cleanUp(con, ps, rs);
 		}
+	}
+
+	protected Dictionary<?, ?> read(String configuration)
+		throws IOException, SQLException {
+
+		ReaderInputStream readerInputStream = new ReaderInputStream(
+			new StringReader(configuration));
+
+		return ConfigurationHandler.read(readerInputStream);
 	}
 
 	@Reference(target = "(bean.id=liferayDataSource)")

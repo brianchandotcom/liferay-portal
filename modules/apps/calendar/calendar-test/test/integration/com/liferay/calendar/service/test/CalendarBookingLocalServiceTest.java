@@ -127,7 +127,7 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteLastCalendarBookingInstanceRemovesCalendarBooking()
+	public void testDeleteLastCalendarBookingInstanceDeletesCalendarBooking()
 		throws PortalException {
 
 		ServiceContext serviceContext = createServiceContext();

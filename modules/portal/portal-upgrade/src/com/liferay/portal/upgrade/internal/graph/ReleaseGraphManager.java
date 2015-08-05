@@ -38,11 +38,11 @@ public class ReleaseGraphManager {
 			new UpgradeProcessEdgeFactory(upgradeInfos));
 
 		for (UpgradeInfo upgradeInfo : upgradeInfos) {
-			_directedGraph.addVertex(upgradeInfo.getFrom());
-			_directedGraph.addVertex(upgradeInfo.getTo());
+			_directedGraph.addVertex(upgradeInfo.getFromVersionString());
+			_directedGraph.addVertex(upgradeInfo.getToVersionString());
 
 			_directedGraph.addEdge(
-				upgradeInfo.getFrom(), upgradeInfo.getTo(),
+				upgradeInfo.getFromVersionString(), upgradeInfo.getToVersionString(),
 				new UpgradeProcessEdge(upgradeInfo));
 		}
 	}
@@ -154,8 +154,8 @@ public class ReleaseGraphManager {
 			String sourceVertex, String targetVertex) {
 
 			for (UpgradeInfo upgradeInfo : _upgradeInfos) {
-				String from = upgradeInfo.getFrom();
-				String to = upgradeInfo.getTo();
+				String from = upgradeInfo.getFromVersionString();
+				String to = upgradeInfo.getToVersionString();
 
 				if (from.equals(sourceVertex) && to.equals(targetVertex)) {
 					return new UpgradeProcessEdge(upgradeInfo);

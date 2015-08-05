@@ -24,51 +24,56 @@ import com.liferay.portal.kernel.util.StringPool;
  */
 public class UpgradeInfo {
 
-	public UpgradeInfo(String from, String to, UpgradeProcess upgradeProcess) {
-		_from = from;
-		_to = to;
+	public UpgradeInfo(
+		String fromVersionString, String toVersionString,
+		UpgradeProcess upgradeProcess) {
+
+		_fromVersionString = fromVersionString;
+		_toVersionString = toVersionString;
 		_upgradeProcess = upgradeProcess;
 	}
 
-	public int from() {
-		return transform(_from);
+	public int getFromVersionInt() {
+		return toInt(_fromVersionString);
 	}
 
-	public String getFrom() {
-		return _from;
+	public String getFromVersionString() {
+		return _fromVersionString;
 	}
 
-	public String getTo() {
-		return _to;
+	public String getToVersionString() {
+		return _toVersionString;
 	}
 
 	public UpgradeProcess getUpgradeProcess() {
 		return _upgradeProcess;
 	}
 
-	public int to() {
-		return transform(_to);
+	public int getToVersionInt() {
+		return toInt(_toVersionString);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(7);
 
-		sb.append("Upgrade process from version '");
-		sb.append(_from);
-		sb.append("' to version '");
-		sb.append(_to);
-		sb.append("'");
+		sb.append("{fromVersionString=");
+		sb.append(_fromVersionString);
+		sb.append(", toVersionString=");
+		sb.append(_toVersionString);
+		sb.append(", upgradeProcess=");
+		sb.append(_upgradeProcess);
+		sb.append("}");
 
 		return sb.toString();
 	}
 
-	protected int transform(String s) {
+	protected int toInt(String s) {
 		return Integer.parseInt(s.replace(StringPool.PERIOD, StringPool.BLANK));
 	}
 
-	private final String _from;
-	private final String _to;
+	private final String _fromVersionString;
+	private final String _toVersionString;
 	private final UpgradeProcess _upgradeProcess;
 
 }

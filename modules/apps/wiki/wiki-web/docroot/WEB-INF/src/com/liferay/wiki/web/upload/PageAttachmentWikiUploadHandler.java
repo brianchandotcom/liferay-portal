@@ -17,6 +17,7 @@ package com.liferay.wiki.web.upload;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.upload.BaseUploadHandler;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -86,9 +87,10 @@ public class PageAttachmentWikiUploadHandler extends BaseUploadHandler {
 		try {
 			WikiPage page = WikiPageLocalServiceUtil.getPage(_classPK);
 
+			Folder folder = page.addAttachmentsFolder();
+
 			return PortletFileRepositoryUtil.getPortletFileEntry(
-				themeDisplay.getScopeGroupId(), page.getAttachmentsFolderId(),
-				fileName);
+				themeDisplay.getScopeGroupId(), folder.getFolderId(), fileName);
 		}
 		catch (PortalException pe) {
 			return null;

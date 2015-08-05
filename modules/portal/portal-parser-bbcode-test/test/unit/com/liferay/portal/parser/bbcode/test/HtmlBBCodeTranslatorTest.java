@@ -62,8 +62,8 @@ public class HtmlBBCodeTranslatorTest {
 		String expected =
 			"<div class=\"lfr-code\"><table><tbody><tr>" +
 				"<td class=\"line-numbers\" data-line-number=\"1\"></td>" +
-				"<td class=\"lines\"><div class=\"line\">:)[code]</div></td>" +
-				"</tr></tbody></table></div>";
+					"<td class=\"lines\"><div class=\"line\">:)[code]</div>" +
+						"</td></tr></tbody></table></div>";
 		String actual = _htmlBBCodeTranslator.parse(content);
 
 		Assert.assertEquals(expected, actual);
@@ -83,8 +83,9 @@ public class HtmlBBCodeTranslatorTest {
 	public void testEmotion() {
 		String content = ":)";
 
-		String expected ="<img alt=\"emoticon\" " +
-			"src=\"@theme_images_path@/emoticons/happy.gif\" >";
+		String expected =
+			"<img alt=\"emoticon\" " +
+				"src=\"@theme_images_path@/emoticons/happy.gif\" >";
 		String actual = _htmlBBCodeTranslator.parse(content);
 
 		Assert.assertEquals(expected, actual);
@@ -95,8 +96,8 @@ public class HtmlBBCodeTranslatorTest {
 		String content = "[font=georgia, serif]text[/font]";
 
 		String expected =
-			"<span style=\"font-family: " + HtmlUtil.escapeAttribute(
-				"georgia, serif") + "\">text</span>";
+			"<span style=\"font-family: " +
+				HtmlUtil.escapeAttribute("georgia, serif") + "\">text</span>";
 		String actual = _htmlBBCodeTranslator.parse(content);
 
 		Assert.assertEquals(expected, actual);
@@ -124,7 +125,7 @@ public class HtmlBBCodeTranslatorTest {
 
 	@Test
 	public void testInvalidTag() {
-		String content = "[x]invaildTag[/x]";
+		String content = "[x]invalidTag[/x]";
 
 		String actual = _htmlBBCodeTranslator.parse(content);
 
@@ -223,8 +224,11 @@ public class HtmlBBCodeTranslatorTest {
 		String content =
 			"[url=https://msdn.microsoft.com/aa752574(VS.85).aspx]link[/url]";
 
-		String expected = "<a href=\"" + HtmlUtil.escapeHREF(
-			"https://msdn.microsoft.com/aa752574(VS.85).aspx") + "\">link</a>";
+		String expected =
+			"<a href=\"" +
+				HtmlUtil.escapeHREF(
+					"https://msdn.microsoft.com/aa752574(VS.85).aspx") +
+						"\">link</a>";
 		String actual = _htmlBBCodeTranslator.parse(content);
 
 		Assert.assertEquals(expected, actual);

@@ -2064,6 +2064,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			MBMessage.class.getName(), PortletProvider.Action.VIEW);
 
 		subscriptionSender.setPortletId(portletId);
+
 		subscriptionSender.setReplyToAddress(replyToAddress);
 		subscriptionSender.setScopeGroupId(message.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);

@@ -91,18 +91,15 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 						<c:if test="<%= !group.isControlPanel() && userSetupComplete && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon()) %>">
 
 							<%
-							PortletURL editPageURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.EDIT);
+							String portletId = PortletProviderUtil.getPortletId(Layout.class.getName(), PortletProvider.Action.EDIT);
 
-							editPageURL.setParameter("tabs1", layout.isPrivateLayout() ? "private-pages" : "public-pages");
+							PortletURL editPageURL = PortalUtil.getControlPanelPortletURL(request, portletId, 0, PortletRequest.RENDER_PHASE);
+
+							editPageURL.setParameter("privateLayout", String.valueOf(layout.isPrivateLayout()));
 							editPageURL.setParameter("groupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));
 							editPageURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
 							editPageURL.setParameter("treeId", "layoutsTree");
 							editPageURL.setParameter("viewLayout", Boolean.TRUE.toString());
-
-							String editPageURLString = HttpUtil.setParameter(editPageURL.toString(), "controlPanelCategory", "current_site");
-
-							editPageURLString = HttpUtil.setParameter(editPageURLString, "doAsGroupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));
-							editPageURLString = HttpUtil.setParameter(editPageURLString, "refererPlid", String.valueOf(layout.getPlid()));
 							%>
 
 							<li>
@@ -110,7 +107,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 									iconCssClass="icon-cog"
 									label="edit"
 									linkCssClass="control-menu-icon"
-									url="<%= editPageURLString %>"
+									url="<%= editPageURL.toString() %>"
 								/>
 							</li>
 						</c:if>

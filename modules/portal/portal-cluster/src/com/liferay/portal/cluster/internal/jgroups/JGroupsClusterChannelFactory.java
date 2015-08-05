@@ -68,15 +68,21 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 	@Activate
 	@Modified
 	protected synchronized void activate(Map<String, Object> properties) {
+		String[] channelSystemPropertiesArray = null;
+
 		String channelSystemProperties = GetterUtil.getString(
 			properties.get(ClusterPropsKeys.CHANNEL_SYSTEM_PROPERTIES));
 
 		if (Validator.isNull(channelSystemProperties)) {
-			channelSystemProperties = GetterUtil.getString(
-				_props.get(PropsKeys.CLUSTER_LINK_CHANNEL_SYSTEM_PROPERTIES));
+			channelSystemPropertiesArray = _props.getArray(
+				PropsKeys.CLUSTER_LINK_CHANNEL_SYSTEM_PROPERTIES);
+		}
+		else {
+			channelSystemPropertiesArray = StringUtil.split(
+				channelSystemProperties);
 		}
 
-		initSystemProperties(channelSystemProperties);
+		initSystemProperties(channelSystemPropertiesArray);
 
 		String autodetectAddress = GetterUtil.getString(
 			properties.get(ClusterPropsKeys.AUTODETECT_ADDRESS));
@@ -157,10 +163,7 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 		}
 	}
 
-	protected void initSystemProperties(String channelSystemProperties) {
-		String[] channelSystemPropertiesArray = StringUtil.split(
-			channelSystemProperties);
-
+	protected void initSystemProperties(String[] channelSystemPropertiesArray) {
 		for (String channelSystemProperty : channelSystemPropertiesArray) {
 			int index = channelSystemProperty.indexOf(CharPool.COLON);
 

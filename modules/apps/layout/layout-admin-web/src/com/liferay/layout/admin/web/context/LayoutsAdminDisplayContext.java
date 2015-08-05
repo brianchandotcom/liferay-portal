@@ -61,23 +61,14 @@ public class LayoutsAdminDisplayContext {
 
 		_groupDisplayContextHelper = new GroupDisplayContextHelper(request);
 
-		boolean privateLayout = false;
+		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 		String tabs1 = ParamUtil.getString(request, "tabs1");
 
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		if (Validator.isNull(tabs1)) {
-			LayoutSet layoutSet = _themeDisplay.getLayoutSet();
-
-			Layout refererLayout = LayoutLocalServiceUtil.fetchLayout(
-				_themeDisplay.getRefererPlid());
-
-			if (refererLayout != null) {
-				layoutSet = refererLayout.getLayoutSet();
-			}
-
-			Group group = layoutSet.getGroup();
+			Group group = _themeDisplay.getScopeGroup();
 
 			if (group.isUser()) {
 				tabs1 = "my-profile";
@@ -86,9 +77,7 @@ public class LayoutsAdminDisplayContext {
 				tabs1 = "public-pages";
 			}
 
-			if ((!group.isControlPanel()|| refererLayout!= null) &&
-				layoutSet.isPrivateLayout()) {
-
+			if (!group.isControlPanel() && privateLayout) {
 				if (group.isUser()) {
 					tabs1 = "my-dashboard";
 				}

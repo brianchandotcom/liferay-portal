@@ -1273,7 +1273,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		int pos = releaseVersion.lastIndexOf(CharPool.PERIOD);
 
-		_mainReleaseVersion = releaseVersion.substring(0, pos) + ".0";
+		_mainReleaseVersion = releaseVersion.substring(0, pos);
 
 		return _mainReleaseVersion;
 	}

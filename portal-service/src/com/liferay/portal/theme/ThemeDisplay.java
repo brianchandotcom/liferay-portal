@@ -966,6 +966,12 @@ public class ThemeDisplay
 
 	@JSON(include = false)
 	public PortletURL getURLUpdateManager() {
+		if (_urlUpdateManager == null) {
+			_urlUpdateManager = PortalUtil.getControlPanelPortletURL(
+				getRequest(), PortletKeys.MARKETPLACE_STORE, 0,
+				PortletRequest.RENDER_PHASE);
+		}
+
 		return _urlUpdateManager;
 	}
 
@@ -1784,6 +1790,10 @@ public class ThemeDisplay
 		_urlSiteAdministration = urlSiteAdministration;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setURLUpdateManager(PortletURL urlUpdateManager) {
 		_urlUpdateManager = urlUpdateManager;
 	}

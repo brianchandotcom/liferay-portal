@@ -37,199 +37,170 @@ public class HtmlBBCodeTranslatorTest {
 
 	@Test
 	public void testAlign() {
-		String content = "[center]text[/center]";
-
 		String expected = "<p style=\"text-align: center\">text</p>";
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse("[center]text[/center]");
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testBold() {
-		String content = "[b]text[/b]";
-
 		String expected = "<strong>text</strong>";
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse("[b]text[/b]");
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testCode() {
-		String content = "[code]:)[code]";
-
 		String expected =
 			"<div class=\"lfr-code\"><table><tbody><tr>" +
 				"<td class=\"line-numbers\" data-line-number=\"1\"></td>" +
 					"<td class=\"lines\"><div class=\"line\">:)[code]</div>" +
 						"</td></tr></tbody></table></div>";
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse("[code]:)[code]");
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testColor() {
-		String content = "[color=#ff0000]text[/color]";
-
 		String expected = "<span style=\"color: #ff0000\">text</span>";
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse(
+			"[color=#ff0000]text[/color]");
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testEmotion() {
-		String content = ":)";
-
 		String expected =
 			"<img alt=\"emoticon\" " +
 				"src=\"@theme_images_path@/emoticons/happy.gif\" >";
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse(":)");
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testFontFamily() {
-		String content = "[font=georgia, serif]text[/font]";
-
 		String expected =
 			"<span style=\"font-family: " +
 				HtmlUtil.escapeAttribute("georgia, serif") + "\">text</span>";
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse(
+			"[font=georgia, serif]text[/font]");
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testFontSize() {
-		String content = "[size=5]text[/size]";
-
 		String expected = "<span style=\"font-size: 18px;\">text</span>";
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse("[size=5]text[/size]");
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testIncompleteTag() {
-		String content = "[b]text";
-
 		String expected = "<strong>text</strong>";
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse("[b]text");
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testInvalidTag() {
-		String content = "[x]invalidTag[/x]";
+		String expected = "[x]invalidTag[/x]";
 
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse("[x]invalidTag[/x]");
 
-		Assert.assertEquals(content, actual);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testInvalidTagAndValidTag() {
-		String content = "[x]bbb[u]XXX[/u]ddd[/x]";
-
 		String expected = "[x]bbb<u>XXX</u>ddd[/x]";
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse("[x]bbb[u]XXX[/u]ddd[/x]");
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testItalic() {
-		String content = "[i]text[/i]";
-
 		String expected = "<em>text</em>";
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse("[i]text[/i]");
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testOrderedList() {
-		String content = "[list type=\"i\" start=\"2\"][*]line1[*]line2[/list]";
-
 		String expected =
 			"<ol style=\"list-style: lower-roman outside;\" start=\"2\">" +
 				"<li>line1</li><li>line2</li></ol>";
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse(
+			"[list type=\"i\" start=\"2\"][*]line1[*]line2[/list]");
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testQuote() {
-		String content = "[quote=citer]text[/quote]";
-
 		String expected =
 			"<div class=\"quote-title\">citer:</div><div class=\"quote\">" +
 				"<div class=\"quote-content\">text</div></div>";
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse(
+			"[quote=citer]text[/quote]");
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
-	public void testStar() {
-		String content = "[b]type[/b] some [u]text[/u]\n" + "[*]this is a test";
-
+	public void testAsterisk() {
 		String expected =
 			"<strong>type</strong> some <u>text</u><li>this is a test</li>";
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse(
+			"[b]type[/b] some [u]text[/u]\n" + "[*]this is a test");
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testStrike() {
-		String content = "[s]text[/s]";
-
 		String expected = "<strike>text</strike>";
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse("[s]text[/s]");
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testUnderline() {
-		String content = "[u]text[/u]";
-
 		String expected = "<u>text</u>";
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse("[u]text[/u]");
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
-	public void testUnorderList() {
-		String content = "[list type=\"circle\"][*]line1[*]line2[/list]";
-
+	public void testUnorderedList() {
 		String expected =
 			"<ul style=\"list-style: circle outside;\">" +
 				"<li>line1</li><li>line2</li></ul>";
-		String actual = _htmlBBCodeTranslator.parse(content);
+		String actual = _htmlBBCodeTranslator.parse(
+			"[list type=\"circle\"][*]line1[*]line2[/list]");
 
 		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
-	public void testUrl() {
-		String content =
-			"[url=https://msdn.microsoft.com/aa752574(VS.85).aspx]link[/url]";
+	public void testURL() {
+		String url = "https://msdn.microsoft.com/aa752574(VS.85).aspx";
 
 		String expected =
-			"<a href=\"" +
-				HtmlUtil.escapeHREF(
-					"https://msdn.microsoft.com/aa752574(VS.85).aspx") +
-						"\">link</a>";
-		String actual = _htmlBBCodeTranslator.parse(content);
+			"<a href=\"" + HtmlUtil.escapeHREF(url) + "\">link</a>";
+		String actual = _htmlBBCodeTranslator.parse(
+			"[url=" + url + "]link[/url]");
 
 		Assert.assertEquals(expected, actual);
 	}

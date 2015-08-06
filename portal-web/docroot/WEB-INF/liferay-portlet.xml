@@ -77,8 +77,6 @@
 		<css-class-wrapper>portlet-directory</css-class-wrapper>
 	</portlet>
 	<portlet>
-	</portlet>
-	<portlet>
 		<portlet-name>47</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>hello_world</struts-path>

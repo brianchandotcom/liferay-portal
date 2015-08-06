@@ -37,6 +37,14 @@ import org.dom4j.Element;
  */
 public class PoshiRunnerValidation {
 
+	public static void clearExceptions() {
+		_exceptions.clear();
+	}
+
+	public static Set<Exception> getExceptions() {
+		return _exceptions;
+	}
+
 	public static void main(String[] args) throws Exception {
 		PoshiRunnerContext.readFiles();
 
@@ -128,7 +136,7 @@ public class PoshiRunnerValidation {
 			"description", "echo", "execute", "fail", "for", "if", "property",
 			"take-screenshot", "task", "var", "while");
 
-		if (filePath.endsWith(".function")) {
+		if (Validator.isNotNull(filePath) && filePath.endsWith(".function")) {
 			possibleElementNames = Arrays.asList("execute", "if");
 		}
 

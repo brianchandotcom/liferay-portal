@@ -47,7 +47,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.admin.util.PortalAdministrationApplicationType;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 
@@ -59,6 +59,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -913,19 +914,13 @@ public class ThemeDisplay
 
 	@JSON(include = false)
 	public PortletURL getURLMyAccount() {
-		try {
-			if (_urlMyAccount == null) {
-				_urlMyAccount = PortletProviderUtil.getPortletURL(
-					getRequest(),
-					PortalAdministrationApplicationType.SiteAdmin.CLASS_NAME,
-					PortletProvider.Action.VIEW);
-			}
+		if (_urlMyAccount == null) {
+			_urlMyAccount = PortalUtil.getControlPanelPortletURL(
+				getRequest(), PortletKeys.MY_ACCOUNT, 0,
+				PortletRequest.RENDER_PHASE);
+		}
 
-			return _urlMyAccount;
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
+		return _urlMyAccount;
 	}
 
 	@JSON(include = false)

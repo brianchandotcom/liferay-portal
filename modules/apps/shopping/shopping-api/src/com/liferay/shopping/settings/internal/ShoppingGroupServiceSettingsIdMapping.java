@@ -16,7 +16,7 @@ package com.liferay.shopping.settings.internal;
 
 import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
 import com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration;
-import com.liferay.shopping.model.ShoppingConstants;
+import com.liferay.shopping.constants.ShoppingConstants;
 
 import org.osgi.service.component.annotations.Component;
 

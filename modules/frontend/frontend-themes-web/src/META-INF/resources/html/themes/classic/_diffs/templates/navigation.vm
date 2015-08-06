@@ -8,12 +8,12 @@
 			<h1 class="hide-accessible">#language ("navigation")</h1>
 
 			#foreach ($nav_item in $nav_items)
-					#set ($nav_item_attr_selected="")
-					#set ($nav_item_attr_has_popup="")
-					#set ($nav_item_caret="")
-					#set ($nav_item_css_class="lfr-nav-item")
-					#set ($nav_item_href_link="")
-					#set ($nav_item_link_css_class="")
+				#set ($nav_item_attr_selected="")
+				#set ($nav_item_attr_has_popup="")
+				#set ($nav_item_caret="")
+				#set ($nav_item_css_class="lfr-nav-item")
+				#set ($nav_item_href_link="")
+				#set ($nav_item_link_css_class="")
 
 				#if ($nav_item.isBrowsable())
 					#set ($nav_item_href_link="href='$nav_item.getURL()'")

@@ -75,24 +75,19 @@ public class PortletProviderUtil {
 		PortletProvider portletProvider = null;
 
 		if (action.equals(PortletProvider.Action.ADD)) {
-			return getPortletProvider(
-				className, _addServiceTrackerMap);
+			return getPortletProvider(className, _addServiceTrackerMap);
 		}
 		else if (action.equals(PortletProvider.Action.BROWSE)) {
-			return getPortletProvider(
-				className, _browseServiceTrackerMap);
+			return getPortletProvider(className, _browseServiceTrackerMap);
 		}
 		else if (action.equals(PortletProvider.Action.EDIT)) {
-			return getPortletProvider(
-				className, _editServiceTrackerMap);
+			return getPortletProvider(className, _editServiceTrackerMap);
 		}
 		else if (action.equals(PortletProvider.Action.MANAGE)) {
-			return getPortletProvider(
-				className, _manageServiceTrackerMap);
+			return getPortletProvider(className, _manageServiceTrackerMap);
 		}
 		else if (action.equals(PortletProvider.Action.VIEW)) {
-			return getPortletProvider(
-				className, _viewServiceTrackerMap);
+			return getPortletProvider(className, _viewServiceTrackerMap);
 		}
 
 		return portletProvider;

@@ -34,6 +34,7 @@ deploy {
 }
 
 jar {
+	baseName = "gradle-resources-http"
 	duplicatesStrategy = "exclude"
 	from sourceSets.main.output
 

@@ -1420,7 +1420,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 			"Missing while condition element", _getExceptionMessage());
 	}
 
-	@Test
 	private String _getExceptionMessage() {
 		Set<Exception> exceptions = PoshiRunnerValidation.getExceptions();
 

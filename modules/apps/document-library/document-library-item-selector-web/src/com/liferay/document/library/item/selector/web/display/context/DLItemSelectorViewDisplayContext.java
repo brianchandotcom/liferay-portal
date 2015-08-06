@@ -17,7 +17,6 @@ package com.liferay.document.library.item.selector.web.display.context;
 import com.liferay.document.library.item.selector.web.DLItemSelectorView;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;

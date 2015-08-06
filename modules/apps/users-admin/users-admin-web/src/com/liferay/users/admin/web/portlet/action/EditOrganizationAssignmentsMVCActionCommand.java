@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin.action;
+package com.liferay.users.admin.web.portlet.action;
 
 import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;

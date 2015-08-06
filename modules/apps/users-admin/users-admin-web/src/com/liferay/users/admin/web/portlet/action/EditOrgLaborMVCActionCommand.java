@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin.action;
+package com.liferay.users.admin.web.portlet.action;
 
 import com.liferay.portal.NoSuchListTypeException;
 import com.liferay.portal.NoSuchOrgLaborException;

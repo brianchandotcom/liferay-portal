@@ -12,28 +12,38 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin.action;
+package com.liferay.users.admin.web.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.struts.FindAction;
 import com.liferay.portal.util.PortletKeys;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
- * @author Pei-Jung Lan
+ * @author Raymond Augé
  */
-@OSGiBeanProperties(
-	property = {
-		"javax.portlet.name=" + PortletKeys.USERS_ADMIN,
-		"mvc.command.name=/users_admin/edit_organization_assignments"
-	},
-	service = MVCRenderCommand.class
-)
-public class EditOrganizationAssignmentsMVCRenderCommand
-	extends GetOrganizationMVCRenderCommand {
+public class FindUserAction extends FindAction {
 
 	@Override
-	protected String getPath() {
-		return "/html/portlet/users_admin/edit_organization_assignments.jsp";
+	protected long getGroupId(long primaryKey) throws Exception {
+		return 0;
+	}
+
+	@Override
+	protected String getPrimaryKeyParameterName() {
+		return "p_u_i_d";
+	}
+
+	@Override
+	protected String getStrutsAction(
+		HttpServletRequest request, String portletId) {
+
+		return "/directory/view_user";
+	}
+
+	@Override
+	protected String[] initPortletIds() {
+		return new String[] {PortletKeys.DIRECTORY};
 	}
 
 }

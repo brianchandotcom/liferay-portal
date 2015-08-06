@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin.action;
+package com.liferay.users.admin.web.portlet.action;
 
-import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -26,8 +28,14 @@ import javax.portlet.RenderResponse;
 /**
  * @author Pei-Jung Lan
  */
-public abstract class GetOrganizationMVCRenderCommand
-	implements MVCRenderCommand {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.USERS_ADMIN,
+		"mvc.command.name=/users_admin/edit_user"
+	},
+	service = MVCRenderCommand.class
+)
+public class EditUserMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -35,12 +43,10 @@ public abstract class GetOrganizationMVCRenderCommand
 		throws PortletException {
 
 		try {
-			ActionUtil.getOrganization(renderRequest);
+			PortalUtil.getSelectedUser(renderRequest);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchOrganizationException ||
-				e instanceof PrincipalException) {
-
+			if (e instanceof PrincipalException) {
 				SessionErrors.add(renderRequest, e.getClass());
 
 				return "/html/portlet/users_admin/error.jsp";
@@ -50,9 +56,7 @@ public abstract class GetOrganizationMVCRenderCommand
 			}
 		}
 
-		return getPath();
+		return "/html/portlet/users_admin/edit_user.jsp";
 	}
-
-	protected abstract String getPath();
 
 }

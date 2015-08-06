@@ -44,6 +44,16 @@ public class HtmlBBCodeTranslatorTest {
 	}
 
 	@Test
+	public void testAsterisk() {
+		String expected =
+			"<strong>type</strong> some <u>text</u><li>this is a test</li>";
+		String actual = _htmlBBCodeTranslator.parse(
+			"[b]type[/b] some [u]text[/u]\n" + "[*]this is a test");
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
 	public void testBold() {
 		String expected = "<strong>text</strong>";
 		String actual = _htmlBBCodeTranslator.parse("[b]text[/b]");
@@ -152,16 +162,6 @@ public class HtmlBBCodeTranslatorTest {
 				"<div class=\"quote-content\">text</div></div>";
 		String actual = _htmlBBCodeTranslator.parse(
 			"[quote=citer]text[/quote]");
-
-		Assert.assertEquals(expected, actual);
-	}
-
-	@Test
-	public void testAsterisk() {
-		String expected =
-			"<strong>type</strong> some <u>text</u><li>this is a test</li>";
-		String actual = _htmlBBCodeTranslator.parse(
-			"[b]type[/b] some [u]text[/u]\n" + "[*]this is a test");
 
 		Assert.assertEquals(expected, actual);
 	}

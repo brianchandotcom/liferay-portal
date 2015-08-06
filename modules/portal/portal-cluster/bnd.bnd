@@ -11,6 +11,7 @@ Import-Package:\
 	!COM.ibm.netrexx.*,\
 	!netrexx.*,\
 	!org.mozilla.javascript.*,\
+	!org.apache.logging.*,\
 	*
 Include-Resource:\
 	classes,\

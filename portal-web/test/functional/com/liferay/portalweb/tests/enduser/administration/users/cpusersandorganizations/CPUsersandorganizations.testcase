@@ -1981,7 +1981,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-49534" name="SearchUserFullName" priority="4">
+	<command name="SearchUserFullName" priority="4">
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />

@@ -942,6 +942,10 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public boolean isReminderQueryComplete() {
+		if (isDefaultUser()) {
+			return true;
+		}
+
 		if (PropsValues.USERS_REMINDER_QUERIES_ENABLED) {
 			if (Validator.isNull(getReminderQueryQuestion()) ||
 				Validator.isNull(getReminderQueryAnswer())) {

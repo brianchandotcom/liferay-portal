@@ -1,4 +1,4 @@
-<definition component-name="portal-tools" extends="PortalSmoke">
+<definition component-name="portal-core-infrastructure-portal-services" extends="PortalSmoke">
 	<property name="database.jndi.enabled" value="true" />
-	<property name="testray.main.component.name" value="Tools" />
+	<property name="testray.main.component.name" value="Databases" />
 </definition>

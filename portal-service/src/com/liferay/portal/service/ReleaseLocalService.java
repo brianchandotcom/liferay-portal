@@ -242,4 +242,9 @@ public interface ReleaseLocalService extends BaseLocalService,
 	public com.liferay.portal.model.Release updateRelease(long releaseId,
 		java.lang.String buildNumber, java.util.Date buildDate, boolean verified)
 		throws PortalException;
+
+	public void updateRelease(java.lang.String servletContextName,
+		java.util.List<com.liferay.portal.kernel.upgrade.UpgradeProcess> upgradeProcesses,
+		java.lang.String currentVersion, java.lang.String previousVersion,
+		boolean runUpgrade);
 }

@@ -292,6 +292,15 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 			buildDate, verified);
 	}
 
+	@Override
+	public void updateRelease(java.lang.String servletContextName,
+		java.util.List<com.liferay.portal.kernel.upgrade.UpgradeProcess> upgradeProcesses,
+		java.lang.String currentVersion, java.lang.String previousVersion,
+		boolean runUpgrade) {
+		_releaseLocalService.updateRelease(servletContextName,
+			upgradeProcesses, currentVersion, previousVersion, runUpgrade);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

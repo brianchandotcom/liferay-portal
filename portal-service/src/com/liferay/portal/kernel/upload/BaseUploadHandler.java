@@ -154,12 +154,12 @@ public abstract class BaseUploadHandler implements UploadHandler {
 
 			validateFile(fileName, contentType, size);
 
-			inputStream = uploadPortletRequest.getFileAsStream(parameterName);
-
 			long folderId = getFolderId(uploadPortletRequest);
 
 			String uniqueFileName = getUniqueFileName(
 				themeDisplay, fileName, folderId);
+
+			inputStream = uploadPortletRequest.getFileAsStream(parameterName);
 
 			FileEntry fileEntry = addFileEntry(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),

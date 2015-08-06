@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_SITE_SELECTOR</td>
-	<td>//a[contains(@href,'SiteSelector')]</td>
+	<td>//a[contains(@id,'allSitesLink')]</td>
 	<td></td>
 </tr>
 </tbody>

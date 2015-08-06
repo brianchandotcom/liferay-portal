@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.web.social;
 
-import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS},
+	property = {"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS},
 	service = SocialActivityInterpreter.class
 )
 public class MBThreadActivityInterpreter extends BaseSocialActivityInterpreter {

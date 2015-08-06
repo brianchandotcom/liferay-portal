@@ -54,7 +54,7 @@ if (threadFlag != null) {
 			<%
 			String messageURL = null;
 
-			if (portletName.equals(MessageBoardsPortletKeys.MESSAGE_BOARDS_ADMIN)) {
+			if (portletName.equals(MBPortletKeys.MESSAGE_BOARDS_ADMIN)) {
 				PortletURL selMessageURL = renderResponse.createRenderURL();
 
 				selMessageURL.setParameter("mvcRenderCommandName", "/message_boards/view_message");

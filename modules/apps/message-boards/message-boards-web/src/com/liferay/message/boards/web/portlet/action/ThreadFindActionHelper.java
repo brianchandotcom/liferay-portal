@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
-import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.BaseFindActionHelper;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -44,8 +44,8 @@ public class ThreadFindActionHelper extends BaseFindActionHelper {
 	@Override
 	public String[] initPortletIds() {
 		return new String[] {
-			MessageBoardsPortletKeys.MESSAGE_BOARDS,
-			MessageBoardsPortletKeys.MESSAGE_BOARDS_ADMIN
+			MBPortletKeys.MESSAGE_BOARDS,
+			MBPortletKeys.MESSAGE_BOARDS_ADMIN
 		};
 	}
 

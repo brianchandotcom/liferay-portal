@@ -15,7 +15,7 @@
 package com.liferay.message.boards.layout.set.prototype.action;
 
 import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
-import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -139,7 +139,7 @@ public class AddLayoutSetPrototypeAction {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS + ")",
+		target = "(javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS + ")",
 		unbind = "-"
 	)
 	protected void setMessageBoardsPortlet(Portlet portlet) {

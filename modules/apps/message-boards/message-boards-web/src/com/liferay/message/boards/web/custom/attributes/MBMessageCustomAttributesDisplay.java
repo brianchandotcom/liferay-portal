@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.web.custom.attributes;
 
-import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS},
+	property = {"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS},
 	service = CustomAttributesDisplay.class
 )
 public class MBMessageCustomAttributesDisplay

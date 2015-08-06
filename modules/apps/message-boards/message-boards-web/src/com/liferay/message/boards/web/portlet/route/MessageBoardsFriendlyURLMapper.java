@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.web.portlet.route;
 
-import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/routes.xml",
-		"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS
+		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS
 	},
 	service = FriendlyURLMapper.class
 )

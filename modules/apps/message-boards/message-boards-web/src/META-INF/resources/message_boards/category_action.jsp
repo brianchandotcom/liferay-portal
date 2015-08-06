@@ -96,7 +96,7 @@ else {
 		/>
 	</c:if>
 
-	<c:if test="<%= portletName.equals(MessageBoardsPortletKeys.MESSAGE_BOARDS) %>">
+	<c:if test="<%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS) %>">
 		<c:if test="<%= enableRSS %>">
 
 			<liferay-ui:rss

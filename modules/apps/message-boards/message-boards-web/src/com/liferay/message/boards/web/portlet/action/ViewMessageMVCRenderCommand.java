@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.web.portlet.action;
 
-import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -45,8 +45,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS,
-		"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS_ADMIN,
+		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
 		"mvc.command.name=/message_boards/view_message"
 	},
 	service = MVCRenderCommand.class
@@ -84,12 +84,12 @@ public class ViewMessageMVCRenderCommand implements MVCRenderCommand {
 
 			if (Validator.isNotNull(threadView)) {
 				preferences.setValue(
-					MessageBoardsPortletKeys.MESSAGE_BOARDS, "thread-view",
+					MBPortletKeys.MESSAGE_BOARDS, "thread-view",
 					threadView);
 			}
 			else {
 				threadView = preferences.getValue(
-					MessageBoardsPortletKeys.MESSAGE_BOARDS, "thread-view",
+					MBPortletKeys.MESSAGE_BOARDS, "thread-view",
 					PropsValues.MESSAGE_BOARDS_THREAD_VIEWS_DEFAULT);
 			}
 
@@ -99,7 +99,7 @@ public class ViewMessageMVCRenderCommand implements MVCRenderCommand {
 				threadView = PropsValues.MESSAGE_BOARDS_THREAD_VIEWS_DEFAULT;
 
 				preferences.setValue(
-					MessageBoardsPortletKeys.MESSAGE_BOARDS, "thread-view",
+					MBPortletKeys.MESSAGE_BOARDS, "thread-view",
 					threadView);
 			}
 

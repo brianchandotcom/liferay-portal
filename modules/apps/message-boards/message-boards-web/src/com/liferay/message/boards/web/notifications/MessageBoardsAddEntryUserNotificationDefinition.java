@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.web.notifications;
 
-import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS},
+	property = {"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS},
 	service = UserNotificationDefinition.class
 )
 public class MessageBoardsAddEntryUserNotificationDefinition
@@ -34,7 +34,7 @@ public class MessageBoardsAddEntryUserNotificationDefinition
 
 	public MessageBoardsAddEntryUserNotificationDefinition() {
 		super(
-			MessageBoardsPortletKeys.MESSAGE_BOARDS, 0,
+			MBPortletKeys.MESSAGE_BOARDS, 0,
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 			"receive-a-notification-when-someone-adds-a-new-post-in-a-thread-" +
 				"or-category-you-are-subscribed-to");

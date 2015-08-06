@@ -17,7 +17,7 @@ package com.liferay.message.boards.web.messaging;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.message.boards.configuration.MessageBoardsConfiguration;
-import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS},
+	property = {"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS},
 	service = SchedulerEntry.class
 )
 public class ExpireBanMessageListener
@@ -70,7 +70,7 @@ public class ExpireBanMessageListener
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS + ")",
+		target = "(javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS + ")",
 		unbind = "-"
 	)
 	protected void setPortlet(Portlet portlet) {

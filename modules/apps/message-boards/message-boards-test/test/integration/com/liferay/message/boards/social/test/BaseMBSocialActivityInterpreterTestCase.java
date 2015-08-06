@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.social.test;
 
-import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
@@ -38,7 +38,7 @@ public abstract class BaseMBSocialActivityInterpreterTestCase
 				registry.getServices(
 					SocialActivityInterpreter.class,
 					"(javax.portlet.name=" +
-						MessageBoardsPortletKeys.MESSAGE_BOARDS + ")");
+						MBPortletKeys.MESSAGE_BOARDS + ")");
 
 			for (SocialActivityInterpreter socialActivityInterpreter :
 					socialActivityInterpreters) {

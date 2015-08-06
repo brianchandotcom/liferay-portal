@@ -15,7 +15,7 @@
 package com.liferay.message.boards.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.message.boards.web.lar.MBPortletDataHandler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -169,7 +169,7 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 				registry.getServices(
 					PortletDataHandler.class,
 					"(javax.portlet.name=" +
-						MessageBoardsPortletKeys.MESSAGE_BOARDS + ")");
+						MBPortletKeys.MESSAGE_BOARDS + ")");
 
 			Iterator<PortletDataHandler> iterator =
 				portletDataHandlers.iterator();
@@ -183,7 +183,7 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected String getPortletId() {
-		return MessageBoardsPortletKeys.MESSAGE_BOARDS;
+		return MBPortletKeys.MESSAGE_BOARDS;
 	}
 
 }

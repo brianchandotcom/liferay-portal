@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.web.upgrade.v1_0_0;
 
-import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 
 /**
  * @author Sergio González
@@ -25,8 +25,8 @@ public class UpgradePortletId
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"19", MessageBoardsPortletKeys.MESSAGE_BOARDS},
-			new String[] {"162", MessageBoardsPortletKeys.MESSAGE_BOARDS_ADMIN}
+			new String[] {"19", MBPortletKeys.MESSAGE_BOARDS},
+			new String[] {"162", MBPortletKeys.MESSAGE_BOARDS_ADMIN}
 		};
 	}
 

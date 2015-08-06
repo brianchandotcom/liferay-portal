@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.web.portlet;
 
-import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
 import com.liferay.portal.kernel.portlet.ManagePortletProvider;
@@ -44,7 +44,7 @@ public class MessageBoardsAdminPortletProvider
 
 	@Override
 	public String getPortletId() {
-		return MessageBoardsPortletKeys.MESSAGE_BOARDS_ADMIN;
+		return MBPortletKeys.MESSAGE_BOARDS_ADMIN;
 	}
 
 }

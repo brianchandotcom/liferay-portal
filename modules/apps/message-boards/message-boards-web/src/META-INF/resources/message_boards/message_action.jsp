@@ -25,7 +25,7 @@ MBMessage message = (MBMessage)objArray[0];
 
 Set<Long> threadSubscriptionClassPKs = null;
 
-if (portletName.equals(MessageBoardsPortletKeys.MESSAGE_BOARDS)) {
+if (portletName.equals(MBPortletKeys.MESSAGE_BOARDS)) {
 	threadSubscriptionClassPKs = (Set<Long>)objArray[1];
 }
 
@@ -66,7 +66,7 @@ MBThread thread = message.getThread();
 		/>
 	</c:if>
 
-	<c:if test="<%= portletName.equals(MessageBoardsPortletKeys.MESSAGE_BOARDS) %>">
+	<c:if test="<%= portletName.equals(MBPortletKeys.MESSAGE_BOARDS) %>">
 		<c:if test="<%= enableRSS && MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW) %>">
 
 			<liferay-ui:rss

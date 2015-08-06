@@ -14,7 +14,7 @@
 
 package com.liferay.message.boards.web.upgrade.v1_0_0;
 
-import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.messageboards.constants.MBConstants;
@@ -32,7 +32,7 @@ public class UpgradePortletSettings
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgradeMainPortlet(
-			MessageBoardsPortletKeys.MESSAGE_BOARDS, MBConstants.SERVICE_NAME,
+			MBPortletKeys.MESSAGE_BOARDS, MBConstants.SERVICE_NAME,
 			PortletKeys.PREFS_OWNER_TYPE_GROUP, false);
 	}
 

@@ -17,7 +17,7 @@ package com.liferay.message.boards.web.constants;
 /**
  * @author Adolfo Pérez
  */
-public class MessageBoardsPortletKeys {
+public class MBPortletKeys {
 
 	public static final String MESSAGE_BOARDS =
 		"com_liferay_message_boards_web_portlet_MessageBoardsPortlet";

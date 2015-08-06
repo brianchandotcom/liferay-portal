@@ -76,7 +76,7 @@ public class PortletProviderUtil {
 
 		if (action.equals(PortletProvider.Action.ADD)) {
 			return getPortletProvider(
-				className, (ServiceTrackerMap) _addServiceTrackerMap);
+				className, (ServiceTrackerMap)_addServiceTrackerMap);
 		}
 		else if (action.equals(PortletProvider.Action.BROWSE)) {
 			return getPortletProvider(
@@ -105,7 +105,7 @@ public class PortletProviderUtil {
 		PortletProvider portletProvider = serviceTrackerMap.getService(
 			className);
 
-		if ((portletProvider == null) && isAsset(className)) {
+		if ((portletProvider == null) && isAssetObject(className)) {
 			portletProvider = serviceTrackerMap.getService(
 				AssetEntry.class.getName());
 		}
@@ -113,7 +113,7 @@ public class PortletProviderUtil {
 		return portletProvider;
 	}
 
-	protected static boolean isAsset(String className) {
+	protected static boolean isAssetObject(String className) {
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);

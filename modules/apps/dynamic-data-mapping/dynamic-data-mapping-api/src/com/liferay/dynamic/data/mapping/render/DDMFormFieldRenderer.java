@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.render;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 
 /**
  * @author Pablo Carvalho

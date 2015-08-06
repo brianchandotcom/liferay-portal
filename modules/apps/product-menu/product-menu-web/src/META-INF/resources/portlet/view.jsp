@@ -103,6 +103,34 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 			<h4 class="user-heading">
 				<%= HtmlUtil.escape(user.getFullName()) %>
 			</h4>
+
+			<small class="user-subheading">
+				<ul class="nav nav-pills">
+
+					<%
+					List<Group> mySiteGroups = user.getMySiteGroups(new String[] {User.class.getName()}, false, QueryUtil.ALL_POS);
+
+					for (Group mySiteGroup : mySiteGroups) {
+					%>
+
+						<c:if test="<%= mySiteGroup.getPublicLayoutsPageCount() > 0 %>">
+							<li>
+								<aui:a href="<%= mySiteGroup.getDisplayURL(themeDisplay, false) %>" label="profile" />
+							</li>
+						</c:if>
+
+						<c:if test="<%= mySiteGroup.getPrivateLayoutsPageCount() > 0 %>">
+							<li>
+								<aui:a href="<%= mySiteGroup.getDisplayURL(themeDisplay, true) %>" label="dashboard" />
+							</li>
+						</c:if>
+
+					<%
+					}
+					%>
+
+				</ul>
+			</small>
 		</div>
 
 		<c:if test="<%= themeDisplay.isShowSignOutIcon() %>">

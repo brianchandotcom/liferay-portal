@@ -12,28 +12,32 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin.action;
+package com.liferay.users.admin.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PortletKeys;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Pei-Jung Lan
  */
 @OSGiBeanProperties(
 	property = {
-		"javax.portlet.name=" + PortletKeys.USERS_ADMIN,
-		"mvc.command.name=/users_admin/edit_organization"
+		"javax.portlet.name=" + PortletKeys.USERS_ADMIN, "mvc.command.name=/",
+		"mvc.command.name=/users_admin/view"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditOrganizationMVCRenderCommand
-	extends GetOrganizationMVCRenderCommand {
+public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	protected String getPath() {
-		return "/html/portlet/users_admin/edit_organization.jsp";
+	public String render(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		return "/html/portlet/users_admin/view.jsp";
 	}
 
 }

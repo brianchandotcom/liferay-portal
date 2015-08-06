@@ -12,18 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin.action;
+package com.liferay.users.admin.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 /**
  * @author Pei-Jung Lan
@@ -31,32 +24,16 @@ import javax.portlet.RenderResponse;
 @OSGiBeanProperties(
 	property = {
 		"javax.portlet.name=" + PortletKeys.USERS_ADMIN,
-		"mvc.command.name=/users_admin/edit_user"
+		"mvc.command.name=/users_admin/edit_organization"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditUserMVCRenderCommand implements MVCRenderCommand {
+public class EditOrganizationMVCRenderCommand
+	extends GetOrganizationMVCRenderCommand {
 
 	@Override
-	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
-
-		try {
-			PortalUtil.getSelectedUser(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/html/portlet/users_admin/error.jsp";
-			}
-			else {
-				throw new PortletException(e);
-			}
-		}
-
-		return "/html/portlet/users_admin/edit_user.jsp";
+	protected String getPath() {
+		return "/html/portlet/users_admin/edit_organization.jsp";
 	}
 
 }

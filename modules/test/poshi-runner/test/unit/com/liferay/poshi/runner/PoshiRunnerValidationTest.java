@@ -1455,6 +1455,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 	private static final String _DEPENDENCIES_DIR =
 		PropsValues.TEST_BASE_DIR_NAME +
-		"unit/com/liferay/poshi/runner/dependencies/validation/";
+			"unit/com/liferay/poshi/runner/dependencies/validation/";
 
 }

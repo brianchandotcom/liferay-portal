@@ -777,7 +777,7 @@
 		<execute macro="AssetPublisherPortlet#configureDisplayPagePG" />
 	</command>
 
-	<command known-issues="LPS-56541" name="ConfigureAPPortletDisplaytemplateFullContentWithBookmarks" priority="4">
+	<command name="ConfigureAPPortletDisplaytemplateFullContentWithBookmarks" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Bookmarks Page" />
 		</execute>

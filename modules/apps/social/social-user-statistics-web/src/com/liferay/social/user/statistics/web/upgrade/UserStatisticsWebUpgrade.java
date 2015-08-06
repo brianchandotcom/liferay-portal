@@ -52,8 +52,8 @@ public class UserStatisticsWebUpgrade {
 		upgradeProcesses.add(new UpgradePortletId());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.social.user.statistics.web", upgradeProcesses, 1, 1,
-			false);
+			"com.liferay.social.user.statistics.web", upgradeProcesses,
+			"1.0.0.0", "1.0.0.0", false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

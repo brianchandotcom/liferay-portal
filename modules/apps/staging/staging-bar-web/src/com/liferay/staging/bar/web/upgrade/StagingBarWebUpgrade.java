@@ -52,7 +52,8 @@ public class StagingBarWebUpgrade {
 		upgradeProcesses.add(new UpgradePortletId());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.staging.bar.web", upgradeProcesses, 1, 1, false);
+			"com.liferay.staging.bar.web", upgradeProcesses, "1.0.0.0",
+			"1.0.0.0", false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

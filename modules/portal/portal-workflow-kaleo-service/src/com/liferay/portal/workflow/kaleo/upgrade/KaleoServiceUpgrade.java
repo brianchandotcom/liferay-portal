@@ -53,8 +53,8 @@ public class KaleoServiceUpgrade {
 		upgradeProcesses.add(new KaleoServiceUpgrade_1_2_0());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.portal.workflow.kaleo.service", upgradeProcesses, 1, 1,
-			false);
+			"com.liferay.portal.workflow.kaleo.service", upgradeProcesses,
+			"1.0.0.0", "1.0.0.0", false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

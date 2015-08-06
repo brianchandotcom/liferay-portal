@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,13 +55,6 @@ public class JournalServiceUpgrade {
 		JournalArticleImageLocalService journalArticleImageLocalService ) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
 	@Activate
 	protected void upgrade() throws Exception {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
@@ -70,15 +62,10 @@ public class JournalServiceUpgrade {
 		upgradeProcesses.add(new UpgradeClassNames());
 		upgradeProcesses.add(new UpgradeLastPublishDate());
 
-		_releaseLocalService.updateRelease(
-			"com.liferay.journal.service", upgradeProcesses, 1, 1, false);
-
 		deleteTempImages();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalServiceUpgrade.class);
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

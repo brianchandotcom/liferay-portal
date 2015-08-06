@@ -124,7 +124,7 @@ public class ReleasePersistenceTest {
 
 		newRelease.setServletContextName(RandomTestUtil.randomString());
 
-		newRelease.setBuildNumber(RandomTestUtil.nextInt());
+		newRelease.setBuildNumber(RandomTestUtil.randomString());
 
 		newRelease.setBuildDate(RandomTestUtil.nextDate());
 
@@ -419,7 +419,7 @@ public class ReleasePersistenceTest {
 
 		release.setServletContextName(RandomTestUtil.randomString());
 
-		release.setBuildNumber(RandomTestUtil.nextInt());
+		release.setBuildNumber(RandomTestUtil.randomString());
 
 		release.setBuildDate(RandomTestUtil.nextDate());
 

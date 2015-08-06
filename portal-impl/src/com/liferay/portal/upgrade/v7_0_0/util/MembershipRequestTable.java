@@ -16,6 +16,9 @@ package com.liferay.portal.upgrade.v7_0_0.util;
 
 import java.sql.Types;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author	  Brian Wing Shun Chan
  * @generated
@@ -38,6 +41,32 @@ public class MembershipRequestTable {
 		{"statusId", Types.BIGINT}
 	};
 
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+static {
+TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("membershipRequestId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+
+TABLE_COLUMNS_MAP.put("comments", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("replyComments", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("replyDate", Types.TIMESTAMP);
+
+TABLE_COLUMNS_MAP.put("replierUserId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("statusId", Types.BIGINT);
+
+}
 	public static final String TABLE_SQL_CREATE = "create table MembershipRequest (mvccVersion LONG default 0,membershipRequestId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,comments STRING null,replyComments STRING null,replyDate DATE null,replierUserId LONG,statusId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table MembershipRequest";

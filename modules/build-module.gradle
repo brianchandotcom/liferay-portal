@@ -90,6 +90,7 @@ dependencies {
 	serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.28"
 	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.44"
 	tldFormatter group: "com.liferay", name: "com.liferay.tld.formatter", version: "1.0.0"
+	upgradeTableBuilder group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "1.0.1"
 	wsddBuilder group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "1.0.2"
 	xmlFormatter group: "com.liferay", name: "com.liferay.xml.formatter", version: "1.0.0"
 }

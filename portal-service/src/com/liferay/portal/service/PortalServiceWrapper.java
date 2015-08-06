@@ -46,7 +46,7 @@ public class PortalServiceWrapper implements PortalService,
 	}
 
 	@Override
-	public int getBuildNumber() {
+	public java.lang.String getBuildNumber() {
 		return _portalService.getBuildNumber();
 	}
 
@@ -100,7 +100,7 @@ public class PortalServiceWrapper implements PortalService,
 	}
 
 	@Override
-	public int testGetBuildNumber() {
+	public java.lang.String testGetBuildNumber() {
 		return _portalService.testGetBuildNumber();
 	}
 

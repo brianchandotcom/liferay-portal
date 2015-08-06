@@ -80,7 +80,7 @@ public class PortalServiceHttp {
 		}
 	}
 
-	public static int getBuildNumber(HttpPrincipal httpPrincipal) {
+	public static java.lang.String getBuildNumber(HttpPrincipal httpPrincipal) {
 		try {
 			MethodKey methodKey = new MethodKey(PortalServiceUtil.class,
 					"getBuildNumber", _getBuildNumberParameterTypes1);
@@ -96,7 +96,7 @@ public class PortalServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return ((Integer)returnObj).intValue();
+			return (java.lang.String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -274,7 +274,8 @@ public class PortalServiceHttp {
 		}
 	}
 
-	public static int testGetBuildNumber(HttpPrincipal httpPrincipal) {
+	public static java.lang.String testGetBuildNumber(
+		HttpPrincipal httpPrincipal) {
 		try {
 			MethodKey methodKey = new MethodKey(PortalServiceUtil.class,
 					"testGetBuildNumber", _testGetBuildNumberParameterTypes9);
@@ -290,7 +291,7 @@ public class PortalServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return ((Integer)returnObj).intValue();
+			return (java.lang.String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

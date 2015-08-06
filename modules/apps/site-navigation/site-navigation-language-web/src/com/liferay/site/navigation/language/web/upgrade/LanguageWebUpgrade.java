@@ -17,7 +17,6 @@ package com.liferay.site.navigation.language.web.upgrade;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.site.navigation.language.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.site.navigation.language.web.upgrade.v1_0_0.UpgradePortletPreferences;
 
@@ -40,13 +39,6 @@ public class LanguageWebUpgrade {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
 	@Activate
 	protected void upgrade() throws PortalException {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
@@ -54,12 +46,6 @@ public class LanguageWebUpgrade {
 		upgradeProcesses.add(new UpgradePortletId());
 
 		upgradeProcesses.add(new UpgradePortletPreferences());
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.site.navigation.language.web", upgradeProcesses, 1, 1,
-			false);
 	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

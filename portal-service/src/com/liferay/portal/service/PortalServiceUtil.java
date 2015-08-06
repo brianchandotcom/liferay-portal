@@ -53,7 +53,7 @@ public class PortalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static int getBuildNumber() {
+	public static java.lang.String getBuildNumber() {
 		return getService().getBuildNumber();
 	}
 
@@ -102,7 +102,7 @@ public class PortalServiceUtil {
 		getService().testDeleteClassName();
 	}
 
-	public static int testGetBuildNumber() {
+	public static java.lang.String testGetBuildNumber() {
 		return getService().testGetBuildNumber();
 	}
 

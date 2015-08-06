@@ -42,11 +42,6 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.search.SearchResultManagerUtil" class="com.liferay.portal.kernel.search.SearchResultManagerUtil">
-		<property name="searchResultManager">
-			<bean class="com.liferay.portal.search.SearchResultManagerImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.search.StringQueryFactory" class="com.liferay.portal.kernel.search.generic.StringQueryFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.search.StringQueryFactoryUtil" class="com.liferay.portal.kernel.search.StringQueryFactoryUtil">
 		<property name="stringQueryFactory" ref="com.liferay.portal.kernel.search.StringQueryFactory" />

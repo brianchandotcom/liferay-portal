@@ -52,8 +52,8 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 
 	@JSONWebService
 	@Override
-	public int getBuildNumber() {
-		return ReleaseInfo.getBuildNumber();
+	public String getBuildNumber() {
+		return ReleaseInfo.getVersion();
 	}
 
 	@Override
@@ -174,7 +174,7 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 	}
 
 	@Override
-	public int testGetBuildNumber() {
+	public String testGetBuildNumber() {
 		return portalService.getBuildNumber();
 	}
 

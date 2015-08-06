@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.staging;
+package com.liferay.staging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;

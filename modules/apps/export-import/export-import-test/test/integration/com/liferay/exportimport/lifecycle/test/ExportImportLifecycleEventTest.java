@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.lifecycle;
+package com.liferay.exportimport.lifecycle.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalFolderConstants;

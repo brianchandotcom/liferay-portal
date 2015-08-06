@@ -19,11 +19,11 @@
 <%
 userStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(UserStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource()));
 
+String displayActivityCounterName = "";
+
 int index = ParamUtil.getInteger(request, "index");
 
 String displayActivityCounterNames[] = userStatisticsPortletInstanceConfiguration.displayActivityCounterName();
-
-String displayActivityCounterName = "";
 
 if (index < displayActivityCounterNames.length) {
 	displayActivityCounterName = displayActivityCounterNames[index];

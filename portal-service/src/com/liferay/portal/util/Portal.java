@@ -1118,8 +1118,26 @@ public interface Portal {
 		String portletName);
 
 	public PortletURL getSiteAdministrationURL(
+		PortletRequest portletRequest, ThemeDisplay themeDisplay);
+
+	public PortletURL getSiteAdministrationURL(
+		PortletRequest portletRequest, ThemeDisplay themeDisplay,
+		String portletName);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getSiteAdministrationURL(PortletRequest, themeDisplay)}
+	 */
+	@Deprecated
+	public PortletURL getSiteAdministrationURL(
 		PortletResponse portletResponse, ThemeDisplay themeDisplay);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getSiteAdministrationURL(PortletRequest, themeDisplay,
+	 *             String)}
+	 */
+	@Deprecated
 	public PortletURL getSiteAdministrationURL(
 		PortletResponse portletResponse, ThemeDisplay themeDisplay,
 		String portletName);

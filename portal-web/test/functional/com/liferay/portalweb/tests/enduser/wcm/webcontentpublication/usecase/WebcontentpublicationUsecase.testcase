@@ -235,7 +235,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55859" name="AssertAssetListScopeViaAssetPublisher" priority="4">
+	<command name="AssertAssetListScopeViaAssetPublisher" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteScopeName" value="Global" />

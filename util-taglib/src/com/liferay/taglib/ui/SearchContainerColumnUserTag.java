@@ -17,9 +17,11 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.search.UserSearchEntry;
 
 import java.util.Date;
@@ -28,6 +30,7 @@ import java.util.Map;
 
 import javax.portlet.PortletURL;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -80,7 +83,12 @@ public class SearchContainerColumnUserTag<R> extends SearchContainerColumnTag {
 				(HttpServletRequest)pageContext.getRequest());
 			userSearchEntry.setResponse(
 				(HttpServletResponse)pageContext.getResponse());
-			userSearchEntry.setServletContext(pageContext.getServletContext());
+
+			ServletContext servletContext = ServletContextPool.get(
+				PortalUtil.getServletContextName());
+
+			userSearchEntry.setServletContext(servletContext);
+
 			userSearchEntry.setUserId(_userId);
 			userSearchEntry.setValign(getValign());
 

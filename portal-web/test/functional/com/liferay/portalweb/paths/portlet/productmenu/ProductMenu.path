@@ -72,12 +72,12 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_MY_SPACE_PANEL_TITLE</td>
-	<td>//div[contains(@id,'my_space')]//h5[contains(.,'${key_portletCategoryName}')]</td>
+	<td>//div[contains(@id,'my_space')]//a[contains(.,'${key_portletCategoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_CONTROL_PANEL_PANEL_TITLE</td>
-	<td>//div[contains(@id,'control_panel')]//h5[contains(.,'${key_portletCategoryName}')]</td>
+	<td>//div[contains(@id,'control_panel')]//a[contains(.,'${key_portletCategoryName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -14,19 +14,31 @@
  */
 --%>
 
-<%@ include file="/html/portlet/group_statistics/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
-	String displayActivityCounterName = PrefsParamUtil.getString(portletPreferences, request, "displayActivityCounterName" + displayActivityCounterNameIndex);
+String[] displayActivityCounterNames = groupStatisticsPortletInstanceConfiguration.displayActivityCounterName();
+
+int displayActivityCounterNameIndexCount = displayActivityCounterNames.length;
+
+for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < displayActivityCounterNameIndexCount; displayActivityCounterNameIndex++) {
+	String displayActivityCounterName = displayActivityCounterNames[displayActivityCounterNameIndex];
 
 	if (Validator.isNull(displayActivityCounterName)) {
 		continue;
 	}
 
-	String chartType = PrefsParamUtil.getString(portletPreferences, request, "chartType" + displayActivityCounterNameIndex, "area");
-	int chartWidth = PrefsParamUtil.getInteger(portletPreferences, request, "chartWidth" + displayActivityCounterNameIndex, 35);
-	String dataRange = PrefsParamUtil.getString(portletPreferences, request, "dataRange" + displayActivityCounterNameIndex, "year");
+	String[] chartTypes = groupStatisticsPortletInstanceConfiguration.chartType();
+
+	String chartType = GetterUtil.getString(chartTypes[displayActivityCounterNameIndex], "area");
+
+	String[] chartWidths = groupStatisticsPortletInstanceConfiguration.chartWidth();
+
+	int chartWidth = GetterUtil.getInteger(chartWidths[displayActivityCounterNameIndex], 35);
+
+	String[] dataRanges = groupStatisticsPortletInstanceConfiguration.dataRange();
+
+	String dataRange = GetterUtil.getString(dataRanges[displayActivityCounterNameIndex], "year");
 
 	List<AssetTag> assetTags = null;
 
@@ -86,13 +98,13 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 					<c:when test="<%= dataSize > 0 %>">
 						<c:choose>
 							<c:when test='<%= chartType.equals("pie") %>'>
-								<%@ include file="/html/portlet/group_statistics/chart/pie.jspf" %>
+								<%@ include file="/chart/pie.jspf" %>
 							</c:when>
 							<c:when test='<%= chartType.equals("tag-cloud") %>'>
-								<%@ include file="/html/portlet/group_statistics/chart/tag_cloud.jspf" %>
+								<%@ include file="/chart/tag_cloud.jspf" %>
 							</c:when>
 							<c:otherwise>
-								<%@ include file="/html/portlet/group_statistics/chart/other.jspf" %>
+								<%@ include file="/chart/other.jspf" %>
 							</c:otherwise>
 						</c:choose>
 					</c:when>
@@ -110,7 +122,7 @@ for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 }
 %>
 
-<c:if test="<%= Validator.isNull(displayActivityCounterNameIndexesParam) %>">
+<c:if test="<%= displayActivityCounterNameIndexCount == 0 %>">
 	<div class="alert alert-info portlet-configuration">
 		<a href="<%= portletDisplay.getURLConfiguration() %>" onClick="<%= portletDisplay.getURLConfigurationJS() %>">
 			<liferay-ui:message key="please-configure-this-portlet-and-select-at-least-one-activity-counter" />

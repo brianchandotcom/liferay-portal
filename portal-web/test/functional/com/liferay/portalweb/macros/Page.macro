@@ -472,7 +472,7 @@
 		</execute>
 
 		<var name="appsPortletList" value="App Manager,Purchased,Store,Plugins Configuration,License Manager" />
-		<var name="configurationPortletList" value="Portal Settings,Custom Fields,Server Administration,Portal Instances,Workflow Configuration,Workflow Definition, Configuration Admin,Server Access Policy" />
+		<var name="configurationPortletList" value="Portal Settings,Custom Fields,Server Administration,Portal Instances,Workflow Configuration,Workflow Definition,Configuration Admin,Server Access Policy" />
 		<var name="sitesPortletList" value="Sites,Site Templates,Page Templates" />
 		<var name="usersPortletList" value="Users and Organizations,User Groups,Roles,Password Policies,Monitoring" />
 

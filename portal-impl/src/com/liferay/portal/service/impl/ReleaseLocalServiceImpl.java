@@ -39,7 +39,6 @@ import java.sql.ResultSet;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 /**
  * @author Brian Wing Shun Chan
@@ -212,6 +211,17 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		releasePersistence.update(release);
 
 		return release;
+	}
+
+	public void updateRelease(
+		String servletContextName, List<UpgradeProcess> upgradeProcesses,
+		String currentVersion, String previousVersion, boolean runUpgrade) {
+
+		// TODO
+
+		// This is a method just to pass the first pull: all the invocations to
+		// this methods will be removed!!
+
 	}
 
 	protected void testSupportsStringCaseSensitiveQuery() {

@@ -223,14 +223,16 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				filePath, String.valueOf(syncFile.getSyncFileId()), false);
 		}
 		else {
-			if (syncFile.getSize() <= 0) {
+			String checksum = syncFile.getChecksum();
+
+			if (checksum.isEmpty() || (syncFile.getSize() <= 0)) {
 				downloadFile(syncFile, null, 0, false);
 
 				return;
 			}
 
 			SyncFile sourceSyncFile = SyncFileService.fetchSyncFile(
-				syncFile.getChecksum(), SyncFile.STATE_SYNCED);
+				checksum, SyncFile.STATE_SYNCED);
 
 			SyncFileService.update(syncFile);
 

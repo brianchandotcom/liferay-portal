@@ -496,9 +496,11 @@ public class BookmarksFolderLocalServiceWrapper
 	}
 
 	@Override
-	public void restoreFolderFromTrash(long userId, long folderId)
+	public com.liferay.bookmarks.model.BookmarksFolder restoreFolderFromTrash(
+		long userId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_bookmarksFolderLocalService.restoreFolderFromTrash(userId, folderId);
+		return _bookmarksFolderLocalService.restoreFolderFromTrash(userId,
+			folderId);
 	}
 
 	/**

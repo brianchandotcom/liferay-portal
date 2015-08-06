@@ -108,6 +108,16 @@ public class JavaClass {
 
 			checkUnusedParameters(javaTerm);
 
+			if (_fileName.endsWith("LocalServiceImpl.java") &&
+				javaTerm.hasAnnotation("Indexable") &&
+				!javaTerm.hasReturnType()) {
+
+				_javaSourceProcessor.processErrorMessage(
+					_fileName,
+					"Missing return type for method with @Indexable: " +
+						_fileName + " " + javaTerm.getLineCount());
+			}
+
 			if (!BaseSourceProcessor.isExcludedFile(
 					checkJavaFieldTypesExclusionFiles, _absolutePath)) {
 
@@ -210,19 +220,13 @@ public class JavaClass {
 		JavaTerm javaTerm, String annotation, String requiredMethodNameRegex,
 		int requiredMethodType, String fileName) {
 
-		String methodContent = javaTerm.getContent();
 		String methodName = javaTerm.getName();
 
 		Pattern pattern = Pattern.compile(requiredMethodNameRegex);
 
 		Matcher matcher = pattern.matcher(methodName);
 
-		if (methodContent.contains(
-				_indent + StringPool.AT + annotation + "\n") ||
-			methodContent.contains(
-				_indent + StringPool.AT + annotation +
-					StringPool.OPEN_PARENTHESIS)) {
-
+		if (javaTerm.hasAnnotation(annotation)) {
 			if (!matcher.find()) {
 				_javaSourceProcessor.processErrorMessage(
 					fileName,
@@ -236,9 +240,7 @@ public class JavaClass {
 						fileName);
 			}
 		}
-		else if (matcher.find() &&
-				 !methodContent.contains(_indent + "@Override")) {
-
+		else if (matcher.find() && !javaTerm.hasAnnotation("Override")) {
 			_javaSourceProcessor.processErrorMessage(
 				fileName,
 				"Annotation @" + annotation + " required for " + methodName +
@@ -351,12 +353,8 @@ public class JavaClass {
 			String modifierDefinition)
 		throws Exception {
 
-		String javaTermContent = javaTerm.getContent();
-
 		for (String annotation : annotationsExclusions) {
-			if (javaTermContent.contains(
-					_indent + StringPool.AT + annotation)) {
-
+			if (javaTerm.hasAnnotation(annotation)) {
 				return;
 			}
 		}
@@ -377,6 +375,8 @@ public class JavaClass {
 		if (!isFinalableField(javaTerm, _name, pattern, true)) {
 			return;
 		}
+
+		String javaTermContent = javaTerm.getContent();
 
 		String newJavaTermContent = StringUtil.replaceFirst(
 			javaTermContent, modifierDefinition, modifierDefinition + " final");
@@ -881,7 +881,7 @@ public class JavaClass {
 		}
 
 		JavaTerm javaTerm = new JavaTerm(
-			name, type, javaTermContent, lineCount);
+			name, type, javaTermContent, lineCount, _indent);
 
 		if (javaTerm.isConstructor()) {
 			_constructorCount++;

@@ -74,7 +74,8 @@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %>
 
-<%@ page import="javax.portlet.PortletURL" %><%@
+<%@ page import="javax.portlet.PortletRequest" %><%@
+page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.ResourceURL" %><%@
 page import="javax.portlet.WindowState" %>
 

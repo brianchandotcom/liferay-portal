@@ -29,6 +29,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -217,9 +218,9 @@ public class DLFolderAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest),
-			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_folder");

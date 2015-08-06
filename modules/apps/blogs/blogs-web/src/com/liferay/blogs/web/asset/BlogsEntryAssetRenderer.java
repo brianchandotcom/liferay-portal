@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -153,8 +154,8 @@ public class BlogsEntryAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), BlogsPortletKeys.BLOGS,
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, BlogsPortletKeys.BLOGS, 0,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");

@@ -261,14 +261,6 @@
 
 		<action path="/our_activities/view" forward="portlet.our_activities.view" />
 
-		<!-- Plugins Admin -->
-
-		<action path="/plugins_admin/edit_plugin" type="com.liferay.portlet.pluginsadmin.action.EditPluginAction">
-			<forward name="portlet.plugins_admin.edit_plugin" path="portlet.plugins_admin.edit_plugin" />
-			<forward name="portlet.plugins_admin.error" path="portlet.plugins_admin.error" />
-		</action>
-
-		<action path="/plugins_admin/view" forward="portlet.plugins_admin.view" />
 
 		<!-- Portal Settings -->
 

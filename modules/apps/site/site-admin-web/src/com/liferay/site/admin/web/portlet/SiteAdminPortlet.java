@@ -213,7 +213,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 			PortletURL siteAdministrationURL =
 				PortalUtil.getSiteAdministrationURL(
-					actionResponse, themeDisplay,
+					actionRequest, themeDisplay,
 					SiteAdminPortletKeys.SITE_SETTINGS);
 
 			String controlPanelURL = HttpUtil.setParameter(

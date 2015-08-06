@@ -191,7 +191,7 @@ pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
 }
 
 pluginManager.withPlugin("com.moowork.node") {
-	File nodejsDir = new File(liferay.tmpDir, "nodejs")
+	File nodejsDir = new File(buildDir, "nodejs")
 
 	task setupNpmCache(type: NpmTask)
 

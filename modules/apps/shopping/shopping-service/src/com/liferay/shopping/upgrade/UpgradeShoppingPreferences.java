@@ -15,8 +15,8 @@
 package com.liferay.shopping.upgrade;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.shopping.constants.ShoppingPortletKeys;
 
 import javax.portlet.PortletPreferences;
 
@@ -27,7 +27,7 @@ public class UpgradeShoppingPreferences extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String[] getPortletIds() {
-		return new String[] {PortletKeys.SHOPPING};
+		return new String[] {ShoppingPortletKeys.SHOPPING};
 	}
 
 	@Override

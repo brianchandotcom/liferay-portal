@@ -26,10 +26,10 @@ import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.shopping.constants.ShoppingConstants;
+import com.liferay.shopping.constants.ShoppingPortletKeys;
 import com.liferay.shopping.exception.BillingCityException;
 import com.liferay.shopping.exception.BillingCountryException;
 import com.liferay.shopping.exception.BillingEmailAddressException;
@@ -663,7 +663,7 @@ public class ShoppingOrderLocalServiceImpl
 		}
 
 		subscriptionSender.setMailId("shopping_order", order.getOrderId());
-		subscriptionSender.setPortletId(PortletKeys.SHOPPING);
+		subscriptionSender.setPortletId(ShoppingPortletKeys.SHOPPING);
 		subscriptionSender.setScopeGroupId(order.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
 

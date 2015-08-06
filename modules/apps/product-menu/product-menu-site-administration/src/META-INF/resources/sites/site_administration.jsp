@@ -27,7 +27,7 @@ Group group = themeDisplay.getScopeGroup();
 		<a class="icon-angle-left icon-monospaced" href="javascript:;" id="<portlet:namespace />allSitesLink"></a>
 	</div>
 	<div class="toolbar-group-content">
-		<%= group.getDescriptiveName(locale) %>
+		<aui:a href="<%= group.getDisplayURL(themeDisplay) %>" label="<%= group.getDescriptiveName(locale) %>" />
 	</div>
 
 	<c:if test="<%= themeDisplay.isShowStagingIcon() %>">
@@ -54,7 +54,7 @@ Group group = themeDisplay.getScopeGroup();
 		%>
 
 		<div class="toolbar-group-field">
-			<aui:a cssClass="icon-fb-radio icon-monospaced" href="<%= stagingGroupURL %>" title="staging"></aui:a>
+			<aui:a cssClass="icon-fb-radio icon-monospaced" href="<%= stagingGroupURL %>" title="staging" />
 		</div>
 
 		<%
@@ -79,7 +79,7 @@ Group group = themeDisplay.getScopeGroup();
 		%>
 
 		<div class="toolbar-group-field">
-			<aui:a cssClass="icon-circle-blank icon-monospaced" href="<%= liveGroupURL %>" title="live"></aui:a>
+			<aui:a cssClass="icon-circle-blank icon-monospaced" href="<%= liveGroupURL %>" title="live" />
 		</div>
 	</c:if>
 </div>

@@ -113,7 +113,7 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 	</div>
 </div>
 
-<aui:script sandbox="<%= true %>">
+<aui:script use="liferay-store">
 	var sidenavContainer = $('#sidenavContainerId');
 
 	sidenavContainer.sideNavigation(

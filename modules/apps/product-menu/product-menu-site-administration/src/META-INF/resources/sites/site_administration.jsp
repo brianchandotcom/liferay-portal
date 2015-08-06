@@ -90,7 +90,7 @@ Group group = themeDisplay.getScopeGroup();
 	$('#<portlet:namespace />allSitesLink').on(
 		'click',
 		function(event) {
-			$('#<portlet:namespace />all_sitesTabLink').tab('show');
+			$('#<portlet:namespace /><%= PanelCategoryKeys.SITES_ALL_SITES %>TabLink').tab('show');
 		}
 	);
 </aui:script>

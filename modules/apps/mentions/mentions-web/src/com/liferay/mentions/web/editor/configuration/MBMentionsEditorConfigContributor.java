@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"editor.config.key=editor", "editor.name=alloyeditor",
-		"editor.name=ckeditor",
+		"editor.name=ckeditor", "editor.name=ckeditor_bbcode",
 		"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS,
 		"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS_ADMIN,
 		"service.ranking:Integer=10"

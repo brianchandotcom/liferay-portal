@@ -316,6 +316,12 @@ public class BreadcrumbUtil {
 
 		breadcrumbEntry.setBaseModel(layout);
 
+		LayoutType layoutType = layout.getLayoutType();
+
+		if (!layoutType.isBrowsable()) {
+			breadcrumbEntry.setBrowsable(false);
+		}
+
 		String layoutName = layout.getName(themeDisplay.getLocale());
 
 		if (layout.isTypeControlPanel()) {
@@ -326,12 +332,6 @@ public class BreadcrumbUtil {
 		}
 
 		breadcrumbEntry.setTitle(layoutName);
-
-		LayoutType layoutType = layout.getLayoutType();
-
-		if (!layoutType.isBrowsable()) {
-			breadcrumbEntry.setBrowsable(false);
-		}
 
 		String layoutURL = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 

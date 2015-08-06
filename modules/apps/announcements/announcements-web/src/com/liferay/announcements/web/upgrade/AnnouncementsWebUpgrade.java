@@ -52,7 +52,8 @@ public class AnnouncementsWebUpgrade {
 		upgradeProcesses.add(new UpgradePortletId());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.announcements.web", upgradeProcesses, 1, 1, false);
+			"com.liferay.announcements.web", upgradeProcesses, "1.0.0.0",
+			"1.0.0.0", false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

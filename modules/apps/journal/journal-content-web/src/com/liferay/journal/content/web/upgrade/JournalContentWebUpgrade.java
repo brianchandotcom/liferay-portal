@@ -55,7 +55,8 @@ public class JournalContentWebUpgrade {
 		upgradeProcesses.add(new UpgradePortletPreferences());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.journal.content.web", upgradeProcesses, 1, 1, false);
+			"com.liferay.journal.content.web", upgradeProcesses, "1.0.0.0",
+			"1.0.0.0", false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

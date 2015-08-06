@@ -77,10 +77,11 @@ public class PoshiRunnerValidationTest extends TestCase {
 	@Test
 	public void testValidateClassCommandName() {
 		String classCommandName = "ValidateClassCommandName#classCommandName";
-		String filePath = getFilePath("ValidateClassCommandName.testcase");
 
 		Element element = PoshiRunnerContext.getTestCaseCommandElement(
 			classCommandName);
+
+		String filePath = getFilePath("ValidateClassCommandName.testcase");
 
 		PoshiRunnerValidation.validateClassCommandName(
 			element, classCommandName, "test-case", filePath);

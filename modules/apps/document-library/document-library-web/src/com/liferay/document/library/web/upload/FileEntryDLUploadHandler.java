@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.upload;
+package com.liferay.document.library.web.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -59,7 +59,7 @@ import javax.portlet.PortletResponse;
 /**
  * @author Roberto Díaz
  */
-public class DLImageUploadHandler extends BaseUploadHandler {
+public class FileEntryDLUploadHandler extends BaseUploadHandler {
 
 	@Override
 	protected FileEntry addFileEntry(

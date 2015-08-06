@@ -3,7 +3,9 @@
 #end
 
 #macro (control_menu)
-	$theme.runtime("com.liferay.portlet.admin.util.PortalControlMenuApplicationType$ControlMenu", $portletProviderAction.VIEW)
+	#if ($is_setup_complete && $is_signed_in)
+		$theme.runtime("com.liferay.portlet.admin.util.PortalControlMenuApplicationType$ControlMenu", $portletProviderAction.VIEW)
+	#end
 #end
 
 #macro (css $file_name)
@@ -66,15 +68,19 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 #end
 
 #macro (search)
-	$theme.runtime("com.liferay.portlet.admin.util.PortalSearchApplicationType$Search", $portletProviderAction.VIEW)
+	#if ($is_setup_complete)
+		$theme.runtime("com.liferay.portlet.admin.util.PortalSearchApplicationType$Search", $portletProviderAction.VIEW)
+	#end
 #end
 
 #macro (user_personal_bar)
-	#set ($render_portlet_boundary = $request.getAttribute("RENDER_PORTLET_BOUNDARY"))
+	#if ($is_setup_complete)
+		#set ($render_portlet_boundary = $request.getAttribute("RENDER_PORTLET_BOUNDARY"))
 
-	$request.setAttribute("RENDER_PORTLET_BOUNDARY", false)
+		$request.setAttribute("RENDER_PORTLET_BOUNDARY", false)
 
-	$theme.runtime("com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType$UserPersonalBar", $portletProviderAction.VIEW)
+		$theme.runtime("com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType$UserPersonalBar", $portletProviderAction.VIEW)
 
-	$request.setAttribute("RENDER_PORTLET_BOUNDARY", $render_portlet_boundary)
+		$request.setAttribute("RENDER_PORTLET_BOUNDARY", $render_portlet_boundary)
+	#end
 #end

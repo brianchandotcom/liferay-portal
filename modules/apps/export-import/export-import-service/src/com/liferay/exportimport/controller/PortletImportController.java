@@ -1390,9 +1390,6 @@ public class PortletImportController implements ImportController {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletImportController.class);
 
-	private static final PortletImportController _instance =
-		new PortletImportController();
-
 	private final DeletionSystemEventImporter _deletionSystemEventImporter =
 		DeletionSystemEventImporter.getInstance();
 	private final PermissionImporter _permissionImporter =

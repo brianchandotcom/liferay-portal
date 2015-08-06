@@ -114,6 +114,8 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
 
+		PortletURL portletURL = null;
+
 		long plid = PortalUtil.getPlidFromPortletId(
 			entry.getGroupId(), portletId);
 
@@ -121,11 +123,13 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 			portletId = PortletProviderUtil.getPortletId(
 				BlogsEntry.class.getName(), PortletProvider.Action.MANAGE);
 
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
+			portletURL = PortalUtil.getControlPanelPortletURL(
+				portletRequest, portletId, 0, PortletRequest.RENDER_PHASE);
 		}
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+		else {
+			portletURL = PortletURLFactoryUtil.create(
+				portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+		}
 
 		if (!isContainerModel) {
 			portletURL.setParameter(

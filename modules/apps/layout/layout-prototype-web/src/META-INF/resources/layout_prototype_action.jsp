@@ -59,39 +59,46 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 	</c:if>
 
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, layoutPrototype.getGroup(), ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
-		<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="exportURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(layoutPrototype.getGroupId()) %>" />
-			<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
-			<portlet:param name="rootNodeName" value="<%= layoutPrototype.getName(locale) %>" />
-			<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
-		</liferay-portlet:renderURL>
+
+		<%
+		PortletURL exportURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.EXPORT_IMPORT, 0, PortletRequest.RENDER_PHASE);
+
+		exportURL.setWindowState(LiferayWindowState.POP_UP);
+		exportURL.setParameter("mvcRenderCommandName", "exportLayouts");
+		exportURL.setParameter(Constants.CMD, Constants.EXPORT);
+		exportURL.setParameter("groupId", String.valueOf(layoutPrototype.getGroupId()));
+		exportURL.setParameter("privateLayout", Boolean.TRUE.toString());
+		exportURL.setParameter("rootNodeName", layoutPrototype.getName(locale));
+		exportURL.setParameter("showHeader", Boolean.FALSE.toString());
+		%>
 
 		<liferay-ui:icon
 			cssClass="export-layout-prototype layout-prototype-action"
 			iconCssClass="icon-arrow-down"
 			message="export"
 			method="get"
-			url="<%= exportURL %>"
+			url="<%= exportURL.toString() %>"
 			useDialog="<%= true %>"
 		/>
 
-		<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="importURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcRenderCommandName" value="importLayouts" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(layoutPrototype.getGroupId()) %>" />
-			<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
-			<portlet:param name="rootNodeName" value="<%= layoutPrototype.getName(locale) %>" />
-			<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
-		</liferay-portlet:renderURL>
+		<%
+		PortletURL importURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.EXPORT_IMPORT, 0, PortletRequest.RENDER_PHASE);
+
+		importURL.setWindowState(LiferayWindowState.POP_UP);
+		importURL.setParameter("mvcRenderCommandName", "importLayouts");
+		importURL.setParameter(Constants.CMD, Constants.IMPORT);
+		importURL.setParameter("groupId", String.valueOf(layoutPrototype.getGroupId()));
+		importURL.setParameter("privateLayout", Boolean.TRUE.toString());
+		importURL.setParameter("rootNodeName", layoutPrototype.getName(locale));
+		importURL.setParameter("showHeader", Boolean.FALSE.toString());
+		%>
 
 		<liferay-ui:icon
 			cssClass="import-layout-prototype layout-prototype-action"
 			iconCssClass="icon-arrow-up"
 			message="import"
 			method="get"
-			url="<%= importURL %>"
+			url="<%= importURL.toString() %>"
 			useDialog="<%= true %>"
 		/>
 	</c:if>

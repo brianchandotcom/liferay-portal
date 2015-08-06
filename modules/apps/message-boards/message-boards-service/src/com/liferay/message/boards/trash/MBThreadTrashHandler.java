@@ -255,6 +255,8 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
+		PortletURL portletURL = null;
+
 		long plid = PortalUtil.getPlidFromPortletId(
 			thread.getGroupId(), portletId);
 
@@ -262,11 +264,13 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			portletId = PortletProviderUtil.getPortletId(
 				MBThread.class.getName(), PortletProvider.Action.MANAGE);
 
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
+			portletURL = PortalUtil.getControlPanelPortletURL(
+				portletRequest, portletId, 0, PortletRequest.RENDER_PHASE);
 		}
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+		else {
+			portletURL = PortletURLFactoryUtil.create(
+				portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+		}
 
 		if (isContainerModel) {
 			portletURL.setParameter(

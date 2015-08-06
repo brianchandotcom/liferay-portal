@@ -69,7 +69,7 @@ public abstract class BaseBlogsUploadHandler extends BaseUploadHandler {
 
 	@Override
 	protected void checkPermission(
-			long groupId, PermissionChecker permissionChecker)
+			long groupId, long folderId, PermissionChecker permissionChecker)
 		throws PortalException {
 
 		boolean containsResourcePermission =

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.upload.BaseUploadHandler;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
@@ -48,8 +48,9 @@ public class PageAttachmentWikiUploadHandler extends BaseUploadHandler {
 
 	@Override
 	protected FileEntry addFileEntry(
-			ThemeDisplay themeDisplay, String fileName, InputStream inputStream,
-			String contentType)
+			long userId, long groupId, long folderId, String fileName,
+			String contentType, InputStream inputStream, long size,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(_classPK);
@@ -61,7 +62,7 @@ public class PageAttachmentWikiUploadHandler extends BaseUploadHandler {
 
 	@Override
 	protected void checkPermission(
-			long groupId, PermissionChecker permissionChecker)
+			long groupId, long folderId, PermissionChecker permissionChecker)
 		throws PortalException {
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(_classPK);
@@ -81,7 +82,7 @@ public class PageAttachmentWikiUploadHandler extends BaseUploadHandler {
 
 	@Override
 	protected FileEntry fetchFileEntry(
-			ThemeDisplay themeDisplay, String fileName)
+			long userId, long groupId, long folderId, String fileName)
 		throws PortalException {
 
 		try {
@@ -90,7 +91,7 @@ public class PageAttachmentWikiUploadHandler extends BaseUploadHandler {
 			Folder folder = page.addAttachmentsFolder();
 
 			return PortletFileRepositoryUtil.getPortletFileEntry(
-				themeDisplay.getScopeGroupId(), folder.getFolderId(), fileName);
+				groupId, folder.getFolderId(), fileName);
 		}
 		catch (PortalException pe) {
 			return null;

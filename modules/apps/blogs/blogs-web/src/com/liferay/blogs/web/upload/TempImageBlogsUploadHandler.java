@@ -17,7 +17,7 @@ package com.liferay.blogs.web.upload;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.service.ServiceContext;
 
 import java.io.InputStream;
 
@@ -30,23 +30,23 @@ public class TempImageBlogsUploadHandler extends BaseBlogsUploadHandler {
 
 	@Override
 	protected FileEntry addFileEntry(
-			ThemeDisplay themeDisplay, String fileName, InputStream inputStream,
-			String contentType)
+			long userId, long groupId, long folderId, String fileName,
+			String contentType, InputStream inputStream, long size,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return TempFileEntryUtil.addTempFileEntry(
-			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-			_TEMP_FOLDER_NAME, fileName, inputStream, contentType);
+			groupId, userId, _TEMP_FOLDER_NAME, fileName, inputStream,
+			contentType);
 	}
 
 	@Override
 	protected FileEntry fetchFileEntry(
-		ThemeDisplay themeDisplay, String fileName) {
+		long userId, long groupId, long folderId, String fileName) {
 
 		try {
 			return TempFileEntryUtil.getTempFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				_TEMP_FOLDER_NAME, fileName);
+				groupId, userId, _TEMP_FOLDER_NAME, fileName);
 		}
 		catch (PortalException pe) {
 			return null;

@@ -719,8 +719,6 @@ public interface PropsKeys {
 
 	public static final String DL_FOLDERS_SEARCH_VISIBLE = "dl.folders.search.visible";
 
-	public static final String DL_IMAGE_EXTENSIONS = "dl.image.extensions";
-
 	public static final String DL_NAME_BLACKLIST = "dl.name.blacklist";
 
 	public static final String DL_PUBLISH_TO_LIVE_BY_DEFAULT = "dl.publish.to.live.by.default";

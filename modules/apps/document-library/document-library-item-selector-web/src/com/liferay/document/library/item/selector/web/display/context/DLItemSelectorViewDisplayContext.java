@@ -102,8 +102,6 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/document_library/upload_file_entry");
 		portletURL.setParameter(
-			"repositoryId", String.valueOf(getRepositoryId(request)));
-		portletURL.setParameter(
 			"folderId", String.valueOf(getFolderId(request)));
 
 		return portletURL;

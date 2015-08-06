@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.blogs.constants.BlogsConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
@@ -32,30 +32,31 @@ public class ImageBlogsUploadHandler extends BaseBlogsUploadHandler {
 
 	@Override
 	protected FileEntry addFileEntry(
-			ThemeDisplay themeDisplay, String fileName, InputStream inputStream,
-			String contentType)
+			long userId, long groupId, long folderId, String fileName,
+			String contentType, InputStream inputStream, long size,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
-			themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
+			userId, groupId);
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
-			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-			BlogsEntry.class.getName(), 0, BlogsConstants.SERVICE_NAME,
-			folder.getFolderId(), inputStream, fileName, contentType, true);
+			groupId, userId, BlogsEntry.class.getName(), 0,
+			BlogsConstants.SERVICE_NAME, folder.getFolderId(), inputStream,
+			fileName, contentType, true);
 	}
 
 	@Override
 	protected FileEntry fetchFileEntry(
-			ThemeDisplay themeDisplay, String fileName)
+			long userId, long groupId, long folderId, String fileName)
 		throws PortalException {
 
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
-			themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
+			userId, groupId);
 
 		try {
 			return PortletFileRepositoryUtil.getPortletFileEntry(
-				themeDisplay.getScopeGroupId(), folder.getFolderId(), fileName);
+				groupId, folder.getFolderId(), fileName);
 		}
 		catch (PortalException pe) {
 			return null;

@@ -14,35 +14,24 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.search.result.SearchResultTranslator;
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Eudaldo Alonso
+ * @author André de Oliveira
  */
-public class SearchResultUtil {
+public interface SummaryFactory {
 
-	public static List<SearchResult> getSearchResults(
-		Hits hits, Locale locale) {
+	public Summary getSummary(
+			Document document, String className, long classPK, Locale locale,
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws PortalException;
 
-		return getSearchResults(hits, locale, null, null);
-	}
-
-	public static List<SearchResult> getSearchResults(
-		Hits hits, Locale locale, PortletRequest portletRequest,
-		PortletResponse portletResponse) {
-
-		return _searchResultTranslator.translate(
-			hits, locale, portletRequest, portletResponse);
-	}
-
-	private static final SearchResultTranslator _searchResultTranslator =
-		ProxyFactory.newServiceTrackedInstance(SearchResultTranslator.class);
+	public Summary getSummary(String className, long classPK, Locale locale)
+		throws PortalException;
 
 }

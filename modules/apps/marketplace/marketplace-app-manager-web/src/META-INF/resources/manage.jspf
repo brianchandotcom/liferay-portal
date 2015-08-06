@@ -23,15 +23,15 @@ portletURL.setParameter("category", category);
 <liferay-ui:error exception="<%= RequiredPluginPackageException.class %>" message="unable-to-uninstall-app-or-plugin-because-it-is-required" />
 
 <div class="row">
-	<div class="span3">
+	<div class="category-nav w25 column column-first">
 		<div class="alert-container"></div>
 
-		<div class="category-nav well">
+		<div class="well">
 			<%@ include file="/categories.jspf" %>
 		</div>
 	</div>
 
-	<div class="apps span9">
+	<div class="apps w75 column column-last">
 		<h3>
 			<c:choose>
 				<c:when test="<%= Validator.isNull(category) %>">

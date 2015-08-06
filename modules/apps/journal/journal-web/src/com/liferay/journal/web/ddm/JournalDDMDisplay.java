@@ -66,9 +66,9 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 			DDMStructure structure, String redirectURL, String backURL)
 		throws Exception {
 
-		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest),
-			JournalPortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, JournalPortletKeys.JOURNAL, 0,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter("redirect", redirectURL);

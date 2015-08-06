@@ -176,7 +176,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		siteThemeDisplay.setScopeGroupId(layoutSetPrototype.getGroupId());
 
 		PortletURL siteAdministrationURL = PortalUtil.getSiteAdministrationURL(
-			actionResponse, siteThemeDisplay,
+			actionRequest, siteThemeDisplay,
 			LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS);
 
 		actionRequest.setAttribute(

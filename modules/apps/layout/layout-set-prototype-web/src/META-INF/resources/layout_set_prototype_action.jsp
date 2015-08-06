@@ -38,7 +38,7 @@ Group group = layoutSetPrototype.getGroup();
 
 		siteThemeDisplay.setScopeGroupId(group.getGroupId());
 
-		PortletURL siteAdministrationURL = PortalUtil.getSiteAdministrationURL(renderResponse, siteThemeDisplay);
+		PortletURL siteAdministrationURL = PortalUtil.getSiteAdministrationURL(request, siteThemeDisplay);
 		%>
 
 		<c:if test="<%= siteAdministrationURL != null %>">

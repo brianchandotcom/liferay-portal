@@ -60,7 +60,7 @@ if (row == null) {
 
 	siteThemeDisplay.setScopeGroupId(group.getGroupId());
 
-	PortletURL siteAdministrationURL = PortalUtil.getSiteAdministrationURL(renderResponse, siteThemeDisplay);
+	PortletURL siteAdministrationURL = PortalUtil.getSiteAdministrationURL(request, siteThemeDisplay);
 	%>
 
 	<c:if test="<%= siteAdministrationURL != null %>">

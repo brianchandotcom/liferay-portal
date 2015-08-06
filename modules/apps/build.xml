@@ -35,6 +35,7 @@
 		<dirset dir="message-boards" includes="*" />
 		<dirset dir="microblogs" includes="*" />
 		<dirset dir="mobile-device-rules" includes="*" />
+		<dirset dir="my-account" includes="*" />
 		<dirset dir="nested-portlets" includes="*" />
 		<dirset dir="network-utilities" includes="*" />
 		<dirset dir="password-generator" includes="*" />

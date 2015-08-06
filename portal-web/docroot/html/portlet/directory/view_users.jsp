@@ -114,16 +114,7 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 	}
 	%>
 
-	<liferay-ui:search-container-results>
-		<c:choose>
-			<c:when test="<%= portletName.equals(PortletKeys.DIRECTORY) && PropsValues.USERS_INDEXER_ENABLED && PropsValues.USERS_SEARCH_WITH_INDEX %>">
-				<%@ include file="/html/portlet/users_admin/user_search_results_index.jspf" %>
-			</c:when>
-			<c:otherwise>
-				<%@ include file="/html/portlet/users_admin/user_search_results_database.jspf" %>
-			</c:otherwise>
-		</c:choose>
-	</liferay-ui:search-container-results>
+	<liferay-ui:user-search-container-results userParams="<%= userParams %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.User"

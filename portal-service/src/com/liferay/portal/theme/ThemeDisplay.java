@@ -925,18 +925,15 @@ public class ThemeDisplay
 
 	@JSON(include = false)
 	public PortletURL getURLPageSettings() {
-		try {
-			if (_urlPageSettings == null) {
-				_urlPageSettings = PortletProviderUtil.getPortletURL(
-					getRequest(), Layout.class.getName(),
-					PortletProvider.Action.EDIT);
-			}
+		if (_urlPageSettings == null) {
+			String portletId = PortletProviderUtil.getPortletId(
+				Layout.class.getName(), PortletProvider.Action.EDIT);
 
-			return _urlPageSettings;
+			_urlPageSettings = PortalUtil.getControlPanelPortletURL(
+				getRequest(), portletId, 0, PortletRequest.RENDER_PHASE);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
+
+		return _urlPageSettings;
 	}
 
 	public String getURLPortal() {

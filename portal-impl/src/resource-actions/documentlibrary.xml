@@ -5,10 +5,10 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.documentlibrary</model-name>
 		<portlet-ref>
-			<portlet-name>20</portlet-name>
-			<portlet-name>31</portlet-name>
-			<portlet-name>110</portlet-name>
-			<portlet-name>199</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_IGDisplayPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLDisplayPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLAdminPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -51,10 +51,10 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.documentlibrary.model.DLFileEntry</model-name>
 		<portlet-ref>
-			<portlet-name>20</portlet-name>
-			<portlet-name>31</portlet-name>
-			<portlet-name>110</portlet-name>
-			<portlet-name>199</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_IGDisplayPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLDisplayPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>3</weight>
 		<permissions>
@@ -89,10 +89,10 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.documentlibrary.model.DLFileEntryType</model-name>
 		<portlet-ref>
-			<portlet-name>20</portlet-name>
-			<portlet-name>31</portlet-name>
-			<portlet-name>110</portlet-name>
-			<portlet-name>199</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_IGDisplayPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLDisplayPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>5</weight>
 		<permissions>
@@ -118,10 +118,10 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.documentlibrary.model.DLFileShortcut</model-name>
 		<portlet-ref>
-			<portlet-name>20</portlet-name>
-			<portlet-name>31</portlet-name>
-			<portlet-name>110</portlet-name>
-			<portlet-name>199</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_IGDisplayPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLDisplayPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>4</weight>
 		<permissions>
@@ -147,10 +147,10 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.documentlibrary.model.DLFolder</model-name>
 		<portlet-ref>
-			<portlet-name>20</portlet-name>
-			<portlet-name>31</portlet-name>
-			<portlet-name>110</portlet-name>
-			<portlet-name>199</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_IGDisplayPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLDisplayPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

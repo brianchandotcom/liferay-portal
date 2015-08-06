@@ -202,7 +202,6 @@ page import="com.liferay.portlet.asset.model.AssetVocabulary" %><%@
 page import="com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.AssetCategoryServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %><%@
-page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.AssetTagServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.AssetVocabularyServiceUtil" %><%@
@@ -250,7 +249,6 @@ page import="com.liferay.util.log4j.Levels" %>
 <%@ page import="java.io.Serializable" %>
 
 <%@ page import="java.text.DateFormat" %><%@
-page import="java.text.DecimalFormat" %><%@
 page import="java.text.DecimalFormatSymbols" %><%@
 page import="java.text.Format" %><%@
 page import="java.text.NumberFormat" %><%@

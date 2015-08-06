@@ -152,14 +152,14 @@ public class ExportImportPortletPreferencesProcessorRegistryUtil {
 			ServiceReference<ExportImportPortletPreferencesProcessor>
 				serviceReference) {
 
+			String portletName = GetterUtil.getString(
+				serviceReference.getProperty("javax.portlet.name"));
+
 			Registry registry = RegistryUtil.getRegistry();
 
 			ExportImportPortletPreferencesProcessor
 				exportImportPortletPreferencesProcessor = registry.getService(
 					serviceReference);
-
-			String portletName = GetterUtil.getString(
-				serviceReference.getProperty("javax.portlet.name"));
 
 			_exportImportPortletPreferencesProcessors.put(
 				portletName, exportImportPortletPreferencesProcessor);

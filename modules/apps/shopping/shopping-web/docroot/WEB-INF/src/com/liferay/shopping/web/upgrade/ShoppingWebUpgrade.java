@@ -15,6 +15,7 @@
 package com.liferay.shopping.web.upgrade;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.shopping.web.upgrade.v1_0_0.UpgradeAdminPortlets;
@@ -31,6 +32,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = ShoppingWebUpgrade.class)
 public class ShoppingWebUpgrade {
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
 
 	@Reference(unbind = "-")
 	protected void setReleaseLocalService(

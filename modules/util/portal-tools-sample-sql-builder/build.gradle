@@ -1,6 +1,7 @@
 dependencies {
 	compile group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
 	compile project(":apps:blogs:blogs-web")
+	compile project(":apps:document-library:document-library-web")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-service")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-web")
@@ -9,6 +10,7 @@ dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-web")
 	compile project(":apps:journal:journal-api")
 	compile project(":apps:journal:journal-service")
+	compile project(":apps:message-boards:message-boards-web")
 	compile project(":apps:wiki:wiki-api")
 	compile project(":apps:wiki:wiki-service")
 }

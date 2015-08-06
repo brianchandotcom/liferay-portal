@@ -1,6 +1,7 @@
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	compile project(":portal:portal-search")
 }
 
 liferay {

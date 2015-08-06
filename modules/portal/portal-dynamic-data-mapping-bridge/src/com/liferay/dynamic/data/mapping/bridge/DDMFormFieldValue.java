@@ -12,14 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.storage;
-
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.Value;
+package com.liferay.dynamic.data.mapping.bridge;
 
 import java.io.Serializable;
 
@@ -31,6 +24,7 @@ import java.util.Map;
 /**
  * @author Marcellus Tavares
  * @author Pablo Carvalho
+ * @author Leonardo Barros
  */
 public class DDMFormFieldValue implements Serializable {
 

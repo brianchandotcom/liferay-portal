@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
-
-import com.liferay.portal.kernel.util.LocaleUtil;
+package com.liferay.dynamic.data.mapping.bridge;
 
 import java.io.Serializable;
 
@@ -88,7 +86,7 @@ public class DDMFormFieldOptions implements Serializable {
 		}
 	}
 
-	private Locale _defaultLocale = LocaleUtil.getDefault();
+	private Locale _defaultLocale = Locale.US;
 	private final Map<String, LocalizedValue> _options = new LinkedHashMap<>();
 
 }

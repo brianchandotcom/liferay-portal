@@ -49,8 +49,6 @@ import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.DuplicateQueryRuleException;
 import com.liferay.portlet.asset.model.AssetQueryRule;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.model.ClassType;
-import com.liferay.portlet.asset.model.ClassTypeReader;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.exportimport.staging.LayoutStagingUtil;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
@@ -286,26 +284,11 @@ public class AssetPublisherConfigurationAction
 			return null;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String className = PortalUtil.getClassName(defaultAssetTypeId);
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
-
-		ClassTypeReader classTypeReader =
-			assetRendererFactory.getClassTypeReader();
-
-		List<ClassType> classTypes = classTypeReader.getAvailableClassTypes(
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(
-				themeDisplay.getSiteGroupId()),
-			themeDisplay.getLocale());
-
-		if (classTypes.isEmpty()) {
-			return null;
-		}
 
 		String assetClassName = AssetPublisherUtil.getClassName(
 			assetRendererFactory);

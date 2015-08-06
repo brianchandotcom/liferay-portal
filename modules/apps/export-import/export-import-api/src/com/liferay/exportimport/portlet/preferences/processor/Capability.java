@@ -22,7 +22,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Mate Thurzo
  */
-public interface ExportImportPortletPreferencesProcessorCapability {
+public interface Capability {
 
 	public PortletPreferences process(
 			PortletDataContext portletDataContext,

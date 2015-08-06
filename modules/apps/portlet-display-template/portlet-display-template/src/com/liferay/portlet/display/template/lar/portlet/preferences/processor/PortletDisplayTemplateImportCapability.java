@@ -14,18 +14,25 @@
 
 package com.liferay.portlet.display.template.lar.portlet.preferences.processor;
 
-import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorCapability;
+import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.DDMTemplateManagerUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
+
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -36,13 +43,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	service = {
-		ExportImportPortletPreferencesProcessorCapability.class,
-		PortletDisplayTemplateExportPortletPreferencesProcessorCapability.class
-	}
+	service = {Capability.class, PortletDisplayTemplateImportCapability.class}
 )
-public class PortletDisplayTemplateExportPortletPreferencesProcessorCapability
-	implements ExportImportPortletPreferencesProcessorCapability {
+public class PortletDisplayTemplateImportCapability implements Capability {
 
 	@Override
 	public PortletPreferences process(
@@ -50,49 +53,14 @@ public class PortletDisplayTemplateExportPortletPreferencesProcessorCapability
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		exportDisplayStyle(
-			portletDataContext, portletDataContext.getPortletId(),
-			portletPreferences);
-
-		return portletPreferences;
-	}
-
-	protected void exportDisplayStyle(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws PortletDataException {
-
-		String displayStyle = getDisplayStyle(
-			portletDataContext, portletId, portletPreferences);
-
-		if (Validator.isNull(displayStyle) ||
-			!displayStyle.startsWith(
-				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX)) {
-
-			return;
+		try {
+			return importDisplayStyle(
+				portletDataContext, portletDataContext.getPortletId(),
+				portletPreferences);
 		}
-
-		long displayStyleGroupId = getDisplayStyleGroupId(
-			portletDataContext, portletId, portletPreferences);
-
-		long previousScopeGroupId = portletDataContext.getScopeGroupId();
-
-		if (displayStyleGroupId != portletDataContext.getScopeGroupId()) {
-			portletDataContext.setScopeGroupId(displayStyleGroupId);
+		catch (Exception e) {
+			return portletPreferences;
 		}
-
-		DDMTemplate ddmTemplate =
-			PortletDisplayTemplateManagerUtil.getDDMTemplate(
-				portletDataContext.getGroupId(),
-				getClassNameId(portletDataContext, portletId), displayStyle,
-				false);
-
-		if (ddmTemplate != null) {
-			PortletDisplayTemplateManagerUtil.exportDDMTemplateStagedModel(
-				portletDataContext, portletId, ddmTemplate);
-		}
-
-		portletDataContext.setScopeGroupId(previousScopeGroupId);
 	}
 
 	protected long getClassNameId(
@@ -147,6 +115,55 @@ public class PortletDisplayTemplateExportPortletPreferencesProcessorCapability
 		}
 
 		return 0;
+	}
+
+	protected PortletPreferences importDisplayStyle(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		PortletPreferences processedPreferences = portletPreferences;
+
+		String displayStyle = getDisplayStyle(
+			portletDataContext, portletId, portletPreferences);
+
+		if (Validator.isNull(displayStyle) ||
+			!displayStyle.startsWith(
+				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX)) {
+
+			return processedPreferences;
+		}
+
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext,
+			DDMTemplateManagerUtil.getDDMTemplateModelClass());
+
+		long displayStyleGroupId = getDisplayStyleGroupId(
+			portletDataContext, portletId, portletPreferences);
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
+
+		long groupId = MapUtil.getLong(
+			groupIds, displayStyleGroupId, displayStyleGroupId);
+
+		DDMTemplate ddmTemplate =
+			PortletDisplayTemplateManagerUtil.getDDMTemplate(
+				groupId, getClassNameId(portletDataContext, portletId),
+				displayStyle, false);
+
+		if (ddmTemplate != null) {
+			portletPreferences.setValue(
+				"displayStyleGroupId",
+				String.valueOf(ddmTemplate.getGroupId()));
+		}
+		else {
+			portletPreferences.setValue(
+				"displayStyleGroupId", StringPool.BLANK);
+		}
+
+		return processedPreferences;
 	}
 
 }

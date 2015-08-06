@@ -26,11 +26,9 @@ import javax.portlet.PortletPreferences;
  */
 public interface ExportImportPortletPreferencesProcessor {
 
-	public List<ExportImportPortletPreferencesProcessorCapability>
-		getExportCapabilities();
+	public List<Capability> getExportCapabilities();
 
-	public List<ExportImportPortletPreferencesProcessorCapability>
-		getImportCapabilities();
+	public List<Capability> getImportCapabilities();
 
 	public PortletPreferences processExportPortletPreferences(
 			PortletDataContext portletDataContext,

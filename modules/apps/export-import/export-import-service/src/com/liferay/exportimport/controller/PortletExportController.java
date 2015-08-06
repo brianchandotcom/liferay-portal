@@ -22,8 +22,8 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 
 import com.liferay.exportimport.lar.DeletionSystemEventExporter;
 import com.liferay.exportimport.lar.PermissionExporter;
+import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
-import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorCapability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorRegistryUtil;
 import com.liferay.portal.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
@@ -906,14 +906,11 @@ public class PortletExportController implements ExportController {
 								portlet.getRootPortletId());
 
 				if (exportImportPortletPreferencesProcessor != null) {
-					List<ExportImportPortletPreferencesProcessorCapability>
-						exportCapabilities =
-							exportImportPortletPreferencesProcessor.
-								getExportCapabilities();
+					List<Capability> exportCapabilities =
+						exportImportPortletPreferencesProcessor.
+							getExportCapabilities();
 
-					for (ExportImportPortletPreferencesProcessorCapability
-							exportCapability : exportCapabilities) {
-
+					for (Capability exportCapability : exportCapabilities) {
 						exportCapability.process(
 							portletDataContext, jxPortletPreferences);
 					}

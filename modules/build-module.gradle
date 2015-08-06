@@ -87,7 +87,7 @@ dependencies {
 	portal group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 
 	portalTest fileTree(dir: new File(moduleFrameworkBaseDir, "test"), include: "portal-test*.jar")
-	serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.28"
+	serviceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.29"
 	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.44"
 	tldFormatter group: "com.liferay", name: "com.liferay.tld.formatter", version: "1.0.0"
 	upgradeTableBuilder group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "1.0.1"

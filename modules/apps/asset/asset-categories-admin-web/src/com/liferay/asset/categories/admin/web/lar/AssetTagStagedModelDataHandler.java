@@ -60,7 +60,9 @@ public class AssetTagStagedModelDataHandler
 	public AssetTag fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		AssetTag assetTag = AssetTagLocalServiceUtil.fetchAssetTagByUuidAndGroupId(uuid, groupId);
+		AssetTag assetTag =
+			AssetTagLocalServiceUtil.fetchAssetTagByUuidAndGroupId(
+				uuid, groupId);
 
 		if (assetTag == null) {
 			return null;

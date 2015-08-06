@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer;
 
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 
 /**
  * @author Marcellus Tavares

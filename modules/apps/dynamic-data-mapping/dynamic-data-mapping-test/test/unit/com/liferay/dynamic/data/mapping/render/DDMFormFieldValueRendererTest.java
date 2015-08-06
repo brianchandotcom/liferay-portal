@@ -15,6 +15,11 @@
 package com.liferay.dynamic.data.mapping.render;
 
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.render.impl.CheckboxDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.impl.DateDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.impl.DecimalDDMFormFieldValueRenderer;
@@ -24,6 +29,8 @@ import com.liferay.dynamic.data.mapping.render.impl.IntegerDDMFormFieldValueRend
 import com.liferay.dynamic.data.mapping.render.impl.LinkToPageDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.impl.SelectDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.impl.TextDDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -39,13 +46,6 @@ import com.liferay.portal.util.CalendarFactoryImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
-import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.util.Calendar;
 

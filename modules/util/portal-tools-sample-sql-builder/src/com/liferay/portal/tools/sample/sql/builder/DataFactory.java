@@ -18,6 +18,7 @@ import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.model.CounterModel;
 import com.liferay.counter.model.impl.CounterModelImpl;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordModel;
@@ -2015,7 +2016,9 @@ public class DataFactory {
 		layoutModels.add(
 			newLayoutModel(groupId, "blogs", "", BlogsPortletKeys.BLOGS + ","));
 		layoutModels.add(
-			newLayoutModel(groupId, "document_library", "", "20,"));
+			newLayoutModel(
+				groupId, "document_library", "",
+				DLPortletKeys.DOCUMENT_LIBRARY + ","));
 		layoutModels.add(
 			newLayoutModel(
 				groupId, "forums", "",

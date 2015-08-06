@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.registry.internal;
+package com.liferay.registry.internal.test;
 
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -21,6 +21,9 @@ import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
+import com.liferay.registry.internal.RegistryWrapper;
+import com.liferay.registry.internal.TrackedOne;
+import com.liferay.registry.internal.TrackedTwo;
 
 import java.util.Collection;
 import java.util.Dictionary;

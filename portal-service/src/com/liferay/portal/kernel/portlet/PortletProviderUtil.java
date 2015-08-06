@@ -76,23 +76,23 @@ public class PortletProviderUtil {
 
 		if (action.equals(PortletProvider.Action.ADD)) {
 			return getPortletProvider(
-				className, (ServiceTrackerMap)_addServiceTrackerMap);
+				className, _addServiceTrackerMap);
 		}
 		else if (action.equals(PortletProvider.Action.BROWSE)) {
 			return getPortletProvider(
-				className, (ServiceTrackerMap)_browseServiceTrackerMap);
+				className, _browseServiceTrackerMap);
 		}
 		else if (action.equals(PortletProvider.Action.EDIT)) {
 			return getPortletProvider(
-				className, (ServiceTrackerMap)_editServiceTrackerMap);
+				className, _editServiceTrackerMap);
 		}
 		else if (action.equals(PortletProvider.Action.MANAGE)) {
 			return getPortletProvider(
-				className, (ServiceTrackerMap)_manageServiceTrackerMap);
+				className, _manageServiceTrackerMap);
 		}
 		else if (action.equals(PortletProvider.Action.VIEW)) {
 			return getPortletProvider(
-				className, (ServiceTrackerMap)_viewServiceTrackerMap);
+				className, _viewServiceTrackerMap);
 		}
 
 		return portletProvider;
@@ -100,7 +100,8 @@ public class PortletProviderUtil {
 
 	protected static PortletProvider getPortletProvider(
 		String className,
-		ServiceTrackerMap<String, PortletProvider> serviceTrackerMap) {
+		ServiceTrackerMap
+			<String, ? extends PortletProvider> serviceTrackerMap) {
 
 		PortletProvider portletProvider = serviceTrackerMap.getService(
 			className);

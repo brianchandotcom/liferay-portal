@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.InitialThreadLocal;
 /**
  * @author Raymond Augé
  */
-public @interface Details {
+public interface Details {
 
 	public static final String CONFIGURATION_DESTINATION =
 		"liferay/configuration";

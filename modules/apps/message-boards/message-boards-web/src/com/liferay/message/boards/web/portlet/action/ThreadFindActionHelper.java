@@ -44,8 +44,7 @@ public class ThreadFindActionHelper extends BaseFindActionHelper {
 	@Override
 	public String[] initPortletIds() {
 		return new String[] {
-			MBPortletKeys.MESSAGE_BOARDS,
-			MBPortletKeys.MESSAGE_BOARDS_ADMIN
+			MBPortletKeys.MESSAGE_BOARDS, MBPortletKeys.MESSAGE_BOARDS_ADMIN
 		};
 	}
 

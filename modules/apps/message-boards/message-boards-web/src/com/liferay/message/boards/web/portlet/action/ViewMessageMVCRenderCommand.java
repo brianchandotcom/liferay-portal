@@ -84,8 +84,7 @@ public class ViewMessageMVCRenderCommand implements MVCRenderCommand {
 
 			if (Validator.isNotNull(threadView)) {
 				preferences.setValue(
-					MBPortletKeys.MESSAGE_BOARDS, "thread-view",
-					threadView);
+					MBPortletKeys.MESSAGE_BOARDS, "thread-view", threadView);
 			}
 			else {
 				threadView = preferences.getValue(
@@ -99,8 +98,7 @@ public class ViewMessageMVCRenderCommand implements MVCRenderCommand {
 				threadView = PropsValues.MESSAGE_BOARDS_THREAD_VIEWS_DEFAULT;
 
 				preferences.setValue(
-					MBPortletKeys.MESSAGE_BOARDS, "thread-view",
-					threadView);
+					MBPortletKeys.MESSAGE_BOARDS, "thread-view", threadView);
 			}
 
 			boolean includePrevAndNext =

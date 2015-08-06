@@ -47,8 +47,7 @@ public class CategoryFindActionHelper extends BaseFindActionHelper {
 		// Order is important. See LPS-23770.
 
 		return new String[] {
-			MBPortletKeys.MESSAGE_BOARDS_ADMIN,
-			MBPortletKeys.MESSAGE_BOARDS
+			MBPortletKeys.MESSAGE_BOARDS_ADMIN, MBPortletKeys.MESSAGE_BOARDS
 		};
 	}
 

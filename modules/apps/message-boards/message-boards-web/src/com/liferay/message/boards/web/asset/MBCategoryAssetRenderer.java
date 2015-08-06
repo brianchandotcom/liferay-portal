@@ -101,8 +101,7 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			getControlPanelPlid(liferayPortletRequest),
-			MBPortletKeys.MESSAGE_BOARDS,
-			PortletRequest.RENDER_PHASE);
+			MBPortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/message_boards/edit_category");

@@ -34,8 +34,7 @@ public class MessageBoardsUpdateEntryUserNotificationDefinition
 
 	public MessageBoardsUpdateEntryUserNotificationDefinition() {
 		super(
-			MBPortletKeys.MESSAGE_BOARDS, 0,
-			NOTIFICATION_TYPE_UPDATE_ENTRY,
+			MBPortletKeys.MESSAGE_BOARDS, 0, NOTIFICATION_TYPE_UPDATE_ENTRY,
 			"receive-a-notification-when-someone-updates-a-post-you-are-" +
 				"subscribed-to");
 

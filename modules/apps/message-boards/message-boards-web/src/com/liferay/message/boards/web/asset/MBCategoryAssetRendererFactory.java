@@ -93,8 +93,7 @@ public class MBCategoryAssetRendererFactory extends BaseAssetRendererFactory {
 
 		LiferayPortletURL liferayPortletURL =
 			liferayPortletResponse.createLiferayPortletURL(
-				MBPortletKeys.MESSAGE_BOARDS,
-				PortletRequest.RENDER_PHASE);
+				MBPortletKeys.MESSAGE_BOARDS, PortletRequest.RENDER_PHASE);
 
 		try {
 			liferayPortletURL.setWindowState(windowState);

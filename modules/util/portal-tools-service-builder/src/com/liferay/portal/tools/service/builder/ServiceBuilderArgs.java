@@ -24,7 +24,7 @@ public class ServiceBuilderArgs {
 		"classpath*:META-INF/portal-model-hints.xml",
 		"META-INF/portal-model-hints.xml",
 		"classpath*:META-INF/ext-model-hints.xml",
-		"META-INF/portlet-model-hints.xml"
+		"classpath*:META-INF/portlet-model-hints.xml"
 	};
 
 	public static final String OUTPUT_KEY_MODIFIED_FILES =

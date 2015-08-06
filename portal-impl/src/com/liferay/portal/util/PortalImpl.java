@@ -2738,9 +2738,9 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getLayoutActualURL(Layout layout, String mainPath) {
-		layout = getBrowsableLayout(layout);
-
 		Map<String, String> variables = new HashMap<>();
+
+		layout = getBrowsableLayout(layout);
 
 		variables.put("liferay:groupId", String.valueOf(layout.getGroupId()));
 		variables.put("liferay:mainPath", mainPath);
@@ -7624,8 +7624,6 @@ public class PortalImpl implements Portal {
 		if (layoutType.isBrowsable()) {
 			return layout;
 		}
-
-		// Find first browsable child layout or default layout
 
 		List<Layout> childLayouts = layout.getAllChildren();
 

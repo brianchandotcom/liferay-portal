@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="message-boards-web,../layout/layout-set-prototype-web" />
+	<property name="import.shared" value="message-boards-web,../layout/layout-set-prototype-web,../social/social-user-statistics-web" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

@@ -1653,6 +1653,9 @@ public class PortalImpl implements Portal {
 				company.getVirtualHostname(), getPortalServerPort(false),
 				false));
 		sb.append(getPathFriendlyURLPrivateGroup());
+		sb.append(group.getFriendlyURL());
+
+		sb.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
 		sb.append(GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
 		sb.append(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
 
@@ -1668,10 +1671,6 @@ public class PortalImpl implements Portal {
 		params.put(
 			"p_p_state", new String[] {WindowState.MAXIMIZED.toString()});
 		params.put("p_p_mode", new String[] {PortletMode.VIEW.toString()});
-		params.put("doAsGroupId", new String[] {String.valueOf(scopeGroupId)});
-		params.put(
-			"controlPanelCategory",
-			new String[] {PortletCategoryKeys.CURRENT_SITE});
 
 		sb.append(HttpUtil.parameterMapToString(params, true));
 
@@ -1782,20 +1781,33 @@ public class PortalImpl implements Portal {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long plid = 0;
+		Layout layout = null;
 
 		try {
-			plid = getControlPanelPlid(themeDisplay.getCompanyId());
+			long plid = getControlPanelPlid(themeDisplay.getCompanyId());
+
+			layout = LayoutLocalServiceUtil.getLayout(plid);
 		}
-		catch (Exception e) {
-			_log.error("Unable to determine control panel layout id", e);
+		catch (PortalException pe) {
+			_log.error("Unable to determine control panel layout", pe);
+
+			return null;
 		}
+
+		VirtualLayout virtualLayout = new VirtualLayout(
+			layout, themeDisplay.getScopeGroup());
+
+		portletRequest.setAttribute(WebKeys.LAYOUT, virtualLayout);
 
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
-			portletRequest, portletId, plid, lifecycle);
+			portletRequest, portletId, virtualLayout.getPlid(), lifecycle);
 
-		liferayPortletURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
-		liferayPortletURL.setRefererPlid(themeDisplay.getPlid());
+		try {
+			liferayPortletURL.setWindowState(WindowState.MAXIMIZED);
+		}
+		catch (WindowStateException wse) {
+			_log.error(wse);
+		}
 
 		return liferayPortletURL;
 	}

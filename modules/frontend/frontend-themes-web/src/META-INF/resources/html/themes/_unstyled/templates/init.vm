@@ -128,17 +128,6 @@
 	#set ($my_account_url = $htmlUtil.escape($theme_display.getURLMyAccount().toString()))
 #end
 
-#set ($show_page_settings = $theme_display.isShowPageSettingsIcon())
-#set ($show_site_settings = $theme_display.isShowSiteSettingsIcon())
-
-#if ($show_page_settings)
-	#set ($page_settings_text = $languageUtil.get($locale, "manage-pages"))
-
-	#if ($theme_display.getURLPageSettings())
-		#set ($page_settings_url = $htmlUtil.escape($theme_display.getURLPageSettings().toString()))
-	#end
-#end
-
 #set ($show_sign_in = $theme_display.isShowSignInIcon())
 
 #if ($show_sign_in)

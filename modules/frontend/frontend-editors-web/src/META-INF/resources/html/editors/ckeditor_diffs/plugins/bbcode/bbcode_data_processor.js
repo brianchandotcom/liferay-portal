@@ -254,10 +254,10 @@
 
 				var image = imagePath.substring(imagePath.lastIndexOf('/') + 1);
 
-				var imageIndex = instance._getImageIndex(editorConfig.emoticonImages, image);
+				var imageIndex = instance._getImageIndex(editorConfig.smiley_images, image);
 
 				if (imageIndex >= 0) {
-					emoticonSymbol = editorConfig.emoticonSymbols[imageIndex];
+					emoticonSymbol = editorConfig.smiley_symbols[imageIndex];
 				}
 			}
 

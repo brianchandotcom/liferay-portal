@@ -17,7 +17,6 @@ package com.liferay.portal.theme;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -904,6 +903,10 @@ public class ThemeDisplay
 		return _urlHome;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String getURLLayoutTemplates() {
 		if (Validator.isNull(_urlLayoutTemplates)) {
 			return getURLPageSettings() + "#layout";
@@ -923,6 +926,10 @@ public class ThemeDisplay
 		return _urlMyAccount;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@JSON(include = false)
 	public PortletURL getURLPageSettings() {
 		if (_urlPageSettings == null) {

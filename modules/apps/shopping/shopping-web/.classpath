@@ -18,6 +18,8 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.application.list.api.jar" />
+	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.osgi.service.tracker.map.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.portal.spring.extender.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.shopping.api.jar" />
 	<classpathentry kind="lib" path="docroot/WEB-INF/lib/com.liferay.shopping.service.jar" />

@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="shopping-service" />
+	<property name="import.shared" value="shopping-service,../application-list/application-list-api" />
 	<property name="osgi.auto.update.xml" value="true" />
 	<property name="osgi.ide.dependencies" value="struts-core.jar" />
 

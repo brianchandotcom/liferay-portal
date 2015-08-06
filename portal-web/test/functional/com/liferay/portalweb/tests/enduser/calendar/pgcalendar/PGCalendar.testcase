@@ -3476,7 +3476,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchCalendarEventInSearchPortletWithTag" priority="3">
+	<command known-issues="LPS-51310,LPS-57592" name="SearchCalendarEventInSearchPortletWithTag" priority="3">
 		<description message="This is a use case for LPS-54548." />
 
 		<execute macro="Page#gotoPG">

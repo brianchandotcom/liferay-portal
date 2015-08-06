@@ -67,9 +67,9 @@ public class PortalServiceSoap {
 		}
 	}
 
-	public static int getBuildNumber() throws RemoteException {
+	public static java.lang.String getBuildNumber() throws RemoteException {
 		try {
-			int returnValue = PortalServiceUtil.getBuildNumber();
+			java.lang.String returnValue = PortalServiceUtil.getBuildNumber();
 
 			return returnValue;
 		}
@@ -163,9 +163,10 @@ public class PortalServiceSoap {
 		}
 	}
 
-	public static int testGetBuildNumber() throws RemoteException {
+	public static java.lang.String testGetBuildNumber()
+		throws RemoteException {
 		try {
-			int returnValue = PortalServiceUtil.testGetBuildNumber();
+			java.lang.String returnValue = PortalServiceUtil.testGetBuildNumber();
 
 			return returnValue;
 		}

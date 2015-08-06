@@ -58,7 +58,7 @@ public interface PortalService extends BaseService {
 
 	@JSONWebService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getBuildNumber();
+	public java.lang.String getBuildNumber();
 
 	/**
 	* Sets the Spring bean ID for this bean.
@@ -85,7 +85,7 @@ public interface PortalService extends BaseService {
 
 	public void testDeleteClassName() throws PortalException;
 
-	public int testGetBuildNumber();
+	public java.lang.String testGetBuildNumber();
 
 	public void testGetUserId();
 

@@ -19,7 +19,6 @@ import com.liferay.polls.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 
 import java.util.ArrayList;
@@ -40,13 +39,6 @@ public class PollsServiceUpgrade {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
 	@Activate
 	protected void upgrade() throws PortalException {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
@@ -55,11 +47,6 @@ public class PollsServiceUpgrade {
 
 		upgradeProcesses.add(new UpgradeClassNames());
 		upgradeProcesses.add(new UpgradeLastPublishDate());
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.polls.service", upgradeProcesses, 1, 1, false);
 	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

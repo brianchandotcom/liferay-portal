@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeSchema;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,13 +40,6 @@ public class DDMServiceUpgrade {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
 	@Activate
 	protected void upgrade() throws PortalException {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
@@ -57,12 +49,6 @@ public class DDMServiceUpgrade {
 		upgradeProcesses.add(new UpgradeClassNames());
 		upgradeProcesses.add(new UpgradeDynamicDataMapping());
 		upgradeProcesses.add(new UpgradeLastPublishDate());
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.dynamic.data.mapping.service", upgradeProcesses, 1, 1,
-			false);
 	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

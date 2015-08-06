@@ -641,8 +641,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 			element, "ValidateHasNoChildElements.macro");
 
 		Assert.assertEquals(
-			"validateHasNoChildElements is failing", "",
-			getExceptionMessage());
+			"validateHasNoChildElements is failing", "", getExceptionMessage());
 
 		Element childElement = element.addElement("var");
 
@@ -910,8 +909,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 			element, 2, "ValidateNumberOfAttributes.macro");
 
 		Assert.assertEquals(
-			"validateNumberOfAttributes is failing", "",
-			getExceptionMessage());
+			"validateNumberOfAttributes is failing", "", getExceptionMessage());
 
 		PoshiRunnerValidation.validateNumberOfAttributes(
 			element, 1, "ValidateNumberOfAttributes.macro");
@@ -1056,8 +1054,7 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		Assert.assertEquals(
 			"validatePathFile is failing",
-			"Thead class name does not match file name",
-			getExceptionMessage());
+			"Thead class name does not match file name", getExceptionMessage());
 
 		filePath = getFilePath("ValidatePathFile5.path");
 

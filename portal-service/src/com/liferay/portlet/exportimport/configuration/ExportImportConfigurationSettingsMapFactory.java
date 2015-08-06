@@ -40,10 +40,9 @@ import java.util.TimeZone;
 import javax.portlet.PortletRequest;
 
 /**
- * This factory class provides a convenient way to build a settings map for an
- * {@link com.liferay.portlet.exportimport.model.ExportImportConfiguration}
- * which can be used to kick-off and control an export, import or staging
- * process.
+ * Provides a way to build a settings map for an {@link
+ * com.liferay.portlet.exportimport.model.ExportImportConfiguration}, which can
+ * be used to start and control an export, import, or staging process.
  *
  * @author Daniel Kocsis
  * @author Akos Thurzo

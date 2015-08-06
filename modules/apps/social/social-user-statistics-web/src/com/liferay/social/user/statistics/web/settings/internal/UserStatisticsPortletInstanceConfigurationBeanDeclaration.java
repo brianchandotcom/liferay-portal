@@ -16,6 +16,7 @@ package com.liferay.social.user.statistics.web.settings.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.social.user.statistics.web.configuration.UserStatisticsPortletInstanceConfiguration;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

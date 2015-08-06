@@ -24,40 +24,22 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface UserStatisticsPortletInstanceConfiguration {
 
-	@Meta.AD(
-		deflt = "true",
-		required = false
-	)
+	@Meta.AD(deflt = "user.achievements", required = false)
+	public String[] displayActivityCounterName();
+
+	@Meta.AD(deflt = "true", required = false)
 	public boolean displayAdditionalActivityCounters();
 
-	@Meta.AD(
-		deflt = "true",
-		required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean rankByContribution();
 
-	@Meta.AD(
-		deflt = "true",
-		required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean rankByParticipation();
 
-	@Meta.AD(
-		deflt = "true",
-		required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean showHeaderText();
 
-	@Meta.AD(
-		deflt = "true",
-		required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean showTotals();
-
-	@Meta.AD(
-		deflt = "user.achievements",
-		required = false
-	)
-	public String[] displayActivityCounterName();
 
 }

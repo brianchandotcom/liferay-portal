@@ -36,35 +36,24 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Tuple" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
-
-<%@ page import="com.liferay.portlet.social.model.SocialActivityCounter" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portlet.social.model.SocialActivityCounter" %><%@
 page import="com.liferay.portlet.social.model.SocialActivityCounterConstants" %><%@
 page import="com.liferay.portlet.social.model.impl.SocialActivityCounterImpl" %><%@
 page import="com.liferay.portlet.social.service.SocialActivityCounterLocalServiceUtil" %><%@
 page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %><%@
-page import="com.liferay.portlet.social.util.comparator.SocialActivityCounterNameComparator" %>
-
-<%@ page import="com.liferay.social.user.statistics.web.configuration.UserStatisticsPortletInstanceConfiguration" %>
-
-<%@ page import="com.liferay.taglib.search.ResultRow" %>
-
-<%@ page import="java.text.DecimalFormat" %><%@
-page import="java.text.Format" %>
+page import="com.liferay.portlet.social.util.comparator.SocialActivityCounterNameComparator" %><%@
+page import="com.liferay.social.user.statistics.web.configuration.UserStatisticsPortletInstanceConfiguration" %><%@
+page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Collections" %><%@
-page import="java.util.Date" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
-<%@ page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.WindowState" %>
+<%@ page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />
 

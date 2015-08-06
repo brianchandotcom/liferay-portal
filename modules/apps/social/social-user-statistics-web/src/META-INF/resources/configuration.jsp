@@ -53,12 +53,12 @@ if (displayActivityCounterNameCount == 0) {
 			<aui:fieldset label="">
 
 				<%
-				for (int displayActivityCounterNameIndex=0; displayActivityCounterNameIndex < displayActivityCounterNameCount; displayActivityCounterNameIndex++) {
+				for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < displayActivityCounterNameCount; displayActivityCounterNameIndex++) {
 				%>
 
 					<div class="lfr-form-row">
 						<div class="row-fields">
-							<liferay-util:include page="/add_activity_counter.jsp" servletContext="<%= application %>" >
+							<liferay-util:include page="/add_activity_counter.jsp" servletContext="<%= application %>">
 								<liferay-util:param name="index" value="<%= String.valueOf(displayActivityCounterNameIndex) %>" />
 							</liferay-util:include>
 						</div>

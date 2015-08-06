@@ -16,9 +16,10 @@ package com.liferay.social.user.statistics.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.social.user.statistics.web.constants.UserStatisticsPortletKeys;
-import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.Portlet;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Iván Zaera
@@ -45,7 +46,4 @@ import javax.portlet.Portlet;
 	service = Portlet.class
 )
 public class UserStatisticsPortlet extends MVCPortlet {
-
-
-
 }

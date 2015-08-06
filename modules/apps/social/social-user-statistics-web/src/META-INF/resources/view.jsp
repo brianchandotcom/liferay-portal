@@ -46,7 +46,7 @@ if (!rankingNamesList.isEmpty()) {
 	if (userStatisticsPortletInstanceConfiguration.displayAdditionalActivityCounters()) {
 		int displayActivityCounterNameCount = userStatisticsPortletInstanceConfiguration.displayActivityCounterName().length;
 
-		for (int displayActivityCounterNameIndex=0; displayActivityCounterNameIndex < displayActivityCounterNameCount; displayActivityCounterNameIndex++) {
+		for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < displayActivityCounterNameCount; displayActivityCounterNameIndex++) {
 			selectedNamesList.add(userStatisticsPortletInstanceConfiguration.displayActivityCounterName()[displayActivityCounterNameIndex]);
 		}
 	}
@@ -76,7 +76,7 @@ if (!rankingNamesList.isEmpty()) {
 	String rankingNamesMessage = LanguageUtil.format(request, rankingNames[0], StringPool.BLANK, false);
 
 	for (int i = 1; i < rankingNames.length; i++) {
-		rankingNamesMessage = LanguageUtil.format(request, "x-and-y", new Object[]{rankingNamesMessage, rankingNames[i]});
+		rankingNamesMessage = LanguageUtil.format(request, "x-and-y", new Object[] {rankingNamesMessage, rankingNames[i]});
 	}
 	%>
 

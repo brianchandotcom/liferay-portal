@@ -12,11 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.storage;
-
-import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+package com.liferay.dynamic.data.mapping.bridge;
 
 import java.io.Serializable;
 

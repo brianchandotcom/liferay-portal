@@ -36,6 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AsyncExportImportLifecycleMessageListener
 	extends BaseExportImportLifecycleMessageListener {
 
+	@Override
 	protected Set<ExportImportLifecycleListener>
 		getExportImportLifecycleListeners(Message message) {
 

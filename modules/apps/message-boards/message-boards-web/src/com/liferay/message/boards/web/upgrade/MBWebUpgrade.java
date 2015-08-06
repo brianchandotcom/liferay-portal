@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = MessageBoardsWebUpgrade.class)
-public class MessageBoardsWebUpgrade {
+@Component(immediate = true, service = MBWebUpgrade.class)
+public class MBWebUpgrade {
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(

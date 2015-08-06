@@ -5246,7 +5246,7 @@ public class PortalImpl implements Portal {
 		// Build number
 
 		sb.append("&b=");
-		sb.append(ReleaseInfo.getBuildNumber());
+		sb.append(ReleaseInfo.getVersion());
 
 		// Timestamp
 

@@ -57,6 +57,10 @@ public class PortalServiceUtil {
 		return getService().getBuildNumber();
 	}
 
+	public static java.lang.String getVersion() {
+		return getService().getVersion();
+	}
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

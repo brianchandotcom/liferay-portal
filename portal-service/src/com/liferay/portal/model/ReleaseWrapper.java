@@ -259,6 +259,11 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	}
 
 	@Override
+	public com.liferay.portal.kernel.plugin.Version getVersion() {
+		return _release.getVersion();
+	}
+
+	@Override
 	public int hashCode() {
 		return _release.hashCode();
 	}

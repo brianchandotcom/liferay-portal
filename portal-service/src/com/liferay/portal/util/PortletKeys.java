@@ -81,10 +81,6 @@ public class PortletKeys {
 
 	public static final String MARKETPLACE_STORE = "1_WAR_marketplaceportlet";
 
-	public static final String MESSAGE_BOARDS = "19";
-
-	public static final String MESSAGE_BOARDS_ADMIN = "162";
-
 	public static final String MOBILE_DEVICE_RULES =
 		"com_liferay_mobile_device_rules_web_portlet_MDRPortlet";
 

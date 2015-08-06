@@ -137,7 +137,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56665" name="AssertViewPermissionsViaCPAndPG" priority="4">
+	<command name="AssertViewPermissionsViaCPAndPG" priority="4">
 		<var name="roleType1" value="Regular" />
 		<var name="roleType2" value="Regular" />
 
@@ -1255,7 +1255,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56665" name="OrderWCByModifiedDateViaAP" priority="3">
+	<command name="OrderWCByModifiedDateViaAP" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
@@ -1331,7 +1331,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56665" name="OrderWCByPublishDateViaAP" priority="3">
+	<command name="OrderWCByPublishDateViaAP" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>

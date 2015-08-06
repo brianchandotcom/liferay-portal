@@ -469,7 +469,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56665" name="AddVocabularyAssetTypes" priority="4">
+	<command name="AddVocabularyAssetTypes" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -515,7 +515,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56665" name="AddVocabularyAssetTypeWebContent" priority="4">
+	<command name="AddVocabularyAssetTypeWebContent" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

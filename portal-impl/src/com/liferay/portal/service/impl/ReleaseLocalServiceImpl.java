@@ -214,40 +214,6 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		return release;
 	}
 
-	@Override
-	public void updateRelease(
-			String servletContextName, List<UpgradeProcess> upgradeProcesses,
-			Properties unfilteredPortalProperties)
-		throws Exception {
-
-		String buildNumber = GetterUtil.getString(
-			unfilteredPortalProperties.getProperty(
-				PropsKeys.RELEASE_INFO_BUILD_NUMBER));
-		String previousBuildNumber = GetterUtil.getString(
-			unfilteredPortalProperties.getProperty(
-				PropsKeys.RELEASE_INFO_PREVIOUS_BUILD_NUMBER),
-			buildNumber);
-
-		updateRelease(servletContextName, buildNumber, previousBuildNumber);
-	}
-
-	@Override
-	public void updateRelease(
-			String servletContextName, String buildNumber,
-			String previousBuildNumber)
-		throws PortalException {
-
-		Release release = releaseLocalService.fetchRelease(servletContextName);
-
-		if (release == null) {
-			release = releaseLocalService.addRelease(
-				servletContextName, previousBuildNumber);
-		}
-
-		releaseLocalService.updateRelease(
-			release.getReleaseId(), buildNumber, null, true);
-	}
-
 	protected void testSupportsStringCaseSensitiveQuery() {
 		DB db = DBFactoryUtil.getDB();
 

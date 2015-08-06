@@ -56,7 +56,17 @@ public class GroupStatisticsConfigurationAction
 		super.setServletContext(servletContext);
 	}
 
-	protected void update(String key, ActionRequest actionRequest) {
+	@Override
+	protected void updateMultiValuedKeys(ActionRequest actionRequest) {
+		super.updateMultiValuedKeys(actionRequest);
+
+		_setPreference(actionRequest, "chartType");
+		_setPreference(actionRequest, "chartWidth");
+		_setPreference(actionRequest, "dataRange");
+		_setPreference(actionRequest, "displayActivityCounterName");
+	}
+
+	private void _setPreference(ActionRequest actionRequest, String key) {
 		List<String> values = new ArrayList<>();
 
 		for (int i = 0;; i++) {
@@ -72,16 +82,6 @@ public class GroupStatisticsConfigurationAction
 
 		setPreference(
 			actionRequest, key, values.toArray(new String[values.size()]));
-	}
-
-	@Override
-	protected void updateMultiValuedKeys(ActionRequest actionRequest) {
-		super.updateMultiValuedKeys(actionRequest);
-
-		update("chartType", actionRequest);
-		update("chartWidth", actionRequest);
-		update("dataRange", actionRequest);
-		update("displayActivityCounterName", actionRequest);
 	}
 
 }

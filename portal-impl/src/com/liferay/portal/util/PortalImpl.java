@@ -2738,37 +2738,9 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getLayoutActualURL(Layout layout, String mainPath) {
+		layout = getBrowsableLayout(layout);
+
 		Map<String, String> variables = new HashMap<>();
-
-		LayoutType layoutType = layout.getLayoutType();
-
-		if (!layoutType.isBrowsable()) {
-			List<Layout> childLayouts = layout.getAllChildren();
-
-			Layout browsableChildLayout = null;
-
-			for (Layout childLayout : childLayouts) {
-				LayoutType childLayoutType = childLayout.getLayoutType();
-
-				if (childLayoutType.isBrowsable()) {
-					browsableChildLayout = childLayout;
-
-					break;
-				}
-			}
-
-			if (browsableChildLayout != null) {
-				layout = browsableChildLayout;
-			}
-			else {
-				long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(
-					layout.getGroupId(), layout.getPrivateLayout());
-
-				layout = LayoutLocalServiceUtil.fetchLayout(defaultPlid);
-			}
-
-			layoutType = layout.getLayoutType();
-		}
 
 		variables.put("liferay:groupId", String.valueOf(layout.getGroupId()));
 		variables.put("liferay:mainPath", mainPath);
@@ -2781,6 +2753,8 @@ public class PortalImpl implements Portal {
 		else {
 			variables.put("liferay:pvlsgid", "0");
 		}
+
+		LayoutType layoutType = layout.getLayoutType();
 
 		UnicodeProperties typeSettingsProperties =
 			layoutType.getTypeSettingsProperties();
@@ -7642,6 +7616,39 @@ public class PortalImpl implements Portal {
 		}
 
 		return locale;
+	}
+
+	protected Layout getBrowsableLayout(Layout layout) {
+		LayoutType layoutType = layout.getLayoutType();
+
+		if (layoutType.isBrowsable()) {
+			return layout;
+		}
+
+		// Find first browsable child layout or default layout
+
+		List<Layout> childLayouts = layout.getAllChildren();
+
+		Layout browsableChildLayout = null;
+
+		for (Layout childLayout : childLayouts) {
+			LayoutType childLayoutType = childLayout.getLayoutType();
+
+			if (childLayoutType.isBrowsable()) {
+				browsableChildLayout = childLayout;
+
+				break;
+			}
+		}
+
+		if (browsableChildLayout != null) {
+			return browsableChildLayout;
+		}
+
+		long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(
+			layout.getGroupId(), layout.getPrivateLayout());
+
+		return LayoutLocalServiceUtil.fetchLayout(defaultPlid);
 	}
 
 	protected String getCanonicalDomain(

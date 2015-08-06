@@ -557,8 +557,9 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("function", "Click");
 		element.addAttribute("selenium", "click");
 
-		List<Attribute> attributes = element.attributes();
 		List<String> attributeNames = new ArrayList<>();
+
+		List<Attribute> attributes = element.attributes();
 
 		for (Attribute attribute : attributes) {
 			attributeNames.add(attribute.getName());
@@ -579,8 +580,9 @@ public class PoshiRunnerValidationTest extends TestCase {
 		element.addAttribute("function", "Click");
 		element.addAttribute("locator1", "//here");
 
-		attributes = element.attributes();
 		attributeNames = new ArrayList<>();
+
+		attributes = element.attributes();
 
 		for (Attribute attribute : attributes) {
 			attributeNames.add(attribute.getName());

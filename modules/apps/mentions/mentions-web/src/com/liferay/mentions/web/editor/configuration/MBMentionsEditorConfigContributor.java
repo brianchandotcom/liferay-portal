@@ -14,6 +14,7 @@
 
 package com.liferay.mentions.web.editor.configuration;
 
+import com.liferay.message.boards.web.constants.MessageBoardsPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -24,8 +25,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"editor.config.key=editor", "editor.name=alloyeditor",
-		"editor.name=ckeditor", "javax.portlet.name=19",
-		"javax.portlet.name=162", "service.ranking:Integer=10"
+		"editor.name=ckeditor",
+		"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS,
+		"javax.portlet.name=" + MessageBoardsPortletKeys.MESSAGE_BOARDS_ADMIN,
+		"service.ranking:Integer=10"
 	},
 	service = EditorConfigContributor.class
 )

@@ -56,7 +56,14 @@ public class UserStatisticsConfigurationAction
 		super.setServletContext(servletContext);
 	}
 
-	protected void update(String key, ActionRequest actionRequest) {
+	@Override
+	protected void updateMultiValuedKeys(ActionRequest actionRequest) {
+		super.updateMultiValuedKeys(actionRequest);
+
+		_setPreference(actionRequest, "displayActivityCounterName");
+	}
+
+	private void _setPreference(ActionRequest actionRequest, String key) {
 		List<String> values = new ArrayList<>();
 
 		for (int i = 0;; i++) {
@@ -72,13 +79,6 @@ public class UserStatisticsConfigurationAction
 
 		setPreference(
 			actionRequest, key, values.toArray(new String[values.size()]));
-	}
-
-	@Override
-	protected void updateMultiValuedKeys(ActionRequest actionRequest) {
-		super.updateMultiValuedKeys(actionRequest);
-
-		update("displayActivityCounterName", actionRequest);
 	}
 
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<portlet-preferences>
+	<preference>
+		<name>displayActivityCounterName0</name>
+		<value>user.achievements</value>
+	</preference>
+	<preference>
+		<name>displayActivityCounterNameIndexes</name>
+		<value>0</value>
+	</preference>
+	<preference>
+		<name>displayAdditionalActivityCounters</name>
+		<value>true</value>
+	</preference>
+	<preference>
+		<name>rankByContribution</name>
+		<value>true</value>
+	</preference>
+	<preference>
+		<name>rankByParticipation</name>
+		<value>true</value>
+	</preference>
+	<preference>
+		<name>showHeaderText</name>
+		<value>true</value>
+	</preference>
+	<preference>
+		<name>showTotals</name>
+		<value>true</value>
+	</preference>
+</portlet-preferences>

@@ -14,18 +14,18 @@
  */
 --%>
 
-<%@ include file="/html/portlet/user_statistics/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
 List<String> rankingNamesList = new ArrayList<String>();
 
-if (rankByParticipation) {
+if (userStatisticsPortletInstanceConfiguration.rankByParticipation()) {
 	rankingNamesList.add(SocialActivityCounterConstants.NAME_PARTICIPATION);
 }
 
-if (rankByContribution) {
+if (userStatisticsPortletInstanceConfiguration.rankByContribution()) {
 	rankingNamesList.add(SocialActivityCounterConstants.NAME_CONTRIBUTION);
 }
 
@@ -43,9 +43,11 @@ if (!rankingNamesList.isEmpty()) {
 	selectedNamesList.add(SocialActivityCounterConstants.NAME_CONTRIBUTION);
 	selectedNamesList.add(SocialActivityCounterConstants.NAME_PARTICIPATION);
 
-	if (displayAdditionalActivityCounters) {
-		for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
-			selectedNamesList.add(PrefsParamUtil.getString(portletPreferences, request, "displayActivityCounterName" + displayActivityCounterNameIndex));
+	if (userStatisticsPortletInstanceConfiguration.displayAdditionalActivityCounters()) {
+		int displayActivityCounterNameCount = userStatisticsPortletInstanceConfiguration.displayActivityCounterName().length;
+
+		for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < displayActivityCounterNameCount; displayActivityCounterNameIndex++) {
+			selectedNamesList.add(userStatisticsPortletInstanceConfiguration.displayActivityCounterName()[displayActivityCounterNameIndex]);
 		}
 	}
 
@@ -64,7 +66,7 @@ if (!rankingNamesList.isEmpty()) {
 
 		// User display
 
-		row.addJSP("/html/portlet/user_statistics/user_display.jsp", application, request, response);
+		row.addJSP("/user_display.jsp", application, request, response);
 
 		// Add result row
 
@@ -78,7 +80,7 @@ if (!rankingNamesList.isEmpty()) {
 	}
 	%>
 
-	<c:if test="<%= showHeaderText %>">
+	<c:if test="<%= userStatisticsPortletInstanceConfiguration.showHeaderText() %>">
 		<div class="top-users">
 			<c:if test="<%= total > 0 %>">
 				<liferay-ui:message arguments="<%= total %>" key="top-users-out-of-x" translateArguments="<%= false %>" /> <%= LanguageUtil.format(request, "ranking-is-based-on-x", rankingNamesMessage, false) %><br />

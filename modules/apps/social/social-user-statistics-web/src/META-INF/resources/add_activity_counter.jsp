@@ -14,12 +14,20 @@
  */
 --%>
 
-<%@ include file="/html/portlet/user_statistics/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-int index = ParamUtil.getInteger(request, "index", GetterUtil.getInteger((String)request.getAttribute("configuration.jsp-index")));
+userStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(UserStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource()));
 
-String displayActivityCounterName = PrefsParamUtil.getString(portletPreferences, request, "displayActivityCounterName" + index);
+int index = ParamUtil.getInteger(request, "index");
+
+String displayActivityCounterNames[] = userStatisticsPortletInstanceConfiguration.displayActivityCounterName();
+
+String displayActivityCounterName = "";
+
+if (index < displayActivityCounterNames.length) {
+	displayActivityCounterName = displayActivityCounterNames[index];
+}
 
 List<String> activityCounterNames = SocialConfigurationUtil.getActivityCounterNames(SocialActivityCounterConstants.TYPE_ACTOR);
 

@@ -18,14 +18,18 @@
 			<if>
 				<equals arg1="${tomcat.keep.app.server.properties}" arg2="true" />
 				<then>
+					<antcall target="update-sdk-properties" inheritAll="false" />
+
 					<antcall target="unzip-tomcat" inheritAll="false" />
 				</then>
 				<else>
-					<antcall target="unzip-tomcat" />
-
 					<app-server-properties-update>
 						app.server.type=tomcat
 					</app-server-properties-update>
+
+					<antcall target="update-sdk-properties" inheritAll="false" />
+
+					<antcall target="unzip-tomcat" />
 				</else>
 			</if>
 
@@ -82,11 +86,13 @@
 	</macrodef>
 
 	<target name="build-dist-glassfish">
-		<antcall target="unzip-glassfish" />
-
 		<app-server-properties-update>
 			app.server.type=glassfish
 		</app-server-properties-update>
+
+		<antcall target="update-sdk-properties" inheritAll="false" />
+
+		<antcall target="unzip-glassfish" />
 
 		<ant target="deploy" inheritAll="false" />
 
@@ -102,11 +108,13 @@
 	</target>
 
 	<target name="build-dist-jboss">
-		<antcall target="unzip-jboss" />
-
 		<app-server-properties-update>
 			app.server.type=jboss
 		</app-server-properties-update>
+
+		<antcall target="update-sdk-properties" inheritAll="false" />
+
+		<antcall target="unzip-jboss" />
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
@@ -127,10 +135,12 @@
 		<app-server-properties-update>
 			app.server.type=jboss
 			app.server.jboss.version=6.0.1
-			app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.0
+			app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.0.1
 			app.server.jboss.zip.name=jboss-eap-6.0.1.zip
 			app.server.jboss.zip.url=http://www.jboss.org/jbossas/downloads/jboss-eap-6.0.1.zip
 		</app-server-properties-update>
+
+		<antcall target="update-sdk-properties" inheritAll="false" />
 
 		<antcall target="unzip-jboss" inheritAll="false" />
 
@@ -153,10 +163,12 @@
 		<app-server-properties-update>
 			app.server.type=jboss
 			app.server.jboss.version=6.1.0
-			app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.1
+			app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.1.0
 			app.server.jboss.zip.name=jboss-eap-6.1.0.zip
 			app.server.jboss.zip.url=http://www.jboss.org/jbossas/downloads/jboss-eap-6.1.0.zip
 		</app-server-properties-update>
+
+		<antcall target="update-sdk-properties" inheritAll="false" />
 
 		<antcall target="unzip-jboss" inheritAll="false" />
 
@@ -179,10 +191,12 @@
 		<app-server-properties-update>
 			app.server.type=jboss
 			app.server.jboss.version=6.4.0
-			app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.4
+			app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.4.0
 			app.server.jboss.zip.name=jboss-eap-6.4.0.zip
 			app.server.jboss.zip.url=http://www.jboss.org/jbossas/downloads/jboss-eap-6.4.0.zip
 		</app-server-properties-update>
+
+		<antcall target="update-sdk-properties" inheritAll="false" />
 
 		<antcall target="unzip-jboss" inheritAll="false" />
 
@@ -202,11 +216,13 @@
 	</target>
 
 	<target name="build-dist-jetty">
-		<antcall target="unzip-jetty" />
-
 		<app-server-properties-update>
 			app.server.type=jetty
 		</app-server-properties-update>
+
+		<antcall target="update-sdk-properties" inheritAll="false" />
+
+		<antcall target="unzip-jetty" />
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
@@ -327,11 +343,13 @@
 	</target>
 
 	<target name="build-dist-resin">
-		<antcall target="unzip-resin" />
-
 		<app-server-properties-update>
 			app.server.type=resin
 		</app-server-properties-update>
+
+		<antcall target="update-sdk-properties" inheritAll="false" />
+
+		<antcall target="unzip-resin" />
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
@@ -361,6 +379,8 @@
 			app.server.tomcat.version=7.0.39
 			app.server.tomcat.zip.url=http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.39/bin/apache-tomcat-7.0.39.zip
 		</app-server-properties-update>
+
+		<antcall target="update-sdk-properties" inheritAll="false" />
 
 		<antcall target="build-dist-tomcat" inheritAll="false">
 			<param name="tomcat.keep.app.server.properties" value="true" />
@@ -561,11 +581,13 @@
 	</target>
 
 	<target name="build-dist-tcserver">
-		<antcall target="unzip-tcserver" />
-
 		<app-server-properties-update>
 			app.server.type=tcserver
 		</app-server-properties-update>
+
+		<antcall target="update-sdk-properties" inheritAll="false" />
+
+		<antcall target="unzip-tcserver" />
 
 		<delete dir="${project.dir}/portal-web/classes" />
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
@@ -174,10 +175,16 @@ public class SiteMapDisplayContext {
 		String layoutURL = PortalUtil.getLayoutURL(layout, themeDisplay);
 		String target = PortalUtil.getLayoutTarget(layout);
 
-		sb.append("<a href=\"");
-		sb.append(layoutURL);
-		sb.append("\" ");
-		sb.append(target);
+		sb.append("<a");
+
+		LayoutType layoutType = layout.getLayoutType();
+
+		if (layoutType.isBrowsable()) {
+			sb.append(" href=\"");
+			sb.append(layoutURL);
+			sb.append("\" ");
+			sb.append(target);
+		}
 
 		if (Validator.isNotNull(cssClass)) {
 			sb.append(" class=\"");

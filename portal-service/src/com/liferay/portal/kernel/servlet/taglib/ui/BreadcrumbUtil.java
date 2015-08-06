@@ -29,6 +29,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -325,6 +326,12 @@ public class BreadcrumbUtil {
 		}
 
 		breadcrumbEntry.setTitle(layoutName);
+
+		LayoutType layoutType = layout.getLayoutType();
+
+		if (!layoutType.isBrowsable()) {
+			breadcrumbEntry.setBrowsable(false);
+		}
 
 		String layoutURL = PortalUtil.getLayoutFullURL(layout, themeDisplay);
 

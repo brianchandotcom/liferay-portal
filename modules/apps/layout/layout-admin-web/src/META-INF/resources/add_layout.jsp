@@ -171,14 +171,16 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 						}
 
 						LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(type);
+
+						ResourceBundle resourceBundle = ResourceBundle.getBundle("content.Language", locale, layoutTypeController.getClass().getClassLoader());
 					%>
 
-						<aui:nav-item cssClass="lfr-page-template" data-search='<%= LanguageUtil.get(request, "layout.types." + type) %>'>
+						<aui:nav-item cssClass="lfr-page-template" data-search='<%= LanguageUtil.get(request, resourceBundle, "layout.types." + type) %>'>
 							<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-type="<%= type %>">
-								<aui:input disabled="<%= (layoutsCount == 0) && !layoutTypeController.isFirstPageable() %>" id='<%= "addLayoutSelectedPageTemplate" + type %>' label='<%= "layout.types." + type %>' name="selectedPageTemplate" type="radio" />
+								<aui:input disabled="<%= (layoutsCount == 0) && !layoutTypeController.isFirstPageable() %>" id='<%= "addLayoutSelectedPageTemplate" + type %>' label='<%= LanguageUtil.get(request, resourceBundle, "layout.types." + type) %>' name="selectedPageTemplate" type="radio" />
 
 								<div class="lfr-page-template-description">
-									<small><%= LanguageUtil.get(request, "layout.types." + type + ".description" ) %></small>
+									<small><%= LanguageUtil.get(request, resourceBundle, "layout.types." + type + ".description") %></small>
 								</div>
 							</div>
 

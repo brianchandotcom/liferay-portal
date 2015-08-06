@@ -19,22 +19,28 @@
 <%
 groupStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(GroupStatisticsPortletInstanceConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource())));
 
-int index = ParamUtil.getInteger(request, "index");
-
-String[] displayActivityCounterNames = groupStatisticsPortletInstanceConfiguration.displayActivityCounterName();
-String[] chartTypes = groupStatisticsPortletInstanceConfiguration.chartType();
-String[] chartWidths = groupStatisticsPortletInstanceConfiguration.chartWidth();
-String[] dataRanges = groupStatisticsPortletInstanceConfiguration.dataRange();
-
 String displayActivityCounterName = "";
 String chartType = "";
 int chartWidth = 35;
 String dataRange = "";
 
+int index = ParamUtil.getInteger(request, "index");
+
+String[] displayActivityCounterNames = groupStatisticsPortletInstanceConfiguration.displayActivityCounterName();
+
 if (index < displayActivityCounterNames.length) {
 	displayActivityCounterName = displayActivityCounterNames[index];
+
+	String[] chartTypes = groupStatisticsPortletInstanceConfiguration.chartType();
+
 	chartType = chartTypes[index];
+
+	String[] chartWidths = groupStatisticsPortletInstanceConfiguration.chartWidth();
+
 	chartWidth = GetterUtil.getInteger(chartWidths[index], chartWidth);
+
+	String[] dataRanges = groupStatisticsPortletInstanceConfiguration.dataRange();
+
 	dataRange = dataRanges[index];
 }
 

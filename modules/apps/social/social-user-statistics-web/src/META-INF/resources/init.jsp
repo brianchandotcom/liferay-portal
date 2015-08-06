@@ -29,6 +29,9 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator" %><%@
+page import="com.liferay.portal.kernel.settings.SettingsFactory" %><%@
+page import="com.liferay.portal.kernel.settings.SettingsFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
@@ -47,7 +50,9 @@ page import="com.liferay.portlet.social.service.SocialActivityCounterLocalServic
 page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %><%@
 page import="com.liferay.portlet.social.util.comparator.SocialActivityCounterNameComparator" %>
 
-<%@page import="com.liferay.taglib.search.ResultRow" %>
+<%@ page import="com.liferay.social.user.statistics.web.configuration.UserStatisticsPortletInstanceConfiguration" %>
+
+<%@ page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.text.DecimalFormat" %><%@
 page import="java.text.Format" %>
@@ -66,23 +71,9 @@ page import="javax.portlet.WindowState" %>
 <liferay-theme:defineObjects />
 
 <%
-boolean displayAdditionalActivityCounters = GetterUtil.getBoolean(PrefsParamUtil.getString(portletPreferences, request, "displayAdditionalActivityCounters"), true);
+SettingsFactory settingsFactory = SettingsFactoryUtil.getSettingsFactory();
 
-int[] displayActivityCounterNameIndexes = null;
-
-String displayActivityCounterNameIndexesParam = PrefsParamUtil.getString(portletPreferences, request, "displayActivityCounterNameIndexes");
-
-if (Validator.isNotNull(displayActivityCounterNameIndexesParam)) {
-	displayActivityCounterNameIndexes = StringUtil.split(displayActivityCounterNameIndexesParam, 0);
-}
-else {
-	displayActivityCounterNameIndexes = new int[] {0};
-}
-
-boolean rankByContribution = GetterUtil.getBoolean(PrefsParamUtil.getString(portletPreferences, request, "rankByContribution"), true);
-boolean rankByParticipation = GetterUtil.getBoolean(PrefsParamUtil.getString(portletPreferences, request, "rankByParticipation"), true);
-boolean showHeaderText = GetterUtil.getBoolean(PrefsParamUtil.getString(portletPreferences, request, "showHeaderText"), true);
-boolean showTotals = GetterUtil.getBoolean(PrefsParamUtil.getString(portletPreferences, request, "showTotals"), true);
+UserStatisticsPortletInstanceConfiguration userStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(UserStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
 %>
 
 <%@ include file="/init-ext.jsp" %>

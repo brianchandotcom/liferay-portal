@@ -28,6 +28,12 @@ public interface UserStatisticsPortletInstanceConfiguration {
 		deflt = "true",
 		required = false
 	)
+	public boolean displayAdditionalActivityCounters();
+
+	@Meta.AD(
+		deflt = "true",
+		required = false
+	)
 	public boolean rankByContribution();
 
 	@Meta.AD(

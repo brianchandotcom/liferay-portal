@@ -16,12 +16,17 @@ package com.liferay.social.user.statistics.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.user.statistics.web.constants.UserStatisticsPortletKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import javax.portlet.ActionRequest;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Iván Zaera
@@ -46,6 +51,31 @@ public class UserStatisticsConfigurationAction
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
+	}
+
+	@Override
+	protected void updateMultiValuedKeys(ActionRequest actionRequest) {
+		super.updateMultiValuedKeys(actionRequest);
+
+		update("displayActivityCounterName", actionRequest);
+	}
+
+	protected void update(String key, ActionRequest actionRequest) {
+		List<String> values = new ArrayList<>();
+
+		for (int i = 0;; i++) {
+			String value = ParamUtil.getString(
+				actionRequest, "preferences--" + key + i + "--");
+
+			if (Validator.isNull(value)) {
+				break;
+			}
+
+			values.add(value);
+		}
+
+		setPreference(
+			actionRequest, key, values.toArray(new String[values.size()]));
 	}
 
 }

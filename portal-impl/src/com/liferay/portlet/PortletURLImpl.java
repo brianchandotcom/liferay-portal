@@ -56,7 +56,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.admin.util.PortalAdministrationApplicationType;
+import com.liferay.portlet.admin.util.PortalProductMenuApplicationType;
 import com.liferay.portlet.social.util.FacebookUtil;
 import com.liferay.util.Encryptor;
 import com.liferay.util.EncryptorException;
@@ -834,7 +834,7 @@ public class PortletURLImpl
 		}
 
 		String controlPanelMenuPortletId = PortletProviderUtil.getPortletId(
-			PortalAdministrationApplicationType.SiteAdmin.CLASS_NAME,
+			PortalProductMenuApplicationType.ProductMenu.CLASS_NAME,
 			PortletProvider.Action.VIEW);
 
 		if (_portletId.equals(controlPanelMenuPortletId)) {

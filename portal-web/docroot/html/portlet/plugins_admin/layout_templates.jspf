@@ -48,7 +48,7 @@ List layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates();
 
 		PortletURL rowURL = renderResponse.createRenderURL();
 
-		rowURL.setParameter("struts_action", "/plugins_admin/edit_plugin");
+		rowURL.setParameter("mvcRenderCommandName", "/plugins_admin/edit_plugin");
 		rowURL.setParameter("redirect", currentURL);
 
 		if (pluginPackage != null) {

@@ -41,9 +41,7 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 }
 %>
 
-<portlet:actionURL var="editPluginURL">
-	<portlet:param name="struts_action" value="/plugins_admin/edit_plugin" />
-</portlet:actionURL>
+<portlet:actionURL name="/plugins_admin/edit_plugin" var="editPluginURL" />
 
 <aui:form action="<%= editPluginURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

@@ -270,6 +270,28 @@ public class Version implements Comparable<Version>, Serializable {
 		}
 	}
 
+	public int toInt() {
+		StringBundler sb = new StringBundler(4);
+
+		if (_major != null) {
+			sb.append(_major);
+		}
+
+		if (_minor != null) {
+			sb.append(_minor);
+		}
+
+		if (_bugFix != null) {
+			sb.append(_bugFix);
+		}
+
+		if (_buildNumber != null) {
+			sb.append(_buildNumber);
+		}
+
+		return Integer.parseInt(sb.toString());
+	}
+
 	@Override
 	public String toString() {
 		return _toString(_major, _minor, _bugFix, _buildNumber);

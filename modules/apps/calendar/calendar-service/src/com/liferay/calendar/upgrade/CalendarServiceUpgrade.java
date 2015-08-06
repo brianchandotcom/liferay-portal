@@ -56,7 +56,8 @@ public class CalendarServiceUpgrade {
 		upgradeProcesses.add(new UpgradeLastPublishDate());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.calendar.service", upgradeProcesses, 1, 1, false);
+			"com.liferay.calendar.service", upgradeProcesses, "1.0.0.0",
+			"1.0.0.0", false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

@@ -80,6 +80,19 @@ public class PortalServiceSoap {
 		}
 	}
 
+	public static java.lang.String getVersion() throws RemoteException {
+		try {
+			java.lang.String returnValue = PortalServiceUtil.getVersion();
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void testAddClassName_Rollback(
 		java.lang.String classNameValue) throws RemoteException {
 		try {

@@ -56,8 +56,8 @@ public class DDLServiceUpgrade {
 		upgradeProcesses.add(new UpgradeLastPublishDate());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.dynamic.data.lists.service", upgradeProcesses, 1, 1,
-			false);
+			"com.liferay.dynamic.data.lists.service", upgradeProcesses,
+			"1.0.0.0", "1.0.0.0", false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

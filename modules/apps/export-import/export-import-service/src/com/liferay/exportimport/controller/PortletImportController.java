@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -1318,17 +1319,17 @@ public class PortletImportController implements ImportController {
 
 		// Build compatibility
 
-		int buildNumber = ReleaseInfo.getBuildNumber();
+		Version currentVersion = ReleaseInfo.getCurrentVersion();
 
 		Element headerElement = rootElement.element("header");
 
-		int importBuildNumber = GetterUtil.getInteger(
+		Version importVersion = Version.getInstance(
 			headerElement.attributeValue("build-number"));
 
-		if (buildNumber != importBuildNumber) {
+		if (currentVersion.compareTo(importVersion) != 0) {
 			throw new LayoutImportException(
-				"LAR build number " + importBuildNumber + " does not match " +
-					"portal build number " + buildNumber);
+				"LAR build number " + importVersion + " does not match " +
+					"portal build number " + currentVersion);
 		}
 
 		// Type

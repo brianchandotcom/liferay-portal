@@ -15,17 +15,8 @@
 package com.liferay.comment.web.portlet;
 
 import com.liferay.comment.web.constants.CommentPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletURLFactoryUtil;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,25 +28,12 @@ import org.osgi.service.component.annotations.Component;
 	property = {"model.class.name=com.liferay.portal.kernel.comment.Comment"},
 	service = ViewPortletProvider.class
 )
-public class CommentViewPortletProvider implements ViewPortletProvider {
+public class CommentViewPortletProvider
+	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
 		return CommentPortletKeys.COMMENT;
-	}
-
-	@Override
-	public PortletURL getPortletURL(HttpServletRequest request)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long plid = PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
-
-		return PortletURLFactoryUtil.create(
-			request, CommentPortletKeys.COMMENT, plid,
-			PortletRequest.RENDER_PHASE);
 	}
 
 }

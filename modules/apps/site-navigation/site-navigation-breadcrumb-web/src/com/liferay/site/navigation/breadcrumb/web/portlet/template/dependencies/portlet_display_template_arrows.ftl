@@ -58,6 +58,7 @@
 
 			<#if entry.isBrowsable()>
 				<#assign entryURL = entry.getURL()!"">
+
 				<#assign entryHrefLink = "href='${entryURL}'">
 			</#if>
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.plugin.Version;
+
 import java.text.DateFormat;
 
 import java.util.Date;
@@ -107,6 +109,10 @@ public class ReleaseInfo {
 		return _BUILD_NUMBER;
 	}
 
+	public static final Version getCurrentVersion() {
+		return Version.getInstance(getVersion());
+	}
+
 	public static final String getCodeName() {
 		return _CODE_NAME;
 	}
@@ -166,7 +172,7 @@ public class ReleaseInfo {
 
 	private static final String _VENDOR = "Liferay, Inc.";
 
-	private static final String _VERSION = "7.0.0";
+	private static final String _VERSION = "7.0.0.0";
 
 	private static final String _VERSION_DISPLAY_NAME = "7.0.0 CE M5";
 

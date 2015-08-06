@@ -91,7 +91,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 
 			<liferay-ui:search-container-column-jsp
 				name="description"
-				path="/html/portlet/dynamic_data_mapping/template_description.jsp"
+				path="/template_description.jsp"
 			/>
 
 			<liferay-ui:search-container-column-date

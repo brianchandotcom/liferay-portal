@@ -135,7 +135,7 @@ public class FileEntryDLUploadHandler extends BaseUploadHandler {
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to get url for file entry id " +
+					"Unable to get URL for file entry " +
 						fileEntry.getFileEntryId());
 			}
 		}

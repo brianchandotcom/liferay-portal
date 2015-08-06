@@ -214,7 +214,7 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMForm createFullHierarchyDDMForm()
+	public com.liferay.dynamic.data.mapping.bridge.DDMForm createFullHierarchyDDMForm()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructure.createFullHierarchyDDMForm();
 	}
@@ -272,25 +272,25 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getDDMForm() {
+	public com.liferay.dynamic.data.mapping.bridge.DDMForm getDDMForm() {
 		return _ddmStructure.getDDMForm();
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMFormField getDDMFormField(
+	public com.liferay.dynamic.data.mapping.bridge.DDMFormField getDDMFormField(
 		java.lang.String fieldName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructure.getDDMFormField(fieldName);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMFormField> getDDMFormFields(
+	public java.util.List<com.liferay.dynamic.data.mapping.bridge.DDMFormField> getDDMFormFields(
 		boolean includeTransientFields) {
 		return _ddmStructure.getDDMFormFields(includeTransientFields);
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout getDDMFormLayout()
+	public com.liferay.dynamic.data.mapping.bridge.DDMFormLayout getDDMFormLayout()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructure.getDDMFormLayout();
 	}
@@ -458,12 +458,12 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getFullHierarchyDDMForm() {
+	public com.liferay.dynamic.data.mapping.bridge.DDMForm getFullHierarchyDDMForm() {
 		return _ddmStructure.getFullHierarchyDDMForm();
 	}
 
 	@Override
-	public Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.model.DDMFormField> getFullHierarchyDDMFormFieldsMap(
+	public Map<java.lang.String, com.liferay.dynamic.data.mapping.bridge.DDMFormField> getFullHierarchyDDMFormFieldsMap(
 		boolean includeNestedDDMFormFields) {
 		return _ddmStructure.getFullHierarchyDDMFormFieldsMap(includeNestedDDMFormFields);
 	}
@@ -857,7 +857,7 @@ public class DDMStructureWrapper implements DDMStructure,
 
 	@Override
 	public void setDDMForm(
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm) {
+		com.liferay.dynamic.data.mapping.bridge.DDMForm ddmForm) {
 		_ddmStructure.setDDMForm(ddmForm);
 	}
 
@@ -955,7 +955,7 @@ public class DDMStructureWrapper implements DDMStructure,
 
 	@Override
 	public void setFullHierarchyDDMForm(
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm fullHierarchyDDMForm) {
+		com.liferay.dynamic.data.mapping.bridge.DDMForm fullHierarchyDDMForm) {
 		_ddmStructure.setFullHierarchyDDMForm(fullHierarchyDDMForm);
 	}
 
@@ -1227,7 +1227,7 @@ public class DDMStructureWrapper implements DDMStructure,
 
 	@Override
 	public void updateDDMForm(
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm) {
+		com.liferay.dynamic.data.mapping.bridge.DDMForm ddmForm) {
 		_ddmStructure.updateDDMForm(ddmForm);
 	}
 

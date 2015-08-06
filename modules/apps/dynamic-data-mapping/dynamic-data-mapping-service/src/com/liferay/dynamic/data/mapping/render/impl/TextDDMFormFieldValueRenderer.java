@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.render.impl;
 
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormFieldType;
 
 /**
  * @author Marcellus Tavares

@@ -323,12 +323,12 @@ public final class LoggerUtil {
 				"<link href=\"" + PropsValues.LOGGER_RESOURCES_URL +
 					"/css/.sass-cache/main.css\"");
 			indexHTMLContent = StringUtil.replace(
-				indexHTMLContent, "<script src=\"../js/component.js\"",
-				"<script src=\"" + PropsValues.LOGGER_RESOURCES_URL +
+				indexHTMLContent, "<script defer src=\"../js/component.js\"",
+				"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
 					"/js/component.js\"");
 			indexHTMLContent = StringUtil.replace(
-				indexHTMLContent, "<script src=\"../js/main.js\"",
-				"<script src=\"" + PropsValues.LOGGER_RESOURCES_URL +
+				indexHTMLContent, "<script defer src=\"../js/main.js\"",
+				"<script defer src=\"" + PropsValues.LOGGER_RESOURCES_URL +
 					"/js/main.js\"");
 		}
 

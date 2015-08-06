@@ -15,14 +15,14 @@
 package com.liferay.configuration.admin.web.util;
 
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
+import com.liferay.dynamic.data.mapping.bridge.DDMForm;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormField;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.bridge.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import java.util.Locale;
 

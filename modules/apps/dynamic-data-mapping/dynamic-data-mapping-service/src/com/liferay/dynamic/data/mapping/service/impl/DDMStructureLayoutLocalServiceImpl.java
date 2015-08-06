@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.bridge.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureLayoutLocalServiceBaseImpl;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 
 /**
  * @author Marcellus Tavares

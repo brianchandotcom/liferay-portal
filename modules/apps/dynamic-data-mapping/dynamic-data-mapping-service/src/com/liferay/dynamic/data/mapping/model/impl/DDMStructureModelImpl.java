@@ -977,20 +977,20 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		_lastPublishDate = lastPublishDate;
 	}
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getDDMForm() {
+	public com.liferay.dynamic.data.mapping.bridge.DDMForm getDDMForm() {
 		return null;
 	}
 
 	public void setDDMForm(
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm) {
+		com.liferay.dynamic.data.mapping.bridge.DDMForm ddmForm) {
 	}
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getFullHierarchyDDMForm() {
+	public com.liferay.dynamic.data.mapping.bridge.DDMForm getFullHierarchyDDMForm() {
 		return null;
 	}
 
 	public void setFullHierarchyDDMForm(
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm fullHierarchyDDMForm) {
+		com.liferay.dynamic.data.mapping.bridge.DDMForm fullHierarchyDDMForm) {
 	}
 
 	@Override

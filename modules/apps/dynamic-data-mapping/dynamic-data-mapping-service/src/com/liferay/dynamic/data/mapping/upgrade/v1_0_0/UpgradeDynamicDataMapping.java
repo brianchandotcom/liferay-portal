@@ -14,6 +14,14 @@
 
 package com.liferay.dynamic.data.mapping.upgrade.v1_0_0;
 
+import com.liferay.dynamic.data.mapping.bridge.DDMForm;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormField;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormValues;
+import com.liferay.dynamic.data.mapping.bridge.LocalizedValue;
+import com.liferay.dynamic.data.mapping.bridge.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.bridge.Value;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
@@ -58,14 +66,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.model.Value;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.File;
 

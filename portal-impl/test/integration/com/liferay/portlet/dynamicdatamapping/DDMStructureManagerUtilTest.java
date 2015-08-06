@@ -14,6 +14,16 @@
 
 package com.liferay.portlet.dynamicdatamapping;
 
+import com.liferay.dynamic.data.mapping.bridge.DDMForm;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormField;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormLayoutColumn;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormLayoutPage;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormValues;
+import com.liferay.dynamic.data.mapping.bridge.LocalizedValue;
+import com.liferay.dynamic.data.mapping.bridge.Value;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.search.Document;
@@ -30,16 +40,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.model.Value;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.util.ArrayList;
 import java.util.HashMap;

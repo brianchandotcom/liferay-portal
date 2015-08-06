@@ -17,7 +17,6 @@ package com.liferay.microblogs.upgrade;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,13 +36,6 @@ public class MicroblogsServiceUpgrade {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
-	}
-
 	@Activate
 	protected void upgrade() throws PortalException {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>(1);
@@ -51,11 +43,6 @@ public class MicroblogsServiceUpgrade {
 		upgradeProcesses.add(new MicroblogsServiceUpgrade_1_0_0());
 		upgradeProcesses.add(new MicroblogsServiceUpgrade_1_0_1());
 		upgradeProcesses.add(new MicroblogsServiceUpgrade_1_0_2());
-
-		_releaseLocalService.updateRelease(
-			"com.liferay.microblogs.service", upgradeProcesses, 1, 1, false);
 	}
-
-	private ReleaseLocalService _releaseLocalService;
 
 }

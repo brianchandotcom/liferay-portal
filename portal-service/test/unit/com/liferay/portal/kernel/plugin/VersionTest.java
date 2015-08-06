@@ -111,6 +111,15 @@ public class VersionTest {
 		assertIncludes("*", "1.2.3.4");
 	}
 
+	@Test
+	public void testToIntConversion() {
+		assertToIntConversion("0.1", 01);
+		assertToIntConversion("0.0.1", 001);
+		assertToIntConversion("0.0.0.1", 0001);
+		assertToIntConversion("1.1.0", 110);
+		assertToIntConversion("1.1.1", 111);
+	}
+
 	protected void assertIncludes(String first, String second) {
 		Version firstVersion = Version.getInstance(first);
 		Version secondVersion = Version.getInstance(second);
@@ -143,6 +152,14 @@ public class VersionTest {
 		Assert.assertTrue(
 			first + " is not previous than " + second,
 			firstVersion.isPreviousVersionThan(second));
+	}
+
+	protected void assertToIntConversion(
+		String stringVersion, int versionNumber) {
+
+		Version version = Version.getInstance(stringVersion);
+
+		Assert.assertEquals(versionNumber, version.toInt());
 	}
 
 }

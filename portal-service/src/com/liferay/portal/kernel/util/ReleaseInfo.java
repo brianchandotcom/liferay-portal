@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.plugin.Version;
+
 import java.text.DateFormat;
 
 import java.util.Date;
@@ -47,6 +49,9 @@ public class ReleaseInfo {
 
 	public static final int RELEASE_5_2_3_BUILD_NUMBER = 5203;
 
+	public static final Version RELEASE_5_2_0_3_VERSION = Version.getInstance(
+		"5.1.0.3");
+
 	public static final int RELEASE_5_2_5_BUILD_NUMBER = 5205;
 
 	public static final int RELEASE_5_2_7_BUILD_NUMBER = 5207;
@@ -55,7 +60,13 @@ public class ReleaseInfo {
 
 	public static final int RELEASE_5_2_9_BUILD_NUMBER = 5209;
 
+	public static final Version RELEASE_5_2_0_9_VERSION = Version.getInstance(
+		"5.2.0.9");
+
 	public static final int RELEASE_6_0_0_BUILD_NUMBER = 6000;
+
+	public static final Version RELEASE_6_0_0_0_VERSION = Version.getInstance(
+		"6.0.0.0");
 
 	public static final int RELEASE_6_0_1_BUILD_NUMBER = 6001;
 
@@ -66,6 +77,9 @@ public class ReleaseInfo {
 	public static final int RELEASE_6_0_4_BUILD_NUMBER = 6004;
 
 	public static final int RELEASE_6_0_5_BUILD_NUMBER = 6005;
+
+	public static final Version RELEASE_6_0_0_5_VERSION = Version.getInstance(
+		"6.0.0.5");
 
 	public static final int RELEASE_6_0_6_BUILD_NUMBER = 6006;
 
@@ -82,6 +96,9 @@ public class ReleaseInfo {
 	public static final int RELEASE_6_1_10_BUILD_NUMBER = 6110;
 
 	public static final int RELEASE_6_1_20_BUILD_NUMBER = 6120;
+
+	public static final Version RELEASE_6_1_2_0_VERSION = Version.getInstance(
+		"6.1.2.0");
 
 	public static final int RELEASE_6_2_0_BUILD_NUMBER = 6200;
 
@@ -105,6 +122,10 @@ public class ReleaseInfo {
 
 	public static final int getBuildNumber() {
 		return _BUILD_NUMBER;
+	}
+
+	public static final Version getCurrentVersion() {
+		return Version.getInstance(getVersion());
 	}
 
 	public static final String getCodeName() {
@@ -166,7 +187,7 @@ public class ReleaseInfo {
 
 	private static final String _VENDOR = "Liferay, Inc.";
 
-	private static final String _VERSION = "7.0.0";
+	private static final String _VERSION = "7.0.0.0";
 
 	private static final String _VERSION_DISPLAY_NAME = "7.0.0 CE M5";
 

@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.myaccount.action;
+package com.liferay.my.account.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortalUtil;
@@ -28,18 +27,20 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Pei-Jung Lan
  */
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + PortletKeys.MY_ACCOUNT,
 		"mvc.command.name=/users_admin/edit_user"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditUserMVCRenderCommand
-	extends com.liferay.portlet.usersadmin.action.EditUserMVCRenderCommand {
+public class EditUserMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(

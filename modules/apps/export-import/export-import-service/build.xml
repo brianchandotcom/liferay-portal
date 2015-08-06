@@ -3,6 +3,7 @@
 
 <project>
 	<property name="import.shared" value="export-import-api" />
+	<property name="osgi.ide.dependencies" value="commons-lang.jar,jodd.jar,xstream.jar" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

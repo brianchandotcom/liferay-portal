@@ -473,7 +473,7 @@ public class LicenseUtil {
 
 		jsonObject.put("version", 2);
 		jsonObject.put("orderUuid", orderUuid);
-		jsonObject.put("liferayVersion", ReleaseInfo.getBuildNumber());
+		jsonObject.put("liferayVersion", ReleaseInfo.getVersion());
 
 		if (Validator.isNull(productEntryName)) {
 			jsonObject.put(Constants.CMD, "QUERY");

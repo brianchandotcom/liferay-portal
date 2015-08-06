@@ -76,7 +76,7 @@ body {
 				.search-button {
 					background-color: transparent;
 					border-width: 0;
-					margin-top: 4px;
+					margin-top: 0;
 
 					.lfr-btn-label {
 						display: none;

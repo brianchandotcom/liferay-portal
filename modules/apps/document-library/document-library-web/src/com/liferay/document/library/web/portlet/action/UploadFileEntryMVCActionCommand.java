@@ -12,32 +12,33 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.action;
+package com.liferay.document.library.web.portlet.action;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.upload.UploadHandler;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.upload.DLImageUploadHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
-		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN,
-		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
-		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/document_library/upload_image"
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY,
+		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
+		"mvc.command.name=/document_library/upload_file_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
+public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -47,6 +48,6 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 		_uploadHandler.upload(actionRequest, actionResponse);
 	}
 
-	private UploadHandler _uploadHandler = new DLImageUploadHandler();
+	private final UploadHandler _uploadHandler = new DLImageUploadHandler();
 
 }

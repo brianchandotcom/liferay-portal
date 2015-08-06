@@ -45,7 +45,7 @@ public class ExportImportPortletPreferencesProcessorRegistryUtil {
 	public static List<ExportImportPortletPreferencesProcessor>
 		getExportImportPortletPreferencesProcessors() {
 
-			return _instance._getExportImportPortletPreferencesProcessors();
+		return _instance._getExportImportPortletPreferencesProcessors();
 	}
 
 	public static void register(
@@ -94,10 +94,10 @@ public class ExportImportPortletPreferencesProcessorRegistryUtil {
 	private List<ExportImportPortletPreferencesProcessor>
 		_getExportImportPortletPreferencesProcessors() {
 
-			Collection<ExportImportPortletPreferencesProcessor> values =
-				_exportImportPortletPreferencesProcessors.values();
+		Collection<ExportImportPortletPreferencesProcessor> values =
+			_exportImportPortletPreferencesProcessors.values();
 
-			return ListUtil.fromCollection(values);
+		return ListUtil.fromCollection(values);
 	}
 
 	private void _register(

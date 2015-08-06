@@ -128,17 +128,10 @@ public class UpgradeProcessUtil {
 	}
 
 	public static boolean upgradeProcess(
-		int buildNumber, List<UpgradeProcess> upgradeProcesses)
+			int buildNumber, List<UpgradeProcess> upgradeProcesses)
 		throws UpgradeException {
 
 		return upgradeProcess(buildNumber, upgradeProcesses, _INDEX_ON_UPGRADE);
-	}
-
-	public static boolean upgradeProcess(
-			Version version, List<UpgradeProcess> upgradeProcesses)
-		throws UpgradeException {
-
-		return upgradeProcess(version.toInt(), upgradeProcesses, _INDEX_ON_UPGRADE);
 	}
 
 	public static boolean upgradeProcess(
@@ -169,6 +162,14 @@ public class UpgradeProcessUtil {
 		}
 
 		return ranUpgradeProcess;
+	}
+
+	public static boolean upgradeProcess(
+			Version version, List<UpgradeProcess> upgradeProcesses)
+		throws UpgradeException {
+
+		return upgradeProcess(
+			version.toInt(), upgradeProcesses, _INDEX_ON_UPGRADE);
 	}
 
 	private static boolean _upgradeProcess(

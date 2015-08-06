@@ -206,6 +206,8 @@
 
 		<ant dir="modules/core/registry-api" target="compile" inheritAll="false" />
 
+		<ant dir="modules/portal/portal-dynamic-data-mapping-bridge" target="compile" inheritAll="false" />
+
 		<ant dir="portal-service" target="compile" inheritAll="false" />
 
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
@@ -327,6 +329,8 @@
 		<stopwatch name="modules.stopwatch" />
 
 		<ant dir="${project.dir}/modules/core/registry-api" target="deploy" inheritAll="false" />
+
+		<ant dir="${project.dir}/modules/portal/portal-dynamic-data-mapping-bridge" target="deploy" inheritAll="false" />
 
 		<ant dir="${project.dir}/modules" target="deploy" inheritAll="false" />
 
@@ -897,6 +901,8 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 
 			ant -f modules/core/registry-api/build.xml deploy
 			ant -f modules/core/registry-test/build.xml compile-test
+
+			ant -f modules/portal/portal-dynamic-data-mapping-bridge/build.xml deploy
 
 			ant -f modules/apps/build.xml compile-test
 			ant -f modules/core/build.xml compile-test

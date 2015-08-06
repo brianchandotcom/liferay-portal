@@ -1444,7 +1444,10 @@ public class PoshiRunnerValidationTest extends TestCase {
 	}
 
 	protected String getFilePath(String fileName) {
-		String filePath = _DEPENDENCIES_DIR + fileName;
+		String filePath =
+			PropsValues.TEST_BASE_DIR_NAME +
+				"unit/com/liferay/poshi/runner/dependencies/validation/" +
+					fileName;
 
 		if (OSDetector.isWindows()) {
 			filePath = filePath.replace("/", "\\");
@@ -1452,9 +1455,5 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		return filePath;
 	}
-
-	private static final String _DEPENDENCIES_DIR =
-		PropsValues.TEST_BASE_DIR_NAME +
-			"unit/com/liferay/poshi/runner/dependencies/validation/";
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.render;
 
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 
 import java.util.List;
 import java.util.Locale;

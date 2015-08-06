@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.util.DocumentLibraryDDMFormFieldValueTra
 import com.liferay.dynamic.data.mapping.util.HTMLSanitizerDDMFormFieldValueTransformer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 /**
  * @author Eduardo Lundgren

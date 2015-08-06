@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.calendar.util.test;
+package com.liferay.calendar.util;
 
-import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.util.CalendarFactoryImpl;

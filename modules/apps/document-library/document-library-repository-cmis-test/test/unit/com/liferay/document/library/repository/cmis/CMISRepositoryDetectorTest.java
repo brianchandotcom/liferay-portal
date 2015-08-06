@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.repository.cmis.test;
+package com.liferay.document.library.repository.cmis;
 
 import com.liferay.document.library.repository.cmis.internal.CMISRepositoryDetector;
 

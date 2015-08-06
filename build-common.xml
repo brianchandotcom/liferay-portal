@@ -1255,16 +1255,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<attribute name="test.type" />
 
 		<sequential>
-			<ivy:resolve log="${ivy.log.level}">
-				<dependency name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.8.Final" />
-				<dependency name="com.liferay.arquillian.extension" org="com.liferay" rev="1.0.0-SNAPSHOT" />
-				<exclude org="junit" />
-			</ivy:resolve>
-
-			<path id="test-ivy.classpath">
-				<ivy:resources type="bundle,jar,orbit" />
-			</path>
-
 			<var name="junit.classpath" value="${classpath.full}" />
 
 			<if>
@@ -1311,7 +1301,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<pathelement path="test-classes/@{test.type}" />
 				<pathelement path="${junit.classpath}" />
 				<pathelement path="${test.additional.classpath}" />
-				<path refid="test-ivy.classpath" />
 				<fileset dir="${project.dir}/lib/development" includes="*.jar" excludes="jalopy.jar,jetty*.jar,tomcat*.jar" />
 				<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 				<fileset dir="${project.dir}/lib/portal" includes="*.jar" excludes="ant.jar" />

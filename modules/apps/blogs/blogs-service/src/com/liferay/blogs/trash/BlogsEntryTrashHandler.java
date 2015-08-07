@@ -112,7 +112,6 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 		PortletURL portletURL = null;
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
-
 		String portletId = PortletProviderUtil.getPortletId(
 			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
 

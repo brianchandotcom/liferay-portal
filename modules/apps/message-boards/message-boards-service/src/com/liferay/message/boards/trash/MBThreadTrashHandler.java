@@ -253,7 +253,6 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		PortletURL portletURL = null;
 
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
-
 		String portletId = PortletProviderUtil.getPortletId(
 			MBThread.class.getName(), PortletProvider.Action.EDIT);
 

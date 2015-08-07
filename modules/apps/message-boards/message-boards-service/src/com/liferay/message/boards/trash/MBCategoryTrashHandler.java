@@ -397,7 +397,6 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		PortletURL portletURL = null;
 
 		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
-
 		String portletId = PortletProviderUtil.getPortletId(
 			MBCategory.class.getName(), PortletProvider.Action.EDIT);
 

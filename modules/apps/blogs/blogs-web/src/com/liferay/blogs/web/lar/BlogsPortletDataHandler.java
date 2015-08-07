@@ -16,10 +16,6 @@ package com.liferay.blogs.web.lar;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.template.TemplateHandler;
-import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.constants.BlogsConstants;
@@ -165,47 +161,6 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext);
 
 		actionableDynamicQuery.performCount();
-	}
-
-	@Override
-	protected String getDisplayStyle(
-		PortletDataContext portletDataContext, String portletId,
-		PortletPreferences portletPreferences) {
-
-		try {
-			TemplateHandler templateHandler =
-				TemplateHandlerRegistryUtil.getTemplateHandler(
-					BlogsEntry.class.getName());
-
-			if (Validator.isNotNull(templateHandler)) {
-				return portletPreferences.getValue("displayStyle", null);
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return null;
-	}
-
-	@Override
-	protected long getDisplayStyleGroupId(
-		PortletDataContext portletDataContext, String portletId,
-		PortletPreferences portletPreferences) {
-
-		try {
-			TemplateHandler templateHandler =
-				TemplateHandlerRegistryUtil.getTemplateHandler(
-					BlogsEntry.class.getName());
-
-			if (Validator.isNotNull(templateHandler)) {
-				return GetterUtil.getLong(
-					portletPreferences.getValue("displayStyleGroupId", null));
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return 0;
 	}
 
 }

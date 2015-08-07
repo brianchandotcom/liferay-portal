@@ -257,7 +257,17 @@ for (long defaultTeamId : defaultTeamIds) {
 					},
 					id: '<portlet:namespace />selectSiteRole',
 					title: '<liferay-ui:message arguments="site-role" key="select-x" />',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/roles_admin/select_site_role" /><portlet:param name="step" value="2" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /></portlet:renderURL>'
+
+					<%
+					LiferayPortletURL selectSiteRoleURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
+
+					selectSiteRoleURL.setParameter("groupId", String.valueOf(groupId));
+					selectSiteRoleURL.setParameter("roleType", String.valueOf(RoleConstants.TYPE_SITE));
+					selectSiteRoleURL.setParameter("step", "2");
+					selectSiteRoleURL.setWindowState(LiferayWindowState.POP_UP);
+					%>
+
+					uri: '<%= selectSiteRoleURL.toString() %>'
 				},
 				function(event) {
 					for (var i = 0; i < <portlet:namespace />siteRolesRoleIds.length; i++) {

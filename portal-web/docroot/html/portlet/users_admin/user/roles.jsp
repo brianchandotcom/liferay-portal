@@ -117,7 +117,16 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 
 						id: '<%= regularRoleEventName %>',
 						title: '<liferay-ui:message arguments="regular-role" key="select-x" />',
-						uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.ROLES_ADMIN %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/roles_admin/select_regular_role.jsp" /><portlet:param name="eventName" value='<%= regularRoleEventName %>' /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></liferay-portlet:renderURL>'
+
+						<%
+						LiferayPortletURL selectRegularRoleURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
+
+						selectRegularRoleURL.setParameter("eventName", regularRoleEventName);
+						selectRegularRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
+						selectRegularRoleURL.setWindowState(LiferayWindowState.POP_UP);
+						%>
+
+						uri: '<%= selectRegularRoleURL.toString() %>'
 					},
 					function(event) {
 						<portlet:namespace />selectRole(event.roleid, event.roletitle, event.searchcontainername, event.groupdescriptivename, event.groupid, event.iconcssclass);
@@ -322,7 +331,19 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 
 						id: '<%= organizationRoleEventName %>',
 						title: '<liferay-ui:message arguments="organization-role" key="select-x" />',
-						uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.ROLES_ADMIN %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/roles_admin/select_organization_role.jsp" /><portlet:param name="eventName" value='<%= organizationRoleEventName %>' /><portlet:param name="step" value="1" /><portlet:param name="organizationIds" value="<%= StringUtil.merge(organizationIds) %>" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></liferay-portlet:renderURL>'
+
+						<%
+						LiferayPortletURL selectOrganizationRoleURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
+
+						selectOrganizationRoleURL.setParameter("eventName", organizationRoleEventName);
+						selectOrganizationRoleURL.setParameter("organizationIds", StringUtil.merge(organizationIds));
+						selectOrganizationRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
+						selectOrganizationRoleURL.setParameter("roleType", String.valueOf(RoleConstants.TYPE_ORGANIZATION));
+						selectOrganizationRoleURL.setParameter("step", "1");
+						selectOrganizationRoleURL.setWindowState(LiferayWindowState.POP_UP);
+						%>
+
+						uri: '<%= selectOrganizationRoleURL.toString() %>'
 					},
 					function(event) {
 						<portlet:namespace />selectRole(event.roleid, event.roletitle, event.searchcontainername, event.groupdescriptivename, event.groupid, event.iconcssclass);
@@ -476,7 +497,18 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 
 								id: '<%= siteRoleEventName %>',
 								title: '<liferay-ui:message arguments="site-role" key="select-x" />',
-								uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.ROLES_ADMIN %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/roles_admin/select_site_role.jsp" /><portlet:param name="eventName" value='<%= siteRoleEventName %>' /><portlet:param name="step" value="1" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></liferay-portlet:renderURL>'
+
+								<%
+								LiferayPortletURL selectSiteRoleURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
+
+								selectSiteRoleURL.setParameter("eventName", siteRoleEventName);
+								selectSiteRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
+								selectSiteRoleURL.setParameter("roleType", String.valueOf(RoleConstants.TYPE_SITE));
+								selectSiteRoleURL.setParameter("step", "1");
+								selectSiteRoleURL.setWindowState(LiferayWindowState.POP_UP);
+								%>
+
+								uri: '<%= selectSiteRoleURL.toString() %>'
 							},
 							function(event) {
 								<portlet:namespace />selectRole(event.roleid, event.roletitle, event.searchcontainername, event.groupdescriptivename, event.groupid, event.iconcssclass);

@@ -7697,7 +7697,7 @@ public class PortalImpl implements Portal {
 			layout = LayoutLocalServiceUtil.getLayout(plid);
 		}
 		catch (PortalException pe) {
-			_log.error("Unable to determine control panel layout", pe);
+			_log.error("Unable to get control panel layout", pe);
 
 			return null;
 		}

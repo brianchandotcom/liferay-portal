@@ -289,7 +289,7 @@ public class GroupImpl extends GroupBaseImpl {
 					themeDisplay, groupFriendlyURL);
 			}
 			catch (PortalException pe) {
-				_log.error(pe);
+				_log.error(pe, pe);
 			}
 		}
 		else if (privateLayout && (getPrivateLayoutsPageCount() > 0)) {

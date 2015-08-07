@@ -19,6 +19,9 @@ import aQute.bnd.annotation.metatype.Configurable;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.settings.util.ConfigurationPidUtil;
 
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+
 import java.util.Dictionary;
 
 import org.osgi.framework.BundleContext;
@@ -78,7 +81,17 @@ public class ConfigurationBeanManagedService implements ManagedService {
 	}
 
 	@Override
-	public void updated(Dictionary<String, ?> properties) {
+	public void updated(final Dictionary<String, ?> properties) {
+		if (System.getSecurityManager() != null) {
+			AccessController.doPrivileged(
+				new UpdatePrivilegedAction(properties));
+		}
+		else {
+			_updated(properties);
+		}
+	}
+
+	protected void _updated(Dictionary<String, ?> properties) {
 		if (properties == null) {
 			properties = new HashMapDictionary<>();
 		}
@@ -93,6 +106,23 @@ public class ConfigurationBeanManagedService implements ManagedService {
 		_configurationBeanServiceRegistration = _bundleContext.registerService(
 			_configurationBeanClass.getName(), _configurationBean,
 			new HashMapDictionary<String, Object>());
+	}
+
+	protected class UpdatePrivilegedAction implements PrivilegedAction<Void> {
+
+		public UpdatePrivilegedAction(Dictionary<String, ?> properties) {
+			_properties = properties;
+		}
+
+		@Override
+		public Void run() {
+			_updated(_properties);
+
+			return null;
+		}
+
+		private final Dictionary<String, ?> _properties;
+
 	}
 
 	private BundleContext _bundleContext;

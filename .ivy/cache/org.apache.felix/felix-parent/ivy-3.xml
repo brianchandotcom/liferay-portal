@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
 	<info organisation="org.apache.felix"
-		module="org.apache.felix.fileinstall"
-		revision="3.5.1-SNAPSHOT"
-		status="integration"
-		publication="20150728161458"
+		module="felix-parent"
+		revision="3"
+		status="release"
+		publication="20150716123729"
 	>
-		<description homepage="http://felix.apache.org/site/apache-felix-file-install.html">
-		A utility to automatically install bundles from a directory.
+		<description homepage="http://felix.apache.org/">
+		Apache Felix is a community effort to implement the OSGi Framework and Service platform and other interesting OSGi-related technologies.
 		</description>
-		<m:properties__felix.java.version>7</m:properties__felix.java.version>
 		<m:properties__site.javadoc.exclude>*.impl:*.internal:</m:properties__site.javadoc.exclude>
 		<m:properties__sourceReleaseAssemblyDescriptor>source-release-zip-tar</m:properties__sourceReleaseAssemblyDescriptor>
 		<m:properties__felix.java.signature.groupId>org.codehaus.mojo.signature</m:properties__felix.java.signature.groupId>
+		<m:properties__felix.java.version>5</m:properties__felix.java.version>
 		<m:properties__maven.compiler.source>1.5</m:properties__maven.compiler.source>
 		<m:properties__gpg.useagent>true</m:properties__gpg.useagent>
 		<m:properties__distMgmtSnapshotsUrl>https://repository.apache.org/content/repositories/snapshots</m:properties__distMgmtSnapshotsUrl>
@@ -22,7 +22,7 @@
 		<m:properties__distMgmtSnapshotsName>Apache Development Snapshot Repository</m:properties__distMgmtSnapshotsName>
 		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>
 		<m:properties__organization.logo>http://www.apache.org/images/asf_logo_wide.gif</m:properties__organization.logo>
-		<m:maven.plugins>org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-site-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-site-plugin__null|org.apache.maven.plugins__maven-antrun-plugin__null|org.apache.maven.plugins__maven-javadoc-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__null|org.apache.rat__apache-rat-plugin__null|org.codehaus.mojo__animal-sniffer-maven-plugin__null|org.apache.maven.plugins__maven-release-plugin__null|org.codehaus.mojo__ianal-maven-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-site-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-site-plugin__null|org.apache.maven.plugins__maven-antrun-plugin__null|org.apache.maven.plugins__maven-javadoc-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__null|org.apache.rat__apache-rat-plugin__null|org.codehaus.mojo__animal-sniffer-maven-plugin__null|org.apache.maven.plugins__maven-release-plugin__null|org.codehaus.mojo__ianal-maven-plugin__null|null__maven-jar-plugin__null|org.apache.felix__maven-bundle-plugin__2.1.0|null__maven-source-plugin__2.2.1|null__maven-shade-plugin__2.2|org.codehaus.mojo__rat-maven-plugin__null</m:maven.plugins>
+		<m:maven.plugins>org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-site-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-site-plugin__null|org.apache.maven.plugins__maven-antrun-plugin__null|org.apache.maven.plugins__maven-javadoc-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__null|org.apache.rat__apache-rat-plugin__null|org.codehaus.mojo__animal-sniffer-maven-plugin__null|org.apache.maven.plugins__maven-release-plugin__null|org.codehaus.mojo__ianal-maven-plugin__null</m:maven.plugins>
 		<m:dependency.management__junit__junit__version>4.11</m:dependency.management__junit__junit__version>
 		<m:dependency.management__org.easymock__easymock__version>2.5.2</m:dependency.management__org.easymock__easymock__version>
 		<m:dependency.management__org.mockito__mockito-all__version>1.10.19</m:dependency.management__org.mockito__mockito-all__version>
@@ -40,8 +40,6 @@
 		<conf name="optional" visibility="public" description="contains all optional dependencies"/>
 	</configurations>
 	<publications>
-		<artifact name="org.apache.felix.fileinstall" type="jar" ext="jar" conf="master"/>
-		<artifact name="org.apache.felix.fileinstall" type="source" ext="jar" conf="sources" m:classifier="sources"/>
 	</publications>
 	<dependencies>
 		<dependency org="junit" name="junit" rev="4.11" force="true" conf="test->runtime(*),master(*)"/>

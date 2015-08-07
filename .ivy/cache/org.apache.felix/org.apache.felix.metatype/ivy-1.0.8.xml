@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
 	<info organisation="org.apache.felix"
-		module="org.apache.felix.metatype"
-		revision="1.0.8"
-		status="release"
-		publication="20130904003314"
+		module="org.apache.felix.configadmin"
+		revision="1.8.7-SNAPSHOT"
+		status="integration"
+		publication="20150716210335"
 	>
 		<description homepage="">
-		Implementation of the OSGi Metatype Service Specification 1.2
+		Implementation of the OSGi Configuration Admin Service Specification 1.5
 		</description>
+		<m:properties__bundle.build.name>
+            ${basedir}/target
+        </m:properties__bundle.build.name>
+		<m:properties__felix.build.source>5</m:properties__felix.build.source>
+		<m:properties__felix.java.signature.artifactId>java15</m:properties__felix.java.signature.artifactId>
+		<m:properties__felix.build.target>5</m:properties__felix.build.target>
+		<m:properties__bundle.file.name>
+            ${bundle.build.name}/${project.build.finalName}.jar
+        </m:properties__bundle.file.name>
 		<m:properties__sourceReleaseAssemblyDescriptor>source-release-zip-tar</m:properties__sourceReleaseAssemblyDescriptor>
 		<m:properties__distMgmtSnapshotsUrl>https://repository.apache.org/content/repositories/snapshots</m:properties__distMgmtSnapshotsUrl>
 		<m:properties__distMgmtSnapshotsName>Apache Development Snapshot Repository</m:properties__distMgmtSnapshotsName>
 		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>
 		<m:properties__organization.logo>http://www.apache.org/images/asf_logo_wide.gif</m:properties__organization.logo>
-		<m:maven.plugins>org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__null|org.apache.rat__apache-rat-plugin__null|org.apache.maven.plugins__maven-release-plugin__null|org.codehaus.mojo__ianal-maven-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__null|org.apache.rat__apache-rat-plugin__null|org.apache.maven.plugins__maven-release-plugin__null|org.codehaus.mojo__ianal-maven-plugin__null|org.apache.felix__maven-bundle-plugin__2.3.7</m:maven.plugins>
+		<m:maven.plugins>org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__null|org.apache.rat__apache-rat-plugin__null|org.apache.maven.plugins__maven-release-plugin__null|org.codehaus.mojo__ianal-maven-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-compiler-plugin__null|org.apache.rat__apache-rat-plugin__null|org.apache.maven.plugins__maven-release-plugin__null|org.codehaus.mojo__ianal-maven-plugin__null|org.apache.felix__maven-bundle-plugin__2.3.7|org.codehaus.mojo__animal-sniffer-maven-plugin__1.7|null__maven-compiler-plugin__null|null__maven-surefire-plugin__null</m:maven.plugins>
 	</info>
 	<configurations>
 		<conf name="default" visibility="public" description="runtime dependencies and master artifact can be used with this conf" extends="runtime,master"/>
@@ -29,14 +38,21 @@
 		<conf name="optional" visibility="public" description="contains all optional dependencies"/>
 	</configurations>
 	<publications>
-		<artifact name="org.apache.felix.metatype" type="bundle" ext="jar" conf="master"/>
-		<artifact name="org.apache.felix.metatype" type="source" ext="jar" conf="sources" m:classifier="sources"/>
-		<artifact name="org.apache.felix.metatype" type="javadoc" ext="jar" conf="javadoc" m:classifier="javadoc"/>
+		<artifact name="org.apache.felix.configadmin" type="bundle" ext="jar" conf="master"/>
 	</publications>
 	<dependencies>
-		<dependency org="org.osgi" name="org.osgi.core" rev="4.0.0" force="true" conf="provided->compile(*),provided(*),runtime(*),master(*)"/>
-		<dependency org="org.osgi" name="org.osgi.compendium" rev="4.3.0" force="true" conf="provided->compile(*),provided(*),runtime(*),master(*)"/>
-		<dependency org="net.sf.kxml" name="kxml2" rev="2.2.2" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)"/>
+		<dependency org="org.osgi" name="org.osgi.core" rev="5.0.0" force="true" conf="provided->compile(*),provided(*),runtime(*),master(*)"/>
+		<dependency org="org.osgi" name="org.osgi.enterprise" rev="5.0.0" force="true" conf="provided->compile(*),provided(*),runtime(*),master(*)"/>
+		<dependency org="biz.aQute" name="bndlib" rev="1.50.0" force="true" conf="provided->compile(*),provided(*),runtime(*),master(*)"/>
+		<dependency org="junit" name="junit" rev="4.6" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.ops4j.pax.exam" name="pax-exam-junit4" rev="2.6.0" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.ops4j.pax.exam" name="pax-exam-container-native" rev="2.6.0" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.ops4j.pax.exam" name="pax-exam-link-mvn" rev="2.6.0" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.ops4j.pax.url" name="pax-url-aether" rev="1.5.0" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.ops4j.pax.tinybundles" name="tinybundles" rev="1.0.0" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.apache.geronimo.specs" name="geronimo-atinject_1.0_spec" rev="1.0" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.slf4j" name="slf4j-simple" rev="1.7.1" force="true" conf="test->runtime(*),master(*)"/>
+		<dependency org="org.apache.felix" name="org.apache.felix.framework" rev="4.0.3" force="true" conf="test->runtime(*),master(*)"/>
 		<dependency org="junit" name="junit" rev="4.0" force="true" conf="test->runtime(*),master(*)"/>
 		<dependency org="org.easymock" name="easymock" rev="2.4" force="true" conf="test->runtime(*),master(*)"/>
 		<dependency org="org.mockito" name="mockito-all" rev="1.7" force="true" conf="test->runtime(*),master(*)"/>

@@ -3,7 +3,7 @@
   <parent>
     <artifactId>felix-parent</artifactId>
     <groupId>org.apache.felix</groupId>
-    <version>2.1</version>
+    <version>3</version>
     <relativePath>../pom/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -19,13 +19,6 @@
   </scm>
   <build>
     <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
-        </configuration>
-      </plugin>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
         <configuration>
@@ -62,7 +55,7 @@
                 !org.apache.felix.utils.*,
                 *</Import-Package>
             <Bundle-Activator>org.apache.felix.fileinstall.internal.FileInstall</Bundle-Activator>
-            <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+            <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
             <Bundle-Vendor>The Apache Software Foundation</Bundle-Vendor>
             <Bundle-DocURL>http://felix.apache.org/site/apache-felix-file-install.html</Bundle-DocURL>
             <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>

@@ -16,10 +16,12 @@ package com.liferay.social.user.statistics.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.social.user.statistics.web.constants.UserStatisticsPortletKeys;
+import com.liferay.social.user.statistics.web.upgrade.UserStatisticsWebUpgrade;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
@@ -47,4 +49,10 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class UserStatisticsPortlet extends MVCPortlet {
+
+	@Reference(unbind = "-")
+	protected void setUserStatisticsWebUpgrade(
+		UserStatisticsWebUpgrade userStatisticsWebUpgrade) {
+	}
+
 }

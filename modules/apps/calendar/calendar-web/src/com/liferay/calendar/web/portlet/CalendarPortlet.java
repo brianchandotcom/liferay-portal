@@ -52,6 +52,7 @@ import com.liferay.calendar.util.CalendarSearcher;
 import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RSSUtil;
+import com.liferay.calendar.web.upgrade.CalendarWebUpgrade;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -125,6 +126,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Lundgren
@@ -1163,6 +1165,11 @@ public class CalendarPortlet extends MVCPortlet {
 			themeDisplay, calendars);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
+	}
+
+	@Reference(unbind = "-")
+	protected void setCalendarWebUpgrade(
+		CalendarWebUpgrade calendarWebUpgrade) {
 	}
 
 }

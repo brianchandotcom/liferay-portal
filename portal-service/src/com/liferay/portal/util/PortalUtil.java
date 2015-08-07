@@ -1806,10 +1806,10 @@ public class PortalUtil {
 
 	public static PortletURL getSiteAdministrationURL(
 		HttpServletRequest request, ThemeDisplay themeDisplay,
-		String portletName) {
+		String portletId) {
 
 		return getPortal().getSiteAdministrationURL(
-			request, themeDisplay, portletName);
+			request, themeDisplay, portletId);
 	}
 
 	public static PortletURL getSiteAdministrationURL(
@@ -1821,10 +1821,10 @@ public class PortalUtil {
 
 	public static PortletURL getSiteAdministrationURL(
 		PortletRequest portletRequest, ThemeDisplay themeDisplay,
-		String portletName) {
+		String portletId) {
 
 		return getPortal().getSiteAdministrationURL(
-			portletRequest, themeDisplay, portletName);
+			portletRequest, themeDisplay, portletId);
 	}
 
 	/**

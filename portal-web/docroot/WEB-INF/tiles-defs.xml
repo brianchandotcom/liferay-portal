@@ -288,21 +288,6 @@
 		<put name="portlet_content" value="/portlet/our_activities/view.jsp" />
 	</definition>
 
-	<!-- Plugins Admin -->
-
-	<definition name="portlet.plugins_admin" extends="portlet" />
-
-	<definition name="portlet.plugins_admin.edit_plugin" extends="portlet.plugins_admin">
-		<put name="portlet_content" value="/portlet/plugins_admin/edit_plugin.jsp" />
-	</definition>
-
-	<definition name="portlet.plugins_admin.error" extends="portlet.plugins_admin">
-		<put name="portlet_content" value="/portlet/plugins_admin/error.jsp" />
-	</definition>
-
-	<definition name="portlet.plugins_admin.view" extends="portlet.plugins_admin">
-		<put name="portlet_content" value="/portlet/plugins_admin/view.jsp" />
-	</definition>
 
 	<!-- Portal Settings -->
 

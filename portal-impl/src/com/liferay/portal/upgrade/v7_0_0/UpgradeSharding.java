@@ -44,12 +44,12 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateDLFileEntryMetadata();
 		_updateDLFileEntryTypes_DLFolders();
 		_updateDLSyncEvent();
-		_updateGroups_Orgs();
-		_updateGroups_Roles();
-		_updateGroups_UserGroups();
+		_updateGroupsOrgs();
+		_updateGroupsRoles();
+		_updateGroupsUserGroups();
 		_updateJournalArticleImage();
 		_updateJournalArticleResource();
-		_updateMarketplace_Module();
+		_updateMarketplaceModule();
 		_updateMBStatsUser();
 		_updateOrgGroupRole();
 		_updateOrgLabor();
@@ -58,28 +58,94 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updatePortletPreferences();
 		_updateRatingsStats();
 		_updateResourceBlockPermission();
-		_updateSCFrameworkVersi_SCProductVers();
-		_updateSCLicenses_SCProductEntries();
+		_updateSCFrameworkVersionSCProductVersion();
+		_updateSCLicensesSCProductEntries();
 		_updateShoppingItemField();
 		_updateShoppingItemPrice();
 		_updateShoppingOrderItem();
 		_updateTrashVersion();
 		_updateUserGroupGroupRole();
 		_updateUserGroupRole();
-		_updateUserGroups_Teams();
+		_updateUserGroupsTeams();
 		_updateUserIdMapper();
-		_updateUsers_Groups();
-		_updateUsers_Orgs();
-		_updateUsers_Roles();
-		_updateUsers_Teams();
-		_updateUsers_UserGroups();
+		_updateUsersGroups();
+		_updateUsersOrgs();
+		_updateUsersRoles();
+		_updateUsersTeams();
+		_updateUsersUserGroups();
 		_updateUserTrackerPath();
 		_updateWikiPageResource();
 	}
 
-	private void _batchUpdateCompanyIdOnTable(
+	private void _updateAnnouncementsFlags() throws Exception {
+		String select =
+			"select a.flagId, a.userId, u.companyId from AnnouncementsFlag a," +
+				" User_ u where a.userId=u.userId";
+
+		String update =
+			"update AnnouncementsFlag set companyId = ? where flagId = ?";
+
+		_updateCompanyColumnOnTable(
+			"AnnouncementsFlag", select, update, "companyId", "flagId");
+	}
+
+	private void _updateAssetEntriesAssetCategories() throws Exception {
+		String select =
+			"select a.categoryId, c.companyId, a.entryId from " +
+				"AssetEntries_AssetCategories a, AssetCategory c where " +
+				"a.categoryId=c.categoryId";
+
+		String update =
+			"update AssetEntries_AssetCategories set companyId = ? " +
+				"where categoryId = ? and entryId = ?";
+
+		_updateCompanyColumnOnTable(
+			"AssetEntries_AssetCategories", select, update, "companyId",
+			"categoryId", "entryId");
+	}
+
+	private void _updateAssetEntriesAssetTags() throws Exception {
+		String select =
+			"select t.companyId, a.entryId, a.tagId from " +
+				"AssetEntries_AssetTags a, AssetTag t where a.tagId=t.tagId";
+
+		String update =
+			"update AssetEntries_AssetTags set companyId = ? " +
+				"where entryId = ? and tagId = ?";
+
+		_updateCompanyColumnOnTable(
+			"AssetEntries_AssetTags", select, update, "companyId", "entryId",
+			"tagId");
+	}
+
+	private void _updateAssetTagStats() throws Exception {
+		String select =
+			"select t.companyId, a.tagStatsId from AssetTagStats a, " +
+				"AssetTag t where a.tagId=t.tagId";
+
+		String update =
+			"update AssetTagStats set companyId = ? where tagStatsId = ?";
+
+		_updateCompanyColumnOnTable(
+			"AssetTagStats", select, update, "companyId", "tagStatsId");
+	}
+
+	private void _updateBrowserTracker() throws Exception {
+		String select =
+			"select b.browserTrackerId, u.companyId from BrowserTracker b, " +
+				"User_ u where b.userId=u.userId";
+
+		String update =
+			"update BrowserTracker set companyId = ? " +
+				"where browserTrackerId = ?";
+
+		_updateCompanyColumnOnTable(
+			"BrowserTracker", select, update, "companyId", "browserTrackerId");
+	}
+
+	private void _updateCompanyColumnOnTable(
 			String tableName, String select, String update,
-			String[] columnNames)
+			String... columnNames)
 		throws Exception {
 
 		Connection con = null;
@@ -144,80 +210,6 @@ public class UpgradeSharding extends UpgradeProcess {
 		}
 	}
 
-	private void _updateAnnouncementsFlags() throws Exception {
-		String select =
-			"select a.flagId, a.userId, u.companyId from AnnouncementsFlag a," +
-				" User_ u where a.userId=u.userId";
-
-		String update =
-			"update AnnouncementsFlag set companyId = ? where flagId = ?";
-
-		String[] columnNames = {"companyId", "flagId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"AnnouncementsFlag", select, update, columnNames);
-	}
-
-	private void _updateAssetEntriesAssetCategories() throws Exception {
-		String select =
-			"select a.categoryId, c.companyId, a.entryId from " +
-				"AssetEntries_AssetCategories a, AssetCategory c where " +
-				"a.categoryId=c.categoryId";
-
-		String update =
-			"update AssetEntries_AssetCategories set companyId = ? " +
-				"where categoryId = ? and entryId = ?";
-
-		String[] columnNames = {"companyId", "categoryId", "entryId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"AssetEntries_AssetCategories", select, update, columnNames);
-	}
-
-	private void _updateAssetEntriesAssetTags() throws Exception {
-		String select =
-			"select t.companyId, a.entryId, a.tagId from " +
-				"AssetEntries_AssetTags a, AssetTag t where a.tagId=t.tagId";
-
-		String update =
-			"update AssetEntries_AssetTags set companyId = ? " +
-				"where entryId = ? and tagId = ?";
-
-		String[] columnNames = {"companyId", "entryId", "tagId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"AssetEntries_AssetTags", select, update, columnNames);
-	}
-
-	private void _updateAssetTagStats() throws Exception {
-		String select =
-			"select t.companyId, a.tagStatsId from AssetTagStats a, " +
-				"AssetTag t where a.tagId=t.tagId";
-
-		String update =
-			"update AssetTagStats set companyId = ? where tagStatsId = ?";
-
-		String[] columnNames = {"companyId", "tagStatsId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"AssetTagStats", select, update, columnNames);
-	}
-
-	private void _updateBrowserTracker() throws Exception {
-		String select =
-			"select b.browserTrackerId, u.companyId from BrowserTracker b, " +
-				"User_ u where b.userId=u.userId";
-
-		String update =
-			"update BrowserTracker set companyId = ? " +
-				"where browserTrackerId = ?";
-
-		String[] columnNames = {"companyId", "browserTrackerId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"BrowserTracker", select, update, columnNames);
-	}
-
 	private void _updateDDMStorageLink() throws Exception {
 		String select =
 			"select ds.companyId, dsl.structureId from DDMStructure ds, " +
@@ -226,10 +218,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String update =
 			"update DDMStorageLink set companyId = ? where structureId = ?";
 
-		String[] columnNames = {"companyId", "structureId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"DDMStorageLink", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"DDMStorageLink", select, update, "companyId", "structureId");
 	}
 
 	private void _updateDDMStructureLink() throws Exception {
@@ -240,10 +230,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String update =
 			"update DDMStructureLink set companyId = ? where structureId = ?";
 
-		String[] columnNames = {"companyId", "structureId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"DDMStructureLink", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"DDMStructureLink", select, update, "companyId", "structureId");
 	}
 
 	private void _updateDDMTemplateLink() throws Exception {
@@ -254,10 +242,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String update =
 			"update DDMTemplateLink set companyId = ? where templateId = ?";
 
-		String[] columnNames = {"companyId", "templateId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"DDMTemplateLink", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"DDMTemplateLink", select, update, "companyId", "templateId");
 	}
 
 	private void _updateDLFileEntryMetadata() throws Exception {
@@ -270,10 +256,9 @@ public class UpgradeSharding extends UpgradeProcess {
 			"update DLFileEntryMetadata set companyId = ? " +
 				"where fileEntryMetadataId = ?";
 
-		String[] columnNames = {"companyId", "fileEntryMetadataId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"DLFileEntryMetadata", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"DLFileEntryMetadata", select, update, "companyId",
+			"fileEntryMetadataId");
 	}
 
 	private void _updateDLFileEntryTypes_DLFolders() throws Exception {
@@ -289,10 +274,9 @@ public class UpgradeSharding extends UpgradeProcess {
 			"update DLFileEntryTypes_DLFolders set companyId = ? " +
 				"where fileEntryTypeId = ? and folderId = ?";
 
-		String[] columnNames = {"companyId", "fileEntryTypeId", "folderId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"DLFileEntryTypes_DLFolders", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"DLFileEntryTypes_DLFolders", select, update, "companyId",
+			"fileEntryTypeId", "folderId");
 	}
 
 	private void _updateDLSyncEvent() throws Exception {
@@ -311,8 +295,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		String[] columnNames = {"companyId", "syncEventId"};
 
-		_batchUpdateCompanyIdOnTable(
-			"DLSyncEvent", select, update, columnNames);
+		_updateCompanyColumnOnTable("DLSyncEvent", select, update, columnNames);
 
 		// DLFolders
 
@@ -325,13 +308,11 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		update = "update DLSyncEvent set companyId = ? where syncEventId = ?";
 
-		columnNames = new String[] {"companyId", "syncEventId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"DLSyncEvent", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"DLSyncEvent", select, update, "companyId", "syncEventId");
 	}
 
-	private void _updateGroups_Orgs() throws Exception {
+	private void _updateGroupsOrgs() throws Exception {
 		String select =
 			"select g.companyId, go.groupId, go.organizationId from " +
 				"Group_ g, Groups_Orgs go, Organization_ o " +
@@ -342,13 +323,12 @@ public class UpgradeSharding extends UpgradeProcess {
 			"update Groups_Orgs set companyId = ? " +
 				"where groupId = ? and organizationId = ?";
 
-		String[] columnNames = {"companyId", "groupId", "organizationId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"Groups_Orgs", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"Groups_Orgs", select, update, "companyId", "groupId",
+			"organizationId");
 	}
 
-	private void _updateGroups_Roles() throws Exception {
+	private void _updateGroupsRoles() throws Exception {
 		String select =
 			"select g.companyId, gr.groupId, gr.roleId from " +
 				"Group_ g, Groups_Roles gr, Role_ r " +
@@ -358,13 +338,11 @@ public class UpgradeSharding extends UpgradeProcess {
 			"update Groups_Roles set companyId = ? " +
 				"where groupId = ? and roleId = ?";
 
-		String[] columnNames = {"companyId", "groupId", "roleId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"Groups_Roles", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"Groups_Roles", select, update, "companyId", "groupId", "roleId");
 	}
 
-	private void _updateGroups_UserGroups() throws Exception {
+	private void _updateGroupsUserGroups() throws Exception {
 		String select =
 			"select g.companyId, gug.groupId, gug.userGroupId from " +
 				"Group_ g, Groups_UserGroups gug, UserGroup ug " +
@@ -375,10 +353,9 @@ public class UpgradeSharding extends UpgradeProcess {
 			"update Groups_UserGroups set companyId = ? " +
 				"where groupId = ? and userGroupId = ?";
 
-		String[] columnNames = {"companyId", "groupId", "userGroupId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"Groups_UserGroups", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"Groups_UserGroups", select, update, "companyId", "groupId",
+			"userGroupId");
 	}
 
 	private void _updateJournalArticleImage() throws Exception {
@@ -390,10 +367,9 @@ public class UpgradeSharding extends UpgradeProcess {
 			"update JournalArticleImage set companyId = ? " +
 				"where articleImageId = ?";
 
-		String[] columnNames = {"companyId", "articleImageId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"JournalArticleImage", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"JournalArticleImage", select, update, "companyId",
+			"articleImageId");
 	}
 
 	private void _updateJournalArticleResource() throws Exception {
@@ -406,13 +382,12 @@ public class UpgradeSharding extends UpgradeProcess {
 			"update JournalArticleResource set companyId = ? " +
 				"where resourcePrimKey = ?";
 
-		String[] columnNames = {"companyId", "resourcePrimKey"};
-
-		_batchUpdateCompanyIdOnTable(
-			"JournalArticleResource", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"JournalArticleResource", select, update, "companyId",
+			"resourcePrimKey");
 	}
 
-	private void _updateMarketplace_Module() throws Exception {
+	private void _updateMarketplaceModule() throws Exception {
 		String select =
 			"select ma.companyId, mm.moduleId from " +
 				"Marketplace_App ma, Marketplace_Module mm " +
@@ -421,10 +396,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String update =
 			"update Marketplace_Module set companyId = ? where moduleId = ?";
 
-		String[] columnNames = {"companyId", "moduleId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"Marketplace_Module", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"Marketplace_Module", select, update, "companyId", "moduleId");
 	}
 
 	private void _updateMBStatsUser() throws Exception {
@@ -435,29 +408,24 @@ public class UpgradeSharding extends UpgradeProcess {
 		String update =
 			"update MBStatsUser set companyId = ? where statsUserId = ?";
 
-		String[] columnNames = {"companyId", "statsUserId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"MBStatsUser", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"MBStatsUser", select, update, "companyId", "statsUserId");
 	}
 
 	private void _updateOrgGroupRole() throws Exception {
 		String select =
 			"select g.companyId, ogr.organizationId, ogr.groupId, ogr.roleId " +
 				"from OrgGroupRole ogr, Group_ g, Organization_ o, Role_ r " +
-				"where ogr.organizationId=o.organizationId and " +
-				"ogr.groupId=g.groupId and ogr.roleId=r.roleId;";
+					"where ogr.organizationId=o.organizationId and " +
+						"ogr.groupId=g.groupId and ogr.roleId=r.roleId;";
 
 		String update =
 			"update OrgGroupRole set companyId = ? " +
 				"where organizationId = ? and groupId = ? and roleId = ?";
 
-		String[] columnNames = {
-			"companyId", "organizationId", "groupId", "roleId"
-		};
-
-		_batchUpdateCompanyIdOnTable(
-			"OrgGroupRole", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"OrgGroupRole", select, update, "companyId", "organizationId",
+			"groupId", "roleId");
 	}
 
 	private void _updateOrgLabor() throws Exception {
@@ -468,25 +436,23 @@ public class UpgradeSharding extends UpgradeProcess {
 		String update =
 			"update OrgLabor set companyId = ? where orgLaborId = ?";
 
-		String[] columnNames = {"companyId", "orgLaborId"};
-
-		_batchUpdateCompanyIdOnTable("OrgLabor", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"OrgLabor", select, update, "companyId", "orgLaborId");
 	}
 
 	private void _updatePasswordPolicyRel() throws Exception {
 		String select =
 			"select pp.companyId, ppr.passwordPolicyRelId " +
 				"from PasswordPolicy pp, PasswordPolicyRel ppr " +
-				"where pp.passwordPolicyId=ppr.passwordPolicyId";
+					"where pp.passwordPolicyId=ppr.passwordPolicyId";
 
 		String update =
 			"update PasswordPolicyRel set companyId = ? " +
 				"where passwordPolicyRelId = ?";
 
-		String[] columnNames = {"companyId", "passwordPolicyRelId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"PasswordPolicyRel", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"PasswordPolicyRel", select, update, "companyId",
+			"passwordPolicyRelId");
 	}
 
 	private void _updatePasswordTracker() throws Exception {
@@ -498,10 +464,9 @@ public class UpgradeSharding extends UpgradeProcess {
 			"update PasswordTracker set companyId = ? " +
 				"where passwordTrackerId = ?";
 
-		String[] columnNames = {"companyId", "passwordTrackerId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"PasswordTracker", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"PasswordTracker", select, update, "companyId",
+			"passwordTrackerId");
 	}
 
 	private void _updatePortletPreferences() throws Exception {
@@ -514,10 +479,9 @@ public class UpgradeSharding extends UpgradeProcess {
 			"update PortletPreferences set companyId = ? " +
 				"where portletPreferencesId = ?";
 
-		String[] columnNames = {"companyId", "portletPreferencesId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"PortletPreferences", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"PortletPreferences", select, update, "companyId",
+			"portletPreferencesId");
 	}
 
 	private void _updateRatingsStats() throws Exception {
@@ -618,72 +582,64 @@ public class UpgradeSharding extends UpgradeProcess {
 		String update =
 			"update RatingsStats set companyId = ? where statsId = ?";
 
-		String[] columnNames = {"companyId", "statsId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"RatingsStats", select.toString(), update, columnNames);
+		_updateCompanyColumnOnTable(
+			"RatingsStats", select.toString(), update, "companyId", "statsId");
 	}
 
 	private void _updateResourceBlockPermission() throws Exception {
 		String select =
 			"select r.companyId, rbp.resourceBlockPermissionId " +
 				"from ResourceBlockPermission rbp, Role_ r " +
-				"where r.roleId=rbp.roleId";
+					"where r.roleId=rbp.roleId";
 
 		String update =
 			"update ResourceBlockPermission set companyId = ? " +
 				"where resourceBlockPermissionId = ?";
 
-		String[] columnNames = {"companyId", "resourceBlockPermissionId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"ResourceBlockPermission", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"ResourceBlockPermission", select, update, "companyId",
+			"resourceBlockPermissionId");
 	}
 
-	private void _updateSCFrameworkVersi_SCProductVers() throws Exception {
+	private void _updateSCFrameworkVersionSCProductVersion() throws Exception {
 		String select =
 			"select fv.companyId, fvpv.frameworkVersionId, " +
 				"fvpv.productVersionId from SCFrameworkVersion fv, " +
-				"SCProductVersion pv, SCFrameworkVersi_SCProductVers fvpv " +
-				"where fv.frameworkVersionId=fvpv.frameworkVersionId and " +
-				"pv.productVersionId=fvpv.productVersionId";
+					"SCProductVersion pv, SCFrameworkVersi_SCProductVers fvpv" +
+						" where fv.frameworkVersionId=fvpv.frameworkVersionId" +
+							" and pv.productVersionId=fvpv.productVersionId";
 
 		String update =
 			"update SCFrameworkVersi_SCProductVers set companyId = ? " +
 				"where frameworkVersionId = ? and productVersionId = ?";
 
-		String[] columnNames = {
-			"companyId", "frameworkVersionId", "productVersionId"
-		};
-
-		_batchUpdateCompanyIdOnTable(
-			"SCFrameworkVersi_SCProductVers", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"SCFrameworkVersi_SCProductVers", select, update, "companyId",
+			"frameworkVersionId", "productVersionId");
 	}
 
-	private void _updateSCLicenses_SCProductEntries() throws Exception {
+	private void _updateSCLicensesSCProductEntries() throws Exception {
 		String select =
 			"select pe.companyId, lpe.licenseId, " +
 				"lpe.productVersionId from SCLicense l, " +
-				"SCLicenses_SCProductEntries lpe, SCProductEntry pe " +
-				"where l.licenseId=lpe.licenseId and " +
-				"lpe.productVersionId=pe.productVersionId";
+					"SCLicenses_SCProductEntries lpe, SCProductEntry pe " +
+						"where l.licenseId=lpe.licenseId and " +
+							"lpe.productVersionId=pe.productVersionId";
 
 		String update =
 			"update SCLicenses_SCProductEntries set companyId = ? " +
 				"where licenseId = ? and productEntryId = ?";
 
-		String[] columnNames = {"companyId", "licenseId", "productEntryId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"SCLicenses_SCProductEntries", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"SCLicenses_SCProductEntries", select, update, "companyId",
+			"licenseId", "productEntryId");
 
 		// SCLicense
 
 		update = "update SCLicense set companyId = ? where licenseId = ?";
 
-		columnNames = new String[] {"companyId", "licenseId"};
-
-		_batchUpdateCompanyIdOnTable("SCLicense", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"SCLicense", select, update, "companyId", "licenseId");
 	}
 
 	private void _updateShoppingItemField() throws Exception {
@@ -694,10 +650,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String update =
 			"update ShoppingItemField set companyId = ? where itemFieldId = ?";
 
-		String[] columnNames = {"companyId", "itemFieldId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"ShoppingItemField", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"ShoppingItemField", select, update, "companyId", "itemFieldId");
 	}
 
 	private void _updateShoppingItemPrice() throws Exception {
@@ -708,10 +662,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String update =
 			"update ShoppingItemPrice set companyId = ? where itemPriceId = ?";
 
-		String[] columnNames = {"companyId", "itemPriceId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"ShoppingItemPrice", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"ShoppingItemPrice", select, update, "companyId", "itemPriceId");
 	}
 
 	private void _updateShoppingOrderItem() throws Exception {
@@ -722,10 +674,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String update =
 			"update ShoppingOrderItem set companyId = ? where orderItemId = ?";
 
-		String[] columnNames = {"companyId", "orderItemId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"ShoppingOrderItem", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"ShoppingOrderItem", select, update, "companyId", "orderItemId");
 	}
 
 	private void _updateTrashVersion() throws Exception {
@@ -736,62 +686,56 @@ public class UpgradeSharding extends UpgradeProcess {
 		String update =
 			"update TrashVersion set companyId = ? where versionId = ?";
 
-		String[] columnNames = {"companyId", "versionId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"TrashVersion", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"TrashVersion", select, update, "companyId", "versionId");
 	}
 
 	private void _updateUserGroupGroupRole() throws Exception {
 		String select =
 			"select g.companyId, uggr.userGroupId, uggr.groupId, uggr.roleId " +
 				"from Group_ g, Role_ r, UserGroup ug, " +
-				"UserGroupGroupRole uggr where g.groupId=uggr.groupId and " +
-				"ug.userGroupId=uggr.userGroupId and r.roleId=uggr.roleId";
+					"UserGroupGroupRole uggr where g.groupId=uggr.groupId" +
+						" and ug.userGroupId=uggr.userGroupId and " +
+							"r.roleId=uggr.roleId";
 
 		String update =
 			"update UserGroupGroupRole set companyId = ? " +
 				"where userGroupId = ? and groupId = ? and roleId = ?";
 
-		String[] columnNames = {
-			"companyId", "userGroupId", "groupId", "roleId"
-		};
-
-		_batchUpdateCompanyIdOnTable(
-			"UserGroupGroupRole", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"UserGroupGroupRole", select, update, "companyId", "userGroupId",
+			"groupId", "roleId");
 	}
 
 	private void _updateUserGroupRole() throws Exception {
 		String select =
 			"select g.companyId, ugr.userId, ugr.groupId, ugr.roleId from " +
 				"Group_ g, Role_ r, User_ u, UserGroupRole ugr where " +
-				"g.groupId=ugr.groupId and u.userId=ugr.userId and " +
-				"r.roleId=ugr.roleId";
+					"g.groupId=ugr.groupId and u.userId=ugr.userId and " +
+						"r.roleId=ugr.roleId";
 
 		String update =
 			"update UserGroupRole set companyId = ? " +
 				"where userId = ? and groupId = ? and roleId = ?";
 
-		String[] columnNames = {"companyId", "userId", "groupId", "roleId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"UserGroupRole", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"UserGroupRole", select, update, "companyId", "userId", "groupId",
+			"roleId");
 	}
 
-	private void _updateUserGroups_Teams() throws Exception {
+	private void _updateUserGroupsTeams() throws Exception {
 		String select =
 			"select t.companyId, ugt.teamId, ugt.userGroupId from Team t, " +
 				"UserGroup ug, UserGroups_Teams ugt where " +
-				"t.teamId=ugt.teamId and ug.userGroupId=ugt.userGroupId";
+					"t.teamId=ugt.teamId and ug.userGroupId=ugt.userGroupId";
 
 		String update =
 			"update UserGroups_Teams set companyId = ? " +
 				"where teamId = ? and userGroupId = ?";
 
-		String[] columnNames = {"companyId", "teamId", "userGroupId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"UserGroups_Teams", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"UserGroups_Teams", select, update, "companyId", "teamId",
+			"userGroupId");
 	}
 
 	private void _updateUserIdMapper() throws Exception {
@@ -802,89 +746,79 @@ public class UpgradeSharding extends UpgradeProcess {
 		String update =
 			"update UserIdMapper set companyId = ? where userIdMapperId = ?";
 
-		String[] columnNames = {"companyId", "userIdMapperId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"UserIdMapper", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"UserIdMapper", select, update, "companyId", "userIdMapperId");
 	}
 
-	private void _updateUsers_Groups() throws Exception {
+	private void _updateUsersGroups() throws Exception {
 		String select =
 			"select u.companyId, ug.userId, ug.groupId from Group_ g, " +
 				"User_ u, Users_Groups ug where g.groupId=ug.groupId and " +
-				"u.userId=ug.userId";
+					"u.userId=ug.userId";
 
 		String update =
 			"update Users_Groups set companyId = ? where userId = ? " +
 				"and groupId = ?";
 
-		String[] columnNames = {"companyId", "userId", "groupId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"Users_Groups", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"Users_Groups", select, update, "companyId", "userId", "groupId");
 	}
 
-	private void _updateUsers_Orgs() throws Exception {
+	private void _updateUsersOrgs() throws Exception {
 		String select =
 			"select u.companyId, uo.userId, uo.organizationId from " +
 				"Organization_ o, User_ u, Users_Orgs uo where " +
-				"o.organizationId=uo.organizationId and u.userId=uo.userId";
+					"o.organizationId=uo.organizationId and u.userId=uo.userId";
 
 		String update =
 			"update Users_Orgs set companyId = ? where userId = ? and " +
 				"organizationId = ?";
 
-		String[] columnNames = {"companyId", "userId", "organizationId"};
-
-		_batchUpdateCompanyIdOnTable("Users_Orgs", select, update, columnNames);
+		_updateCompanyColumnOnTable("Users_Orgs", select, update, "companyId",
+			"userId", "organizationId");
 	}
 
-	private void _updateUsers_Roles() throws Exception {
+	private void _updateUsersRoles() throws Exception {
 		String select =
 			"select u.companyId, ur.userId, ur.roleId from Role_ r, User_ u, " +
 				"Users_Roles ur where r.roleId=ur.roleId and " +
-				"u.userId=ur.userId";
+					"u.userId=ur.userId";
 
 		String update =
 			"update Users_Roles set companyId = ? where userId = ? and " +
 				"roleId = ?";
 
-		String[] columnNames = {"companyId", "userId", "roleId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"Users_Roles", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"Users_Roles", select, update, "companyId", "userId", "roleId");
 	}
 
-	private void _updateUsers_Teams() throws Exception {
+	private void _updateUsersTeams() throws Exception {
 		String select =
 			"select u.companyId, ut.userId, ut.teamId from Team t, User_ u, " +
 				"Users_Teams ut where t.teamId=ut.teamId and " +
-				"u.userId=ut.userId";
+					"u.userId=ut.userId";
 
 		String update =
 			"update Users_Teams set companyId = ? where userId = ? and " +
 				"teamId = ?";
 
-		String[] columnNames = {"companyId", "userId", "teamId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"Users_Teams", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"Users_Teams", select, update, "companyId", "userId", "teamId");
 	}
 
-	private void _updateUsers_UserGroups() throws Exception {
+	private void _updateUsersUserGroups() throws Exception {
 		String select =
 			"select u.companyId, uug.userId, uug.userGroupId from " +
 				"UserGroup ug, User_ u, Users_UserGroups uug where " +
-				"ug.userGroupId=uug.userGroupId and u.userId=uug.userId";
+					"ug.userGroupId=uug.userGroupId and u.userId=uug.userId";
 
 		String update =
 			"update Users_UserGroups set companyId = ? where userId = ? and " +
 				"userGroupId = ?";
 
-		String[] columnNames = {"companyId", "userId", "userGroupId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"Users_UserGroups", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"Users_UserGroups", select, update, "companyId", "userId",
+			"userGroupId");
 	}
 
 	private void _updateUserTrackerPath() throws Exception {
@@ -896,10 +830,9 @@ public class UpgradeSharding extends UpgradeProcess {
 			"update UserTrackerPath set companyId = ? where " +
 				"userTrackerPathId = ?";
 
-		String[] columnNames = {"companyId", "userTrackerPathId"};
-
-		_batchUpdateCompanyIdOnTable(
-			"UserTrackerPath", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"UserTrackerPath", select, update, "companyId",
+			"userTrackerPathId");
 	}
 
 	private void _updateWikiPageResource() throws Exception {
@@ -911,10 +844,8 @@ public class UpgradeSharding extends UpgradeProcess {
 			"update WikiPageResource set companyId = ? where " +
 				"resourcePrimKey = ?";
 
-		String[] columnNames = {"companyId", "resourcePrimKey"};
-
-		_batchUpdateCompanyIdOnTable(
-			"WikiPageResource", select, update, columnNames);
+		_updateCompanyColumnOnTable(
+			"WikiPageResource", select, update, "companyId", "resourcePrimKey");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -96,39 +96,20 @@ List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Group.class.getNam
 							}
 
 							themeDisplay.setDoAsGroupId(siteGroup.getGroupId());
+
+							request.setAttribute("my_sites.jsp-privateLayout", false);
+							request.setAttribute("my_sites.jsp-selectedSite", selectedSite);
+							request.setAttribute("my_sites.jsp-siteGroup", mySiteGroup);
+
+							if (mySiteGroup.isUser()) {
+								request.setAttribute("my_sites.jsp-siteName", LanguageUtil.get(request, "my-profile"));
+							}
+
+							request.setAttribute("my_sites.jsp-showPrivateLabel", (mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging);
+							request.setAttribute("my_sites.jsp-showStagingLabel", showPublicSiteStaging);
 							%>
 
-							<li class="<%= selectedSite ? "active" : StringPool.BLANK %>">
-
-								<%
-								String siteName = mySiteGroup.isUser() ? LanguageUtil.get(request, "my-profile") : mySiteGroup.getDescriptiveName(locale);
-
-								String groupFriendlyURL = siteGroup.getFriendlyURL();
-								%>
-
-								<a href="<%= selectedSite ? "javascript:;" : HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, false)) %>" id="<portlet:namespace /><%= groupFriendlyURL.substring(1) %>PublicSiteLink" role="menuitem">
-									<%= HtmlUtil.escape(siteName) %>
-								</a>
-
-								<c:if test="<%= showPublicSiteStaging %>">
-									<small><liferay-ui:message key="staging" /></small>
-								</c:if>
-
-								<c:if test="<%= (mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging %>">
-									<small><liferay-ui:message key="public" /></small>
-								</c:if>
-
-								<c:if test="<%= selectedSite %>">
-									<aui:script sandbox="<%= true %>">
-										$('#<portlet:namespace /><%= groupFriendlyURL.substring(1) %>PublicSiteLink').on(
-											'click',
-											function(event) {
-												$('#<portlet:namespace /><%= PanelCategoryKeys.SITE_ADMINISTRATION %>TabLink').tab('show');
-											}
-										);
-									</aui:script>
-								</c:if>
-							</li>
+							<liferay-util:include page="/my_sites/site_link.jsp" servletContext="<%= application %>" />
 						</c:if>
 
 						<c:if test="<%= showPrivateSite && ((mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) %>">
@@ -141,39 +122,20 @@ List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Group.class.getNam
 							}
 
 							themeDisplay.setDoAsGroupId(siteGroup.getGroupId());
+
+							request.setAttribute("my_sites.jsp-privateLayout", true);
+							request.setAttribute("my_sites.jsp-selectedSite", selectedSite);
+							request.setAttribute("my_sites.jsp-siteGroup", mySiteGroup);
+
+							if (mySiteGroup.isUser()) {
+								request.setAttribute("my_sites.jsp-siteName", LanguageUtil.get(request, "my-dashboard"));
+							}
+
+							request.setAttribute("my_sites.jsp-showPrivateLabel", (mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging);
+							request.setAttribute("my_sites.jsp-showStagingLabel", showPrivateSiteStaging);
 							%>
 
-							<li class="<%= selectedSite ? "active" : StringPool.BLANK %>">
-
-								<%
-								String siteName = mySiteGroup.isUser() ? LanguageUtil.get(request, "my-dashboard") : mySiteGroup.getDescriptiveName(locale);
-
-								String groupFriendlyURL = siteGroup.getFriendlyURL();
-								%>
-
-								<a href="<%= selectedSite ? "javascript:;" : HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, true)) %>" id="<portlet:namespace /><%= groupFriendlyURL.substring(1) %>PrivateSiteLink" role="menuitem">
-									<%= HtmlUtil.escape(siteName) %>
-								</a>
-
-								<c:if test="<%= showPrivateSiteStaging %>">
-									<small><liferay-ui:message key="staging" /></small>
-								</c:if>
-
-								<c:if test="<%= (mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging %>">
-									<small><liferay-ui:message key="private" /></small>
-								</c:if>
-
-								<c:if test="<%= selectedSite %>">
-									<aui:script sandbox="<%= true %>">
-										$('#<portlet:namespace /><%= groupFriendlyURL.substring(1) %>PrivateSiteLink').on(
-											'click',
-											function(event) {
-												$('#<portlet:namespace /><%= PanelCategoryKeys.SITE_ADMINISTRATION %>TabLink').tab('show');
-											}
-										);
-									</aui:script>
-								</c:if>
-							</li>
+							<liferay-util:include page="/my_sites/site_link.jsp" servletContext="<%= application %>" />
 						</c:if>
 
 					<%

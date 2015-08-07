@@ -41,7 +41,7 @@
 					<delete dir="${bourbon.tmp.dir}" />
 
 					<copy todir="${app.server.portal.dir}/html/css/common" overwrite="true" preservelastmodified="true">
-						<fileset dir="${common.css.dir}/" />
+						<fileset dir="${common.css.dir}" />
 					</copy>
 				</then>
 			</if>

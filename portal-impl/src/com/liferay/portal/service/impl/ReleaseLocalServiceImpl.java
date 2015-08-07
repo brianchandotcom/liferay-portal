@@ -50,7 +50,7 @@ import java.util.Properties;
 public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 
 	@Override
-	public Release addRelease(String servletContextName, int buildNumber) {
+	public Release addRelease(String servletContextName, String buildNumber) {
 		Release release = null;
 
 		if (servletContextName.equals(

@@ -49,8 +49,8 @@
 	</macrodef>
 
 	<target name="clean">
-		<delete dir="${common.css.dir}/bourbon" />
 		<delete dir="${app.server.portal.dir}/html/css/common" />
+		<delete dir="${common.css.dir}/bourbon" />
 
 		<clean
 			module.dir="${basedir}"

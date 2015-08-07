@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
@@ -84,8 +83,8 @@ public class AddDefaultJournalStructuresAction extends SimpleAction {
 		_defaultDDMStructureHelper.addDDMStructures(
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
-			PortalClassLoaderUtil.getClassLoader(),
-			"com/liferay/portal/upgrade/v7_0_0/dependencies" +
+			getClass().getClassLoader(),
+			"com/liferay/journal/upgrade/v1_0_0/dependencies" +
 				"/basic-web-content-structure.xml",
 			serviceContext);
 	}

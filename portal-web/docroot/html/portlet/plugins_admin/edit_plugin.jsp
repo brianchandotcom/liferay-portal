@@ -127,7 +127,7 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 									>
 
 										<%
-										LiferayPortletURL editURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.MANAGE);
+										PortletURL editURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.MANAGE);
 
 										editURL.setParameter(Constants.CMD, "edit");
 										editURL.setParameter("tabs1", "roles");
@@ -173,7 +173,7 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 									>
 
 										<%
-										LiferayPortletURL editURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.MANAGE);
+										PortletURL editURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.MANAGE);
 
 										editURL.setParameter(Constants.CMD, "edit");
 										editURL.setParameter("tabs1", "roles");

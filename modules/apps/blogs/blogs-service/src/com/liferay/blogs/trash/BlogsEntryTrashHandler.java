@@ -60,9 +60,9 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
-
 		PortletURL portletURL = getRestoreURL(portletRequest, classPK, false);
+
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
 
 		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 		portletURL.setParameter("urlTitle", entry.getUrlTitle());
@@ -109,12 +109,12 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 			boolean isContainerModel)
 		throws PortalException {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
+		PortletURL portletURL = null;
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
 
-		PortletURL portletURL = null;
+		String portletId = PortletProviderUtil.getPortletId(
+			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
 
 		long plid = PortalUtil.getPlidFromPortletId(
 			entry.getGroupId(), portletId);

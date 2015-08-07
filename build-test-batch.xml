@@ -186,21 +186,46 @@
 	</macrodef>
 
 	<macrodef name="run-functional-test">
+		<attribute name="app.server.type" />
 		<attribute name="database.type" />
+		<attribute name="tomcat.gc.log" default="false" />
+		<attribute name="tsant.gc.log" default="false" />
 		<sequential>
 			<property name="test.class" value="${axis.variable}" />
 
-			<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<antcall target="compile" />
+
+			<ant antfile="build-dist.xml" target="build-dist-@{app.server.type}" />
+
+			<antcall target="record-test-generated-properties" />
+
+			<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
+
+			<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
+
+			<database-test-run-test database.type="@{database.type}">
 				<test-action>
-					<database-test-run-test database.type="@{database.type}">
-						<test-action>
-							<ant antfile="build-test-tomcat.xml" inheritAll="false" target="run-selenium-tomcat">
-								<property name="test.class" value="${axis.variable}" />
-							</ant>
-						</test-action>
-					</database-test-run-test>
+					<ant antfile="build-test-@{app.server.type}.xml" inheritAll="false" target="run-selenium-@{app.server.type}">
+						<property name="database.type" value="@{database.type}" />
+						<property name="test.class" value="${axis.variable}" />
+					</ant>
 				</test-action>
-			</run-batch-test>
+			</database-test-run-test>
+
+			<merge-test-results />
+
+			<check-deprecated-method />
+
+			<if>
+				<available file=".testable.portal.started" />
+				<then>
+					<antcall target="stop-app-server" />
+
+					<delete file=".testable.portal.started" failonerror="false" />
+				</then>
+			</if>
+
+			<print-gc-logs tomcat.gc.log="@{tomcat.gc.log}" tsant.gc.log="@{tsant.gc.log}" />
 		</sequential>
 	</macrodef>
 
@@ -264,7 +289,7 @@
 	</macrodef>
 
 	<target name="functional-tomcat-mysql">
-		<run-functional-test database.type="mysql" />
+		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
 	<target name="integration-db2">

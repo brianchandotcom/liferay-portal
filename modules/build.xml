@@ -69,7 +69,7 @@
 		<dirset dir="apps/xsl-content" includes="*" />
 		<dirset dir="core" includes="*" />
 		<dirset dir="frontend" includes="*" />
-		<dirset dir="portal" excludes="portal-search-solr,portal-taglib-aui-form-extension-sample" includes="*" />
+		<dirset dir="portal" excludes="portal-backgroundtask-api,portal-backgroundtask-service,portal-backgroundtask-test,portal-search-solr,portal-taglib-aui-form-extension-sample" includes="*" />
 		<dirset dir="portal-cache" includes="portal-cache,portal-cache-ehcache,portal-cache-ehcache-provider" />
 		<dirset dir="portal-security" includes="*" />
 		<dirset dir="portal-store" includes="*" />

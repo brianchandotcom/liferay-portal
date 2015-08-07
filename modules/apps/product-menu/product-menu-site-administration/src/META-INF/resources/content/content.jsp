@@ -42,71 +42,79 @@ String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.
 
 		scopeLayouts.addAll(LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId(), false));
 		scopeLayouts.addAll(LayoutLocalServiceUtil.getScopeGroupLayouts(curSite.getGroupId(), true));
-
-		String scopeLabel = null;
-
-		Group curScopeGroup = themeDisplay.getScopeGroup();
-
-		if (curScopeGroup.isLayout()) {
-			scopeLabel = StringUtil.shorten(curScopeGroup.getDescriptiveName(locale), 20);
-		}
-		else {
-			scopeLabel = LanguageUtil.get(request, "default-scope");
-		}
 		%>
 
 		<c:if test="<%= !scopeLayouts.isEmpty() %>">
-			<div class="lfr-title-scope-selector nobr">
-				<liferay-ui:message key="scope" />:
-				<liferay-ui:icon-menu direction="down" icon="" message="<%= scopeLabel %>">
+			<ul class="nav nav-equal-height nav-nested">
+				<li>
+					<div class="nav-equal-height-heading">
 
-					<%
-					Map<String, Object> data = new HashMap<String, Object>();
+						<%
+						String scopeLabel = null;
 
-					data.put("navigation", Boolean.TRUE.toString());
+						Group curScopeGroup = themeDisplay.getScopeGroup();
 
-					long doAsGroupId = themeDisplay.getDoAsGroupId();
-
-					try {
-						themeDisplay.setDoAsGroupId(curSite.getGroupId());
-
-						PortletURL portletURL = PortalUtil.getSiteAdministrationURL(request, themeDisplay, themeDisplay.getPpid());
-					%>
-
-					<liferay-ui:icon
-						data="<%= data %>"
-						iconCssClass="<%= curSite.getIconCssClass() %>"
-						message="default-scope"
-						url='<%= portletURL.toString() %>'
-					/>
-
-					<%
-					for (Layout curScopeLayout : scopeLayouts) {
-						Group scopeGroup = curScopeLayout.getScopeGroup();
-
-						themeDisplay.setDoAsGroupId(scopeGroup.getGroupId());
-
-						portletURL = PortalUtil.getSiteAdministrationURL(request, themeDisplay, themeDisplay.getPpid());
-					%>
-
-						<liferay-ui:icon
-							data="<%= data %>"
-							iconCssClass="<%= scopeGroup.getIconCssClass() %>"
-							message="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>"
-							url='<%= portletURL.toString() %>'
-						/>
-
-					<%
+						if (curScopeGroup.isLayout()) {
+							scopeLabel = StringUtil.shorten(curScopeGroup.getDescriptiveName(locale), 20);
 						}
+						else {
+							scopeLabel = LanguageUtil.get(request, "default-scope");
+						}
+						%>
 
-					}
-					finally {
-						themeDisplay.setDoAsGroupId(doAsGroupId);
-					}
-					%>
+						<span><%= scopeLabel %></span>
 
-				</liferay-ui:icon-menu>
-			</div>
+						<span class="nav-equal-height-heading-field">
+							<liferay-ui:icon-menu direction="down" icon="../aui/cog" message="" showArrow="<%= false %>">
+
+								<%
+								Map<String, Object> data = new HashMap<String, Object>();
+
+								data.put("navigation", Boolean.TRUE.toString());
+
+								long doAsGroupId = themeDisplay.getDoAsGroupId();
+
+								try {
+									themeDisplay.setDoAsGroupId(curSite.getGroupId());
+
+									PortletURL portletURL = PortalUtil.getSiteAdministrationURL(request, themeDisplay, themeDisplay.getPpid());
+								%>
+
+								<liferay-ui:icon
+									data="<%= data %>"
+									iconCssClass="<%= curSite.getIconCssClass() %>"
+									message="default-scope"
+									url="<%= portletURL.toString() %>"
+								/>
+
+								<%
+								for (Layout curScopeLayout : scopeLayouts) {
+									Group scopeGroup = curScopeLayout.getScopeGroup();
+
+									themeDisplay.setDoAsGroupId(scopeGroup.getGroupId());
+
+									portletURL = PortalUtil.getSiteAdministrationURL(request, themeDisplay, themeDisplay.getPpid());
+								%>
+
+									<liferay-ui:icon
+										data="<%= data %>"
+										iconCssClass="<%= scopeGroup.getIconCssClass() %>"
+										message="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>"
+										url="<%= portletURL.toString() %>"
+									/>
+
+								<%
+									}
+
+								}
+								finally {
+									themeDisplay.setDoAsGroupId(doAsGroupId);
+								}
+								%>
+
+							</liferay-ui:icon-menu>
+						</span>
+					</div>
 		</c:if>
 
 		<ul aria-labelledby="<%= panelPageCategoryId %>" class="nav nav-equal-height" role="menu">
@@ -127,5 +135,10 @@ String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.
 			%>
 
 		</ul>
+
+		<c:if test="<%= !scopeLayouts.isEmpty() %>">
+				</ul>
+			</li>
+		</c:if>
 	</div>
 </div>

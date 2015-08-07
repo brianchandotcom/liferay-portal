@@ -1509,8 +1509,6 @@
 
 		<execute function="Click" locator1="PGLogin#SIGN_IN_BUTTON" value1="Sign In" />
 
-		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
-
 		<if>
 			<condition function="IsElementPresent" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
 			<then>
@@ -1544,6 +1542,8 @@
 				<execute function="AssertClick" locator1="PGLoginPasswordreminder#SAVE_BUTTON" value1="Save" />
 			</then>
 		</if>
+		
+		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 	</command>
 
 	<command name="loginUserInvalidPG">

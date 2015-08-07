@@ -416,15 +416,14 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			boolean isContainerModel)
 		throws PortalException {
 
-		String portletId = WikiPortletKeys.WIKI;
+		PortletURL portletURL = null;
 
 		WikiPage page = WikiPageLocalServiceUtil.getLatestPage(
 			classPK, WorkflowConstants.STATUS_ANY, false);
-
-		PortletURL portletURL = null;
+		String portletId = WikiPortletKeys.WIKI;
 
 		long plid = PortalUtil.getPlidFromPortletId(
-			page.getGroupId(), WikiPortletKeys.WIKI);
+			page.getGroupId(), portletId);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
 			portletId = WikiPortletKeys.WIKI_ADMIN;

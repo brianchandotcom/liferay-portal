@@ -213,14 +213,13 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 			boolean isContainerModel)
 		throws PortalException {
 
-		String portletId = WikiPortletKeys.WIKI;
+		PortletURL portletURL = null;
 
 		WikiNode node = WikiNodeLocalServiceUtil.getNode(classPK);
+		String portletId = WikiPortletKeys.WIKI;
 
 		long plid = PortalUtil.getPlidFromPortletId(
-			node.getGroupId(), WikiPortletKeys.WIKI);
-
-		PortletURL portletURL = null;
+			node.getGroupId(), portletId);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
 			portletId = WikiPortletKeys.WIKI_ADMIN;

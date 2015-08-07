@@ -59,8 +59,10 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws Exception {
 		_CLASS_NAME_ID = PortalUtil.getClassNameId(StringUtil.randomString());
+
+		BaseDDMServiceTestCase.setUpClass();
 	}
 
 	@Test

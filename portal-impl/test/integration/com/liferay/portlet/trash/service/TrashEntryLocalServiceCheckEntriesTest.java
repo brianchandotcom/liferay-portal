@@ -39,6 +39,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -92,10 +93,18 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 	@Test
 	public void testCompanies() throws Exception {
 		for (int i = 0; i < _COMPANIES_COUNT; i++ ) {
+			long companyId = createCompany();
+
+			Long previousCompanyId = CompanyThreadLocal.getCompanyId();
+
+			CompanyThreadLocal.setCompanyId(companyId);
+
 			Group group = updateTrashEntriesMaxAge(
-				createGroup(createCompany()), _MAX_AGE);
+				createGroup(companyId), _MAX_AGE);
 
 			createTrashEntries(group);
+
+			CompanyThreadLocal.setCompanyId(previousCompanyId);
 		}
 
 		TrashEntryLocalServiceUtil.checkEntries();
@@ -228,7 +237,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 				group.getGroupId(), TestPropsValues.getUserId());
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			group.getCreatorUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomBytes(), serviceContext);
@@ -355,7 +364,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 
 	private static final int _NOT_EXPIRED_TRASH_ENTRIES_COUNT = 4;
 
-	@DeleteAfterTestRun
+	//@DeleteAfterTestRun
 	private final List<Company> _companies = new ArrayList<>();
 
 	@DeleteAfterTestRun

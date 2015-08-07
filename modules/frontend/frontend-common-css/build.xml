@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="common.css.dir" value="src/META-INF/resources/html/css/common" />
+	<property name="common.css.dir.tmp" value="tmp/META-INF/resources/html/css/common" />
 	<property name="third.party.dir" value="../../../portal-web/third-party" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
@@ -13,11 +13,11 @@
 		<sequential>
 			<property name="bourbon.version" value="3.2.3" />
 
-			<property name="bourbon.deploy" value="${common.css.dir}/bourbon" />
+			<property name="bourbon.deploy" value="${common.css.dir.tmp}/bourbon" />
 
 			<property name="bourbon.file" value="bourbon-${bourbon.version}.zip" />
 
-			<property name="bourbon.tmp.dir" value="${common.css.dir}/BOURBON_ZIP" />
+			<property name="bourbon.tmp.dir" value="${common.css.dir.tmp}/BOURBON_ZIP" />
 
 			<if>
 				<not>
@@ -40,8 +40,12 @@
 
 					<delete dir="${bourbon.tmp.dir}" />
 
+					<copy todir="${common.css.dir.tmp}" overwrite="true">
+						<fileset dir="src/META-INF/resources/html/css/common" excludes="**.npmignore,**.json" />
+					</copy>
+
 					<copy todir="${app.server.portal.dir}/html/css/common" overwrite="true" preservelastmodified="true">
-						<fileset dir="${common.css.dir}" />
+						<fileset dir="${common.css.dir.tmp}" />
 					</copy>
 				</then>
 			</if>
@@ -50,7 +54,6 @@
 
 	<target name="clean">
 		<delete dir="${app.server.portal.dir}/html/css/common" />
-		<delete dir="${common.css.dir}/bourbon" />
 
 		<clean
 			module.dir="${basedir}"

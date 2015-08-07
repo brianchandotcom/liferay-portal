@@ -3,4 +3,6 @@ Bundle-SymbolicName: com.liferay.frontend.common.css
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
-	META-INF/resources=src/META-INF/resources
+	META-INF/resources=tmp/META-INF/resources
+
+-donotcopy: (\.npmignore|package\.json)

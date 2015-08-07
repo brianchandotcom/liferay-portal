@@ -19,7 +19,7 @@
 				<version>1.0.1</version>
 				<configuration>
 					<docrootDirName>css</docrootDirName>
-					<portalCommonDirName>../../../modules/frontend/frontend-common-css/src/META-INF/resources/html/css/common</portalCommonDirName>
+					<portalCommonDirName>../../../modules/frontend/frontend-common-css/tmp/META-INF/resources/html/css/common</portalCommonDirName>
 				</configuration>
 			</plugin>
 		</plugins>

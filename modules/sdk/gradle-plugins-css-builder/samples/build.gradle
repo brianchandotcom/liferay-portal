@@ -24,5 +24,5 @@ apply plugin: "com.liferay.css.builder"
 
 buildCSS {
 	docrootDirName = "css"
-	portalCommonDirName = "../../../modules/frontend/frontend-common-css/src/META-INF/resources/html/css/common"
+	portalCommonDirName = "../../../modules/frontend/frontend-common-css/tmp/META-INF/resources/html/css/common"
 }

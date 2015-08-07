@@ -44,7 +44,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>showDropZone</name>
+			<name>showDragAndDropZone</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

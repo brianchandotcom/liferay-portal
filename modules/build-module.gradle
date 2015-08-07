@@ -109,6 +109,12 @@ dependencies {
 eclipse {
 	classpath {
 		file {
+			whenMerged {
+				it.entries.removeAll {
+					(it.kind == "lib") && it.path.endsWith(".pom")
+				}
+			}
+
 			withXml {
 				Node node = it.asNode()
 

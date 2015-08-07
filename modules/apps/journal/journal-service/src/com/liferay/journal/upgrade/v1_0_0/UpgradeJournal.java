@@ -610,8 +610,10 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 	}
 
 	protected String getContent(String fileName) {
+		Class<?> clazz = getClass();
+
 		return ContentUtil.get(
-			getClass().getClassLoader(),
+			clazz.getClassLoader(),
 			"com/liferay/journal/upgrade/v1_0_0/dependencies/" + fileName);
 	}
 

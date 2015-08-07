@@ -80,10 +80,12 @@ public class AddDefaultJournalStructuresAction extends SimpleAction {
 
 		serviceContext.setUserId(defaultUserId);
 
+		Class<?> clazz = getClass();
+
 		_defaultDDMStructureHelper.addDDMStructures(
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
-			getClass().getClassLoader(),
+			clazz.getClassLoader(),
 			"com/liferay/journal/upgrade/v1_0_0/dependencies" +
 				"/basic-web-content-structure.xml",
 			serviceContext);

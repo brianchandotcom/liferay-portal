@@ -146,7 +146,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 			<input class="hide" id="<%= randomNamespace %>InputFile" type="file" />
 		</liferay-util:buffer>
 
-		<div class="drop-enabled drop-zone no-border <%= showDragAndDropZone ? StringPool.BLANK : "hide" %>" data-returntype="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(draggableFileReturnType)) %>" data-uploadurl="<%= uploadURL.toString() %>">
+		<div class="drop-enabled drop-zone <%= showDragAndDropZone ? StringPool.BLANK : "hide" %> no-border" data-returntype="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(draggableFileReturnType)) %>" data-uploadurl="<%= uploadURL.toString() %>">
 			<strong><liferay-ui:message arguments="<%= selectFileHTML %>" key="drag-and-drop-to-upload-or-x" /></strong>
 		</div>
 	</c:if>

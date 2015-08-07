@@ -119,7 +119,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 						title: '<liferay-ui:message arguments="regular-role" key="select-x" />',
 
 						<%
-						LiferayPortletURL selectRegularRoleURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
+						PortletURL selectRegularRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
 
 						selectRegularRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
 						selectRegularRoleURL.setParameter("eventName", regularRoleEventName);
@@ -333,7 +333,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 						title: '<liferay-ui:message arguments="organization-role" key="select-x" />',
 
 						<%
-						LiferayPortletURL selectOrganizationRoleURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
+						PortletURL selectOrganizationRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
 
 						selectOrganizationRoleURL.setParameter("eventName", organizationRoleEventName);
 						selectOrganizationRoleURL.setParameter("organizationIds", StringUtil.merge(organizationIds));
@@ -499,7 +499,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 								title: '<liferay-ui:message arguments="site-role" key="select-x" />',
 
 								<%
-								LiferayPortletURL selectSiteRoleURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
+								PortletURL selectSiteRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
 
 								selectSiteRoleURL.setParameter("eventName", siteRoleEventName);
 								selectSiteRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));

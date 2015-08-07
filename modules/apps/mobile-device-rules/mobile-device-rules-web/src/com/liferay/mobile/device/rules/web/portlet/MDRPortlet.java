@@ -15,11 +15,13 @@
 package com.liferay.mobile.device.rules.web.portlet;
 
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
+import com.liferay.mobile.device.rules.web.upgrade.MobileDeviceRulesWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -51,4 +53,10 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class MDRPortlet extends MVCPortlet {
+
+	@Reference(unbind = "-")
+	protected void setMobileDeviceRulesWebUpgrade(
+		MobileDeviceRulesWebUpgrade mobileDeviceRulesWebUpgrade) {
+	}
+
 }

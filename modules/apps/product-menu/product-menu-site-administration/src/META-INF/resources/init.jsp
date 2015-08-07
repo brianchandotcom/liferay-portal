@@ -32,6 +32,7 @@ page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
 page import="com.liferay.application.list.taglib.constants.ApplicationListWebKeys" %><%@
 page import="com.liferay.application.list.taglib.display.context.logic.PanelCategoryHelper" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@

@@ -58,7 +58,8 @@ page import="com.liferay.portlet.sites.util.SitesUtil" %>
 
 <%@ page import="java.util.Set" %>
 
-<%@ page import="javax.portlet.PortletURL" %><%@
+<%@ page import="javax.portlet.PortletRequest" %><%@
+page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
 <portlet:defineObjects />

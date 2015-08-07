@@ -130,9 +130,7 @@ else {
 		<c:if test="<%= hasWorkflowTask %>">
 
 			<%
-			long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
-
-			PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(controlPanelPlid, PortletKeys.MY_WORKFLOW_TASK, PortletRequest.RENDER_PHASE);
+			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.MY_WORKFLOW_TASK, 0, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("mvcPath", "/edit_workflow_task.jsp");
 

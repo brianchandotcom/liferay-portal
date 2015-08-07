@@ -2492,26 +2492,26 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return StringPool.BLANK;
 		}
 
-		String portletId = null;
-		long plid = LayoutConstants.DEFAULT_PLID;
-		String strutsAction = null;
+		long plid = serviceContext.getPlid();
 
-		if (serviceContext.getPlid() != LayoutConstants.DEFAULT_PLID) {
-			portletId = WikiPortletKeys.WIKI;
-			plid = serviceContext.getPlid();
-			strutsAction = "/wiki/compare_versions";
+		PortletURL portletURL = null;
+
+		if (plid == LayoutConstants.DEFAULT_PLID) {
+			portletURL = PortalUtil.getControlPanelPortletURL(
+				request, WikiPortletKeys.WIKI_ADMIN, 0,
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter(
+				"struts_action", "/wiki_admin/compare_versions");
 		}
 		else {
-			portletId = WikiPortletKeys.WIKI_ADMIN;
-			plid = PortalUtil.getControlPanelPlid(
-				serviceContext.getCompanyId());
-			strutsAction = "/wiki_admin/compare_versions";
+			portletURL = PortletURLFactoryUtil.create(
+				request, WikiPortletKeys.WIKI, plid,
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter("struts_action", "/wiki/compare_versions");
 		}
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, portletId, plid, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("struts_action", strutsAction);
 		portletURL.setParameter("nodeId", String.valueOf(page.getNodeId()));
 		portletURL.setParameter("title", page.getTitle());
 		portletURL.setParameter(
@@ -2542,11 +2542,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 						WikiEscapeUtil.escapeName(page.getTitle()));
 		}
 		else {
-			long controlPanelPlid = PortalUtil.getControlPanelPlid(
-				serviceContext.getCompanyId());
-
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				request, WikiPortletKeys.WIKI_ADMIN, controlPanelPlid,
+			PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
+				request, WikiPortletKeys.WIKI_ADMIN, 0,
 				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(

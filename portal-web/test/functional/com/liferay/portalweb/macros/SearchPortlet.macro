@@ -12,4 +12,27 @@
 		<execute function="AssertClick" locator1="PGSearchConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
+
+	<command name="configureAssetType">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="Search" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+
+		<var name="key_searchAssetType" value="${searchAssetType}" />
+
+		<execute function="AssertClick" locator1="SearchConfiguration#SEARCH_PORTLET_TAG_CONFIGURATION" value1="Configure" />
+
+		<execute function="AssertClick" locator1="SearchConfiguration#SEARCH_PORTLET_ASSET_TYPE_TAG_CONFIGURATION" value1="${searchAssetType}" />
+
+		<execute function="AssertClick" locator1="SearchConfiguration#SEARCH_PORTLET_CONFIGURATION_MOVE_TO_AVAILABLE_BUTTON" />
+
+		<execute function="AssertClick" locator1="PGSearchConfiguration#SAVE_BUTTON" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
 </definition>

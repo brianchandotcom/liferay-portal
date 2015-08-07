@@ -28,6 +28,16 @@
 	<td>//div[@class='search-results']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SEARCH_PORTLET_OPTIONS_WRENCH</td>
+	<td>//div[contains(@class,'portlet-options')]/a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_PORTLET_OPTIONS_MENULIST</td>
+	<td>//ul[contains(@class,'dropdown-menu')]//span[contains(.,'${key_searchPortletOption}')]</td>
+	<td></td>
+</tr>
 <!--The title attribute for the search comment changes depending on language.-->
 <tr>
 	<td>SEARCH_BUTTON</td>

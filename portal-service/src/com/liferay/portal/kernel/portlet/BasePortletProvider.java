@@ -37,10 +37,9 @@ public abstract class BasePortletProvider implements PortletProvider {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long plid = getPlid(themeDisplay);
 		long controlPanelPlid = PortalUtil.getControlPanelPlid(
 			themeDisplay.getCompanyId());
-
-		long plid = getPlid(themeDisplay);
 
 		if (plid == controlPanelPlid) {
 			return PortalUtil.getControlPanelPortletURL(

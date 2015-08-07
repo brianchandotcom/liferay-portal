@@ -1120,15 +1120,13 @@ public class DLImpl implements DL {
 			return StringPool.BLANK;
 		}
 
-		long plid = serviceContext.getPlid();
+		PortletURL portletURL = null;
 
+		long plid = serviceContext.getPlid();
 		long controlPanelPlid = PortalUtil.getControlPanelPlid(
 			serviceContext.getCompanyId());
-
 		String portletId = PortletProviderUtil.getPortletId(
 			FileEntry.class.getName(), PortletProvider.Action.VIEW);
-
-		PortletURL portletURL = null;
 
 		if ((plid == controlPanelPlid) ||
 			(plid == LayoutConstants.DEFAULT_PLID)) {

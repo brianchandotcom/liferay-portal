@@ -136,7 +136,6 @@ boolean showPrototypes = ParamUtil.getBoolean(request, "showPrototypes", true);
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
 	<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
-	<aui:input name="forceDisable" type="hidden" value="<%= false %>" />
 
 	<%
 	request.setAttribute("site.group", group);
@@ -156,66 +155,6 @@ boolean showPrototypes = ParamUtil.getBoolean(request, "showPrototypes", true);
 		showButtons="<%= true %>"
 	/>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveGroup(forceDisable) {
-		var $ = AUI.$;
-
-		var form = $(document.<portlet:namespace />fm);
-
-		var ok = true;
-
-		<c:if test="<%= liveGroup != null %>">
-			var stagingTypeEl = $('input[name=<portlet:namespace />stagingType]:checked');
-
-			var oldValue;
-
-			<c:choose>
-				<c:when test="<%= liveGroup.isStaged() && !liveGroup.isStagedRemotely() %>">
-					oldValue = 1;
-				</c:when>
-				<c:when test="<%= liveGroup.isStaged() && liveGroup.isStagedRemotely() %>">
-					oldValue = 2;
-				</c:when>
-				<c:otherwise>
-					oldValue = 0;
-				</c:otherwise>
-			</c:choose>
-
-			var currentValue = stagingTypeEl.val();
-
-			if (stagingTypeEl.length && (currentValue != oldValue)) {
-				ok = false;
-
-				if (currentValue == 0) {
-					ok = confirm('<%= UnicodeLanguageUtil.format(request, "are-you-sure-you-want-to-deactivate-staging-for-x", liveGroup.getDescriptiveName(locale), false) %>');
-				}
-				else if (currentValue == 1) {
-					ok = confirm('<%= UnicodeLanguageUtil.format(request, "are-you-sure-you-want-to-activate-local-staging-for-x", liveGroup.getDescriptiveName(locale), false) %>');
-				}
-				else if (currentValue == 2) {
-					ok = confirm('<%= UnicodeLanguageUtil.format(request, "are-you-sure-you-want-to-activate-remote-staging-for-x", liveGroup.getDescriptiveName(locale), false) %>');
-				}
-			}
-		</c:if>
-
-		if (ok) {
-			if (forceDisable) {
-				form.fm('forceDisable').val(true);
-				form.fm('local').prop('checked', false);
-				form.fm('none').prop('checked', true);
-				form.fm('redirect').val('<portlet:renderURL><portlet:param name="mvcPath" value="/edit_site.jsp" /><portlet:param name="historyKey" value='<%= renderResponse.getNamespace() + "staging" %>' /></portlet:renderURL>');
-				form.fm('remote').prop('checked', false);
-			}
-
-			<c:if test="<%= (group != null) && !group.isCompany() %>">
-				<portlet:namespace />saveLocales();
-			</c:if>
-
-			submitForm(form);
-		}
-	}
-</aui:script>
 
 <aui:script sandbox="<%= true %>">
 	var applicationAdapter = $('#<portlet:namespace />customJspServletContextName');

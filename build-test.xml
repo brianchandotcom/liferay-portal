@@ -1165,6 +1165,30 @@ Operating system is not supported.
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-ie-driver">
+		<sequential>
+			<if>
+				<not>
+					<isset property="ie.driver.zip" />
+				</not>
+				<then>
+					<fail>
+.
+
+Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.31.0.zip" or "IEDriverServer_Win32_2.31.0.zip" which can be downloaded from this website: https://code.google.com/p/selenium/wiki/InternetExplorerDriver.
+					</fail>
+				</then>
+				<else>
+					<exec executable="taskkill.exe">
+						<arg line="/F /IM IEDriverServer.exe" />
+					</exec>
+
+					<unzip src="${ie.driver.zip}" dest="tools/selenium" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-safari-driver">
 		<sequential>
 			<if>
@@ -2396,6 +2420,14 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</execute>
 				</else>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-ie-driver">
+		<sequential>
+			<exec executable="taskkill.exe">
+				<arg line="/F /IM IEDriverServer.exe" />
+			</exec>
 		</sequential>
 	</macrodef>
 

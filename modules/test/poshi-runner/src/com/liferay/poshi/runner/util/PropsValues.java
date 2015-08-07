@@ -119,6 +119,18 @@ public class PropsValues {
 	public static final int SELENIUM_PORT = GetterUtil.getInteger(
 		PropsUtil.get("selenium.port"));
 
+	public static final boolean SELENIUM_REMOTE_DRIVER_ENABLED =
+		GetterUtil.getBoolean(PropsUtil.get("selenium.remote.driver.enabled"));
+
+	public static final String SELENIUM_REMOTE_DRIVER_HUB =
+		PropsUtil.get("selenium.remote.driver.hub");
+
+	public static final String SELENIUM_DESIRED_CAPABILITIES_PLATFORM =
+		PropsUtil.get("selenium.desired.capabilities.platform");
+
+	public static final String SELENIUM_DESIRED_CAPABILITIES_VERSION =
+		PropsUtil.get("selenium.desired.capabilities.version");
+
 	public static final String TCAT_ADMIN_REPOSITORY = PropsUtil.get(
 		"tcat.admin.repository");
 

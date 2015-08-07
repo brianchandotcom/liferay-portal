@@ -56,7 +56,8 @@ public class TextHTMLDDMFormFieldValueRenderer
 	}
 
 	private static final String _HTML =
-		"<a href=\"\" onclick=\"Liferay.DDLUtil.openPreviewDialog(" +
+		"<a href=\"javascript:;\" onclick=\"" +
+			"Liferay.DDLUtil.openPreviewDialog(" +
 			"'[$DDM_FORM_FIELD_VALUE$]');\">([$PREVIEW$])</a>";
 
 }

@@ -1,0 +1,17 @@
+buildService {
+	apiDirName = "../portal-workflow-kaleo-api/src"
+	autoNamespaceTables = false
+	testDirName = "../portal-workflow-kaleo-test/test/integration"
+}
+
+dependencies {
+	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
+	compile group: "org.jabsorb", name: "jabsorb", version: "1.3.1"
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":portal:portal-workflow-kaleo-api")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/portal")
+}

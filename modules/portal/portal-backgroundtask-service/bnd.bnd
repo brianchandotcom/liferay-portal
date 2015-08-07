@@ -1,0 +1,19 @@
+Bundle-Name: Liferay Portal Background Task Service
+Bundle-SymbolicName: com.liferay.portal.backgroundtask.service
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portal.kernel.backgroundtask,\
+	*
+Include-Resource:\
+	classes,\
+	META-INF/=../../../portal-impl/src/META-INF/log4j.dtd,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
+	@lib/jabsorb.jar
+Liferay-Service: true
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+Spring-Context: META-INF/spring
+-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

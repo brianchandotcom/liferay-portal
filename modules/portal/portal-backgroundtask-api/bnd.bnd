@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Background Task API
+Bundle-SymbolicName: com.liferay.portal.backgroundtask.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.backgroundtask.*
+Include-Resource: classes

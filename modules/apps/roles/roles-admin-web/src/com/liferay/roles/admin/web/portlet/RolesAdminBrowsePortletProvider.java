@@ -16,7 +16,7 @@ package com.liferay.roles.admin.web.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.ManagePortletProvider;
+import com.liferay.portal.kernel.portlet.BrowsePortletProvider;
 import com.liferay.roles.admin.web.constants.RolesAdminPortletKeys;
 
 import javax.portlet.PortletURL;
@@ -31,10 +31,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {"model.class.name=com.liferay.portal.model.Role"},
-	service = ManagePortletProvider.class
+	service = BrowsePortletProvider.class
 )
-public class RoleManagePortletProvider
-	extends BasePortletProvider implements ManagePortletProvider {
+public class RolesAdminBrowsePortletProvider
+	extends BasePortletProvider implements BrowsePortletProvider {
 
 	@Override
 	public String getPortletId() {
@@ -47,7 +47,7 @@ public class RoleManagePortletProvider
 
 		PortletURL portletURL = super.getPortletURL(request);
 
-		portletURL.setParameter("mvcPath", "/edit_role_permissions.jsp");
+		portletURL.setParameter("mvcPath", "/select_role.jsp");
 
 		return portletURL;
 	}

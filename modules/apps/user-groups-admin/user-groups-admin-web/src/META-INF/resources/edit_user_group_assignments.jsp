@@ -49,9 +49,7 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 	url="<%= portletURL.toString() %>"
 />
 
-<portlet:actionURL name="editUserGroupAssignments" var="editUserGroupAssignmentsURL" />
-
-<aui:form action="<%= editUserGroupAssignmentsURL %>" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
@@ -123,7 +121,7 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 		form.fm('addUserIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 		form.fm('removeUserIds').val(Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-		submitForm(form);
+		submitForm(form, '<portlet:actionURL name="editUserGroupAssignments" />');
 	}
 </aui:script>
 

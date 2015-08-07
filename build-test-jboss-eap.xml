@@ -13,7 +13,7 @@
 		<app-server-properties-update>
 			app.server.type=jboss
 			app.server.jboss.version=${app.server.jboss.version}
-			app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-${app.server.jboss.major.version}
+			app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-${app.server.jboss.version}
 			app.server.jboss.zip.name=jboss-eap-${app.server.jboss.version}.zip
 		</app-server-properties-update>
 

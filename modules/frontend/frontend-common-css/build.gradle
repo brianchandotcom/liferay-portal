@@ -1,8 +1,36 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 }
 
+ext {
+	bourbonVersion = "3.2.3"
+}
+
 liferay {
 	deployDir = file("${liferayHome}/osgi/portal")
+}
+
+task buildBourbon(type: Copy)
+
+buildBourbon {
+	File bourbonDestinationDir = file("src/META-INF/resources/html/css/common/bourbon")
+	File bourbonZipFile = file("../../../portal-web/third-party/bourbon-${bourbonVersion}.zip")
+
+	eachFile new StripPathSegmentsAction(4)
+	from zipTree(bourbonZipFile)
+	include "bourbon-${bourbonVersion}/app/assets/stylesheets/**/*"
+	includeEmptyDirs = false
+	into bourbonDestinationDir
+
+	onlyIf {
+		!FileUtil.isUpToDate(project, bourbonZipFile, bourbonDestinationDir)
+	}
+}
+
+classes {
+	dependsOn buildBourbon
 }

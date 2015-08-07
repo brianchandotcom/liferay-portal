@@ -19,7 +19,7 @@ package com.liferay.portlet.admin.util;
  */
 public class PortalMyAccountApplicationType {
 
-	public interface UserPersonalBar {
+	public interface MyAccount {
 
 		public static final String CLASS_NAME =
 			"com.liferay.portlet.admin.util." +

@@ -100,42 +100,40 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 		</div>
 
 		<div class="nameplate-content">
-			<h4 class="user-heading">
+			<div class="user-heading">
 				<%= HtmlUtil.escape(user.getFullName()) %>
-			</h4>
+			</div>
 
-			<small class="user-subheading">
-				<ul class="nav nav-pills">
+			<ul class="user-subheading">
 
-					<%
-					List<Group> mySiteGroups = user.getMySiteGroups(new String[] {User.class.getName()}, false, QueryUtil.ALL_POS);
+				<%
+				List<Group> mySiteGroups = user.getMySiteGroups(new String[] {User.class.getName()}, false, QueryUtil.ALL_POS);
 
-					for (Group mySiteGroup : mySiteGroups) {
-					%>
+				for (Group mySiteGroup : mySiteGroups) {
+				%>
 
-						<c:if test="<%= mySiteGroup.getPublicLayoutsPageCount() > 0 %>">
-							<li>
-								<aui:a href="<%= mySiteGroup.getDisplayURL(themeDisplay, false) %>" label="profile" />
-							</li>
-						</c:if>
+					<c:if test="<%= mySiteGroup.getPublicLayoutsPageCount() > 0 %>">
+						<li>
+							<aui:a href="<%= mySiteGroup.getDisplayURL(themeDisplay, false) %>" label="profile" />
+						</li>
+					</c:if>
 
-						<c:if test="<%= mySiteGroup.getPrivateLayoutsPageCount() > 0 %>">
-							<li>
-								<aui:a href="<%= mySiteGroup.getDisplayURL(themeDisplay, true) %>" label="dashboard" />
-							</li>
-						</c:if>
+					<c:if test="<%= mySiteGroup.getPrivateLayoutsPageCount() > 0 %>">
+						<li>
+							<aui:a href="<%= mySiteGroup.getDisplayURL(themeDisplay, true) %>" label="dashboard" />
+						</li>
+					</c:if>
 
-					<%
-					}
-					%>
+				<%
+				}
+				%>
 
-				</ul>
-			</small>
+			</ul>
 		</div>
 
 		<c:if test="<%= themeDisplay.isShowSignOutIcon() %>">
 			<div class="nameplate-field">
-				<a class="icon-monospaced icon-off user-signout" href="<%= themeDisplay.getURLSignOut() %>"></a>
+				<a class="icon-lg icon-monospaced icon-off user-signout" href="<%= themeDisplay.getURLSignOut() %>"></a>
 			</div>
 		</c:if>
 	</div>

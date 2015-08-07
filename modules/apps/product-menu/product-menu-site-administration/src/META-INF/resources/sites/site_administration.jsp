@@ -53,7 +53,7 @@ Group group = themeDisplay.getScopeGroup();
 		}
 		%>
 
-		<div class="toolbar-group-field">
+		<div class="<%= stagingGroupURL == null ? "active" : StringPool.BLANK %> toolbar-group-field">
 			<aui:a cssClass="icon-fb-radio icon-monospaced" href="<%= stagingGroupURL %>" title="staging" />
 		</div>
 
@@ -78,7 +78,7 @@ Group group = themeDisplay.getScopeGroup();
 		}
 		%>
 
-		<div class="toolbar-group-field">
+		<div class="<%= liveGroupURL == null ? "active" : StringPool.BLANK %> toolbar-group-field">
 			<aui:a cssClass="icon-circle-blank icon-monospaced" href="<%= liveGroupURL %>" title="live" />
 		</div>
 	</c:if>

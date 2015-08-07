@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
 import com.liferay.portal.kernel.portlet.ManagePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.portlet.announcements.constants.AnnouncementsConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,19 +27,19 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=" + AnnouncementsConstants.CLASS_NAME_ALERTS_ENTRY},
+	property = {"model.class.name=com.liferay.portlet.announcements.model.AnnouncementsEntry"},
 	service = {
 		EditPortletProvider.class, ManagePortletProvider.class,
 		ViewPortletProvider.class
 	}
 )
-public class AlertsPortletProvider
+public class AnnouncementsEditPortletProvider
 	extends BasePortletProvider
 	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return AnnouncementsPortletKeys.ALERTS;
+		return AnnouncementsPortletKeys.ANNOUNCEMENTS;
 	}
 
 }

@@ -12,34 +12,32 @@
  * details.
  */
 
-package com.liferay.announcements.web.portlet;
+package com.liferay.dynamic.data.mapping.web.portlet;
 
-import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.portal.kernel.portlet.ManagePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Adolfo Pérez
+ * @author Rafael Praxedes
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.portlet.announcements.model.AnnouncementsEntry"},
-	service = {
-		EditPortletProvider.class, ManagePortletProvider.class,
-		ViewPortletProvider.class
-	}
+	property = {
+		"model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure",
+		"model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate"
+	},
+	service = {EditPortletProvider.class, ViewPortletProvider.class}
 )
-public class AnnouncementsPortletProvider
-	extends BasePortletProvider
-	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
+public class DDMEditPortletProvider extends BasePortletProvider
+	implements EditPortletProvider, ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return AnnouncementsPortletKeys.ANNOUNCEMENTS;
+		return DDMPortletKeys.DYNAMIC_DATA_MAPPING;
 	}
 
 }

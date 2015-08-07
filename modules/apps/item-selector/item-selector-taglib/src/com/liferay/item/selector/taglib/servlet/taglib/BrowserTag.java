@@ -98,7 +98,7 @@ public class BrowserTag extends IncludeTag {
 		_portletURL = null;
 		_searchContainer = null;
 		_showBreadcrumb = false;
-		_showDragAndDropZone = false;
+		_showDragAndDropZone = true;
 		_tabName = null;
 		_uploadURL = null;
 	}
@@ -193,7 +193,7 @@ public class BrowserTag extends IncludeTag {
 	private PortletURL _portletURL;
 	private SearchContainer<?> _searchContainer;
 	private boolean _showBreadcrumb;
-	private boolean _showDragAndDropZone;
+	private boolean _showDragAndDropZone = true;
 	private String _tabName;
 	private PortletURL _uploadURL;
 

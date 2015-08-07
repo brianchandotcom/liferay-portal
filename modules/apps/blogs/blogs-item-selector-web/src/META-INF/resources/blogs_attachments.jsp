@@ -81,6 +81,7 @@ searchContainer.setResults(results);
 	itemSelectedEventName="<%= blogsItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	portletURL="<%= blogsItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	searchContainer="<%= searchContainer %>"
+	showDragAndDropZone="<%= false %>"
 	tabName="<%= blogsItemSelectorViewDisplayContext.getTitle(locale) %>"
 	uploadURL="<%= blogsItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>"
 />

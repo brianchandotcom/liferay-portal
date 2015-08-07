@@ -414,7 +414,9 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 			</c:otherwise>
 		</c:choose>
 
-		<liferay-ui:drop-here-info message="drop-files-here" />
+		<c:if test="<%= (draggableFileReturnType != null) && !showSearchInfo %>">
+			<liferay-ui:drop-here-info message="drop-files-here" />
+		</c:if>
 	</c:if>
 </div>
 

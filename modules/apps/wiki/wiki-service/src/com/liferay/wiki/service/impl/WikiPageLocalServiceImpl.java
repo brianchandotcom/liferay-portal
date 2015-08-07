@@ -2480,9 +2480,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return StringPool.BLANK;
 		}
 
-		long plid = serviceContext.getPlid();
-
 		PortletURL portletURL = null;
+
+		long plid = serviceContext.getPlid();
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
 			portletURL = PortalUtil.getControlPanelPortletURL(

@@ -94,9 +94,9 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		WikiNode node = WikiNodeLocalServiceUtil.getNode(classPK);
-
 		PortletURL portletURL = getRestoreURL(portletRequest, classPK, false);
+
+		WikiNode node = WikiNodeLocalServiceUtil.getNode(classPK);
 
 		portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 

@@ -1,6 +1,12 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
+clean  {
+	ext {
+		cleanDeployed = false
+	}
+}
+
 configurations {
 	jnaerator
 }
@@ -23,6 +29,10 @@ ext {
 
 	libSassUrl = "https://github.com/sass/libsass/archive/${libSassVersion}.zip"
 	sassSpecUrl = "https://github.com/sass/sass-spec/archive/${sassSpecVersion}.zip"
+}
+
+liferay {
+	deployDir = file("../../../lib/development")
 }
 
 task buildLibSass_Darwin(type: BuildLibSassTask)

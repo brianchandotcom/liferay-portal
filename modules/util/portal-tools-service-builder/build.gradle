@@ -1,3 +1,9 @@
+clean  {
+	ext {
+		cleanDeployed = false
+	}
+}
+
 dependencies {
 	compile group: "com.liferay", name: "org.freemarker", transitive: false, version: "2.3.17.LIFERAY-PATCHED-1"
 	compile group: "com.thoughtworks.qdox", name: "qdox", transitive: false, version: "1.12.1"
@@ -11,5 +17,5 @@ dependencies {
 }
 
 liferay {
-	deployDir = file("../../../tools/sdk/dependencies/${bundle.instructions['Bundle-SymbolicName']}/lib")
+	deployDir = file("../../../lib/development")
 }

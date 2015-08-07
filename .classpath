@@ -34,6 +34,13 @@
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.bnd.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.build.logger.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.heap.dump.jar"/>
+	<classpathentry kind="lib" path="lib/development/com.liferay.css.builder.jar"/>
+	<classpathentry kind="lib" path="lib/development/com.liferay.portal.tools.service.builder.jar"/>
+	<classpathentry kind="lib" path="lib/development/com.liferay.rtl.css.jar"/>
+	<classpathentry kind="lib" path="lib/development/com.liferay.sass.compiler.api.jar"/>
+	<classpathentry kind="lib" path="lib/development/com.liferay.sass.compiler.jni.jar"/>
+	<classpathentry kind="lib" path="lib/development/com.liferay.sass.compiler.ruby.jar"/>
+	<classpathentry kind="lib" path="lib/development/com.liferay.whip.jar"/>
 	<classpathentry kind="lib" path="lib/development/deployment.jar"/>
 	<classpathentry kind="lib" path="lib/development/derby.jar"/>
 	<classpathentry kind="lib" path="lib/development/derbytools.jar"/>

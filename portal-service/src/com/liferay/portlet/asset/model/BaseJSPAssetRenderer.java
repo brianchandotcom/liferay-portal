@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.model;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -78,7 +79,9 @@ public abstract class BaseJSPAssetRenderer
 
 		String portletId = getAssetRendererFactory().getPortletId();
 
-		return PortletBagPool.get(portletId).getServletContext();
+		PortletBag portletBag = PortletBagPool.get(portletId);
+
+		return portletBag.getServletContext();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

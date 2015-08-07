@@ -131,8 +131,8 @@ generated or not.
 
 The deprecated value specifies whether the entity's services are deprecated.
 
-If the partitionable value is true, then the entity will have associated a
-companyId.
+The partitionable value specifies wheter or not the entity has a companyId field.
+By default, the value is true, so your entity will be partitionable.
 -->
 <!ATTLIST entity
 	name CDATA #REQUIRED

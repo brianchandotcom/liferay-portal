@@ -33,15 +33,15 @@ boolean showStagingLabel = (Boolean)request.getAttribute("my_sites.jsp-showStagi
 
 	<a href="<%= selectedSite ? "javascript:;" : HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, privateLayout)) %>" id="<portlet:namespace /><%= groupFriendlyURL.substring(1) %><%= privateLayout ? "Private" : "Public" %>SiteLink" role="menuitem">
 		<%= HtmlUtil.escape(siteName) %>
+
+		<c:if test="<%= showStagingLabel %>">
+			<small class="pull-right"><liferay-ui:message key="staging" /></small>
+		</c:if>
+
+		<c:if test="<%= showPrivateLabel %>">
+			<small class="pull-right"><liferay-ui:message key='<%= privateLayout ? "private" : "public" %>' /></small>
+		</c:if>
 	</a>
-
-	<c:if test="<%= showStagingLabel %>">
-		<small><liferay-ui:message key="staging" /></small>
-	</c:if>
-
-	<c:if test="<%= showPrivateLabel %>">
-		<small><liferay-ui:message key='<%= privateLayout ? "private" : "public" %>' /></small>
-	</c:if>
 
 	<c:if test="<%= selectedSite %>">
 		<aui:script sandbox="<%= true %>">

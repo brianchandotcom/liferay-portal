@@ -45,11 +45,11 @@ public class JaxWsApiBundleActivator implements BundleActivator {
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) {
+	public void stop(BundleContext bundleContext) throws Exception {
 		cleanUp(bundleContext);
 	}
 
-	protected void cleanUp(BundleContext bundleContext) {
+	protected void cleanUp(BundleContext bundleContext) throws Exception {
 		try {
 			_endpoint.stop();
 		}

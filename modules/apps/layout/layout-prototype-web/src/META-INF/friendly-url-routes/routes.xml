@@ -15,6 +15,7 @@
 	<route>
 		<pattern>/templates</pattern>
 		<ignored-parameter name="mvcPath" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
 		<pattern></pattern>

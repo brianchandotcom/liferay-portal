@@ -16,8 +16,9 @@ package com.liferay.portlet.asset.model;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletBag;
+import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -42,7 +43,7 @@ public abstract class BaseJSPAssetRenderer
 			String template)
 		throws Exception {
 
-		ServletContext servletContext = getServletContext(request);
+		ServletContext servletContext = getServletContext();
 
 		String jspPath = getJspPath(request, template);
 
@@ -71,12 +72,16 @@ public abstract class BaseJSPAssetRenderer
 		_servletContext = servletContext;
 	}
 
-	protected ServletContext getServletContext(HttpServletRequest request) {
+	protected ServletContext getServletContext() {
 		if (_servletContext != null) {
 			return _servletContext;
 		}
 
-		return (ServletContext)request.getAttribute(WebKeys.CTX);
+		String portletId = getAssetRendererFactory().getPortletId();
+
+		PortletBag portletBag = PortletBagPool.get(portletId);
+
+		return portletBag.getServletContext();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

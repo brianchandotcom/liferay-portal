@@ -81,8 +81,8 @@ public class JournalServiceUpgrade {
 
 		upgradeProcesses.add(new UpgradeClassNames());
 		upgradeProcesses.add(new UpgradeJournal());
-		upgradeProcesses.add(new UpgradeJournalDisplayPreferences());
 		upgradeProcesses.add(new UpgradeJournalArticleType());
+		upgradeProcesses.add(new UpgradeJournalDisplayPreferences());
 		upgradeProcesses.add(new UpgradeLastPublishDate());
 
 		_releaseLocalService.updateRelease(

@@ -14,11 +14,11 @@
 
 package com.liferay.portlet.dynamicdatamapping;
 
+import com.liferay.dynamic.data.mapping.bridge.DDMForm;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormField;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormLayout;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.StagedGroupedModel;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 
 import java.util.List;
 import java.util.Locale;

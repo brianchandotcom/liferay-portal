@@ -21,6 +21,7 @@ import com.liferay.document.library.web.display.context.logic.FileVersionDisplay
 import com.liferay.document.library.web.display.context.logic.UIItemsBuilder;
 import com.liferay.document.library.web.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.display.context.util.JSPRenderer;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -37,7 +38,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManagerUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.IOException;
 

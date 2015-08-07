@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.values.query.internal.model;
 
-import com.liferay.portlet.dynamicdatamapping.model.Value;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.bridge.Value;
 
 import java.util.Locale;
 

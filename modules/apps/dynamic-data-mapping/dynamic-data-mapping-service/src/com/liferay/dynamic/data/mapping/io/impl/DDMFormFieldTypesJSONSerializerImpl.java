@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.io.impl;
 
+import com.liferay.dynamic.data.mapping.bridge.DDMForm;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFactory;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
 import java.util.List;
 

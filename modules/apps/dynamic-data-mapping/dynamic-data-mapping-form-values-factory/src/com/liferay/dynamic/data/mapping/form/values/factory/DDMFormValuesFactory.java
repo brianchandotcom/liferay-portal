@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.values.factory;
 
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.bridge.DDMForm;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormValues;
 
 import javax.portlet.PortletRequest;
 

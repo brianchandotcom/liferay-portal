@@ -15,6 +15,13 @@
 package com.liferay.dynamic.data.mapping.render;
 
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
+import com.liferay.dynamic.data.mapping.bridge.DDMForm;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormField;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormValues;
+import com.liferay.dynamic.data.mapping.bridge.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.render.impl.CheckboxDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.impl.DateDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.impl.DecimalDDMFormFieldValueRenderer;
@@ -39,13 +46,6 @@ import com.liferay.portal.util.CalendarFactoryImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.HtmlImpl;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
-import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.util.Calendar;
 

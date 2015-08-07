@@ -14,6 +14,7 @@
 	<path id="jspc.common.classpath">
 		<pathelement path="docroot/WEB-INF/classes" />
 		<pathelement location="${project.dir}/modules/core/registry-api/classes" />
+		<pathelement location="${project.dir}/modules/portal/portal-dynamic-data-mapping-bridge/classes" />
 		<pathelement location="${project.dir}/portal-impl/portal-impl.jar" />
 		<pathelement location="${project.dir}/portal-pacl/portal-pacl.jar" />
 		<pathelement location="${project.dir}/portal-service/portal-service.jar" />

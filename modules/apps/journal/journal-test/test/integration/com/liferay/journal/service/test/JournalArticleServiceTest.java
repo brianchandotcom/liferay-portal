@@ -15,6 +15,7 @@
 package com.liferay.journal.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.bridge.DDMForm;
 import com.liferay.dynamic.data.mapping.exception.RequiredTemplateException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
@@ -55,7 +56,6 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
 import java.io.InputStream;
 

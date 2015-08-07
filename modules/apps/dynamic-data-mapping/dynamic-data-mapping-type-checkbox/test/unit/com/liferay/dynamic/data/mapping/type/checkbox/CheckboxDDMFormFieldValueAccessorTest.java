@@ -14,12 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.type.checkbox;
 
+import com.liferay.dynamic.data.mapping.bridge.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.bridge.LocalizedValue;
+import com.liferay.dynamic.data.mapping.bridge.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.bridge.Value;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.model.Value;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 
 import org.junit.Assert;
 import org.junit.Test;

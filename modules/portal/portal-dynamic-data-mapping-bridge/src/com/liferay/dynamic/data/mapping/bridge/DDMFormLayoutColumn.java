@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
-
-import com.liferay.portal.kernel.util.ListUtil;
+package com.liferay.dynamic.data.mapping.bridge;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,7 +36,7 @@ public class DDMFormLayoutColumn {
 
 	public DDMFormLayoutColumn(int size, String... ddmFormFieldNames) {
 		_size = size;
-		_ddmFormFieldNames = ListUtil.toList(ddmFormFieldNames);
+		_ddmFormFieldNames = Arrays.asList(ddmFormFieldNames);
 	}
 
 	public String getDDMFormFieldName(int index) {

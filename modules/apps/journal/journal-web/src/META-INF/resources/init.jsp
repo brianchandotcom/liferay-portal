@@ -26,7 +26,12 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.dynamic.data.mapping.exception.NoSuchStructureException" %><%@
+<%@ page import="com.liferay.dynamic.data.mapping.bridge.DDMForm" %><%@
+page import="com.liferay.dynamic.data.mapping.bridge.DDMFormField" %><%@
+page import="com.liferay.dynamic.data.mapping.bridge.DDMFormFieldOptions" %><%@
+page import="com.liferay.dynamic.data.mapping.bridge.DDMFormValues" %><%@
+page import="com.liferay.dynamic.data.mapping.bridge.LocalizedValue" %><%@
+page import="com.liferay.dynamic.data.mapping.exception.NoSuchStructureException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
@@ -178,11 +183,6 @@ page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.DuplicateFileException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileSizeException" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntry" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.model.DDMForm" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.model.DDMFormField" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.model.LocalizedValue" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues" %><%@
 page import="com.liferay.portlet.trash.model.TrashEntry" %><%@
 page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@

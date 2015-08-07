@@ -65,6 +65,7 @@ Export-Package:\
 	!unicode-license.txt,\
 	com.liferay.ibm.icu.*;version='4.0.1',\
 	com.liferay.registry.*;version='1.0.0',\
+	com.liferay.dynamic.data.mapping.bridge;version='1.0.0',\
 	com.sun.syndication;version='1.0',\
 	com.sun.syndication.feed;version='1.0',\
 	com.sun.syndication.feed.atom;version='1.0',\
@@ -190,6 +191,7 @@ Export-Package:\
 	org.xml.sax.*;version='2.0.2',\
 	*
 Include-Resource:\
+	@lib/com.liferay.dynamic.data.mapping.bridge.jar,\
 	@lib/com.liferay.registry.api.jar,\
 	@lib/jaxws-api.jar,\
 	@../../../lib/development/jms.jar,\

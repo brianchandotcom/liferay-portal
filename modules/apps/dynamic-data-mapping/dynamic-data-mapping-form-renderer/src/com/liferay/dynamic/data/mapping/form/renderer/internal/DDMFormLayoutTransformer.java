@@ -14,11 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormLayoutColumn;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormLayoutPage;
+import com.liferay.dynamic.data.mapping.bridge.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.bridge.LocalizedValue;
 
 import java.util.ArrayList;
 import java.util.HashMap;

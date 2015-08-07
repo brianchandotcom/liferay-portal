@@ -146,11 +146,11 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 	protected void upgradeRolesAdmin() throws Exception {
 		runSQL("alter table PasswordPolicy add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.ROLES_ADMIN, "PasswordPolicy");
+		updateLastPublishDates("128", "PasswordPolicy");
 
 		runSQL("alter table Role_ add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.ROLES_ADMIN, "Role_");
+		updateLastPublishDates("128", "Role_");
 	}
 
 	protected void upgradeSiteAdmin() throws Exception {

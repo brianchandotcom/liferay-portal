@@ -14,6 +14,7 @@
 
 package com.liferay.my.account.web.portlet.action;
 
+import com.liferay.my.account.web.constants.MyAccountPortletKeys;
 import com.liferay.portal.UserPasswordException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.Validator;
@@ -22,7 +23,6 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.pwd.PwdAuthenticator;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + PortletKeys.MY_ACCOUNT,
+		"javax.portlet.name=" + MyAccountPortletKeys.MY_ACCOUNT,
 		"mvc.command.name=/users_admin/edit_user"
 	},
 	service = MVCActionCommand.class

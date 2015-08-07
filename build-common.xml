@@ -54,6 +54,10 @@
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
 	</path>
 
+	<path id="portal.tools.classpath">
+		<fileset dir="${project.dir}/tools/sdk/tmp/portal-tools" includes="*.jar" />
+	</path>
+
 	<path id="project.classpath">
 		<pathelement path="${classpath.full}" />
 		<path refid="lib.classpath" />
@@ -1106,6 +1110,10 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<update-sdk-properties />
 				</then>
 			</if>
+
+			<gradle-execute task="setupPortalTools">
+				<arg value="--build-file=${project.dir}/modules/util.gradle" />
+			</gradle-execute>
 		</sequential>
 	</macrodef>
 

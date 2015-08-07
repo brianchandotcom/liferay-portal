@@ -121,7 +121,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Group.class.getNam
 										$('#<portlet:namespace />selectedPublicSiteLink').on(
 											'click',
 											function(event) {
-												$('#<portlet:namespace />site_administrationTabLink').tab('show');
+												$('#<portlet:namespace /><%= PanelCategoryKeys.SITE_ADMINISTRATION %>TabLink').tab('show');
 											}
 										);
 									</aui:script>

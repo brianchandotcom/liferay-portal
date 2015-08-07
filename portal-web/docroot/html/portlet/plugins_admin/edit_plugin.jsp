@@ -176,9 +176,9 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 										LiferayPortletURL editURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.MANAGE);
 
 										editURL.setParameter(Constants.CMD, "edit");
-										editURL.setParameter("portletResource", String.valueOf(portlet.getPortletId()));
-										editURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 										editURL.setParameter("tabs1", "roles");
+										editURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+										editURL.setParameter("portletResource", String.valueOf(portlet.getPortletId()));
 										%>
 
 										<liferay-ui:icon iconCssClass="icon-edit" label="<%= true %>" message="change" url="<%= editURL.toString() %>" />

@@ -69,7 +69,6 @@ page import="com.liferay.portal.util.WebKeys" %><%@
 page import="com.liferay.portal.util.comparator.PortletCategoryComparator" %><%@
 page import="com.liferay.portal.util.comparator.PortletTitleComparator" %><%@
 page import="com.liferay.portlet.PortletConfigFactoryUtil" %><%@
-page import="com.liferay.portlet.PortletURLImpl" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@

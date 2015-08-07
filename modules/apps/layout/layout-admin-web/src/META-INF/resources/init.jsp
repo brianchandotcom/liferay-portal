@@ -109,7 +109,6 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.RobotsUtil" %><%@
 page import="com.liferay.portal.util.WebKeys" %><%@
 page import="com.liferay.portal.webserver.WebServerServletTokenUtil" %><%@
-page import="com.liferay.portlet.PortletURLFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.FileSizeException" %><%@
 page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys" %><%@

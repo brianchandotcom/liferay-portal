@@ -189,7 +189,3 @@ alter table Users_UserGroups add companyId LONG;
 create index IX_BB65040C on Users_UserGroups (companyId);
 
 alter table UserTrackerPath add companyId LONG;
-
-alter table WikiPageResource add companyId LONG;
-
-create index IX_13319367 on WikiPageResource (uuid_, companyId);

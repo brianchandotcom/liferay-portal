@@ -1,4 +1,56 @@
+import com.liferay.gradle.util.copy.RenameDependencyClosure
+
+buildscript {
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.16"
+	}
+}
+
+configurations {
+	portalTools {
+		resolutionStrategy {
+			eachDependency {
+				DependencyResolveDetails dependencyResolveDetails ->
+
+				if ((dependencyResolveDetails.requested.version == "default") && project.hasProperty(dependencyResolveDetails.requested.name + ".version")) {
+					dependencyResolveDetails.useVersion project.properties[dependencyResolveDetails.requested.name + ".version"]
+				}
+			}
+		}
+	}
+}
+
+dependencies {
+	portalTools group: "com.liferay", name: "com.liferay.css.builder", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.whip", version: "default"
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+task setupPortalTools(type: Copy)
 task wrapper(type: Wrapper)
+
+setupPortalTools {
+	from configurations.portalTools
+	into rootProject.file("../tools/sdk/tmp/portal-tools")
+
+	rename new RenameDependencyClosure(project, "portalTools")
+}
 
 wrapper {
 	File wrapperDir = rootDir.parentFile

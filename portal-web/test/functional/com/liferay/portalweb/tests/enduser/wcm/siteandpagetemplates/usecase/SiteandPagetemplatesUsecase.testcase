@@ -795,7 +795,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55859" name="SitesTemplateResourceInheritance" priority="4">
+	<command name="SitesTemplateResourceInheritance" priority="4">
 		<property name="portlet.plugins.includes" value="tasks-portlet" />
 
 		<execute macro="Page#gotoCP">

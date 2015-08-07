@@ -24,6 +24,7 @@ import com.liferay.wiki.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradePortletSettings;
+import com.liferay.wiki.upgrade.v1_0_0.UpgradeSchema;
 import com.liferay.wiki.upgrade.v1_0_0.UpgradeWikiPageResource;
 
 import java.util.ArrayList;
@@ -59,6 +60,8 @@ public class WikiServiceUpgrade {
 	@Activate
 	protected void upgrade() throws PortalException {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
+
+		upgradeProcesses.add(new UpgradeSchema());
 
 		upgradeProcesses.add(new UpgradePortletId());
 

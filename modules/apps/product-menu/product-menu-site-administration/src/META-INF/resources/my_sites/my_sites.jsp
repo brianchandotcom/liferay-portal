@@ -102,9 +102,11 @@ List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Group.class.getNam
 
 								<%
 								String siteName = mySiteGroup.isUser() ? LanguageUtil.get(request, "my-profile") : mySiteGroup.getDescriptiveName(locale);
+
+								String groupFriendlyURL = siteGroup.getFriendlyURL();
 								%>
 
-								<a href="<%= selectedSite ? "javascript:;" : HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, false)) %>" id="<portlet:namespace />selectedPublicSiteLink" role="menuitem">
+								<a href="<%= selectedSite ? "javascript:;" : HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, false)) %>" id="<portlet:namespace /><%= groupFriendlyURL.substring(1) %>PublicSiteLink" role="menuitem">
 									<%= HtmlUtil.escape(siteName) %>
 								</a>
 
@@ -118,7 +120,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Group.class.getNam
 
 								<c:if test="<%= selectedSite %>">
 									<aui:script sandbox="<%= true %>">
-										$('#<portlet:namespace />selectedPublicSiteLink').on(
+										$('#<portlet:namespace /><%= groupFriendlyURL.substring(1) %>PublicSiteLink').on(
 											'click',
 											function(event) {
 												$('#<portlet:namespace /><%= PanelCategoryKeys.SITE_ADMINISTRATION %>TabLink').tab('show');
@@ -145,9 +147,11 @@ List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Group.class.getNam
 
 								<%
 								String siteName = mySiteGroup.isUser() ? LanguageUtil.get(request, "my-dashboard") : mySiteGroup.getDescriptiveName(locale);
+
+								String groupFriendlyURL = siteGroup.getFriendlyURL();
 								%>
 
-								<a href="<%= selectedSite ? "javascript:;" : HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, true)) %>" id="<portlet:namespace />selectedPrivateSiteLink" role="menuitem">
+								<a href="<%= selectedSite ? "javascript:;" : HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, true)) %>" id="<portlet:namespace /><%= groupFriendlyURL.substring(1) %>PrivateSiteLink" role="menuitem">
 									<%= HtmlUtil.escape(siteName) %>
 								</a>
 
@@ -161,7 +165,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Group.class.getNam
 
 								<c:if test="<%= selectedSite %>">
 									<aui:script sandbox="<%= true %>">
-										$('#<portlet:namespace />selectedPrivateSiteLink').on(
+										$('#<portlet:namespace /><%= groupFriendlyURL.substring(1) %>PrivateSiteLink').on(
 											'click',
 											function(event) {
 												$('#<portlet:namespace /><%= PanelCategoryKeys.SITE_ADMINISTRATION %>TabLink').tab('show');

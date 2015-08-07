@@ -9,7 +9,7 @@
 >
 	<bean id="com.liferay.portal.service.persistence.impl.CompanyProvider" class="com.liferay.portal.service.persistence.impl.ThreadLocalCompanyProvider" />
 
-	<bean id="com.liferay.portal.service.persistence.impl.ServiceCompanyProvider" class="com.liferay.portal.service.persistence.impl.ServiceCompanyProviderImpl">
+	<bean id="com.liferay.portal.service.persistence.impl.CompanyProviderHolder" class="com.liferay.portal.service.persistence.impl.CompanyProviderHolderImpl">
 		<property name="companyProvider" ref="com.liferay.portal.service.persistence.impl.CompanyProvider" />
 	</bean>
 </beans>

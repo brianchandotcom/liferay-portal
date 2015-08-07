@@ -91,7 +91,7 @@ public class TableMapperTest {
 	public static void setUpClass() {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
-		_serviceCompanyProvider.setCompanyProvider(
+		_companyProviderHolder.setCompanyProvider(
 			new ThreadLocalCompanyProvider());
 	}
 
@@ -142,7 +142,7 @@ public class TableMapperTest {
 		_tableMapperImpl = new TableMapperImpl<Left, Right>(
 			_TABLE_NAME, _LEFT_COLUMN_NAME, _RIGHT_COLUMN_NAME,
 			_leftBasePersistence, _rightBasePersistence,
-			_serviceCompanyProvider);
+			_companyProviderHolder);
 	}
 
 	@After
@@ -1299,7 +1299,7 @@ public class TableMapperTest {
 			TableMapperFactory.getTableMapper(
 				_TABLE_NAME, _LEFT_COLUMN_NAME, _RIGHT_COLUMN_NAME,
 				_leftBasePersistence, _rightBasePersistence,
-				_serviceCompanyProvider);
+				_companyProviderHolder);
 
 		Assert.assertEquals(1, tableMappers.size());
 		Assert.assertSame(tableMapper, tableMappers.get(_TABLE_NAME));
@@ -1316,7 +1316,7 @@ public class TableMapperTest {
 			TableMapperFactory.getTableMapper(
 				_TABLE_NAME, _LEFT_COLUMN_NAME, _RIGHT_COLUMN_NAME,
 				_leftBasePersistence, _rightBasePersistence,
-				_serviceCompanyProvider));
+				_companyProviderHolder));
 
 		// Reverse mapping table
 
@@ -1325,7 +1325,7 @@ public class TableMapperTest {
 			TableMapperFactory.getTableMapper(
 				_TABLE_NAME, _RIGHT_COLUMN_NAME, _LEFT_COLUMN_NAME,
 				_rightBasePersistence, _leftBasePersistence,
-				_serviceCompanyProvider));
+				_companyProviderHolder));
 
 		// Remove
 
@@ -1419,8 +1419,8 @@ public class TableMapperTest {
 
 	private static final String _TABLE_NAME = "Lefts_Rights";
 
-	private static final ServiceCompanyProvider _serviceCompanyProvider =
-		new ServiceCompanyProviderImpl();
+	private static final CompanyProviderHolder _companyProviderHolder =
+		new CompanyProviderHolderImpl();
 
 	private DataSource _dataSource;
 	private MockBasePersistence<Left> _leftBasePersistence;

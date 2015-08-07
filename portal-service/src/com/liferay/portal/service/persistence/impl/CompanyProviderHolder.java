@@ -17,11 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 /**
  * @author Cristina González
  */
-public interface ServiceCompanyProvider {
-
-	public long getCompanyId();
-
-	public String getCompanyIdName();
+public interface CompanyProviderHolder extends CompanyProvider {
 
 	public CompanyProvider getCompanyProvider();
 

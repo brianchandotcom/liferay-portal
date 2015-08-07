@@ -417,19 +417,10 @@ public abstract class LiferayConverter {
 	}
 
 	protected int getAudioBitRate(ICodec outputICodec, int originalBitRate) {
-		if ((originalBitRate == 0) || (originalBitRate > AUDIO_BIT_RATE_MAX)) {
-			originalBitRate = AUDIO_BIT_RATE_DEFAULT;
-		}
-
-		ICodec.ID iCodecID = outputICodec.getID();
-
-		if (iCodecID.equals(ICodec.ID.CODEC_ID_VORBIS)) {
-			if (originalBitRate < 64000) {
-				originalBitRate = 64000;
-			}
-		}
-
-		return originalBitRate;
+		return getCodecBitRate(
+			outputICodec,
+			getProperty(
+				originalBitRate, AUDIO_BIT_RATE_DEFAULT, AUDIO_BIT_RATE_MAX));
 	}
 
 	protected int getAudioEncodingChannels(
@@ -487,19 +478,31 @@ public abstract class LiferayConverter {
 		return AUDIO_SAMPLE_RATE_DEFAULT;
 	}
 
+	protected int getCodecBitRate(ICodec outputICodec, int originalBitRate) {
+		ICodec.ID iCodecID = outputICodec.getID();
+
+		if (iCodecID.equals(ICodec.ID.CODEC_ID_VORBIS)) {
+			if (originalBitRate < 64000) {
+				return 64000;
+			}
+		}
+
+		return originalBitRate;
+	}
+
 	protected abstract IContainer getInputIContainer();
 
 	protected int getProperty(
-		int originalValue, int defaultValue, int maxValue) {
+		int originalBitRate, int defaultBitRate, int maxBitRate) {
 
-		if (originalValue <= 0) {
-			originalValue = defaultValue;
+		if (originalBitRate <= 0) {
+			return defaultBitRate;
 		}
-		else if (originalValue > maxValue) {
-			originalValue = maxValue;
+		else if (originalBitRate > maxBitRate) {
+			return maxBitRate;
 		}
 
-		return originalValue;
+		return originalBitRate;
 	}
 
 	protected int getProperty(

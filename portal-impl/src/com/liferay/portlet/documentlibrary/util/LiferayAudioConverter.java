@@ -170,7 +170,9 @@ public class LiferayAudioConverter extends LiferayConverter {
 
 	@Override
 	protected int getAudioBitRate(ICodec outputICodec, int originalBitRate) {
-		return getProperty(originalBitRate, _audioBitRate, AUDIO_BIT_RATE_MAX);
+		return getCodecBitRate(
+			outputICodec,
+			getProperty(originalBitRate, _audioBitRate, AUDIO_BIT_RATE_MAX));
 	}
 
 	@Override

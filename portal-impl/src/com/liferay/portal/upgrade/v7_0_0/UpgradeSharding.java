@@ -774,8 +774,9 @@ public class UpgradeSharding extends UpgradeProcess {
 			"update Users_Orgs set companyId = ? where userId = ? and " +
 				"organizationId = ?";
 
-		_updateCompanyColumnOnTable("Users_Orgs", select, update, "companyId",
-			"userId", "organizationId");
+		_updateCompanyColumnOnTable(
+			"Users_Orgs", select, update, "companyId", "userId",
+			"organizationId");
 	}
 
 	private void _updateUsersRoles() throws Exception {

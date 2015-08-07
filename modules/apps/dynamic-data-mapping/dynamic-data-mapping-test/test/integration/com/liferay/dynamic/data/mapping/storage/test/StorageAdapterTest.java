@@ -75,11 +75,13 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws Exception {
 		_CLASS_NAME_ID = PortalUtil.getClassNameId(StringUtil.randomString());
 
 		_enLocale = LocaleUtil.fromLanguageId("en_US");
 		_ptLocale = LocaleUtil.fromLanguageId("pt_BR");
+
+		BaseDDMServiceTestCase.setUpClass();
 	}
 
 	@Test

@@ -75,6 +75,9 @@ public abstract class BaseBackgroundTaskTestCase {
 		_groupId = TestPropsValues.getGroupId();
 		_siteDefaultLocale = Locale.CANADA;
 		_themeDisplayLocale = Locale.FRANCE;
+
+		initalizeThreadLocals();
+
 		_user = UserTestUtil.addUser();
 
 		_principalName = String.valueOf(_user.getUserId());

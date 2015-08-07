@@ -16,22 +16,38 @@ package com.liferay.portal.service.test;
 
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.TreeModel;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author Shinn Lok
  */
 public abstract class BaseLocalServiceTreeTestCase {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		previousCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CompanyThreadLocal.setCompanyId(previousCompanyId);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -209,6 +225,8 @@ public abstract class BaseLocalServiceTreeTestCase {
 	protected abstract TreeModel getTreeModel(long primaryKey) throws Exception;
 
 	protected abstract void rebuildTree() throws Exception;
+
+	protected static long previousCompanyId;
 
 	@DeleteAfterTestRun
 	protected Group group;

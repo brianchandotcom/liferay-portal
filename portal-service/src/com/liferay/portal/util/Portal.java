@@ -1115,14 +1115,14 @@ public interface Portal {
 
 	public PortletURL getSiteAdministrationURL(
 		HttpServletRequest request, ThemeDisplay themeDisplay,
-		String portletName);
+		String portletId);
 
 	public PortletURL getSiteAdministrationURL(
 		PortletRequest portletRequest, ThemeDisplay themeDisplay);
 
 	public PortletURL getSiteAdministrationURL(
 		PortletRequest portletRequest, ThemeDisplay themeDisplay,
-		String portletName);
+		String portletId);
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link

@@ -19,7 +19,7 @@
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
 
-Group group = themeDisplay.getScopeGroup();
+Group group = themeDisplay.getSiteGroup();
 %>
 
 <div class="toolbar">
@@ -48,12 +48,14 @@ Group group = themeDisplay.getScopeGroup();
 					layoutSet = stagingGroup.getPublicLayoutSet();
 				}
 
-				stagingGroupURL = PortalUtil.getGroupFriendlyURL(layoutSet, themeDisplay);
+				if (layoutSet.getPageCount() > 0) {
+					stagingGroupURL = PortalUtil.getGroupFriendlyURL(layoutSet, themeDisplay);
+				}
 			}
 		}
 		%>
 
-		<div class="toolbar-group-field">
+		<div class="<%= stagingGroupURL == null ? "active" : StringPool.BLANK %> toolbar-group-field">
 			<aui:a cssClass="icon-fb-radio icon-monospaced" href="<%= stagingGroupURL %>" title="staging" />
 		</div>
 
@@ -73,12 +75,14 @@ Group group = themeDisplay.getScopeGroup();
 					layoutSet = liveGroup.getPublicLayoutSet();
 				}
 
-				liveGroupURL = PortalUtil.getGroupFriendlyURL(layoutSet, themeDisplay);
+				if (layoutSet.getPageCount() > 0) {
+					liveGroupURL = PortalUtil.getGroupFriendlyURL(layoutSet, themeDisplay);
+				}
 			}
 		}
 		%>
 
-		<div class="toolbar-group-field">
+		<div class="<%= liveGroupURL == null ? "active" : StringPool.BLANK %> toolbar-group-field">
 			<aui:a cssClass="icon-circle-blank icon-monospaced" href="<%= liveGroupURL %>" title="live" />
 		</div>
 	</c:if>

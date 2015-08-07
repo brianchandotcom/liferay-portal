@@ -19,7 +19,7 @@
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
 
-Group group = themeDisplay.getScopeGroup();
+Group group = themeDisplay.getSiteGroup();
 %>
 
 <div class="toolbar">

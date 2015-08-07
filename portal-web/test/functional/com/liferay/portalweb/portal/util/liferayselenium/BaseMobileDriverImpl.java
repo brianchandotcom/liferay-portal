@@ -443,6 +443,16 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public void javaScriptMouseDown(String locator) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void javaScriptMouseUp(String locator) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void keyDownAndWait(String locator, String keySequence) {
 		throw new UnsupportedOperationException();
 	}

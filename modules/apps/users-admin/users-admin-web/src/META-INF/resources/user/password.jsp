@@ -90,7 +90,7 @@ else {
 
 	<!-- End LPS-38289 and LPS-55993 -->
 
-	<c:if test="<%= portletName.equals(PortletKeys.MY_ACCOUNT) %>">
+	<c:if test="<%= portletName.equals(myAccountPortletId) %>">
 		<aui:input autocomplete="off" label="current-password" name="password0" size="30" type="password" />
 	</c:if>
 
@@ -107,7 +107,7 @@ else {
 	</c:if>
 </aui:fieldset>
 
-<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_ENABLED && portletName.equals(PortletKeys.MY_ACCOUNT) %>">
+<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_ENABLED && portletName.equals(myAccountPortletId) %>">
 	<h3><liferay-ui:message key="reminder" /></h3>
 
 	<%

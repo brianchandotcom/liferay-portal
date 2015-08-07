@@ -73,7 +73,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 			value="<%= UsersAdminUtil.getUserColumnText(locale, userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, userGroupRolesCount) %>"
 		/>
 
-		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && !SiteMembershipPolicyUtil.isMembershipRequired(selUser.getUserId(), group.getGroupId()) && !SiteMembershipPolicyUtil.isMembershipProtected(permissionChecker, selUser.getUserId(), group.getGroupId()) %>">
+		<c:if test="<%= !portletName.equals(myAccountPortletId) && !SiteMembershipPolicyUtil.isMembershipRequired(selUser.getUserId(), group.getGroupId()) && !SiteMembershipPolicyUtil.isMembershipProtected(permissionChecker, selUser.getUserId(), group.getGroupId()) %>">
 			<liferay-ui:search-container-column-text>
 				<c:if test="<%= group.isManualMembership() %>">
 					<a class="modify-link" data-rowId="<%= group.getGroupId() %>" href="javascript:;"><%= removeGroupIcon %></a>
@@ -85,7 +85,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
+<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 	<liferay-ui:icon
 		cssClass="modify-link"
 		iconCssClass="icon-search"

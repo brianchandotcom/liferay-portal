@@ -77,7 +77,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 			/>
 		</liferay-ui:search-container-column-text>
 
-		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && !RoleMembershipPolicyUtil.isRoleRequired(selUser.getUserId(), role.getRoleId()) %>">
+		<c:if test="<%= !portletName.equals(myAccountPortletId) && !RoleMembershipPolicyUtil.isRoleRequired(selUser.getUserId(), role.getRoleId()) %>">
 			<liferay-ui:search-container-column-text>
 				<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 			</liferay-ui:search-container-column-text>
@@ -87,7 +87,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
+<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 	<liferay-ui:icon
 		cssClass="modify-link"
 		iconCssClass="icon-search"
@@ -238,7 +238,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 			}
 			%>
 
-			<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && !membershipProtected %>">
+			<c:if test="<%= !portletName.equals(myAccountPortletId) && !membershipProtected %>">
 				<liferay-ui:search-container-column-text>
 					<a class="modify-link" data-groupId="<%= userGroupRole.getGroupId() %>" data-rowId="<%= userGroupRole.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 				</liferay-ui:search-container-column-text>
@@ -248,7 +248,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 
-	<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
+	<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 		<aui:script use="liferay-search-container">
 			var Util = Liferay.Util;
 
@@ -303,7 +303,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 	</c:if>
 </c:if>
 
-<c:if test="<%= !organizations.isEmpty() && !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
+<c:if test="<%= !organizations.isEmpty() && !portletName.equals(myAccountPortletId) %>">
 	<liferay-ui:icon
 		cssClass="modify-link"
 		iconCssClass="icon-search"
@@ -407,7 +407,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 				}
 				%>
 
-				<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && !membershipProtected %>">
+				<c:if test="<%= !portletName.equals(myAccountPortletId) && !membershipProtected %>">
 					<liferay-ui:search-container-column-text>
 						<a class="modify-link" data-groupId="<%= userGroupRole.getGroupId() %>" data-rowId="<%= userGroupRole.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 					</liferay-ui:search-container-column-text>
@@ -417,7 +417,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>
 
-		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
+		<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 			<liferay-ui:icon
 				cssClass="modify-link"
 				iconCssClass="icon-search"
@@ -569,7 +569,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 	</liferay-ui:search-container>
 </c:if>
 
-<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
+<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 	<aui:script>
 		var <portlet:namespace />addRoleIds = [];
 		var <portlet:namespace />deleteRoleIds = [];

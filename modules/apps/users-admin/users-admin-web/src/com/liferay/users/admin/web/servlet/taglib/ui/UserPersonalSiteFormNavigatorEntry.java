@@ -14,6 +14,8 @@
 
 package com.liferay.users.admin.web.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.model.User;
@@ -21,7 +23,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.admin.util.PortalMyAccountApplicationType;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -56,7 +58,11 @@ public class UserPersonalSiteFormNavigatorEntry
 
 		String portletName = portletDisplay.getPortletName();
 
-		if ((selUser != null) && portletName.equals(PortletKeys.MY_ACCOUNT)) {
+		String portletId = PortletProviderUtil.getPortletId(
+			PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
+			PortletProvider.Action.VIEW);
+
+		if ((selUser != null) && portletName.equals(portletId)) {
 			return false;
 		}
 

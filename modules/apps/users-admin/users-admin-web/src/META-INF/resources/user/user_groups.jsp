@@ -62,7 +62,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 			property="name"
 		/>
 
-		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && !UserGroupMembershipPolicyUtil.isMembershipRequired(selUser.getUserId(), userGroup.getUserGroupId()) %>">
+		<c:if test="<%= !portletName.equals(myAccountPortletId) && !UserGroupMembershipPolicyUtil.isMembershipRequired(selUser.getUserId(), userGroup.getUserGroupId()) %>">
 			<liferay-ui:search-container-column-text>
 				<a class="modify-link" data-rowId="<%= userGroup.getUserGroupId() %>" href="javascript:;"><%= removeUserGroupIcon %></a>
 			</liferay-ui:search-container-column-text>
@@ -72,7 +72,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
+<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 	<liferay-ui:icon
 		cssClass="modify-link"
 		iconCssClass="icon-search"

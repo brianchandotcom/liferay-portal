@@ -39,6 +39,8 @@ import com.liferay.portal.WebsiteURLException;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.DynamicActionRequest;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -78,11 +80,11 @@ import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.InvokerPortletImpl;
 import com.liferay.portlet.admin.util.AdminUtil;
+import com.liferay.portlet.admin.util.PortalMyAccountApplicationType;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.announcements.model.AnnouncementsEntryConstants;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl;
@@ -716,7 +718,11 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 		String portletId = serviceContext.getPortletId();
 
-		if (!portletId.equals(PortletKeys.MY_ACCOUNT)) {
+		String myAccountPortletId = PortletProviderUtil.getPortletId(
+			PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
+			PortletProvider.Action.VIEW);
+
+		if (!portletId.equals(myAccountPortletId)) {
 			Group group = user.getGroup();
 
 			boolean hasGroupUpdatePermission = GroupPermissionUtil.contains(

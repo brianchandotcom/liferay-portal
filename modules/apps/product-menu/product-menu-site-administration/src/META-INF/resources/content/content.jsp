@@ -48,12 +48,10 @@ String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.
 		Group curScopeGroup = themeDisplay.getScopeGroup();
 
 		if (curScopeGroup.isLayout()) {
-			Layout scopeLayout = LayoutLocalServiceUtil.getLayout(curScopeGroup.getClassPK());
-
-			scopeLabel = StringUtil.shorten(scopeLayout.getName(locale), 20);
+			scopeLabel = StringUtil.shorten(curScopeGroup.getDescriptiveName(locale), 20);
 		}
 		else {
-			scopeLabel = LanguageUtil.get(request, "default");
+			scopeLabel = LanguageUtil.get(request, "default-scope");
 		}
 		%>
 
@@ -66,28 +64,44 @@ String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.
 					Map<String, Object> data = new HashMap<String, Object>();
 
 					data.put("navigation", Boolean.TRUE.toString());
+
+					long doAsGroupId = themeDisplay.getDoAsGroupId();
+
+					try {
+						themeDisplay.setDoAsGroupId(curSite.getGroupId());
+
+						PortletURL portletURL = PortalUtil.getSiteAdministrationURL(request, themeDisplay, themeDisplay.getPpid());
 					%>
 
 					<liferay-ui:icon
 						data="<%= data %>"
 						iconCssClass="<%= curSite.getIconCssClass() %>"
-						message="default"
-						url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", curSite.getGroupId()) %>'
+						message="default-scope"
+						url='<%= portletURL.toString() %>'
 					/>
 
 					<%
 					for (Layout curScopeLayout : scopeLayouts) {
 						Group scopeGroup = curScopeLayout.getScopeGroup();
+
+						themeDisplay.setDoAsGroupId(scopeGroup.getGroupId());
+
+						portletURL = PortalUtil.getSiteAdministrationURL(request, themeDisplay, themeDisplay.getPpid());
 					%>
 
 						<liferay-ui:icon
 							data="<%= data %>"
 							iconCssClass="<%= scopeGroup.getIconCssClass() %>"
 							message="<%= HtmlUtil.escape(curScopeLayout.getName(locale)) %>"
-							url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", scopeGroup.getGroupId()) %>'
+							url='<%= portletURL.toString() %>'
 						/>
 
 					<%
+						}
+
+					}
+					finally {
+						themeDisplay.setDoAsGroupId(doAsGroupId);
 					}
 					%>
 

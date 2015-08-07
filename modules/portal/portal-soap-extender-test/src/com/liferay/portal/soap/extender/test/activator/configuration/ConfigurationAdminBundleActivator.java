@@ -16,12 +16,18 @@ package com.liferay.portal.soap.extender.test.activator.configuration;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.http.context.ServletContextHelper;
+import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Carlos Sierra Andrés
@@ -81,7 +87,33 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) {
+	public void stop(BundleContext bundleContext) throws Exception {
+		final CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		ServiceTracker<ServletContextHelper, ServletContextHelper>
+			serviceTracker =
+				new ServiceTracker<ServletContextHelper, ServletContextHelper>(
+					bundleContext, ServletContextHelper.class, null) {
+
+					@Override
+					public void removedService(
+						ServiceReference<ServletContextHelper> reference,
+						ServletContextHelper service) {
+
+						Object contextName = reference.getProperty(
+							HttpWhiteboardConstants.
+								HTTP_WHITEBOARD_CONTEXT_NAME);
+
+						if ("soap-test".equals(contextName)) {
+							countDownLatch.countDown();
+
+							close();
+						}
+					}
+				};
+
+		serviceTracker.open();
+
 		try {
 			_cxfConfiguration.delete();
 		}
@@ -98,6 +130,10 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			_soapConfiguration.delete();
 		}
 		catch (Exception e) {
+		}
+
+		if (!countDownLatch.await(10, TimeUnit.MINUTES)) {
+			throw new TimeoutException("Service unregister waiting timeout");
 		}
 	}
 

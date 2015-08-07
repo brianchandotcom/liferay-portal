@@ -15,11 +15,13 @@
 package com.liferay.my.account.web.portlet;
 
 import com.liferay.my.account.web.constants.MyAccountPortletKeys;
+import com.liferay.my.account.web.upgrade.MyAccountWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -52,4 +54,10 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class MyAccountPortlet extends MVCPortlet {
+
+	@Reference(unbind = "-")
+	protected void setMyAccountWebUpgrade(
+		MyAccountWebUpgrade MyAccountWebUpgrade) {
+	}
+
 }

@@ -127,7 +127,7 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getLabel() {
-		return "asset-type";
+		return "any-asset";
 	}
 
 	@Override

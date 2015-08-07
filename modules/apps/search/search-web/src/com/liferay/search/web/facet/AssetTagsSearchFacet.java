@@ -101,7 +101,7 @@ public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getLabel() {
-		return "tag";
+		return "any-tag";
 	}
 
 	@Override

@@ -98,7 +98,7 @@ public class FolderSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getLabel() {
-		return "folder";
+		return "any-folder";
 	}
 
 	@Override

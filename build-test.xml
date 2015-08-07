@@ -1168,22 +1168,21 @@ Operating system is not supported.
 	<macrodef name="prepare-ie-driver">
 		<sequential>
 			<if>
-				<not>
-					<isset property="ie.driver.zip" />
-				</not>
+				<os family="windows" />
 				<then>
-					<fail>
-.
+					<property name="selenium.ie.driver.zip" value="IEDriverServer_Win32_${selenium.ie.driver.version}.0.zip" />
 
-Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.31.0.zip" or "IEDriverServer_Win32_2.31.0.zip" which can be downloaded from this website: https://code.google.com/p/selenium/wiki/InternetExplorerDriver.
-					</fail>
+					<mirrors-get
+						dest="tools/selenium/${selenium.ie.driver.zip}"
+						src="http://selenium-release.storage.googleapis.com/${selenium.ie.driver.version}/${selenium.ie.driver.zip}"
+					/>
+
+					<stop-ie-driver />
+
+					<unzip src="tools/selenium/${selenium.ie.driver.zip}" dest="tools/selenium" />
 				</then>
 				<else>
-					<exec executable="taskkill.exe">
-						<arg line="/F /IM IEDriverServer.exe" />
-					</exec>
-
-					<unzip src="${ie.driver.zip}" dest="tools/selenium" />
+					<fail message="Operating system is not supported." />
 				</else>
 			</if>
 		</sequential>

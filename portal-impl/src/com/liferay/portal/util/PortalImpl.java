@@ -7702,8 +7702,19 @@ public class PortalImpl implements Portal {
 			return null;
 		}
 
-		return new VirtualLayout(
-			layout, themeDisplay.getScopeGroup());
+		Group group = null;
+
+		long groupId = themeDisplay.getDoAsGroupId();
+
+		if (groupId > 0) {
+			group = GroupLocalServiceUtil.fetchGroup(groupId);
+		}
+
+		if (group == null) {
+			group = themeDisplay.getScopeGroup();
+		}
+
+		return new VirtualLayout(layout, group);
 	}
 
 	protected long getDefaultScopeGroupId(long companyId)

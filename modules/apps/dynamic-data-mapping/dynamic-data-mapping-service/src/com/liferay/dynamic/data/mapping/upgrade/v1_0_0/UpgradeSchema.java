@@ -38,18 +38,20 @@ public class UpgradeSchema extends UpgradeProcess {
 
 		try {
 			runSQL("alter_column_name DDMContent xml data_ TEXT null");
+
+			runSQL("alter_column_name DDMStructure xsd definition TEXT null");
 		}
 		catch (SQLException sqle) {
+
+			// DDMContent
+
 			upgradeTable(
 				DDMContentTable.TABLE_NAME, DDMContentTable.TABLE_COLUMNS,
 				DDMContentTable.TABLE_SQL_CREATE,
 				DDMContentTable.TABLE_SQL_ADD_INDEXES);
-		}
 
-		try {
-			runSQL("alter_column_name DDMStructure xsd definition TEXT null");
-		}
-		catch (SQLException sqle) {
+			// DDMStructure
+
 			upgradeTable(
 				DDMStructureTable.TABLE_NAME, DDMStructureTable.TABLE_COLUMNS,
 				DDMStructureTable.TABLE_SQL_CREATE,

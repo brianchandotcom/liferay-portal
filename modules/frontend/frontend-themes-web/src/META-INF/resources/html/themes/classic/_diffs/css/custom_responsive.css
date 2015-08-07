@@ -4,8 +4,9 @@
 	body #wrapper #banner {
 		padding: 20px 0;
 
-		.navbar-form .field-wrapper a {
-			padding: 2px 6px;
+		.navbar-form .field-wrapper .search-button {
+			height: 32px;
+			padding: 0 10px;
 		}
 	}
 

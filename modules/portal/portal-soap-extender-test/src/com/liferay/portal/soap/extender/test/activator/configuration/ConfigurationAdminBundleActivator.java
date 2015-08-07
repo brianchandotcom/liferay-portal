@@ -110,6 +110,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 							close();
 						}
 					}
+
 				};
 
 		serviceTracker.open();

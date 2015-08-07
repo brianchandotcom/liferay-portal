@@ -72,7 +72,7 @@ import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.base.CompanyLocalServiceBaseImpl;
 import com.liferay.portal.service.persistence.impl.CompanyProvider;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
@@ -277,12 +277,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		// Search engine
 
 		CompanyProvider companyProvider =
-			_serviceCompanyProvider.getCompanyProvider();
+			_companyProviderHolder.getCompanyProvider();
 
 		try {
 			long companyId = company.getCompanyId();
 
-			_serviceCompanyProvider.setCompanyProvider(
+			_companyProviderHolder.setCompanyProvider(
 				new CustomCompanyProvider(companyId));
 
 			SearchEngineUtil.initialize(companyId);
@@ -414,7 +414,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			portletLocalService.checkPortlets(companyId);
 		}
 		finally {
-			_serviceCompanyProvider.setCompanyProvider(companyProvider);
+			_companyProviderHolder.setCompanyProvider(companyProvider);
 		}
 
 		return company;
@@ -1695,8 +1695,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyLocalServiceImpl.class);
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	private ServiceCompanyProvider _serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	private CompanyProviderHolder _companyProviderHolder;
 
 	private class CustomCompanyProvider implements CompanyProvider {
 

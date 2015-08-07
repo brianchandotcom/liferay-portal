@@ -17,7 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 /**
  * @author Cristina González
  */
-public class ServiceCompanyProviderImpl implements ServiceCompanyProvider {
+public class CompanyProviderHolderImpl implements CompanyProviderHolder {
 
 	@Override
 	public long getCompanyId() {

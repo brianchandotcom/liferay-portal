@@ -73,9 +73,9 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 import com.liferay.portal.service.persistence.impl.NestedSetsTreeManager;
 import com.liferay.portal.service.persistence.impl.PersistenceNestedSetsTreeManager;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
@@ -410,7 +410,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		</#if>
 
 		<#if entity.isPartitionableModel()>
-			${entity.varName}.setCompanyId(serviceCompanyProvider.getCompanyId());
+			${entity.varName}.setCompanyId(companyProviderHolder.getCompanyId());
 		</#if>
 
 		return ${entity.varName};
@@ -1667,7 +1667,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#if column.isCollection() && column.isMappingManyToMany()>
 				<#assign tempEntity = serviceBuilder.getEntity(column.getEJBName())>
 
-				${entity.varName}To${tempEntity.name}TableMapper = TableMapperFactory.getTableMapper("${column.mappingTable}", "${entity.PKDBName}", "${tempEntity.PKDBName}", this, ${tempEntity.varName}Persistence, serviceCompanyProvider);
+				${entity.varName}To${tempEntity.name}TableMapper = TableMapperFactory.getTableMapper("${column.mappingTable}", "${entity.PKDBName}", "${tempEntity.PKDBName}", this, ${tempEntity.varName}Persistence, companyProviderHolder);
 			</#if>
 		</#list>
 
@@ -1701,8 +1701,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	</#list>
 
 	<#if entity.isPartitionableModel()>
-		@BeanReference(type = ServiceCompanyProvider.class)
-		protected ServiceCompanyProvider serviceCompanyProvider;
+		@BeanReference(type = CompanyProviderHolder.class)
+		protected CompanyProviderHolder companyProviderHolder;
 	<#else>
 		<#assign isMappeable = false>
 
@@ -1714,7 +1714,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		<#if isMappeable>
 			@BeanReference(type = ServiceCompanyProvider.class)
-			protected ServiceCompanyProvider serviceCompanyProvider;
+			protected CompanyProviderHolder companyProviderHolder;
 		</#if>
 	</#if>
 

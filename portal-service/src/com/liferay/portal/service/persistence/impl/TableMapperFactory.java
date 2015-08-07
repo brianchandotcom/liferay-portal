@@ -35,7 +35,7 @@ public class TableMapperFactory {
 				String tableName, String leftColumnName, String rightColumnName,
 				BasePersistence<L> leftPersistence,
 				BasePersistence<R> rightPersistence,
-				ServiceCompanyProvider serviceCompanyProvider) {
+				CompanyProviderHolder companyProviderHolder) {
 
 		TableMapper<?, ?> tableMapper = tableMappers.get(tableName);
 
@@ -45,12 +45,12 @@ public class TableMapperFactory {
 			if (cacheMappingTableNames.contains(tableName)) {
 				tableMapperImpl = new TableMapperImpl<>(
 					tableName, leftColumnName, rightColumnName, leftPersistence,
-					rightPersistence, serviceCompanyProvider);
+					rightPersistence, companyProviderHolder);
 			}
 			else {
 				tableMapperImpl = new CachelessTableMapperImpl<>(
 					tableName, leftColumnName, rightColumnName, leftPersistence,
-					rightPersistence, serviceCompanyProvider);
+					rightPersistence, companyProviderHolder);
 			}
 
 			tableMapperImpl.setReverseTableMapper(

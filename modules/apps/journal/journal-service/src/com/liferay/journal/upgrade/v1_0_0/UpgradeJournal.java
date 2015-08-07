@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.journal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.upgrade.v7_0_0.util.JournalArticleTable;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureManager;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplateManager;
@@ -43,7 +42,6 @@ import com.liferay.util.xml.XMLUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.ArrayList;
@@ -606,37 +604,6 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL(
-				"alter_column_name JournalArticle structureId " +
-					"DDMStructureKey VARCHAR(75) null");
-
-			runSQL(
-				"alter_column_name JournalArticle templateId DDMTemplateKey " +
-					"VARCHAR(75) null");
-
-			runSQL("alter_column_type JournalArticle description TEXT null");
-
-			runSQL(
-				"alter_column_name JournalFeed structureId DDMStructureKey " +
-					"TEXT null");
-
-			runSQL(
-				"alter_column_name JournalFeed templateId DDMTemplateKey " +
-					"TEXT null");
-
-			runSQL(
-				"alter_column_name JournalFeed rendererTemplateId " +
-					"DDMRendererTemplateKey TEXT null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				JournalArticleTable.TABLE_NAME,
-				JournalArticleTable.TABLE_COLUMNS,
-				JournalArticleTable.TABLE_SQL_CREATE,
-				JournalArticleTable.TABLE_SQL_ADD_INDEXES);
-		}
-
 		updateBasicWebContentStructure();
 
 		addDDMTemplateLinks();
@@ -644,7 +611,8 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 
 	protected String getContent(String fileName) {
 		return ContentUtil.get(
-			"com/liferay/portal/upgrade/v7_0_0/dependencies/" + fileName);
+			getClass().getClassLoader(),
+			"com/liferay/journal/upgrade/v1_0_0/dependencies/" + fileName);
 	}
 
 	protected List<Element> getDDMStructures(Locale locale)

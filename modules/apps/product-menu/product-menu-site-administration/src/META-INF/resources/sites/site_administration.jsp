@@ -48,7 +48,9 @@ Group group = themeDisplay.getScopeGroup();
 					layoutSet = stagingGroup.getPublicLayoutSet();
 				}
 
-				stagingGroupURL = PortalUtil.getGroupFriendlyURL(layoutSet, themeDisplay);
+				if (layoutSet.getPageCount() > 0) {
+					stagingGroupURL = PortalUtil.getGroupFriendlyURL(layoutSet, themeDisplay);
+				}
 			}
 		}
 		%>
@@ -73,7 +75,9 @@ Group group = themeDisplay.getScopeGroup();
 					layoutSet = liveGroup.getPublicLayoutSet();
 				}
 
-				liveGroupURL = PortalUtil.getGroupFriendlyURL(layoutSet, themeDisplay);
+				if (layoutSet.getPageCount() > 0) {
+					liveGroupURL = PortalUtil.getGroupFriendlyURL(layoutSet, themeDisplay);
+				}
 			}
 		}
 		%>

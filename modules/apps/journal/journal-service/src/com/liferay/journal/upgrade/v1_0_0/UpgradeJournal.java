@@ -14,7 +14,6 @@
 
 package com.liferay.journal.upgrade.v1_0_0;
 
-import com.liferay.journal.upgrade.v1_0_0.util.JournalArticleTable;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,7 +42,6 @@ import com.liferay.util.xml.XMLUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import java.util.ArrayList;
@@ -606,37 +604,6 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL(
-				"alter_column_name JournalArticle structureId " +
-					"DDMStructureKey VARCHAR(75) null");
-
-			runSQL(
-				"alter_column_name JournalArticle templateId DDMTemplateKey " +
-					"VARCHAR(75) null");
-
-			runSQL("alter_column_type JournalArticle description TEXT null");
-
-			runSQL(
-				"alter_column_name JournalFeed structureId DDMStructureKey " +
-					"TEXT null");
-
-			runSQL(
-				"alter_column_name JournalFeed templateId DDMTemplateKey " +
-					"TEXT null");
-
-			runSQL(
-				"alter_column_name JournalFeed rendererTemplateId " +
-					"DDMRendererTemplateKey TEXT null");
-		}
-		catch (SQLException sqle) {
-			upgradeTable(
-				JournalArticleTable.TABLE_NAME,
-				JournalArticleTable.TABLE_COLUMNS,
-				JournalArticleTable.TABLE_SQL_CREATE,
-				JournalArticleTable.TABLE_SQL_ADD_INDEXES);
-		}
-
 		updateBasicWebContentStructure();
 
 		addDDMTemplateLinks();

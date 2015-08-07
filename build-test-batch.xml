@@ -154,42 +154,40 @@
 
 	<macrodef name="record-test-environment-properties">
 		<sequential>
-			<get-env-app-server />
-			<get-env-browser />
-			<get-env-database />
-			<get-env-java-jdk />
-			<get-env-liferay-portal />
-			<get-env-operating-system />
-
-			<echoproperties destfile="test-environment.properties">
-				<propertyset>
-					<propertyref prefix="app.server.type" />
-					<propertyref prefix="app.server.version" />
-					<propertyref prefix="browser.type" />
-					<propertyref prefix="browser.version" />
-					<propertyref prefix="database.type" />
-					<propertyref prefix="database.version" />
-					<propertyref prefix="env.option.app.server" />
-					<propertyref prefix="env.option.browser" />
-					<propertyref prefix="env.option.database" />
-					<propertyref prefix="env.option.java.jdk" />
-					<propertyref prefix="env.option.operating.system" />
-					<propertyref prefix="java.jdk.type" />
-					<propertyref prefix="java.jdk.version" />
-					<propertyref prefix="liferay.compare.urls" />
-					<propertyref prefix="liferay.plugins.git.id" />
-					<propertyref prefix="liferay.portal.branch" />
-					<propertyref prefix="liferay.portal.bundle" />
-					<propertyref prefix="liferay.portal.git.id" />
-					<propertyref prefix="operating.system.type" />
-					<propertyref prefix="operating.system.version" />
-				</propertyset>
-			</echoproperties>
-
 			<if>
 				<isset property="env.WORKSPACE" />
 				<then>
-					<copy file="test-environment.properties" tofile="${env.WORKSPACE}/test-environment.properties" />
+					<get-env-app-server />
+					<get-env-browser />
+					<get-env-database />
+					<get-env-java-jdk />
+					<get-env-liferay-portal />
+					<get-env-operating-system />
+
+					<echoproperties destfile="${env.WORKSPACE}/test-environment.properties">
+						<propertyset>
+							<propertyref prefix="app.server.type" />
+							<propertyref prefix="app.server.version" />
+							<propertyref prefix="browser.type" />
+							<propertyref prefix="browser.version" />
+							<propertyref prefix="database.type" />
+							<propertyref prefix="database.version" />
+							<propertyref prefix="env.option.app.server" />
+							<propertyref prefix="env.option.browser" />
+							<propertyref prefix="env.option.database" />
+							<propertyref prefix="env.option.java.jdk" />
+							<propertyref prefix="env.option.operating.system" />
+							<propertyref prefix="java.jdk.type" />
+							<propertyref prefix="java.jdk.version" />
+							<propertyref prefix="liferay.compare.urls" />
+							<propertyref prefix="liferay.plugins.git.id" />
+							<propertyref prefix="liferay.portal.branch" />
+							<propertyref prefix="liferay.portal.bundle" />
+							<propertyref prefix="liferay.portal.git.id" />
+							<propertyref prefix="operating.system.type" />
+							<propertyref prefix="operating.system.version" />
+						</propertyset>
+					</echoproperties>
 				</then>
 			</if>
 		</sequential>

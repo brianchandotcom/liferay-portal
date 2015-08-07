@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 
@@ -54,8 +55,10 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -81,6 +84,18 @@ public class JournalArticleFinderTest {
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE,
 			TransactionalTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_previousCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CompanyThreadLocal.setCompanyId(_previousCompanyId);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -589,6 +604,8 @@ public class JournalArticleFinderTest {
 	}
 
 	private static final long _USER_ID = 1234L;
+
+	private static long _previousCompanyId;
 
 	private JournalArticle _article;
 	private final List<JournalArticle> _articles = new ArrayList<>();

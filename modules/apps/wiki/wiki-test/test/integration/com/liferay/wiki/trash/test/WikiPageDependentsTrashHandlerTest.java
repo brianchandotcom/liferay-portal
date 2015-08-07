@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -41,8 +42,10 @@ import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.wiki.util.test.WikiPageTrashHandlerTestUtil;
 import com.liferay.wiki.util.test.WikiTestUtil;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -61,6 +64,18 @@ public class WikiPageDependentsTrashHandlerTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		previousCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CompanyThreadLocal.setCompanyId(previousCompanyId);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -1074,6 +1089,8 @@ public class WikiPageDependentsTrashHandlerTest {
 		trashHandler.restoreTrashEntry(
 			TestPropsValues.getUserId(), page.getResourcePrimKey());
 	}
+
+	protected static long previousCompanyId;
 
 	private static final String _CHILD_PAGE_TITLE = "ChildPage";
 

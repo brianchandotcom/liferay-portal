@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
@@ -40,13 +41,27 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 /**
  * @author Eduardo Garcia
  * @author Rafael Praxedes
  */
 public class BaseDDMServiceTestCase {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		previousCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CompanyThreadLocal.setCompanyId(previousCompanyId);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -222,6 +237,8 @@ public class BaseDDMServiceTestCase {
 		return StringUtil.read(
 			clazz.getClassLoader(), getBasePath() + fileName);
 	}
+
+	protected static long previousCompanyId;
 
 	protected DDMStructureLayoutTestHelper ddmStructureLayoutTestHelper;
 	protected DDMStructureTestHelper ddmStructureTestHelper;

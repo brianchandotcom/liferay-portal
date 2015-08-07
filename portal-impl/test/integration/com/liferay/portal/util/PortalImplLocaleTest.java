@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.servlet.I18nServlet;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -36,6 +38,8 @@ import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.Locale;
+
+import javax.portlet.PortletPreferences;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -66,9 +70,20 @@ public class PortalImplLocaleTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_previousCompanyId = CompanyThreadLocal.getCompanyId();
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+
 		PropsValues.LOCALES_ENABLED = new String[] {
 			"ca_ES", "en_US", "fr_FR", "de_DE", "pt_BR", "es_ES", "en_GB"
 		};
+
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
+			TestPropsValues.getCompanyId(), false);
+
+		portletPreferences.setValues(PropsKeys.LOCALES, new String[0]);
+
+		portletPreferences.store();
 
 		LanguageUtil.init();
 
@@ -88,6 +103,8 @@ public class PortalImplLocaleTest {
 	public void tearDown() throws Exception {
 		PropsValues.LOCALES_ENABLED = PropsUtil.getArray(
 			PropsKeys.LOCALES_ENABLED);
+
+		CompanyThreadLocal.setCompanyId(_previousCompanyId);
 
 		LanguageUtil.init();
 	}
@@ -176,6 +193,8 @@ public class PortalImplLocaleTest {
 
 		return mockHttpServletResponse;
 	}
+
+	private static long _previousCompanyId;
 
 	@DeleteAfterTestRun
 	private Group _group;

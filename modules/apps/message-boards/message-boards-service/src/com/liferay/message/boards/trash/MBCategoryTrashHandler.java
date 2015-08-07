@@ -169,9 +169,9 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
-
 		PortletURL portletURL = getRestoreURL(portletRequest, classPK);
+
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
 		portletURL.setParameter(
 			"mbCategoryId", String.valueOf(category.getParentCategoryId()));
@@ -394,12 +394,12 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			MBCategory.class.getName(), PortletProvider.Action.EDIT);
+		PortletURL portletURL = null;
 
 		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
-		PortletURL portletURL = null;
+		String portletId = PortletProviderUtil.getPortletId(
+			MBCategory.class.getName(), PortletProvider.Action.EDIT);
 
 		long plid = PortalUtil.getPlidFromPortletId(
 			category.getGroupId(), portletId);

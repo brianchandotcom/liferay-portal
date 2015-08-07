@@ -83,13 +83,13 @@ Group group = layoutSetPrototype.getGroup();
 		<%
 		PortletURL exportPagesURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.EXPORT_IMPORT, 0, PortletRequest.RENDER_PHASE);
 
-		exportPagesURL.setWindowState(LiferayWindowState.POP_UP);
 		exportPagesURL.setParameter("mvcRenderCommandName", "exportLayouts");
 		exportPagesURL.setParameter(Constants.CMD, Constants.EXPORT);
 		exportPagesURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 		exportPagesURL.setParameter("privateLayout", Boolean.TRUE.toString());
 		exportPagesURL.setParameter("rootNodeName", layoutSetPrototype.getName(locale));
 		exportPagesURL.setParameter("showHeader", Boolean.FALSE.toString());
+		exportPagesURL.setWindowState(LiferayWindowState.POP_UP);
 		%>
 
 		<liferay-ui:icon
@@ -104,13 +104,13 @@ Group group = layoutSetPrototype.getGroup();
 		<%
 		PortletURL importPagesURL = PortalUtil.getControlPanelPortletURL(request, PortletKeys.EXPORT_IMPORT, 0, PortletRequest.RENDER_PHASE);
 
-		importPagesURL.setWindowState(LiferayWindowState.POP_UP);
 		importPagesURL.setParameter("mvcRenderCommandName", "importLayouts");
 		importPagesURL.setParameter(Constants.CMD, Constants.IMPORT);
 		importPagesURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 		importPagesURL.setParameter("privateLayout", Boolean.TRUE.toString());
 		importPagesURL.setParameter("rootNodeName", layoutSetPrototype.getName(locale));
 		importPagesURL.setParameter("showHeader", Boolean.FALSE.toString());
+		importPagesURL.setWindowState(LiferayWindowState.POP_UP);
 		%>
 
 		<liferay-ui:icon

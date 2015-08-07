@@ -134,12 +134,12 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				<%
 				PortletURL editQuestionURL = PortalUtil.getControlPanelPortletURL(request, PollsPortletKeys.POLLS, 0, PortletRequest.RENDER_PHASE);
 
-				editQuestionURL.setWindowState(LiferayWindowState.POP_UP);
 				editQuestionURL.setParameter("struts_action", "/polls/edit_question");
 				editQuestionURL.setParameter("redirect", redirectURL.toString());
 				editQuestionURL.setParameter("referringPortletResource", portletDisplay.getId());
 				editQuestionURL.setParameter("questionId", String.valueOf(question.getQuestionId()));
 				editQuestionURL.setParameter("showHeader", Boolean.FALSE.toString());
+				editQuestionURL.setWindowState(LiferayWindowState.POP_UP);
 
 				String taglibEditQuestionURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "editQuestion', title: '" + HtmlUtil.escapeJS(ResourceActionsUtil.getModelResource(locale, PollsQuestion.class.getName())) + "', uri:'" + HtmlUtil.escapeJS(editQuestionURL.toString()) + "'});";
 				%>
@@ -170,11 +170,11 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 				<%
 				PortletURL editQuestionURL = PortalUtil.getControlPanelPortletURL(request, PollsPortletKeys.POLLS, 0, PortletRequest.RENDER_PHASE);
 
-				editQuestionURL.setWindowState(LiferayWindowState.POP_UP);
 				editQuestionURL.setParameter("struts_action", "/polls/edit_question");
 				editQuestionURL.setParameter("redirect", redirectURL.toString());
 				editQuestionURL.setParameter("referringPortletResource", portletDisplay.getId());
 				editQuestionURL.setParameter("showHeader", Boolean.FALSE.toString());
+				editQuestionURL.setWindowState(LiferayWindowState.POP_UP);
 
 				String taglibEditQuestionURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "editQuestion', title: '" + HtmlUtil.escapeJS(LanguageUtil.get(request, "new-poll")) + "', uri:'" + HtmlUtil.escapeJS(editQuestionURL.toString()) + "'});";
 				%>

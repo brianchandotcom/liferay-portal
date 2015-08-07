@@ -123,9 +123,9 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		MBThread thread = _mbThreadLocalService.getThread(classPK);
-
 		PortletURL portletURL = getRestoreURL(portletRequest, classPK, false);
+
+		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
 		portletURL.setParameter(
 			"mbCategoryId", String.valueOf(thread.getCategoryId()));
@@ -250,12 +250,12 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 			boolean isContainerModel)
 		throws PortalException {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			MBThread.class.getName(), PortletProvider.Action.EDIT);
+		PortletURL portletURL = null;
 
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
-		PortletURL portletURL = null;
+		String portletId = PortletProviderUtil.getPortletId(
+			MBThread.class.getName(), PortletProvider.Action.EDIT);
 
 		long plid = PortalUtil.getPlidFromPortletId(
 			thread.getGroupId(), portletId);

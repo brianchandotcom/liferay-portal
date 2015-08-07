@@ -427,9 +427,10 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			page.getGroupId(), WikiPortletKeys.WIKI);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
+			portletId = WikiPortletKeys.WIKI_ADMIN;
+
 			portletURL = PortalUtil.getControlPanelPortletURL(
-				portletRequest, WikiPortletKeys.WIKI_ADMIN, 0,
-				PortletRequest.RENDER_PHASE);
+				portletRequest, portletId, 0, PortletRequest.RENDER_PHASE);
 		}
 		else {
 			portletURL = PortletURLFactoryUtil.create(

@@ -40,7 +40,7 @@ String modifiedLabel = StringPool.BLANK;
 int index = 0;
 
 if (fieldParamSelection.equals("0")) {
-	modifiedLabel = LanguageUtil.get(request, "any-time");
+	modifiedLabel = LanguageUtil.get(request, HtmlUtil.escape(facetConfiguration.getLabel()));
 }
 %>
 
@@ -57,7 +57,7 @@ if (fieldParamSelection.equals("0")) {
 				%>
 
 				<aui:a href="javascript:;" onClick="<%= taglibClearFacet %>">
-					<aui:icon image="time" /> <liferay-ui:message key="any-time" />
+					<aui:icon image="time" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" />
 				</aui:a>
 			</li>
 

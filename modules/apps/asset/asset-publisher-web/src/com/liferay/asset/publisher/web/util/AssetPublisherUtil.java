@@ -827,7 +827,9 @@ public class AssetPublisherUtil {
 
 		return LocalizationUtil.getLocalizationMap(
 			portletPreferences, "emailAssetEntryAddedBody",
-			AssetPublisherWebConfigurationValues.EMAIL_ASSET_ENTRY_ADDED_BODY);
+			AssetPublisherWebConfigurationValues.EMAIL_ASSET_ENTRY_ADDED_BODY,
+			AssetPublisherWebConfigurationValues.EMAIL_ASSET_ENTRY_ADDED_BODY,
+			AssetPublisherUtil.class.getClassLoader());
 	}
 
 	public static boolean getEmailAssetEntryAddedEnabled(
@@ -852,7 +854,10 @@ public class AssetPublisherUtil {
 		return LocalizationUtil.getLocalizationMap(
 			portletPreferences, "emailAssetEntryAddedSubject",
 			AssetPublisherWebConfigurationValues.
-				EMAIL_ASSET_ENTRY_ADDED_SUBJECT);
+				EMAIL_ASSET_ENTRY_ADDED_SUBJECT,
+			AssetPublisherWebConfigurationValues.
+				EMAIL_ASSET_ENTRY_ADDED_SUBJECT,
+			AssetPublisherUtil.class.getClassLoader());
 	}
 
 	public static Map<String, String> getEmailDefinitionTerms(

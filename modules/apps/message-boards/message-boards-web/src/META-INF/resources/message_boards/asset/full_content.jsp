@@ -18,7 +18,7 @@
 
 <%
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
-AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute(WebKeys.ASSET_RENDERER);
+AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.ASSET_RENDERER);
 
 request.setAttribute("edit_message.jsp-category", message.getCategory());
 request.setAttribute("edit_message.jsp-className", message.getClassName());

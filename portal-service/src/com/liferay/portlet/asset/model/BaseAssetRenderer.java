@@ -56,7 +56,7 @@ import javax.portlet.WindowState;
  * @author Jorge Ferrer
  * @author Sergio González
  */
-public abstract class BaseAssetRenderer implements AssetRenderer {
+public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
@@ -67,14 +67,16 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		return StringPool.BLANK;
 	}
 
-	public AssetRendererFactory getAssetRendererFactory() {
+	@SuppressWarnings("unchecked")
+	public AssetRendererFactory<T> getAssetRendererFactory() {
 		if (_assetRendererFactory != null) {
 			return _assetRendererFactory;
 		}
 
 		_assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				getClassName());
+			(AssetRendererFactory<T>)
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(getClassName());
 
 		return _assetRendererFactory;
 	}
@@ -427,7 +429,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	private static final DDMFormValuesReader _nullDDMFormValuesReader =
 		new NullDDMFormValuesReader();
 
-	private AssetRendererFactory _assetRendererFactory;
+	private AssetRendererFactory<T> _assetRendererFactory;
 	private int _assetRendererType = AssetRendererFactory.TYPE_LATEST_APPROVED;
 
 	private static final class NullDDMFormValuesReader

@@ -62,9 +62,9 @@ public class MBCategoryTrashRenderer extends BaseTrashRenderer {
 
 	@Override
 	public String getPortletId() {
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				MBCategory.class.getName());
+		AssetRendererFactory<MBCategory> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				MBCategory.class);
 
 		return assetRendererFactory.getPortletId();
 	}

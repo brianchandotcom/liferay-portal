@@ -38,10 +38,15 @@ import javax.servlet.http.HttpServletResponse;
  * @author Michael C. Han
  * @author Sergio González
  */
-public class UserAssetRenderer extends BaseJSPAssetRenderer {
+public class UserAssetRenderer extends BaseJSPAssetRenderer<User> {
 
 	public UserAssetRenderer(User user) {
 		_user = user;
+	}
+
+	@Override
+	public User getAssetObject() {
+		return _user;
 	}
 
 	@Override

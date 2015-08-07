@@ -142,10 +142,10 @@ public class AssetVocabularyLocalServiceUtil {
 		getService().deleteVocabularies(groupId);
 	}
 
-	public static void deleteVocabulary(
+	public static com.liferay.portlet.asset.model.AssetVocabulary deleteVocabulary(
 		com.liferay.portlet.asset.model.AssetVocabulary vocabulary)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteVocabulary(vocabulary);
+		return getService().deleteVocabulary(vocabulary);
 	}
 
 	public static void deleteVocabulary(long vocabularyId)

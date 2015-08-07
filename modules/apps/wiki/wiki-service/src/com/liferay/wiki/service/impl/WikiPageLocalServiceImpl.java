@@ -1723,6 +1723,18 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		assetEntryLocalService.updateVisible(
 			WikiPage.class.getName(), page.getResourcePrimKey(), false);
 
+		// Attachments
+
+		for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
+			PortletFileRepositoryUtil.movePortletFileEntryToTrash(
+				userId, fileEntry.getFileEntryId());
+		}
+
+		// Comment
+
+		CommentManagerUtil.moveDiscussionToTrash(
+			WikiPage.class.getName(), page.getResourcePrimKey());
+
 		// Social
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
@@ -2738,6 +2750,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				WikiPage.class.getName(), page.getResourcePrimKey(), true);
 		}
 
+		// Attachments
+
+		WikiNode node = page.getNode();
+
+		for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
+			PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
+				node.getStatusByUserId(), fileEntry.getFileEntryId());
+		}
+
 		// Index
 
 		Indexer<WikiPage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -2881,6 +2902,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				WikiPage.class.getName(), page.getResourcePrimKey(), false);
 		}
 
+		// Attachments
+
+		WikiNode node = page.getNode();
+
+		for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
+			PortletFileRepositoryUtil.movePortletFileEntryToTrash(
+				node.getStatusByUserId(), fileEntry.getFileEntryId());
+		}
+
 		// Indexer
 
 		Indexer<WikiPage> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -2983,6 +3013,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			userId, page, trashEntry.getStatus(), new ServiceContext(),
 			new HashMap<String, Serializable>());
 
+		// Attachments
+
+		for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
+			PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
+				userId, fileEntry.getFileEntryId());
+		}
+
 		// Child pages
 
 		moveDependentChildPagesFromTrash(page, oldNodeId, trashTitle);
@@ -3006,6 +3043,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		trashEntryLocalService.deleteEntry(
+			WikiPage.class.getName(), page.getResourcePrimKey());
+
+		// Comment
+
+		CommentManagerUtil.restoreDiscussionFromTrash(
 			WikiPage.class.getName(), page.getResourcePrimKey());
 
 		// Social

@@ -70,11 +70,14 @@ public class JavaTerm {
 
 	public static final int TYPE_VARIABLE_PUBLIC_STATIC = 1;
 
-	public JavaTerm(String name, int type, String content, int lineCount) {
+	public JavaTerm(
+		String name, int type, String content, int lineCount, String indent) {
+
 		_name = name;
 		_type = type;
 		_content = content;
 		_lineCount = lineCount;
+		_indent = indent;
 	}
 
 	public String getContent() {
@@ -107,6 +110,30 @@ public class JavaTerm {
 
 	public int getType() {
 		return _type;
+	}
+
+	public boolean hasAnnotation(String annotation) {
+		if (_content.contains(_indent + StringPool.AT + annotation + "\n") ||
+			_content.contains(
+				_indent + StringPool.AT + annotation + 
+					StringPool.OPEN_PARENTHESIS)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean hasReturnType() {
+		if (!isMethod()) {
+			return false;
+		}
+
+		int i = _content.indexOf(_name);
+
+		String methodSignature = StringUtil.trim(_content.substring(0, i));
+
+		return !methodSignature.endsWith(" void");
 	}
 
 	public boolean isClass() {
@@ -230,22 +257,6 @@ public class JavaTerm {
 		else {
 			return false;
 		}
-	}
-
-	public void setContent(String content) {
-		_content = content;
-	}
-
-	public void setLineCount(int lineCount) {
-		_lineCount = lineCount;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
-	public void setParameterTypes(List<String> parameterTypes) {
-		_parameterTypes = parameterTypes;
 	}
 
 	public void setType(int type) {
@@ -381,6 +392,7 @@ public class JavaTerm {
 	}
 
 	private String _content;
+	private String _indent;
 	private int _lineCount;
 	private String _name;
 	private List<String> _parameterNames;

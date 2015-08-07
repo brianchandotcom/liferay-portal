@@ -122,6 +122,16 @@ public class CommentManagerUtil {
 		return getCommentManager().hasDiscussion(className, classPK);
 	}
 
+	public static void moveDiscussionToTrash(String className, long classPK) {
+		getCommentManager().moveDiscussionToTrash(className, classPK);
+	}
+
+	public static void restoreDiscussionFromTrash(
+		String className, long classPK) {
+
+		getCommentManager().restoreDiscussionFromTrash(className, classPK);
+	}
+
 	public static void subscribeDiscussion(
 			long userId, long groupId, String className, long classPK)
 		throws PortalException {

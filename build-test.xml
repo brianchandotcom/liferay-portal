@@ -961,9 +961,7 @@ jdbc.default.password=${database.password}]]></echo>
 				</elseif>
 				<else>
 					<then>
-						<fail>
-Operating system is not supported.
-						</fail>
+						<fail message="Operating system is not supported." />
 					</then>
 				</else>
 			</if>

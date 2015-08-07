@@ -1316,6 +1316,8 @@ rerun your task.
 				value="${app.server.dir.property.list}"
 			/>
 
+			<delete file="${sdk.dir}/build.${env.COMPUTERNAME}.properties" />
+
 			<for list="${app.server.dir.property.list}" param="app.server.dir.property">
 				<sequential>
 					<propertycopy

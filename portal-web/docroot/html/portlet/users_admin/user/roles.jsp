@@ -121,8 +121,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 						<%
 						LiferayPortletURL selectRegularRoleURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
 
-						selectRegularRoleURL.setParameter("eventName", regularRoleEventName);
 						selectRegularRoleURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
+						selectRegularRoleURL.setParameter("eventName", regularRoleEventName);
 						selectRegularRoleURL.setWindowState(LiferayWindowState.POP_UP);
 						%>
 

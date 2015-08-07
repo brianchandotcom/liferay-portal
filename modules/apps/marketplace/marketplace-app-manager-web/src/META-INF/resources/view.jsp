@@ -25,33 +25,15 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("toolbarItem", toolbarItem);
 %>
 
-<aui:nav-bar>
-	<aui:nav>
-
-		<%
-		portletURL.setParameter("toolbarItem", "manage");
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="manage" selected='<%= toolbarItem.equals("manage") %>' />
-
-		<%
-		portletURL.setParameter("toolbarItem", "install");
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="install" selected='<%= toolbarItem.equals("install") %>' />
-
-		<%
-		portletURL.setParameter("toolbarItem", toolbarItem);
-		%>
-
-	</aui:nav>
-</aui:nav-bar>
-
-<c:choose>
-	<c:when test='<%= toolbarItem.equals("install") %>'>
-		<%@ include file="/install_apps.jspf" %>
-	</c:when>
-	<c:otherwise>
+<liferay-ui:tabs
+	names="manage,install"
+	refresh="<%= false %>"
+>
+	<liferay-ui:section>
 		<%@ include file="/manage.jspf" %>
-	</c:otherwise>
-</c:choose>
+	</liferay-ui:section>
+
+	<liferay-ui:section>
+		<%@ include file="/install_apps.jspf" %>
+	</liferay-ui:section>
+</liferay-ui:tabs>

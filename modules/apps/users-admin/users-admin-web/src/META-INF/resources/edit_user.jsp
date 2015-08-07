@@ -142,7 +142,7 @@ if (organizations.size() == 1) {
 }
 
 if (selUser != null) {
-	if (!portletName.equals(PortletKeys.MY_ACCOUNT)) {
+	if (!portletName.equals(myAccountPortletId)) {
 		PortalUtil.addPortletBreadcrumbEntry(request, selUser.getFullName(), null);
 	}
 }
@@ -150,7 +150,7 @@ if (selUser != null) {
 
 <liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-create-user-account-because-the-maximum-number-of-users-has-been-reached" />
 
-<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
+<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 	<aui:nav-bar>
 		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="toolbarItem" value='<%= (selUser == null) ? "add" : "view" %>' />

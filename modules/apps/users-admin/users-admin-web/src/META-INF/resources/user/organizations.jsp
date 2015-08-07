@@ -85,7 +85,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 			value="<%= UsersAdminUtil.getUserColumnText(locale, userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, userGroupRolesCount) %>"
 		/>
 
-		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && ((selUser == null) || !OrganizationMembershipPolicyUtil.isMembershipProtected(permissionChecker, selUser.getUserId(), organization.getOrganizationId())) %>">
+		<c:if test="<%= !portletName.equals(myAccountPortletId) && ((selUser == null) || !OrganizationMembershipPolicyUtil.isMembershipProtected(permissionChecker, selUser.getUserId(), organization.getOrganizationId())) %>">
 			<liferay-ui:search-container-column-text>
 				<a class="modify-link" data-rowId="<%= organization.getOrganizationId() %>" href="javascript:;"><%= removeOrganizationIcon %></a>
 			</liferay-ui:search-container-column-text>
@@ -95,7 +95,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
+<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
 	<liferay-ui:icon
 		cssClass="modify-link"
 		iconCssClass="icon-search"

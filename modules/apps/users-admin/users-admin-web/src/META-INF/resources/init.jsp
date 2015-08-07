@@ -153,6 +153,7 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.WebKeys" %><%@
 page import="com.liferay.portal.webserver.WebServerServletTokenUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
+page import="com.liferay.portlet.admin.util.PortalMyAccountApplicationType" %><%@
 page import="com.liferay.portlet.announcements.model.AnnouncementsDelivery" %><%@
 page import="com.liferay.portlet.announcements.model.AnnouncementsEntryConstants" %><%@
 page import="com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl" %><%@
@@ -219,7 +220,9 @@ boolean filterManageableRoles = true;
 boolean filterManageableUserGroupRoles = true;
 boolean filterManageableUserGroups = true;
 
-if (portletName.equals(PortletKeys.MY_ACCOUNT)) {
+String myAccountPortletId = PortletProviderUtil.getPortletId(PortalMyAccountApplicationType.MyAccount.CLASS_NAME, PortletProvider.Action.VIEW);
+
+if (portletName.equals(myAccountPortletId)) {
 	filterManageableGroups = false;
 	filterManageableOrganizations = false;
 	filterManageableRoles = false;

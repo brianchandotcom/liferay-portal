@@ -208,6 +208,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		addOAuthParameter(
 			oAuthRequest, "clientPortletNamespace",
 			portletResponse.getNamespace());
+		addOAuthParameter(oAuthRequest, "p_p_id", "12_WAR_osbportlet");
 
 		String serverNamespace = getServerNamespace();
 

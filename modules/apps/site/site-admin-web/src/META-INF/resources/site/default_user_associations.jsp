@@ -259,11 +259,11 @@ for (long defaultTeamId : defaultTeamIds) {
 					title: '<liferay-ui:message arguments="site-role" key="select-x" />',
 
 					<%
-					LiferayPortletURL selectSiteRoleURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
+					PortletURL selectSiteRoleURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.BROWSE);
 
-					selectSiteRoleURL.setParameter("groupId", String.valueOf(groupId));
 					selectSiteRoleURL.setParameter("roleType", String.valueOf(RoleConstants.TYPE_SITE));
 					selectSiteRoleURL.setParameter("step", "2");
+					selectSiteRoleURL.setParameter("groupId", String.valueOf(groupId));
 					selectSiteRoleURL.setWindowState(LiferayWindowState.POP_UP);
 					%>
 

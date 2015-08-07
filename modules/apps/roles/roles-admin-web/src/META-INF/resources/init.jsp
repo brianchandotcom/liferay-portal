@@ -119,10 +119,16 @@ page import="java.util.Set" %>
 page import="javax.portlet.ResourceURL" %><%@
 page import="javax.portlet.WindowState" %>
 
-<liferay-theme:defineObjects />
 <portlet:defineObjects />
 
+<liferay-theme:defineObjects />
+
 <%
+WindowState windowState = liferayPortletRequest.getWindowState();
+
+PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
+String currentURL = currentURLObj.toString();
+
 boolean filterManageableGroups = true;
 boolean filterManageableOrganizations = true;
 boolean filterManageableRoles = true;
@@ -131,11 +137,6 @@ if (permissionChecker.isCompanyAdmin()) {
 	filterManageableGroups = false;
 	filterManageableOrganizations = false;
 }
-
-WindowState windowState = liferayPortletRequest.getWindowState();
-
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-String currentURL = currentURLObj.toString();
 %>
 
 <%@ include file="/init-ext.jsp" %>

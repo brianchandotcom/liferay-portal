@@ -1064,6 +1064,7 @@ Operating system is not supported.
 			<echo file="${liferay.home}/osgi/portal/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.cfg">
 				additionalConfigurations=\
 					cluster.routing.allocation.disk.threshold_enabled: false,\
+					cluster.service.slow_task_logging_threshold: 600s, \
 					index.indexing.slowlog.threshold.index.warn: 600s,\
 					index.search.slowlog.threshold.fetch.warn: 600s,\
 					index.search.slowlog.threshold.query.warn: 600s,\

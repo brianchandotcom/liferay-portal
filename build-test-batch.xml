@@ -235,6 +235,56 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="clean-restart-sybase">
+		<attribute name="retry" default="false" />
+		<sequential>
+			<exec executable="service">
+				<arg line="sybase stop" />
+			</exec>
+
+			<waitfor maxwait="60" maxwaitunit="second">
+				<not>
+					<socket server="localhost" port="5000" />
+				</not>
+			</waitfor>
+
+			<sleep if:true="@{retry}" seconds="10" />
+
+			<antcall target="clean-up-sybase-processes" />
+
+			<if if:true="@{retry}">
+				<available file="/opt/sybase.tar.gz" />
+				<then>
+					<delete dir="/opt/sybase" />
+
+					<exec executable="tar" failonerror="true">
+						<arg line="xf /opt/sybase.tar.gz -C /" />
+					</exec>
+
+					<exec executable="hostname" failonerror="true" outputproperty="hostname" />
+
+					<echo file="/opt/sybase/interfaces">lportal
+		master tcp ether ${hostname} 5000
+		query tcp ether ${hostname} 5000
+					</echo>
+				</then>
+				<else>
+					<fail message="Unable to reset sybase installation due to missing /opt/sybase.tar.gz" />
+				</else>
+			</if>
+
+			<exec executable="service" failonerror="true">
+				<arg line="sybase start" />
+			</exec>
+
+			<waitfor maxwait="60" maxwaitunit="second">
+				<socket server="localhost" port="5000" />
+			</waitfor>
+
+			<sleep if:true="@{retry}" seconds="10" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="copy-testray-results">
 		<attribute default="${default.test.results.dir}" name="test.results.dest.dir" />
 		<attribute default="**/TEST-*.xml" name="test.results.fileset" />
@@ -875,6 +925,10 @@
 		<run-integration-test database.type="postgresql" />
 	</target>
 
+	<target name="integration-sybase">
+		<run-integration-test database.type="sybase" />
+	</target>
+
 	<target name="modules-integration-db2">
 		<run-modules-integration-test database.type="db2" />
 	</target>
@@ -889,6 +943,10 @@
 
 	<target name="modules-integration-postgresql">
 		<run-modules-integration-test database.type="postgresql" />
+	</target>
+
+	<target name="modules-integration-sybase">
+		<run-modules-integration-test database.type="sybase" />
 	</target>
 
 	<target name="modules-unit">
@@ -980,6 +1038,92 @@
 				<prepare-test-build />
 			</test-set-up>
 		</run-batch-test>
+	</target>
+
+	<target name="sybase-service-start">
+		<local name="database.type" />
+
+		<property name="database.type" value="sybase" />
+
+		<get-database-property property.name="database.password" />
+		<get-database-property property.name="database.schema" />
+		<get-database-property property.name="database.username" />
+
+		<clean-restart-sybase />
+
+		<echo file="create-header.sql">use master
+dump transaction master with no_log
+go
+drop database lportal
+go
+create database lportal on master = "250m"
+go
+exec sp_dboption 'lportal', 'allow nulls by default' , true
+go
+
+exec sp_dboption 'lportal', 'select into/bulkcopy/pllsort' , true
+go</echo>
+
+		<retry retrycount="10">
+			<sequential>
+				<local name="output.content" />
+				<local name="return.code" />
+
+				<exec executable="${sybase.executable}" outputproperty="output.content" resultproperty="return.code">
+					<arg value="-i" />
+					<arg value="create-header.sql" />
+					<arg value="-P" />
+					<arg value="${database.password}" />
+					<arg value="-S" />
+					<arg value="${database.schema}" />
+					<arg value="-U" />
+					<arg value="${database.username}" />
+				</exec>
+
+				<echo>Header injection return code : ${return.code}
+Output content :
+${output.content}</echo>
+
+				<if>
+					<or>
+						<contains string="${output.content}" substring="Database 'lportal' already exists" />
+						<contains string="${output.content}" substring="The model database is unavailable. It is being used to create a new database." />
+					</or>
+					<then>
+						<clean-restart-sybase retry="true" />
+
+						<fail message="Error output content : ${output.content}" />
+					</then>
+				</if>
+
+				<if>
+					<not>
+						<equals arg1="${return.code}" arg2="0" />
+					</not>
+					<then>
+						<clean-restart-sybase retry="true" />
+
+						<fail message="Error return code : ${return.code}"  />
+					</then>
+				</if>
+			</sequential>
+		</retry>
+
+		<delete file="create-header.sql" />
+	</target>
+
+	<target name="sybase-service-stop">
+		<exec executable="service">
+			<arg line="sybase stop" />
+		</exec>
+
+		<waitfor maxwait="60" maxwaitunit="second">
+			<not>
+				<socket server="localhost" port="5000" />
+			</not>
+		</waitfor>
+
+		<antcall target="clean-up-sybase-processes" />
 	</target>
 
 	<target name="tck">

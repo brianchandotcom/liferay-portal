@@ -57,6 +57,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -72,6 +73,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
+import javax.portlet.PortletURL;
 
 /**
  * Represents either a site or a generic resource container.
@@ -286,6 +289,7 @@ public class GroupImpl extends GroupBaseImpl {
 					themeDisplay, groupFriendlyURL);
 			}
 			catch (PortalException pe) {
+				_log.error(pe);
 			}
 		}
 		else if (privateLayout && (getPrivateLayoutsPageCount() > 0)) {
@@ -297,6 +301,23 @@ public class GroupImpl extends GroupBaseImpl {
 					themeDisplay, groupFriendlyURL);
 			}
 			catch (PortalException pe) {
+				_log.error(pe);
+			}
+		}
+		else {
+			try {
+				if (GroupPermissionUtil.contains(
+						themeDisplay.getPermissionChecker(), this,
+						ActionKeys.VIEW_SITE_ADMINISTRATION)) {
+
+					PortletURL portletURL = PortalUtil.getSiteAdministrationURL(
+						themeDisplay.getRequest(), themeDisplay);
+
+					return portletURL.toString();
+				}
+			}
+			catch (PortalException pe) {
+				_log.error(pe);
 			}
 		}
 

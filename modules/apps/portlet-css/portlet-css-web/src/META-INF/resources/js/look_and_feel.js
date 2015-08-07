@@ -481,7 +481,7 @@ AUI.add(
 								{
 									constrain: true,
 									trigger: item,
-									zIndex: 1000
+									zIndex: 2000
 								}
 							).render(popupBoundingBox);
 						}

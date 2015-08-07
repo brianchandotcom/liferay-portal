@@ -84,6 +84,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		Connection con = null;
 		PreparedStatement ps = null;
+		PreparedStatement ps2 = null;
 		ResultSet rs = null;
 
 		try {
@@ -98,7 +99,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			ps = con.prepareStatement(update);
+			ps2 = con.prepareStatement(update);
 
 			int count = 0;
 
@@ -106,14 +107,14 @@ public class UpgradeSharding extends UpgradeProcess {
 				int i = 1;
 
 				for (String columnName : columnNames) {
-					ps.setLong(i++, rs.getLong(columnName));
+					ps2.setLong(i++, rs.getLong(columnName));
 				}
 
 				if (supportsBatchUpdates) {
 					ps.addBatch();
 
 					if (count == PropsValues.HIBERNATE_JDBC_BATCH_SIZE) {
-						ps.executeBatch();
+						ps2.executeBatch();
 
 						count = 0;
 					}
@@ -122,7 +123,7 @@ public class UpgradeSharding extends UpgradeProcess {
 					}
 				}
 				else {
-					ps.executeUpdate();
+					ps2.executeUpdate();
 				}
 			}
 
@@ -139,6 +140,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps2);
 		}
 	}
 

@@ -83,27 +83,27 @@ public class RoleSearch extends SearchContainer<Role> {
 				PortletPreferencesFactoryUtil.getPortalPreferences(
 					portletRequest);
 
+			String portletId = PortletProviderUtil.getPortletId(
+				Role.class.getName(), PortletProvider.Action.BROWSE);
+
 			String orderByCol = ParamUtil.getString(
 				portletRequest, "orderByCol");
 			String orderByType = ParamUtil.getString(
 				portletRequest, "orderByType");
 
-			String rolesAdminPortletKey = PortletProviderUtil.getPortletId(
-				Role.class.getName(), PortletProvider.Action.BROWSE);
-
 			if (Validator.isNotNull(orderByCol) &&
 				Validator.isNotNull(orderByType)) {
 
 				preferences.setValue(
-					rolesAdminPortletKey, "roles-order-by-col", orderByCol);
+					portletId, "roles-order-by-col", orderByCol);
 				preferences.setValue(
-					rolesAdminPortletKey, "roles-order-by-type", orderByType);
+					portletId, "roles-order-by-type", orderByType);
 			}
 			else {
 				orderByCol = preferences.getValue(
-					rolesAdminPortletKey, "roles-order-by-col", "title");
+					portletId, "roles-order-by-col", "title");
 				orderByType = preferences.getValue(
-					rolesAdminPortletKey, "roles-order-by-type", "asc");
+					portletId, "roles-order-by-type", "asc");
 			}
 
 			OrderByComparator<Role> orderByComparator =

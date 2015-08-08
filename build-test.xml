@@ -5187,13 +5187,16 @@ module.framework.properties.osgi.console=11312</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="sharepoint.enabled" />
+		<get-testcase-property property.name="cmis.repository.type" />
 
 		<if>
-			<equals arg1="${sharepoint.enabled}" arg2="true" />
+			<or>
+				<equals arg1="${cmis.repository.type}" arg2="documentum6" />
+				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
+			</or>
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					sharepoint.vm.host.name=${sharepoint.vm.host.name}
+					cmis.repository.vm.host.name=${cmis.repository.vm.host.name}
 				</echo>
 			</then>
 		</if>
@@ -6286,31 +6289,34 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="sharepoint.enabled" />
+		<get-testcase-property property.name="cmis.repository.type" />
 
 		<if>
-			<equals arg1="${sharepoint.enabled}" arg2="true" />
+			<or>
+				<equals arg1="${cmis.repository.type}" arg2="documentum6" />
+				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
+			</or>
 			<then>
 				<if>
 					<os family="unix" />
 					<then>
-						<exec executable="/bin/bash" os="${os.unix}" outputproperty="sharepoint.vm.host.name">
+						<exec executable="/bin/bash" os="${os.unix}" outputproperty="cmis.repository.vm.host.name">
 							<arg value="-c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2E${cmis.repository.type}&quot;" />
 						</exec>
 					</then>
 					<else>
-						<exec executable="cmd" outputproperty="sharepoint.vm.host.name">
+						<exec executable="cmd" outputproperty="cmis.repository.vm.host.name">
 							<arg value="/c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2E${cmis.repository.type}&quot;" />
 						</exec>
 					</else>
 				</if>
 
 				<propertyregex
-					input="${sharepoint.vm.host.name}"
+					input="${cmis.repository.vm.host.name}"
 					override="true"
-					property="sharepoint.vm.host.name"
+					property="cmis.repository.vm.host.name"
 					regexp="&quot;(cloud.*?)&quot;"
 					select="\1"
 				/>
@@ -6393,10 +6399,13 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<antcall target="run-selenium-test" />
 
-		<get-testcase-property property.name="sharepoint.enabled" />
+		<get-testcase-property property.name="cmis.repository.type" />
 
 		<if>
-			<equals arg1="${sharepoint.enabled}" arg2="true" />
+			<or>
+				<equals arg1="${cmis.repository.type}" arg2="documentum6" />
+				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
+			</or>
 			<then>
 				<property file="${project.dir}/portal-web/test/test-portal-web-ext.properties" />
 
@@ -6405,13 +6414,13 @@ jdbc.default.password=${database.mysql.password}</echo>
 					<then>
 						<exec executable="/bin/bash" os="${os.unix}">
 							<arg value="-c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/release?hostname=${sharepoint.vm.host.name}&amp;resourceType=qa%2Esharepoint2010&quot;" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/release?hostname=${cmis.repository.vm.host.name}&amp;resourceType=qa%2E${cmis.repository.type}&quot;" />
 						</exec>
 					</then>
 					<else>
 						<exec executable="cmd">
 							<arg value="/c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/release?hostname=${sharepoint.vm.host.name}&amp;resourceType=qa%2Esharepoint2010&quot;" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/release?hostname=${cmis.repository.vm.host.name}&amp;resourceType=qa%2E${cmis.repository.type}&quot;" />
 						</exec>
 					</else>
 				</if>

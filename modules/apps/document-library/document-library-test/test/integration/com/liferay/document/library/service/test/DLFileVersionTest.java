@@ -16,11 +16,6 @@ package com.liferay.document.library.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.events.AddDefaultDocumentLibraryStructuresAction;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.storage.Field;
-import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverterUtil;
-import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -37,7 +32,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
@@ -60,6 +54,9 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoTable;
@@ -70,10 +67,8 @@ import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -300,32 +295,27 @@ public class DLFileVersionTest {
 			DLFileEntryConstants.VERSION_DEFAULT, fileEntry.getVersion());
 	}
 
-	protected Field createField(DDMStructure ddmStructure, String name) {
-		Field field = new Field(
-			ddmStructure.getStructureId(), name, StringPool.BLANK);
+	protected DDMFormFieldValue createDDMFormFieldValue(String name) {
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
-		field.setDefaultLocale(LocaleUtil.US);
+		ddmFormFieldValue.setName(name);
 
-		return field;
+		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
+
+		localizedValue.addString(LocaleUtil.US, StringPool.BLANK);
+
+		ddmFormFieldValue.setValue(localizedValue);
+
+		return ddmFormFieldValue;
 	}
 
-	protected Field createFieldsDisplayField(
-		DDMStructure ddmStructure, Set<String> fieldNames) {
+	protected DDMFormValues createDDMFormValues(DDMForm ddmForm) {
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
-		List<String> fieldsDisplayValues = new ArrayList<>();
+		ddmFormValues.addAvailableLocale(LocaleUtil.US);
+		ddmFormValues.setDefaultLocale(LocaleUtil.US);
 
-		for (String fieldName : fieldNames) {
-			fieldsDisplayValues.add(
-				fieldName + "_INSTANCE_" + StringUtil.randomString());
-		}
-
-		Field fieldsDisplayField = new Field(
-			ddmStructure.getStructureId(), "_fieldsDisplay",
-			StringUtil.merge(fieldsDisplayValues));
-
-		fieldsDisplayField.setDefaultLocale(LocaleUtil.US);
-
-		return fieldsDisplayField;
+		return ddmFormValues;
 	}
 
 	protected ServiceContext getServiceContext() throws Exception {
@@ -349,26 +339,15 @@ public class DLFileVersionTest {
 		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			Fields fields = new Fields();
+			DDMFormValues ddmFormValues = createDDMFormValues(
+				ddmStructure.getDDMForm());
 
-			Set<String> fieldNames = ddmStructure.getFieldNames();
+			for (String fieldName : ddmStructure.getFieldNames()) {
+				DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
+					fieldName);
 
-			for (String fieldName : fieldNames) {
-				Field field = createField(ddmStructure, fieldName);
-
-				fields.put(field);
+				ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 			}
-
-			Field fieldsDisplayField = createFieldsDisplayField(
-				ddmStructure, fieldNames);
-
-			fields.put(fieldsDisplayField);
-
-			DDMFormValues ddmFormValues =
-				FieldsToDDMFormValuesConverterUtil.convert(
-					DDMStructureLocalServiceUtil.getDDMStructure(
-						ddmStructure.getStructureId()),
-					fields);
 
 			serviceContext.setAttribute(
 				DDMFormValues.class.getName() + ddmStructure.getStructureId(),
@@ -482,23 +461,21 @@ public class DLFileVersionTest {
 					DDMFormValues.class.getName() +
 					ddmStructure.getStructureId());
 
-			com.liferay.dynamic.data.mapping.model.DDMStructure
-				structure = DDMStructureLocalServiceUtil.getDDMStructure(
-					ddmStructure.getStructureId());
+			for (DDMFormFieldValue ddmFormFieldValue :
+					ddmFormValues.getDDMFormFieldValues()) {
 
-			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
-				structure, ddmFormValues);
+				String fieldType = ddmStructure.getFieldType(
+					ddmFormFieldValue.getName());
 
-			for (Field field : fields) {
-				String type = field.getType();
+				if (fieldType.equals("text")) {
+					LocalizedValue localizedValue = new LocalizedValue(
+						LocaleUtil.US);
 
-				if (!field.isPrivate() && type.equals("text")) {
-					field.setValue(metadata);
+					localizedValue.addString(LocaleUtil.US, metadata);
+
+					ddmFormFieldValue.setValue(localizedValue);
 				}
 			}
-
-			ddmFormValues = FieldsToDDMFormValuesConverterUtil.convert(
-				structure, fields);
 
 			_serviceContext.setAttribute(
 				DDMFormValues.class.getName() + ddmStructure.getStructureId(),

@@ -34,8 +34,8 @@ import java.util.List;
 public class AssetEntryImpl extends AssetEntryBaseImpl {
 
 	@Override
-	public AssetRenderer getAssetRenderer() {
-		AssetRendererFactory assetRendererFactory =
+	public AssetRenderer<?> getAssetRenderer() {
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				getClassName());
 
@@ -52,7 +52,7 @@ public class AssetEntryImpl extends AssetEntryBaseImpl {
 	}
 
 	@Override
-	public AssetRendererFactory getAssetRendererFactory() {
+	public AssetRendererFactory<?> getAssetRendererFactory() {
 		return
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				getClassName());

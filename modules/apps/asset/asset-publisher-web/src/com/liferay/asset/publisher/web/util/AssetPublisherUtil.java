@@ -512,13 +512,14 @@ public class AssetPublisherUtil {
 				continue;
 			}
 
-			AssetRendererFactory assetRendererFactory =
+			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
 					getAssetRendererFactoryByClassName(
 						assetEntry.getClassName());
 
-			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-				assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(
+					assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
 
 			if (!assetRendererFactory.isActive(
 					permissionChecker.getCompanyId())) {
@@ -732,7 +733,7 @@ public class AssetPublisherUtil {
 	}
 
 	public static String getClassName(
-		AssetRendererFactory assetRendererFactory) {
+		AssetRendererFactory<?> assetRendererFactory) {
 
 		Class<?> clazz = assetRendererFactory.getClass();
 

@@ -50,10 +50,15 @@ import javax.servlet.http.HttpServletResponse;
  * @author Sergio González
  */
 public class CommentAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<WorkflowableComment> implements TrashRenderer {
 
 	public CommentAssetRenderer(WorkflowableComment workflowableComment) {
 		_workflowableComment = workflowableComment;
+	}
+
+	@Override
+	public WorkflowableComment getAssetObject() {
+		return _workflowableComment;
 	}
 
 	@Override
@@ -90,7 +95,8 @@ public class CommentAssetRenderer
 
 	@Override
 	public String getPortletId() {
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<WorkflowableComment> assetRendererFactory =
+			getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
 	}
@@ -157,7 +163,8 @@ public class CommentAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<WorkflowableComment> assetRendererFactory =
+			getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);

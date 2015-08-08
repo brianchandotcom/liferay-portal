@@ -57,10 +57,10 @@ public class AssetPublisherHelper {
 		viewFullContentURL.setParameter(
 			"assetEntryId", String.valueOf(assetEntry.getEntryId()));
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			assetEntry.getAssetRendererFactory();
 
-		AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
+		AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
 		viewFullContentURL.setParameter("type", assetRendererFactory.getType());
 

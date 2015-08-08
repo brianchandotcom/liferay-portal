@@ -47,7 +47,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"javax.portlet.name=" + CommentPortletKeys.COMMENT},
 	service = AssetRendererFactory.class
 )
-public class CommentAssetRendererFactory extends BaseAssetRendererFactory {
+public class CommentAssetRendererFactory
+	extends BaseAssetRendererFactory<WorkflowableComment> {
 
 	public static final String TYPE = "discussion";
 
@@ -59,7 +60,8 @@ public class CommentAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<WorkflowableComment> getAssetRenderer(
+			long classPK, int type)
 		throws PortalException {
 
 		Comment comment = CommentManagerUtil.fetchComment(classPK);

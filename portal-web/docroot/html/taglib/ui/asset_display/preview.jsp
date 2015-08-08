@@ -19,7 +19,7 @@
 <%
 AssetEntry assetEntry = (AssetEntry)request.getAttribute("liferay-ui:asset-display:assetEntry");
 
-AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute(WebKeys.ASSET_RENDERER);
+AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.ASSET_RENDERER);
 %>
 
 <div class="asset-preview">

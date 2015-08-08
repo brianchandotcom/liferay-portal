@@ -32,8 +32,8 @@ boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT)
 
 AssetEntry assetEntry = null;
 
-AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(type);
-AssetRenderer assetRenderer = null;
+AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(type);
+AssetRenderer<?> assetRenderer = null;
 
 if (Validator.isNotNull(urlTitle)) {
 	assetRenderer = assetRendererFactory.getAssetRenderer(groupId, urlTitle);

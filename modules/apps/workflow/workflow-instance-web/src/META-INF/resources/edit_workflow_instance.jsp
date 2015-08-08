@@ -52,7 +52,7 @@ else {
 		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= true %>" id="preview">
 
 			<%
-			AssetRenderer assetRenderer = workflowInstanceEditDisplayContext.getAssetRenderer();
+			AssetRenderer<?> assetRenderer = workflowInstanceEditDisplayContext.getAssetRenderer();
 
 			AssetEntry assetEntry = workflowInstanceEditDisplayContext.getAssetEntry();
 			%>

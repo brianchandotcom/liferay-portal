@@ -121,22 +121,24 @@ public class WorkflowTaskDisplayContext {
 	public AssetEntry getAssetEntry() throws PortalException {
 		long assetEntryId = ParamUtil.getLong(_renderRequest, "assetEntryId");
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<?> assetRendererFactory =
+			getAssetRendererFactory();
 
 		return assetRendererFactory.getAssetEntry(assetEntryId);
 	}
 
-	public AssetRenderer getAssetRenderer() throws PortalException {
+	public AssetRenderer<?> getAssetRenderer() throws PortalException {
 		long assetEntryVersionId = ParamUtil.getLong(
 			_workflowTaskRequestHelper.getRequest(), "assetEntryVersionId");
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<?> assetRendererFactory =
+			getAssetRendererFactory();
 
 		return assetRendererFactory.getAssetRenderer(
 			assetEntryVersionId, AssetRendererFactory.TYPE_LATEST);
 	}
 
-	public AssetRenderer getAssetRenderer(WorkflowTask workflowTask)
+	public AssetRenderer<?> getAssetRenderer(WorkflowTask workflowTask)
 		throws PortalException, PortletException {
 
 		WorkflowHandler<?> workflowHandler = getWorkflowHandler(workflowTask);
@@ -146,7 +148,7 @@ public class WorkflowTaskDisplayContext {
 		return workflowHandler.getAssetRenderer(classPK);
 	}
 
-	public AssetRendererFactory getAssetRendererFactory() {
+	public AssetRendererFactory<?> getAssetRendererFactory() {
 		String type = ParamUtil.getString(_renderRequest, "type");
 
 		return AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(
@@ -423,7 +425,7 @@ public class WorkflowTaskDisplayContext {
 		sb.append(_renderResponse.getNamespace());
 		sb.append("editAsset', title: '");
 
-		AssetRenderer assetRenderer = getAssetRenderer(workflowTask);
+		AssetRenderer<?> assetRenderer = getAssetRenderer(workflowTask);
 
 		String assetTitle = HtmlUtil.escape(
 			assetRenderer.getTitle(_workflowTaskRequestHelper.getLocale()));

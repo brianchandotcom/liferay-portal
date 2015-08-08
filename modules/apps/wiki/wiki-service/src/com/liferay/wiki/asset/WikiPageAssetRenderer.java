@@ -56,7 +56,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Sergio González
  */
 public class WikiPageAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<WikiPage> implements TrashRenderer {
 
 	public static final String TYPE = "wiki_page";
 
@@ -85,6 +85,11 @@ public class WikiPageAssetRenderer
 			WikiGroupServiceSettings.class,
 			new GroupServiceSettingsLocator(
 				page.getGroupId(), WikiConstants.SERVICE_NAME));
+	}
+
+	@Override
+	public WikiPage getAssetObject() {
+		return _page;
 	}
 
 	@Override
@@ -220,7 +225,8 @@ public class WikiPageAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<WikiPage> assetRendererFactory =
+			getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);

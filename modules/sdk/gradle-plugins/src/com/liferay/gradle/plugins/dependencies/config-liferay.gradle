@@ -124,5 +124,4 @@ liferay {
 	jmxRemotePort = 8099
 	liferayHome = "${->liferay.appServerParentDir}"
 	portalVersion = "7.0.0-SNAPSHOT"
-	tmpDir = rootProject.file("tmp")
 }

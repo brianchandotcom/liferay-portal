@@ -29,8 +29,6 @@ liferay {
 	if (liferayHomeSystemProperty) {
 		liferayHome = liferayHomeSystemProperty
 	}
-
-	tmpDir = new File(rootDir, "../tmp")
 }
 
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")

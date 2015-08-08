@@ -156,6 +156,14 @@ AUI.add(
 								}
 							);
 						}
+
+						if (dataChannel.scrollElementId) {
+							var scrollElement = document.getElementById(dataChannel.scrollElementId);
+
+							if (scrollElement) {
+								scrollElement.scrollIntoView();
+							}
+						}
 					}
 				);
 			}

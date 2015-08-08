@@ -19,20 +19,26 @@
 <div class="profile-header">
 	<div class="nameplate">
 		<div class="nameplate-field">
-			<div class="user-icon user-icon-lg user-icon-success">
+			<div class="user-icon <%= userIconCssClass %> user-icon-success">
 				<img alt="" class="img-responsive <%= imageCssClass %>" src="<%= HtmlUtil.escape(taglibSrc) %>">
 			</div>
 		</div>
-		<div class="nameplate-content">
-			<div class="heading4">
-				<c:choose>
-					<c:when test="<%= showLink %>">
-						<aui:a href="<%= url %>">
+		<c:if test="<%= showUserName %>">
+			<div class="nameplate-content">
+				<div class="heading4">
+					<c:choose>
+						<c:when test="<%= showLink %>">
+							<aui:a href="<%= url %>">
+								<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
+							</aui:a>
+						</c:when>
+						<c:otherwise>
 							<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
-						</aui:a>
-					</c:when>
-					<c:otherwise>
-						<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
-					</c:otherwise>
-				</c:choose>
-			</div>
+						</c:otherwise>
+					</c:choose>
+				</div>
+		</c:if>
+
+		<c:if test="<%= showUserDetails %>">
+			<div class="nameplate-content">
+		</c:if>

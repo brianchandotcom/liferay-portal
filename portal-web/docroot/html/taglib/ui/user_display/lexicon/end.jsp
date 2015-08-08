@@ -13,7 +13,13 @@
  * details.
  */
 --%>
+<%@ include file="/html/taglib/ui/user_display/init.jsp" %>
 
-		</div>
+		<c:if test="<%= showUserName %>">
+			</div>
+		</c:if>
+		<c:if test="<%= showUserDetails %>">
+			</div>
+		</c:if>
 	</div>
 </div>

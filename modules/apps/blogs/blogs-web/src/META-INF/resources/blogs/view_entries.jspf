@@ -110,9 +110,7 @@ contextObjects.put("blogsPortletInstanceSettingsHelper", blogsPortletInstanceSet
 
 	<liferay-util:include page="/blogs/view_entry_content.jsp" servletContext="<%= application %>" />
 
-	<c:if test="<%= index < searchContainer.getTotal() %>">
-		<div class="separator"><!-- --></div>
-	</c:if>
+	<div class="separator"><!-- --></div>
 
 	<%
 	}

@@ -1,26 +1,17 @@
 .portlet-blogs {
 	.entry-subtitle {
-		color: #2B4259;
-		font-size: 24px;
-		font-weight: 400;
+		margin-bottom: 20px;
+
+		h4 {
+			line-height: 30px;
+		}
 	}
 
 	.entry-body {
-		font-size: 18px;
+		position: relative;
 
 		h1 {
-			font-size: 22px;
 			font-weight: bold;
-		}
-
-		h2 {
-			color: #868896;
-			font-size: 20px;
-			font-weight: 400;
-		}
-
-		a, h2 {
-			color: #32A8E6;
 		}
 
 		p {
@@ -40,13 +31,11 @@
 			background-repeat: no-repeat;
 			background-size: cover;
 			height: 400px;
-			margin-bottom: 10px;
 		}
 
 		.cover-image-caption {
 			color: #868896;
-			font-size: 12px;
-			margin-bottom: 35px;
+			text-align: right;
 		}
 
 		.uploading-image-container {
@@ -60,13 +49,5 @@
 		.uploading-image {
 			opacity: 0.4;
 		}
-	}
-
-	.entry-date {
-		color: #999;
-		display: block;
-		font-size: 14px;
-		margin-bottom: 32px;
-		margin-top: 24px;
 	}
 }

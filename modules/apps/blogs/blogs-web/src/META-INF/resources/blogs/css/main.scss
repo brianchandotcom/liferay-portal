@@ -1,9 +1,16 @@
 @import "bourbon";
 @import "mixins";
 
-@import url(common_main.css);
+@import "common_main";
 
 .portlet-blogs {
+	.entry-options {
+		background-color: #FFF;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
 	.taglib-custom-attributes-list {
 		margin-bottom: 1em;
 	}
@@ -29,16 +36,14 @@
 	}
 
 	.entry-author {
-		color: #999;
 		float: left;
 		line-height: 20px;
+		margin-right: 30px;
 		vertical-align: middle;
 	}
 
-	.taglib-user-display {
-		color: #999;
-		display: inline;
-		padding: 0;
+	.entry-info {
+		margin-top: 15px;
 	}
 
 	.edit-actions {
@@ -81,48 +86,38 @@
 		}
 	}
 
-	.read-more {
-		font-size: 14px;
-		margin-bottom: 40px;
+	.border-top {
+		border-top: 1px solid #EDEEF0;
+		padding-top: 20px;
 	}
 
 	.entry-footer {
-		margin-bottom: 60px;
-		margin-top: 80px;
 		vertical-align: middle;
 
 		.entry-social, .flags, .social-bookmarks {
 			display: inline-block;
-
-			&:before {
-				background: #EDEEF0;
-				content: '';
-				display: inline-block;
-				height: 20px;
-				margin: 0 40px;
-				vertical-align: middle;
-				width: 1px;
-
-				@include respond-to(phone, tablet) {
-					margin: 0 15px;
-				}
-			}
 		}
 
 		.entry-social {
-			.ratings {
+			& > div {
 				display: inline-block;
+				margin-top: 0;
+				vertical-align: top;
+			}
 
-				.taglib-ratings {
-					display: inline-block;
-					vertical-align: middle;
+			.comments {
+				margin-right: 10px;
+			}
 
-					&.stars {
-						margin-top: 0;
+			.ratings .taglib-ratings {
+				display: inline-block;
+				vertical-align: middle;
 
-						.liferay-rating-score {
-							padding-left: 0;
-						}
+				&.stars {
+					margin-top: 0;
+
+					.liferay-rating-score {
+						padding-left: 0;
 					}
 				}
 			}
@@ -194,17 +189,11 @@
 	.entry-title {
 		display: block;
 
-		h2 {
-			font-size: 26px;
-			font-weight: bold;
-			margin-bottom: 24px;
+		h2 .alloy-editor-placeholder {
+			color: #32A8E6;
 
-			.alloy-editor-placeholder {
-				color: #32A8E6;
-
-				p {
-					margin-bottom: 0;
-				}
+			p {
+				margin-bottom: 0;
 			}
 		}
 
@@ -228,117 +217,40 @@
 		}
 	}
 
-	.entry-navigation, .entry-metadata {
-		h2 {
-			color: #868896;
-			display: block;
-			font-size: 20px;
-			font-weight: 400;
-			margin-bottom: 16px;
-			margin-top: 0;
-		}
+	.entry-metadata {
+		padding: 30px 0;
 	}
 
-	.entry-tags, .entry-categories, .entry-links {
-		margin-bottom: 60px;
+	.entry-navigation h2 {
+		margin-bottom: 15px;
+		margin-top: 0;
 	}
 
 	.entry-navigation {
-		border-bottom: 1px solid #EDEEF0;
-		border-top: 1px solid #EDEEF0;
 		padding: 60px 0;
 		width: 100%;
 
-		a:hover {
-			text-decoration: none;
-
-			h3 {
-				text-decoration: underline;
-			}
-		}
-
-		h2 {
-			@include ellipsis;
-		}
-
-		h3 {
-			color: #2B4259;
-			font-size: 20px;
-			font-weight: bold;
-			margin-bottom: 16px;
+		.entry-info {
 			margin-top: 0;
-
-			@include ellipsis;
-		}
-
-		.entry-content {
-			display: block;
-			overflow: hidden;
-
-			.entry-content-body {
-				color: #555;
-				display: block;
-				font-size: 18px;
-				font-weight: 400;
-				margin-bottom: 0;
-			}
 		}
 
 		.small-image {
 			background-position: center;
 			background-repeat: no-repeat;
 			background-size: cover;
-			display: block;
-			float: right;
 			height: 140px;
-			margin-left: 60px;
-			width: 140px;
-		}
-
-		.taglib-user-display {
-			display: block;
-			margin-top: 28px;
-			overflow: hidden;
-
-			@include respond-to(phone, tablet) {
-				margin-top: 0;
-			}
-		}
-
-		.previous-entry {
-			.previous-entry-content {
-				padding-right: 60px;
-			}
-
-			&.has-next-entry .previous-entry-content {
-				border-right: 1px solid #EDEEF0;
-
-				@include respond-to(phone) {
-					border-right-width: 0;
-				}
-			}
-		}
-
-		.next-entry {
-			> h2, .next-entry-content {
-				margin-left: 30px;
-
-				@include respond-to(phone) {
-					margin-left: 0;
-				}
-			}
-
-			> h2 {
-				@include respond-to(phone) {
-					margin-top: 60px;
-				}
-			}
 		}
 	}
 
 	.lfr-blogs-cover-image-selector {
 		margin: 0 0 10px;
 		padding-top: 10px;
+	}
+
+	.nameplate-content {
+		padding-left: 0;
+
+		vertical-align: middle;
 	}
 
 	.search-form {
@@ -348,6 +260,10 @@
 	.search-root-entry {
 		color: #999;
 		float: right;
+	}
+
+	.separator {
+		border-color: transparent;
 	}
 
 	.subscribe {

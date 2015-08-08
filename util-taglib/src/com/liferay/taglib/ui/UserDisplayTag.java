@@ -73,6 +73,15 @@ public class UserDisplayTag extends TagSupport {
 			request.setAttribute(
 				"liferay-ui:user-display:showUserName",
 				String.valueOf(_showUserName));
+
+			if (Validator.isNull(_userIconCssClass)) {
+				_userIconCssClass = "user-icon-lg";
+			}
+
+			request.setAttribute(
+				"liferay-ui:user-display:userIconCssClass",
+				String.valueOf(_userIconCssClass));
+
 			request.setAttribute(
 				"liferay-ui:user-display:user-id", String.valueOf(_userId));
 			request.setAttribute(
@@ -147,6 +156,10 @@ public class UserDisplayTag extends TagSupport {
 		_url = url;
 	}
 
+	public void setUserIconCssClass(String userIconCssClass) {
+		_userIconCssClass = userIconCssClass;
+	}
+
 	public void setUserId(long userId) {
 		_userId = userId;
 	}
@@ -192,6 +205,7 @@ public class UserDisplayTag extends TagSupport {
 	private boolean _showUserName = true;
 	private String _startPage;
 	private String _url;
+	private String _userIconCssClass;
 	private long _userId;
 	private String _userName;
 	private String _view;

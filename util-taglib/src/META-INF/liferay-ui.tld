@@ -5451,6 +5451,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>userIconCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>userId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

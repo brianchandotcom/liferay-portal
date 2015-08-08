@@ -1,7 +1,7 @@
 <definition component-name="portal-document-management-ee">
 	<property name="custom.properties" value="session.store.password=true${line.separator}company.security.auth.type=screenName" />
 	<property name="hook.plugins.includes" value="sharepoint-hook" />
-	<property name="sharepoint.enabled" value="true" />
+	<property name="cmis.repository.type" value="sharepoint2010" />
 	<property name="testray.main.component.name" value="Documents Management" />
 
 	<set-up>

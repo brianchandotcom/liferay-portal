@@ -38,7 +38,7 @@ portletURL.setParameter("eventName", eventName);
 		searchContainer="<%= ruleGroupSearch %>"
 	>
 		<aui:nav-bar>
-			<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
+			<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
 				<liferay-portlet:renderURL var="addRuleGroupURL">
 					<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -76,7 +76,7 @@ portletURL.setParameter("eventName", eventName);
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup"
+			className="com.liferay.mobile.device.rules.model.MDRRuleGroup"
 			escapedModel="<%= true %>"
 			keyProperty="ruleGroupId"
 			modelVar="ruleGroup"

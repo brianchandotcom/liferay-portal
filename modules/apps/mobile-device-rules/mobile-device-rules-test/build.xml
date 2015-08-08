@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="mobile-device-rules-service" />
+	<property name="import.shared" value="mobile-device-rules-api,mobile-device-rules-service" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 </project>

@@ -15,6 +15,19 @@
 package com.liferay.mobile.device.rules.lar;
 
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
+import com.liferay.mobile.device.rules.model.MDRAction;
+import com.liferay.mobile.device.rules.model.MDRRule;
+import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
+import com.liferay.mobile.device.rules.model.impl.MDRActionImpl;
+import com.liferay.mobile.device.rules.model.impl.MDRRuleGroupImpl;
+import com.liferay.mobile.device.rules.model.impl.MDRRuleGroupInstanceImpl;
+import com.liferay.mobile.device.rules.model.impl.MDRRuleImpl;
+import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.permission.MDRPermission;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -29,19 +42,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
-import com.liferay.portlet.mobiledevicerules.model.MDRAction;
-import com.liferay.portlet.mobiledevicerules.model.MDRRule;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
-import com.liferay.portlet.mobiledevicerules.model.impl.MDRActionImpl;
-import com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupImpl;
-import com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupInstanceImpl;
-import com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleImpl;
-import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.permission.MDRPermission;
 
 import java.util.List;
 

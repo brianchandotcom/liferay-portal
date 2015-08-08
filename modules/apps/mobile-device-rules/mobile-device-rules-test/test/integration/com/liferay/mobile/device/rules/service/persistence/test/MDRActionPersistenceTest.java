@@ -15,6 +15,13 @@
 package com.liferay.mobile.device.rules.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
+import com.liferay.mobile.device.rules.exception.NoSuchActionException;
+import com.liferay.mobile.device.rules.model.MDRAction;
+import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.persistence.MDRActionPersistence;
+import com.liferay.mobile.device.rules.service.persistence.MDRActionUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -35,17 +42,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.portlet.mobiledevicerules.NoSuchActionException;
-import com.liferay.portlet.mobiledevicerules.model.MDRAction;
-import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.persistence.MDRActionPersistence;
-import com.liferay.portlet.mobiledevicerules.service.persistence.MDRActionUtil;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
 import org.junit.runner.RunWith;
 
 import java.io.Serializable;
@@ -148,6 +150,8 @@ public class MDRActionPersistenceTest {
 
 		newMDRAction.setTypeSettings(RandomTestUtil.randomString());
 
+		newMDRAction.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_mdrActions.add(_persistence.update(newMDRAction));
 
 		MDRAction existingMDRAction = _persistence.findByPrimaryKey(newMDRAction.getPrimaryKey());
@@ -181,6 +185,9 @@ public class MDRActionPersistenceTest {
 		Assert.assertEquals(existingMDRAction.getType(), newMDRAction.getType());
 		Assert.assertEquals(existingMDRAction.getTypeSettings(),
 			newMDRAction.getTypeSettings());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMDRAction.getLastPublishDate()),
+			Time.getShortTimestamp(newMDRAction.getLastPublishDate()));
 	}
 
 	@Test
@@ -244,7 +251,7 @@ public class MDRActionPersistenceTest {
 			"actionId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "ruleGroupInstanceId", true,
-			"name", true, "description", true, "type", true, "typeSettings",
+			"name", true, "description", true, "type", true, "lastPublishDate",
 			true);
 	}
 
@@ -490,6 +497,8 @@ public class MDRActionPersistenceTest {
 		mdrAction.setType(RandomTestUtil.randomString());
 
 		mdrAction.setTypeSettings(RandomTestUtil.randomString());
+
+		mdrAction.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_mdrActions.add(_persistence.update(mdrAction));
 

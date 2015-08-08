@@ -521,38 +521,6 @@
 		<property name="service" ref="com.liferay.portlet.messageboards.service.MBThreadService" />
 		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBThreadService" />
 	</bean>
-	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRActionService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRActionService" />
-		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRActionService" />
-	</bean>
-	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRActionService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRActionService" />
-		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRActionService" />
-	</bean>
-	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleService" />
-		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleService" />
-	</bean>
-	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleService" />
-		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleService" />
-	</bean>
-	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleGroupService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService" />
-		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService" />
-	</bean>
-	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleGroupService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService" />
-		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService" />
-	</bean>
-	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleGroupInstanceService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
-		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
-	</bean>
-	<bean name="/com_liferay_portlet_mobiledevicerules_service_spring_MDRRuleGroupInstanceService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
-		<property name="serviceInterface" value="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" />
-	</bean>
 	<bean name="/com_liferay_portlet_ratings_service_spring_RatingsEntryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.ratings.service.RatingsEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.ratings.service.RatingsEntryService" />

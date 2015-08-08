@@ -15,6 +15,13 @@
 package com.liferay.mobile.device.rules.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
+import com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupPersistence;
+import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -35,17 +42,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupPersistence;
-import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupUtil;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
 import org.junit.runner.RunWith;
 
 import java.io.Serializable;
@@ -138,6 +140,8 @@ public class MDRRuleGroupPersistenceTest {
 
 		newMDRRuleGroup.setDescription(RandomTestUtil.randomString());
 
+		newMDRRuleGroup.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_mdrRuleGroups.add(_persistence.update(newMDRRuleGroup));
 
 		MDRRuleGroup existingMDRRuleGroup = _persistence.findByPrimaryKey(newMDRRuleGroup.getPrimaryKey());
@@ -164,6 +168,9 @@ public class MDRRuleGroupPersistenceTest {
 			newMDRRuleGroup.getName());
 		Assert.assertEquals(existingMDRRuleGroup.getDescription(),
 			newMDRRuleGroup.getDescription());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMDRRuleGroup.getLastPublishDate()),
+			Time.getShortTimestamp(newMDRRuleGroup.getLastPublishDate()));
 	}
 
 	@Test
@@ -237,7 +244,8 @@ public class MDRRuleGroupPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("MDRRuleGroup", "uuid",
 			true, "ruleGroupId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "description", true);
+			"modifiedDate", true, "name", true, "description", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -472,6 +480,8 @@ public class MDRRuleGroupPersistenceTest {
 		mdrRuleGroup.setName(RandomTestUtil.randomString());
 
 		mdrRuleGroup.setDescription(RandomTestUtil.randomString());
+
+		mdrRuleGroup.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_mdrRuleGroups.add(_persistence.update(mdrRuleGroup));
 

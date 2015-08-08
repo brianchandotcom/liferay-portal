@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="com.liferay.mobile.device.rules.service.MDRActionLocalService" class="com.liferay.mobile.device.rules.service.impl.MDRActionLocalServiceImpl" />
+	<bean id="com.liferay.mobile.device.rules.service.MDRActionService" class="com.liferay.mobile.device.rules.service.impl.MDRActionServiceImpl" />
+	<bean id="com.liferay.mobile.device.rules.service.persistence.MDRActionPersistence" class="com.liferay.mobile.device.rules.service.persistence.impl.MDRActionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.mobile.device.rules.service.MDRRuleLocalService" class="com.liferay.mobile.device.rules.service.impl.MDRRuleLocalServiceImpl" />
+	<bean id="com.liferay.mobile.device.rules.service.MDRRuleService" class="com.liferay.mobile.device.rules.service.impl.MDRRuleServiceImpl" />
+	<bean id="com.liferay.mobile.device.rules.service.persistence.MDRRulePersistence" class="com.liferay.mobile.device.rules.service.persistence.impl.MDRRulePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService" class="com.liferay.mobile.device.rules.service.impl.MDRRuleGroupLocalServiceImpl" />
+	<bean id="com.liferay.mobile.device.rules.service.MDRRuleGroupService" class="com.liferay.mobile.device.rules.service.impl.MDRRuleGroupServiceImpl" />
+	<bean id="com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupPersistence" class="com.liferay.mobile.device.rules.service.persistence.impl.MDRRuleGroupPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupFinder" class="com.liferay.mobile.device.rules.service.persistence.impl.MDRRuleGroupFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService" class="com.liferay.mobile.device.rules.service.impl.MDRRuleGroupInstanceLocalServiceImpl" />
+	<bean id="com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService" class="com.liferay.mobile.device.rules.service.impl.MDRRuleGroupInstanceServiceImpl" />
+	<bean id="com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupInstancePersistence" class="com.liferay.mobile.device.rules.service.persistence.impl.MDRRuleGroupInstancePersistenceImpl" parent="basePersistence" />
+</beans>

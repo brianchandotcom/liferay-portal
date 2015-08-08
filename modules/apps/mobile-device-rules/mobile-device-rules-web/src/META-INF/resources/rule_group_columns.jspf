@@ -19,7 +19,7 @@ Group group = GroupLocalServiceUtil.getGroup(ruleGroup.getGroupId());
 
 String rowHREF = null;
 
-if (MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup, ActionKeys.UPDATE)) {
+if (MDRRuleGroupPermission.contains(permissionChecker, ruleGroup, ActionKeys.UPDATE)) {
 %>
 
 	<liferay-portlet:renderURL var="editURL">

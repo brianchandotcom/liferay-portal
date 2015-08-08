@@ -15,6 +15,9 @@
 package com.liferay.mobile.device.rules.web.portlet.action;
 
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
+import com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupServiceUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -27,9 +30,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupServiceUtil;
 
 import java.util.Locale;
 import java.util.Map;

@@ -26,6 +26,15 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.layout.admin.web.context.LayoutsAdminDisplayContext" %><%@
+page import="com.liferay.mobile.device.rules.model.MDRAction" %><%@
+page import="com.liferay.mobile.device.rules.model.MDRRuleGroup" %><%@
+page import="com.liferay.mobile.device.rules.model.MDRRuleGroupInstance" %><%@
+page import="com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil" %><%@
+page import="com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceServiceUtil" %><%@
+page import="com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil" %><%@
+page import="com.liferay.mobile.device.rules.service.permission.MDRPermission" %><%@
+page import="com.liferay.mobile.device.rules.service.permission.MDRRuleGroupInstancePermission" %><%@
+page import="com.liferay.mobile.device.rules.util.comparator.RuleGroupInstancePriorityComparator" %><%@
 page import="com.liferay.portal.ImageTypeException" %><%@
 page import="com.liferay.portal.LayoutFriendlyURLException" %><%@
 page import="com.liferay.portal.LayoutFriendlyURLsException" %><%@
@@ -114,15 +123,6 @@ page import="com.liferay.portlet.documentlibrary.FileSizeException" %><%@
 page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys" %><%@
 page import="com.liferay.portlet.exportimport.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.portlet.exportimport.staging.StagingUtil" %><%@
-page import="com.liferay.portlet.mobiledevicerules.model.MDRAction" %><%@
-page import="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup" %><%@
-page import="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance" %><%@
-page import="com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil" %><%@
-page import="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceServiceUtil" %><%@
-page import="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil" %><%@
-page import="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil" %><%@
-page import="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupInstancePermissionUtil" %><%@
-page import="com.liferay.portlet.mobiledevicerules.util.RuleGroupInstancePriorityComparator" %><%@
 page import="com.liferay.portlet.sites.util.SitesUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@

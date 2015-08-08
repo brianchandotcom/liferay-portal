@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder package-path="com.liferay.mobile.device.rules" auto-import-default-references="false">
+	<author>Edward C. Han</author>
+	<namespace>MDR</namespace>
+	<entity name="MDRAction" local-service="true" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="actionId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="ruleGroupInstanceId" type="long" />
+		<column name="name" type="String"  localized="true" />
+		<column name="description" type="String" localized="true" />
+		<column name="type" type="String" />
+		<column name="typeSettings" type="String" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="RuleGroupInstanceId" return-type="Collection">
+			<finder-column name="ruleGroupInstanceId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.mobile.device.rules" entity="MDRRuleGroupInstance" />
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
+		<reference package-path="com.liferay.portal" entity="User" />
+	</entity>
+	<entity name="MDRRule" local-service="true" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="ruleId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="ruleGroupId" type="long" />
+		<column name="name" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
+		<column name="type" type="String" />
+		<column name="typeSettings" type="String" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="RuleGroupId" return-type="Collection">
+			<finder-column name="ruleGroupId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.mobile.device.rules" entity="MDRRuleGroup" />
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
+		<reference package-path="com.liferay.portal" entity="User" />
+	</entity>
+	<entity name="MDRRuleGroup" local-service="true" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="ruleGroupId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" arrayable-operator="OR" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.mobile.device.rules" entity="MDRRule" />
+		<reference package-path="com.liferay.mobile.device.rules" entity="MDRRuleGroupInstance" />
+		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
+		<reference package-path="com.liferay.portal" entity="User" />
+	</entity>
+	<entity name="MDRRuleGroupInstance" local-service="true" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="ruleGroupInstanceId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="ruleGroupId" type="long" />
+		<column name="priority" type="int" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="RuleGroupId" return-type="Collection">
+			<finder-column name="ruleGroupId" />
+		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="G_C_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="C_C_R" return-type="MDRRuleGroupInstance" unique="true">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="ruleGroupId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.mobile.device.rules" entity="MDRAction" />
+		<reference package-path="com.liferay.mobile.device.rules" entity="MDRRuleGroup" />
+		<reference package-path="com.liferay.portal" entity="ClassName" />
+		<reference package-path="com.liferay.portal" entity="Layout" />
+		<reference package-path="com.liferay.portal" entity="LayoutSet" />
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
+		<reference package-path="com.liferay.portal" entity="User" />
+	</entity>
+	<exceptions>
+		<exception>ActionType</exception>
+		<exception>DuplicateRuleGroupInstance</exception>
+	</exceptions>
+</service-builder>

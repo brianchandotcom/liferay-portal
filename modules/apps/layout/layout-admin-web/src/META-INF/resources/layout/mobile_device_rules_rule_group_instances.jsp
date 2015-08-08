@@ -38,7 +38,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance"
+		className="com.liferay.mobile.device.rules.model.MDRRuleGroupInstance"
 		escapedModel="<%= true %>"
 		keyProperty="ruleGroupInstanceId"
 		modelVar="mdrRuleGroupInstance"

@@ -17,12 +17,15 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.application.list.api.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.mobile.device.rules.api.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.mobile.device.rules.service.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.osgi.service.tracker.map.jar" />
 	<classpathentry kind="lib" path="lib/javax.servlet.jsp.jstl.jar" />
 	<classpathentry kind="lib" path="lib/jsp-api.jar" />
 	<classpathentry kind="lib" path="lib/jstl-api.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.compendium.jar" />
+	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
 	<classpathentry kind="lib" path="lib/servlet-api.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

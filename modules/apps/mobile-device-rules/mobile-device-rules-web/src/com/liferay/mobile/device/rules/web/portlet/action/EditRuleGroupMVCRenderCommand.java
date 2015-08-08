@@ -15,13 +15,13 @@
 package com.liferay.mobile.device.rules.web.portlet.action;
 
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
+import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupServiceUtil;
 import com.liferay.mobile.device.rules.web.constants.MDRWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupServiceUtil;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;

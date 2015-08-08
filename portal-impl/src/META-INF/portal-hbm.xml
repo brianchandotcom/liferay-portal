@@ -111,10 +111,6 @@
 	<import class="com.liferay.portlet.messageboards.model.MBStatsUser" />
 	<import class="com.liferay.portlet.messageboards.model.MBThread" />
 	<import class="com.liferay.portlet.messageboards.model.MBThreadFlag" />
-	<import class="com.liferay.portlet.mobiledevicerules.model.MDRAction" />
-	<import class="com.liferay.portlet.mobiledevicerules.model.MDRRule" />
-	<import class="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup" />
-	<import class="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance" />
 	<import class="com.liferay.portlet.ratings.model.RatingsEntry" />
 	<import class="com.liferay.portlet.ratings.model.RatingsStats" />
 	<import class="com.liferay.portlet.shopping.model.ShoppingCart" />
@@ -1805,76 +1801,6 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="threadId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.portlet.mobiledevicerules.model.impl.MDRActionImpl" table="MDRAction">
-		<id name="actionId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="ruleGroupInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
-		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleImpl" table="MDRRule">
-		<id name="ruleId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="ruleGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
-		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupImpl" table="MDRRuleGroup">
-		<id name="ruleGroupId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.portlet.mobiledevicerules.model.impl.MDRRuleGroupInstanceImpl" table="MDRRuleGroupInstance">
-		<id name="ruleGroupInstanceId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="ruleGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.ratings.model.impl.RatingsEntryImpl" table="RatingsEntry">

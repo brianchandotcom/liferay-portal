@@ -17,6 +17,9 @@
 		<operation xmlns:operNS="urn:http.service.expando.portlet.liferay.com" name="deleteColumn" qname="operNS:deleteColumn" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="columnId" type="tns:long"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.expando.portlet.liferay.com" xmlns:rtns="http://model.expando.portlet.liferay.com" name="fetchExpandoColumn" qname="operNS:fetchExpandoColumn" returnQName="fetchExpandoColumnReturn" returnType="rtns:ExpandoColumnSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="columnId" type="tns:long"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.expando.portlet.liferay.com" xmlns:rtns="http://model.expando.portlet.liferay.com" name="updateColumn" qname="operNS:updateColumn" returnQName="updateColumnReturn" returnType="rtns:ExpandoColumnSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="columnId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
@@ -32,7 +35,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="columnId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="typeSettings" type="tns:string"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addColumn deleteColumn updateColumn updateTypeSettings" />
+		<parameter name="allowedMethods" value="addColumn deleteColumn fetchExpandoColumn updateColumn updateTypeSettings" />
 		<parameter name="className" value="com.liferay.portlet.expando.service.http.ExpandoColumnServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.expando.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

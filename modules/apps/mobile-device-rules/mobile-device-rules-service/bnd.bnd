@@ -3,6 +3,20 @@ Bundle-SymbolicName: com.liferay.mobile.device.rules.service
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.mobile.device.rules.lar,\
+	com.liferay.mobile.device.rules.model.impl,\
 	com.liferay.mobile.device.rules.rule.group.action,\
-	com.liferay.mobile.device.rules.rule.group.rule
-Include-Resource: classes
+	com.liferay.mobile.device.rules.rule.group.rule,\
+	com.liferay.mobile.device.rules.service.permission
+Include-Resource:\
+	classes,\
+	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
+	META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\
+	resource-actions/default.xml=classes/META-INF/resource-actions/default.xml,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
+Liferay-Service: true
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+Spring-Context: META-INF/spring
+-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

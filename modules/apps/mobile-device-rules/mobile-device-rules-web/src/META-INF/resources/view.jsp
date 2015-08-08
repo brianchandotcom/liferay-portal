@@ -42,7 +42,7 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 		searchContainer="<%= ruleGroupSearch %>"
 	>
 		<aui:nav-bar>
-			<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
+			<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
 				<portlet:renderURL var="viewRulesURL">
 					<portlet:param name="mvcRenderCommandName" value="/view.jsp" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -87,7 +87,7 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup"
+			className="com.liferay.mobile.device.rules.model.MDRRuleGroup"
 			escapedModel="<%= true %>"
 			keyProperty="ruleGroupId"
 			modelVar="ruleGroup"

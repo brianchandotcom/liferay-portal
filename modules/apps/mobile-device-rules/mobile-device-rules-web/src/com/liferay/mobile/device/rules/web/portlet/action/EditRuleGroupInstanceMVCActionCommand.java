@@ -15,6 +15,8 @@
 package com.liferay.mobile.device.rules.web.portlet.action;
 
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
+import com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -26,8 +28,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceServiceUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

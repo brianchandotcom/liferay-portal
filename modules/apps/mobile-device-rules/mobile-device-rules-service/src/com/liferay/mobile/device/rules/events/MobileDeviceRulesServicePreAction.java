@@ -14,6 +14,12 @@
 
 package com.liferay.mobile.device.rules.events;
 
+import com.liferay.mobile.device.rules.action.ActionHandlerManagerUtil;
+import com.liferay.mobile.device.rules.internal.MDRRuleGroupInstanceImpl;
+import com.liferay.mobile.device.rules.model.MDRAction;
+import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
+import com.liferay.mobile.device.rules.rule.RuleGroupProcessorUtil;
+import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
@@ -21,15 +27,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
-import com.liferay.portal.kernel.mobile.device.rulegroup.ActionHandlerManagerUtil;
-import com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcessorUtil;
 import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.mobiledevicerules.model.MDRAction;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
-import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil;
 
 import java.util.List;
 
@@ -111,7 +112,8 @@ public class MobileDeviceRulesServicePreAction extends Action {
 			return;
 		}
 
-		themeDisplay.setMDRRuleGroupInstance(mdrRuleGroupInstance);
+		themeDisplay.setMDRRuleGroupInstance(
+			new MDRRuleGroupInstanceImpl(mdrRuleGroupInstance));
 
 		if (mdrRuleGroupInstance == null) {
 			return;

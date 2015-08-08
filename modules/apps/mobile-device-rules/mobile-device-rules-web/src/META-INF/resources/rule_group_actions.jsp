@@ -27,7 +27,7 @@ MDRRuleGroup ruleGroup = (MDRRuleGroup)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.UPDATE) %>">
+	<c:if test="<%= MDRRuleGroupPermission.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.UPDATE) %>">
 		<liferay-portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
@@ -41,7 +41,7 @@ MDRRuleGroup ruleGroup = (MDRRuleGroup)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= MDRRuleGroupPermission.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= MDRRuleGroup.class.getName() %>"
 			modelResourceDescription="<%= ruleGroup.getName(locale) %>"
@@ -59,7 +59,7 @@ MDRRuleGroup ruleGroup = (MDRRuleGroup)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.VIEW) && MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
+	<c:if test="<%= MDRRuleGroupPermission.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.VIEW) && MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
 		<portlet:renderURL var="editRulesURL">
 			<portlet:param name="mvcPath" value="/view_rules.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
@@ -88,7 +88,7 @@ MDRRuleGroup ruleGroup = (MDRRuleGroup)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.DELETE) %>">
+	<c:if test="<%= MDRRuleGroupPermission.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/mobile_device_rules/edit_rule_group" var="deleteURL">
 			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />

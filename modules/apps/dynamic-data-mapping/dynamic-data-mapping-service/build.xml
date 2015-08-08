@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="dynamic-data-mapping-api" />
+	<property name="import.shared" value="dynamic-data-mapping-api,../mobile-device-rules/mobile-device-rules-api" />
 	<property name="osgi.ide.dependencies" value="spring-context.jar" />
 	<property name="service.input.file" value="service.xml" />
 

@@ -14,8 +14,8 @@
 
 package com.liferay.mobile.device.rules.web.search;
 
+import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 
 import java.util.ArrayList;
 import java.util.List;

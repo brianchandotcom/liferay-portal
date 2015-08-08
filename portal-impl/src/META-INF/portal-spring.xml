@@ -299,19 +299,6 @@
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder" class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.messageboards.service.MBThreadFlagLocalService" class="com.liferay.portlet.messageboards.service.impl.MBThreadFlagLocalServiceImpl" />
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBThreadFlagPersistence" class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFlagPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRActionLocalService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRActionLocalServiceImpl" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRActionService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRActionServiceImpl" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRActionPersistence" class="com.liferay.portlet.mobiledevicerules.service.persistence.impl.MDRActionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleLocalServiceImpl" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleServiceImpl" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRulePersistence" class="com.liferay.portlet.mobiledevicerules.service.persistence.impl.MDRRulePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleGroupLocalServiceImpl" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleGroupServiceImpl" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupPersistence" class="com.liferay.portlet.mobiledevicerules.service.persistence.impl.MDRRuleGroupPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupFinder" class="com.liferay.portlet.mobiledevicerules.service.persistence.impl.MDRRuleGroupFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleGroupInstanceLocalServiceImpl" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleGroupInstanceServiceImpl" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupInstancePersistence" class="com.liferay.portlet.mobiledevicerules.service.persistence.impl.MDRRuleGroupInstancePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.ratings.service.RatingsEntryLocalService" class="com.liferay.portlet.ratings.service.impl.RatingsEntryLocalServiceImpl" />
 	<bean id="com.liferay.portlet.ratings.service.RatingsEntryService" class="com.liferay.portlet.ratings.service.impl.RatingsEntryServiceImpl" />
 	<bean id="com.liferay.portlet.ratings.service.persistence.RatingsEntryPersistence" class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryPersistenceImpl" parent="basePersistence" />

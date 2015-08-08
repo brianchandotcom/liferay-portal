@@ -15,9 +15,12 @@
 package com.liferay.mobile.device.rules.web.portlet.action;
 
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
-import com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcessorUtil;
-import com.liferay.portal.kernel.mobile.device.rulegroup.rule.RuleHandler;
-import com.liferay.portal.kernel.mobile.device.rulegroup.rule.UnknownRuleHandlerException;
+import com.liferay.mobile.device.rules.exception.NoSuchActionException;
+import com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
+import com.liferay.mobile.device.rules.rule.RuleGroupProcessorUtil;
+import com.liferay.mobile.device.rules.rule.RuleHandler;
+import com.liferay.mobile.device.rules.rule.UnknownRuleHandlerException;
+import com.liferay.mobile.device.rules.service.MDRRuleServiceUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -28,9 +31,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portlet.mobiledevicerules.NoSuchActionException;
-import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleServiceUtil;
 
 import java.util.Locale;
 import java.util.Map;

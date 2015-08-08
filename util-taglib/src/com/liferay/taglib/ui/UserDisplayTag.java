@@ -84,8 +84,7 @@ public class UserDisplayTag extends TagSupport {
 
 			request.setAttribute(
 				"liferay-ui:user-display:userId", String.valueOf(_userId));
-			request.setAttribute(
-				"liferay-ui:user-display:userName", _userName);
+			request.setAttribute("liferay-ui:user-display:userName", _userName);
 
 			User user = UserLocalServiceUtil.fetchUserById(_userId);
 

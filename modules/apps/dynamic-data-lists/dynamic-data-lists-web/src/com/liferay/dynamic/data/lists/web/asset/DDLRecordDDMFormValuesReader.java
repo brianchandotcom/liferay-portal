@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.lists.web.asset;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.asset.model.BaseDDMFormValuesReader;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
@@ -30,9 +31,7 @@ public class DDLRecordDDMFormValuesReader extends BaseDDMFormValuesReader {
 
 	@Override
 	public DDMFormValues getDDMFormValues() throws PortalException {
-		DDMFormValues ddmFormValues = _ddlRecord.getDDMFormValues();
-
-		return ddmFormValues;
+		return DDMBeanCopyUtil.copyDDMFormValues(_ddlRecord.getDDMFormValues());
 	}
 
 	private final DDLRecord _ddlRecord;

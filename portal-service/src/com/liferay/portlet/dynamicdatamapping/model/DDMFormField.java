@@ -30,31 +30,7 @@ import java.util.Map;
  */
 public class DDMFormField implements Serializable {
 
-	public DDMFormField() {
-		_properties = new LinkedHashMap<>();
-	}
-
-	public DDMFormField(DDMFormField ddmFormField) {
-		_properties = new LinkedHashMap<>(ddmFormField._properties);
-
-		setDDMFormFieldOptions(
-			new DDMFormFieldOptions(ddmFormField.getDDMFormFieldOptions()));
-		setLabel(new LocalizedValue(ddmFormField.getLabel()));
-		setPredefinedValue(
-			new LocalizedValue(ddmFormField.getPredefinedValue()));
-		setStyle(new LocalizedValue(ddmFormField.getStyle()));
-		setTip(new LocalizedValue(ddmFormField.getTip()));
-
-		for (DDMFormField nestedDDMFormField :
-				ddmFormField._nestedDDMFormFields) {
-
-			addNestedDDMFormField(nestedDDMFormField);
-		}
-	}
-
 	public DDMFormField(String name, String type) {
-		_properties = new LinkedHashMap<>();
-
 		setName(name);
 		setType(type);
 
@@ -262,6 +238,6 @@ public class DDMFormField implements Serializable {
 
 	private DDMForm _ddmForm;
 	private List<DDMFormField> _nestedDDMFormFields = new ArrayList<>();
-	private final Map<String, Object> _properties;
+	private final Map<String, Object> _properties = new LinkedHashMap<>();
 
 }

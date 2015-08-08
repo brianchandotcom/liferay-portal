@@ -17,6 +17,7 @@ package com.liferay.journal.web.asset;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalConverter;
@@ -50,8 +51,9 @@ final class JournalArticleDDMFormValuesReader extends BaseDDMFormValuesReader {
 			Fields fields = journalConverter.getDDMFields(
 				ddmStructure, _article.getContent());
 
-			return FieldsToDDMFormValuesConverterUtil.convert(
-				ddmStructure, fields);
+			return DDMBeanCopyUtil.copyDDMFormValues(
+				FieldsToDDMFormValuesConverterUtil.convert(
+					ddmStructure, fields));
 		}
 		catch (Exception e) {
 			throw new PortalException(

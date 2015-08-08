@@ -320,7 +320,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 				String className = entry.getClassName();
 				long classPK = entry.getClassPK();
 
-				AssetRendererFactory assetRendererFactory =
+				AssetRendererFactory<?> assetRendererFactory =
 					AssetRendererFactoryRegistryUtil.
 						getAssetRendererFactoryByClassName(className);
 

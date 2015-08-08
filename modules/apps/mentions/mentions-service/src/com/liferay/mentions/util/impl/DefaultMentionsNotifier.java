@@ -126,7 +126,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 	protected String getAssetEntryName(
 		String className, ServiceContext serviceContext) {
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 

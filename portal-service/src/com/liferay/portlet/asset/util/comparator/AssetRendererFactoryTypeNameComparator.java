@@ -25,7 +25,7 @@ import java.util.Locale;
  * @author Eduardo Garcia
  */
 public class AssetRendererFactoryTypeNameComparator
-	implements Comparator<AssetRendererFactory>, Serializable {
+	implements Comparator<AssetRendererFactory<?>>, Serializable {
 
 	public AssetRendererFactoryTypeNameComparator(Locale locale) {
 		_locale = locale;
@@ -33,8 +33,8 @@ public class AssetRendererFactoryTypeNameComparator
 
 	@Override
 	public int compare(
-		AssetRendererFactory assetRendererFactory1,
-		AssetRendererFactory assetRendererFactory2) {
+		AssetRendererFactory<?> assetRendererFactory1,
+		AssetRendererFactory<?> assetRendererFactory2) {
 
 		String assetRendererFactoryType1 = assetRendererFactory1.getTypeName(
 			_locale);

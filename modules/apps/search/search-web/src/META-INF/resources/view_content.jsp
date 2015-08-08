@@ -20,11 +20,11 @@
 long assetEntryId = ParamUtil.getLong(request, "assetEntryId");
 String type = ParamUtil.getString(request, "type");
 
-AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(type);
+AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(type);
 
 AssetEntry assetEntry = assetRendererFactory.getAssetEntry(assetEntryId);
 
-AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
+AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 %>
 
 <c:if test="<%= (assetEntry != null) && assetEntry.isVisible() %>">

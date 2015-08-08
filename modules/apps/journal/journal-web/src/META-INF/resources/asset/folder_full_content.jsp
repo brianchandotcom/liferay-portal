@@ -47,7 +47,7 @@ JournalFolder folder = ActionUtil.getFolder(request);
 				</div>
 
 				<%
-				AssetRendererFactory journalFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
+				AssetRendererFactory<JournalFolder> journalFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalFolder.class);
 				%>
 
 				<div class="<%= journalFolderAssetRendererFactory.getIconCssClass() %> lfr-asset-icon">
@@ -55,7 +55,7 @@ JournalFolder folder = ActionUtil.getFolder(request);
 				</div>
 
 				<%
-				AssetRendererFactory journalArticleAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+				AssetRendererFactory<JournalArticle> journalArticleAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);
 				%>
 
 				<div class="<%= journalArticleAssetRendererFactory.getIconCssClass() %> last lfr-asset-icon">

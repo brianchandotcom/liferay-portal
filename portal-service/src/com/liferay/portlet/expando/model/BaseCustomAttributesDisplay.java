@@ -30,7 +30,7 @@ public abstract class BaseCustomAttributesDisplay
 
 	@Override
 	public String getIconCssClass() {
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				getClassName());
 

@@ -26,12 +26,12 @@ long classPK = ParamUtil.getLong(request, "classPK");
 
 String portletId = PortletProviderUtil.getPortletId(className, PortletProvider.Action.ADD);
 
-AssetRenderer assetRenderer = null;
+AssetRenderer<?> assetRenderer = null;
 
 Map<String, Object> data = new HashMap<String, Object>();
 
 if (Validator.isNotNull(className) && (classPK > 0)) {
-	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+	AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
 	assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 

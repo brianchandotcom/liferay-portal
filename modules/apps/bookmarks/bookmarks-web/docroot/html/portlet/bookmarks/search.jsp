@@ -106,9 +106,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 					>
 
 						<%
-						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(BookmarksEntry.class.getName());
+						AssetRendererFactory<BookmarksEntry> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(BookmarksEntry.class);
 
-						AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(entry.getEntryId());
+						AssetRenderer<BookmarksEntry> assetRenderer = assetRendererFactory.getAssetRenderer(entry.getEntryId());
 						%>
 
 						<liferay-ui:icon
@@ -164,9 +164,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search"
 					>
 
 						<%
-						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(BookmarksFolder.class.getName());
+						AssetRendererFactory<BookmarksFolder> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(BookmarksFolder.class);
 
-						AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
+						AssetRenderer<BookmarksFolder> assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
 						%>
 
 						<liferay-ui:icon

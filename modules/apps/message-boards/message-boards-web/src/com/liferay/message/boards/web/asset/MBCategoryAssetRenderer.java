@@ -44,10 +44,15 @@ import javax.servlet.http.HttpServletResponse;
  * @author Sergio González
  * @author Jonathan Lee
  */
-public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer {
+public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 
 	public MBCategoryAssetRenderer(MBCategory category) {
 		_category = category;
+	}
+
+	@Override
+	public MBCategory getAssetObject() {
+		return _category;
 	}
 
 	@Override
@@ -118,7 +123,8 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer {
 			WindowState windowState)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<MBCategory> assetRendererFactory =
+			getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);

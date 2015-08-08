@@ -68,7 +68,7 @@ public class BaseAssetEntryValidator implements AssetEntryValidator {
 	protected boolean isAssetCategorizable(long classNameId) {
 		String className = PortalUtil.getClassName(classNameId);
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 

@@ -286,7 +286,7 @@ public class AssetPublisherConfigurationAction
 
 		String className = PortalUtil.getClassName(defaultAssetTypeId);
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 

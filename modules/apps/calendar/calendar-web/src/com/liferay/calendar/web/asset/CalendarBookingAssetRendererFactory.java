@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = AssetRendererFactory.class
 )
 public class CalendarBookingAssetRendererFactory
-	extends BaseAssetRendererFactory {
+	extends BaseAssetRendererFactory<CalendarBooking> {
 
 	public static final String TYPE = "calendar";
 
@@ -65,7 +65,8 @@ public class CalendarBookingAssetRendererFactory
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<CalendarBooking> getAssetRenderer(
+			long classPK, int type)
 		throws PortalException {
 
 		CalendarBooking calendarBooking =

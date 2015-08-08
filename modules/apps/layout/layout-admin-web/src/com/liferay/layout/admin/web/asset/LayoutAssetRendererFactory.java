@@ -42,7 +42,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"javax.portlet.name=" + LayoutAdminPortletKeys.LAYOUT_ADMIN},
 	service = AssetRendererFactory.class
 )
-public class LayoutAssetRendererFactory extends BaseAssetRendererFactory {
+public class LayoutAssetRendererFactory
+	extends BaseAssetRendererFactory<Layout> {
 
 	public static final String TYPE = "layout";
 
@@ -82,7 +83,7 @@ public class LayoutAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long plid, int type)
+	public AssetRenderer<Layout> getAssetRenderer(long plid, int type)
 		throws PortalException {
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);

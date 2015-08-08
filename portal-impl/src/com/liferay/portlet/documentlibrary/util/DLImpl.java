@@ -214,8 +214,7 @@ public class DLImpl implements DL {
 
 	@Override
 	public String getDLFileEntryControlPanelLink(
-			PortletRequest portletRequest, long fileEntryId)
-		throws PortalException {
+		PortletRequest portletRequest, long fileEntryId) {
 
 		String portletId = PortletProviderUtil.getPortletId(
 			FileEntry.class.getName(), PortletProvider.Action.MANAGE);
@@ -232,8 +231,7 @@ public class DLImpl implements DL {
 
 	@Override
 	public String getDLFolderControlPanelLink(
-			PortletRequest portletRequest, long folderId)
-		throws PortalException {
+		PortletRequest portletRequest, long folderId) {
 
 		String portletId = PortletProviderUtil.getPortletId(
 			Folder.class.getName(), PortletProvider.Action.MANAGE);

@@ -6244,51 +6244,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="solr.enabled" />
-
-		<if>
-			<equals arg1="${solr.enabled}" arg2="true" />
-			<then>
-				<ant antfile="build-test-solr.xml" target="start-solr" />
-			</then>
-		</if>
-
-		<antcall target="deploy-specified-plugins" />
-
-		<antcall target="deploy-extra-apps" />
-
-		<get-testcase-property property.name="app.server.bundles.size" />
-
-		<if>
-			<isset property="app.server.bundles.size" />
-			<then>
-				<prepare-additional-bundles />
-			</then>
-		</if>
-
-		<get-testcase-property property.name="cluster.enabled" />
-
-		<if>
-			<equals arg1="${cluster.enabled}" arg2="true" />
-			<then>
-				<prepare-test-cluster-properties />
-			</then>
-		</if>
-
-		<get-testcase-property property.name="hook.plugins.includes" />
-
-		<if>
-			<and>
-				<contains string="${hook.plugins.includes}" substring="so-hook" />
-				<equals arg1="${app.server.type}" arg2="jboss" />
-			</and>
-			<then>
-				<start-app-server />
-
-				<stop-app-server />
-			</then>
-		</if>
-
 		<get-testcase-property property.name="cmis.repository.type" />
 
 		<if>
@@ -6331,6 +6286,51 @@ jdbc.default.password=${database.mysql.password}</echo>
 						/>
 					</then>
 				</if>
+			</then>
+		</if>
+
+		<get-testcase-property property.name="solr.enabled" />
+
+		<if>
+			<equals arg1="${solr.enabled}" arg2="true" />
+			<then>
+				<ant antfile="build-test-solr.xml" target="start-solr" />
+			</then>
+		</if>
+
+		<antcall target="deploy-specified-plugins" />
+
+		<antcall target="deploy-extra-apps" />
+
+		<get-testcase-property property.name="app.server.bundles.size" />
+
+		<if>
+			<isset property="app.server.bundles.size" />
+			<then>
+				<prepare-additional-bundles />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="cluster.enabled" />
+
+		<if>
+			<equals arg1="${cluster.enabled}" arg2="true" />
+			<then>
+				<prepare-test-cluster-properties />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="hook.plugins.includes" />
+
+		<if>
+			<and>
+				<contains string="${hook.plugins.includes}" substring="so-hook" />
+				<equals arg1="${app.server.type}" arg2="jboss" />
+			</and>
+			<then>
+				<start-app-server />
+
+				<stop-app-server />
 			</then>
 		</if>
 

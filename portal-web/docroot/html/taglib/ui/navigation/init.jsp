@@ -16,33 +16,18 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
+<%@ page import="com.liferay.portal.theme.NavItem" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.DDMTemplate" %>
+
 <%
 String bulletStyle = StringUtil.toLowerCase(((String)request.getAttribute("liferay-ui:navigation:bulletStyle")));
-String[] displayStyleDefinition = (String[])request.getAttribute("liferay-ui:navigation:displayStyleDefinition");
+String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:navigation:displayStyle"));
+long displayStyleGroupId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:navigation:displayStyleGroupId"));
+String headerType = (String)request.getAttribute("liferay-ui:navigation:headerType");
+String includedLayouts = (String)request.getAttribute("liferay-ui:navigation:includedLayouts");
+List<NavItem> navItems = (List)request.getAttribute("liferay-ui:navigation:navItems");
+boolean nestedChildren = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:navigation:nestedChildren"));
 boolean preview = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:navigation:preview"));
-
-String headerType = null;
-String includedLayouts = null;
-boolean nestedChildren = true;
-int rootLayoutLevel = 0;
-String rootLayoutType = null;
-
-if ((displayStyleDefinition != null) && (displayStyleDefinition.length != 0)) {
-	headerType = displayStyleDefinition[0];
-	includedLayouts = displayStyleDefinition[3];
-
-	if (displayStyleDefinition.length > 4) {
-		nestedChildren = GetterUtil.getBoolean(displayStyleDefinition[4]);
-	}
-
-	rootLayoutLevel = GetterUtil.getInteger(displayStyleDefinition[2]);
-	rootLayoutType = displayStyleDefinition[1];
-}
-else {
-	headerType = (String)request.getAttribute("liferay-ui:navigation:headerType");
-	includedLayouts = (String)request.getAttribute("liferay-ui:navigation:includedLayouts");
-	nestedChildren = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:navigation:nestedChildren"));
-	rootLayoutLevel = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:navigation:rootLayoutLevel"));
-	rootLayoutType = (String)request.getAttribute("liferay-ui:navigation:rootLayoutType");
-}
+int rootLayoutLevel = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:navigation:rootLayoutLevel"));
+String rootLayoutType = (String)request.getAttribute("liferay-ui:navigation:rootLayoutType");
 %>

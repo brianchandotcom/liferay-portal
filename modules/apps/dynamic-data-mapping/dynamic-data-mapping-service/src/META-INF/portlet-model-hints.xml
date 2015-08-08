@@ -124,6 +124,9 @@
 		</field>
 		<field name="version" type="String" />
 		<field name="name" type="String" localized="true">
+			<hint-collection name="CLOB" />
+			<hint name="display-height">15</hint>
+			<hint name="display-width">150</hint>
 			<validator name="required" />
 		</field>
 		<field name="description" type="String" localized="true">
@@ -160,6 +163,9 @@
 		<field name="templateId" type="long" />
 		<field name="version" type="String" />
 		<field name="name" type="String" localized="true">
+			<hint-collection name="CLOB" />
+			<hint name="display-height">15</hint>
+			<hint name="display-width">150</hint>
 			<validator name="required" />
 		</field>
 		<field name="description" type="String" localized="true">

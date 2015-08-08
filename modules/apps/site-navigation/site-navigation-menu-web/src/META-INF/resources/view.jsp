@@ -18,7 +18,8 @@
 
 <liferay-ui:navigation
 	bulletStyle="<%= navigationMenuDisplayContext.getBulletStyle() %>"
-	displayStyleDefinition='<%= NavigationMenuWebConfigurationUtil.getArray("display.style", new Filter(navigationMenuDisplayContext.getDisplayStyle())) %>'
+	ddmTemplateGroupId="<%= navigationMenuDisplayContext.getDisplayStyleGroupId() %>"
+	ddmTemplateKey="<%= navigationMenuDisplayContext.getDDMTemplateKey() %>"
 	headerType="<%= navigationMenuDisplayContext.getHeaderType() %>"
 	includedLayouts="<%= navigationMenuDisplayContext.getIncludedLayouts() %>"
 	nestedChildren="<%= navigationMenuDisplayContext.isNestedChildren() %>"

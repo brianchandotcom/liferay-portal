@@ -33,6 +33,8 @@ public interface DDMTemplateManager {
 
 	public static final String TEMPLATE_TYPE_DISPLAY = "display";
 
+	public static final String TEMPLATE_TYPE_MACRO = "macro";
+
 	public static final String TEMPLATE_VERSION_DEFAULT = "1.0";
 
 	public DDMTemplate addTemplate(

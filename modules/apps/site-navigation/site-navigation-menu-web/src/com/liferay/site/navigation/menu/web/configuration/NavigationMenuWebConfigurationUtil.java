@@ -16,7 +16,6 @@ package com.liferay.site.navigation.menu.web.configuration;
 
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
-import com.liferay.portal.kernel.configuration.Filter;
 
 /**
  * @author Eudaldo Alonso
@@ -25,14 +24,6 @@ public class NavigationMenuWebConfigurationUtil {
 
 	public static String get(String key) {
 		return _configuration.get(key);
-	}
-
-	public static String[] getArray(String key) {
-		return _configuration.getArray(key);
-	}
-
-	public static String[] getArray(String key, Filter filter) {
-		return _configuration.getArray(key, filter);
 	}
 
 	private static final Configuration _configuration =

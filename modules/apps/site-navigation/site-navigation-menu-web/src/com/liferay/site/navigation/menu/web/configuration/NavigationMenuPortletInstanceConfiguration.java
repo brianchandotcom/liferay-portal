@@ -30,6 +30,9 @@ public interface NavigationMenuPortletInstanceConfiguration {
 	@Meta.AD(deflt = "", required = false)
 	public String displayStyle();
 
+	@Meta.AD(deflt = "0", required = false)
+	public long displayStyleGroupId();
+
 	@Meta.AD(deflt = "root-layout", required = false)
 	public String headerType();
 

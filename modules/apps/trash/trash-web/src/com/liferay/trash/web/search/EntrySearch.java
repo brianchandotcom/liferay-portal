@@ -70,12 +70,13 @@ public class EntrySearch extends SearchContainer<TrashEntry> {
 				PortletPreferencesFactoryUtil.getPortalPreferences(
 					portletRequest);
 
+			String portletId = PortletProviderUtil.getPortletId(
+				User.class.getName(), PortletProvider.Action.VIEW);
+
 			String orderByCol = ParamUtil.getString(
 				portletRequest, "orderByCol");
 			String orderByType = ParamUtil.getString(
 				portletRequest, "orderByType");
-			String portletId = PortletProviderUtil.getPortletId(
-				User.class.getName(), PortletProvider.Action.VIEW);
 
 			if (Validator.isNotNull(orderByCol) &&
 				Validator.isNotNull(orderByType)) {

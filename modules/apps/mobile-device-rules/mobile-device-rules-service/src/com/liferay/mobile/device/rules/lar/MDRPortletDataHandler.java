@@ -14,6 +14,7 @@
 
 package com.liferay.mobile.device.rules.lar;
 
+import com.liferay.mobile.device.rules.constants.MDRConstants;
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.model.MDRRule;
@@ -27,7 +28,6 @@ import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
 import com.liferay.mobile.device.rules.service.MDRRuleLocalServiceUtil;
-import com.liferay.mobile.device.rules.service.permission.MDRPermission;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -114,7 +114,7 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPortletPermissions(MDRPermission.RESOURCE_NAME);
+		portletDataContext.addPortletPermissions(MDRConstants.SERVICE_NAME);
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -149,7 +149,7 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPortletPermissions(
-			MDRPermission.RESOURCE_NAME);
+			MDRConstants.SERVICE_NAME);
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "rules")) {
 			Element rulesElement = portletDataContext.getImportDataGroupElement(

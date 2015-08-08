@@ -14,19 +14,27 @@
 
 package com.liferay.mobile.device.rules.service.permission;
 
+import com.liferay.mobile.device.rules.constants.MDRConstants;
+import com.liferay.mobile.device.rules.model.MDRRule;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
+import com.liferay.portal.security.permission.ResourcePermissionChecker;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Edward Han
+ * @author Daniel Kocsis
  */
-public class MDRPermission {
-
-	public static final String RESOURCE_NAME =
-		"com.liferay.mobile.device.rules";
+@Component(
+	property = {"resource.name=" + MDRConstants.SERVICE_NAME},
+	service = ResourcePermissionChecker.class
+)
+public class MDRPermission extends BaseResourcePermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
@@ -34,23 +42,27 @@ public class MDRPermission {
 
 		if (!contains(permissionChecker, groupId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, RESOURCE_NAME, groupId, actionId);
+				permissionChecker, MDRConstants.SERVICE_NAME, groupId,
+				actionId);
 		}
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, long groupId, String actionId) {
+		PermissionChecker permissionChecker, long classPK, String actionId) {
 
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, groupId, RESOURCE_NAME, groupId,
-			PortletKeys.MOBILE_DEVICE_RULES, actionId);
+		String portletId = PortletProviderUtil.getPortletId(
+			MDRRule.class.getName(), PortletProvider.Action.EDIT);
 
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
+		return contains(
+			permissionChecker, MDRConstants.SERVICE_NAME, portletId, classPK,
+			actionId);
+	}
 
-		return permissionChecker.hasPermission(
-			groupId, RESOURCE_NAME, groupId, actionId);
+	@Override
+	public Boolean checkResource(
+		PermissionChecker permissionChecker, long classPK, String actionId) {
+
+		return contains(permissionChecker, classPK, actionId);
 	}
 
 }

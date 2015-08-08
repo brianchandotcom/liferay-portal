@@ -6320,6 +6320,17 @@ jdbc.default.password=${database.mysql.password}</echo>
 					regexp="&quot;(cloud.*?)&quot;"
 					select="\1"
 				/>
+
+				<if>
+					<equals arg1="${cmis.repository.type}" arg2="documentum6" />
+					<then>
+						<replace
+							file="${lp.plugins.dir}/hooks/documentum-hook/docroot/WEB-INF/src/dfc.properties"
+							token="dfc.docbroker.host[0]=localhost"
+							value="dfc.docbroker.host[0]=${cmis.repository.vm.host.name}"
+						/>
+					</then>
+				</if>
 			</then>
 		</if>
 

@@ -717,7 +717,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		String portletId = serviceContext.getPortletId();
-
 		String myAccountPortletId = PortletProviderUtil.getPortletId(
 			PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
 			PortletProvider.Action.VIEW);

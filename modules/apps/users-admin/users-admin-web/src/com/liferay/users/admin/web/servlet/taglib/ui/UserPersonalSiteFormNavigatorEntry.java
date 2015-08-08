@@ -56,13 +56,13 @@ public class UserPersonalSiteFormNavigatorEntry
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		String portletName = portletDisplay.getPortletName();
-
 		String portletId = PortletProviderUtil.getPortletId(
 			PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
 			PortletProvider.Action.VIEW);
 
-		if ((selUser != null) && portletName.equals(portletId)) {
+		if ((selUser != null) &&
+			portletId.equals(portletDisplay.getPortletName())) {
+
 			return false;
 		}
 

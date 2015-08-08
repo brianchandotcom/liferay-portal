@@ -77,9 +77,13 @@
 
 		<mkdir dir="${sass.tmp.dir}" />
 
+		<path id="css.builder.classpath">
+			<fileset dir="${sdk.dir}/dependencies/com.liferay.css.builder/lib" includes="*.jar" />
+		</path>
+
 		<java
 			classname="com.liferay.css.builder.CSSBuilder"
-			classpathref="portal.tools.classpath"
+			classpathref="css.builder.classpath"
 			fork="true"
 			newenvironment="true"
 			outputproperty="build-css.output"

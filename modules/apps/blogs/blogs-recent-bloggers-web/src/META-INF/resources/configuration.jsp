@@ -71,7 +71,8 @@ if (organizationId > 0) {
 								String portletId = PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW);
 								%>
 
-								id: '<%= portletId %>selectOrganization',
+								id: '<%= PortalUtil.getPortletNamespace(portletId) %>selectOrganization',
+
 								title: '<liferay-ui:message arguments="organization" key="select-x" />',
 
 								<%

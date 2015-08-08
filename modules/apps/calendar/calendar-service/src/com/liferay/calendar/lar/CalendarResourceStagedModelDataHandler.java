@@ -246,7 +246,7 @@ public class CalendarResourceStagedModelDataHandler
 			portletDataContext.getScopeGroupId());
 
 		calendarResourceNameMap.put(
-			LocaleUtil.getDefault(), scopeGroup.getName());
+			LocaleUtil.getDefault(), scopeGroup.getDescriptiveName());
 
 		return calendarResourceNameMap;
 	}

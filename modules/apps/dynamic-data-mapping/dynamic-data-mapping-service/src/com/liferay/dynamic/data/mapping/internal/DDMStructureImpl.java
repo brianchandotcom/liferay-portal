@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 
@@ -99,12 +98,6 @@ public class DDMStructureImpl implements DDMStructure {
 		}
 
 		return ddmFormFields;
-	}
-
-	@Override
-	public DDMFormLayout getDDMFormLayout() throws PortalException {
-		return DDMBeanCopyUtil.copyDDMFormLayout(
-			_ddmStructure.getDDMFormLayout());
 	}
 
 	@Override

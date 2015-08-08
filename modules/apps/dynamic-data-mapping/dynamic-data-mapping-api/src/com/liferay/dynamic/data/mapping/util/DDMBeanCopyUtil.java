@@ -17,10 +17,6 @@ package com.liferay.dynamic.data.mapping.util;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -163,50 +159,6 @@ public class DDMBeanCopyUtil {
 		}
 
 		return copyDDMFormField;
-	}
-
-	public static DDMFormLayout copyDDMFormLayout(
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout) {
-
-		if (ddmFormLayout == null) {
-			return null;
-		}
-
-		DDMFormLayout copyDDMFormLayout = new DDMFormLayout();
-
-		copyDDMFormLayout.setDefaultLocale(ddmFormLayout.getDefaultLocale());
-
-		for (com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage
-				ddmFormLayoutPage :
-					ddmFormLayout.getDDMFormLayoutPages()) {
-
-			copyDDMFormLayout.addDDMFormLayoutPage(
-				copyDDMFormLayoutPage(ddmFormLayoutPage));
-		}
-
-		return copyDDMFormLayout;
-	}
-
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout
-		copyDDMFormLayout(DDMFormLayout ddmFormLayout) {
-
-		if (ddmFormLayout == null) {
-			return null;
-		}
-
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout copyDDMFormLayout =
-			new com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout();
-
-		copyDDMFormLayout.setDefaultLocale(ddmFormLayout.getDefaultLocale());
-
-		for (DDMFormLayoutPage ddmFormLayoutPage :
-				ddmFormLayout.getDDMFormLayoutPages()) {
-
-			copyDDMFormLayout.addDDMFormLayoutPage(
-				copyDDMFormLayoutPage(ddmFormLayoutPage));
-		}
-
-		return copyDDMFormLayout;
 	}
 
 	public static DDMFormValues copyDDMFormValues(
@@ -363,132 +315,6 @@ public class DDMBeanCopyUtil {
 		}
 
 		return copyDDMFormFieldValue;
-	}
-
-	protected static DDMFormLayoutColumn copyDDMFormLayoutColumn(
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn
-			ddmFormLayoutColumn) {
-
-		if (ddmFormLayoutColumn == null) {
-			return null;
-		}
-
-		DDMFormLayoutColumn copyDDMFormLayoutColumn = new DDMFormLayoutColumn();
-
-		copyDDMFormLayoutColumn.setDDMFormFieldNames(
-			ddmFormLayoutColumn.getDDMFormFieldNames());
-		copyDDMFormLayoutColumn.setSize(ddmFormLayoutColumn.getSize());
-
-		return copyDDMFormLayoutColumn;
-	}
-
-	protected static com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn
-		copyDDMFormLayoutColumn(DDMFormLayoutColumn ddmFormLayoutColumn) {
-
-		if (ddmFormLayoutColumn == null) {
-			return null;
-		}
-
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn copyDDMFormLayoutColumn =
-			new com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn();
-
-		copyDDMFormLayoutColumn.setDDMFormFieldNames(
-			ddmFormLayoutColumn.getDDMFormFieldNames());
-		copyDDMFormLayoutColumn.setSize(ddmFormLayoutColumn.getSize());
-
-		return copyDDMFormLayoutColumn;
-	}
-
-	protected static DDMFormLayoutPage copyDDMFormLayoutPage(
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage ddmFormLayoutPage) {
-
-		if (ddmFormLayoutPage == null) {
-			return null;
-		}
-
-		DDMFormLayoutPage copyDDMFormLayoutPage = new DDMFormLayoutPage();
-
-		copyDDMFormLayoutPage.setTitle(
-			copyLocalizedValue(ddmFormLayoutPage.getTitle()));
-		copyDDMFormLayoutPage.setDescription(
-			copyLocalizedValue(ddmFormLayoutPage.getDescription()));
-
-		for (com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow
-				ddmFormLayoutPageRow :
-						ddmFormLayoutPage.getDDMFormLayoutRows()) {
-
-			copyDDMFormLayoutPage.addDDMFormLayoutRow(
-				copyDDMFormLayoutRow(ddmFormLayoutPageRow));
-		}
-
-		return copyDDMFormLayoutPage;
-	}
-
-	protected static com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage copyDDMFormLayoutPage(
-		DDMFormLayoutPage ddmFormLayoutPage) {
-
-		if (ddmFormLayoutPage == null) {
-			return null;
-		}
-
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage copyDDMFormLayoutPage =
-			new com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage();
-
-		copyDDMFormLayoutPage.setTitle(
-			copyLocalizedValue(ddmFormLayoutPage.getTitle()));
-		copyDDMFormLayoutPage.setDescription(
-			copyLocalizedValue(ddmFormLayoutPage.getDescription()));
-
-		for (DDMFormLayoutRow ddmFormLayoutPageRow :
-				ddmFormLayoutPage.getDDMFormLayoutRows()) {
-
-			copyDDMFormLayoutPage.addDDMFormLayoutRow(
-				copyDDMFormLayoutRow(ddmFormLayoutPageRow));
-		}
-
-		return copyDDMFormLayoutPage;
-	}
-
-	protected static DDMFormLayoutRow copyDDMFormLayoutRow(
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow
-			ddmFormLayoutRow) {
-
-		if (ddmFormLayoutRow == null) {
-			return null;
-		}
-
-		DDMFormLayoutRow copyDDMFormLayoutRow = new DDMFormLayoutRow();
-
-		for (com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn
-			ddmFormLayoutPageColumn :
-				ddmFormLayoutRow.getDDMFormLayoutColumns()) {
-
-			copyDDMFormLayoutRow.addDDMFormLayoutColumn(
-				copyDDMFormLayoutColumn(ddmFormLayoutPageColumn));
-		}
-
-		return copyDDMFormLayoutRow;
-	}
-
-	protected static com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow
-		copyDDMFormLayoutRow(DDMFormLayoutRow ddmFormLayoutRow) {
-
-		if (ddmFormLayoutRow == null) {
-			return null;
-		}
-
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow
-			copyDDMFormLayoutRow =
-				new com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow();
-
-		for (DDMFormLayoutColumn ddmFormLayoutPageColumn :
-				ddmFormLayoutRow.getDDMFormLayoutColumns()) {
-
-			copyDDMFormLayoutRow.addDDMFormLayoutColumn(
-				copyDDMFormLayoutColumn(ddmFormLayoutPageColumn));
-		}
-
-		return copyDDMFormLayoutRow;
 	}
 
 	protected static LocalizedValue copyLocalizedValue(

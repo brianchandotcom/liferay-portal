@@ -184,6 +184,10 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean isValue(String locator, String value);
 
+	public void javaScriptMouseDown(String locator);
+
+	public void javaScriptMouseUp(String locator);
+
 	public void keyDownAndWait(String locator, String keySequence);
 
 	public void keyPressAndWait(String locator, String keySequence);

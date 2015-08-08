@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.model;
+package com.liferay.portal.background.task.model.impl;
 
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.kernel.util.MapUtil;

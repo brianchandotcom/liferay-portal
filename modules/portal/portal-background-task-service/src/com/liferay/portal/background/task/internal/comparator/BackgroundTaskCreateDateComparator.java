@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.backgroundtask.internal.comparator;
+package com.liferay.portal.background.task.internal.comparator;
 
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;

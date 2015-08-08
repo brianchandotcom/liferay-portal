@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.service.impl;
+package com.liferay.portal.background.task.service.impl;
 
-import com.liferay.portal.backgroundtask.internal.BackgroundTaskImpl;
+import com.liferay.portal.background.task.internal.BackgroundTaskImpl;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskLockHelperUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;

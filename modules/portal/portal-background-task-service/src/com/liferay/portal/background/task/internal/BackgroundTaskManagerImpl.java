@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.backgroundtask.internal;
+package com.liferay.portal.background.task.internal;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
@@ -456,14 +456,14 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 		if (orderByComparator instanceof
 				BackgroundTaskCompletionDateComparator) {
 
-			return new com.liferay.portal.backgroundtask.internal.comparator.
+			return new com.liferay.portal.background.task.internal.comparator.
 				BackgroundTaskCompletionDateComparator(
 					orderByComparator.isAscending());
 		}
 		else if (orderByComparator instanceof
 					BackgroundTaskCreateDateComparator) {
 
-			return new com.liferay.portal.backgroundtask.internal.comparator.
+			return new com.liferay.portal.background.task.internal.comparator.
 				BackgroundTaskCreateDateComparator(
 					orderByComparator.isAscending());
 		}

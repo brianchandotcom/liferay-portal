@@ -211,6 +211,8 @@ public class RemoteMVCPortlet extends MVCPortlet {
 
 		String serverNamespace = getServerNamespace();
 
+		addOAuthParameter(oAuthRequest, "p_p_id", serverNamespace);
+
 		Map<String, String[]> parameterMap = portletRequest.getParameterMap();
 
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {

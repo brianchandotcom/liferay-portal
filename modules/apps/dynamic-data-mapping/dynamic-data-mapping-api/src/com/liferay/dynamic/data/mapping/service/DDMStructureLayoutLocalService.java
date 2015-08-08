@@ -61,7 +61,7 @@ public interface DDMStructureLayoutLocalService extends BaseLocalService,
 
 	public com.liferay.dynamic.data.mapping.model.DDMStructureLayout addStructureLayout(
 		long userId, long groupId, long structureVersionId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -304,7 +304,7 @@ public interface DDMStructureLayoutLocalService extends BaseLocalService,
 
 	public com.liferay.dynamic.data.mapping.model.DDMStructureLayout updateStructureLayout(
 		long structureLayoutId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 }

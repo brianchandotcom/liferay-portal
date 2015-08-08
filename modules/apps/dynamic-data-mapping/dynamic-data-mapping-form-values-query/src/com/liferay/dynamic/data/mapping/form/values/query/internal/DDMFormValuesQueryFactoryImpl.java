@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQuerySynt
 import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryLexer;
 import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser;
 import com.liferay.dynamic.data.mapping.form.values.query.internal.parser.DDMFormValuesQueryParser.PathContext;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BailErrorStrategy;

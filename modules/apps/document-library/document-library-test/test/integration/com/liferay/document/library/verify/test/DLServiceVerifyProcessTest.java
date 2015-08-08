@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -361,10 +361,11 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 			"/com/liferay/document/library/service/test/dependencies" +
 				"/ddmstructure.xml");
 
-		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
-			new String(bytes));
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
+			DDMFormXSDDeserializerUtil.deserialize(new String(bytes));
 
-		serviceContext.setAttribute("ddmForm", ddmForm);
+		serviceContext.setAttribute(
+			"ddmForm", DDMBeanCopyUtil.copyDDMForm(ddmForm));
 
 		User user = TestPropsValues.getUser();
 
@@ -382,8 +383,10 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		com.liferay.portlet.dynamicdatamapping.DDMStructure ddmStructure =
 			ddmStructures.get(0);
 
-		Map<String, DDMFormValues> ddmFormValuesMap = getDDMFormValuesMap(
-			ddmStructure.getStructureKey(), user.getLocale());
+		Map<String,
+			com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues>
+				ddmFormValuesMap = getDDMFormValuesMap(
+					ddmStructure.getStructureKey(), user.getLocale());
 
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			RandomTestUtil.randomBytes(
@@ -417,8 +420,10 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		Set<Locale> availableLocales = DDMFormTestUtil.createAvailableLocales(
 			currentLocale);
 
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			availableLocales, currentLocale);
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.setAvailableLocales(availableLocales);
+		ddmForm.setDefaultLocale(currentLocale);
 
 		DDMFormField ddmFormField = new DDMFormField("date_an", "ddm-date");
 
@@ -426,8 +431,10 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm, availableLocales, currentLocale);
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.setAvailableLocales(availableLocales);
+		ddmFormValues.setDefaultLocale(currentLocale);
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 

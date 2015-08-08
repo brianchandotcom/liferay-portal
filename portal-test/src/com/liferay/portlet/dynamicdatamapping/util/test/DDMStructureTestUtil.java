@@ -26,7 +26,6 @@ import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManager;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import java.util.HashMap;
@@ -58,15 +57,13 @@ public class DDMStructureTestUtil {
 
 		nameMap.put(defaultLocale, "Test Structure");
 
-		DDMFormLayout ddmFormLayout = getSampleDDMFormLayout(ddmForm);
-
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
 		return DDMStructureManagerUtil.addStructure(
 			TestPropsValues.getUserId(), groupId, parentStructureId,
 			PortalUtil.getClassNameId(className), null, nameMap, null, ddmForm,
-			ddmFormLayout, StorageEngineManager.STORAGE_TYPE_DEFAULT,
+			StorageEngineManager.STORAGE_TYPE_DEFAULT,
 			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, serviceContext);
 	}
 
@@ -125,16 +122,6 @@ public class DDMStructureTestUtil {
 		ddmForm.addDDMFormField(ddmFormField);
 
 		return ddmForm;
-	}
-
-	private static DDMFormLayout getSampleDDMFormLayout(DDMForm ddmForm) {
-		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-
-		Locale defaultLocale = ddmForm.getDefaultLocale();
-
-		ddmFormLayout.setDefaultLocale(defaultLocale);
-
-		return ddmFormLayout;
 	}
 
 }

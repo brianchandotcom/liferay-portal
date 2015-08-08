@@ -14,10 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.registry;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 
 /**
  * @author Pablo Carvalho

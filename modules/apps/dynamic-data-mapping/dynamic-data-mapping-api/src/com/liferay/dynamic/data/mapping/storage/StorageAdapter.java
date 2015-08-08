@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.storage;
 
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 /**
  * @author Eduardo Lundgren

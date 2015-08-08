@@ -14,16 +14,17 @@
 
 package com.liferay.dynamic.data.mapping.internal;
 
+import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -75,24 +76,28 @@ public class DDMStructureImpl implements DDMStructure {
 
 	@Override
 	public DDMForm getDDMForm() {
-		return _ddmStructure.getDDMForm();
+		return DDMBeanCopyUtil.copyDDMForm(_ddmStructure.getDDMForm());
 	}
 
 	@Override
 	public DDMFormField getDDMFormField(String fieldName)
 		throws PortalException {
 
-		return _ddmStructure.getDDMFormField(fieldName);
+		return DDMBeanCopyUtil.copyDDMFormField(
+			_ddmStructure.getDDMFormField(fieldName));
 	}
 
 	@Override
 	public List<DDMFormField> getDDMFormFields(boolean includeTransientFields) {
-		return _ddmStructure.getDDMFormFields(includeTransientFields);
-	}
+		List<DDMFormField> ddmFormFields = new ArrayList<>();
 
-	@Override
-	public DDMFormLayout getDDMFormLayout() throws PortalException {
-		return _ddmStructure.getDDMFormLayout();
+		for (com.liferay.dynamic.data.mapping.model.DDMFormField ddmFormField :
+				_ddmStructure.getDDMFormFields(includeTransientFields)) {
+
+			ddmFormFields.add(DDMBeanCopyUtil.copyDDMFormField(ddmFormField));
+		}
+
+		return ddmFormFields;
 	}
 
 	@Override
@@ -144,7 +149,8 @@ public class DDMStructureImpl implements DDMStructure {
 
 	@Override
 	public DDMForm getFullHierarchyDDMForm() {
-		return _ddmStructure.getFullHierarchyDDMForm();
+		return DDMBeanCopyUtil.copyDDMForm(
+			_ddmStructure.getFullHierarchyDDMForm());
 	}
 
 	@Override

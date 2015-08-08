@@ -842,12 +842,12 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		_statusDate = statusDate;
 	}
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getDDMForm() {
+	public com.liferay.dynamic.data.mapping.model.DDMForm getDDMForm() {
 		return null;
 	}
 
 	public void setDDMForm(
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm) {
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm) {
 	}
 
 	/**

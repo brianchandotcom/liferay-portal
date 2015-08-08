@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 
 /**
  * @author Marcellus Tavares

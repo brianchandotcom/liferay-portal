@@ -29,18 +29,6 @@ import java.util.Set;
  */
 public class DDMForm implements Serializable {
 
-	public DDMForm() {
-	}
-
-	public DDMForm(DDMForm ddmForm) {
-		_availableLocales = new LinkedHashSet<>(ddmForm._availableLocales);
-		_defaultLocale = ddmForm._defaultLocale;
-
-		for (DDMFormField ddmFormField : ddmForm._ddmFormFields) {
-			addDDMFormField(new DDMFormField(ddmFormField));
-		}
-	}
-
 	public void addAvailableLocale(Locale locale) {
 		_availableLocales.add(locale);
 	}

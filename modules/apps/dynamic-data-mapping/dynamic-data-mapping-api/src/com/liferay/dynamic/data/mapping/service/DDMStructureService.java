@@ -55,8 +55,8 @@ public interface DDMStructureService extends BaseService {
 		java.lang.String structureKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		java.lang.String storageType, int type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
@@ -106,8 +106,8 @@ public interface DDMStructureService extends BaseService {
 		long userId, long groupId, long classNameId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		java.lang.String storageType,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
@@ -150,8 +150,8 @@ public interface DDMStructureService extends BaseService {
 		long classNameId, java.lang.String structureKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		java.lang.String storageType, int type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
@@ -502,8 +502,8 @@ public interface DDMStructureService extends BaseService {
 		java.lang.String structureKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -544,8 +544,8 @@ public interface DDMStructureService extends BaseService {
 		long structureId, long parentStructureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 

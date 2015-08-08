@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.exception.StructureNameException;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexerUtil;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureIdComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureStructureKeyComparator;
@@ -35,7 +36,6 @@ import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
@@ -67,7 +67,9 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 		com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
 			_ddmStructureLocalService.getStructure(structureId);
 
-		DDMIndexerUtil.addAttributes(document, ddmStructure, ddmFormValues);
+		DDMIndexerUtil.addAttributes(
+			document, ddmStructure,
+			DDMBeanCopyUtil.copyDDMFormValues(ddmFormValues));
 	}
 
 	@Override
@@ -75,16 +77,19 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 			long userId, long groupId, String parentStructureKey,
 			long classNameId, String structureKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, DDMForm ddmForm,
-			DDMFormLayout ddmFormLayout, String storageType, int type,
-			ServiceContext serviceContext)
+			String storageType, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		try {
+			com.liferay.dynamic.data.mapping.model.DDMForm copyDDMForm =
+				DDMBeanCopyUtil.copyDDMForm(ddmForm);
+
 			com.liferay.dynamic.data.mapping.model.DDMStructure
 				ddmStructure = _ddmStructureLocalService.addStructure(
 					userId, groupId, parentStructureKey, classNameId,
-					structureKey, nameMap, descriptionMap, ddmForm,
-					ddmFormLayout, storageType, type, serviceContext);
+					structureKey, nameMap, descriptionMap, copyDDMForm,
+					_ddm.getDefaultDDMFormLayout(copyDDMForm), storageType,
+					type, serviceContext);
 
 			return new DDMStructureImpl(ddmStructure);
 		}
@@ -132,7 +137,8 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 			_ddmStructureLocalService.getStructure(structureId);
 
 		return DDMIndexerUtil.extractAttributes(
-			ddmStructure, ddmFormValues, locale);
+			ddmStructure, DDMBeanCopyUtil.copyDDMFormValues(ddmFormValues),
+			locale);
 	}
 
 	@Override
@@ -235,7 +241,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 	public DDMForm getDDMForm(PortletRequest portletRequest)
 		throws PortalException {
 
-		return _ddm.getDDMForm(portletRequest);
+		return DDMBeanCopyUtil.copyDDMForm(_ddm.getDDMForm(portletRequest));
 	}
 
 	@Override
@@ -251,11 +257,6 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 	@Override
 	public Class<?> getDDMStructureModelClass() {
 		return com.liferay.dynamic.data.mapping.model.DDMStructure.class;
-	}
-
-	@Override
-	public DDMFormLayout getDefaultDDMFormLayout(DDMForm ddmForm) {
-		return _ddm.getDefaultDDMFormLayout(ddmForm);
 	}
 
 	@Override
@@ -337,15 +338,18 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 	public DDMStructure updateStructure(
 			long userId, long structureId, long parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
-			ServiceContext serviceContext)
+			DDMForm ddmForm, ServiceContext serviceContext)
 		throws PortalException {
 
 		try {
+			com.liferay.dynamic.data.mapping.model.DDMForm copyDDMForm =
+				DDMBeanCopyUtil.copyDDMForm(ddmForm);
+
 			com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
 				_ddmStructureLocalService.updateStructure(
 					userId, structureId, parentStructureId, nameMap,
-					descriptionMap, ddmForm, ddmFormLayout, serviceContext);
+					descriptionMap, copyDDMForm,
+					_ddm.getDefaultDDMFormLayout(copyDDMForm), serviceContext);
 
 			return new DDMStructureImpl(ddmStructure);
 		}

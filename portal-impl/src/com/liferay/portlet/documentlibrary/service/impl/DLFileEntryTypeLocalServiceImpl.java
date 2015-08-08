@@ -54,7 +54,6 @@ import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManager;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -744,23 +743,20 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 
 		try {
-			DDMFormLayout ddmFormLayout =
-				DDMStructureManagerUtil.getDefaultDDMFormLayout(ddmForm);
-
 			if (ddmStructure == null) {
 				ddmStructure = DDMStructureManagerUtil.addStructure(
 					userId, groupId, null,
 					classNameLocalService.getClassNameId(
 						DLFileEntryMetadata.class),
 					ddmStructureKey, nameMap, descriptionMap, ddmForm,
-					ddmFormLayout, StorageEngineManager.STORAGE_TYPE_DEFAULT,
+					StorageEngineManager.STORAGE_TYPE_DEFAULT,
 					DDMStructureManager.STRUCTURE_TYPE_AUTO, serviceContext);
 			}
 			else {
 				ddmStructure = DDMStructureManagerUtil.updateStructure(
 					userId, ddmStructure.getStructureId(),
 					ddmStructure.getParentStructureId(), nameMap,
-					descriptionMap, ddmForm, ddmFormLayout, serviceContext);
+					descriptionMap, ddmForm, serviceContext);
 			}
 
 			return ddmStructure.getStructureId();

@@ -15,10 +15,11 @@
 package com.liferay.document.library.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.search.TestOrderHelper;
 import com.liferay.dynamic.data.mapping.util.DDMIndexerUtil;
@@ -61,8 +62,8 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
+import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.File;
@@ -268,14 +269,11 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 		String content = "Content: Enterprise. Open Source. For Life.";
 
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			_ddmStructure.getDDMForm(),
-			DDMFormValuesTestUtil.createAvailableLocales(LocaleUtil.US),
-			LocaleUtil.US);
+		DDMFormValues ddmFormValues = createDDMFormValues();
 
 		for (String keyword : keywords) {
 			ddmFormValues.addDDMFormFieldValue(
-				DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
+				createLocalizedDDMFormFieldValue(
 					"name", StringUtil.trim(keyword)));
 		}
 
@@ -330,6 +328,33 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			folderId, keywords + ".txt", keywords, approved, serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
+	}
+
+	protected DDMFormValues createDDMFormValues(
+		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm) {
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.addAvailableLocale(LocaleUtil.US);
+		ddmFormValues.setDefaultLocale(LocaleUtil.US);
+
+		return ddmFormValues;
+	}
+
+	protected DDMFormFieldValue createLocalizedDDMFormFieldValue(
+		String name, String value) {
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName(name);
+
+		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
+
+		localizedValue.addString(LocaleUtil.US, value);
+
+		ddmFormFieldValue.setValue(localizedValue);
+
+		return ddmFormFieldValue;
 	}
 
 	@Override

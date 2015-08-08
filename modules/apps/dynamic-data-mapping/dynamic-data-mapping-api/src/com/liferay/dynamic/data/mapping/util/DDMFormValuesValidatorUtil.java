@@ -15,8 +15,8 @@
 package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.exception.StorageException;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 /**
  * @author Marcellus Tavares

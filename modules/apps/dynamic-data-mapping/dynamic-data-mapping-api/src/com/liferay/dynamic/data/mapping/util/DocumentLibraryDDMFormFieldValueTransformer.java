@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -24,8 +26,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.dynamicdatamapping.model.Value;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 
 import java.util.Locale;
 

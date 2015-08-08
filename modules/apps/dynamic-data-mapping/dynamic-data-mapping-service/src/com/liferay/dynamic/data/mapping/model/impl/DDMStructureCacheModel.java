@@ -246,8 +246,8 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		type = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
 
-		_ddmForm = (com.liferay.portlet.dynamicdatamapping.model.DDMForm)objectInput.readObject();
-		_fullHierarchyDDMForm = (com.liferay.portlet.dynamicdatamapping.model.DDMForm)objectInput.readObject();
+		_ddmForm = (com.liferay.dynamic.data.mapping.model.DDMForm)objectInput.readObject();
+		_fullHierarchyDDMForm = (com.liferay.dynamic.data.mapping.model.DDMForm)objectInput.readObject();
 	}
 
 	@Override
@@ -355,6 +355,6 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	public String storageType;
 	public int type;
 	public long lastPublishDate;
-	public com.liferay.portlet.dynamicdatamapping.model.DDMForm _ddmForm;
-	public com.liferay.portlet.dynamicdatamapping.model.DDMForm _fullHierarchyDDMForm;
+	public com.liferay.dynamic.data.mapping.model.DDMForm _ddmForm;
+	public com.liferay.dynamic.data.mapping.model.DDMForm _fullHierarchyDDMForm;
 }

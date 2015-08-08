@@ -14,10 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.test.util;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import java.util.LinkedHashSet;
 import java.util.List;

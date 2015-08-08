@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Layout Controller Container
+Bundle-SymbolicName: com.liferay.layout.controller.container
+Bundle-Version: 1.0.0
+Include-Resource: classes
+Web-ContextPath: /layout-controller-container

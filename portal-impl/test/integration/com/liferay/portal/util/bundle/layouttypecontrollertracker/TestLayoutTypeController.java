@@ -66,6 +66,11 @@ public class TestLayoutTypeController implements LayoutTypeController {
 	}
 
 	@Override
+	public boolean isBrowsable() {
+		return true;
+	}
+
+	@Override
 	public boolean isFirstPageable() {
 		return false;
 	}

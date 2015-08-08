@@ -476,6 +476,10 @@ public class UploadServletRequestImpl
 			parameterValues = values.toArray(new String[values.size()]);
 		}
 
+		if (_liferayServletRequest != null) {
+			return parameterValues;
+		}
+
 		String[] parentParameterValues = super.getParameterValues(name);
 
 		if (parameterValues == null) {

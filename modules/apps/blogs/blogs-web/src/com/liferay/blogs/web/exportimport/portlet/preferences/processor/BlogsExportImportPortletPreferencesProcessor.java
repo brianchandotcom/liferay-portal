@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS},
 	service = ExportImportPortletPreferencesProcessor.class
 )
-public class BlogsExportImportPreferencesProcessor
+public class BlogsExportImportPortletPreferencesProcessor
 	implements ExportImportPortletPreferencesProcessor {
 
 	@Override

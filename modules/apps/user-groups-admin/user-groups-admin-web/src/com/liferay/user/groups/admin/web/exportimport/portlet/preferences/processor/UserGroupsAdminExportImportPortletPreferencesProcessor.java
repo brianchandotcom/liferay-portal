@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = ExportImportPortletPreferencesProcessor.class
 )
-public class UserGroupsAdminExportImportPreferencesProcessor
+public class UserGroupsAdminExportImportPortletPreferencesProcessor
 	implements ExportImportPortletPreferencesProcessor {
 
 	@Override

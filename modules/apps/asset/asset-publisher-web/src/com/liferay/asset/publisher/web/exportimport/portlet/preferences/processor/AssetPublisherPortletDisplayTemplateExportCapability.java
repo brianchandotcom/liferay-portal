@@ -40,7 +40,7 @@ public class AssetPublisherPortletDisplayTemplateExportCapability
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 
-		return AssetPublisherExportImportPreferencesProcessorUtil.
+		return AssetPublisherExportImportPortletPreferencesProcessorUtil.
 			getDisplayStyle(portletPreferences);
 	}
 
@@ -49,7 +49,7 @@ public class AssetPublisherPortletDisplayTemplateExportCapability
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 
-		return AssetPublisherExportImportPreferencesProcessorUtil.
+		return AssetPublisherExportImportPortletPreferencesProcessorUtil.
 			getDisplayStyleGroupId(portletPreferences);
 	}
 

@@ -25,7 +25,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Mate Thurzo
  */
-public class UserGroupsAdminExportImportPreferencesProcessorUtil {
+public class UserGroupsAdminExportImportPortletPreferencesProcessorUtil {
 
 	public static String getDisplayStyle(
 		PortletPreferences portletPreferences) {

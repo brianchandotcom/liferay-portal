@@ -36,7 +36,6 @@ import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
@@ -78,18 +77,19 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 			long userId, long groupId, String parentStructureKey,
 			long classNameId, String structureKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, DDMForm ddmForm,
-			DDMFormLayout ddmFormLayout, String storageType, int type,
-			ServiceContext serviceContext)
+			String storageType, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		try {
+			com.liferay.dynamic.data.mapping.model.DDMForm copyDDMForm =
+				DDMBeanCopyUtil.copyDDMForm(ddmForm);
+
 			com.liferay.dynamic.data.mapping.model.DDMStructure
 				ddmStructure = _ddmStructureLocalService.addStructure(
 					userId, groupId, parentStructureKey, classNameId,
-					structureKey, nameMap, descriptionMap,
-					DDMBeanCopyUtil.copyDDMForm(ddmForm),
-					DDMBeanCopyUtil.copyDDMFormLayout(ddmFormLayout),
-					storageType, type, serviceContext);
+					structureKey, nameMap, descriptionMap, copyDDMForm,
+					_ddm.getDefaultDDMFormLayout(copyDDMForm), storageType,
+					type, serviceContext);
 
 			return new DDMStructureImpl(ddmStructure);
 		}
@@ -260,12 +260,6 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 	}
 
 	@Override
-	public DDMFormLayout getDefaultDDMFormLayout(DDMForm ddmForm) {
-		return DDMBeanCopyUtil.copyDDMFormLayout(
-			_ddm.getDefaultDDMFormLayout(DDMBeanCopyUtil.copyDDMForm(ddmForm)));
-	}
-
-	@Override
 	public Serializable getIndexedFieldValue(
 			Serializable fieldValue, String fieldType)
 		throws Exception {
@@ -344,17 +338,18 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 	public DDMStructure updateStructure(
 			long userId, long structureId, long parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
-			ServiceContext serviceContext)
+			DDMForm ddmForm, ServiceContext serviceContext)
 		throws PortalException {
 
 		try {
+			com.liferay.dynamic.data.mapping.model.DDMForm copyDDMForm =
+				DDMBeanCopyUtil.copyDDMForm(ddmForm);
+
 			com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
 				_ddmStructureLocalService.updateStructure(
 					userId, structureId, parentStructureId, nameMap,
-					descriptionMap, DDMBeanCopyUtil.copyDDMForm(ddmForm),
-					DDMBeanCopyUtil.copyDDMFormLayout(ddmFormLayout),
-					serviceContext);
+					descriptionMap, copyDDMForm,
+					_ddm.getDefaultDDMFormLayout(copyDDMForm), serviceContext);
 
 			return new DDMStructureImpl(ddmStructure);
 		}

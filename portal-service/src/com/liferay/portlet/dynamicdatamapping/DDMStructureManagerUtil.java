@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
@@ -52,13 +51,12 @@ public class DDMStructureManagerUtil {
 			long userId, long groupId, String parentStructureKey,
 			long classNameId, String structureKey, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, DDMForm ddmForm,
-			DDMFormLayout ddmFormLayout, String storageType, int type,
-			ServiceContext serviceContext)
+			String storageType, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		return _ddmStructureManager.addStructure(
 			userId, groupId, parentStructureKey, classNameId, structureKey,
-			nameMap, descriptionMap, ddmForm, ddmFormLayout, storageType, type,
+			nameMap, descriptionMap, ddmForm, storageType, type,
 			serviceContext);
 	}
 
@@ -142,10 +140,6 @@ public class DDMStructureManagerUtil {
 		return _ddmStructureManager.getDDMStructureModelClass();
 	}
 
-	public static DDMFormLayout getDefaultDDMFormLayout(DDMForm ddmForm) {
-		return _ddmStructureManager.getDefaultDDMFormLayout(ddmForm);
-	}
-
 	public static Serializable getIndexedFieldValue(
 			Serializable fieldValue, String fieldType)
 		throws Exception {
@@ -187,13 +181,12 @@ public class DDMStructureManagerUtil {
 	public static DDMStructure updateStructure(
 			long userId, long structureId, long parentStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
-			ServiceContext serviceContext)
+			DDMForm ddmForm, ServiceContext serviceContext)
 		throws PortalException {
 
 		return _ddmStructureManager.updateStructure(
 			userId, structureId, parentStructureId, nameMap, descriptionMap,
-			ddmForm, ddmFormLayout, serviceContext);
+			ddmForm, serviceContext);
 	}
 
 	public static void updateStructureDefinition(

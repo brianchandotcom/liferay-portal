@@ -46,7 +46,8 @@ afterEvaluate {
 }
 
 buildCSS {
-	portalCommonDirName = new File(rootDir, "../portal-web/docroot/html/css/common")
+	dependsOn ":frontend:frontend-common-css:buildCssCommon"
+	portalCommonDirName = relativePath(new File(rootDir, "frontend/frontend-common-css/src/META-INF/resources/html/css/common"))
 }
 
 configurations {

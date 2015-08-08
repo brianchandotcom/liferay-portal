@@ -15,6 +15,7 @@ liferay {
 }
 
 task buildBourbon(type: Copy)
+task buildCssCommon
 
 buildBourbon {
 	File bourbonDestinationDir = file("src/META-INF/resources/html/css/common/bourbon")
@@ -31,6 +32,10 @@ buildBourbon {
 	}
 }
 
-classes {
+buildCssCommon {
 	dependsOn buildBourbon
+}
+
+classes {
+	dependsOn buildCssCommon
 }

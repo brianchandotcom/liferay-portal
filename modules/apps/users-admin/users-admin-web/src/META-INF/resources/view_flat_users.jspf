@@ -258,6 +258,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 
 	<%
 	List<User> results = searchContainer.getResults();
+
 	boolean showDeleteButton = !results.isEmpty() && (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && (searchTerms.isActive() || (!searchTerms.isActive() && PropsValues.USERS_DELETE));
 	boolean showRestoreButton = !results.isEmpty() && (searchTerms.getStatus() != WorkflowConstants.STATUS_ANY) && !searchTerms.isActive();
 	%>

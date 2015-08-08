@@ -97,14 +97,6 @@ public class LiferayExtension {
 		return _portalVersion;
 	}
 
-	public File getTmpDir() {
-		File tmpDir = project.file(_tmpDir);
-
-		tmpDir.mkdirs();
-
-		return tmpDir;
-	}
-
 	public String getVersionPrefix() {
 		String version = getPortalVersion();
 
@@ -141,10 +133,6 @@ public class LiferayExtension {
 		_portalVersion = portalVersion;
 	}
 
-	public void setTmpDir(Object tmpDir) {
-		_tmpDir = tmpDir;
-	}
-
 	protected final Project project;
 
 	private Object _appServerParentDir;
@@ -154,6 +142,5 @@ public class LiferayExtension {
 	private int _jmxRemotePort;
 	private Object _liferayHome;
 	private String _portalVersion;
-	private Object _tmpDir;
 
 }

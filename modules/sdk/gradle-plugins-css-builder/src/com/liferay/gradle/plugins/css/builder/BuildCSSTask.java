@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.css.builder;
 
 import com.liferay.css.builder.CSSBuilderArgs;
 import com.liferay.gradle.util.ArrayUtil;
+import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
 
 import java.io.File;
@@ -28,7 +29,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
@@ -101,13 +101,8 @@ public class BuildCSSTask extends JavaExec {
 
 	@Override
 	public FileCollection getClasspath() {
-		Project project = getProject();
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		return configurationContainer.getByName(
-			CSSBuilderPlugin.CONFIGURATION_NAME);
+		return GradleUtil.getConfiguration(
+			_project, CSSBuilderPlugin.CSS_BUILDER_CONFIGURATION_NAME);
 	}
 
 	@OutputDirectories

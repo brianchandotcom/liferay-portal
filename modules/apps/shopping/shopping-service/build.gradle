@@ -1,0 +1,16 @@
+buildService {
+	apiDirName = "../shopping-api/src"
+	autoNamespaceTables = false
+	testDirName = "../shopping-test/test/integration"
+}
+
+dependencies {
+	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":apps:shopping:shopping-api")
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

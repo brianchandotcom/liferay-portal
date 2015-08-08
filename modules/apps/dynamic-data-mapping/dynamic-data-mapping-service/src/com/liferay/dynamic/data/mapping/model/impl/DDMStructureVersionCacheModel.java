@@ -218,7 +218,7 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
 
-		_ddmForm = (com.liferay.portlet.dynamicdatamapping.model.DDMForm)objectInput.readObject();
+		_ddmForm = (com.liferay.dynamic.data.mapping.model.DDMForm)objectInput.readObject();
 	}
 
 	@Override
@@ -310,5 +310,5 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
-	public com.liferay.portlet.dynamicdatamapping.model.DDMForm _ddmForm;
+	public com.liferay.dynamic.data.mapping.model.DDMForm _ddmForm;
 }

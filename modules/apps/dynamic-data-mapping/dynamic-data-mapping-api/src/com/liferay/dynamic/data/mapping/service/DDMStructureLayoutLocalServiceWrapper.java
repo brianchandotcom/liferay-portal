@@ -49,7 +49,7 @@ public class DDMStructureLayoutLocalServiceWrapper
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructureLayout addStructureLayout(
 		long userId, long groupId, long structureVersionId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLayoutLocalService.addStructureLayout(userId,
@@ -372,7 +372,7 @@ public class DDMStructureLayoutLocalServiceWrapper
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructureLayout updateStructureLayout(
 		long structureLayoutId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLayoutLocalService.updateStructureLayout(structureLayoutId,

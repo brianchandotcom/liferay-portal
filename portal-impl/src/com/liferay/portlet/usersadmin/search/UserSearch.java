@@ -87,7 +87,7 @@ public class UserSearch extends SearchContainer<User> {
 			User.class.getName(), PortletProvider.Action.VIEW);
 		String portletName = portletConfig.getPortletName();
 
-		if (!portletName.equals(portletId)) {
+		if (!portletId.equals(portletName)) {
 			displayTerms.setStatus(WorkflowConstants.STATUS_APPROVED);
 			searchTerms.setStatus(WorkflowConstants.STATUS_APPROVED);
 		}

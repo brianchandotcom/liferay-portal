@@ -1284,11 +1284,6 @@ rerun your task.
 						<test.classes>
 							<batchtest todir="test-results/@{test.type}">
 								<fileset dir="test-classes/${current.test.dir}" includes="@{test.includes}">
-									<exclude name="**/DLAppServiceHttpTest.class" />
-									<exclude name="**/DLAppServiceJsonTest.class" />
-									<exclude name="**/DLAppServiceSoapTest.class" />
-									<exclude name="**/UserServiceHttpTest.class" />
-									<exclude name="**/UserServiceSoapTest.class" />
 									<exclude name="**/pacl/test/*Test.class" />
 									<exclude name="${test.excludes}" />
 									<filename regex="${junit.test.excludes}" negate="true" />

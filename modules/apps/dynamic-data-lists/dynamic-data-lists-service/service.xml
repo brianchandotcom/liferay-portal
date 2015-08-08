@@ -29,6 +29,7 @@
 		<column name="recordSetId" type="long" />
 		<column name="version" type="String" />
 		<column name="displayIndex" type="int" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -77,6 +78,7 @@
 		<column name="description" type="String" localized="true" />
 		<column name="minDisplayRows" type="int" />
 		<column name="scope" type="int" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 

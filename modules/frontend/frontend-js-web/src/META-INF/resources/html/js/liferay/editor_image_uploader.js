@@ -181,14 +181,14 @@ AUI.add(
 						var data = JSON.parse(event.data);
 
 						if (data.success) {
-							var image = A.one(instance._editor.element.$).one('[data-random-id="' + data.image.randomId + '"]');
+							var image = A.one(instance._editor.element.$).one('[data-random-id="' + data.file.randomId + '"]');
 
 							if (image) {
 								image.removeAttribute('data-random-id');
 								image.removeClass(CSS_UPLOADING_IMAGE);
 
-								image.attr(data.image.attributeDataImageId, data.image.fileEntryId);
-								image.attr('src', data.image.url);
+								image.attr(data.file.attributeDataImageId, data.file.fileEntryId);
+								image.attr('src', data.file.url);
 
 								var imageContainer = image.ancestor();
 
@@ -198,7 +198,7 @@ AUI.add(
 							}
 						}
 						else {
-							instance._removeTempImage(data.image);
+							instance._removeTempImage(data.file);
 						}
 					},
 

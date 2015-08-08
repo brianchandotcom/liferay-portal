@@ -150,7 +150,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56541" name="ADTAssetPublisher" priority="3">
+	<command name="ADTAssetPublisher" priority="3">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoConfigurationCP">

@@ -255,7 +255,7 @@ public class ExpandoValuePersistenceTest {
 	protected OrderByComparator<ExpandoValue> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ExpandoValue", "valueId",
 			true, "companyId", true, "tableId", true, "columnId", true,
-			"rowId", true, "classNameId", true, "classPK", true, "data", true);
+			"rowId", true, "classNameId", true, "classPK", true);
 	}
 
 	@Test

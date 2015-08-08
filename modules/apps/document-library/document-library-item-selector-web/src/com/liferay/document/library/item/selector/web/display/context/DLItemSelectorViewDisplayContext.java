@@ -20,11 +20,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
@@ -88,6 +90,21 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 	public String getTitle(Locale locale) {
 		return _dlItemSelectorView.getTitle(locale);
+	}
+
+	public PortletURL getUploadURL(
+		HttpServletRequest request,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		PortletURL portletURL = liferayPortletResponse.createActionURL(
+			PortletKeys.DOCUMENT_LIBRARY);
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "/document_library/upload_file_entry");
+		portletURL.setParameter(
+			"folderId", String.valueOf(getFolderId(request)));
+
+		return portletURL;
 	}
 
 	private final DLItemSelectorView<T> _dlItemSelectorView;

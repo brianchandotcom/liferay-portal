@@ -940,6 +940,52 @@ jdbc.default.password=${database.password}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-chrome-driver">
+		<sequential>
+			<if>
+				<os family="mac" />
+				<then>
+					<property name="selenium.chrome.driver.zip" value="chromedriver_mac32.zip" />
+				</then>
+				<elseif>
+					<os family="unix" />
+					<then>
+						<property name="selenium.chrome.driver.zip" value="chromedriver_linux64.zip" />
+					</then>
+				</elseif>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<property name="selenium.chrome.driver.zip" value="chromedriver_win32.zip" />
+					</then>
+				</elseif>
+				<else>
+					<then>
+						<fail>
+Operating system is not supported.
+						</fail>
+					</then>
+				</else>
+			</if>
+
+			<mirrors-get
+				dest="tools/selenium/${selenium.chrome.driver.zip}"
+				src="http://chromedriver.storage.googleapis.com/${selenium.chrome.driver.version}/${selenium.chrome.driver.zip}"
+			/>
+
+			<stop-chrome-driver />
+
+			<unzip src="tools/selenium/${selenium.chrome.driver.zip}" dest="tools/selenium" />
+
+			<if>
+				<os family="unix" />
+				<then>
+					<chmod file="tools/selenium/chromedriver" perm="a+x" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-database-jndi">
 		<sequential>
 			<if>
@@ -1010,6 +1056,20 @@ jdbc.default.password=${database.password}]]></echo>
 					</replace>
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-elasticsearch-configuration" >
+		<sequential>
+			<echo file="${liferay.home}/osgi/portal/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.cfg">
+				additionalConfigurations=\
+					cluster.routing.allocation.disk.threshold_enabled: false,\
+					index.indexing.slowlog.threshold.index.warn: 600s,\
+					index.search.slowlog.threshold.fetch.warn: 600s,\
+					index.search.slowlog.threshold.query.warn: 600s,\
+					monitor.jvm.gc.old.warn: 600s,\
+					monitor.jvm.gc.young.warn: 600s
+			</echo>
 		</sequential>
 	</macrodef>
 
@@ -1104,6 +1164,294 @@ jdbc.default.password=${database.password}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-safari-driver">
+		<sequential>
+			<if>
+				<os family="mac" />
+				<then>
+					<mirrors-get
+						dest="tools/selenium/extensions"
+						src="http://selenium-release.storage.googleapis.com/2.45/SafariDriver.safariextz"
+					/>
+
+					<execute>
+						open ${basedir.unix}/tools/selenium/extensions/SafariDriver.safariextz
+					</execute>
+
+					<echo file="tools/selenium/safaridriver.scpt">
+						<![CDATA[
+tell application "System Events"
+	tell process "Safari"
+		set frontmost to true
+
+		repeat until (exists window 1) and subrole of window 1 is "AXDialog" -- wait until the dialog is displayed.
+			delay 1
+		end repeat
+
+		click button 1 of front window -- install
+	end tell
+end tell
+
+tell application "Safari" to quit
+						]]>
+					</echo>
+
+					<execute>
+						osascript ${basedir.unix}/tools/selenium/safaridriver.scpt
+					</execute>
+
+					<delete file="tools/selenium/safaridriver.scpt" />
+				</then>
+				<else>
+					<fail message="Operating system is not supported." />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-test-bundles">
+		<attribute name="unit" />
+		<sequential>
+			<if>
+				<matches pattern="http" string="${test.build.bundle.glassfish.zip.url}" />
+				<then>
+					<antcall target="prepare-test-bundle" inheritAll="false">
+						<param name="app.server.type" value="glassfish" />
+						<param name="test.app.server.bin.dir" value="${app.server.glassfish.bin.dir}" />
+						<param name="test.build.bundle.zip.url" value="${test.build.bundle.glassfish.zip.url}" />
+					</antcall>
+				</then>
+				<elseif>
+					<equals arg1="${test.build.bundle.glassfish}" arg2="true" />
+					<then>
+						<ant antfile="build-dist.xml" target="build-dist-glassfish" inheritAll="false" />
+					</then>
+				</elseif>
+			</if>
+
+			<if>
+				<matches pattern="http" string="${test.build.bundle.jboss.zip.url}" />
+				<then>
+					<antcall target="prepare-test-bundle" inheritAll="false">
+						<param name="app.server.type" value="jboss" />
+						<param name="test.app.server.bin.dir" value="${app.server.jboss.bin.dir}" />
+						<param name="test.build.bundle.zip.url" value="${test.build.bundle.jboss.zip.url}" />
+					</antcall>
+				</then>
+				<elseif>
+					<equals arg1="${test.build.bundle.jboss}" arg2="true" />
+					<then>
+						<ant antfile="build-dist.xml" target="build-dist-jboss" inheritAll="false" />
+					</then>
+				</elseif>
+			</if>
+
+			<if>
+				<equals arg1="${test.build.bundle.jbosseap6.0}" arg2="true" />
+				<then>
+					<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.0" inheritAll="false" />
+				</then>
+			</if>
+
+			<if>
+				<and>
+					<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
+					<matches pattern="http" string="${test.build.portal.war.url}" />
+				</and>
+				<then>
+					<app-server-properties-update>
+						app.server.type=jboss
+						app.server.jboss.version=6.1.0
+						app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.1
+						app.server.jboss.zip.name=jboss-eap-6.1.0.zip
+						app.server.jboss.zip.url=http://www.jboss.org/jbossas/downloads/jboss-eap-6.1.0.zip
+					</app-server-properties-update>
+
+					<antcall target="prepare-test-bundle" inheritAll="false">
+						<param name="app.server.lib.global.dir" value="${app.server.parent.dir}/jboss-eap-6.1/modules/com/liferay/portal/main" />
+						<param name="app.server.portal.dir" value="${app.server.parent.dir}/jboss-eap-6.1/standalone/deployments/ROOT.war" />
+						<param name="app.server.type" value="jboss" />
+					</antcall>
+
+					<app-server-properties-reset />
+				</then>
+				<elseif>
+					<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
+					<then>
+						<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.1" inheritAll="false" />
+					</then>
+				</elseif>
+			</if>
+
+			<if>
+				<matches pattern="http" string="${test.build.bundle.jetty.zip.url}" />
+				<then>
+					<antcall target="prepare-test-bundle" inheritAll="false">
+						<param name="app.server.type" value="jetty" />
+						<param name="test.app.server.bin.dir" value="${app.server.jetty.bin.dir}" />
+						<param name="test.build.bundle.zip.url" value="${test.build.bundle.jetty.zip.url}" />
+					</antcall>
+				</then>
+				<elseif>
+					<equals arg1="${test.build.bundle.jetty}" arg2="true" />
+					<then>
+						<ant antfile="build-dist.xml" target="build-dist-jetty" inheritAll="false" />
+					</then>
+				</elseif>
+			</if>
+
+			<if>
+				<matches pattern="http" string="${test.build.bundle.jonas.zip.url}" />
+				<then>
+					<antcall target="prepare-test-bundle" inheritAll="false">
+						<param name="app.server.type" value="jonas" />
+						<param name="test.app.server.bin.dir" value="${app.server.jonas.bin.dir}" />
+						<param name="test.build.bundle.zip.url" value="${test.build.bundle.jonas.zip.url}" />
+					</antcall>
+				</then>
+				<elseif>
+					<equals arg1="${test.build.bundle.jonas}" arg2="true" />
+					<then>
+						<ant antfile="build-dist.xml" target="build-dist-jonas" inheritAll="false" />
+					</then>
+				</elseif>
+			</if>
+
+			<if>
+				<matches pattern="http" string="${test.build.bundle.resin.zip.url}" />
+				<then>
+					<antcall target="prepare-test-bundle" inheritAll="false">
+						<param name="app.server.type" value="resin" />
+						<param name="test.app.server.bin.dir" value="${app.server.resin.bin.dir}" />
+						<param name="test.build.bundle.zip.url" value="${test.build.bundle.resin.zip.url}" />
+					</antcall>
+				</then>
+				<elseif>
+					<equals arg1="${test.build.bundle.resin}" arg2="true" />
+					<then>
+						<ant antfile="build-dist.xml" target="build-dist-resin" inheritAll="false" />
+					</then>
+				</elseif>
+			</if>
+
+			<if>
+				<and>
+					<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
+					<matches pattern="http" string="${test.build.portal.war.url}" />
+				</and>
+				<then>
+					<antcall target="prepare-test-bundle" inheritAll="false">
+						<param name="app.server.lib.global.dir" value="${app.server.tcserver.lib.global.dir}" />
+						<param name="app.server.portal.dir" value="${app.server.tcserver.portal.dir}" />
+						<param name="app.server.type" value="tcserver" />
+					</antcall>
+				</then>
+				<elseif>
+					<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
+					<then>
+						<ant antfile="build-dist.xml" target="build-dist-tcserver" inheritAll="false" />
+					</then>
+				</elseif>
+			</if>
+
+			<if>
+				<matches pattern="http" string="${test.build.bundle.tomcat.zip.url}" />
+				<then>
+					<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
+
+					<antcall target="prepare-test-bundle" inheritAll="false">
+						<param name="app.server.type" value="tomcat" />
+						<param name="test.app.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
+						<param name="test.build.bundle.zip.url" value="${test.build.bundle.tomcat.zip.url}" />
+					</antcall>
+				</then>
+				<else>
+					<if>
+						<equals arg1="@{unit}" arg2="true" />
+						<then>
+							<ant antfile="build-dist.xml" target="build-dist-tomcat-bare" inheritAll="false" />
+
+							<antcall target="deploy-additional-jars" />
+
+							<ant dir="portal-service" target="deploy" inheritAll="false" />
+
+							<ant dir="util-java" target="deploy" inheritAll="false" />
+
+							<ant dir="portal-impl" target="deploy" inheritAll="false" />
+
+							<ant dir="${project.dir}/modules/core" target="deploy" inheritAll="false" />
+						</then>
+						<else>
+							<ant antfile="build-dist.xml" target="build-dist-tomcat" inheritAll="false" />
+
+							<setup-testable-tomcat />
+
+							<prepare-elasticsearch-configuration />
+						</else>
+					</if>
+
+					<antcall target="prepare-portal-ext-properties" />
+
+					<antcall target="prepare-system-ext-properties" />
+				</else>
+			</if>
+
+			<replace file="${app.server.tomcat.bin.dir}/setenv${file.suffix.bat}">
+				<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
+				<replacevalue><![CDATA[-verbose:gc -Xloggc:/tmp/tomcat-gc.log -Xms512m -Xmx512m -XX:MaxNewSize=32m -XX:MaxPermSize=200m -XX:MaxTenuringThreshold=0 -XX:NewSize=32m -XX:ParallelGCThreads=2 -XX:PermSize=200m -XX:+PrintGCCause -XX:+PrintGCDetails -XX:SurvivorRatio=65536 -XX:TargetSurvivorRatio=0 -XX:+UseParNewGC]]></replacevalue>
+			</replace>
+
+			<antcall target="prepare-test-build-tomcat-dependents" inheritAll="false" />
+
+			<if>
+				<and>
+					<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
+					<matches pattern="http" string="${test.build.portal.war.url}" />
+				</and>
+				<then>
+					<antcall target="prepare-test-bundle" inheritAll="false">
+						<param name="app.server.lib.global.dir" value="${app.server.weblogic.lib.global.dir}" />
+						<param name="app.server.portal.dir" value="${app.server.weblogic.portal.dir}" />
+						<param name="app.server.type" value="weblogic" />
+					</antcall>
+				</then>
+				<elseif>
+					<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
+					<then>
+						<app-server-properties-update>
+							app.server.type=weblogic
+						</app-server-properties-update>
+
+						<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
+
+						<antcall target="deploy" inheritAll="false" />
+
+						<app-server-properties-reset />
+					</then>
+				</elseif>
+			</if>
+
+			<antcall target="deploy-license-xml" />
+
+			<if>
+				<matches pattern="http" string="${test.build.plugins.war.zip.url}" />
+				<then>
+					<mirrors-get
+						dest="plugins.war.zip"
+						src="${test.build.plugins.war.zip.url}"
+					/>
+
+					<unzip
+						dest="."
+						src="plugins.war.zip"
+					/>
+
+					<delete file="plugins.war.zip" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-test-cluster-properties">
 		<sequential>
 			<if>
@@ -1155,6 +1503,8 @@ jdbc.default.password=${database.password}]]></echo>
 	</macrodef>
 
 	<macrodef name="print-gc-logs">
+		<attribute name="tomcat.gc.log" />
+		<attribute name="tsant.gc.log" />
 		<sequential>
 			<if>
 				<available file="/tmp/ant-gc.log" />
@@ -1172,7 +1522,7 @@ ${ant-gc-log}
 				</else>
 			</if>
 
-			<if>
+			<if if:true="@{tomcat.gc.log}">
 				<available file="/tmp/tomcat-gc.log" />
 				<then>
 					<loadfile property="tomcat-gc-log" srcFile="/tmp/tomcat-gc.log" />
@@ -1188,7 +1538,7 @@ ${tomcat-gc-log}
 				</else>
 			</if>
 
-			<if>
+			<if if:true="@{tsant.gc.log}">
 				<available file="/tmp/tsant-gc.log" />
 				<then>
 					<loadfile property="tsant-gc-log" srcFile="/tmp/tsant-gc.log" />
@@ -1516,29 +1866,6 @@ module.framework.base.dir=${project.dir}/osgi]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="setup-testable-tomcat-logging">
-		<sequential>
-			<if>
-				<and>
-					<equals arg1="@{testable.tomcat.debug.logging}" arg2="on" />
-					<not>
-						<resourcecontains resource="${app.server.tomcat.dir}/conf/logging.properties" substring="org.apache.catalina.level" />
-					</not>
-				</and>
-				<then>
-					<echo file="${app.server.tomcat.dir}/conf/logging.properties" append="true">
-						<![CDATA[
-org.apache.catalina.level=ALL
-
-org.apache.catalina.loader.WebappClassLoader.level=INFO
-org.apache.catalina.loader.WebappLoader.level=INFO
-org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
-					</echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="setup-testable-tomcat-jmx">
 		<sequential>
 			<var name="testable.tomcat.jmx.opts" value="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=${jmx.remote.authenticate} -Dcom.sun.management.jmxremote.port=${jmx.remote.port} -Dcom.sun.management.jmxremote.ssl=${jmx.remote.ssl}" />
@@ -1569,6 +1896,29 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 							CATALINA_OPTS="${CATALINA_OPTS} ${JMX_OPTS}"
 						]]>
+					</echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-tomcat-logging">
+		<sequential>
+			<if>
+				<and>
+					<equals arg1="@{testable.tomcat.debug.logging}" arg2="on" />
+					<not>
+						<resourcecontains resource="${app.server.tomcat.dir}/conf/logging.properties" substring="org.apache.catalina.level" />
+					</not>
+				</and>
+				<then>
+					<echo file="${app.server.tomcat.dir}/conf/logging.properties" append="true">
+						<![CDATA[
+org.apache.catalina.level=ALL
+
+org.apache.catalina.loader.WebappClassLoader.level=INFO
+org.apache.catalina.loader.WebappLoader.level=INFO
+org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</echo>
 				</then>
 			</if>
@@ -1741,28 +2091,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="start-appium">
-		<sequential>
-			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
-
-			<parallel>
-				<daemons>
-					<exec executable="/bin/bash" os="${os.unix}">
-						<env key="PATH" value="${env.PATH}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
-						<arg value="-c" />
-						<arg value="${appium.unix.cmd}" />
-					</exec>
-
-					<exec dir="${appium.win32.dir}" executable="cmd.exe" os="${os.windows}">
-						<env key="Path" value="${env.Path}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
-						<arg value="/c" />
-						<arg value="${appium.win32.cmd}" />
-					</exec>
-				</daemons>
-			</parallel>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="start-app-server">
 		<attribute default="0" name="app.server.bundle.index" />
 		<attribute default="" name="testable.portal.started.marker.file" />
@@ -1876,6 +2204,28 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-appium">
+		<sequential>
+			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
+
+			<parallel>
+				<daemons>
+					<exec executable="/bin/bash" os="${os.unix}">
+						<env key="PATH" value="${env.PATH}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
+						<arg value="-c" />
+						<arg value="${appium.unix.cmd}" />
+					</exec>
+
+					<exec dir="${appium.win32.dir}" executable="cmd.exe" os="${os.windows}">
+						<env key="Path" value="${env.Path}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
+						<arg value="/c" />
+						<arg value="${appium.win32.cmd}" />
+					</exec>
+				</daemons>
+			</parallel>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="start-lcs-app-server">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
 		<attribute default="0" name="app.server.bundle.index" />
@@ -1938,25 +2288,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					/>
 				</else>
 			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="stop-appium">
-		<sequential>
-			<exec executable="/bin/bash" os="${os.unix}" >
-				<arg value="-c" />
-				<arg value="killall node" />
-			</exec>
-
-			<exec executable="/bin/bash" os="${os.unix}" >
-				<arg value="-c" />
-				<arg value="fuser -k 9515/tcp" />
-			</exec>
-
-			<exec executable="cmd.exe" os="${os.windows}" >
-				<arg value="/c" />
-				<arg value="tskill node" />
-			</exec>
 		</sequential>
 	</macrodef>
 
@@ -2026,6 +2357,43 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				<then>
 					<record action="stop" name="${project.dir}/log" />
 				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-appium">
+		<sequential>
+			<exec executable="/bin/bash" os="${os.unix}" >
+				<arg value="-c" />
+				<arg value="killall node" />
+			</exec>
+
+			<exec executable="/bin/bash" os="${os.unix}" >
+				<arg value="-c" />
+				<arg value="fuser -k 9515/tcp" />
+			</exec>
+
+			<exec executable="cmd.exe" os="${os.windows}" >
+				<arg value="/c" />
+				<arg value="tskill node" />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-chrome-driver">
+		<sequential>
+			<if>
+				<os family="unix" />
+				<then>
+					<execute>
+						killall chromedriver
+					</execute>
+				</then>
+				<else>
+					<execute>
+						taskkill.exe /F /IM chromedriver.exe
+					</execute>
+				</else>
 			</if>
 		</sequential>
 	</macrodef>
@@ -2542,11 +2910,42 @@ go]]></replacevalue>
 		</delete>
 	</target>
 
+	<target name="clean-up-db2-processes">
+		<if>
+			<os family="unix" />
+			<then>
+				<echo file="clean_up_db2_processes.sh">
+					<![CDATA[
+						#!/bin/bash
+
+						db2 db2stop force
+
+						for i in "m" "q" "s"
+						do
+							for j in `ipcs -$i | grep db2 | cut -c12-21`
+							do
+								echo "ipcrm -$i $j"
+
+								ipcrm -$i $j
+							done
+						done
+					]]>
+				</echo>
+
+				<chmod file="clean_up_db2_processes.sh" perm="a+x" />
+
+				<exec executable="${basedir}/clean_up_db2_processes.sh" />
+
+				<delete file="clean_up_db2_processes.sh" />
+			</then>
+		</if>
+	</target>
+
 	<target name="clean-up-java-processes">
 		<if>
 			<os family="unix" />
 			<then>
-				<echo file="cleanjava.sh">
+				<echo file="clean_up_java_processes.sh">
 					<![CDATA[
 						#!/bin/bash
 
@@ -2559,11 +2958,11 @@ go]]></replacevalue>
 					]]>
 				</echo>
 
-				<chmod file="cleanjava.sh" perm="a+x" />
+				<chmod file="clean_up_java_processes.sh" perm="a+x" />
 
-				<exec executable="${basedir}/cleanjava.sh" />
+				<exec executable="${basedir}/clean_up_java_processes.sh" />
 
-				<delete file="cleanjava.sh" />
+				<delete file="clean_up_java_processes.sh" />
 			</then>
 		</if>
 	</target>
@@ -4233,6 +4632,7 @@ module.framework.properties.osgi.console=11312</echo>
 				<then>
 					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 						browser.type=*googlechrome
+						selenium.chrome.driver.executable=${selenium.chrome.driver.executable}
 					</echo>
 				</then>
 			</elseif>
@@ -4840,223 +5240,7 @@ module.framework.properties.osgi.console=11312</echo>
 
 		<antcall target="compile" inheritAll="false" />
 
-		<if>
-			<matches pattern="http" string="${test.build.bundle.glassfish.zip.url}" />
-			<then>
-				<antcall target="prepare-test-bundle" inheritAll="false">
-					<param name="app.server.type" value="glassfish" />
-					<param name="test.app.server.bin.dir" value="${app.server.glassfish.bin.dir}" />
-					<param name="test.build.bundle.zip.url" value="${test.build.bundle.glassfish.zip.url}" />
-				</antcall>
-			</then>
-			<elseif>
-				<equals arg1="${test.build.bundle.glassfish}" arg2="true" />
-				<then>
-					<ant antfile="build-dist.xml" target="build-dist-glassfish" inheritAll="false" />
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<matches pattern="http" string="${test.build.bundle.jboss.zip.url}" />
-			<then>
-				<antcall target="prepare-test-bundle" inheritAll="false">
-					<param name="app.server.type" value="jboss" />
-					<param name="test.app.server.bin.dir" value="${app.server.jboss.bin.dir}" />
-					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jboss.zip.url}" />
-				</antcall>
-			</then>
-			<elseif>
-				<equals arg1="${test.build.bundle.jboss}" arg2="true" />
-				<then>
-					<ant antfile="build-dist.xml" target="build-dist-jboss" inheritAll="false" />
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<equals arg1="${test.build.bundle.jbosseap6.0}" arg2="true" />
-			<then>
-				<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.0" inheritAll="false" />
-			</then>
-		</if>
-
-		<if>
-			<and>
-				<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
-				<matches pattern="http" string="${test.build.portal.war.url}" />
-			</and>
-			<then>
-				<app-server-properties-update>
-					app.server.type=jboss
-					app.server.jboss.version=6.1.0
-					app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-6.1
-					app.server.jboss.zip.name=jboss-eap-6.1.0.zip
-					app.server.jboss.zip.url=http://www.jboss.org/jbossas/downloads/jboss-eap-6.1.0.zip
-				</app-server-properties-update>
-
-				<antcall target="prepare-test-bundle" inheritAll="false">
-					<param name="app.server.lib.global.dir" value="${app.server.parent.dir}/jboss-eap-6.1/modules/com/liferay/portal/main" />
-					<param name="app.server.portal.dir" value="${app.server.parent.dir}/jboss-eap-6.1/standalone/deployments/ROOT.war" />
-					<param name="app.server.type" value="jboss" />
-				</antcall>
-
-				<app-server-properties-reset />
-			</then>
-			<elseif>
-				<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
-				<then>
-					<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.1" inheritAll="false" />
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<matches pattern="http" string="${test.build.bundle.jetty.zip.url}" />
-			<then>
-				<antcall target="prepare-test-bundle" inheritAll="false">
-					<param name="app.server.type" value="jetty" />
-					<param name="test.app.server.bin.dir" value="${app.server.jetty.bin.dir}" />
-					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jetty.zip.url}" />
-				</antcall>
-			</then>
-			<elseif>
-				<equals arg1="${test.build.bundle.jetty}" arg2="true" />
-				<then>
-					<ant antfile="build-dist.xml" target="build-dist-jetty" inheritAll="false" />
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<matches pattern="http" string="${test.build.bundle.jonas.zip.url}" />
-			<then>
-				<antcall target="prepare-test-bundle" inheritAll="false">
-					<param name="app.server.type" value="jonas" />
-					<param name="test.app.server.bin.dir" value="${app.server.jonas.bin.dir}" />
-					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jonas.zip.url}" />
-				</antcall>
-			</then>
-			<elseif>
-				<equals arg1="${test.build.bundle.jonas}" arg2="true" />
-				<then>
-					<ant antfile="build-dist.xml" target="build-dist-jonas" inheritAll="false" />
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<matches pattern="http" string="${test.build.bundle.resin.zip.url}" />
-			<then>
-				<antcall target="prepare-test-bundle" inheritAll="false">
-					<param name="app.server.type" value="resin" />
-					<param name="test.app.server.bin.dir" value="${app.server.resin.bin.dir}" />
-					<param name="test.build.bundle.zip.url" value="${test.build.bundle.resin.zip.url}" />
-				</antcall>
-			</then>
-			<elseif>
-				<equals arg1="${test.build.bundle.resin}" arg2="true" />
-				<then>
-					<ant antfile="build-dist.xml" target="build-dist-resin" inheritAll="false" />
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<and>
-				<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
-				<matches pattern="http" string="${test.build.portal.war.url}" />
-			</and>
-			<then>
-				<antcall target="prepare-test-bundle" inheritAll="false">
-					<param name="app.server.lib.global.dir" value="${app.server.tcserver.lib.global.dir}" />
-					<param name="app.server.portal.dir" value="${app.server.tcserver.portal.dir}" />
-					<param name="app.server.type" value="tcserver" />
-				</antcall>
-			</then>
-			<elseif>
-				<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
-				<then>
-					<ant antfile="build-dist.xml" target="build-dist-tcserver" inheritAll="false" />
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<matches pattern="http" string="${test.build.bundle.tomcat.zip.url}" />
-			<then>
-				<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
-
-				<antcall target="prepare-test-bundle" inheritAll="false">
-					<param name="app.server.type" value="tomcat" />
-					<param name="test.app.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
-					<param name="test.build.bundle.zip.url" value="${test.build.bundle.tomcat.zip.url}" />
-				</antcall>
-			</then>
-			<else>
-				<ant antfile="build-dist.xml" target="build-dist-tomcat" inheritAll="false" />
-
-				<setup-testable-tomcat />
-
-				<antcall target="prepare-portal-ext-properties" />
-
-				<antcall target="prepare-system-ext-properties" />
-			</else>
-		</if>
-
-		<replace file="${app.server.tomcat.bin.dir}/setenv${file.suffix.bat}">
-			<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
-			<replacevalue><![CDATA[-verbose:gc -Xloggc:/tmp/tomcat-gc.log -Xms512m -Xmx512m -XX:MaxNewSize=32m -XX:MaxPermSize=200m -XX:MaxTenuringThreshold=0 -XX:NewSize=32m -XX:ParallelGCThreads=2 -XX:PermSize=200m -XX:+PrintGCCause -XX:+PrintGCDetails -XX:SurvivorRatio=65536 -XX:TargetSurvivorRatio=0 -XX:+UseParNewGC]]></replacevalue>
-		</replace>
-
-		<antcall target="prepare-test-build-tomcat-dependents" inheritAll="false" />
-
-		<if>
-			<and>
-				<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
-				<matches pattern="http" string="${test.build.portal.war.url}" />
-			</and>
-			<then>
-				<antcall target="prepare-test-bundle" inheritAll="false">
-					<param name="app.server.lib.global.dir" value="${app.server.weblogic.lib.global.dir}" />
-					<param name="app.server.portal.dir" value="${app.server.weblogic.portal.dir}" />
-					<param name="app.server.type" value="weblogic" />
-				</antcall>
-			</then>
-			<elseif>
-				<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
-				<then>
-					<app-server-properties-update>
-						app.server.type=weblogic
-					</app-server-properties-update>
-
-					<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
-
-					<antcall target="deploy" inheritAll="false" />
-
-					<app-server-properties-reset />
-				</then>
-			</elseif>
-		</if>
-
-		<antcall target="deploy-license-xml" />
-
-		<if>
-			<matches pattern="http" string="${test.build.plugins.war.zip.url}" />
-			<then>
-				<mirrors-get
-					dest="plugins.war.zip"
-					src="${test.build.plugins.war.zip.url}"
-				/>
-
-				<unzip
-					dest="."
-					src="plugins.war.zip"
-				/>
-
-				<delete file="plugins.war.zip" />
-			</then>
-		</if>
+		<prepare-test-bundles unit="false" />
 
 		<if>
 			<not>
@@ -5084,6 +5268,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<echo if:set="env.JENKINS_HOME">
 ANT_OPTS=${env.ANT_OPTS}</echo>
 
+		<antcall if:set="env.JENKINS_HOME" target="clean-up-db2-processes" inheritAll="false" />
 		<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
 	</target>
 
@@ -5117,6 +5302,24 @@ plugins.includes=marketplace-portlet</echo>
 				<delete file="${lp.plugins.dir}/build.${user.name}.properties" />
 			</then>
 		</if>
+	</target>
+
+	<target name="prepare-test-build-unit">
+		<record-git-commit-portal />
+
+		<antcall target="compile" inheritAll="false" />
+
+		<prepare-test-bundles unit="true" />
+
+		<antcall target="compile-test" inheritAll="false" />
+
+		<record-test-class-file-names />
+
+		<echo if:set="env.JENKINS_HOME">
+ANT_OPTS=${env.ANT_OPTS}</echo>
+
+		<antcall if:set="env.JENKINS_HOME" target="clean-up-db2-processes" inheritAll="false" />
+		<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
 	</target>
 
 	<target name="prepare-test-bundle">
@@ -5999,6 +6202,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
+		<antcall target="clean-up-db2-processes" inheritAll="false" />
 		<antcall target="clean-up-java-processes" inheritAll="false" />
 
 		<get-testcase-property property.name="portal.version" />
@@ -6118,7 +6322,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<if>
 			<equals arg1="${browser.type}" arg2="googlechrome" />
 			<then>
-				<antcall target="start-chrome-driver" />
+				<prepare-chrome-driver />
 			</then>
 		</if>
 
@@ -6126,6 +6330,13 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<equals arg1="${browser.type}" arg2="ie" />
 			<then>
 				<antcall target="start-ie-driver" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="safari" />
+			<then>
+				<prepare-safari-driver />
 			</then>
 		</if>
 
@@ -6250,7 +6461,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<if>
 			<equals arg1="${browser.type}" arg2="googlechrome" />
 			<then>
-				<antcall target="stop-chrome-driver" />
+				<stop-chrome-driver />
 			</then>
 		</if>
 
@@ -6288,29 +6499,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 			app.server.bundle.index="${app.server.bundle.index}"
 			testable.portal.started.marker.file="${testable.portal.started.marker.file}"
 		/>
-	</target>
-
-	<target name="start-chrome-driver">
-		<if>
-			<not>
-				<isset property="chrome.driver.zip" />
-			</not>
-			<then>
-				<fail>
-.
-
-Please set "chrome.driver.zip" in test.properties to point to "chromedriver_win_22_0_1203_0b.zip"
-which can be downloaded from this website: http://code.google.com/p/chromedriver/
-				</fail>
-			</then>
-			<else>
-				<exec executable="taskkill.exe">
-					<arg line="/F /IM chromedriver.exe" />
-				</exec>
-
-				<unzip src="${chrome.driver.zip}" dest="tools/selenium" />
-			</else>
-		</if>
 	</target>
 
 	<target name="start-ie-driver">
@@ -6401,12 +6589,6 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<stop-app-server
 			app.server.bundle.index="${app.server.bundle.index}"
 		/>
-	</target>
-
-	<target name="stop-chrome-driver">
-		<exec executable="taskkill.exe">
-			<arg line="/F /IM chromedriver.exe" />
-		</exec>
 	</target>
 
 	<target name="stop-ie-driver">

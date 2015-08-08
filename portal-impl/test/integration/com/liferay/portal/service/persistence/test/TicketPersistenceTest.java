@@ -202,7 +202,7 @@ public class TicketPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("Ticket", "mvccVersion",
 			true, "ticketId", true, "companyId", true, "createDate", true,
 			"classNameId", true, "classPK", true, "key", true, "type", true,
-			"extraInfo", true, "expirationDate", true);
+			"expirationDate", true);
 	}
 
 	@Test

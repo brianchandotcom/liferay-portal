@@ -1,0 +1,13 @@
+<definition component-name="test">
+	<command name="classCommandName">
+		<if>
+			<and>
+				<isset var="year" />
+				<isset var="month" />
+			</and>
+			<then>
+				<execute function="Click" locator1="//right here" value1="value" />
+			</then>
+		</if>
+	</command>
+</definition>

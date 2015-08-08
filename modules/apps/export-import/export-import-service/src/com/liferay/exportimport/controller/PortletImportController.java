@@ -23,6 +23,9 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 import com.liferay.exportimport.lar.DeletionSystemEventImporter;
 import com.liferay.exportimport.lar.LayoutCache;
 import com.liferay.exportimport.lar.PermissionImporter;
+import com.liferay.exportimport.portlet.preferences.processor.Capability;
+import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
+import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorRegistryUtil;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchPortletPreferencesException;
 import com.liferay.portal.PortletIdException;
@@ -911,13 +914,35 @@ public class PortletImportController implements ImportController {
 					Portlet portlet = PortletLocalServiceUtil.getPortletById(
 						portletDataContext.getCompanyId(), curPortletId);
 
-					PortletDataHandler portletDataHandler =
-						portlet.getPortletDataHandlerInstance();
+					ExportImportPortletPreferencesProcessor
+						exportImportPortletPreferencesProcessor =
+							ExportImportPortletPreferencesProcessorRegistryUtil.
+								getExportImportPortletPreferencesProcessor(
+									portlet.getRootPortletId());
 
-					jxPortletPreferences =
-						portletDataHandler.processImportPortletPreferences(
-							portletDataContext, curPortletId,
-							jxPortletPreferences);
+					if (exportImportPortletPreferencesProcessor != null) {
+						List<Capability> importCapabilities =
+							exportImportPortletPreferencesProcessor.
+								getImportCapabilities();
+
+						for (Capability importCapability : importCapabilities) {
+							importCapability.process(
+								portletDataContext, jxPortletPreferences);
+						}
+
+						exportImportPortletPreferencesProcessor.
+							processImportPortletPreferences(
+								portletDataContext, jxPortletPreferences);
+					}
+					else {
+						PortletDataHandler portletDataHandler =
+							portlet.getPortletDataHandlerInstance();
+
+						jxPortletPreferences =
+							portletDataHandler.processImportPortletPreferences(
+								portletDataContext, curPortletId,
+								jxPortletPreferences);
+					}
 				}
 				finally {
 					portletDataContext.setImportDataRootElement(
@@ -1361,9 +1386,6 @@ public class PortletImportController implements ImportController {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletImportController.class);
-
-	private static final PortletImportController _instance =
-		new PortletImportController();
 
 	private final DeletionSystemEventImporter _deletionSystemEventImporter =
 		DeletionSystemEventImporter.getInstance();

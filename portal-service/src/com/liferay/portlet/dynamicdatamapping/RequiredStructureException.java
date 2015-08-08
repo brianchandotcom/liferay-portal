@@ -17,92 +17,23 @@ package com.liferay.portlet.dynamicdatamapping;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Isaac Obrist
+ * @author Rafael Praxedes
  */
 public class RequiredStructureException extends PortalException {
 
-	@Deprecated
-	public static final int REFERENCED_STRUCTURE = 1;
-
-	@Deprecated
-	public static final int REFERENCED_STRUCTURE_LINK = 2;
-
-	@Deprecated
-	public static final int REFERENCED_TEMPLATE = 3;
-
-	@Deprecated
-	public RequiredStructureException(int type) {
-		_type = type;
+	public RequiredStructureException() {
 	}
 
-	@Deprecated
-	public int getType() {
-		return _type;
+	public RequiredStructureException(String msg) {
+		super(msg);
 	}
 
-	public static class MustNotDeleteStructureReferencedByStructureLinks
-		extends RequiredStructureException {
-
-		public MustNotDeleteStructureReferencedByStructureLinks(
-			long structureId) {
-
-			super(
-				String.format(
-					"Structure %s cannot be deleted because it is " +
-						"referenced by one or more structure links",
-					structureId),
-				REFERENCED_STRUCTURE_LINK);
-
-			this.structureId = structureId;
-		}
-
-		public long structureId;
-
+	public RequiredStructureException(String msg, Throwable cause) {
+		super(msg, cause);
 	}
 
-	public static class MustNotDeleteStructureReferencedByTemplates
-		extends RequiredStructureException {
-
-		public MustNotDeleteStructureReferencedByTemplates(long structureId) {
-			super(
-				String.format(
-					"Structure %s cannot be deleted because it is " +
-						"referenced by one or more templates",
-					structureId),
-				REFERENCED_TEMPLATE);
-
-			this.structureId = structureId;
-		}
-
-		public long structureId;
-
+	public RequiredStructureException(Throwable cause) {
+		super(cause);
 	}
-
-	public static class MustNotDeleteStructureThatHasChild
-		extends RequiredStructureException {
-
-		public MustNotDeleteStructureThatHasChild(long structureId) {
-			super(
-				String.format(
-					"Structure %s cannot be deleted because it has child " +
-						"structures",
-					structureId),
-				REFERENCED_STRUCTURE);
-
-			this.structureId = structureId;
-		}
-
-		public long structureId;
-
-	}
-
-	private RequiredStructureException(String message, int type) {
-		super(message);
-
-		_type = type;
-	}
-
-	private final int _type;
 
 }

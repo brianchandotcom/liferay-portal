@@ -250,6 +250,11 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _dlFileEntry.getLastPublishDate();
+	}
+
+	@Override
 	public FileVersion getLatestFileVersion() throws PortalException {
 		return getLatestFileVersion(false);
 	}
@@ -520,8 +525,8 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	@Override
-	public void setCreateDate(Date date) {
-		_dlFileEntry.setCreateDate(date);
+	public void setCreateDate(Date createDate) {
+		_dlFileEntry.setCreateDate(createDate);
 	}
 
 	@Override
@@ -530,8 +535,13 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	@Override
-	public void setModifiedDate(Date date) {
-		_dlFileEntry.setModifiedDate(date);
+	public void setLastPublishDate(Date lastPublishDate) {
+		_dlFileEntry.setLastPublishDate(lastPublishDate);
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_dlFileEntry.setModifiedDate(modifiedDate);
 	}
 
 	public void setPrimaryKey(long primaryKey) {

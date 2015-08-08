@@ -449,6 +449,7 @@ public interface LayoutSetPrototypeModel extends BaseModel<LayoutSetPrototype>,
 	 *
 	 * @return the last publish date of this layout set prototype
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -456,6 +457,7 @@ public interface LayoutSetPrototypeModel extends BaseModel<LayoutSetPrototype>,
 	 *
 	 * @param lastPublishDate the last publish date of this layout set prototype
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

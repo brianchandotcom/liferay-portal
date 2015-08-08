@@ -303,6 +303,7 @@ public interface CalendarNotificationTemplateModel extends BaseModel<CalendarNot
 	 *
 	 * @return the last publish date of this calendar notification template
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -310,6 +311,7 @@ public interface CalendarNotificationTemplateModel extends BaseModel<CalendarNot
 	 *
 	 * @param lastPublishDate the last publish date of this calendar notification template
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

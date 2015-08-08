@@ -270,6 +270,7 @@ public interface MBDiscussionModel extends AttachedModel, BaseModel<MBDiscussion
 	 *
 	 * @return the last publish date of this message boards discussion
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -277,6 +278,7 @@ public interface MBDiscussionModel extends AttachedModel, BaseModel<MBDiscussion
 	 *
 	 * @param lastPublishDate the last publish date of this message boards discussion
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

@@ -213,8 +213,7 @@ public class ShoppingCartPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("ShoppingCart", "cartId",
 			true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"itemIds", true, "couponCodes", true, "altShipping", true,
-			"insure", true);
+			"couponCodes", true, "altShipping", true, "insure", true);
 	}
 
 	@Test

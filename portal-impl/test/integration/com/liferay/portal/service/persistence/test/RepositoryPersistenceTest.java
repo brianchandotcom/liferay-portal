@@ -258,8 +258,8 @@ public class RepositoryPersistenceTest {
 			true, "uuid", true, "repositoryId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "classNameId", true, "name", true,
-			"description", true, "portletId", true, "typeSettings", true,
-			"dlFolderId", true, "lastPublishDate", true);
+			"description", true, "portletId", true, "dlFolderId", true,
+			"lastPublishDate", true);
 	}
 
 	@Test

@@ -17,7 +17,7 @@ deployJar {
 		autoClean = false
 	}
 
-	from jar.outputs
+	from jar
 	into "../../../lib/development"
 
 	rename {

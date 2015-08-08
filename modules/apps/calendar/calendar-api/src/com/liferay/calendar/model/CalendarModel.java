@@ -537,6 +537,7 @@ public interface CalendarModel extends BaseModel<Calendar>, LocalizedModel,
 	 *
 	 * @return the last publish date of this calendar
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -544,6 +545,7 @@ public interface CalendarModel extends BaseModel<Calendar>, LocalizedModel,
 	 *
 	 * @param lastPublishDate the last publish date of this calendar
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

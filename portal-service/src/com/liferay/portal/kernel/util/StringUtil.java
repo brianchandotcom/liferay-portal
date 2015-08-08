@@ -3799,7 +3799,7 @@ public class StringUtil {
 	 *
 	 * <p>
 	 * Example:
-	 * <p>
+	 * </p>
 	 *
 	 * <p>
 	 * <pre>
@@ -3856,7 +3856,7 @@ public class StringUtil {
 	 *
 	 * <p>
 	 * Example:
-	 * <p>
+	 * </p>
 	 *
 	 * <p>
 	 * <pre>
@@ -3887,6 +3887,30 @@ public class StringUtil {
 		return s;
 	}
 
+	/**
+	 * Returns a string representing the string <code>s</code> without an
+	 * appended parenthetical suffix. If there is not a space directly before
+	 * the opening parenthesis, the parenthetical suffix is not stripped.
+	 *
+	 * <p>
+	 * Example:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * stripParentheticalSuffix("file") returns "file"
+	 * stripParentheticalSuffix("file (0)") returns "file"
+	 * stripParentheticalSuffix("file (0 0)") returns "file"
+	 * stripParentheticalSuffix("file(0)") returns "file(0)"
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * @param  s the string from which to strip its parenthetical suffix
+	 * @return a string representing the string <code>s</code> without an
+	 *         appended parenthetical suffix
+	 */
 	public static String stripParentheticalSuffix(String s) {
 		int x = s.lastIndexOf(StringPool.OPEN_PARENTHESIS);
 		int y = s.lastIndexOf(StringPool.CLOSE_PARENTHESIS);

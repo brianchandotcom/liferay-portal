@@ -14,13 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.type.select;
 
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueAccessor;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 
 import java.util.Locale;

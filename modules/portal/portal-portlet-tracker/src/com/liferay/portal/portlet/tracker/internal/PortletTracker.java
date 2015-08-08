@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UTF8Control;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
@@ -81,7 +82,6 @@ import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
 import javax.servlet.Servlet;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
 
 import org.osgi.framework.Bundle;
@@ -125,7 +125,9 @@ public class PortletTracker
 		if (Validator.isNull(portletName)) {
 			Class<?> clazz = portlet.getClass();
 
-			portletName = clazz.getName();
+			portletName = StringUtil.replace(
+				clazz.getName(), new String[] {".", "$"},
+				new String[] {"_", "_"});
 		}
 
 		String portletId = StringUtil.replace(
@@ -1209,6 +1211,11 @@ public class PortletTracker
 		}
 	}
 
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
 	@Reference(unbind = "-")
 	protected void setPortletInstanceFactory(
 		PortletInstanceFactory portletInstanceFactory) {
@@ -1233,10 +1240,6 @@ public class PortletTracker
 	@Reference(unbind = "-")
 	protected void setResourceActions(ResourceActions resourceActions) {
 		_resourceActions = resourceActions;
-	}
-
-	@Reference(target = "(original.bean=true)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	protected String toLowerCase(Object object) {

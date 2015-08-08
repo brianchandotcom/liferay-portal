@@ -3,6 +3,7 @@ dependencies {
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	compile project(":apps:dynamic-data-lists:dynamic-data-lists-service")
+	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
 }
 
 liferay {

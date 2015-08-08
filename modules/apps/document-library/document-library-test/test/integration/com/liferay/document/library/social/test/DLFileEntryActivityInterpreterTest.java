@@ -15,6 +15,7 @@
 package com.liferay.document.library.social.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.web.social.DLFileEntryActivityInterpreter;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -26,12 +27,12 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
-import com.liferay.portlet.documentlibrary.social.DLFileEntryActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
@@ -74,7 +75,9 @@ public class DLFileEntryActivityInterpreterTest
 			TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(), serviceContext);
+			RandomTestUtil.randomBytes(
+				TikaSafeRandomizerBumper.TEXT_PLAIN_INSTANCE),
+			serviceContext);
 	}
 
 	@Override
@@ -106,7 +109,9 @@ public class DLFileEntryActivityInterpreterTest
 			_fileEntry.getFileEntryId(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, false,
-			RandomTestUtil.randomBytes(), serviceContext);
+			RandomTestUtil.randomBytes(
+				TikaSafeRandomizerBumper.TEXT_PLAIN_INSTANCE),
+			serviceContext);
 	}
 
 	@Override

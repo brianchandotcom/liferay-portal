@@ -33,6 +33,10 @@ AUI.add(
 
 					url: {
 						validator: Lang.isString
+					},
+
+					zIndex: {
+						validator: Lang.isNumber
 					}
 				},
 
@@ -53,6 +57,8 @@ AUI.add(
 						var strings = instance.get('strings');
 
 						var eventName = instance.get(STR_EVENT_NAME);
+
+						var zIndex = instance.get('zIndex');
 
 						Util.selectEntity(
 							{
@@ -84,10 +90,12 @@ AUI.add(
 												}
 											}
 										}
-									]
+									],
+									zIndex: zIndex
 								},
 								eventName: eventName,
 								id: eventName,
+								stack: !zIndex,
 								title: Liferay.Language.get('select-image'),
 								uri: instance.get('url')
 							},

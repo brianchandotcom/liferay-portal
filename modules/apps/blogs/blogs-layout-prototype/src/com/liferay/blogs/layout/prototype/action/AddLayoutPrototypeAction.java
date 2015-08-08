@@ -18,6 +18,7 @@ import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
@@ -30,8 +31,6 @@ import com.liferay.portal.util.DefaultLayoutPrototypesUtil;
 
 import java.util.List;
 import java.util.ResourceBundle;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -87,6 +86,10 @@ public class AddLayoutPrototypeAction {
 			layout, RecentBloggersPortletKeys.RECENT_BLOGGERS, "column-2");
 	}
 
+	@Reference(target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")")
+	protected void setBlogsPortlet(Portlet portlet) {
+	}
+
 	@Reference(unbind = "-")
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
@@ -101,14 +104,15 @@ public class AddLayoutPrototypeAction {
 		_layoutPrototypeLocalService = layoutPrototypeLocalService;
 	}
 
-	@Reference(
-		target = "(javax.portlet.name=com.liferay.blogs.web.portlet.BlogsPortlet)"
-	)
-	protected void setPortlet(Portlet portlet) {
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference(
+		target = "(javax.portlet.name=" + RecentBloggersPortletKeys.RECENT_BLOGGERS + ")"
+	)
+	protected void setRecentBloggersPortlet(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")

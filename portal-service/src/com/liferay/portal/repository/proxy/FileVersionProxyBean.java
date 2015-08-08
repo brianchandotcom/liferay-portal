@@ -136,6 +136,11 @@ public class FileVersionProxyBean
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _fileVersion.getLastPublishDate();
+	}
+
+	@Override
 	public String getMimeType() {
 		return _fileVersion.getMimeType();
 	}
@@ -276,8 +281,8 @@ public class FileVersionProxyBean
 	}
 
 	@Override
-	public void setCreateDate(Date date) {
-		_fileVersion.setCreateDate(date);
+	public void setCreateDate(Date createDate) {
+		_fileVersion.setCreateDate(createDate);
 	}
 
 	@Override
@@ -286,8 +291,13 @@ public class FileVersionProxyBean
 	}
 
 	@Override
-	public void setModifiedDate(Date date) {
-		_fileVersion.setModifiedDate(date);
+	public void setLastPublishDate(Date lastPublishDate) {
+		_fileVersion.setLastPublishDate(lastPublishDate);
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_fileVersion.setModifiedDate(modifiedDate);
 	}
 
 	@Override

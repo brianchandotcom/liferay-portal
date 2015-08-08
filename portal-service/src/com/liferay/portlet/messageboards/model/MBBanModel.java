@@ -240,6 +240,7 @@ public interface MBBanModel extends BaseModel<MBBan>, StagedGroupedModel {
 	 *
 	 * @return the last publish date of this message boards ban
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -247,6 +248,7 @@ public interface MBBanModel extends BaseModel<MBBan>, StagedGroupedModel {
 	 *
 	 * @param lastPublishDate the last publish date of this message boards ban
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

@@ -3,6 +3,11 @@
 @include respond-to(phone) {
 	body #wrapper #banner {
 		padding: 20px 0;
+
+		.navbar-form .field-wrapper .search-button {
+			height: 32px;
+			padding: 0 10px;
+		}
 	}
 
 	#navigationCollapse {

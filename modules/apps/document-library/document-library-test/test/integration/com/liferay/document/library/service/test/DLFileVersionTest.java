@@ -16,6 +16,11 @@ package com.liferay.document.library.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.events.AddDefaultDocumentLibraryStructuresAction;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.storage.Field;
+import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverterUtil;
+import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -55,13 +60,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
-import com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
@@ -317,12 +316,11 @@ public class DLFileVersionTest {
 
 		for (String fieldName : fieldNames) {
 			fieldsDisplayValues.add(
-				fieldName + DDMImpl.INSTANCE_SEPARATOR +
-				StringUtil.randomString());
+				fieldName + "_INSTANCE_" + StringUtil.randomString());
 		}
 
 		Field fieldsDisplayField = new Field(
-			ddmStructure.getStructureId(), DDMImpl.FIELDS_DISPLAY_NAME,
+			ddmStructure.getStructureId(), "_fieldsDisplay",
 			StringUtil.merge(fieldsDisplayValues));
 
 		fieldsDisplayField.setDefaultLocale(LocaleUtil.US);
@@ -484,7 +482,7 @@ public class DLFileVersionTest {
 					DDMFormValues.class.getName() +
 					ddmStructure.getStructureId());
 
-			com.liferay.portlet.dynamicdatamapping.model.DDMStructure
+			com.liferay.dynamic.data.mapping.model.DDMStructure
 				structure = DDMStructureLocalServiceUtil.getDDMStructure(
 					ddmStructure.getStructureId());
 

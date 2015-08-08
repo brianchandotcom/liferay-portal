@@ -192,11 +192,21 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#viewCP">
+			<var name="assetName" value="Wiki Node Name" />
+			<var name="assetType" value="Wiki Node" />
+			<var name="deleteUser" value="Test Test" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute macro="WikiNode#viewNoCP">
-			<var name="wikiNodeName" value="Wiki Node Name" />
+		<execute macro="WikiNode#viewMainNode">
+			<var name="wikiNodeName" value="Main" />
 		</execute>
 	</command>
 

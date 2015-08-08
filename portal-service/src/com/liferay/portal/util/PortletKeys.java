@@ -43,14 +43,8 @@ public class PortletKeys {
 
 	public static final String DOCKBAR = "145";
 
-	public static final String DOCUMENT_LIBRARY = "20";
-
-	public static final String DOCUMENT_LIBRARY_ADMIN = "199";
-
-	public static final String DOCUMENT_LIBRARY_DISPLAY = "110";
-
-	public static final String DYNAMIC_DATA_MAPPING =
-		"com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet";
+	public static final String DOCUMENT_LIBRARY =
+		"com_liferay_document_library_web_portlet_DLPortlet";
 
 	public static final String EXPANDO =
 		"com_liferay_expando_web_portlet_ExpandoPortlet";
@@ -63,8 +57,6 @@ public class PortletKeys {
 	public static final String FLAGS = "142";
 
 	public static final String FRIENDS_DIRECTORY = "186";
-
-	public static final String GROUP_STATISTICS = "181";
 
 	public static final String IMAGE_UPLOADER = "195";
 
@@ -86,12 +78,6 @@ public class PortletKeys {
 		"3_WAR_marketplaceportlet";
 
 	public static final String MARKETPLACE_STORE = "1_WAR_marketplaceportlet";
-
-	public static final String MEDIA_GALLERY_DISPLAY = "31";
-
-	public static final String MESSAGE_BOARDS = "19";
-
-	public static final String MESSAGE_BOARDS_ADMIN = "162";
 
 	public static final String MOBILE_DEVICE_RULES =
 		"com_liferay_mobile_device_rules_web_portlet_MDRPortlet";
@@ -146,7 +132,8 @@ public class PortletKeys {
 
 	public static final String REQUESTS = "121";
 
-	public static final String ROLES_ADMIN = "128";
+	public static final String ROLES_ADMIN =
+		"com_liferay_roles_admin_web_portlet_RolesAdminPortlet";
 
 	public static final String SHOPPING = "34";
 
@@ -154,8 +141,6 @@ public class PortletKeys {
 		"com_liferay_site_admin_web_portlet_SiteAdminPortlet";
 
 	public static final String SITE_MEMBERS_DIRECTORY = "187";
-
-	public static final String SOCIAL_ACTIVITY = "179";
 
 	public static final String SOFTWARE_CATALOG = "98";
 
@@ -170,8 +155,6 @@ public class PortletKeys {
 
 	public static final String USER_GROUPS_ADMIN =
 		"com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet";
-
-	public static final String USER_STATISTICS = "180";
 
 	public static final String USERS_ADMIN = "125";
 

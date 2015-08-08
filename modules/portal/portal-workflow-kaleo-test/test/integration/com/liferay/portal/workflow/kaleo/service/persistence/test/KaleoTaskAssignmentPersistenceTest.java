@@ -255,9 +255,8 @@ public class KaleoTaskAssignmentPersistenceTest {
 			"modifiedDate", true, "kaleoClassName", true, "kaleoClassPK", true,
 			"kaleoDefinitionId", true, "kaleoNodeId", true,
 			"assigneeClassName", true, "assigneeClassPK", true,
-			"assigneeActionId", true, "assigneeScript", true,
-			"assigneeScriptLanguage", true, "assigneeScriptRequiredContexts",
-			true);
+			"assigneeActionId", true, "assigneeScriptLanguage", true,
+			"assigneeScriptRequiredContexts", true);
 	}
 
 	@Test

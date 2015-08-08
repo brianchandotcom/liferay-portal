@@ -38,6 +38,23 @@ public class HtmlImplTest {
 	}
 
 	@Test
+	public void testEscapeHREF() {
+		Assert.assertNull(_htmlImpl.escapeHREF(null));
+		Assert.assertEquals(
+			StringPool.BLANK, _htmlImpl.escapeHREF(StringPool.BLANK));
+		Assert.assertEquals(
+			"javascript&#x25;3aalert&#x28;&#x27;hello&#x27;&#x29;&#x3b;",
+			_htmlImpl.escapeHREF("javascript:alert('hello');"));
+		Assert.assertEquals(
+			"data&#x25;3atext&#x2f;html&#x3b;base64&#x2c;PHNjcmlwdD5hbGVydCgn" +
+				"dGVzdDMnKTwvc2NyaXB0Pg",
+			_htmlImpl.escapeHREF(
+				"data:text/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaX" +
+					"B0Pg"));
+		assertUnchangedEscape("http://localhost:8080");
+	}
+
+	@Test
 	public void testEscapeHtmlEncodingAmpersand() {
 		Assert.assertEquals("&amp;", _htmlImpl.escape("&"));
 	}

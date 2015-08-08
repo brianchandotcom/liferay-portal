@@ -1,7 +1,7 @@
 <definition>
 	<command name="activateStagingCP">
 		<execute function="AssertClick" locator1="CPSitesEdit#MENU_STAGING" value1="Staging" />
-		<execute function="AssertTextEquals" locator1="CPSitesEdit#SITE_TITLE" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_SELECTOR" value1="${siteName}" />
 
 		<if>
 			<equals arg1="${remoteStaging}" arg2="true" />
@@ -454,11 +454,11 @@
 	<command name="gotoPublishToLive">
 		<if>
 			<and>
-				<condition function="IsElementNotPresent#isNotVisible" locator1="PGStaging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
-				<condition function="IsElementPresent" locator1="PGStaging#STAGING_BUTTON" />
+				<condition function="IsElementNotPresent" locator1="PGStaging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
+				<condition function="IsElementPresent" locator1="Dockbar#STAGING_ICON" />
 			</and>
 			<then>
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="PGStaging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
+				<execute function="Click" locator1="Dockbar#STAGING_ICON" />
 				<execute function="AssertElementPresent" locator1="PGStaging#STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" />
 			</then>
 		</if>

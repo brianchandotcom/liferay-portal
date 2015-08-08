@@ -25,8 +25,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface PortletProvider {
 
-	public static final String CLASS_NAME_ANY = "any-class-name";
-
 	public String getPortletId();
 
 	public PortletURL getPortletURL(HttpServletRequest request)

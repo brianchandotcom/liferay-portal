@@ -39,7 +39,7 @@ DDLRecordSet recordSet = ddlFormDisplayContext.getRecordSet();
 			<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
 			<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
-			<%= request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML) %>
+			<%= request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML) %>
 
 			<aui:button-row>
 				<aui:button type="submit" value="send" />

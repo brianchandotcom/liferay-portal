@@ -49,18 +49,6 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 					</ul>
 				</li>
 
-				<aui:script sandbox="<%= true %>">
-					$('#sidenavContainerId').sideNavigation(
-						{
-							gutter: '0',
-							toggler: '#sidenavToggleId',
-							type: 'fixed-push',
-							typeMobile: 'fixed',
-							width: '320px'
-						}
-					);
-				</aui:script>
-
 				<li class="center">
 					<ul>
 
@@ -103,18 +91,15 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 						<c:if test="<%= !group.isControlPanel() && userSetupComplete && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon()) %>">
 
 							<%
-							PortletURL editPageURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.EDIT);
+							String portletId = PortletProviderUtil.getPortletId(Layout.class.getName(), PortletProvider.Action.EDIT);
 
-							editPageURL.setParameter("tabs1", layout.isPrivateLayout() ? "private-pages" : "public-pages");
+							PortletURL editPageURL = PortalUtil.getControlPanelPortletURL(request, portletId, 0, PortletRequest.RENDER_PHASE);
+
 							editPageURL.setParameter("groupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));
 							editPageURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
+							editPageURL.setParameter("privateLayout", String.valueOf(layout.isPrivateLayout()));
 							editPageURL.setParameter("treeId", "layoutsTree");
 							editPageURL.setParameter("viewLayout", Boolean.TRUE.toString());
-
-							String editPageURLString = HttpUtil.setParameter(editPageURL.toString(), "controlPanelCategory", "current_site");
-
-							editPageURLString = HttpUtil.setParameter(editPageURLString, "doAsGroupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));
-							editPageURLString = HttpUtil.setParameter(editPageURLString, "refererPlid", String.valueOf(layout.getPlid()));
 							%>
 
 							<li>
@@ -122,14 +107,14 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 									iconCssClass="icon-cog"
 									label="edit"
 									linkCssClass="control-menu-icon"
-									url="<%= editPageURLString %>"
+									url="<%= editPageURL.toString() %>"
 								/>
 							</li>
 						</c:if>
 
 						<%
 						boolean customizableLayout = !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isStagingGroup() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE);
-						boolean linkedLayout = ((!SitesUtil.isLayoutUpdateable(layout) && SitesUtil.isUserGroupLayout(layout)) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE);
+						boolean linkedLayout = (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE);
 						boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLinkActive() && SitesUtil.isLayoutModifiedSinceLastMerge(layout) && hasLayoutUpdatePermission;
 						boolean hasMessages = modifiedLayout || linkedLayout || customizableLayout;
 						%>

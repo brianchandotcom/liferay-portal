@@ -93,7 +93,7 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicySyntaxPanel" persistState="<%= true %>" title="password-syntax-checking">
 			<aui:fieldset>
 
-				<aui:input helpMessage="syntax-checking-enabled-help" label="syntax-checking-enabled" name="checkSyntax" />
+				<aui:input helpMessage="enable-syntax-checking-help" label="enable-syntax-checking" name="checkSyntax" />
 
 				<div class="password-policy-options" id="<portlet:namespace />syntaxSettings">
 					<aui:input helpMessage="allow-dictionary-words-help" name="allowDictionaryWords" />
@@ -122,7 +122,7 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyHistoryPanel" persistState="<%= true %>" title="password-history">
 			<aui:fieldset>
 
-				<aui:input helpMessage="history-enabled-help" label="history-enabled" name="history" />
+				<aui:input helpMessage="enable-history-help" label="enable-history" name="history" />
 
 				<div class="password-policy-options" id="<portlet:namespace />historySettings">
 					<aui:select helpMessage="history-count-help" name="historyCount">
@@ -145,7 +145,7 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyExpirationPanel" persistState="<%= true %>" title="password-expiration">
 			<aui:fieldset>
 
-				<aui:input helpMessage="expiration-enabled-help" label="expiration-enabled" name="expireable" />
+				<aui:input helpMessage="enable-expiration-help" label="enable-expiration" name="expireable" />
 
 				<div class="password-policy-options" id="<portlet:namespace />expirationSettings">
 					<aui:select helpMessage="maximum-age-help" label="maximum-age" name="maxAge">
@@ -184,7 +184,7 @@ boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defau
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="passwordPoliciesAdminPasswordPolicyLockoutPanel" persistState="<%= true %>" title="lockout">
 			<aui:fieldset>
-				<aui:input helpMessage="lockout-enabled-help" label="lockout-enabled" name="lockout" />
+				<aui:input helpMessage="enable-lockout-help" label="enable-lockout" name="lockout" />
 
 				<div class="password-policy-options" id="<portlet:namespace />lockoutSettings">
 					<aui:input helpMessage="maximum-failure-help" label="maximum-failure" name="maxFailure" />

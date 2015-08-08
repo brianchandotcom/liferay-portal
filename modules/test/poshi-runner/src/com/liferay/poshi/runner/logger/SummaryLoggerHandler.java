@@ -268,6 +268,8 @@ public final class SummaryLoggerHandler {
 		}
 
 		if (summary != null) {
+			summary = PoshiRunnerVariablesUtil.replaceCommandVars(summary);
+
 			return _replaceCommandVars(summary, element);
 		}
 

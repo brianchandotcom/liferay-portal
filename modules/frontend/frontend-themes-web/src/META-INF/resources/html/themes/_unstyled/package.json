@@ -22,5 +22,5 @@
 	"scripts": {
 		"prepublish": "node ../../../publish.js"
 	},
-	"version": "7.0.2"
+	"version": "7.0.3"
 }

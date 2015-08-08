@@ -23,7 +23,7 @@ boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 
 String portletResourceNamespace = ParamUtil.getString(request, "portletResourceNamespace", renderResponse.getNamespace());
 
-DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
+DDMStructure structure = (DDMStructure)request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
 
 DDMStructureVersion structureVersion = null;
 
@@ -204,7 +204,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 					</c:choose>
 				</aui:row>
 
-				<c:if test="<%= !PropsValues.DYNAMIC_DATA_MAPPING_STRUCTURE_FORCE_AUTOGENERATE_KEY %>">
+				<c:if test="<%= !DDMWebConfigurationValues.DYNAMIC_DATA_MAPPING_STRUCTURE_FORCE_AUTOGENERATE_KEY %>">
 					<aui:input disabled="<%= (structure != null) ? true : false %>" label='<%= LanguageUtil.format(request, "x-key", ddmDisplay.getStructureName(locale), false) %>' name="structureKey" />
 				</c:if>
 
@@ -250,7 +250,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 	function <portlet:namespace />openParentStructureSelector() {
 		Liferay.Util.openDDMPortlet(
 			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+				basePortletURL: '<%= PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 				classPK: <%= (structure != null) ? structure.getPrimaryKey() : 0 %>,
 				dialog: {
 					destroyOnHide: true

@@ -12,6 +12,7 @@
 _sass_cache_*.css
 cobertura.ser
 
+**/.gradle
 **/.sonar
 **/pmd-reports
 
@@ -39,6 +40,7 @@ cobertura.ser
 /release.*.properties
 /svn-revision
 /test.*.properties
+/tmp
 /WEB-INF
 
 /.ivy/cache/com.liferay-*.xml

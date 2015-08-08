@@ -488,6 +488,7 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 	 *
 	 * @return the last publish date of this asset category
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -495,6 +496,7 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 	 *
 	 * @param lastPublishDate the last publish date of this asset category
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

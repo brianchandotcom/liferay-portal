@@ -380,6 +380,7 @@ public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
 	 *
 	 * @return the last publish date of this message boards thread
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -387,6 +388,7 @@ public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
 	 *
 	 * @param lastPublishDate the last publish date of this message boards thread
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

@@ -227,6 +227,7 @@ public interface MBThreadFlagModel extends BaseModel<MBThreadFlag>,
 	 *
 	 * @return the last publish date of this message boards thread flag
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -234,6 +235,7 @@ public interface MBThreadFlagModel extends BaseModel<MBThreadFlag>,
 	 *
 	 * @param lastPublishDate the last publish date of this message boards thread flag
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

@@ -266,6 +266,7 @@
 			<classpath refid="plugin.classpath" />
 			<formatter type="brief" usefile="false" />
 			<formatter type="xml" />
+			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<test name="com.liferay.poshi.runner.PoshiRunner" todir="test-results" />
 		</junit>
 	</target>

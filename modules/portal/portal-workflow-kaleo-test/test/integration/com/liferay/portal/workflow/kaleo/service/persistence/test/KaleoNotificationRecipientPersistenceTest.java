@@ -247,9 +247,8 @@ public class KaleoNotificationRecipientPersistenceTest {
 			"modifiedDate", true, "kaleoDefinitionId", true,
 			"kaleoNotificationId", true, "recipientClassName", true,
 			"recipientClassPK", true, "recipientRoleType", true,
-			"recipientScript", true, "recipientScriptLanguage", true,
-			"recipientScriptContexts", true, "address", true,
-			"notificationReceptionType", true);
+			"recipientScriptLanguage", true, "recipientScriptContexts", true,
+			"address", true, "notificationReceptionType", true);
 	}
 
 	@Test

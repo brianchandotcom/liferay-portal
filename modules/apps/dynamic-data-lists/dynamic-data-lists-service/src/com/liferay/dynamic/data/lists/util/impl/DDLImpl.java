@@ -23,6 +23,12 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.DDLRecordServiceUtil;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.lists.util.DDL;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.Field;
+import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.storage.StorageEngineUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverterUtil;
+import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -43,15 +49,9 @@ import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.dynamicdatamapping.storage.Field;
-import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
-import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -114,7 +114,7 @@ public class DDLImpl implements DDL {
 			if (fieldValue instanceof Date) {
 				jsonObject.put(fieldName, ((Date)fieldValue).getTime());
 			}
-			else if (fieldType.equals(DDMImpl.TYPE_DDM_DOCUMENTLIBRARY) &&
+			else if (fieldType.equals(DDMFormFieldType.DOCUMENT_LIBRARY) &&
 					 Validator.isNotNull(fieldValue)) {
 
 				JSONObject fieldValueJSONObject =
@@ -129,7 +129,7 @@ public class DDLImpl implements DDL {
 
 				jsonObject.put(fieldName, fieldValueJSONObject.toString());
 			}
-			else if (fieldType.equals(DDMImpl.TYPE_DDM_LINK_TO_PAGE) &&
+			else if (fieldType.equals(DDMFormFieldType.LINK_TO_PAGE) &&
 					 Validator.isNotNull(fieldValue)) {
 
 				JSONObject fieldValueJSONObject =
@@ -150,8 +150,8 @@ public class DDLImpl implements DDL {
 
 				jsonObject.put(fieldName, fieldValueJSONObject.toString());
 			}
-			else if ((fieldType.equals(DDMImpl.TYPE_RADIO) ||
-					  fieldType.equals(DDMImpl.TYPE_SELECT)) &&
+			else if ((fieldType.equals(DDMFormFieldType.RADIO) ||
+					  fieldType.equals(DDMFormFieldType.SELECT)) &&
 					 Validator.isNotNull(fieldValue)) {
 
 				fieldValue = JSONFactoryUtil.createJSONArray(

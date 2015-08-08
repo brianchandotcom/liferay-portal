@@ -3,13 +3,7 @@
 
 <display>
 	<category name="category.cms">
-		<portlet id="20" />
-		<portlet id="31" />
 		<portlet id="64" />
-		<portlet id="110" />
-	</category>
-	<category name="category.collaboration">
-		<portlet id="19" />
 	</category>
 	<category name="category.community">
 		<portlet id="11" />
@@ -24,7 +18,6 @@
 		<portlet id="104" />
 		<portlet id="111" />
 		<portlet id="125" />
-		<portlet id="128" />
 		<portlet id="130" />
 		<portlet id="131" />
 		<portlet id="132" />
@@ -32,14 +25,11 @@
 		<portlet id="137" />
 		<portlet id="157" />
 		<portlet id="158" />
-		<portlet id="162" />
 		<portlet id="164" />
 		<portlet id="176" />
-		<portlet id="179" />
 		<portlet id="195" />
 		<portlet id="196" />
 		<portlet id="197" />
-		<portlet id="199" />
 	</category>
 	<category name="category.sample">
 		<portlet id="47" />
@@ -47,10 +37,7 @@
 	<category name="category.shopping">
 		<portlet id="34" />
 	</category>
-	<category name="category.social">
-		<portlet id="180" />
-		<portlet id="181" />
-	</category>
+	<category name="category.social" />
 	<category name="category.tools">
 		<portlet id="2" />
 		<portlet id="58" />

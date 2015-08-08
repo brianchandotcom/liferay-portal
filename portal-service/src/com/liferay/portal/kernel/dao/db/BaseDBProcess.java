@@ -61,4 +61,14 @@ public abstract class BaseDBProcess implements DBProcess {
 		db.runSQLTemplate(path, failOnError);
 	}
 
+	@Override
+	public void runSQLTemplateString(
+			String template, boolean evaluate, boolean failOnError)
+		throws IOException, NamingException, SQLException {
+
+		DB db = DBFactoryUtil.getDB();
+
+		db.runSQLTemplateString(template, evaluate, failOnError);
+	}
+
 }

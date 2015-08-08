@@ -51,7 +51,7 @@ backURL.setParameter("templateId", String.valueOf(templateId));
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion"
+			className="com.liferay.dynamic.data.mapping.model.DDMTemplateVersion"
 			keyProperty="templateVersionId"
 			modelVar="templateVersion"
 		>

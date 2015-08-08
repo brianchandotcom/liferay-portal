@@ -35,8 +35,6 @@ public interface PanelCategoryKeys {
 
 	public static final String ROOT = "root";
 
-	public static final String ROOT_SITES = "root_sites";
-
 	public static final String SITE_ADMINISTRATION = "site_administration";
 
 	public static final String SITE_ADMINISTRATION_CONFIGURATION =
@@ -61,5 +59,7 @@ public interface PanelCategoryKeys {
 
 	public static final String SITES_ADMINISTRATION_SITES =
 		"sites_administration.sites";
+
+	public static final String SITES_ALL_SITES = "sites_all_sites";
 
 }

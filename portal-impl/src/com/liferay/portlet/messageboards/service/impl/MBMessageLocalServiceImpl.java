@@ -67,7 +67,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
@@ -82,6 +81,7 @@ import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.MessageSubjectException;
 import com.liferay.portlet.messageboards.NoSuchThreadException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
+import com.liferay.portlet.messageboards.constants.MBConstants;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
@@ -103,7 +103,6 @@ import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator
 import com.liferay.portlet.messageboards.util.comparator.ThreadLastPostDateComparator;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.util.TrashUtil;
-import com.liferay.util.SerializableUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -375,7 +374,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			PortletFileRepositoryUtil.addPortletFileEntries(
 				message.getGroupId(), userId, MBMessage.class.getName(),
-				message.getMessageId(), PortletKeys.MESSAGE_BOARDS,
+				message.getMessageId(), MBConstants.SERVICE_NAME,
 				folder.getFolderId(), inputStreamOVPs);
 		}
 
@@ -517,7 +516,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		PortletFileRepositoryUtil.addPortletFileEntry(
 			message.getGroupId(), userId, MBMessage.class.getName(),
-			message.getMessageId(), PortletKeys.MESSAGE_BOARDS,
+			message.getMessageId(), MBConstants.SERVICE_NAME,
 			folder.getFolderId(), file, fileName, mimeType, true);
 	}
 
@@ -1664,7 +1663,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 				PortletFileRepositoryUtil.addPortletFileEntries(
 					message.getGroupId(), userId, MBMessage.class.getName(),
-					message.getMessageId(), PortletKeys.MESSAGE_BOARDS,
+					message.getMessageId(), MBConstants.SERVICE_NAME,
 					folder.getFolderId(), inputStreamOVPs);
 			}
 			else {
@@ -1966,8 +1965,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					message.getMessageId();
 		}
 
+		String portletId = PortletProviderUtil.getPortletId(
+			MBMessage.class.getName(), PortletProvider.Action.VIEW);
+
 		String layoutURL = LayoutURLUtil.getLayoutURL(
-			message.getGroupId(), PortletKeys.MESSAGE_BOARDS, serviceContext);
+			message.getGroupId(), portletId, serviceContext);
 
 		if (Validator.isNotNull(layoutURL)) {
 			return layoutURL + Portal.FRIENDLY_URL_SEPARATOR +
@@ -1977,8 +1979,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long controlPanelPlid = PortalUtil.getControlPanelPlid(
 				serviceContext.getCompanyId());
 
+			portletId = PortletProviderUtil.getPortletId(
+				MBMessage.class.getName(), PortletProvider.Action.MANAGE);
+
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				request, PortletKeys.MESSAGE_BOARDS_ADMIN, controlPanelPlid,
+				request, portletId, controlPanelPlid,
 				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
@@ -1996,6 +2001,76 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		return subject;
+	}
+
+	protected MBSubscriptionSender getSubscriptionSender(
+		long userId, MBMessage message, String messageURL, String entryTitle,
+		boolean htmlFormat, String messageBody, String categoryName,
+		String inReplyTo, String fromName, String fromAddress,
+		String replyToAddress, String emailAddress, String fullName,
+		LocalizedValuesMap subjectLocalizedValuesMap,
+		LocalizedValuesMap bodyLocalizedValuesMap,
+		ServiceContext serviceContext) {
+
+		MBSubscriptionSender subscriptionSender = new MBSubscriptionSender(
+			MBPermission.RESOURCE_NAME);
+
+		subscriptionSender.setBulk(PropsValues.MESSAGE_BOARDS_EMAIL_BULK);
+		subscriptionSender.setClassName(message.getModelClassName());
+		subscriptionSender.setClassPK(message.getMessageId());
+		subscriptionSender.setCompanyId(message.getCompanyId());
+		subscriptionSender.setContextAttribute(
+			"[$MESSAGE_BODY$]", messageBody, false);
+		subscriptionSender.setContextAttributes(
+			"[$CATEGORY_NAME$]", categoryName, "[$MAILING_LIST_ADDRESS$]",
+			replyToAddress, "[$MESSAGE_ID$]", message.getMessageId(),
+			"[$MESSAGE_SUBJECT$]", entryTitle, "[$MESSAGE_URL$]", messageURL,
+			"[$MESSAGE_USER_ADDRESS$]", emailAddress, "[$MESSAGE_USER_NAME$]",
+			fullName);
+		subscriptionSender.setCurrentUserId(userId);
+		subscriptionSender.setEntryTitle(entryTitle);
+		subscriptionSender.setEntryURL(messageURL);
+		subscriptionSender.setFrom(fromAddress, fromName);
+		subscriptionSender.setHtmlFormat(htmlFormat);
+		subscriptionSender.setInReplyTo(inReplyTo);
+
+		if (bodyLocalizedValuesMap != null) {
+			subscriptionSender.setLocalizedBodyMap(
+				LocalizationUtil.getMap(bodyLocalizedValuesMap));
+		}
+
+		if (subjectLocalizedValuesMap != null) {
+			subscriptionSender.setLocalizedSubjectMap(
+				LocalizationUtil.getMap(subjectLocalizedValuesMap));
+		}
+
+		Date modifiedDate = message.getModifiedDate();
+
+		subscriptionSender.setMailId(
+			MBUtil.MESSAGE_POP_PORTLET_PREFIX, message.getCategoryId(),
+			message.getMessageId(), modifiedDate.getTime());
+
+		int notificationType =
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
+
+		if (serviceContext.isCommandUpdate()) {
+			notificationType =
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY;
+		}
+
+		subscriptionSender.setNotificationType(notificationType);
+
+		String portletId = PortletProviderUtil.getPortletId(
+			MBMessage.class.getName(), PortletProvider.Action.VIEW);
+
+		subscriptionSender.setPortletId(portletId);
+
+		subscriptionSender.setReplyToAddress(replyToAddress);
+		subscriptionSender.setScopeGroupId(message.getGroupId());
+		subscriptionSender.setServiceContext(serviceContext);
+		subscriptionSender.setUniqueMailId(false);
+
+		return subscriptionSender;
 	}
 
 	protected void notifyDiscussionSubscribers(
@@ -2226,64 +2301,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				modifiedDate.getTime());
 		}
 
-		SubscriptionSender subscriptionSenderPrototype =
-			new MBSubscriptionSender(MBPermission.RESOURCE_NAME);
-
-		subscriptionSenderPrototype.setBulk(
-			PropsValues.MESSAGE_BOARDS_EMAIL_BULK);
-		subscriptionSenderPrototype.setClassName(message.getModelClassName());
-		subscriptionSenderPrototype.setClassPK(message.getMessageId());
-		subscriptionSenderPrototype.setCompanyId(message.getCompanyId());
-		subscriptionSenderPrototype.setContextAttribute(
-			"[$MESSAGE_BODY$]", messageBody, false);
-		subscriptionSenderPrototype.setContextAttributes(
-			"[$CATEGORY_NAME$]", categoryName, "[$MAILING_LIST_ADDRESS$]",
-			replyToAddress, "[$MESSAGE_ID$]", message.getMessageId(),
-			"[$MESSAGE_SUBJECT$]", entryTitle, "[$MESSAGE_URL$]", messageURL,
-			"[$MESSAGE_USER_ADDRESS$]", emailAddress, "[$MESSAGE_USER_NAME$]",
-			fullName);
-		subscriptionSenderPrototype.setCurrentUserId(userId);
-		subscriptionSenderPrototype.setEntryTitle(entryTitle);
-		subscriptionSenderPrototype.setEntryURL(messageURL);
-		subscriptionSenderPrototype.setFrom(fromAddress, fromName);
-		subscriptionSenderPrototype.setHtmlFormat(htmlFormat);
-		subscriptionSenderPrototype.setInReplyTo(inReplyTo);
-
-		if (bodyLocalizedValuesMap != null) {
-			subscriptionSenderPrototype.setLocalizedBodyMap(
-				LocalizationUtil.getMap(bodyLocalizedValuesMap));
-		}
-
-		if (subjectLocalizedValuesMap != null) {
-			subscriptionSenderPrototype.setLocalizedSubjectMap(
-				LocalizationUtil.getMap(subjectLocalizedValuesMap));
-		}
-
-		Date modifiedDate = message.getModifiedDate();
-
-		subscriptionSenderPrototype.setMailId(
-			MBUtil.MESSAGE_POP_PORTLET_PREFIX, message.getCategoryId(),
-			message.getMessageId(), modifiedDate.getTime());
-
-		int notificationType =
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
-
-		if (serviceContext.isCommandUpdate()) {
-			notificationType =
-				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY;
-		}
-
-		subscriptionSenderPrototype.setNotificationType(notificationType);
-
-		subscriptionSenderPrototype.setPortletId(PortletKeys.MESSAGE_BOARDS);
-		subscriptionSenderPrototype.setReplyToAddress(replyToAddress);
-		subscriptionSenderPrototype.setScopeGroupId(message.getGroupId());
-		subscriptionSenderPrototype.setServiceContext(serviceContext);
-		subscriptionSenderPrototype.setUniqueMailId(false);
-
-		SubscriptionSender subscriptionSender =
-			(SubscriptionSender)SerializableUtil.clone(
-				subscriptionSenderPrototype);
+		SubscriptionSender subscriptionSender = getSubscriptionSender(
+			userId, message, messageURL, entryTitle, htmlFormat, messageBody,
+			categoryName, inReplyTo, fromName, fromAddress, replyToAddress,
+			emailAddress, fullName, subjectLocalizedValuesMap,
+			bodyLocalizedValuesMap, serviceContext);
 
 		subscriptionSender.addPersistedSubscribers(
 			MBCategory.class.getName(), message.getGroupId());
@@ -2303,8 +2325,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (!MailingListThreadLocal.isSourceMailingList()) {
 			for (long categoryId : categoryIds) {
 				MBSubscriptionSender sourceMailingListSubscriptionSender =
-					(MBSubscriptionSender)SerializableUtil.clone(
-						subscriptionSenderPrototype);
+					getSubscriptionSender(
+						userId, message, messageURL, entryTitle, htmlFormat,
+						messageBody, categoryName, inReplyTo, fromName,
+						fromAddress, replyToAddress, emailAddress, fullName,
+						subjectLocalizedValuesMap, bodyLocalizedValuesMap,
+						serviceContext);
 
 				sourceMailingListSubscriptionSender.setBulk(false);
 

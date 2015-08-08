@@ -198,7 +198,7 @@ public class ExpandoColumnPersistenceTest {
 	protected OrderByComparator<ExpandoColumn> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ExpandoColumn", "columnId",
 			true, "companyId", true, "tableId", true, "name", true, "type",
-			true, "defaultData", true, "typeSettings", true);
+			true, "defaultData", true);
 	}
 
 	@Test

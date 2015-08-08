@@ -260,17 +260,9 @@ public class ServiceTestUtil {
 			_log.error(e, e);
 		}
 
-		// Trash
-
-		PortalRegisterTestUtil.registerTrashHandlers();
-
 		// Workflow
 
 		PortalRegisterTestUtil.registerWorkflowHandlers();
-
-		// Asset renderers
-
-		PortalRegisterTestUtil.registerAssetRendererFactories();
 
 		// Company
 

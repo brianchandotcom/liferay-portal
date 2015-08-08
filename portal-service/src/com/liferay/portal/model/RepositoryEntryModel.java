@@ -276,6 +276,7 @@ public interface RepositoryEntryModel extends BaseModel<RepositoryEntry>,
 	 *
 	 * @return the last publish date of this repository entry
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -283,6 +284,7 @@ public interface RepositoryEntryModel extends BaseModel<RepositoryEntry>,
 	 *
 	 * @param lastPublishDate the last publish date of this repository entry
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

@@ -9,6 +9,7 @@
 <#assign root_css_class = languageUtil.get(locale, "lang.dir") />
 <#assign css_class = htmlUtil.escape(theme_display.getColorScheme().getCssClass()) + " yui3-skin-sam" />
 
+<#assign liferay_product_menu_state = sessionClicks.get(request, "liferay_product_menu_state", "closed") />
 <#assign liferay_toggle_controls = sessionClicks.get(request, "liferay_toggle_controls", "visible") />
 
 <#if layout??>
@@ -127,17 +128,6 @@
 
 	<#if theme_display.getURLMyAccount()??>
 		<#assign my_account_url = htmlUtil.escape(theme_display.getURLMyAccount().toString()) />
-	</#if>
-</#if>
-
-<#assign show_page_settings = theme_display.isShowPageSettingsIcon() />
-<#assign show_site_settings = theme_display.isShowSiteSettingsIcon() />
-
-<#if show_page_settings>
-	<#assign page_settings_text = languageUtil.get(locale, "manage-pages") />
-
-	<#if theme_display.getURLPageSettings()??>
-		<#assign page_settings_url = htmlUtil.escape(theme_display.getURLPageSettings().toString()) />
 	</#if>
 </#if>
 

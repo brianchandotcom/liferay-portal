@@ -383,6 +383,16 @@ public class CalendarBookingLocalServiceImpl
 			recurrenceObj.setUntilJCalendar(startTimeJCalendar);
 		}
 		else {
+			CalendarBooking calendarBookingInstance =
+				RecurrenceUtil.getCalendarBookingInstance(calendarBooking, 1);
+
+			if (calendarBookingInstance == null) {
+				calendarBookingLocalService.deleteCalendarBooking(
+					calendarBooking);
+
+				return;
+			}
+
 			recurrenceObj.addExceptionDate(startTimeJCalendar);
 		}
 

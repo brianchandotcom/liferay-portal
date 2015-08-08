@@ -642,7 +642,7 @@ AUI.add(
 
 				if (!insertContainer) {
 					insertContainer = A.Node.create('<div id="lfr-add-rule-container"></div>');
-					addIdLink = A.Node.create('<a href="javascript:;" id="lfr-add-id">' + Liferay.Language.get('add-a-css-rule-for-just-this-portlet') + '</a>');
+					addIdLink = A.Node.create('<a href="javascript:;" id="lfr-add-id">' + Liferay.Language.get('add-a-css-rule-for-this-portlet') + '</a>');
 					addClassLink = A.Node.create('<a href="javascript:;" id="lfr-add-class">' + Liferay.Language.get('add-a-css-rule-for-all-portlets-like-this-one') + '</a>');
 
 					var updateOnTypeHolder = A.Node.create('<span class="field"><span class="field-content"></span></span>');

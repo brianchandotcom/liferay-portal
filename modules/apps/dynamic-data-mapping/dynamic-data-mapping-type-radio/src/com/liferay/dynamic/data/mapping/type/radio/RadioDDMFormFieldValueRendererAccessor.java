@@ -14,11 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.type.radio;
 
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRendererAccessor;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueAccessor;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueRendererAccessor;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 
 /**

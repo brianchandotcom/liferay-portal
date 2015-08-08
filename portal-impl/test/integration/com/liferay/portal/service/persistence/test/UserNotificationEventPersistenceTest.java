@@ -301,7 +301,7 @@ public class UserNotificationEventPersistenceTest {
 			"mvccVersion", true, "uuid", true, "userNotificationEventId", true,
 			"companyId", true, "userId", true, "type", true, "timestamp", true,
 			"deliveryType", true, "deliverBy", true, "delivered", true,
-			"payload", true, "actionRequired", true, "archived", true);
+			"actionRequired", true, "archived", true);
 	}
 
 	@Test

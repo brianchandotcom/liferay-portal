@@ -732,6 +732,7 @@ public interface JournalArticleModel extends AttachedModel,
 	 *
 	 * @return the last publish date of this journal article
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -739,6 +740,7 @@ public interface JournalArticleModel extends AttachedModel,
 	 *
 	 * @param lastPublishDate the last publish date of this journal article
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

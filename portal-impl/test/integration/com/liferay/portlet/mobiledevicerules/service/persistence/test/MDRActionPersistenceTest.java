@@ -246,8 +246,8 @@ public class MDRActionPersistenceTest {
 			"actionId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "ruleGroupInstanceId", true,
-			"name", true, "description", true, "type", true, "typeSettings",
-			true, "lastPublishDate", true);
+			"name", true, "description", true, "type", true, "lastPublishDate",
+			true);
 	}
 
 	@Test

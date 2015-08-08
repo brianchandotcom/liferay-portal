@@ -17,7 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="jgroups" org="org.jgroups" rev="3.2.12.Final" />
+		<dependency name="jgroups" org="org.jgroups" rev="3.6.4.Final" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 	</dependencies>

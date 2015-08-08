@@ -19,15 +19,20 @@
 <%
 PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
+PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
+
+PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
+
+boolean containsActivePortlet = panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), panelCategory);
 
 String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.getKey(), StringPool.PERIOD, StringPool.UNDERLINE);
 %>
 
-<a aria-expanded="false" class="collapse-icon collapsed list-group-heading" data-toggle="collapse" href="#<%= panelPageCategoryId %>">
-	<h5><%= LanguageUtil.get(themeDisplay.getLocale(), "content") %></h5>
+<a aria-expanded="false" class="collapse-icon <%= containsActivePortlet ? StringPool.BLANK : "collapsed" %> list-group-heading" data-toggle="collapse" href="#<%= panelPageCategoryId %>">
+	<liferay-ui:message key="content" />
 </a>
 
-<div class="collapse" id="<%= panelPageCategoryId %>">
+<div class="collapse <%= containsActivePortlet ? "in" : StringPool.BLANK %>" id="<%= panelPageCategoryId %>">
 	<div class="list-group-item">
 
 		<%
@@ -90,7 +95,7 @@ String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.
 			</div>
 		</c:if>
 
-		<ul aria-labelledby="<%= panelPageCategoryId %>" class="category-portlets list-unstyled" role="menu">
+		<ul aria-labelledby="<%= panelPageCategoryId %>" class="nav nav-equal-height" role="menu">
 
 			<%
 			for (PanelApp panelApp : panelAppRegistry.getPanelApps(panelCategory)) {

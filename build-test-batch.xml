@@ -48,6 +48,7 @@
 
 	<macrodef name="database-test-run-test">
 		<attribute name="database.type" />
+		<attribute name="stop.app.server" default="false" />
 		<element name="test-action" />
 
 		<sequential>
@@ -87,6 +88,15 @@
 
 					<test-action />
 
+					<if if:true="@{stop.app.server}">
+						<available file=".testable.portal.started" />
+						<then>
+							<antcall target="stop-app-server" />
+
+							<delete file=".testable.portal.started" failonerror="false" />
+						</then>
+					</if>
+
 					<exec executable="${database.service.executable}" failonerror="true">
 						<arg line="${database.service.cmd.stop}" />
 					</exec>
@@ -119,6 +129,14 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-test-build-unit">
+		<sequential>
+			<antcall target="prepare-test-build-unit">
+				<param name="test.class.groups.size" value="${test.batch.size}" />
+			</antcall>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="print-test-class-group">
 		<attribute name="test.class.group.index" />
 		<sequential>
@@ -132,6 +150,9 @@
 
 	<macrodef name="run-batch-test">
 		<attribute name="test.class.group.index" />
+		<attribute name="tomcat.gc.log" default="false" />
+		<attribute name="tsant.gc.log" default="false" />
+		<attribute name="unit.test" default="false" />
 		<element name="test-action" />
 		<sequential>
 			<if>
@@ -139,7 +160,9 @@
 					<equals arg1="@{test.class.group.index}" arg2="default" />
 				</not>
 				<then>
-					<prepare-test-build />
+					<prepare-test-build unless:true="@{unit.test}" />
+
+					<prepare-test-build-unit if:true="@{unit.test}" />
 
 					<test-action />
 
@@ -147,18 +170,18 @@
 
 					<check-deprecated-method />
 
-					<if>
-						<available file=".testable.portal.started" />
-						<then>
-							<antcall target="stop-app-server" />
-
-							<delete file=".testable.portal.started" failonerror="false" />
-						</then>
-					</if>
-
-					<print-gc-logs />
+					<print-gc-logs
+						tomcat.gc.log="@{tomcat.gc.log}"
+						tsant.gc.log="@{tsant.gc.log}"
+					/>
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-build-selenium">
+		<sequential>
+			<ant antfile="build.xml" dir="portal-web" target="build-selenium" />
 		</sequential>
 	</macrodef>
 
@@ -205,9 +228,9 @@
 	<macrodef name="run-modules-integration-test">
 		<attribute name="database.type" />
 		<sequential>
-			<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<run-batch-test test.class.group.index="${jenkins.axis.variable}" tomcat.gc.log="true">
 				<test-action>
-					<database-test-run-test database.type="@{database.type}">
+					<database-test-run-test database.type="@{database.type}" stop.app.server="true">
 						<test-action>
 							<print-test-class-group test.class.group.index="@{test.class.group.index}" />
 
@@ -229,12 +252,6 @@
 					</database-test-run-test>
 				</test-action>
 			</run-batch-test>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="run-build-selenium">
-		<sequential>
-			<ant antfile="build.xml" dir="portal-web" target="build-selenium" />
 		</sequential>
 	</macrodef>
 
@@ -335,29 +352,25 @@
 	</target>
 
 	<target name="tck">
-		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}" tomcat.gc.log="true" tsant.gc.log="true">
 			<test-action>
-				<exec executable="${database.mysql.service.executable}" failonerror="true">
-					<arg line="${database.mysql.service.cmd.start}" />
-				</exec>
+				<database-test-run-test database.type="mysql" stop.app.server="true">
+					<test-action>
+						<ant antfile="build-test-tck.xml" target="record-test-tck-package-names">
+							<property name="test.class.groups.size" value="${test.batch.size}" />
+						</ant>
 
-				<antcall target="rebuild-database" inheritAll="false" />
-
-				<antcall target="delete-liferay-home" />
-
-				<ant antfile="build-test-tck.xml" target="record-test-tck-package-names">
-					<property name="test.class.groups.size" value="${test.batch.size}" />
-				</ant>
-
-				<ant antfile="build-test-tck.xml" target="test-class-group">
-					<property name="test.class.group.index" value="@{test.class.group.index}" />
-				</ant>
+						<ant antfile="build-test-tck.xml" target="test-class-group">
+							<property name="test.class.group.index" value="@{test.class.group.index}" />
+						</ant>
+					</test-action>
+				</database-test-run-test>
 			</test-action>
 		</run-batch-test>
 	</target>
 
 	<target name="unit">
-		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+		<run-batch-test test.class.group.index="${jenkins.axis.variable}" unit.test="true">
 			<test-action>
 				<ant dir="portal-service" target="test-class-group" inheritAll="false">
 					<property name="test.class.group.index" value="@{test.class.group.index}" />

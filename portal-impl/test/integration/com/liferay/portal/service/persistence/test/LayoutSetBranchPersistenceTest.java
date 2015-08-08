@@ -277,9 +277,8 @@ public class LayoutSetBranchPersistenceTest {
 			true, "modifiedDate", true, "privateLayout", true, "name", true,
 			"description", true, "master", true, "logoId", true, "themeId",
 			true, "colorSchemeId", true, "wapThemeId", true,
-			"wapColorSchemeId", true, "css", true, "settings", true,
-			"layoutSetPrototypeUuid", true, "layoutSetPrototypeLinkEnabled",
-			true);
+			"wapColorSchemeId", true, "layoutSetPrototypeUuid", true,
+			"layoutSetPrototypeLinkEnabled", true);
 	}
 
 	@Test

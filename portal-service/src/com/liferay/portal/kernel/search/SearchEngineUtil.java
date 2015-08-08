@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.search.queue.QueuingSearchEngine;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ClassUtil;
@@ -891,7 +892,8 @@ public class SearchEngineUtil {
 
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setCommitImmediately(commitImmediately);
+		searchContext.setCommitImmediately(
+			commitImmediately || ProxyModeThreadLocal.isForceSync());
 		searchContext.setCompanyId(companyId);
 		searchContext.setSearchEngineId(searchEngineId);
 

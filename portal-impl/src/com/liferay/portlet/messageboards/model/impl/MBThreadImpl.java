@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.messageboards.constants.MBConstants;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -57,7 +57,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		serviceContext.setAddGuestPermissions(true);
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
-			getGroupId(), PortletKeys.MESSAGE_BOARDS, serviceContext);
+			getGroupId(), MBConstants.SERVICE_NAME, serviceContext);
 
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(
 			getRootMessageId());
@@ -87,7 +87,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 
 		Repository repository =
 			PortletFileRepositoryUtil.fetchPortletRepository(
-				getGroupId(), PortletKeys.MESSAGE_BOARDS);
+				getGroupId(), MBConstants.SERVICE_NAME);
 
 		if (repository == null) {
 			return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;

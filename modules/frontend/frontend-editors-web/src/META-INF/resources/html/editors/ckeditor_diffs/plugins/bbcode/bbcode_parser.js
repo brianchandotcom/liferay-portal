@@ -165,12 +165,14 @@
 
 			var length = data.length;
 
-			var lastIndex = instance._lexer.getLastIndex();
+			var lastIndex = length;
 
 			if (token) {
-				var tokenItem = token[1] || token[3];
+				lastIndex = instance._lexer.getLastIndex();
 
 				length = lastIndex;
+
+				var tokenItem = token[1] || token[3];
 
 				if (instance._isValidTag(tokenItem)) {
 					length = token.index;
@@ -215,7 +217,7 @@
 				}
 			}
 
-			if (pos >= 0 && instance._isValidTag(tagName)) {
+			if (pos >= 0) {
 				var tokenTagEnd = Parser.TOKEN_TAG_END;
 
 				for (var i = stack.length - 1; i >= pos; i--) {
@@ -362,12 +364,6 @@
 		I: 'list-style-type: upper-roman;'
 	};
 
-	var MAP_UNORDERED_LIST_STYLES = {
-		circle: 'list-style-type: circle;',
-		disc: 'list-style-type: disc;',
-		square: 'list-style-type: square;'
-	};
-
 	var MAP_TOKENS_EXCLUDE_NEW_LINE = {
 		'*': 3,
 		li: 3,
@@ -375,6 +371,12 @@
 		td: 3,
 		th: 3,
 		tr: 3
+	};
+
+	var MAP_UNORDERED_LIST_STYLES = {
+		circle: 'list-style-type: circle;',
+		disc: 'list-style-type: disc;',
+		square: 'list-style-type: square;'
 	};
 
 	var REGEX_ATTRS = /\s*([^=]+)\s*=\s*"([^"]+)"\s*/g;
@@ -655,7 +657,7 @@
 			if (token.attribute) {
 				var bbCodeAttr;
 
-				while ((bbCodeAttr = REGEX_ATTRS.exec(token.attribute))) {
+				while (bbCodeAttr = REGEX_ATTRS.exec(token.attribute)) {
 					var attrName = bbCodeAttr[1];
 
 					if (MAP_IMAGE_ATTRIBUTES[attrName]) {
@@ -674,13 +676,13 @@
 		_handleList: function(token) {
 			var instance = this;
 
-			var tag = 'ul';
 			var listAttributes = STR_BLANK;
+			var tag = 'ul';
 
 			if (token.attribute) {
 				var listAttribute;
 
-				while ((listAttribute = REGEX_ATTRS.exec(token.attribute))) {
+				while (listAttribute = REGEX_ATTRS.exec(token.attribute)) {
 					var attrName = listAttribute[1];
 					var attrValue = listAttribute[2];
 

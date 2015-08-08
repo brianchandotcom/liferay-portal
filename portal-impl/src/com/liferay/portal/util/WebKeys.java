@@ -81,6 +81,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String DIFF_VERSION = "DIFF_VERSION";
 
+	public static final String DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE = "DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE";
+
 	public static final String DOCUMENT_LIBRARY_FILE_ENTRIES = "DOCUMENT_LIBRARY_FILE_ENTRIES";
 
 	public static final String DOCUMENT_LIBRARY_FILE_ENTRY = "DOCUMENT_LIBRARY_FILE_ENTRY";
@@ -96,12 +98,6 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 	public static final String DOCUMENT_LIBRARY_FOLDERS = "DOCUMENT_LIBRARY_FOLDERS";
 
 	public static final String DOCUMENT_LIBRARY_REPOSITORY = "DOCUMENT_LIBRARY_REPOSITORY";
-
-	public static final String DYNAMIC_DATA_MAPPING_FORM_HTML = "DYNAMIC_DATA_MAPPING_FORM_HTML";
-
-	public static final String DYNAMIC_DATA_MAPPING_STRUCTURE = "DYNAMIC_DATA_MAPPING_STRUCTURE";
-
-	public static final String DYNAMIC_DATA_MAPPING_TEMPLATE = "DYNAMIC_DATA_MAPPING_TEMPLATE";
 
 	public static final String EMAIL_ADDRESS = "EMAIL_ADDRESS";
 
@@ -335,8 +331,6 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 	public static final String SHOPPING_ORDER = "SHOPPING_ORDER";
 
 	public static final String SITE_ADMINISTRATION_CATEGORIES_MAP = "SITES_ADMINISTRATION_CATEGORIES_MAP";
-
-	public static final String SOCIAL_ACTIVITY_SETTINGS_MAP = "SOCIAL_ACTIVITY_SETTINGS_MAP";
 
 	public static final String SOFTWARE_CATALOG_FRAMEWORK_VERSION = "SOFTWARE_CATALOG_FRAMEWORK_VERSION";
 

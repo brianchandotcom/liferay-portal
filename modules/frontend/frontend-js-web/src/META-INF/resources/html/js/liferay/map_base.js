@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-map-base',
 	function(A) {
-		var AArray = A.Array;
-
 		var Lang = A.Lang;
 
 		var STR_CONTROLS = 'controls';
@@ -37,14 +35,16 @@ AUI.add(
 
 						var nativeFeatures = instance._addData(data);
 
-						var features = nativeFeatures.map(instance._wrapNativeFeature, instance);
+						if (nativeFeatures.length) {
+							var features = nativeFeatures.map(instance._wrapNativeFeature, instance);
 
-						instance.fire(
-							'featuresAdded',
-							{
-								features: features
-							}
-						);
+							instance.fire(
+								'featuresAdded',
+								{
+									features: features
+								}
+							);
+						}
 					},
 
 					_onFeatureClick: function(event) {

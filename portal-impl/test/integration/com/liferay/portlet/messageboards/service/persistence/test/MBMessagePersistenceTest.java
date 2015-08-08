@@ -492,10 +492,10 @@ public class MBMessagePersistenceTest {
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "categoryId", true,
 			"threadId", true, "rootMessageId", true, "parentMessageId", true,
-			"subject", true, "body", true, "format", true, "anonymous", true,
-			"priority", true, "allowPingbacks", true, "answer", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"subject", true, "format", true, "anonymous", true, "priority",
+			true, "allowPingbacks", true, "answer", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test

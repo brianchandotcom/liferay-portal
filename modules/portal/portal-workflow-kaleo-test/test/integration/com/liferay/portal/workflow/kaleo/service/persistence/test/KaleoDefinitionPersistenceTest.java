@@ -256,8 +256,7 @@ public class KaleoDefinitionPersistenceTest {
 			"kaleoDefinitionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "title", true, "description",
-			true, "content", true, "version", true, "active", true,
-			"startKaleoNodeId", true);
+			true, "version", true, "active", true, "startKaleoNodeId", true);
 	}
 
 	@Test

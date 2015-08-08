@@ -16,30 +16,19 @@ package com.liferay.application.list;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalService;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.WebKeys;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.ControlPanelEntry;
-import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowState;
-import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -67,33 +56,8 @@ public abstract class BaseControlPanelEntryPanelApp implements PanelApp {
 	public PortletURL getPortletURL(HttpServletRequest request)
 		throws PortalException {
 
-		try {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			Group controlPanelGroup = GroupLocalServiceUtil.getGroup(
-				themeDisplay.getCompanyId(), GroupConstants.CONTROL_PANEL);
-
-			Layout controlPanelLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-				controlPanelGroup.getGroupId(), true,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-			VirtualLayout virtualLayout = new VirtualLayout(
-				controlPanelLayout, themeDisplay.getScopeGroup());
-
-			request.setAttribute(WebKeys.LAYOUT, virtualLayout);
-
-			LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
-				request, getPortletId(), virtualLayout.getPlid(),
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setWindowState(WindowState.MAXIMIZED);
-
-			return portletURL;
-		}
-		catch (WindowStateException wse) {
-			throw new PortalException(wse);
-		}
+		return PortalUtil.getControlPanelPortletURL(
+			request, getPortletId(), 0, PortletRequest.RENDER_PHASE);
 	}
 
 	@Override

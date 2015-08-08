@@ -984,10 +984,6 @@
 		<priority value="WARN" />
 	</category>
 
-	<category name="com.liferay.portlet.messageboards.pop.MessageListenerImpl">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay.portlet.messageboards.service.impl.MBCategoryLocalServiceImpl">
 		<priority value="ERROR" />
 	</category>

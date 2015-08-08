@@ -174,6 +174,11 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _fileEntry.getLastPublishDate();
+	}
+
+	@Override
 	public FileVersion getLatestFileVersion() throws PortalException {
 		return _fileEntry.getLatestFileVersion();
 	}
@@ -375,8 +380,8 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 	}
 
 	@Override
-	public void setCreateDate(Date date) {
-		_fileEntry.setCreateDate(date);
+	public void setCreateDate(Date createDate) {
+		_fileEntry.setCreateDate(createDate);
 	}
 
 	@Override
@@ -385,8 +390,13 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 	}
 
 	@Override
-	public void setModifiedDate(Date date) {
-		_fileEntry.setModifiedDate(date);
+	public void setLastPublishDate(Date lastPublishDate) {
+		_fileEntry.setLastPublishDate(lastPublishDate);
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_fileEntry.setModifiedDate(modifiedDate);
 	}
 
 	@Override

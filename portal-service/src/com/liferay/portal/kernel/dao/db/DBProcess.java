@@ -36,4 +36,8 @@ public interface DBProcess {
 	public void runSQLTemplate(String path, boolean failOnError)
 		throws IOException, NamingException, SQLException;
 
+	public void runSQLTemplateString(
+			String template, boolean evaluate, boolean failOnError)
+		throws IOException, NamingException, SQLException;
+
 }

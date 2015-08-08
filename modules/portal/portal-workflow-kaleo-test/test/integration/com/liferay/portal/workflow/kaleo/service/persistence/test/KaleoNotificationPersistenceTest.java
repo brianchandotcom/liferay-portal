@@ -254,8 +254,8 @@ public class KaleoNotificationPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "kaleoClassName", true, "kaleoClassPK", true,
 			"kaleoDefinitionId", true, "kaleoNodeName", true, "name", true,
-			"description", true, "executionType", true, "template", true,
-			"templateLanguage", true, "notificationTypes", true);
+			"description", true, "executionType", true, "templateLanguage",
+			true, "notificationTypes", true);
 	}
 
 	@Test

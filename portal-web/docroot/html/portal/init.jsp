@@ -39,7 +39,7 @@ page import="com.liferay.portal.struts.PortletRequestProcessor" %><%@
 page import="com.liferay.portal.util.PortletCategoryUtil" %><%@
 page import="com.liferay.portal.util.TermsOfUseContentProvider" %><%@
 page import="com.liferay.portal.util.TermsOfUseContentProviderRegistryUtil" %><%@
-page import="com.liferay.portlet.admin.util.PortalAdministrationApplicationType" %><%@
+page import="com.liferay.portlet.admin.util.PortalProductMenuApplicationType" %><%@
 page import="com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler" %><%@
 page import="com.liferay.portlet.portletconfiguration.util.PortletConfigurationApplicationType" %>
 

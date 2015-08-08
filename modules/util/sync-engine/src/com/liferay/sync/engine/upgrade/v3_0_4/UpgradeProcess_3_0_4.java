@@ -14,8 +14,8 @@
 
 package com.liferay.sync.engine.upgrade.v3_0_4;
 
-import com.liferay.sync.engine.service.SyncFileService;
-import com.liferay.sync.engine.service.persistence.SyncFilePersistence;
+import com.liferay.sync.engine.service.SyncAccountService;
+import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
 import com.liferay.sync.engine.upgrade.UpgradeProcess;
 
 /**
@@ -31,20 +31,20 @@ public class UpgradeProcess_3_0_4 extends UpgradeProcess {
 
 	@Override
 	public void upgrade() throws Exception {
-		SyncFilePersistence syncFilePersistence =
-			SyncFileService.getSyncFilePersistence();
+		SyncAccountPersistence syncAccountPersistence =
+			SyncAccountService.getSyncAccountPersistence();
 
-		syncFilePersistence.executeRaw(
-			"ALTER TABLE `SyncAccount` ADD COLUMN oAuthEnabled" +
-				" VARCHAR(16777216) BEFORE password;");
+		syncAccountPersistence.executeRaw(
+			"ALTER TABLE `SyncAccount` ADD COLUMN oAuthEnabled " +
+				"VARCHAR(16777216) BEFORE password;");
 
-		syncFilePersistence.executeRaw(
-			"ALTER TABLE `SyncAccount` ADD COLUMN oAuthConsumerSecret" +
-				" VARCHAR(16777216) BEFORE oAuthEnabled;");
+		syncAccountPersistence.executeRaw(
+			"ALTER TABLE `SyncAccount` ADD COLUMN oAuthConsumerSecret " +
+				"VARCHAR(16777216) BEFORE oAuthEnabled;");
 
-		syncFilePersistence.executeRaw(
-			"ALTER TABLE `SyncAccount` ADD COLUMN oAuthConsumerKey" +
-				" VARCHAR(16777216) BEFORE oAuthConsumerSecret;");
+		syncAccountPersistence.executeRaw(
+			"ALTER TABLE `SyncAccount` ADD COLUMN oAuthConsumerKey " +
+				"VARCHAR(16777216) BEFORE oAuthConsumerSecret;");
 	}
 
 }

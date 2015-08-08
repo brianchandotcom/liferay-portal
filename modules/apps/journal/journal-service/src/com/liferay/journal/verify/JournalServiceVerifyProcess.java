@@ -14,6 +14,8 @@
 
 package com.liferay.journal.verify;
 
+import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
+import com.liferay.dynamic.data.mapping.util.impl.DDMFieldsCounter;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleImage;
@@ -57,8 +59,6 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
-import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFieldsCounter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

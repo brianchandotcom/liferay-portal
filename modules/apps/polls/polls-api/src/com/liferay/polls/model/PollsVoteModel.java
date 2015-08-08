@@ -240,6 +240,7 @@ public interface PollsVoteModel extends BaseModel<PollsVote>, StagedGroupedModel
 	 *
 	 * @return the last publish date of this polls vote
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -247,6 +248,7 @@ public interface PollsVoteModel extends BaseModel<PollsVote>, StagedGroupedModel
 	 *
 	 * @param lastPublishDate the last publish date of this polls vote
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

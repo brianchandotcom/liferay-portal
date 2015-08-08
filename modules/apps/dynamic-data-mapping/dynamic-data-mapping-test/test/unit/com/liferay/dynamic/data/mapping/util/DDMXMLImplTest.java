@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
+import com.liferay.dynamic.data.mapping.util.impl.DDMXMLImpl;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -23,8 +24,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXML;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXMLImpl;
 
 import java.util.List;
 import java.util.Locale;

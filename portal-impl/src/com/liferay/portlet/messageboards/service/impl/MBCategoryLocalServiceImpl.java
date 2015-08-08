@@ -985,7 +985,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 				// Threads
 
 				mbThreadLocalService.moveDependentsToTrash(
-					user.getUserId(), thread.getThreadId(), trashEntryId);
+					thread.getGroupId(), thread.getThreadId(), trashEntryId);
 
 				// Indexer
 
@@ -1061,7 +1061,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 				// Threads
 
 				mbThreadLocalService.restoreDependentsFromTrash(
-					user.getUserId(), thread.getThreadId());
+					thread.getGroupId(), thread.getThreadId());
 
 				// Trash
 

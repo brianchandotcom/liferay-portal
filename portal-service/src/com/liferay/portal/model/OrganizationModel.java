@@ -360,6 +360,7 @@ public interface OrganizationModel extends BaseModel<Organization>, MVCCModel,
 	 *
 	 * @return the last publish date of this organization
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -367,6 +368,7 @@ public interface OrganizationModel extends BaseModel<Organization>, MVCCModel,
 	 *
 	 * @param lastPublishDate the last publish date of this organization
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

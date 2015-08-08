@@ -1337,7 +1337,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/c3p0.jar</file-name>
-				<version>0.9.2.1</version>
+				<version>0.9.5</version>
 				<project-name>C3P0</project-name>
 				<project-url>http://sourceforge.net/projects/c3p0</project-url>
 				<licenses>
@@ -2538,7 +2538,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/mchange-commons-java.jar</file-name>
-				<version>0.2.3.4</version>
+				<version>0.2.9</version>
 				<project-name>C3P0</project-name>
 				<project-url>http://sourceforge.net/projects/c3p0</project-url>
 				<licenses>

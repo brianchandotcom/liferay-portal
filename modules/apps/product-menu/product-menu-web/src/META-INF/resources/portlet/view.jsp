@@ -56,7 +56,7 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 	%>
 
 		<li class="col-xs-4 <%= rootPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>">
-			<a aria-expanded="true" data-toggle="tab" href="#<%= childPanelCategory.getKey() %>">
+			<a aria-expanded="true" data-toggle="tab" href="#<portlet:namespace /><%= childPanelCategory.getKey() %>">
 				<div class="product-menu-tab-icon">
 					<span class="<%= childPanelCategory.getIconCssClass() %> icon-monospaced"></span>
 				</div>
@@ -80,7 +80,7 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 		for (PanelCategory childPanelCategory : panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.ROOT)) {
 		%>
 
-			<div class="fade in tab-pane <%= rootPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>" id="<%= childPanelCategory.getKey() %>">
+			<div class="fade in tab-pane <%= rootPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>" id="<portlet:namespace /><%= childPanelCategory.getKey() %>">
 				<liferay-application-list:panel-content panelCategory="<%= childPanelCategory %>" />
 			</div>
 
@@ -103,6 +103,34 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 			<h4 class="user-heading">
 				<%= HtmlUtil.escape(user.getFullName()) %>
 			</h4>
+
+			<small class="user-subheading">
+				<ul class="nav nav-pills">
+
+					<%
+					List<Group> mySiteGroups = user.getMySiteGroups(new String[] {User.class.getName()}, false, QueryUtil.ALL_POS);
+
+					for (Group mySiteGroup : mySiteGroups) {
+					%>
+
+						<c:if test="<%= mySiteGroup.getPublicLayoutsPageCount() > 0 %>">
+							<li>
+								<aui:a href="<%= mySiteGroup.getDisplayURL(themeDisplay, false) %>" label="profile" />
+							</li>
+						</c:if>
+
+						<c:if test="<%= mySiteGroup.getPrivateLayoutsPageCount() > 0 %>">
+							<li>
+								<aui:a href="<%= mySiteGroup.getDisplayURL(themeDisplay, true) %>" label="dashboard" />
+							</li>
+						</c:if>
+
+					<%
+					}
+					%>
+
+				</ul>
+			</small>
 		</div>
 
 		<c:if test="<%= themeDisplay.isShowSignOutIcon() %>">
@@ -112,3 +140,31 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 		</c:if>
 	</div>
 </div>
+
+<aui:script use="liferay-store">
+	var sidenavContainer = $('#sidenavContainerId');
+
+	sidenavContainer.sideNavigation(
+		{
+			gutter: '0',
+			toggler: '#sidenavToggleId',
+			type: 'fixed-push',
+			typeMobile: 'fixed',
+			width: '320px'
+		}
+	);
+
+	sidenavContainer.on(
+		'closed.lexicon.sidenav',
+		function(event) {
+			Liferay.Store('liferay_product_menu_state', 'closed');
+		}
+	);
+
+	sidenavContainer.on(
+		'open.lexicon.sidenav',
+		function(event) {
+			Liferay.Store('liferay_product_menu_state', 'open');
+		}
+	);
+</aui:script>

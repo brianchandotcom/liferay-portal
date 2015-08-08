@@ -41,9 +41,7 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 }
 %>
 
-<portlet:actionURL var="editPluginURL">
-	<portlet:param name="struts_action" value="/plugins_admin/edit_plugin" />
-</portlet:actionURL>
+<portlet:actionURL name="/plugins_admin/edit_plugin" var="editPluginURL" />
 
 <aui:form action="<%= editPluginURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -127,15 +125,17 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 									<liferay-ui:search-container-column-text
 										align="right"
 									>
-										<liferay-portlet:renderURL portletName="<%= PortletKeys.ROLES_ADMIN %>" var="editURL">
-											<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
-											<portlet:param name="<%= Constants.CMD %>" value="edit" />
-											<portlet:param name="tabs1" value="roles" />
-											<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
-											<portlet:param name="portletResource" value="<%= portlet.getPortletId() %>" />
-										</liferay-portlet:renderURL>
 
-										<liferay-ui:icon iconCssClass="icon-edit" label="<%= true %>" message="change" url="<%= editURL %>" />
+										<%
+										PortletURL editURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.MANAGE);
+
+										editURL.setParameter(Constants.CMD, "edit");
+										editURL.setParameter("tabs1", "roles");
+										editURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+										editURL.setParameter("portletResource", String.valueOf(portlet.getPortletId()));
+										%>
+
+										<liferay-ui:icon iconCssClass="icon-edit" label="<%= true %>" message="change" url="<%= editURL.toString() %>" />
 									</liferay-ui:search-container-column-text>
 								</liferay-ui:search-container-row>
 
@@ -171,15 +171,17 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 									<liferay-ui:search-container-column-text
 										align="right"
 									>
-										<liferay-portlet:renderURL portletName="<%= PortletKeys.ROLES_ADMIN %>" var="editURL">
-											<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
-											<portlet:param name="<%= Constants.CMD %>" value="edit" />
-											<portlet:param name="tabs1" value="roles" />
-											<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
-											<portlet:param name="portletResource" value="<%= portlet.getPortletId() %>" />
-										</liferay-portlet:renderURL>
 
-										<liferay-ui:icon iconCssClass="icon-edit" label="<%= true %>" message="change" url="<%= editURL %>" />
+										<%
+										PortletURL editURL = PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.MANAGE);
+
+										editURL.setParameter(Constants.CMD, "edit");
+										editURL.setParameter("tabs1", "roles");
+										editURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+										editURL.setParameter("portletResource", String.valueOf(portlet.getPortletId()));
+										%>
+
+										<liferay-ui:icon iconCssClass="icon-edit" label="<%= true %>" message="change" url="<%= editURL.toString() %>" />
 									</liferay-ui:search-container-column-text>
 								</liferay-ui:search-container-row>
 

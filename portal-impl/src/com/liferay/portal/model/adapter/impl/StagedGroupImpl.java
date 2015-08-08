@@ -43,6 +43,11 @@ public class StagedGroupImpl extends GroupImpl implements StagedGroup {
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return null;
+	}
+
+	@Override
 	public Class<?> getModelClass() {
 		return StagedGroup.class;
 	}
@@ -68,12 +73,16 @@ public class StagedGroupImpl extends GroupImpl implements StagedGroup {
 	}
 
 	@Override
-	public void setCreateDate(Date date) {
+	public void setCreateDate(Date createDate) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void setModifiedDate(Date date) {
+	public void setLastPublishDate(Date lastPublishDate) {
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
 		throw new UnsupportedOperationException();
 	}
 

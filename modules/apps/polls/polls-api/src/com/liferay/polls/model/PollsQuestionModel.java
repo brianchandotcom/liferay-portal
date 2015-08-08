@@ -431,6 +431,7 @@ public interface PollsQuestionModel extends BaseModel<PollsQuestion>,
 	 *
 	 * @return the last publish date of this polls question
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -438,6 +439,7 @@ public interface PollsQuestionModel extends BaseModel<PollsQuestion>,
 	 *
 	 * @param lastPublishDate the last publish date of this polls question
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

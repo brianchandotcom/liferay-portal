@@ -17,11 +17,12 @@ package com.liferay.portlet.rolesadmin.search;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -82,6 +83,9 @@ public class RoleSearch extends SearchContainer<Role> {
 				PortletPreferencesFactoryUtil.getPortalPreferences(
 					portletRequest);
 
+			String portletId = PortletProviderUtil.getPortletId(
+				Role.class.getName(), PortletProvider.Action.BROWSE);
+
 			String orderByCol = ParamUtil.getString(
 				portletRequest, "orderByCol");
 			String orderByType = ParamUtil.getString(
@@ -91,16 +95,15 @@ public class RoleSearch extends SearchContainer<Role> {
 				Validator.isNotNull(orderByType)) {
 
 				preferences.setValue(
-					PortletKeys.ROLES_ADMIN, "roles-order-by-col", orderByCol);
+					portletId, "roles-order-by-col", orderByCol);
 				preferences.setValue(
-					PortletKeys.ROLES_ADMIN, "roles-order-by-type",
-					orderByType);
+					portletId, "roles-order-by-type", orderByType);
 			}
 			else {
 				orderByCol = preferences.getValue(
-					PortletKeys.ROLES_ADMIN, "roles-order-by-col", "title");
+					portletId, "roles-order-by-col", "title");
 				orderByType = preferences.getValue(
-					PortletKeys.ROLES_ADMIN, "roles-order-by-type", "asc");
+					portletId, "roles-order-by-type", "asc");
 			}
 
 			OrderByComparator<Role> orderByComparator =

@@ -14,26 +14,26 @@
 
 package com.liferay.document.library.layout.set.prototype.action;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.util.DefaultLayoutSetPrototypesUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -96,7 +96,7 @@ public class AddLayoutSetPrototypeAction {
 			layoutSet, "documents-and-media", "/documents", "1_column");
 
 		String portletId = DefaultLayoutPrototypesUtil.addPortletId(
-			layout, PortletKeys.DOCUMENT_LIBRARY, "column-1");
+			layout, DLPortletKeys.DOCUMENT_LIBRARY, "column-1");
 
 		Map<String, String> preferences = new HashMap<>();
 
@@ -120,8 +120,15 @@ public class AddLayoutSetPrototypeAction {
 		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY + ")"
+	)
+	protected void setPortlet(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")

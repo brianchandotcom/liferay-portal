@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root>
+	<template>
+		<template-key>documentlibrary-carousel-ftl</template-key>
+		<name>portlet-display-template-name-carousel</name>
+		<description>portlet-display-template-description-carousel</description>
+		<language>ftl</language>
+		<script-file>com/liferay/document/library/web/template/dependencies/portlet_display_template_carousel.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+</root>

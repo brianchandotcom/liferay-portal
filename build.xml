@@ -887,6 +887,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			ant -f modules/apps/build.xml clean
 			ant -f modules/core/build.xml clean
 			ant -f modules/portal/build.xml clean
+			ant -f modules/portal-cache/build.xml clean
 			ant -f modules/portal-security/build.xml clean
 			ant -f modules/portal-store/build.xml clean
 			ant -f modules/sdk/build.xml clean
@@ -900,6 +901,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			ant -f modules/apps/build.xml compile-test
 			ant -f modules/core/build.xml compile-test
 			ant -f modules/portal/build.xml compile-test
+			ant -f modules/portal-cache/build.xml compile-test
 			ant -f modules/portal-security/build.xml compile-test
 			ant -f modules/portal-store/build.xml compile-test
 			ant -f modules/sdk/build.xml compile-test

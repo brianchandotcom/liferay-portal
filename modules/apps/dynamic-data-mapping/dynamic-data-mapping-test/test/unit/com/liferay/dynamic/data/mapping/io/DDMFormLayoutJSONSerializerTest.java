@@ -15,9 +15,8 @@
 package com.liferay.dynamic.data.mapping.io;
 
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
+import com.liferay.dynamic.data.mapping.io.impl.DDMFormLayoutJSONSerializerImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormLayoutJSONSerializerImpl;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormLayoutJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;

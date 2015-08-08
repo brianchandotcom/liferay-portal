@@ -58,7 +58,9 @@ public class UpgradeProcess_6_1_0 extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgrade(UpgradeSchema.class);
+
 		upgrade(UpgradeUserName.class);
+
 		upgrade(UpgradeAdminPortlets.class);
 		upgrade(UpgradeBlogs.class);
 		upgrade(UpgradeCamelCasePortletPreferences.class);
@@ -81,6 +83,7 @@ public class UpgradeProcess_6_1_0 extends UpgradeProcess {
 		upgrade(UpgradeSubscription.class);
 		upgrade(UpgradeVirtualHost.class);
 		upgrade(UpgradeWorkflow.class);
+
 		upgrade(UpgradeAsset.class);
 		upgrade(UpgradeAssetPublisher.class);
 	}

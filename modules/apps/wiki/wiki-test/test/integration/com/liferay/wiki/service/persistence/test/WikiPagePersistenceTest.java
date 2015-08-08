@@ -576,10 +576,10 @@ public class WikiPagePersistenceTest {
 			"pageId", true, "resourcePrimKey", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "nodeId", true, "title", true,
-			"version", true, "minorEdit", true, "content", true, "summary",
-			true, "format", true, "head", true, "parentTitle", true,
-			"redirectTitle", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			"version", true, "minorEdit", true, "summary", true, "format",
+			true, "head", true, "parentTitle", true, "redirectTitle", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test

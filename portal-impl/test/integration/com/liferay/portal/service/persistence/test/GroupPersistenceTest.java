@@ -380,10 +380,9 @@ public class GroupPersistenceTest {
 			"creatorUserId", true, "classNameId", true, "classPK", true,
 			"parentGroupId", true, "liveGroupId", true, "treePath", true,
 			"groupKey", true, "name", true, "description", true, "type", true,
-			"typeSettings", true, "manualMembership", true,
-			"membershipRestriction", true, "friendlyURL", true, "site", true,
-			"remoteStagingGroupCount", true, "inheritContent", true, "active",
-			true);
+			"manualMembership", true, "membershipRestriction", true,
+			"friendlyURL", true, "site", true, "remoteStagingGroupCount", true,
+			"inheritContent", true, "active", true);
 	}
 
 	@Test

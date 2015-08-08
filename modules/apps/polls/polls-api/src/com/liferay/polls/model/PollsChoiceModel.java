@@ -347,6 +347,7 @@ public interface PollsChoiceModel extends BaseModel<PollsChoice>, LocalizedModel
 	 *
 	 * @return the last publish date of this polls choice
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -354,6 +355,7 @@ public interface PollsChoiceModel extends BaseModel<PollsChoice>, LocalizedModel
 	 *
 	 * @param lastPublishDate the last publish date of this polls choice
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

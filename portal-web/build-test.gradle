@@ -8,7 +8,7 @@ buildscript {
 	}
 
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "latest.release"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "1.0.5"
 	}
 }
 
@@ -53,7 +53,7 @@ poshiRunner {
 		poshiProperty "test.skip.tear.down", project.properties["testSkipTearDown"]
 	}
 
-	version = "1.0.9"
+	version = "1.0.11"
 }
 
 repositories {
@@ -62,4 +62,8 @@ repositories {
 	maven {
 		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
 	}
+}
+
+runPoshi {
+	jvmArgs "-Dfile.encoding=UTF-8"
 }

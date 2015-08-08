@@ -17,7 +17,6 @@ package com.liferay.portal.theme;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -47,7 +46,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.admin.util.PortalAdministrationApplicationType;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 
@@ -59,6 +58,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -903,6 +903,10 @@ public class ThemeDisplay
 		return _urlHome;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String getURLLayoutTemplates() {
 		if (Validator.isNull(_urlLayoutTemplates)) {
 			return getURLPageSettings() + "#layout";
@@ -913,35 +917,30 @@ public class ThemeDisplay
 
 	@JSON(include = false)
 	public PortletURL getURLMyAccount() {
-		try {
-			if (_urlMyAccount == null) {
-				_urlMyAccount = PortletProviderUtil.getPortletURL(
-					getRequest(),
-					PortalAdministrationApplicationType.SiteAdmin.CLASS_NAME,
-					PortletProvider.Action.VIEW);
-			}
+		if (_urlMyAccount == null) {
+			_urlMyAccount = PortalUtil.getControlPanelPortletURL(
+				getRequest(), PortletKeys.MY_ACCOUNT, 0,
+				PortletRequest.RENDER_PHASE);
+		}
 
-			return _urlMyAccount;
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
+		return _urlMyAccount;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@JSON(include = false)
 	public PortletURL getURLPageSettings() {
-		try {
-			if (_urlPageSettings == null) {
-				_urlPageSettings = PortletProviderUtil.getPortletURL(
-					getRequest(), Layout.class.getName(),
-					PortletProvider.Action.EDIT);
-			}
+		if (_urlPageSettings == null) {
+			String portletId = PortletProviderUtil.getPortletId(
+				Layout.class.getName(), PortletProvider.Action.EDIT);
 
-			return _urlPageSettings;
+			_urlPageSettings = PortalUtil.getControlPanelPortletURL(
+				getRequest(), portletId, 0, PortletRequest.RENDER_PHASE);
 		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
+
+		return _urlPageSettings;
 	}
 
 	public String getURLPortal() {
@@ -967,6 +966,12 @@ public class ThemeDisplay
 
 	@JSON(include = false)
 	public PortletURL getURLUpdateManager() {
+		if (_urlUpdateManager == null) {
+			_urlUpdateManager = PortalUtil.getControlPanelPortletURL(
+				getRequest(), PortletKeys.MARKETPLACE_STORE, 0,
+				PortletRequest.RENDER_PHASE);
+		}
+
 		return _urlUpdateManager;
 	}
 
@@ -1785,6 +1790,10 @@ public class ThemeDisplay
 		_urlSiteAdministration = urlSiteAdministration;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setURLUpdateManager(PortletURL urlUpdateManager) {
 		_urlUpdateManager = urlUpdateManager;
 	}

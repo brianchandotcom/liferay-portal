@@ -122,12 +122,14 @@
 
 			var length = data.length;
 
-			var lastIndex = instance._lexer.getLastIndex();
+			var lastIndex = length;
 
 			if (token) {
-				var tokenItem = token[1] || token[3];
+				lastIndex = instance._lexer.getLastIndex();
 
 				length = lastIndex;
+
+				var tokenItem = token[1] || token[3];
 
 				if (instance._isValidTag(tokenItem)) {
 					length = token.index;
@@ -172,7 +174,7 @@
 				}
 			}
 
-			if (pos >= 0 && instance._isValidTag(tagName)) {
+			if (pos >= 0) {
 				var tokenTagEnd = Parser.TOKEN_TAG_END;
 
 				for (var i = stack.length - 1; i >= pos; i--) {

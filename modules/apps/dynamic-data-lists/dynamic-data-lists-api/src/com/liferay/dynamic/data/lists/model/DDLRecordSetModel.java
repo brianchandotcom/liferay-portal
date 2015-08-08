@@ -468,6 +468,22 @@ public interface DDLRecordSetModel extends BaseModel<DDLRecordSet>,
 	 */
 	public void setScope(int scope);
 
+	/**
+	 * Returns the last publish date of this d d l record set.
+	 *
+	 * @return the last publish date of this d d l record set
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this d d l record set.
+	 *
+	 * @param lastPublishDate the last publish date of this d d l record set
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

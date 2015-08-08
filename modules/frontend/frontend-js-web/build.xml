@@ -4,7 +4,8 @@
 <project>
 	<property name="alloy.bootstrap.version" value="3.2.0-2" />
 	<property name="alloy.version" value="3.0.1" />
-	<property name="lexicon.version" value="0.1.8" />
+	<property name="jquery.plugins.form.version" value="3.51" />
+	<property name="lexicon.version" value="0.1.9" />
 	<property name="third.party.dir" value="../../../portal-web/third-party" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
@@ -193,6 +194,31 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="build-jquery-plugins-form">
+		<sequential>
+			<if>
+				<not>
+					<available file="src/META-INF/resources/html/js/jquery/form.js" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="src/META-INF/resources/html/js/jquery/form.js"
+						src="https://raw.githubusercontent.com/malsup/form/${jquery.plugins.form.version}/jquery.form.js"
+					/>
+
+					<replace file="src/META-INF/resources/html/js/jquery/form.js">
+						<replacetoken><![CDATA[typeof define === 'function']]></replacetoken>
+						<replacevalue><![CDATA[false && typeof define === 'function']]></replacevalue>
+					</replace>
+
+					<loadfile property="form.js.content" srcFile="src/META-INF/resources/html/js/jquery/form.js" />
+
+					<echo file="src/META-INF/resources/html/js/jquery/form.js"><![CDATA[;(function(jQuery){]]>${line.separator}${form.js.content}<![CDATA[})(AUI.$);]]></echo>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="build-lexicon">
 		<sequential>
 			<path id="lexicon.zip.path">
@@ -273,6 +299,10 @@
 		<build-alloy-bootstrap />
 	</target>
 
+	<target name="build-jquery-plugins-form">
+		<build-jquery-plugins-form />
+	</target>
+
 	<target name="build-lexicon">
 		<build-lexicon />
 	</target>
@@ -285,6 +315,8 @@
 		<build-alloy-bootstrap />
 
 		<build-alloy />
+
+		<build-jquery-plugins-form />
 
 		<build-lexicon />
 

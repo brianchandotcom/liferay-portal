@@ -88,7 +88,6 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 					document.get(Field.CLASS_NAME_ID));
 
 				className = _portal.getClassName(classNameId);
-
 				classPK = document.get(Field.CLASS_PK);
 			}
 

@@ -361,10 +361,10 @@ public class LayoutRevisionPersistenceTest {
 			"layoutBranchId", true, "parentLayoutRevisionId", true, "head",
 			true, "major", true, "plid", true, "privateLayout", true, "name",
 			true, "title", true, "description", true, "keywords", true,
-			"robots", true, "typeSettings", true, "iconImageId", true,
-			"themeId", true, "colorSchemeId", true, "wapThemeId", true,
-			"wapColorSchemeId", true, "css", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			"robots", true, "iconImageId", true, "themeId", true,
+			"colorSchemeId", true, "wapThemeId", true, "wapColorSchemeId",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test

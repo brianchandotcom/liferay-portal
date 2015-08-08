@@ -17,6 +17,7 @@ package com.liferay.mobile.device.rules.lar;
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PortalUtil;
@@ -45,8 +46,6 @@ import com.liferay.portlet.mobiledevicerules.service.permission.MDRPermission;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -219,8 +218,9 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 		ruleGroupInstancesExportActionableDynamicQuery.performCount();
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

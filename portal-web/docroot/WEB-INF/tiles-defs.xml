@@ -288,21 +288,6 @@
 		<put name="portlet_content" value="/portlet/our_activities/view.jsp" />
 	</definition>
 
-	<!-- Plugins Admin -->
-
-	<definition name="portlet.plugins_admin" extends="portlet" />
-
-	<definition name="portlet.plugins_admin.edit_plugin" extends="portlet.plugins_admin">
-		<put name="portlet_content" value="/portlet/plugins_admin/edit_plugin.jsp" />
-	</definition>
-
-	<definition name="portlet.plugins_admin.error" extends="portlet.plugins_admin">
-		<put name="portlet_content" value="/portlet/plugins_admin/error.jsp" />
-	</definition>
-
-	<definition name="portlet.plugins_admin.view" extends="portlet.plugins_admin">
-		<put name="portlet_content" value="/portlet/plugins_admin/view.jsp" />
-	</definition>
 
 	<!-- Portal Settings -->
 
@@ -428,18 +413,6 @@
 
 	<definition name="portlet.sites_directory.view" extends="portlet.sites_directory">
 		<put name="portlet_content" value="/portlet/sites_directory/view.jsp" />
-	</definition>
-
-	<!-- Social Activity -->
-
-	<definition name="portlet.social_activity" extends="portlet" />
-
-	<definition name="portlet.social_activity.error" extends="portlet.social_activity">
-		<put name="portlet_content" value="/portlet/social_activity/error.jsp" />
-	</definition>
-
-	<definition name="portlet.social_activity.view" extends="portlet.social_activity">
-		<put name="portlet_content" value="/portlet/social_activity/view.jsp" />
 	</definition>
 
 	<!-- Software Catalog -->

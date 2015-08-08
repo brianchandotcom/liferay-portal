@@ -19,7 +19,7 @@
 <%
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
-DDMTemplate template = (DDMTemplate)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE);
+DDMTemplate template = (DDMTemplate)request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE);
 
 long templateId = BeanParamUtil.getLong(template, request, "templateId");
 

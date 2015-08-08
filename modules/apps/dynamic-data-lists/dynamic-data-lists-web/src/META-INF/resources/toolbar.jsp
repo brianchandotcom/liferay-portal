@@ -48,7 +48,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 			function() {
 				Liferay.Util.openDDMPortlet(
 					{
-						basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+						basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 						dialog: {
 							destroyOnHide: true
 						},

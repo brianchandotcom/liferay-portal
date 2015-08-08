@@ -43,7 +43,7 @@ public class BlogsPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return BlogsPortletKeys.BLOGS;
+		return BlogsPortletKeys.BLOGS_ADMIN;
 	}
 
 	@Reference(unbind = "-")

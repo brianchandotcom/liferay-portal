@@ -296,6 +296,7 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	 *
 	 * @return the last publish date of this document library file shortcut
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -303,6 +304,7 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	 *
 	 * @param lastPublishDate the last publish date of this document library file shortcut
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

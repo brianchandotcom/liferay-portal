@@ -1,0 +1,5 @@
+<definition>
+	<command name="validateTestCaseFile">
+		<execute macro="ValidateTestCaseFile#validateTestCaseFile" />
+	</command>
+</definition>

@@ -2443,6 +2443,7 @@
 		<column name="groupId" type="long" />
 		<column name="name" type="String" accessor="true" />
 		<column name="description" type="String" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Relationships -->
 

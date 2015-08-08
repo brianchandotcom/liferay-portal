@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.extender.internal.context;
 
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -26,8 +27,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
-
-import javax.servlet.ServletContext;
 
 import javax.sql.DataSource;
 
@@ -98,6 +97,11 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		InfrastructureUtil infrastructureUtil) {
 	}
 
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
 	@Reference(target = "(original.bean=true)")
 	protected void setSaxReaderUtil(SAXReaderUtil saxReaderUtil) {
 	}
@@ -107,10 +111,6 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		ServiceConfigurator serviceConfigurator) {
 
 		_serviceConfigurator = serviceConfigurator;
-	}
-
-	@Reference(target = "(original.bean=true)")
-	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	@Override

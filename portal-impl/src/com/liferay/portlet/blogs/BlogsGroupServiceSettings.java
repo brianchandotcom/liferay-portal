@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portlet.blogs.util.BlogsConstants;
+import com.liferay.portlet.blogs.constants.BlogsConstants;
 
 import java.util.Map;
 

@@ -30,7 +30,7 @@ PortletURL portletURL = panelApp.getPortletURL(request);
 
 	<li
 		aria-selected="<%= ppid.equals(panelApp.getPortletId()) ? "true" : StringPool.BLANK %>"
-		class="<%= ppid.equals(panelApp.getPortletId()) ? "selected-portlet" : StringPool.BLANK %>"
+		class="<%= ppid.equals(panelApp.getPortletId()) ? "active" : StringPool.BLANK %>"
 		role="presentation"
 	>
 

@@ -847,28 +847,21 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 		<sequential>
 			<if>
-				<not>
-					<available file="${sdk.dir}/tools/gradle" />
-				</not>
-				<then>
-					<setup-sdk />
-				</then>
-			</if>
-
-			<if>
 				<os family="unix" />
 				<then>
 					<property name="gradlew.suffix" value="" />
 
-					<chmod file="${sdk.dir}/tools/gradle/gradlew${gradlew.suffix}" perm="a+x" />
+					<chmod file="${project.dir}/gradlew${gradlew.suffix}" perm="a+x" />
 				</then>
 				<else>
 					<property name="gradlew.suffix" value=".bat" />
 				</else>
 			</if>
 
-			<exec dir="@{dir}" executable="${sdk.dir}/tools/gradle/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
+			<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 				<args />
+				<arg value="--project-cache-dir=${project.dir}/.gradle" />
+				<arg value="--stacktrace" />
 				<arg value="-DappServerParentDir=${app.server.parent.dir}" />
 				<arg value="-DliferayHome=${liferay.home}" />
 				<arg value="@{task}" />
@@ -1008,6 +1001,16 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="remake-dir">
+		<attribute name="dir" />
+
+		<sequential>
+			<delete dir="@{dir}" />
+
+			<mkdir dir="@{dir}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="report-test-coverage">
 		<attribute name="test.type" />
 
@@ -1042,16 +1045,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					</if>
 				</then>
 			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="remake-dir">
-		<attribute name="dir" />
-
-		<sequential>
-			<delete dir="@{dir}" />
-
-			<mkdir dir="@{dir}" />
 		</sequential>
 	</macrodef>
 
@@ -1110,149 +1103,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 						/>
 					</unzip>
 
-					<propertyselector
-						casesensitive="false"
-						delimiter=","
-						distinct="true"
-						match="app\.(server\.(glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere).+)\.dir"
-						override="true"
-						property="app.server.dir.property.list"
-						select="\1"
-					/>
-
-					<sortlist
-						delimiter=","
-						override="true"
-						property="app.server.dir.property.list"
-						value="${app.server.dir.property.list}"
-					/>
-
-					<for list="${app.server.dir.property.list}" param="app.server.dir.property">
-						<sequential>
-							<propertycopy
-								from="app.@{app.server.dir.property}.dir"
-								name="temp.app.server.dir"
-							/>
-
-							<echo
-								append="true"
-								file="${sdk.dir}/build.${env.COMPUTERNAME}.properties"
-							>
-								app.@{app.server.dir.property}.dir=${temp.app.server.dir}
-							</echo>
-
-							<var name="temp.app.server.dir" unset="true" />
-						</sequential>
-					</for>
-
-					<propertyselector
-						casesensitive="false"
-						delimiter="," match="ivy.pom.(.+)"
-						property="ivy.pom.property.list"
-						select="\1"
-					/>
-
-					<sortlist
-						delimiter=","
-						override="true"
-						property="ivy.pom.property.list"
-						value="${ivy.pom.property.list}"
-					/>
-
-					<if>
-						<not>
-							<equals arg1="${ivy.pom.property.list}" arg2="$${ivy.pom.property.list}" />
-						</not>
-						<then>
-							<for list="${ivy.pom.property.list}" param="ivy.pom.property">
-								<sequential>
-									<propertycopy
-										from="ivy.pom.@{ivy.pom.property}"
-										name="temp.ivy.pom"
-									/>
-
-									<echo
-										append="true"
-										file="${sdk.dir}/build.${env.COMPUTERNAME}.properties"
-									>
-										ivy.pom.@{ivy.pom.property}=${temp.ivy.pom}
-									</echo>
-
-									<var name="temp.ivy.pom" unset="true" />
-								</sequential>
-							</for>
-						</then>
-					</if>
-
-					<propertyselector
-						casesensitive="false"
-						delimiter="," match="sonatype.(.+)"
-						property="sonatype.property.list"
-						select="\1"
-					/>
-
-					<sortlist
-						delimiter=","
-						override="true"
-						property="sonatype.property.list"
-						value="${sonatype.property.list}"
-					/>
-
-					<if>
-						<not>
-							<equals arg1="${sonatype.property.list}" arg2="$${sonatype.property.list}" />
-						</not>
-						<then>
-							<for list="${sonatype.property.list}" param="sonatype.property">
-								<sequential>
-									<propertycopy
-										from="sonatype.@{sonatype.property}"
-										name="temp.sonatype"
-									/>
-
-									<echo
-										append="true"
-										file="${sdk.dir}/build.${env.COMPUTERNAME}.properties"
-									>
-										sonatype.@{sonatype.property}=${temp.sonatype}
-									</echo>
-
-									<var name="temp.sonatype" unset="true" />
-								</sequential>
-							</for>
-						</then>
-					</if>
-
-					<echo
-						append="true"
-						file="${sdk.dir}/build.${env.COMPUTERNAME}.properties"
-					>
-						app.server.type=${app.server.type}
-						auto.deploy.dir=${liferay.home}/osgi/apps
-						clean.delete.ivy.md5=true
-						clean.delete.lib=true
-						ivy.home=${ivy.home}
-						ivy.log.level=${ivy.log.level}
-						junit.java.integration.gc=${junit.java.integration.gc}
-						junit.java.unit.gc=${junit.java.unit.gc}
-						junit.java.unit.gc.logging=${junit.java.unit.gc.logging}
-						junit.test.excludes=${junit.test.excludes}
-						liferay.home=${liferay.home}
-						lp.portal.project.dir=${project.dir}
-						microsoft.translator.client.id=${microsoft.translator.client.id}
-						microsoft.translator.client.secret=${microsoft.translator.client.secret}
-						module.framework.base.dir=${liferay.home}/osgi
-						sass.compiler.class.name=${sass.compiler.class.name}
-						snapshot.check.enabled=${snapshot.check.enabled}
-						upgrade.table.dir=${upgrade.table.dir}
-						-baselinerepo=${-baselinerepo}
-						-metatype=${-metatype}
-						-plugin=${-plugin}
-						-releaserepo=${-releaserepo}
-					</echo>
-
-					<copy file="${sdk.dir}/build.${env.COMPUTERNAME}.properties" tofile="${sdk.dir}/build.${env.HOST}.properties" />
-					<copy file="${sdk.dir}/build.${env.COMPUTERNAME}.properties" tofile="${sdk.dir}/build.${env.HOSTNAME}.properties" />
+					<update-sdk-properties />
 				</then>
 			</if>
 		</sequential>
@@ -1262,16 +1113,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<attribute name="test.type" />
 
 		<sequential>
-			<ivy:resolve log="${ivy.log.level}">
-				<dependency name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.8.Final" />
-				<dependency name="com.liferay.arquillian.extension" org="com.liferay" rev="1.0.0-SNAPSHOT" />
-				<exclude org="junit" />
-			</ivy:resolve>
-
-			<path id="test-ivy.classpath">
-				<ivy:resources type="bundle,jar,orbit" />
-			</path>
-
 			<var name="junit.classpath" value="${classpath.full}" />
 
 			<if>
@@ -1318,7 +1159,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<pathelement path="test-classes/@{test.type}" />
 				<pathelement path="${junit.classpath}" />
 				<pathelement path="${test.additional.classpath}" />
-				<path refid="test-ivy.classpath" />
 				<fileset dir="${project.dir}/lib/development" includes="*.jar" excludes="jalopy.jar,jetty*.jar,tomcat*.jar" />
 				<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 				<fileset dir="${project.dir}/lib/portal" includes="*.jar" excludes="ant.jar" />
@@ -1454,6 +1294,156 @@ rerun your task.
 					</junit-cmd>
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="update-sdk-properties">
+		<sequential>
+			<propertyselector
+				casesensitive="false"
+				delimiter=","
+				distinct="true"
+				match="app\.(server\.(glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere).+)\.dir"
+				override="true"
+				property="app.server.dir.property.list"
+				select="\1"
+			/>
+
+			<sortlist
+				delimiter=","
+				override="true"
+				property="app.server.dir.property.list"
+				value="${app.server.dir.property.list}"
+			/>
+
+			<delete file="${sdk.dir}/build.${env.COMPUTERNAME}.properties" />
+
+			<for list="${app.server.dir.property.list}" param="app.server.dir.property">
+				<sequential>
+					<propertycopy
+						from="app.@{app.server.dir.property}.dir"
+						name="temp.app.server.dir"
+					/>
+
+					<echo
+						append="true"
+						file="${sdk.dir}/build.${env.COMPUTERNAME}.properties"
+					>
+						app.@{app.server.dir.property}.dir=${temp.app.server.dir}
+					</echo>
+
+					<var name="temp.app.server.dir" unset="true" />
+				</sequential>
+			</for>
+
+			<propertyselector
+				casesensitive="false"
+				delimiter="," match="ivy.pom.(.+)"
+				property="ivy.pom.property.list"
+				select="\1"
+			/>
+
+			<sortlist
+				delimiter=","
+				override="true"
+				property="ivy.pom.property.list"
+				value="${ivy.pom.property.list}"
+			/>
+
+			<if>
+				<not>
+					<equals arg1="${ivy.pom.property.list}" arg2="$${ivy.pom.property.list}" />
+				</not>
+				<then>
+					<for list="${ivy.pom.property.list}" param="ivy.pom.property">
+						<sequential>
+							<propertycopy
+								from="ivy.pom.@{ivy.pom.property}"
+								name="temp.ivy.pom"
+							/>
+
+							<echo
+								append="true"
+								file="${sdk.dir}/build.${env.COMPUTERNAME}.properties"
+							>
+								ivy.pom.@{ivy.pom.property}=${temp.ivy.pom}
+							</echo>
+
+							<var name="temp.ivy.pom" unset="true" />
+						</sequential>
+					</for>
+				</then>
+			</if>
+
+			<propertyselector
+				casesensitive="false"
+				delimiter="," match="sonatype.(.+)"
+				property="sonatype.property.list"
+				select="\1"
+			/>
+
+			<sortlist
+				delimiter=","
+				override="true"
+				property="sonatype.property.list"
+				value="${sonatype.property.list}"
+			/>
+
+			<if>
+				<not>
+					<equals arg1="${sonatype.property.list}" arg2="$${sonatype.property.list}" />
+				</not>
+				<then>
+					<for list="${sonatype.property.list}" param="sonatype.property">
+						<sequential>
+							<propertycopy
+								from="sonatype.@{sonatype.property}"
+								name="temp.sonatype"
+							/>
+
+							<echo
+								append="true"
+								file="${sdk.dir}/build.${env.COMPUTERNAME}.properties"
+							>
+								sonatype.@{sonatype.property}=${temp.sonatype}
+							</echo>
+
+							<var name="temp.sonatype" unset="true" />
+						</sequential>
+					</for>
+				</then>
+			</if>
+
+			<echo
+				append="true"
+				file="${sdk.dir}/build.${env.COMPUTERNAME}.properties"
+			>
+				app.server.type=${app.server.type}
+				auto.deploy.dir=${liferay.home}/osgi/apps
+				clean.delete.ivy.md5=true
+				clean.delete.lib=true
+				ivy.home=${ivy.home}
+				ivy.log.level=${ivy.log.level}
+				junit.java.integration.gc=${junit.java.integration.gc}
+				junit.java.unit.gc=${junit.java.unit.gc}
+				junit.java.unit.gc.logging=${junit.java.unit.gc.logging}
+				junit.test.excludes=${junit.test.excludes}
+				liferay.home=${liferay.home}
+				lp.portal.project.dir=${project.dir}
+				microsoft.translator.client.id=${microsoft.translator.client.id}
+				microsoft.translator.client.secret=${microsoft.translator.client.secret}
+				module.framework.base.dir=${liferay.home}/osgi
+				sass.compiler.class.name=${sass.compiler.class.name}
+				snapshot.check.enabled=${snapshot.check.enabled}
+				upgrade.table.dir=${upgrade.table.dir}
+				-baselinerepo=${-baselinerepo}
+				-metatype=${-metatype}
+				-plugin=${-plugin}
+				-releaserepo=${-releaserepo}
+			</echo>
+
+			<copy file="${sdk.dir}/build.${env.COMPUTERNAME}.properties" tofile="${sdk.dir}/build.${env.HOST}.properties" />
+			<copy file="${sdk.dir}/build.${env.COMPUTERNAME}.properties" tofile="${sdk.dir}/build.${env.HOSTNAME}.properties" />
 		</sequential>
 	</macrodef>
 
@@ -1862,5 +1852,9 @@ rerun your task.
 		<report-test-coverage
 			test.type="unit"
 		/>
+	</target>
+
+	<target name="update-sdk-properties">
+		<update-sdk-properties />
 	</target>
 </project>

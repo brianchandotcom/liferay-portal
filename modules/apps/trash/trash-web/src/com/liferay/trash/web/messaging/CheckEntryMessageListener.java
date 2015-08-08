@@ -16,6 +16,7 @@ package com.liferay.trash.web.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerType;
@@ -23,8 +24,6 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.web.constants.TrashPortletKeys;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -52,12 +51,13 @@ public class CheckEntryMessageListener
 		TrashEntryLocalServiceUtil.checkEntries();
 	}
 
-	@Reference(target = "(javax.portlet.name=" + TrashPortletKeys.TRASH + ")")
-	protected void setPortlet(Portlet portlet) {
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference(target = "(javax.portlet.name=" + TrashPortletKeys.TRASH + ")")
+	protected void setPortlet(Portlet portlet) {
 	}
 
 }

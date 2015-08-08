@@ -420,6 +420,7 @@ public interface JournalFeedModel extends BaseModel<JournalFeed>,
 	 *
 	 * @return the last publish date of this journal feed
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -427,6 +428,7 @@ public interface JournalFeedModel extends BaseModel<JournalFeed>,
 	 *
 	 * @param lastPublishDate the last publish date of this journal feed
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

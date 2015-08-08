@@ -37,8 +37,7 @@ import java.util.Set;
 public class DDMStructureImpl implements DDMStructure {
 
 	public DDMStructureImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure
-			ddmStructure) {
+		com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure) {
 
 		_ddmStructure = ddmStructure;
 	}
@@ -46,7 +45,7 @@ public class DDMStructureImpl implements DDMStructure {
 	@Override
 	public Object clone() {
 		DDMStructureImpl structureImpl = new DDMStructureImpl(
-			(com.liferay.portlet.dynamicdatamapping.model.DDMStructure)
+			(com.liferay.dynamic.data.mapping.model.DDMStructure)
 				_ddmStructure.clone());
 
 		return structureImpl;
@@ -151,6 +150,11 @@ public class DDMStructureImpl implements DDMStructure {
 	@Override
 	public long getGroupId() {
 		return _ddmStructure.getGroupId();
+	}
+
+	@Override
+	public Date getLastPublishDate() {
+		return _ddmStructure.getLastPublishDate();
 	}
 
 	@Override
@@ -279,6 +283,11 @@ public class DDMStructureImpl implements DDMStructure {
 	}
 
 	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_ddmStructure.setLastPublishDate(lastPublishDate);
+	}
+
+	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_ddmStructure.setModifiedDate(modifiedDate);
 	}
@@ -308,7 +317,7 @@ public class DDMStructureImpl implements DDMStructure {
 		_ddmStructure.setUuid(uuid);
 	}
 
-	private final com.liferay.portlet.dynamicdatamapping.model.DDMStructure
+	private final com.liferay.dynamic.data.mapping.model.DDMStructure
 		_ddmStructure;
 
 }

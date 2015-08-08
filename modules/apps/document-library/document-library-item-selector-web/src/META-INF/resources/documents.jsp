@@ -86,4 +86,5 @@ searchContainer.setResults(results);
 	searchContainer="<%= searchContainer %>"
 	showBreadcrumb="<%= true %>"
 	tabName="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
+	uploadURL="<%= dlItemSelectorViewDisplayContext.getUploadURL(request, liferayPortletResponse) %>"
 />

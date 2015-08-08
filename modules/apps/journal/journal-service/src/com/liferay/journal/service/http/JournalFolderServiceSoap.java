@@ -122,15 +122,15 @@ public class JournalFolderServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap[] getDDMStructures(
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureSoap[] getDDMStructures(
 		long[] groupIds, long folderId, int restrictionType)
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> returnValue =
+			java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> returnValue =
 				JournalFolderServiceUtil.getDDMStructures(groupIds, folderId,
 					restrictionType);
 
-			return com.liferay.portlet.dynamicdatamapping.model.DDMStructureSoap.toSoapModels(returnValue);
+			return com.liferay.dynamic.data.mapping.model.DDMStructureSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

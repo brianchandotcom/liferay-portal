@@ -14,195 +14,26 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeLastPublishDate;
 import com.liferay.portal.util.PortletKeys;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author Levente Hudák
  */
-public class UpgradeLastPublishDate extends UpgradeProcess {
+public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgradeAssetCategoriesAdmin();
 		upgradeBlogs();
 		upgradeDocumentLibrary();
-		upgradeDynamicDataMapping();
 		upgradeLayoutsAdmin();
 		upgradeMessageBoards();
 		upgradeMobileDeviceRules();
 		upgradeRatings();
 		upgradeRolesAdmin();
+		upgradeSiteAdmin();
 		upgradeUsersAdmin();
-	}
-
-	protected Date getLayoutSetLastPublishDate(long groupId) throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select settings_ from LayoutSet where groupId = ?");
-
-			ps.setLong(1, groupId);
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				UnicodeProperties settingsProperties = new UnicodeProperties(
-					true);
-
-				settingsProperties.load(rs.getString("settings"));
-
-				String lastPublishDateString = settingsProperties.getProperty(
-					"last-publish-date");
-
-				if (Validator.isNotNull(lastPublishDateString)) {
-					return new Date(GetterUtil.getLong(lastPublishDateString));
-				}
-			}
-
-			return null;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected Date getPortletLastPublishDate(long groupId, String portletId)
-		throws Exception {
-
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select preferences from PortletPreferences where plid = ? " +
-					"and ownerType = ? and ownerId = ? and portletId = ?");
-
-			ps.setLong(1, LayoutConstants.DEFAULT_PLID);
-			ps.setInt(2, PortletKeys.PREFS_OWNER_TYPE_GROUP);
-			ps.setString(3, portletId);
-			ps.setLong(4, groupId);
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				String preferences = rs.getString("preferences");
-
-				if (Validator.isNotNull(preferences)) {
-					int x = preferences.lastIndexOf(
-						"last-publish-date</name><value>");
-					int y = preferences.indexOf("</value>", x);
-
-					String lastPublishDateString = preferences.substring(x, y);
-
-					if (Validator.isNotNull(lastPublishDateString)) {
-						return new Date(
-							GetterUtil.getLong(lastPublishDateString));
-					}
-				}
-			}
-
-			return null;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected List<Long> getStagedGroupIds() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"select groupId from Group_ where typeSettings like " +
-					"'%staged=true%'");
-
-			rs = ps.executeQuery();
-
-			List<Long> stagedGroupIds = new ArrayList<>();
-
-			while (rs.next()) {
-				long stagedGroupId = rs.getLong("groupId");
-
-				stagedGroupIds.add(stagedGroupId);
-			}
-
-			return stagedGroupIds;
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
-		}
-	}
-
-	protected void updateLastPublishDates(String portletId, String tableName)
-		throws Exception {
-
-		List<Long> stagedGroupIds = getStagedGroupIds();
-
-		for (long stagedGroupId : stagedGroupIds) {
-			Date lastPublishDate = getPortletLastPublishDate(
-				stagedGroupId, portletId);
-
-			if (lastPublishDate == null) {
-				lastPublishDate = getLayoutSetLastPublishDate(stagedGroupId);
-			}
-
-			if (lastPublishDate == null) {
-				continue;
-			}
-
-			updateStagedModelLastPublishDates(
-				stagedGroupId, tableName, lastPublishDate);
-		}
-	}
-
-	protected void updateStagedModelLastPublishDates(
-			long groupId, String tableName, Date lastPublishDate)
-		throws Exception {
-
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"update " + tableName + " set lastPublishDate = ? where " +
-					"groupId = ?");
-
-			ps.setDate(1, new java.sql.Date(lastPublishDate.getTime()));
-			ps.setLong(2, groupId);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
 	}
 
 	protected void upgradeAssetCategoriesAdmin() throws Exception {
@@ -228,38 +59,31 @@ public class UpgradeLastPublishDate extends UpgradeProcess {
 	protected void upgradeDocumentLibrary() throws Exception {
 		runSQL("alter table DLFileEntry add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.DOCUMENT_LIBRARY, "DLFileEntry");
+		updateLastPublishDates("20", "DLFileEntry");
 
 		runSQL("alter table DLFileEntryType add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.DOCUMENT_LIBRARY, "DLFileEntryType");
+		updateLastPublishDates("20", "DLFileEntryType");
 
 		runSQL("alter table DLFileShortcut add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.DOCUMENT_LIBRARY, "DLFileShortcut");
+		updateLastPublishDates("20", "DLFileShortcut");
+
+		runSQL("alter table DLFileVersion add lastPublishDate DATE null");
+
+		updateLastPublishDates("20", "DLFileVersion");
 
 		runSQL("alter table DLFolder add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.DOCUMENT_LIBRARY, "DLFolder");
+		updateLastPublishDates("20", "DLFolder");
 
 		runSQL("alter table Repository add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.DOCUMENT_LIBRARY, "Repository");
+		updateLastPublishDates("20", "Repository");
 
 		runSQL("alter table RepositoryEntry add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.DOCUMENT_LIBRARY, "RepositoryEntry");
-	}
-
-	protected void upgradeDynamicDataMapping() throws Exception {
-		runSQL("alter table DDMStructure add lastPublishDate DATE null");
-
-		updateLastPublishDates(
-			PortletKeys.DYNAMIC_DATA_MAPPING, "DDMStructure");
-
-		runSQL("alter table DDMTemplate add lastPublishDate DATE null");
-
-		updateLastPublishDates(PortletKeys.DYNAMIC_DATA_MAPPING, "DDMTemplate");
+		updateLastPublishDates("20", "RepositoryEntry");
 	}
 
 	protected void upgradeLayoutsAdmin() throws Exception {
@@ -275,23 +99,23 @@ public class UpgradeLastPublishDate extends UpgradeProcess {
 	protected void upgradeMessageBoards() throws Exception {
 		runSQL("alter table MBBan add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBBan");
+		updateLastPublishDates("19", "MBBan");
 
 		runSQL("alter table MBCategory add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBCategory");
+		updateLastPublishDates("19", "MBCategory");
 
 		runSQL("alter table MBDiscussion add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBDiscussion");
+		updateLastPublishDates("19", "MBDiscussion");
 
 		runSQL("alter table MBMessage add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBMessage");
+		updateLastPublishDates("19", "MBMessage");
 
 		runSQL("alter table MBThreadFlag add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.MESSAGE_BOARDS, "MBThreadFlag");
+		updateLastPublishDates("19", "MBThreadFlag");
 	}
 
 	protected void upgradeMobileDeviceRules() throws Exception {
@@ -327,6 +151,12 @@ public class UpgradeLastPublishDate extends UpgradeProcess {
 		runSQL("alter table Role_ add lastPublishDate DATE null");
 
 		updateLastPublishDates(PortletKeys.ROLES_ADMIN, "Role_");
+	}
+
+	protected void upgradeSiteAdmin() throws Exception {
+		runSQL("alter table Team add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.SITE_ADMIN, "Team");
 	}
 
 	protected void upgradeUsersAdmin() throws Exception {

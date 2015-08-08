@@ -430,6 +430,22 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	public void setChecksum(String checksum);
 
 	/**
+	 * Returns the last publish date of this document library file version.
+	 *
+	 * @return the last publish date of this document library file version
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this document library file version.
+	 *
+	 * @param lastPublishDate the last publish date of this document library file version
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the status of this document library file version.
 	 *
 	 * @return the status of this document library file version

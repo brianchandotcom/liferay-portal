@@ -138,6 +138,11 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _dlFileShortcut.getLastPublishDate();
+	}
+
+	@Override
 	public Object getModel() {
 		return _dlFileShortcut;
 	}
@@ -218,8 +223,8 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	}
 
 	@Override
-	public void setCreateDate(Date date) {
-		_dlFileShortcut.setCreateDate(date);
+	public void setCreateDate(Date createDate) {
+		_dlFileShortcut.setCreateDate(createDate);
 	}
 
 	@Override
@@ -228,8 +233,13 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	}
 
 	@Override
-	public void setModifiedDate(Date date) {
-		_dlFileShortcut.setModifiedDate(date);
+	public void setLastPublishDate(Date lastPublishDate) {
+		_dlFileShortcut.setLastPublishDate(lastPublishDate);
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_dlFileShortcut.setModifiedDate(modifiedDate);
 	}
 
 	public void setPrimaryKey(long primaryKey) {

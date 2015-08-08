@@ -183,7 +183,7 @@ AUI.add(
 				portletURL.setParameter('portletNamespace', instance.get('portletNamespace'));
 				portletURL.setParameter('readOnly', instance.get('readOnly'));
 				portletURL.setPlid(instance.get('p_l_id'));
-				portletURL.setPortletId('com_liferay_dynamic_data_mapping_web_portlet_DynamicDataMappingPortlet');
+				portletURL.setPortletId('com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet');
 				portletURL.setResourceId('renderStructureField');
 				portletURL.setWindowState('pop_up');
 

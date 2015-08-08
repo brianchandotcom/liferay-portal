@@ -271,8 +271,7 @@ public class KaleoInstancePersistenceTest {
 			"modifiedDate", true, "kaleoDefinitionId", true,
 			"kaleoDefinitionName", true, "kaleoDefinitionVersion", true,
 			"rootKaleoInstanceTokenId", true, "className", true, "classPK",
-			true, "completed", true, "completionDate", true, "workflowContext",
-			true);
+			true, "completed", true, "completionDate", true);
 	}
 
 	@Test

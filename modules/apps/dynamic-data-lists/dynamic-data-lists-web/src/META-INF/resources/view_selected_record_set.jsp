@@ -49,7 +49,7 @@ DDLRecordSet recordSet = ddlDisplayContext.getRecordSet();
 			</liferay-portlet:renderURL>
 
 			<c:if test="<%= ddlDisplayContext.isShowAddDDMTemplateIcon() %>">
-				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="addFormTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.EDIT) %>" var="addFormTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcPath" value="/edit_template.jsp" />
 					<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 					<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
@@ -76,7 +76,7 @@ DDLRecordSet recordSet = ddlDisplayContext.getRecordSet();
 					url="<%= taglibAddFormTemplateURL %>"
 				/>
 
-				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="addDisplayTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.EDIT) %>" var="addDisplayTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcPath" value="/edit_template.jsp" />
 					<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 					<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
@@ -104,7 +104,7 @@ DDLRecordSet recordSet = ddlDisplayContext.getRecordSet();
 			</c:if>
 
 			<c:if test="<%= ddlDisplayContext.isShowEditDisplayDDMTemplateIcon() %>">
-				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editDisplayTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.EDIT) %>" var="editDisplayTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcPath" value="/edit_template.jsp" />
 					<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 					<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
@@ -131,7 +131,7 @@ DDLRecordSet recordSet = ddlDisplayContext.getRecordSet();
 			</c:if>
 
 			<c:if test="<%= ddlDisplayContext.isShowEditFormDDMTemplateIcon() %>">
-				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editFormTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.EDIT) %>" var="editFormTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcPath" value="/edit_template.jsp" />
 					<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 					<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />

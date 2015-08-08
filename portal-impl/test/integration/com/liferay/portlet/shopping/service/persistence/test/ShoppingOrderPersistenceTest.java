@@ -407,10 +407,10 @@ public class ShoppingOrderPersistenceTest {
 			true, "shippingState", true, "shippingZip", true,
 			"shippingCountry", true, "shippingPhone", true, "ccName", true,
 			"ccType", true, "ccNumber", true, "ccExpMonth", true, "ccExpYear",
-			true, "ccVerNumber", true, "comments", true, "ppTxnId", true,
-			"ppPaymentStatus", true, "ppPaymentGross", true, "ppReceiverEmail",
-			true, "ppPayerEmail", true, "sendOrderEmail", true,
-			"sendShippingEmail", true);
+			true, "ccVerNumber", true, "ppTxnId", true, "ppPaymentStatus",
+			true, "ppPaymentGross", true, "ppReceiverEmail", true,
+			"ppPayerEmail", true, "sendOrderEmail", true, "sendShippingEmail",
+			true);
 	}
 
 	@Test

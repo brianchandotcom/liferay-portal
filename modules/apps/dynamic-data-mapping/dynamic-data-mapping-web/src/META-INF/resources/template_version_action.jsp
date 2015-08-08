@@ -25,7 +25,7 @@ DDMTemplateVersion templateVersion = (DDMTemplateVersion)row.getObject();
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-	<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="viewTemplateVersionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+	<liferay-portlet:renderURL portletName="<%= DDMPortletKeys.DYNAMIC_DATA_MAPPING %>" var="viewTemplateVersionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 		<portlet:param name="mvcPath" value="/view_template_version.jsp" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="templateVersionId" value="<%= String.valueOf(templateVersion.getTemplateVersionId()) %>" />

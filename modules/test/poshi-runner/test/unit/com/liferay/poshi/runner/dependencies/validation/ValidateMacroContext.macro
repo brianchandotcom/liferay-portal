@@ -1,0 +1,5 @@
+<definition>
+	<command name="validateMacroContextPass">
+		<execute function="Click" locator1="//right here" value1="value" />
+	</command>
+</definition>

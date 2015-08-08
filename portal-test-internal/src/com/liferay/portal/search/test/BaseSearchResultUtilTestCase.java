@@ -18,25 +18,19 @@ import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.RelatedSearchResult;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultManager;
-import com.liferay.portal.kernel.search.SearchResultManagerUtil;
+import com.liferay.portal.kernel.search.result.SearchResultTranslator;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.model.ClassName;
-import com.liferay.portal.search.SearchResultManagerImpl;
-import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -66,13 +60,12 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 		setUpRegistryUtil();
 
-		setUpClassNameLocalService();
 		setUpFastDateFormatFactoryUtil();
 		setUpIndexerRegistry();
 		setUpPortalUtil();
 		setUpPropsUtil();
 		setUpServiceTrackerMap();
-		setUpSearchResultManagerUtil();
+		setUpSearchResultTranslator();
 	}
 
 	protected void assertEmptyCommentRelatedSearchResults(
@@ -101,27 +94,14 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 	protected SearchResult assertOneSearchResult(Document document) {
 		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
-			document);
+			searchResultTranslator, document);
 
 		Assert.assertEquals(1, searchResults.size());
 
 		return searchResults.get(0);
 	}
 
-	protected void setUpClassNameLocalService() throws Exception {
-		when(
-			classNameLocalService.getClassName(
-				SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME_ID)
-		).thenReturn(
-			className
-		);
-
-		when(
-			className.getClassName()
-		).thenReturn(
-			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME
-		);
-	}
+	protected abstract SearchResultTranslator createSearchResultTranslator();
 
 	protected void setUpFastDateFormatFactoryUtil() {
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
@@ -139,19 +119,21 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 	}
 
 	protected void setUpPortalUtil() {
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(portal);
+		Portal portal = Mockito.mock(Portal.class);
 
 		when(
 			portal.getClassName(SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME_ID)
 		).thenReturn(
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME
 		);
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(portal);
 	}
 
 	protected void setUpPropsUtil() {
-		PropsUtil.setProps(props);
+		PropsUtil.setProps(Mockito.mock(Props.class));
 	}
 
 	protected void setUpRegistryUtil() {
@@ -159,17 +141,10 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 		mockStatic(
 			AssetRendererFactoryRegistryUtil.class, Mockito.CALLS_REAL_METHODS);
-		mockStatic(IndexerRegistryUtil.class, Mockito.CALLS_REAL_METHODS);
 	}
 
-	protected void setUpSearchResultManagerUtil() {
-		SearchResultManagerUtil searchResultManagerUtil =
-			new SearchResultManagerUtil();
-
-		SearchResultManager searchResultManager = new SearchResultManagerImpl(
-			classNameLocalService, dlAppLocalService, mbMessageLocalService);
-
-		searchResultManagerUtil.setSearchResultManager(searchResultManager);
+	protected void setUpSearchResultTranslator() {
+		searchResultTranslator = createSearchResultTranslator();
 	}
 
 	protected void setUpServiceTrackerMap() {
@@ -194,23 +169,7 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 	@Mock
 	protected AssetRendererFactory assetRendererFactory;
 
-	@Mock
-	protected ClassName className;
-
-	@Mock
-	protected ClassNameLocalService classNameLocalService;
-
-	@Mock
-	protected DLAppLocalService dlAppLocalService;
-
-	@Mock
-	protected MBMessageLocalService mbMessageLocalService;
-
-	@Mock
-	protected Portal portal;
-
-	@Mock
-	protected Props props;
+	protected SearchResultTranslator searchResultTranslator;
 
 	@Mock
 	private ServiceTrackerMap<String, SearchResultManager> _serviceTrackerMap;

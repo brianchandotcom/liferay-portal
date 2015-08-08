@@ -64,6 +64,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 		attributes.put("groupId", getGroupId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -135,6 +136,12 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 		if (description != null) {
 			setDescription(description);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
 	}
 
 	@Override
@@ -190,6 +197,16 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	@Override
 	public long getGroupId() {
 		return _team.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this team.
+	*
+	* @return the last publish date of this team
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _team.getLastPublishDate();
 	}
 
 	/**
@@ -378,6 +395,16 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	@Override
 	public void setGroupId(long groupId) {
 		_team.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this team.
+	*
+	* @param lastPublishDate the last publish date of this team
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_team.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

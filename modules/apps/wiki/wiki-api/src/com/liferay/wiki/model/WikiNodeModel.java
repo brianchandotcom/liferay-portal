@@ -263,6 +263,7 @@ public interface WikiNodeModel extends BaseModel<WikiNode>, ContainerModel,
 	 *
 	 * @return the last publish date of this wiki node
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -270,6 +271,7 @@ public interface WikiNodeModel extends BaseModel<WikiNode>, ContainerModel,
 	 *
 	 * @param lastPublishDate the last publish date of this wiki node
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

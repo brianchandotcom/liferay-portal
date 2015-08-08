@@ -16,6 +16,7 @@
 		<field name="recordSetId" type="long" />
 		<field name="version" type="String" />
 		<field name="displayIndex" type="int" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.dynamic.data.lists.model.DDLRecordSet">
 		<field name="uuid" type="String" />
@@ -39,6 +40,7 @@
 		</field>
 		<field name="minDisplayRows" type="int" />
 		<field name="scope" type="int" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.dynamic.data.lists.model.DDLRecordVersion">
 		<field name="recordVersionId" type="long" />

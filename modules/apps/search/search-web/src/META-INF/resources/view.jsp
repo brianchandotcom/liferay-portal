@@ -43,27 +43,31 @@ pageContext.setAttribute("portletURL", portletURL);
 
 		<liferay-ui:quick-access-entry label="skip-to-search" onClick="<%= taglibOnClick %>" />
 
-		<aui:select cssClass="search-select" inlineField="<%= true %>" label="" name="groupId" title="scope">
+		<c:choose>
+			<c:when test='<%= Validator.equals(searchDisplayContext.getSearchScope(), "let-the-user-choose") %>'>
+				<aui:select cssClass="search-select" inlineField="<%= true %>" label="" name="groupId" title="scope">
 
-			<%
-			Group group = themeDisplay.getScopeGroup();
-			%>
+					<%
+					Group group = themeDisplay.getScopeGroup();
+					%>
 
-			<c:if test="<%= !group.isStagingGroup() %>">
-				<aui:option label="everything" selected="<%= (groupId == 0) %>" value="0" />
-			</c:if>
+					<c:if test="<%= !group.isStagingGroup() %>">
+						<aui:option label="everything" selected="<%= (groupId == 0) %>" value="0" />
+					</c:if>
 
-			<aui:option label='<%= "this-" + (group.isOrganization() ? "organization" : "site") %>' selected="<%= (groupId != 0) %>" value="<%= group.getGroupId() %>" />
-		</aui:select>
+					<aui:option label="this-site" selected="<%= (groupId != 0) %>" value="<%= group.getGroupId() %>" />
+				</aui:select>
+			</c:when>
+			<c:when test='<%= Validator.equals(searchDisplayContext.getSearchScope(), "everything") %>'>
+				<aui:input name="groupId" type="hidden" value="0" />
+			</c:when>
+			<c:otherwise>
+				<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
+			</c:otherwise>
+		</c:choose>
 
 		<aui:field-wrapper inlineField="<%= true %>">
-			<a class="btn btn-default" href="javascript:;" onclick="<%= renderResponse.getNamespace() + "search();" %>">
-				<i class="icon-search"></i>
-
-				<span class="search-button">
-					<liferay-ui:message key="search" />
-				</span>
-			</a>
+			<aui:button cssClass="search-button" icon="icon-search" onClick='<%= renderResponse.getNamespace() + "search();" %>' value="search" />
 		</aui:field-wrapper>
 	</aui:fieldset>
 

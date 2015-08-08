@@ -18,13 +18,12 @@ import com.liferay.calendar.upgrade.v1_0_0.UpgradeCalendar;
 import com.liferay.calendar.upgrade.v1_0_0.UpgradeCalendarBooking;
 import com.liferay.calendar.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -36,15 +35,16 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CalendarServiceUpgrade.class)
 public class CalendarServiceUpgrade {
 
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
 	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
-	}
-
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	@Activate

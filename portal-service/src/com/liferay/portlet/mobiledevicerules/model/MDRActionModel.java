@@ -504,6 +504,7 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 	 *
 	 * @return the last publish date of this m d r action
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -511,6 +512,7 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 	 *
 	 * @param lastPublishDate the last publish date of this m d r action
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

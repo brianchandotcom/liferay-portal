@@ -14,11 +14,11 @@
 
 package com.liferay.journal.web.ddm;
 
+import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
+import com.liferay.dynamic.data.mapping.util.DDMPermissionHandler;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.permission.JournalPermission;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
 
 /**
  * @author Marcellus Tavares
@@ -31,12 +31,12 @@ public class JournalDDMPermissionHandler implements DDMPermissionHandler {
 
 	@Override
 	public String getAddStructureActionId() {
-		return ActionKeys.ADD_STRUCTURE;
+		return DDMActionKeys.ADD_STRUCTURE;
 	}
 
 	@Override
 	public String getAddTemplateActionId() {
-		return ActionKeys.ADD_TEMPLATE;
+		return DDMActionKeys.ADD_TEMPLATE;
 	}
 
 	@Override

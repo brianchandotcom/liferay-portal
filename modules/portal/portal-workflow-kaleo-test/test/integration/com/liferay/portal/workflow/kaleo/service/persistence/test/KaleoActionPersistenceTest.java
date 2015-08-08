@@ -258,9 +258,8 @@ public class KaleoActionPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "kaleoClassName", true, "kaleoClassPK", true,
 			"kaleoDefinitionId", true, "kaleoNodeName", true, "name", true,
-			"description", true, "executionType", true, "script", true,
-			"scriptLanguage", true, "scriptRequiredContexts", true, "priority",
-			true);
+			"description", true, "executionType", true, "scriptLanguage", true,
+			"scriptRequiredContexts", true, "priority", true);
 	}
 
 	@Test

@@ -472,6 +472,7 @@ public interface BlogsEntryModel extends BaseModel<BlogsEntry>,
 	 *
 	 * @return the last publish date of this blogs entry
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -479,6 +480,7 @@ public interface BlogsEntryModel extends BaseModel<BlogsEntry>,
 	 *
 	 * @param lastPublishDate the last publish date of this blogs entry
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

@@ -39,7 +39,6 @@ import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -269,7 +268,8 @@ public class FileEntryStagedModelDataHandler
 		}
 
 		if (portletDataContext.getBooleanParameter(
-				DLPortletDataHandler.NAMESPACE, "previews-and-thumbnails")) {
+				_DL_PORTLET_DATA_HANDLER_NAMESPACE,
+				"previews-and-thumbnails")) {
 
 			DLProcessorRegistryUtil.exportGeneratedFiles(
 				portletDataContext, fileEntry, fileEntryElement);
@@ -593,7 +593,7 @@ public class FileEntryStagedModelDataHandler
 		}
 
 		if (portletDataContext.getBooleanParameter(
-				DLPortletDataHandler.NAMESPACE, "previews-and-thumbnails")) {
+				"document_library", "previews-and-thumbnails")) {
 
 			DLProcessorRegistryUtil.importGeneratedFiles(
 				portletDataContext, fileEntry, importedFileEntry,
@@ -794,6 +794,12 @@ public class FileEntryStagedModelDataHandler
 			throw pde;
 		}
 	}
+
+	/**
+	 * @see com.liferay.document.library.web.lar.DLPortletDataHandler#NAMESPACE
+	 */
+	private static final String _DL_PORTLET_DATA_HANDLER_NAMESPACE =
+		"document_library";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileEntryStagedModelDataHandler.class);

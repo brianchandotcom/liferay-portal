@@ -368,12 +368,12 @@ public class CalendarBookingPersistenceTest {
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "resourceBlockId", true, "calendarId", true,
 			"calendarResourceId", true, "parentCalendarBookingId", true,
-			"vEventUid", true, "title", true, "description", true, "location",
-			true, "startTime", true, "endTime", true, "allDay", true,
-			"recurrence", true, "firstReminder", true, "firstReminderType",
-			true, "secondReminder", true, "secondReminderType", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"vEventUid", true, "title", true, "location", true, "startTime",
+			true, "endTime", true, "allDay", true, "recurrence", true,
+			"firstReminder", true, "firstReminderType", true, "secondReminder",
+			true, "secondReminderType", true, "lastPublishDate", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test

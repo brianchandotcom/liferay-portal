@@ -317,6 +317,7 @@ public interface PhoneModel extends AttachedModel, BaseModel<Phone>, MVCCModel,
 	 *
 	 * @return the last publish date of this phone
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -324,6 +325,7 @@ public interface PhoneModel extends AttachedModel, BaseModel<Phone>, MVCCModel,
 	 *
 	 * @param lastPublishDate the last publish date of this phone
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

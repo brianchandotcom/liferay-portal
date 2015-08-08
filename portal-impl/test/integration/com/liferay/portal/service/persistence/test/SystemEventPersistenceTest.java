@@ -238,7 +238,7 @@ public class SystemEventPersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "classNameId", true, "classPK", true, "classUuid", true,
 			"referrerClassNameId", true, "parentSystemEventId", true,
-			"systemEventSetKey", true, "type", true, "extraData", true);
+			"systemEventSetKey", true, "type", true);
 	}
 
 	@Test

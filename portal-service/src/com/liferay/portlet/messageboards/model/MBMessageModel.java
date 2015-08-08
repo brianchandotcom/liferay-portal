@@ -439,6 +439,7 @@ public interface MBMessageModel extends AttachedModel, BaseModel<MBMessage>,
 	 *
 	 * @return the last publish date of this message-boards message
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -446,6 +447,7 @@ public interface MBMessageModel extends AttachedModel, BaseModel<MBMessage>,
 	 *
 	 * @param lastPublishDate the last publish date of this message-boards message
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	/**

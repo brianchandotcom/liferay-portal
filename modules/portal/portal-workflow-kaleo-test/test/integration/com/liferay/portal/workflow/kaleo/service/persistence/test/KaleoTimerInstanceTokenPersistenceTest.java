@@ -271,8 +271,7 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 			"kaleoDefinitionId", true, "kaleoInstanceId", true,
 			"kaleoInstanceTokenId", true, "kaleoTaskInstanceTokenId", true,
 			"kaleoTimerId", true, "kaleoTimerName", true, "blocking", true,
-			"completionUserId", true, "completed", true, "completionDate",
-			true, "workflowContext", true);
+			"completionUserId", true, "completed", true, "completionDate", true);
 	}
 
 	@Test

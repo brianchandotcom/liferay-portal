@@ -11,7 +11,7 @@ dependencies {
 
 ext {
 	alloyEditorVersion = "0.4.0-alpha.1"
-	ckEditorVersion = "4.4.8"
+	ckEditorVersion = "4.5.2"
 	tinyMCEVersion = "4.1.7"
 
 	ckEditorScaytUrl = "http://download.ckeditor.com/scayt/releases/scayt_${ckEditorVersion}.zip"
@@ -58,7 +58,7 @@ buildAlloyEditor {
 	duplicatesStrategy = "exclude"
 
 	from(zipTree(alloyEditorZipFile)) {
-		eachFile new StripPathSegmentsAction(2)
+		eachFile new StripPathSegmentsAction(1)
 		include "alloy-editor/**"
 	}
 
@@ -83,7 +83,6 @@ buildCKEditor {
 
 	from(zipTree(ckEditorZipFile)) {
 		eachFile new StripPathSegmentsAction(1)
-
 		include "ckeditor/**"
 	}
 
@@ -159,7 +158,6 @@ buildTinyMCE {
 
 	from(zipTree(tinyMCEZipFile)) {
 		eachFile new StripPathSegmentsAction(3)
-
 		include "tinymce/js/tinymce/**"
 	}
 

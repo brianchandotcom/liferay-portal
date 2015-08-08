@@ -17,14 +17,13 @@ package com.liferay.announcements.web.messaging;
 import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.announcements.service.AnnouncementsEntryLocalServiceUtil;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -55,14 +54,15 @@ public class CheckEntryMessageListener
 		AnnouncementsEntryLocalServiceUtil.checkEntries();
 	}
 
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
 	@Reference(
 		target = "(javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS + ")"
 	)
 	protected void setPortlet(Portlet portlet) {
-	}
-
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
 	}
 
 }

@@ -88,6 +88,7 @@ page import="com.liferay.portal.model.Organization" %><%@
 page import="com.liferay.portal.model.OrganizationConstants" %><%@
 page import="com.liferay.portal.model.Portlet" %><%@
 page import="com.liferay.portal.model.Role" %><%@
+page import="com.liferay.portal.model.RoleConstants" %><%@
 page import="com.liferay.portal.model.SiteConstants" %><%@
 page import="com.liferay.portal.model.Team" %><%@
 page import="com.liferay.portal.model.User" %><%@

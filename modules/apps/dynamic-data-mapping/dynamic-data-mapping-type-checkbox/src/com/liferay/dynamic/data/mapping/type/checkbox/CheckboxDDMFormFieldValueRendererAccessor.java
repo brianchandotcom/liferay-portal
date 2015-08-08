@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.type.checkbox;
 
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRendererAccessor;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueAccessor;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueRendererAccessor;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 
 /**

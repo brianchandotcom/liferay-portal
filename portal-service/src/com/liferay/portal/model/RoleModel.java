@@ -499,6 +499,7 @@ public interface RoleModel extends AttachedModel, BaseModel<Role>, LocalizedMode
 	 *
 	 * @return the last publish date of this role
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -506,6 +507,7 @@ public interface RoleModel extends AttachedModel, BaseModel<Role>, LocalizedMode
 	 *
 	 * @param lastPublishDate the last publish date of this role
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

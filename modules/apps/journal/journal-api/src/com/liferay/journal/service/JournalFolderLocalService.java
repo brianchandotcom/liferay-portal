@@ -233,7 +233,7 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	public int getCompanyFoldersCount(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getDDMStructures(
 		long[] groupIds, long folderId, int restrictionType)
 		throws PortalException;
 

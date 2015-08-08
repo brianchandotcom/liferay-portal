@@ -16,10 +16,11 @@ package com.liferay.blogs.web.messaging;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.blogs.configuration.BlogsSystemConfiguration;
+import com.liferay.blogs.configuration.BlogsConfiguration;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerType;
@@ -29,8 +30,6 @@ import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 
 import java.util.Map;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -53,11 +52,11 @@ public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 		schedulerEntry.setTimeUnit(TimeUnit.MINUTE);
 		schedulerEntry.setTriggerType(TriggerType.SIMPLE);
 
-		_blogsSystemConfiguration = Configurable.createConfigurable(
-			BlogsSystemConfiguration.class, properties);
+		_blogsConfiguration = Configurable.createConfigurable(
+			BlogsConfiguration.class, properties);
 
 		schedulerEntry.setTriggerValue(
-			_blogsSystemConfiguration.linkbackJobInterval());
+			_blogsConfiguration.linkbackJobInterval());
 	}
 
 	@Override
@@ -67,15 +66,16 @@ public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 		LinkbackProducerUtil.sendQueuedPingbacks();
 	}
 
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
 	@Reference(target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")")
 	protected void setPortlet(Portlet portlet) {
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
-	}
-
-	private volatile BlogsSystemConfiguration _blogsSystemConfiguration;
+	private volatile BlogsConfiguration _blogsConfiguration;
 	private final LinkbackConsumer _linkbackConsumer =
 		LinkbackConsumerUtil.getLinkbackConsumer();
 

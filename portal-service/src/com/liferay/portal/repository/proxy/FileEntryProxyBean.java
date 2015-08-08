@@ -178,6 +178,11 @@ public class FileEntryProxyBean
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		return _fileEntry.getLastPublishDate();
+	}
+
+	@Override
 	public FileVersion getLatestFileVersion() throws PortalException {
 		FileVersion fileVersion = _fileEntry.getLatestFileVersion();
 
@@ -423,8 +428,8 @@ public class FileEntryProxyBean
 	}
 
 	@Override
-	public void setCreateDate(Date date) {
-		_fileEntry.setCreateDate(date);
+	public void setCreateDate(Date createDate) {
+		_fileEntry.setCreateDate(createDate);
 	}
 
 	@Override
@@ -433,8 +438,13 @@ public class FileEntryProxyBean
 	}
 
 	@Override
-	public void setModifiedDate(Date date) {
-		_fileEntry.setModifiedDate(date);
+	public void setLastPublishDate(Date lastPublishDate) {
+		_fileEntry.setLastPublishDate(lastPublishDate);
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_fileEntry.setModifiedDate(modifiedDate);
 	}
 
 	@Override

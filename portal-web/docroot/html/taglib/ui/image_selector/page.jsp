@@ -113,10 +113,10 @@ itemSelectorURL.setParameter("1_json", itemSelectorJSONParamJSONObject.toString(
 
 PortletURL uploadItemSelectorCriterionUploadURL = liferayPortletResponse.createActionURL(PortletKeys.BLOGS);
 
-uploadItemSelectorCriterionUploadURL.setParameter(ActionRequest.ACTION_NAME, "/blogs/upload_editor_image");
+uploadItemSelectorCriterionUploadURL.setParameter(ActionRequest.ACTION_NAME, "/blogs/upload_image");
 
-itemSelectorUploadParamJSONObject.put("url", uploadItemSelectorCriterionUploadURL.toString());
 itemSelectorUploadParamJSONObject.put("repositoryName", LanguageUtil.get(locale, "blogs"));
+itemSelectorUploadParamJSONObject.put("URL", uploadItemSelectorCriterionUploadURL.toString());
 
 itemSelectorURL.setParameter("2_json", itemSelectorUploadParamJSONObject.toString());
 

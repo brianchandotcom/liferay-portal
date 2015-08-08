@@ -241,6 +241,7 @@ public interface AssetTagModel extends BaseModel<AssetTag>, StagedGroupedModel {
 	 *
 	 * @return the last publish date of this asset tag
 	 */
+	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -248,6 +249,7 @@ public interface AssetTagModel extends BaseModel<AssetTag>, StagedGroupedModel {
 	 *
 	 * @param lastPublishDate the last publish date of this asset tag
 	 */
+	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override

@@ -16,19 +16,15 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
 
 import java.lang.reflect.Method;
 
-import java.net.InetAddress;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.net.UnknownHostException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -43,30 +39,6 @@ public class JarUtil {
 	public static void downloadAndInstallJar(
 			URL url, String libPath, String name, URLClassLoader urlClassLoader)
 		throws Exception {
-
-		if (PortalRunMode.isTestMode()) {
-			try {
-				InetAddress.getAllByName("mirrors");
-
-				String urlString = url.toExternalForm();
-
-				String newURLString = StringUtil.replace(
-					urlString, "://", "://mirrors/");
-
-				url = new URL(newURLString);
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Swapping URL from " + urlString + " to " +
-							newURLString);
-				}
-			}
-			catch (UnknownHostException uhe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to resolve \"mirrors\"");
-				}
-			}
-		}
 
 		Path path = Paths.get(libPath, name);
 

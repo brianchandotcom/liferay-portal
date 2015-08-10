@@ -778,6 +778,13 @@ public class PortletTracker
 		List<String> roleRefs = StringPlus.asList(
 			serviceReference.getProperty("javax.portlet.security-role-ref"));
 
+		if (roleRefs.isEmpty()) {
+			roleRefs.add("administrator");
+			roleRefs.add("guest");
+			roleRefs.add("power-user");
+			roleRefs.add("user");
+		}
+
 		for (String roleRef : roleRefs) {
 			for (String curRoleRef : StringUtil.split(roleRef)) {
 				unlinkedRoles.add(curRoleRef);

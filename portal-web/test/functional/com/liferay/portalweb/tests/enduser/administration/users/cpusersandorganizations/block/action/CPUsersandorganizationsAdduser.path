@@ -10,17 +10,17 @@
 <tbody>
 <tr>
 	<td>DETAILS</td>
-	<td>//a[@id='_125_detailsLink']</td>
+	<td>//a[contains(@id,'detailsLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATIONS</td>
-	<td>//a[@id='_125_organizationsLink']</td>
+	<td>//a[contains(@id,'organizationsLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERSONAL_SITE</td>
-	<td>//a[@id='_125_personalSiteLink']</td>
+	<td>//a[contains(@id,'personalSiteLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -56,32 +56,32 @@
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_SCREEN_NAME_FIELD</td>
-	<td>//input[@id='_125_screenName']</td>
+	<td>//input[contains(@id,'screenName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_EMAIL_ADDRESS_FIELD</td>
-	<td>//input[@id='_125_emailAddress']</td>
+	<td>//input[contains(@id,'emailAddress')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_FIRST_NAME_FIELD</td>
-	<td>//input[@id='_125_firstName']</td>
+	<td>//input[contains(@id,'firstName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_MIDDLE_NAME_FIELD</td>
-	<td>//input[@id='_125_middleName']</td>
+	<td>//input[contains(@id,'middleName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_LAST_NAME_FIELD</td>
-	<td>//input[@id='_125_lastName']</td>
+	<td>//input[contains(@id,'lastName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_BIRTHDAY_FIELD</td>
-	<td>//input[@id='_125_birthday']</td>
+	<td>//input[contains(@id,'birthday')]</td>
 	<td></td>
 </tr>
 <tr>

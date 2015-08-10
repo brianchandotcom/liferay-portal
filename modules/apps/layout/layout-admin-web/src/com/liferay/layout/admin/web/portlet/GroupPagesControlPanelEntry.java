@@ -17,12 +17,9 @@ package com.liferay.layout.admin.web.portlet;
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.BaseControlPanelEntry;
 import com.liferay.portlet.ControlPanelEntry;
 
@@ -45,11 +42,11 @@ public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		if (group.isUser()) {
-			return hasUserLayoutsAccesPermissionDenied(permissionChecker);
+		if (group.isCompany()) {
+			return true;
 		}
 
-		return group.isCompany();
+		return false;
 	}
 
 	@Override
@@ -57,35 +54,8 @@ public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		if (group.isUser()) {
-			return super.hasPermissionImplicitlyGranted(
-				permissionChecker, group, portlet);
-		}
-
 		return GroupPermissionUtil.contains(
 			permissionChecker, group, ActionKeys.MANAGE_LAYOUTS);
-	}
-
-	protected boolean hasUserLayoutsAccesPermissionDenied(
-			PermissionChecker permissionChecker)
-		throws Exception {
-
-		if (!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED &&
-			!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
-
-			return true;
-		}
-
-		if ((PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED ||
-			 PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED) &&
-			!RoleLocalServiceUtil.hasUserRole(
-				permissionChecker.getUserId(), permissionChecker.getCompanyId(),
-				RoleConstants.POWER_USER, true)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 }

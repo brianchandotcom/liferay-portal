@@ -1118,9 +1118,19 @@ public interface Portal {
 	public Map<String, List<Portlet>> getSiteAdministrationCategoriesMap(
 		HttpServletRequest request);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getControlPanelPortletURL(PortletRequest, Group, String, long, String)}
+	 */
+	@Deprecated
 	public PortletURL getSiteAdministrationURL(
 		HttpServletRequest request, ThemeDisplay themeDisplay);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getControlPanelPortletURL(PortletRequest, Group, String, long, String)}
+	 */
+	@Deprecated
 	public PortletURL getSiteAdministrationURL(
 		HttpServletRequest request, ThemeDisplay themeDisplay,
 		String portletId);

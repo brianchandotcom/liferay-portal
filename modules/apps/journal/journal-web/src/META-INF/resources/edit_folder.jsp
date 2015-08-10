@@ -34,7 +34,7 @@ boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed() && (WorkflowHan
 List<WorkflowDefinition> workflowDefinitions = null;
 
 if (workflowEnabled) {
-	workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), 0, 100, null);
+	workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 }
 %>
 

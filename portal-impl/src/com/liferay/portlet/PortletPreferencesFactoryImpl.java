@@ -87,6 +87,53 @@ import javax.xml.stream.events.XMLEvent;
 public class PortletPreferencesFactoryImpl
 	implements PortletPreferencesFactory {
 
+	public static Map<String, Preference> createPreferencesMap(String xml) {
+		XMLEventReader xmlEventReader = null;
+
+		Map<String, Preference> preferencesMap = new HashMap<>();
+
+		try {
+			XMLInputFactory xmlInputFactory =
+				StAXReaderUtil.getXMLInputFactory();
+
+			xmlEventReader = xmlInputFactory.createXMLEventReader(
+				new UnsyncStringReader(xml));
+
+			while (xmlEventReader.hasNext()) {
+				XMLEvent xmlEvent = xmlEventReader.nextEvent();
+
+				if (xmlEvent.isStartElement()) {
+					StartElement startElement = xmlEvent.asStartElement();
+
+					String elementName = startElement.getName().getLocalPart();
+
+					if (elementName.equals("preference")) {
+						Preference preference = readPreference(xmlEventReader);
+
+						preferencesMap.put(preference.getName(), preference);
+					}
+				}
+			}
+		}
+		catch (XMLStreamException xse) {
+			throw new SystemException(xse);
+		}
+		finally {
+			if (xmlEventReader != null) {
+				try {
+					xmlEventReader.close();
+				}
+				catch (XMLStreamException xse) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(xse, xse);
+					}
+				}
+			}
+		}
+
+		return preferencesMap;
+	}
+
 	@Override
 	public void checkControlPanelPortletPreferences(
 			ThemeDisplay themeDisplay, Portlet portlet)
@@ -737,6 +784,50 @@ public class PortletPreferencesFactoryImpl
 		return portletPreferencesImpl.toXML();
 	}
 
+	protected static Preference readPreference(XMLEventReader xmlEventReader)
+		throws XMLStreamException {
+
+		String name = null;
+		List<String> values = new ArrayList<>();
+		boolean readOnly = false;
+
+		while (xmlEventReader.hasNext()) {
+			XMLEvent xmlEvent = xmlEventReader.nextEvent();
+
+			if (xmlEvent.isStartElement()) {
+				StartElement startElement = xmlEvent.asStartElement();
+
+				String elementName = startElement.getName().getLocalPart();
+
+				if (elementName.equals("name")) {
+					name = StAXReaderUtil.read(xmlEventReader);
+				}
+				else if (elementName.equals("value")) {
+					String value = StAXReaderUtil.read(xmlEventReader);
+
+					values.add(value);
+				}
+				else if (elementName.equals("read-only")) {
+					String value = StAXReaderUtil.read(xmlEventReader);
+
+					readOnly = GetterUtil.getBoolean(value);
+				}
+			}
+			else if (xmlEvent.isEndElement()) {
+				EndElement endElement = xmlEvent.asEndElement();
+
+				String elementName = endElement.getName().getLocalPart();
+
+				if (elementName.equals("preference")) {
+					break;
+				}
+			}
+		}
+
+		return new Preference(
+			name, values.toArray(new String[values.size()]), readOnly);
+	}
+
 	protected PortletPreferences getPortletSetup(
 		long siteGroupId, Layout layout, String portletId,
 		String defaultPreferences, boolean strictMode) {
@@ -811,50 +902,6 @@ public class PortletPreferencesFactoryImpl
 			defaultPreferences);
 	}
 
-	protected Preference readPreference(XMLEventReader xmlEventReader)
-		throws XMLStreamException {
-
-		String name = null;
-		List<String> values = new ArrayList<>();
-		boolean readOnly = false;
-
-		while (xmlEventReader.hasNext()) {
-			XMLEvent xmlEvent = xmlEventReader.nextEvent();
-
-			if (xmlEvent.isStartElement()) {
-				StartElement startElement = xmlEvent.asStartElement();
-
-				String elementName = startElement.getName().getLocalPart();
-
-				if (elementName.equals("name")) {
-					name = StAXReaderUtil.read(xmlEventReader);
-				}
-				else if (elementName.equals("value")) {
-					String value = StAXReaderUtil.read(xmlEventReader);
-
-					values.add(value);
-				}
-				else if (elementName.equals("read-only")) {
-					String value = StAXReaderUtil.read(xmlEventReader);
-
-					readOnly = GetterUtil.getBoolean(value);
-				}
-			}
-			else if (xmlEvent.isEndElement()) {
-				EndElement endElement = xmlEvent.asEndElement();
-
-				String elementName = endElement.getName().getLocalPart();
-
-				if (elementName.equals("preference")) {
-					break;
-				}
-			}
-		}
-
-		return new Preference(
-			name, values.toArray(new String[values.size()]), readOnly);
-	}
-
 	protected Map<String, Preference> toPreferencesMap(String xml) {
 		if (Validator.isNull(xml)) {
 			return Collections.emptyMap();
@@ -869,54 +916,7 @@ public class PortletPreferencesFactoryImpl
 			return preferencesMap;
 		}
 
-		XMLEventReader xmlEventReader = null;
-
-		try {
-			XMLInputFactory xmlInputFactory =
-				StAXReaderUtil.getXMLInputFactory();
-
-			xmlEventReader = xmlInputFactory.createXMLEventReader(
-				new UnsyncStringReader(xml));
-
-			while (xmlEventReader.hasNext()) {
-				XMLEvent xmlEvent = xmlEventReader.nextEvent();
-
-				if (xmlEvent.isStartElement()) {
-					StartElement startElement = xmlEvent.asStartElement();
-
-					String elementName = startElement.getName().getLocalPart();
-
-					if (elementName.equals("preference")) {
-						Preference preference = readPreference(xmlEventReader);
-
-						if (preferencesMap == null) {
-							preferencesMap = new HashMap<>();
-						}
-
-						preferencesMap.put(preference.getName(), preference);
-					}
-				}
-			}
-		}
-		catch (XMLStreamException xse) {
-			throw new SystemException(xse);
-		}
-		finally {
-			if (xmlEventReader != null) {
-				try {
-					xmlEventReader.close();
-				}
-				catch (XMLStreamException xse) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(xse, xse);
-					}
-				}
-			}
-		}
-
-		if (preferencesMap == null) {
-			preferencesMap = Collections.emptyMap();
-		}
+		preferencesMap = createPreferencesMap(xml);
 
 		_preferencesMapPortalCache.put(cacheKey, preferencesMap);
 

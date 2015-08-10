@@ -72,12 +72,7 @@ String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.
 
 								data.put("navigation", Boolean.TRUE.toString());
 
-								long doAsGroupId = themeDisplay.getDoAsGroupId();
-
-								try {
-									themeDisplay.setDoAsGroupId(curSite.getGroupId());
-
-									PortletURL portletURL = PortalUtil.getSiteAdministrationURL(request, themeDisplay, themeDisplay.getPpid());
+								PortletURL portletURL = PortalUtil.getControlPanelPortletURL(request, curSite, themeDisplay.getPpid(), 0, PortletRequest.RENDER_PHASE);
 								%>
 
 								<liferay-ui:icon
@@ -91,9 +86,7 @@ String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.
 								for (Layout curScopeLayout : scopeLayouts) {
 									Group scopeGroup = curScopeLayout.getScopeGroup();
 
-									themeDisplay.setDoAsGroupId(scopeGroup.getGroupId());
-
-									portletURL = PortalUtil.getSiteAdministrationURL(request, themeDisplay, themeDisplay.getPpid());
+									portletURL = PortalUtil.getControlPanelPortletURL(request, scopeGroup, themeDisplay.getPpid(), 0, PortletRequest.RENDER_PHASE);
 								%>
 
 									<liferay-ui:icon
@@ -104,11 +97,6 @@ String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.
 									/>
 
 								<%
-									}
-
-								}
-								finally {
-									themeDisplay.setDoAsGroupId(doAsGroupId);
 								}
 								%>
 

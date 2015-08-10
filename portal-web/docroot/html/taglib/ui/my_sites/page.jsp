@@ -104,119 +104,103 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 								}
 							}
 						}
-
-						long doAsGroupId = themeDisplay.getDoAsGroupId();
-
-						try {
 						%>
 
-							<c:if test="<%= showPublicSite && ((mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging) %>">
-
-								<%
-								if (showPublicSiteStaging) {
-									siteGroup = GroupLocalServiceUtil.fetchGroup(stagingGroupId);
-								}
-
-								themeDisplay.setDoAsGroupId(siteGroup.getGroupId());
-								%>
-
-								<li class="<%= (selectedSite && layout.isPublicLayout()) ? "active" : "public-site" %> <%= itemCssClass %>">
-									<a href="<%= HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, false)) %>" onclick="Liferay.Util.forcePost(this); return false;" role="menuitem">
-
-										<%
-										String siteName = StringPool.BLANK;
-
-										if (mySiteGroup.isUser()) {
-											siteName = LanguageUtil.get(request, "my-profile");
-										}
-										else {
-											siteName = mySiteGroup.getDescriptiveName(locale);
-										}
-
-										if (showPublicSiteStaging) {
-											StringBundler sb = new StringBundler(5);
-
-											sb.append(HtmlUtil.escape(siteName));
-											sb.append(StringPool.SPACE);
-											sb.append(StringPool.OPEN_PARENTHESIS);
-											sb.append(LanguageUtil.get(request, "staging"));
-											sb.append(StringPool.CLOSE_PARENTHESIS);
-
-											siteName = sb.toString();
-										}
-
-										if ((mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) {
-											iconCssClass = "icon-eye-open";
-										}
-										%>
-
-										<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
-
-										<c:if test="<%= (mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging %>">
-											<span class="badge site-type"><liferay-ui:message key="public" /></span>
-										</c:if>
-									</a>
-								</li>
-							</c:if>
-
-							<c:if test="<%= showPrivateSite && ((mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) %>">
-
-								<%
-								siteGroup = mySiteGroup;
-
-								if (showPrivateSiteStaging) {
-									siteGroup = GroupLocalServiceUtil.fetchGroup(stagingGroupId);
-								}
-
-								themeDisplay.setDoAsGroupId(siteGroup.getGroupId());
-								%>
-
-								<li class="<%= (selectedSite && layout.isPrivateLayout()) ? "active" : "private-site" %> <%= itemCssClass %>">
-									<a href="<%= HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, true)) %>" onclick="Liferay.Util.forcePost(this); return false;" role="menuitem">
-
-										<%
-										String siteName = StringPool.BLANK;
-
-										if (mySiteGroup.isUser()) {
-											siteName = LanguageUtil.get(request, "my-dashboard");
-										}
-										else {
-											siteName = mySiteGroup.getDescriptiveName(locale);
-										}
-
-										if (showPrivateSiteStaging) {
-											StringBundler sb = new StringBundler(5);
-
-											sb.append(siteName);
-											sb.append(StringPool.SPACE);
-											sb.append(StringPool.OPEN_PARENTHESIS);
-											sb.append(LanguageUtil.get(request, "staging"));
-											sb.append(StringPool.CLOSE_PARENTHESIS);
-
-											siteName = sb.toString();
-										}
-
-										if ((mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging) {
-											iconCssClass = "icon-eye-close";
-										}
-										%>
-
-										<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
-
-										<c:if test="<%= (mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging %>">
-											<span class="badge site-type"><liferay-ui:message key="private" /></span>
-										</c:if>
-									</a>
-								</li>
-							</c:if>
+					<c:if test="<%= showPublicSite && ((mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging) %>">
 
 						<%
-						}
-						finally {
-							themeDisplay.setDoAsGroupId(doAsGroupId);
+						if (showPublicSiteStaging) {
+							siteGroup = GroupLocalServiceUtil.fetchGroup(stagingGroupId);
 						}
 						%>
 
+						<li class="<%= (selectedSite && layout.isPublicLayout()) ? "active" : "public-site" %> <%= itemCssClass %>">
+							<a href="<%= HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, false)) %>" onclick="Liferay.Util.forcePost(this); return false;" role="menuitem">
+
+								<%
+								String siteName = StringPool.BLANK;
+
+								if (mySiteGroup.isUser()) {
+									siteName = LanguageUtil.get(request, "my-profile");
+								}
+								else {
+									siteName = mySiteGroup.getDescriptiveName(locale);
+								}
+
+								if (showPublicSiteStaging) {
+									StringBundler sb = new StringBundler(5);
+
+									sb.append(HtmlUtil.escape(siteName));
+									sb.append(StringPool.SPACE);
+									sb.append(StringPool.OPEN_PARENTHESIS);
+									sb.append(LanguageUtil.get(request, "staging"));
+									sb.append(StringPool.CLOSE_PARENTHESIS);
+
+									siteName = sb.toString();
+								}
+
+								if ((mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) {
+									iconCssClass = "icon-eye-open";
+								}
+								%>
+
+								<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
+
+								<c:if test="<%= (mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging %>">
+									<span class="badge site-type"><liferay-ui:message key="public" /></span>
+								</c:if>
+							</a>
+						</li>
+					</c:if>
+
+					<c:if test="<%= showPrivateSite && ((mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) %>">
+
+						<%
+						siteGroup = mySiteGroup;
+
+						if (showPrivateSiteStaging) {
+							siteGroup = GroupLocalServiceUtil.fetchGroup(stagingGroupId);
+						}
+						%>
+
+						<li class="<%= (selectedSite && layout.isPrivateLayout()) ? "active" : "private-site" %> <%= itemCssClass %>">
+							<a href="<%= HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, true)) %>" onclick="Liferay.Util.forcePost(this); return false;" role="menuitem">
+
+								<%
+								String siteName = StringPool.BLANK;
+
+								if (mySiteGroup.isUser()) {
+									siteName = LanguageUtil.get(request, "my-dashboard");
+								}
+								else {
+									siteName = mySiteGroup.getDescriptiveName(locale);
+								}
+
+								if (showPrivateSiteStaging) {
+									StringBundler sb = new StringBundler(5);
+
+									sb.append(siteName);
+									sb.append(StringPool.SPACE);
+									sb.append(StringPool.OPEN_PARENTHESIS);
+									sb.append(LanguageUtil.get(request, "staging"));
+									sb.append(StringPool.CLOSE_PARENTHESIS);
+
+									siteName = sb.toString();
+								}
+
+								if ((mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging) {
+									iconCssClass = "icon-eye-close";
+								}
+								%>
+
+								<%@ include file="/html/taglib/ui/my_sites/page_site_name.jspf" %>
+
+								<c:if test="<%= (mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging %>">
+									<span class="badge site-type"><liferay-ui:message key="private" /></span>
+								</c:if>
+							</a>
+						</li>
+					</c:if>
 					</c:when>
 					<c:when test='<%= PropsValues.MY_SITES_DISPLAY_STYLE.equals("classic") %>'>
 

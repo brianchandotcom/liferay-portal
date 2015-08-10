@@ -1112,9 +1112,7 @@ public class LiferaySeleniumHelper {
 				".*The web application \\[\\] appears to have started " +
 					"a thread.*")) {
 
-			if (line.matches(
-					".*\\[Hikari housekeeper (pool HikariPool-*\\].*")) {
-
+			if (line.contains("[Hikari housekeeper (pool HikariPool-")) {
 				return true;
 			}
 		}

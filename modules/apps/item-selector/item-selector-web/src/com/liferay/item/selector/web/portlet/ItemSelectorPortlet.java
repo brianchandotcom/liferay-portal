@@ -16,6 +16,7 @@ package com.liferay.item.selector.web.portlet;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorRendering;
+import com.liferay.item.selector.web.upgrade.ItemSelectorWebUpgrade;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -76,6 +77,11 @@ public class ItemSelectorPortlet extends MVCPortlet {
 	@Reference
 	protected void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
+	}
+
+	@Reference(unbind = "-")
+	protected void setItemSelectorWebUpgrade(
+		ItemSelectorWebUpgrade itemSelectorWebUpgrade) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

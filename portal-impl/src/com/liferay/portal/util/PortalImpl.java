@@ -1749,6 +1749,10 @@ public class PortalImpl implements Portal {
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
 			request, portletId, layout.getPlid(), lifecycle);
 
+		if (referrerPlid > 0) {
+			liferayPortletURL.setRefererPlid(referrerPlid);
+		}
+
 		try {
 			liferayPortletURL.setWindowState(WindowState.MAXIMIZED);
 		}
@@ -1773,6 +1777,10 @@ public class PortalImpl implements Portal {
 
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
 			portletRequest, portletId, layout.getPlid(), lifecycle);
+
+		if (referrerPlid > 0) {
+			liferayPortletURL.setRefererPlid(referrerPlid);
+		}
 
 		try {
 			liferayPortletURL.setWindowState(WindowState.MAXIMIZED);

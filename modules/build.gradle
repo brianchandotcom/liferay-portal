@@ -2,7 +2,9 @@ import com.liferay.gradle.util.FileUtil
 
 buildscript {
 	repositories {
-		mavenLocal()
+		if (!Boolean.getBoolean("maven.local.ignore")) {
+			mavenLocal()
+		}
 
 		maven {
 			url "http://cdn.repository.liferay.com/nexus/content/groups/public"

@@ -246,8 +246,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	}
 
 	protected PortletURL getRestoreURL(
-			PortletRequest portletRequest, long classPK,
-			boolean containerModel)
+			PortletRequest portletRequest, long classPK, boolean containerModel)
 		throws PortalException {
 
 		PortletURL portletURL = null;

@@ -3,7 +3,7 @@
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ADD" value1="Add" />
-		
+
 		<execute function="AssertClick" locator1="CPDocumentsandmedia#ADD_MENULIST_FOLDER" value1="Folder" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${dmFolderName}" />
@@ -16,7 +16,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertElementPresent" locator1="CPDocumentsandmedia#DOCUMENT_CONTAINER_FOLDER" />
 		<execute function="AssertTextEquals" locator1="CPDocumentsandmedia#DOCUMENT_CONTAINER_FOLDER_TITLE" value1="${dmFolderName}" />

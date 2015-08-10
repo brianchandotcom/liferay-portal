@@ -807,7 +807,7 @@
 		<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_TABLE_VIEWS" value1="${threadSubject}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_TABLE_LAST_POST" value1="${userName}" />
 		<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_TABLE_ACTIONS" value1="${threadSubject}" />
-		
+
 		<execute function="AssertClick" locator1="CPMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#TITLE_HEADER" value1="${threadSubject}" />

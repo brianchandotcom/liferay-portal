@@ -31,7 +31,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutSetPrototypeServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 
@@ -44,6 +43,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -168,16 +168,10 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 				layoutSetPrototype.getLayoutSetPrototypeId(),
 				settingsProperties.toString());
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		ThemeDisplay siteThemeDisplay = (ThemeDisplay)themeDisplay.clone();
-
-		siteThemeDisplay.setScopeGroupId(layoutSetPrototype.getGroupId());
-
-		PortletURL siteAdministrationURL = PortalUtil.getSiteAdministrationURL(
-			actionRequest, siteThemeDisplay,
-			LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS);
+		PortletURL siteAdministrationURL = PortalUtil.getControlPanelPortletURL(
+			actionRequest, layoutSetPrototype.getGroup(),
+			LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS, 0,
+			PortletRequest.RENDER_PHASE);
 
 		actionRequest.setAttribute(
 			WebKeys.REDIRECT, siteAdministrationURL.toString());

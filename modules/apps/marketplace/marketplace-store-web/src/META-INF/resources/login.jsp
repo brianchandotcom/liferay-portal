@@ -14,11 +14,12 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<%@ include file="/init.jsp" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
+<liferay-portlet:renderURL var="callbackURL" />
 
-<%@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %>
+<liferay-portlet:actionURL name="authorize" var="authorizeURL">
+	<portlet:param name="callbackURL" value="<%= callbackURL %>" />
+</liferay-portlet:actionURL>
 
-<portlet:defineObjects />
+<aui:button onClick="<%= authorizeURL %>" value="sign-in" />

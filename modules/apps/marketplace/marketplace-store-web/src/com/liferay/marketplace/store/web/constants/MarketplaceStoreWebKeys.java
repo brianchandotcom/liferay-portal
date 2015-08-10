@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,13 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+package com.liferay.marketplace.store.web.constants;
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
+/**
+ * @author Ryan Park
+ */
+public class MarketplaceStoreWebKeys {
 
-<%@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %>
+	public static final String OAUTH_REQUEST_TOKEN = "OAUTH_REQUEST_TOKEN";
 
-<portlet:defineObjects />
+}

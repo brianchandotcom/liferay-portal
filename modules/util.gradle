@@ -48,7 +48,6 @@ task wrapper(type: Wrapper)
 setUpPortalTools {
 	from configurations.portalTools
 	into rootProject.file("../tools/sdk/tmp/portal-tools")
-
 	rename new RenameDependencyClosure(project, "portalTools")
 }
 

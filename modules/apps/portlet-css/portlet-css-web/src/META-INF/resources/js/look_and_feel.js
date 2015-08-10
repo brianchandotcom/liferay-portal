@@ -480,8 +480,8 @@ AUI.add(
 							instance[borderLocation] = new A.ColorPickerPopover(
 								{
 									constrain: true,
-									trigger: item,
-									zIndex: 2000
+									plugins: [Liferay.WidgetZIndex],
+									trigger: item
 								}
 							).render(popupBoundingBox);
 						}

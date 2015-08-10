@@ -52,7 +52,7 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 		String[] excludes = {
 			"**/.ivy/**", "**/.sass-cache/**", "**/__MACOSX/**",
 			"**/aui_deprecated.css", "**/_partial.scss",
-			"**/css/common/bourbon/**", "**/expected/**", "**/aui/**",
+			"**/bourbon/**", "**/expected/**", "**/aui/**",
 			"**/frontend-editors-web/**", "**/misc/**", "**/_unstyled/css/**",
 			"**/admin/css/**", "**/atlas/css/**",
 			"**/classic/css/**", "**/control_panel/css/**",

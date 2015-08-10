@@ -30,27 +30,27 @@
 </tr>
 <tr>
 	<td>NAME_FIELD</td>
-	<td>//input[@id='_1_WAR_CalendarPortlet_name']</td>
+	<td>//input[contains(@id,'_CalendarPortlet_name')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_1_WAR_CalendarPortlet_description']</td>
+	<td>//textarea[contains(@id,'_CalendarPortlet_description')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFAULT_CALENDAR_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_CalendarPortlet_defaultCalendar']</td>
+	<td>//input[contains(@id,'_CalendarPortlet_defaultCalendar')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_COMMENTS_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_CalendarPortlet_enableComments']</td>
+	<td>//input[contains(@id,'_CalendarPortlet_enableComments')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_CalendarPortlet_enableRatings']</td>
+	<td>//input[contains(@id,'_CalendarPortlet_enableRatings')]</td>
 	<td></td>
 </tr>
 <tr>

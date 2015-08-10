@@ -43,13 +43,17 @@ public class ServiceReferenceTCCLServiceDependency
 
 		Thread currentThread = Thread.currentThread();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
 		Bundle bundle = serviceReference.getBundle();
 
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+		ClassLoader contextClassLoader = null;
 
-		currentThread.setContextClassLoader(bundleWiring.getClassLoader());
+		if (bundle != null) {
+			contextClassLoader = currentThread.getContextClassLoader();
+
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+			currentThread.setContextClassLoader(bundleWiring.getClassLoader());
+		}
 
 		try {
 			super.invoke(
@@ -57,7 +61,9 @@ public class ServiceReferenceTCCLServiceDependency
 				name);
 		}
 		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
+			if (bundle != null) {
+				currentThread.setContextClassLoader(contextClassLoader);
+			}
 		}
 	}
 
@@ -71,13 +77,17 @@ public class ServiceReferenceTCCLServiceDependency
 
 		Thread currentThread = Thread.currentThread();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
 		Bundle bundle = currentServiceReference.getBundle();
 
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+		ClassLoader contextClassLoader = null;
 
-		currentThread.setContextClassLoader(bundleWiring.getClassLoader());
+		if (bundle != null) {
+			contextClassLoader = currentThread.getContextClassLoader();
+
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+			currentThread.setContextClassLoader(bundleWiring.getClassLoader());
+		}
 
 		try {
 			super.invokeSwappedCallback(
@@ -86,7 +96,9 @@ public class ServiceReferenceTCCLServiceDependency
 				swapCallback);
 		}
 		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
+			if (bundle != null) {
+				currentThread.setContextClassLoader(contextClassLoader);
+			}
 		}
 	}
 

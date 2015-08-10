@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletURL;
+
 /**
  * @author Peter Fellwock
  */
@@ -58,6 +60,11 @@ public class TestGroup implements Group {
 	@Override
 	public boolean getActive() {
 		return false;
+	}
+
+	@Override
+	public PortletURL getAdministrationURL(ThemeDisplay themeDisplay) {
+		return null;
 	}
 
 	@Override

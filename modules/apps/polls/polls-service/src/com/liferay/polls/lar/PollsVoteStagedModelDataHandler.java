@@ -135,7 +135,7 @@ public class PollsVoteStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			vote);
 
-		serviceContext.setCreateDate(vote.getVoteDate());
+		serviceContext.setCreateDate(vote.getCreateDate());
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			PollsVote existingVote = fetchStagedModelByUuidAndGroupId(

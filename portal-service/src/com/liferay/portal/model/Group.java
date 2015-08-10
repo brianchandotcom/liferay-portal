@@ -71,6 +71,9 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public java.lang.String getDisplayURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay);
 
+	public javax.portlet.PortletURL getAdministrationURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay);
+
 	public java.lang.String getDisplayURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay,
 		boolean privateLayout);

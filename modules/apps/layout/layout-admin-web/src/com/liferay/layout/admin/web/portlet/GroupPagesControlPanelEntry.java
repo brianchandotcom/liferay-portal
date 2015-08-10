@@ -45,11 +45,11 @@ public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		if (group.isUser()) {
-			return hasUserLayoutsAccesPermissionDenied(permissionChecker);
+		if (group.isCompany()) {
+			return true;
 		}
 
-		return group.isCompany();
+		return false;
 	}
 
 	@Override
@@ -57,35 +57,8 @@ public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		if (group.isUser()) {
-			return super.hasAccessPermissionExplicitlyGranted(
-				permissionChecker, group, portlet);
-		}
-
 		return GroupPermissionUtil.contains(
 			permissionChecker, group, ActionKeys.MANAGE_LAYOUTS);
-	}
-
-	protected boolean hasUserLayoutsAccesPermissionDenied(
-			PermissionChecker permissionChecker)
-		throws Exception {
-
-		if (!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED &&
-			!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
-
-			return true;
-		}
-
-		if ((PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED ||
-			 PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED) &&
-			!RoleLocalServiceUtil.hasUserRole(
-				permissionChecker.getUserId(), permissionChecker.getCompanyId(),
-				RoleConstants.POWER_USER, true)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 }

@@ -106,7 +106,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 
 	protected PortletURL getRestoreURL(
 			PortletRequest portletRequest, long classPK,
-			boolean isContainerModel)
+			boolean containerModel)
 		throws PortalException {
 
 		PortletURL portletURL = null;
@@ -130,7 +130,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 				portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 		}
 
-		if (!isContainerModel) {
+		if (!containerModel) {
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/blogs/view_entry");
 		}

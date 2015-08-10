@@ -245,6 +245,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
+	public javax.portlet.PortletURL getAdministrationURL(
+		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		return _group.getAdministrationURL(themeDisplay);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.model.Group> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _group.getAncestors();

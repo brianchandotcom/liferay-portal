@@ -4972,41 +4972,9 @@ public class PortalImpl implements Portal {
 		return portletURL;
 	}
 
-	@Override
-	public PortletURL getSiteAdministrationURL(
-		PortletRequest portletRequest, ThemeDisplay themeDisplay) {
-
-		Portlet portlet = getFirstSiteAdministrationPortlet(themeDisplay);
-
-		if (portlet == null) {
-			return null;
-		}
-
-		PortletURL portletURL = getControlPanelPortletURL(
-			portletRequest, portlet.getPortletId(), 0,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		return portletURL;
-	}
-
-	@Override
-	public PortletURL getSiteAdministrationURL(
-		PortletRequest portletRequest, ThemeDisplay themeDisplay,
-		String portletId) {
-
-		PortletURL portletURL = getControlPanelPortletURL(
-			portletRequest, portletId, 0, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		return portletURL;
-	}
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getSiteAdministrationURL(PortletRequest, themeDisplay)}
+	 *             #getControlPanelPortletURL(PortletRequest, Group, String, long, String)}
 	 */
 	@Deprecated
 	@Override
@@ -5025,8 +4993,7 @@ public class PortalImpl implements Portal {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getSiteAdministrationURL(PortletRequest, themeDisplay,
-	 *             String)}
+	 *             #getControlPanelPortletURL(PortletRequest, Group, String, long, String)}
 	 */
 	@Deprecated
 	@Override

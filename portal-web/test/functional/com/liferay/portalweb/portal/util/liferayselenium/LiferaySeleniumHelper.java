@@ -1109,8 +1109,8 @@ public class LiferaySeleniumHelper {
 		// LPS-57789, temporary workaround until Dante Wang fixes it
 
 		if (line.matches(
-				".*The web application \\[\\] appears to have started " +
-					"a thread.*")) {
+				".*The web application \\[\\] appears to have started a " +
+					"thread.*")) {
 
 			if (line.contains("[Hikari housekeeper (pool HikariPool-")) {
 				return true;

@@ -2204,7 +2204,7 @@ They have been replaced by Application Display Templates (ADT).
 
 #### Who is affected?
 
-This affects developers that use the following portlet property:
+This affects developers that use portlet properties with the following prefix:
 
     navigation.display.style
 

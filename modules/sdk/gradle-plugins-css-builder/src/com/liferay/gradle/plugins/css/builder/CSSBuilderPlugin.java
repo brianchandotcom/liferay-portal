@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.css.builder;
 
-import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
@@ -170,9 +169,7 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 
 		String portalCommonDirName = buildCSSTask.getPortalCommonDirName();
 
-		if (Validator.isNotNull(portalCommonDirName) &&
-			FileUtil.exists(project, portalCommonDirName)) {
-
+		if (Validator.isNotNull(portalCommonDirName)) {
 			return;
 		}
 

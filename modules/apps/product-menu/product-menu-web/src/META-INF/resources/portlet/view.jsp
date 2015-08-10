@@ -20,7 +20,9 @@
 PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
 PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 
-PanelCategory firstChildPanelCategory = panelCategoryRegistry.getFirstChildPanelCategory(PanelCategoryKeys.ROOT);
+List<PanelCategory> childPanelCategories = panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.ROOT, permissionChecker, themeDisplay.getScopeGroup());
+
+PanelCategory firstChildPanelCategory = childPanelCategories.get(0);
 
 String rootPanelCategoryKey = firstChildPanelCategory.getKey();
 
@@ -49,10 +51,7 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 <ul class="nav nav-tabs product-menu-tabs">
 
 	<%
-	for (PanelCategory childPanelCategory : panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.ROOT)) {
-		if (!childPanelCategory.hasAccessPermission(permissionChecker, themeDisplay.getScopeGroup())) {
-			continue;
-		}
+	for (PanelCategory childPanelCategory : childPanelCategories) {
 	%>
 
 		<li class="col-xs-4 <%= rootPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>">
@@ -77,7 +76,7 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 	<div class="tab-content">
 
 		<%
-		for (PanelCategory childPanelCategory : panelCategoryRegistry.getChildPanelCategories(PanelCategoryKeys.ROOT)) {
+		for (PanelCategory childPanelCategory : childPanelCategories) {
 		%>
 
 			<div class="fade in tab-pane <%= rootPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>" id="<portlet:namespace /><%= childPanelCategory.getKey() %>">

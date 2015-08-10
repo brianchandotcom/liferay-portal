@@ -216,30 +216,28 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 		PortletURL portletURL = null;
 
 		WikiNode node = WikiNodeLocalServiceUtil.getNode(classPK);
-		String portletId = WikiPortletKeys.WIKI;
 
 		long plid = PortalUtil.getPlidFromPortletId(
-			node.getGroupId(), portletId);
+			node.getGroupId(), WikiPortletKeys.WIKI);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			portletId = WikiPortletKeys.WIKI_ADMIN;
-
 			portletURL = PortalUtil.getControlPanelPortletURL(
-				portletRequest, portletId, 0, PortletRequest.RENDER_PHASE);
+				portletRequest, WikiPortletKeys.WIKI_ADMIN, 0,
+				PortletRequest.RENDER_PHASE);
+
+			if (!isContainerModel) {
+				portletURL.setParameter(
+					"struts_action", "/wiki_admin/view_all_pages");
+			}
 		}
 		else {
 			portletURL = PortletURLFactoryUtil.create(
-				portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
-		}
+				portletRequest, WikiPortletKeys.WIKI, plid,
+				PortletRequest.RENDER_PHASE);
 
-		if (!isContainerModel) {
-			if (portletId.equals(WikiPortletKeys.WIKI)) {
+			if (!isContainerModel) {
 				portletURL.setParameter(
 					"struts_action", "/wiki/view_all_pages");
-			}
-			else {
-				portletURL.setParameter(
-					"struts_action", "/wiki_admin/view_all_pages");
 			}
 		}
 

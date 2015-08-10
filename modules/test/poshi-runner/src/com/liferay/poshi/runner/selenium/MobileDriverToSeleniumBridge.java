@@ -960,63 +960,6 @@ public class MobileDriverToSeleniumBridge
 	}
 
 	protected void tap(String locator) {
-		if (PropsValues.MOBILE_DEVICE_TYPE.equals("android")) {
-			try {
-				Runtime runtime = Runtime.getRuntime();
-
-				StringBuilder sb = new StringBuilder(6);
-
-				sb.append(PropsValues.MOBILE_ANDROID_HOME);
-				sb.append("/platform-tools/");
-				sb.append("adb -s emulator-5554 shell /data/local/tap.sh ");
-
-				int elementPositionCenterX =
-					WebDriverHelper.getElementPositionCenterX(this, locator);
-
-				int screenPositionX = elementPositionCenterX * 3 / 2;
-
-				sb.append(screenPositionX);
-
-				sb.append(" ");
-
-				int elementPositionCenterY =
-					WebDriverHelper.getElementPositionCenterY(this, locator);
-				int navigationBarHeight = 116;
-				int viewportPositionTop = WebDriverHelper.getScrollOffsetY(
-					this);
-
-				int screenPositionY =
-					(((elementPositionCenterY - viewportPositionTop) * 3) / 2) +
-						navigationBarHeight;
-
-				sb.append(screenPositionY);
-
-				runtime.exec(sb.toString());
-			}
-			catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
-		}
-		else if (PropsValues.MOBILE_DEVICE_TYPE.equals("ios")) {
-			TouchAction touchAction = new TouchAction(this);
-
-			int screenPositionX = WebDriverHelper.getElementPositionCenterX(
-				this, locator);
-
-			int navigationBarHeight = 50;
-
-			int screenPositionY =
-				WebDriverHelper.getElementPositionCenterY(this, locator) +
-					navigationBarHeight;
-
-			context("NATIVE_APP");
-
-			touchAction.tap(screenPositionX, screenPositionY);
-
-			touchAction.perform();
-
-			context("WEBVIEW_1");
-		}
 	}
 
 }

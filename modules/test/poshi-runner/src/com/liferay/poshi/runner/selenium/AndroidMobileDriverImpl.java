@@ -123,6 +123,44 @@ public class AndroidMobileDriverImpl extends BaseMobileDriverImpl {
 		}
 	}
 
+	protected void tap(String locator) {
+		try {
+			Runtime runtime = Runtime.getRuntime();
+
+			StringBuilder sb = new StringBuilder(6);
+
+			sb.append(PropsValues.MOBILE_ANDROID_HOME);
+			sb.append("/platform-tools/");
+			sb.append("adb -s emulator-5554 shell /data/local/tap.sh ");
+
+			int elementPositionCenterX =
+				WebDriverHelper.getElementPositionCenterX(this, locator);
+
+			int screenPositionX = elementPositionCenterX * 3 / 2;
+
+			sb.append(screenPositionX);
+
+			sb.append(" ");
+
+			int elementPositionCenterY =
+				WebDriverHelper.getElementPositionCenterY(this, locator);
+			int navigationBarHeight = 116;
+			int viewportPositionTop = WebDriverHelper.getScrollOffsetY(
+				this);
+
+			int screenPositionY =
+				(((elementPositionCenterY - viewportPositionTop) * 3) / 2) +
+					navigationBarHeight;
+
+			sb.append(screenPositionY);
+
+			runtime.exec(sb.toString());
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+	}
+
 	private static final DesiredCapabilities _desiredCapabilities;
 	private static final URL _url;
 

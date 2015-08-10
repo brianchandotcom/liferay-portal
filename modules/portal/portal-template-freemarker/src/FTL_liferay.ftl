@@ -48,7 +48,7 @@ LPS-30525.
 <#macro css
 	file_name
 >
-	<#if file_name = css_main_file>
+	<#if file_name == css_main_file>
 		<link class="lfr-css-file" href="${file_name}" id="mainLiferayThemeCSS" rel="stylesheet" type="text/css" />
 	<#else>
 		<link class="lfr-css-file" href="${file_name}" rel="stylesheet" type="text/css" />

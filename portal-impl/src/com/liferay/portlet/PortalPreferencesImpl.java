@@ -68,6 +68,24 @@ public class PortalPreferencesImpl
 	}
 
 	public PortalPreferencesImpl(
+		com.liferay.portal.model.PortalPreferences portalPreferences,
+		boolean signedIn) {
+
+		super(
+			portalPreferences.getOwnerId(), portalPreferences.getOwnerType(),
+			portalPreferences.getPreferences(), null);
+
+		setOriginalPreferences(
+			PortletPreferencesFactoryImpl.createPreferencesMap(
+				portalPreferences.getPreferences()));
+
+		_portalPreferences = (com.liferay.portal.model.PortalPreferences)
+			portalPreferences.clone();
+
+		_signedIn = signedIn;
+	}
+
+	public PortalPreferencesImpl(
 		long ownerId, int ownerType, String xml,
 		Map<String, Preference> preferences, boolean signedIn) {
 
@@ -78,9 +96,14 @@ public class PortalPreferencesImpl
 
 	@Override
 	public PortalPreferencesImpl clone() {
-		return new PortalPreferencesImpl(
-			getOwnerId(), getOwnerType(), getOriginalXML(),
-			new HashMap<>(getOriginalPreferences()), isSignedIn());
+		if (_portalPreferences == null) {
+			return new PortalPreferencesImpl(
+				getOwnerId(), getOwnerType(), getOriginalXML(),
+				new HashMap<>(getOriginalPreferences()), isSignedIn());
+		}
+		else {
+			return new PortalPreferencesImpl(_portalPreferences, isSignedIn());
+		}
 	}
 
 	@Override
@@ -301,11 +324,25 @@ public class PortalPreferencesImpl
 	@Override
 	public void store() throws IOException {
 		try {
-			PortalPreferencesLocalServiceUtil.updatePreferences(
-				getOwnerId(), getOwnerType(), this);
+			if (_portalPreferences == null) {
+				_portalPreferences =
+					PortalPreferencesLocalServiceUtil.updatePreferences(
+						getOwnerId(), getOwnerType(), this);
+			}
+			else {
+				PortalPreferencesWrapperCacheUtil.remove(
+					getOwnerId(), getOwnerType());
+
+				_portalPreferences.setPreferences(toXML());
+
+				PortalPreferencesLocalServiceUtil.updatePortalPreferences(
+					_portalPreferences);
+
+				_portalPreferences = reload(getOwnerId(), getOwnerType());
+			}
 		}
-		catch (SystemException se) {
-			throw new IOException(se);
+		catch (Throwable t) {
+			throw new IOException(t);
 		}
 	}
 
@@ -354,12 +391,9 @@ public class PortalPreferencesImpl
 						continue;
 					}
 
-					String preferencesXML = portalPreferences.getPreferences();
-
 					PortalPreferencesImpl portalPreferencesImpl =
-						(PortalPreferencesImpl)
-							PortletPreferencesFactoryUtil.fromXML(
-								ownerId, ownerType, preferencesXML);
+						new PortalPreferencesImpl(
+							portalPreferences, isSignedIn());
 
 					if (!Arrays.equals(
 							originalValues,
@@ -374,13 +408,21 @@ public class PortalPreferencesImpl
 					setOriginalPreferences(
 						portalPreferencesImpl.getOriginalPreferences());
 
-					setOriginalXML(preferencesXML);
+					setOriginalXML(portalPreferences.getPreferences());
+
+					setPortalPreferences(portalPreferences);
 				}
 				else {
 					throw e;
 				}
 			}
 		}
+	}
+
+	protected void setPortalPreferences(
+		com.liferay.portal.model.PortalPreferences portalPreferences) {
+
+		_portalPreferences = portalPreferences;
 	}
 
 	private String _encodeKey(String namespace, String key) {
@@ -414,6 +456,7 @@ public class PortalPreferencesImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalPreferencesImpl.class);
 
+	private com.liferay.portal.model.PortalPreferences _portalPreferences;
 	private boolean _signedIn;
 	private long _userId;
 

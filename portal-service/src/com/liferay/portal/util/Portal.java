@@ -1125,16 +1125,9 @@ public interface Portal {
 		HttpServletRequest request, ThemeDisplay themeDisplay,
 		String portletId);
 
-	public PortletURL getSiteAdministrationURL(
-		PortletRequest portletRequest, ThemeDisplay themeDisplay);
-
-	public PortletURL getSiteAdministrationURL(
-		PortletRequest portletRequest, ThemeDisplay themeDisplay,
-		String portletId);
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getSiteAdministrationURL(PortletRequest, themeDisplay)}
+	 *             #getControlPanelPortletURL(PortletRequest, Group, String, long, String)}
 	 */
 	@Deprecated
 	public PortletURL getSiteAdministrationURL(
@@ -1142,8 +1135,7 @@ public interface Portal {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getSiteAdministrationURL(PortletRequest, themeDisplay,
-	 *             String)}
+	 *             #getControlPanelPortletURL(PortletRequest, Group, String, long, String)}
 	 */
 	@Deprecated
 	public PortletURL getSiteAdministrationURL(

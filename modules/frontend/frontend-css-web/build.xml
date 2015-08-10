@@ -2,7 +2,6 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="common.css.dir" value="../../../portal-web/docroot/html/css/common" />
 	<property name="css.dir" value="src/META-INF/resources" />
 	<property name="third.party.dir" value="../../../portal-web/third-party" />
 

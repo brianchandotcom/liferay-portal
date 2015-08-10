@@ -226,8 +226,6 @@ AUI.add(
 					bgData.backgroundColor = color;
 				};
 
-				var hexValue = backgroundColor.val().replace('#', EMPTY);
-
 				if (!instance._backgroundColorPicker) {
 					instance._backgroundColorPicker = new A.ColorPickerPopover(
 						{
@@ -1952,8 +1950,6 @@ AUI.add(
 						textData.color = color;
 					}
 				};
-
-				var hexValue = fontColor.val().replace('#', EMPTY);
 
 				if (!instance._fontColorPicker) {
 					instance._fontColorPicker = new A.ColorPickerPopover(

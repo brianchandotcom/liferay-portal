@@ -12,6 +12,14 @@
 		<execute function="AssertTextNotPresent" value1="${assetName}" />
 	</command>
 
+	<command name="dragAndDropAssetToRecycleBin">
+		<var name="key_assetName" value="${assetName}" />
+
+		<execute function="AssertTextEquals" locator1="RecycleBin#ASSET_TITLE" value1="${assetName}" />
+
+		<execute function="DragAndDrop" locator1="RecycleBin#ASSET_TITLE" locator2="RecycleBin#RECYCLE_BIN" value1="${assetName}" />
+	</command>
+
 	<command name="emptyCP">
 		<if>
 			<condition function="IsElementPresent" locator1="CPRecyclebin#EMPTY_RECYCLE_BIN" />
@@ -123,6 +131,13 @@
 	<command name="searchCP">
 		<execute function="Type" locator1="CPRecyclebin#SEARCH_FIELD" value1="${assetName}" />
 		<execute function="AssertClick" locator1="CPRecyclebin#SEARCH_BUTTON" value1="Search" />
+	</command>
+
+	<command name="viewAssetsDuplicateName">
+		<var name="key_assetName" value="${assetName}" />
+
+		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME_1" value1="${assetName}" />
+		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME_2" value1="${assetName}" />
 	</command>
 
 	<command name="viewCP">

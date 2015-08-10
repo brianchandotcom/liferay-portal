@@ -502,8 +502,16 @@ public interface Portal {
 		String category, ThemeDisplay themeDisplay);
 
 	public PortletURL getControlPanelPortletURL(
+		HttpServletRequest request, Group group, String portletId,
+		long referrerPlid, String lifecycle);
+
+	public PortletURL getControlPanelPortletURL(
 		HttpServletRequest request, String portletId, long referrerPlid,
 		String lifecycle);
+
+	public PortletURL getControlPanelPortletURL(
+		PortletRequest portletRequest, Group group, String portletId,
+		long referrerPlid, String lifecycle);
 
 	public PortletURL getControlPanelPortletURL(
 		PortletRequest portletRequest, String portletId, long referrerPlid,

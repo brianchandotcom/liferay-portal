@@ -665,11 +665,27 @@ public class PortalUtil {
 	}
 
 	public static PortletURL getControlPanelPortletURL(
+		HttpServletRequest request, Group group, String portletId,
+		long referrerPlid, String lifecycle) {
+
+		return getPortal().getControlPanelPortletURL(
+			request, group, portletId, referrerPlid, lifecycle);
+	}
+
+	public static PortletURL getControlPanelPortletURL(
 		HttpServletRequest request, String portletId, long referrerPlid,
 		String lifecycle) {
 
 		return getPortal().getControlPanelPortletURL(
 			request, portletId, referrerPlid, lifecycle);
+	}
+
+	public static PortletURL getControlPanelPortletURL(
+		PortletRequest portletRequest, Group group, String portletId,
+		long referrerPlid, String lifecycle) {
+
+		return getPortal().getControlPanelPortletURL(
+			portletRequest, group, portletId, referrerPlid, lifecycle);
 	}
 
 	public static PortletURL getControlPanelPortletURL(

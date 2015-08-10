@@ -39,6 +39,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECYCLE_BIN</td>
+	<td>//div[contains(@id,'site_administration_content')]//a[contains(@id,'trash_web_portlet_TrashPortlet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_TITLE</td>
+	<td>//div[contains(@class,'app-view-entry') and @data-title='${key_assetName}']//div[@class='entry-metadata']/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -67,6 +77,16 @@
 <tr>
 	<td>RECYCLE_BIN_TABLE_ACTIONS</td>
 	<td>//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr[contains(.,'${key_assetName}')]/td[5]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_TABLE_NAME_1</td>
+	<td>//div[contains(@id,'trashEntriesSearchContainerSearchContainer')]//tr[contains(.,'${key_assetName}')][1]/td[1]/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_TABLE_NAME_2</td>
+	<td>//div[contains(@id,'trashEntriesSearchContainerSearchContainer')]//tr[contains(.,'${key_assetName}')][2]/td[1]/span/a</td>
 	<td></td>
 </tr>
 <tr>

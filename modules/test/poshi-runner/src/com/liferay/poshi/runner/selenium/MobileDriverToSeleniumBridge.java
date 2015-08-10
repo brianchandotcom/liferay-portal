@@ -15,14 +15,10 @@
 package com.liferay.poshi.runner.selenium;
 
 import com.liferay.poshi.runner.util.PropsValues;
-import com.liferay.poshi.runner.util.StringUtil;
 
 import com.thoughtworks.selenium.Selenium;
 
 import io.appium.java_client.MobileDriver;
-import io.appium.java_client.TouchAction;
-
-import java.io.IOException;
 
 import java.util.List;
 

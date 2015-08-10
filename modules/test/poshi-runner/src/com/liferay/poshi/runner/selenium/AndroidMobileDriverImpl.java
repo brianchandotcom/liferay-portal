@@ -70,15 +70,14 @@ public class AndroidMobileDriverImpl extends BaseMobileDriverImpl {
 
 	@Override
 	protected void swipeWebElementIntoView(String locator) {
-		int elementPositionCenterY =
-			WebDriverHelper.getElementPositionCenterY(this, locator);
+		int elementPositionCenterY = WebDriverHelper.getElementPositionCenterY(
+			this, locator);
 
 		for (int i = 0; i < 25; i++) {
 			int viewportPositionBottom =
 				WebDriverHelper.getViewportPositionBottom(this);
 
-			int viewportPositionTop = WebDriverHelper.getScrollOffsetY(
-				this);
+			int viewportPositionTop = WebDriverHelper.getScrollOffsetY(this);
 
 			StringBuilder sb = new StringBuilder(4);
 
@@ -145,8 +144,7 @@ public class AndroidMobileDriverImpl extends BaseMobileDriverImpl {
 			int elementPositionCenterY =
 				WebDriverHelper.getElementPositionCenterY(this, locator);
 			int navigationBarHeight = 116;
-			int viewportPositionTop = WebDriverHelper.getScrollOffsetY(
-				this);
+			int viewportPositionTop = WebDriverHelper.getScrollOffsetY(this);
 
 			int screenPositionY =
 				(((elementPositionCenterY - viewportPositionTop) * 3) / 2) +

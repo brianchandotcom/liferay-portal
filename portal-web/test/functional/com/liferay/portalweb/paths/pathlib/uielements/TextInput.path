@@ -114,11 +114,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_NAME</td>
-	<td>//input[contains(@id,'folderName')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FILE</td>
 	<td>//input[contains(@id,'file') and @type='file']</td>
 	<td></td>

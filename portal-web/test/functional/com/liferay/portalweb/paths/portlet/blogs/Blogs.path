@@ -31,12 +31,12 @@
 <!--ENTRY_TABLE-->
 <tr>
 	<td>ENTRY_TABLE_ALL_CHECKBOX</td>
-	<td>//th/input[@name='_161_allRowIds']</td>
+	<td>//th/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_entryTitle}')]/td/input[@name='_161_rowIds']</td>
+	<td>//tr[contains(.,'${key_entryTitle}')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

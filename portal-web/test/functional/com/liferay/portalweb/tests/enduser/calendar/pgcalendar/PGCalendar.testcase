@@ -2169,7 +2169,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteEventAndViewRSSFeed" priority="4">
+	<command known-issues="LPS-57784" name="DeleteEventAndViewRSSFeed" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -2224,7 +2224,7 @@
 		<execute macro="Navigator#closeWindow" />
 	</command>
 
-	<command name="DisableRSSFeedForSiteCalendar" priority="4">
+	<command known-issues="LPS-57784" name="DisableRSSFeedForSiteCalendar" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -4556,7 +4556,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSiteCalendarRSSFeed" priority="4">
+	<command known-issues="LPS-57784" name="ViewSiteCalendarRSSFeed" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

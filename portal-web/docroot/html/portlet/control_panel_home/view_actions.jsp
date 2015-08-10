@@ -77,15 +77,11 @@
 							if (refererLayout != null) {
 								Group refererGroup = refererLayout.getGroup();
 
-								ThemeDisplay siteThemeDisplay = (ThemeDisplay)themeDisplay.clone();
-
-								siteThemeDisplay.setScopeGroupId(refererGroup.getGroupId());
-
 								String siteName = HtmlUtil.escape(StringUtil.shorten(refererGroup.getDescriptiveName(locale), 35));
 
 								String buttonLabel = LanguageUtil.format(request, "manage-x", siteName, false);
 
-								PortletURL siteAdministrationURL = PortalUtil.getSiteAdministrationURL(request, siteThemeDisplay);
+								PortletURL siteAdministrationURL = refererGroup.getAdministrationURL(themeDisplay);
 						%>
 
 								<c:if test="<%= siteAdministrationURL != null %>">

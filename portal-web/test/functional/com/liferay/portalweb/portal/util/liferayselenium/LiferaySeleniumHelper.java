@@ -1106,6 +1106,19 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
+		// LPS-57789, temporary workaround until Dante Wang fixes it
+
+		if (line.matches(
+				".*The web application \\[\\] appears to have started " +
+					"a thread.*")) {
+
+			if (line.matches(
+					".*\\[Hikari housekeeper (pool HikariPool-*\\].*")) {
+
+				return true;
+			}
+		}
+
 		// LRQA-14442, temporary workaround until Kiyoshi Lee fixes it
 
 		if (line.contains("Framework Event Dispatcher: Equinox Container:")) {

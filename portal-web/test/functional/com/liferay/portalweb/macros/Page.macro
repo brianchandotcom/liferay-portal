@@ -207,7 +207,9 @@
 
 		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_ALL_SITES_PANEL_TITLE" value1="${portletCategoryName}" />
 
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_NAME" value1="${siteName}" />
+		<var name="key_portletName" value="${siteName}" />
+
+		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${siteName}" />
 	</command>
 
 	<command name="deleteFriendlyURLPG">

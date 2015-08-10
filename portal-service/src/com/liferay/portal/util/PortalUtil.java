@@ -1816,7 +1816,8 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getControlPanelPortletURL(PortletRequest, Group, String, long, String)}
+	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
+	 *             long, String)}
 	 */
 	@Deprecated
 	public static PortletURL getSiteAdministrationURL(
@@ -1827,7 +1828,8 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getControlPanelPortletURL(PortletRequest, Group, String, long, String)}
+	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
+	 *             long, String)}
 	 */
 	@Deprecated
 	public static PortletURL getSiteAdministrationURL(
@@ -1840,7 +1842,8 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getControlPanelPortletURL(PortletRequest, Group, String, long, String)}
+	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
+	 *             long, String)}
 	 */
 	@Deprecated
 	public static PortletURL getSiteAdministrationURL(
@@ -1852,7 +1855,8 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getControlPanelPortletURL(PortletRequest, Group, String, long, String)}
+	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
+	 *             long, String)}
 	 */
 	@Deprecated
 	public static PortletURL getSiteAdministrationURL(

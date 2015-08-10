@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.form.web.application.list;
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.portal.service.PortletLocalService;
 
@@ -45,7 +46,7 @@ public class DDLFormAdminPanelApp extends BaseControlPanelEntryPanelApp {
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
-		this.portletLocalService = portletLocalService;
+		_portletLocalService = portletLocalService;
 	}
 
 }

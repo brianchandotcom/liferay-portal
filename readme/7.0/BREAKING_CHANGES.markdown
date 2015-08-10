@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `bfabcf8`.*
+*This document has been reviewed through commit `dca7f96`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2191,7 +2191,7 @@ deploy Vaadin libraries to Liferay's OSGi container.
 Vaadin 6.x is outdated and there are no plans for any new projects to be
 created with it. Therefore, developers should begin using Vaadin 7.x.
 
-------------------------------------------------------------------------------
+---------------------------------------
 
 ### Replaced the Navigation Menu Portlet's Display Styles with ADTs
 - **Date:** 2015-Jul-31
@@ -2204,14 +2204,14 @@ They have been replaced by Application Display Templates (ADT).
 
 #### Who is affected?
 
-This affects developers that use the following portlet properties:
+This affects developers that use the following portlet property:
 
     navigation.display.style
 
 This also affects developers that use the following attribute in the navigation
-taglib:
+tag:
 
-     displayStyleDefinition
+    displayStyleDefinition
 
 #### How should I update my code?
 
@@ -2221,10 +2221,11 @@ to *Site Settings* &rarr; *Application Display Templates*. ADTs can also be
 created programatically.
 
 Developers should use the `ddmTemplateGroupId` and `ddmTemplateKey` attributes
-of the navigation taglib to set the ADT that defines the style of the
-navigation.
+of the navigation tag to set the ADT that defines the style of the navigation.
 
 #### Why was this change made?
 
 ADTs allow you to change an application's look and feel without changing its JSP
 code.
+
+---------------------------------------

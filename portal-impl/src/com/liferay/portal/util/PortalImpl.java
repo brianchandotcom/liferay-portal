@@ -1736,13 +1736,13 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public PortletURL getControlPanelPortletURL(
-		HttpServletRequest request, String portletId, long referrerPlid,
-		String lifecycle) {
+		HttpServletRequest request, Group group, String portletId,
+		long referrerPlid, String lifecycle) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = getControlPanelLayout(themeDisplay);
+		Layout layout = getControlPanelLayout(themeDisplay, group);
 
 		request.setAttribute(WebKeys.LAYOUT, layout);
 
@@ -1765,13 +1765,22 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public PortletURL getControlPanelPortletURL(
-		PortletRequest portletRequest, String portletId, long referrerPlid,
+		HttpServletRequest request, String portletId, long referrerPlid,
 		String lifecycle) {
+
+		return getControlPanelPortletURL(
+			request, null, portletId, referrerPlid, lifecycle);
+	}
+
+	@Override
+	public PortletURL getControlPanelPortletURL(
+		PortletRequest portletRequest, Group group, String portletId,
+		long referrerPlid, String lifecycle) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = getControlPanelLayout(themeDisplay);
+		Layout layout = getControlPanelLayout(themeDisplay, group);
 
 		portletRequest.setAttribute(WebKeys.LAYOUT, layout);
 
@@ -1790,6 +1799,15 @@ public class PortalImpl implements Portal {
 		}
 
 		return liferayPortletURL;
+	}
+
+	@Override
+	public PortletURL getControlPanelPortletURL(
+		PortletRequest portletRequest, String portletId, long referrerPlid,
+		String lifecycle) {
+
+		return getControlPanelPortletURL(
+			portletRequest, null, portletId, referrerPlid, lifecycle);
 	}
 
 	@Override
@@ -7696,7 +7714,9 @@ public class PortalImpl implements Portal {
 		return contextPath;
 	}
 
-	protected Layout getControlPanelLayout(ThemeDisplay themeDisplay) {
+	protected Layout getControlPanelLayout(
+		ThemeDisplay themeDisplay, Group group) {
+
 		Layout layout = null;
 
 		try {
@@ -7710,16 +7730,16 @@ public class PortalImpl implements Portal {
 			return null;
 		}
 
-		Group group = null;
-
-		long groupId = themeDisplay.getDoAsGroupId();
-
-		if (groupId > 0) {
-			group = GroupLocalServiceUtil.fetchGroup(groupId);
-		}
-
 		if (group == null) {
-			group = themeDisplay.getScopeGroup();
+			long groupId = themeDisplay.getDoAsGroupId();
+
+			if (groupId > 0) {
+				group = GroupLocalServiceUtil.fetchGroup(groupId);
+			}
+
+			if (group == null) {
+				group = themeDisplay.getScopeGroup();
+			}
 		}
 
 		return new VirtualLayout(layout, group);

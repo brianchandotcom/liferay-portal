@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_SITE_NAME</td>
-	<td>//div[contains(@id,'site_administration')]//a[contains(.,'${siteName}')]</td>
+	<td>//div[contains(@id,'sites_administration')]//a[contains(.,'${siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

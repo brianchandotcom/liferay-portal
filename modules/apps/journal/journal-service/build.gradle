@@ -11,6 +11,7 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
 	compile project(":apps:journal:journal-api")
+	compile project(":apps:mobile-device-rules:mobile-device-rules-api")
 }
 
 liferay {

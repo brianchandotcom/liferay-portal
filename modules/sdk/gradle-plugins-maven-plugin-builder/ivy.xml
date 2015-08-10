@@ -17,7 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="com.liferay.gradle.util" org="com.liferay" rev="1.0.15" />
+		<dependency name="com.liferay.gradle.util" org="com.liferay" rev="1.0.16" />
 		<dependency name="qdox" org="com.thoughtworks.qdox" rev="1.12.1" />
 		<dependency conf="provided->default" name="groovy-all" org="org.codehaus.groovy" rev="2.3.10" />
 		<dependency conf="provided->default" name="org.gradle.gradle-base-services" org="com.liferay" rev="2.5" />

@@ -14,10 +14,16 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.liferay.poshi.runner.util.PropsValues;
+import com.liferay.poshi.runner.util.StringUtil;
+
 import io.appium.java_client.android.AndroidDriver;
+
+import java.io.IOException;
 
 import java.net.URL;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
@@ -30,6 +36,36 @@ public class AndroidMobileDriverImpl extends BaseMobileDriverImpl {
 		super(
 			projectDirName, browserURL,
 			new AndroidDriver(_url, _desiredCapabilities));
+	}
+
+	@Override
+	public void type(String locator, String value) {
+		WebElement webElement = getWebElement(locator);
+
+		if (!webElement.isEnabled()) {
+			return;
+		}
+
+		webElement.clear();
+
+		Runtime runtime = Runtime.getRuntime();
+
+		StringBuilder sb = new StringBuilder(6);
+
+		sb.append(PropsValues.MOBILE_ANDROID_HOME);
+		sb.append("/platform-tools/");
+		sb.append("adb -s emulator-5554 shell input text ");
+
+		value = StringUtil.replace(value, " ", "%s");
+
+		sb.append(value);
+
+		try {
+			runtime.exec(sb.toString());
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
 	}
 
 	private static final DesiredCapabilities _desiredCapabilities;

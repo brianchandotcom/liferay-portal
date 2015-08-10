@@ -131,6 +131,11 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 	}
 
 	@Override
+	public String getTitle() {
+		return "asset-type";
+	}
+
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.search.web)", unbind = "-"
 	)

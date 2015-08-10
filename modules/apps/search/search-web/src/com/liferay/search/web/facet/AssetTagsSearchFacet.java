@@ -105,6 +105,11 @@ public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 	}
 
 	@Override
+	public String getTitle() {
+		return "tag";
+	}
+
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.search.web)", unbind = "-"
 	)

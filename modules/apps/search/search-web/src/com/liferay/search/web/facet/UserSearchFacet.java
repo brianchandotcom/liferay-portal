@@ -101,6 +101,11 @@ public class UserSearchFacet extends BaseJSPSearchFacet {
 	}
 
 	@Override
+	public String getTitle() {
+		return "user";
+	}
+
+	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.search.web)", unbind = "-"
 	)

@@ -215,9 +215,8 @@ public class PortalPreferencesLocalServiceImpl
 					ownerId, ownerType, defaultPreferences);
 		}
 
-		PortalPreferencesImpl portalPreferencesImpl =
-			(PortalPreferencesImpl)PortletPreferencesFactoryUtil.fromXML(
-				ownerId, ownerType, portalPreferences.getPreferences());
+		PortalPreferencesImpl portalPreferencesImpl = new PortalPreferencesImpl(
+			portalPreferences, false);
 
 		portalPreferencesWrapper = new PortalPreferencesWrapper(
 			portalPreferencesImpl);

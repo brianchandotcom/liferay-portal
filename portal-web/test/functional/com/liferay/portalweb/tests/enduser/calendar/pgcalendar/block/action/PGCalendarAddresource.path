@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_1_WAR_CalendarPortlet_description']</td>
+	<td>//textarea[contains(@id,'_CalendarPortlet_description')]</td>
 	<td></td>
 </tr>
 <tr>

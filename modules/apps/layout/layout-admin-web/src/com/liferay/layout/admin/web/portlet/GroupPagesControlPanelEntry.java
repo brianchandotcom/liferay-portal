@@ -58,7 +58,7 @@ public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {
 		throws Exception {
 
 		if (group.isUser()) {
-			return super.hasAccessPermissionExplicitlyGranted(
+			return super.hasPermissionImplicitlyGranted(
 				permissionChecker, group, portlet);
 		}
 

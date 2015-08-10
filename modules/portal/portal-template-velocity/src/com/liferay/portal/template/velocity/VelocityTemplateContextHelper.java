@@ -27,6 +27,7 @@ import com.liferay.portal.service.permission.RolePermissionUtil;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplatePortletPreferences;
 import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 
@@ -116,8 +117,11 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 
 		// Insert custom vm variables
 
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		Map<String, Object> vmVariables =
-			(Map<String, Object>)request.getAttribute(WebKeys.VM_VARIABLES);
+			(Map<String, Object>)request.getAttribute(
+				WebKeys.VM_VARIABLES + portletDisplay.getId());
 
 		if (vmVariables != null) {
 			for (Map.Entry<String, Object> entry : vmVariables.entrySet()) {

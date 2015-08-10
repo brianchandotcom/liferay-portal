@@ -1,5 +1,5 @@
 import com.liferay.gradle.util.FileUtil
-import com.liferay.gradle.util.copy.StripPathSegmentsAction
+import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
 
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
@@ -18,14 +18,24 @@ task buildBourbon(type: Copy)
 task buildCssCommon
 
 buildBourbon {
-	File bourbonDestinationDir = file("src/META-INF/resources/html/css/common/bourbon")
+	File commonCssDestinationDir = file("tmp/META-INF/resources/html/css/common")
+
+	File bourbonDestinationDir = new File(commonCssDestinationDir, "bourbon")
 	File bourbonZipFile = file("../../../portal-web/third-party/bourbon-${bourbonVersion}.zip")
 
-	eachFile new StripPathSegmentsAction(4)
-	from zipTree(bourbonZipFile)
-	include "bourbon-${bourbonVersion}/app/assets/stylesheets/**/*"
+	from("src/META-INF/resources/html/css/common") {
+		exclude "**.npmignore"
+		exclude "**.json"
+	}
+
 	includeEmptyDirs = false
-	into bourbonDestinationDir
+	into commonCssDestinationDir
+
+	into(bourbonDestinationDir.name) {
+		eachFile new ReplaceLeadingPathAction("bourbon/bourbon-3.2.3/app/assets/stylesheets": "bourbon")
+		from zipTree(bourbonZipFile)
+		include "bourbon-${bourbonVersion}/app/assets/stylesheets/**/*"
+	}
 
 	onlyIf {
 		!FileUtil.isUpToDate(project, bourbonZipFile, bourbonDestinationDir)

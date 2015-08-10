@@ -4,6 +4,7 @@ dependencies {
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:document-library:document-library-api")
 	compile project(":apps:document-library:document-library-service")
+	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 }
 
 liferay {

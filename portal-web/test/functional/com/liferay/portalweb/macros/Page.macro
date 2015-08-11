@@ -325,9 +325,16 @@
 
 		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_SITES_NAVIGATION" value1="Sites" />
 
-		<var name="key_portletCategoryName" value="${portletCategoryName}" />
+		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITES_PANEL_TITLE" value1="${portletCategoryName}" />
+		<if>
+			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${portletName}" />
+			<then>
+				<var name="key_portletCategoryName" value="${portletCategoryName}" />
+
+				<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITES_PANEL_TITLE" value1="${portletCategoryName}" />
+			</then>
+		</if>
 
 		<if>
 			<not>

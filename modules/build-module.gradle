@@ -273,7 +273,9 @@ tasks.withType(JavaCompile) {
 	options.warnings = false
 }
 
-if (project.hasProperty("testClassGroupIndex")) {
+String testClassGroupIndex = System.getProperty("test.class.group.index")
+
+if (testClassGroupIndex) {
 	Properties properties = new Properties()
 
 	File file = new File(rootDir, "../test.class.file.names.properties")

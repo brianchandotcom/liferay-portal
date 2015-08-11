@@ -156,9 +156,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 	title='<%= (ldapServerId == 0) ? "add-ldap-server" : "edit-ldap-server" %>'
 />
 
-<portlet:actionURL var="editLDAPServerURL">
-	<portlet:param name="struts_action" value="/portal_settings/edit_ldap_server" />
-</portlet:actionURL>
+<portlet:actionURL name="/portal_settings/edit_ldap_server" var="editLDAPServerURL" />
 
 <aui:form action="<%= editLDAPServerURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry(false);" %>'>
 	<liferay-ui:error exception="<%= DuplicateLDAPServerNameException.class %>" message="please-enter-a-unique-ldap-server-name" />

@@ -605,6 +605,7 @@
    <bean id="com.liferay.portlet.portalsettings.action.TestLDAPConnectionMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestLDAPConnectionMVCRenderCommand" />
    <bean id="com.liferay.portlet.portalsettings.action.TestLDAPGroupsMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestLDAPGroupsMVCRenderCommand" />
    <bean id="com.liferay.portlet.portalsettings.action.TestLDAPUsersMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestLDAPUsersMVCRenderCommand" />
+   <bean id="com.liferay.portlet.portalsettings.action.TestOpenSSOConfigurationMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestOpenSSOConfigurationMVCRenderCommand" />
 
 
     <bean id="com.liferay.portlet.rolesadmin.util.RolesAdmin" class="com.liferay.portlet.rolesadmin.util.RolesAdminImpl" />

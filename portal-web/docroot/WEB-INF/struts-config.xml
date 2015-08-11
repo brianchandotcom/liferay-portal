@@ -261,11 +261,6 @@
 
 		<action path="/our_activities/view" forward="portlet.our_activities.view" />
 
-
-		<!-- Portal Settings -->
-  
-		<action path="/portal_settings/test_opensso_configuration" forward="portlet.portal_settings.test_opensso_configuration" />
-
 		<!-- Portlet Sharing -->
 
 		<action path="/portlet_sharing/view" type="com.liferay.portlet.portletsharing.action.ViewAction">

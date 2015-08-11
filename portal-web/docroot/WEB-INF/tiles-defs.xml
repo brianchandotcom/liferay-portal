@@ -301,10 +301,6 @@
 		<put name="portlet_content" value="/portlet/portal_settings/error.jsp" />
 	</definition>
 	
-	<definition name="portlet.portal_settings.test_opensso_configuration" extends="portlet.portal_settings">
-		<put name="portlet_content" value="/portlet/portal_settings/test_opensso_configuration.jsp" />
-	</definition>
-
 	<!-- Portlet Sharing -->
 
 	<definition name="portlet.portlet_sharing" extends="portlet">

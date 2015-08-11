@@ -245,7 +245,7 @@
 </tr>
 <tr>
 	<td>FOLDER</td>
-	<td>//a[@role='menuitem' and contains(.,'Folder')]</td>
+	<td>//a[@role='menuitem' and @title='Folder']</td>
 	<td></td>
 </tr>
 <tr>

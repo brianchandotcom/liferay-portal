@@ -15,11 +15,13 @@
 package com.liferay.announcements.web.portlet;
 
 import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
+import com.liferay.announcements.web.upgrade.AnnouncementsWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -49,4 +51,10 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class AnnouncementsPortlet extends MVCPortlet {
+
+	@Reference(unbind = "-")
+	protected void setAnnouncementsWebUpgrade(
+		AnnouncementsWebUpgrade announcementsWebUpgrade) {
+	}
+
 }

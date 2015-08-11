@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCRenderCommand.class
 )
-public class StagingMVCRenderCommand implements MVCRenderCommand {
+public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -66,7 +66,7 @@ public class StagingMVCRenderCommand implements MVCRenderCommand {
 			renderRequest = ActionUtil.getWrappedRenderRequest(
 				renderRequest, null);
 
-			return "/staging.jsp";
+			return "/view.jsp";
 		}
 		catch (Exception e) {
 			SessionErrors.add(renderRequest, e.getClass());

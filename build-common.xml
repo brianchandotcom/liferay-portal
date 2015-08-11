@@ -842,6 +842,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	<macrodef name="gradle-execute">
 		<attribute default="${basedir}" name="dir" />
 		<attribute default="true" name="failonerror" />
+		<attribute default="true" name="forcedcacheenabled" />
 		<attribute name="task" />
 		<element implicit="true" name="args" optional="true" />
 
@@ -863,6 +864,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<arg value="--project-cache-dir=${project.dir}/.gradle" />
 				<arg value="--stacktrace" />
 				<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
+				<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
 				<arg value="-Dliferay.home=${liferay.home}" />
 				<arg value="@{task}" />
 				<env key="GRADLE_OPTS" value="${env.ANT_OPTS}" />

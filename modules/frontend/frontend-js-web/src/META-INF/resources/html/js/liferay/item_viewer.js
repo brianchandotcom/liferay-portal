@@ -199,7 +199,9 @@ AUI.add(
 							{
 								content: sidebarNode.find('.image-viewer-base-image'),
 								equalHeight: false,
+								position: 'right',
 								toggler: instance._infoIconEl.getDOMNode(),
+								useDelegate: false,
 								width: '300px'
 							}
 						);

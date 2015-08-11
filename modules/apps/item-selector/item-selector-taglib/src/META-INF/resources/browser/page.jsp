@@ -139,14 +139,14 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 	}
 	%>
 
-	<c:if test="<%= (draggableFileReturnType != null) && !showSearchInfo %>">
+	<c:if test="<%= (draggableFileReturnType != null) && showDragAndDropZone && !showSearchInfo %>">
 		<liferay-util:buffer var="selectFileHTML">
 			<label class="btn btn-default" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
 
 			<input class="hide" id="<%= randomNamespace %>InputFile" type="file" />
 		</liferay-util:buffer>
 
-		<div class="drop-enabled drop-zone <%= showDragAndDropZone ? StringPool.BLANK : "hide" %> no-border" data-returntype="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(draggableFileReturnType)) %>" data-uploadurl="<%= uploadURL.toString() %>">
+		<div class="drop-enabled drop-zone no-border">
 			<strong><liferay-ui:message arguments="<%= selectFileHTML %>" key="drag-and-drop-to-upload-or-x" /></strong>
 		</div>
 	</c:if>
@@ -429,7 +429,11 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>', event);
 				}
 			},
-			rootNode: '#<%= randomNamespace %>ItemSelectorContainer'
+			rootNode: '#<%= randomNamespace %>ItemSelectorContainer',
+			<c:if test="<%= (draggableFileReturnType != null) %>">
+			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(draggableFileReturnType)) %>',
+			uploadItemUrl: '<%= uploadURL.toString() %>'
+			</c:if>
 		}
 	);
 </aui:script>

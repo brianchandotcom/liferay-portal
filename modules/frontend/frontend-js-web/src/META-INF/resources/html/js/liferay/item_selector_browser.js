@@ -28,6 +28,14 @@ AUI.add(
 					closeCaption: {
 						validator: Lang.isString,
 						value: ''
+					},
+					uploadItemReturnType: {
+						validator: Lang.isString,
+						value: ''
+					},
+					uploadItemUrl: {
+						validator: Lang.isString,
+						value: ''
 					}
 				},
 
@@ -61,8 +69,6 @@ AUI.add(
 								rootNode: instance.rootNode
 							}
 						);
-
-						instance._dropArea = instance.rootNode.one('.drop-zone');
 
 						instance._bindUI();
 						instance._renderUI();
@@ -286,9 +292,7 @@ AUI.add(
 					_showFile: function(file, preview) {
 						var instance = this;
 
-						var dropArea = instance._dropArea;
-
-						var returnType = dropArea.getData('returntype');
+						var returnType = instance.get('uploadItemReturnType');
 
 						var linkNode = A.Node.create(
 							Lang.sub(
@@ -307,7 +311,7 @@ AUI.add(
 						instance._uploadItemViewer.set(STR_LINKS, new A.NodeList(linkNode));
 						instance._uploadItemViewer.show();
 
-						instance._itemSelectorUploader.startUpload(file, dropArea.getData('uploadurl'));
+						instance._itemSelectorUploader.startUpload(file, instance.get('uploadItemUrl'));
 					}
 				}
 			}

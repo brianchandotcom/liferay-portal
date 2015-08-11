@@ -419,7 +419,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public boolean isPartialText(String locator, String value) {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.isPartialText(this, locator, value);
 	}
 
 	@Override

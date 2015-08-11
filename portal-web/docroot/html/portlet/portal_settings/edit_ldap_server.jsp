@@ -546,7 +546,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 			var data = {};
 
 			if (type == 'ldapConnection') {
-				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/portal_settings/test_ldap_connection" /></portlet:renderURL>';
+				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/portal_settings/test_ldap_connection" /></portlet:renderURL>';
 			}
 			else if (type == 'ldapGroups') {
 				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/portal_settings/test_ldap_groups" /></portlet:renderURL>';

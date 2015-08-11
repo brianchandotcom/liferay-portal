@@ -1209,6 +1209,8 @@ public interface PropsKeys {
 
 	public static final String LDAP_IMPORT_USER_SEARCH_FILTER = "ldap.import.user.search.filter";
 
+	public static final String LDAP_IMPORT_USER_SYNC_UUID = "ldap.import.user.sync.uuid";
+
 	public static final String LDAP_PAGE_SIZE = "ldap.page.size";
 
 	public static final String LDAP_PASSWORD_POLICY_ENABLED = "ldap.password.policy.enabled";

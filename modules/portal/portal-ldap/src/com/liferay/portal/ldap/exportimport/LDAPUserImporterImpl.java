@@ -607,7 +607,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	}
 
 	protected User getUser(long companyId, LDAPUser ldapUser) throws Exception {
-		User user = null;
+		if (PropsValues.LDAP_IMPORT_USER_SYNC_UUID) {
+			ServiceContext serviceContext = ldapUser.getServiceContext();
+
+			return UserLocalServiceUtil.fetchUserByUuidAndCompanyId(
+				serviceContext.getUuid(), companyId);
+		}
 
 		String authType = PrefsPropsUtil.getString(
 			companyId, PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
@@ -616,15 +621,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		if (authType.equals(CompanyConstants.AUTH_TYPE_SN) &&
 			!ldapUser.isAutoScreenName()) {
 
-			user = UserLocalServiceUtil.fetchUserByScreenName(
+			return UserLocalServiceUtil.fetchUserByScreenName(
 				companyId, ldapUser.getScreenName());
 		}
-		else {
-			user = UserLocalServiceUtil.fetchUserByEmailAddress(
-				companyId, ldapUser.getEmailAddress());
-		}
 
-		return user;
+		return UserLocalServiceUtil.fetchUserByEmailAddress(
+			companyId, ldapUser.getEmailAddress());
 	}
 
 	protected Attribute getUsers(

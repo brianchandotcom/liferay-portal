@@ -7632,9 +7632,9 @@ public class PortalImpl implements Portal {
 			return layout;
 		}
 
-		List<Layout> childLayouts = layout.getAllChildren();
-
 		Layout browsableChildLayout = null;
+
+		List<Layout> childLayouts = layout.getAllChildren();
 
 		for (Layout childLayout : childLayouts) {
 			LayoutType childLayoutType = childLayout.getLayoutType();

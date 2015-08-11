@@ -143,7 +143,7 @@ public class SeleniumUtil extends TestPropsValues {
 					System.setProperty(
 						"webdriver.ie.driver",
 						TestPropsValues.SELENIUM_EXECUTABLE_DIR_NAME +
-							"\\IEDriverServer.exe");
+							TestPropsValues.SELENIUM_IE_DRIVER_EXECUTABLE);
 
 					if (SELENIUM_LOGGER_ENABLED) {
 						_selenium = _wrapWithLoggerHandler(

@@ -15,14 +15,10 @@
 package com.liferay.poshi.runner.selenium;
 
 import com.liferay.poshi.runner.util.PropsValues;
-import com.liferay.poshi.runner.util.StringUtil;
 
 import com.thoughtworks.selenium.Selenium;
 
 import io.appium.java_client.MobileDriver;
-import io.appium.java_client.TouchAction;
-
-import java.io.IOException;
 
 import java.util.List;
 
@@ -885,37 +881,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void type(String locator, String value) {
-		if (PropsValues.MOBILE_DEVICE_TYPE.equals("android")) {
-			WebElement webElement = getWebElement(locator);
-
-			if (!webElement.isEnabled()) {
-				return;
-			}
-
-			webElement.clear();
-
-			Runtime runtime = Runtime.getRuntime();
-
-			StringBuilder sb = new StringBuilder(6);
-
-			sb.append(PropsValues.MOBILE_ANDROID_HOME);
-			sb.append("/platform-tools/");
-			sb.append("adb -s emulator-5554 shell input text ");
-
-			value = StringUtil.replace(value, " ", "%s");
-
-			sb.append(value);
-
-			try {
-				runtime.exec(sb.toString());
-			}
-			catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
-		}
-		else if (PropsValues.MOBILE_DEVICE_TYPE.equals("ios")) {
-			WebDriverHelper.type(this, locator, value);
-		}
+		WebDriverHelper.type(this, locator, value);
 	}
 
 	@Override
@@ -984,124 +950,12 @@ public class MobileDriverToSeleniumBridge
 	}
 
 	protected void swipeWebElementIntoView(String locator) {
-		if (PropsValues.MOBILE_DEVICE_TYPE.equals("android")) {
-			int elementPositionCenterY =
-				WebDriverHelper.getElementPositionCenterY(this, locator);
+		WebElement webElement = getWebElement(locator, "1");
 
-			for (int i = 0; i < 25; i++) {
-				int viewportPositionBottom =
-					WebDriverHelper.getViewportPositionBottom(this);
-
-				int viewportPositionTop = WebDriverHelper.getScrollOffsetY(
-					this);
-
-				StringBuilder sb = new StringBuilder(4);
-
-				sb.append(PropsValues.MOBILE_ANDROID_HOME);
-				sb.append("/platform-tools/");
-
-				if (elementPositionCenterY >= viewportPositionBottom) {
-					try {
-						sb.append("adb -s emulator-5554 shell ");
-						sb.append("/data/local/swipe_up.sh");
-
-						Runtime runtime = Runtime.getRuntime();
-
-						runtime.exec(sb.toString());
-					}
-					catch (IOException ioe) {
-						ioe.printStackTrace();
-					}
-				}
-				else if (elementPositionCenterY <= viewportPositionTop ) {
-					try {
-						sb.append("adb -s emulator-5554 shell ");
-						sb.append("/data/local/swipe_down.sh");
-
-						Runtime runtime = Runtime.getRuntime();
-
-						runtime.exec(sb.toString());
-					}
-					catch (IOException ioe) {
-						ioe.printStackTrace();
-					}
-				}
-				else {
-					break;
-				}
-
-				try {
-					LiferaySeleniumHelper.pause("1000");
-				}
-				catch (Exception e) {
-				}
-			}
-		}
-		else if (PropsValues.MOBILE_DEVICE_TYPE.equals("ios")) {
-			WebElement webElement = getWebElement(locator, "1");
-
-			WebDriverHelper.scrollWebElementIntoView(this, webElement);
-		}
+		WebDriverHelper.scrollWebElementIntoView(this, webElement);
 	}
 
 	protected void tap(String locator) {
-		if (PropsValues.MOBILE_DEVICE_TYPE.equals("android")) {
-			try {
-				Runtime runtime = Runtime.getRuntime();
-
-				StringBuilder sb = new StringBuilder(6);
-
-				sb.append(PropsValues.MOBILE_ANDROID_HOME);
-				sb.append("/platform-tools/");
-				sb.append("adb -s emulator-5554 shell /data/local/tap.sh ");
-
-				int elementPositionCenterX =
-					WebDriverHelper.getElementPositionCenterX(this, locator);
-
-				int screenPositionX = elementPositionCenterX * 3 / 2;
-
-				sb.append(screenPositionX);
-
-				sb.append(" ");
-
-				int elementPositionCenterY =
-					WebDriverHelper.getElementPositionCenterY(this, locator);
-				int navigationBarHeight = 116;
-				int viewportPositionTop = WebDriverHelper.getScrollOffsetY(
-					this);
-
-				int screenPositionY =
-					(((elementPositionCenterY - viewportPositionTop) * 3) / 2) +
-						navigationBarHeight;
-
-				sb.append(screenPositionY);
-
-				runtime.exec(sb.toString());
-			}
-			catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
-		}
-		else if (PropsValues.MOBILE_DEVICE_TYPE.equals("ios")) {
-			TouchAction touchAction = new TouchAction(this);
-
-			int screenPositionX = WebDriverHelper.getElementPositionCenterX(
-				this, locator);
-
-			int navigationBarHeight = 50;
-
-			int screenPositionY =
-				WebDriverHelper.getElementPositionCenterY(this, locator) +
-					navigationBarHeight;
-
-			context("NATIVE_APP");
-
-			touchAction.tap(screenPositionX, screenPositionY);
-
-			touchAction.perform();
-
-			context("WEBVIEW_1");
-		}
 	}
 
 }

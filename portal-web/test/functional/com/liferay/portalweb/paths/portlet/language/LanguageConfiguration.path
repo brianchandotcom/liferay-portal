@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>LanguageConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">LanguageConfiguration</td></tr>
+</thead>
+<tbody>
+<!--LANGUAGES-->
+<tr>
+	<td>LANGUAGES_CURRENT</td>
+	<td>//select[contains(@id,'currentLanguageIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGES_CURRENT_SELECT</td>
+	<td>//select[contains(@id,'currentLanguageIds')]/option</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGES_AVAILABLE</td>
+	<td>//select[contains(@id,'availableLanguageIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGES_AVAILABLE_SELECT</td>
+	<td>//select[contains(@id,'availableLanguageIds')]/option</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_CURRENT_TO_AVAILABLE_BUTTON</td>
+	<td>//button[@title='Move selected items from Current to Available.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_AVAILABLE_TO_CURRENT_BUTTON</td>
+	<td>//button[@title='Move selected items from Available to Current.']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -3347,20 +3347,24 @@ go]]></replacevalue>
 			</and>
 			<then>
 				<if>
-					<contains string="${test.class}" substring="#" />
+					<isset property="test.class" />
 					<then>
+						<antcall target="record-test-generated-properties" />
+
+						<property file="test.generated.properties" />
+
 						<get-test-class-name />
 
-						<get-test-method-name />
+						<if>
+							<contains string="${test.class}" substring="#" />
+							<then>
+								<get-test-method-name />
+							</then>
+							<else>
+								<property name="test.method.name" value="" />
+							</else>
+						</if>
 					</then>
-					<elseif>
-						<isset property="test.class" />
-						<then>
-							<get-test-class-name />
-
-							<property name="test.method.name" value="" />
-						</then>
-					</elseif>
 				</if>
 
 				<if>

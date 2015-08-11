@@ -2643,16 +2643,31 @@ go]]></replacevalue>
 		<get-testray-testcase-product-edition />
 
 		<if>
-			<isset property="env.TEST_BUILD_FIX_PACK_NAME" />
+			<and>
+				<isset property="env.GITHUB_BRANCH_NAME" />
+				<isset property="env.GITHUB_USERNAME" />
+			</and>
 			<then>
 				<propertyregex
-					input="${testray.build.name}"
-					override="true"
-					property="testray.build.name"
-					regexp="(-\s)\d+(\s-)"
-					replace="\1${env.TEST_BUILD_FIX_PACK_NAME}\2"
-				/>
+						input="${testray.build.name}"
+						override="true"
+						property="testray.build.name"
+						regexp="(-\s)\d+(\s-)"
+						replace="\1${env.GITHUB_USERNAME} - ${env.GITHUB_BRANCH_NAME}\2"
+					/>
 			</then>
+			<elseif>
+				<isset property="env.TEST_BUILD_FIX_PACK_NAME" />
+				<then>
+					<propertyregex
+						input="${testray.build.name}"
+						override="true"
+						property="testray.build.name"
+						regexp="(-\s)\d+(\s-)"
+						replace="\1${env.TEST_BUILD_FIX_PACK_NAME}\2"
+					/>
+				</then>
+			</elseif>
 		</if>
 
 		<if>

@@ -49,9 +49,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-
 
 <liferay-ui:membership-policy-error />
 
-<portlet:actionURL name="/users_admin/edit_organization_assignments" var="editAssignmentsURL" />
-
-<aui:form action="<%= editAssignmentsURL %>" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
@@ -129,6 +127,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-
 		form.fm('addUserIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 		form.fm('removeUserIds').val(Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-		submitForm(form);
+		submitForm(form, '<portlet:actionURL name="/users_admin/edit_organization_assignments" />');
 	}
 </aui:script>

@@ -263,12 +263,12 @@
 
 
 		<!-- Portal Settings -->
-
+ 
 		<action path="/portal_settings/edit_ldap_server" type="com.liferay.portlet.portalsettings.action.EditLDAPServerAction">
 			<forward name="portlet.portal_settings.edit_ldap_server" path="portlet.portal_settings.edit_ldap_server" />
 			<forward name="portlet.portal_settings.error" path="portlet.portal_settings.error" />
 		</action>
-
+ 
 		<action path="/portal_settings/test_cas_configuration" forward="portlet.portal_settings.test_cas_configuration" />
 
 		<action path="/portal_settings/test_ldap_connection" forward="portlet.portal_settings.test_ldap_connection" />
@@ -278,8 +278,6 @@
 		<action path="/portal_settings/test_ldap_users" forward="portlet.portal_settings.test_ldap_users" />
 
 		<action path="/portal_settings/test_opensso_configuration" forward="portlet.portal_settings.test_opensso_configuration" />
-
-		<action path="/portal_settings/view" forward="portlet.portal_settings.edit_company" />
 
 		<!-- Portlet Sharing -->
 

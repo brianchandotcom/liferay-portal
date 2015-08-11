@@ -46,7 +46,7 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 	}
 
 	private static final String _PAGE =
-		"/html/taglib/ui/search_iterator/page.jsp";
+		"/html/taglib/ui/search_iterator/table.jsp";
 
 	private boolean _paginate = true;
 

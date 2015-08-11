@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
@@ -348,6 +349,8 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 							blacklistChar, StringPool.UNDERLINE);
 					}
 
+					newTitle = renameDlCharLastBlacklist(newTitle);
+
 					if (!dlFileEntry.getTitle().equals(newTitle)) {
 						try {
 							dlFileEntry = renameTitle(dlFileEntry, newTitle);
@@ -516,6 +519,32 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		}
 
 		return mimeType;
+	}
+
+	protected String renameDlCharLastBlacklist(String title) {
+		String previousTitle = null;
+
+		while (!title.equals(previousTitle)) {
+			previousTitle = title;
+
+			for (String blacklistLastChar :
+					PropsValues.DL_CHAR_LAST_BLACKLIST) {
+
+				if (blacklistLastChar.startsWith(
+						UnicodeFormatter.UNICODE_PREFIX)) {
+
+					blacklistLastChar = UnicodeFormatter.parseString(
+						blacklistLastChar);
+				}
+
+				if (title.endsWith(blacklistLastChar)) {
+					title = StringUtil.replaceLast(
+						title, blacklistLastChar, StringPool.BLANK);
+				}
+			}
+		}
+
+		return title;
 	}
 
 	protected void renameDuplicateTitle(DLFileEntry dlFileEntry)

@@ -40,8 +40,13 @@ import java.util.TimeZone;
 import javax.portlet.PortletRequest;
 
 /**
+ * Provides a way to build a settings map for an {@link
+ * com.liferay.portlet.exportimport.model.ExportImportConfiguration}, which can
+ * be used to start and control an export, import, or staging process.
+ *
  * @author Daniel Kocsis
  * @author Akos Thurzo
+ * @since  7.0
  */
 public class ExportImportConfigurationSettingsMapFactory {
 
@@ -194,6 +199,20 @@ public class ExportImportConfigurationSettingsMapFactory {
 			user.getTimeZone());
 	}
 
+	/**
+	 * Returns an export layout settings map if the type is {@link
+	 * ExportImportConfigurationConstants#TYPE_EXPORT_LAYOUT}; otherwise,
+	 * returns either a local or remote publish layout settings map, depending
+	 * on the staging type.
+	 *
+	 * @param  portletRequest the portlet request
+	 * @param  groupId the primary key of the group
+	 * @param  type the export/import option type
+	 * @return an export layout settings map if the type is an export layout;
+	 *         otherwise, returns either a local or remote publish layout
+	 *         settings map, depending on the staging type
+	 * @throws PortalException if a portal exception occurred
+	 */
 	public static Map<String, Serializable> buildSettingsMap(
 			PortletRequest portletRequest, long groupId, int type)
 		throws PortalException {

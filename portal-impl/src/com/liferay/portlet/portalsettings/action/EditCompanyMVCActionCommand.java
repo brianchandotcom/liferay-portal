@@ -14,6 +14,12 @@
 
 package com.liferay.portlet.portalsettings.action;
 
+import java.io.IOException;
+import java.util.List;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+
 import com.liferay.portal.AccountNameException;
 import com.liferay.portal.AddressCityException;
 import com.liferay.portal.AddressStreetException;
@@ -28,13 +34,21 @@ import com.liferay.portal.NoSuchListTypeException;
 import com.liferay.portal.NoSuchRegionException;
 import com.liferay.portal.PhoneNumberException;
 import com.liferay.portal.WebsiteURLException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.ldap.DuplicateLDAPServerNameException;
+import com.liferay.portal.kernel.ldap.LDAPServerNameException;
+import com.liferay.portal.kernel.ldap.LDAPUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Address;
@@ -43,35 +57,30 @@ import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.CompanyServiceUtil;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
-import java.util.List;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
+ * @author Philip Jones
  */
-public class EditCompanyAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.PORTAL_SETTINGS,
+		"mvc.command.name=/portal_settings/edit_company"
+	},
+	service = MVCActionCommand.class
+)
+public class EditCompanyMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	public void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -82,22 +91,23 @@ public class EditCompanyAction extends PortletAction {
 				validateLDAP(actionRequest);
 				validateSocialInteractions(actionRequest);
 
-				if (!SessionErrors.isEmpty(actionRequest)) {
-					setForward(
-						actionRequest, "portlet.portal_settings.edit_company");
-				}
-				else {
-					updateCompany(actionRequest);
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
 
-					sendRedirect(actionRequest, actionResponse);
+				if (SessionErrors.isEmpty(actionRequest)) {
+					updateCompany(actionRequest);
 				}
+
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 		}
 		catch (Exception e) {
+			String mvcPath = "/html/portlet/portal_settings/edit_company.jsp";
+
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.portal_settings.error");
+				mvcPath = "/html/portlet/portal_settings/error.jsp";
 			}
 			else if (e instanceof AddressCityException ||
 					 e instanceof AccountNameException ||
@@ -124,28 +134,18 @@ public class EditCompanyAction extends PortletAction {
 				else {
 					SessionErrors.add(actionRequest, e.getClass(), e);
 				}
-
-				setForward(
-					actionRequest, "portlet.portal_settings.edit_company");
 			}
 			else {
 				throw e;
 			}
+
+			actionResponse.setRenderParameter("mvcPath", mvcPath);
 		}
 	}
 
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	protected void updateCompany(ActionRequest actionRequest)
+		throws IOException, PortalException {
 
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.portal_settings.edit_company"));
-	}
-
-	protected void updateCompany(ActionRequest actionRequest) throws Exception {
 		long companyId = PortalUtil.getCompanyId(actionRequest);
 
 		String virtualHostname = ParamUtil.getString(
@@ -234,14 +234,12 @@ public class EditCompanyAction extends PortletAction {
 
 		if (Validator.isNotNull(casServiceURL) &&
 			!Validator.isUrl(casServiceURL)) {
-
-			SessionErrors.add(actionRequest, "casServiceURLInvalid");
+				SessionErrors.add(actionRequest, "casServiceURLInvalid");
 		}
 
 		if (Validator.isNotNull(casNoSuchUserRedirectURL) &&
 			!Validator.isUrl(casNoSuchUserRedirectURL)) {
-
-			SessionErrors.add(actionRequest, "casNoSuchUserURLInvalid");
+				SessionErrors.add(actionRequest, "casNoSuchUserURLInvalid");
 		}
 	}
 
@@ -259,6 +257,48 @@ public class EditCompanyAction extends PortletAction {
 			SessionErrors.add(
 				actionRequest, "ldapExportAndImportOnPasswordAutogeneration");
 		}
+	}
+
+	protected void validateLDAPServerName(
+			long ldapServerId, long companyId, UnicodeProperties properties)
+		throws Exception {
+
+		String ldapServerName = properties.getProperty(
+			"ldap.server.name." + ldapServerId);
+
+		if (Validator.isNull(ldapServerName)) {
+			throw new LDAPServerNameException();
+		}
+
+		long[] existingLDAPServerIds = StringUtil.split(
+			PrefsPropsUtil.getString(companyId, "ldap.server.ids"), 0L);
+
+		for (long existingLDAPServerId : existingLDAPServerIds) {
+			if (ldapServerId == existingLDAPServerId) {
+				continue;
+			}
+
+			String existingLDAPServerName = PrefsPropsUtil.getString(
+				companyId, "ldap.server.name." + existingLDAPServerId);
+
+			if (ldapServerName.equals(existingLDAPServerName)) {
+				throw new DuplicateLDAPServerNameException();
+			}
+		}
+	}
+
+	protected void validateSearchFilters(ActionRequest actionRequest)
+		throws Exception {
+
+		String userFilter = ParamUtil.getString(
+			actionRequest, "importUserSearchFilter");
+
+		LDAPUtil.validateFilter(userFilter, "importUserSearchFilter");
+
+		String groupFilter = ParamUtil.getString(
+			actionRequest, "importGroupSearchFilter");
+
+		LDAPUtil.validateFilter(groupFilter, "importGroupSearchFilter");
 	}
 
 	protected void validateSocialInteractions(ActionRequest actionRequest) {
@@ -301,3 +341,5 @@ public class EditCompanyAction extends PortletAction {
 	}
 
 }
+
+

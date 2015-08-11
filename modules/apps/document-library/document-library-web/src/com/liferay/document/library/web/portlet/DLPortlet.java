@@ -15,11 +15,13 @@
 package com.liferay.document.library.web.portlet;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.upgrade.DLWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -59,4 +61,9 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class DLPortlet extends MVCPortlet {
+
+	@Reference(unbind = "-")
+	protected void setDLWebUpgrade(DLWebUpgrade dlWebUpgrade) {
+	}
+
 }

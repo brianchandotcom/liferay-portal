@@ -165,7 +165,9 @@
 				portal,\
 				social-office
 
-			test.base.dir.name=../../../portal-web/test/functional/com/liferay/portalweb/
+			project.dir=${lp.portal.project.dir}
+
+			test.base.dir.name=${lp.portal.project.dir}/portal-web/test/functional/com/liferay/portalweb/
 
 			test.case.available.property.names=\
 				app.server.bundles.size,\

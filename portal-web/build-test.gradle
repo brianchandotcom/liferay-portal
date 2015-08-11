@@ -29,6 +29,10 @@ poshiRunner {
 		poshiProperty "product.names", project.properties["productNames"]
 	}
 
+	if (project.hasProperty("projectDir")) {
+		poshiProperty "project.dir", project.properties["projectDir"]
+	}
+
 	if (project.hasProperty("saveScreenshot")) {
 		poshiProperty "save.screenshot", project.properties["saveScreenshot"]
 	}
@@ -37,7 +41,9 @@ poshiRunner {
 		poshiProperty "selenium.logger.enabled", project.properties["seleniumLoggerEnabled"]
 	}
 
-	poshiProperty "test.base.dir.name", "test/functional"
+	if (project.hasProperty("testBaseDirName")) {
+		poshiProperty "test.base.dir.name", project.properties["testBaseDirName"]
+	}
 
 	if (project.hasProperty("testCaseAvailablePropertyNames")) {
 		poshiProperty "test.case.available.property.names", project.properties["testCaseAvailablePropertyNames"]

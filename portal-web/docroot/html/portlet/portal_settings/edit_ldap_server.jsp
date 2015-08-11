@@ -557,7 +557,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 				data.<portlet:namespace />groupMappingUser = document.<portlet:namespace />fm['<portlet:namespace />groupMappingUser'].value;
 			}
 			else if (type == 'ldapUsers') {
-				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/portal_settings/test_ldap_users" /></portlet:renderURL>';
+				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/portal_settings/test_ldap_users" /></portlet:renderURL>';
 
 				data.<portlet:namespace />importUserSearchFilter = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_IMPORT_USER_SEARCH_FILTER + postfix %>--'].value;
 				data.<portlet:namespace />userMappingEmailAddress = document.<portlet:namespace />fm['<portlet:namespace />userMappingEmailAddress'].value;

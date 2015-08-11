@@ -264,8 +264,6 @@
 
 		<!-- Portal Settings -->
   
-		<action path="/portal_settings/test_ldap_users" forward="portlet.portal_settings.test_ldap_users" />
-
 		<action path="/portal_settings/test_opensso_configuration" forward="portlet.portal_settings.test_opensso_configuration" />
 
 		<!-- Portlet Sharing -->

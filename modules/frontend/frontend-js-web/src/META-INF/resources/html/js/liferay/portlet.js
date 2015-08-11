@@ -549,25 +549,25 @@
 						}
 					);
 				}
+			}
 
+			Liferay.fire(
+				'portletReady',
+				{
+					portlet: portlet,
+					portletId: portletId
+				}
+			);
+
+			instance.readyCounter++;
+
+			if (instance.readyCounter === instance.list.length) {
 				Liferay.fire(
-					'portletReady',
+					'allPortletsReady',
 					{
-						portlet: portlet,
 						portletId: portletId
 					}
 				);
-
-				instance.readyCounter++;
-
-				if (instance.readyCounter === instance.list.length) {
-					Liferay.fire(
-						'allPortletsReady',
-						{
-							portletId: portletId
-						}
-					);
-				}
 			}
 		},
 		['aui-base', 'aui-timer', 'event-move']

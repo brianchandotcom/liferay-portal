@@ -1004,19 +1004,20 @@ else {
 }
 %>
 
+<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>'>
+	Liferay.Portlet.onLoad(
+		{
+			canEditTitle: <%= showConfigurationIcon && portletDecorate %>,
+			columnPos: <%= columnPos %>,
+			isStatic: '<%= staticVar %>',
+			namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
+			refreshURL: '<%= HtmlUtil.escapeJS(PortletURLUtil.getRefreshURL(request, themeDisplay)) %>'
+		}
+	);
+</aui:script>
+
 <c:if test="<%= renderPortletBoundary %>">
-		<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>'>
-			Liferay.Portlet.onLoad(
-				{
-					canEditTitle: <%= showConfigurationIcon && portletDecorate %>,
-					columnPos: <%= columnPos %>,
-					isStatic: '<%= staticVar %>',
-					namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',
-					portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
-					refreshURL: '<%= HtmlUtil.escapeJS(PortletURLUtil.getRefreshURL(request, themeDisplay)) %>'
-				}
-			);
-		</aui:script>
 		</div>
 	</div>
 </c:if>

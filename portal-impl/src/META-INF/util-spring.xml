@@ -603,6 +603,7 @@
    <bean id="com.liferay.portlet.portalsettings.action.EditLDAPServerMVCActionCommand" class="com.liferay.portlet.portalsettings.action.EditLDAPServerMVCActionCommand" />
    <bean id="com.liferay.portlet.portalsettings.action.TestCASConfigurationMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestCASConfigurationMVCRenderCommand" />
    <bean id="com.liferay.portlet.portalsettings.action.TestLDAPConnectionMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestLDAPConnectionMVCRenderCommand" />
+   <bean id="com.liferay.portlet.portalsettings.action.TestLDAPGroupsMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestLDAPGroupsMVCRenderCommand" />
 
 
     <bean id="com.liferay.portlet.rolesadmin.util.RolesAdmin" class="com.liferay.portlet.rolesadmin.util.RolesAdminImpl" />

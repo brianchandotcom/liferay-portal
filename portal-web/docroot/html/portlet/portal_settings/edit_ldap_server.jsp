@@ -549,7 +549,7 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/portal_settings/test_ldap_connection" /></portlet:renderURL>';
 			}
 			else if (type == 'ldapGroups') {
-				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/portal_settings/test_ldap_groups" /></portlet:renderURL>';
+				url = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/portal_settings/test_ldap_groups" /></portlet:renderURL>';
 
 				data.<portlet:namespace />importGroupSearchFilter = document.<portlet:namespace />fm['<portlet:namespace />settings--<%= PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix %>--'].value;
 				data.<portlet:namespace />groupMappingDescription = document.<portlet:namespace />fm['<portlet:namespace />groupMappingDescription'].value;

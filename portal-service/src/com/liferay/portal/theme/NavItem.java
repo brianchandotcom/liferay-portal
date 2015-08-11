@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.Serializable;
@@ -264,6 +265,12 @@ public class NavItem implements Serializable {
 			"velocityTaglib_layoutIcon");
 
 		method.invoke(velocityTaglib, _layout);
+	}
+
+	public boolean isBrowsable() {
+		LayoutType layoutType = _layout.getLayoutType();
+
+		return layoutType.isBrowsable();
 	}
 
 	public boolean isChildSelected() throws PortalException {

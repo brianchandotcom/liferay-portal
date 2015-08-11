@@ -76,18 +76,22 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 		url="<%= portletURL.toString() %>"
 	/>
 
+	<%
+	String usersAdminPortletId = PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW);
+	%>
+
 	<c:choose>
 		<c:when test='<%= tabs2.equals("users") %>'>
-			<liferay-util:include page="/html/portlet/users_admin/edit_role_assignments_users.jsp" />
+			<liferay-util:include page="/edit_role_assignments_users.jsp" portletId="<%= usersAdminPortletId %>" />
 		</c:when>
 		<c:when test='<%= tabs2.equals("sites") %>'>
-			<liferay-util:include page="/html/portlet/users_admin/edit_role_assignments_sites.jsp" />
+			<liferay-util:include page="/edit_role_assignments_sites.jsp" portletId="<%= usersAdminPortletId %>" />
 		</c:when>
 		<c:when test='<%= tabs2.equals("organizations") %>'>
-			<liferay-util:include page="/html/portlet/users_admin/edit_role_assignments_organizations.jsp" />
+			<liferay-util:include page="/edit_role_assignments_organizations.jsp" portletId="<%= usersAdminPortletId %>" />
 		</c:when>
 		<c:when test='<%= tabs2.equals("user-groups") %>'>
-			<liferay-util:include page="/html/portlet/users_admin/edit_role_assignments_user_groups.jsp" />
+			<liferay-util:include page="/edit_role_assignments_user_groups.jsp" portletId="<%= usersAdminPortletId %>" />
 		</c:when>
 	</c:choose>
 </aui:form>

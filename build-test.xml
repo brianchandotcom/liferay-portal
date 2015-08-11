@@ -961,9 +961,7 @@ jdbc.default.password=${database.password}]]></echo>
 				</elseif>
 				<else>
 					<then>
-						<fail>
-Operating system is not supported.
-						</fail>
+						<fail message="Operating system is not supported." />
 					</then>
 				</else>
 			</if>
@@ -1161,6 +1159,29 @@ Operating system is not supported.
 
 					<delete file="${basedir}/${patching.tool.zip.file.name}" />
 				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-ie-driver">
+		<sequential>
+			<if>
+				<os family="windows" />
+				<then>
+					<property name="selenium.ie.driver.zip" value="IEDriverServer_Win32_${selenium.ie.driver.version}.0.zip" />
+
+					<mirrors-get
+						dest="tools/selenium/${selenium.ie.driver.zip}"
+						src="http://selenium-release.storage.googleapis.com/${selenium.ie.driver.version}/${selenium.ie.driver.zip}"
+					/>
+
+					<stop-ie-driver />
+
+					<unzip src="tools/selenium/${selenium.ie.driver.zip}" dest="tools/selenium" />
+				</then>
+				<else>
+					<fail message="Operating system is not supported." />
+				</else>
 			</if>
 		</sequential>
 	</macrodef>
@@ -2396,6 +2417,14 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</execute>
 				</else>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-ie-driver">
+		<sequential>
+			<exec executable="taskkill.exe">
+				<arg line="/F /IM IEDriverServer.exe" />
+			</exec>
 		</sequential>
 	</macrodef>
 
@@ -4639,6 +4668,29 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 	</target>
 
+	<target name="prepare-selenium-browser-driver">
+		<if>
+			<equals arg1="${browser.type}" arg2="googlechrome" />
+			<then>
+				<prepare-chrome-driver />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="ie" />
+			<then>
+				<prepare-ie-driver />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="safari" />
+			<then>
+				<prepare-safari-driver />
+			</then>
+		</if>
+	</target>
+
 	<target name="prepare-selenium-browser-properties">
 		<if>
 			<equals arg1="${browser.type}" arg2="firefox" />
@@ -4661,6 +4713,7 @@ module.framework.properties.osgi.console=11312</echo>
 				<then>
 					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 						browser.type=*iehta
+						selenium.ie.driver.executable=${selenium.ie.driver.executable}
 					</echo>
 				</then>
 			</elseif>
@@ -6358,26 +6411,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<remake-dir dir="${selenium.output.dir}" />
 
-		<if>
-			<equals arg1="${browser.type}" arg2="googlechrome" />
-			<then>
-				<prepare-chrome-driver />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="ie" />
-			<then>
-				<antcall target="start-ie-driver" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="safari" />
-			<then>
-				<prepare-safari-driver />
-			</then>
-		</if>
+		<antcall target="prepare-selenium-browser-driver" />
 
 		<antcall target="copy-sikuli-temp-files" />
 
@@ -6510,7 +6544,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<if>
 			<equals arg1="${browser.type}" arg2="ie" />
 			<then>
-				<antcall target="stop-ie-driver" />
+				<stop-ie-driver />
 			</then>
 		</if>
 	</target>
@@ -6541,28 +6575,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 			app.server.bundle.index="${app.server.bundle.index}"
 			testable.portal.started.marker.file="${testable.portal.started.marker.file}"
 		/>
-	</target>
-
-	<target name="start-ie-driver">
-		<if>
-			<not>
-				<isset property="ie.driver.zip" />
-			</not>
-			<then>
-				<fail>
-.
-
-Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.31.0.zip" or "IEDriverServer_Win32_2.31.0.zip" which can be downloaded from this website: https://code.google.com/p/selenium/wiki/InternetExplorerDriver.
-				</fail>
-			</then>
-			<else>
-				<exec executable="taskkill.exe">
-					<arg line="/F /IM IEDriverServer.exe" />
-				</exec>
-
-				<unzip src="${ie.driver.zip}" dest="tools/selenium" />
-			</else>
-		</if>
 	</target>
 
 	<target name="start-lcs-server">
@@ -6631,12 +6643,6 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<stop-app-server
 			app.server.bundle.index="${app.server.bundle.index}"
 		/>
-	</target>
-
-	<target name="stop-ie-driver">
-		<exec executable="taskkill.exe">
-			<arg line="/F /IM IEDriverServer.exe" />
-		</exec>
 	</target>
 
 	<target name="stop-lcs-server">

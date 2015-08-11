@@ -4615,6 +4615,12 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<description>A state of the represendted object used for styling the row. E.g. success, warning, info, default, primary or danger</description>
+			<name>state</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<description>Creates parameters for rows in the search container. The <![CDATA[<code>liferay-ui:search-container-row</code>]]> tag is required.</description>

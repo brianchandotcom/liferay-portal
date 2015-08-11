@@ -176,6 +176,8 @@ public interface ResultRow {
 
 	public String getRowId();
 
+	public String getState();
+
 	public boolean isBold();
 
 	public boolean isRestricted();
@@ -205,5 +207,7 @@ public interface ResultRow {
 	public void setRowId(String rowId);
 
 	public void setSkip(boolean skip);
+
+	public void setState(String state);
 
 }

@@ -54,12 +54,14 @@ public class ResultRow
 	public ResultRow(
 		String rowId, Object obj, String primaryKey, int pos, boolean bold) {
 
-		this(rowId, obj, primaryKey, pos, bold, StringPool.BLANK);
+		this(
+			rowId, obj, primaryKey, pos, bold, StringPool.BLANK,
+			StringPool.BLANK);
 	}
 
 	public ResultRow(
 		String rowId, Object obj, String primaryKey, int pos, boolean bold,
-		String cssClass) {
+		String cssClass, String state) {
 
 		_rowId = rowId;
 		_obj = obj;
@@ -67,6 +69,7 @@ public class ResultRow
 		_pos = pos;
 		_bold = bold;
 		_cssClass = cssClass;
+		_state = state;
 		_searchEntries = new ArrayList<>();
 	}
 
@@ -586,6 +589,11 @@ public class ResultRow
 	}
 
 	@Override
+	public String getState() {
+		return _state;
+	}
+
+	@Override
 	public boolean isBold() {
 		return _bold;
 	}
@@ -663,6 +671,11 @@ public class ResultRow
 		_skip = skip;
 	}
 
+	@Override
+	public void setState(String state) {
+		_state = state;
+	}
+
 	private boolean _bold;
 	private String _classHoverName;
 	private String _className;
@@ -676,5 +689,6 @@ public class ResultRow
 	private String _rowId;
 	private final List<SearchEntry> _searchEntries;
 	private boolean _skip;
+	private String _state;
 
 }

@@ -116,6 +116,7 @@ public class SearchContainerRowTag<R>
 			_rowIdProperty = null;
 			_rowVar = DEFAULT_ROW_VAR;
 			_stringKey = false;
+			_state = StringPool.BLANK;
 		}
 
 		return EVAL_PAGE;
@@ -192,6 +193,10 @@ public class SearchContainerRowTag<R>
 		return _rowVar;
 	}
 
+	public String getState() {
+		return _state;
+	}
+
 	public boolean isBold() {
 		return _bold;
 	}
@@ -260,6 +265,10 @@ public class SearchContainerRowTag<R>
 		_rowVar = rowVar;
 	}
 
+	public void setState(String state) {
+		_state = state;
+	}
+
 	public void setStringKey(boolean stringKey) {
 		_stringKey = stringKey;
 	}
@@ -314,7 +323,7 @@ public class SearchContainerRowTag<R>
 		}
 
 		_resultRow = new com.liferay.taglib.search.ResultRow(
-			rowId, model, primaryKey, _rowIndex, _bold, _cssClass);
+			rowId, model, primaryKey, _rowIndex, _bold, _cssClass, _state);
 
 		pageContext.setAttribute(_indexVar, _rowIndex);
 		pageContext.setAttribute(_modelVar, model);
@@ -341,6 +350,7 @@ public class SearchContainerRowTag<R>
 	private int _rowIndex;
 	private String _rowVar = DEFAULT_ROW_VAR;
 	private SearchContainer<R> _searchContainer;
+	private String _state = StringPool.BLANK;
 	private boolean _stringKey;
 
 }

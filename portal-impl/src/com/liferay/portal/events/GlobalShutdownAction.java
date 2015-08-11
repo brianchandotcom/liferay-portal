@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -165,23 +164,6 @@ public class GlobalShutdownAction extends SimpleAction {
 		// Plugins
 
 		RequiredPluginsUtil.stopCheckingRequiredPlugins();
-
-		// Scheduler engine
-
-		try {
-			SchedulerEngineHelperUtil.shutdown();
-		}
-		catch (Exception e) {
-		}
-
-		// Wait 1 second so Quartz threads can cleanly shutdown
-
-		try {
-			Thread.sleep(1000);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	protected void shutdownLevel2() {

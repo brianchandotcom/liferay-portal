@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.backgroundtask.internal.BackgroundTaskImpl;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskLockHelperUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
@@ -223,11 +224,13 @@ public class BackgroundTaskLocalServiceImpl
 
 	@Clusterable(onMaster = true)
 	@Override
-	public void cleanUpBackgroundTask(
-		final BackgroundTask backgroundTask, final int status) {
+	public void cleanUpBackgroundTask(long backgroundTaskId, final int status) {
+		final BackgroundTask backgroundTask = fetchBackgroundTask(
+			backgroundTaskId);
 
 		try {
-			BackgroundTaskLockHelperUtil.unlockBackgroundTask(backgroundTask);
+			BackgroundTaskLockHelperUtil.unlockBackgroundTask(
+				new BackgroundTaskImpl(backgroundTask));
 		}
 		catch (Exception e) {
 		}
@@ -269,7 +272,8 @@ public class BackgroundTaskLocalServiceImpl
 			backgroundTask.setStatus(BackgroundTaskConstants.STATUS_FAILED);
 
 			cleanUpBackgroundTask(
-				backgroundTask, BackgroundTaskConstants.STATUS_FAILED);
+				backgroundTask.getBackgroundTaskId(),
+				BackgroundTaskConstants.STATUS_FAILED);
 		}
 	}
 
@@ -287,7 +291,8 @@ public class BackgroundTaskLocalServiceImpl
 				BackgroundTaskConstants.STATUS_IN_PROGRESS) {
 
 			cleanUpBackgroundTask(
-				backgroundTask, BackgroundTaskConstants.STATUS_CANCELLED);
+				backgroundTask.getBackgroundTaskId(),
+				BackgroundTaskConstants.STATUS_CANCELLED);
 		}
 
 		return backgroundTaskPersistence.remove(backgroundTask);

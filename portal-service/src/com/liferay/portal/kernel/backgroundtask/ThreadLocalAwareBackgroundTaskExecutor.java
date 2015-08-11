@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
-import com.liferay.portal.model.BackgroundTask;
-
 import java.io.Serializable;
 
 import java.util.Map;

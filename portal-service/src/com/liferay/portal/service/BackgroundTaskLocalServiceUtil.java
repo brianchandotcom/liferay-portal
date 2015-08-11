@@ -101,9 +101,8 @@ public class BackgroundTaskLocalServiceUtil {
 			status, statusMessage, serviceContext);
 	}
 
-	public static void cleanUpBackgroundTask(
-		com.liferay.portal.model.BackgroundTask backgroundTask, int status) {
-		getService().cleanUpBackgroundTask(backgroundTask, status);
+	public static void cleanUpBackgroundTask(long backgroundTaskId, int status) {
+		getService().cleanUpBackgroundTask(backgroundTaskId, status);
 	}
 
 	public static void cleanUpBackgroundTasks() {

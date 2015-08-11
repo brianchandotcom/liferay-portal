@@ -14,14 +14,13 @@
 
 package com.liferay.portal.backgroundtask.messaging;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskLockHelperUtil;
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.BackgroundTask;
-import com.liferay.portal.service.BackgroundTaskLocalService;
 
 /**
  * @author Michael C. Han
@@ -49,8 +48,7 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 			long backgroundTaskId = (Long)message.get("backgroundTaskId");
 
 			BackgroundTask backgroundTask =
-				_backgroundTaskLocalService.fetchBackgroundTask(
-					backgroundTaskId);
+				BackgroundTaskManagerUtil.fetchBackgroundTask(backgroundTaskId);
 
 			if (!BackgroundTaskLockHelperUtil.isLockedBackgroundTask(
 					backgroundTask)) {
@@ -62,18 +60,15 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 
 	private void executeQueuedBackgroundTasks(String taskExecutorClassName) {
 		BackgroundTask backgroundTask =
-			_backgroundTaskLocalService.fetchFirstBackgroundTask(
+			BackgroundTaskManagerUtil.fetchFirstBackgroundTask(
 				taskExecutorClassName, BackgroundTaskConstants.STATUS_QUEUED);
 
 		if (backgroundTask == null) {
 			return;
 		}
 
-		_backgroundTaskLocalService.resumeBackgroundTask(
+		BackgroundTaskManagerUtil.resumeBackgroundTask(
 			backgroundTask.getBackgroundTaskId());
 	}
-
-	@BeanReference(type = BackgroundTaskLocalService.class)
-	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 }

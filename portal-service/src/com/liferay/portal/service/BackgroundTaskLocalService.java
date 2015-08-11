@@ -83,8 +83,7 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext);
 
 	@com.liferay.portal.kernel.cluster.Clusterable(onMaster = true)
-	public void cleanUpBackgroundTask(
-		com.liferay.portal.model.BackgroundTask backgroundTask, int status);
+	public void cleanUpBackgroundTask(long backgroundTaskId, int status);
 
 	@com.liferay.portal.kernel.cluster.Clusterable(onMaster = true)
 	public void cleanUpBackgroundTasks();

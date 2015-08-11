@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.backgroundtask.util.comparator;
+package com.liferay.portal.backgroundtask.internal.comparator;
 
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.BackgroundTask;
 
 /**
  * @author Eduardo Garcia

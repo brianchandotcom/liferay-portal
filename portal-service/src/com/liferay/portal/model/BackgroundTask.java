@@ -35,6 +35,14 @@ public interface BackgroundTask extends BackgroundTaskModel, PersistedModel {
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public void addBackgroundTaskAttachment(long userId,
+		java.lang.String fileName, java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void addBackgroundTaskAttachment(long userId,
+		java.lang.String fileName, java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

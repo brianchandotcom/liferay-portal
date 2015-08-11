@@ -14,8 +14,10 @@
 
 package com.liferay.portal.backgroundtask.messaging;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil;
@@ -37,8 +39,6 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.BackgroundTask;
-import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 
 /**
@@ -61,7 +61,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		ServiceContext serviceContext = new ServiceContext();
 
 		BackgroundTask backgroundTask =
-			BackgroundTaskLocalServiceUtil.amendBackgroundTask(
+			BackgroundTaskManagerUtil.amendBackgroundTask(
 				backgroundTaskId, null,
 				BackgroundTaskConstants.STATUS_IN_PROGRESS, serviceContext);
 
@@ -113,7 +113,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 					backgroundTaskStatusMessageListener);
 			}
 
-			backgroundTask = BackgroundTaskLocalServiceUtil.fetchBackgroundTask(
+			backgroundTask = BackgroundTaskManagerUtil.fetchBackgroundTask(
 				backgroundTask.getBackgroundTaskId());
 
 			BackgroundTaskResult backgroundTaskResult =
@@ -154,7 +154,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			_log.error("Unable to execute background task", e);
 		}
 		finally {
-			BackgroundTaskLocalServiceUtil.amendBackgroundTask(
+			BackgroundTaskManagerUtil.amendBackgroundTask(
 				backgroundTaskId, null, status, statusMessage, serviceContext);
 
 			BackgroundTaskStatusRegistryUtil.unregisterBackgroundTaskStatus(

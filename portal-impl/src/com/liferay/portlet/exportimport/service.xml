@@ -7,7 +7,6 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="BackgroundTask" />
 		<reference package-path="com.liferay.portal" entity="Layout" />
 	</entity>
 	<entity name="ExportImportConfiguration" local-service="true" remote-service="true" trash-enabled="true">

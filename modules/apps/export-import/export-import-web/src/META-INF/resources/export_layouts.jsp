@@ -139,7 +139,7 @@ if (!cmd.equals(Constants.ADD)) {
 >
 
 	<%
-	int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(liveGroupId, LayoutExportBackgroundTaskExecutor.class.getName(), false);
+	int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(liveGroupId, LayoutExportBackgroundTaskExecutor.class.getName(), false);
 	%>
 
 	<div class='<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>' id="<portlet:namespace />incompleteProcessMessage">

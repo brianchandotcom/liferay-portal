@@ -19,7 +19,7 @@
 <%
 long backgroundTaskId = ParamUtil.getLong(request, "backgroundTaskId");
 
-BackgroundTask backgroundTask = BackgroundTaskLocalServiceUtil.fetchBackgroundTask(backgroundTaskId);
+BackgroundTask backgroundTask = BackgroundTaskManagerUtil.fetchBackgroundTask(backgroundTaskId);
 
 JSONObject jsonObject = null;
 

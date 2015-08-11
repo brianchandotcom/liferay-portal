@@ -93,9 +93,9 @@ public class BackgroundTaskLocalServiceWrapper
 	}
 
 	@Override
-	public void cleanUpBackgroundTask(
-		com.liferay.portal.model.BackgroundTask backgroundTask, int status) {
-		_backgroundTaskLocalService.cleanUpBackgroundTask(backgroundTask, status);
+	public void cleanUpBackgroundTask(long backgroundTaskId, int status) {
+		_backgroundTaskLocalService.cleanUpBackgroundTask(backgroundTaskId,
+			status);
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
 
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.LayoutLocalServiceUtil;

@@ -566,7 +566,6 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.portal" entity="Account" />
-		<reference package-path="com.liferay.portal" entity="BackgroundTask" />
 		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Company" />
 		<reference package-path="com.liferay.portal" entity="Layout" />
@@ -744,7 +743,6 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="BackgroundTask" />
 		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Image" />

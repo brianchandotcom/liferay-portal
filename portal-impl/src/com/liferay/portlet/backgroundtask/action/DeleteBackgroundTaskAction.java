@@ -15,11 +15,11 @@
 package com.liferay.portlet.backgroundtask.action;
 
 import com.liferay.portal.NoSuchBackgroundTaskException;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 
 import javax.portlet.ActionRequest;
@@ -66,7 +66,7 @@ public class DeleteBackgroundTaskAction extends PortletAction {
 		long backgroundTaskId = ParamUtil.getLong(
 			actionRequest, "backgroundTaskId");
 
-		BackgroundTaskLocalServiceUtil.deleteBackgroundTask(backgroundTaskId);
+		BackgroundTaskManagerUtil.deleteBackgroundTask(backgroundTaskId);
 	}
 
 }

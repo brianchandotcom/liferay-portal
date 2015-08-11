@@ -27,6 +27,7 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PendingBackgroundTaskException;
 import com.liferay.portal.RemoteOptionsException;
 import com.liferay.portal.RequiredGroupException;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -63,7 +64,6 @@ import com.liferay.portal.model.Team;
 import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.RemoteAuthException;
-import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -163,7 +163,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 		long backgroundTaskId = ParamUtil.getLong(
 			actionRequest, "backgroundTaskId");
 
-		BackgroundTaskLocalServiceUtil.deleteBackgroundTask(backgroundTaskId);
+		BackgroundTaskManagerUtil.deleteBackgroundTask(backgroundTaskId);
 	}
 
 	public void deleteGroups(

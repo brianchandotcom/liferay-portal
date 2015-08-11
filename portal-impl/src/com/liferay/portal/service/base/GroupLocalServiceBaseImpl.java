@@ -38,7 +38,6 @@ import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.persistence.AccountPersistence;
-import com.liferay.portal.service.persistence.BackgroundTaskPersistence;
 import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.CompanyPersistence;
 import com.liferay.portal.service.persistence.GroupFinder;
@@ -1025,63 +1024,6 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setAccountPersistence(AccountPersistence accountPersistence) {
 		this.accountPersistence = accountPersistence;
-	}
-
-	/**
-	 * Returns the background task local service.
-	 *
-	 * @return the background task local service
-	 */
-	public com.liferay.portal.service.BackgroundTaskLocalService getBackgroundTaskLocalService() {
-		return backgroundTaskLocalService;
-	}
-
-	/**
-	 * Sets the background task local service.
-	 *
-	 * @param backgroundTaskLocalService the background task local service
-	 */
-	public void setBackgroundTaskLocalService(
-		com.liferay.portal.service.BackgroundTaskLocalService backgroundTaskLocalService) {
-		this.backgroundTaskLocalService = backgroundTaskLocalService;
-	}
-
-	/**
-	 * Returns the background task remote service.
-	 *
-	 * @return the background task remote service
-	 */
-	public com.liferay.portal.service.BackgroundTaskService getBackgroundTaskService() {
-		return backgroundTaskService;
-	}
-
-	/**
-	 * Sets the background task remote service.
-	 *
-	 * @param backgroundTaskService the background task remote service
-	 */
-	public void setBackgroundTaskService(
-		com.liferay.portal.service.BackgroundTaskService backgroundTaskService) {
-		this.backgroundTaskService = backgroundTaskService;
-	}
-
-	/**
-	 * Returns the background task persistence.
-	 *
-	 * @return the background task persistence
-	 */
-	public BackgroundTaskPersistence getBackgroundTaskPersistence() {
-		return backgroundTaskPersistence;
-	}
-
-	/**
-	 * Sets the background task persistence.
-	 *
-	 * @param backgroundTaskPersistence the background task persistence
-	 */
-	public void setBackgroundTaskPersistence(
-		BackgroundTaskPersistence backgroundTaskPersistence) {
-		this.backgroundTaskPersistence = backgroundTaskPersistence;
 	}
 
 	/**
@@ -3746,12 +3688,6 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portal.service.AccountService accountService;
 	@BeanReference(type = AccountPersistence.class)
 	protected AccountPersistence accountPersistence;
-	@BeanReference(type = com.liferay.portal.service.BackgroundTaskLocalService.class)
-	protected com.liferay.portal.service.BackgroundTaskLocalService backgroundTaskLocalService;
-	@BeanReference(type = com.liferay.portal.service.BackgroundTaskService.class)
-	protected com.liferay.portal.service.BackgroundTaskService backgroundTaskService;
-	@BeanReference(type = BackgroundTaskPersistence.class)
-	protected BackgroundTaskPersistence backgroundTaskPersistence;
 	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
 	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
 	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)

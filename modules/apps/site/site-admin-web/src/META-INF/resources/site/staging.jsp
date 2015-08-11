@@ -36,7 +36,7 @@ if (stagedLocally) {
 	stagingGroupId = stagingGroup.getGroupId();
 }
 
-BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLocalServiceUtil.fetchFirstBackgroundTask(liveGroupId, LayoutStagingBackgroundTaskExecutor.class.getName(), true, new BackgroundTaskCreateDateComparator(false));
+BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskManagerUtil.fetchFirstBackgroundTask(liveGroupId, LayoutStagingBackgroundTaskExecutor.class.getName(), true, new BackgroundTaskCreateDateComparator(false));
 %>
 
 <h3><liferay-ui:message key="staging" /></h3>
@@ -70,7 +70,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 	</liferay-util:include>
 </c:if>
 
-<c:if test="<%= stagedLocally && (BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(liveGroupId, LayoutStagingBackgroundTaskExecutor.class.getName(), false) > 0) %>">
+<c:if test="<%= stagedLocally && (BackgroundTaskManagerUtil.getBackgroundTasksCount(liveGroupId, LayoutStagingBackgroundTaskExecutor.class.getName(), false) > 0) %>">
 	<div class="alert alert-warning">
 		<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
 

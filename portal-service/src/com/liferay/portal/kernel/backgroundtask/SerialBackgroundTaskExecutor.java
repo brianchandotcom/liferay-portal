@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.BackgroundTask;
 
 /**
  * @author Michael C. Han

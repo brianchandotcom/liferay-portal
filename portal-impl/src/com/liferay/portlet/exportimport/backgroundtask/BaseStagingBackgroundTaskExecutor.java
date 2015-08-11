@@ -14,7 +14,9 @@
 
 package com.liferay.portlet.exportimport.backgroundtask;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil;
@@ -25,9 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
@@ -112,8 +112,7 @@ public abstract class BaseStagingBackgroundTaskExecutor
 		long backgroundTaskId, String backgroundTaskState) {
 
 		BackgroundTask backgroundTask =
-			BackgroundTaskLocalServiceUtil.fetchBackgroundTask(
-				backgroundTaskId);
+			BackgroundTaskManagerUtil.fetchBackgroundTask(backgroundTaskId);
 
 		if ((backgroundTask == null) || Validator.isNull(backgroundTaskState)) {
 			return;
@@ -130,7 +129,7 @@ public abstract class BaseStagingBackgroundTaskExecutor
 
 		backgroundTask.setTaskContextMap(taskContextMap);
 
-		BackgroundTaskLocalServiceUtil.updateBackgroundTask(backgroundTask);
+		BackgroundTaskManagerUtil.updateBackgroundTask(backgroundTask);
 	}
 
 	protected BackgroundTaskResult processMissingReferences(
@@ -148,8 +147,7 @@ public abstract class BaseStagingBackgroundTaskExecutor
 
 		if (MapUtil.isNotEmpty(weakMissingReferences)) {
 			BackgroundTask backgroundTask =
-				BackgroundTaskLocalServiceUtil.fetchBackgroundTask(
-					backgroundTaskId);
+				BackgroundTaskManagerUtil.fetchBackgroundTask(backgroundTaskId);
 
 			JSONArray jsonArray = StagingUtil.getWarningMessagesJSONArray(
 				getLocale(backgroundTask), weakMissingReferences);

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.backgroundtask;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.cluster.BaseClusterMasterTokenTransitionListener;
-import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 
 /**
  * @author Michael C. Han
@@ -25,7 +25,7 @@ public class BackgroundTaskClusterMasterTokenTransitionListener
 
 	@Override
 	protected void doMasterTokenAcquired() throws Exception {
-		BackgroundTaskLocalServiceUtil.cleanUpBackgroundTasks();
+		BackgroundTaskManagerUtil.cleanUpBackgroundTasks();
 	}
 
 	@Override

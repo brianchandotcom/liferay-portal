@@ -21,6 +21,7 @@ import com.liferay.portal.NoSuchLayoutBranchException;
 import com.liferay.portal.NoSuchLayoutRevisionException;
 import com.liferay.portal.PortletIdException;
 import com.liferay.portal.RemoteOptionsException;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -73,7 +74,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -1307,7 +1307,7 @@ public class StagingImpl implements Staging {
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());
 
-		BackgroundTaskLocalServiceUtil.addBackgroundTask(
+		BackgroundTaskManagerUtil.addBackgroundTask(
 			userId, exportImportConfiguration.getGroupId(), StringPool.BLANK,
 			null, LayoutStagingBackgroundTaskExecutor.class, taskContextMap,
 			new ServiceContext());
@@ -1431,7 +1431,7 @@ public class StagingImpl implements Staging {
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());
 
-		BackgroundTaskLocalServiceUtil.addBackgroundTask(
+		BackgroundTaskManagerUtil.addBackgroundTask(
 			userId, exportImportConfiguration.getGroupId(),
 			exportImportConfiguration.getName(), null,
 			PortletStagingBackgroundTaskExecutor.class, taskContextMap,
@@ -2035,7 +2035,7 @@ public class StagingImpl implements Staging {
 
 		taskContextMap.put("httpPrincipal", httpPrincipal);
 
-		BackgroundTaskLocalServiceUtil.addBackgroundTask(
+		BackgroundTaskManagerUtil.addBackgroundTask(
 			user.getUserId(), exportImportConfiguration.getGroupId(),
 			StringPool.BLANK, null,
 			LayoutRemoteStagingBackgroundTaskExecutor.class, taskContextMap,

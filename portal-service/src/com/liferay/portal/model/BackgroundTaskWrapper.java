@@ -183,6 +183,21 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	}
 
 	@Override
+	public void addBackgroundTaskAttachment(long userId,
+		java.lang.String fileName, java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_backgroundTask.addBackgroundTaskAttachment(userId, fileName, file);
+	}
+
+	@Override
+	public void addBackgroundTaskAttachment(long userId,
+		java.lang.String fileName, java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_backgroundTask.addBackgroundTaskAttachment(userId, fileName,
+			inputStream);
+	}
+
+	@Override
 	public java.lang.Object clone() {
 		return new BackgroundTaskWrapper((BackgroundTask)_backgroundTask.clone());
 	}

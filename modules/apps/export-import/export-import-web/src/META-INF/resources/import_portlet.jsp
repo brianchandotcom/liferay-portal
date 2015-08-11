@@ -31,7 +31,7 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(scopeGroupId, Export
 		<div id="<portlet:namespace />exportImportOptions">
 
 			<%
-			int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(themeDisplay.getScopeGroupId(), selPortlet.getPortletId(), PortletImportBackgroundTaskExecutor.class.getName(), false);
+			int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(themeDisplay.getScopeGroupId(), selPortlet.getPortletId(), PortletImportBackgroundTaskExecutor.class.getName(), false);
 			%>
 
 			<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">

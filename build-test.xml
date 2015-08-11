@@ -2644,8 +2644,8 @@ go]]></replacevalue>
 
 		<if>
 			<and>
-				<isset property="env.GITHUB_BRANCH_NAME" />
-				<isset property="env.GITHUB_USERNAME" />
+				<isset property="github.branch.name" />
+				<isset property="github.username" />
 			</and>
 			<then>
 				<propertyregex
@@ -2653,7 +2653,7 @@ go]]></replacevalue>
 					override="true"
 					property="testray.build.name"
 					regexp="(-\s)\d+(\s-)"
-					replace="\1${env.GITHUB_USERNAME} - ${env.GITHUB_BRANCH_NAME}\2"
+					replace="\1${github.username} - ${github.branch.name}\2"
 				/>
 			</then>
 			<elseif>

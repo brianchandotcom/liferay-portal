@@ -17,6 +17,7 @@ package com.liferay.portlet.container.test;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -94,16 +95,7 @@ public class BaseTestCase {
 			return "";
 		}
 
-		byte[] bytes = new byte[100];
-		StringBuffer buffer = new StringBuffer(500);
-		int length = 0;
-
-		while ((length = stream.read(bytes)) != -1) {
-			String chunk = new String(bytes, 0, length);
-			buffer.append(chunk);
-		}
-
-		return buffer.toString();
+		return StringUtil.read(stream);
 	}
 
 	protected BundleContext getBundleContext() {

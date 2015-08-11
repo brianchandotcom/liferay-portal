@@ -47,6 +47,8 @@ public interface LayoutType extends Serializable {
 
 	public String getURL(Map<String, String> variables);
 
+	public boolean isBrowsable();
+
 	public boolean isFirstPageable();
 
 	public boolean isParentable();

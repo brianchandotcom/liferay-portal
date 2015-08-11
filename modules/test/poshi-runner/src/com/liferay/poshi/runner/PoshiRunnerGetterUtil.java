@@ -165,11 +165,7 @@ public class PoshiRunnerGetterUtil {
 	}
 
 	public static String getProjectDirName() {
-		File file = new File(StringPool.PERIOD);
-
-		String absolutePath = file.getAbsolutePath();
-
-		return absolutePath.substring(0, absolutePath.length() - 1);
+		return getCanonicalPath(PropsValues.PROJECT_DIR);
 	}
 
 	public static Element getRootElementFromFilePath(String filePath)

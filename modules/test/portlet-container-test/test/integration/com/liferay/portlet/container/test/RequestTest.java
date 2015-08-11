@@ -100,8 +100,6 @@ public class RequestTest extends BaseTestCase {
 		Field field = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "AUTH_TOKEN_CHECK_ENABLED");
 
-		field = ReflectionUtil.unfinalField(field);
-
 		Object originalValue = field.get(null);
 
 		try {
@@ -131,8 +129,6 @@ public class RequestTest extends BaseTestCase {
 	public void testActionRequest_AUTH_TOKEN_IGNORE_ORIGINS() throws Exception {
 		Field field = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "AUTH_TOKEN_IGNORE_ORIGINS");
-
-		field = ReflectionUtil.unfinalField(field);
 
 		Object originalValue = field.get(null);
 
@@ -171,8 +167,6 @@ public class RequestTest extends BaseTestCase {
 
 		Field field = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "AUTH_TOKEN_IGNORE_PORTLETS");
-
-		field = ReflectionUtil.unfinalField(field);
 
 		Object originalValue = field.get(null);
 
@@ -329,8 +323,6 @@ public class RequestTest extends BaseTestCase {
 	public void testActionRequest_p_auth_secret() throws Exception {
 		Field field = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "AUTH_TOKEN_SHARED_SECRET");
-
-		field = ReflectionUtil.unfinalField(field);
 
 		Object originalValue = field.get(null);
 

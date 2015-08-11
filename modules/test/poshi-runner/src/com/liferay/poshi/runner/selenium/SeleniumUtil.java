@@ -71,14 +71,22 @@ public class SeleniumUtil extends PropsValues {
 
 				_selenium = new ChromeWebDriverImpl(projectDirName, portalURL);
 			}
-			else if (BROWSER_TYPE.equals("*iehta") ||
-					 BROWSER_TYPE.equals("*iexplore")) {
+			else if ((BROWSER_TYPE.equals("*iehta") ||
+					  BROWSER_TYPE.equals("*iexplore")) &&
+					 !SELENIUM_REMOTE_DRIVER_ENABLED) {
 
 				System.setProperty(
 					"webdriver.ie.driver",
 					SELENIUM_EXECUTABLE_DIR_NAME + "\\IEDriverServer.exe");
 
 				_selenium = new InternetExplorerWebDriverImpl(
+					projectDirName, portalURL);
+			}
+			else if ((BROWSER_TYPE.equals("*iehta") ||
+					  BROWSER_TYPE.equals("*iexplore")) &&
+					 SELENIUM_REMOTE_DRIVER_ENABLED) {
+
+				_selenium = new InternetExplorerRemoteWebDriverImpl(
 					projectDirName, portalURL);
 			}
 			else if (BROWSER_TYPE.equals("*safari")) {

@@ -31,6 +31,12 @@ public class InternetExplorerWebDriverImpl extends BaseWebDriverImpl {
 		super(projectDirName, browserURL, new InternetExplorerDriver());
 	}
 
+	public InternetExplorerWebDriverImpl(
+		String projectDirName, String browserURL, WebDriver webDriver) {
+
+		super(projectDirName, browserURL, webDriver);
+	}
+
 	@Override
 	public void javaScriptMouseDown(String locator) {
 		WebElement webElement = getWebElement(locator);

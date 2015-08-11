@@ -11,6 +11,7 @@ FileTree fileTree = fileTree(rootDir) {
 		exclude "portal/portal-search-solr/build.gradle"
 		exclude "portal/portal-taglib-aui-form-extension-sample/build.gradle"
 
+		include "addons/layout-type-controller/*/build.gradle"
 		include "addons/portlet-configuration-icon/*/build.gradle"
 		include "apps/amazon-rankings/*/build.gradle"
 		include "apps/announcements/*/build.gradle"
@@ -22,7 +23,6 @@ FileTree fileTree = fileTree(rootDir) {
 		include "apps/comment/*/build.gradle"
 		include "apps/configuration-admin/*/build.gradle"
 		include "apps/control-menu/*/build.gradle"
-		include "apps/control-panel/*/build.gradle"
 		include "apps/currency-converter/*/build.gradle"
 		include "apps/dictionary/*/build.gradle"
 		include "apps/document-library/*/build.gradle"

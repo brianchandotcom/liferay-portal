@@ -205,10 +205,6 @@
 			<contains></contains>
 			<matches>.*osgi.compendium:service=.*version=1.[0-9]+.*</matches>
 		</ignore-error>
-		<ignore-error description="LPS-57789">
-			<contains>[Hikari housekeeper (pool HikariPool-</contains>
-			<matches>.*The web application \\[\\] appears to have started a thread.*</matches>
-		</ignore-error>
 		<ignore-error description="LRQA-14442, temporary workaround until Kiyoshi Lee fixes it">
 			<contains>[org_eclipse_equinox_http_servlet.*Framework Event Dispatcher: Equinox Container:</contains>
 			<matches></matches>

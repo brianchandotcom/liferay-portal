@@ -197,7 +197,7 @@ public class CompileThemeTask extends DefaultTask {
 	protected void copyPortalThemeDir(
 		String theme, final String[] excludes, final String[] includes) {
 
-		final String prefix = "html/themes/" + theme + "/";
+		final String prefix = + theme + "/";
 
 		final File frontendThemesWebDir = getFrontendThemesWebDir();
 		final File frontendThemesWebFile = getFrontendThemesWebFile();

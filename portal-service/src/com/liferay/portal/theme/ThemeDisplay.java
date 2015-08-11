@@ -537,8 +537,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * Returns the URL for the portal instance's JavaScript resources. This
-	 * method typically returns <code>/html/js</code>.
+	 * Returns the URL for the portal instance's JavaScript resources.
 	 *
 	 * @return the URL for the portal instance's JavaScript resources
 	 */

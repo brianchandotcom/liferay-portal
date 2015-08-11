@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="css.dir" value="src/META-INF/resources/html/css" />
+	<property name="css.dir" value="src/META-INF/resources" />
 	<property name="third.party.dir" value="../../../portal-web/third-party" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />

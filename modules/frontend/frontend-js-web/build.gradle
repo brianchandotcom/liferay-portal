@@ -22,7 +22,7 @@ liferay {
 	deployDir = file("${liferayHome}/osgi/portal")
 }
 
-File jsDestinationDir = file("tmp/META-INF/resources/html/js")
+File jsDestinationDir = file("tmp/META-INF/resources")
 File thirdPartyDir = file("../../../portal-web/third-party")
 
 task buildAlloy(type: Copy)
@@ -131,7 +131,7 @@ buildLexicon {
 buildLfrAMDLoader {
 	dependsOn downloadLfrAMDLoader
 	from new File(node.nodeModulesDir, "node_modules/lfr-amd-loader/dist/loader.js")
-	into "tmp/META-INF/resources/html/js/loader"
+	into "tmp/META-INF/resources/loader"
 }
 
 downloadLfrAMDLoader {

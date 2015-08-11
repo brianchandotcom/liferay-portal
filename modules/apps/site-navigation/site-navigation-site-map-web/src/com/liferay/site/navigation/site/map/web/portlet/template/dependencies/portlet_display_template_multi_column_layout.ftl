@@ -6,20 +6,19 @@
 		    <@aui.column columnWidth=25>
 				<div class="results-header">
 					<h3>
-						<#assign layoutHrefLink = "">
+						<a
+
 						<#assign layoutType = entry.getLayoutType()>
 
 						<#if layoutType.isBrowsable()>
-							<#assign layoutHrefLink = "href='${portalUtil.getLayoutURL(entry, themeDisplay)}'">
+							href="${portalUtil.getLayoutURL(entry, themeDisplay)}"
 						</#if>
 
-						<a ${layoutHrefLink}>${entry.getName(locale)}</a>
+						>${entry.getName(locale)}</a>
 					</h3>
 				</div>
 
-				<#assign pages = entry.getChildren()>
-
-				<@displayPages pages = pages />
+				<@displayPages pages=entry.getChildren() />
 		    </@aui.column>
 		</#list>
 	</@aui.layout>
@@ -32,18 +31,17 @@
 		<ul class="child-pages">
 			<#list pages as page>
 				<li>
-					<#assign pageHrefLink = "">
+					<a
+
 					<#assign pageType = page.getLayoutType()>
 
 					<#if pageType.isBrowsable()>
-						<#assign pageHrefLink = "href='${portalUtil.getLayoutURL(page, themeDisplay)}'">
+						href="${portalUtil.getLayoutURL(page, themeDisplay)}"
 					</#if>
 
-					<a ${pageHrefLink}>${page.getName(locale)}</a>
+					>${page.getName(locale)}</a>
 
-					<#assign childPages = page.getChildren()>
-
-					<@displayPages pages = childPages />
+					<@displayPages pages=page.getChildren() />
 				</li>
 			</#list>
 		</ul>

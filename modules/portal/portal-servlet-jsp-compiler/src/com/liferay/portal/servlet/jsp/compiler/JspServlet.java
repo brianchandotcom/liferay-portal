@@ -175,7 +175,7 @@ public class JspServlet extends HttpServlet {
 		defaults.put("compilerTargetVM", "1.7");
 		defaults.put("development", "false");
 		defaults.put("httpMethods", "GET,POST,HEAD");
-		defaults.put("keepgenerated", "true");
+		defaults.put("keepgenerated", "false");
 		defaults.put("logVerbosityLevel", "DEBUG");
 
 		Enumeration<String> names = servletConfig.getInitParameterNames();

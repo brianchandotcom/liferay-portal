@@ -462,7 +462,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 				cssServletContext =
 					PortalWebResourcesUtil.getPathServletContext(requestURI);
 			}
-			else {
+
+			if (cssServletContext == null) {
 				cssServletContext = _servletContext;
 			}
 

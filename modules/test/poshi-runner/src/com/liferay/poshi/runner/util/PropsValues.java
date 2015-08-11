@@ -105,6 +105,12 @@ public class PropsValues {
 	public static final String SELENIUM_CHROME_DRIVER_EXECUTABLE =
 		PropsUtil.get("selenium.chrome.driver.executable");
 
+	public static final String SELENIUM_DESIRED_CAPABILITIES_PLATFORM =
+		PropsUtil.get("selenium.desired.capabilities.platform");
+
+	public static final String SELENIUM_DESIRED_CAPABILITIES_VERSION =
+		PropsUtil.get("selenium.desired.capabilities.version");
+
 	public static final String SELENIUM_EXECUTABLE_DIR_NAME =
 		PropsUtil.get("selenium.executable.dir.name");
 
@@ -124,12 +130,6 @@ public class PropsValues {
 
 	public static final String SELENIUM_REMOTE_DRIVER_HUB =
 		PropsUtil.get("selenium.remote.driver.hub");
-
-	public static final String SELENIUM_DESIRED_CAPABILITIES_PLATFORM =
-		PropsUtil.get("selenium.desired.capabilities.platform");
-
-	public static final String SELENIUM_DESIRED_CAPABILITIES_VERSION =
-		PropsUtil.get("selenium.desired.capabilities.version");
 
 	public static final String TCAT_ADMIN_REPOSITORY = PropsUtil.get(
 		"tcat.admin.repository");

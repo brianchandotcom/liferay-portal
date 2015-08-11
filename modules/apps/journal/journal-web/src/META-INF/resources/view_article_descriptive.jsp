@@ -17,7 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalArticle article = (JournalArticle)request.getAttribute("view_entries.jsp-article");
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+JournalArticle article = null;
+
+if (row != null) {
+	article = (JournalArticle)row.getObject();
+}
+else {
+	article = (JournalArticle)request.getAttribute("view_entries.jsp-article");
+}
 
 PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempRowURL");
 
@@ -67,7 +76,7 @@ String articleImageURL = article.getArticleImageURL(themeDisplay);
 	thumbnailSrc='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 	thumbnailStyle="max-height: 128px; max-width: 128px;"
 	title="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
-	url="<%= tempRowURL.toString() %>"
+	url="<%= tempRowURL != null ? tempRowURL.toString() : null %>"
 	version="<%= String.valueOf(article.getVersion()) %>"
 	view="lexicon"
 />

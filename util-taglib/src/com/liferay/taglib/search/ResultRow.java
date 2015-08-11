@@ -15,6 +15,7 @@
 package com.liferay.taglib.search;
 
 import com.liferay.portal.kernel.dao.search.SearchEntry;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,11 +54,19 @@ public class ResultRow
 	public ResultRow(
 		String rowId, Object obj, String primaryKey, int pos, boolean bold) {
 
+		this(rowId, obj, primaryKey, pos, bold, StringPool.BLANK);
+	}
+
+	public ResultRow(
+		String rowId, Object obj, String primaryKey, int pos, boolean bold,
+		String cssClass) {
+
 		_rowId = rowId;
 		_obj = obj;
 		_primaryKey = primaryKey;
 		_pos = pos;
 		_bold = bold;
+		_cssClass = cssClass;
 		_searchEntries = new ArrayList<>();
 	}
 
@@ -533,6 +542,10 @@ public class ResultRow
 		return _className;
 	}
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
 	@Override
 	public Map<String, Object> getData() {
 		return _data;
@@ -607,6 +620,10 @@ public class ResultRow
 		_className = className;
 	}
 
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
+	}
+
 	@Override
 	public void setData(Map<String, Object> data) {
 		_data = data;
@@ -649,6 +666,7 @@ public class ResultRow
 	private boolean _bold;
 	private String _classHoverName;
 	private String _className;
+	private String _cssClass;
 	private Map<String, Object> _data;
 	private Object _obj;
 	private Map<String, Object> _params;

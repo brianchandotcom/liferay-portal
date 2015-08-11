@@ -3994,6 +3994,12 @@
 		<tei-class>com.liferay.taglib.ui.SearchContainerTei</tei-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>A CSS class for styling the column.</description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>A variable for the search container's pagination. Different pagination variables ensure independent pagination when multiple search containers are on a JSP.</description>
 			<name>curParam</name>
 			<required>false</required>
@@ -4555,6 +4561,12 @@
 			<description>The class name of the objects to display in rows.</description>
 			<name>className</name>
 			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A CSS class for styling the row.</description>
+			<name>cssClass</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>

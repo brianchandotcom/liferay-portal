@@ -160,6 +160,8 @@ public interface ResultRow {
 
 	public String getClassName();
 
+	public String getCssClass();
+
 	public Map<String, Object> getData();
 
 	public List<SearchEntry> getEntries();
@@ -187,6 +189,8 @@ public interface ResultRow {
 	public void setClassHoverName(String classHoverName);
 
 	public void setClassName(String className);
+
+	public void setCssClass(String cssClass);
 
 	public void setData(Map<String, Object> data);
 

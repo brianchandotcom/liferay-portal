@@ -64,7 +64,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 	</div>
 </c:if>
 
-<div class="lfr-search-container <%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %>">
+<div class="lfr-search-container <%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> <%= searchContainer.getCssClass() %>">
 	<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP && (resultRows.size() > PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP_DELTA) && paginate %>">
 		<div class="taglib-search-iterator-page-iterator-top">
 			<liferay-ui:search-paginator id='<%= id + "PageIteratorTop" %>' searchContainer="<%= searchContainer %>" type="<%= type %>" />
@@ -257,7 +257,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 			Map<String, Object> data = row.getData();
 		%>
 
-			<tr class="<%= GetterUtil.getString(row.getClassName()) %> <%= rowIsChecked ? "info" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
+			<tr class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "info" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
 
 			<%
 			for (int j = 0; j < entries.size(); j++) {

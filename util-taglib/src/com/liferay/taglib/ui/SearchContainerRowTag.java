@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
@@ -106,6 +107,7 @@ public class SearchContainerRowTag<R>
 		if (!ServerDetector.isResin()) {
 			_bold = false;
 			_className = null;
+			_cssClass = StringPool.BLANK;
 			_escapedModel = false;
 			_indexVar = DEFAULT_INDEX_VAR;
 			_keyProperty = null;
@@ -148,6 +150,10 @@ public class SearchContainerRowTag<R>
 
 	public String getClassName() {
 		return _className;
+	}
+
+	public String getCssClass() {
+		return _cssClass;
 	}
 
 	public List<String> getHeaderNames() {
@@ -208,6 +214,10 @@ public class SearchContainerRowTag<R>
 
 	public void setClassName(String className) {
 		_className = className;
+	}
+
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
 	}
 
 	public void setEscapedModel(boolean escapedModel) {
@@ -304,7 +314,7 @@ public class SearchContainerRowTag<R>
 		}
 
 		_resultRow = new com.liferay.taglib.search.ResultRow(
-			rowId, model, primaryKey, _rowIndex, _bold);
+			rowId, model, primaryKey, _rowIndex, _bold, _cssClass);
 
 		pageContext.setAttribute(_indexVar, _rowIndex);
 		pageContext.setAttribute(_modelVar, model);
@@ -316,6 +326,7 @@ public class SearchContainerRowTag<R>
 
 	private boolean _bold;
 	private String _className;
+	private String _cssClass = StringPool.BLANK;
 	private boolean _escapedModel;
 	private List<String> _headerNames;
 	private boolean _headerNamesAssigned;

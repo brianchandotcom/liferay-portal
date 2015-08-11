@@ -93,6 +93,17 @@ public class SearchContainer<R> {
 		PortletURL iteratorURL, List<String> headerNames,
 		String emptyResultsMessage) {
 
+		this (
+			portletRequest, displayTerms, searchTerms, curParam, cur, delta,
+			iteratorURL, headerNames, emptyResultsMessage, StringPool.BLANK);
+	}
+
+	public SearchContainer(
+		PortletRequest portletRequest, DisplayTerms displayTerms,
+		DisplayTerms searchTerms, String curParam, int cur, int delta,
+		PortletURL iteratorURL, List<String> headerNames,
+		String emptyResultsMessage, String cssClass) {
+
 		_portletRequest = portletRequest;
 		_displayTerms = displayTerms;
 		_searchTerms = searchTerms;
@@ -162,6 +173,10 @@ public class SearchContainer<R> {
 		if (searchContainerReference != null) {
 			searchContainerReference.register(this);
 		}
+
+		if (Validator.isNotNull(cssClass)) {
+			_cssClass = cssClass;
+		}
 	}
 
 	public SearchContainer(
@@ -186,6 +201,10 @@ public class SearchContainer<R> {
 
 	public String getClassName() {
 		return _className;
+	}
+
+	public String getCssClass() {
+		return _cssClass;
 	}
 
 	public int getCur() {
@@ -380,6 +399,10 @@ public class SearchContainer<R> {
 		_className = className;
 	}
 
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
+	}
+
 	public void setDelta(int delta) {
 		if (delta <= 0) {
 			_delta = DEFAULT_DELTA;
@@ -528,6 +551,7 @@ public class SearchContainer<R> {
 	}
 
 	private String _className;
+	private String _cssClass = StringPool.BLANK;
 	private int _cur;
 	private final String _curParam;
 	private int _delta = DEFAULT_DELTA;

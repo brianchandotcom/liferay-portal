@@ -601,6 +601,8 @@
    <bean id="com.liferay.portlet.portalsettings.action.EditCompanyMVCActionCommand" class="com.liferay.portlet.portalsettings.action.EditCompanyMVCActionCommand" />
    <bean id="com.liferay.portlet.portalsettings.action.EditCompanyMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.EditCompanyMVCRenderCommand" />
    <bean id="com.liferay.portlet.portalsettings.action.EditLDAPServerMVCActionCommand" class="com.liferay.portlet.portalsettings.action.EditLDAPServerMVCActionCommand" />
+   <bean id="com.liferay.portlet.portalsettings.action.TestCASConfigurationMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestCASConfigurationMVCRenderCommand" />
+
 
     <bean id="com.liferay.portlet.rolesadmin.util.RolesAdmin" class="com.liferay.portlet.rolesadmin.util.RolesAdminImpl" />
 	<bean id="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" class="com.liferay.portlet.rolesadmin.util.RolesAdminUtil">

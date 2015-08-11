@@ -20,17 +20,17 @@
 </tr>
 <tr>
 	<td>DEFAULT_CALENDAR_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_CalendarPortlet_defaultCalendar']</td>
+	<td>//input[contains(@id,'_CalendarPortlet_defaultCalendar')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_COMMENTS_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_CalendarPortlet_enableComments']</td>
+	<td>//input[contains(@id,'_CalendarPortlet_enableComments')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_CalendarPortlet_enableRatings']</td>
+	<td>//input[contains(@id,'_CalendarPortlet_enableRatings')]</td>
 	<td></td>
 </tr>
 <tr>

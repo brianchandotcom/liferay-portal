@@ -40,6 +40,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
@@ -340,14 +341,14 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 						return;
 					}
 
-					String title = dlFileEntry.getTitle();
+					String newTitle = dlFileEntry.getTitle();
 
-					if (StringUtil.contains(
-							title, StringPool.DOUBLE_BACK_SLASH)) {
+					for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
+						newTitle = newTitle.replace(
+							blacklistChar, StringPool.UNDERLINE);
+					}
 
-						String newTitle = title.replace(
-							StringPool.BACK_SLASH, StringPool.UNDERLINE);
-
+					if (!dlFileEntry.getTitle().equals(newTitle)) {
 						try {
 							dlFileEntry = renameTitle(dlFileEntry, newTitle);
 						}

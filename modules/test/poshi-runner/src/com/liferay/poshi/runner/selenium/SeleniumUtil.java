@@ -77,7 +77,8 @@ public class SeleniumUtil extends PropsValues {
 
 				System.setProperty(
 					"webdriver.ie.driver",
-					SELENIUM_EXECUTABLE_DIR_NAME + "\\IEDriverServer.exe");
+					SELENIUM_EXECUTABLE_DIR_NAME +
+						SELENIUM_CHROME_DRIVER_EXECUTABLE);
 
 				_selenium = new InternetExplorerWebDriverImpl(
 					projectDirName, portalURL);

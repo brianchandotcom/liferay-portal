@@ -116,6 +116,9 @@ public class PropsValues {
 
 	public static final String SELENIUM_HOST = PropsUtil.get("selenium.host");
 
+	public static final String SELENIUM_IE_DRIVER_EXECUTABLE =
+		PropsUtil.get("selenium.ie.driver.executable");
+
 	public static final String SELENIUM_IMPLEMENTATION = PropsUtil.get(
 		"selenium.implementation");
 

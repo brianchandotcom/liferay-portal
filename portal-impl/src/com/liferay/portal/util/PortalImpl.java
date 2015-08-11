@@ -1736,18 +1736,60 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public PortletURL getControlPanelPortletURL(
-		HttpServletRequest request, String portletId, long referrerPlid,
-		String lifecycle) {
+		HttpServletRequest request, Group group, String portletId,
+		long referrerPlid, String lifecycle) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = getControlPanelLayout(themeDisplay);
+		Layout layout = getControlPanelLayout(themeDisplay, group);
 
 		request.setAttribute(WebKeys.LAYOUT, layout);
 
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
 			request, portletId, layout.getPlid(), lifecycle);
+
+		if (referrerPlid > 0) {
+			liferayPortletURL.setRefererPlid(referrerPlid);
+		}
+
+		try {
+			liferayPortletURL.setWindowState(WindowState.MAXIMIZED);
+		}
+		catch (WindowStateException wse) {
+			_log.error(wse);
+		}
+
+		return liferayPortletURL;
+	}
+
+	@Override
+	public PortletURL getControlPanelPortletURL(
+		HttpServletRequest request, String portletId, long referrerPlid,
+		String lifecycle) {
+
+		return getControlPanelPortletURL(
+			request, null, portletId, referrerPlid, lifecycle);
+	}
+
+	@Override
+	public PortletURL getControlPanelPortletURL(
+		PortletRequest portletRequest, Group group, String portletId,
+		long referrerPlid, String lifecycle) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = getControlPanelLayout(themeDisplay, group);
+
+		portletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
+			portletRequest, portletId, layout.getPlid(), lifecycle);
+
+		if (referrerPlid > 0) {
+			liferayPortletURL.setRefererPlid(referrerPlid);
+		}
 
 		try {
 			liferayPortletURL.setWindowState(WindowState.MAXIMIZED);
@@ -1764,24 +1806,8 @@ public class PortalImpl implements Portal {
 		PortletRequest portletRequest, String portletId, long referrerPlid,
 		String lifecycle) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = getControlPanelLayout(themeDisplay);
-
-		portletRequest.setAttribute(WebKeys.LAYOUT, layout);
-
-		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
-			portletRequest, portletId, layout.getPlid(), lifecycle);
-
-		try {
-			liferayPortletURL.setWindowState(WindowState.MAXIMIZED);
-		}
-		catch (WindowStateException wse) {
-			_log.error(wse);
-		}
-
-		return liferayPortletURL;
+		return getControlPanelPortletURL(
+			portletRequest, null, portletId, referrerPlid, lifecycle);
 	}
 
 	@Override
@@ -4919,6 +4945,12 @@ public class PortalImpl implements Portal {
 			PortletCategoryKeys.SITE_ADMINISTRATION_ALL);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
+	 *             long, String)}
+	 */
+	@Deprecated
 	@Override
 	public PortletURL getSiteAdministrationURL(
 		HttpServletRequest request, ThemeDisplay themeDisplay) {
@@ -4933,6 +4965,12 @@ public class PortalImpl implements Portal {
 			request, themeDisplay, portlet.getPortletId());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
+	 *             long, String)}
+	 */
+	@Deprecated
 	@Override
 	public PortletURL getSiteAdministrationURL(
 		HttpServletRequest request, ThemeDisplay themeDisplay,
@@ -4946,41 +4984,10 @@ public class PortalImpl implements Portal {
 		return portletURL;
 	}
 
-	@Override
-	public PortletURL getSiteAdministrationURL(
-		PortletRequest portletRequest, ThemeDisplay themeDisplay) {
-
-		Portlet portlet = getFirstSiteAdministrationPortlet(themeDisplay);
-
-		if (portlet == null) {
-			return null;
-		}
-
-		PortletURL portletURL = getControlPanelPortletURL(
-			portletRequest, portlet.getPortletId(), 0,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		return portletURL;
-	}
-
-	@Override
-	public PortletURL getSiteAdministrationURL(
-		PortletRequest portletRequest, ThemeDisplay themeDisplay,
-		String portletId) {
-
-		PortletURL portletURL = getControlPanelPortletURL(
-			portletRequest, portletId, 0, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		return portletURL;
-	}
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getSiteAdministrationURL(PortletRequest, themeDisplay)}
+	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
+	 *             long, String)}
 	 */
 	@Deprecated
 	@Override
@@ -4999,8 +5006,8 @@ public class PortalImpl implements Portal {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getSiteAdministrationURL(PortletRequest, themeDisplay,
-	 *             String)}
+	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
+	 *             long, String)}
 	 */
 	@Deprecated
 	@Override
@@ -7688,7 +7695,9 @@ public class PortalImpl implements Portal {
 		return contextPath;
 	}
 
-	protected Layout getControlPanelLayout(ThemeDisplay themeDisplay) {
+	protected Layout getControlPanelLayout(
+		ThemeDisplay themeDisplay, Group group) {
+
 		Layout layout = null;
 
 		try {
@@ -7702,16 +7711,16 @@ public class PortalImpl implements Portal {
 			return null;
 		}
 
-		Group group = null;
-
-		long groupId = themeDisplay.getDoAsGroupId();
-
-		if (groupId > 0) {
-			group = GroupLocalServiceUtil.fetchGroup(groupId);
-		}
-
 		if (group == null) {
-			group = themeDisplay.getScopeGroup();
+			long groupId = themeDisplay.getDoAsGroupId();
+
+			if (groupId > 0) {
+				group = GroupLocalServiceUtil.fetchGroup(groupId);
+			}
+
+			if (group == null) {
+				group = themeDisplay.getScopeGroup();
+			}
 		}
 
 		return new VirtualLayout(layout, group);

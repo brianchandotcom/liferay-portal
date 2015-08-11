@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +41,10 @@ public class WindowStateFactory {
 	}
 
 	private WindowState _getWindowState(String name) {
+		if (Validator.isNull(name)) {
+			return WindowState.NORMAL;
+		}
+
 		WindowState windowState = _windowStates.get(name);
 
 		if (windowState == null) {

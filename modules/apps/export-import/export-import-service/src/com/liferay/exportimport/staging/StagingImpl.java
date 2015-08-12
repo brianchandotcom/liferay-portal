@@ -2240,14 +2240,8 @@ public class StagingImpl implements Staging {
 			privateLayout = false;
 		}
 
-		String scope = ParamUtil.getString(portletRequest, "scope");
-
-		long[] layoutIds = null;
-
-		if (scope.equals("selected-pages")) {
-			layoutIds = ExportImportHelperUtil.getLayoutIds(
-				portletRequest, targetGroupId);
-		}
+		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(
+			portletRequest, targetGroupId);
 
 		if (schedule) {
 			String groupName = getSchedulerGroupName(
@@ -2279,20 +2273,13 @@ public class StagingImpl implements Staging {
 
 			LayoutServiceUtil.schedulePublishToLive(
 				sourceGroupId, targetGroupId, privateLayout, layoutIds,
-				parameterMap, scope, null, null, groupName, cronText,
-				startCalendar.getTime(), schedulerEndDate, description);
+				parameterMap, groupName, cronText, startCalendar.getTime(),
+				schedulerEndDate, description);
 		}
 		else {
-			if (scope.equals("all-pages")) {
-				publishLayouts(
-					themeDisplay.getUserId(), sourceGroupId, targetGroupId,
-					privateLayout, parameterMap);
-			}
-			else {
-				publishLayouts(
-					themeDisplay.getUserId(), sourceGroupId, targetGroupId,
-					privateLayout, layoutIds, parameterMap);
-			}
+			publishLayouts(
+				themeDisplay.getUserId(), sourceGroupId, targetGroupId,
+				privateLayout, layoutIds, parameterMap);
 		}
 	}
 
@@ -2310,17 +2297,8 @@ public class StagingImpl implements Staging {
 			privateLayout = false;
 		}
 
-		String scope = ParamUtil.getString(portletRequest, "scope");
-
-		if (Validator.isNull(scope)) {
-			scope = "all-pages";
-		}
-
-		Map<Long, Boolean> layoutIdMap = null;
-
-		if (scope.equals("selected-pages")) {
-			layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(portletRequest);
-		}
+		Map<Long, Boolean> layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(
+			portletRequest);
 
 		Map<String, String[]> parameterMap =
 			ExportImportConfigurationParameterMapFactory.buildParameterMap(

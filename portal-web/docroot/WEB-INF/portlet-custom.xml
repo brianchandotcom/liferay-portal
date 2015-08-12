@@ -247,13 +247,13 @@
 	<portlet>
 		<portlet-name>131</portlet-name>
 		<display-name>Monitoring</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.monitoring.portlet.MonitoringPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/monitoring/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
+			<name>view-template</name>
 			<value>/monitoring/view</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>

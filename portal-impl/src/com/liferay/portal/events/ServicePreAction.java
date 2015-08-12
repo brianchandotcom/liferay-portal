@@ -2049,9 +2049,10 @@ public class ServicePreAction extends Action {
 							Portlet firstPortlet = categoryPortlets.get(0);
 
 							PortletURL redirectURL =
-								PortalUtil.getSiteAdministrationURL(
-									request, themeDisplay,
-									firstPortlet.getPortletId());
+								PortalUtil.getControlPanelPortletURL(
+									request, themeDisplay.getScopeGroup(),
+									firstPortlet.getPortletId(), 0,
+									PortletRequest.RENDER_PHASE);
 
 							response.sendRedirect(redirectURL.toString());
 						}

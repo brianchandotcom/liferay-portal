@@ -64,7 +64,7 @@ public class MyAccountPanelApp extends BaseControlPanelEntryPanelApp {
 			return user.getGroup();
 		}
 		catch (PortalException pe) {
-			_log.error(pe);
+			_log.error(pe, pe);
 		}
 
 		return group;

@@ -74,7 +74,7 @@ public class MyPagesPanelApp extends GroupPagesPanelApp {
 			return user.getGroup();
 		}
 		catch (PortalException pe) {
-			_log.error(pe);
+			_log.error(pe, pe);
 		}
 
 		return group;

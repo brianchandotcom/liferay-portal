@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.portlet.monitoring.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;

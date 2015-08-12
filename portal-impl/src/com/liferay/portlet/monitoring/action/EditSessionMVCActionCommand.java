@@ -14,10 +14,6 @@
 
 package com.liferay.portlet.monitoring.action;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.servlet.http.HttpSession;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -31,6 +27,11 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Brian Wing Shun Chan

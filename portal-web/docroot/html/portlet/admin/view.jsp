@@ -28,14 +28,12 @@
 		portletURL.setParameter("struts_action", "/admin/view");
 		portletURL.setParameter("tabs1", tabs1);
 		portletURL.setParameter("tabs2", tabs2);
-		portletURL.setParameter("tabs3", tabs3);
 		%>
 
 		<portlet:renderURL var="redirectURL">
 			<portlet:param name="struts_action" value="/admin/view" />
 			<portlet:param name="tabs1" value="<%= tabs1 %>" />
 			<portlet:param name="tabs2" value="<%= tabs2 %>" />
-			<portlet:param name="tabs3" value="<%= tabs3 %>" />
 			<portlet:param name="cur" value="<%= String.valueOf(cur) %>" />
 		</portlet:renderURL>
 
@@ -43,13 +41,12 @@
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 			<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-			<aui:input name="tabs3" type="hidden" value="<%= tabs3 %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 			<aui:input name="className" type="hidden" />
 
 			<c:if test="<%= showTabs1 %>">
 				<liferay-ui:tabs
-					names="server,instances,plugins"
+					names="server,instances"
 					url="<%= portletURL.toString() %>"
 				/>
 			</c:if>
@@ -68,20 +65,6 @@
 						);
 					</aui:script>
 				</c:when>
-				<c:when test='<%= tabs1.equals("plugins") %>'>
-
-					<%
-					PortletURL marketplaceURL = null;
-
-					if ((PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) || PortalUtil.isOmniadmin(user.getUserId())) && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE)) {
-						marketplaceURL = ((RenderResponseImpl)renderResponse).createRenderURL(PortletKeys.MARKETPLACE_STORE);
-					}
-
-					boolean showEditPluginHREF = false;
-					%>
-
-					<%@ include file="/html/portlet/plugins_admin/plugins.jspf" %>
-				</c:when>
 			</c:choose>
 		</aui:form>
 
@@ -89,7 +72,6 @@
 			<portlet:param name="struts_action" value="/admin/view" />
 			<portlet:param name="tabs1" value="<%= tabs1 %>" />
 			<portlet:param name="tabs2" value="<%= tabs2 %>" />
-			<portlet:param name="tabs3" value="<%= tabs3 %>" />
 			<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= String.valueOf(cur) %>" />
 			<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= String.valueOf(delta) %>" />
 		</portlet:renderURL>

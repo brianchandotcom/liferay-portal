@@ -49,7 +49,7 @@
 									<liferay-ui:message key="do-you-want-to-manage-the-installed-apps" />
 								</p>
 
-								<liferay-portlet:renderURL portletName="<%= PortletKeys.PLUGINS_ADMIN %>" var="pluginsAdminURL">
+								<liferay-portlet:renderURL portletName="com_liferay_pluginsadmin_web_portlet_PluginsAdminPortlet" var="pluginsAdminURL">
 									<portlet:param name="redirect" value="<%= PortalUtil.getCurrentURL(request) %>" />
 								</liferay-portlet:renderURL>
 

@@ -351,6 +351,85 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="merge-testray-results">
+		<attribute name="test.results.dir" default="${default.test.results.dir}" />
+		<attribute name="test.results.fileset" default="*.xml" />
+		<attribute name="test.results.suite.dir" default="${default.test.results.suite.dir}" />
+		<attribute name="test.results.suite.file.name" default="${default.test.results.suite.file.name}" />
+
+		<sequential>
+			<local name="test.results.suite.file" />
+
+			<property name="test.results.suite.file" value="@{test.results.suite.dir}/@{test.results.suite.file.name}" />
+
+			<echo>Merging into file ${test.results.suite.file}</echo>
+
+			<first id="first">
+				<fileset dir="@{test.results.dir}" includes="@{test.results.fileset}" />
+			</first>
+
+			<loadfile property="test.results.suite.file.header" srcfile="${toString:first}" />
+
+			<propertyregex
+				input="${test.results.suite.file.header}"
+				override="true"
+				property="test.results.suite.file.header"
+				regexp="&lt;testcase[\s\S.]*"
+				replace=""
+			/>
+
+			<propertyregex
+				input="${test.results.suite.file.header}"
+				override="true"
+				property="test.results.suite.file.header"
+				regexp="&lt;testsuite.*\n"
+				replace="&lt;testsuite&gt;${line.separator}"
+			/>
+
+			<echo file="${test.results.suite.file}">${test.results.suite.file.header}</echo>
+
+			<for param="test.results.file">
+				<path>
+					<fileset dir="@{test.results.dir}">
+						<include name="@{test.results.fileset}" />
+					</fileset>
+				</path>
+				<sequential>
+					<var name="test.results.file.body" unset="true" />
+
+					<loadfile property="test.results.file.body" srcfile="@{test.results.file}" />
+
+					<if>
+						<contains string="${test.results.file.body}" substring="testcase" />
+						<then>
+							<echo>Merging @{test.results.file}.</echo>
+
+							<propertyregex
+								input="${test.results.file.body}"
+								override="true"
+								property="test.results.file.body"
+								regexp="&lt;\?xml[\s\S]*?&lt;testcase"
+								replace="&lt;testcase"
+							/>
+
+							<propertyregex
+								input="${test.results.file.body}"
+								override="true"
+								property="test.results.file.body"
+								regexp="&lt;/testcase&gt;[\s\S]*"
+								replace="&lt;/testcase&gt;${line.separator}"
+							/>
+
+							<echo append="true" file="${test.results.suite.file}">${test.results.file.body}</echo>
+						</then>
+					</if>
+				</sequential>
+			</for>
+
+			<echo append="true" file="${test.results.suite.file}">&lt;/testsuite&gt;</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-test-build">
 		<sequential>
 			<antcall target="prepare-test-build">

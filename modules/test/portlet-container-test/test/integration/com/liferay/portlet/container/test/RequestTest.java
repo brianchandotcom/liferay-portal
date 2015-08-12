@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.security.auth.AuthTokenWhitelistUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -52,6 +54,9 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -248,10 +253,31 @@ public class RequestTest extends BaseTestCase {
 			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
-		Map<String, List<String>> responseMap = request(portletURL.toString());
+		String url = portletURL.toString();
 
-		Assert.assertEquals("200", responseMap.get("responseCode").get(0));
-		Assert.assertFalse(map.containsKey("processAction"));
+		try (CaptureAppender captureAppender =
+			Log4JLoggerTestUtil.configureLog4JLogger(
+				SecurityPortletContainerWrapper.class.getName(), Level.WARN)) {
+
+			Map<String, List<String>> responseMap = request(url);
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(1, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			String rootUrl = url.substring(0, url.indexOf('?'));
+
+			Assert.assertEquals(
+				"User 0 is not allowed to access URL " + rootUrl +
+					" and portlet " + PortletKeys.TEST_PORTLET,
+				loggingEvent.getMessage());
+
+			Assert.assertEquals("200", responseMap.get("responseCode").get(0));
+			Assert.assertFalse(map.containsKey("processAction"));
+		}
 	}
 
 	@Test
@@ -460,20 +486,25 @@ public class RequestTest extends BaseTestCase {
 				"?p_p_id='\"><script>alert(1)</script>&p_p_lifecycle=0&" +
 					"p_p_state=exclusive";
 
-		Map<String, List<String>> responseMap = request(url);
+		try (CaptureAppender captureAppender =
+			Log4JLoggerTestUtil.configureLog4JLogger(
+				SecurityPortletContainerWrapper.class.getName(), Level.WARN)) {
 
-		Assert.assertEquals("200", responseMap.get("responseCode").get(0));
+			Map<String, List<String>> responseMap = request(url);
 
-		String expected =
-			"You do not have the roles required to access this portlet.";
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
 
-		String responseBody = responseMap.get("responseBody").get(0);
+			Assert.assertEquals(1, loggingEvents.size());
 
-		Assert.assertTrue(
-			"Expected to contain <" + expected + "> but was <" + responseBody +
-				">",
-			responseBody.contains(
-				"You do not have the roles required to access this portlet."));
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"Invalid portlet ID '\"><script>alert(1)</script>",
+				loggingEvent.getMessage());
+
+			Assert.assertEquals("200", responseMap.get("responseCode").get(0));
+		}
 	}
 
 	@Test
@@ -626,13 +657,36 @@ public class RequestTest extends BaseTestCase {
 	public void testResourceRequest_invalidPortletId() throws Exception {
 		MockHttpServletRequest request = getRequest();
 
+		String rootUrl = layout.getRegularURL(request);
 		String url =
-			layout.getRegularURL(request) +
-				"?p_p_id='\"><script>alert(1)</script>&p_p_lifecycle=2&";
+			rootUrl + "?p_p_id='\"><script>alert(1)</script>&p_p_lifecycle=2&";
 
-		Map<String, List<String>> responseMap = request(url);
+		try (CaptureAppender captureAppender =
+			Log4JLoggerTestUtil.configureLog4JLogger(
+				SecurityPortletContainerWrapper.class.getName(), Level.WARN)) {
 
-		Assert.assertEquals("400", responseMap.get("responseCode").get(0));
+			Map<String, List<String>> responseMap = request(url);
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(2, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"Invalid portlet ID '\"><script>alert(1)</script>",
+				loggingEvent.getMessage());
+
+			loggingEvent = loggingEvents.get(1);
+
+			Assert.assertEquals(
+				"Reject serveResource for " + rootUrl +
+					" on '\"><script>alert(1)</script>",
+				loggingEvent.getMessage());
+
+			Assert.assertEquals("400", responseMap.get("responseCode").get(0));
+		}
 	}
 
 	@Test

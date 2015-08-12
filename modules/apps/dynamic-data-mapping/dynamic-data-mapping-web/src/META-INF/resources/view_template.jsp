@@ -175,7 +175,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 				String structureName = StringPool.BLANK;
 
 				if (template.getClassPK() > 0) {
-					DDMStructure templateStructure = DDMStructureServiceUtil.getStructure(template.getClassPK());
+					DDMStructure templateStructure = DDMStructureLocalServiceUtil.getStructure(template.getClassPK());
 
 					structureName = templateStructure.getName(locale);
 				}

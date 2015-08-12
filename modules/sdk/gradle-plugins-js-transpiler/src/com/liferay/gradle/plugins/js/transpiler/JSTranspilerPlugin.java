@@ -65,7 +65,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		final NpmTask downloadLfrAmdLoaderTask = addTaskDownloadModule(
 			project, DOWNLOAD_LFR_AMD_LOADER_TASK_NAME);
 
-		addTaskTranspileJS(project);
+		final TranspileJSTask transpileJSTask = addTaskTranspileJS(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -78,6 +78,8 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 					configureTaskDownloadModule(
 						downloadLfrAmdLoaderTask, "lfr-amd-loader",
 						jsTranspilerExtension.getLfrAmdLoaderVersion());
+
+					configureTaskTranspileJS(transpileJSTask);
 				}
 
 			});
@@ -112,13 +114,6 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 		transpileJSTask.setDescription("Transpiles JS files.");
 		transpileJSTask.setGroup(BasePlugin.BUILD_GROUP);
-
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
-		transpileJSTask.setOutputDir(sourceSetOutput.getResourcesDir());
 
 		Task classesTask = GradleUtil.getTask(
 			project, JavaPlugin.CLASSES_TASK_NAME);
@@ -155,6 +150,25 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 			nodeExtension.getNodeModulesDir(), "node_modules/" + moduleName);
 
 		taskOutputs.dir(moduleDir);
+	}
+
+	protected void configureTaskTranspileJS(TranspileJSTask transpileJSTask) {
+		configureTaskTranspileJSOutputDir(transpileJSTask);
+	}
+
+	protected void configureTaskTranspileJSOutputDir(
+		TranspileJSTask transpileJSTask) {
+
+		if (transpileJSTask.getOutputDir() != null) {
+			return;
+		}
+
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			transpileJSTask.getProject(), SourceSet.MAIN_SOURCE_SET_NAME);
+
+		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+		transpileJSTask.setOutputDir(sourceSetOutput.getResourcesDir());
 	}
 
 }

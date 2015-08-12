@@ -378,6 +378,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 
 			<liferay-ui:search-container-row
 				className="Object"
+				cssClass="entry-display-style selectable"
 				modelVar="object"
 			>
 
@@ -399,8 +400,6 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 					<c:when test="<%= curArticle != null %>">
 
 						<%
-						row.setClassName("entry-display-style selectable");
-
 						Map<String, Object> rowData = new HashMap<String, Object>();
 
 						rowData.put("draggable", JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE));
@@ -416,8 +415,6 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 					<c:when test="<%= curFolder != null %>">
 
 						<%
-						row.setClassName("entry-display-style selectable");
-
 						Map<String, Object> rowData = new HashMap<String, Object>();
 
 						rowData.put("draggable", JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE));

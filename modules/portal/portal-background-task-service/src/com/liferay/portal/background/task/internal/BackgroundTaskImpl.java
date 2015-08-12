@@ -34,7 +34,8 @@ import java.util.Map;
 public class BackgroundTaskImpl implements BackgroundTask {
 
 	public BackgroundTaskImpl(
-		com.liferay.portal.model.BackgroundTask backgroundTask) {
+		com.liferay.portal.background.task.model.BackgroundTask
+			backgroundTask) {
 
 		_backgroundTask = backgroundTask;
 	}
@@ -116,7 +117,7 @@ public class BackgroundTaskImpl implements BackgroundTask {
 	}
 
 	@Override
-	public com.liferay.portal.model.BackgroundTask getModel() {
+	public com.liferay.portal.background.task.model.BackgroundTask getModel() {
 		return _backgroundTask;
 	}
 
@@ -180,6 +181,7 @@ public class BackgroundTaskImpl implements BackgroundTask {
 		_backgroundTask.setTaskContextMap(taskContextMap);
 	}
 
-	private final com.liferay.portal.model.BackgroundTask _backgroundTask;
+	private final com.liferay.portal.background.task.model.BackgroundTask
+		_backgroundTask;
 
 }

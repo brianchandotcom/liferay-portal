@@ -15,6 +15,8 @@
 package com.liferay.portal.background.task.service.impl;
 
 import com.liferay.portal.background.task.internal.BackgroundTaskImpl;
+import com.liferay.portal.background.task.model.BackgroundTask;
+import com.liferay.portal.background.task.service.base.BackgroundTaskLocalServiceBaseImpl;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskLockHelperUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
@@ -33,11 +35,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.base.BackgroundTaskLocalServiceBaseImpl;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 

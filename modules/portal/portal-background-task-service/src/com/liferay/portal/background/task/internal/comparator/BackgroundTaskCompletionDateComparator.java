@@ -14,9 +14,9 @@
 
 package com.liferay.portal.background.task.internal.comparator;
 
+import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.BackgroundTask;
 
 /**
  * @author Eduardo Garcia

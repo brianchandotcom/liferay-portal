@@ -14,12 +14,12 @@
 
 package com.liferay.portal.background.task.internal;
 
+import com.liferay.portal.background.task.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.backgroundtask.util.comparator.BackgroundTaskCompletionDateComparator;
 import com.liferay.portlet.backgroundtask.util.comparator.BackgroundTaskCreateDateComparator;
@@ -176,9 +176,10 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	public BackgroundTask
 		fetchFirstBackgroundTask(String taskExecutorClassName, int status) {
 
-		com.liferay.portal.model.BackgroundTask bcakgroundTaskModel =
-			BackgroundTaskLocalServiceUtil.fetchFirstBackgroundTask(
-				taskExecutorClassName, status);
+		com.liferay.portal.background.task.model.BackgroundTask
+			bcakgroundTaskModel =
+				BackgroundTaskLocalServiceUtil.fetchFirstBackgroundTask(
+					taskExecutorClassName, status);
 
 		if (bcakgroundTaskModel == null) {
 			return null;
@@ -421,8 +422,10 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 	@Override
 	public BackgroundTask updateBackgroundTask(BackgroundTask backgroundTask) {
-		com.liferay.portal.model.BackgroundTask backgroundTaskModel =
-			(com.liferay.portal.model.BackgroundTask)backgroundTask.getModel();
+		com.liferay.portal.background.task.model.BackgroundTask
+			backgroundTaskModel =
+				(com.liferay.portal.background.task.model.BackgroundTask)
+					backgroundTask.getModel();
 
 		backgroundTaskModel =
 			BackgroundTaskLocalServiceUtil.updateBackgroundTask(
@@ -441,8 +444,9 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 		List<BackgroundTask> backgroundTasks = new ArrayList<>(
 			backgroundTaskModels.size());
 
-		for (com.liferay.portal.model.BackgroundTask backgroundTaskModel :
-				backgroundTaskModels) {
+		for (com.liferay.portal.background.task.model.BackgroundTask
+				backgroundTaskModel :
+					backgroundTaskModels) {
 
 			backgroundTasks.add(new BackgroundTaskImpl(backgroundTaskModel));
 		}

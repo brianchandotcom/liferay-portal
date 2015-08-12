@@ -61,12 +61,12 @@
 </tr>
 <tr>
 	<td>FEEDS_TITLE_NAME_FIELD</td>
-	<td>//input[@id='_86_title${key_feedRowIndexNumber}']</td>
+	<td>//input[contains(@id,'PortletConfigurationPortlet_title${key_feedRowIndexNumber}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FEEDS_URL_NAME_FIELD</td>
-	<td>//input[@id='_86_url${key_feedRowIndexNumber}']</td>
+	<td>//input[contains(@id,'PortletConfigurationPortlet_url${key_feedRowIndexNumber}')]</td>
 	<td></td>
 </tr>
 <tr>

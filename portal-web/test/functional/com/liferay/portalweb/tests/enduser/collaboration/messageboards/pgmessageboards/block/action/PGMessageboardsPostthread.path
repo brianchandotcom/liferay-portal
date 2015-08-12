@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>SUBJECT_FIELD</td>
-	<td>//input[@id='_19_subject']</td>
+	<td>//input[contains(@id,'subject')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -90,12 +90,12 @@
 </tr>
 <tr>
 	<td>PUBLISH_BUTTON</td>
-	<td>//button[@id='_19_publishButton' and contains(.,'Publish')]</td>
+	<td>//button[contains(.,'Publish')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBMIT_FOR_PUBLICATION_BUTTON</td>
-	<td>//button[@id='_19_publishButton' and contains(.,'Submit for Publication')]</td>
+	<td>//button[contains(.,'Submit for Publication')]</td>
 	<td></td>
 </tr>
 <tr>

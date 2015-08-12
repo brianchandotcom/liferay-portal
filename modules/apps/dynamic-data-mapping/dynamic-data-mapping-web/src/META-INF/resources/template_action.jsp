@@ -42,7 +42,7 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 
 	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template, refererPortletName, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
-			modelResource="<%= DDMTemplate.class.getName() %>"
+			modelResource="<%= DDMTemplatePermission.getTemplateModelResourceName(template.getResourceClassNameId()) %>"
 			modelResourceDescription="<%= template.getName(locale) %>"
 			resourcePrimKey="<%= String.valueOf(template.getTemplateId()) %>"
 			var="permissionsURL"

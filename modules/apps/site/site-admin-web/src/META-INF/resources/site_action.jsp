@@ -56,11 +56,7 @@ if (row == null) {
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= view %>" showWhenSingleIcon="<%= true %>">
 
 	<%
-	ThemeDisplay siteThemeDisplay = (ThemeDisplay)themeDisplay.clone();
-
-	siteThemeDisplay.setScopeGroupId(group.getGroupId());
-
-	PortletURL siteAdministrationURL = PortalUtil.getSiteAdministrationURL(request, siteThemeDisplay);
+	PortletURL siteAdministrationURL = group.getAdministrationURL(themeDisplay);
 	%>
 
 	<c:if test="<%= siteAdministrationURL != null %>">

@@ -18,7 +18,15 @@ import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.my.account.web.constants.MyAccountPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.util.PortalUtil;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,11 +54,30 @@ public class MyAccountPanelApp extends BaseControlPanelEntryPanelApp {
 		return MyAccountPortletKeys.MY_ACCOUNT;
 	}
 
+	@Override
+	protected Group getGroup(HttpServletRequest request) {
+		Group group = null;
+
+		try {
+			User user = PortalUtil.getUser(request);
+
+			return user.getGroup();
+		}
+		catch (PortalException pe) {
+			_log.error(pe);
+		}
+
+		return group;
+	}
+
 	@Reference(unbind = "-")
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
 		_portletLocalService = portletLocalService;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MyAccountPanelApp.class);
 
 }

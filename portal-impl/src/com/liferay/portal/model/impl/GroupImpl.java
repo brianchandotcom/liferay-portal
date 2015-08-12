@@ -74,6 +74,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 /**
@@ -108,6 +109,20 @@ public class GroupImpl extends GroupBaseImpl {
 	@Override
 	public void clearStagingGroup() {
 		_stagingGroup = null;
+	}
+
+	@Override
+	public PortletURL getAdministrationURL(ThemeDisplay themeDisplay) {
+		Portlet portlet = PortalUtil.getFirstSiteAdministrationPortlet(
+			themeDisplay);
+
+		if (portlet == null) {
+			return null;
+		}
+
+		return PortalUtil.getControlPanelPortletURL(
+			themeDisplay.getRequest(), this, portlet.getPortletId(), 0,
+			PortletRequest.RENDER_PHASE);
 	}
 
 	@Override
@@ -310,8 +325,7 @@ public class GroupImpl extends GroupBaseImpl {
 						themeDisplay.getPermissionChecker(), this,
 						ActionKeys.VIEW_SITE_ADMINISTRATION)) {
 
-					PortletURL portletURL = PortalUtil.getSiteAdministrationURL(
-						themeDisplay.getRequest(), themeDisplay);
+					PortletURL portletURL = getAdministrationURL(themeDisplay);
 
 					return portletURL.toString();
 				}

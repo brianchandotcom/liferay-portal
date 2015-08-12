@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMTemplateLocalServiceBaseImpl;
+import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -273,11 +274,14 @@ public class DDMTemplateLocalServiceImpl
 			boolean addGuestPermissions)
 		throws PortalException {
 
+		String resourceName =
+			DDMTemplatePermission.getTemplateModelResourceName(
+				template.getResourceClassNameId());
+
 		resourceLocalService.addResources(
 			template.getCompanyId(), template.getGroupId(),
-			template.getUserId(), DDMTemplate.class.getName(),
-			template.getTemplateId(), false, addGroupPermissions,
-			addGuestPermissions);
+			template.getUserId(), resourceName, template.getTemplateId(), false,
+			addGroupPermissions, addGuestPermissions);
 	}
 
 	/**
@@ -292,10 +296,14 @@ public class DDMTemplateLocalServiceImpl
 			DDMTemplate template, ModelPermissions modelPermissions)
 		throws PortalException {
 
+		String resourceName =
+			DDMTemplatePermission.getTemplateModelResourceName(
+				template.getResourceClassNameId());
+
 		resourceLocalService.addModelResources(
 			template.getCompanyId(), template.getGroupId(),
-			template.getUserId(), DDMTemplate.class.getName(),
-			template.getTemplateId(), modelPermissions);
+			template.getUserId(), resourceName, template.getTemplateId(),
+			modelPermissions);
 	}
 
 	/**

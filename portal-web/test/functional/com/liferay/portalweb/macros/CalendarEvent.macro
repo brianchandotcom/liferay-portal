@@ -503,9 +503,11 @@
 					<execute function="Type" locator1="PGCalendarAddevent#REPEAT_ENDS_AFTER_FIELD" value1="1" />
 					<execute function="Click" locator1="PGCalendarAddevent#REPEAT_DIALOG_SUMMARY" />
 					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_DIALOG_SUMMARY" value1="Daily, 1 Times" />
-					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_DONE_BUTTON" value1="Done" />
-					<execute function="Check" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
+					<execute function="AssertClick" locator1="PGCalendarAddevent#REPEAT_DONE_BUTTON" value1="Done" />
+
 					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY" value1="Daily, 1 Times" />
+
+					<execute function="Check" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
 
 					<execute macro="CalendarEvent#selectCalendar">
 						<var name="calendarName" value="${calendarName}" />
@@ -1165,6 +1167,9 @@
 			</and>
 			<then>
 				<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_DIALOG_SUMMARY" value1="${frequency} On The ${position} ${weekday} Of ${month}" />
+
+				<execute function="AssertClick" locator1="PGCalendarAddevent#REPEAT_DONE_BUTTON" value1="Done" />
+
 				<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY" value1="${frequency} On The ${position} ${weekday} Of ${month}" />
 			</then>
 			<elseif>
@@ -1174,6 +1179,9 @@
 				</and>
 				<then>
 					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_DIALOG_SUMMARY" value1="${frequency} On ${position} ${weekday}, ${numberOfOccurrences} Times" />
+
+					<execute function="AssertClick" locator1="PGCalendarAddevent#REPEAT_DONE_BUTTON" value1="Done" />
+
 					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY" value1="${frequency} On ${position} ${weekday}, ${numberOfOccurrences} Times" />
 				</then>
 			</elseif>
@@ -1181,6 +1189,9 @@
 				<isset var="position" />
 				<then>
 					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_DIALOG_SUMMARY" value1="${frequency} On ${position} ${weekday}" />
+
+					<execute function="AssertClick" locator1="PGCalendarAddevent#REPEAT_DONE_BUTTON" value1="Done" />
+
 					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY" value1="${frequency} On ${position} ${weekday}" />
 				</then>
 			</elseif>
@@ -1188,13 +1199,14 @@
 				<isset var="numberOfOccurrences" />
 				<then>
 					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_DIALOG_SUMMARY" value1="${frequency}, ${numberOfOccurrences} Times" />
+
+					<execute function="AssertClick" locator1="PGCalendarAddevent#REPEAT_DONE_BUTTON" value1="Done" />
+
 					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY" value1="${frequency}, ${numberOfOccurrences} Times" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_DONE_BUTTON" value1="Done" />
-		<execute function="Click" locator1="PGCalendarAddevent#REPEAT_DONE_BUTTON" value1="Done" />
 		<execute function="Check" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
 	</command>
 

@@ -14,12 +14,6 @@
 
 package com.liferay.portlet.portalsettings.action;
 
-import java.io.IOException;
-import java.util.List;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-
 import com.liferay.portal.AccountNameException;
 import com.liferay.portal.AddressCityException;
 import com.liferay.portal.AddressStreetException;
@@ -63,6 +57,13 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
+
+import java.io.IOException;
+
+import java.util.List;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 /**
  * @author Brian Wing Shun Chan
@@ -341,5 +342,3 @@ public class EditCompanyMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 }
-
-

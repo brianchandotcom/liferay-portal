@@ -30,7 +30,8 @@ import javax.portlet.RenderResponse;
 		"mvc.command.name=/portal_settings/test_opensso_configuration"
 	}
 )
-public class TestOpenSSOConfigurationMVCRenderCommand implements MVCRenderCommand {
+public class TestOpenSSOConfigurationMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(

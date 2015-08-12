@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.portlet.portalsettings.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -19,5 +20,4 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
  * @author Philip Jones
  */
 public class PortalSettingsPortlet extends MVCPortlet {
-
 }

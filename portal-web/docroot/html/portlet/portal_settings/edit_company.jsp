@@ -37,7 +37,6 @@ request.setAttribute("websites.classPK", company.getAccountId());
 <aui:form action="<%= editCompanyURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCompany();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-	
 
 	<liferay-util:buffer var="htmlTop">
 		<div class="company-info">

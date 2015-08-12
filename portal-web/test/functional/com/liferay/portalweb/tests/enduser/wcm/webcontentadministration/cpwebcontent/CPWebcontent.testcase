@@ -1082,7 +1082,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="EditWebContent" priority="5">
+	<command known-issues="LPS-51687,LPS-56754" name="EditWebContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

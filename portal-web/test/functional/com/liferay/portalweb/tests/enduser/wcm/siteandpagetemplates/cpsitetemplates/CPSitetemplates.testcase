@@ -11,7 +11,7 @@
 		<execute macro="SiteTemplates#tearDownCP" />
 	</tear-down>
 
-	<command name="AddSiteTemplate" priority="5">
+	<command known-issues="LPS-56754" name="AddSiteTemplate" priority="5">
 		<var name="siteTemplateActive" value="Yes" />
 
 		<execute macro="Page#gotoCP">
@@ -33,7 +33,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSiteTemplate" priority="5">
+	<command known-issues="LPS-56754" name="DeleteSiteTemplate" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>
@@ -60,7 +60,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSiteTemplateStatus" priority="5">
+	<command known-issues="LPS-56754" name="EditSiteTemplateStatus" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>

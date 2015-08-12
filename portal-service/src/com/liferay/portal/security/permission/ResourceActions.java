@@ -92,6 +92,8 @@ public interface ResourceActions {
 	public List<String> getActionsNames(
 		HttpServletRequest request, String name, long actionIds);
 
+	public String getCompositeModelNameSeparator();
+
 	public List<String> getModelNames();
 
 	public List<String> getModelPortletResources(String name);

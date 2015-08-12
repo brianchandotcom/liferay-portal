@@ -88,7 +88,7 @@ permissions on all supported actions.
 <!--
 The model-resource element defines the permissions of the model.
 -->
-<!ELEMENT model-resource (model-name, portlet-ref, root?, weight?, permissions?) >
+<!ELEMENT model-resource ((composite-model-name | model-name), portlet-ref, root?, weight?, permissions?) >
 
 <!--
 The organization value specifies if the model resource is an organization model
@@ -101,6 +101,12 @@ default value is false.
 	organization CDATA #IMPLIED
 	portal CDATA #IMPLIED
 >
+
+<!--
+The composite-model-name element is the name of the model.
+-->
+<!ELEMENT composite-model-name (model-name+) >
+
 <!--
 The model-name element is the name of the model.
 -->

@@ -28,14 +28,14 @@
 				<not>
 					<uptodate
 						srcfile="${third.party.dir}/${alloy.file}"
-						targetfile="tmp/META-INF/resources/html/js/aui"
+						targetfile="tmp/META-INF/resources/aui"
 					/>
 				</not>
 				<then>
 
 					<!-- Prepare -->
 
-					<delete dir="tmp/META-INF/resources/html/js/aui" />
+					<delete dir="tmp/META-INF/resources/aui" />
 
 					<echo>${alloy.file}</echo>
 
@@ -111,13 +111,13 @@
 
 					<copy
 						file="${alloy.temp.dir}/aui_deprecated.css"
-						tofile="tmp/META-INF/resources/html/js/aui/aui_deprecated.css"
+						tofile="tmp/META-INF/resources/aui/aui_deprecated.css"
 						overwrite="true"
 					/>
 
 					<!-- JavaScript -->
 
-					<copy todir="tmp/META-INF/resources/html/js/aui" overwrite="true" preservelastmodified="true">
+					<copy todir="tmp/META-INF/resources/aui" overwrite="true" preservelastmodified="true">
 						<fileset dir="${alloy.build.dir}/" />
 					</copy>
 
@@ -145,15 +145,15 @@
 				<not>
 					<uptodate
 						srcfile="${third.party.dir}/${alloy.bootstrap.file}"
-						targetfile="tmp/META-INF/resources/html/js/bootstrap"
+						targetfile="tmp/META-INF/resources/bootstrap"
 					/>
 				</not>
 				<then>
 
 					<!-- Prepare -->
 
-					<delete dir="tmp/META-INF/resources/html/bootstrap-assets" />
-					<delete dir="tmp/META-INF/resources/html/js/bootstrap" />
+					<delete dir="tmp/META-INF/resources/bootstrap-assets" />
+					<delete dir="tmp/META-INF/resources/bootstrap" />
 
 					<echo>${alloy.bootstrap.file}</echo>
 
@@ -174,7 +174,7 @@
 						/>
 					</delete>
 
-					<copy todir="tmp/META-INF/resources/html/js/bootstrap" overwrite="true" preservelastmodified="true">
+					<copy todir="tmp/META-INF/resources/bootstrap" overwrite="true" preservelastmodified="true">
 						<fileset dir="${alloy.bootstrap.assets.dir}/javascripts/" />
 					</copy>
 
@@ -182,7 +182,7 @@
 
 					<!-- Assets -->
 
-					<copy todir="tmp/META-INF/resources/html/bootstrap-assets" overwrite="true" preservelastmodified="true">
+					<copy todir="tmp/META-INF/resources/bootstrap-assets" overwrite="true" preservelastmodified="true">
 						<fileset dir="${alloy.bootstrap.assets.dir}/" />
 					</copy>
 
@@ -198,22 +198,22 @@
 		<sequential>
 			<if>
 				<not>
-					<available file="src/META-INF/resources/html/js/jquery/form.js" />
+					<available file="src/META-INF/resources/jquery/form.js" />
 				</not>
 				<then>
 					<mirrors-get
-						dest="src/META-INF/resources/html/js/jquery/form.js"
+						dest="src/META-INF/resources/jquery/form.js"
 						src="https://raw.githubusercontent.com/malsup/form/${jquery.plugins.form.version}/jquery.form.js"
 					/>
 
-					<replace file="src/META-INF/resources/html/js/jquery/form.js">
+					<replace file="src/META-INF/resources/jquery/form.js">
 						<replacetoken><![CDATA[typeof define === 'function']]></replacetoken>
 						<replacevalue><![CDATA[false && typeof define === 'function']]></replacevalue>
 					</replace>
 
-					<loadfile property="form.js.content" srcFile="src/META-INF/resources/html/js/jquery/form.js" />
+					<loadfile property="form.js.content" srcFile="src/META-INF/resources/jquery/form.js" />
 
-					<echo file="src/META-INF/resources/html/js/jquery/form.js"><![CDATA[;(function(jQuery){]]>${line.separator}${form.js.content}<![CDATA[})(AUI.$);]]></echo>
+					<echo file="src/META-INF/resources/jquery/form.js"><![CDATA[;(function(jQuery){]]>${line.separator}${form.js.content}<![CDATA[})(AUI.$);]]></echo>
 				</then>
 			</if>
 		</sequential>
@@ -235,15 +235,15 @@
 				<not>
 					<uptodate
 						srcfile="${third.party.dir}/${lexicon.file}"
-						targetfile="tmp/META-INF/resources/html/js/lexicon"
+						targetfile="tmp/META-INF/resources/lexicon"
 					/>
 				</not>
 				<then>
 
 					<!-- Prepare -->
 
-					<delete dir="tmp/META-INF/resources/html/lexicon-assets" />
-					<delete dir="tmp/META-INF/resources/html/js/lexicon" />
+					<delete dir="tmp/META-INF/resources/lexicon-assets" />
+					<delete dir="tmp/META-INF/resources/lexicon" />
 
 					<echo>${lexicon.file}</echo>
 
@@ -257,7 +257,7 @@
 
 					<!-- JavaScript -->
 
-					<copy todir="tmp/META-INF/resources/html/js/lexicon" overwrite="true" preservelastmodified="true">
+					<copy todir="tmp/META-INF/resources/lexicon" overwrite="true" preservelastmodified="true">
 						<fileset dir="${tstamp.value}/js/" />
 					</copy>
 
@@ -265,7 +265,7 @@
 
 					<!-- Assets -->
 
-					<copy todir="tmp/META-INF/resources/html/lexicon-assets" overwrite="true" preservelastmodified="true">
+					<copy todir="tmp/META-INF/resources/lexicon-assets" overwrite="true" preservelastmodified="true">
 						<fileset dir="${tstamp.value}/" />
 					</copy>
 
@@ -286,7 +286,7 @@
 
 			<copy
 				file="${sdk.tools.dir}/node-v${nodejs.version}/node_modules/lfr-amd-loader/dist/loader.js"
-				todir="tmp/META-INF/resources/html/js/loader"
+				todir="tmp/META-INF/resources/loader"
 			/>
 		</sequential>
 	</macrodef>

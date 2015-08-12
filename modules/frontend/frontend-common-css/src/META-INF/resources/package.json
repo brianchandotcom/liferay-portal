@@ -11,13 +11,13 @@
 			"url": "https://github.com/Robert-Frampton"
 		}
 	],
-	"description": "The base styled theme structure for Liferay themes",
+	"description": "Sass mixins for Liferay themes",
 	"keywords": [
 		"liferay",
 		"theme"
 	],
 	"license": "LGPL",
-	"name": "liferay-theme-styled",
-	"repository": "https://github.com/liferay/liferay-portal/tree/master/modules/frontend/frontend-themes-web/src/META-INF/resources/html/themes/_styled",
-	"version": "7.0.3"
+	"name": "liferay-theme-mixins",
+	"repository": "https://github.com/liferay/liferay-portal/tree/master/modules/frontend/frontend-common-css/src/META-INF/resources",
+	"version": "7.0.2"
 }

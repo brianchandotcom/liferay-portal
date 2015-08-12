@@ -100,6 +100,10 @@ public class ResourceActionsUtil {
 		return getResourceActions().getActionsNames(request, name, actionIds);
 	}
 
+	public static String getCompositeModelNameSeparator() {
+		return getResourceActions().getCompositeModelNameSeparator();
+	}
+
 	public static List<String> getModelNames() {
 		return getResourceActions().getModelNames();
 	}

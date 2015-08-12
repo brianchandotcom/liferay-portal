@@ -19,6 +19,7 @@ import com.liferay.portal.search.elasticsearch.internal.connection.Elasticsearch
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -26,6 +27,9 @@ import org.junit.rules.TestName;
 /**
  * @author André de Oliveira
  */
+@Ignore(
+	"This test is ignored, because it is very unstable, André please fix it."
+)
 public class Cluster2InstancesTest {
 
 	@Before

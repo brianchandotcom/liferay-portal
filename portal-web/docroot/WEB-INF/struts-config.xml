@@ -211,10 +211,6 @@
 
 		<action path="/maps/view" forward="portlet.maps.view" name="mapsMapsForm" scope="request" />
 
-		<!-- Monitoring -->
-
-		<action path="/monitoring/view" forward="portlet.monitoring.view" />
-
 		<!-- News -->
 
 		<action path="/news/edit" type="com.liferay.portlet.news.action.EditPreferencesAction">

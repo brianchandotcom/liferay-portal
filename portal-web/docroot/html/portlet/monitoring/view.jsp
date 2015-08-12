@@ -19,7 +19,7 @@
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/monitoring/view");
+portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
 %>
 
 <c:choose>

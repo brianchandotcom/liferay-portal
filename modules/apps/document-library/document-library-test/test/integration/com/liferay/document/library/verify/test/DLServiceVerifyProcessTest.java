@@ -365,7 +365,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 			DDMFormXSDDeserializerUtil.deserialize(new String(bytes));
 
 		serviceContext.setAttribute(
-			"ddmForm", DDMBeanTranslatorUtil.copyDDMForm(ddmForm));
+			"ddmForm", DDMBeanTranslatorUtil.translate(ddmForm));
 
 		User user = TestPropsValues.getUser();
 

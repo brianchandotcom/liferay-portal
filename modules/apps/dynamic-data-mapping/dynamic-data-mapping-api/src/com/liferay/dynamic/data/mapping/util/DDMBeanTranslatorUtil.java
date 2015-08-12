@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class DDMBeanTranslatorUtil {
 
-	public static DDMForm copyDDMForm(
+	public static DDMForm translate(
 		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm) {
 
 		if (ddmForm == null) {
@@ -47,7 +47,7 @@ public class DDMBeanTranslatorUtil {
 				ddmFormField :
 					ddmForm.getDDMFormFields()) {
 
-			DDMFormField copyDDMFormField = copyDDMFormField(ddmFormField);
+			DDMFormField copyDDMFormField = translate(ddmFormField);
 
 			copyDDMFormField.setDDMForm(copyDDMForm);
 
@@ -57,7 +57,70 @@ public class DDMBeanTranslatorUtil {
 		return copyDDMForm;
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.model.DDMForm copyDDMForm(
+	public static DDMFormField translate(
+		com.liferay.portlet.dynamicdatamapping.model.DDMFormField ddmFormField) {
+
+		if (ddmFormField == null) {
+			return null;
+		}
+
+		DDMFormField copyDDMFormField = new DDMFormField(
+			ddmFormField.getName(), ddmFormField.getType());
+
+		copyDDMFormField.setDataType(ddmFormField.getDataType());
+		copyDDMFormField.setFieldNamespace(ddmFormField.getFieldNamespace());
+		copyDDMFormField.setIndexType(ddmFormField.getIndexType());
+		copyDDMFormField.setDDMFormFieldOptions(
+			translate(ddmFormField.getDDMFormFieldOptions()));
+		copyDDMFormField.setLabel(translateLocalizedValue(ddmFormField.getLabel()));
+		copyDDMFormField.setLocalizable(ddmFormField.isLocalizable());
+		copyDDMFormField.setMultiple(ddmFormField.isMultiple());
+		copyDDMFormField.setPredefinedValue(
+			translateLocalizedValue(ddmFormField.getPredefinedValue()));
+		copyDDMFormField.setReadOnly(ddmFormField.isReadOnly());
+		copyDDMFormField.setRepeatable(ddmFormField.isRepeatable());
+		copyDDMFormField.setRequired(ddmFormField.isRequired());
+		copyDDMFormField.setShowLabel(ddmFormField.isShowLabel());
+		copyDDMFormField.setStyle(translateLocalizedValue(ddmFormField.getStyle()));
+		copyDDMFormField.setTip(translateLocalizedValue(ddmFormField.getTip()));
+		copyDDMFormField.setVisibilityExpression(
+			ddmFormField.getVisibilityExpression());
+
+		for (com.liferay.portlet.dynamicdatamapping.model.DDMFormField
+			nestedDDMFormField : ddmFormField.getNestedDDMFormFields()) {
+
+			copyDDMFormField.addNestedDDMFormField(
+				translate(nestedDDMFormField));
+		}
+
+		return copyDDMFormField;
+	}
+
+	public static DDMFormValues translate(
+		com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues ddmFormValues) {
+
+		if (ddmFormValues == null) {
+			return null;
+		}
+
+		DDMFormValues copyDDMFormValues = new DDMFormValues(
+			translate(ddmFormValues.getDDMForm()));
+
+		copyDDMFormValues.setAvailableLocales(
+			ddmFormValues.getAvailableLocales());
+		copyDDMFormValues.setDefaultLocale(ddmFormValues.getDefaultLocale());
+
+		for (com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue
+			ddmFormFieldValue : ddmFormValues.getDDMFormFieldValues()) {
+
+			copyDDMFormValues.addDDMFormFieldValue(
+				translate(ddmFormFieldValue));
+		}
+
+		return copyDDMFormValues;
+	}
+
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMForm translate(
 		DDMForm ddmForm) {
 
 		if (ddmForm == null) {
@@ -72,7 +135,7 @@ public class DDMBeanTranslatorUtil {
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 			com.liferay.portlet.dynamicdatamapping.model.DDMFormField
-				copyDDMFormField = copyDDMFormField(ddmFormField);
+				copyDDMFormField = translate(ddmFormField);
 
 			copyDDMFormField.setDDMForm(copyDDMForm);
 
@@ -82,47 +145,8 @@ public class DDMBeanTranslatorUtil {
 		return copyDDMForm;
 	}
 
-	public static DDMFormField copyDDMFormField(
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormField ddmFormField) {
-
-		if (ddmFormField == null) {
-			return null;
-		}
-
-		DDMFormField copyDDMFormField = new DDMFormField(
-			ddmFormField.getName(), ddmFormField.getType());
-
-		copyDDMFormField.setDataType(ddmFormField.getDataType());
-		copyDDMFormField.setFieldNamespace(ddmFormField.getFieldNamespace());
-		copyDDMFormField.setIndexType(ddmFormField.getIndexType());
-		copyDDMFormField.setDDMFormFieldOptions(
-			copyDDMFormFieldOptions(ddmFormField.getDDMFormFieldOptions()));
-		copyDDMFormField.setLabel(copyLocalizedValue(ddmFormField.getLabel()));
-		copyDDMFormField.setLocalizable(ddmFormField.isLocalizable());
-		copyDDMFormField.setMultiple(ddmFormField.isMultiple());
-		copyDDMFormField.setPredefinedValue(
-			copyLocalizedValue(ddmFormField.getPredefinedValue()));
-		copyDDMFormField.setReadOnly(ddmFormField.isReadOnly());
-		copyDDMFormField.setRepeatable(ddmFormField.isRepeatable());
-		copyDDMFormField.setRequired(ddmFormField.isRequired());
-		copyDDMFormField.setShowLabel(ddmFormField.isShowLabel());
-		copyDDMFormField.setStyle(copyLocalizedValue(ddmFormField.getStyle()));
-		copyDDMFormField.setTip(copyLocalizedValue(ddmFormField.getTip()));
-		copyDDMFormField.setVisibilityExpression(
-			ddmFormField.getVisibilityExpression());
-
-		for (com.liferay.portlet.dynamicdatamapping.model.DDMFormField
-			nestedDDMFormField : ddmFormField.getNestedDDMFormFields()) {
-
-			copyDDMFormField.addNestedDDMFormField(
-				copyDDMFormField(nestedDDMFormField));
-		}
-
-		return copyDDMFormField;
-	}
-
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMFormField
-		copyDDMFormField(DDMFormField ddmFormField) {
+		translate(DDMFormField ddmFormField) {
 
 		if (ddmFormField == null) {
 			return null;
@@ -136,18 +160,18 @@ public class DDMBeanTranslatorUtil {
 		copyDDMFormField.setFieldNamespace(ddmFormField.getFieldNamespace());
 		copyDDMFormField.setIndexType(ddmFormField.getIndexType());
 		copyDDMFormField.setDDMFormFieldOptions(
-			copyDDMFormFieldOptions(ddmFormField.getDDMFormFieldOptions()));
-		copyDDMFormField.setLabel(copyLocalizedValue(ddmFormField.getLabel()));
+			translate(ddmFormField.getDDMFormFieldOptions()));
+		copyDDMFormField.setLabel(translateLocalizedValue(ddmFormField.getLabel()));
 		copyDDMFormField.setLocalizable(ddmFormField.isLocalizable());
 		copyDDMFormField.setMultiple(ddmFormField.isMultiple());
 		copyDDMFormField.setPredefinedValue(
-			copyLocalizedValue(ddmFormField.getPredefinedValue()));
+			translateLocalizedValue(ddmFormField.getPredefinedValue()));
 		copyDDMFormField.setReadOnly(ddmFormField.isReadOnly());
 		copyDDMFormField.setRepeatable(ddmFormField.isRepeatable());
 		copyDDMFormField.setRequired(ddmFormField.isRequired());
 		copyDDMFormField.setShowLabel(ddmFormField.isShowLabel());
-		copyDDMFormField.setStyle(copyLocalizedValue(ddmFormField.getStyle()));
-		copyDDMFormField.setTip(copyLocalizedValue(ddmFormField.getTip()));
+		copyDDMFormField.setStyle(translateLocalizedValue(ddmFormField.getStyle()));
+		copyDDMFormField.setTip(translateLocalizedValue(ddmFormField.getTip()));
 		copyDDMFormField.setVisibilityExpression(
 			ddmFormField.getVisibilityExpression());
 
@@ -155,37 +179,13 @@ public class DDMBeanTranslatorUtil {
 				ddmFormField.getNestedDDMFormFields()) {
 
 			copyDDMFormField.addNestedDDMFormField(
-				copyDDMFormField(nestedDDMFormField));
+				translate(nestedDDMFormField));
 		}
 
 		return copyDDMFormField;
 	}
 
-	public static DDMFormValues copyDDMFormValues(
-		com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues ddmFormValues) {
-
-		if (ddmFormValues == null) {
-			return null;
-		}
-
-		DDMFormValues copyDDMFormValues = new DDMFormValues(
-			copyDDMForm(ddmFormValues.getDDMForm()));
-
-		copyDDMFormValues.setAvailableLocales(
-			ddmFormValues.getAvailableLocales());
-		copyDDMFormValues.setDefaultLocale(ddmFormValues.getDefaultLocale());
-
-		for (com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue
-			ddmFormFieldValue : ddmFormValues.getDDMFormFieldValues()) {
-
-			copyDDMFormValues.addDDMFormFieldValue(
-				copyDDMFormFieldValue(ddmFormFieldValue));
-		}
-
-		return copyDDMFormValues;
-	}
-
-	public static com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues copyDDMFormValues(
+	public static com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues translate(
 		DDMFormValues ddmFormValues) {
 
 		if (ddmFormValues == null) {
@@ -193,7 +193,7 @@ public class DDMBeanTranslatorUtil {
 		}
 
 		com.liferay.portlet.dynamicdatamapping.model.DDMForm copyDDMForm =
-			copyDDMForm(ddmFormValues.getDDMForm());
+			translate(ddmFormValues.getDDMForm());
 
 		com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues copyDDMFormValues =
 			new com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues(
@@ -207,13 +207,13 @@ public class DDMBeanTranslatorUtil {
 				ddmFormValues.getDDMFormFieldValues()) {
 
 			copyDDMFormValues.addDDMFormFieldValue(
-				copyDDMFormFieldValue(ddmFormFieldValue));
+				translate(ddmFormFieldValue));
 		}
 
 		return copyDDMFormValues;
 	}
 
-	protected static DDMFormFieldOptions copyDDMFormFieldOptions(
+	protected static DDMFormFieldOptions translate(
 		com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions ddmFormFieldOptions) {
 
 		if (ddmFormFieldOptions == null) {
@@ -241,7 +241,47 @@ public class DDMBeanTranslatorUtil {
 		return copyDDMFormFieldOptions;
 	}
 
-	protected static com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions copyDDMFormFieldOptions(
+	protected static Value translate(
+		com.liferay.portlet.dynamicdatamapping.model.Value value) {
+
+		if (value == null) {
+			return null;
+		}
+
+		if (value.isLocalized()) {
+			return translateLocalizedValue(value);
+		}
+		else {
+			return translateUnlocalizedValue(value);
+		}
+	}
+
+	protected static DDMFormFieldValue translate(
+		com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue
+			ddmFormFieldValue) {
+
+		if (ddmFormFieldValue == null) {
+			return null;
+		}
+
+		DDMFormFieldValue copyDDMFormFieldValue = new DDMFormFieldValue();
+
+		copyDDMFormFieldValue.setInstanceId(ddmFormFieldValue.getInstanceId());
+		copyDDMFormFieldValue.setName(ddmFormFieldValue.getName());
+		copyDDMFormFieldValue.setValue(translate(ddmFormFieldValue.getValue()));
+
+		for (com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue
+			nestedFormFieldValue :
+				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
+
+			copyDDMFormFieldValue.addNestedDDMFormFieldValue(
+				translate(nestedFormFieldValue));
+		}
+
+		return copyDDMFormFieldValue;
+	}
+
+	protected static com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions translate(
 		DDMFormFieldOptions ddmFormFieldOptions) {
 
 		if (ddmFormFieldOptions == null) {
@@ -268,32 +308,7 @@ public class DDMBeanTranslatorUtil {
 		return copyDDMFormFieldOptions;
 	}
 
-	protected static DDMFormFieldValue copyDDMFormFieldValue(
-		com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue
-			ddmFormFieldValue) {
-
-		if (ddmFormFieldValue == null) {
-			return null;
-		}
-
-		DDMFormFieldValue copyDDMFormFieldValue = new DDMFormFieldValue();
-
-		copyDDMFormFieldValue.setInstanceId(ddmFormFieldValue.getInstanceId());
-		copyDDMFormFieldValue.setName(ddmFormFieldValue.getName());
-		copyDDMFormFieldValue.setValue(copyValue(ddmFormFieldValue.getValue()));
-
-		for (com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue
-			nestedFormFieldValue :
-				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
-
-			copyDDMFormFieldValue.addNestedDDMFormFieldValue(
-				copyDDMFormFieldValue(nestedFormFieldValue));
-		}
-
-		return copyDDMFormFieldValue;
-	}
-
-	protected static com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue copyDDMFormFieldValue(
+	protected static com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue translate(
 		DDMFormFieldValue ddmFormFieldValue) {
 
 		if (ddmFormFieldValue == null) {
@@ -305,19 +320,32 @@ public class DDMBeanTranslatorUtil {
 
 		copyDDMFormFieldValue.setInstanceId(ddmFormFieldValue.getInstanceId());
 		copyDDMFormFieldValue.setName(ddmFormFieldValue.getName());
-		copyDDMFormFieldValue.setValue(copyValue(ddmFormFieldValue.getValue()));
+		copyDDMFormFieldValue.setValue(translate(ddmFormFieldValue.getValue()));
 
 		for (DDMFormFieldValue nestedFormFieldValue :
 				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
 
 			copyDDMFormFieldValue.addNestedDDMFormFieldValue(
-				copyDDMFormFieldValue(nestedFormFieldValue));
+				translate(nestedFormFieldValue));
 		}
 
 		return copyDDMFormFieldValue;
 	}
 
-	protected static LocalizedValue copyLocalizedValue(
+	protected static com.liferay.portlet.dynamicdatamapping.model.Value translate(Value value) {
+		if (value == null) {
+			return null;
+		}
+
+		if (value.isLocalized()) {
+			return translateLocalizedValue(value);
+		}
+		else {
+			return translateUnlocalizedValue(value);
+		}
+	}
+
+	protected static LocalizedValue translateLocalizedValue(
 		com.liferay.portlet.dynamicdatamapping.model.Value value) {
 
 		if (value == null) {
@@ -337,7 +365,7 @@ public class DDMBeanTranslatorUtil {
 		return localizedValue;
 	}
 
-	protected static com.liferay.portlet.dynamicdatamapping.model.LocalizedValue copyLocalizedValue(Value value) {
+	protected static com.liferay.portlet.dynamicdatamapping.model.LocalizedValue translateLocalizedValue(Value value) {
 		if (value == null) {
 			return null;
 		}
@@ -356,7 +384,7 @@ public class DDMBeanTranslatorUtil {
 		return localizedValue;
 	}
 
-	protected static UnlocalizedValue copyUnlocalizedValue(
+	protected static UnlocalizedValue translateUnlocalizedValue(
 		com.liferay.portlet.dynamicdatamapping.model.Value value) {
 
 		if (value == null) {
@@ -366,41 +394,13 @@ public class DDMBeanTranslatorUtil {
 		return new UnlocalizedValue(value.getString(value.getDefaultLocale()));
 	}
 
-	protected static com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue copyUnlocalizedValue(Value value) {
+	protected static com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue translateUnlocalizedValue(Value value) {
 		if (value == null) {
 			return null;
 		}
 
 		return new com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue(
 			value.getString(value.getDefaultLocale()));
-	}
-
-	protected static Value copyValue(
-		com.liferay.portlet.dynamicdatamapping.model.Value value) {
-
-		if (value == null) {
-			return null;
-		}
-
-		if (value.isLocalized()) {
-			return copyLocalizedValue(value);
-		}
-		else {
-			return copyUnlocalizedValue(value);
-		}
-	}
-
-	protected static com.liferay.portlet.dynamicdatamapping.model.Value copyValue(Value value) {
-		if (value == null) {
-			return null;
-		}
-
-		if (value.isLocalized()) {
-			return copyLocalizedValue(value);
-		}
-		else {
-			return copyUnlocalizedValue(value);
-		}
 	}
 
 }

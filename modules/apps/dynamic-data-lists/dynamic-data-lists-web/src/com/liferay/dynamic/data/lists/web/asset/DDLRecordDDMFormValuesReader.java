@@ -31,8 +31,7 @@ public class DDLRecordDDMFormValuesReader extends BaseDDMFormValuesReader {
 
 	@Override
 	public DDMFormValues getDDMFormValues() throws PortalException {
-		return DDMBeanTranslatorUtil.copyDDMFormValues(
-			_ddlRecord.getDDMFormValues());
+		return DDMBeanTranslatorUtil.translate(_ddlRecord.getDDMFormValues());
 	}
 
 	private final DDLRecord _ddlRecord;

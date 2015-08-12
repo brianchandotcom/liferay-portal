@@ -69,7 +69,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 		DDMIndexerUtil.addAttributes(
 			document, ddmStructure,
-			DDMBeanTranslatorUtil.copyDDMFormValues(ddmFormValues));
+			DDMBeanTranslatorUtil.translate(ddmFormValues));
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 		try {
 			com.liferay.dynamic.data.mapping.model.DDMForm copyDDMForm =
-				DDMBeanTranslatorUtil.copyDDMForm(ddmForm);
+				DDMBeanTranslatorUtil.translate(ddmForm);
 
 			com.liferay.dynamic.data.mapping.model.DDMStructure
 				ddmStructure = _ddmStructureLocalService.addStructure(
@@ -137,8 +137,8 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 			_ddmStructureLocalService.getStructure(structureId);
 
 		return DDMIndexerUtil.extractAttributes(
-			ddmStructure,
-			DDMBeanTranslatorUtil.copyDDMFormValues(ddmFormValues), locale);
+			ddmStructure, DDMBeanTranslatorUtil.translate(ddmFormValues),
+			locale);
 	}
 
 	@Override
@@ -241,8 +241,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 	public DDMForm getDDMForm(PortletRequest portletRequest)
 		throws PortalException {
 
-		return DDMBeanTranslatorUtil.copyDDMForm(
-			_ddm.getDDMForm(portletRequest));
+		return DDMBeanTranslatorUtil.translate(_ddm.getDDMForm(portletRequest));
 	}
 
 	@Override
@@ -344,7 +343,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 		try {
 			com.liferay.dynamic.data.mapping.model.DDMForm copyDDMForm =
-				DDMBeanTranslatorUtil.copyDDMForm(ddmForm);
+				DDMBeanTranslatorUtil.translate(ddmForm);
 
 			com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
 				_ddmStructureLocalService.updateStructure(

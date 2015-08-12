@@ -51,7 +51,7 @@ final class JournalArticleDDMFormValuesReader extends BaseDDMFormValuesReader {
 			Fields fields = journalConverter.getDDMFields(
 				ddmStructure, _article.getContent());
 
-			return DDMBeanTranslatorUtil.copyDDMFormValues(
+			return DDMBeanTranslatorUtil.translate(
 				FieldsToDDMFormValuesConverterUtil.convert(
 					ddmStructure, fields));
 		}

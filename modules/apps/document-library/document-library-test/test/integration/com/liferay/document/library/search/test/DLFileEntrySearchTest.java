@@ -273,7 +273,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		String content = "Content: Enterprise. Open Source. For Life.";
 
 		DDMFormValues ddmFormValues = createDDMFormValues(
-			DDMBeanTranslatorUtil.copyDDMForm(_ddmStructure.getDDMForm()));
+			DDMBeanTranslatorUtil.translate(_ddmStructure.getDDMForm()));
 
 		for (String keyword : keywords) {
 			ddmFormValues.addDDMFormFieldValue(

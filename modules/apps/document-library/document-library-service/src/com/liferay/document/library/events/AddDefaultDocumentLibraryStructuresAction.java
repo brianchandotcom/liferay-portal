@@ -141,7 +141,7 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 		DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(definition);
 
 		serviceContext.setAttribute(
-			"ddmForm", DDMBeanTranslatorUtil.copyDDMForm(ddmForm));
+			"ddmForm", DDMBeanTranslatorUtil.translate(ddmForm));
 
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.fetchFileEntryType(

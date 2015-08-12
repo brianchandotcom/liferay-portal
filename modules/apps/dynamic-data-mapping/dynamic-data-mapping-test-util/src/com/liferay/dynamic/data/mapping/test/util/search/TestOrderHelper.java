@@ -252,7 +252,7 @@ public abstract class TestOrderHelper {
 		DDMFormValuesReader ddmFormValuesReader =
 			assetRenderer.getDDMFormValuesReader();
 
-		DDMFormValues ddmFormValues = DDMBeanTranslatorUtil.copyDDMFormValues(
+		DDMFormValues ddmFormValues = DDMBeanTranslatorUtil.translate(
 			ddmFormValuesReader.getDDMFormValues());
 
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =

@@ -76,14 +76,14 @@ public class DDMStructureImpl implements DDMStructure {
 
 	@Override
 	public DDMForm getDDMForm() {
-		return DDMBeanTranslatorUtil.copyDDMForm(_ddmStructure.getDDMForm());
+		return DDMBeanTranslatorUtil.translate(_ddmStructure.getDDMForm());
 	}
 
 	@Override
 	public DDMFormField getDDMFormField(String fieldName)
 		throws PortalException {
 
-		return DDMBeanTranslatorUtil.copyDDMFormField(
+		return DDMBeanTranslatorUtil.translate(
 			_ddmStructure.getDDMFormField(fieldName));
 	}
 
@@ -94,8 +94,7 @@ public class DDMStructureImpl implements DDMStructure {
 		for (com.liferay.dynamic.data.mapping.model.DDMFormField ddmFormField :
 				_ddmStructure.getDDMFormFields(includeTransientFields)) {
 
-			ddmFormFields.add(
-				DDMBeanTranslatorUtil.copyDDMFormField(ddmFormField));
+			ddmFormFields.add(DDMBeanTranslatorUtil.translate(ddmFormField));
 		}
 
 		return ddmFormFields;
@@ -150,7 +149,7 @@ public class DDMStructureImpl implements DDMStructure {
 
 	@Override
 	public DDMForm getFullHierarchyDDMForm() {
-		return DDMBeanTranslatorUtil.copyDDMForm(
+		return DDMBeanTranslatorUtil.translate(
 			_ddmStructure.getFullHierarchyDDMForm());
 	}
 

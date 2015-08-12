@@ -89,7 +89,7 @@ public class DLFileEntryMetadataLocalServiceTest {
 			DDMFormXSDDeserializerUtil.deserialize(new String(testFileBytes));
 
 		serviceContext.setAttribute(
-			"ddmForm", DDMBeanTranslatorUtil.copyDDMForm(ddmForm));
+			"ddmForm", DDMBeanTranslatorUtil.translate(ddmForm));
 
 		User user = TestPropsValues.getUser();
 

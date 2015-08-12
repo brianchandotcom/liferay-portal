@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>DETAILS</td>
-	<td>//a[@id='_125_detailsLink']</td>
+	<td>//a[contains(@id,'detailsLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_SITE</td>
-	<td>//a[@id='_125_organizationSiteLink']</td>
+	<td>//a[contains(@id,'organizationSiteLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,7 +62,7 @@
 <!--ORGANIZATION_SITE-->
 <tr>
 	<td>ORGANIZATION_SITE_CREATE_SITE_CHECKBOX</td>
-	<td>//input[contains(@id,'125_site')]</td>
+	<td>//div[contains(@class,'input-checkbox-wrapper')]//input[contains(@id,'site')]</td>
 	<td></td>
 </tr>
 </tbody>

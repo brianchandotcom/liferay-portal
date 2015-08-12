@@ -15,17 +15,17 @@
 </tr>
 <tr>
 	<td>NAME_FIELD</td>
-	<td>//input[@id='_128_name']</td>
+	<td>//input[contains(@id,'name')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//input[@id='_128_title']</td>
+	<td>//input[contains(@id,'title')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_128_description']</td>
+	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,57 +46,57 @@
 <!--TITLE_FIELD_LOCALIZATION-->
 <tr>
 	<td>TITLE_FIELD_LOCALIZATION_FLAG_ENGLISH</td>
-	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='en_US']</td>
+	<td>//div[contains(@id,'titleContentBox')]//img[@data-languageid='en_US']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TITLE_FIELD_LOCALIZATION_FLAG_CATALAN</td>
-	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='ca_ES']</td>
+	<td>//div[contains(@id,'titleContentBox')]//img[@data-languageid='ca_ES']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TITLE_FIELD_LOCALIZATION_FLAG_CHINESE</td>
-	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='zh_CN']</td>
+	<td>//div[contains(@id,'titleContentBox')]//img[@data-languageid='zh_CN']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TITLE_FIELD_LOCALIZATION_FLAG_FINNISH</td>
-	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='fi_FI']</td>
+	<td>//div[contains(@id,'titleContentBox')]//img[@data-languageid='fi_FI']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TITLE_FIELD_LOCALIZATION_FLAG_FRENCH</td>
-	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='fr_FR']</td>
+	<td>//div[contains(@id,'titleContentBox')]//img[@data-languageid='fr_FR']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TITLE_FIELD_LOCALIZATION_FLAG_GERMAN</td>
-	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='de_DE']</td>
+	<td>//div[contains(@id,'titleContentBox')]//img[@data-languageid='de_DE']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TITLE_FIELD_LOCALIZATION_FLAG_HEBREW</td>
-	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='iw_IL']</td>
+	<td>//div[contains(@id,'titleContentBox')]//img[@data-languageid='iw_IL']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TITLE_FIELD_LOCALIZATION_FLAG_HUNGARIAN</td>
-	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='hu_HU']</td>
+	<td>//div[contains(@id,'titleContentBox')]//img[@data-languageid='hu_HU']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TITLE_FIELD_LOCALIZATION_FLAG_JAPANESE</td>
-	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='ja_JP']</td>
+	<td>//div[contains(@id,'titleContentBox')]//img[@data-languageid='ja_JP']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TITLE_FIELD_LOCALIZATION_FLAG_PORTUGUESE</td>
-	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='pt_BR']</td>
+	<td>//div[contains(@id,'titleContentBox')]//img[@data-languageid='pt_BR']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TITLE_FIELD_LOCALIZATION_FLAG_SPANISH</td>
-	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='es_ES']</td>
+	<td>//div[contains(@id,'titleContentBox')]//img[@data-languageid='es_ES']</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,57 +107,57 @@
 <!--DESCRIPTION_FIELD_LOCALIZATION-->
 <tr>
 	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_ENGLISH</td>
-	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='en_US']</td>
+	<td>//div[contains(@id,'descriptionContentBox')]//img[@data-languageid='en_US']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_CATALAN</td>
-	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='ca_ES']</td>
+	<td>//div[contains(@id,'descriptionContentBox')]//img[@data-languageid='ca_ES']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_CHINESE</td>
-	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='zh_CN']</td>
+	<td>//div[contains(@id,'descriptionContentBox')]//img[@data-languageid='zh_CN']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_FINNISH</td>
-	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='fi_FI']</td>
+	<td>//div[contains(@id,'descriptionContentBox')]//img[@data-languageid='fi_FI']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_FRENCH</td>
-	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='fr_FR']</td>
+	<td>//div[contains(@id,'descriptionContentBox')]//img[@data-languageid='fr_FR']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_GERMAN</td>
-	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='de_DE']</td>
+	<td>//div[contains(@id,'descriptionContentBox')]//img[@data-languageid='de_DE']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_HEBREW</td>
-	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='iw_IL']</td>
+	<td>//div[contains(@id,'descriptionContentBox')]//img[@data-languageid='iw_IL']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_HUNGARIAN</td>
-	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='hu_HU']</td>
+	<td>//div[contains(@id,'descriptionContentBox')]//img[@data-languageid='hu_HU']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_JAPANESE</td>
-	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='ja_JP']</td>
+	<td>//div[contains(@id,'descriptionContentBox')]//img[@data-languageid='ja_JP']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_PORTUGUESE</td>
-	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='pt_BR']</td>
+	<td>//div[contains(@id,'descriptionContentBox')]//img[@data-languageid='pt_BR']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_SPANISH</td>
-	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='es_ES']</td>
+	<td>//div[contains(@id,'descriptionContentBox')	]//img[@data-languageid='es_ES']</td>
 	<td></td>
 </tr>
 <tr>

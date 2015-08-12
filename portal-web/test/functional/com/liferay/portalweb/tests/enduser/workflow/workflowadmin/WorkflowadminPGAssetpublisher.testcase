@@ -108,7 +108,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56092" name="ApproveMessageBoardsThreadPG" priority="4">
+	<command name="ApproveMessageBoardsThreadPG" priority="4">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 		<var name="workflowAssetType" value="Message Boards Message" />
@@ -160,7 +160,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56092" name="ApproveWebContentPG" priority="4">
+	<command name="ApproveWebContentPG" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 		<var name="workflowAssetType" value="Web Content Article" />
@@ -273,7 +273,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56092" name="RejectMessageBoardsThreadPG" priority="4">
+	<command name="RejectMessageBoardsThreadPG" priority="4">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 		<var name="workflowAssetType" value="Message Boards Message" />
@@ -333,7 +333,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56092" name="RejectWebContentPG" priority="4">
+	<command name="RejectWebContentPG" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 		<var name="workflowAssetType" value="Web Content Article" />

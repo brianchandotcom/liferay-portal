@@ -143,47 +143,10 @@ cobertura.ser
 /portal-web/test-output
 /portal-web/test-results
 
+/portal-web/docroot/aui
 /portal-web/docroot/dtd
-/portal-web/docroot/favicon.ico
-/portal-web/docroot/wsrp
-
-/portal-web/docroot/html/ALLOY_ZIP
-
-/portal-web/docroot/html/css/common/bourbon
-
-/portal-web/docroot/html/css/portal/aui_deprecated.css
-/portal-web/docroot/html/css/portal/bootstrap.css
 
 /portal-web/docroot/html/icons/_sprite.*
-
-/portal-web/docroot/html/js/aui
-
-/portal-web/docroot/html/js/editor/alloyeditor
-/portal-web/docroot/html/js/editor/ckeditor
-/portal-web/docroot/html/js/editor/codepress
-/portal-web/docroot/html/js/editor/tiny_mce
-
-/portal-web/docroot/html/themes/_unstyled/css/aui
-/portal-web/docroot/html/themes/_unstyled/images/aui
-
-/portal-web/docroot/html/themes/classic/css
-/portal-web/docroot/html/themes/classic/images
-/portal-web/docroot/html/themes/classic/javascript
-/portal-web/docroot/html/themes/classic/js
-/portal-web/docroot/html/themes/classic/templates
-
-/portal-web/docroot/html/themes/classic/_diffs/css/alloy.css
-
-/portal-web/docroot/html/themes/control_panel/css
-/portal-web/docroot/html/themes/control_panel/images
-/portal-web/docroot/html/themes/control_panel/javascript
-/portal-web/docroot/html/themes/control_panel/js
-/portal-web/docroot/html/themes/control_panel/templates
-
-/portal-web/docroot/html/themes/genesis
-
-/portal-web/docroot/html/VAADIN
-/portal-web/docroot/html/VAADIN_ZIP
 
 /portal-web/docroot/WEB-INF/classes
 /portal-web/docroot/WEB-INF/lib
@@ -195,6 +158,8 @@ cobertura.ser
 /portal-web/docroot/WEB-INF/tld/aui.tld
 /portal-web/docroot/WEB-INF/tld/ddm.tld
 /portal-web/docroot/WEB-INF/tld/liferay-*.tld
+
+/portal-web/docroot/wsrp
 
 /portal-web/test/test-portal-web-ext.properties
 

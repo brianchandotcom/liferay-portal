@@ -42,25 +42,25 @@ specifies the friendly name of a theme that is displayed to the user.
 
 <!--
 The root-path value sets the location of the root path for the theme. For
-example, the root path for the Classic theme is "/html/themes/classic". This
+example, the root path for the Classic theme is "/classic". This
 means you can find the files for the Classic theme in
-/docroot/html/themes/classic.
+/docroot/classic.
 -->
 <!ELEMENT root-path (#PCDATA)>
 
 <!--
 The templates-path value sets the location of the templates path for the theme.
 For example, the templates path for the Classic theme is
-"/html/themes/classic/templates". This means you can find the JSP templates for
-the Classic theme in /docroot/html/themes/classic/templates.
+"/classic/templates". This means you can find the JSP templates for
+the Classic theme in /docroot/classic/templates.
 -->
 <!ELEMENT templates-path (#PCDATA)>
 
 <!--
 The images-path value sets the location of the images path for the theme. For
-example, the images path for the Classic theme is "/html/themes/classic/images".
+example, the images path for the Classic theme is "/classic/images".
 This means you can find the images for the Classic theme in
-/docroot/html/themes/classic/images.
+/docroot/classic/images.
 -->
 <!ELEMENT images-path (#PCDATA)>
 

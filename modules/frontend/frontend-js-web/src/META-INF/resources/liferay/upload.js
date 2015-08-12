@@ -133,7 +133,7 @@ AUI.add(
 
 		var UPLOADER_TYPE = A.Uploader.TYPE || 'none';
 
-		var URL_SWF_UPLOADER = themeDisplay.getPathContext() + '/html/js/aui/uploader/assets/flashuploader.swf';
+		var URL_SWF_UPLOADER = themeDisplay.getPathContext() + '/aui/uploader/assets/flashuploader.swf';
 
 		/**
 		 * OPTIONS

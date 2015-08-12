@@ -14,7 +14,7 @@
 		<filter-class>com.liferay.portal.servlet.filters.aggregate.AggregateFilter</filter-class>
 		<init-param>
 			<param-name>url-regex-ignore-pattern</param-name>
-			<param-value>^/html/editors/ckeditor[^/]*/ckeditor\.js(\?.*)?$</param-value>
+			<param-value>^/ckeditor[^/]*/ckeditor\.js(\?.*)?$</param-value>
 		</init-param>
 	</filter>
 	<filter>

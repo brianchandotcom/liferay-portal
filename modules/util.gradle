@@ -56,6 +56,25 @@ wrapper {
 	File wrapperDir = rootDir.parentFile
 
 	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-1-bin.zip"
+
+	doLast {
+		ant.replace(file: new File(wrapperDir, "gradlew")) {
+			replacetoken "# Split up the JVM_OPTS And GRADLE_OPTS values into an array, following the shell quoting and substitution rules"
+
+			replacevalue '''\
+# Split up the JVM_OPTS And GRADLE_OPTS values into an array, following the shell quoting and substitution rules
+DEFAULT_JVM_OPTS="$DEFAULT_JVM_OPTS -Dgradle.user.home=$APP_HOME/.gradle"'''
+		}
+
+		ant.replace(file: new File(wrapperDir, "gradlew.bat")) {
+			replacetoken "@rem Setup the command line"
+
+			replacevalue """\
+@rem Setup the command line
+set DEFAULT_JVM_OPTS=%DEFAULT_JVM_OPTS% -Dgradle.user.home=%APP_HOME%\\.gradle"""
+		}
+	}
+
 	jarFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.jar")
 	scriptFile = new File(wrapperDir, "gradlew")
 }

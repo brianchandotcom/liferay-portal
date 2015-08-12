@@ -297,8 +297,4 @@ if (testClassGroupIndex) {
 		jvmArgs "-Dtest.class.group.index=" + testClassGroupIndex
 		jvmArgs "-Dtest.class.groups=" + testClassGroups
 	}
-
-	if (testClassGroupIndex == "0") {
-		test.finalizedBy compileJSP
-	}
 }

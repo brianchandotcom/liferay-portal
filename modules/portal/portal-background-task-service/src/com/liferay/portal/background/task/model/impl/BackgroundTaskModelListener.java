@@ -19,8 +19,11 @@ import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModelListener;
+import com.liferay.portal.model.ModelListener;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
-import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
 
@@ -29,6 +32,7 @@ import java.util.Map;
 /**
  * @author Levente Hudák
  */
+@Component(immediate = true, service = ModelListener.class)
 public class BackgroundTaskModelListener
 	extends BaseModelListener<BackgroundTask> {
 
@@ -48,13 +52,13 @@ public class BackgroundTaskModelListener
 
 		try {
 			ExportImportConfiguration exportImportConfiguration =
-				ExportImportConfigurationLocalServiceUtil.
+				_exportImportConfigurationLocalService.
 					getExportImportConfiguration(exportImportConfigurationId);
 
 			if (exportImportConfiguration.getStatus() ==
 					WorkflowConstants.STATUS_DRAFT) {
 
-				ExportImportConfigurationLocalServiceUtil.
+				_exportImportConfigurationLocalService.
 					deleteExportImportConfiguration(exportImportConfiguration);
 			}
 		}
@@ -62,5 +66,17 @@ public class BackgroundTaskModelListener
 			throw new ModelListenerException(e);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setExportImportConfigurationLocalService(
+		ExportImportConfigurationLocalService
+			exportImportConfigurationLocalService) {
+
+		_exportImportConfigurationLocalService =
+			exportImportConfigurationLocalService;
+	}
+
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
 
 }

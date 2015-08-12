@@ -883,6 +883,8 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 
 		<delete dir="${basedir}/.gradle" />
 
+		<setup-sdk />
+
 		<gradle-execute dir="modules" forcedcacheenabled="false" task="clean">
 			<arg value="--parallel" />
 			<arg value="-Dgradle.user.home=${basedir}/.gradle" />

@@ -14,6 +14,10 @@ targetCompatibility = "1.6"
 
 task downloadSrc(type: Copy)
 
+clean {
+	delete "src/com"
+}
+
 compileJava {
 	dependsOn downloadSrc
 }

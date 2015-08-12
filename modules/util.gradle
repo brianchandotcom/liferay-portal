@@ -30,6 +30,7 @@ configurations {
 
 dependencies {
 	portalTools group: "com.liferay", name: "com.liferay.css.builder", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.jasper.jspc", version: "default"
 	portalTools group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "default"
 	portalTools group: "com.liferay", name: "com.liferay.whip", version: "default"
 }

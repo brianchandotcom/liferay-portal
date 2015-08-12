@@ -1737,7 +1737,7 @@ public class PortalImpl implements Portal {
 	@Override
 	public PortletURL getControlPanelPortletURL(
 		HttpServletRequest request, Group group, String portletId,
-		long referrerPlid, String lifecycle) {
+		long refererPlid, String lifecycle) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -1749,8 +1749,8 @@ public class PortalImpl implements Portal {
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
 			request, portletId, layout.getPlid(), lifecycle);
 
-		if (referrerPlid > 0) {
-			liferayPortletURL.setRefererPlid(referrerPlid);
+		if (refererPlid > 0) {
+			liferayPortletURL.setRefererPlid(refererPlid);
 		}
 
 		try {
@@ -1765,17 +1765,17 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public PortletURL getControlPanelPortletURL(
-		HttpServletRequest request, String portletId, long referrerPlid,
+		HttpServletRequest request, String portletId, long refererPlid,
 		String lifecycle) {
 
 		return getControlPanelPortletURL(
-			request, null, portletId, referrerPlid, lifecycle);
+			request, null, portletId, refererPlid, lifecycle);
 	}
 
 	@Override
 	public PortletURL getControlPanelPortletURL(
 		PortletRequest portletRequest, Group group, String portletId,
-		long referrerPlid, String lifecycle) {
+		long refererPlid, String lifecycle) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -1787,8 +1787,8 @@ public class PortalImpl implements Portal {
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
 			portletRequest, portletId, layout.getPlid(), lifecycle);
 
-		if (referrerPlid > 0) {
-			liferayPortletURL.setRefererPlid(referrerPlid);
+		if (refererPlid > 0) {
+			liferayPortletURL.setRefererPlid(refererPlid);
 		}
 
 		try {
@@ -1803,11 +1803,11 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public PortletURL getControlPanelPortletURL(
-		PortletRequest portletRequest, String portletId, long referrerPlid,
+		PortletRequest portletRequest, String portletId, long refererPlid,
 		String lifecycle) {
 
 		return getControlPanelPortletURL(
-			portletRequest, null, portletId, referrerPlid, lifecycle);
+			portletRequest, null, portletId, refererPlid, lifecycle);
 	}
 
 	@Override

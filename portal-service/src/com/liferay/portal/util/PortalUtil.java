@@ -666,34 +666,34 @@ public class PortalUtil {
 
 	public static PortletURL getControlPanelPortletURL(
 		HttpServletRequest request, Group group, String portletId,
-		long referrerPlid, String lifecycle) {
+		long refererPlid, String lifecycle) {
 
 		return getPortal().getControlPanelPortletURL(
-			request, group, portletId, referrerPlid, lifecycle);
+			request, group, portletId, refererPlid, lifecycle);
 	}
 
 	public static PortletURL getControlPanelPortletURL(
-		HttpServletRequest request, String portletId, long referrerPlid,
+		HttpServletRequest request, String portletId, long refererPlid,
 		String lifecycle) {
 
 		return getPortal().getControlPanelPortletURL(
-			request, portletId, referrerPlid, lifecycle);
+			request, portletId, refererPlid, lifecycle);
 	}
 
 	public static PortletURL getControlPanelPortletURL(
 		PortletRequest portletRequest, Group group, String portletId,
-		long referrerPlid, String lifecycle) {
+		long refererPlid, String lifecycle) {
 
 		return getPortal().getControlPanelPortletURL(
-			portletRequest, group, portletId, referrerPlid, lifecycle);
+			portletRequest, group, portletId, refererPlid, lifecycle);
 	}
 
 	public static PortletURL getControlPanelPortletURL(
-		PortletRequest portletRequest, String portletId, long referrerPlid,
+		PortletRequest portletRequest, String portletId, long refererPlid,
 		String lifecycle) {
 
 		return getPortal().getControlPanelPortletURL(
-			portletRequest, portletId, referrerPlid, lifecycle);
+			portletRequest, portletId, refererPlid, lifecycle);
 	}
 
 	public static String getCreateAccountURL(

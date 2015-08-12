@@ -503,18 +503,18 @@ public interface Portal {
 
 	public PortletURL getControlPanelPortletURL(
 		HttpServletRequest request, Group group, String portletId,
-		long referrerPlid, String lifecycle);
+		long refererPlid, String lifecycle);
 
 	public PortletURL getControlPanelPortletURL(
-		HttpServletRequest request, String portletId, long referrerPlid,
+		HttpServletRequest request, String portletId, long refererPlid,
 		String lifecycle);
 
 	public PortletURL getControlPanelPortletURL(
 		PortletRequest portletRequest, Group group, String portletId,
-		long referrerPlid, String lifecycle);
+		long refererPlid, String lifecycle);
 
 	public PortletURL getControlPanelPortletURL(
-		PortletRequest portletRequest, String portletId, long referrerPlid,
+		PortletRequest portletRequest, String portletId, long refererPlid,
 		String lifecycle);
 
 	public String getCreateAccountURL(

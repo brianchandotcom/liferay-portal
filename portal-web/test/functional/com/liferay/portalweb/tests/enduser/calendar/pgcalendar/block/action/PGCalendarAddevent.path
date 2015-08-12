@@ -109,7 +109,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REPEAT_SUMMARY_1</td>
+	<td>REPEAT_SUMMARY</td>
 	<td>//a[@class='calendar-portlet-recurrence-summary']</td>
 	<td></td>
 </tr>
@@ -169,7 +169,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REPEAT_SUMMARY_2</td>
+	<td>REPEAT_DIALOG_SUMMARY</td>
 	<td>//span[@class='calendar-portlet-recurrence-summary']</td>
 	<td></td>
 </tr>

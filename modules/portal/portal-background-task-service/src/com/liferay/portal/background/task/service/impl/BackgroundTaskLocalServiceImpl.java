@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskLockHelperUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
@@ -561,10 +561,22 @@ public class BackgroundTaskLocalServiceImpl
 		MessageBusUtil.sendMessage(DestinationNames.BACKGROUND_TASK, message);
 	}
 
-	@BeanReference(type = BackgroundTaskStatusRegistry.class)
+	protected void setBackgroundTaskStatusRegistry(
+		BackgroundTaskStatusRegistry backgroundTaskStatusRegistry) {
+
+		_backgroundTaskStatusRegistry = backgroundTaskStatusRegistry;
+	}
+
+	protected void setBackgroundTaskThreadLocalManager(
+		BackgroundTaskThreadLocalManager backgroundTaskThreadLocalManager) {
+
+		_backgroundTaskThreadLocalManager = backgroundTaskThreadLocalManager;
+	}
+
+	@ServiceReference(type = BackgroundTaskStatusRegistry.class)
 	private BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
 
-	@BeanReference(type = BackgroundTaskThreadLocalManager.class)
+	@ServiceReference(type = BackgroundTaskThreadLocalManager.class)
 	private BackgroundTaskThreadLocalManager _backgroundTaskThreadLocalManager;
 
 }

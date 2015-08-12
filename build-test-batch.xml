@@ -234,6 +234,10 @@
 		<attribute name="tomcat.gc.log" default="false" />
 		<attribute name="tsant.gc.log" default="false" />
 		<sequential>
+			<var name="app.server.type" unset="true" />
+
+			<property name="app.server.type" value="@{app.server.type}" />
+
 			<property name="test.class" value="${axis.variable}" />
 
 			<run-batch-test tomcat.gc.log="@{tomcat.gc.log}" tsant.gc.log="@{tsant.gc.log}">

@@ -626,18 +626,35 @@
 		<sequential>
 			<test-set-up />
 
-			<test-action />
+			<trycatch property="job.failure.message">
+				<try>
+					<test-action />
+				</try>
 
-			<merge-test-results />
+				<finally>
+					<property name="job.failure.message" value="" />
 
-			<check-deprecated-method />
+					<prepare-testray-results job.failure.message="${job.failure.message}" />
 
-			<test-tear-down />
+					<if>
+						<isset property="testray.results.dir" />
+						<then>
+							<send-testray-results testray.results.dir="${testray.results.dir}" />
+						</then>
+					</if>
 
-			<print-gc-logs
-				tomcat.gc.log="@{tomcat.gc.log}"
-				tsant.gc.log="@{tsant.gc.log}"
-			/>
+					<merge-test-results />
+
+					<check-deprecated-method />
+
+					<test-tear-down />
+
+					<print-gc-logs
+						tomcat.gc.log="@{tomcat.gc.log}"
+						tsant.gc.log="@{tsant.gc.log}"
+					/>
+				</finally>
+			</trycatch>
 		</sequential>
 	</macrodef>
 

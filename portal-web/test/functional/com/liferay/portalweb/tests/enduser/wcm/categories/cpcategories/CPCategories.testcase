@@ -1026,7 +1026,7 @@
 		</execute>
 	</command>
 
-	<command name="EditVocabulary" priority="5">
+	<command known-issues="LPS-56754" name="EditVocabulary" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

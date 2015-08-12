@@ -346,7 +346,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSitePages" priority="5">
+	<command known-issues="LPS-56754" name="DeleteSitePages" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

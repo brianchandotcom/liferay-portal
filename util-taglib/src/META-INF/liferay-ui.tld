@@ -4393,6 +4393,65 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a column in a search container for displaying an image.</description>
+		<name>search-container-column-image</name>
+		<tag-class>com.liferay.taglib.ui.SearchContainerColumnImageTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>A horizontal alignment for the column contents. The default is <![CDATA[<code>left</code>]]>.</description>
+			<name>align</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The number of columns to span. The default is <![CDATA[<code>1</code>]]>.</description>
+			<name>colspan</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+		</attribute>
+		<attribute>
+			<description>A CSS class for styling the column.</description>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A URL for the column's contents.</description>
+			<name>href</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The path of the image.</description>
+			<name>src</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>index</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Set to true if you want the checkbox of the row to be checked when clicking on this column.</description>
+			<name>toggleRowChecker</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A vertical alignment for the column contents. The default is <![CDATA[<code>middle</code>]]>.</description>
+			<name>valign</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates a text column in a search container.</description>
 		<name>search-container-column-text</name>
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnTextTag</tag-class>

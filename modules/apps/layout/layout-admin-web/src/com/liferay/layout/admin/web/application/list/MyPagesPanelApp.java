@@ -17,6 +17,10 @@ package com.liferay.layout.admin.web.application.list;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.PortletLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,6 +47,16 @@ public class MyPagesPanelApp extends GroupPagesPanelApp {
 	@Override
 	public String getPortletId() {
 		return LayoutAdminPortletKeys.MY_PAGES;
+	}
+
+	@Override
+	public boolean hasAccessPermission(
+			PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		User user = permissionChecker.getUser();
+
+		return super.hasAccessPermission(permissionChecker, user.getGroup());
 	}
 
 	@Reference(unbind = "-")

@@ -18,10 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureServiceBaseImpl;
-import com.liferay.dynamic.data.mapping.service.permission.DDMPermission;
 import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
-import com.liferay.dynamic.data.mapping.util.DDMPermissionHandler;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -50,13 +47,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMPermissionHandler ddmPermissionHandler =
-			DDMUtil.getDDMPermissionHandler(classNameId);
-
-		DDMPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmPermissionHandler.getResourceName(classNameId),
-			ddmPermissionHandler.getAddStructureActionId());
+		DDMStructurePermission.checkAddStruturePermission(
+			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
 			getUserId(), groupId, classNameId, nameMap, descriptionMap, ddmForm,
@@ -95,13 +87,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			String xsd, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMPermissionHandler ddmPermissionHandler =
-			DDMUtil.getDDMPermissionHandler(classNameId);
-
-		DDMPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmPermissionHandler.getResourceName(classNameId),
-			ddmPermissionHandler.getAddStructureActionId());
+		DDMStructurePermission.checkAddStruturePermission(
+			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
 			getUserId(), groupId, classNameId, nameMap, descriptionMap, xsd,
@@ -117,13 +104,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMPermissionHandler ddmPermissionHandler =
-			DDMUtil.getDDMPermissionHandler(classNameId);
-
-		DDMPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmPermissionHandler.getResourceName(classNameId),
-			ddmPermissionHandler.getAddStructureActionId());
+		DDMStructurePermission.checkAddStruturePermission(
+			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
 			getUserId(), groupId, parentStructureId, classNameId, structureKey,
@@ -171,13 +153,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMPermissionHandler ddmPermissionHandler =
-			DDMUtil.getDDMPermissionHandler(classNameId);
-
-		DDMPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmPermissionHandler.getResourceName(classNameId),
-			ddmPermissionHandler.getAddStructureActionId());
+		DDMStructurePermission.checkAddStruturePermission(
+			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
 			getUserId(), groupId, parentStructureId, classNameId, structureKey,
@@ -193,13 +170,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMPermissionHandler ddmPermissionHandler =
-			DDMUtil.getDDMPermissionHandler(classNameId);
-
-		DDMPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmPermissionHandler.getResourceName(classNameId),
-			ddmPermissionHandler.getAddStructureActionId());
+		DDMStructurePermission.checkAddStruturePermission(
+			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
 			userId, groupId, parentStructureKey, classNameId, structureKey,
@@ -251,13 +223,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMPermissionHandler ddmPermissionHandler =
-			DDMUtil.getDDMPermissionHandler(classNameId);
-
-		DDMPermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmPermissionHandler.getResourceName(classNameId),
-			ddmPermissionHandler.getAddStructureActionId());
+		DDMStructurePermission.checkAddStruturePermission(
+			getPermissionChecker(), groupId, classNameId);
 
 		return ddmStructureLocalService.addStructure(
 			userId, groupId, parentStructureKey, classNameId, structureKey,
@@ -289,13 +256,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
 			structureId);
 
-		DDMPermissionHandler ddmPermissionHandler =
-			DDMUtil.getDDMPermissionHandler(structure.getClassNameId());
-
-		DDMPermission.check(
+		DDMStructurePermission.checkAddStruturePermission(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmPermissionHandler.getResourceName(structure.getClassNameId()),
-			ddmPermissionHandler.getAddStructureActionId());
+			structure.getClassNameId());
 
 		return ddmStructureLocalService.copyStructure(
 			getUserId(), structureId, nameMap, descriptionMap, serviceContext);
@@ -309,13 +272,9 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
 			structureId);
 
-		DDMPermissionHandler ddmPermissionHandler =
-			DDMUtil.getDDMPermissionHandler(structure.getClassNameId());
-
-		DDMPermission.check(
+		DDMStructurePermission.checkAddStruturePermission(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmPermissionHandler.getResourceName(structure.getClassNameId()),
-			ddmPermissionHandler.getAddStructureActionId());
+			structure.getClassNameId());
 
 		return ddmStructureLocalService.copyStructure(
 			getUserId(), structureId, serviceContext);
@@ -336,7 +295,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 	@Override
 	public void deleteStructure(long structureId) throws PortalException {
 		DDMStructurePermission.check(
-			getPermissionChecker(), structureId, ActionKeys.DELETE);
+			getPermissionChecker(), structureId, ActionKeys.VIEW);
 
 		ddmStructureLocalService.deleteStructure(structureId);
 	}

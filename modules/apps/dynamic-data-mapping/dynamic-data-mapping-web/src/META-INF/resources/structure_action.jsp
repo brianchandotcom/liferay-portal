@@ -80,7 +80,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmPermissionHandler.getResourceName(structure.getClassNameId()), ddmPermissionHandler.getAddStructureActionId()) %>">
+	<c:if test="<%= DDMStructurePermission.containsAddStruturePermission(permissionChecker, scopeGroupId, structure.getClassNameId()) %>">
 		<portlet:renderURL var="copyURL">
 			<portlet:param name="closeRedirect" value="<%= HttpUtil.encodeURL(currentURL) %>" />
 			<portlet:param name="mvcPath" value="/copy_structure.jsp" />

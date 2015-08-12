@@ -61,8 +61,7 @@ portletURL.setParameter("struts_action", "/monitoring/view");
 				}
 				%>
 
-				<portlet:renderURL var="rowURL">
-					<portlet:param name="struts_action" value="/monitoring/edit_session" />
+				<portlet:renderURL name="/monitoring/edit_session" var="rowURL" >
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="sessionId" value="<%= userTracker.getSessionId() %>" />
 				</portlet:renderURL>

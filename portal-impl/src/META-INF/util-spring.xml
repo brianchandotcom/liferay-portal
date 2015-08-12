@@ -598,6 +598,8 @@
 	<bean id="com.liferay.portlet.login.action.ForgotPasswordMVCRenderCommand" class="com.liferay.portlet.login.action.ForgotPasswordMVCRenderCommand" />
 	<bean id="com.liferay.portlet.login.action.LoginMVCActionCommand" class="com.liferay.portlet.login.action.LoginMVCActionCommand" />
 	<bean id="com.liferay.portlet.login.action.LoginMVCRenderCommand" class="com.liferay.portlet.login.action.LoginMVCRenderCommand" />
+	<bean id="com.liferay.portlet.monitoring.action.EditSessionMVCActionCommand" class="com.liferay.portlet.monitoring.action.EditSessionMVCActionCommand" />
+	<bean id="com.liferay.portlet.monitoring.action.EditSessionMVCRenderCommand" class="com.liferay.portlet.monitoring.action.EditSessionMVCRenderCommand" />
 	<bean id="com.liferay.portlet.portalsettings.action.EditCompanyMVCActionCommand" class="com.liferay.portlet.portalsettings.action.EditCompanyMVCActionCommand" />
 	<bean id="com.liferay.portlet.portalsettings.action.EditCompanyMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.EditCompanyMVCRenderCommand" />
 	<bean id="com.liferay.portlet.portalsettings.action.EditLDAPServerMVCActionCommand" class="com.liferay.portlet.portalsettings.action.EditLDAPServerMVCActionCommand" />

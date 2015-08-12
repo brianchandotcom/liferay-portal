@@ -213,11 +213,6 @@
 
 		<!-- Monitoring -->
 
-		<action path="/monitoring/edit_session" type="com.liferay.portlet.monitoring.action.EditSessionAction">
-			<forward name="portlet.monitoring.edit_session" path="portlet.monitoring.edit_session" />
-			<forward name="portlet.monitoring.error" path="portlet.monitoring.error" />
-		</action>
-
 		<action path="/monitoring/view" forward="portlet.monitoring.view" />
 
 		<!-- News -->

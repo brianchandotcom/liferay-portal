@@ -223,11 +223,7 @@
 	<!-- Monitoring -->
 
 	<definition name="portlet.monitoring" extends="portlet" />
-
-	<definition name="portlet.monitoring.edit_session" extends="portlet.monitoring">
-		<put name="portlet_content" value="/portlet/monitoring/edit_session.jsp" />
-	</definition>
-
+ 
 	<definition name="portlet.monitoring.error" extends="portlet.monitoring">
 		<put name="portlet_content" value="/portlet/monitoring/error.jsp" />
 	</definition>

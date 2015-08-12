@@ -14,39 +14,40 @@
 
 package com.liferay.portlet.monitoring.action;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.servlet.http.HttpSession;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.PortalSessionContext;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpSession;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Philip Jones
  */
-public class EditSessionAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.MONITORING,
+		"mvc.command.name=/monitoring/edit_session"
+	},
+	service = MVCActionCommand.class
+)
+public class EditSessionMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	public void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -60,25 +61,16 @@ public class EditSessionAction extends PortletAction {
 				actionRequest,
 				PrincipalException.MustBeCompanyAdmin.class.getName());
 
-			setForward(actionRequest, "portlet.monitoring.error");
+			actionResponse.setRenderParameter(
+				"mvcPath", "/html/portlet/monitoring/error.jsp" );
 
 			return;
 		}
 
 		invalidateSession(actionRequest);
 
-		sendRedirect(actionRequest, actionResponse);
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.monitoring.edit_session"));
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
 	protected void invalidateSession(ActionRequest actionRequest)
@@ -103,6 +95,6 @@ public class EditSessionAction extends PortletAction {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditSessionAction.class);
+		EditSessionMVCActionCommand.class);
 
 }

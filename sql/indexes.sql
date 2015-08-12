@@ -56,14 +56,6 @@ create unique index IX_C0AAD74D on AssetVocabulary (groupId, name);
 create index IX_C4E6FD10 on AssetVocabulary (uuid_, companyId);
 create unique index IX_1B2B8792 on AssetVocabulary (uuid_, groupId);
 
-create index IX_C5A6C78F on BackgroundTask (companyId);
-create index IX_579C63B0 on BackgroundTask (groupId, name, taskExecutorClassName, completed);
-create index IX_C71C3B7 on BackgroundTask (groupId, status);
-create index IX_7A9FF471 on BackgroundTask (groupId, taskExecutorClassName, completed);
-create index IX_7E757D70 on BackgroundTask (groupId, taskExecutorClassName, status);
-create index IX_75638CDF on BackgroundTask (status);
-create index IX_2FCFE748 on BackgroundTask (taskExecutorClassName, status);
-
 create index IX_BB0C2905 on BlogsEntry (companyId, displayDate, status);
 create index IX_EB2DCE27 on BlogsEntry (companyId, status);
 create index IX_A5F57B61 on BlogsEntry (companyId, userId, status);

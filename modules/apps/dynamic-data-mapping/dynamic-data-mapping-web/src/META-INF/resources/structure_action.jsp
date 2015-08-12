@@ -67,7 +67,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, refererPortletName, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
-			modelResource="<%= DDMStructure.class.getName() %>"
+			modelResource="<%= DDMStructurePermission.getStructureModelResourceName(structure.getClassNameId()) %>"
 			modelResourceDescription="<%= structure.getName(locale) %>"
 			resourcePrimKey="<%= String.valueOf(structure.getStructureId()) %>"
 			var="permissionsURL"

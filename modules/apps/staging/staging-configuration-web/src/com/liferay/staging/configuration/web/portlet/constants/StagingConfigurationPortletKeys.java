@@ -12,23 +12,15 @@
  * details.
  */
 
-package com.liferay.exportimport.web.portlet.action;
-
-import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.staging.configuration.web.portlet.constants;
 
 /**
- * @author Daniel Kocsis
+ * @author Levente Hudák
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT,
-		"mvc.command.name=staging"
-	},
-	service = MVCResourceCommand.class
-)
-public class StagingMVCResourceCommand extends ExportImportMVCResourceCommand {
+public class StagingConfigurationPortletKeys {
+
+	public static final String STAGING_CONFIGURATION =
+		"com_liferay_staging_configuration_web_portlet_" +
+			"StagingConfigurationPortlet";
+
 }

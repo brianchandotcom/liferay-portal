@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.exportimport.web.portlet.action;
+package com.liferay.staging.configuration.web.portlet.action;
 
-import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.staging.configuration.web.portlet.constants.StagingConfigurationPortletKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -32,12 +32,13 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT,
+		"javax.portlet.name=" +
+			StagingConfigurationPortletKeys.STAGING_CONFIGURATION,
 		"mvc.command.name=staging"
 	},
 	service = MVCRenderCommand.class
 )
-public class StagingMVCRenderCommand extends ExportImportMVCRenderCommand {
+public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -65,7 +66,7 @@ public class StagingMVCRenderCommand extends ExportImportMVCRenderCommand {
 			renderRequest = ActionUtil.getWrappedRenderRequest(
 				renderRequest, null);
 
-			return "/staging.jsp";
+			return "/view.jsp";
 		}
 		catch (Exception e) {
 			SessionErrors.add(renderRequest, e.getClass());

@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
+import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -624,8 +625,10 @@ public class DDMTemplateFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DDMTemplate.class.getName(), "DDMTemplate.templateId",
-					groupIds);
+					sql,
+					DDMTemplatePermission.getTemplateModelResourceName(
+						structureClassNameId),
+					"DDMTemplate.templateId", groupIds);
 			}
 
 			sql = StringUtil.replace(
@@ -685,8 +688,10 @@ public class DDMTemplateFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DDMTemplate.class.getName(), "DDMTemplate.templateId",
-					groupIds);
+					sql,
+					DDMTemplatePermission.getTemplateModelResourceName(
+						resourceClassNameId),
+					"DDMTemplate.templateId", groupIds);
 			}
 
 			sql = StringUtil.replace(
@@ -768,8 +773,10 @@ public class DDMTemplateFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DDMTemplate.class.getName(), "DDMTemplate.templateId",
-					groupIds);
+					sql,
+					DDMTemplatePermission.getTemplateModelResourceName(
+						structureClassNameId),
+					"DDMTemplate.templateId", groupIds);
 			}
 
 			sql = StringUtil.replace(
@@ -825,8 +832,10 @@ public class DDMTemplateFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DDMTemplate.class.getName(), "DDMTemplate.templateId",
-					groupIds);
+					sql,
+					DDMTemplatePermission.getTemplateModelResourceName(
+						resourceClassNameId),
+					"DDMTemplate.templateId", groupIds);
 			}
 
 			sql = StringUtil.replace(

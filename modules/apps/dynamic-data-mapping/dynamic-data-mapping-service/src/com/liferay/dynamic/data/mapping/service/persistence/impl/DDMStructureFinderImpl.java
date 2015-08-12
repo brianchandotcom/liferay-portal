@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
+import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -265,7 +266,9 @@ public class DDMStructureFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DDMStructure.class.getName(),
+					sql,
+					DDMStructurePermission.getStructureModelResourceName(
+						classNameId),
 					"DDMStructure.structureId", groupIds);
 			}
 
@@ -341,7 +344,9 @@ public class DDMStructureFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DDMStructure.class.getName(),
+					sql,
+					DDMStructurePermission.getStructureModelResourceName(
+						classNameId),
 					"DDMStructure.structureId", groupIds);
 			}
 

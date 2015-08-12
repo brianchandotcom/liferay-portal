@@ -20,7 +20,6 @@ import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.MathUtil;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
-import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.StringUtil;
 
 import java.io.BufferedReader;
@@ -165,11 +164,7 @@ public class PoshiRunnerGetterUtil {
 	}
 
 	public static String getProjectDirName() {
-		File file = new File(StringPool.PERIOD);
-
-		String absolutePath = file.getAbsolutePath();
-
-		return absolutePath.substring(0, absolutePath.length() - 1);
+		return getCanonicalPath(PropsValues.PROJECT_DIR);
 	}
 
 	public static Element getRootElementFromFilePath(String filePath)

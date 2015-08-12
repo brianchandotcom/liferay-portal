@@ -96,6 +96,8 @@ public class PropsValues {
 
 	public static final String PRODUCT_NAMES = PropsUtil.get("product.names");
 
+	public static final String PROJECT_DIR = PropsUtil.get("project.dir");
+
 	public static final boolean SAVE_SCREENSHOT = GetterUtil.getBoolean(
 		PropsUtil.get("save.screenshot"));
 

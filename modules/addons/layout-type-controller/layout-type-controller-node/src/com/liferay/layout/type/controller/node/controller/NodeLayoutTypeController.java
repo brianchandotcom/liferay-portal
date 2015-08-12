@@ -103,7 +103,7 @@ public class NodeLayoutTypeController
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.node)"
 	)
 	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
+		this.servletContext = servletContext;
 	}
 
 	private static final String _EDIT_PAGE = "/layout/edit/node.jsp";

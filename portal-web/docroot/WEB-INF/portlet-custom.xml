@@ -257,7 +257,7 @@
 		</init-param>
 		<init-param>
 			<name>view-template</name>
-			<value>/portal_settings/view</value>
+			<value>/html/portlet/portal_settings/edit_company.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

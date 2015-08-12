@@ -288,19 +288,6 @@
 		<put name="portlet_content" value="/portlet/our_activities/view.jsp" />
 	</definition>
 
-
-	<!-- Portal Settings -->
-
-	<definition name="portlet.portal_settings" extends="portlet" />
-
-	<definition name="portlet.portal_settings.edit_ldap_server" extends="portlet.portal_settings">
-		<put name="portlet_content" value="/portlet/portal_settings/edit_ldap_server.jsp" />
-	</definition>
-
-	<definition name="portlet.portal_settings.error" extends="portlet.portal_settings">
-		<put name="portlet_content" value="/portlet/portal_settings/error.jsp" />
-	</definition>
-	
 	<!-- Portlet Sharing -->
 
 	<definition name="portlet.portlet_sharing" extends="portlet">

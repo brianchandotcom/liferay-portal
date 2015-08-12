@@ -438,11 +438,9 @@ public class AssetEntryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = AssetEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AssetEntry>() {
 				@Override
-				public void performAction(Object object) {
-					AssetEntry assetEntry = (AssetEntry)object;
-
+				public void performAction(AssetEntry assetEntry) {
 					Assert.assertNotNull(assetEntry);
 
 					count.increment();

@@ -354,11 +354,9 @@ public class UserGroupPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = UserGroupLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<UserGroup>() {
 				@Override
-				public void performAction(Object object) {
-					UserGroup userGroup = (UserGroup)object;
-
+				public void performAction(UserGroup userGroup) {
 					Assert.assertNotNull(userGroup);
 
 					count.increment();

@@ -320,11 +320,9 @@ public class AccountPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = AccountLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Account>() {
 				@Override
-				public void performAction(Object object) {
-					Account account = (Account)object;
-
+				public void performAction(Account account) {
 					Assert.assertNotNull(account);
 
 					count.increment();

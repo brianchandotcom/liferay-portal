@@ -489,11 +489,9 @@ public class GroupPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = GroupLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Group>() {
 				@Override
-				public void performAction(Object object) {
-					Group group = (Group)object;
-
+				public void performAction(Group group) {
 					Assert.assertNotNull(group);
 
 					count.increment();

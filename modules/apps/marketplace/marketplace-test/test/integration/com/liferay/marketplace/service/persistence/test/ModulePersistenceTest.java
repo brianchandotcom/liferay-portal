@@ -333,11 +333,9 @@ public class ModulePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ModuleLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Module>() {
 				@Override
-				public void performAction(Object object) {
-					Module module = (Module)object;
-
+				public void performAction(Module module) {
 					Assert.assertNotNull(module);
 
 					count.increment();

@@ -437,11 +437,9 @@ public class BookmarksFolderPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = BookmarksFolderLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<BookmarksFolder>() {
 				@Override
-				public void performAction(Object object) {
-					BookmarksFolder bookmarksFolder = (BookmarksFolder)object;
-
+				public void performAction(BookmarksFolder bookmarksFolder) {
 					Assert.assertNotNull(bookmarksFolder);
 
 					count.increment();

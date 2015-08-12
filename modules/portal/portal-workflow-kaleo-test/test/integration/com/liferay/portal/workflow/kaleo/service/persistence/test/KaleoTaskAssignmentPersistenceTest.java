@@ -367,11 +367,10 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = KaleoTaskAssignmentLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoTaskAssignment>() {
 				@Override
-				public void performAction(Object object) {
-					KaleoTaskAssignment kaleoTaskAssignment = (KaleoTaskAssignment)object;
-
+				public void performAction(
+					KaleoTaskAssignment kaleoTaskAssignment) {
 					Assert.assertNotNull(kaleoTaskAssignment);
 
 					count.increment();

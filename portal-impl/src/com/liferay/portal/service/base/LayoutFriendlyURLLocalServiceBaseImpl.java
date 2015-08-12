@@ -305,12 +305,10 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<LayoutFriendlyURL>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(LayoutFriendlyURL stagedModel)
 					throws PortalException {
-					LayoutFriendlyURL stagedModel = (LayoutFriendlyURL)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);
 				}

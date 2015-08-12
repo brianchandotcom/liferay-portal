@@ -330,11 +330,9 @@ public class SCFrameworkVersionPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = SCFrameworkVersionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SCFrameworkVersion>() {
 				@Override
-				public void performAction(Object object) {
-					SCFrameworkVersion scFrameworkVersion = (SCFrameworkVersion)object;
-
+				public void performAction(SCFrameworkVersion scFrameworkVersion) {
 					Assert.assertNotNull(scFrameworkVersion);
 
 					count.increment();

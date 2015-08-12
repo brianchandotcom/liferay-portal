@@ -339,11 +339,9 @@ public class TrashEntryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = TrashEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<TrashEntry>() {
 				@Override
-				public void performAction(Object object) {
-					TrashEntry trashEntry = (TrashEntry)object;
-
+				public void performAction(TrashEntry trashEntry) {
 					Assert.assertNotNull(trashEntry);
 
 					count.increment();

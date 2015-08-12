@@ -456,11 +456,9 @@ public class BackgroundTaskPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = BackgroundTaskLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<BackgroundTask>() {
 				@Override
-				public void performAction(Object object) {
-					BackgroundTask backgroundTask = (BackgroundTask)object;
-
+				public void performAction(BackgroundTask backgroundTask) {
 					Assert.assertNotNull(backgroundTask);
 
 					count.increment();

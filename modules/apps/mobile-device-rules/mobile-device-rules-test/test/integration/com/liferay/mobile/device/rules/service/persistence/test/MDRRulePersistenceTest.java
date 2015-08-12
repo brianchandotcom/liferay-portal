@@ -350,11 +350,9 @@ public class MDRRulePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = MDRRuleLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MDRRule>() {
 				@Override
-				public void performAction(Object object) {
-					MDRRule mdrRule = (MDRRule)object;
-
+				public void performAction(MDRRule mdrRule) {
 					Assert.assertNotNull(mdrRule);
 
 					count.increment();

@@ -348,11 +348,9 @@ public class RatingsEntryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = RatingsEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<RatingsEntry>() {
 				@Override
-				public void performAction(Object object) {
-					RatingsEntry ratingsEntry = (RatingsEntry)object;
-
+				public void performAction(RatingsEntry ratingsEntry) {
 					Assert.assertNotNull(ratingsEntry);
 
 					count.increment();

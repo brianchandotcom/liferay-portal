@@ -364,11 +364,9 @@ public class PollsVotePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = PollsVoteLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PollsVote>() {
 				@Override
-				public void performAction(Object object) {
-					PollsVote pollsVote = (PollsVote)object;
-
+				public void performAction(PollsVote pollsVote) {
 					Assert.assertNotNull(pollsVote);
 
 					count.increment();

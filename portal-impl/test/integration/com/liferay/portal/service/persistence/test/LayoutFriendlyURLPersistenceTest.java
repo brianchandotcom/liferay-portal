@@ -408,11 +408,9 @@ public class LayoutFriendlyURLPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = LayoutFriendlyURLLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<LayoutFriendlyURL>() {
 				@Override
-				public void performAction(Object object) {
-					LayoutFriendlyURL layoutFriendlyURL = (LayoutFriendlyURL)object;
-
+				public void performAction(LayoutFriendlyURL layoutFriendlyURL) {
 					Assert.assertNotNull(layoutFriendlyURL);
 
 					count.increment();

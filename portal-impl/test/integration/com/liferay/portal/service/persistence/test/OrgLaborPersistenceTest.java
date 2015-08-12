@@ -334,11 +334,9 @@ public class OrgLaborPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = OrgLaborLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<OrgLabor>() {
 				@Override
-				public void performAction(Object object) {
-					OrgLabor orgLabor = (OrgLabor)object;
-
+				public void performAction(OrgLabor orgLabor) {
 					Assert.assertNotNull(orgLabor);
 
 					count.increment();

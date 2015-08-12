@@ -449,11 +449,9 @@ public class JournalFolderPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = JournalFolderLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<JournalFolder>() {
 				@Override
-				public void performAction(Object object) {
-					JournalFolder journalFolder = (JournalFolder)object;
-
+				public void performAction(JournalFolder journalFolder) {
 					Assert.assertNotNull(journalFolder);
 
 					count.increment();

@@ -272,11 +272,9 @@ public class ClusterGroupPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ClusterGroupLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ClusterGroup>() {
 				@Override
-				public void performAction(Object object) {
-					ClusterGroup clusterGroup = (ClusterGroup)object;
-
+				public void performAction(ClusterGroup clusterGroup) {
 					Assert.assertNotNull(clusterGroup);
 
 					count.increment();

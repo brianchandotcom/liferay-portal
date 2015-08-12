@@ -281,11 +281,9 @@ public class PortalPreferencesPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = PortalPreferencesLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PortalPreferences>() {
 				@Override
-				public void performAction(Object object) {
-					PortalPreferences portalPreferences = (PortalPreferences)object;
-
+				public void performAction(PortalPreferences portalPreferences) {
 					Assert.assertNotNull(portalPreferences);
 
 					count.increment();

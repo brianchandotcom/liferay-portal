@@ -281,11 +281,9 @@ public class PasswordTrackerPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = PasswordTrackerLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PasswordTracker>() {
 				@Override
-				public void performAction(Object object) {
-					PasswordTracker passwordTracker = (PasswordTracker)object;
-
+				public void performAction(PasswordTracker passwordTracker) {
 					Assert.assertNotNull(passwordTracker);
 
 					count.increment();

@@ -467,11 +467,9 @@ public class DDMStructurePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DDMStructureLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMStructure>() {
 				@Override
-				public void performAction(Object object) {
-					DDMStructure ddmStructure = (DDMStructure)object;
-
+				public void performAction(DDMStructure ddmStructure) {
 					Assert.assertNotNull(ddmStructure);
 
 					count.increment();

@@ -303,12 +303,10 @@ public abstract class PollsChoiceLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PollsChoice>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(PollsChoice stagedModel)
 					throws PortalException {
-					PollsChoice stagedModel = (PollsChoice)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);
 				}

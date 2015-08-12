@@ -319,11 +319,10 @@ public class ResourceTypePermissionPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ResourceTypePermissionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ResourceTypePermission>() {
 				@Override
-				public void performAction(Object object) {
-					ResourceTypePermission resourceTypePermission = (ResourceTypePermission)object;
-
+				public void performAction(
+					ResourceTypePermission resourceTypePermission) {
 					Assert.assertNotNull(resourceTypePermission);
 
 					count.increment();

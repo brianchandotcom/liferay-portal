@@ -308,12 +308,10 @@ public abstract class MDRRuleGroupLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MDRRuleGroup>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(MDRRuleGroup stagedModel)
 					throws PortalException {
-					MDRRuleGroup stagedModel = (MDRRuleGroup)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);
 				}

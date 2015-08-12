@@ -334,11 +334,9 @@ public class LockPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = LockLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Lock>() {
 				@Override
-				public void performAction(Object object) {
-					Lock lock = (Lock)object;
-
+				public void performAction(Lock lock) {
 					Assert.assertNotNull(lock);
 
 					count.increment();

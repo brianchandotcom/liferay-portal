@@ -389,11 +389,9 @@ public class LayoutSetBranchPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = LayoutSetBranchLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<LayoutSetBranch>() {
 				@Override
-				public void performAction(Object object) {
-					LayoutSetBranch layoutSetBranch = (LayoutSetBranch)object;
-
+				public void performAction(LayoutSetBranch layoutSetBranch) {
 					Assert.assertNotNull(layoutSetBranch);
 
 					count.increment();

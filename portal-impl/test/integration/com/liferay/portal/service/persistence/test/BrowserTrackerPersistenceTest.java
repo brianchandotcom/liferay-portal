@@ -276,11 +276,9 @@ public class BrowserTrackerPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = BrowserTrackerLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<BrowserTracker>() {
 				@Override
-				public void performAction(Object object) {
-					BrowserTracker browserTracker = (BrowserTracker)object;
-
+				public void performAction(BrowserTracker browserTracker) {
 					Assert.assertNotNull(browserTracker);
 
 					count.increment();

@@ -373,11 +373,10 @@ public class JournalContentSearchPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = JournalContentSearchLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<JournalContentSearch>() {
 				@Override
-				public void performAction(Object object) {
-					JournalContentSearch journalContentSearch = (JournalContentSearch)object;
-
+				public void performAction(
+					JournalContentSearch journalContentSearch) {
 					Assert.assertNotNull(journalContentSearch);
 
 					count.increment();

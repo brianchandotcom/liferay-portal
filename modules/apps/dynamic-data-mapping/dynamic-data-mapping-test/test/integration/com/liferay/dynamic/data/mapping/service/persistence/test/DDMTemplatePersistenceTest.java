@@ -534,11 +534,9 @@ public class DDMTemplatePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DDMTemplateLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DDMTemplate>() {
 				@Override
-				public void performAction(Object object) {
-					DDMTemplate ddmTemplate = (DDMTemplate)object;
-
+				public void performAction(DDMTemplate ddmTemplate) {
 					Assert.assertNotNull(ddmTemplate);
 
 					count.increment();

@@ -339,11 +339,9 @@ public class DLContentPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = DLContentLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<DLContent>() {
 				@Override
-				public void performAction(Object object) {
-					DLContent dlContent = (DLContent)object;
-
+				public void performAction(DLContent dlContent) {
 					Assert.assertNotNull(dlContent);
 
 					count.increment();

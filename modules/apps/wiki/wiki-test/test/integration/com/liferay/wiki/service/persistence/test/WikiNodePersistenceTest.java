@@ -404,11 +404,9 @@ public class WikiNodePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = WikiNodeLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<WikiNode>() {
 				@Override
-				public void performAction(Object object) {
-					WikiNode wikiNode = (WikiNode)object;
-
+				public void performAction(WikiNode wikiNode) {
 					Assert.assertNotNull(wikiNode);
 
 					count.increment();

@@ -412,11 +412,9 @@ public class MBMailingListPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = MBMailingListLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBMailingList>() {
 				@Override
-				public void performAction(Object object) {
-					MBMailingList mbMailingList = (MBMailingList)object;
-
+				public void performAction(MBMailingList mbMailingList) {
 					Assert.assertNotNull(mbMailingList);
 
 					count.increment();

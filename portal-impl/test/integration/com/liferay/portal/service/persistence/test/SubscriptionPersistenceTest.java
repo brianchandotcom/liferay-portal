@@ -349,11 +349,9 @@ public class SubscriptionPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = SubscriptionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Subscription>() {
 				@Override
-				public void performAction(Object object) {
-					Subscription subscription = (Subscription)object;
-
+				public void performAction(Subscription subscription) {
 					Assert.assertNotNull(subscription);
 
 					count.increment();

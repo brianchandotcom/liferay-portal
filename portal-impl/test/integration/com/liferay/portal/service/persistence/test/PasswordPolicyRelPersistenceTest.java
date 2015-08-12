@@ -288,11 +288,9 @@ public class PasswordPolicyRelPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = PasswordPolicyRelLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PasswordPolicyRel>() {
 				@Override
-				public void performAction(Object object) {
-					PasswordPolicyRel passwordPolicyRel = (PasswordPolicyRel)object;
-
+				public void performAction(PasswordPolicyRel passwordPolicyRel) {
 					Assert.assertNotNull(passwordPolicyRel);
 
 					count.increment();

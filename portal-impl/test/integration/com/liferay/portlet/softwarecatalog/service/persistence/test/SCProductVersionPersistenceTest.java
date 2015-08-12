@@ -326,11 +326,9 @@ public class SCProductVersionPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = SCProductVersionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SCProductVersion>() {
 				@Override
-				public void performAction(Object object) {
-					SCProductVersion scProductVersion = (SCProductVersion)object;
-
+				public void performAction(SCProductVersion scProductVersion) {
 					Assert.assertNotNull(scProductVersion);
 
 					count.increment();

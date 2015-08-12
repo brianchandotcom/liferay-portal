@@ -388,11 +388,9 @@ public class MicroblogsEntryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = MicroblogsEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MicroblogsEntry>() {
 				@Override
-				public void performAction(Object object) {
-					MicroblogsEntry microblogsEntry = (MicroblogsEntry)object;
-
+				public void performAction(MicroblogsEntry microblogsEntry) {
 					Assert.assertNotNull(microblogsEntry);
 
 					count.increment();

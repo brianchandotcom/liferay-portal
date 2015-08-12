@@ -316,11 +316,9 @@ public class WallEntryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = WallEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<WallEntry>() {
 				@Override
-				public void performAction(Object object) {
-					WallEntry wallEntry = (WallEntry)object;
-
+				public void performAction(WallEntry wallEntry) {
 					Assert.assertNotNull(wallEntry);
 
 					count.increment();

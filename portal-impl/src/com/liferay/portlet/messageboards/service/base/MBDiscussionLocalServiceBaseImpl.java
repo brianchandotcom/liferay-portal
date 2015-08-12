@@ -328,12 +328,10 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBDiscussion>() {
 				@Override
-				public void performAction(Object object)
+				public void performAction(MBDiscussion stagedModel)
 					throws PortalException {
-					MBDiscussion stagedModel = (MBDiscussion)object;
-
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
 						stagedModel);
 				}

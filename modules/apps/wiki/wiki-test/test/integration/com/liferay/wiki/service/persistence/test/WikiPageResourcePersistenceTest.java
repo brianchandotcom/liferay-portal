@@ -308,11 +308,9 @@ public class WikiPageResourcePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = WikiPageResourceLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<WikiPageResource>() {
 				@Override
-				public void performAction(Object object) {
-					WikiPageResource wikiPageResource = (WikiPageResource)object;
-
+				public void performAction(WikiPageResource wikiPageResource) {
 					Assert.assertNotNull(wikiPageResource);
 
 					count.increment();

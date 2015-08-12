@@ -778,11 +778,9 @@ public class JournalArticlePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = JournalArticleLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<JournalArticle>() {
 				@Override
-				public void performAction(Object object) {
-					JournalArticle journalArticle = (JournalArticle)object;
-
+				public void performAction(JournalArticle journalArticle) {
 					Assert.assertNotNull(journalArticle);
 
 					count.increment();

@@ -302,11 +302,10 @@ public class ResourceBlockPermissionPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ResourceBlockPermissionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ResourceBlockPermission>() {
 				@Override
-				public void performAction(Object object) {
-					ResourceBlockPermission resourceBlockPermission = (ResourceBlockPermission)object;
-
+				public void performAction(
+					ResourceBlockPermission resourceBlockPermission) {
 					Assert.assertNotNull(resourceBlockPermission);
 
 					count.increment();

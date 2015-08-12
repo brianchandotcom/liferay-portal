@@ -370,11 +370,10 @@ public class ExportImportConfigurationPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ExportImportConfigurationLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ExportImportConfiguration>() {
 				@Override
-				public void performAction(Object object) {
-					ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)object;
-
+				public void performAction(
+					ExportImportConfiguration exportImportConfiguration) {
 					Assert.assertNotNull(exportImportConfiguration);
 
 					count.increment();

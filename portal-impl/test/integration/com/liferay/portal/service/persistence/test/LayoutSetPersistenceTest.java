@@ -352,11 +352,9 @@ public class LayoutSetPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = LayoutSetLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<LayoutSet>() {
 				@Override
-				public void performAction(Object object) {
-					LayoutSet layoutSet = (LayoutSet)object;
-
+				public void performAction(LayoutSet layoutSet) {
 					Assert.assertNotNull(layoutSet);
 
 					count.increment();

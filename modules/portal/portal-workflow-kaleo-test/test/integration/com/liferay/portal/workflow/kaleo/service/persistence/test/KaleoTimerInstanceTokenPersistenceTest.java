@@ -387,11 +387,10 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = KaleoTimerInstanceTokenLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<KaleoTimerInstanceToken>() {
 				@Override
-				public void performAction(Object object) {
-					KaleoTimerInstanceToken kaleoTimerInstanceToken = (KaleoTimerInstanceToken)object;
-
+				public void performAction(
+					KaleoTimerInstanceToken kaleoTimerInstanceToken) {
 					Assert.assertNotNull(kaleoTimerInstanceToken);
 
 					count.increment();

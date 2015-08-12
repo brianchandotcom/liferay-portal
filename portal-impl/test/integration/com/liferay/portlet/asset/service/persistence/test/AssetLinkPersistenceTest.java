@@ -338,11 +338,9 @@ public class AssetLinkPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = AssetLinkLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AssetLink>() {
 				@Override
-				public void performAction(Object object) {
-					AssetLink assetLink = (AssetLink)object;
-
+				public void performAction(AssetLink assetLink) {
 					Assert.assertNotNull(assetLink);
 
 					count.increment();

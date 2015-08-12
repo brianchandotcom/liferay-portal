@@ -401,11 +401,9 @@ public class RolePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = RoleLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Role>() {
 				@Override
-				public void performAction(Object object) {
-					Role role = (Role)object;
-
+				public void performAction(Role role) {
 					Assert.assertNotNull(role);
 
 					count.increment();

@@ -388,11 +388,9 @@ public class CalendarPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = CalendarLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Calendar>() {
 				@Override
-				public void performAction(Object object) {
-					Calendar calendar = (Calendar)object;
-
+				public void performAction(Calendar calendar) {
 					Assert.assertNotNull(calendar);
 
 					count.increment();

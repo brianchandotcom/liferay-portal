@@ -291,11 +291,9 @@ public class AnnouncementsFlagPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = AnnouncementsFlagLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AnnouncementsFlag>() {
 				@Override
-				public void performAction(Object object) {
-					AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)object;
-
+				public void performAction(AnnouncementsFlag announcementsFlag) {
 					Assert.assertNotNull(announcementsFlag);
 
 					count.increment();

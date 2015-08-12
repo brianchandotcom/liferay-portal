@@ -311,11 +311,9 @@ public class ReleasePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ReleaseLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Release>() {
 				@Override
-				public void performAction(Object object) {
-					Release release = (Release)object;
-
+				public void performAction(Release release) {
 					Assert.assertNotNull(release);
 
 					count.increment();

@@ -297,11 +297,9 @@ public class ServiceComponentPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ServiceComponentLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ServiceComponent>() {
 				@Override
-				public void performAction(Object object) {
-					ServiceComponent serviceComponent = (ServiceComponent)object;
-
+				public void performAction(ServiceComponent serviceComponent) {
 					Assert.assertNotNull(serviceComponent);
 
 					count.increment();

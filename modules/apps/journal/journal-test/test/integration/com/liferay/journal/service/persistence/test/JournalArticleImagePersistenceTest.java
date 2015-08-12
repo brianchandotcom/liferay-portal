@@ -332,11 +332,10 @@ public class JournalArticleImagePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = JournalArticleImageLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<JournalArticleImage>() {
 				@Override
-				public void performAction(Object object) {
-					JournalArticleImage journalArticleImage = (JournalArticleImage)object;
-
+				public void performAction(
+					JournalArticleImage journalArticleImage) {
 					Assert.assertNotNull(journalArticleImage);
 
 					count.increment();

@@ -326,11 +326,9 @@ public class CompanyPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = CompanyLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Company>() {
 				@Override
-				public void performAction(Object object) {
-					Company company = (Company)object;
-
+				public void performAction(Company company) {
 					Assert.assertNotNull(company);
 
 					count.increment();

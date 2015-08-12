@@ -332,11 +332,9 @@ public class PortletItemPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = PortletItemLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<PortletItem>() {
 				@Override
-				public void performAction(Object object) {
-					PortletItem portletItem = (PortletItem)object;
-
+				public void performAction(PortletItem portletItem) {
 					Assert.assertNotNull(portletItem);
 
 					count.increment();

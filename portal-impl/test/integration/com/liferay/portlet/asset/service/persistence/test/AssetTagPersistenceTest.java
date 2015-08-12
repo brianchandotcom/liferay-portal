@@ -371,11 +371,9 @@ public class AssetTagPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = AssetTagLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<AssetTag>() {
 				@Override
-				public void performAction(Object object) {
-					AssetTag assetTag = (AssetTag)object;
-
+				public void performAction(AssetTag assetTag) {
 					Assert.assertNotNull(assetTag);
 
 					count.increment();

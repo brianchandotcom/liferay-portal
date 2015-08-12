@@ -363,11 +363,9 @@ public class SCProductEntryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = SCProductEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SCProductEntry>() {
 				@Override
-				public void performAction(Object object) {
-					SCProductEntry scProductEntry = (SCProductEntry)object;
-
+				public void performAction(SCProductEntry scProductEntry) {
 					Assert.assertNotNull(scProductEntry);
 
 					count.increment();

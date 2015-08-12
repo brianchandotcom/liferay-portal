@@ -497,11 +497,9 @@ public class BookmarksEntryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = BookmarksEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
 				@Override
-				public void performAction(Object object) {
-					BookmarksEntry bookmarksEntry = (BookmarksEntry)object;
-
+				public void performAction(BookmarksEntry bookmarksEntry) {
 					Assert.assertNotNull(bookmarksEntry);
 
 					count.increment();

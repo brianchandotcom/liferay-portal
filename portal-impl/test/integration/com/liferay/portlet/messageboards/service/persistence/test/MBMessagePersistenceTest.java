@@ -606,11 +606,9 @@ public class MBMessagePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = MBMessageLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<MBMessage>() {
 				@Override
-				public void performAction(Object object) {
-					MBMessage mbMessage = (MBMessage)object;
-
+				public void performAction(MBMessage mbMessage) {
 					Assert.assertNotNull(mbMessage);
 
 					count.increment();

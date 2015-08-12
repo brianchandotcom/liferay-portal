@@ -406,11 +406,9 @@ public class AddressPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = AddressLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Address>() {
 				@Override
-				public void performAction(Object object) {
-					Address address = (Address)object;
-
+				public void performAction(Address address) {
 					Assert.assertNotNull(address);
 
 					count.increment();

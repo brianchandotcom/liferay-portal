@@ -364,11 +364,9 @@ public class PhonePersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = PhoneLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Phone>() {
 				@Override
-				public void performAction(Object object) {
-					Phone phone = (Phone)object;
-
+				public void performAction(Phone phone) {
 					Assert.assertNotNull(phone);
 
 					count.increment();

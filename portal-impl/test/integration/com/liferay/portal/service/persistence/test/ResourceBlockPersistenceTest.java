@@ -313,11 +313,9 @@ public class ResourceBlockPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = ResourceBlockLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ResourceBlock>() {
 				@Override
-				public void performAction(Object object) {
-					ResourceBlock resourceBlock = (ResourceBlock)object;
-
+				public void performAction(ResourceBlock resourceBlock) {
 					Assert.assertNotNull(resourceBlock);
 
 					count.increment();

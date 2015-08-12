@@ -564,11 +564,9 @@ public class UserPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = UserLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<User>() {
 				@Override
-				public void performAction(Object object) {
-					User user = (User)object;
-
+				public void performAction(User user) {
 					Assert.assertNotNull(user);
 
 					count.increment();

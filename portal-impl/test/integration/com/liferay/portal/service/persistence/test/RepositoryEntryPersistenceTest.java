@@ -357,11 +357,9 @@ public class RepositoryEntryPersistenceTest {
 
 		ActionableDynamicQuery actionableDynamicQuery = RepositoryEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
+		actionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<RepositoryEntry>() {
 				@Override
-				public void performAction(Object object) {
-					RepositoryEntry repositoryEntry = (RepositoryEntry)object;
-
+				public void performAction(RepositoryEntry repositoryEntry) {
 					Assert.assertNotNull(repositoryEntry);
 
 					count.increment();

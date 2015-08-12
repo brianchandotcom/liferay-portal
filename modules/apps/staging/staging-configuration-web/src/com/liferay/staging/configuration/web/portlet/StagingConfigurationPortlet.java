@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class StagingConfigurationPortlet extends MVCPortlet {
 
-	public void editGroup(
+	public void editStagingConfiguration(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortalException {
 

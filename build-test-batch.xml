@@ -568,6 +568,43 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-testray-results">
+		<attribute name="job.failure.message" default="" />
+		<attribute name="test.results.dir" default="${default.test.results.dir}" />
+		<attribute name="test.results.suite.dir" default="${default.test.results.suite.dir}" />
+		<attribute name="test.results.suite.file.name" default="${default.test.results.suite.file.name}" />
+
+		<sequential>
+			<copy-test-results />
+
+			<set-testray-required-properties />
+
+			<generate-testray-axis-result job.failure.message="@{job.failure.message}" />
+
+			<if>
+				<resourcecount when="greater" count="0">
+					<fileset dir="@{test.results.dir}" erroronmissingdir="false" includes="TEST-*.xml" />
+				</resourcecount>
+				<then>
+					<build-testray-results />
+
+					<merge-testray-results />
+				</then>
+			</if>
+
+			<if>
+				<isset property="env.WORKSPACE" />
+				<then>
+					<mkdir dir="${env.WORKSPACE}/test-results" />
+
+					<copy todir="${env.WORKSPACE}/test-results/test-suite" verbose="true">
+						<fileset dir="${test.results.suite.dir}" erroronmissingdir="false" includes="TESTS-*.xml" />
+					</copy>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="print-test-class-group">
 		<attribute name="test.class.group.index" />
 		<sequential>

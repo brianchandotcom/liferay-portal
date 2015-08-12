@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
-import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -152,7 +152,7 @@ public class DLFileEntryTypeServiceTest {
 			new String(testFileBytes));
 
 		serviceContext.setAttribute(
-			"ddmForm", DDMBeanCopyUtil.copyDDMForm(ddmForm));
+			"ddmForm", DDMBeanTranslatorUtil.copyDDMForm(ddmForm));
 
 		User user = TestPropsValues.getUser();
 

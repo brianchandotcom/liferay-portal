@@ -22,7 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
@@ -141,7 +141,7 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 		DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(definition);
 
 		serviceContext.setAttribute(
-			"ddmForm", DDMBeanCopyUtil.copyDDMForm(ddmForm));
+			"ddmForm", DDMBeanTranslatorUtil.copyDDMForm(ddmForm));
 
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.fetchFileEntryType(

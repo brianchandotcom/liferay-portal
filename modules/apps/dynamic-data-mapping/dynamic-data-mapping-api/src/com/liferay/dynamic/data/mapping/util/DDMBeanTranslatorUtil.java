@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * @author Leonardo Barros
  */
-public class DDMBeanCopyUtil {
+public class DDMBeanTranslatorUtil {
 
 	public static DDMForm copyDDMForm(
 		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm) {

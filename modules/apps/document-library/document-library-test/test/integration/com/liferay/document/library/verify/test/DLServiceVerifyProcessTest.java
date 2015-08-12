@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
-import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -365,7 +365,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 			DDMFormXSDDeserializerUtil.deserialize(new String(bytes));
 
 		serviceContext.setAttribute(
-			"ddmForm", DDMBeanCopyUtil.copyDDMForm(ddmForm));
+			"ddmForm", DDMBeanTranslatorUtil.copyDDMForm(ddmForm));
 
 		User user = TestPropsValues.getUser();
 

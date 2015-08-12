@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.exception.StructureNameException;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexerUtil;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureIdComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureStructureKeyComparator;
@@ -69,7 +69,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 		DDMIndexerUtil.addAttributes(
 			document, ddmStructure,
-			DDMBeanCopyUtil.copyDDMFormValues(ddmFormValues));
+			DDMBeanTranslatorUtil.copyDDMFormValues(ddmFormValues));
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 		try {
 			com.liferay.dynamic.data.mapping.model.DDMForm copyDDMForm =
-				DDMBeanCopyUtil.copyDDMForm(ddmForm);
+				DDMBeanTranslatorUtil.copyDDMForm(ddmForm);
 
 			com.liferay.dynamic.data.mapping.model.DDMStructure
 				ddmStructure = _ddmStructureLocalService.addStructure(
@@ -137,8 +137,8 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 			_ddmStructureLocalService.getStructure(structureId);
 
 		return DDMIndexerUtil.extractAttributes(
-			ddmStructure, DDMBeanCopyUtil.copyDDMFormValues(ddmFormValues),
-			locale);
+			ddmStructure,
+			DDMBeanTranslatorUtil.copyDDMFormValues(ddmFormValues), locale);
 	}
 
 	@Override
@@ -241,7 +241,8 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 	public DDMForm getDDMForm(PortletRequest portletRequest)
 		throws PortalException {
 
-		return DDMBeanCopyUtil.copyDDMForm(_ddm.getDDMForm(portletRequest));
+		return DDMBeanTranslatorUtil.copyDDMForm(
+			_ddm.getDDMForm(portletRequest));
 	}
 
 	@Override
@@ -343,7 +344,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 		try {
 			com.liferay.dynamic.data.mapping.model.DDMForm copyDDMForm =
-				DDMBeanCopyUtil.copyDDMForm(ddmForm);
+				DDMBeanTranslatorUtil.copyDDMForm(ddmForm);
 
 			com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
 				_ddmStructureLocalService.updateStructure(

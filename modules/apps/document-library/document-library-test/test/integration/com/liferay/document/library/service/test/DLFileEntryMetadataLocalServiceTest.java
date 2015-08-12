@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
-import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -89,7 +89,7 @@ public class DLFileEntryMetadataLocalServiceTest {
 			DDMFormXSDDeserializerUtil.deserialize(new String(testFileBytes));
 
 		serviceContext.setAttribute(
-			"ddmForm", DDMBeanCopyUtil.copyDDMForm(ddmForm));
+			"ddmForm", DDMBeanTranslatorUtil.copyDDMForm(ddmForm));
 
 		User user = TestPropsValues.getUser();
 

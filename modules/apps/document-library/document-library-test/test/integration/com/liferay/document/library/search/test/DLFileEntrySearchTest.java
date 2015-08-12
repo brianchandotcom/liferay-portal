@@ -22,7 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.search.TestOrderHelper;
-import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexerUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -273,7 +273,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		String content = "Content: Enterprise. Open Source. For Life.";
 
 		DDMFormValues ddmFormValues = createDDMFormValues(
-			DDMBeanCopyUtil.copyDDMForm(_ddmStructure.getDDMForm()));
+			DDMBeanTranslatorUtil.copyDDMForm(_ddmStructure.getDDMForm()));
 
 		for (String keyword : keywords) {
 			ddmFormValues.addDDMFormFieldValue(

@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.internal;
 
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManager;
@@ -41,7 +41,7 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 		try {
 			return _storageEngine.create(
 				companyId, ddmStructureId,
-				DDMBeanCopyUtil.copyDDMFormValues(ddmFormValues),
+				DDMBeanTranslatorUtil.copyDDMFormValues(ddmFormValues),
 				serviceContext);
 		}
 		catch (PortalException pe) {
@@ -63,7 +63,7 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 
 	@Override
 	public DDMFormValues getDDMFormValues(long classPK) throws PortalException {
-		return DDMBeanCopyUtil.copyDDMFormValues(
+		return DDMBeanTranslatorUtil.copyDDMFormValues(
 			_storageEngine.getDDMFormValues(classPK));
 	}
 
@@ -73,7 +73,7 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return DDMBeanCopyUtil.copyDDMFormValues(
+		return DDMBeanTranslatorUtil.copyDDMFormValues(
 			_ddm.getDDMFormValues(
 				ddmStructureId, fieldNamespace, serviceContext));
 	}
@@ -86,7 +86,7 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 
 		try {
 			_storageEngine.update(
-				classPK, DDMBeanCopyUtil.copyDDMFormValues(ddmFormValues),
+				classPK, DDMBeanTranslatorUtil.copyDDMFormValues(ddmFormValues),
 				serviceContext);
 		}
 		catch (PortalException pe) {

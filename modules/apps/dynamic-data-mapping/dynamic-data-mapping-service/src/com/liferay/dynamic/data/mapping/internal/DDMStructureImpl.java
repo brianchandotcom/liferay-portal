@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal;
 
-import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
@@ -76,14 +76,14 @@ public class DDMStructureImpl implements DDMStructure {
 
 	@Override
 	public DDMForm getDDMForm() {
-		return DDMBeanCopyUtil.copyDDMForm(_ddmStructure.getDDMForm());
+		return DDMBeanTranslatorUtil.copyDDMForm(_ddmStructure.getDDMForm());
 	}
 
 	@Override
 	public DDMFormField getDDMFormField(String fieldName)
 		throws PortalException {
 
-		return DDMBeanCopyUtil.copyDDMFormField(
+		return DDMBeanTranslatorUtil.copyDDMFormField(
 			_ddmStructure.getDDMFormField(fieldName));
 	}
 
@@ -94,7 +94,8 @@ public class DDMStructureImpl implements DDMStructure {
 		for (com.liferay.dynamic.data.mapping.model.DDMFormField ddmFormField :
 				_ddmStructure.getDDMFormFields(includeTransientFields)) {
 
-			ddmFormFields.add(DDMBeanCopyUtil.copyDDMFormField(ddmFormField));
+			ddmFormFields.add(
+				DDMBeanTranslatorUtil.copyDDMFormField(ddmFormField));
 		}
 
 		return ddmFormFields;
@@ -149,7 +150,7 @@ public class DDMStructureImpl implements DDMStructure {
 
 	@Override
 	public DDMForm getFullHierarchyDDMForm() {
-		return DDMBeanCopyUtil.copyDDMForm(
+		return DDMBeanTranslatorUtil.copyDDMForm(
 			_ddmStructure.getFullHierarchyDDMForm());
 	}
 

@@ -27,7 +27,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
-import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Hits;
@@ -252,7 +252,7 @@ public abstract class TestOrderHelper {
 		DDMFormValuesReader ddmFormValuesReader =
 			assetRenderer.getDDMFormValuesReader();
 
-		DDMFormValues ddmFormValues = DDMBeanCopyUtil.copyDDMFormValues(
+		DDMFormValues ddmFormValues = DDMBeanTranslatorUtil.copyDDMFormValues(
 			ddmFormValuesReader.getDDMFormValues());
 
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =

@@ -824,12 +824,10 @@ public class ${entity.name}PersistenceTest {
 			ActionableDynamicQuery actionableDynamicQuery = ${entity.name}LocalServiceUtil.getActionableDynamicQuery();
 
 			actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.PerformActionMethod() {
+				new ActionableDynamicQuery.PerformActionMethod<${entity.name}>() {
 
 					@Override
-					public void performAction(Object object) {
-						${entity.name} ${entity.varName} = (${entity.name})object;
-
+					public void performAction(${entity.name} ${entity.varName}) {
 						Assert.assertNotNull(${entity.varName});
 
 						count.increment();

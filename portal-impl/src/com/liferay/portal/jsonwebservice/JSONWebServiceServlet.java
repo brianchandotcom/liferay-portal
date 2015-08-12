@@ -17,7 +17,6 @@ package com.liferay.portal.jsonwebservice;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
-import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -26,7 +25,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.JSONServlet;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.struts.JSONAction;
-import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -50,13 +48,6 @@ public class JSONWebServiceServlet extends JSONServlet {
 	public void service(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
-
-		if (PortalUtil.isMultipartRequest(request)) {
-			UploadServletRequest uploadServletRequest =
-				new UploadServletRequestImpl(request);
-
-			request = uploadServletRequest;
-		}
 
 		String path = GetterUtil.getString(request.getPathInfo());
 

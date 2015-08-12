@@ -597,17 +597,15 @@
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
 		</property>
 	</bean>
-	
-   <bean id="com.liferay.portlet.portalsettings.action.EditCompanyMVCActionCommand" class="com.liferay.portlet.portalsettings.action.EditCompanyMVCActionCommand" />
-   <bean id="com.liferay.portlet.portalsettings.action.EditCompanyMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.EditCompanyMVCRenderCommand" />
-   <bean id="com.liferay.portlet.portalsettings.action.EditLDAPServerMVCActionCommand" class="com.liferay.portlet.portalsettings.action.EditLDAPServerMVCActionCommand" />
-   <bean id="com.liferay.portlet.portalsettings.action.TestCASConfigurationMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestCASConfigurationMVCRenderCommand" />
-   <bean id="com.liferay.portlet.portalsettings.action.TestLDAPConnectionMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestLDAPConnectionMVCRenderCommand" />
-   <bean id="com.liferay.portlet.portalsettings.action.TestLDAPGroupsMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestLDAPGroupsMVCRenderCommand" />
-   <bean id="com.liferay.portlet.portalsettings.action.TestLDAPUsersMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestLDAPUsersMVCRenderCommand" />
-   <bean id="com.liferay.portlet.portalsettings.action.TestOpenSSOConfigurationMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestOpenSSOConfigurationMVCRenderCommand" />
-
-
+    <bean id="com.liferay.portlet.portalsettings.action.EditCompanyMVCActionCommand" class="com.liferay.portlet.portalsettings.action.EditCompanyMVCActionCommand" />
+    <bean id="com.liferay.portlet.portalsettings.action.EditCompanyMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.EditCompanyMVCRenderCommand" />
+    <bean id="com.liferay.portlet.portalsettings.action.EditLDAPServerMVCActionCommand" class="com.liferay.portlet.portalsettings.action.EditLDAPServerMVCActionCommand" />
+    <bean id="com.liferay.portlet.portalsettings.action.EditLDAPServerMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.EditLDAPServerMVCRenderCommand" />
+    <bean id="com.liferay.portlet.portalsettings.action.TestCASConfigurationMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestCASConfigurationMVCRenderCommand" />
+    <bean id="com.liferay.portlet.portalsettings.action.TestLDAPConnectionMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestLDAPConnectionMVCRenderCommand" />
+    <bean id="com.liferay.portlet.portalsettings.action.TestLDAPGroupsMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestLDAPGroupsMVCRenderCommand" />
+    <bean id="com.liferay.portlet.portalsettings.action.TestLDAPUsersMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestLDAPUsersMVCRenderCommand" />
+    <bean id="com.liferay.portlet.portalsettings.action.TestOpenSSOConfigurationMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.TestOpenSSOConfigurationMVCRenderCommand" />
     <bean id="com.liferay.portlet.rolesadmin.util.RolesAdmin" class="com.liferay.portlet.rolesadmin.util.RolesAdminImpl" />
 	<bean id="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" class="com.liferay.portlet.rolesadmin.util.RolesAdminUtil">
 		<property name="rolesAdmin" ref="com.liferay.portlet.rolesadmin.util.RolesAdmin" />

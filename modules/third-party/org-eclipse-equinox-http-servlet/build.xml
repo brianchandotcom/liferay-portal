@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<property name="javac.source" value="1.6" />
+	<property name="javac.target" value="1.6" />
+	<property name="original.lib.name" value="org.eclipse.equinox.http.servlet" />
+	<property name="original.lib.url" value="https://repository.liferay.com/nexus/content/groups/public/org/eclipse/equinox" />
+	<property name="original.lib.version" value="1.2.1-SNAPSHOT" />
+
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<target name="compile">
+		<process-ivy
+			module.dir="${basedir}"
+		/>
+
+		<unzip
+			dest="classes"
+			src="lib/${original.lib.name}.jar"
+		/>
+
+		<mirrors-get
+			dest="${original.lib.name}-sources.jar"
+			src="${original.lib.url}/${original.lib.name}/${original.lib.version}/${original.lib.name}-1.2.1-20150713.234938-2-sources.jar"
+		/>
+
+		<unjar
+			dest="${plugin.source.dir}"
+			src="${original.lib.name}-sources.jar"
+		>
+			<mapper
+				type="glob"
+				from="./*"
+				to="*"
+			/>
+			<patternset includes="org/eclipse/equinox/http/servlet/internal/servlet/HttpSessionAdaptor.java" />
+		</unjar>
+
+		<delete file="${original.lib.name}-sources.jar" />
+
+		<patch dir="${plugin.source.dir}" patchfile="patches/LPS-57261.diff" strip="1" />
+
+		<compile
+			module.dir="${basedir}"
+		/>
+	</target>
+
+	<target name="jar">
+		<jar-macro
+			module.dir="${basedir}"
+		/>
+
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<mkdir dir="${tstamp.value}" />
+
+		<unjar dest="${tstamp.value}" src="lib/${original.lib.name}.jar">
+			<patternset>
+				<include name="META-INF/MANIFEST.MF" />
+			</patternset>
+		</unjar>
+
+		<jar destfile="${plugin.file}" manifest="${tstamp.value}/META-INF/MANIFEST.MF" update="true" />
+
+		<delete dir="${tstamp.value}" />
+	</target>
+</project>

@@ -1324,8 +1324,13 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[1]" value1="Name1" />
-		<execute function="AssertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[2]" value1="Name2" />
+		<execute macro="DDLDisplayPortlet#viewDDLTemplateRecordFieldData">
+			<var name="ddlRecordFieldData" value="Name1" />
+		</execute>
+
+		<execute macro="DDLDisplayPortlet#viewDDLTemplateRecordFieldData">
+			<var name="ddlRecordFieldData" value="Name2" />
+		</execute>
 	</command>
 
 	<command known-issues="LPS-51615" name="ViewListRecordWithUploadedVelocityDisplayTemplate" priority="4">

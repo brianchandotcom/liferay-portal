@@ -36,12 +36,12 @@
 </tr>
 <tr>
 	<td>DETAILS_PANEL_DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_1_WAR_CalendarPortlet_description']</td>
+	<td>//textarea[contains(@id,'_CalendarPortlet_description')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_PANEL_ACTIVE_CHECKBOX</td>
-	<td>//input[@id='_1_WAR_CalendarPortlet_active']</td>
+	<td>//input[contains(@id,'_CalendarPortlet_active')]</td>
 	<td></td>
 </tr>
 </tbody>

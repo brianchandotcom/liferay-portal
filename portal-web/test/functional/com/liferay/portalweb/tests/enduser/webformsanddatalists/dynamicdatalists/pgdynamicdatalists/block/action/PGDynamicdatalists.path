@@ -127,6 +127,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECORD_TABLE_NAME</td>
+	<td>//div[contains(@class,'searchcontainer')]//a[contains(.,'${key_ddlRecordFieldData}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -22,7 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
@@ -141,7 +141,7 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 		DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(definition);
 
 		serviceContext.setAttribute(
-			"ddmForm", DDMBeanTranslatorUtil.translate(ddmForm));
+			"ddmForm", _ddmBeanTranslator.translate(ddmForm));
 
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.fetchFileEntryType(
@@ -395,6 +395,11 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 	}
 
 	@Reference
+	protected void setDDMBeanTranslator(DDMBeanTranslator ddmBeanTranslator) {
+		_ddmBeanTranslator = ddmBeanTranslator;
+	}
+
+	@Reference
 	protected void setDDMFormXSDDeserializer(
 		DDMFormXSDDeserializer ddmFormXSDDeserializer) {
 
@@ -439,6 +444,7 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 
 	private CompanyLocalService _companyLocalService;
 	private DDM _ddm;
+	private DDMBeanTranslator _ddmBeanTranslator;
 	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;

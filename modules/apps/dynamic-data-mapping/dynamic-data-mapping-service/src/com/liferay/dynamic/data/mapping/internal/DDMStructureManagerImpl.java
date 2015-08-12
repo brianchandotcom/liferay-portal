@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.exception.StructureNameException;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.dynamic.data.mapping.util.DDMIndexerUtil;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureIdComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureStructureKeyComparator;
@@ -69,7 +69,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 		DDMIndexerUtil.addAttributes(
 			document, ddmStructure,
-			DDMBeanTranslatorUtil.translate(ddmFormValues));
+			_ddmBeanTranslator.translate(ddmFormValues));
 	}
 
 	@Override
@@ -81,15 +81,15 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 		throws PortalException {
 
 		try {
-			com.liferay.dynamic.data.mapping.model.DDMForm copyDDMForm =
-				DDMBeanTranslatorUtil.translate(ddmForm);
+			com.liferay.dynamic.data.mapping.model.DDMForm translatedDDMForm =
+				_ddmBeanTranslator.translate(ddmForm);
 
 			com.liferay.dynamic.data.mapping.model.DDMStructure
 				ddmStructure = _ddmStructureLocalService.addStructure(
 					userId, groupId, parentStructureKey, classNameId,
-					structureKey, nameMap, descriptionMap, copyDDMForm,
-					_ddm.getDefaultDDMFormLayout(copyDDMForm), storageType,
-					type, serviceContext);
+					structureKey, nameMap, descriptionMap, translatedDDMForm,
+					_ddm.getDefaultDDMFormLayout(translatedDDMForm),
+					storageType, type, serviceContext);
 
 			return new DDMStructureImpl(ddmStructure);
 		}
@@ -137,8 +137,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 			_ddmStructureLocalService.getStructure(structureId);
 
 		return DDMIndexerUtil.extractAttributes(
-			ddmStructure, DDMBeanTranslatorUtil.translate(ddmFormValues),
-			locale);
+			ddmStructure, _ddmBeanTranslator.translate(ddmFormValues), locale);
 	}
 
 	@Override
@@ -241,7 +240,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 	public DDMForm getDDMForm(PortletRequest portletRequest)
 		throws PortalException {
 
-		return DDMBeanTranslatorUtil.translate(_ddm.getDDMForm(portletRequest));
+		return _ddmBeanTranslator.translate(_ddm.getDDMForm(portletRequest));
 	}
 
 	@Override
@@ -343,7 +342,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 		try {
 			com.liferay.dynamic.data.mapping.model.DDMForm copyDDMForm =
-				DDMBeanTranslatorUtil.translate(ddmForm);
+				_ddmBeanTranslator.translate(ddmForm);
 
 			com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
 				_ddmStructureLocalService.updateStructure(
@@ -407,6 +406,11 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 	}
 
 	@Reference
+	protected void setDDMBeanTranslator(DDMBeanTranslator ddmBeanTranslator) {
+		_ddmBeanTranslator = ddmBeanTranslator;
+	}
+
+	@Reference
 	protected void setDDMStorageLinkLocalService(
 		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
 
@@ -461,6 +465,7 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 	}
 
 	private DDM _ddm;
+	private DDMBeanTranslator _ddmBeanTranslator;
 	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 	private DDMStructureLocalService _ddmStructureLocalService;
 

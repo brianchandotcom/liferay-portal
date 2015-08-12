@@ -24,8 +24,8 @@ User user2 = UserLocalServiceUtil.fetchUser(userId);
 %>
 
 <div class="user-info">
-	<div class="user-avatar">
-		<img alt="<%= HtmlUtil.escapeAttribute((user2 != null) ? user2.getFullName() : LanguageUtil.get(request, "anonymous")) %>" class="avatar img-circle" src="<%= HtmlUtil.escape((user2 != null) ? user2.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, StringPool.BLANK)) %>" />
+	<div class="user-icon user-icon-lg">
+		<img alt="<%= HtmlUtil.escapeAttribute((user2 != null) ? user2.getFullName() : LanguageUtil.get(request, "anonymous")) %>" class="img-responsive" src="<%= HtmlUtil.escape((user2 != null) ? user2.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, StringPool.BLANK)) %>" />
 	</div>
 
 	<div class="user-details">

@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ page import="com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil" %>
+<%@ page import="com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission" %>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.portlet.PortletProvider" %>
@@ -29,4 +31,3 @@
 <%@ page import="com.liferay.portal.util.PortletKeys" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.DDMTemplate" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.DDMTemplateManager" %>
-<%@ page import="com.liferay.portlet.dynamicdatamapping.DDMTemplateManagerUtil" %>

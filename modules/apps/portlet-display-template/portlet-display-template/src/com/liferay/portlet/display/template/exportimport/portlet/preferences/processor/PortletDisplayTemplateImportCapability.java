@@ -27,7 +27,6 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.DDMTemplateManagerUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
@@ -136,7 +135,7 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 
 		StagedModelDataHandlerUtil.importReferenceStagedModels(
 			portletDataContext,
-			DDMTemplateManagerUtil.getDDMTemplateModelClass());
+			com.liferay.dynamic.data.mapping.model.DDMTemplate.class);
 
 		long displayStyleGroupId = getDisplayStyleGroupId(
 			portletDataContext, portletId, portletPreferences);

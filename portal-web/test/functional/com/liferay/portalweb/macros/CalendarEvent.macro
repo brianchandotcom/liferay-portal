@@ -1178,11 +1178,11 @@
 					<isset var="numberOfOccurrences" />
 				</and>
 				<then>
-					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_DIALOG_SUMMARY" value1="${frequency} On ${position} ${weekday}, ${numberOfOccurrences} Times" />
+					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_DIALOG_SUMMARY" value1="${frequency}, On ${position} ${weekday}, ${numberOfOccurrences} Times" />
 
 					<execute function="AssertClick" locator1="PGCalendarAddevent#REPEAT_DONE_BUTTON" value1="Done" />
 
-					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY" value1="${frequency} On ${position} ${weekday}, ${numberOfOccurrences} Times" />
+					<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY" value1="${frequency}, On ${position} ${weekday}, ${numberOfOccurrences} Times" />
 				</then>
 			</elseif>
 			<elseif>

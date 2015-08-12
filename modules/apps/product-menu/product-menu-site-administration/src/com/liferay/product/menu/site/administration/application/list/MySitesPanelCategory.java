@@ -17,8 +17,14 @@ package com.liferay.product.menu.site.administration.application.list;
 import com.liferay.application.list.BaseJSPPanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.PermissionChecker;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
@@ -62,6 +68,24 @@ public class MySitesPanelCategory extends BaseJSPPanelCategory {
 	@Override
 	public String getParentCategoryKey() {
 		return PanelCategoryKeys.SITES_ALL_SITES;
+	}
+
+	@Override
+	public boolean hasAccessPermission(
+			PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		User user = permissionChecker.getUser();
+
+		List<Group> siteGroups = user.getMySiteGroups(
+			new String[] {Group.class.getName(), Organization.class.getName()},
+			false, 1);
+
+		if (siteGroups.isEmpty()) {
+			return false;
+		}
+
+		return super.hasAccessPermission(permissionChecker, group);
 	}
 
 	@Override

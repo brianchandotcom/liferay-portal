@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
 
@@ -31,8 +29,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.portlet.PortletRequest;
 
 /**
  * @author Leonardo Barros
@@ -96,9 +92,6 @@ public interface DDMStructureManager {
 
 	public List<DDMStructure> getClassStructures(
 		long companyId, long classNameId, int start, int end);
-
-	public DDMForm getDDMForm(PortletRequest portletRequest)
-		throws PortalException;
 
 	public JSONArray getDDMFormFieldsJSONArray(long structureId, String script)
 		throws PortalException;

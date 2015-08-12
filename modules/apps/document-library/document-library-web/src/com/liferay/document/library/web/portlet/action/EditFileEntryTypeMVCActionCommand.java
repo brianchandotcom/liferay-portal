@@ -15,6 +15,8 @@
 package com.liferay.document.library.web.portlet.action;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -39,7 +41,6 @@ import com.liferay.portlet.documentlibrary.NoSuchMetadataSetException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
@@ -55,6 +56,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alexander Chow
@@ -155,6 +157,16 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		return StringUtil.split(GetterUtil.getString(value), 0L);
 	}
 
+	@Reference
+	protected void setDDM(DDM ddm) {
+		_ddm = ddm;
+	}
+
+	@Reference
+	protected void setDDMBeanTranslator(DDMBeanTranslator ddmBeanTranslator) {
+		_ddmBeanTranslator = ddmBeanTranslator;
+	}
+
 	protected void subscribeFileEntryType(ActionRequest actionRequest)
 		throws Exception {
 
@@ -202,7 +214,8 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntryType.class.getName(), actionRequest);
 
-		DDMForm ddmForm = DDMStructureManagerUtil.getDDMForm(actionRequest);
+		DDMForm ddmForm = _ddmBeanTranslator.translate(
+			_ddm.getDDMForm(actionRequest));
 
 		serviceContext.setAttribute("ddmForm", ddmForm);
 
@@ -231,5 +244,8 @@ public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 				serviceContext);
 		}
 	}
+
+	private DDM _ddm;
+	private DDMBeanTranslator _ddmBeanTranslator;
 
 }

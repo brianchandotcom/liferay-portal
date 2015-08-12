@@ -1,4 +1,31 @@
 <definition>
+	<command name="moveLanguagesToAvailable">
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
+		<while>
+			<condition function="IsElementPresent" locator1="LanguageConfiguration#LANGUAGES_CURRENT_SELECT" />
+			<then>
+				<execute function="Click" locator1="LanguageConfiguration#LANGUAGES_CURRENT_SELECT" />
+				<execute function="Click" locator1="LanguageConfiguration#MOVE_CURRENT_TO_AVAILABLE_BUTTON" />
+			</then>
+		</while>
+	</command>
+
+	<command name="moveLanguagesToCurrent">
+		<for list="${currentLanguages}" param="currentLanguage">
+			<var name="key_currentLanguage" value="${currentLanguage}" />
+
+			<execute function="Select" locator1="LanguageConfiguration#LANGUAGES_AVAILABLE" value1="${currentLanguage}" />
+			<execute function="Click" locator1="LanguageConfiguration#MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="LanguageConfiguration#LANGUAGES_CURRENT" value1="${currentLanguage}" />
+		</for>
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
 	<command name="selectLanguagePG">
 		<if>
 			<equals arg1="${language}" arg2="Arabic (Saudi Arabia)" />
@@ -61,5 +88,21 @@
 
 	<command name="tearDownLanguagePG">
 		<execute function="Click" locator1="Language#LANGUAGE_MENU_ENGLISH" />
+	</command>
+
+	<command name="viewLanguagesAbsent">
+		<for list="${missingLanguages}" param="missingLanguage">
+			<var name="missingLanguage" value="${missingLanguage}" />
+
+			<execute function="AssertElementNotPresent" locator1="Language#LANGUAGE_MENU_${missingLanguage}" />
+		</for>
+	</command>
+
+	<command name="viewLanguagesPresent">
+		<for list="${currentLanguages}" param="currentLanguage">
+			<var name="currentLanguage" value="${currentLanguage}" />
+
+			<execute function="AssertElementPresent" locator1="Language#LANGUAGE_MENU_${currentLanguage}" />
+		</for>
 	</command>
 </definition>

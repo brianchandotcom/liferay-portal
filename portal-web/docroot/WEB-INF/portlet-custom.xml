@@ -4,14 +4,14 @@
 	<portlet>
 		<portlet-name>9</portlet-name>
 		<display-name>Admin</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+        <portlet-class>com.liferay.portlet.admin.portlet.AdminPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/admin/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/admin/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/admin/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -286,14 +286,14 @@
 	<portlet>
 		<portlet-name>137</portlet-name>
 		<display-name>Admin Server</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.admin.portlet.AdminServerPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/admin/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/admin_server/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/admin/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

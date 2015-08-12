@@ -15,12 +15,12 @@
 </tr>
 <tr>
 	<td>USERS</td>
-	<td>//ul[contains(@class,'tab')]//a[contains(.,'All Users')]</td>
+	<td>//ul[contains(@class,'tab')]//a[contains(.,'Users')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATIONS</td>
-	<td>//ul[contains(@class,'tab')]//a[contains(.,'All Organizations')]</td>
+	<td>//ul[contains(@class,'tab')]//a[contains(.,'Organizations')]</td>
 	<td></td>
 </tr>
 <tr>

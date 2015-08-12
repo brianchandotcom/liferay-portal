@@ -25,13 +25,13 @@
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/admin/view");
+		portletURL.setParameter("mvcRenderCommandName", "/admin/view");
 		portletURL.setParameter("tabs1", tabs1);
 		portletURL.setParameter("tabs2", tabs2);
 		%>
 
 		<portlet:renderURL var="redirectURL">
-			<portlet:param name="struts_action" value="/admin/view" />
+			<portlet:param name="mvcRenderCommandName" value="/admin/view" />
 			<portlet:param name="tabs1" value="<%= tabs1 %>" />
 			<portlet:param name="tabs2" value="<%= tabs2 %>" />
 			<portlet:param name="cur" value="<%= String.valueOf(cur) %>" />
@@ -69,7 +69,7 @@
 		</aui:form>
 
 		<portlet:renderURL var="redirectURL">
-			<portlet:param name="struts_action" value="/admin/view" />
+			<portlet:param name="mvcRenderCommandName" value="/admin/view" />
 			<portlet:param name="tabs1" value="<%= tabs1 %>" />
 			<portlet:param name="tabs2" value="<%= tabs2 %>" />
 			<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= String.valueOf(cur) %>" />

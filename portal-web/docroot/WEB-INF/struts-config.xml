@@ -127,10 +127,6 @@
 			<forward name="portal.verify_email_address" path="portal.verify_email_address" />
 		</action>
 
-		<!-- Admin -->
- 
-		<action path="/admin/view" forward="portlet.admin.view" />
-
 		<!-- Admin Plugins -->
 
 		<action path="/admin_plugins/edit_server" type="com.liferay.portlet.admin.action.EditServerAction">

@@ -210,6 +210,30 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="build-testray-results">
+		<attribute name="test.results.dir" default="${default.test.results.dir}" />
+		<attribute name="test.results.fileset" default="**/TEST-*.xml" />
+
+		<sequential>
+			<echo>Build testray results</echo>
+
+			<echo>@{test.results.dir}</echo>
+
+			<echo>@{test.results.fileset}</echo>
+
+			<for param="file.name">
+				<path>
+					<fileset dir="@{test.results.dir}" erroronmissingdir="false">
+						<include name="@{test.results.fileset}" />
+					</fileset>
+				</path>
+				<sequential>
+					<build-testray-result test.results.file="@{file.name}" />
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="check-deprecated-method">
 		<sequential>
 			<if>

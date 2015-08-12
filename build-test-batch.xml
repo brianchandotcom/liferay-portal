@@ -3,7 +3,7 @@
 <project name="portal-test-batch" basedir="." xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
 	<import file="build-test.xml" />
 
-	<condition else="0" property="jenkins.axis.variable" value="${env.AXIS_VARIABLE}">
+	<condition else="0" property="axis.variable" value="${env.AXIS_VARIABLE}">
 		<isset property="env.AXIS_VARIABLE" />
 	</condition>
 
@@ -279,7 +279,7 @@
 	<macrodef name="run-integration-test">
 		<attribute name="database.type" />
 		<sequential>
-			<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<run-batch-test test.class.group.index="${axis.variable}">
 				<test-action>
 					<database-test-run-test database.type="@{database.type}">
 						<test-action>
@@ -300,7 +300,7 @@
 	<macrodef name="run-modules-integration-test">
 		<attribute name="database.type" />
 		<sequential>
-			<run-batch-test test.class.group.index="${jenkins.axis.variable}" tomcat.gc.log="true">
+			<run-batch-test test.class.group.index="${axis.variable}" tomcat.gc.log="true">
 				<test-action>
 					<database-test-run-test database.type="@{database.type}" stop.app.server="true">
 						<test-action>
@@ -372,7 +372,7 @@
 	</target>
 
 	<target name="modules-unit">
-		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+		<run-batch-test test.class.group.index="${axis.variable}">
 			<test-action>
 				<ant dir="modules" target="test-class-group" inheritAll="false">
 					<property name="test.class.group.index" value="@{test.class.group.index}" />
@@ -383,7 +383,7 @@
 	</target>
 
 	<target name="plugins">
-		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+		<run-batch-test test.class.group.index="${axis.variable}">
 			<test-action>
 				<ant antfile="build-test-plugins.xml" target="test-plugin-group">
 					<property name="test.plugin.group.index" value="@{test.class.group.index}" />
@@ -393,7 +393,7 @@
 	</target>
 
 	<target name="portal-web">
-		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+		<run-batch-test test.class.group.index="${axis.variable}">
 			<test-action>
 				<database-test-run-test database.type="mysql">
 					<test-action>
@@ -412,7 +412,7 @@
 	</target>
 
 	<target name="service-builder">
-		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+		<run-batch-test test.class.group.index="${axis.variable}">
 			<test-action>
 				<ant dir="modules/util/portal-tools-service-builder" target="clean" />
 
@@ -424,7 +424,7 @@
 	</target>
 
 	<target name="tck">
-		<run-batch-test test.class.group.index="${jenkins.axis.variable}" tomcat.gc.log="true" tsant.gc.log="true">
+		<run-batch-test test.class.group.index="${axis.variable}" tomcat.gc.log="true" tsant.gc.log="true">
 			<test-action>
 				<database-test-run-test database.type="mysql" stop.app.server="true">
 					<test-action>
@@ -442,7 +442,7 @@
 	</target>
 
 	<target name="unit">
-		<run-batch-test test.class.group.index="${jenkins.axis.variable}" unit.test="true">
+		<run-batch-test test.class.group.index="${axis.variable}" unit.test="true">
 			<test-action>
 				<ant dir="portal-service" target="test-class-group" inheritAll="false">
 					<property name="test.class.group.index" value="@{test.class.group.index}" />

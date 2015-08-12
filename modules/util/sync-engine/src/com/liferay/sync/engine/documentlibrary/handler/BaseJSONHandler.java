@@ -76,9 +76,7 @@ public class BaseJSONHandler extends BaseHandler {
 
 			exception = exceptionJsonNode.asText();
 
-			if (exception.startsWith(
-					"No JSON web service action associated with path")) {
-
+			if (exception.startsWith("No JSON web service action")) {
 				return
 					"com.liferay.portal.kernel.jsonwebservice." +
 						"NoSuchJSONWebServiceException";
@@ -112,9 +110,7 @@ public class BaseJSONHandler extends BaseHandler {
 
 			String message = messageJsonNode.asText();
 
-			if (message.startsWith(
-					"No JSON web service action associated with path")) {
-
+			if (message.startsWith("No JSON web service action")) {
 				return
 					"com.liferay.portal.kernel.jsonwebservice." +
 						"NoSuchJSONWebServiceException";

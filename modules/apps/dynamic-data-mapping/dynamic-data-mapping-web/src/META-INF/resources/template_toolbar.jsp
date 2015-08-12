@@ -38,7 +38,7 @@ long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 
 		<c:choose>
 			<c:when test="<%= classNameId == PortalUtil.getClassNameId(DDMStructure.class) %>">
-				<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmPermissionHandler.getResourceName(scopeClassNameId), ddmPermissionHandler.getAddTemplateActionId()) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) %>">
+				<c:if test="<%= DDMTemplatePermission.containsAddTemplatePermission(permissionChecker, groupId, classNameId, scopeClassNameId) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) %>">
 
 					<%
 					if (Validator.isNull(templateTypeValue)) {
@@ -59,7 +59,7 @@ long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 					<aui:nav-item href="<%= addTemplateURL %>" iconCssClass="icon-plus" label="<%= message %>" selected='<%= toolbarItem.equals("add-form-template") %>' />
 				</c:if>
 
-				<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmPermissionHandler.getResourceName(scopeClassNameId), ddmPermissionHandler.getAddTemplateActionId()) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) %>">
+				<c:if test="<%= DDMTemplatePermission.containsAddTemplatePermission(permissionChecker, groupId, classNameId, scopeClassNameId) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) %>">
 
 					<%
 					if (Validator.isNull(templateTypeValue)) {
@@ -88,7 +88,7 @@ long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 				if (classNameId > 0) {
 					TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
 
-					if (DDMPermission.contains(permissionChecker, scopeGroupId, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
+					if (permissionChecker.hasPermission(scopeGroupId, templateHandler.getResourceName(), scopeGroupId, ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
 						templateHandlers.add(templateHandler);
 					}
 				}
@@ -102,7 +102,7 @@ long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 					while (itr.hasNext()) {
 						TemplateHandler templateHandler = itr.next();
 
-						if (!DDMPermission.contains(permissionChecker, scopeGroupId, templateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
+						if (!permissionChecker.hasPermission(scopeGroupId, templateHandler.getResourceName(), scopeGroupId, ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
 							itr.remove();
 						}
 					}

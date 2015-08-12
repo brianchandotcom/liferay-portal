@@ -3,10 +3,6 @@ AUI.add(
 	function(A) {
 		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
 
-		var STR_ROW_IDS_JOURNAL_ARTICLE_CHECKBOX = 'rowIdsJournalArticle';
-
-		var STR_ROW_IDS_JOURNAL_FOLDER_CHECKBOX = 'rowIdsJournalFolder';
-
 		var JournalNavigation = A.Component.create(
 			{
 				AUGMENTS: [Liferay.PortletBase],
@@ -24,8 +20,7 @@ AUI.add(
 						instance._journalContainer = journalContainer;
 
 						var checkBoxesId = [
-							instance.ns(STR_ROW_IDS_JOURNAL_ARTICLE_CHECKBOX),
-							instance.ns(STR_ROW_IDS_JOURNAL_FOLDER_CHECKBOX)
+							config.rowIds
 						];
 
 						var displayStyle = A.clone(config.displayStyle);

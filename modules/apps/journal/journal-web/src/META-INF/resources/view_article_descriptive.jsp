@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 JournalArticle article = null;
@@ -27,8 +29,6 @@ if (row != null) {
 else {
 	article = (JournalArticle)request.getAttribute("view_entries.jsp-article");
 }
-
-PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempRowURL");
 
 JournalArticle latestApprovedArticleVersion = null;
 
@@ -48,6 +48,17 @@ DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDispl
 
 String articleImageURL = article.getArticleImageURL(themeDisplay);
 %>
+
+<liferay-portlet:renderURL varImpl="rowURL">
+	<portlet:param name="mvcPath" value="/edit_article.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="backURL" value="<%= currentURL %>" />
+	<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
+	<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+	<portlet:param name="folderId" value="<%= String.valueOf(article.getFolderId()) %>" />
+	<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+	<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
+</liferay-portlet:renderURL>
 
 <liferay-ui:app-view-entry
 	actionJsp="/article_action.jsp"
@@ -76,7 +87,7 @@ String articleImageURL = article.getArticleImageURL(themeDisplay);
 	thumbnailSrc='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 	thumbnailStyle="max-height: 128px; max-width: 128px;"
 	title="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
-	url="<%= tempRowURL != null ? tempRowURL.toString() : null %>"
+	url="<%= rowURL != null ? rowURL.toString() : null %>"
 	version="<%= String.valueOf(article.getVersion()) %>"
 	view="lexicon"
 />

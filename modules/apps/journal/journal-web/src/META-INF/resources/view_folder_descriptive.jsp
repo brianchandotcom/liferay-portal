@@ -30,7 +30,11 @@ else {
 
 String folderImage = (String)request.getAttribute("view_entries.jsp-folderImage");
 
-PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempRowURL");
+PortletURL rowURL = liferayPortletResponse.createRenderURL();
+
+rowURL.setParameter("redirect", currentURL);
+rowURL.setParameter("groupId", String.valueOf(folder.getGroupId()));
+rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 %>
 
 <liferay-ui:app-view-entry
@@ -48,6 +52,6 @@ PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempR
 	thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
 	thumbnailStyle="max-height: 128px; max-width: 128px;"
 	title="<%= HtmlUtil.escape(folder.getName()) %>"
-	url="<%= tempRowURL != null ? tempRowURL.toString() : null %>"
+	url="<%= rowURL != null ? rowURL.toString() : null %>"
 	view="lexicon"
 />

@@ -248,6 +248,31 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="copy-test-results">
+		<attribute name="test.results.dest.dir" default="${default.test.results.dir}" />
+		<attribute name="test.results.fileset" default="**/TEST-*.xml" />
+
+		<sequential>
+			<copy flatten="true" todir="@{test.results.dest.dir}">
+				<fileset dir="modules" erroronmissingdir="false">
+					<include name="@{test.results.fileset}" />
+				</fileset>
+				<fileset dir="portal-impl/test-results" erroronmissingdir="false">
+					<include name="@{test.results.fileset}" />
+				</fileset>
+				<fileset dir="portal-service/test-results" erroronmissingdir="false">
+					<include name="@{test.results.fileset}" />
+				</fileset>
+				<fileset dir="portal-web/test-results" erroronmissingdir="false">
+					<include name="@{test.results.fileset}" />
+				</fileset>
+				<fileset dir="util-java/test-results" erroronmissingdir="false">
+					<include name="@{test.results.fileset}" />
+				</fileset>
+			</copy>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="database-test-action">
 		<attribute name="database.type" />
 		<element name="action" />

@@ -16,6 +16,9 @@ package com.liferay.portal.kernel.portlet.bridges.mvc;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -54,6 +57,26 @@ public abstract class BaseMVCActionCommand implements MVCActionCommand {
 		catch (Exception e) {
 			throw new PortletException(e);
 		}
+	}
+
+	protected void addSuccessMessage(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		boolean addProcessActionSuccessMessage = GetterUtil.getBoolean(
+			portletConfig.getInitParameter("add-process-action-success-action"),
+			true);
+
+		if (!addProcessActionSuccessMessage) {
+			return;
+		}
+
+		String successMessage = ParamUtil.getString(
+			actionRequest, "successMessage");
+
+		SessionMessages.add(actionRequest, "requestProcessed", successMessage);
 	}
 
 	protected abstract void doProcessAction(

@@ -29,9 +29,7 @@ birthdayCalendar.set(Calendar.DATE, 1);
 birthdayCalendar.set(Calendar.YEAR, 1970);
 %>
 
-<portlet:actionURL secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="createAccountURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
-	<portlet:param name="struts_action" value="/login/create_account" />
-</portlet:actionURL>
+<portlet:actionURL name="/login/create_account" secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="createAccountURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>" />
 
 <aui:form action="<%= createAccountURL %>" method="post" name="fm">
 	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
@@ -192,7 +190,7 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 
 			<c:if test="<%= PropsValues.CAPTCHA_CHECK_PORTAL_CREATE_ACCOUNT %>">
 				<portlet:resourceURL var="captchaURL">
-					<portlet:param name="struts_action" value="/login/captcha" />
+					<portlet:param name="mvcRenderCommandName" value="/login/captcha" />
 				</portlet:resourceURL>
 
 				<liferay-ui:captcha url="<%= captchaURL %>" />

@@ -207,35 +207,6 @@
 			<forward name="portlet.invitation.view" path="portlet.invitation.view" />
 		</action>
 
-		<!-- Login -->
-
-		<action path="/login/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
-
-		<action path="/login/create_account" type="com.liferay.portlet.login.action.CreateAccountAction">
-			<forward name="portlet.login.create_account" path="portlet.login.create_account" />
-			<forward name="portlet.login.login" path="portlet.login.login" />
-			<forward name="portlet.login.update_account" path="portlet.login.update_account" />
-		</action>
-
-		<action path="/login/create_anonymous_account" type="com.liferay.portlet.login.action.CreateAnonymousAccountAction">
-			<forward name="portlet.login.create_anonymous_account" path="portlet.login.create_anonymous_account" />
-			<forward name="portlet.login.login" path="portlet.login.login" />
-		</action>
-
-		<action path="/login/forgot_password" type="com.liferay.portlet.login.action.ForgotPasswordAction">
-			<forward name="portlet.login.forgot_password" path="portlet.login.forgot_password" />
-			<forward name="portlet.login.login" path="portlet.login.login" />
-		</action>
-
-		<action path="/login/login" type="com.liferay.portlet.login.action.LoginAction">
-			<forward name="portlet.login.login" path="portlet.login.login" />
-			<forward name="portlet.login.login_redirect" path="portlet.login.login_redirect" />
-		</action>
-
-		<action path="/login/login_redirect" forward="portlet.login.login_redirect" />
-
-		<action path="/login/update_account" forward="portlet.login.update_account" />
-
 		<!-- Maps -->
 
 		<action path="/maps/view" forward="portlet.maps.view" name="mapsMapsForm" scope="request" />

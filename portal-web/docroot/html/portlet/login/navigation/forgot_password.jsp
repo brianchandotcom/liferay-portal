@@ -17,18 +17,18 @@
 <%@ include file="/html/portlet/login/init.jsp" %>
 
 <%
-String strutsAction = ParamUtil.getString(request, "struts_action");
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
 boolean showForgotPasswordIcon = false;
 
-if (!strutsAction.equals("/login/forgot_password") && (company.isSendPassword() || company.isSendPasswordResetLink())) {
+if (!mvcRenderCommandName.equals("/login/forgot_password") && (company.isSendPassword() || company.isSendPasswordResetLink())) {
 	showForgotPasswordIcon = true;
 }
 %>
 
 <c:if test="<%= showForgotPasswordIcon %>">
 	<portlet:renderURL var="forgotPasswordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-		<portlet:param name="struts_action" value="/login/forgot_password" />
+		<portlet:param name="mvcRenderCommandName" value="/login/forgot_password" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon

@@ -25,15 +25,16 @@ import com.liferay.portal.UserPasswordException;
 import com.liferay.portal.UserScreenNameException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.AuthException;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -44,32 +45,31 @@ import com.liferay.portlet.PortletURLImpl;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
  * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
-public class LoginAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.FAST_LOGIN,
+		"javax.portlet.name=" + PortletKeys.LOGIN,
+		"mvc.command.name=/login/login"
+	}
+)
+public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -96,7 +96,9 @@ public class LoginAction extends PortletAction {
 				actionRequest, "doActionAfterLogin");
 
 			if (doActionAfterLogin) {
-				setForward(actionRequest, "portlet.login.login_redirect");
+				//setForward - PETER
+				actionResponse.setRenderParameter(
+					"mvcPath", "/html/portlet/login/login_redirect.jsp");
 			}
 		}
 		catch (Exception e) {
@@ -140,17 +142,6 @@ public class LoginAction extends PortletAction {
 		}
 	}
 
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.login.login"));
-	}
-
 	protected String getCompleteRedirectURL(
 		HttpServletRequest request, String redirect) {
 
@@ -172,11 +163,6 @@ public class LoginAction extends PortletAction {
 		}
 
 		return portalURL.concat(redirect);
-	}
-
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
 
 	protected void login(
@@ -276,8 +262,7 @@ public class LoginAction extends PortletAction {
 		actionResponse.sendRedirect(portletURL.toString());
 	}
 
-	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
-
-	private static final Log _log = LogFactoryUtil.getLog(LoginAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LoginMVCActionCommand.class);
 
 }

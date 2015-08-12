@@ -212,38 +212,6 @@
 		<put name="portlet_content" value="/portlet/invitation/view.jsp" />
 	</definition>
 
-	<!-- Login -->
-
-	<definition name="portlet.login" extends="portlet" />
-
-	<definition name="portlet.login.create_account" extends="portlet.login">
-		<put name="portlet_content" value="/portlet/login/create_account.jsp" />
-	</definition>
-
-	<definition name="portlet.login.create_anonymous_account" extends="portlet.login">
-		<put name="portlet_content" value="/portlet/login/create_anonymous_account.jsp" />
-	</definition>
-
-	<definition name="portlet.login.forgot_password" extends="portlet.login">
-		<put name="portlet_content" value="/portlet/login/forgot_password.jsp" />
-	</definition>
-
-	<definition name="portlet.login.login" extends="portlet.login">
-		<put name="portlet_content" value="/portlet/login/login.jsp" />
-	</definition>
-
-	<definition name="portlet.login.login_redirect" extends="portlet.login">
-		<put name="portlet_content" value="/portlet/login/login_redirect.jsp" />
-	</definition>
-
-	<definition name="portlet.login.open_id" extends="portlet.login">
-		<put name="portlet_content" value="/portlet/login/open_id.jsp" />
-	</definition>
-
-	<definition name="portlet.login.update_account" extends="portlet.login">
-		<put name="portlet_content" value="/portlet/login/update_account.jsp" />
-	</definition>
-
 	<!-- Maps -->
 
 	<definition name="portlet.maps" extends="portlet" />

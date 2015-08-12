@@ -187,7 +187,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 		PortletURL loginURL = PortletURLFactoryUtil.create(request, PortletKeys.FAST_LOGIN, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		loginURL.setParameter("saveLastPath", Boolean.FALSE.toString());
-		loginURL.setParameter("struts_action", "/login/login");
+		loginURL.setParameter("mvcRenderCommandName", "/login/login");
 		loginURL.setPortletMode(PortletMode.VIEW);
 		loginURL.setWindowState(LiferayWindowState.POP_UP);
 		%>

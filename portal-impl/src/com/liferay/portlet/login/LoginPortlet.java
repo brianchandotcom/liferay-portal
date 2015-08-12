@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,13 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/login/init.jsp" %>
+package com.liferay.portlet.login;
 
-<liferay-util:dynamic-include key="/html/portlet/login/open_id.jsp#pre" />
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
-<liferay-util:include page="/html/portlet/login/navigation.jsp" />
-
-<liferay-util:dynamic-include key="/html/portlet/login/open_id.jsp#post" />
+/**
+ * @author Peter Fellwock
+ */
+public class LoginPortlet extends MVCPortlet {
+}

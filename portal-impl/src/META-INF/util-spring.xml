@@ -597,6 +597,14 @@
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.login.action.CreateAccountMVCActionCommand" class="com.liferay.portlet.login.action.CreateAccountMVCActionCommand" />
+	<bean id="com.liferay.portlet.login.action.CreateAccountMVCRenderCommand" class="com.liferay.portlet.login.action.CreateAccountMVCRenderCommand" />
+	<bean id="com.liferay.portlet.login.action.CreateAnonymousAccountMVCActionCommand" class="com.liferay.portlet.login.action.CreateAnonymousAccountMVCActionCommand" />
+	<bean id="com.liferay.portlet.login.action.CreateAnonymousAccountMVCRenderCommand" class="com.liferay.portlet.login.action.CreateAnonymousAccountMVCRenderCommand" />
+	<bean id="com.liferay.portlet.login.action.ForgotPasswordMVCActionCommand" class="com.liferay.portlet.login.action.ForgotPasswordMVCActionCommand" />
+	<bean id="com.liferay.portlet.login.action.ForgotPasswordMVCRenderCommand" class="com.liferay.portlet.login.action.ForgotPasswordMVCRenderCommand" />
+	<bean id="com.liferay.portlet.login.action.LoginMVCActionCommand" class="com.liferay.portlet.login.action.LoginMVCActionCommand" />
+	<bean id="com.liferay.portlet.login.action.LoginMVCRenderCommand" class="com.liferay.portlet.login.action.LoginMVCRenderCommand" />
 	<bean id="com.liferay.portlet.portalsettings.action.EditCompanyMVCActionCommand" class="com.liferay.portlet.portalsettings.action.EditCompanyMVCActionCommand" />
 	<bean id="com.liferay.portlet.portalsettings.action.EditCompanyMVCRenderCommand" class="com.liferay.portlet.portalsettings.action.EditCompanyMVCRenderCommand" />
 	<bean id="com.liferay.portlet.portalsettings.action.EditLDAPServerMVCActionCommand" class="com.liferay.portlet.portalsettings.action.EditLDAPServerMVCActionCommand" />

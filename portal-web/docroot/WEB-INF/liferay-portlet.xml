@@ -85,10 +85,9 @@
 	<portlet>
 		<portlet-name>58</portlet-name>
 		<icon>/html/icons/login.png</icon>
-		<struts-path>login</struts-path>
 		<configuration-action-class>com.liferay.portlet.login.action.ConfigurationActionImpl</configuration-action-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
@@ -250,10 +249,9 @@
 	<portlet>
 		<portlet-name>164</portlet-name>
 		<icon>/html/icons/login.png</icon>
-		<parent-struts-path>login</parent-struts-path>
 		<configuration-action-class>com.liferay.portlet.login.action.ConfigurationActionImpl</configuration-action-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>

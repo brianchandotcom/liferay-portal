@@ -17,18 +17,18 @@
 <%@ include file="/html/portlet/login/init.jsp" %>
 
 <%
-String strutsAction = ParamUtil.getString(request, "struts_action");
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
 boolean showAnonymousIcon = false;
 
-if (!strutsAction.startsWith("/login/create_anonymous_account") && company.isStrangers() && portletName.equals(PortletKeys.FAST_LOGIN)) {
+if (!mvcRenderCommandName.startsWith("/login/create_anonymous_account") && company.isStrangers() && portletName.equals(PortletKeys.FAST_LOGIN)) {
 	showAnonymousIcon = true;
 }
 %>
 
 <c:if test="<%= showAnonymousIcon %>">
 	<portlet:renderURL var="anonymousURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-		<portlet:param name="struts_action" value="/login/create_anonymous_account" />
+		<portlet:param name="mvcRenderCommandName" value="/login/create_anonymous_account" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon

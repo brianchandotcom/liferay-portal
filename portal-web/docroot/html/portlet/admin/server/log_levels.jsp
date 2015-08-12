@@ -21,7 +21,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL serverURL = renderResponse.createRenderURL();
 
-serverURL.setParameter("struts_action", "/admin/view");
+serverURL.setParameter("mvcRenderCommandName", "/admin/view");
 serverURL.setParameter("tabs1", tabs1);
 serverURL.setParameter("tabs2", tabs2);
 serverURL.setParameter("tabs3", tabs3);

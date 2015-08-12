@@ -26,7 +26,8 @@ import javax.portlet.RenderResponse;
  */
 @OSGiBeanProperties(
 	property = {
-		"javax.portlet.name=" + PortletKeys.PORTAL_SETTINGS,
+		"javax.portlet.name=" + PortletKeys.ADMIN,
+		"javax.portlet.name=" + PortletKeys.ADMIN_SERVER,
 		"mvc.command.name=/admin_server/edit_document_library_extra_settings"
 	}
 )

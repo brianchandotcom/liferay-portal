@@ -14,6 +14,23 @@
 
 package com.liferay.portlet.admin.action;
 
+import java.io.File;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletSession;
+import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
+
+import org.apache.log4j.Level;
+
 import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.captcha.CaptchaImpl;
 import com.liferay.portal.captcha.recaptcha.ReCaptchaImpl;
@@ -37,6 +54,9 @@ import com.liferay.portal.kernel.log.SanitizerLogWrapper;
 import com.liferay.portal.kernel.mail.Account;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingHelperUtil;
 import com.liferay.portal.kernel.scripting.ScriptingUtil;
@@ -46,6 +66,7 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.InstancePool;
@@ -74,51 +95,39 @@ import com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFac
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
 import com.liferay.portal.struts.ActionConstants;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
+import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.admin.util.CleanUpPermissionsUtil;
 import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 import com.liferay.util.log4j.Log4JUtil;
 
-import java.io.File;
-
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletPreferences;
-import javax.portlet.PortletSession;
-import javax.portlet.PortletURL;
-import javax.portlet.WindowState;
-
-import org.apache.log4j.Level;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Philip Jones
  */
-public class EditServerAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.ADMIN,
+		"javax.portlet.name=" + PortletKeys.ADMIN_SERVER,
+		"mvc.command.name=/admin/edit_server"
+	},
+	service = MVCActionCommand.class
+)
+public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	public void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -132,7 +141,8 @@ public class EditServerAction extends PortletAction {
 				actionRequest,
 				PrincipalException.MustBeOmniadmin.class.getName());
 
-			setForward(actionRequest, "portlet.admin.error");
+			actionResponse.setRenderParameter(
+					"mvcPath", "/html/portlet/admin/error.jsp" );
 
 			return;
 		}
@@ -172,9 +182,10 @@ public class EditServerAction extends PortletAction {
 		}
 		else if (cmd.equals("installXuggler")) {
 			installXuggler(actionRequest, actionResponse);
-
-			setForward(actionRequest, ActionConstants.COMMON_NULL);
-
+		
+			actionResponse.setRenderParameter(
+                    "mvcPath", ActionConstants.COMMON_NULL);
+			
 			return;
 		}
 		else if (cmd.equals("reindex")) {
@@ -184,7 +195,7 @@ public class EditServerAction extends PortletAction {
 			reindexDictionaries(actionRequest);
 		}
 		else if (cmd.equals("runScript")) {
-			runScript(portletConfig, actionRequest, actionResponse);
+			runScript(actionRequest, actionResponse);
 		}
 		else if (cmd.equals("shutdown")) {
 			shutdown(actionRequest);
@@ -341,7 +352,11 @@ public class EditServerAction extends PortletAction {
 
 			jsonObject.put("success", Boolean.TRUE);
 
-			writeJSON(actionRequest, actionResponse, jsonObject);
+			JSONPortletResponseUtil.writeJSON(
+                    actionRequest, actionResponse, jsonObject);
+
+            actionResponse.setRenderParameter(
+                            "mvcPath", ActionConstants.COMMON_NULL);
 		}
 		catch (Exception e) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -349,7 +364,11 @@ public class EditServerAction extends PortletAction {
 			jsonObject.put("exception", e.getMessage());
 			jsonObject.put("success", Boolean.FALSE);
 
-			writeJSON(actionRequest, actionResponse, jsonObject);
+			JSONPortletResponseUtil.writeJSON(
+                    actionRequest, actionResponse, jsonObject);
+
+            actionResponse.setRenderParameter(
+                            "mvcPath", ActionConstants.COMMON_NULL);
 		}
 
 		progressTracker.finish(actionRequest);
@@ -421,15 +440,17 @@ public class EditServerAction extends PortletAction {
 	}
 
 	protected void runScript(
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String language = ParamUtil.getString(actionRequest, "language");
 		String script = ParamUtil.getString(actionRequest, "script");
 
-		PortletContext portletContext = portletConfig.getPortletContext();
+		PortletConfig portletConfig =
+                PortletConfigFactoryUtil.get(PortletKeys.ADMIN_SERVER);
 
+        PortletContext portletContext = portletConfig.getPortletContext();
+        
 		Map<String, Object> portletObjects =
 			ScriptingHelperUtil.getPortletObjects(
 				portletConfig, portletContext, actionRequest, actionResponse);
@@ -832,6 +853,6 @@ public class EditServerAction extends PortletAction {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditServerAction.class);
+		EditServerMVCActionCommand.class);
 
 }

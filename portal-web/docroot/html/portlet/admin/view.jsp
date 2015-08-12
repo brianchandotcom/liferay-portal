@@ -60,7 +60,7 @@
 							{
 								form: document.<portlet:namespace />fm,
 								namespace: '<portlet:namespace />',
-								url: '<portlet:actionURL><portlet:param name="struts_action" value="/admin/edit_server" /></portlet:actionURL>'
+								url: '<portlet:actionURL><portlet:param name="mvcRenderCommandName" value="/admin/edit_server" /></portlet:actionURL>'
 							}
 						);
 					</aui:script>
@@ -76,9 +76,7 @@
 			<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= String.valueOf(delta) %>" />
 		</portlet:renderURL>
 
-		<portlet:actionURL var="editServerURL">
-			<portlet:param name="struts_action" value="/admin/edit_server" />
-		</portlet:actionURL>
+		<portlet:actionURL name="/admin/edit_server" var="editServerURL" />
 
 		<aui:script>
 			AUI.$('#<portlet:namespace />fm').on(

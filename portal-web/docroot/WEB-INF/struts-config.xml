@@ -128,11 +128,7 @@
 		</action>
 
 		<!-- Admin -->
-
-		<action path="/admin/edit_server" type="com.liferay.portlet.admin.action.EditServerAction">
-			<forward name="portlet.admin.error" path="portlet.admin.error" />
-		</action>
-
+ 
 		<action path="/admin/view" forward="portlet.admin.view" />
 
 		<!-- Admin Plugins -->
@@ -144,12 +140,7 @@
 		<action path="/admin_plugins/view" forward="portlet.admin.view" />
 
 		<!-- Admin Server -->
-
-		<action path="/admin_server/edit_document_library_extra_settings" type="com.liferay.portal.convert.action.EditDocumentLibraryExtraSettingsAction">
-			<forward name="portlet.admin.edit_document_library_extra_settings" path="portlet.admin.edit_document_library_extra_settings" />
-			<forward name="portlet.admin.error" path="portlet.admin.error" />
-		</action>
-
+ 
 		<action path="/admin_server/edit_server" type="com.liferay.portlet.admin.action.EditServerAction">
 			<forward name="portlet.admin.edit_permissions" path="portlet.admin.edit_permissions" />
 			<forward name="portlet.admin.error" path="portlet.admin.error" />

@@ -108,10 +108,6 @@
 
 	<definition name="portlet.admin" extends="portlet" />
 
-	<definition name="portlet.admin.edit_document_library_extra_settings" extends="portlet.admin">
-		<put name="portlet_content" value="/portlet/admin/edit_document_library_extra_settings.jsp" />
-	</definition>
-
 	<definition name="portlet.admin.error" extends="portlet.admin">
 		<put name="portlet_content" value="/portlet/admin/error.jsp" />
 	</definition>

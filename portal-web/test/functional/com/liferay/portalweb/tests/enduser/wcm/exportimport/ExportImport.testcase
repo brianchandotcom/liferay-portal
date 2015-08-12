@@ -504,7 +504,7 @@
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 	</command>
 
-	<command name="ExportImportSampleLARPortlet" priority="5">
+	<command known-issues="LPS-56754" name="ExportImportSampleLARPortlet" priority="5">
 		<property name="portlet.plugins.includes" value="sample-lar-portlet" />
 
 		<execute macro="Page#addPG">

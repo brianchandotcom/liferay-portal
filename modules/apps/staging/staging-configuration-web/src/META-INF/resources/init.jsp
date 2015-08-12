@@ -28,7 +28,9 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.LocaleException" %><%@
 page import="com.liferay.portal.RemoteOptionsException" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.BackgroundTask" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.SystemException" %><%@
 page import="com.liferay.portal.kernel.json.JSONArray" %><%@
@@ -47,14 +49,12 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.model.BackgroundTask" %><%@
 page import="com.liferay.portal.model.Group" %><%@
 page import="com.liferay.portal.model.LayoutSet" %><%@
 page import="com.liferay.portal.model.Portlet" %><%@
 page import="com.liferay.portal.security.auth.AuthException" %><%@
 page import="com.liferay.portal.security.auth.RemoteAuthException" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
-page import="com.liferay.portal.service.BackgroundTaskLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.LayoutSetLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.GroupPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@

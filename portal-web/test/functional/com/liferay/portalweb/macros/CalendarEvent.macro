@@ -496,7 +496,7 @@
 					<var name="endDate" value="${startDate}" />
 
 					<execute function="Type" locator1="PGCalendarAddevent#END_DATE" value1="${endDate}" />
-					<execute function="Check" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
+					<execute function="Click" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
 					<execute function="AssertSelectedLabel" locator1="PGCalendarAddevent#REPEAT_REPEATS_DROPDOWN" value1="Daily" />
 					<execute function="AssertSelectedLabel" locator1="PGCalendarAddevent#REPEAT_REPEAT_EVERY_DROPDOWN" value1="1" />
 					<execute function="Click" locator1="PGCalendarAddevent#REPEAT_ENDS_AFTER_RADIO" />
@@ -1046,7 +1046,7 @@
 	</command>
 
 	<command name="gotoRepeatConfiguration">
-		<execute function="Check" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
+		<execute function="Click" locator1="PGCalendarAddevent#REPEAT_CHECKBOX" />
 	</command>
 
 	<command name="inviteResource">

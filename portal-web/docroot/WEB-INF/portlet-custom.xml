@@ -254,7 +254,7 @@
 		</init-param>
 		<init-param>
 			<name>view-template</name>
-			<value>/monitoring/view</value>
+			<value>/html/portlet/monitoring/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

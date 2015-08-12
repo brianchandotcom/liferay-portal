@@ -61,8 +61,9 @@ portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
 				}
 				%>
 
-				<portlet:renderURL name="/monitoring/edit_session" var="rowURL" >
-					<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:renderURL var="rowURL" >
+				    <portlet:param name="mvcRenderCommandName" value="/monitoring/edit_session" />
+				    <portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="sessionId" value="<%= userTracker.getSessionId() %>" />
 				</portlet:renderURL>
 

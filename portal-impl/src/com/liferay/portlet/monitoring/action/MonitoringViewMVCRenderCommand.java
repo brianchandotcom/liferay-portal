@@ -26,7 +26,7 @@ import javax.portlet.RenderResponse;
  */
 @OSGiBeanProperties(
 	property = {
-		"javax.portlet.name=" + PortletKeys.PORTAL_SETTINGS,
+		"javax.portlet.name=" + PortletKeys.MONITORING,
 		"mvc.command.name=/monitoring/view"
 	}
 )

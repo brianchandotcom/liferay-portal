@@ -220,14 +220,6 @@
 		<put name="portlet_content" value="/portlet/maps/view.jsp" />
 	</definition>
 
-	<!-- Monitoring -->
-
-	<definition name="portlet.monitoring" extends="portlet" />
- 
-	<definition name="portlet.monitoring.error" extends="portlet.monitoring">
-		<put name="portlet_content" value="/portlet/monitoring/error.jsp" />
-	</definition>
-
 	<!-- News -->
 
 	<definition name="portlet.news" extends="portlet" />

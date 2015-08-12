@@ -411,7 +411,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 						row.setPrimaryKey(HtmlUtil.escape(curArticle.getArticleId()));
 						%>
 
-						<%@ include file="/article_columns.jspf" %>
+						<%@ include file="/article_columns_list.jspf" %>
 					</c:when>
 					<c:when test="<%= curFolder != null %>">
 
@@ -429,7 +429,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 						row.setPrimaryKey(String.valueOf(curFolder.getPrimaryKey()));
 						%>
 
-						<%@ include file="/folder_columns.jspf" %>
+						<%@ include file="/folder_columns_list.jspf" %>
 					</c:when>
 				</c:choose>
 

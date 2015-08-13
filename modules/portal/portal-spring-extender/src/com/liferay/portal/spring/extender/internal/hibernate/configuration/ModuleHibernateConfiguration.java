@@ -27,6 +27,7 @@ public class ModuleHibernateConfiguration
 	extends PortletHibernateConfiguration implements ApplicationContextAware {
 
 	public ModuleHibernateConfiguration() {
+		this(null);
 	}
 
 	public ModuleHibernateConfiguration(ClassLoader classLoader) {

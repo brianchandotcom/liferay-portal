@@ -201,10 +201,6 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		return oAuthRequest;
 	}
 
-	protected String getServerNamespace() {
-		return StringPool.BLANK;
-	}
-
 	protected String getServerPortletId() {
 		return StringPool.BLANK;
 	}
@@ -270,10 +266,10 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		addOAuthParameter(
 			oAuthRequest, "clientPortletNamespace",
 			portletResponse.getNamespace());
-
 		addOAuthParameter(oAuthRequest, "p_p_id", getServerPortletId());
 
-		String serverNamespace = getServerNamespace();
+		String serverNamespace = PortalUtil.getPortletNamespace(
+			getServerPortletId());
 
 		Map<String, String[]> parameterMap = portletRequest.getParameterMap();
 

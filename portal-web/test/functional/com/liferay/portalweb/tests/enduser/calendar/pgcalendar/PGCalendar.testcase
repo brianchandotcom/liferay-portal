@@ -4232,7 +4232,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16080" name="ViewDefaultDurationsViaScheduler" priority="4">
+	<command name="ViewDefaultDurationsViaScheduler" priority="4">
 		<for list="15,30,60,120" param="minutes">
 			<execute macro="Page#gotoPG">
 				<var name="pageName" value="${pageName}" />

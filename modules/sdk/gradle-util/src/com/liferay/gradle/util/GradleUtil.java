@@ -392,6 +392,24 @@ public class GradleUtil {
 		return project.file(object);
 	}
 
+	public static Integer toInteger(Object object) {
+		if (object instanceof Integer) {
+			return (Integer)object;
+		}
+
+		if (object instanceof Number) {
+			Number number = (Number)object;
+
+			return number.intValue();
+		}
+
+		if (object instanceof String) {
+			return Integer.parseInt((String)object);
+		}
+
+		return null;
+	}
+
 	public static String toString(Object object) {
 		if (object == null) {
 			return null;

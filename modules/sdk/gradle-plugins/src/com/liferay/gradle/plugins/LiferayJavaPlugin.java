@@ -1061,6 +1061,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
 
 		configureTaskBuildCSSDocrootDirName(buildCSSTask);
+		configureTaskBuildCSSSassCompilerClassName(buildCSSTask);
 	}
 
 	protected void configureTaskBuildCSSDocrootDirName(
@@ -1081,11 +1082,27 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		buildCSSTask.setDocrootDirName(project.relativePath(resourcesDir));
 	}
 
+	protected void configureTaskBuildCSSSassCompilerClassName(
+		BuildCSSTask buildCSSTask) {
+
+		if (Validator.isNotNull(buildCSSTask.getSassCompilerClassName())) {
+			return;
+		}
+
+		String sassCompilerClassName = GradleUtil.getProperty(
+			buildCSSTask.getProject(), "sass.compiler.class.name",
+			(String)null);
+
+		buildCSSTask.setSassCompilerClassName(sassCompilerClassName);
+	}
+
 	protected void configureTaskBuildLang(Project project) {
 		BuildLangTask buildLangTask = (BuildLangTask)GradleUtil.getTask(
 			project, LangBuilderPlugin.BUILD_LANG_TASK_NAME);
 
 		configureTaskBuildLangLangDirName(buildLangTask);
+		configureTaskBuildLangTranslateClientId(buildLangTask);
+		configureTaskBuildLangTranslateClientSecret(buildLangTask);
 	}
 
 	protected void configureTaskBuildLangLangDirName(
@@ -1096,6 +1113,34 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		File langDir = new File(getResourcesDir(project), "content");
 
 		buildLangTask.setLangDirName(project.relativePath(langDir));
+	}
+
+	protected void configureTaskBuildLangTranslateClientId(
+		BuildLangTask buildLangTask) {
+
+		if (Validator.isNotNull(buildLangTask.getTranslateClientId())) {
+			return;
+		}
+
+		String translateClientId = GradleUtil.getProperty(
+			buildLangTask.getProject(), "microsoft.translator.client.id",
+			(String)null);
+
+		buildLangTask.setTranslateClientId(translateClientId);
+	}
+
+	protected void configureTaskBuildLangTranslateClientSecret(
+		BuildLangTask buildLangTask) {
+
+		if (Validator.isNotNull(buildLangTask.getTranslateClientSecret())) {
+			return;
+		}
+
+		String translateClientSecret = GradleUtil.getProperty(
+			buildLangTask.getProject(), "microsoft.translator.client.secret",
+			(String)null);
+
+		buildLangTask.setTranslateClientSecret(translateClientSecret);
 	}
 
 	protected void configureTaskBuildService(Project project) {
@@ -1848,13 +1893,25 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskTestJvmArgs(Test test) {
-		List<String> jvmArgs = new ArrayList<>();
+		test.jvmArgs("-Djava.net.preferIPv4Stack=true");
+		test.jvmArgs("-Dliferay.mode=test");
+		test.jvmArgs("-Duser.timezone=GMT");
 
-		jvmArgs.add("-Djava.net.preferIPv4Stack=true");
-		jvmArgs.add("-Dliferay.mode=test");
-		jvmArgs.add("-Duser.timezone=GMT");
+		String name = test.getName();
 
-		test.jvmArgs(jvmArgs);
+		if (name.equals(JavaPlugin.TEST_TASK_NAME)) {
+			name = "junit.java.unit.gc";
+		}
+		else if (name.equals(TEST_INTEGRATION_TASK_NAME)) {
+			name = "junit.java.integration.gc";
+		}
+
+		String value = GradleUtil.getProperty(
+			test.getProject(), name, (String)null);
+
+		if (Validator.isNotNull(value)) {
+			test.jvmArgs((Object[])value.split("\\s+"));
+		}
 	}
 
 	protected void configureTaskTestSystemProperties(

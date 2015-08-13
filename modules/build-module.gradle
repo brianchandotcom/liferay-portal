@@ -177,39 +177,6 @@ sourceSets {
 	}
 }
 
-test {
-	jvmArgs "-XX:MaxNewSize=32m"
-	jvmArgs "-XX:MaxPermSize=64m"
-	jvmArgs "-XX:MaxTenuringThreshold=0"
-	jvmArgs "-XX:NewSize=32m"
-	jvmArgs "-XX:ParallelGCThreads=2"
-	jvmArgs "-XX:PermSize=64m"
-	jvmArgs "-XX:SurvivorRatio=65536"
-	jvmArgs "-XX:TargetSurvivorRatio=0"
-	jvmArgs "-XX:-UseAdaptiveSizePolicy"
-	jvmArgs "-XX:+UseParallelOldGC"
-	jvmArgs "-XX:-UseSplitVerifier"
-
-	maxHeapSize = "256m"
-	minHeapSize = "256m"
-}
-
-testIntegration {
-	jvmArgs "-XX:MaxNewSize=32m"
-	jvmArgs "-XX:MaxPermSize=200m"
-	jvmArgs "-XX:MaxTenuringThreshold=0"
-	jvmArgs "-XX:NewSize=32m"
-	jvmArgs "-XX:ParallelGCThreads=2"
-	jvmArgs "-XX:PermSize=200m"
-	jvmArgs "-XX:SurvivorRatio=65536"
-	jvmArgs "-XX:TargetSurvivorRatio=0"
-	jvmArgs "-XX:-UseAdaptiveSizePolicy"
-	jvmArgs "-XX:+UseParallelOldGC"
-
-	maxHeapSize = "512m"
-	minHeapSize = "512m"
-}
-
 whip {
 	version = project.properties["com.liferay.whip.version"]
 }

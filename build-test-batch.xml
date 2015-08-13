@@ -194,35 +194,27 @@
 	</macrodef>
 
 	<macrodef name="run-batch-test">
-		<attribute name="test.class.group.index" />
 		<attribute name="tomcat.gc.log" default="false" />
 		<attribute name="tsant.gc.log" default="false" />
 		<attribute name="unit.test" default="false" />
 		<element name="test-action" />
 		<sequential>
-			<if>
-				<not>
-					<equals arg1="@{test.class.group.index}" arg2="default" />
-				</not>
-				<then>
-					<prepare-test-build unless:true="@{unit.test}" />
+			<prepare-test-build unless:true="@{unit.test}" />
 
-					<prepare-test-build-unit if:true="@{unit.test}" />
+			<prepare-test-build-unit if:true="@{unit.test}" />
 
-					<test-action />
+			<test-action />
 
-					<record-test-environment-properties />
+			<record-test-environment-properties />
 
-					<merge-test-results />
+			<merge-test-results />
 
-					<check-deprecated-method />
+			<check-deprecated-method />
 
-					<print-gc-logs
-						tomcat.gc.log="@{tomcat.gc.log}"
-						tsant.gc.log="@{tsant.gc.log}"
-					/>
-				</then>
-			</if>
+			<print-gc-logs
+				tomcat.gc.log="@{tomcat.gc.log}"
+				tsant.gc.log="@{tsant.gc.log}"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -279,15 +271,15 @@
 	<macrodef name="run-integration-test">
 		<attribute name="database.type" />
 		<sequential>
-			<run-batch-test test.class.group.index="${axis.variable}">
+			<run-batch-test>
 				<test-action>
 					<database-test-run-test database.type="@{database.type}">
 						<test-action>
-							<print-test-class-group test.class.group.index="@{test.class.group.index}" />
+							<print-test-class-group test.class.group.index="${axis.variable}" />
 
 							<ant dir="portal-impl" target="test-class-group" inheritAll="false">
 								<property name="database.type" value="@{database.type}" />
-								<property name="test.class.group.index" value="@{test.class.group.index}" />
+								<property name="test.class.group.index" value="${axis.variable}" />
 								<property name="test.type" value="integration" />
 							</ant>
 						</test-action>
@@ -300,11 +292,11 @@
 	<macrodef name="run-modules-integration-test">
 		<attribute name="database.type" />
 		<sequential>
-			<run-batch-test test.class.group.index="${axis.variable}" tomcat.gc.log="true">
+			<run-batch-test tomcat.gc.log="true">
 				<test-action>
 					<database-test-run-test database.type="@{database.type}" stop.app.server="true">
 						<test-action>
-							<print-test-class-group test.class.group.index="@{test.class.group.index}" />
+							<print-test-class-group test.class.group.index="${axis.variable}" />
 
 							<antcall target="prepare-portal-ext-properties" inheritAll="false">
 								<param name="database.type" value="@{database.type}" />
@@ -313,7 +305,7 @@
 							<antcall target="prepare-system-ext-properties" inheritAll="false" />
 
 							<ant dir="modules" target="test-class-group" inheritAll="false">
-								<property name="test.class.group.index" value="@{test.class.group.index}" />
+								<property name="test.class.group.index" value="${axis.variable}" />
 								<property name="test.type" value="integration" />
 							</ant>
 
@@ -372,10 +364,10 @@
 	</target>
 
 	<target name="modules-unit">
-		<run-batch-test test.class.group.index="${axis.variable}">
+		<run-batch-test>
 			<test-action>
 				<ant dir="modules" target="test-class-group" inheritAll="false">
-					<property name="test.class.group.index" value="@{test.class.group.index}" />
+					<property name="test.class.group.index" value="${axis.variable}" />
 					<property name="test.type" value="unit" />
 				</ant>
 			</test-action>
@@ -383,17 +375,17 @@
 	</target>
 
 	<target name="plugins">
-		<run-batch-test test.class.group.index="${axis.variable}">
+		<run-batch-test>
 			<test-action>
 				<ant antfile="build-test-plugins.xml" target="test-plugin-group">
-					<property name="test.plugin.group.index" value="@{test.class.group.index}" />
+					<property name="test.plugin.group.index" value="${axis.variable}" />
 				</ant>
 			</test-action>
 		</run-batch-test>
 	</target>
 
 	<target name="portal-web">
-		<run-batch-test test.class.group.index="${axis.variable}">
+		<run-batch-test>
 			<test-action>
 				<database-test-run-test database.type="mysql">
 					<test-action>
@@ -412,7 +404,7 @@
 	</target>
 
 	<target name="service-builder">
-		<run-batch-test test.class.group.index="${axis.variable}">
+		<run-batch-test>
 			<test-action>
 				<ant dir="modules/util/portal-tools-service-builder" target="clean" />
 
@@ -424,7 +416,7 @@
 	</target>
 
 	<target name="tck">
-		<run-batch-test test.class.group.index="${axis.variable}" tomcat.gc.log="true" tsant.gc.log="true">
+		<run-batch-test tomcat.gc.log="true" tsant.gc.log="true">
 			<test-action>
 				<database-test-run-test database.type="mysql" stop.app.server="true">
 					<test-action>
@@ -433,7 +425,7 @@
 						</ant>
 
 						<ant antfile="build-test-tck.xml" target="test-class-group">
-							<property name="test.class.group.index" value="@{test.class.group.index}" />
+							<property name="test.class.group.index" value="${axis.variable}" />
 						</ant>
 					</test-action>
 				</database-test-run-test>
@@ -442,19 +434,19 @@
 	</target>
 
 	<target name="unit">
-		<run-batch-test test.class.group.index="${axis.variable}" unit.test="true">
+		<run-batch-test unit.test="true">
 			<test-action>
 				<ant dir="portal-service" target="test-class-group" inheritAll="false">
-					<property name="test.class.group.index" value="@{test.class.group.index}" />
+					<property name="test.class.group.index" value="${axis.variable}" />
 				</ant>
 
 				<ant dir="portal-impl" target="test-class-group" inheritAll="false">
-					<property name="test.class.group.index" value="@{test.class.group.index}" />
+					<property name="test.class.group.index" value="${axis.variable}" />
 					<property name="test.type" value="unit" />
 				</ant>
 
 				<ant dir="util-java" target="test-class-group" inheritAll="false">
-					<property name="test.class.group.index" value="@{test.class.group.index}" />
+					<property name="test.class.group.index" value="${axis.variable}" />
 				</ant>
 			</test-action>
 		</run-batch-test>

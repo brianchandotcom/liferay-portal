@@ -5941,17 +5941,36 @@ if (ppstate.equals("normal")) {
 
 				<property name="testray.logs.dir" value="${jenkins.testray.results.dir}/logs/${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
 
+				<var name="result.file" value="portal-web/test-results/functional/report.html" />
+				<var name="screenshot.dir" value="portal-web/test-results/functional/screenshots" />
+
+				<if>
+					<and>
+						<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
+						<isset property="test.class" />
+					</and>
+					<then>
+						<get-poshi-class-name />
+						<get-poshi-method-name />
+
+						<property name="poshi.runner.results.dir" value="${poshi.class.name}_${poshi.method.name}" />
+
+						<var name="result.file" value="portal-web/test-results/${poshi.runner.results.dir}/index.html" />
+						<var name="screenshot.dir" value="portal-web/test-results/${poshi.runner.results.dir}/screenshots" />
+					</then>
+				</if>
+
 				<mkdir dir="${testray.logs.dir}" />
 
 				<copy
 					failonerror="false"
-					file="portal-web/test-results/functional/report.html"
+					file="${result.file}"
 					tofile="${testray.logs.dir}/report.html"
 				/>
 
 				<copy failonerror="false" todir="${testray.logs.dir}/screenshots">
 					<fileset
-						dir="portal-web/test-results/functional/screenshots"
+						dir="${screenshot.dir}"
 					/>
 				</copy>
 

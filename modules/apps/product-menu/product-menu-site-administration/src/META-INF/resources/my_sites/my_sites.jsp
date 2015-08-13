@@ -19,7 +19,7 @@
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
 
-List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Group.class.getName(), Organization.class.getName()}, false, PropsValues.MY_SITES_MAX_ELEMENTS);
+List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Company.class.getName(), Group.class.getName(), Organization.class.getName()}, false, PropsValues.MY_SITES_MAX_ELEMENTS);
 %>
 
 <c:if test="<%= !mySiteGroups.isEmpty() %>">

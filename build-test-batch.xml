@@ -361,6 +361,102 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="generate-testray-axis-result">
+		<attribute name="job.failure.message" default="" />
+		<attribute name="test.results.axis.dir" default="${default.test.results.axis.dir}" />
+		<attribute name="test.results.axis.file.name" default="${default.test.results.axis.file.name}" />
+
+		<sequential>
+			<local name="test.results.axis.file" />
+
+			<property name="test.results.axis.file" value="@{test.results.axis.dir}/@{test.results.axis.file.name}" />
+
+			<echo>Generate axis result ${test.results.axis.file}</echo>
+
+			<var name="build.name" value="${env.JOB_NAME}" />
+
+			<if>
+				<isset property="env.JOB_VARIANT" />
+				<then>
+					<var name="build.name" value="${env.JOB_NAME}_${env.JOB_VARIANT}" />
+				</then>
+			</if>
+
+			<var name="job.failure.report" unset="true" />
+
+			<if>
+				<equals arg1="@{job.failure.message}" arg2="" />
+				<then>
+					<property name="job.failure.report" value="" />
+				</then>
+				<else>
+					<property name="job.failure.report"><![CDATA[
+		<failure message="@{job.failure.message}">
+			@{job.failure.message}
+		</failure>
+				]]></property>
+				</else>
+			</if>
+
+			<echo file="${test.results.axis.file}"><![CDATA[
+<testsuite errors="0" failures="0" name="com.liferay.jenkins.Jenkins" skipped="0" tests="1" time="0">
+	<environments>
+		<environment type="Application Server" option="${env.option.app.server}" />
+		<environment type="Browser" option="${env.option.browser}" />
+		<environment type="Database" option="${env.option.database}" />
+		<environment type="Java JDK" option="${env.option.java.jdk}" />
+		<environment type="Operating System" option="${env.option.operating.system}" />
+	</environments>
+
+	<properties>
+		<property name="app.server.type" value="${app.server.type}" />
+		<property name="app.server.version" value="${app.server.version}" />
+		<property name="browser.type" value="${browser.type}" />
+		<property name="browser.version" value="${browser.version}" />
+		<property name="database.type" value="${database.type}" />
+		<property name="database.version" value="${database.version}" />
+		<property name="liferay.compare.urls" value="${liferay.compare.urls}" />
+		<property name="liferay.plugins.git.id" value="${liferay.plugins.git.id}" />
+		<property name="liferay.portal.branch" value="${liferay.portal.branch}" />
+		<property name="liferay.portal.bundle" value="${liferay.portal.bundle}" />
+		<property name="liferay.portal.git.id" value="${liferay.portal.git.id}" />
+		<property name="java.jdk.type" value="${java.jdk.type}" />
+		<property name="java.jdk.version" value="${java.jdk.version}" />
+		<property name="operating.system.type" value="${operating.system.type}" />
+		<property name="operating.system.version" value="${operating.system.version}" />
+		<property name="testray.build.name" value="${testray.build.name}" />
+		<property name="testray.build.time" value="${testray.build.time}" />
+		<property name="testray.build.type" value="${testray.build.type}" />
+		<property name="testray.product.type" value="${testray.product.type}" />
+		<property name="testray.product.version" value="${testray.product.version}" />
+		<property name="testray.project.name" value="${testray.project.name}" />
+		<property name="testray.run.id" value="${testray.run.id}" />
+	</properties>
+
+	<testcase classname="com.liferay.jenkins.Jenkins" name="${build.name}" time="0">
+		<attachments>
+			<file name="console.output" value="${testray.logs.console}" />
+		</attachments>
+		${job.failure.report}
+		<properties>
+			<property name="testray.case.defect" value="${testray.case.defect}" />
+			<property name="testray.component.names" value="${testray.component.names}" />
+			<property name="testray.main.component.name" value="${testray.main.component.name}" />
+			<property name="testray.team.name" value="${testray.team.name}" />
+			<property name="testray.testcase.description" value="${testray.testcase.description}" />
+			<property name="testray.testcase.name" value="${testray.axis.name}" />
+			<property name="testray.testcase.priority" value="${testray.testcase.priority}" />
+			<property name="testray.testcase.product.edition" value="${testray.testcase.product.edition}" />
+		</properties>
+	</testcase>
+
+	<system-out />
+
+	<system-err />
+</testsuite>]]></echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="merge-test-results">
 		<sequential>
 			<antcall target="merge-test-results" />

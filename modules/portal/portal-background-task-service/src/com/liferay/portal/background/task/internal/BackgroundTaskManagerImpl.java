@@ -423,19 +423,6 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 		_backgroundTaskLocalService.triggerBackgroundTask(backgroundTaskId);
 	}
 
-	@Override
-	public BackgroundTask updateBackgroundTask(BackgroundTask backgroundTask) {
-		com.liferay.portal.background.task.model.BackgroundTask
-			backgroundTaskModel =
-				(com.liferay.portal.background.task.model.BackgroundTask)
-					backgroundTask.getModel();
-
-		backgroundTaskModel = _backgroundTaskLocalService.updateBackgroundTask(
-			backgroundTaskModel);
-
-		return new BackgroundTaskImpl(backgroundTaskModel);
-	}
-
 	@Reference(unbind = "-")
 	protected void setBackgroundTaskLocalService(
 		BackgroundTaskLocalService backgroundTaskLocalService) {

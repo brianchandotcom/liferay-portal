@@ -129,7 +129,9 @@ public abstract class BaseStagingBackgroundTaskExecutor
 
 		backgroundTask.setTaskContextMap(taskContextMap);
 
-		BackgroundTaskManagerUtil.updateBackgroundTask(backgroundTask);
+		BackgroundTaskManagerUtil.amendBackgroundTask(
+			backgroundTask.getBackgroundTaskId(), taskContextMap,
+			backgroundTask.getStatus(), new ServiceContext());
 	}
 
 	protected BackgroundTaskResult processMissingReferences(

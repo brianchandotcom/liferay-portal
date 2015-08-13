@@ -51,12 +51,10 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 <ul class="nav nav-tabs product-menu-tabs">
 
 	<%
-	String listItemClassName = "col-xs-" + 12/childPanelCategories.size();
-
 	for (PanelCategory childPanelCategory : childPanelCategories) {
 	%>
 
-		<li class="<%= listItemClassName %> <%= rootPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>">
+		<li class="<%= "col-xs-" + (12 / childPanelCategories.size()) %> <%= rootPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>">
 			<a aria-expanded="true" data-toggle="tab" href="#<portlet:namespace /><%= childPanelCategory.getKey() %>">
 				<div class="product-menu-tab-icon">
 					<span class="<%= childPanelCategory.getIconCssClass() %> icon-monospaced"></span>

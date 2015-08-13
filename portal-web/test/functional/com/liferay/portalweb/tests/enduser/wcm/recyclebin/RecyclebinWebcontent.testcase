@@ -86,7 +86,7 @@
 			<var name="siteScopeName" value="Liferay" />
 		</execute>
 
-		<execute macro="RecycleBin#dragAndDropAssetToRecycleBin">
+		<execute macro="RecycleBin#dragAndDropContentToRecycleBin">
 			<var name="assetName" value="WC WebContent Title" />
 		</execute>
 

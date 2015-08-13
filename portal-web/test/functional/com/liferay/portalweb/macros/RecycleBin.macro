@@ -12,12 +12,12 @@
 		<execute function="AssertTextNotPresent" value1="${assetName}" />
 	</command>
 
-	<command name="dragAndDropAssetToRecycleBin">
-		<var name="key_assetName" value="${assetName}" />
+	<command name="dragAndDropContentToRecycleBin">
+		<var name="key_webContentTitle" value="${assetName}" />
 
-		<execute function="AssertTextEquals" locator1="RecycleBin#ASSET_TITLE" value1="${assetName}" />
+		<execute function="AssertTextEquals" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${assetName}" />
 
-		<execute function="DragAndDrop" locator1="RecycleBin#ASSET_TITLE" locator2="RecycleBin#RECYCLE_BIN" value1="${assetName}" />
+		<execute function="DragAndDrop" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" locator2="RecycleBin#RECYCLE_BIN" value1="${assetName}" />
 	</command>
 
 	<command name="emptyCP">

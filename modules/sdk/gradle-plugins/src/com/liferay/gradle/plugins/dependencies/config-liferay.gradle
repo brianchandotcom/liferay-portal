@@ -15,113 +15,113 @@
 liferay {
 	appServers {
 		glassfish {
-			deployDir = "${->liferay.appServers.glassfish.dir}/autodeploy"
-			dir = "${->liferay.appServerParentDir}/glassfish-${->liferay.appServers.glassfish.version}"
-			libGlobalDir = "${->liferay.appServers.glassfish.dir}/domains/domain1/lib"
-			portalDir = "${->liferay.appServers.glassfish.dir}/domains/domain1/applications/liferay-portal"
-			version = "3.1.2.2"
+			deployDir = project.properties["app.server.glassfish.deploy.dir"] ?: "${->liferay.appServers.glassfish.dir}/autodeploy"
+			dir = project.properties["app.server.glassfish.dir"] ?: "${->liferay.appServerParentDir}/glassfish-${->liferay.appServers.glassfish.version}"
+			libGlobalDir = project.properties["app.server.glassfish.lib.global.dir"] ?: "${->liferay.appServers.glassfish.dir}/domains/domain1/lib"
+			portalDir = project.properties["app.server.glassfish.portal.dir"] ?: "${->liferay.appServers.glassfish.dir}/domains/domain1/applications/liferay-portal"
+			version = project.properties["app.server.glassfish.version"] ?: "3.1.2.2"
 		}
 
 		jboss {
-			deployDir = "${->liferay.appServers.jboss.dir}/standalone/deployments"
-			dir = "${->liferay.appServerParentDir}/jboss-${->liferay.appServers.jboss.version}"
-			libGlobalDir = "${->liferay.appServers.jboss.dir}/modules/com/liferay/portal/main"
-			portalDir = "${->liferay.appServers.jboss.dir}/standalone/deployments/ROOT.war"
-			version = "7.1.1"
+			deployDir = project.properties["app.server.jboss.deploy.dir"] ?: "${->liferay.appServers.jboss.dir}/standalone/deployments"
+			dir = project.properties["app.server.jboss.dir"] ?: "${->liferay.appServerParentDir}/jboss-${->liferay.appServers.jboss.version}"
+			libGlobalDir = project.properties["app.server.jboss.lib.global.dir"] ?: "${->liferay.appServers.jboss.dir}/modules/com/liferay/portal/main"
+			portalDir = project.properties["app.server.jboss.portal.dir"] ?: "${->liferay.appServers.jboss.dir}/standalone/deployments/ROOT.war"
+			version = project.properties["app.server.jboss.version"] ?: "7.1.1"
 		}
 
 		jboss5 {
-			deployDir = "${->liferay.appServers.jboss5.dir}/standalone/deploy"
-			dir = "${->liferay.appServerParentDir}/jboss-${->liferay.appServers.jboss5.version}"
-			libGlobalDir = "${->liferay.appServers.jboss5.dir}/server/default/lib"
-			portalDir = "${->liferay.appServers.jboss5.dir}/standalone/deployments/ROOT.war"
-			version = "5.1.0"
+			deployDir = project.properties["app.server.jboss5.deploy.dir"] ?: "${->liferay.appServers.jboss5.dir}/standalone/deploy"
+			dir = project.properties["app.server.jboss5.dir"] ?: "${->liferay.appServerParentDir}/jboss-${->liferay.appServers.jboss5.version}"
+			libGlobalDir = project.properties["app.server.jboss5.lib.global.dir"] ?: "${->liferay.appServers.jboss5.dir}/server/default/lib"
+			portalDir = project.properties["app.server.jboss5.portal.dir"] ?: "${->liferay.appServers.jboss5.dir}/standalone/deployments/ROOT.war"
+			version = project.properties["app.server.jboss5.version"] ?: "5.1.0"
 		}
 
 		jbossEap {
-			deployDir = "${->liferay.appServers.jbossEap.dir}/standalone/deployments"
-			dir = "${->liferay.appServerParentDir}/jboss-eap-${->liferay.appServers.jbossEap.version}"
-			libGlobalDir = "${->liferay.appServers.jbossEap.dir}/modules/com/liferay/portal/main"
-			portalDir = "${->liferay.appServers.jbossEap.dir}/standalone/deployments/ROOT.war"
-			version = "6.1.0"
+			deployDir = project.properties["app.server.jbossEap.deploy.dir"] ?: "${->liferay.appServers.jbossEap.dir}/standalone/deployments"
+			dir = project.properties["app.server.jbossEap.dir"] ?: "${->liferay.appServerParentDir}/jboss-eap-${->liferay.appServers.jbossEap.version}"
+			libGlobalDir = project.properties["app.server.jbossEap.lib.global.dir"] ?: "${->liferay.appServers.jbossEap.dir}/modules/com/liferay/portal/main"
+			portalDir = project.properties["app.server.jbossEap.portal.dir"] ?: "${->liferay.appServers.jbossEap.dir}/standalone/deployments/ROOT.war"
+			version = project.properties["app.server.jbossEap.version"] ?: "6.1.0"
 		}
 
 		jbossWildfly {
-			deployDir = "${->liferay.appServers.jbossWildfly.dir}/standalone/deployments"
-			dir = "${->liferay.appServerParentDir}/jboss-wildfly-${->liferay.appServers.jbossWildfly.version}"
-			libGlobalDir = "${->liferay.appServers.jbossWildfly.dir}/modules/com/liferay/portal/main"
-			portalDir = "${->liferay.appServers.jbossWildfly.dir}/standalone/deployments/ROOT.war"
-			version = "8.1.0"
+			deployDir = project.properties["app.server.jbossWildfly.deploy.dir"] ?: "${->liferay.appServers.jbossWildfly.dir}/standalone/deployments"
+			dir = project.properties["app.server.jbossWildfly.dir"] ?: "${->liferay.appServerParentDir}/jboss-wildfly-${->liferay.appServers.jbossWildfly.version}"
+			libGlobalDir = project.properties["app.server.jbossWildfly.lib.global.dir"] ?: "${->liferay.appServers.jbossWildfly.dir}/modules/com/liferay/portal/main"
+			portalDir = project.properties["app.server.jbossWildfly.portal.dir"] ?: "${->liferay.appServers.jbossWildfly.dir}/standalone/deployments/ROOT.war"
+			version = project.properties["app.server.jbossWildfly.version"] ?: "8.1.0"
 		}
 
 		jetty {
-			deployDir = "${->liferay.appServers.jetty.dir}/webapps"
-			dir = "${->liferay.appServerParentDir}/jetty-${->liferay.appServers.jetty.version}"
-			libGlobalDir = "${->liferay.appServers.jetty.dir}/lib/ext/liferay"
-			portalDir = "${->liferay.appServers.jetty.dir}/webapps/root"
-			version = "8.1.10"
+			deployDir = project.properties["app.server.jetty.deploy.dir"] ?: "${->liferay.appServers.jetty.dir}/webapps"
+			dir = project.properties["app.server.jetty.dir"] ?: "${->liferay.appServerParentDir}/jetty-${->liferay.appServers.jetty.version}"
+			libGlobalDir = project.properties["app.server.jetty.lib.global.dir"] ?: "${->liferay.appServers.jetty.dir}/lib/ext/liferay"
+			portalDir = project.properties["app.server.jetty.portal.dir"] ?: "${->liferay.appServers.jetty.dir}/webapps/root"
+			version = project.properties["app.server.jetty.version"] ?: "8.1.10"
 		}
 
 		jonas {
-			deployDir = "${->liferay.appServers.jonas.dir}/deploy"
-			dir = "${->liferay.appServerParentDir}/jonas-${->liferay.appServers.jonas.version}"
-			libGlobalDir = "${->liferay.appServers.jonas.dir}/lib/ext"
-			portalDir = "${->liferay.appServers.jonas.dir}/deploy/liferay-portal"
-			version = "5.2.3"
+			deployDir = project.properties["app.server.jonas.deploy.dir"] ?: "${->liferay.appServers.jonas.dir}/deploy"
+			dir = project.properties["app.server.jonas.dir"] ?: "${->liferay.appServerParentDir}/jonas-${->liferay.appServers.jonas.version}"
+			libGlobalDir = project.properties["app.server.jonas.lib.global.dir"] ?: "${->liferay.appServers.jonas.dir}/lib/ext"
+			portalDir = project.properties["app.server.jonas.portal.dir"] ?: "${->liferay.appServers.jonas.dir}/deploy/liferay-portal"
+			version = project.properties["app.server.jonas.version"] ?: "5.2.3"
 		}
 
 		resin {
-			deployDir = "${->liferay.appServers.resin.dir}/webapps"
-			dir = "${->liferay.appServerParentDir}/resin-${->liferay.appServers.resin.version}"
-			libGlobalDir = "${->liferay.appServers.resin.dir}/ext-lib"
-			portalDir = "${->liferay.appServers.resin.dir}/webapps/ROOT"
-			version = "4.0.33"
+			deployDir = project.properties["app.server.resin.deploy.dir"] ?: "${->liferay.appServers.resin.dir}/webapps"
+			dir = project.properties["app.server.resin.dir"] ?: "${->liferay.appServerParentDir}/resin-${->liferay.appServers.resin.version}"
+			libGlobalDir = project.properties["app.server.resin.lib.global.dir"] ?: "${->liferay.appServers.resin.dir}/ext-lib"
+			portalDir = project.properties["app.server.resin.portal.dir"] ?: "${->liferay.appServers.resin.dir}/webapps/ROOT"
+			version = project.properties["app.server.resin.version"] ?: "4.0.33"
 		}
 
 		tcserver {
-			deployDir = "${->liferay.appServers.tcserver.dir}/liferay/webapps"
-			dir = "${->liferay.appServerParentDir}/tcserver-${->liferay.appServers.tcserver.version}"
-			libGlobalDir = "${->liferay.appServers.tcserver.dir}/liferay/lib"
-			portalDir = "${->liferay.appServers.tcserver.dir}/liferay/webapps/ROOT"
-			version = "2.6.4"
+			deployDir = project.properties["app.server.tcserver.deploy.dir"] ?: "${->liferay.appServers.tcserver.dir}/liferay/webapps"
+			dir = project.properties["app.server.tcserver.dir"] ?: "${->liferay.appServerParentDir}/tcserver-${->liferay.appServers.tcserver.version}"
+			libGlobalDir = project.properties["app.server.tcserver.lib.global.dir"] ?: "${->liferay.appServers.tcserver.dir}/liferay/lib"
+			portalDir = project.properties["app.server.tcserver.portal.dir"] ?: "${->liferay.appServers.tcserver.dir}/liferay/webapps/ROOT"
+			version = project.properties["app.server.tcserver.version"] ?: "2.6.4"
 		}
 
 		tomcat {
-			binDir = "${->liferay.appServers.tomcat.dir}/bin"
-			deployDir = "${->liferay.appServers.tomcat.dir}/webapps"
-			dir = "${->liferay.appServerParentDir}/tomcat-${->liferay.appServers.tomcat.version}"
-			libGlobalDir = "${->liferay.appServers.tomcat.dir}/lib/ext"
-			managerPassword = "tomcat"
-			managerUserName = "tomcat"
-			portalDir = "${->liferay.appServers.tomcat.dir}/webapps/ROOT"
-			startExecutable = "catalina${->fileSuffixBat}"
+			binDir = project.properties["app.server.tomcat.bin.dir"] ?: "${->liferay.appServers.tomcat.dir}/bin"
+			deployDir = project.properties["app.server.tomcat.deploy.dir"] ?: "${->liferay.appServers.tomcat.dir}/webapps"
+			dir = project.properties["app.server.tomcat.dir"] ?: "${->liferay.appServerParentDir}/tomcat-${->liferay.appServers.tomcat.version}"
+			libGlobalDir = project.properties["app.server.tomcat.lib.global.dir"] ?: "${->liferay.appServers.tomcat.dir}/lib/ext"
+			managerPassword = project.properties["app.server.tomcat.manager.password"] ?: "tomcat"
+			managerUserName = project.properties["app.server.tomcat.manager.user"] ?: "tomcat"
+			portalDir = project.properties["app.server.tomcat.portal.dir"] ?: "${->liferay.appServers.tomcat.dir}/webapps/ROOT"
+			startExecutable = project.properties["app.server.tomcat.start.executable"] ?: "catalina${->fileSuffixBat}"
 			startExecutableArgs = ["run"]
-			stopExecutable = "shutdown${->fileSuffixBat}"
-			version = "7.0.62"
-			zipUrl = "http://archive.apache.org/dist/tomcat/tomcat-7/v${->liferay.appServers.tomcat.version}/bin/apache-tomcat-${->liferay.appServers.tomcat.version}.zip"
+			stopExecutable = project.properties["app.server.tomcat.stop.executable"] ?: "shutdown${->fileSuffixBat}"
+			version = project.properties["app.server.tomcat.version"] ?: "7.0.62"
+			zipUrl = project.properties["app.server.tomcat.zip.url"] ?: "http://archive.apache.org/dist/tomcat/tomcat-7/v${->liferay.appServers.tomcat.version}/bin/apache-tomcat-${->liferay.appServers.tomcat.version}.zip"
 		}
 
 		weblogic {
-			deployDir = "${->liferay.appServers.weblogic.dir}/domains/liferay/autodeploy"
-			dir = "${->liferay.appServerParentDir}/weblogic-${->liferay.appServers.weblogic.version}"
-			libGlobalDir = "${->liferay.appServers.weblogic.dir}/domains/liferay/lib"
-			portalDir = "${->liferay.appServers.weblogic.dir}/domains/liferay/autodeploy/ROOT"
-			version = "12.1.2"
+			deployDir = project.properties["app.server.weblogic.deploy.dir"] ?: "${->liferay.appServers.weblogic.dir}/domains/liferay/autodeploy"
+			dir = project.properties["app.server.weblogic.dir"] ?: "${->liferay.appServerParentDir}/weblogic-${->liferay.appServers.weblogic.version}"
+			libGlobalDir = project.properties["app.server.weblogic.lib.global.dir"] ?: "${->liferay.appServers.weblogic.dir}/domains/liferay/lib"
+			portalDir = project.properties["app.server.weblogic.portal.dir"] ?: "${->liferay.appServers.weblogic.dir}/domains/liferay/autodeploy/ROOT"
+			version = project.properties["app.server.weblogic.version"] ?: "12.1.2"
 		}
 
 		websphere {
-			deployDir = "${->liferay.appServers.websphere.dir}/profiles/liferay/wsadmin-deploy"
-			dir = "${->liferay.appServerParentDir}/websphere-${->liferay.appServers.websphere.version}"
-			libGlobalDir = "${->liferay.appServers.websphere.dir}/lib/ext"
-			portalDir = "${->liferay.appServers.websphere.dir}/profiles/liferay/installedApps/liferay-cell/liferay-portal.ear/liferay-portal.war"
-			version = "7.0"
+			deployDir = project.properties["app.server.websphere.deploy.dir"] ?: "${->liferay.appServers.websphere.dir}/profiles/liferay/wsadmin-deploy"
+			dir = project.properties["app.server.websphere.dir"] ?: "${->liferay.appServerParentDir}/websphere-${->liferay.appServers.websphere.version}"
+			libGlobalDir = project.properties["app.server.websphere.lib.global.dir"] ?: "${->liferay.appServers.websphere.dir}/lib/ext"
+			portalDir = project.properties["app.server.websphere.portal.dir"] ?: "${->liferay.appServers.websphere.dir}/profiles/liferay/installedApps/liferay-cell/liferay-portal.ear/liferay-portal.war"
+			version = project.properties["app.server.websphere.version"] ?: "7.0"
 		}
 	}
 
 	appServerParentDir = rootProject.file("../bundles")
 	appServerType = "tomcat"
-	deployDir = "${->liferay.appServerParentDir}/deploy"
-	jmxRemotePort = 8099
-	liferayHome = "${->liferay.appServerParentDir}"
+	deployDir = project.properties["auto.deploy.dir"] ?: "${->liferay.appServerParentDir}/deploy"
+	jmxRemotePort = project.properties["jmx.remote.port"] ?: 8099
+	liferayHome = project.properties["liferay.home"] ?: "${->liferay.appServerParentDir}"
 	portalVersion = "7.0.0-SNAPSHOT"
 }

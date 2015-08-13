@@ -39,7 +39,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command known-issues="LPS-56092" name="ApproveWebContentViaWebContentDisplayPG" priority="4">
+	<command name="ApproveWebContentViaWebContentDisplayPG" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -103,7 +103,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56092" name="RejectWebContentViaWebContentDisplayPG" priority="4">
+	<command name="RejectWebContentViaWebContentDisplayPG" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 

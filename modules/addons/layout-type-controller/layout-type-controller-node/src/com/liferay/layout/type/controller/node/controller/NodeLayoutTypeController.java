@@ -89,21 +89,18 @@ public class NodeLayoutTypeController
 
 	@Reference(unbind = "-")
 	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
 	}
 
 	@Reference(unbind = "-")
 	protected void setPanelCategoryRegistry(
 		PanelCategoryRegistry panelCategoryRegistry) {
-
-		_panelCategoryRegistry = panelCategoryRegistry;
 	}
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.node)"
 	)
 	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
+		this.servletContext = servletContext;
 	}
 
 	private static final String _EDIT_PAGE = "/layout/edit/node.jsp";
@@ -113,8 +110,5 @@ public class NodeLayoutTypeController
 			"&p_v_l_s_g_id=${liferay:pvlsgid}";
 
 	private static final String _VIEW_PAGE = "/layout/view/node.jsp";
-
-	private PanelAppRegistry _panelAppRegistry;
-	private PanelCategoryRegistry _panelCategoryRegistry;
 
 }

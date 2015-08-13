@@ -54,7 +54,7 @@ public abstract class BasePanelLayoutTypeControllerImpl
 		throws Exception {
 
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(getEditPage());
+			servletContext.getRequestDispatcher(getEditPage());
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -80,7 +80,7 @@ public abstract class BasePanelLayoutTypeControllerImpl
 		throws Exception {
 
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(getViewPage());
+			servletContext.getRequestDispatcher(getViewPage());
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -142,6 +142,6 @@ public abstract class BasePanelLayoutTypeControllerImpl
 	protected void removeAttributes(HttpServletRequest request) {
 	}
 
-	protected ServletContext _servletContext;
+	protected ServletContext servletContext;
 
 }

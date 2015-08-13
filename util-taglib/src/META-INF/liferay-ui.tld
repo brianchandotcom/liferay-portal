@@ -138,7 +138,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether the entry is a folder. The default is <![CDATA[<code>false</code>]]>.</description>
+			<description>Whether the entry is a folder. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>folder</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -2045,7 +2045,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The number of items to show in the icon menu before scrolling. The default value is 15.</description>
+			<description>The number of items to show in the icon menu before scrolling. The default value is <![CDATA[<code>15</code>]]>.</description>
 			<name>maxDisplayItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4103,13 +4103,13 @@
 			<type>int</type>
 		</attribute>
 		<attribute>
-			<description>A variable name for the results of the <![CDATA[<code>total</code>]]> attribute. The default is <![CDATA[<code>total</code>]]>.</description>
+			<description>A variable name for the results of the <![CDATA[<code>total</code>]]> attribute. The default value is <![CDATA[<code>total</code>]]>.</description>
 			<name>totalVar</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A variable name for the <![CDATA[<code>SearchContainer</code>]]> object. The default is <![CDATA[<code>searchContainer</code>]]>.</description>
+			<description>A variable name for the <![CDATA[<code>SearchContainer</code>]]> object. The default value is <![CDATA[<code>searchContainer</code>]]>.</description>
 			<name>var</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4161,13 +4161,13 @@
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnDateTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A horizontal alignment for the column contents. The default is <![CDATA[<code>left</code>]]>.</description>
+			<description>A horizontal alignment for the column contents. The default value is <![CDATA[<code>left</code>]]>.</description>
 			<name>align</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The number of columns to span. The default is <![CDATA[<code>1</code>]]>.</description>
+			<description>The number of columns to span. The default value is <![CDATA[<code>1</code>]]>.</description>
 			<name>colspan</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4216,7 +4216,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A vertical alignment for the column contents. The default is <![CDATA[<code>middle</code>]]>.</description>
+			<description>A vertical alignment for the column contents. The default value is <![CDATA[<code>middle</code>]]>.</description>
 			<name>valign</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4229,31 +4229,37 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a column in a search container for displaying an icon.</description>
 		<name>search-container-column-icon</name>
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnIconTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>A horizontal alignment for the column contents. The default value is <![CDATA[<code>left</code>]]>.</description>
 			<name>align</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The number of columns to span. The default value is <![CDATA[<code>1</code>]]>.</description>
 			<name>colspan</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
 		</attribute>
 		<attribute>
+			<description>A CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A URL for the items in the column.</description>
 			<name>href</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A workflow status for the item.</description>
 			<name>icon</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4269,42 +4275,51 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to automatically check the checkbox for the row when the column is clicked.</description>
 			<name>toggleRowChecker</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>A vertical alignment for the column contents. The default value is <![CDATA[<code>middle</code>]]>.</description>
 			<name>valign</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a column in a search container for displaying an image.</description>
 		<name>search-container-column-image</name>
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnImageTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>A horizontal alignment for the column contents. The default value is <![CDATA[<code>left</code>]]>.</description>
 			<name>align</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The number of columns to span. The default value is <![CDATA[<code>1</code>]]>.</description>
 			<name>colspan</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
 		</attribute>
 		<attribute>
+			<description>A CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A URL for the items in the column.</description>
 			<name>href</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The path of the image.</description>
 			<name>src</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4320,11 +4335,14 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to automatically check the checkbox for the row when the column is clicked.</description>
 			<name>toggleRowChecker</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<description>A vertical alignment for the column contents. The default value is <![CDATA[<code>middle</code>]]>.</description>
 			<name>valign</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4336,13 +4354,13 @@
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnJSPTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A horizontal alignment for the column contents. The default is <![CDATA[<code>left</code>]]>.</description>
+			<description>A horizontal alignment for the column contents. The default value is <![CDATA[<code>left</code>]]>.</description>
 			<name>align</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The number of columns to span. The default is <![CDATA[<code>1</code>]]>.</description>
+			<description>The number of columns to span. The default value is <![CDATA[<code>1</code>]]>.</description>
 			<name>colspan</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4371,6 +4389,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A vertical alignment for the column contents. The default value is <![CDATA[<code>middle</code>]]>.</description>
 			<name>valign</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4382,13 +4401,13 @@
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnStatusTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A horizontal alignment for the column contents. The default is <![CDATA[<code>left</code>]]>.</description>
+			<description>A horizontal alignment for the column contents. The default value is <![CDATA[<code>left</code>]]>.</description>
 			<name>align</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The number of columns to span. The default is <![CDATA[<code>1</code>]]>.</description>
+			<description>The number of columns to span. The default value is <![CDATA[<code>1</code>]]>.</description>
 			<name>colspan</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4401,7 +4420,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A URL for the column's contents.</description>
+			<description>A URL for the items in the column.</description>
 			<name>href</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4436,7 +4455,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A vertical alignment for the column contents. The default is <![CDATA[<code>middle</code>]]>.</description>
+			<description>A vertical alignment for the column contents. The default value is <![CDATA[<code>middle</code>]]>.</description>
 			<name>valign</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4477,7 +4496,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The number of columns to span. The default is <![CDATA[<code>1</code>]]>.</description>
+			<description>The number of columns to span. The default value is <![CDATA[<code>1</code>]]>.</description>
 			<name>colspan</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4540,7 +4559,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>A vertical alignment for the column contents. The default is <![CDATA[<code>middle</code>]]>.</description>
+			<description>A vertical alignment for the column contents. The default value is <![CDATA[<code>middle</code>]]>.</description>
 			<name>valign</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -4772,6 +4791,7 @@
 		<tag-class>com.liferay.taglib.ui.SearchIteratorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>The display style for the component. Options are <![CDATA[<code>table<code>]]>, <![CDATA[<code>descriptive<code>]]>, or <![CDATA[<code>icon<code>]]>.</description>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

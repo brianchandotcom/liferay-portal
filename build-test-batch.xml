@@ -236,39 +236,39 @@
 		<sequential>
 			<property name="test.class" value="${axis.variable}" />
 
-			<antcall target="compile" />
-
-			<ant antfile="build-dist.xml" target="build-dist-@{app.server.type}" />
-
-			<antcall target="record-test-generated-properties" />
-
-			<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
-
-			<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
-
-			<database-test-run-test database.type="@{database.type}">
+			<run-batch-test tomcat.gc.log="@{tomcat.gc.log}" tsant.gc.log="@{tsant.gc.log}">
 				<test-action>
-					<ant antfile="build-test-@{app.server.type}.xml" inheritAll="false" target="run-selenium-@{app.server.type}">
-						<property name="database.type" value="@{database.type}" />
-						<property name="test.class" value="${axis.variable}" />
-					</ant>
+					<antcall target="compile" />
+
+					<ant antfile="build-dist.xml" target="build-dist-@{app.server.type}" />
+
+					<antcall target="record-test-generated-properties" />
+
+					<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
+
+					<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
+
+					<database-test-run-test database.type="@{database.type}">
+						<test-action>
+							<ant antfile="build-test-@{app.server.type}.xml" inheritAll="false" target="run-selenium-@{app.server.type}">
+								<property name="database.type" value="@{database.type}" />
+								<property name="test.class" value="${axis.variable}" />
+							</ant>
+						</test-action>
+					</database-test-run-test>
 				</test-action>
-			</database-test-run-test>
 
-			<merge-test-results />
+				<clean-up>
+					<if>
+						<available file=".testable.portal.started" />
+						<then>
+							<antcall target="stop-app-server" />
 
-			<check-deprecated-method />
-
-			<if>
-				<available file=".testable.portal.started" />
-				<then>
-					<antcall target="stop-app-server" />
-
-					<delete file=".testable.portal.started" failonerror="false" />
-				</then>
-			</if>
-
-			<print-gc-logs tomcat.gc.log="@{tomcat.gc.log}" tsant.gc.log="@{tsant.gc.log}" />
+							<delete file=".testable.portal.started" failonerror="false" />
+						</then>
+					</if>
+				</clean-up>
+			</run-batch-test>
 		</sequential>
 	</macrodef>
 

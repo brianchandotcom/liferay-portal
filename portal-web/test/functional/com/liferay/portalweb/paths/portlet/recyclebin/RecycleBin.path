@@ -44,11 +44,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_TITLE</td>
-	<td>//div[contains(@class,'app-view-entry') and @data-title='${key_assetName}']//div[@class='entry-metadata']/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

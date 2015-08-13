@@ -74,6 +74,13 @@
 		margin-right: 1em;
 	}
 
+	.lfr-ddm-small-image-view img {
+		width: auto;
+		height: auto;
+		max-width: 100%;
+		max-height: 125px;
+	}
+
 	.lfr-ddm-types-form-column .column-content-first {
 		margin-right: 10px;
 	}

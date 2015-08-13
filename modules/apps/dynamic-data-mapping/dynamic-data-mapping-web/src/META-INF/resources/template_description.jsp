@@ -28,7 +28,9 @@ String rowHREF = (String)row.getParameter("rowHREF");
 
 <c:choose>
 	<c:when test="<%= template.isSmallImage() %>">
-		<img alt="" src="<%= HtmlUtil.escapeAttribute(template.getTemplateImageURL(themeDisplay)) %>" width="<%= 25 %>" />
+		<div class="lfr-ddm-small-image-view">
+			<img alt="" src="<%= HtmlUtil.escapeAttribute(template.getTemplateImageURL(themeDisplay)) %>" />
+		</div>
 	</c:when>
 	<c:otherwise>
 		<%= HtmlUtil.escape(template.getDescription(locale)) %>

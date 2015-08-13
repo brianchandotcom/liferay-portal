@@ -176,7 +176,9 @@ public class WikiPageStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			page);
 
-		serviceContext.setUuid(page.getUuid());
+		if (portletDataContext.isDataStrategyMirror()) {
+			serviceContext.setUuid(page.getUuid());
+		}
 
 		Map<Long, Long> nodeIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -197,19 +199,21 @@ public class WikiPageStagedModelDataHandler
 				page.getFormat(), page.getHead(), page.getParentTitle(),
 				page.getRedirectTitle(), serviceContext);
 
-			WikiPageResource pageResource =
-				WikiPageResourceLocalServiceUtil.getPageResource(
-					importedPage.getResourcePrimKey());
+			if (portletDataContext.isDataStrategyMirror()) {
+				WikiPageResource pageResource =
+					WikiPageResourceLocalServiceUtil.getPageResource(
+						importedPage.getResourcePrimKey());
 
-			String pageResourceUuid = GetterUtil.getString(
-				pageElement.attributeValue("page-resource-uuid"));
-
-			if (Validator.isNotNull(pageResourceUuid)) {
-				pageResource.setUuid(
+				String pageResourceUuid = GetterUtil.getString(
 					pageElement.attributeValue("page-resource-uuid"));
 
-				WikiPageResourceLocalServiceUtil.updateWikiPageResource(
-					pageResource);
+				if (Validator.isNotNull(pageResourceUuid)) {
+					pageResource.setUuid(
+						pageElement.attributeValue("page-resource-uuid"));
+
+					WikiPageResourceLocalServiceUtil.updateWikiPageResource(
+						pageResource);
+				}
 			}
 		}
 		else {

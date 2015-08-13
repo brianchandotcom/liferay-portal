@@ -30,6 +30,9 @@ import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Eudaldo Alonso
@@ -74,6 +77,10 @@ public class SitesPanelCategory extends BaseJSPPanelCategory {
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
+		if (_panelCategoryRegistry == null) {
+			return false;
+		}
+
 		List<PanelCategory> childPanelCategories =
 			_panelCategoryRegistry.getChildPanelCategories(
 				this, permissionChecker, group);
@@ -94,11 +101,21 @@ public class SitesPanelCategory extends BaseJSPPanelCategory {
 		super.setServletContext(servletContext);
 	}
 
-	@Reference(unbind = "-")
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	protected void setPanelCategoryRegistry(
 		PanelCategoryRegistry panelCategoryRegistry) {
 
 		_panelCategoryRegistry = panelCategoryRegistry;
+	}
+
+	protected void unsetPanelCategoryRegistry(
+		PanelCategoryRegistry panelCategoryRegistry) {
+
+		_panelCategoryRegistry = null;
 	}
 
 	private PanelCategoryRegistry _panelCategoryRegistry;

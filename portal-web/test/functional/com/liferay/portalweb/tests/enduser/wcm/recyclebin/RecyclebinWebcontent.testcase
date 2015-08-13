@@ -178,7 +178,7 @@
 			<var name="siteScopeName" value="Liferay" />
 		</execute>
 
-		<execute macro="RecycleBin#viewAssetsDuplicateName">
+		<execute macro="RecycleBin#viewDuplicateNames">
 			<var name="assetName" value="WC WebContent Title" />
 		</execute>
 	</command>
@@ -302,7 +302,7 @@
 			<var name="siteScopeName" value="Liferay" />
 		</execute>
 
-		<execute macro="RecycleBin#viewAssetsDuplicateName">
+		<execute macro="RecycleBin#viewDuplicateNames">
 			<var name="assetName" value="WC Folder Name" />
 		</execute>
 	</command>

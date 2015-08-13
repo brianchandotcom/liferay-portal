@@ -133,13 +133,6 @@
 		<execute function="AssertClick" locator1="CPRecyclebin#SEARCH_BUTTON" value1="Search" />
 	</command>
 
-	<command name="viewAssetsDuplicateName">
-		<var name="key_assetName" value="${assetName}" />
-
-		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME_1" value1="${assetName}" />
-		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME_2" value1="${assetName}" />
-	</command>
-
 	<command name="viewCP">
 		<var name="key_assetName" value="${assetName}" />
 
@@ -183,6 +176,13 @@
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="CPSitesettings#MENU_BASIC_INFORMATION_RECYCLE_BIN" />
+	</command>
+
+	<command name="viewDuplicateNames">
+		<var name="key_assetName" value="${assetName}" />
+
+		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME_1" value1="${assetName}" />
+		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME_2" value1="${assetName}" />
 	</command>
 
 	<command name="viewRecyclebinViaSiteSettingsCP">

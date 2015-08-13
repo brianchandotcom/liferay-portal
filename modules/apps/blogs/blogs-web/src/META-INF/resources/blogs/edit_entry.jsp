@@ -121,7 +121,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 					<aui:input name="coverImageCaption" type="hidden" />
 
 					<div class="entry-cover-image-caption <%= (coverImageFileEntryId == 0) ? "invisible" : "" %>">
-						<liferay-ui:input-editor contents="<%= coverImageCaption %>" editorName="alloyeditor" name="coverImageCaptionEditor" placeholder="caption" showSource="<%= false %>" />
+						<liferay-ui:input-editor contents="<%= HtmlUtil.escape(coverImageCaption) %>" editorName="alloyeditor" name="coverImageCaptionEditor" placeholder="caption" showSource="<%= false %>" />
 					</div>
 
 					<div class="entry-title">
@@ -184,7 +184,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 							</div>
 
 							<div class="entry-description">
-								<liferay-ui:input-editor contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorName="alloyeditor" name="descriptionEditor" onInitMethod="OnDescriptionEditorInit" placeholder="description" showSource="<%= false %>" />
+								<liferay-ui:input-editor contents="<%= HtmlUtil.escape(description) %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorName="alloyeditor" name="descriptionEditor" onInitMethod="OnDescriptionEditorInit" placeholder="description" showSource="<%= false %>" />
 							</div>
 
 							<aui:input name="description" type="hidden" />

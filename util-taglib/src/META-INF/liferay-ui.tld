@@ -4718,7 +4718,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A state of the represendted object used for styling the row. E.g. success, warning, info, default, primary or danger</description>
+			<description>A state for the component. Possible values are <![CDATA[<code>success</code>]]>, <![CDATA[<code>warning</code>]]>, <![CDATA[<code>info</code>]]>, <![CDATA[<code>default</code>]]>, <![CDATA[<code>primary</code>]]>, or <![CDATA[<code>danger</code>]]>.</description>
 			<name>state</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

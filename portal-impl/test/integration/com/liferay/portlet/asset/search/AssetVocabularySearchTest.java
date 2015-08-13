@@ -15,7 +15,6 @@
 package com.liferay.portlet.asset.search;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.search.test.BaseSearchTestCase;
@@ -38,7 +37,6 @@ import org.junit.Test;
  * @author Istvan Andras Dezsi
  * @author Tibor Lipusz
  */
-@Sync
 public class AssetVocabularySearchTest extends BaseSearchTestCase {
 
 	@ClassRule

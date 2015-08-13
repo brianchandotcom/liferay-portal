@@ -22,9 +22,9 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -41,7 +40,9 @@ import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.service.persistence.test.AssetEntryQueryTestUtil;
 import com.liferay.portlet.asset.util.AssetUtil;
 
-import org.junit.After;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -53,7 +54,6 @@ import org.junit.runner.RunWith;
  * @author Carlos Sierra
  */
 @RunWith(Arquillian.class)
-@Sync
 public class JournalArticleIndexableTest {
 
 	@ClassRule
@@ -67,16 +67,7 @@ public class JournalArticleIndexableTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_testMode = PortalRunMode.isTestMode();
-
-		PortalRunMode.setTestMode(true);
-
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
-	}
-
-	@After
-	public void tearDown() {
-		PortalRunMode.setTestMode(_testMode);
 	}
 
 	@Test
@@ -91,11 +82,9 @@ public class JournalArticleIndexableTest {
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
-		Hits hits = AssetUtil.search(
-			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		int initialEntries = 0;
 
-		int total = hits.getLength();
+		assertCount(initialEntries, assetEntryQuery, searchContext);
 
 		JournalArticle article = JournalTestUtil.addArticle(
 			_group.getGroupId(), RandomTestUtil.randomString(),
@@ -103,12 +92,7 @@ public class JournalArticleIndexableTest {
 
 		Assert.assertTrue(article.isIndexable());
 
-		hits = AssetUtil.search(
-			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-
-		Assert.assertEquals(
-			"Regular articles should be indexed", total + 1, hits.getLength());
+		assertCount(initialEntries + 1, assetEntryQuery, searchContext);
 	}
 
 	@Test
@@ -125,11 +109,9 @@ public class JournalArticleIndexableTest {
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
-		Hits hits = AssetUtil.search(
-			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		int initialEntries = 0;
 
-		int total = hits.getLength();
+		assertCount(initialEntries, assetEntryQuery, searchContext);
 
 		JournalTestUtil.addArticle(
 			_group.getGroupId(),
@@ -140,18 +122,44 @@ public class JournalArticleIndexableTest {
 			true,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		hits = AssetUtil.search(
-			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		assertCount(initialEntries, assetEntryQuery, searchContext);
+	}
 
-		Assert.assertEquals(
-			"Unindexable articles should not be indexed", total,
-			hits.getLength());
+	protected void assertCount(
+			final int expectedCount, final AssetEntryQuery assetEntryQuery,
+			final SearchContext searchContext)
+		throws Exception {
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					int actualCount = searchCount(
+						assetEntryQuery, searchContext, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS);
+
+					Assert.assertEquals(expectedCount, actualCount);
+
+					return null;
+				}
+
+			});
+	}
+
+	protected int searchCount(
+			AssetEntryQuery assetEntryQuery, SearchContext searchContext,
+			int start, int end)
+		throws Exception {
+
+		Hits hits = AssetUtil.search(
+			searchContext, assetEntryQuery, start, end);
+
+		return hits.getLength();
 	}
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	private boolean _testMode;
 
 }

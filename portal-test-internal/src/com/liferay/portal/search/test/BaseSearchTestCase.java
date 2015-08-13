@@ -266,7 +266,7 @@ public abstract class BaseSearchTestCase {
 		throws Exception {
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
+			10, TimeUnit.SECONDS,
 			new Callable<Void>() {
 
 				@Override

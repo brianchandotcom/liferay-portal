@@ -197,7 +197,9 @@
 		<attribute name="tomcat.gc.log" default="false" />
 		<attribute name="tsant.gc.log" default="false" />
 		<attribute name="unit.test" default="false" />
+		<element name="clean-up" optional="true" />
 		<element name="test-action" />
+
 		<sequential>
 			<prepare-test-build unless:true="@{unit.test}" />
 
@@ -210,6 +212,8 @@
 			<merge-test-results />
 
 			<check-deprecated-method />
+
+			<clean-up />
 
 			<print-gc-logs
 				tomcat.gc.log="@{tomcat.gc.log}"

@@ -19,11 +19,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.asset.model.DDMFormValuesReader;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.UnlocalizedValue;
 
 import java.util.List;
 

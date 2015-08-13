@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.NoSuchClassTypeFieldException;
+import com.liferay.portlet.dynamicdatamapping.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.LocalizedValue;
 
 import java.util.ArrayList;
 import java.util.List;

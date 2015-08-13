@@ -30,12 +30,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.model.Value;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.util.HashMap;
 import java.util.List;

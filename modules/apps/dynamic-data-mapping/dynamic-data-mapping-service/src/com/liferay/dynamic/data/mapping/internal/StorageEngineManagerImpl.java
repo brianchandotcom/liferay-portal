@@ -19,9 +19,9 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManager;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

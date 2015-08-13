@@ -16,9 +16,9 @@ package com.liferay.dynamic.data.mapping.internal;
 
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.dynamicdatamapping.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 

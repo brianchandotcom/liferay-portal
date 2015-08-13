@@ -63,9 +63,9 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.LocalizedValue;
 
 import java.io.File;
 import java.io.InputStream;
@@ -335,7 +335,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	}
 
 	protected DDMFormValues createDDMFormValues(
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm) {
+		com.liferay.portlet.dynamicdatamapping.DDMForm ddmForm) {
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 

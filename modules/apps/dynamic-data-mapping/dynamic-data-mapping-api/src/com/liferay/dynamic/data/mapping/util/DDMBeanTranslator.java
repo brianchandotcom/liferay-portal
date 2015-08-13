@@ -23,21 +23,21 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
  */
 public interface DDMBeanTranslator {
 	public DDMForm translate(
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm);
+		com.liferay.portlet.dynamicdatamapping.DDMForm ddmForm);
 
 	public DDMFormField translate(
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormField ddmFormField);
+		com.liferay.portlet.dynamicdatamapping.DDMFormField ddmFormField);
 
 	public DDMFormValues translate(
-		com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues ddmFormValues);
+		com.liferay.portlet.dynamicdatamapping.DDMFormValues ddmFormValues);
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMForm translate(
+	public com.liferay.portlet.dynamicdatamapping.DDMForm translate(
 		DDMForm ddmForm);
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMFormField
+	public com.liferay.portlet.dynamicdatamapping.DDMFormField
 		translate(DDMFormField ddmFormField);
 
-	public com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues translate(
+	public com.liferay.portlet.dynamicdatamapping.DDMFormValues translate(
 		DDMFormValues ddmFormValues);
 
 }

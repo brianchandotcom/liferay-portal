@@ -27,7 +27,20 @@ Group group = themeDisplay.getSiteGroup();
 		<a class="icon-angle-left icon-monospaced" href="javascript:;" id="<portlet:namespace />allSitesLink"></a>
 	</div>
 	<div class="toolbar-group-content">
-		<aui:a href="<%= group.getDisplayURL(themeDisplay) %>" label="<%= group.getDescriptiveName(locale) %>" />
+		<aui:a href="<%= group.getDisplayURL(themeDisplay) %>">
+			<%= group.getDescriptiveName(locale) %>
+
+			<c:if test="<%= themeDisplay.isShowStagingIcon() %>">
+				<c:choose>
+					<c:when test="<%= group.isStagingGroup() %>">
+						(<liferay-ui:message key="staging" />)
+					</c:when>
+					<c:when test="<%= group.hasStagingGroup() %>">
+						(<liferay-ui:message key="live" />)
+					</c:when>
+				</c:choose>
+			</c:if>
+		</aui:a>
 	</div>
 
 	<c:if test="<%= themeDisplay.isShowStagingIcon() %>">
@@ -35,22 +48,11 @@ Group group = themeDisplay.getSiteGroup();
 		<%
 		String stagingGroupURL = null;
 
-		if (group.hasStagingGroup()) {
+		if (!group.isStagedRemotely() && group.hasStagingGroup()) {
 			Group stagingGroup = StagingUtil.getStagingGroup(group.getGroupId());
 
 			if (stagingGroup != null) {
-				LayoutSet layoutSet = themeDisplay.getLayoutSet();
-
-				if (layoutSet.isPrivateLayout()) {
-					layoutSet = stagingGroup.getPrivateLayoutSet();
-				}
-				else {
-					layoutSet = stagingGroup.getPublicLayoutSet();
-				}
-
-				if (layoutSet.getPageCount() > 0) {
-					stagingGroupURL = PortalUtil.getGroupFriendlyURL(layoutSet, themeDisplay);
-				}
+				stagingGroupURL = stagingGroup.getDisplayURL(themeDisplay);
 			}
 		}
 		%>
@@ -63,20 +65,14 @@ Group group = themeDisplay.getSiteGroup();
 		String liveGroupURL = null;
 
 		if (group.isStagingGroup()) {
-			Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
+			if (group.isStagedRemotely()) {
+				liveGroupURL = StagingUtil.buildRemoteURL(group.getTypeSettingsProperties());
+			}
+			else {
+				Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
 
-			if (liveGroup != null) {
-				LayoutSet layoutSet = themeDisplay.getLayoutSet();
-
-				if (layoutSet.isPrivateLayout()) {
-					layoutSet = liveGroup.getPrivateLayoutSet();
-				}
-				else {
-					layoutSet = liveGroup.getPublicLayoutSet();
-				}
-
-				if (layoutSet.getPageCount() > 0) {
-					liveGroupURL = PortalUtil.getGroupFriendlyURL(layoutSet, themeDisplay);
+				if (liveGroup != null) {
+					liveGroupURL = liveGroup.getDisplayURL(themeDisplay);
 				}
 			}
 		}

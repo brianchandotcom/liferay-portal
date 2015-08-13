@@ -20,11 +20,15 @@ import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateElementException;
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException;
 import com.liferay.dynamic.data.mapping.exception.StructureNameException;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureIdComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -37,6 +41,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -232,6 +237,69 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			DDMStructureLocalServiceUtil.fetchStructure(
 				structure.getGroupId(), _CLASS_NAME_ID,
 				structure.getStructureKey()));
+	}
+
+	@Test
+	public void testGetChildDDMFormAfterParentUpdate() throws Exception {
+		DDMForm parentDDMForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField nameDDMFormField = DDMFormTestUtil.createTextDDMFormField(
+			"Name", true, false, false);
+
+		nameDDMFormField.addNestedDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField("Age", true, false, false));
+
+		parentDDMForm.addDDMFormField(nameDDMFormField);
+
+		DDMStructure parentStructure = ddmStructureTestHelper.addStructure(
+			parentDDMForm, StorageType.JSON.toString());
+
+		DDMForm childDDMForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField descriptionDDMFormField =
+			DDMFormTestUtil.createTextDDMFormField(
+				"Description", true, false, false);
+
+		childDDMForm.addDDMFormField(descriptionDDMFormField);
+
+		DDMStructure childStructure = ddmStructureTestHelper.addStructure(
+			parentStructure.getStructureId(), parentStructure.getClassNameId(),
+			null, "Child Structure", StringPool.BLANK, childDDMForm,
+			DDMUtil.getDefaultDDMFormLayout(childDDMForm),
+			StorageType.JSON.toString(), DDMStructureConstants.TYPE_DEFAULT);
+
+		Map<String, DDMFormField> childFullHierarchyDDMFormFieldsMap =
+			childStructure.getFullHierarchyDDMFormFieldsMap(true);
+
+		Assert.assertTrue(
+			childFullHierarchyDDMFormFieldsMap.containsKey("Name"));
+		Assert.assertTrue(
+			childFullHierarchyDDMFormFieldsMap.containsKey("Age"));
+		Assert.assertTrue(
+			childFullHierarchyDDMFormFieldsMap.containsKey("Description"));
+
+		// Update parent DDMForm to have just the Name field
+
+		DDMForm parentDDMFormUpdated = DDMFormTestUtil.createDDMForm();
+
+		parentDDMFormUpdated.addDDMFormField(nameDDMFormField);
+
+		parentStructure.setDDMForm(parentDDMFormUpdated);
+
+		DDMStructureLocalServiceUtil.updateDDMStructure(parentStructure);
+
+		// Assert the child DDMForm have the full hierarchy updated
+
+		childStructure = DDMStructureLocalServiceUtil.getStructure(
+			childStructure.getStructureId());
+
+		childFullHierarchyDDMFormFieldsMap =
+			childStructure.getFullHierarchyDDMFormFieldsMap(true);
+
+		Assert.assertTrue(
+			childFullHierarchyDDMFormFieldsMap.containsKey("Name"));
+		Assert.assertTrue(
+			childFullHierarchyDDMFormFieldsMap.containsKey("Description"));
 	}
 
 	@Test

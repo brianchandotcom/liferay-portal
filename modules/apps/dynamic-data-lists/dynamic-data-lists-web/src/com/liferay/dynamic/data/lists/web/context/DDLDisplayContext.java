@@ -141,7 +141,7 @@ public class DDLDisplayContext {
 
 	public boolean isEditable() {
 		return PrefsParamUtil.getBoolean(
-			_portletPreferences, _renderRequest, "editable");
+			_portletPreferences, _renderRequest, "editable", true);
 	}
 
 	public boolean isShowAddDDMTemplateIcon() {

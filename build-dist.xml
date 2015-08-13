@@ -107,30 +107,6 @@
 		</antcall>
 	</target>
 
-	<target name="build-dist-jboss">
-		<app-server-properties-update>
-			app.server.type=jboss
-		</app-server-properties-update>
-
-		<antcall target="update-sdk-properties" inheritAll="false" />
-
-		<antcall target="unzip-jboss" />
-
-		<delete dir="${project.dir}/portal-web/classes" />
-
-		<ant target="deploy" inheritAll="false" />
-
-		<antcall target="resolve-dynamic-jars" inheritAll="false" />
-
-		<app-server-properties-reset />
-
-		<antcall target="deploy-plugins">
-			<param name="deployer.dest.dir" value="${app.server.parent.dir}/jboss-${app.server.jboss.version}/standalone/deployments" />
-			<param name="deployer.app.server.type" value="jboss" />
-			<param name="deployer.app.server.lib.portal.dir" value="${app.server.parent.dir}/jboss-${app.server.jboss.version}/standalone/deployments/ROOT.war/WEB-INF/lib" />
-		</antcall>
-	</target>
-
 	<target name="build-dist-jboss-eap-6.0">
 		<app-server-properties-update>
 			app.server.type=jboss

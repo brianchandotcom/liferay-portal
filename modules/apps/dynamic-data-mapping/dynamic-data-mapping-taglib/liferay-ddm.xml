@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<taglibs short-name="liferay-ddm" uri="http://liferay.com/tld/ddm" tlib-version="1.0">
+<taglibs short-name="liferay-ddm" uri="http://liferay.com/tld/ddm" tlib-version="1.0" osgi-module="true">
 	<authors>
 		<author>Bruno Basto</author>
 	</authors>

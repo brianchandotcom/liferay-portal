@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="common.css.dir" value="tmp/META-INF/resources/html/css/common" />
+	<property name="common.css.dir" value="tmp/META-INF/resources" />
 	<property name="third.party.dir" value="../../../portal-web/third-party" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
@@ -39,7 +39,7 @@
 					<delete dir="${bourbon.tmp.dir}" />
 
 					<copy todir="${common.css.dir}" overwrite="true">
-						<fileset dir="src/META-INF/resources/html/css/common" excludes="**.npmignore,**.json" />
+						<fileset dir="src/META-INF/resources" excludes="**.npmignore,**.json" />
 					</copy>
 
 					<copy todir="${app.server.portal.dir}/html/css/common" overwrite="true" preservelastmodified="true">

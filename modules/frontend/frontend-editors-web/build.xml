@@ -8,7 +8,7 @@
 
 	<property name="alloyeditor.version" value="0.4.0-alpha.1" />
 	<property name="ckeditor.file" value="ckeditor_4.5.2_liferay.zip" />
-	<property name="html.editor.dir" value="src/META-INF/resources/html/editors" />
+	<property name="editor.dir" value="src/META-INF/resources" />
 	<property name="import.shared" value="../apps/item-selector/item-selector-api,../apps/item-selector/item-selector-criteria-api,../apps/layout/layout-item-selector-api" />
 	<property name="scayt.file" value="scayt_4.5.2.zip" />
 	<property name="third.party.dir" value="../../../portal-web/third-party" />
@@ -31,38 +31,38 @@
 				<not>
 					<uptodate
 						srcfile="${third.party.dir}/${alloyeditor.file}"
-						targetfile="tmp/META-INF/resources/html/editors/alloyeditor"
+						targetfile="tmp/META-INF/resources/alloyeditor"
 					/>
 				</not>
 				<then>
-					<delete dir="tmp/META-INF/resources/html/editors/alloyeditor" />
+					<delete dir="tmp/META-INF/resources/alloyeditor" />
 
 					<echo>${alloyeditor.file}</echo>
 
-					<unzip src="${third.party.dir}/${alloyeditor.file}" dest="tmp/META-INF/resources/html/editors/_tmp" />
+					<unzip src="${third.party.dir}/${alloyeditor.file}" dest="tmp/META-INF/resources/_tmp" />
 
-					<copy todir="tmp/META-INF/resources/html/editors/alloyeditor" overwrite="true" preservelastmodified="true">
-						<fileset dir="tmp/META-INF/resources/html/editors/_tmp/alloy-editor" />
+					<copy todir="tmp/META-INF/resources/alloyeditor" overwrite="true" preservelastmodified="true">
+						<fileset dir="tmp/META-INF/resources/_tmp/alloy-editor" />
 					</copy>
 
-					<delete dir="tmp/META-INF/resources/html/editors/_tmp" />
+					<delete dir="tmp/META-INF/resources/_tmp" />
 				</then>
 			</if>
 
-			<copy todir="tmp/META-INF/resources/html/editors/alloyeditor" preservelastmodified="true">
-				<fileset dir="${html.editor.dir}/alloyeditor_diffs" />
+			<copy todir="tmp/META-INF/resources/alloyeditor" preservelastmodified="true">
+				<fileset dir="${editor.dir}/alloyeditor_diffs" />
 			</copy>
 
 			<for param="alloy.editor.file">
 				<path>
-					<fileset dir="tmp/META-INF/resources/html/editors/alloyeditor" includes="alloy-editor*.js" />
+					<fileset dir="tmp/META-INF/resources/alloyeditor" includes="alloy-editor*.js" />
 				</path>
 				<sequential>
 					<basename property="alloy.editor.file.name" file="@{alloy.editor.file}" suffix=".js" />
 
-					<concat destfile="tmp/META-INF/resources/html/editors/alloyeditor/liferay-${alloy.editor.file.name}.js">
+					<concat destfile="tmp/META-INF/resources/alloyeditor/liferay-${alloy.editor.file.name}.js">
 						<fileset file="@{alloy.editor.file}" />
-						<fileset dir="${html.editor.dir}/alloyeditor_diffs/buttons" >
+						<fileset dir="${editor.dir}/alloyeditor_diffs/buttons" >
 							<include name="**/*.js" />
 						</fileset>
 					</concat>
@@ -79,16 +79,16 @@
 				<not>
 					<uptodate
 						srcfile="${third.party.dir}/${ckeditor.file}"
-						targetfile="tmp/META-INF/resources/html/editors/ckeditor"
+						targetfile="tmp/META-INF/resources/ckeditor"
 					/>
 				</not>
 				<then>
-					<delete dir="tmp/META-INF/resources/html/editors/ckeditor" />
+					<delete dir="tmp/META-INF/resources/ckeditor" />
 
-					<unzip src="${third.party.dir}/${ckeditor.file}" dest="tmp/META-INF/resources/html/editors" />
+					<unzip src="${third.party.dir}/${ckeditor.file}" dest="tmp/META-INF/resources" />
 
-					<copy todir="tmp/META-INF/resources/html/editors/ckeditor" overwrite="true" preservelastmodified="true">
-						<fileset dir="${html.editor.dir}/ckeditor_diffs" />
+					<copy todir="tmp/META-INF/resources/ckeditor" overwrite="true" preservelastmodified="true">
+						<fileset dir="${editor.dir}/ckeditor_diffs" />
 					</copy>
 
 					<build-ckeditor-plugins-scayt />
@@ -96,8 +96,8 @@
 					<build-ckeditor-plugins-wsc />
 				</then>
 				<else>
-					<copy todir="tmp/META-INF/resources/html/editors/ckeditor" preservelastmodified="true">
-						<fileset dir="${html.editor.dir}/ckeditor_diffs" />
+					<copy todir="tmp/META-INF/resources/ckeditor" preservelastmodified="true">
+						<fileset dir="${editor.dir}/ckeditor_diffs" />
 					</copy>
 				</else>
 			</if>
@@ -106,9 +106,9 @@
 
 	<macrodef name="build-ckeditor-plugins-bbcode">
 		<sequential>
-			<concat destfile="${html.editor.dir}/ckeditor_diffs/plugins/bbcode/bbcode_parser.js">
+			<concat destfile="${editor.dir}/ckeditor_diffs/plugins/bbcode/bbcode_parser.js">
 				<filelist
-					dir="${html.editor.dir}/ckeditor_diffs/plugins/bbcode"
+					dir="${editor.dir}/ckeditor_diffs/plugins/bbcode"
 					files="bbcode_utils.js,lexer.js,parser.js,converter.js"
 				/>
 			</concat>
@@ -130,7 +130,7 @@
 			</if>
 
 			<unzip
-				dest="tmp/META-INF/resources/html/editors/ckeditor/plugins"
+				dest="tmp/META-INF/resources/ckeditor/plugins"
 				src="${third.party.dir}/${scayt.file}"
 			/>
 		</sequential>
@@ -151,7 +151,7 @@
 			</if>
 
 			<unzip
-				dest="tmp/META-INF/resources/html/editors/ckeditor/plugins"
+				dest="tmp/META-INF/resources/ckeditor/plugins"
 				src="${third.party.dir}/${wsc.file}"
 			/>
 		</sequential>
@@ -163,26 +163,26 @@
 				<not>
 					<uptodate
 						srcfile="${third.party.dir}/${tinymce.file}"
-						targetfile="tmp/META-INF/resources/html/editors/tiny_mce"
+						targetfile="tmp/META-INF/resources/tiny_mce"
 					/>
 				</not>
 				<then>
-					<delete dir="tmp/META-INF/resources/html/editors/tiny_mce" />
-					<delete dir="tmp/META-INF/resources/html/editors/tinymce" />
+					<delete dir="tmp/META-INF/resources/tiny_mce" />
+					<delete dir="tmp/META-INF/resources/tinymce" />
 
-					<unzip src="${third.party.dir}/${tinymce.file}" dest="tmp/META-INF/resources/html/editors" />
+					<unzip src="${third.party.dir}/${tinymce.file}" dest="tmp/META-INF/resources" />
 
-					<move todir="tmp/META-INF/resources/html/editors/tiny_mce" preservelastmodified="true">
-						<fileset dir="tmp/META-INF/resources/html/editors/tinymce/js/tinymce">
+					<move todir="tmp/META-INF/resources/tiny_mce" preservelastmodified="true">
+						<fileset dir="tmp/META-INF/resources/tinymce/js/tinymce">
 							<include name="*/**" />
 						</fileset>
 					</move>
 
-					<copy todir="tmp/META-INF/resources/html/editors/tiny_mce" overwrite="true" preservelastmodified="true">
-						<fileset dir="${html.editor.dir}/tiny_mce_diffs" />
+					<copy todir="tmp/META-INF/resources/tiny_mce" overwrite="true" preservelastmodified="true">
+						<fileset dir="${editor.dir}/tiny_mce_diffs" />
 					</copy>
 
-					<delete dir="tmp/META-INF/resources/html/editors/tinymce" />
+					<delete dir="tmp/META-INF/resources/tinymce" />
 				</then>
 			</if>
 		</sequential>

@@ -1,5 +1,5 @@
 (function() {
-	var pluginName = 'restore';
+	var pluginName = 'ajaxsave';
 
 	CKEDITOR.plugins.add(
 		pluginName,
@@ -10,18 +10,18 @@
 					{
 						canUndo: false,
 						exec: function(editor) {
-							editor.fire('restoreContent');
+							editor.fire('saveContent');
 						}
 					}
 				);
 
 				if (editor.ui.addButton) {
 					editor.ui.addButton(
-						'Restore',
+						'AjaxSave',
 						{
 							command: pluginName,
-							icon: themeDisplay.getPathEditors() + '/editors/ckeditor/plugins/restore/assets/restore.png',
-							label: Liferay.Language.get('restore-the-original-content')
+							icon: themeDisplay.getPathEditors() + '/ckeditor/plugins/ajaxsave/assets/save.png',
+							label: editor.lang.save.toolbar
 						}
 					);
 				}

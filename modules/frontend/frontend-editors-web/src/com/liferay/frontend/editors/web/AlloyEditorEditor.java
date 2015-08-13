@@ -32,7 +32,7 @@ public class AlloyEditorEditor extends BaseEditor {
 
 	@Override
 	protected String getJspPath() {
-		return "/editors/alloyeditor.jsp";
+		return "/alloyeditor.jsp";
 	}
 
 }

@@ -7756,17 +7756,6 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void validateDDMStructureFields(
-			DDMStructure ddmStructure, long classNameId,
-			ServiceContext serviceContext, Locale[] locales)
-		throws PortalException {
-
-		Fields fields = DDMUtil.getFields(
-			ddmStructure.getStructureId(), serviceContext);
-
-		validateDDMStructureFields(ddmStructure, classNameId, fields, locales);
-	}
-
-	protected void validateDDMStructureFields(
 			DDMStructure ddmStructure, long classNameId, String content)
 		throws PortalException {
 

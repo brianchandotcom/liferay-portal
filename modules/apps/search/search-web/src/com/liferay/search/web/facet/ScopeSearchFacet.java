@@ -97,7 +97,7 @@ public class ScopeSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getLabel() {
-		return "site";
+		return "any-site";
 	}
 
 	@Override

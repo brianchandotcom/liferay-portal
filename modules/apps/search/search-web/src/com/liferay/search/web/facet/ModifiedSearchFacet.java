@@ -125,7 +125,7 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getLabel() {
-		return "modified";
+		return "any-time";
 	}
 
 	@Override

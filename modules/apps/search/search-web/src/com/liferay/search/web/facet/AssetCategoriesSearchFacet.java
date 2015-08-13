@@ -101,6 +101,11 @@ public class AssetCategoriesSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getLabel() {
+		return "any-category";
+	}
+
+	@Override
+	public String getTitle() {
 		return "category";
 	}
 

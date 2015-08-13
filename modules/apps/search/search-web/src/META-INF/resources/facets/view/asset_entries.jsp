@@ -38,7 +38,7 @@ if (dataJSONObject.has("values")) {
 
 	<ul class="asset-type nav nav-pills nav-stacked">
 		<li class="default facet-value <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
-			<a data-value="" href="javascript:;"><aui:icon image="search" /> <liferay-ui:message key="everything" /></a>
+			<a data-value="" href="javascript:;"><aui:icon image="search" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
 		</li>
 
 		<%

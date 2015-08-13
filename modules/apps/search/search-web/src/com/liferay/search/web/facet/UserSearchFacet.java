@@ -97,6 +97,11 @@ public class UserSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getLabel() {
+		return "any-user";
+	}
+
+	@Override
+	public String getTitle() {
 		return "user";
 	}
 

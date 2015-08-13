@@ -36,7 +36,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 
 	<ul class="nav nav-pills nav-stacked scopes">
 		<li class="default facet-value <%= fieldParam.equals("0") ? "active" : StringPool.BLANK %>">
-			<a data-value="0" href="javascript:;"><aui:icon image="sitemap" /> <liferay-ui:message key="any" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
+			<a data-value="0" href="javascript:;"><aui:icon image="sitemap" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
 		</li>
 
 		<%

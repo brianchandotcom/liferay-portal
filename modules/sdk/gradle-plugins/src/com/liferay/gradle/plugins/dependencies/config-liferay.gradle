@@ -24,34 +24,10 @@ liferay {
 
 		jboss {
 			deployDir = project.properties["app.server.jboss.deploy.dir"] ?: "${->liferay.appServers.jboss.dir}/standalone/deployments"
-			dir = project.properties["app.server.jboss.dir"] ?: "${->liferay.appServerParentDir}/jboss-${->liferay.appServers.jboss.version}"
+			dir = project.properties["app.server.jboss.dir"] ?: "${->liferay.appServerParentDir}/jboss-wildfly-${->liferay.appServers.jboss.version}"
 			libGlobalDir = project.properties["app.server.jboss.lib.global.dir"] ?: "${->liferay.appServers.jboss.dir}/modules/com/liferay/portal/main"
 			portalDir = project.properties["app.server.jboss.portal.dir"] ?: "${->liferay.appServers.jboss.dir}/standalone/deployments/ROOT.war"
-			version = project.properties["app.server.jboss.version"] ?: "7.1.1"
-		}
-
-		jboss5 {
-			deployDir = project.properties["app.server.jboss5.deploy.dir"] ?: "${->liferay.appServers.jboss5.dir}/standalone/deploy"
-			dir = project.properties["app.server.jboss5.dir"] ?: "${->liferay.appServerParentDir}/jboss-${->liferay.appServers.jboss5.version}"
-			libGlobalDir = project.properties["app.server.jboss5.lib.global.dir"] ?: "${->liferay.appServers.jboss5.dir}/server/default/lib"
-			portalDir = project.properties["app.server.jboss5.portal.dir"] ?: "${->liferay.appServers.jboss5.dir}/standalone/deployments/ROOT.war"
-			version = project.properties["app.server.jboss5.version"] ?: "5.1.0"
-		}
-
-		jbossEap {
-			deployDir = project.properties["app.server.jbossEap.deploy.dir"] ?: "${->liferay.appServers.jbossEap.dir}/standalone/deployments"
-			dir = project.properties["app.server.jbossEap.dir"] ?: "${->liferay.appServerParentDir}/jboss-eap-${->liferay.appServers.jbossEap.version}"
-			libGlobalDir = project.properties["app.server.jbossEap.lib.global.dir"] ?: "${->liferay.appServers.jbossEap.dir}/modules/com/liferay/portal/main"
-			portalDir = project.properties["app.server.jbossEap.portal.dir"] ?: "${->liferay.appServers.jbossEap.dir}/standalone/deployments/ROOT.war"
-			version = project.properties["app.server.jbossEap.version"] ?: "6.1.0"
-		}
-
-		jbossWildfly {
-			deployDir = project.properties["app.server.jbossWildfly.deploy.dir"] ?: "${->liferay.appServers.jbossWildfly.dir}/standalone/deployments"
-			dir = project.properties["app.server.jbossWildfly.dir"] ?: "${->liferay.appServerParentDir}/jboss-wildfly-${->liferay.appServers.jbossWildfly.version}"
-			libGlobalDir = project.properties["app.server.jbossWildfly.lib.global.dir"] ?: "${->liferay.appServers.jbossWildfly.dir}/modules/com/liferay/portal/main"
-			portalDir = project.properties["app.server.jbossWildfly.portal.dir"] ?: "${->liferay.appServers.jbossWildfly.dir}/standalone/deployments/ROOT.war"
-			version = project.properties["app.server.jbossWildfly.version"] ?: "8.1.0"
+			version = project.properties["app.server.jboss.version"] ?: "8.1.0"
 		}
 
 		jetty {

@@ -3537,19 +3537,22 @@
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
 		<execute macro="CalendarEvent#add">
-			<var name="addRSVPEnabled" value="true" />
 			<var name="eventTitle" value="Calendar Event Title" />
 			<var name="eventType" value="Regular" />
 			<var name="optionSet" value="true" />
 			<var name="pageName" value="Calendar Page" />
-			<var name="rsvp" value="Yes" />
-			<var name="rsvpYes" value="Yes" />
 			<var name="tag" value="true" />
 			<var name="tagText" value="tag1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#addRSVP">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="eventType" value="Regular" />
+			<var name="rsvp" value="Yes" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">

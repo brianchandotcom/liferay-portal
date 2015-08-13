@@ -130,7 +130,7 @@ boolean showPrototypes = ParamUtil.getBoolean(request, "showPrototypes", true);
 	<portlet:param name="mvcPath" value="/edit_site.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editGroupURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
+<aui:form action="<%= editGroupURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
@@ -155,29 +155,3 @@ boolean showPrototypes = ParamUtil.getBoolean(request, "showPrototypes", true);
 		showButtons="<%= true %>"
 	/>
 </aui:form>
-
-<aui:script sandbox="<%= true %>">
-	var applicationAdapter = $('#<portlet:namespace />customJspServletContextName');
-
-	if (applicationAdapter.length) {
-		var publicPages = $('#<portlet:namespace />publicLayoutSetPrototypeId');
-		var privatePages = $('#<portlet:namespace />privateLayoutSetPrototypeId');
-
-		var toggleCompatibleSiteTemplates = function(event) {
-			var siteTemplate = applicationAdapter.val();
-
-			var options = $();
-
-			options = options.add(publicPages.find('option[data-servletContextName]'));
-			options = options.add(privatePages.find('option[data-servletContextName]'));
-
-			options.prop('disabled', false);
-
-			options.filter(':not([data-servletContextName=' + siteTemplate + '])').prop('disabled', true);
-		};
-
-		applicationAdapter.on('change', toggleCompatibleSiteTemplates);
-
-		toggleCompatibleSiteTemplates();
-	}
-</aui:script>

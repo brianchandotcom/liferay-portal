@@ -418,6 +418,32 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 
 						</aui:select>
 					</aui:fieldset>
+
+					<aui:script sandbox="<%= true %>">
+						var applicationAdapter = $('#<portlet:namespace />customJspServletContextName');
+
+						if (applicationAdapter.length) {
+							var publicPages = $('#<portlet:namespace />publicLayoutSetPrototypeId');
+							var privatePages = $('#<portlet:namespace />privateLayoutSetPrototypeId');
+
+							var toggleCompatibleSiteTemplates = function(event) {
+								var siteTemplate = applicationAdapter.val();
+
+								var options = $();
+
+								options = options.add(publicPages.find('option[data-servletContextName]'));
+								options = options.add(privatePages.find('option[data-servletContextName]'));
+
+								options.prop('disabled', false);
+
+								options.filter(':not([data-servletContextName=' + siteTemplate + '])').prop('disabled', true);
+							};
+
+							applicationAdapter.on('change', toggleCompatibleSiteTemplates);
+
+							toggleCompatibleSiteTemplates();
+						}
+					</aui:script>
 				</c:if>
 			</c:when>
 			<c:when test="<%= layoutSetPrototype != null %>">

@@ -16,7 +16,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-boolean scroll = GetterUtil.getBoolean(request.getAttribute("iferay-ui:icon-menu:scroll"));
+boolean scroll = GetterUtil.getBoolean(request.getAttribute("liferay-ui:icon-menu:scroll"));
 %>
 
 		</ul>

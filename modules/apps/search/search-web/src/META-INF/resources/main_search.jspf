@@ -83,7 +83,7 @@ Hits hits = indexer.search(searchContext);
 
 				request.setAttribute("search.jsp-facet", searchFacet.getFacet());
 
-				searchFacet.includeView(request, response);
+				searchFacet.includeView(request, new PipingServletResponse(pageContext));
 			}
 			%>
 

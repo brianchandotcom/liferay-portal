@@ -1314,7 +1314,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		Project project = buildUpgradeTableTask.getProject();
 
-		File file = getFileProperty(project, "upgrade.table.dir");
+		File file = GradleUtil.getProperty(
+			project, "upgrade.table.dir", (File)null);
 
 		if (file != null) {
 			buildUpgradeTableTask.setUpgradeTableDirName(
@@ -1900,20 +1901,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected String getDeployedFileName(Project project, File sourceFile) {
 		return sourceFile.getName();
-	}
-
-	protected File getFileProperty(Project project, String name) {
-		if (!project.hasProperty(name)) {
-			return null;
-		}
-
-		Object value = project.property(name);
-
-		if ((value instanceof String) && Validator.isNull((String)value)) {
-			return null;
-		}
-
-		return project.file(value);
 	}
 
 	protected File getJavaDir(Project project) {

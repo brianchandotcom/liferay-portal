@@ -22,6 +22,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 if (Validator.isNull(redirect)) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
+	portletURL.setParameter("mvcPath", "/view_membership_requests.jsp");
+
 	redirect = portletURL.toString();
 }
 

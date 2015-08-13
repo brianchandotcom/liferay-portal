@@ -16,14 +16,13 @@
 
 <%@ include file="/html/taglib/ui/app_view_entry/init.jsp" %>
 
-<div class="app-view-entry app-view-entry-taglib entry-display-style <%= cssClass %> <%= showCheckbox ? "selectable" : StringPool.BLANK %> " <%= AUIUtil.buildData(data) %> <%= showCheckbox ? "data-draggable='true'" : StringPool.BLANK %> data-title="<%= HtmlUtil.escapeAttribute(shortTitle) %>">
 	<h5>
 		<c:choose>
 			<c:when test="<%= Validator.isNull(url) %>">
 				<%= HtmlUtil.escape(title) %>
 			</c:when>
 			<c:otherwise>
-				<a class="entry-link" data-folder="<%= folder ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-folder-id="<%= rowCheckerId %>" href="<%= url %>" title="<%= linkTitle %>">
+				<a href="<%= url %>" title="<%= linkTitle %>">
 					<%= HtmlUtil.escape(title) %>
 				</a>
 			</c:otherwise>
@@ -146,4 +145,3 @@
 	<c:if test="<%= !folder && (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">
 		<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" view="lexicon" />
 	</c:if>
-</div>

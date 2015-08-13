@@ -4,7 +4,7 @@
 	<portlet>
 		<portlet-name>9</portlet-name>
 		<display-name>Admin</display-name>
-        <portlet-class>com.liferay.portlet.admin.portlet.AdminPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.admin.portlet.AdminPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/admin/</value>

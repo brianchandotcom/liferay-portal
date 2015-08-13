@@ -31,7 +31,8 @@ import javax.portlet.RenderResponse;
 		"mvc.command.name=/admin_server/edit_document_library_extra_settings"
 	}
 )
-public class EditDocumentLibraryExtraSettingsMVCRenderCommand implements MVCRenderCommand {
+public class EditDocumentLibraryExtraSettingsMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(

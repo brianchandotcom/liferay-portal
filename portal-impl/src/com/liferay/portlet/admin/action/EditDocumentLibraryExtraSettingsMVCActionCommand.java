@@ -14,16 +14,6 @@
 
 package com.liferay.portlet.admin.action;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -40,6 +30,9 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoPresetUtil;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+
 /**
  * @author Alexander Chow
  * @author Philip Jones
@@ -52,7 +45,7 @@ import com.liferay.portlet.expando.util.ExpandoPresetUtil;
 	},
 	service = MVCActionCommand.class
 )
-public class EditDocumentLibraryExtraSettingsMVCActionCommand 
+public class EditDocumentLibraryExtraSettingsMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override

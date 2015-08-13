@@ -127,25 +127,6 @@
 			<forward name="portal.verify_email_address" path="portal.verify_email_address" />
 		</action>
 
-		<!-- Admin Plugins -->
-
-		<action path="/admin_plugins/edit_server" type="com.liferay.portlet.admin.action.EditServerAction">
-			<forward name="portlet.admin.error" path="portlet.admin.error" />
-		</action>
-
-		<action path="/admin_plugins/view" forward="portlet.admin.view" />
-
-		<!-- Admin Server -->
- 
-		<action path="/admin_server/edit_server" type="com.liferay.portlet.admin.action.EditServerAction">
-			<forward name="portlet.admin.edit_permissions" path="portlet.admin.edit_permissions" />
-			<forward name="portlet.admin.error" path="portlet.admin.error" />
-		</action>
-
-		<action path="/admin_server/view" forward="portlet.admin.view" />
-
-		<action path="/admin_server/view_chart" type="com.liferay.portlet.admin.action.ViewChartAction" />
-
 		<!-- Asset -->
 
 		<action path="/asset/get_categories" type="com.liferay.portlet.asset.action.GetCategoriesAction" />

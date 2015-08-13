@@ -14,23 +14,6 @@
 
 package com.liferay.portlet.admin.action;
 
-import java.io.File;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletPreferences;
-import javax.portlet.PortletSession;
-import javax.portlet.PortletURL;
-import javax.portlet.WindowState;
-
-import org.apache.log4j.Level;
-
 import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.captcha.CaptchaImpl;
 import com.liferay.portal.captcha.recaptcha.ReCaptchaImpl;
@@ -110,6 +93,24 @@ import com.liferay.portlet.admin.util.CleanUpPermissionsUtil;
 import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 import com.liferay.util.log4j.Log4JUtil;
 
+import java.io.File;
+
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletSession;
+import javax.portlet.PortletURL;
+import javax.portlet.WindowState;
+
+import org.apache.log4j.Level;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
@@ -142,7 +143,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 				PrincipalException.MustBeOmniadmin.class.getName());
 
 			actionResponse.setRenderParameter(
-					"mvcPath", "/html/portlet/admin/error.jsp" );
+				"mvcPath", "/html/portlet/admin/error.jsp" );
 
 			return;
 		}
@@ -151,7 +152,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String redirect = null;
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 		if (cmd.equals("addLogLevel")) {
 			addLogLevel(actionRequest);
@@ -182,10 +183,10 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else if (cmd.equals("installXuggler")) {
 			installXuggler(actionRequest, actionResponse);
-		
+
 			actionResponse.setRenderParameter(
-                    "mvcPath", ActionConstants.COMMON_NULL);
-			
+				"mvcPath", ActionConstants.COMMON_NULL);
+
 			return;
 		}
 		else if (cmd.equals("reindex")) {
@@ -353,10 +354,10 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			jsonObject.put("success", Boolean.TRUE);
 
 			JSONPortletResponseUtil.writeJSON(
-                    actionRequest, actionResponse, jsonObject);
+				actionRequest, actionResponse, jsonObject);
 
-            actionResponse.setRenderParameter(
-                            "mvcPath", ActionConstants.COMMON_NULL);
+			actionResponse.setRenderParameter(
+							"mvcPath", ActionConstants.COMMON_NULL);
 		}
 		catch (Exception e) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -365,10 +366,10 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			jsonObject.put("success", Boolean.FALSE);
 
 			JSONPortletResponseUtil.writeJSON(
-                    actionRequest, actionResponse, jsonObject);
+				actionRequest, actionResponse, jsonObject);
 
-            actionResponse.setRenderParameter(
-                            "mvcPath", ActionConstants.COMMON_NULL);
+			actionResponse.setRenderParameter(
+							"mvcPath", ActionConstants.COMMON_NULL);
 		}
 
 		progressTracker.finish(actionRequest);
@@ -446,11 +447,11 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		String language = ParamUtil.getString(actionRequest, "language");
 		String script = ParamUtil.getString(actionRequest, "script");
 
-		PortletConfig portletConfig =
-                PortletConfigFactoryUtil.get(PortletKeys.ADMIN_SERVER);
+		PortletConfig portletConfig = PortletConfigFactoryUtil.get(
+			PortletKeys.ADMIN_SERVER);
 
-        PortletContext portletContext = portletConfig.getPortletContext();
-        
+		PortletContext portletContext = portletConfig.getPortletContext();
+
 		Map<String, Object> portletObjects =
 			ScriptingHelperUtil.getPortletObjects(
 				portletConfig, portletContext, actionRequest, actionResponse);

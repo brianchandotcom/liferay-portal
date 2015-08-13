@@ -207,6 +207,8 @@ public interface PropsKeys {
 
 	public static final String AUTO_DEPLOY_WEBSPHERE_WSADMIN_PROPERTIES_FILE = "auto.deploy.websphere.wsadmin.properties.file.name";
 
+	public static final String AUTO_DEPLOY_WILDFLY_PREFIX = "auto.deploy.wildfly.prefix";
+
 	public static final String AUTO_LOGIN_HOOKS = "auto.login.hooks";
 
 	public static final String AUTO_LOGIN_IGNORE_HOSTS = "auto.login.ignore.hosts";

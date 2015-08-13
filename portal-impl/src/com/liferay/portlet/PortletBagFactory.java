@@ -281,7 +281,9 @@ public class PortletBagFactory {
 		properties.put("javax.portlet.name", portlet.getPortletId());
 
 		return ServiceTrackerCollections.list(
-			clazz, "(javax.portlet.name=" + portlet.getPortletId() + ")",
+			clazz,
+			"(|(javax.portlet.name=" + portlet.getPortletId() +
+				")(javax.portlet.name=ALL))",
 			properties);
 	}
 

@@ -66,7 +66,6 @@ import com.liferay.portlet.DefaultControlPanelEntryFactory;
 import com.liferay.portlet.PortletQNameUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
-import com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
@@ -4255,8 +4254,7 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * The name of the portlet data handler class of the portlet.
 	 */
-	private String _portletDataHandlerClass =
-		DefaultConfigurationPortletDataHandler.class.getName();
+	private String _portletDataHandlerClass;
 
 	/**
 	 * The filters of the portlet.

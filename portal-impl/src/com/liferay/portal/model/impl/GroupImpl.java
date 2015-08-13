@@ -62,6 +62,7 @@ import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.staging.StagingConstants;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 
@@ -1036,8 +1037,12 @@ public class GroupImpl extends GroupBaseImpl {
 		try {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
-			String portletDataHandlerClass =
-				portlet.getPortletDataHandlerClass();
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if (portletDataHandler == null) {
+				return false;
+			}
 
 			for (Map.Entry<String, String> entry :
 					typeSettingsProperties.entrySet()) {
@@ -1054,8 +1059,8 @@ public class GroupImpl extends GroupBaseImpl {
 				Portlet stagedPortlet = PortletLocalServiceUtil.getPortletById(
 					stagedPortletId);
 
-				if (portletDataHandlerClass.equals(
-						stagedPortlet.getPortletDataHandlerClass())) {
+				if (portletDataHandler.equals(
+						stagedPortlet.getPortletDataHandlerInstance())) {
 
 					return GetterUtil.getBoolean(entry.getValue());
 				}

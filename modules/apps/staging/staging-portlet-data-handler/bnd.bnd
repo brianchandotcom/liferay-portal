@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Staging Portlet Data Handler
+Bundle-SymbolicName: com.liferay.staging.portletdatahandler
+Bundle-Version: 1.0.0
+Include-Resource: classes

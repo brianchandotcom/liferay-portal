@@ -198,6 +198,7 @@
 				setup.wizard.enabled,\
 				solr.enabled,\
 				test.assert.javascript.errors,\
+				test.smtp.server.enabled,\
 				testcase.url,\
 				testray.component.names,\
 				testray.main.component.name,\

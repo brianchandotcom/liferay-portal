@@ -24,15 +24,15 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
-		"mvc.command.name=/", "mvc.command.name=/message_boards/view"
+		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+		"mvc.command.name=/", "mvc.command.name=/message_boards_admin/view"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewMVCRenderCommand extends BaseViewMVCRenderCommand {
+public class AdminViewMVCRenderCommand extends BaseViewMVCRenderCommand {
 
-	public ViewMVCRenderCommand() {
-		super("/message_boards/view.jsp");
+	public AdminViewMVCRenderCommand() {
+		super("/message_boards_admin/view.jsp");
 	}
 
 }

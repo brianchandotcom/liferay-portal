@@ -23,10 +23,20 @@ import java.util.concurrent.TimeUnit;
 public class IdempotentRetryAssert {
 
 	public static <T> T retryAssert(
-			long timeout, TimeUnit timeUnit, Callable<T> callable)
+			long timeout, TimeUnit timeoutTimeUnit, Callable<T> callable)
 		throws Exception {
 
-		long deadline = System.currentTimeMillis() + timeUnit.toMillis(timeout);
+		return retryAssert(
+			timeout, timeoutTimeUnit, 0, TimeUnit.SECONDS, callable);
+	}
+
+	public static <T> T retryAssert(
+			long timeout, TimeUnit timeoutTimeUnit, long pause,
+			TimeUnit pauseTimeUnit, Callable<T> callable)
+		throws Exception {
+
+		long deadline = System.currentTimeMillis() + timeoutTimeUnit.toMillis(
+			timeout);
 
 		while (true) {
 			try {
@@ -37,6 +47,8 @@ public class IdempotentRetryAssert {
 					throw ae;
 				}
 			}
+
+			Thread.sleep(pauseTimeUnit.toMillis(pause));
 		}
 	}
 

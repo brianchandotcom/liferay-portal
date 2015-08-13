@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
@@ -65,6 +64,8 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang.ArrayUtils;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -74,7 +75,6 @@ import org.junit.Test;
 /**
  * @author Eudaldo Alonso
  */
-@Sync
 public abstract class BaseAssetSearchTestCase {
 
 	@ClassRule
@@ -1178,7 +1178,7 @@ public abstract class BaseAssetSearchTestCase {
 		throws Exception {
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
+			10, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
 			new Callable<Void>() {
 
 				@Override
@@ -1192,6 +1192,16 @@ public abstract class BaseAssetSearchTestCase {
 				}
 
 			});
+	}
+
+	protected String[] format(Date[] dates, DateFormat dateFormat) {
+		String[] strings = new String[dates.length];
+
+		for (int i = 0; i < strings.length; i++) {
+			strings[i] = dateFormat.format(dates[i]);
+		}
+
+		return strings;
 	}
 
 	protected Date[] generateRandomDates(Date startDate, int size) {
@@ -1226,6 +1236,42 @@ public abstract class BaseAssetSearchTestCase {
 		return null;
 	}
 
+	protected Date[] getExpirationDates(
+			List<AssetEntry> assetEntries, String orderByType)
+		throws Exception {
+
+		Date[] dates = new Date[assetEntries.size()];
+
+		for (int i = 0; i < dates.length; i++) {
+			int index = i;
+
+			if (orderByType.equals("desc")) {
+				index = dates.length - 1 - i;
+			}
+
+			AssetEntry assetEntry = assetEntries.get(index);
+
+			dates[i] = assetEntry.getExpirationDate();
+		}
+
+		return dates;
+	}
+
+	protected String[] getOrderedTitles(
+			List<Map<Locale, String>> orderedTitleMaps, Locale locale)
+		throws Exception {
+
+		String[] titles = new String[orderedTitleMaps.size()];
+
+		for (int i = 0; i < titles.length; i++) {
+			Map<Locale, String> orderedTitleMap = orderedTitleMaps.get(i);
+
+			titles[i] = orderedTitleMap.get(locale);
+		}
+
+		return titles;
+	}
+
 	protected BaseModel<?> getParentBaseModel(
 			Group group, ServiceContext serviceContext)
 		throws Exception {
@@ -1235,11 +1281,25 @@ public abstract class BaseAssetSearchTestCase {
 
 	protected abstract String getSearchKeywords();
 
+	protected String[] getTitles(List<AssetEntry> assetEntries, Locale locale)
+		throws Exception {
+
+		String[] titles = new String[assetEntries.size()];
+
+		for (int i = 0; i < titles.length; i++) {
+			AssetEntry assetEntry = assetEntries.get(i);
+
+			titles[i] = assetEntry.getTitle(locale);
+		}
+
+		return titles;
+	}
+
 	protected boolean isLocalizableTitle() {
 		return true;
 	}
 
-	protected AssetEntry[] search(
+	protected List<AssetEntry> search(
 			AssetEntryQuery assetEntryQuery, SearchContext searchContext)
 		throws Exception {
 
@@ -1247,9 +1307,7 @@ public abstract class BaseAssetSearchTestCase {
 			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
-		List<AssetEntry> assetEntries = AssetUtil.getAssetEntries(results);
-
-		return assetEntries.toArray(new AssetEntry[assetEntries.size()]);
+		return AssetUtil.getAssetEntries(results);
 	}
 
 	protected int searchCount(
@@ -1359,8 +1417,8 @@ public abstract class BaseAssetSearchTestCase {
 	}
 
 	protected void testOrderByCreateDate(
-			AssetEntryQuery assetEntryQuery, String orderByType,
-			String[] titles, String[] orderedTitles)
+			final AssetEntryQuery assetEntryQuery, String orderByType,
+			String[] titles, final String[] orderedTitles)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -1369,36 +1427,54 @@ public abstract class BaseAssetSearchTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group1, serviceContext);
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+		final SearchContext searchContext =
+			SearchContextTestUtil.getSearchContext();
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
 		BaseModel<?>[] baseModels = new BaseModel[titles.length];
 
+		long createDate = 0;
+
 		for (int i = 0; i < titles.length; i++) {
-			String title = titles[i];
+			long to1Second = 1000 - (System.currentTimeMillis() - createDate);
+
+			if (to1Second > 0) {
+				Thread.sleep(to1Second);
+			}
+
+			createDate = System.currentTimeMillis();
 
 			baseModels[i] = addBaseModel(
-				parentBaseModel, title, serviceContext);
+				parentBaseModel, titles[i], serviceContext);
 		}
 
 		assetEntryQuery.setOrderByCol1("createDate");
 		assetEntryQuery.setOrderByType1(orderByType);
 
-		AssetEntry[] assetEntries = search(assetEntryQuery, searchContext);
+		IdempotentRetryAssert.retryAssert(
+			10, TimeUnit.SECONDS,
+			new Callable<Void>() {
 
-		for (int i = 0; i < assetEntries.length; i++) {
-			AssetEntry assetEntry = assetEntries[i];
+				@Override
+				public Void call() throws Exception {
+					List<AssetEntry> assetEntries = search(
+						assetEntryQuery, searchContext);
 
-			String title = assetEntry.getTitle(LocaleUtil.getDefault());
+					Assert.assertEquals(
+						ArrayUtils.toString(orderedTitles),
+						ArrayUtils.toString(
+							getTitles(assetEntries, LocaleUtil.getDefault())));
 
-			Assert.assertEquals(title, orderedTitles[i]);
-		}
+					return null;
+				}
+
+			});
 	}
 
 	protected void testOrderByExpirationDate(
-			AssetEntryQuery assetEntryQuery, String orderByType,
-			Date[] expirationDates)
+			final AssetEntryQuery assetEntryQuery, final String orderByType,
+			final Date[] expirationDates)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -1407,7 +1483,8 @@ public abstract class BaseAssetSearchTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			_group1, serviceContext);
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+		final SearchContext searchContext =
+			SearchContextTestUtil.getSearchContext();
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
@@ -1422,32 +1499,36 @@ public abstract class BaseAssetSearchTestCase {
 
 		Arrays.sort(expirationDates);
 
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+		final DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			PropsValues.INDEX_DATE_FORMAT_PATTERN);
 
-		AssetEntry[] assetEntries = search(assetEntryQuery, searchContext);
+		IdempotentRetryAssert.retryAssert(
+			10, TimeUnit.SECONDS,
+			new Callable<Void>() {
 
-		for (int i = 0; i < assetEntries.length; i++) {
-			AssetEntry assetEntry = assetEntries[i];
+				@Override
+				public Void call() throws Exception {
+					List<AssetEntry> assetEntries = search(
+						assetEntryQuery, searchContext);
 
-			String expirationDate = dateFormat.format(
-				assetEntry.getExpirationDate());
+					Assert.assertEquals(
+						ArrayUtils.toString(
+							format(expirationDates, dateFormat)),
+						ArrayUtils.toString(
+							format(
+								getExpirationDates(assetEntries, orderByType),
+								dateFormat)));
 
-			int index = i;
+					return null;
+				}
 
-			if (orderByType.equals("desc")) {
-				index = assetEntries.length - 1 - i;
-			}
-
-			Assert.assertEquals(
-				expirationDate, dateFormat.format(expirationDates[index]));
-		}
+			});
 	}
 
 	protected void testOrderByTitle(
-			AssetEntryQuery assetEntryQuery, String orderByType,
+			final AssetEntryQuery assetEntryQuery, String orderByType,
 			List<Map<Locale, String>> titleMaps,
-			List<Map<Locale, String>> orderedTitleMaps, Locale[] locales)
+			final List<Map<Locale, String>> orderedTitleMaps, Locale[] locales)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -1463,24 +1544,33 @@ public abstract class BaseAssetSearchTestCase {
 		assetEntryQuery.setOrderByCol1("title");
 		assetEntryQuery.setOrderByType1(orderByType);
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+		final SearchContext searchContext =
+			SearchContextTestUtil.getSearchContext();
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
-		for (Locale locale : locales) {
+		for (final Locale locale : locales) {
 			searchContext.setLocale(locale);
 
-			AssetEntry[] assetEntries = search(assetEntryQuery, searchContext);
+			IdempotentRetryAssert.retryAssert(
+				10, TimeUnit.SECONDS,
+				new Callable<Void>() {
 
-			for (int i = 0; i < assetEntries.length; i++) {
-				AssetEntry assetEntry = assetEntries[i];
+					@Override
+					public Void call() throws Exception {
+						List<AssetEntry> assetEntries = search(
+							assetEntryQuery, searchContext);
 
-				String title = assetEntry.getTitle(locale);
+						Assert.assertEquals(
+							ArrayUtils.toString(
+								getOrderedTitles(orderedTitleMaps, locale)),
+							ArrayUtils.toString(
+								getTitles(assetEntries, locale)));
 
-				Map<Locale, String> orderedTitleMap = orderedTitleMaps.get(i);
+						return null;
+					}
 
-				Assert.assertEquals(orderedTitleMap.get(locale), title);
-			}
+				});
 		}
 	}
 

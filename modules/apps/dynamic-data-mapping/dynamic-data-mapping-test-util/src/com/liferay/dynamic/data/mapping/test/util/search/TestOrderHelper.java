@@ -332,7 +332,7 @@ public abstract class TestOrderHelper {
 			ddmStructure);
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
+			10, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
 			new Callable<Void>() {
 
 				@Override

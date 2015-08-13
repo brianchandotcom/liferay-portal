@@ -774,6 +774,24 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="send-testray-results">
+		<attribute name="test.results.suite.dir" default="${default.test.results.suite.dir}" />
+		<attribute name="test.results.suite.file.name" default="${default.test.results.suite.file.name}" />
+		<attribute name="testray.results.dir" />
+
+		<sequential>
+			<local name="test.results.suite.file" />
+
+			<property name="test.results.suite.file" value="@{test.results.suite.dir}/@{test.results.suite.file.name}" />
+
+			<echo>Sending testray results to @{testray.results.dir}</echo>
+
+			<copy failonerror="false" todir="@{testray.results.dir}">
+				<fileset dir="${test.results.suite.dir}" erroronmissing="false" includes="TESTS-*.xml" />
+			</copy>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="set-testray-required-properties">
 		<sequential>
 			<get-env-app-server />

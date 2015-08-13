@@ -3540,9 +3540,9 @@
 			<var name="eventTitle" value="Calendar Event Title" />
 			<var name="eventType" value="Regular" />
 			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="tag" />
 			<var name="pageName" value="Calendar Page" />
-			<var name="tag" value="true" />
-			<var name="tagText" value="tag1" />
+			<var name="specificOptionSetValue" value="tag1" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

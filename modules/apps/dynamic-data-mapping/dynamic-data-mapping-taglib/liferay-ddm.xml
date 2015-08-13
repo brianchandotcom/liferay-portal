@@ -26,8 +26,8 @@
 			</attribute>
 			<attribute>
 				<name>ddmFormValues</name>
-				<inputType>com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues</inputType>
-				<outputType>com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues</outputType>
+				<inputType>com.liferay.dynamic.data.mapping.storage.DDMFormValues</inputType>
+				<outputType>com.liferay.dynamic.data.mapping.storage.DDMFormValues</outputType>
 			</attribute>
 			<attribute>
 				<name>fieldsNamespace</name>

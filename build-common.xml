@@ -1108,6 +1108,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<update-sdk-properties />
 				</then>
 			</if>
+
+			<update-gradle-properties />
 		</sequential>
 	</macrodef>
 
@@ -1296,6 +1298,140 @@ rerun your task.
 					</junit-cmd>
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="update-gradle-properties">
+		<sequential>
+			<propertyselector
+				casesensitive="false"
+				delimiter=","
+				distinct="true"
+				match="app\.(server\.(glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere).+)\.dir"
+				override="true"
+				property="app.server.dir.property.list"
+				select="\1"
+			/>
+
+			<sortlist
+				delimiter=","
+				override="true"
+				property="app.server.dir.property.list"
+				value="${app.server.dir.property.list}"
+			/>
+
+			<delete file="${basedir}/.gradle/gradle.properties" />
+
+			<for list="${app.server.dir.property.list}" param="app.server.dir.property">
+				<sequential>
+					<propertycopy
+						from="app.@{app.server.dir.property}.dir"
+						name="temp.app.server.dir"
+					/>
+
+					<echo
+						append="true"
+						file="${basedir}/.gradle/gradle.properties"
+					>
+						app.@{app.server.dir.property}.dir=${temp.app.server.dir}
+					</echo>
+
+					<var name="temp.app.server.dir" unset="true" />
+				</sequential>
+			</for>
+
+			<propertyselector
+				casesensitive="false"
+				delimiter="," match="ivy.pom.(.+)"
+				property="ivy.pom.property.list"
+				select="\1"
+			/>
+
+			<sortlist
+				delimiter=","
+				override="true"
+				property="ivy.pom.property.list"
+				value="${ivy.pom.property.list}"
+			/>
+
+			<if>
+				<not>
+					<equals arg1="${ivy.pom.property.list}" arg2="$${ivy.pom.property.list}" />
+				</not>
+				<then>
+					<for list="${ivy.pom.property.list}" param="ivy.pom.property">
+						<sequential>
+							<propertycopy
+								from="ivy.pom.@{ivy.pom.property}"
+								name="temp.ivy.pom"
+							/>
+
+							<echo
+								append="true"
+								file="${basedir}/.gradle/gradle.properties"
+							>
+								pom.@{ivy.pom.property}=${temp.ivy.pom}
+							</echo>
+
+							<var name="temp.ivy.pom" unset="true" />
+						</sequential>
+					</for>
+				</then>
+			</if>
+
+			<propertyselector
+				casesensitive="false"
+				delimiter="," match="sonatype.(.+)"
+				property="sonatype.property.list"
+				select="\1"
+			/>
+
+			<sortlist
+				delimiter=","
+				override="true"
+				property="sonatype.property.list"
+				value="${sonatype.property.list}"
+			/>
+
+			<if>
+				<not>
+					<equals arg1="${sonatype.property.list}" arg2="$${sonatype.property.list}" />
+				</not>
+				<then>
+					<for list="${sonatype.property.list}" param="sonatype.property">
+						<sequential>
+							<propertycopy
+								from="sonatype.@{sonatype.property}"
+								name="temp.sonatype"
+							/>
+
+							<echo
+								append="true"
+								file="${basedir}/.gradle/gradle.properties"
+							>
+								sonatype.@{sonatype.property}=${temp.sonatype}
+							</echo>
+
+							<var name="temp.sonatype" unset="true" />
+						</sequential>
+					</for>
+				</then>
+			</if>
+
+			<echo
+				append="true"
+				file="${basedir}/.gradle/gradle.properties"
+			>
+				app.server.type=${app.server.type}
+				auto.deploy.dir=${liferay.home}/osgi/apps
+				junit.java.integration.gc=${junit.java.integration.gc}
+				junit.java.unit.gc=${junit.java.unit.gc}
+				liferay.home=${liferay.home}
+				microsoft.translator.client.id=${microsoft.translator.client.id}
+				microsoft.translator.client.secret=${microsoft.translator.client.secret}
+				sass.compiler.class.name=${sass.compiler.class.name}
+				upgrade.table.dir=${upgrade.table.dir}
+			</echo>
 		</sequential>
 	</macrodef>
 
@@ -1854,6 +1990,10 @@ rerun your task.
 		<report-test-coverage
 			test.type="unit"
 		/>
+	</target>
+
+	<target name="update-gradle-properties">
+		<update-gradle-properties />
 	</target>
 
 	<target name="update-sdk-properties">

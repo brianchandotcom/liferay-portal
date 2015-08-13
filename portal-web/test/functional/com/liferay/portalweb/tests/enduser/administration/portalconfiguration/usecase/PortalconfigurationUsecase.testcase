@@ -97,7 +97,7 @@
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
-			<var name="virtualHostsURL" value="www.able.com:8080" />
+			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">
@@ -208,7 +208,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Page" />
-			<var name="virtualHostsURL" value="www.able.com:8080" />
+			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -217,7 +217,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Page" />
-			<var name="virtualHostsURL" value="www.able.com:8080" />
+			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

@@ -203,6 +203,7 @@
 		<execute macro="Page#addPG">
 			<var name="defaultURL" value="false" />
 			<var name="pageName" value="Web Content Page" />
+			<var name="virtualHostsURL" value="http://www.able.com:8080" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.extensions;
 
+import com.liferay.gradle.util.GradleUtil;
+
 import groovy.lang.Closure;
 
 import java.io.File;
@@ -86,7 +88,13 @@ public class LiferayExtension {
 	}
 
 	public int getJmxRemotePort() {
-		return _jmxRemotePort;
+		Integer jmxRemotePort = GradleUtil.toInteger(_jmxRemotePort);
+
+		if (jmxRemotePort != null) {
+			return jmxRemotePort;
+		}
+
+		return 0;
 	}
 
 	public File getLiferayHome() {
@@ -121,7 +129,7 @@ public class LiferayExtension {
 		_deployDir = deployDir;
 	}
 
-	public void setJmxRemotePort(int jmxRemotePort) {
+	public void setJmxRemotePort(Object jmxRemotePort) {
 		_jmxRemotePort = jmxRemotePort;
 	}
 
@@ -139,7 +147,7 @@ public class LiferayExtension {
 	private final NamedDomainObjectContainer<AppServer> _appServers;
 	private String _appServerType;
 	private Object _deployDir;
-	private int _jmxRemotePort;
+	private Object _jmxRemotePort;
 	private Object _liferayHome;
 	private String _portalVersion;
 

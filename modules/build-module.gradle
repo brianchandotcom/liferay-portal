@@ -12,26 +12,12 @@ buildscript {
 	}
 
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.16"
+		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.17"
 	}
 }
 
 apply plugin: "com.liferay.plugin"
 apply plugin: "eclipse"
-
-liferay {
-	appServerParentDir = System.properties["app.server.parent.dir"] ?: rootProject.file("../../bundles")
-
-	if (deployDir == new File(appServerParentDir, "deploy")) {
-		deployDir = new File(liferayHome, "osgi/apps")
-	}
-
-	String liferayHomeSystemProperty = System.properties["liferay.home"]
-
-	if (liferayHomeSystemProperty) {
-		liferayHome = liferayHomeSystemProperty
-	}
-}
 
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")
 File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
@@ -189,39 +175,6 @@ sourceSets {
 		compileClasspath = configurations.portal + compileClasspath + configurations.portalTest
 		runtimeClasspath = configurations.portal + runtimeClasspath + configurations.portalTest
 	}
-}
-
-test {
-	jvmArgs "-XX:MaxNewSize=32m"
-	jvmArgs "-XX:MaxPermSize=64m"
-	jvmArgs "-XX:MaxTenuringThreshold=0"
-	jvmArgs "-XX:NewSize=32m"
-	jvmArgs "-XX:ParallelGCThreads=2"
-	jvmArgs "-XX:PermSize=64m"
-	jvmArgs "-XX:SurvivorRatio=65536"
-	jvmArgs "-XX:TargetSurvivorRatio=0"
-	jvmArgs "-XX:-UseAdaptiveSizePolicy"
-	jvmArgs "-XX:+UseParallelOldGC"
-	jvmArgs "-XX:-UseSplitVerifier"
-
-	maxHeapSize = "256m"
-	minHeapSize = "256m"
-}
-
-testIntegration {
-	jvmArgs "-XX:MaxNewSize=32m"
-	jvmArgs "-XX:MaxPermSize=200m"
-	jvmArgs "-XX:MaxTenuringThreshold=0"
-	jvmArgs "-XX:NewSize=32m"
-	jvmArgs "-XX:ParallelGCThreads=2"
-	jvmArgs "-XX:PermSize=200m"
-	jvmArgs "-XX:SurvivorRatio=65536"
-	jvmArgs "-XX:TargetSurvivorRatio=0"
-	jvmArgs "-XX:-UseAdaptiveSizePolicy"
-	jvmArgs "-XX:+UseParallelOldGC"
-
-	maxHeapSize = "512m"
-	minHeapSize = "512m"
 }
 
 whip {

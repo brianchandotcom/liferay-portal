@@ -1442,6 +1442,15 @@ public class DDMStructureLocalServiceImpl
 		return structureVersion;
 	}
 
+	protected void clearChildrenStructuresCache(DDMStructure structure)
+		throws PortalException {
+
+		List<DDMStructure> childrenStructures = getChildrenStructures(
+			structure.getGroupId(), structure.getStructureId());
+
+		ddmStructurePersistence.clearCache(childrenStructures);
+	}
+
 	protected Set<Long> deleteStructures(List<DDMStructure> structures)
 		throws PortalException {
 
@@ -1505,6 +1514,10 @@ public class DDMStructureLocalServiceImpl
 
 		ddmStructurePersistence.update(structure);
 
+		// Children structures cache
+
+		clearChildrenStructuresCache(structure);
+
 		// Structure templates
 
 		syncStructureTemplatesFields(structure);
@@ -1535,30 +1548,22 @@ public class DDMStructureLocalServiceImpl
 
 			ddmStructureIndexer.reindexDDMStructures(ddmStructuresIds);
 		}
-		
-		// Cache
-
-		List<DDMStructure> childrenStructures = getChildrenStructures(
-			structure.getGroupId(), structure.getStructureId());
-
-		ddmStructurePersistence.clearCache(childrenStructures);
 
 		return structure;
 	}
-	
-	protected List<Long> getChildrenStructureIds(
-			long groupId, long structureId) 
+
+	protected List<Long> getChildrenStructureIds(long groupId, long structureId)
 		throws PortalException {
-		
+
 		List<DDMStructure> structures = getChildrenStructures(
 			groupId, structureId);
-		
+
 		List<Long> structureIds = new ArrayList<>();
-		
+
 		for (DDMStructure structure : structures) {
 			structureIds.add(structure.getStructureId());
 		}
-		
+
 		return structureIds;
 	}
 
@@ -1566,7 +1571,7 @@ public class DDMStructureLocalServiceImpl
 			List<DDMStructure> structures, long groupId, long parentStructureId)
 		throws PortalException {
 
-		List<DDMStructure> childrenStructures = 
+		List<DDMStructure> childrenStructures =
 			ddmStructurePersistence.findByG_P(groupId, parentStructureId);
 
 		for (DDMStructure childrenStructure : childrenStructures) {

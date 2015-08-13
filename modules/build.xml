@@ -44,6 +44,7 @@
 		<dirset dir="apps/plugins-admin" includes="*" />
 		<dirset dir="apps/polls" includes="*" />
 		<dirset dir="apps/portal-instances" includes="*" />
+		<dirset dir="apps/portal-settings" includes="*" />
 		<dirset dir="apps/portlet-configuration" includes="*" />
 		<dirset dir="apps/portlet-css" includes="*" />
 		<dirset dir="apps/portlet-display-template" includes="*" />

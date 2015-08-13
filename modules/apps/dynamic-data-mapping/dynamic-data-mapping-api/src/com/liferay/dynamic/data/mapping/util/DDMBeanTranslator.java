@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
  * @author Leonardo Barros
  */
 public interface DDMBeanTranslator {
+
 	public DDMForm translate(
 		com.liferay.portlet.dynamicdatamapping.DDMForm ddmForm);
 
@@ -34,8 +35,8 @@ public interface DDMBeanTranslator {
 	public com.liferay.portlet.dynamicdatamapping.DDMForm translate(
 		DDMForm ddmForm);
 
-	public com.liferay.portlet.dynamicdatamapping.DDMFormField
-		translate(DDMFormField ddmFormField);
+	public com.liferay.portlet.dynamicdatamapping.DDMFormField translate(
+		DDMFormField ddmFormField);
 
 	public com.liferay.portlet.dynamicdatamapping.DDMFormValues translate(
 		DDMFormValues ddmFormValues);

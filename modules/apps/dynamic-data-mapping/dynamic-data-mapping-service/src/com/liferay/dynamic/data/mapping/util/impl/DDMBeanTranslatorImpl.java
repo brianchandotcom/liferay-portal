@@ -48,15 +48,14 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		translatedDDMForm.setAvailableLocales(ddmForm.getAvailableLocales());
 		translatedDDMForm.setDefaultLocale(ddmForm.getDefaultLocale());
 
-		for (com.liferay.portlet.dynamicdatamapping.DDMFormField
-				ddmFormField :
-					ddmForm.getDDMFormFields()) {
+		for (com.liferay.portlet.dynamicdatamapping.DDMFormField ddmFormField :
+				ddmForm.getDDMFormFields()) {
 
-			DDMFormField copyDDMFormField = translate(ddmFormField);
+			DDMFormField translatedDDMFormField = translate(ddmFormField);
 
-			copyDDMFormField.setDDMForm(translatedDDMForm);
+			translatedDDMFormField.setDDMForm(translatedDDMForm);
 
-			translatedDDMForm.addDDMFormField(copyDDMFormField);
+			translatedDDMForm.addDDMFormField(translatedDDMFormField);
 		}
 
 		return translatedDDMForm;
@@ -115,7 +114,8 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 
 		translatedDDMFormValues.setAvailableLocales(
 			ddmFormValues.getAvailableLocales());
-		translatedDDMFormValues.setDefaultLocale(ddmFormValues.getDefaultLocale());
+		translatedDDMFormValues.setDefaultLocale(
+			ddmFormValues.getDefaultLocale());
 
 		for (com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue
 			ddmFormFieldValue : ddmFormValues.getDDMFormFieldValues()) {
@@ -230,7 +230,8 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 			return null;
 		}
 
-		DDMFormFieldOptions translatedDDMFormFieldOptions = new DDMFormFieldOptions();
+		DDMFormFieldOptions translatedDDMFormFieldOptions =
+			new DDMFormFieldOptions();
 
 		translatedDDMFormFieldOptions.setDefaultLocale(
 			ddmFormFieldOptions.getDefaultLocale());
@@ -261,9 +262,11 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 
 		DDMFormFieldValue translatedDDMFormFieldValue = new DDMFormFieldValue();
 
-		translatedDDMFormFieldValue.setInstanceId(ddmFormFieldValue.getInstanceId());
+		translatedDDMFormFieldValue.setInstanceId(
+			ddmFormFieldValue.getInstanceId());
 		translatedDDMFormFieldValue.setName(ddmFormFieldValue.getName());
-		translatedDDMFormFieldValue.setValue(translate(ddmFormFieldValue.getValue()));
+		translatedDDMFormFieldValue.setValue(
+			translate(ddmFormFieldValue.getValue()));
 
 		for (com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue
 			nestedFormFieldValue :

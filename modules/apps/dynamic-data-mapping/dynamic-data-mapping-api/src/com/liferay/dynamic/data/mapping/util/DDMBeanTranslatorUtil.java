@@ -50,8 +50,8 @@ public class DDMBeanTranslatorUtil {
 		return getDDMBeanTranslator().translate(ddmForm);
 	}
 
-	public static com.liferay.portlet.dynamicdatamapping.DDMFormField
-		translate(DDMFormField ddmFormField) {
+	public static com.liferay.portlet.dynamicdatamapping.DDMFormField translate(
+		DDMFormField ddmFormField) {
 
 		return getDDMBeanTranslator().translate(ddmFormField);
 	}

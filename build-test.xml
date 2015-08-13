@@ -2699,8 +2699,25 @@ go]]></replacevalue>
 			</elseif>
 		</if>
 
+		<var name="result.file" value="portal-web/test-results/functional/report.html" />
+
 		<if>
-			<available file="portal-web/test-results/functional/report.html" />
+			<and>
+				<equals arg1="${test.poshi.logger.enabled}" arg2="true" />
+				<isset property="test.class" />
+			</and>
+			<then>
+				<get-poshi-class-name />
+				<get-poshi-method-name />
+
+				<property name="poshi.runner.results.dir" value="${poshi.class.name}_${poshi.method.name}" />
+
+				<var name="result.file" value="portal-web/test-results/${poshi.runner.results.dir}/index.html" />
+			</then>
+		</if>
+
+		<if>
+			<available file="${result.file}" />
 			<then>
 				<property name="test.case.attachments">
 					<![CDATA[

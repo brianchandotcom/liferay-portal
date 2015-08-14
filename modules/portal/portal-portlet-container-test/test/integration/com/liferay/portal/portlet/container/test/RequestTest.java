@@ -112,12 +112,12 @@ public class RequestTest extends BaseTestCase {
 			field.set(null, Boolean.FALSE.booleanValue());
 
 			setUpPortlet(
-				requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
+				requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 			HttpServletRequest request = getHttpServletRequest();
 
 			PortletURL portletURL = new PortletURLImpl(
-				request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+				request, _TEST_PORTLET_ID, layout.getPlid(),
 				PortletRequest.ACTION_PHASE);
 
 			Map<String, List<String>> responseMap = request(
@@ -146,12 +146,12 @@ public class RequestTest extends BaseTestCase {
 			AuthTokenWhitelistUtil.resetOriginCSRFWhitelist();
 
 			setUpPortlet(
-				requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
+				requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 			HttpServletRequest request = getHttpServletRequest();
 
 			PortletURL portletURL = new PortletURLImpl(
-				request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+				request, _TEST_PORTLET_ID, layout.getPlid(),
 				PortletRequest.ACTION_PHASE);
 
 			Map<String, List<String>> responseMap = request(
@@ -177,17 +177,17 @@ public class RequestTest extends BaseTestCase {
 		Object originalValue = field.get(null);
 
 		try {
-			field.set(null, new String[] {PortletKeys.TEST_PORTLET});
+			field.set(null, new String[] {_TEST_PORTLET_ID});
 
 			AuthTokenWhitelistUtil.resetPortletCSRFWhitelist();
 
 			setUpPortlet(
-				requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
+				requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 			HttpServletRequest request = getHttpServletRequest();
 
 			PortletURL portletURL = new PortletURLImpl(
-				request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+				request, _TEST_PORTLET_ID, layout.getPlid(),
 				PortletRequest.ACTION_PHASE);
 
 			Map<String, List<String>> responseMap = request(
@@ -209,12 +209,12 @@ public class RequestTest extends BaseTestCase {
 			"javax.portlet.init-param.check-auth-token",
 			Boolean.FALSE.toString());
 
-		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
+		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+			request, _TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
@@ -246,12 +246,12 @@ public class RequestTest extends BaseTestCase {
 	 */
 	@Test
 	public void testActionRequest_noTokens() throws Exception {
-		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
+		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+			request, _TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
 		String url = portletURL.toString();
@@ -273,7 +273,7 @@ public class RequestTest extends BaseTestCase {
 
 			Assert.assertEquals(
 				"User 0 is not allowed to access URL " + rootUrl +
-					" and portlet " + PortletKeys.TEST_PORTLET,
+					" and portlet " + _TEST_PORTLET_ID,
 				loggingEvent.getMessage());
 
 			Assert.assertEquals("200", responseMap.get("responseCode").get(0));
@@ -308,14 +308,14 @@ public class RequestTest extends BaseTestCase {
 
 		};
 
-		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
+		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
 		// Get the p_auth by making a resource request
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+			request, _TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
@@ -329,7 +329,7 @@ public class RequestTest extends BaseTestCase {
 		// Now make the action request using the p_auth parameter
 
 		portletURL = new PortletURLImpl(
-			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+			request, _TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
 		String url = portletURL.toString();
@@ -357,12 +357,12 @@ public class RequestTest extends BaseTestCase {
 			field.set(null, "test");
 
 			setUpPortlet(
-				requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
+				requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 			HttpServletRequest request = getHttpServletRequest();
 
 			PortletURL portletURL = new PortletURLImpl(
-				request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+				request, _TEST_PORTLET_ID, layout.getPlid(),
 				PortletRequest.ACTION_PHASE);
 
 			portletURL.setParameter("p_auth_secret", Encryptor.digest("test"));
@@ -383,12 +383,12 @@ public class RequestTest extends BaseTestCase {
 		properties.put(PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS, "/test/portlet/1");
 		properties.put("com.liferay.portlet.struts-path", "test/portlet");
 
-		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
+		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+			request, _TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
 		portletURL.setParameter("struts_action", "/test/portlet/1");
@@ -426,14 +426,14 @@ public class RequestTest extends BaseTestCase {
 
 		};
 
-		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
+		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
 		// Get the p_auth by making a resource request
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+			request, _TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
@@ -447,7 +447,7 @@ public class RequestTest extends BaseTestCase {
 		// Now make the action request using the p_auth header
 
 		portletURL = new PortletURLImpl(
-			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+			request, _TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
 		String url = portletURL.toString();
@@ -467,7 +467,7 @@ public class RequestTest extends BaseTestCase {
 
 	@Test
 	public void testLayoutRequest() throws Exception {
-		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
+		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -552,14 +552,14 @@ public class RequestTest extends BaseTestCase {
 
 		};
 
-		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
+		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
 		// Get the p_p_auth by making a resource request
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+			request, _TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
@@ -597,12 +597,12 @@ public class RequestTest extends BaseTestCase {
 	public void testRenderRequest_isAccessGrantedByPortletOnPage()
 		throws Exception {
 
-		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
+		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+			request, _TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
@@ -638,12 +638,12 @@ public class RequestTest extends BaseTestCase {
 
 		setUpPortlet(
 			new RequestTestPortlet(map), properties, portletToEmbbed, false);
-		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
+		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+			request, _TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("portletToEmbbed", portletToEmbbed);
@@ -735,14 +735,14 @@ public class RequestTest extends BaseTestCase {
 
 		};
 
-		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
+		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
 		// Get the p_p_auth by making a resource request
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+			request, _TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
@@ -780,12 +780,12 @@ public class RequestTest extends BaseTestCase {
 	public void testResourceRequest_isAccessGrantedByPortletOnPage()
 		throws Exception {
 
-		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
+		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+			request, _TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
@@ -822,12 +822,12 @@ public class RequestTest extends BaseTestCase {
 
 		setUpPortlet(
 			new RequestTestPortlet(map), properties, portletToEmbbed, false);
-		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
+		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
+			request, _TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
 		portletURL.setParameter("portletToEmbbed", portletToEmbbed);
@@ -837,6 +837,8 @@ public class RequestTest extends BaseTestCase {
 		Assert.assertEquals("200", responseMap.get("responseCode").get(0));
 		Assert.assertTrue(map.containsKey("render"));
 	}
+
+	private static final String _TEST_PORTLET_ID = "TEST_PORTLET_ID";
 
 	private Map<String, String> map;
 	private Dictionary<String, Object> properties;

@@ -1,0 +1,21 @@
+<definition>
+	<command name="gotoAllPages">
+		<execute function="AssertClick" locator1="Wiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
+	</command>
+
+	<command name="gotoDraftPages">
+		<execute function="AssertClick" locator1="Wiki#NAVIGATION_DRAFT_PAGES" value1="Draft Pages" />
+	</command>
+
+	<command name="gotoFrontPage">
+		<execute function="AssertClick" locator1="Wiki#NAVIGATION_FRONTPAGE" value1="FrontPage" />
+	</command>
+
+	<command name="gotoOrphanPages">
+		<execute function="AssertClick" locator1="Wiki#NAVIGATION_ORPHAN_PAGES" value1="Orphan Pages" />
+	</command>
+
+	<command name="gotoRecentChanges">
+		<execute function="AssertClick" locator1="Wiki#NAVIGATION_RECENT_CHANGES" value1="Recent Changes" />
+	</command>
+</definition>

@@ -376,7 +376,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 								<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" id="documentLibraryMetadataPanel" persistState="<%= true %>" title="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>">
 
 									<liferay-ddm:html
-										classNameId="<%= PortalUtil.getClassNameId(DDMStructureManagerUtil.getDDMStructureModelClass()) %>"
+										classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
 										classPK="<%= ddmStructure.getPrimaryKey() %>"
 										ddmFormValues="<%= DDMBeanTranslatorUtil.translate(ddmFormValues) %>"
 										fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
@@ -410,12 +410,12 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 							List<DDMStructure> ddmStructures = DDMStructureManagerUtil.getClassStructures(company.getCompanyId(), PortalUtil.getClassNameId(RawMetadataProcessor.class), DDMStructureManager.STRUCTURE_COMPARATOR_STRUCTURE_KEY);
 
 							for (DDMStructure ddmStructure : ddmStructures) {
-								DDMFormValues ddmFormValues = null;
+								com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = null;
 
 								try {
 									DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
 
-									ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
+									ddmFormValues = StorageEngineUtil.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
 
 								}
 								catch (Exception e) {
@@ -428,9 +428,9 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 									<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-asset-metadata" id="documentLibraryAssetMetadataPanel" persistState="<%= true %>" title="<%= name %>">
 
 										<liferay-ddm:html
-											classNameId="<%= PortalUtil.getClassNameId(DDMStructureManagerUtil.getDDMStructureModelClass()) %>"
+											classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
 											classPK="<%= ddmStructure.getPrimaryKey() %>"
-											ddmFormValues="<%= DDMBeanTranslatorUtil.translate(ddmFormValues) %>"
+											ddmFormValues="<%= ddmFormValues %>"
 											fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
 											readOnly="<%= true %>"
 											requestedLocale="<%= locale %>"

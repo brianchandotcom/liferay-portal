@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.lar;
 
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,12 +30,12 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 
 import java.util.HashMap;
@@ -42,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -211,10 +213,13 @@ public class DLFileEntryTypeStagedModelDataHandler
 		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
+			com.liferay.dynamic.data.mapping.model.DDMStructure
+				structure = _ddmStructureLocalService.getStructure(
+					ddmStructure.getStructureId());
+
 			Element referenceElement =
-				DDMStructureManagerUtil.exportDDMStructureStagedModel(
-					portletDataContext, fileEntryType,
-					ddmStructure.getStructureId(),
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, fileEntryType, structure,
 					PortletDataContext.REFERENCE_TYPE_STRONG);
 
 			referenceElement.addAttribute(
@@ -245,14 +250,14 @@ public class DLFileEntryTypeStagedModelDataHandler
 		List<Element> ddmStructureReferenceElements =
 			portletDataContext.getReferenceElements(
 				fileEntryType,
-				DDMStructureManagerUtil.getDDMStructureModelClass());
+				com.liferay.dynamic.data.mapping.model.DDMStructure.class);
 
 		long[] ddmStructureIdsArray =
 			new long[ddmStructureReferenceElements.size()];
 
 		Map<Long, Long> ddmStructureIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDMStructureManagerUtil.getDDMStructureModelClass());
+				com.liferay.dynamic.data.mapping.model.DDMStructure.class);
 
 		for (int i = 0; i < ddmStructureReferenceElements.size(); i++) {
 			Element ddmStructureReferenceElement =
@@ -342,9 +347,13 @@ public class DLFileEntryTypeStagedModelDataHandler
 				continue;
 			}
 
-			DDMStructureManagerUtil.updateStructureKey(
-				importedDDMStructure.getStructureId(),
-				importedDLFileEntryDDMStructureKey);
+			com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
+				_ddmStructureLocalService.getDDMStructure(
+					importedDDMStructure.getStructureId());
+
+			ddmStructure.setStructureKey(importedDLFileEntryDDMStructureKey);
+
+			_ddmStructureLocalService.updateDDMStructure(ddmStructure);
 		}
 	}
 
@@ -365,5 +374,14 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 		return existingDLFileEntryType;
 	}
+
+	@Reference
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

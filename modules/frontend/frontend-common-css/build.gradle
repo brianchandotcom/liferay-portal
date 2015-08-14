@@ -18,12 +18,12 @@ task buildBourbon(type: Copy)
 task buildCssCommon
 
 buildBourbon {
-	File commonCssDestinationDir = file("tmp/META-INF/resources/html/css/common")
+	File commonCssDestinationDir = file("tmp/META-INF/resources")
 
 	File bourbonDestinationDir = new File(commonCssDestinationDir, "bourbon")
 	File bourbonZipFile = file("../../../portal-web/third-party/bourbon-${bourbonVersion}.zip")
 
-	from("src/META-INF/resources/html/css/common") {
+	from("src/META-INF/resources") {
 		exclude "**.npmignore"
 		exclude "**.json"
 	}

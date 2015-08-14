@@ -253,8 +253,6 @@
 
 					<unzip dest="${tstamp.value}" src="${third.party.dir}/${lexicon.file}" />
 
-					<property name="lexicon.assets.dir" value="${tstamp.value}/bootstrap-sass-${lexicon.version}/assets" />
-
 					<!-- JavaScript -->
 
 					<copy todir="tmp/META-INF/resources/lexicon" overwrite="true" preservelastmodified="true">

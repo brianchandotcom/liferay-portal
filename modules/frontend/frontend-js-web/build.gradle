@@ -3,6 +3,7 @@ plugins {
 }
 
 import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 dependencies {
@@ -70,19 +71,20 @@ buildAlloy {
 }
 
 buildAlloyBootstrap {
+	File alloyBootstrapAssetsDestinationDir = new File(jsDestinationDir, "bootstrap-assets")
 	File alloyBootstrapDestinationDir = new File(jsDestinationDir, "bootstrap")
 	File bootstrapSassZipFile = new File(thirdPartyDir, "bootstrap-sass-${alloyBootstrapVersion}.zip")
 
 	doFirst {
-		delete alloyBootstrapDestinationDir
+		delete alloyBootstrapAssetsDestinationDir, alloyBootstrapDestinationDir
 	}
 
-	eachFile new StripPathSegmentsAction(3)
+	eachFile new ReplaceLeadingPathAction("bootstrap-sass-${alloyBootstrapVersion}/assets/javascripts": alloyBootstrapDestinationDir.name, "bootstrap-sass-${alloyBootstrapVersion}/assets": alloyBootstrapAssetsDestinationDir.name)
 	exclude "bootstrap-sass-${alloyBootstrapVersion}/assets/javascripts/bootstrap-*.js"
 	from zipTree(bootstrapSassZipFile)
-	include "bootstrap-sass-${alloyBootstrapVersion}/assets/javascripts/**"
+	include "bootstrap-sass-${alloyBootstrapVersion}/assets/**"
 	includeEmptyDirs = false
-	into alloyBootstrapDestinationDir
+	into jsDestinationDir
 
 	onlyIf {
 		!FileUtil.isUpToDate(project, bootstrapSassZipFile, alloyBootstrapDestinationDir)
@@ -110,21 +112,21 @@ buildJQueryPluginsForm {
 }
 
 buildLexicon {
-	File lexiconDestinatioDir = new File(jsDestinationDir, "lexicon")
+	File lexiconAssetsDestinationDir = new File(jsDestinationDir, "lexicon-assets")
+	File lexiconDestinationDir = new File(jsDestinationDir, "lexicon")
 	File lexiconZipFile = new File(thirdPartyDir, "lexicon-${lexiconVersion}.zip")
 
 	doFirst {
-		delete lexiconDestinatioDir
+		delete lexiconAssetsDestinationDir, lexiconDestinationDir
 	}
 
-	eachFile new StripPathSegmentsAction(1)
+	eachFile new ReplaceLeadingPathAction("js": lexiconDestinationDir.name, "": lexiconAssetsDestinationDir.name)
 	from zipTree(lexiconZipFile)
-	include "js/**"
 	includeEmptyDirs = false
-	into lexiconDestinatioDir
+	into jsDestinationDir
 
 	onlyIf {
-		!FileUtil.isUpToDate(project, lexiconZipFile, lexiconDestinatioDir)
+		!FileUtil.isUpToDate(project, lexiconZipFile, lexiconDestinationDir)
 	}
 }
 

@@ -7,6 +7,12 @@
 		<isset property="env.AXIS_VARIABLE" />
 	</condition>
 
+	<property name="default.test.results.axis.dir" value="${default.test.results.dir}/test-suite" />
+	<property name="default.test.results.axis.file.name" value="TESTS-${test.batch.name}_${axis.variable}.xml" />
+	<property name="default.test.results.dir" value="${project.dir}/test-results" />
+	<property name="default.test.results.suite.dir" value="${default.test.results.dir}/test-suite" />
+	<property name="default.test.results.suite.file.name" value="TESTS-${test.batch.name}_${axis.variable}_results.xml" />
+
 	<macrodef name="check-deprecated-method">
 		<sequential>
 			<if>

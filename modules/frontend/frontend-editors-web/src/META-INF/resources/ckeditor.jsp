@@ -270,9 +270,26 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 		</c:if>
 
 		setHTML: function(value) {
-			CKEDITOR.instances['<%= name %>'].setData(value);
 
-			window['<%= name %>']._setStyles();
+			var _setHtml = function(v) {
+				CKEDITOR.instances['<%= name %>'].setData(v);
+
+				window['<%= name %>']._setStyles();
+			};
+	
+			if (window['<%= name %>'].instanceReady) {
+				_setHtml(value);
+			}
+			else {
+				var ckEditorInstance = CKEDITOR.instances['<%= name %>'];
+
+				ckEditorInstance.on("instanceReady",
+					function(){
+						_setHtml(value);
+					}
+				);
+			}
+
 		}
 	};
 

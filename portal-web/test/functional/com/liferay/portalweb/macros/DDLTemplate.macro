@@ -1,4 +1,15 @@
 <definition>
+	<command name="_showDetails">
+		<if>
+			<condition function="IsElementNotPresent" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#DETAILS_DESCRIPTION_FIELD" />
+			<then>
+				<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#DETAILS" value1="Details" />
+			</then>
+		</if>
+
+		<execute function="AssertElementPresent" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#DETAILS_LANGUAGE_SELECT" />
+	</command>
+
 	<command name="addDisplayTemplateCP">
 		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
@@ -12,7 +23,7 @@
 
 		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#NAME_FIELD" value1="${ddlDisplayTemplateName}" />
 
-		<execute macro="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#showDetails" />
+		<execute macro="DDLTemplate#_showDetails" />
 
 		<execute function="Select" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#DETAILS_LANGUAGE_SELECT" value1="${ddlDisplayTemplateLanguage}" />
 
@@ -143,7 +154,7 @@
 		<execute function="Pause" locator1="1000" />
 		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#NAME_FIELD" value1="${ddlDisplayTemplateNameEdit}" />
 
-		<execute macro="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#showDetails" />
+		<execute macro="DDLTemplate#_showDetails" />
 
 		<execute function="Select" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#DETAILS_LANGUAGE_SELECT" value1="${ddlDisplayTemplateLanguage}" />
 		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#DATA_LIST_RECORD_FIELDS_TEXT" value1="${ddlDisplayTemplateTextFieldScriptEdit}" />

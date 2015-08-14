@@ -1370,6 +1370,14 @@
 		<execute function="AssertElementNotPresent" locator1="PGWikiAllpages#WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
 	</command>
 
+	<command name="viewPageContentBody">
+		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContent}" />
+	</command>
+
+	<command name="viewPageContentBodyHeader">
+		<execute function="AssertTextEquals" locator1="Wiki#BODY_HEADER" value1="${wikiPageContent}" />
+	</command>
+
 	<command name="viewPagePG">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 

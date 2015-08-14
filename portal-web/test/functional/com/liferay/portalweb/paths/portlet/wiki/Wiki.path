@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BODY_HEADER</td>
+	<td>//div[@class='wiki-body']/h1</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CUSTOM_FIELD_TEXT_FIELD</td>
 	<td>//span[contains(.,'Wiki Custom Field Here')]/../..//input[@type='text']</td>
 	<td></td>

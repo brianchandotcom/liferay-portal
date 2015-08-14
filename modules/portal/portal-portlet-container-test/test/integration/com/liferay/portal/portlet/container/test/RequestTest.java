@@ -86,8 +86,9 @@ public class RequestTest extends BaseTestCase {
 		super.setUp();
 
 		map = new ConcurrentHashMap<>();
-		requestTestPortlet = new RequestTestPortlet(map);
+
 		properties = new Hashtable<>();
+		requestTestPortlet = new RequestTestPortlet(map);
 	}
 
 	@After
@@ -96,8 +97,8 @@ public class RequestTest extends BaseTestCase {
 		super.tearDown();
 
 		map = null;
-		requestTestPortlet = null;
 		properties = null;
+		requestTestPortlet = null;
 	}
 
 	@Test

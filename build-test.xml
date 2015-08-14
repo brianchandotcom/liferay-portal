@@ -5187,13 +5187,16 @@ module.framework.properties.osgi.console=11312</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="sharepoint.enabled" />
+		<get-testcase-property property.name="cmis.repository.type" />
 
 		<if>
-			<equals arg1="${sharepoint.enabled}" arg2="true" />
+			<or>
+				<equals arg1="${cmis.repository.type}" arg2="documentum6" />
+				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
+			</or>
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					sharepoint.vm.host.name=${sharepoint.vm.host.name}
+					cmis.repository.vm.host.name=${cmis.repository.vm.host.name}
 				</echo>
 			</then>
 		</if>
@@ -6241,6 +6244,51 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="cmis.repository.type" />
+
+		<if>
+			<or>
+				<equals arg1="${cmis.repository.type}" arg2="documentum6" />
+				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
+			</or>
+			<then>
+				<if>
+					<os family="unix" />
+					<then>
+						<exec executable="/bin/bash" os="${os.unix}" outputproperty="cmis.repository.vm.host.name">
+							<arg value="-c" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2E${cmis.repository.type}&quot;" />
+						</exec>
+					</then>
+					<else>
+						<exec executable="cmd" outputproperty="cmis.repository.vm.host.name">
+							<arg value="/c" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2E${cmis.repository.type}&quot;" />
+						</exec>
+					</else>
+				</if>
+
+				<propertyregex
+					input="${cmis.repository.vm.host.name}"
+					override="true"
+					property="cmis.repository.vm.host.name"
+					regexp="&quot;(cloud.*?)&quot;"
+					select="\1"
+				/>
+
+				<if>
+					<equals arg1="${cmis.repository.type}" arg2="documentum6" />
+					<then>
+						<replace
+							file="${lp.plugins.dir}/hooks/documentum-hook/docroot/WEB-INF/src/dfc.properties"
+							token="dfc.docbroker.host[0]=localhost"
+							value="dfc.docbroker.host[0]=${cmis.repository.vm.host.name}"
+						/>
+					</then>
+				</if>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="solr.enabled" />
 
 		<if>
@@ -6283,37 +6331,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<start-app-server />
 
 				<stop-app-server />
-			</then>
-		</if>
-
-		<get-testcase-property property.name="sharepoint.enabled" />
-
-		<if>
-			<equals arg1="${sharepoint.enabled}" arg2="true" />
-			<then>
-				<if>
-					<os family="unix" />
-					<then>
-						<exec executable="/bin/bash" os="${os.unix}" outputproperty="sharepoint.vm.host.name">
-							<arg value="-c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
-						</exec>
-					</then>
-					<else>
-						<exec executable="cmd" outputproperty="sharepoint.vm.host.name">
-							<arg value="/c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=30000&amp;resourceType=qa%2Esharepoint2010&quot;" />
-						</exec>
-					</else>
-				</if>
-
-				<propertyregex
-					input="${sharepoint.vm.host.name}"
-					override="true"
-					property="sharepoint.vm.host.name"
-					regexp="&quot;(cloud.*?)&quot;"
-					select="\1"
-				/>
 			</then>
 		</if>
 
@@ -6393,10 +6410,13 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<antcall target="run-selenium-test" />
 
-		<get-testcase-property property.name="sharepoint.enabled" />
+		<get-testcase-property property.name="cmis.repository.type" />
 
 		<if>
-			<equals arg1="${sharepoint.enabled}" arg2="true" />
+			<or>
+				<equals arg1="${cmis.repository.type}" arg2="documentum6" />
+				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
+			</or>
 			<then>
 				<property file="${project.dir}/portal-web/test/test-portal-web-ext.properties" />
 
@@ -6405,13 +6425,13 @@ jdbc.default.password=${database.mysql.password}</echo>
 					<then>
 						<exec executable="/bin/bash" os="${os.unix}">
 							<arg value="-c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/release?hostname=${sharepoint.vm.host.name}&amp;resourceType=qa%2Esharepoint2010&quot;" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/release?hostname=${cmis.repository.vm.host.name}&amp;resourceType=qa%2E${cmis.repository.type}&quot;" />
 						</exec>
 					</then>
 					<else>
 						<exec executable="cmd">
 							<arg value="/c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/release?hostname=${sharepoint.vm.host.name}&amp;resourceType=qa%2Esharepoint2010&quot;" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/release?hostname=${cmis.repository.vm.host.name}&amp;resourceType=qa%2E${cmis.repository.type}&quot;" />
 						</exec>
 					</else>
 				</if>

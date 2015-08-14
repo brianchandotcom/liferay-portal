@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.login.action;
+package com.liferay.login.web.portlet.action;
 
+import com.liferay.login.web.constants.LoginPortletKeys;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.util.PropsValues;
@@ -25,11 +27,20 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
  */
-public class ConfigurationActionImpl extends DefaultConfigurationAction {
+@Component(
+		property = {
+			"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
+			"javax.portlet.name=" + LoginPortletKeys.LOGIN
+		},
+		service = ConfigurationAction.class
+	)
+public class LoginConfigurationActionImpl extends DefaultConfigurationAction {
 
 	@Override
 	public void postProcess(

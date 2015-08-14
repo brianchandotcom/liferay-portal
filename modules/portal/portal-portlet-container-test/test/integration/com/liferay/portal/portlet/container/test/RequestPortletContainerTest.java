@@ -84,7 +84,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		testPortlet = new TestPortlet(map);
+		_testPortlet = new TestPortlet(_map);
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		try {
 			field.set(null, Boolean.FALSE.booleanValue());
 
-			setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
+			setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
 			HttpServletRequest httpServletRequest = getHttpServletRequest();
 
@@ -109,7 +109,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 				portletURL.toString());
 
 			Assert.assertEquals("200", getString(responseMap, "code"));
-			Assert.assertTrue(map.containsKey("processAction"));
+			Assert.assertTrue(_map.containsKey("processAction"));
 		}
 		finally {
 			field.set(null, value);
@@ -121,7 +121,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		Field field = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "AUTH_TOKEN_IGNORE_ORIGINS");
 
-		Object originalValue = field.get(null);
+		Object value = field.get(null);
 
 		try {
 			field.set(
@@ -130,22 +130,22 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 			AuthTokenWhitelistUtil.resetOriginCSRFWhitelist();
 
-			setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
+			setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
-			HttpServletRequest request = getHttpServletRequest();
+			HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 			PortletURL portletURL = new PortletURLImpl(
-				request, _TEST_PORTLET_ID, layout.getPlid(),
+				httpServletRequest, _TEST_PORTLET_ID, layout.getPlid(),
 				PortletRequest.ACTION_PHASE);
 
 			Map<String, List<String>> responseMap = request(
 				portletURL.toString());
 
 			Assert.assertEquals("200", getString(responseMap, "code"));
-			Assert.assertTrue(map.containsKey("processAction"));
+			Assert.assertTrue(_map.containsKey("processAction"));
 		}
 		finally {
-			field.set(null, originalValue);
+			field.set(null, value);
 
 			AuthTokenWhitelistUtil.resetOriginCSRFWhitelist();
 		}
@@ -158,29 +158,29 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		Field field = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "AUTH_TOKEN_IGNORE_PORTLETS");
 
-		Object originalValue = field.get(null);
+		Object value = field.get(null);
 
 		try {
 			field.set(null, new String[] {_TEST_PORTLET_ID});
 
 			AuthTokenWhitelistUtil.resetPortletCSRFWhitelist();
 
-			setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
+			setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
-			HttpServletRequest request = getHttpServletRequest();
+			HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 			PortletURL portletURL = new PortletURLImpl(
-				request, _TEST_PORTLET_ID, layout.getPlid(),
+				httpServletRequest, _TEST_PORTLET_ID, layout.getPlid(),
 				PortletRequest.ACTION_PHASE);
 
 			Map<String, List<String>> responseMap = request(
 				portletURL.toString());
 
 			Assert.assertEquals("200", getString(responseMap, "code"));
-			Assert.assertTrue(map.containsKey("processAction"));
+			Assert.assertTrue(_map.containsKey("processAction"));
 		}
 		finally {
-			field.set(null, originalValue);
+			field.set(null, value);
 
 			AuthTokenWhitelistUtil.resetPortletCSRFWhitelist();
 		}
@@ -188,11 +188,11 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 	@Test
 	public void testActionRequest_initParam() throws Exception {
-		properties.put(
+		_properties.put(
 			"javax.portlet.init-param.check-auth-token",
 			Boolean.FALSE.toString());
 
-		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -203,7 +203,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
 		Assert.assertEquals("200", getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("processAction"));
+		Assert.assertTrue(_map.containsKey("processAction"));
 	}
 
 	/**
@@ -229,7 +229,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 	 */
 	@Test
 	public void testActionRequest_noTokens() throws Exception {
-		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -260,13 +260,13 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 				loggingEvent.getMessage());
 
 			Assert.assertEquals("200", getString(responseMap, "code"));
-			Assert.assertFalse(map.containsKey("processAction"));
+			Assert.assertFalse(_map.containsKey("processAction"));
 		}
 	}
 
 	@Test
 	public void testActionRequest_p_auth() throws Exception {
-		testPortlet = new TestPortlet(map) {
+		_testPortlet = new TestPortlet(_map) {
 
 			@Override
 			public void serveResource(
@@ -291,7 +291,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		};
 
-		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -307,7 +307,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		List<String> cookies = responseMap.get("Set-Cookie");
 
-		map.clear();
+		_map.clear();
 
 		// Now make the action request using the p_auth parameter
 
@@ -326,7 +326,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		responseMap = request(url, headers);
 
 		Assert.assertEquals("200", getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("processAction"));
+		Assert.assertTrue(_map.containsKey("processAction"));
 	}
 
 	@Test
@@ -339,7 +339,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		try {
 			field.set(null, "test");
 
-			setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
+			setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
 			HttpServletRequest request = getHttpServletRequest();
 
@@ -353,7 +353,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 				portletURL.toString());
 
 			Assert.assertEquals("200", getString(responseMap, "code"));
-			Assert.assertTrue(map.containsKey("processAction"));
+			Assert.assertTrue(_map.containsKey("processAction"));
 		}
 		finally {
 			field.set(null, originalValue);
@@ -362,10 +362,10 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 	@Test
 	public void testActionRequest_struts_action() throws Exception {
-		properties.put(PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS, "/test/portlet/1");
-		properties.put("com.liferay.portlet.struts-path", "test/portlet");
+		_properties.put(PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS, "/test/portlet/1");
+		_properties.put("com.liferay.portlet.struts-path", "test/portlet");
 
-		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -378,12 +378,12 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
 		Assert.assertEquals("200", getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("processAction"));
+		Assert.assertTrue(_map.containsKey("processAction"));
 	}
 
 	@Test
 	public void testActionRequest_X_CSRF_Token() throws Exception {
-		testPortlet = new TestPortlet(map) {
+		_testPortlet = new TestPortlet(_map) {
 
 			@Override
 			public void serveResource(
@@ -408,7 +408,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		};
 
-		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -424,7 +424,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		List<String> cookies = responseMap.get("Set-Cookie");
 
-		map.clear();
+		_map.clear();
 
 		// Now make the action request using the p_auth header
 
@@ -444,12 +444,12 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		responseMap = request(url, headers);
 
 		Assert.assertEquals("200", getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("processAction"));
+		Assert.assertTrue(_map.containsKey("processAction"));
 	}
 
 	@Test
 	public void testLayoutRequest() throws Exception {
-		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -457,7 +457,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 			layout.getRegularURL(request));
 
 		Assert.assertEquals("200", getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("render"));
+		Assert.assertTrue(_map.containsKey("render"));
 	}
 
 	@Test
@@ -496,17 +496,18 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		final String portletToTarget = "TEST_TARGET";
 
-		properties.put(
+		_properties.put(
 			"com.liferay.portlet.add-default-resource", Boolean.TRUE);
-		properties.put("com.liferay.portlet.system", Boolean.TRUE);
+		_properties.put("com.liferay.portlet.system", Boolean.TRUE);
 
-		setUpPortlet(new TestPortlet(map), properties, portletToTarget, false);
+		setUpPortlet(
+			new TestPortlet(_map), _properties, portletToTarget, false);
 
-		properties = new Hashtable<>();
+		_properties = new Hashtable<>();
 
 		Map<String, String> ignored = new HashMap<>();
 
-		testPortlet = new TestPortlet(ignored) {
+		_testPortlet = new TestPortlet(ignored) {
 
 			@Override
 			public void serveResource(
@@ -533,7 +534,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		};
 
-		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -549,7 +550,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		List<String> cookies = responseMap.get("Set-Cookie");
 
-		map.clear();
+		_map.clear();
 
 		// Now make the render request to the target portlet using the p_p_auth
 		// parameter
@@ -571,14 +572,14 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		responseMap = request(url, headers);
 
 		Assert.assertEquals("200", getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("render"));
+		Assert.assertTrue(_map.containsKey("render"));
 	}
 
 	@Test
 	public void testRenderRequest_isAccessGrantedByPortletOnPage()
 		throws Exception {
 
-		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -589,7 +590,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
 		Assert.assertEquals("200", getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("render"));
+		Assert.assertTrue(_map.containsKey("render"));
 	}
 
 	@Test
@@ -598,7 +599,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		Map<String, String> ignored = new HashMap<>();
 
-		testPortlet = new TestPortlet(ignored) {
+		_testPortlet = new TestPortlet(ignored) {
 
 			@Override
 			public void render(
@@ -617,8 +618,9 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		String portletToEmbbed = "TEST_EMBEDDED";
 
-		setUpPortlet(new TestPortlet(map), properties, portletToEmbbed, false);
-		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(
+			new TestPortlet(_map), _properties, portletToEmbbed, false);
+		setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -631,7 +633,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
 		Assert.assertEquals("200", getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("render"));
+		Assert.assertTrue(_map.containsKey("render"));
 	}
 
 	@Test
@@ -677,17 +679,18 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		final String portletToTarget = "TEST_TARGET";
 
-		properties.put(
+		_properties.put(
 			"com.liferay.portlet.add-default-resource", Boolean.TRUE);
-		properties.put("com.liferay.portlet.system", Boolean.TRUE);
+		_properties.put("com.liferay.portlet.system", Boolean.TRUE);
 
-		setUpPortlet(new TestPortlet(map), properties, portletToTarget, false);
+		setUpPortlet(
+			new TestPortlet(_map), _properties, portletToTarget, false);
 
-		properties = new Hashtable<>();
+		_properties = new Hashtable<>();
 
 		Map<String, String> ignored = new HashMap<>();
 
-		testPortlet = new TestPortlet(ignored) {
+		_testPortlet = new TestPortlet(ignored) {
 
 			@Override
 			public void serveResource(
@@ -714,7 +717,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		};
 
-		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -730,7 +733,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		List<String> cookies = responseMap.get("Set-Cookie");
 
-		map.clear();
+		_map.clear();
 
 		// Now make the render request to the target portlet using the p_p_auth
 		// parameter
@@ -752,14 +755,14 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		responseMap = request(url, headers);
 
 		Assert.assertEquals("200", getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("serveResource"));
+		Assert.assertTrue(_map.containsKey("serveResource"));
 	}
 
 	@Test
 	public void testResourceRequest_isAccessGrantedByPortletOnPage()
 		throws Exception {
 
-		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -770,7 +773,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
 		Assert.assertEquals("200", getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("serveResource"));
+		Assert.assertTrue(_map.containsKey("serveResource"));
 	}
 
 	@Test
@@ -779,7 +782,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		Map<String, String> ignored = new HashMap<>();
 
-		testPortlet = new TestPortlet(ignored) {
+		_testPortlet = new TestPortlet(ignored) {
 
 			@Override
 			public void serveResource(
@@ -799,8 +802,9 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		String portletToEmbbed = "TEST_EMBEDDED";
 
-		setUpPortlet(new TestPortlet(map), properties, portletToEmbbed, false);
-		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(
+			new TestPortlet(_map), _properties, portletToEmbbed, false);
+		setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -813,7 +817,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
 		Assert.assertEquals("200", getString(responseMap, "code"));
-		Assert.assertTrue(map.containsKey("render"));
+		Assert.assertTrue(_map.containsKey("render"));
 	}
 
 	protected String getString(Map<String, List<String>> map, String key) {
@@ -824,8 +828,8 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 	private static final String _TEST_PORTLET_ID = "TEST_PORTLET_ID";
 
-	private final Map<String, String> map = new ConcurrentHashMap<>();
-	private Dictionary<String, Object> properties = new Hashtable<>();
-	private TestPortlet testPortlet;
+	private final Map<String, String> _map = new ConcurrentHashMap<>();
+	private Dictionary<String, Object> _properties = new Hashtable<>();
+	private TestPortlet _testPortlet;
 
 }

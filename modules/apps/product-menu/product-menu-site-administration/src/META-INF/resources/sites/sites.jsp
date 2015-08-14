@@ -21,55 +21,62 @@ PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(Appli
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
 PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 
-String sitesPanelCategoryKey = PanelCategoryKeys.SITE_ADMINISTRATION;
-
-if (Validator.isNotNull(themeDisplay.getPpid())) {
-	PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
-
-	for (PanelCategory curPanelCategory : panelCategoryRegistry.getChildPanelCategories(panelCategory)) {
-		if (panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), curPanelCategory)) {
-			sitesPanelCategoryKey = curPanelCategory.getKey();
-
-			break;
-		}
-	}
-}
-
 List<PanelCategory> childPanelCategories = panelCategoryRegistry.getChildPanelCategories(panelCategory, permissionChecker, themeDisplay.getScopeGroup());
 %>
 
-<ul class="hide nav nav-tabs">
+<c:if test="<%= !childPanelCategories.isEmpty() %>">
 
 	<%
-	for (PanelCategory childPanelCategory : childPanelCategories) {
-	%>
+	PanelCategory firstPanelCategory = childPanelCategories.get(0);
 
-		<li class="col-xs-4 <%= sitesPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>">
-			<a aria-expanded="true" data-toggle="tab" href="#<portlet:namespace /><%= childPanelCategory.getKey() %>" id="<portlet:namespace /><%= childPanelCategory.getKey() %>TabLink">
-				<div class="product-menu-tab-text">
-					<%= childPanelCategory.getLabel(locale) %>
-				</div>
-			</a>
-		</li>
+	String sitesPanelCategoryKey = firstPanelCategory.getKey();
 
-	<%
+	if ((childPanelCategories.size() > 1) && Validator.isNotNull(themeDisplay.getPpid())) {
+		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
+
+		for (PanelCategory curPanelCategory : childPanelCategories) {
+			if (panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), curPanelCategory)) {
+				sitesPanelCategoryKey = curPanelCategory.getKey();
+
+				break;
+			}
+		}
 	}
 	%>
 
-</ul>
+	<ul class="hide nav nav-tabs">
 
-<div class="tab-content">
+		<%
+		for (PanelCategory childPanelCategory : childPanelCategories) {
+		%>
 
-	<%
-	for (PanelCategory childPanelCategory : childPanelCategories) {
-	%>
+			<li class="col-xs-4 <%= (sitesPanelCategoryKey.equals(childPanelCategory.getKey())) ? "active" : StringPool.BLANK %>">
+				<a aria-expanded="true" data-toggle="tab" href="#<portlet:namespace /><%= childPanelCategory.getKey() %>" id="<portlet:namespace /><%= childPanelCategory.getKey() %>TabLink">
+					<div class="product-menu-tab-text">
+						<%= childPanelCategory.getLabel(locale) %>
+					</div>
+				</a>
+			</li>
 
-		<div class="fade in tab-pane <%= sitesPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>" id="<portlet:namespace /><%= childPanelCategory.getKey() %>">
-			<liferay-application-list:panel-content panelCategory="<%= childPanelCategory %>" />
-		</div>
+		<%
+		}
+		%>
 
-	<%
-	}
-	%>
+	</ul>
 
-</div>
+	<div class="tab-content">
+
+		<%
+		for (PanelCategory childPanelCategory : childPanelCategories) {
+		%>
+
+			<div class="fade in tab-pane <%= (sitesPanelCategoryKey.equals(childPanelCategory.getKey())) ? "active" : StringPool.BLANK %>" id="<portlet:namespace /><%= childPanelCategory.getKey() %>">
+				<liferay-application-list:panel-content panelCategory="<%= childPanelCategory %>" />
+			</div>
+
+		<%
+		}
+		%>
+
+	</div>
+</c:if>

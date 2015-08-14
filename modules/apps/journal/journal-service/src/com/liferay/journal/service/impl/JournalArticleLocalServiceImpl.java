@@ -6138,9 +6138,12 @@ public class JournalArticleLocalServiceImpl
 
 			serviceContext.setScopeGroupId(article.getGroupId());
 
+			long userId = PortalUtil.getValidUserId(
+				article.getCompanyId(), article.getUserId());
+
 			journalArticleLocalService.updateStatus(
-				article.getUserId(), article, WorkflowConstants.STATUS_APPROVED,
-				null, serviceContext, new HashMap<String, Serializable>());
+				userId, article, WorkflowConstants.STATUS_APPROVED, null,
+				serviceContext, new HashMap<String, Serializable>());
 		}
 	}
 

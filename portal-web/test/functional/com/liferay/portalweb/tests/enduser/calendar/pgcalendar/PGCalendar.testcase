@@ -361,7 +361,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55805" name="AddCalendarEventRegularAndResourceWithStagingAndSchedulePublishToLive" priority="4">
+	<command name="AddCalendarEventRegularAndResourceWithStagingAndSchedulePublishToLive" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

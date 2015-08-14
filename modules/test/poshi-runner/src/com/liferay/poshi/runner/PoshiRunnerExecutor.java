@@ -21,6 +21,7 @@ import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.PropsValues;
+import com.liferay.poshi.runner.util.RegexUtil;
 import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.Validator;
 
@@ -703,18 +704,11 @@ public class PoshiRunnerExecutor {
 					 (element.attributeValue("input") != null) &&
 					 (element.attributeValue("pattern") != null)) {
 
-				StringBuilder sb = new StringBuilder();
-
-				sb.append("RegexUtil#replace(");
-				sb.append(element.attributeValue("input"));
-				sb.append(StringPool.COMMA);
-				sb.append(element.attributeValue("pattern"));
-				sb.append(StringPool.COMMA);
-				sb.append(element.attributeValue("group"));
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-
-				varValue = PoshiRunnerGetterUtil.getVarMethodValue(
-					sb.toString());
+				varValue = RegexUtil.replace(
+					PoshiRunnerVariablesUtil.replaceCommandVars(
+						element.attributeValue("input")),
+					element.attributeValue("pattern"),
+					element.attributeValue("group"));
 			}
 			else if (element.attributeValue("locator") != null) {
 				String locator = element.attributeValue("locator");

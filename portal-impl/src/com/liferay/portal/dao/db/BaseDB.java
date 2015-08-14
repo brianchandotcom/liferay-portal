@@ -456,8 +456,9 @@ public abstract class BaseDB implements DB {
 			String template, boolean evaluate, boolean failOnError)
 		throws IOException, NamingException, SQLException {
 
-		runSQLTemplateString(
-			DataAccess.getConnection(), template, evaluate, failOnError);
+		try (Connection connection = DataAccess.getConnection()) {
+			runSQLTemplateString(connection, template, evaluate, failOnError);
+		}
 	}
 
 	@Override

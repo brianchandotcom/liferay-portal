@@ -4373,7 +4373,8 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * <code>True</code> if the portlet will only process namespaced parameters.
 	 */
-	private boolean _requiresNamespacedParameters = true;
+	private boolean _requiresNamespacedParameters =
+		PropsValues.REQUIRES_NAMESPACED_PARAMETERS;
 
 	/**
 	 * The resource bundle of the portlet.

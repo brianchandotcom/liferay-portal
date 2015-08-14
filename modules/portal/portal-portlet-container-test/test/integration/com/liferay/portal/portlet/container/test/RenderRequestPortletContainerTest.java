@@ -71,10 +71,10 @@ public class RenderRequestPortletContainerTest
 
 	@Test
 	public void testRenderRequest_invalidPortletId() throws Exception {
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 		String url =
-			layout.getRegularURL(request) +
+			layout.getRegularURL(httpServletRequest) +
 				"?p_p_id='\"><script>alert(1)</script>&p_p_lifecycle=0&" +
 					"p_p_state=exclusive";
 
@@ -144,12 +144,12 @@ public class RenderRequestPortletContainerTest
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 		// Get the p_p_auth by making a resource request
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, TEST_PORTLET_ID, layout.getPlid(),
+			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
@@ -164,7 +164,7 @@ public class RenderRequestPortletContainerTest
 		// parameter
 
 		portletURL = new PortletURLImpl(
-			request, portletToTarget, layout.getPlid(),
+			httpServletRequest, portletToTarget, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setWindowState(WindowState.MAXIMIZED);
@@ -189,10 +189,10 @@ public class RenderRequestPortletContainerTest
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, TEST_PORTLET_ID, layout.getPlid(),
+			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
@@ -229,10 +229,10 @@ public class RenderRequestPortletContainerTest
 		setUpPortlet(new TestPortlet(map), properties, portletToEmbbed, false);
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, TEST_PORTLET_ID, layout.getPlid(),
+			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("portletToEmbbed", portletToEmbbed);

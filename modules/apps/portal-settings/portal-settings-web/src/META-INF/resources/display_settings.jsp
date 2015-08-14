@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/portal_settings/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <liferay-ui:error-marker key="errorSection" value="displaySettings" />
 

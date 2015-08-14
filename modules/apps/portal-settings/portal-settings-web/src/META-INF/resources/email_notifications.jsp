@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/portal_settings/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <h3><liferay-ui:message key="email-notifications" /></h3>
 
@@ -83,7 +83,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 			/>
 
 			<aui:fieldset cssClass="definition-of-terms email-user-add terms">
-				<%@ include file="/html/portlet/portal_settings/definition_of_terms.jspf" %>
+				<%@ include file="/definition_of_terms.jspf" %>
 			</aui:fieldset>
 		</aui:fieldset>
 	</liferay-ui:section>
@@ -101,7 +101,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 		/>
 
 		<aui:fieldset cssClass="definition-of-terms email-verification terms">
-			<%@ include file="/html/portlet/portal_settings/definition_of_terms.jspf" %>
+			<%@ include file="/definition_of_terms.jspf" %>
 		</aui:fieldset>
 	</liferay-ui:section>
 
@@ -118,7 +118,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 		/>
 
 		<aui:fieldset cssClass="definition-of-terms email-verification terms">
-			<%@ include file="/html/portlet/portal_settings/definition_of_terms.jspf" %>
+			<%@ include file="/definition_of_terms.jspf" %>
 		</aui:fieldset>
 	</liferay-ui:section>
 
@@ -135,7 +135,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 		/>
 
 		<aui:fieldset cssClass="definition-of-terms email-verification terms">
-			<%@ include file="/html/portlet/portal_settings/definition_of_terms.jspf" %>
+			<%@ include file="/definition_of_terms.jspf" %>
 		</aui:fieldset>
 	</liferay-ui:section>
 </liferay-ui:tabs>

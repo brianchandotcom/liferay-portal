@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/portal_settings/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <liferay-ui:error-marker key="errorSection" value="authentication" />
 
@@ -30,7 +30,7 @@
 	%>
 
 		<liferay-ui:section>
-			<liferay-util:include page='<%= "/html/portlet/portal_settings/authentication/" + _getSectionJsp(section) + ".jsp" %>' portletId="<%= portletDisplay.getRootPortletId() %>" />
+			<liferay-util:include page='<%= "/authentication/" + _getSectionJsp(section) + ".jsp" %>' portletId="<%= portletDisplay.getRootPortletId() %>" />
 		</liferay-ui:section>
 
 	<%

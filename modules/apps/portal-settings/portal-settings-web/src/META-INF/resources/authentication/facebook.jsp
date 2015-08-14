@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/portal_settings/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 boolean facebookConnectAuthEnabled = FacebookConnectUtil.isEnabled(company.getCompanyId());

@@ -120,7 +120,15 @@
 jdbc.default.driverClassName=${database.driver}
 jdbc.default.url=${database.url}
 jdbc.default.username=${database.username}
-jdbc.default.password=${database.password}]]></echo>
+jdbc.default.password=${database.password}
+
+counter.jdbc.prefix=jdbc.counter.
+
+jdbc.counter.maximumPoolSize=5
+jdbc.counter.minimumIdle=0
+
+jdbc.default.maximumPoolSize=20
+jdbc.default.minimumIdle=0]]></echo>
 
 			<post-action />
 		</sequential>

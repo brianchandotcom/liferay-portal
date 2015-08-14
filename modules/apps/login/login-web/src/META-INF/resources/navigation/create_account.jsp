@@ -14,26 +14,22 @@
  */
 --%>
 
-<%@ include file="/html/portlet/login/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
-boolean showAnonymousIcon = false;
+boolean showCreateAccountIcon = false;
 
-if (!mvcRenderCommandName.startsWith("/login/create_anonymous_account") && company.isStrangers() && portletName.equals(PortletKeys.FAST_LOGIN)) {
-	showAnonymousIcon = true;
+if (!mvcRenderCommandName.equals("/login/create_account") && company.isStrangers() && !portletName.equals(PortletKeys.FAST_LOGIN)) {
+	showCreateAccountIcon = true;
 }
 %>
 
-<c:if test="<%= showAnonymousIcon %>">
-	<portlet:renderURL var="anonymousURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-		<portlet:param name="mvcRenderCommandName" value="/login/create_anonymous_account" />
-	</portlet:renderURL>
-
+<c:if test="<%= showCreateAccountIcon %>">
 	<liferay-ui:icon
-		iconCssClass="icon-user"
-		message="guest"
-		url="<%= anonymousURL %>"
+		iconCssClass="icon-plus"
+		message="create-account"
+		url="<%= PortalUtil.getCreateAccountURL(request, themeDisplay) %>"
 	/>
 </c:if>

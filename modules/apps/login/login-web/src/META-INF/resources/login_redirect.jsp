@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/login/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String emailAddress = ParamUtil.getString(request, "emailAddress");

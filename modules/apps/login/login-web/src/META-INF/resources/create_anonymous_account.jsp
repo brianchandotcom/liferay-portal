@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/login/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <portlet:actionURL name="/login/create_anonymous_account" var="createAnonymousAccountURL" />
 
@@ -86,4 +86,4 @@
 	</aui:button-row>
 </aui:form>
 
-<liferay-util:include page="/html/portlet/login/navigation.jsp" />
+<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />

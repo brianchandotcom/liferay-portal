@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/login/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
@@ -149,7 +149,7 @@
 			</aui:button-row>
 		</aui:form>
 
-		<liferay-util:include page="/html/portlet/login/navigation.jsp" />
+		<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
 
 		<aui:script>
 			AUI.$('#<portlet:namespace />password').on(

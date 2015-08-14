@@ -14,11 +14,23 @@
 
 package com.liferay.bookmarks.model;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 /**
  * @author Alexander Chow
  */
 public class BookmarksFolderConstants {
 
 	public static final long DEFAULT_PARENT_FOLDER_ID = 0;
+
+	public static final String NAME_GENERAL_RESTRICTIONS = "blank";
+
+	public static final String NAME_INVALID_CHARACTERS =
+		StringPool.DOUBLE_SLASH + StringPool.SPACE +
+		StringPool.DOUBLE_BACK_SLASH;
+
+	public static final String NAME_LABEL = "folder-name";
+
+	public static final String NAME_RESERVED_WORDS = StringPool.NULL;
 
 }

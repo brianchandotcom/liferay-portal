@@ -14,11 +14,8 @@
 
 package com.liferay.portal.kernel.portletdisplaytemplate;
 
-import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
-import com.liferay.portlet.exportimport.lar.PortletDataContext;
-import com.liferay.portlet.exportimport.lar.PortletDataException;
 
 import java.util.List;
 import java.util.Map;
@@ -35,20 +32,11 @@ public interface PortletDisplayTemplateManager {
 
 	public static final String ENTRIES = "entries";
 
-	public void exportDDMTemplateStagedModel(
-			PortletDataContext portletDataContext, String portletId,
-			DDMTemplate ddmTemplate)
-		throws PortletDataException;
-
 	public DDMTemplate getDDMTemplate(
 		long groupId, long classNameId, String displayStyle,
 		boolean useDefault);
 
-	public long getDDMTemplateGroupId(long groupId);
-
 	public String getDisplayStyle(String ddmTemplateKey);
-
-	public List<TemplateHandler> getPortletDisplayTemplateHandlers();
 
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
 		String language);

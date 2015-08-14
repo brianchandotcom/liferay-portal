@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ADD_PAGE_FORMAT_DROPDOWN</td>
-	<td>//select[@id='_154_WAR_wikiweb_format']</td>
+	<td>//select[contains(@id,'format')]</td>
 	<td></td>
 </tr>
 <tr>

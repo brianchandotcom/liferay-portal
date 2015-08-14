@@ -213,10 +213,10 @@ public class ActionRequestPortletContainerTest
 	public void testActionRequest_noTokens() throws Exception {
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, TEST_PORTLET_ID, layout.getPlid(),
+			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
 		String url = portletURL.toString();
@@ -275,12 +275,12 @@ public class ActionRequestPortletContainerTest
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 		// Get the p_auth by making a resource request
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, TEST_PORTLET_ID, layout.getPlid(),
+			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
@@ -294,7 +294,7 @@ public class ActionRequestPortletContainerTest
 		// Now make the action request using the p_auth parameter
 
 		portletURL = new PortletURLImpl(
-			request, TEST_PORTLET_ID, layout.getPlid(),
+			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
 		String url = portletURL.toString();
@@ -323,10 +323,10 @@ public class ActionRequestPortletContainerTest
 
 			setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-			HttpServletRequest request = getHttpServletRequest();
+			HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 			PortletURL portletURL = new PortletURLImpl(
-				request, TEST_PORTLET_ID, layout.getPlid(),
+				httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 				PortletRequest.ACTION_PHASE);
 
 			portletURL.setParameter("p_auth_secret", Encryptor.digest("test"));
@@ -349,10 +349,10 @@ public class ActionRequestPortletContainerTest
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, TEST_PORTLET_ID, layout.getPlid(),
+			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
 		portletURL.setParameter("struts_action", "/test/portlet/1");
@@ -392,12 +392,12 @@ public class ActionRequestPortletContainerTest
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 		// Get the p_auth by making a resource request
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, TEST_PORTLET_ID, layout.getPlid(),
+			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
@@ -411,7 +411,7 @@ public class ActionRequestPortletContainerTest
 		// Now make the action request using the p_auth header
 
 		portletURL = new PortletURLImpl(
-			request, TEST_PORTLET_ID, layout.getPlid(),
+			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
 		String url = portletURL.toString();

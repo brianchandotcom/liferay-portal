@@ -47,10 +47,10 @@ public class LayoutRequestPortletContainerTest
 	public void testLayoutRequest() throws Exception {
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 		Map<String, List<String>> responseMap = request(
-			layout.getRegularURL(request));
+			layout.getRegularURL(httpServletRequest));
 
 		Assert.assertEquals("200", getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("render"));

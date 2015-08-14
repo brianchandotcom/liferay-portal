@@ -39,8 +39,10 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.Portlet;
@@ -74,6 +76,8 @@ public class BasePortletContainerTestCase {
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+		testPortlet = new TestPortlet(map);
 	}
 
 	@After
@@ -231,15 +235,20 @@ public class BasePortletContainerTestCase {
 		}
 	}
 
+	protected static final String TEST_PORTLET_ID = "TEST_PORTLET_ID";
+
 	@DeleteAfterTestRun
 	protected Group group;
 
 	protected Layout layout;
+	protected Map<String, String> map = new ConcurrentHashMap<>();
+	protected Dictionary<String, Object> properties = new Hashtable<>();
 	protected ServiceRegistration<?> serviceRegistration;
 	protected List<ServiceRegistration<?>> serviceRegistrations =
 		new CopyOnWriteArrayList<>();
 	protected ServiceTracker
 		<com.liferay.portal.model.Portlet, com.liferay.portal.model.Portlet>
 			serviceTracker;
+	protected TestPortlet testPortlet;
 
 }

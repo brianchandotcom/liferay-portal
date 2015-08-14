@@ -1148,7 +1148,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 				serviceComponent.setNew(false);
 			}
 			else {
-				session.merge(serviceComponent);
+				serviceComponent = (ServiceComponent)session.merge(serviceComponent);
 			}
 		}
 		catch (Exception e) {

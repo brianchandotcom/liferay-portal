@@ -277,7 +277,7 @@ public class ClusterGroupPersistenceImpl extends BasePersistenceImpl<ClusterGrou
 				clusterGroup.setNew(false);
 			}
 			else {
-				session.merge(clusterGroup);
+				clusterGroup = (ClusterGroup)session.merge(clusterGroup);
 			}
 		}
 		catch (Exception e) {

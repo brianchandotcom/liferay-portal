@@ -534,7 +534,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 				browserTracker.setNew(false);
 			}
 			else {
-				session.merge(browserTracker);
+				browserTracker = (BrowserTracker)session.merge(browserTracker);
 			}
 		}
 		catch (Exception e) {

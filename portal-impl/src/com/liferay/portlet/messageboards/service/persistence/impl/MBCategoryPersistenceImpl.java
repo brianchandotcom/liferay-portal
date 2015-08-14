@@ -9657,7 +9657,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 				mbCategory.setNew(false);
 			}
 			else {
-				session.merge(mbCategory);
+				mbCategory = (MBCategory)session.merge(mbCategory);
 			}
 		}
 		catch (Exception e) {

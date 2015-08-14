@@ -8260,7 +8260,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				layout.setNew(false);
 			}
 			else {
-				session.merge(layout);
+				layout = (Layout)session.merge(layout);
 			}
 		}
 		catch (Exception e) {

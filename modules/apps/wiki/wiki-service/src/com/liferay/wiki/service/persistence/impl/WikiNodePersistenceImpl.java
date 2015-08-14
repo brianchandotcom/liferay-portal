@@ -4710,7 +4710,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 				wikiNode.setNew(false);
 			}
 			else {
-				session.merge(wikiNode);
+				wikiNode = (WikiNode)session.merge(wikiNode);
 			}
 		}
 		catch (Exception e) {

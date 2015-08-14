@@ -4860,7 +4860,7 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 				mdrRuleGroupInstance.setNew(false);
 			}
 			else {
-				session.merge(mdrRuleGroupInstance);
+				mdrRuleGroupInstance = (MDRRuleGroupInstance)session.merge(mdrRuleGroupInstance);
 			}
 		}
 		catch (Exception e) {

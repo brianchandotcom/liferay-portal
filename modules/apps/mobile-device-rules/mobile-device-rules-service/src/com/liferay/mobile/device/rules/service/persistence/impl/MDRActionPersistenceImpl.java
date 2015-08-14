@@ -2194,7 +2194,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 				mdrAction.setNew(false);
 			}
 			else {
-				session.merge(mdrAction);
+				mdrAction = (MDRAction)session.merge(mdrAction);
 			}
 		}
 		catch (Exception e) {

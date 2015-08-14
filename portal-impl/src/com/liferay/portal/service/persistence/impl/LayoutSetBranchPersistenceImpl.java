@@ -3369,7 +3369,7 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 				layoutSetBranch.setNew(false);
 			}
 			else {
-				session.merge(layoutSetBranch);
+				layoutSetBranch = (LayoutSetBranch)session.merge(layoutSetBranch);
 			}
 		}
 		catch (Exception e) {

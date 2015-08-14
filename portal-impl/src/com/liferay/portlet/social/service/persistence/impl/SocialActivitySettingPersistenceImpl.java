@@ -2779,7 +2779,7 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 				socialActivitySetting.setNew(false);
 			}
 			else {
-				session.merge(socialActivitySetting);
+				socialActivitySetting = (SocialActivitySetting)session.merge(socialActivitySetting);
 			}
 		}
 		catch (Exception e) {

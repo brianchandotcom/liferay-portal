@@ -2664,7 +2664,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 				ddmContent.setNew(false);
 			}
 			else {
-				session.merge(ddmContent);
+				ddmContent = (DDMContent)session.merge(ddmContent);
 			}
 		}
 		catch (Exception e) {

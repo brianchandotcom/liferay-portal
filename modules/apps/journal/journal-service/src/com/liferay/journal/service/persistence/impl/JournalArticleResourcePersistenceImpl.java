@@ -1945,7 +1945,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 				journalArticleResource.setNew(false);
 			}
 			else {
-				session.merge(journalArticleResource);
+				journalArticleResource = (JournalArticleResource)session.merge(journalArticleResource);
 			}
 		}
 		catch (Exception e) {

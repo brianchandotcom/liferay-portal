@@ -1771,7 +1771,7 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 				wallEntry.setNew(false);
 			}
 			else {
-				session.merge(wallEntry);
+				wallEntry = (WallEntry)session.merge(wallEntry);
 			}
 		}
 		catch (Exception e) {

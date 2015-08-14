@@ -2180,7 +2180,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 				assetCategoryProperty.setNew(false);
 			}
 			else {
-				session.merge(assetCategoryProperty);
+				assetCategoryProperty = (AssetCategoryProperty)session.merge(assetCategoryProperty);
 			}
 		}
 		catch (Exception e) {

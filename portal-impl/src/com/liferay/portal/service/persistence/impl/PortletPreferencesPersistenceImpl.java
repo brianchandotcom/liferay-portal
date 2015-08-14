@@ -4582,7 +4582,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				portletPreferences.setNew(false);
 			}
 			else {
-				session.merge(portletPreferences);
+				portletPreferences = (PortletPreferences)session.merge(portletPreferences);
 			}
 		}
 		catch (Exception e) {

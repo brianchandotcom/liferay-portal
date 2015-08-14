@@ -2699,7 +2699,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 				mbDiscussion.setNew(false);
 			}
 			else {
-				session.merge(mbDiscussion);
+				mbDiscussion = (MBDiscussion)session.merge(mbDiscussion);
 			}
 		}
 		catch (Exception e) {

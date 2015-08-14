@@ -3666,7 +3666,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 				passwordPolicy.setNew(false);
 			}
 			else {
-				session.merge(passwordPolicy);
+				passwordPolicy = (PasswordPolicy)session.merge(passwordPolicy);
 			}
 		}
 		catch (Exception e) {

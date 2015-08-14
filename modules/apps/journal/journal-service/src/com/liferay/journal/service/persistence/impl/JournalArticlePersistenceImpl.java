@@ -29147,7 +29147,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				journalArticle.setNew(false);
 			}
 			else {
-				session.merge(journalArticle);
+				journalArticle = (JournalArticle)session.merge(journalArticle);
 			}
 		}
 		catch (Exception e) {

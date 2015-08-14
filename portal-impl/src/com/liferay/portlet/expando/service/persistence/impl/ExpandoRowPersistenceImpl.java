@@ -1512,7 +1512,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 				expandoRow.setNew(false);
 			}
 			else {
-				session.merge(expandoRow);
+				expandoRow = (ExpandoRow)session.merge(expandoRow);
 			}
 		}
 		catch (Exception e) {

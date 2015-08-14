@@ -1070,7 +1070,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 				passwordPolicyRel.setNew(false);
 			}
 			else {
-				session.merge(passwordPolicyRel);
+				passwordPolicyRel = (PasswordPolicyRel)session.merge(passwordPolicyRel);
 			}
 		}
 		catch (Exception e) {

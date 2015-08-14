@@ -1095,7 +1095,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 				announcementsDelivery.setNew(false);
 			}
 			else {
-				session.merge(announcementsDelivery);
+				announcementsDelivery = (AnnouncementsDelivery)session.merge(announcementsDelivery);
 			}
 		}
 		catch (Exception e) {

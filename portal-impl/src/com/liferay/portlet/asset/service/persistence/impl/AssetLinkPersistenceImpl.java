@@ -3088,7 +3088,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 				assetLink.setNew(false);
 			}
 			else {
-				session.merge(assetLink);
+				assetLink = (AssetLink)session.merge(assetLink);
 			}
 		}
 		catch (Exception e) {

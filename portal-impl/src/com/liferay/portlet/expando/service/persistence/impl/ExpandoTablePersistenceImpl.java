@@ -1143,7 +1143,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 				expandoTable.setNew(false);
 			}
 			else {
-				session.merge(expandoTable);
+				expandoTable = (ExpandoTable)session.merge(expandoTable);
 			}
 		}
 		catch (Exception e) {

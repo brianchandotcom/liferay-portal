@@ -11071,7 +11071,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 				dlFolder.setNew(false);
 			}
 			else {
-				session.merge(dlFolder);
+				dlFolder = (DLFolder)session.merge(dlFolder);
 			}
 		}
 		catch (Exception e) {

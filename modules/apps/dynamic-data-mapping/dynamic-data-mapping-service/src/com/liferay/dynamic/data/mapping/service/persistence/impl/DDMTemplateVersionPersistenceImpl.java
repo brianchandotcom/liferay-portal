@@ -1614,7 +1614,7 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 				ddmTemplateVersion.setNew(false);
 			}
 			else {
-				session.merge(ddmTemplateVersion);
+				ddmTemplateVersion = (DDMTemplateVersion)session.merge(ddmTemplateVersion);
 			}
 		}
 		catch (Exception e) {

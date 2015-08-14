@@ -1912,7 +1912,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 				expandoColumn.setNew(false);
 			}
 			else {
-				session.merge(expandoColumn);
+				expandoColumn = (ExpandoColumn)session.merge(expandoColumn);
 			}
 		}
 		catch (Exception e) {

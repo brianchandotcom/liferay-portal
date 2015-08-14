@@ -11756,7 +11756,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 				dlFileEntry.setNew(false);
 			}
 			else {
-				session.merge(dlFileEntry);
+				dlFileEntry = (DLFileEntry)session.merge(dlFileEntry);
 			}
 		}
 		catch (Exception e) {

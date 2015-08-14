@@ -3895,7 +3895,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 				assetEntry.setNew(false);
 			}
 			else {
-				session.merge(assetEntry);
+				assetEntry = (AssetEntry)session.merge(assetEntry);
 			}
 		}
 		catch (Exception e) {

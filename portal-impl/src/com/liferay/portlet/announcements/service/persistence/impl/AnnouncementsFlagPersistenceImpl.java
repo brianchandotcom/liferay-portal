@@ -1086,7 +1086,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 				announcementsFlag.setNew(false);
 			}
 			else {
-				session.merge(announcementsFlag);
+				announcementsFlag = (AnnouncementsFlag)session.merge(announcementsFlag);
 			}
 		}
 		catch (Exception e) {

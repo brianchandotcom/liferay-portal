@@ -3309,7 +3309,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 				dlFileEntryType.setNew(false);
 			}
 			else {
-				session.merge(dlFileEntryType);
+				dlFileEntryType = (DLFileEntryType)session.merge(dlFileEntryType);
 			}
 		}
 		catch (Exception e) {

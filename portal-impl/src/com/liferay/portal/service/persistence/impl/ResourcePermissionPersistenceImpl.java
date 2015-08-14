@@ -4165,7 +4165,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				resourcePermission.setNew(false);
 			}
 			else {
-				session.merge(resourcePermission);
+				resourcePermission = (ResourcePermission)session.merge(resourcePermission);
 			}
 		}
 		catch (Exception e) {

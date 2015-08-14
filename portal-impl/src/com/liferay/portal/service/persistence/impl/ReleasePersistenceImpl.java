@@ -599,7 +599,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 				release.setNew(false);
 			}
 			else {
-				session.merge(release);
+				release = (Release)session.merge(release);
 			}
 		}
 		catch (Exception e) {

@@ -6683,7 +6683,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 				organization.setNew(false);
 			}
 			else {
-				session.merge(organization);
+				organization = (Organization)session.merge(organization);
 			}
 		}
 		catch (Exception e) {

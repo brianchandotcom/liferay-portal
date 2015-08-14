@@ -1554,7 +1554,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 				ddmStorageLink.setNew(false);
 			}
 			else {
-				session.merge(ddmStorageLink);
+				ddmStorageLink = (DDMStorageLink)session.merge(ddmStorageLink);
 			}
 		}
 		catch (Exception e) {

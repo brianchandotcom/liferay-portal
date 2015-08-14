@@ -1631,7 +1631,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 				meetupsRegistration.setNew(false);
 			}
 			else {
-				session.merge(meetupsRegistration);
+				meetupsRegistration = (MeetupsRegistration)session.merge(meetupsRegistration);
 			}
 		}
 		catch (Exception e) {

@@ -2560,7 +2560,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 				pollsQuestion.setNew(false);
 			}
 			else {
-				session.merge(pollsQuestion);
+				pollsQuestion = (PollsQuestion)session.merge(pollsQuestion);
 			}
 		}
 		catch (Exception e) {

@@ -3359,7 +3359,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 				sapEntry.setNew(false);
 			}
 			else {
-				session.merge(sapEntry);
+				sapEntry = (SAPEntry)session.merge(sapEntry);
 			}
 		}
 		catch (Exception e) {

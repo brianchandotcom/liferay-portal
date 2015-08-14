@@ -2467,7 +2467,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 				mbMailingList.setNew(false);
 			}
 			else {
-				session.merge(mbMailingList);
+				mbMailingList = (MBMailingList)session.merge(mbMailingList);
 			}
 		}
 		catch (Exception e) {

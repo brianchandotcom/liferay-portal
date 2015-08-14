@@ -2910,7 +2910,7 @@ public class ExportImportConfigurationPersistenceImpl
 				exportImportConfiguration.setNew(false);
 			}
 			else {
-				session.merge(exportImportConfiguration);
+				exportImportConfiguration = (ExportImportConfiguration)session.merge(exportImportConfiguration);
 			}
 		}
 		catch (Exception e) {

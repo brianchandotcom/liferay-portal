@@ -18423,7 +18423,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				mbMessage.setNew(false);
 			}
 			else {
-				session.merge(mbMessage);
+				mbMessage = (MBMessage)session.merge(mbMessage);
 			}
 		}
 		catch (Exception e) {

@@ -3033,7 +3033,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 				subscription.setNew(false);
 			}
 			else {
-				session.merge(subscription);
+				subscription = (Subscription)session.merge(subscription);
 			}
 		}
 		catch (Exception e) {

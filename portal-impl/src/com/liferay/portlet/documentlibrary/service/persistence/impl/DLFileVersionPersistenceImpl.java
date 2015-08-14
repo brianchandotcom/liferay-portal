@@ -5783,7 +5783,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 				dlFileVersion.setNew(false);
 			}
 			else {
-				session.merge(dlFileVersion);
+				dlFileVersion = (DLFileVersion)session.merge(dlFileVersion);
 			}
 		}
 		catch (Exception e) {

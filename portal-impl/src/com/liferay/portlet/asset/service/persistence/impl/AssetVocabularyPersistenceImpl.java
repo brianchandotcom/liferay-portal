@@ -4746,7 +4746,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 				assetVocabulary.setNew(false);
 			}
 			else {
-				session.merge(assetVocabulary);
+				assetVocabulary = (AssetVocabulary)session.merge(assetVocabulary);
 			}
 		}
 		catch (Exception e) {

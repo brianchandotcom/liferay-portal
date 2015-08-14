@@ -1583,7 +1583,7 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 				scProductScreenshot.setNew(false);
 			}
 			else {
-				session.merge(scProductScreenshot);
+				scProductScreenshot = (SCProductScreenshot)session.merge(scProductScreenshot);
 			}
 		}
 		catch (Exception e) {

@@ -2198,7 +2198,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				lock.setNew(false);
 			}
 			else {
-				session.merge(lock);
+				lock = (Lock)session.merge(lock);
 			}
 		}
 		catch (Exception e) {

@@ -17922,7 +17922,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				blogsEntry.setNew(false);
 			}
 			else {
-				session.merge(blogsEntry);
+				blogsEntry = (BlogsEntry)session.merge(blogsEntry);
 			}
 		}
 		catch (Exception e) {

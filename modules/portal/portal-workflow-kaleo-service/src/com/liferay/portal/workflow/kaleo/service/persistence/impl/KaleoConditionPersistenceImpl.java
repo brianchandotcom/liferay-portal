@@ -1547,7 +1547,7 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 				kaleoCondition.setNew(false);
 			}
 			else {
-				session.merge(kaleoCondition);
+				kaleoCondition = (KaleoCondition)session.merge(kaleoCondition);
 			}
 		}
 		catch (Exception e) {

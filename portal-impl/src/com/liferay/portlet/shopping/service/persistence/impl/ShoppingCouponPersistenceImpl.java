@@ -1075,7 +1075,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 				shoppingCoupon.setNew(false);
 			}
 			else {
-				session.merge(shoppingCoupon);
+				shoppingCoupon = (ShoppingCoupon)session.merge(shoppingCoupon);
 			}
 		}
 		catch (Exception e) {

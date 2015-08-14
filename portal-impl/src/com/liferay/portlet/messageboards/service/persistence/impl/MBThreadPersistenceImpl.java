@@ -12763,7 +12763,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				mbThread.setNew(false);
 			}
 			else {
-				session.merge(mbThread);
+				mbThread = (MBThread)session.merge(mbThread);
 			}
 		}
 		catch (Exception e) {

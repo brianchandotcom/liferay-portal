@@ -765,7 +765,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 				orgLabor.setNew(false);
 			}
 			else {
-				session.merge(orgLabor);
+				orgLabor = (OrgLabor)session.merge(orgLabor);
 			}
 		}
 		catch (Exception e) {

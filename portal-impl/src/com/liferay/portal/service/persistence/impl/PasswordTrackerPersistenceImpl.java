@@ -766,7 +766,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 				passwordTracker.setNew(false);
 			}
 			else {
-				session.merge(passwordTracker);
+				passwordTracker = (PasswordTracker)session.merge(passwordTracker);
 			}
 		}
 		catch (Exception e) {

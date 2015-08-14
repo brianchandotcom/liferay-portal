@@ -4026,7 +4026,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 				emailAddress.setNew(false);
 			}
 			else {
-				session.merge(emailAddress);
+				emailAddress = (EmailAddress)session.merge(emailAddress);
 			}
 		}
 		catch (Exception e) {

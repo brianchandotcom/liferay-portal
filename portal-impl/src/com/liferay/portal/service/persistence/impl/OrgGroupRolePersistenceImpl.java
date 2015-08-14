@@ -1234,7 +1234,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 				orgGroupRole.setNew(false);
 			}
 			else {
-				session.merge(orgGroupRole);
+				orgGroupRole = (OrgGroupRole)session.merge(orgGroupRole);
 			}
 		}
 		catch (Exception e) {

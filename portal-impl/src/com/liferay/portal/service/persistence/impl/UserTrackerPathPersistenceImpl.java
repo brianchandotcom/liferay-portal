@@ -773,7 +773,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 				userTrackerPath.setNew(false);
 			}
 			else {
-				session.merge(userTrackerPath);
+				userTrackerPath = (UserTrackerPath)session.merge(userTrackerPath);
 			}
 		}
 		catch (Exception e) {

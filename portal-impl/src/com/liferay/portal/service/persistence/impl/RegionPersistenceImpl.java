@@ -2057,7 +2057,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 				region.setNew(false);
 			}
 			else {
-				session.merge(region);
+				region = (Region)session.merge(region);
 			}
 		}
 		catch (Exception e) {

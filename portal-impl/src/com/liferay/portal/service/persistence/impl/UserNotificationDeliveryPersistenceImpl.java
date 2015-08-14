@@ -1195,7 +1195,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 				userNotificationDelivery.setNew(false);
 			}
 			else {
-				session.merge(userNotificationDelivery);
+				userNotificationDelivery = (UserNotificationDelivery)session.merge(userNotificationDelivery);
 			}
 		}
 		catch (Exception e) {

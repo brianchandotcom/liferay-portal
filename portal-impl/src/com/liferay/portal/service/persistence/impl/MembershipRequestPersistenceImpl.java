@@ -2324,7 +2324,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 				membershipRequest.setNew(false);
 			}
 			else {
-				session.merge(membershipRequest);
+				membershipRequest = (MembershipRequest)session.merge(membershipRequest);
 			}
 		}
 		catch (Exception e) {

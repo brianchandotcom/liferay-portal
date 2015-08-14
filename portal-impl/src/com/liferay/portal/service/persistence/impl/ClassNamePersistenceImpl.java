@@ -560,7 +560,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 				className.setNew(false);
 			}
 			else {
-				session.merge(className);
+				className = (ClassName)session.merge(className);
 			}
 		}
 		catch (Exception e) {

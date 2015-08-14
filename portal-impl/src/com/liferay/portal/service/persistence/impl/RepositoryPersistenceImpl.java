@@ -2547,7 +2547,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 				repository.setNew(false);
 			}
 			else {
-				session.merge(repository);
+				repository = (Repository)session.merge(repository);
 			}
 		}
 		catch (Exception e) {

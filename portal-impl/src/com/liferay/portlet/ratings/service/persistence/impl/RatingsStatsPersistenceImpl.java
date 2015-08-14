@@ -563,7 +563,7 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 				ratingsStats.setNew(false);
 			}
 			else {
-				session.merge(ratingsStats);
+				ratingsStats = (RatingsStats)session.merge(ratingsStats);
 			}
 		}
 		catch (Exception e) {

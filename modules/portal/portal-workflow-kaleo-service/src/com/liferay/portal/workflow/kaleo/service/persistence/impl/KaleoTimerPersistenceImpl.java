@@ -1489,7 +1489,7 @@ public class KaleoTimerPersistenceImpl extends BasePersistenceImpl<KaleoTimer>
 				kaleoTimer.setNew(false);
 			}
 			else {
-				session.merge(kaleoTimer);
+				kaleoTimer = (KaleoTimer)session.merge(kaleoTimer);
 			}
 		}
 		catch (Exception e) {

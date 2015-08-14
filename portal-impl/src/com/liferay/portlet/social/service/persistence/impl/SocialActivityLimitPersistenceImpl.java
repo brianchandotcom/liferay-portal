@@ -2224,7 +2224,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 				socialActivityLimit.setNew(false);
 			}
 			else {
-				session.merge(socialActivityLimit);
+				socialActivityLimit = (SocialActivityLimit)session.merge(socialActivityLimit);
 			}
 		}
 		catch (Exception e) {

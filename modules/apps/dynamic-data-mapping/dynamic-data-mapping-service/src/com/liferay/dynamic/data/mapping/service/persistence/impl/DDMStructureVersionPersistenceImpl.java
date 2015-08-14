@@ -1619,7 +1619,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 				ddmStructureVersion.setNew(false);
 			}
 			else {
-				session.merge(ddmStructureVersion);
+				ddmStructureVersion = (DDMStructureVersion)session.merge(ddmStructureVersion);
 			}
 		}
 		catch (Exception e) {

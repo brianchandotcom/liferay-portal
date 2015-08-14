@@ -1859,7 +1859,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 				resourceBlock.setNew(false);
 			}
 			else {
-				session.merge(resourceBlock);
+				resourceBlock = (ResourceBlock)session.merge(resourceBlock);
 			}
 		}
 		catch (Exception e) {

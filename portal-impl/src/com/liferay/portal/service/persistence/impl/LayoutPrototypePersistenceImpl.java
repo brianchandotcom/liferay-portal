@@ -3972,7 +3972,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 				layoutPrototype.setNew(false);
 			}
 			else {
-				session.merge(layoutPrototype);
+				layoutPrototype = (LayoutPrototype)session.merge(layoutPrototype);
 			}
 		}
 		catch (Exception e) {

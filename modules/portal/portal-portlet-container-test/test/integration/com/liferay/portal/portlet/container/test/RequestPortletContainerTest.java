@@ -72,7 +72,7 @@ import org.junit.runner.RunWith;
  * @author Raymond Augé
  */
 @RunWith(Arquillian.class)
-public class RequestTest extends BaseTestCase {
+public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 	@ClassRule
 	@Rule
@@ -88,7 +88,7 @@ public class RequestTest extends BaseTestCase {
 		map = new ConcurrentHashMap<>();
 
 		properties = new Hashtable<>();
-		requestTestPortlet = new RequestTestPortlet(map);
+		requestTestPortlet = new TestPortlet(map);
 	}
 
 	@After
@@ -280,7 +280,7 @@ public class RequestTest extends BaseTestCase {
 
 	@Test
 	public void testActionRequest_p_auth() throws Exception {
-		requestTestPortlet = new RequestTestPortlet(map) {
+		requestTestPortlet = new TestPortlet(map) {
 
 			@Override
 			public void serveResource(
@@ -397,7 +397,7 @@ public class RequestTest extends BaseTestCase {
 
 	@Test
 	public void testActionRequest_X_CSRF_Token() throws Exception {
-		requestTestPortlet = new RequestTestPortlet(map) {
+		requestTestPortlet = new TestPortlet(map) {
 
 			@Override
 			public void serveResource(
@@ -515,13 +515,13 @@ public class RequestTest extends BaseTestCase {
 		properties.put("com.liferay.portlet.system", Boolean.TRUE);
 
 		setUpPortlet(
-			new RequestTestPortlet(map), properties, portletToTarget, false);
+			new TestPortlet(map), properties, portletToTarget, false);
 
 		properties = new Hashtable<>();
 
 		Map<String, String> ignored = new HashMap<>();
 
-		requestTestPortlet = new RequestTestPortlet(ignored) {
+		requestTestPortlet = new TestPortlet(ignored) {
 
 			@Override
 			public void serveResource(
@@ -613,7 +613,7 @@ public class RequestTest extends BaseTestCase {
 
 		Map<String, String> ignored = new HashMap<>();
 
-		requestTestPortlet = new RequestTestPortlet(ignored) {
+		requestTestPortlet = new TestPortlet(ignored) {
 
 			@Override
 			public void render(
@@ -633,7 +633,7 @@ public class RequestTest extends BaseTestCase {
 		String portletToEmbbed = "TEST_EMBEDDED";
 
 		setUpPortlet(
-			new RequestTestPortlet(map), properties, portletToEmbbed, false);
+			new TestPortlet(map), properties, portletToEmbbed, false);
 		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
@@ -698,13 +698,13 @@ public class RequestTest extends BaseTestCase {
 		properties.put("com.liferay.portlet.system", Boolean.TRUE);
 
 		setUpPortlet(
-			new RequestTestPortlet(map), properties, portletToTarget, false);
+			new TestPortlet(map), properties, portletToTarget, false);
 
 		properties = new Hashtable<>();
 
 		Map<String, String> ignored = new HashMap<>();
 
-		requestTestPortlet = new RequestTestPortlet(ignored) {
+		requestTestPortlet = new TestPortlet(ignored) {
 
 			@Override
 			public void serveResource(
@@ -796,7 +796,7 @@ public class RequestTest extends BaseTestCase {
 
 		Map<String, String> ignored = new HashMap<>();
 
-		requestTestPortlet = new RequestTestPortlet(ignored) {
+		requestTestPortlet = new TestPortlet(ignored) {
 
 			@Override
 			public void serveResource(
@@ -817,7 +817,7 @@ public class RequestTest extends BaseTestCase {
 		String portletToEmbbed = "TEST_EMBEDDED";
 
 		setUpPortlet(
-			new RequestTestPortlet(map), properties, portletToEmbbed, false);
+			new TestPortlet(map), properties, portletToEmbbed, false);
 		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
@@ -844,6 +844,6 @@ public class RequestTest extends BaseTestCase {
 
 	private Map<String, String> map;
 	private Dictionary<String, Object> properties;
-	private RequestTestPortlet requestTestPortlet;
+	private TestPortlet requestTestPortlet;
 
 }

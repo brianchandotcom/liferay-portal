@@ -62,7 +62,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Raymond Augé
  */
-public class BaseTestCase {
+public class BasePortletContainerTestCase {
 
 	@Before
 	public void setUp() throws Exception {

@@ -1,0 +1,21 @@
+<definition>
+	<command name="selectHeading">
+		<execute function="Click" locator1="CKEditor#TOOLBAR_FORMAT_BUTTON" />
+
+		<execute function="SelectFrame" locator1="CKEditor#IFRAME" />
+
+		<var name="key_format" value="${format}" />
+
+		<execute function="Click" locator1="CKEditor#TOOLBAR_FORMAT_MENULIST" value1="${format}" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="typeEnterKey">
+		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
+
+		<execute function="KeyPress" locator1="CKEditor#BODY" value1="\RETURN" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+</definition>

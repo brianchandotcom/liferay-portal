@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public class ServiceTrackerCustomizerFactory {
 
-	public static <S> ServiceTrackerCustomizer<S, S> create(
+	public static <S> ServiceTrackerCustomizer<S, S> fromPredicateFilter(
 		final PredicateFilter<S> predicateFilter) {
 
 		return new ServiceTrackerCustomizer<S, S>() {

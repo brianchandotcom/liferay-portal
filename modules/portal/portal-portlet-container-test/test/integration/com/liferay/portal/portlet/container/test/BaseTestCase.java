@@ -102,7 +102,7 @@ public class BaseTestCase {
 		return bundle.getBundleContext();
 	}
 
-	protected HttpServletRequest getRequest() throws Exception {
+	protected HttpServletRequest getHttpServletRequest() throws Exception {
 		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
 		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();

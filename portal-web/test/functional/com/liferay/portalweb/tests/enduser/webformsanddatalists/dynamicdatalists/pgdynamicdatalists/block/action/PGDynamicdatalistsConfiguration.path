@@ -130,12 +130,12 @@
 <!--LIST_TABLE-->
 <tr>
 	<td>LIST_TABLE_NAME_1</td>
-	<td>xpath=(//div[@id='_86_ddlRecordSetsSearchContainer']//tr/td[2]/a)</td>
+	<td>xpath=(//div[contains(@id,'_ddlRecordSetsSearchContainer')]//tr/td/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_TABLE_DESCRIPTION_1</td>
-	<td>xpath=(//div[@id='_86_ddlRecordSetsSearchContainer']//tr/td[3]/a)</td>
+	<td>xpath=(//div[contains(@id,'_ddlRecordSetsSearchContainer')]//tr/td[2]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>

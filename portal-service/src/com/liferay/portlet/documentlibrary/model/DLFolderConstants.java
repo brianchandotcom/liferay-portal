@@ -14,6 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeFormatter;
+
 /**
  * <p>
  * This contains several utility methods for the purpose of determining folder
@@ -29,6 +33,10 @@ package com.liferay.portlet.documentlibrary.model;
 public class DLFolderConstants {
 
 	public static final long DEFAULT_PARENT_FOLDER_ID = 0;
+
+	public static final String NAME_GENERAL_RESTRICTIONS = "blank";
+
+	public static final String NAME_LABEL = "folder-name";
 
 	public static final int RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW = 1;
 
@@ -64,6 +72,37 @@ public class DLFolderConstants {
 		else {
 			return DEFAULT_PARENT_FOLDER_ID;
 		}
+	}
+
+	public static final String getNameInvalidCharacters(
+		String[] documentLibraryCharBlacklist) {
+
+		return StringUtil.merge(documentLibraryCharBlacklist, StringPool.SPACE);
+	}
+
+	public static final String getNameInvalidEndCharacters(
+		String[] documentLibraryCharLastBlacklist) {
+
+		String folderNameInvalidEndCharacters = StringPool.BLANK;
+
+		for (String blacklistLastChar : documentLibraryCharLastBlacklist) {
+			if (blacklistLastChar.startsWith("\\u")) {
+				blacklistLastChar = UnicodeFormatter.parseString(
+					blacklistLastChar);
+			}
+
+			folderNameInvalidEndCharacters += blacklistLastChar +
+				StringPool.SPACE;
+		}
+
+		return StringUtil.trimTrailing(folderNameInvalidEndCharacters);
+	}
+
+	public static final String getNameReservedWords(
+		String[] documentLibraryNameBlacklist) {
+
+		return StringPool.NULL + StringPool.COMMA_AND_SPACE + StringUtil.merge(
+			documentLibraryNameBlacklist, StringPool.COMMA_AND_SPACE);
 	}
 
 }

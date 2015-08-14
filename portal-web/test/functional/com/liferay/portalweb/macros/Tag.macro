@@ -115,6 +115,10 @@
 
 		<execute function="AssertTextEquals" locator1="PGBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="${entryTitle}" />
+
 		<execute macro="BlogsEntry#viewTagPG">
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="tagName" value="${tagName}" />
@@ -147,6 +151,10 @@
 		<execute function="Pause" locator1="3000" />
 
 		<execute function="AssertTextEquals" locator1="PGBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="${entryTitle}" />
 
 		<var name="key_tagName" value="${tagName}" />
 

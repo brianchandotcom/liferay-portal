@@ -12083,7 +12083,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 				bookmarksEntry.setNew(false);
 			}
 			else {
-				session.merge(bookmarksEntry);
+				bookmarksEntry = (BookmarksEntry)session.merge(bookmarksEntry);
 			}
 		}
 		catch (Exception e) {

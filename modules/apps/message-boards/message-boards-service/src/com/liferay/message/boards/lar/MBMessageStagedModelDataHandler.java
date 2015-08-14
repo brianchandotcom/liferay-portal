@@ -51,6 +51,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -339,8 +340,7 @@ public class MBMessageStagedModelDataHandler
 				}
 			}
 
-			_mbMessageLocalService.updateAnswer(
-				importedMessage, message.isAnswer(), false);
+			importedMessage = updateAnswer(message, importedMessage);
 
 			if (importedMessage.isRoot() && !importedMessage.isDiscussion()) {
 				_mbThreadLocalService.updateQuestion(
@@ -510,6 +510,28 @@ public class MBMessageStagedModelDataHandler
 		RatingsEntryLocalService ratingsEntryLocalService) {
 
 		_ratingsEntryLocalService = ratingsEntryLocalService;
+	}
+
+	private MBMessage updateAnswer(MBMessage message, MBMessage importedMessage)
+		throws PortalException {
+
+		if (importedMessage.isAnswer() == message.isAnswer()) {
+			return importedMessage;
+		}
+
+		Date modifiedDate = importedMessage.getModifiedDate();
+
+		_mbMessageLocalService.updateAnswer(
+			importedMessage, message.isAnswer(), false);
+
+		importedMessage = _mbMessageLocalService.fetchMBMessage(
+			importedMessage.getMessageId());
+
+		importedMessage.setModifiedDate(modifiedDate);
+
+		_mbMessageLocalService.updateMBMessage(importedMessage);
+
+		return importedMessage;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

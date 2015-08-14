@@ -2762,7 +2762,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 				shoppingOrder.setNew(false);
 			}
 			else {
-				session.merge(shoppingOrder);
+				shoppingOrder = (ShoppingOrder)session.merge(shoppingOrder);
 			}
 		}
 		catch (Exception e) {

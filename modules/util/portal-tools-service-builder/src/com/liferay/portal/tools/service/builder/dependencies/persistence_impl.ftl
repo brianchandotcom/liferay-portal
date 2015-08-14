@@ -676,7 +676,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					session.evict(${entity.varName});
 					session.saveOrUpdate(${entity.varName});
 				<#else>
-					session.merge(${entity.varName});
+				${entity.varName} = (${entity.name})session.merge(${entity.varName});
 				</#if>
 			}
 

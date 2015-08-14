@@ -1981,7 +1981,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 				ddmStructureLayout.setNew(false);
 			}
 			else {
-				session.merge(ddmStructureLayout);
+				ddmStructureLayout = (DDMStructureLayout)session.merge(ddmStructureLayout);
 			}
 		}
 		catch (Exception e) {

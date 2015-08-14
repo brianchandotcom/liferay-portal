@@ -2539,7 +2539,7 @@ public class KaleoTaskAssignmentPersistenceImpl extends BasePersistenceImpl<Kale
 				kaleoTaskAssignment.setNew(false);
 			}
 			else {
-				session.merge(kaleoTaskAssignment);
+				kaleoTaskAssignment = (KaleoTaskAssignment)session.merge(kaleoTaskAssignment);
 			}
 		}
 		catch (Exception e) {

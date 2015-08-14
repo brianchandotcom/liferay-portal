@@ -2380,7 +2380,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 				shoppingCategory.setNew(false);
 			}
 			else {
-				session.merge(shoppingCategory);
+				shoppingCategory = (ShoppingCategory)session.merge(shoppingCategory);
 			}
 		}
 		catch (Exception e) {

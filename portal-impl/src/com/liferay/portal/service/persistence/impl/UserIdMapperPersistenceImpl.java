@@ -1406,7 +1406,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 				userIdMapper.setNew(false);
 			}
 			else {
-				session.merge(userIdMapper);
+				userIdMapper = (UserIdMapper)session.merge(userIdMapper);
 			}
 		}
 		catch (Exception e) {

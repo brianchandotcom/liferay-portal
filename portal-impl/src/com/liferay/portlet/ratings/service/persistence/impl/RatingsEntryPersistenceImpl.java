@@ -2779,7 +2779,7 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 				ratingsEntry.setNew(false);
 			}
 			else {
-				session.merge(ratingsEntry);
+				ratingsEntry = (RatingsEntry)session.merge(ratingsEntry);
 			}
 		}
 		catch (Exception e) {

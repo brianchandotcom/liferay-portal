@@ -10605,7 +10605,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				assetCategory.setNew(false);
 			}
 			else {
-				session.merge(assetCategory);
+				assetCategory = (AssetCategory)session.merge(assetCategory);
 			}
 		}
 		catch (Exception e) {

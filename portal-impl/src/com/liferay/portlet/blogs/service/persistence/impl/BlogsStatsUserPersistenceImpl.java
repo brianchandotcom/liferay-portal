@@ -3090,7 +3090,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 				blogsStatsUser.setNew(false);
 			}
 			else {
-				session.merge(blogsStatsUser);
+				blogsStatsUser = (BlogsStatsUser)session.merge(blogsStatsUser);
 			}
 		}
 		catch (Exception e) {

@@ -2513,7 +2513,7 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 				repositoryEntry.setNew(false);
 			}
 			else {
-				session.merge(repositoryEntry);
+				repositoryEntry = (RepositoryEntry)session.merge(repositoryEntry);
 			}
 		}
 		catch (Exception e) {

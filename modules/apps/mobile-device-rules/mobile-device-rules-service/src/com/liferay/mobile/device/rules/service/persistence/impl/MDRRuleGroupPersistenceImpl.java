@@ -2980,7 +2980,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 				mdrRuleGroup.setNew(false);
 			}
 			else {
-				session.merge(mdrRuleGroup);
+				mdrRuleGroup = (MDRRuleGroup)session.merge(mdrRuleGroup);
 			}
 		}
 		catch (Exception e) {

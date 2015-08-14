@@ -1000,7 +1000,7 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 				dlSyncEvent.setNew(false);
 			}
 			else {
-				session.merge(dlSyncEvent);
+				dlSyncEvent = (DLSyncEvent)session.merge(dlSyncEvent);
 			}
 		}
 		catch (Exception e) {

@@ -2939,7 +2939,7 @@ public class KaleoInstanceTokenPersistenceImpl extends BasePersistenceImpl<Kaleo
 				kaleoInstanceToken.setNew(false);
 			}
 			else {
-				session.merge(kaleoInstanceToken);
+				kaleoInstanceToken = (KaleoInstanceToken)session.merge(kaleoInstanceToken);
 			}
 		}
 		catch (Exception e) {

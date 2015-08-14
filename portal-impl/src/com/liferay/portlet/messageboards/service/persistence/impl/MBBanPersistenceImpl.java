@@ -3368,7 +3368,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 				mbBan.setNew(false);
 			}
 			else {
-				session.merge(mbBan);
+				mbBan = (MBBan)session.merge(mbBan);
 			}
 		}
 		catch (Exception e) {

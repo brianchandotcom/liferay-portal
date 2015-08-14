@@ -1152,7 +1152,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 				resourceAction.setNew(false);
 			}
 			else {
-				session.merge(resourceAction);
+				resourceAction = (ResourceAction)session.merge(resourceAction);
 			}
 		}
 		catch (Exception e) {

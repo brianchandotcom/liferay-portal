@@ -2902,7 +2902,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 				scProductEntry.setNew(false);
 			}
 			else {
-				session.merge(scProductEntry);
+				scProductEntry = (SCProductEntry)session.merge(scProductEntry);
 			}
 		}
 		catch (Exception e) {

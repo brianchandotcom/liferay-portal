@@ -2933,7 +2933,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 				mbThreadFlag.setNew(false);
 			}
 			else {
-				session.merge(mbThreadFlag);
+				mbThreadFlag = (MBThreadFlag)session.merge(mbThreadFlag);
 			}
 		}
 		catch (Exception e) {

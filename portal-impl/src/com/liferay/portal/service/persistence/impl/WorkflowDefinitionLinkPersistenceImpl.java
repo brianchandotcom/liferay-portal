@@ -2388,7 +2388,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 				workflowDefinitionLink.setNew(false);
 			}
 			else {
-				session.merge(workflowDefinitionLink);
+				workflowDefinitionLink = (WorkflowDefinitionLink)session.merge(workflowDefinitionLink);
 			}
 		}
 		catch (Exception e) {

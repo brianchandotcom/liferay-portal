@@ -1147,7 +1147,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 				listType.setNew(false);
 			}
 			else {
-				session.merge(listType);
+				listType = (ListType)session.merge(listType);
 			}
 		}
 		catch (Exception e) {

@@ -2223,7 +2223,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 				kaleoTimerInstanceToken.setNew(false);
 			}
 			else {
-				session.merge(kaleoTimerInstanceToken);
+				kaleoTimerInstanceToken = (KaleoTimerInstanceToken)session.merge(kaleoTimerInstanceToken);
 			}
 		}
 		catch (Exception e) {

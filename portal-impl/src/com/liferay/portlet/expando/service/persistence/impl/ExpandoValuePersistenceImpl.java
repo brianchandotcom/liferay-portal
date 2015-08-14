@@ -4963,7 +4963,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 				expandoValue.setNew(false);
 			}
 			else {
-				session.merge(expandoValue);
+				expandoValue = (ExpandoValue)session.merge(expandoValue);
 			}
 		}
 		catch (Exception e) {

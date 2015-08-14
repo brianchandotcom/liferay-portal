@@ -3282,7 +3282,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 				ddlRecordSet.setNew(false);
 			}
 			else {
-				session.merge(ddlRecordSet);
+				ddlRecordSet = (DDLRecordSet)session.merge(ddlRecordSet);
 			}
 		}
 		catch (Exception e) {

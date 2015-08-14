@@ -5685,7 +5685,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 				socialRelation.setNew(false);
 			}
 			else {
-				session.merge(socialRelation);
+				socialRelation = (SocialRelation)session.merge(socialRelation);
 			}
 		}
 		catch (Exception e) {

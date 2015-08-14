@@ -4750,7 +4750,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 				assetTag.setNew(false);
 			}
 			else {
-				session.merge(assetTag);
+				assetTag = (AssetTag)session.merge(assetTag);
 			}
 		}
 		catch (Exception e) {

@@ -5059,7 +5059,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 				layoutFriendlyURL.setNew(false);
 			}
 			else {
-				session.merge(layoutFriendlyURL);
+				layoutFriendlyURL = (LayoutFriendlyURL)session.merge(layoutFriendlyURL);
 			}
 		}
 		catch (Exception e) {

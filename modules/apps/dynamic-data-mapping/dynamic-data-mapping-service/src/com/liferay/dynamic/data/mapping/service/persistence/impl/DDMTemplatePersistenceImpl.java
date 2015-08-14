@@ -11814,7 +11814,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 				ddmTemplate.setNew(false);
 			}
 			else {
-				session.merge(ddmTemplate);
+				ddmTemplate = (DDMTemplate)session.merge(ddmTemplate);
 			}
 		}
 		catch (Exception e) {

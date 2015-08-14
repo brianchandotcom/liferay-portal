@@ -2056,7 +2056,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 				mbStatsUser.setNew(false);
 			}
 			else {
-				session.merge(mbStatsUser);
+				mbStatsUser = (MBStatsUser)session.merge(mbStatsUser);
 			}
 		}
 		catch (Exception e) {

@@ -2098,7 +2098,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 				dlFileEntryMetadata.setNew(false);
 			}
 			else {
-				session.merge(dlFileEntryMetadata);
+				dlFileEntryMetadata = (DLFileEntryMetadata)session.merge(dlFileEntryMetadata);
 			}
 		}
 		catch (Exception e) {

@@ -7401,7 +7401,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 				journalFolder.setNew(false);
 			}
 			else {
-				session.merge(journalFolder);
+				journalFolder = (JournalFolder)session.merge(journalFolder);
 			}
 		}
 		catch (Exception e) {

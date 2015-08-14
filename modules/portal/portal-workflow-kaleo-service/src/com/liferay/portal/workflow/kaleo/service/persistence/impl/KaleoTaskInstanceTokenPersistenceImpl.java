@@ -2675,7 +2675,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 				kaleoTaskInstanceToken.setNew(false);
 			}
 			else {
-				session.merge(kaleoTaskInstanceToken);
+				kaleoTaskInstanceToken = (KaleoTaskInstanceToken)session.merge(kaleoTaskInstanceToken);
 			}
 		}
 		catch (Exception e) {

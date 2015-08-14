@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.container.test;
+package com.liferay.portal.portlet.container.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

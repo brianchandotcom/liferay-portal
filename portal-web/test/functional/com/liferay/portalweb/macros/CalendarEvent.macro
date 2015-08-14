@@ -321,8 +321,6 @@
 			<var name="eventType" value="${eventType}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGCalendarVieweventdetails#COMMENTS_BE_THE_FIRST" value1="Be the first." />
-
 		<if>
 			<isset var="eventCommentList" />
 			<then>

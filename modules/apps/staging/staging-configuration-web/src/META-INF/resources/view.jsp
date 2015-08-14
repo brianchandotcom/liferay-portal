@@ -274,9 +274,11 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 		</c:otherwise>
 	</c:choose>
 
-	<aui:button-row>
-		<aui:button cssClass="btn-primary" type="submit" />
-	</aui:button-row>
+	<c:if test="<%= !privateLayoutSet.isLayoutSetPrototypeLinkActive() && !publicLayoutSet.isLayoutSetPrototypeLinkActive() %>">
+		<aui:button-row>
+			<aui:button cssClass="btn-primary" type="submit" />
+		</aui:button-row>
+	</c:if>
 </aui:form>
 
 <aui:script>

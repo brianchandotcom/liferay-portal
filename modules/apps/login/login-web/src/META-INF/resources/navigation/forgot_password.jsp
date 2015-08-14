@@ -14,22 +14,26 @@
  */
 --%>
 
-<%@ include file="/html/portlet/login/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
-boolean showCreateAccountIcon = false;
+boolean showForgotPasswordIcon = false;
 
-if (!mvcRenderCommandName.equals("/login/create_account") && company.isStrangers() && !portletName.equals(PortletKeys.FAST_LOGIN)) {
-	showCreateAccountIcon = true;
+if (!mvcRenderCommandName.equals("/login/forgot_password") && (company.isSendPassword() || company.isSendPasswordResetLink())) {
+	showForgotPasswordIcon = true;
 }
 %>
 
-<c:if test="<%= showCreateAccountIcon %>">
+<c:if test="<%= showForgotPasswordIcon %>">
+	<portlet:renderURL var="forgotPasswordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+		<portlet:param name="mvcRenderCommandName" value="/login/forgot_password" />
+	</portlet:renderURL>
+
 	<liferay-ui:icon
-		iconCssClass="icon-plus"
-		message="create-account"
-		url="<%= PortalUtil.getCreateAccountURL(request, themeDisplay) %>"
+		iconCssClass="icon-question-sign"
+		message="forgot-password"
+		url="<%= forgotPasswordURL %>"
 	/>
 </c:if>

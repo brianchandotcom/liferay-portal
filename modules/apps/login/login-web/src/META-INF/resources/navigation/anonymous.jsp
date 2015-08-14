@@ -14,26 +14,26 @@
  */
 --%>
 
-<%@ include file="/html/portlet/login/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
-boolean showForgotPasswordIcon = false;
+boolean showAnonymousIcon = false;
 
-if (!mvcRenderCommandName.equals("/login/forgot_password") && (company.isSendPassword() || company.isSendPasswordResetLink())) {
-	showForgotPasswordIcon = true;
+if (!mvcRenderCommandName.startsWith("/login/create_anonymous_account") && company.isStrangers() && portletName.equals(PortletKeys.FAST_LOGIN)) {
+	showAnonymousIcon = true;
 }
 %>
 
-<c:if test="<%= showForgotPasswordIcon %>">
-	<portlet:renderURL var="forgotPasswordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-		<portlet:param name="mvcRenderCommandName" value="/login/forgot_password" />
+<c:if test="<%= showAnonymousIcon %>">
+	<portlet:renderURL var="anonymousURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+		<portlet:param name="mvcRenderCommandName" value="/login/create_anonymous_account" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon
-		iconCssClass="icon-question-sign"
-		message="forgot-password"
-		url="<%= forgotPasswordURL %>"
+		iconCssClass="icon-user"
+		message="guest"
+		url="<%= anonymousURL %>"
 	/>
 </c:if>

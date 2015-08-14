@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/login/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -201,4 +201,4 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 	</aui:button-row>
 </aui:form>
 
-<liferay-util:include page="/html/portlet/login/navigation.jsp" />
+<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />

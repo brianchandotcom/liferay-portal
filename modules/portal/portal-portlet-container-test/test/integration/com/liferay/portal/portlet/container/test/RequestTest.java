@@ -63,7 +63,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Raymond Augé
@@ -285,7 +284,7 @@ public class RequestTest extends BaseTestCase {
 			public void serveResource(
 					ResourceRequest resourceRequest,
 					ResourceResponse resourceResponse)
-				throws IOException, PortletException {
+				throws IOException {
 
 				PortletURL portletURL = resourceResponse.createActionURL();
 
@@ -403,7 +402,7 @@ public class RequestTest extends BaseTestCase {
 			public void serveResource(
 					ResourceRequest resourceRequest,
 					ResourceResponse resourceResponse)
-				throws IOException, PortletException {
+				throws IOException {
 
 				PortletURL portletURL = resourceResponse.createActionURL();
 
@@ -527,7 +526,7 @@ public class RequestTest extends BaseTestCase {
 			public void serveResource(
 					ResourceRequest resourceRequest,
 					ResourceResponse resourceResponse)
-				throws IOException, PortletException {
+				throws IOException {
 
 				PortletURL portletURL = PortletURLFactoryUtil.create(
 					resourceRequest, portletToTarget, layout.getPlid(),
@@ -710,7 +709,7 @@ public class RequestTest extends BaseTestCase {
 			public void serveResource(
 					ResourceRequest resourceRequest,
 					ResourceResponse resourceResponse)
-				throws IOException, PortletException {
+				throws IOException {
 
 				PortletURL portletURL = PortletURLFactoryUtil.create(
 					resourceRequest, portletToTarget, layout.getPlid(),

@@ -15,7 +15,6 @@
 package com.liferay.portal.portlet.container.test;
 
 import java.io.IOException;
-
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -38,13 +37,13 @@ public class RequestTestPortlet extends GenericPortlet {
 
 	@Override
 	public void processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException, PortletException {
+		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		_map.put("processAction", Boolean.TRUE.toString());
 	}
 
 	@Override
+	@SuppressWarnings("unused")
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -53,6 +52,7 @@ public class RequestTestPortlet extends GenericPortlet {
 	}
 
 	@Override
+	@SuppressWarnings("unused")
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {

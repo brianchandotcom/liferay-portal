@@ -37,6 +37,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -285,6 +287,10 @@ public class PoshiRunnerGetterUtil {
 				else if (parameterValue.contains("#")) {
 					parameterValue = PoshiRunnerContext.getPathLocator(
 						parameterValue);
+				}
+
+				if (parameterValue.contains("\'")) {
+					parameterValue = parameterValue.replaceAll("\\\\'", "'");
 				}
 
 				params.add(parameterValue);

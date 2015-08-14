@@ -30,6 +30,7 @@
 		<dirset dir="apps/journal" excludes="journal-content-asset-addon-entry" includes="*" />
 		<dirset dir="apps/journal/journal-content-asset-addon-entry" includes="*" />
 		<dirset dir="apps/layout" includes="*" />
+		<dirset dir="apps/login" includes="*" />
 		<dirset dir="apps/loan-calculator" includes="*" />
 		<dirset dir="apps/marketplace" includes="*" />
 		<dirset dir="apps/mentions" excludes="mentions-editor-config" includes="*" />

@@ -180,8 +180,7 @@ public class BaseTestCase {
 
 			responseMap.put("body", Arrays.asList(read(inputStream)));
 
-			String code = String.valueOf(
-				httpURLConnection.getResponseCode());
+			String code = String.valueOf(httpURLConnection.getResponseCode());
 
 			responseMap.put("code", Arrays.asList(code));
 

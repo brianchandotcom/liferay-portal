@@ -111,8 +111,7 @@ public class RequestTest extends BaseTestCase {
 		try {
 			field.set(null, Boolean.FALSE.booleanValue());
 
-			setUpPortlet(
-				requestTestPortlet, properties, _TEST_PORTLET_ID);
+			setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 			HttpServletRequest httpServletRequest = getHttpServletRequest();
 
@@ -130,12 +129,6 @@ public class RequestTest extends BaseTestCase {
 			field.set(null, value);
 		}
 	}
-	
-	protected String getString(Map<String, List<String>> map, String key) {
-		List<String> values = map.get(key);
-		
-		return values.get(0); 
-	}
 
 	@Test
 	public void testActionRequest_AUTH_TOKEN_IGNORE_ORIGINS() throws Exception {
@@ -151,8 +144,7 @@ public class RequestTest extends BaseTestCase {
 
 			AuthTokenWhitelistUtil.resetOriginCSRFWhitelist();
 
-			setUpPortlet(
-				requestTestPortlet, properties, _TEST_PORTLET_ID);
+			setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 			HttpServletRequest request = getHttpServletRequest();
 
@@ -187,8 +179,7 @@ public class RequestTest extends BaseTestCase {
 
 			AuthTokenWhitelistUtil.resetPortletCSRFWhitelist();
 
-			setUpPortlet(
-				requestTestPortlet, properties, _TEST_PORTLET_ID);
+			setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 			HttpServletRequest request = getHttpServletRequest();
 
@@ -362,8 +353,7 @@ public class RequestTest extends BaseTestCase {
 		try {
 			field.set(null, "test");
 
-			setUpPortlet(
-				requestTestPortlet, properties, _TEST_PORTLET_ID);
+			setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
 
 			HttpServletRequest request = getHttpServletRequest();
 
@@ -842,6 +832,12 @@ public class RequestTest extends BaseTestCase {
 
 		Assert.assertEquals("200", getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("render"));
+	}
+
+	protected String getString(Map<String, List<String>> map, String key) {
+		List<String> values = map.get(key);
+
+		return values.get(0);
 	}
 
 	private static final String _TEST_PORTLET_ID = "TEST_PORTLET_ID";

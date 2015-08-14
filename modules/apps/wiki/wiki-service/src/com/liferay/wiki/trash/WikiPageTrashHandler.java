@@ -160,12 +160,12 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
+		PortletURL portletURL = getRestoreURL(portletRequest, classPK, false);
+
 		WikiPage page = WikiPageLocalServiceUtil.getLatestPage(
 			classPK, WorkflowConstants.STATUS_ANY, false);
 
 		WikiNode node = page.getNode();
-
-		PortletURL portletURL = getRestoreURL(portletRequest, classPK, false);
 
 		portletURL.setParameter("nodeName", node.getName());
 		portletURL.setParameter("title", HtmlUtil.unescape(page.getTitle()));
@@ -412,11 +412,10 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 	}
 
 	protected PortletURL getRestoreURL(
-			PortletRequest portletRequest, long classPK,
-			boolean isContainerModel)
+			PortletRequest portletRequest, long classPK, boolean containerModel)
 		throws PortalException {
 
-		String portletId = WikiPortletKeys.WIKI;
+		PortletURL portletURL = null;
 
 		WikiPage page = WikiPageLocalServiceUtil.getLatestPage(
 			classPK, WorkflowConstants.STATUS_ANY, false);
@@ -425,30 +424,29 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			page.getGroupId(), WikiPortletKeys.WIKI);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			portletId = WikiPortletKeys.WIKI_ADMIN;
+			portletURL = PortalUtil.getControlPanelPortletURL(
+				portletRequest, WikiPortletKeys.WIKI_ADMIN, 0,
+				PortletRequest.RENDER_PHASE);
 
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
+			if (containerModel) {
+				portletURL.setParameter(
+					"struts_action", "/wiki_admin/view_all_pages");
+			}
+			else {
+				portletURL.setParameter("struts_action", "/wiki_admin/view");
+			}
 		}
+		else {
+			portletURL = PortletURLFactoryUtil.create(
+				portletRequest, WikiPortletKeys.WIKI, plid,
+				PortletRequest.RENDER_PHASE);
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
-
-		if (isContainerModel) {
-			if (portletId.equals(WikiPortletKeys.WIKI)) {
+			if (containerModel) {
 				portletURL.setParameter(
 					"struts_action", "/wiki/view_all_pages");
 			}
 			else {
-				portletURL.setParameter(
-					"struts_action", "/wiki_admin/view_all_pages");
-			}
-		}
-		else {
-			if (portletId.equals(WikiPortletKeys.WIKI)) {
 				portletURL.setParameter("struts_action", "/wiki/view");
-			}
-			else {
-				portletURL.setParameter("struts_action", "/wiki_admin/view");
 			}
 		}
 

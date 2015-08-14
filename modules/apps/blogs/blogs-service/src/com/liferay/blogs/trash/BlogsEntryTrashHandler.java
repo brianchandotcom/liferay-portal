@@ -60,9 +60,9 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
-
 		PortletURL portletURL = getRestoreURL(portletRequest, classPK, false);
+
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
 
 		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 		portletURL.setParameter("urlTitle", entry.getUrlTitle());
@@ -105,14 +105,14 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 	}
 
 	protected PortletURL getRestoreURL(
-			PortletRequest portletRequest, long classPK,
-			boolean isContainerModel)
+			PortletRequest portletRequest, long classPK, boolean containerModel)
 		throws PortalException {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
+		PortletURL portletURL = null;
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
+		String portletId = PortletProviderUtil.getPortletId(
+			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
 
 		long plid = PortalUtil.getPlidFromPortletId(
 			entry.getGroupId(), portletId);
@@ -121,13 +121,15 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 			portletId = PortletProviderUtil.getPortletId(
 				BlogsEntry.class.getName(), PortletProvider.Action.MANAGE);
 
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
+			portletURL = PortalUtil.getControlPanelPortletURL(
+				portletRequest, portletId, 0, PortletRequest.RENDER_PHASE);
+		}
+		else {
+			portletURL = PortletURLFactoryUtil.create(
+				portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 		}
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
-
-		if (!isContainerModel) {
+		if (!containerModel) {
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/blogs/view_entry");
 		}

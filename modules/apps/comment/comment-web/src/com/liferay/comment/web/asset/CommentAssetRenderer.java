@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 
@@ -140,15 +140,9 @@ public class CommentAssetRenderer
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		HttpServletRequest request =
-			liferayPortletRequest.getHttpServletRequest();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletURL editPortletURL = PortletURLFactoryUtil.create(
-			request, CommentPortletKeys.COMMENT,
-			getControlPanelPlid(themeDisplay), PortletRequest.RENDER_PHASE);
+		PortletURL editPortletURL = PortalUtil.getControlPanelPortletURL(
+			liferayPortletRequest, CommentPortletKeys.COMMENT, 0,
+			PortletRequest.RENDER_PHASE);
 
 		editPortletURL.setParameter("mvcPath", "/edit_discussion.jsp");
 		editPortletURL.setParameter(

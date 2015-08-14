@@ -16,12 +16,13 @@ package com.liferay.portlet.directory.asset;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 
@@ -99,8 +100,11 @@ public class UserAssetRenderer extends BaseJSPAssetRenderer {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
+		String portletId = PortletProviderUtil.getPortletId(
+			User.class.getName(), PortletProvider.Action.VIEW);
+
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), PortletKeys.USERS_ADMIN,
+			getControlPanelPlid(liferayPortletRequest), portletId,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(

@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.users.admin.lar.UsersAdminPortletDataHandler;
+import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -53,7 +53,7 @@ public class UsersAdminPortletDataHandlerTest
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.USERS_ADMIN;
+		return UsersAdminPortletKeys.USERS_ADMIN;
 	}
 
 	@DeleteAfterTestRun

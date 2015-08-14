@@ -34,15 +34,14 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 		}
 	}
 }
+
+List<PanelCategory> childPanelCategories = panelCategoryRegistry.getChildPanelCategories(panelCategory, permissionChecker, themeDisplay.getScopeGroup());
 %>
 
 <ul class="hide nav nav-tabs">
 
 	<%
-	for (PanelCategory childPanelCategory : panelCategoryRegistry.getChildPanelCategories(panelCategory)) {
-		if (!childPanelCategory.hasAccessPermission(permissionChecker, themeDisplay.getScopeGroup())) {
-			continue;
-		}
+	for (PanelCategory childPanelCategory : childPanelCategories) {
 	%>
 
 		<li class="col-xs-4 <%= sitesPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>">
@@ -62,7 +61,7 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 <div class="tab-content">
 
 	<%
-	for (PanelCategory childPanelCategory : panelCategoryRegistry.getChildPanelCategories(panelCategory)) {
+	for (PanelCategory childPanelCategory : childPanelCategories) {
 	%>
 
 		<div class="fade in tab-pane <%= sitesPanelCategoryKey.equals(childPanelCategory.getKey()) ? "active" : StringPool.BLANK %>" id="<portlet:namespace /><%= childPanelCategory.getKey() %>">

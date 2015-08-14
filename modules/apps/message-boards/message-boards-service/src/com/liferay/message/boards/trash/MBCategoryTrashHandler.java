@@ -169,9 +169,9 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
-
 		PortletURL portletURL = getRestoreURL(portletRequest, classPK);
+
+		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
 		portletURL.setParameter(
 			"mbCategoryId", String.valueOf(category.getParentCategoryId()));
@@ -394,10 +394,11 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			MBCategory.class.getName(), PortletProvider.Action.EDIT);
+		PortletURL portletURL = null;
 
 		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
+		String portletId = PortletProviderUtil.getPortletId(
+			MBCategory.class.getName(), PortletProvider.Action.EDIT);
 
 		long plid = PortalUtil.getPlidFromPortletId(
 			category.getGroupId(), portletId);
@@ -406,11 +407,13 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			portletId = PortletProviderUtil.getPortletId(
 				MBCategory.class.getName(), PortletProvider.Action.MANAGE);
 
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
+			portletURL = PortalUtil.getControlPanelPortletURL(
+				portletRequest, portletId, 0, PortletRequest.RENDER_PHASE);
 		}
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+		else {
+			portletURL = PortletURLFactoryUtil.create(
+				portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+		}
 
 		portletURL.setParameter("mvcRenderCommandName", "/message_boards/view");
 

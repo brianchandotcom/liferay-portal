@@ -14,13 +14,15 @@
 
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.taglib.servlet.ServletContextUtil;
 import com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base.BaseTemplateRendererTag;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 import com.liferay.taglib.FileAvailabilityUtil;
 
 import java.util.HashMap;
@@ -81,6 +83,12 @@ public class TemplateRendererTag extends BaseTemplateRendererTag {
 		_portletDisplayDDMTemplate = null;
 	}
 
+	protected PortletDisplayTemplate getPortletDisplayTemplate() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		return registry.getService(PortletDisplayTemplate.class);
+	}
+
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
@@ -105,7 +113,7 @@ public class TemplateRendererTag extends BaseTemplateRendererTag {
 		}
 
 		_portletDisplayDDMTemplate =
-			PortletDisplayTemplateManagerUtil.getDDMTemplate(
+			getPortletDisplayTemplate().getPortletDisplayTemplateDDMTemplate(
 				displaStyleGroupId, PortalUtil.getClassNameId(getClassName()),
 				getDisplayStyle(), true);
 

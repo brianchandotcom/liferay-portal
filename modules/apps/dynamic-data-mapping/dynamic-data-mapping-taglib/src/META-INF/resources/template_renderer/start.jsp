@@ -21,5 +21,5 @@ DDMTemplate portletDisplayDDMTemplate = (DDMTemplate)request.getAttribute("lifer
 %>
 
 <c:if test="<%= portletDisplayDDMTemplate != null %>">
-	<%= PortletDisplayTemplateManagerUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplate.getTemplateId(), entries, contextObjects) %>
+	<%= _getPortletDisplayTemplate().renderDDMTemplate(request, response, portletDisplayDDMTemplate.getTemplateId(), entries, contextObjects) %>
 </c:if>

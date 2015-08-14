@@ -14,9 +14,9 @@
 
 package com.liferay.portlet.display.template.exportimport.portlet.preferences.processor;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -26,7 +26,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
@@ -36,6 +36,7 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -148,7 +149,7 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 			groupIds, displayStyleGroupId, displayStyleGroupId);
 
 		DDMTemplate ddmTemplate =
-			PortletDisplayTemplateManagerUtil.getDDMTemplate(
+			_portletDisplayTemplate.getPortletDisplayTemplateDDMTemplate(
 				groupId, getClassNameId(portletDataContext, portletId),
 				displayStyle, false);
 
@@ -164,5 +165,14 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 
 		return processedPreferences;
 	}
+
+	@Reference
+	protected void setPortletDisplayTemplate(
+		PortletDisplayTemplate portletDisplayTemplate) {
+
+		_portletDisplayTemplate = portletDisplayTemplate;
+	}
+
+	private PortletDisplayTemplate _portletDisplayTemplate;
 
 }

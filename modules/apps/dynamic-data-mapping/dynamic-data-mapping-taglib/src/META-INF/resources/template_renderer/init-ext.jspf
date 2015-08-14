@@ -14,5 +14,4 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil" %>
-<%@ page import="com.liferay.portlet.dynamicdatamapping.DDMTemplate" %>
+<%@ page import="com.liferay.dynamic.data.mapping.model.DDMTemplate" %>

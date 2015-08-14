@@ -14,22 +14,22 @@
 
 package com.liferay.portlet.display.template.exportimport.portlet.preferences.processor;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
 
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -63,7 +63,7 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 
 		if (Validator.isNull(displayStyle) ||
 			!displayStyle.startsWith(
-				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX)) {
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 
 			return;
 		}
@@ -78,14 +78,14 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 		}
 
 		DDMTemplate ddmTemplate =
-			PortletDisplayTemplateManagerUtil.getDDMTemplate(
+			_portletDisplayTemplate.getPortletDisplayTemplateDDMTemplate(
 				portletDataContext.getGroupId(),
 				getClassNameId(portletDataContext, portletId), displayStyle,
 				false);
 
 		if (ddmTemplate != null) {
-			PortletDisplayTemplateManagerUtil.exportDDMTemplateStagedModel(
-				portletDataContext, portletId, ddmTemplate);
+			_portletDisplayTemplate.exportDDMTemplateStagedModel(
+				portletDataContext, portletId, ddmTemplate.getTemplateId());
 		}
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
@@ -144,5 +144,14 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 
 		return 0;
 	}
+
+	@Reference
+	protected void setPortletDisplayTemplate(
+		PortletDisplayTemplate portletDisplayTemplate) {
+
+		_portletDisplayTemplate = portletDisplayTemplate;
+	}
+
+	private PortletDisplayTemplate _portletDisplayTemplate;
 
 }

@@ -14,14 +14,14 @@
  */
 --%>
 
+<%@ page import="com.liferay.dynamic.data.mapping.model.DDMTemplate" %>
+<%@ page import="com.liferay.dynamic.data.mapping.model.DDMTemplateConstants" %>
 <%@ page import="com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil" %>
 <%@ page import="com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission" %>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.portlet.PortletProvider" %>
 <%@ page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %>
-<%@ page import="com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager" %>
-<%@ page import="com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%@ page import="com.liferay.portal.model.Group" %>
@@ -29,5 +29,3 @@
 <%@ page import="com.liferay.portal.service.GroupLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="com.liferay.portal.util.PortletKeys" %>
-<%@ page import="com.liferay.portlet.dynamicdatamapping.DDMTemplate" %>
-<%@ page import="com.liferay.portlet.dynamicdatamapping.DDMTemplateManager" %>

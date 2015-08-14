@@ -60,11 +60,6 @@ public class ContentPanelCategory extends BaseJSPPanelCategory {
 	}
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.SITE_ADMINISTRATION;
-	}
-
-	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.product.menu.site.administration.service)",
 		unbind = "-"

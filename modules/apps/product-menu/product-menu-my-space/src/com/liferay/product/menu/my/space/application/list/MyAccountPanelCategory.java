@@ -48,9 +48,4 @@ public class MyAccountPanelCategory extends BasePanelCategory {
 		return LanguageUtil.get(locale, "my-account");
 	}
 
-	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.MY_SPACE;
-	}
-
 }

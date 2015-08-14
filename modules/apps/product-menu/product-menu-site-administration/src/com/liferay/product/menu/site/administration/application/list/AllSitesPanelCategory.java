@@ -61,11 +61,6 @@ public class AllSitesPanelCategory extends BasePanelCategory {
 	}
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.SITES;
-	}
-
-	@Override
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {

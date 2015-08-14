@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 public class ShoppingPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT;
-	}
-
-	@Override
 	public String getPortletId() {
 		return ShoppingPortletKeys.SHOPPING;
 	}

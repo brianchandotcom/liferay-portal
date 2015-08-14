@@ -52,9 +52,4 @@ public class PublishingToolsPanelCategory extends BasePanelCategory {
 			locale, "category.site_administration.publishing_tools");
 	}
 
-	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.SITE_ADMINISTRATION;
-	}
-
 }

@@ -41,11 +41,6 @@ import org.osgi.service.component.annotations.Reference;
 public class MarketplaceStorePanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.CONTROL_PANEL_APPS;
-	}
-
-	@Override
 	public String getPortletId() {
 		return MarketplaceStorePortletKeys.MARKETPLACE_STORE;
 	}

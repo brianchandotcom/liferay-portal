@@ -85,20 +85,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		map = new ConcurrentHashMap<>();
-
-		properties = new Hashtable<>();
-		requestTestPortlet = new TestPortlet(map);
-	}
-
-	@After
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		map = null;
-		properties = null;
-		requestTestPortlet = null;
+		testPortlet = new TestPortlet(map);
 	}
 
 	@Test
@@ -111,7 +98,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		try {
 			field.set(null, Boolean.FALSE.booleanValue());
 
-			setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
+			setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 			HttpServletRequest httpServletRequest = getHttpServletRequest();
 
@@ -144,7 +131,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 			AuthTokenWhitelistUtil.resetOriginCSRFWhitelist();
 
-			setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
+			setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 			HttpServletRequest request = getHttpServletRequest();
 
@@ -179,7 +166,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 			AuthTokenWhitelistUtil.resetPortletCSRFWhitelist();
 
-			setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
+			setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 			HttpServletRequest request = getHttpServletRequest();
 
@@ -206,7 +193,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 			"javax.portlet.init-param.check-auth-token",
 			Boolean.FALSE.toString());
 
-		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -243,7 +230,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 	 */
 	@Test
 	public void testActionRequest_noTokens() throws Exception {
-		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -280,7 +267,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 	@Test
 	public void testActionRequest_p_auth() throws Exception {
-		requestTestPortlet = new TestPortlet(map) {
+		testPortlet = new TestPortlet(map) {
 
 			@Override
 			public void serveResource(
@@ -305,7 +292,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		};
 
-		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -353,7 +340,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		try {
 			field.set(null, "test");
 
-			setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
+			setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 			HttpServletRequest request = getHttpServletRequest();
 
@@ -379,7 +366,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 		properties.put(PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS, "/test/portlet/1");
 		properties.put("com.liferay.portlet.struts-path", "test/portlet");
 
-		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -397,7 +384,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 	@Test
 	public void testActionRequest_X_CSRF_Token() throws Exception {
-		requestTestPortlet = new TestPortlet(map) {
+		testPortlet = new TestPortlet(map) {
 
 			@Override
 			public void serveResource(
@@ -422,7 +409,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		};
 
-		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -463,7 +450,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 	@Test
 	public void testLayoutRequest() throws Exception {
-		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -521,7 +508,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		Map<String, String> ignored = new HashMap<>();
 
-		requestTestPortlet = new TestPortlet(ignored) {
+		testPortlet = new TestPortlet(ignored) {
 
 			@Override
 			public void serveResource(
@@ -548,7 +535,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		};
 
-		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -593,7 +580,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 	public void testRenderRequest_isAccessGrantedByPortletOnPage()
 		throws Exception {
 
-		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -613,7 +600,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		Map<String, String> ignored = new HashMap<>();
 
-		requestTestPortlet = new TestPortlet(ignored) {
+		testPortlet = new TestPortlet(ignored) {
 
 			@Override
 			public void render(
@@ -634,7 +621,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		setUpPortlet(
 			new TestPortlet(map), properties, portletToEmbbed, false);
-		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -704,7 +691,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		Map<String, String> ignored = new HashMap<>();
 
-		requestTestPortlet = new TestPortlet(ignored) {
+		testPortlet = new TestPortlet(ignored) {
 
 			@Override
 			public void serveResource(
@@ -731,7 +718,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		};
 
-		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -776,7 +763,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 	public void testResourceRequest_isAccessGrantedByPortletOnPage()
 		throws Exception {
 
-		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -796,7 +783,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		Map<String, String> ignored = new HashMap<>();
 
-		requestTestPortlet = new TestPortlet(ignored) {
+		testPortlet = new TestPortlet(ignored) {
 
 			@Override
 			public void serveResource(
@@ -818,7 +805,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		setUpPortlet(
 			new TestPortlet(map), properties, portletToEmbbed, false);
-		setUpPortlet(requestTestPortlet, properties, _TEST_PORTLET_ID);
+		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
 
@@ -842,8 +829,8 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 	private static final String _TEST_PORTLET_ID = "TEST_PORTLET_ID";
 
-	private Map<String, String> map;
-	private Dictionary<String, Object> properties;
-	private TestPortlet requestTestPortlet;
+	private Map<String, String> map = new ConcurrentHashMap<>();
+	private Dictionary<String, Object> properties = new Hashtable<>();
+	private TestPortlet testPortlet;
 
 }

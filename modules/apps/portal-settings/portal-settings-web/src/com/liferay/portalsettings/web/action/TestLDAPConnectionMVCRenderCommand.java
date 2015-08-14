@@ -12,31 +12,32 @@
  * details.
  */
 
-package com.liferay.portlet.portalsettings.action;
-
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.util.PortletKeys;
+package com.liferay.portalsettings.web.action;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Component;
+
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.util.PortletKeys;
+
 /**
  * @author Philip Jones
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"javax.portlet.name=" + PortletKeys.PORTAL_SETTINGS,
-		"mvc.command.name=/portal_settings/test_cas_configuration"
+		"mvc.command.name=/portal_settings/test_ldap_connection"
 	}
 )
-public class TestCASConfigurationMVCRenderCommand implements MVCRenderCommand {
+public class TestLDAPConnectionMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/html/portlet/portal_settings/test_cas_configuration.jsp";
+		return "/html/portlet/portal_settings/test_ldap_connection.jsp";
 	}
 
 }

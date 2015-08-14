@@ -30,9 +30,9 @@ import javax.portlet.ResourceResponse;
 /**
  * @author Raymond Augé
  */
-public class RequestTestPortlet extends GenericPortlet {
+public class TestPortlet extends GenericPortlet {
 
-	public RequestTestPortlet(Map<String, String> map) {
+	public TestPortlet(Map<String, String> map) {
 		_map = map;
 	}
 

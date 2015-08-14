@@ -123,12 +123,18 @@ public class RequestTest extends BaseTestCase {
 			Map<String, List<String>> responseMap = request(
 				portletURL.toString());
 
-			Assert.assertEquals("200", responseMap.get("code").get(0));
+			Assert.assertEquals("200", getString(responseMap, "code"));
 			Assert.assertTrue(map.containsKey("processAction"));
 		}
 		finally {
 			field.set(null, value);
 		}
+	}
+	
+	protected String getString(Map<String, List<String>> map, String key) {
+		List<String> values = map.get(key);
+		
+		return values.get(0); 
 	}
 
 	@Test
@@ -157,7 +163,7 @@ public class RequestTest extends BaseTestCase {
 			Map<String, List<String>> responseMap = request(
 				portletURL.toString());
 
-			Assert.assertEquals("200", responseMap.get("code").get(0));
+			Assert.assertEquals("200", getString(responseMap, "code"));
 			Assert.assertTrue(map.containsKey("processAction"));
 		}
 		finally {
@@ -193,7 +199,7 @@ public class RequestTest extends BaseTestCase {
 			Map<String, List<String>> responseMap = request(
 				portletURL.toString());
 
-			Assert.assertEquals("200", responseMap.get("code").get(0));
+			Assert.assertEquals("200", getString(responseMap, "code"));
 			Assert.assertTrue(map.containsKey("processAction"));
 		}
 		finally {
@@ -219,7 +225,7 @@ public class RequestTest extends BaseTestCase {
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
-		Assert.assertEquals("200", responseMap.get("code").get(0));
+		Assert.assertEquals("200", getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("processAction"));
 	}
 
@@ -276,7 +282,7 @@ public class RequestTest extends BaseTestCase {
 					" and portlet " + _TEST_PORTLET_ID,
 				loggingEvent.getMessage());
 
-			Assert.assertEquals("200", responseMap.get("code").get(0));
+			Assert.assertEquals("200", getString(responseMap, "code"));
 			Assert.assertFalse(map.containsKey("processAction"));
 		}
 	}
@@ -320,7 +326,7 @@ public class RequestTest extends BaseTestCase {
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
-		String p_auth = responseMap.get("body").get(0);
+		String p_auth = getString(responseMap, "body");
 
 		List<String> cookies = responseMap.get("Set-Cookie");
 
@@ -342,7 +348,7 @@ public class RequestTest extends BaseTestCase {
 
 		responseMap = request(url, headers);
 
-		Assert.assertEquals("200", responseMap.get("code").get(0));
+		Assert.assertEquals("200", getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("processAction"));
 	}
 
@@ -370,7 +376,7 @@ public class RequestTest extends BaseTestCase {
 			Map<String, List<String>> responseMap = request(
 				portletURL.toString());
 
-			Assert.assertEquals("200", responseMap.get("code").get(0));
+			Assert.assertEquals("200", getString(responseMap, "code"));
 			Assert.assertTrue(map.containsKey("processAction"));
 		}
 		finally {
@@ -395,7 +401,7 @@ public class RequestTest extends BaseTestCase {
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
-		Assert.assertEquals("200", responseMap.get("code").get(0));
+		Assert.assertEquals("200", getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("processAction"));
 	}
 
@@ -438,7 +444,7 @@ public class RequestTest extends BaseTestCase {
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
-		String p_auth = responseMap.get("body").get(0);
+		String p_auth = getString(responseMap, "body");
 
 		List<String> cookies = responseMap.get("Set-Cookie");
 
@@ -461,7 +467,7 @@ public class RequestTest extends BaseTestCase {
 
 		responseMap = request(url, headers);
 
-		Assert.assertEquals("200", responseMap.get("code").get(0));
+		Assert.assertEquals("200", getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("processAction"));
 	}
 
@@ -474,7 +480,7 @@ public class RequestTest extends BaseTestCase {
 		Map<String, List<String>> responseMap = request(
 			layout.getRegularURL(request));
 
-		Assert.assertEquals("200", responseMap.get("code").get(0));
+		Assert.assertEquals("200", getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("render"));
 	}
 
@@ -504,7 +510,7 @@ public class RequestTest extends BaseTestCase {
 				"Invalid portlet ID '\"><script>alert(1)</script>",
 				loggingEvent.getMessage());
 
-			Assert.assertEquals("200", responseMap.get("code").get(0));
+			Assert.assertEquals("200", getString(responseMap, "code"));
 		}
 	}
 
@@ -564,7 +570,7 @@ public class RequestTest extends BaseTestCase {
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
-		String p_p_auth = responseMap.get("body").get(0);
+		String p_p_auth = getString(responseMap, "body");
 
 		List<String> cookies = responseMap.get("Set-Cookie");
 
@@ -589,7 +595,7 @@ public class RequestTest extends BaseTestCase {
 
 		responseMap = request(url, headers);
 
-		Assert.assertEquals("200", responseMap.get("code").get(0));
+		Assert.assertEquals("200", getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("render"));
 	}
 
@@ -607,7 +613,7 @@ public class RequestTest extends BaseTestCase {
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
-		Assert.assertEquals("200", responseMap.get("code").get(0));
+		Assert.assertEquals("200", getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("render"));
 	}
 
@@ -650,7 +656,7 @@ public class RequestTest extends BaseTestCase {
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
-		Assert.assertEquals("200", responseMap.get("code").get(0));
+		Assert.assertEquals("200", getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("render"));
 	}
 
@@ -686,7 +692,7 @@ public class RequestTest extends BaseTestCase {
 					" on '\"><script>alert(1)</script>",
 				loggingEvent.getMessage());
 
-			Assert.assertEquals("400", responseMap.get("code").get(0));
+			Assert.assertEquals("400", getString(responseMap, "code"));
 		}
 	}
 
@@ -747,7 +753,7 @@ public class RequestTest extends BaseTestCase {
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
-		String p_p_auth = responseMap.get("body").get(0);
+		String p_p_auth = getString(responseMap, "body");
 
 		List<String> cookies = responseMap.get("Set-Cookie");
 
@@ -772,7 +778,7 @@ public class RequestTest extends BaseTestCase {
 
 		responseMap = request(url, headers);
 
-		Assert.assertEquals("200", responseMap.get("code").get(0));
+		Assert.assertEquals("200", getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("serveResource"));
 	}
 
@@ -790,7 +796,7 @@ public class RequestTest extends BaseTestCase {
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
-		Assert.assertEquals("200", responseMap.get("code").get(0));
+		Assert.assertEquals("200", getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("serveResource"));
 	}
 
@@ -834,7 +840,7 @@ public class RequestTest extends BaseTestCase {
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
-		Assert.assertEquals("200", responseMap.get("code").get(0));
+		Assert.assertEquals("200", getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("render"));
 	}
 

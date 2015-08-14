@@ -60,7 +60,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -501,8 +500,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 			"com.liferay.portlet.add-default-resource", Boolean.TRUE);
 		properties.put("com.liferay.portlet.system", Boolean.TRUE);
 
-		setUpPortlet(
-			new TestPortlet(map), properties, portletToTarget, false);
+		setUpPortlet(new TestPortlet(map), properties, portletToTarget, false);
 
 		properties = new Hashtable<>();
 
@@ -619,8 +617,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		String portletToEmbbed = "TEST_EMBEDDED";
 
-		setUpPortlet(
-			new TestPortlet(map), properties, portletToEmbbed, false);
+		setUpPortlet(new TestPortlet(map), properties, portletToEmbbed, false);
 		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
@@ -684,8 +681,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 			"com.liferay.portlet.add-default-resource", Boolean.TRUE);
 		properties.put("com.liferay.portlet.system", Boolean.TRUE);
 
-		setUpPortlet(
-			new TestPortlet(map), properties, portletToTarget, false);
+		setUpPortlet(new TestPortlet(map), properties, portletToTarget, false);
 
 		properties = new Hashtable<>();
 
@@ -803,8 +799,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		String portletToEmbbed = "TEST_EMBEDDED";
 
-		setUpPortlet(
-			new TestPortlet(map), properties, portletToEmbbed, false);
+		setUpPortlet(new TestPortlet(map), properties, portletToEmbbed, false);
 		setUpPortlet(testPortlet, properties, _TEST_PORTLET_ID);
 
 		HttpServletRequest request = getHttpServletRequest();
@@ -829,7 +824,7 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 	private static final String _TEST_PORTLET_ID = "TEST_PORTLET_ID";
 
-	private Map<String, String> map = new ConcurrentHashMap<>();
+	private final Map<String, String> map = new ConcurrentHashMap<>();
 	private Dictionary<String, Object> properties = new Hashtable<>();
 	private TestPortlet testPortlet;
 

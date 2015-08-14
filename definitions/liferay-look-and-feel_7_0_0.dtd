@@ -128,9 +128,9 @@ the user.
 
 <!--
 The root-path value sets the location of the root path for the theme. For
-example, the root path for the Classic theme is "/html/themes/classic". This
+example, the root path for the Classic theme is "/classic". This
 means you can find the files for the Classic theme in
-/docroot/html/themes/classic.
+/modules/frontend/frontend-themes-web/src/META-INF/resources/classic.
 
 For convenience, the root-path attribute can be referenced in the rest of the
 theme element as ${root-path}.
@@ -142,8 +142,8 @@ The default value is "/".
 <!--
 The templates-path value sets the location of the templates path for the theme.
 For example, the templates path for the Classic theme is
-"/html/themes/classic/templates". This means you can find the JSP or VM
-templates for the Classic theme in /docroot/html/themes/classic/templates.
+"/classic/templates". This means you can find the JSP or VM
+templates for the Classic theme in /modules/frontend/frontend-themes-web/src/META-INF/resources/classic/templates.
 
 For convenience, the templates-path attribute can be referenced in the rest of
 the theme element as ${templates-path}.
@@ -154,8 +154,8 @@ The default value is "${root-path}/templates".
 
 <!--
 The css-path value sets the location of the css path for the theme. For example,
-the css path for the Classic theme is "/html/themes/classic/css". This means you
-can find css for the Classic theme in /docroot/html/themes/classic/css.
+the css path for the Classic theme is "/classic/css". This means you
+can find css for the Classic theme in /modules/frontend/frontend-themes-web/src/META-INF/resources/classic/css.
 
 For convenience, the css-path attribute can be referenced in the rest of the
 theme element as ${css-path}.
@@ -166,9 +166,9 @@ The default value is "${root-path}/css".
 
 <!--
 The images-path value sets the location of the images path for the theme. For
-example, the images path for the Classic theme is "/html/themes/classic/images".
+example, the images path for the Classic theme is "/classic/images".
 This means you can find images for the Classic theme in
-/docroot/html/themes/classic/images.
+/modules/frontend/frontend-themes-web/src/META-INF/resources/classic/images.
 
 For convenience, the images-path attribute can be referenced in the rest of the
 theme element as ${images-path}.
@@ -180,8 +180,8 @@ The default value is "${root-path}/images".
 <!--
 The javascript-path value sets the location of the JavaScript path for the
 theme. For example, the JavaScript path for the Classic theme is
-"/html/themes/classic/js". This means you can find JavaScript for the
-Classic theme in /docroot/html/themes/classic/js.
+"/classic/js". This means you can find JavaScript for the
+Classic theme in /modules/frontend/frontend-themes-web/src/META-INF/resources/classic/js.
 
 For convenience, the javascript-path attribute can be referenced in the rest of
 the theme element as ${javascript-path}.

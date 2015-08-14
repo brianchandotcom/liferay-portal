@@ -1,10 +1,21 @@
 <definition>
+	<command name="_showDetails">
+		<if>
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPDynamicdatalistsDatadefinitionsAdd#DETAILS_DESCRIPTION_FIELD" />
+			<then>
+				<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsAdd#DETAILS" value1="Details" />
+			</then>
+		</if>
+
+		<execute function="AssertElementPresent" locator1="CPDynamicdatalistsDatadefinitionsAdd#DETAILS_DESCRIPTION_FIELD" />
+	</command>
+
 	<command name="addCmd">
 		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
 		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_ADD" value1="Add" />
 		<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsDatadefinitionsAdd#NAME_FIELD" value1="${ddlDataDefinitionName}" />
 
-		<execute macro="CPDynamicdatalistsDatadefinitionsAdd#showDetails" />
+		<execute macro="DDLDataDefinition#_showDetails" />
 
 		<if>
 			<isset var="ddlDataDefinitionDescription" />
@@ -123,7 +134,7 @@
 
 		<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsDatadefinitionsEdit#NAME_FIELD" value1="${ddlDataDefinitionNameEdit}" />
 
-		<execute macro="CPDynamicdatalistsDatadefinitionsAdd#showDetails" />
+		<execute macro="DDLDataDefinition#_showDetails" />
 
 		<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsDatadefinitionsEdit#DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescriptionEdit}" />
 

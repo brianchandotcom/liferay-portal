@@ -7,7 +7,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#DETAILS_LANGUAGE_SELECT" />
+		<execute function="AssertVisible" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#DETAILS_LANGUAGE_SELECT" />
 	</command>
 
 	<command name="addDisplayTemplateCP">

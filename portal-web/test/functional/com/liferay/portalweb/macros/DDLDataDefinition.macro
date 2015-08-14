@@ -7,7 +7,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="CPDynamicdatalistsDatadefinitionsAdd#DETAILS_DESCRIPTION_FIELD" />
+		<execute function="AssertVisible" locator1="CPDynamicdatalistsDatadefinitionsAdd#DETAILS_DESCRIPTION_FIELD" />
 	</command>
 
 	<command name="addCmd">

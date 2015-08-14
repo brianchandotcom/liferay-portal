@@ -24,6 +24,7 @@ import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -47,6 +48,7 @@ import org.junit.runner.RunWith;
  * @author Eudaldo Alonso
  */
 @RunWith(Arquillian.class)
+@Sync
 public class JournalArticleAssetSearchTest extends BaseAssetSearchTestCase {
 
 	@ClassRule

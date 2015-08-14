@@ -24,6 +24,7 @@ import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -46,6 +47,7 @@ import org.junit.runner.RunWith;
  * @author Manuel de la Peña
  */
 @RunWith(Arquillian.class)
+@Sync
 public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 
 	@ClassRule

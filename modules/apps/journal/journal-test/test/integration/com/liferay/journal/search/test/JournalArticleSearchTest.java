@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
@@ -77,6 +78,7 @@ import org.junit.runner.RunWith;
  * @author Tibor Lipusz
  */
 @RunWith(Arquillian.class)
+@Sync
 public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 	@ClassRule

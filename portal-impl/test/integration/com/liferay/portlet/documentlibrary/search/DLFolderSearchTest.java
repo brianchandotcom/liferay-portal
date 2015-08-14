@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.search;
 
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.model.BaseModel;
@@ -38,6 +39,7 @@ import org.junit.Test;
 /**
  * @author Eudaldo Alonso
  */
+@Sync
 public class DLFolderSearchTest extends BaseSearchTestCase {
 
 	@ClassRule

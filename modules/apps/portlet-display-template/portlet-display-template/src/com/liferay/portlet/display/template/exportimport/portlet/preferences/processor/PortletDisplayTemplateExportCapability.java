@@ -25,11 +25,12 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -78,13 +79,13 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 		}
 
 		DDMTemplate ddmTemplate =
-			_portletDisplayTemplate.getPortletDisplayTemplateDDMTemplate(
+			getPortletDisplayTemplate().getPortletDisplayTemplateDDMTemplate(
 				portletDataContext.getGroupId(),
 				getClassNameId(portletDataContext, portletId), displayStyle,
 				false);
 
 		if (ddmTemplate != null) {
-			_portletDisplayTemplate.exportDDMTemplateStagedModel(
+			getPortletDisplayTemplate().exportDDMTemplateStagedModel(
 				portletDataContext, portletId, ddmTemplate.getTemplateId());
 		}
 
@@ -145,13 +146,10 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 		return 0;
 	}
 
-	@Reference
-	protected void setPortletDisplayTemplate(
-		PortletDisplayTemplate portletDisplayTemplate) {
+	protected PortletDisplayTemplate getPortletDisplayTemplate() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		_portletDisplayTemplate = portletDisplayTemplate;
+		return registry.getService(PortletDisplayTemplate.class);
 	}
-
-	private PortletDisplayTemplate _portletDisplayTemplate;
 
 }

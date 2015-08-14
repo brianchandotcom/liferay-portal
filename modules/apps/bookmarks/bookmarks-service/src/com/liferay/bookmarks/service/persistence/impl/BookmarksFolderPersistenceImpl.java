@@ -7028,7 +7028,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 				bookmarksFolder.setNew(false);
 			}
 			else {
-				session.merge(bookmarksFolder);
+				bookmarksFolder = (BookmarksFolder)session.merge(bookmarksFolder);
 			}
 		}
 		catch (Exception e) {

@@ -768,7 +768,7 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 				shoppingOrderItem.setNew(false);
 			}
 			else {
-				session.merge(shoppingOrderItem);
+				shoppingOrderItem = (ShoppingOrderItem)session.merge(shoppingOrderItem);
 			}
 		}
 		catch (Exception e) {

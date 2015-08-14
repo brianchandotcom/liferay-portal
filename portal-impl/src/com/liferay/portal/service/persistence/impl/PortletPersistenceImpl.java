@@ -1070,7 +1070,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 				portlet.setNew(false);
 			}
 			else {
-				session.merge(portlet);
+				portlet = (Portlet)session.merge(portlet);
 			}
 		}
 		catch (Exception e) {

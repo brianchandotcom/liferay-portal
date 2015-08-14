@@ -2812,7 +2812,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 				team.setNew(false);
 			}
 			else {
-				session.merge(team);
+				team = (Team)session.merge(team);
 			}
 		}
 		catch (Exception e) {

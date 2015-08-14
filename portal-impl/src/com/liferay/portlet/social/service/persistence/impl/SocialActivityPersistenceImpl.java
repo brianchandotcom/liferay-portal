@@ -6195,7 +6195,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				socialActivity.setNew(false);
 			}
 			else {
-				session.merge(socialActivity);
+				socialActivity = (SocialActivity)session.merge(socialActivity);
 			}
 		}
 		catch (Exception e) {

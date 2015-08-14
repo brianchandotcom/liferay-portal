@@ -2178,7 +2178,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 				mdrRule.setNew(false);
 			}
 			else {
-				session.merge(mdrRule);
+				mdrRule = (MDRRule)session.merge(mdrRule);
 			}
 		}
 		catch (Exception e) {

@@ -5449,7 +5449,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 				calEvent.setNew(false);
 			}
 			else {
-				session.merge(calEvent);
+				calEvent = (CalEvent)session.merge(calEvent);
 			}
 		}
 		catch (Exception e) {

@@ -2250,7 +2250,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 				shoppingItem.setNew(false);
 			}
 			else {
-				session.merge(shoppingItem);
+				shoppingItem = (ShoppingItem)session.merge(shoppingItem);
 			}
 		}
 		catch (Exception e) {

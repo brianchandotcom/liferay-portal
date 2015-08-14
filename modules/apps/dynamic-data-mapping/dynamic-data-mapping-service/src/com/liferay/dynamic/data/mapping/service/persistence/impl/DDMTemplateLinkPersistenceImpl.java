@@ -1539,7 +1539,7 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 				ddmTemplateLink.setNew(false);
 			}
 			else {
-				session.merge(ddmTemplateLink);
+				ddmTemplateLink = (DDMTemplateLink)session.merge(ddmTemplateLink);
 			}
 		}
 		catch (Exception e) {

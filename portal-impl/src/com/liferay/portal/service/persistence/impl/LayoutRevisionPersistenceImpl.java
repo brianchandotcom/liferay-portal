@@ -5870,7 +5870,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 				layoutRevision.setNew(false);
 			}
 			else {
-				session.merge(layoutRevision);
+				layoutRevision = (LayoutRevision)session.merge(layoutRevision);
 			}
 		}
 		catch (Exception e) {

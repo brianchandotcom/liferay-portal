@@ -5584,7 +5584,7 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 				calendarBooking.setNew(false);
 			}
 			else {
-				session.merge(calendarBooking);
+				calendarBooking = (CalendarBooking)session.merge(calendarBooking);
 			}
 		}
 		catch (Exception e) {

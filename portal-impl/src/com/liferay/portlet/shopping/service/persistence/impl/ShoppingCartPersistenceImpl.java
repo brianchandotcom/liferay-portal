@@ -1542,7 +1542,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 				shoppingCart.setNew(false);
 			}
 			else {
-				session.merge(shoppingCart);
+				shoppingCart = (ShoppingCart)session.merge(shoppingCart);
 			}
 		}
 		catch (Exception e) {

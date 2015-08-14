@@ -2502,7 +2502,7 @@ public class KaleoActionPersistenceImpl extends BasePersistenceImpl<KaleoAction>
 				kaleoAction.setNew(false);
 			}
 			else {
-				session.merge(kaleoAction);
+				kaleoAction = (KaleoAction)session.merge(kaleoAction);
 			}
 		}
 		catch (Exception e) {

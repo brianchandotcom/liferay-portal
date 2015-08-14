@@ -1762,7 +1762,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 				resourceTypePermission.setNew(false);
 			}
 			else {
-				session.merge(resourceTypePermission);
+				resourceTypePermission = (ResourceTypePermission)session.merge(resourceTypePermission);
 			}
 		}
 		catch (Exception e) {

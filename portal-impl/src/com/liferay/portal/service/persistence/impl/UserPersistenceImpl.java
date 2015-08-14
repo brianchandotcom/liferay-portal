@@ -7341,7 +7341,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				user.setNew(false);
 			}
 			else {
-				session.merge(user);
+				user = (User)session.merge(user);
 			}
 		}
 		catch (Exception e) {

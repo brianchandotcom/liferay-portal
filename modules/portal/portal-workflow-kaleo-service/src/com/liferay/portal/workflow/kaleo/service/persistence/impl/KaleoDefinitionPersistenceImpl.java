@@ -2836,7 +2836,7 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 				kaleoDefinition.setNew(false);
 			}
 			else {
-				session.merge(kaleoDefinition);
+				kaleoDefinition = (KaleoDefinition)session.merge(kaleoDefinition);
 			}
 		}
 		catch (Exception e) {

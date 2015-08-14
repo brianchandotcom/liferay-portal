@@ -2384,7 +2384,7 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 				kaleoTransition.setNew(false);
 			}
 			else {
-				session.merge(kaleoTransition);
+				kaleoTransition = (KaleoTransition)session.merge(kaleoTransition);
 			}
 		}
 		catch (Exception e) {

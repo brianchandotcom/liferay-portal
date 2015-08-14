@@ -1556,7 +1556,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 				trashVersion.setNew(false);
 			}
 			else {
-				session.merge(trashVersion);
+				trashVersion = (TrashVersion)session.merge(trashVersion);
 			}
 		}
 		catch (Exception e) {

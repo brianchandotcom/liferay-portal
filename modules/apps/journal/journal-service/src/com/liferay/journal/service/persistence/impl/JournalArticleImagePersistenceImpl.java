@@ -2406,7 +2406,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 				journalArticleImage.setNew(false);
 			}
 			else {
-				session.merge(journalArticleImage);
+				journalArticleImage = (JournalArticleImage)session.merge(journalArticleImage);
 			}
 		}
 		catch (Exception e) {

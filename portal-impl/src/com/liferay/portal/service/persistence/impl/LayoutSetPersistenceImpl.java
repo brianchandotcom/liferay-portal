@@ -1608,7 +1608,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 				layoutSet.setNew(false);
 			}
 			else {
-				session.merge(layoutSet);
+				layoutSet = (LayoutSet)session.merge(layoutSet);
 			}
 		}
 		catch (Exception e) {

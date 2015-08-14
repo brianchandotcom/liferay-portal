@@ -1784,7 +1784,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 				kaleoNode.setNew(false);
 			}
 			else {
-				session.merge(kaleoNode);
+				kaleoNode = (KaleoNode)session.merge(kaleoNode);
 			}
 		}
 		catch (Exception e) {

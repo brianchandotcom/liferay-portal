@@ -2626,7 +2626,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 				app.setNew(false);
 			}
 			else {
-				session.merge(app);
+				app = (App)session.merge(app);
 			}
 		}
 		catch (Exception e) {

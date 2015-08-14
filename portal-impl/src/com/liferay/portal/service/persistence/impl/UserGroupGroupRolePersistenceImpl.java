@@ -2773,7 +2773,7 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 				userGroupGroupRole.setNew(false);
 			}
 			else {
-				session.merge(userGroupGroupRole);
+				userGroupGroupRole = (UserGroupGroupRole)session.merge(userGroupGroupRole);
 			}
 		}
 		catch (Exception e) {

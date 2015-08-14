@@ -2844,7 +2844,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 				journalFeed.setNew(false);
 			}
 			else {
-				session.merge(journalFeed);
+				journalFeed = (JournalFeed)session.merge(journalFeed);
 			}
 		}
 		catch (Exception e) {

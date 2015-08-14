@@ -1565,7 +1565,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 				resourceBlockPermission.setNew(false);
 			}
 			else {
-				session.merge(resourceBlockPermission);
+				resourceBlockPermission = (ResourceBlockPermission)session.merge(resourceBlockPermission);
 			}
 		}
 		catch (Exception e) {

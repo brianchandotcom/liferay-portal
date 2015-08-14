@@ -833,7 +833,7 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 				virtualHost.setNew(false);
 			}
 			else {
-				session.merge(virtualHost);
+				virtualHost = (VirtualHost)session.merge(virtualHost);
 			}
 		}
 		catch (Exception e) {

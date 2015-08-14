@@ -1439,7 +1439,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 				wikiPageResource.setNew(false);
 			}
 			else {
-				session.merge(wikiPageResource);
+				wikiPageResource = (WikiPageResource)session.merge(wikiPageResource);
 			}
 		}
 		catch (Exception e) {

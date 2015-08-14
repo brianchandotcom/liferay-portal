@@ -38,7 +38,7 @@ public class IOSMobileDriverImpl extends BaseMobileDriverImpl {
 		int screenPositionX = WebDriverHelper.getElementPositionCenterX(
 			this, locator);
 
-		int navigationBarHeight = 50;
+		int navigationBarHeight = 44;
 
 		int screenPositionY =
 			WebDriverHelper.getElementPositionCenterY(this, locator) +

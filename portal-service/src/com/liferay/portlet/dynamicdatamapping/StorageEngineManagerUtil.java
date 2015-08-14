@@ -36,12 +36,6 @@ public class StorageEngineManagerUtil {
 		_storageEngineManager.deleteByClass(classPK);
 	}
 
-	public static void deleteByDDMStructure(long ddmStructureId)
-		throws PortalException {
-
-		_storageEngineManager.deleteByDDMStructure(ddmStructureId);
-	}
-
 	public static DDMFormValues getDDMFormValues(long classPK)
 		throws PortalException {
 

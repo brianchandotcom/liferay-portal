@@ -54,13 +54,6 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	}
 
 	@Override
-	public void deleteByDDMStructure(long ddmStructureId)
-		throws PortalException {
-
-		_storageEngine.deleteByDDMStructure(ddmStructureId);
-	}
-
-	@Override
 	public DDMFormValues getDDMFormValues(long classPK) throws PortalException {
 		return _ddmBeanTranslator.translate(
 			_storageEngine.getDDMFormValues(classPK));

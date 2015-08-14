@@ -31,9 +31,6 @@ public interface StorageEngineManager {
 
 	public void deleteByClass(long classPK) throws PortalException;
 
-	public void deleteByDDMStructure(long ddmStructureId)
-		throws PortalException;
-
 	public DDMFormValues getDDMFormValues(long classPK) throws PortalException;
 
 	public DDMFormValues getDDMFormValues(

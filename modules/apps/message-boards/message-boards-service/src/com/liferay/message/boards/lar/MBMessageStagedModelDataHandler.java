@@ -51,6 +51,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -339,8 +340,17 @@ public class MBMessageStagedModelDataHandler
 				}
 			}
 
+			Date modifiedDate = importedMessage.getModifiedDate();
+
 			_mbMessageLocalService.updateAnswer(
 				importedMessage, message.isAnswer(), false);
+
+			importedMessage = _mbMessageLocalService.fetchMBMessage(
+				importedMessage.getMessageId());
+
+			importedMessage.setModifiedDate(modifiedDate);
+
+			_mbMessageLocalService.updateMBMessage(importedMessage);
 
 			if (importedMessage.isRoot() && !importedMessage.isDiscussion()) {
 				_mbThreadLocalService.updateQuestion(

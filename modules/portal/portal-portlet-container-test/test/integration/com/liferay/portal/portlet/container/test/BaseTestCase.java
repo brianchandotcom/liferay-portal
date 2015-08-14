@@ -33,10 +33,8 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -44,16 +42,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
-
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
@@ -90,12 +88,12 @@ public class BaseTestCase {
 		serviceRegistrations.clear();
 	}
 
-	protected String drain(InputStream stream) throws IOException {
-		if (stream == null) {
+	protected String read(InputStream inputStream) throws IOException {
+		if (inputStream == null) {
 			return "";
 		}
 
-		return StringUtil.read(stream);
+		return StringUtil.read(inputStream);
 	}
 
 	protected BundleContext getBundleContext() {
@@ -104,8 +102,8 @@ public class BaseTestCase {
 		return bundle.getBundleContext();
 	}
 
-	protected MockHttpServletRequest getRequest() throws Exception {
-		MockHttpServletRequest request = new MockHttpServletRequest();
+	protected HttpServletRequest getRequest() throws Exception {
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
 		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
 
@@ -116,15 +114,15 @@ public class BaseTestCase {
 		themeDisplay.setLayout(layout);
 		themeDisplay.setPlid(layout.getPlid());
 		themeDisplay.setPortalURL(TestPropsValues.PORTAL_URL);
-		themeDisplay.setRequest(request);
+		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setScopeGroupId(group.getGroupId());
 		themeDisplay.setSiteGroupId(group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
-		request.setAttribute(WebKeys.LAYOUT, layout);
-		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
-		return request;
+		return httpServletRequest;
 	}
 
 	protected Map<String, List<String>> request(String urlSpec)
@@ -177,7 +175,7 @@ public class BaseTestCase {
 			String responseCode = String.valueOf(connection.getResponseCode());
 
 			map.put("responseCode", Arrays.asList(responseCode));
-			map.put("responseBody", Arrays.asList(drain(stream)));
+			map.put("responseBody", Arrays.asList(read(stream)));
 
 			return map;
 		}

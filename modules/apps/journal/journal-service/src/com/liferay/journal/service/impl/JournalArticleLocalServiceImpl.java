@@ -29,7 +29,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
@@ -7760,7 +7759,7 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException {
 
 		Locale[] contentLocales = LocaleUtil.fromLanguageIds(
-				LocalizationUtil.getAvailableLanguageIds(content));
+			LocalizationUtil.getAvailableLanguageIds(content));
 
 		Fields fields = DDMXMLUtil.getFields(ddmStructure, content);
 

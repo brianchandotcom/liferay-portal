@@ -8714,7 +8714,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 				ddmStructure.setNew(false);
 			}
 			else {
-				session.merge(ddmStructure);
+				ddmStructure = (DDMStructure)session.merge(ddmStructure);
 			}
 		}
 		catch (Exception e) {

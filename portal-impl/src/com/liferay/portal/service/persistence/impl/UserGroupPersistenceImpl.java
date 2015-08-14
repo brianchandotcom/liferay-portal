@@ -4258,7 +4258,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 				userGroup.setNew(false);
 			}
 			else {
-				session.merge(userGroup);
+				userGroup = (UserGroup)session.merge(userGroup);
 			}
 		}
 		catch (Exception e) {

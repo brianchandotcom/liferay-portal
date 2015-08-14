@@ -1149,7 +1149,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 				pluginSetting.setNew(false);
 			}
 			else {
-				session.merge(pluginSetting);
+				pluginSetting = (PluginSetting)session.merge(pluginSetting);
 			}
 		}
 		catch (Exception e) {

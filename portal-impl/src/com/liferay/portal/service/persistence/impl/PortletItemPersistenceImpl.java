@@ -1832,7 +1832,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 				portletItem.setNew(false);
 			}
 			else {
-				session.merge(portletItem);
+				portletItem = (PortletItem)session.merge(portletItem);
 			}
 		}
 		catch (Exception e) {

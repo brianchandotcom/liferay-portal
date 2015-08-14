@@ -3932,7 +3932,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 				calendar.setNew(false);
 			}
 			else {
-				session.merge(calendar);
+				calendar = (Calendar)session.merge(calendar);
 			}
 		}
 		catch (Exception e) {

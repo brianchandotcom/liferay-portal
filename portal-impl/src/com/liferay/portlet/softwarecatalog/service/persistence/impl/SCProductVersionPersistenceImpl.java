@@ -1118,7 +1118,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 				scProductVersion.setNew(false);
 			}
 			else {
-				session.merge(scProductVersion);
+				scProductVersion = (SCProductVersion)session.merge(scProductVersion);
 			}
 		}
 		catch (Exception e) {

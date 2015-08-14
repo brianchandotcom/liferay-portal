@@ -1761,7 +1761,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 				userTracker.setNew(false);
 			}
 			else {
-				session.merge(userTracker);
+				userTracker = (UserTracker)session.merge(userTracker);
 			}
 		}
 		catch (Exception e) {

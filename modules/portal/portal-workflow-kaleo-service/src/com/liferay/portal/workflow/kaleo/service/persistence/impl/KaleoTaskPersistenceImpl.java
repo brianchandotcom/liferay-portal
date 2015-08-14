@@ -1529,7 +1529,7 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 				kaleoTask.setNew(false);
 			}
 			else {
-				session.merge(kaleoTask);
+				kaleoTask = (KaleoTask)session.merge(kaleoTask);
 			}
 		}
 		catch (Exception e) {

@@ -589,7 +589,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 				webDAVProps.setNew(false);
 			}
 			else {
-				session.merge(webDAVProps);
+				webDAVProps = (WebDAVProps)session.merge(webDAVProps);
 			}
 		}
 		catch (Exception e) {

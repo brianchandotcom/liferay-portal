@@ -765,7 +765,7 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 				shoppingItemPrice.setNew(false);
 			}
 			else {
-				session.merge(shoppingItemPrice);
+				shoppingItemPrice = (ShoppingItemPrice)session.merge(shoppingItemPrice);
 			}
 		}
 		catch (Exception e) {

@@ -1604,7 +1604,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 				ddlRecordVersion.setNew(false);
 			}
 			else {
-				session.merge(ddlRecordVersion);
+				ddlRecordVersion = (DDLRecordVersion)session.merge(ddlRecordVersion);
 			}
 		}
 		catch (Exception e) {

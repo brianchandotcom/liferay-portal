@@ -3321,7 +3321,7 @@ public class SocialActivityAchievementPersistenceImpl
 				socialActivityAchievement.setNew(false);
 			}
 			else {
-				session.merge(socialActivityAchievement);
+				socialActivityAchievement = (SocialActivityAchievement)session.merge(socialActivityAchievement);
 			}
 		}
 		catch (Exception e) {

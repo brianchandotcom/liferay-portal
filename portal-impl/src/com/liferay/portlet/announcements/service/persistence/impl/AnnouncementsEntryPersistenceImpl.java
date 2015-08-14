@@ -4979,7 +4979,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 				announcementsEntry.setNew(false);
 			}
 			else {
-				session.merge(announcementsEntry);
+				announcementsEntry = (AnnouncementsEntry)session.merge(announcementsEntry);
 			}
 		}
 		catch (Exception e) {

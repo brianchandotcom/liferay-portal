@@ -1562,7 +1562,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 				country.setNew(false);
 			}
 			else {
-				session.merge(country);
+				country = (Country)session.merge(country);
 			}
 		}
 		catch (Exception e) {

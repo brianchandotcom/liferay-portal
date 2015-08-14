@@ -2493,7 +2493,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 				pollsChoice.setNew(false);
 			}
 			else {
-				session.merge(pollsChoice);
+				pollsChoice = (PollsChoice)session.merge(pollsChoice);
 			}
 		}
 		catch (Exception e) {

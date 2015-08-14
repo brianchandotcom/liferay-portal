@@ -1118,7 +1118,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 				ticket.setNew(false);
 			}
 			else {
-				session.merge(ticket);
+				ticket = (Ticket)session.merge(ticket);
 			}
 		}
 		catch (Exception e) {

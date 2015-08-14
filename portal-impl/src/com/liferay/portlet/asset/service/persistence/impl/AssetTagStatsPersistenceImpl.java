@@ -1528,7 +1528,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 				assetTagStats.setNew(false);
 			}
 			else {
-				session.merge(assetTagStats);
+				assetTagStats = (AssetTagStats)session.merge(assetTagStats);
 			}
 		}
 		catch (Exception e) {

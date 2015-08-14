@@ -2093,7 +2093,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 				ddmStructureLink.setNew(false);
 			}
 			else {
-				session.merge(ddmStructureLink);
+				ddmStructureLink = (DDMStructureLink)session.merge(ddmStructureLink);
 			}
 		}
 		catch (Exception e) {

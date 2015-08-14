@@ -1547,7 +1547,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 				company.setNew(false);
 			}
 			else {
-				session.merge(company);
+				company = (Company)session.merge(company);
 			}
 		}
 		catch (Exception e) {

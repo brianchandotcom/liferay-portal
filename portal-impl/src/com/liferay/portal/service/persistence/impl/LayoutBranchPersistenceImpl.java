@@ -2187,7 +2187,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 				layoutBranch.setNew(false);
 			}
 			else {
-				session.merge(layoutBranch);
+				layoutBranch = (LayoutBranch)session.merge(layoutBranch);
 			}
 		}
 		catch (Exception e) {

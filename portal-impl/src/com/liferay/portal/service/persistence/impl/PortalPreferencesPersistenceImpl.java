@@ -578,7 +578,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 				portalPreferences.setNew(false);
 			}
 			else {
-				session.merge(portalPreferences);
+				portalPreferences = (PortalPreferences)session.merge(portalPreferences);
 			}
 		}
 		catch (Exception e) {

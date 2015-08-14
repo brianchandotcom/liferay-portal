@@ -6321,7 +6321,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				socialRequest.setNew(false);
 			}
 			else {
-				session.merge(socialRequest);
+				socialRequest = (SocialRequest)session.merge(socialRequest);
 			}
 		}
 		catch (Exception e) {

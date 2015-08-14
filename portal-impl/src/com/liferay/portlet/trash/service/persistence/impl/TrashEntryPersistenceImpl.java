@@ -2572,7 +2572,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 				trashEntry.setNew(false);
 			}
 			else {
-				session.merge(trashEntry);
+				trashEntry = (TrashEntry)session.merge(trashEntry);
 			}
 		}
 		catch (Exception e) {

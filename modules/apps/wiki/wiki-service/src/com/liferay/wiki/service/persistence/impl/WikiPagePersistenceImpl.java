@@ -21431,7 +21431,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				wikiPage.setNew(false);
 			}
 			else {
-				session.merge(wikiPage);
+				wikiPage = (WikiPage)session.merge(wikiPage);
 			}
 		}
 		catch (Exception e) {

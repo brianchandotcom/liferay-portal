@@ -3033,7 +3033,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 				module.setNew(false);
 			}
 			else {
-				session.merge(module);
+				module = (Module)session.merge(module);
 			}
 		}
 		catch (Exception e) {

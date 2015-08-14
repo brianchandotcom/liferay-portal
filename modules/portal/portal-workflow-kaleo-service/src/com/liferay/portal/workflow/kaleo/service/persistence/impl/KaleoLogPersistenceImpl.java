@@ -3512,7 +3512,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 				kaleoLog.setNew(false);
 			}
 			else {
-				session.merge(kaleoLog);
+				kaleoLog = (KaleoLog)session.merge(kaleoLog);
 			}
 		}
 		catch (Exception e) {

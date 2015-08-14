@@ -8096,7 +8096,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				group.setNew(false);
 			}
 			else {
-				session.merge(group);
+				group = (Group)session.merge(group);
 			}
 		}
 		catch (Exception e) {

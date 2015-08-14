@@ -2767,7 +2767,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 				socialActivityCounter.setNew(false);
 			}
 			else {
-				session.merge(socialActivityCounter);
+				socialActivityCounter = (SocialActivityCounter)session.merge(socialActivityCounter);
 			}
 		}
 		catch (Exception e) {

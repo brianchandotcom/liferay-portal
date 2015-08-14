@@ -2419,7 +2419,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 				systemEvent.setNew(false);
 			}
 			else {
-				session.merge(systemEvent);
+				systemEvent = (SystemEvent)session.merge(systemEvent);
 			}
 		}
 		catch (Exception e) {

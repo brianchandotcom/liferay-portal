@@ -4611,7 +4611,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 				address.setNew(false);
 			}
 			else {
-				session.merge(address);
+				address = (Address)session.merge(address);
 			}
 		}
 		catch (Exception e) {

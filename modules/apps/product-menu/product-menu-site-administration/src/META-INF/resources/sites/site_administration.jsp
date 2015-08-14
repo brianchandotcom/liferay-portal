@@ -18,14 +18,29 @@
 
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
+PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
+
+PanelCategory allSitesPanelCategory = panelCategoryRegistry.getPanelCategory(PanelCategoryKeys.SITES_ALL_SITES);
 
 Group group = themeDisplay.getSiteGroup();
 %>
 
 <div class="toolbar">
-	<div class="toolbar-group-field">
-		<a class="icon-angle-left icon-monospaced" href="javascript:;" id="<portlet:namespace />allSitesLink"></a>
-	</div>
+	<c:if test="<%= (allSitesPanelCategory != null) && allSitesPanelCategory.hasAccessPermission(permissionChecker, group) %>">
+		<div class="toolbar-group-field">
+			<a class="icon-angle-left icon-monospaced" href="javascript:;" id="<portlet:namespace />allSitesLink"></a>
+		</div>
+
+		<aui:script sandbox="<%= true %>">
+			$('#<portlet:namespace />allSitesLink').on(
+				'click',
+				function(event) {
+					$('#<portlet:namespace /><%= allSitesPanelCategory.getKey() %>TabLink').tab('show');
+				}
+			);
+		</aui:script>
+	</c:if>
+
 	<div class="toolbar-group-content">
 		<aui:a href="<%= group.getDisplayURL(themeDisplay) %>">
 			<%= group.getDescriptiveName(locale) %>
@@ -85,12 +100,3 @@ Group group = themeDisplay.getSiteGroup();
 </div>
 
 <liferay-application-list:panel panelCategory="<%= panelCategory %>" />
-
-<aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />allSitesLink').on(
-		'click',
-		function(event) {
-			$('#<portlet:namespace /><%= PanelCategoryKeys.SITES_ALL_SITES %>TabLink').tab('show');
-		}
-	);
-</aui:script>

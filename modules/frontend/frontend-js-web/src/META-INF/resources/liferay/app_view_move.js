@@ -19,6 +19,8 @@ AUI.add(
 
 		var CSS_ICON_REPLY = 'icon-reply-all';
 
+		var CSS_SELECTED = 'selected';
+
 		var DATA_FOLDER_ID = 'data-folder-id';
 
 		var SELECTOR_DRAGGABLE_NODES = '[data-draggable]';
@@ -204,6 +206,11 @@ AUI.add(
 						validator: Lang.isObject
 					},
 
+					selectedCSSClass: {
+						validator: Lang.isString,
+						value: CSS_SELECTED
+					},
+
 					/**
 					 * The ID of the trash link.
 					 *
@@ -270,6 +277,8 @@ AUI.add(
 						instance._entriesContainer = instance.byId('entriesContainer');
 
 						instance._eventEditEntry = instance.ns('editEntry');
+
+						instance._selectedCSSClass = instance.get('selectedCSSClass');
 
 						var eventHandles = [
 							Liferay.on(instance._eventEditEntry, instance._editEntry, instance)
@@ -598,7 +607,7 @@ AUI.add(
 							}
 						);
 
-						var selectedItems = instance._entriesContainer.all(STR_DOT + instance.get(STR_DISPLAY_STYLE) + '.selected');
+						var selectedItems = instance._entriesContainer.all(STR_DOT + instance.get(STR_DISPLAY_STYLE) + STR_DOT + instance._selectedCSSClass);
 
 						var selectedItemsCount = selectedItems.size();
 

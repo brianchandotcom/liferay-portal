@@ -134,12 +134,17 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 					node: A.one(document.<portlet:namespace />fm)
 				},
 				moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="mvcPath" value="/move_entries.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
+				selectedCSSClass: 'active',
 				trashLinkId: '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? ("_" + PortletProviderUtil.getPortletId(PortalProductMenuApplicationType.ProductMenu.CLASS_NAME, PortletProvider.Action.VIEW) + "_portlet_" + PortletProviderUtil.getPortletId(TrashEntry.class.getName(), PortletProvider.Action.VIEW)) : StringPool.BLANK %>',
 				updateable: true
 			},
 			namespace: '<portlet:namespace />',
 			portletId: '<%= portletDisplay.getId() %>',
-			rowIds: '<%= RowChecker.ROW_IDS %>'
+			rowIds: '<portlet:namespace /><%= RowChecker.ROW_IDS %>',
+			select: {
+				displayStyleCSSClass: 'list-group-item',
+				selectedCSSClass: 'active'
+			}
 		}
 	);
 

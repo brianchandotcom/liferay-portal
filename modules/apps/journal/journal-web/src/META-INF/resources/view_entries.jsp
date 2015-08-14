@@ -290,7 +290,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 %>
 
 <c:choose>
-	<c:when test='<%= !displayStyle.equals("list") %>'>
+	<c:when test='<%= displayStyle.equals("icon") %>'>
 
 		<%
 		for (int i = 0; i < results.size(); i++) {
@@ -318,14 +318,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 					request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
 					%>
 
-					<c:choose>
-						<c:when test='<%= displayStyle.equals("icon") %>'>
-							<liferay-util:include page="/view_article_icon.jsp" servletContext="<%= application %>" />
-						</c:when>
-						<c:otherwise>
-							<liferay-util:include page="/view_article_descriptive.jsp" servletContext="<%= application %>" />
-						</c:otherwise>
-					</c:choose>
+					<liferay-util:include page="/view_article_icon.jsp" servletContext="<%= application %>" />
 				</c:when>
 				<c:when test="<%= curFolder != null %>">
 
@@ -349,14 +342,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 					request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
 					%>
 
-					<c:choose>
-						<c:when test='<%= displayStyle.equals("icon") %>'>
-							<liferay-util:include page="/view_folder_icon.jsp" servletContext="<%= application %>" />
-						</c:when>
-						<c:otherwise>
-							<liferay-util:include page="/view_folder_descriptive.jsp" servletContext="<%= application %>" />
-						</c:otherwise>
-					</c:choose>
+					<liferay-util:include page="/view_folder_icon.jsp" servletContext="<%= application %>" />
 				</c:when>
 			</c:choose>
 
@@ -378,6 +364,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 
 			<liferay-ui:search-container-row
 				className="Object"
+				cssClass="entry-display-style selectable"
 				modelVar="object"
 			>
 
@@ -399,8 +386,6 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 					<c:when test="<%= curArticle != null %>">
 
 						<%
-						row.setClassName("entry-display-style selectable");
-
 						Map<String, Object> rowData = new HashMap<String, Object>();
 
 						rowData.put("draggable", JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE));
@@ -411,13 +396,18 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 						row.setPrimaryKey(HtmlUtil.escape(curArticle.getArticleId()));
 						%>
 
-						<%@ include file="/article_columns.jspf" %>
+						<c:choose>
+							<c:when test='<%= displayStyle.equals("descriptive") %>'>
+								<%@ include file="/article_columns_descriptive.jspf" %>
+							</c:when>
+							<c:otherwise>
+								<%@ include file="/article_columns_list.jspf" %>
+							</c:otherwise>
+						</c:choose>
 					</c:when>
 					<c:when test="<%= curFolder != null %>">
 
 						<%
-						row.setClassName("entry-display-style selectable");
-
 						Map<String, Object> rowData = new HashMap<String, Object>();
 
 						rowData.put("draggable", JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE));
@@ -429,13 +419,20 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 						row.setPrimaryKey(String.valueOf(curFolder.getPrimaryKey()));
 						%>
 
-						<%@ include file="/folder_columns.jspf" %>
+						<c:choose>
+							<c:when test='<%= displayStyle.equals("descriptive") %>'>
+							<%@ include file="/folder_columns_descriptive.jspf" %>
+							</c:when>
+							<c:otherwise>
+								<%@ include file="/folder_columns_list.jspf" %>
+							</c:otherwise>
+						</c:choose>
 					</c:when>
 				</c:choose>
 
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= articleSearchContainer %>" />
+			<liferay-ui:search-iterator displayStyle='<%= displayStyle.equals("descriptive") ? displayStyle : null %>' paginate="<%= false %>" searchContainer="<%= articleSearchContainer %>" />
 		</liferay-ui:search-container>
 	</c:otherwise>
 </c:choose>

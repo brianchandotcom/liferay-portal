@@ -31,137 +31,135 @@ else {
 }
 %>
 
-<span class="entry-action overlay">
-	<liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" scroll="<%= true %>" showWhenSingleIcon="<%= true %>" view="lexicon">
+	<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="editURL">
+			<portlet:param name="mvcPath" value="/edit_article.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+			<portlet:param name="folderId" value="<%= String.valueOf(article.getFolderId()) %>" />
+			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			iconCssClass="icon-edit"
+			message="edit"
+			url="<%= editURL %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="moveURL">
+			<portlet:param name="mvcPath" value="/move_entries.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
+			<portlet:param name="articleIds" value="<%= article.getArticleId() %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			iconCssClass="icon-move"
+			message="move"
+			url="<%= moveURL %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= JournalArticle.class.getName() %>"
+			modelResourceDescription="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
+			resourcePrimKey="<%= String.valueOf(article.getResourcePrimKey()) %>"
+			var="permissionsURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
+
+		<liferay-ui:icon
+			iconCssClass="icon-lock"
+			message="permissions"
+			method="get"
+			url="<%= permissionsURL %>"
+			useDialog="<%= true %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.VIEW) %>">
+		<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="mvcPath" value="/preview_article_content.jsp" />
+			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
+		</liferay-portlet:renderURL>
+
+		<%
+		String taglibOnClick = "Liferay.fire('previewArticle', {title: '" + HtmlUtil.escapeJS(article.getTitle(locale)) + "', uri: '" + HtmlUtil.escapeJS(previewArticleContentURL.toString()) + "'});";
+		%>
+
+		<liferay-ui:icon
+			iconCssClass="icon-search"
+			message="preview"
+			onClick="<%= taglibOnClick %>"
+			url="javascript:;"
+		/>
+
 		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>">
-			<portlet:renderURL var="editURL">
-				<portlet:param name="mvcPath" value="/edit_article.jsp" />
+			<portlet:renderURL var="viewHistoryURL">
+				<portlet:param name="mvcPath" value="/view_article_history.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-				<portlet:param name="folderId" value="<%= String.valueOf(article.getFolderId()) %>" />
 				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-				<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
 			</portlet:renderURL>
-
-			<liferay-ui:icon
-				iconCssClass="icon-edit"
-				message="edit"
-				url="<%= editURL %>"
-			/>
-		</c:if>
-
-		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>">
-			<portlet:renderURL var="moveURL">
-				<portlet:param name="mvcPath" value="/move_entries.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="backURL" value="<%= currentURL %>" />
-				<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
-				<portlet:param name="articleIds" value="<%= article.getArticleId() %>" />
-			</portlet:renderURL>
-
-			<liferay-ui:icon
-				iconCssClass="icon-move"
-				message="move"
-				url="<%= moveURL %>"
-			/>
-		</c:if>
-
-		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) %>">
-			<liferay-security:permissionsURL
-				modelResource="<%= JournalArticle.class.getName() %>"
-				modelResourceDescription="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
-				resourcePrimKey="<%= String.valueOf(article.getResourcePrimKey()) %>"
-				var="permissionsURL"
-				windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-			/>
-
-			<liferay-ui:icon
-				iconCssClass="icon-lock"
-				message="permissions"
-				method="get"
-				url="<%= permissionsURL %>"
-				useDialog="<%= true %>"
-			/>
-		</c:if>
-
-		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.VIEW) %>">
-			<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcPath" value="/preview_article_content.jsp" />
-				<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-				<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
-			</liferay-portlet:renderURL>
-
-			<%
-			String taglibOnClick = "Liferay.fire('previewArticle', {title: '" + HtmlUtil.escapeJS(article.getTitle(locale)) + "', uri: '" + HtmlUtil.escapeJS(previewArticleContentURL.toString()) + "'});";
-			%>
-
-			<liferay-ui:icon
-				iconCssClass="icon-search"
-				message="preview"
-				onClick="<%= taglibOnClick %>"
-				url="javascript:;"
-			/>
-
-			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>">
-				<portlet:renderURL var="viewHistoryURL">
-					<portlet:param name="mvcPath" value="/view_article_history.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
-					<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-				</portlet:renderURL>
-
-				<liferay-ui:icon
-					iconCssClass="icon-time"
-					message="view-history"
-					url="<%= viewHistoryURL.toString() %>"
-				/>
-			</c:if>
-
-			<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, article.getFolderId(), ActionKeys.ADD_ARTICLE) %>">
-				<portlet:renderURL var="copyURL">
-					<portlet:param name="mvcPath" value="/copy_article.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-					<portlet:param name="oldArticleId" value="<%= article.getArticleId() %>" />
-					<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
-				</portlet:renderURL>
-
-				<liferay-ui:icon
-					iconCssClass="icon-copy"
-					message="copy"
-					url="<%= copyURL.toString() %>"
-				/>
-			</c:if>
-		</c:if>
-
-		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) && article.hasApprovedVersion() %>">
-			<portlet:actionURL name="expireArticles" var="expireURL">
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-			</portlet:actionURL>
 
 			<liferay-ui:icon
 				iconCssClass="icon-time"
-				message="expire"
-				url="<%= expireURL %>"
+				message="view-history"
+				url="<%= viewHistoryURL.toString() %>"
 			/>
 		</c:if>
 
-		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
-			<portlet:actionURL name='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "moveToTrash" : "deleteArticles" %>' var="deleteURL">
+		<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, article.getFolderId(), ActionKeys.ADD_ARTICLE) %>">
+			<portlet:renderURL var="copyURL">
+				<portlet:param name="mvcPath" value="/copy_article.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-			</portlet:actionURL>
+				<portlet:param name="oldArticleId" value="<%= article.getArticleId() %>" />
+				<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
+			</portlet:renderURL>
 
-			<liferay-ui:icon-delete
-				trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
-				url="<%= deleteURL %>"
+			<liferay-ui:icon
+				iconCssClass="icon-copy"
+				message="copy"
+				url="<%= copyURL.toString() %>"
 			/>
 		</c:if>
-	</liferay-ui:icon-menu>
-</span>
+	</c:if>
+
+	<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) && article.hasApprovedVersion() %>">
+		<portlet:actionURL name="expireArticles" var="expireURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			iconCssClass="icon-time"
+			message="expire"
+			url="<%= expireURL %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
+		<portlet:actionURL name='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "moveToTrash" : "deleteArticles" %>' var="deleteURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon-delete
+			trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
+			url="<%= deleteURL %>"
+		/>
+	</c:if>
+</liferay-ui:icon-menu>

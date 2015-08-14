@@ -16,6 +16,7 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Date;
@@ -178,6 +179,10 @@ public class AppViewEntryTag extends IncludeTag {
 		_version = version;
 	}
 
+	public void setView(String view) {
+		_view = view;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_actionJsp = null;
@@ -215,6 +220,7 @@ public class AppViewEntryTag extends IncludeTag {
 		_title = null;
 		_url = null;
 		_version = null;
+		_view = null;
 	}
 
 	protected ServletContext getActionJspServletContext() {
@@ -227,6 +233,11 @@ public class AppViewEntryTag extends IncludeTag {
 
 	@Override
 	protected String getPage() {
+		if (Validator.isNotNull(_view)) {
+			return "/html/taglib/ui/app_view_entry/" + _view + "/" +
+				_displayStyle + ".jsp";
+		}
+
 		return "/html/taglib/ui/app_view_entry/" + _displayStyle + ".jsp";
 	}
 
@@ -339,5 +350,6 @@ public class AppViewEntryTag extends IncludeTag {
 	private String _title;
 	private String _url;
 	private String _version;
+	private String _view;
 
 }

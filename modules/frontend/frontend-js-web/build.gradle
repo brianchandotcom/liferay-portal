@@ -92,7 +92,7 @@ buildAlloyBootstrap {
 }
 
 buildJQueryPluginsForm {
-	File jQueryPluginsFormJsFile = file("src/META-INF/resources/html/js/jquery/form.js")
+	File jQueryPluginsFormJsFile = file("src/META-INF/resources/jquery/form.js")
 
 	doLast {
 		FileUtil.get(project, "https://raw.githubusercontent.com/malsup/form/${jqueryPluginsFormVersion}/jquery.form.js", jQueryPluginsFormJsFile)

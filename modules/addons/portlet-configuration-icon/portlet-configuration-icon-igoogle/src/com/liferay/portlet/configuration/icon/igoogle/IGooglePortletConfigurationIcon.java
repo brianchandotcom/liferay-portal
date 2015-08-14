@@ -15,6 +15,8 @@
 package com.liferay.portlet.configuration.icon.igoogle;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -65,6 +67,10 @@ public class IGooglePortletConfigurationIcon
 				PortalUtil.getGoogleGadgetURL(portlet, themeDisplay);
 		}
 		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+
 			return StringPool.BLANK;
 		}
 	}
@@ -92,5 +98,8 @@ public class IGooglePortletConfigurationIcon
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		IGooglePortletConfigurationIcon.class);
 
 }

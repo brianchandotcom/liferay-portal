@@ -15,6 +15,8 @@
 package com.liferay.portlet.configuration.icon.netvibes;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -79,6 +81,10 @@ public class NetvibesPortletConfigurationIcon
 			return sb.toString();
 		}
 		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
+
 			return StringPool.BLANK;
 		}
 	}
@@ -106,5 +112,8 @@ public class NetvibesPortletConfigurationIcon
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		NetvibesPortletConfigurationIcon.class);
 
 }

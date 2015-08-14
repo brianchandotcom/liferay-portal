@@ -194,10 +194,10 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		setUpPortlet(_testPortlet, _properties, _TEST_PORTLET_ID);
 
-		HttpServletRequest request = getHttpServletRequest();
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
-			request, _TEST_PORTLET_ID, layout.getPlid(),
+			httpServletRequest, _TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
@@ -818,12 +818,6 @@ public class RequestPortletContainerTest extends BasePortletContainerTestCase {
 
 		Assert.assertEquals("200", getString(responseMap, "code"));
 		Assert.assertTrue(_map.containsKey("render"));
-	}
-
-	protected String getString(Map<String, List<String>> map, String key) {
-		List<String> values = map.get(key);
-
-		return values.get(0);
 	}
 
 	private static final String _TEST_PORTLET_ID = "TEST_PORTLET_ID";

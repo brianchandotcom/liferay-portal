@@ -124,6 +124,12 @@ public class BasePortletContainerTestCase {
 		return httpServletRequest;
 	}
 
+	protected String getString(Map<String, List<String>> map, String key) {
+		List<String> values = map.get(key);
+
+		return values.get(0);
+	}
+
 	protected String read(InputStream inputStream) throws IOException {
 		if (inputStream == null) {
 			return "";

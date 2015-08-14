@@ -175,16 +175,17 @@ public class BaseTestCase {
 		}
 
 		try {
-			Map<String, List<String>> map = new HashMap<>(
+			Map<String, List<String>> responseMap = new HashMap<>(
 				httpURLConnection.getHeaderFields());
 
-			String responseCode = String.valueOf(
+			responseMap.put("body", Arrays.asList(read(inputStream)));
+
+			String code = String.valueOf(
 				httpURLConnection.getResponseCode());
 
-			map.put("responseCode", Arrays.asList(responseCode));
-			map.put("responseBody", Arrays.asList(read(inputStream)));
+			responseMap.put("code", Arrays.asList(code));
 
-			return map;
+			return responseMap;
 		}
 		finally {
 			if (inputStream != null) {

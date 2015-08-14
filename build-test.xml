@@ -2712,7 +2712,7 @@ go]]></replacevalue>
 
 		<if>
 			<and>
-				<equals arg1="${test.poshi.logger.enabled}" arg2="true" />
+				<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
 				<isset property="test.class" />
 			</and>
 			<then>

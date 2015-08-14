@@ -28,7 +28,7 @@ public class RegexUtil {
 
 		Matcher matcher = pattern.matcher(content);
 
-		while (matcher.find()) {
+		if (matcher.find()) {
 			return matcher.group(GetterUtil.getInteger(group));
 		}
 

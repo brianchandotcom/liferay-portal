@@ -15,6 +15,7 @@
 package com.liferay.portal.portlet.container.test;
 
 import java.io.IOException;
+
 import java.util.Map;
 
 import javax.portlet.ActionRequest;

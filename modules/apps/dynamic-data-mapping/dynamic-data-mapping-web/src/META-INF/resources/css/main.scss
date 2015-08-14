@@ -49,14 +49,10 @@
 	.lfr-ddm-small-image-preview {
 		background-color: #FFF;
 		border: 1px solid #CCC;
+		margin-right: 1em;
+		max-height: 120px;
 		max-width: 120px;
 		padding: 4px;
-	}
-
-	.lfr-ddm-small-image-preview div {
-		background: #CCC;
-		height: 80px;
-		width: 80px;
 	}
 
 	.lfr-ddm-small-image-content {
@@ -70,15 +66,9 @@
 		}
 	}
 
-	.lfr-ddm-small-image-content img {
-		margin-right: 1em;
-	}
-
-	.lfr-ddm-small-image-view img {
-		width: auto;
-		height: auto;
-		max-width: 100%;
-		max-height: 125px;
+	.lfr-ddm-small-image-view {
+		max-height: 120px;
+		max-width: 120px;
 	}
 
 	.lfr-ddm-types-form-column .column-content-first {

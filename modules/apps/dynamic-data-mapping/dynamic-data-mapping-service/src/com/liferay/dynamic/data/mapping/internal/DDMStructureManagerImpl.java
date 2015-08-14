@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
@@ -37,9 +35,6 @@ import com.liferay.portlet.dynamicdatamapping.DDMStructureManager;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
-import com.liferay.portlet.exportimport.lar.PortletDataContext;
-import com.liferay.portlet.exportimport.lar.PortletDataException;
-import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 
 import java.io.Serializable;
 
@@ -103,26 +98,6 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 		}
 		catch (PortalException pe) {
 			throw translate(pe);
-		}
-	}
-
-	@Override
-	public <T extends StagedModel> Element exportDDMStructureStagedModel(
-			PortletDataContext portletDataContext, T referrerStagedModel,
-			long structureId, String referenceType)
-		throws PortletDataException {
-
-		try {
-			com.liferay.dynamic.data.mapping.model.DDMStructure
-				ddmStructure = _ddmStructureLocalService.getStructure(
-					structureId);
-
-			return StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, referrerStagedModel, ddmStructure,
-				referenceType);
-		}
-		catch (PortalException pe) {
-			throw new PortletDataException(pe);
 		}
 	}
 

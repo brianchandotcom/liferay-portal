@@ -18,11 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.exportimport.lar.PortletDataContext;
-import com.liferay.portlet.exportimport.lar.PortletDataException;
 
 import java.io.Serializable;
 
@@ -66,11 +62,6 @@ public interface DDMStructureManager {
 		throws PortalException;
 
 	public void deleteStructure(long structureId) throws PortalException;
-
-	public <T extends StagedModel> Element exportDDMStructureStagedModel(
-			PortletDataContext portletDataContext, T referrerStagedModel,
-			long structureId, String referenceType)
-		throws PortletDataException;
 
 	public String extractAttributes(
 			long structureId, DDMFormValues ddmFormValues, Locale locale)

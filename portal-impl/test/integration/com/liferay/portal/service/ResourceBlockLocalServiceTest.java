@@ -113,6 +113,13 @@ public class ResourceBlockLocalServiceTest {
 				expectedLog =
 					"ERROR: duplicate key value violates unique constraint ",
 				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				dbType = DB.TYPE_SYBASE,
+				expectedLog =
+					"Attempt to insert duplicate key row in object " +
+						"'ResourceBlock'",
+				expectedType = ExpectedType.PREFIX
 			)
 		},
 		level = "ERROR", loggerClass = JDBCExceptionReporter.class
@@ -228,6 +235,13 @@ public class ResourceBlockLocalServiceTest {
 				dbType = DB.TYPE_POSTGRESQL,
 				expectedLog =
 					"ERROR: duplicate key value violates unique constraint ",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				dbType = DB.TYPE_SYBASE,
+				expectedLog =
+					"Attempt to insert duplicate key row in object " +
+						"'ResourceBlock'",
 				expectedType = ExpectedType.PREFIX
 			)
 		},

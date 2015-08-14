@@ -1,0 +1,14 @@
+<definition>
+	<command name="gotoEntry">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute function="AssertClick" locator1="Wiki#ALL_PAGES_TABLE_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
+	</command>
+
+	<command name="viewEntry">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Wiki#ALL_PAGES_TABLE_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
+		<execute function="AssertTextEquals" locator1="Wiki#ALL_PAGES_TABLE_STATUS" value1="${draftStatus}" />
+	</command>
+</definition>

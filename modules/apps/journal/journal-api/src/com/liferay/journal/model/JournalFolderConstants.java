@@ -14,6 +14,9 @@
 
 package com.liferay.journal.model;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
 /**
  * @author Juan Fernández
  */
@@ -21,10 +24,22 @@ public class JournalFolderConstants {
 
 	public static final long DEFAULT_PARENT_FOLDER_ID = 0;
 
+	public static final String NAME_GENERAL_RESTRICTIONS = "blank";
+
+	public static final String NAME_LABEL = "folder-name";
+
+	public static final String NAME_RESERVED_WORDS = StringPool.NULL;
+
 	public static final int RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW = 1;
 
 	public static final int RESTRICTION_TYPE_INHERIT = 0;
 
 	public static final int RESTRICTION_TYPE_WORKFLOW = 2;
+
+	public static final String getNameInvalidCharacters(
+		String[] journalCharBlacklist) {
+
+		return StringUtil.merge(journalCharBlacklist, StringPool.SPACE);
+	}
 
 }

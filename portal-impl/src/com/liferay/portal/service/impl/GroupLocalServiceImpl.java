@@ -90,6 +90,7 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.security.permission.RolePermissions;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.GroupLocalServiceBaseImpl;
 import com.liferay.portal.theme.ThemeLoader;
@@ -3852,13 +3853,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		// Join by role permissions
 
-		List<?> rolePermissions = (List<?>)params.remove("rolePermissions");
+		RolePermissions rolePermissions = (RolePermissions)params.remove(
+			"rolePermissions");
 
 		if (rolePermissions != null) {
-			String resourceName = (String)rolePermissions.get(0);
-			Integer resourceScope = (Integer)rolePermissions.get(1);
-			String resourceActionId = (String)rolePermissions.get(2);
-			Long resourceRoleId = (Long)rolePermissions.get(3);
+			String resourceName = rolePermissions.getName();
+			int resourceScope = rolePermissions.getScope();
+			String resourceActionId = rolePermissions.getActionId();
+			long resourceRoleId = rolePermissions.getRoleId();
 
 			ResourceAction resourceAction =
 				resourceActionLocalService.fetchResourceAction(

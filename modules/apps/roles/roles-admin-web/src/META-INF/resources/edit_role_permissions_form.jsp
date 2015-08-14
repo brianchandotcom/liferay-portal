@@ -160,12 +160,7 @@ if (Validator.isNotNull(portletResource)) {
 				if (role.getType() == RoleConstants.TYPE_REGULAR) {
 					LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
 
-					List<Object> rolePermissions = new ArrayList<Object>();
-
-					rolePermissions.add(resource);
-					rolePermissions.add(Integer.valueOf(ResourceConstants.SCOPE_GROUP));
-					rolePermissions.add(actionId);
-					rolePermissions.add(Long.valueOf(role.getRoleId()));
+					RolePermissions rolePermissions = new RolePermissions(resource, ResourceConstants.SCOPE_GROUP, actionId, role.getRoleId());
 
 					groupParams.put("rolePermissions", rolePermissions);
 

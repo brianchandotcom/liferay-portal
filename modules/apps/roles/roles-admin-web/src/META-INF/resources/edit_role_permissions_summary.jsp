@@ -130,12 +130,7 @@ for (int i = 0; i < results.size(); i++) {
 	if (role.getType() == RoleConstants.TYPE_REGULAR) {
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
 
-		List rolePermissions = new ArrayList();
-
-		rolePermissions.add(curResource);
-		rolePermissions.add(Integer.valueOf(ResourceConstants.SCOPE_GROUP));
-		rolePermissions.add(actionId);
-		rolePermissions.add(Long.valueOf(role.getRoleId()));
+		RolePermissions rolePermissions = new RolePermissions(curResource, ResourceConstants.SCOPE_GROUP, actionId, role.getRoleId());
 
 		groupParams.put("rolePermissions", rolePermissions);
 

@@ -33,9 +33,7 @@ import com.liferay.util.Encryptor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import java.lang.reflect.Field;
-
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -54,10 +52,10 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -65,7 +63,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
@@ -113,7 +110,7 @@ public class RequestTest extends BaseTestCase {
 			setUpPortlet(
 				requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
 
-			MockHttpServletRequest request = getRequest();
+			HttpServletRequest request = getRequest();
 
 			PortletURL portletURL = new PortletURLImpl(
 				request, PortletKeys.TEST_PORTLET, layout.getPlid(),
@@ -147,7 +144,7 @@ public class RequestTest extends BaseTestCase {
 			setUpPortlet(
 				requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
 
-			MockHttpServletRequest request = getRequest();
+			HttpServletRequest request = getRequest();
 
 			PortletURL portletURL = new PortletURLImpl(
 				request, PortletKeys.TEST_PORTLET, layout.getPlid(),
@@ -183,7 +180,7 @@ public class RequestTest extends BaseTestCase {
 			setUpPortlet(
 				requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
 
-			MockHttpServletRequest request = getRequest();
+			HttpServletRequest request = getRequest();
 
 			PortletURL portletURL = new PortletURLImpl(
 				request, PortletKeys.TEST_PORTLET, layout.getPlid(),
@@ -210,7 +207,7 @@ public class RequestTest extends BaseTestCase {
 
 		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
 
-		MockHttpServletRequest request = getRequest();
+		HttpServletRequest request = getRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
 			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
@@ -247,7 +244,7 @@ public class RequestTest extends BaseTestCase {
 	public void testActionRequest_noTokens() throws Exception {
 		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
 
-		MockHttpServletRequest request = getRequest();
+		HttpServletRequest request = getRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
 			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
@@ -309,7 +306,7 @@ public class RequestTest extends BaseTestCase {
 
 		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
 
-		MockHttpServletRequest request = getRequest();
+		HttpServletRequest request = getRequest();
 
 		// Get the p_auth by making a resource request
 
@@ -358,7 +355,7 @@ public class RequestTest extends BaseTestCase {
 			setUpPortlet(
 				requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
 
-			MockHttpServletRequest request = getRequest();
+			HttpServletRequest request = getRequest();
 
 			PortletURL portletURL = new PortletURLImpl(
 				request, PortletKeys.TEST_PORTLET, layout.getPlid(),
@@ -384,7 +381,7 @@ public class RequestTest extends BaseTestCase {
 
 		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
 
-		MockHttpServletRequest request = getRequest();
+		HttpServletRequest request = getRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
 			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
@@ -427,7 +424,7 @@ public class RequestTest extends BaseTestCase {
 
 		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
 
-		MockHttpServletRequest request = getRequest();
+		HttpServletRequest request = getRequest();
 
 		// Get the p_auth by making a resource request
 
@@ -468,7 +465,7 @@ public class RequestTest extends BaseTestCase {
 	public void testLayoutRequest() throws Exception {
 		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
 
-		MockHttpServletRequest request = getRequest();
+		HttpServletRequest request = getRequest();
 
 		Map<String, List<String>> responseMap = request(
 			layout.getRegularURL(request));
@@ -479,7 +476,7 @@ public class RequestTest extends BaseTestCase {
 
 	@Test
 	public void testRenderRequest_invalidPortletId() throws Exception {
-		MockHttpServletRequest request = getRequest();
+		HttpServletRequest request = getRequest();
 
 		String url =
 			layout.getRegularURL(request) +
@@ -553,7 +550,7 @@ public class RequestTest extends BaseTestCase {
 
 		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
 
-		MockHttpServletRequest request = getRequest();
+		HttpServletRequest request = getRequest();
 
 		// Get the p_p_auth by making a resource request
 
@@ -598,7 +595,7 @@ public class RequestTest extends BaseTestCase {
 
 		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
 
-		MockHttpServletRequest request = getRequest();
+		HttpServletRequest request = getRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
 			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
@@ -639,7 +636,7 @@ public class RequestTest extends BaseTestCase {
 			new RequestTestPortlet(map), properties, portletToEmbbed, false);
 		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
 
-		MockHttpServletRequest request = getRequest();
+		HttpServletRequest request = getRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
 			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
@@ -655,7 +652,7 @@ public class RequestTest extends BaseTestCase {
 
 	@Test
 	public void testResourceRequest_invalidPortletId() throws Exception {
-		MockHttpServletRequest request = getRequest();
+		HttpServletRequest request = getRequest();
 
 		String rootUrl = layout.getRegularURL(request);
 		String url =
@@ -736,7 +733,7 @@ public class RequestTest extends BaseTestCase {
 
 		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
 
-		MockHttpServletRequest request = getRequest();
+		HttpServletRequest request = getRequest();
 
 		// Get the p_p_auth by making a resource request
 
@@ -781,7 +778,7 @@ public class RequestTest extends BaseTestCase {
 
 		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
 
-		MockHttpServletRequest request = getRequest();
+		HttpServletRequest request = getRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
 			request, PortletKeys.TEST_PORTLET, layout.getPlid(),
@@ -823,7 +820,7 @@ public class RequestTest extends BaseTestCase {
 			new RequestTestPortlet(map), properties, portletToEmbbed, false);
 		setUpPortlet(requestTestPortlet, properties, PortletKeys.TEST_PORTLET);
 
-		MockHttpServletRequest request = getRequest();
+		HttpServletRequest request = getRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
 			request, PortletKeys.TEST_PORTLET, layout.getPlid(),

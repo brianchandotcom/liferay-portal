@@ -6,7 +6,7 @@
 	AUI().applyConfig(
 		{
 			groups: {
-				ddl: {
+				dl: {
 					base: PATH_DL_WEB + '/document_library/js/',
 					modules: {
 						'document-library-upload': {

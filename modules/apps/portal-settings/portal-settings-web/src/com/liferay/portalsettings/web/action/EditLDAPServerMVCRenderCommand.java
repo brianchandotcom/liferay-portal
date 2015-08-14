@@ -17,13 +17,15 @@ package com.liferay.portalsettings.web.action;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.util.PortletKeys;
 
 /**
  * @author Philip Jones
  */
-@Compenent(
+@Component(
 	property = {
 		"javax.portlet.name=" + PortletKeys.PORTAL_SETTINGS,
 		"mvc.command.name=/portal_settings/edit_ldap_server"
@@ -35,7 +37,7 @@ public class EditLDAPServerMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/html/portlet/portal_settings/edit_ldap_server.jsp";
+		return "/edit_ldap_server.jsp";
 	}
 
 }

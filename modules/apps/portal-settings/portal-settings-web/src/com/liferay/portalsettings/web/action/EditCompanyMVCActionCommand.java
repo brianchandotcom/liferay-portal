@@ -96,12 +96,12 @@ public class EditCompanyMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception e) {
-			String mvcPath = "/html/portlet/portal_settings/edit_company.jsp";
+			String mvcPath = "/edit_company.jsp";
 
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
-				mvcPath = "/html/portlet/portal_settings/error.jsp";
+				mvcPath = "/error.jsp";
 			}
 			else if (e instanceof AddressCityException ||
 					 e instanceof AccountNameException ||

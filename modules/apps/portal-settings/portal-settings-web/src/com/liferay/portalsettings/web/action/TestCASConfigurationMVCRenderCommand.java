@@ -37,7 +37,7 @@ public class TestCASConfigurationMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/html/portlet/portal_settings/test_cas_configuration.jsp";
+		return "/test_cas_configuration.jsp";
 	}
 
 }

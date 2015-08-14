@@ -12,7 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.portalsettings.portlet;
+package com.liferay.portalsettings.web.portlet;
+
+import javax.portlet.Portlet;
+
+import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
@@ -22,24 +26,24 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 @Component(
 	property = {
 		"com.liferay.portlet.control-panel-entry-category=configuration",
-	       	"com.liferay.portlet.control-panel-entry-weight=1.0",
-	        "com.liferay.portlet.css-class-wrapper=portlet-users-admin",
-	        "com.liferay.portlet.footer-portlet-javascript=/users_admin/js/main.js",
-	        "com.liferay.portlet.header-portlet-css=/css/main.css",
-	        "com.liferay.portlet.header-portlet-css=/users_admin/css/main.css",
-	        "com.liferay.portlet.icon=/icons/portal_settings.png",
-	        "com.liferay.portlet.preferences-owned-by-group=true",
-	        "com.liferay.portlet.private-request-attributes=false",
-	        "com.liferay.portlet.private-session-attributes=false",
-	        "com.liferay.portlet.render-weight=50",
-	        "com.liferay.portlet.use-default-template=true",
-	        "javax.portlet.display-name=Portal Settings",
-	        "javax.portlet.expiration-cache=0",
-	        "javax.portlet.init-param.template-path=/",
-	        "javax.portlet.init-param.view-template=/edit_company.jsp",
-	        "javax.portlet.resource-bundle=content.Language",
-	        "javax.portlet.security-role-ref=administrator",
-	        "javax.portlet.supports.mime-type=text/html"
+	     "com.liferay.portlet.control-panel-entry-weight=1.0",
+	     "com.liferay.portlet.css-class-wrapper=portlet-users-admin",
+	     "com.liferay.portlet.footer-portlet-javascript=/users_admin/js/main.js",
+	     "com.liferay.portlet.header-portlet-css=/css/main.css",
+	     "com.liferay.portlet.header-portlet-css=/users_admin/css/main.css",
+	     "com.liferay.portlet.icon=/icons/portal_settings.png",
+	     "com.liferay.portlet.preferences-owned-by-group=true",
+	     "com.liferay.portlet.private-request-attributes=false",
+	     "com.liferay.portlet.private-session-attributes=false",
+	     "com.liferay.portlet.render-weight=50",
+	     "com.liferay.portlet.use-default-template=true",
+	     "javax.portlet.display-name=Portal Settings",
+	     "javax.portlet.expiration-cache=0",
+	     "javax.portlet.init-param.template-path=/",
+	     "javax.portlet.init-param.view-template=/edit_company.jsp",
+	     "javax.portlet.resource-bundle=content.Language",
+	     "javax.portlet.security-role-ref=administrator",
+	     "javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )

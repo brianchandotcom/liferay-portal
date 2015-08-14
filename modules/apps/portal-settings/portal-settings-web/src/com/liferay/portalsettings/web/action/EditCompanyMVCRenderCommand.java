@@ -37,7 +37,7 @@ public class EditCompanyMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/html/portlet/portal_settings/edit_company.jsp";
+		return "/edit_company.jsp";
 	}
 
 }

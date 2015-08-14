@@ -38,7 +38,7 @@ public class TestOpenSSOConfigurationMVCRenderCommand
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/html/portlet/portal_settings/test_opensso_configuration.jsp";
+		return "/test_opensso_configuration.jsp";
 	}
 
 }

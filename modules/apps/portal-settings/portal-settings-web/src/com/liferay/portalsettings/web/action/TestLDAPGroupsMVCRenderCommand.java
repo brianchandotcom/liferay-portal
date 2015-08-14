@@ -37,7 +37,7 @@ public class TestLDAPGroupsMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/html/portlet/portal_settings/test_ldap_groups.jsp";
+		return "/test_ldap_groups.jsp";
 	}
 
 }

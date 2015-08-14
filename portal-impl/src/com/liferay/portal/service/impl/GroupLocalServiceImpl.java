@@ -3857,29 +3857,27 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			"rolePermissions");
 
 		if (rolePermissions != null) {
-			String resourceName = rolePermissions.getName();
-			int resourceScope = rolePermissions.getScope();
-			String resourceActionId = rolePermissions.getActionId();
-			long resourceRoleId = rolePermissions.getRoleId();
-
 			ResourceAction resourceAction =
 				resourceActionLocalService.fetchResourceAction(
-					resourceName, resourceActionId);
+					rolePermissions.getName(), rolePermissions.getActionId());
 
 			if (resourceAction != null) {
 				Set<Group> rolePermissionsGroups = new HashSet<>();
 
-				if (resourceBlockLocalService.isSupported(resourceName)) {
+				if (resourceBlockLocalService.isSupported(
+						rolePermissions.getName())) {
+
 					List<ResourceTypePermission> resourceTypePermissions =
 						resourceTypePermissionPersistence.findByRoleId(
-							resourceRoleId);
+							rolePermissions.getRoleId());
 
 					for (ResourceTypePermission resourceTypePermission :
 							resourceTypePermissions) {
 
 						if ((resourceTypePermission.getCompanyId() ==
 								companyId) &&
-							resourceName.equals(
+							Validator.equals(
+								rolePermissions.getName(),
 								resourceTypePermission.getName()) &&
 							resourceTypePermission.hasAction(resourceAction)) {
 
@@ -3895,13 +3893,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				else {
 					List<ResourcePermission> resourcePermissions =
 						resourcePermissionPersistence.findByC_N_S(
-							companyId, resourceName, resourceScope);
+							companyId, rolePermissions.getName(),
+							rolePermissions.getScope());
 
 					for (ResourcePermission resourcePermission :
 							resourcePermissions) {
 
 						if ((resourcePermission.getRoleId() ==
-								resourceRoleId) &&
+								rolePermissions.getRoleId()) &&
 							resourcePermission.hasAction(
 								resourceAction)) {
 

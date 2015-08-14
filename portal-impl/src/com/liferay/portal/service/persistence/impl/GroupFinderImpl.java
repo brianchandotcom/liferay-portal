@@ -968,9 +968,9 @@ public class GroupFinderImpl
 			if (key.equals("rolePermissions")) {
 				RolePermissions rolePermissions = (RolePermissions)value;
 
-				String name = rolePermissions.getName();
+				if (ResourceBlockLocalServiceUtil.isSupported(
+						rolePermissions.getName())) {
 
-				if (ResourceBlockLocalServiceUtil.isSupported(name)) {
 					key = "rolePermissions_6_block";
 				}
 				else {
@@ -1056,9 +1056,9 @@ public class GroupFinderImpl
 					RolePermissions rolePermissions =
 						(RolePermissions)entry.getValue();
 
-					String name = rolePermissions.getName();
+					if (ResourceBlockLocalServiceUtil.isSupported(
+							rolePermissions.getName())) {
 
-					if (ResourceBlockLocalServiceUtil.isSupported(name)) {
 						key = "rolePermissions_6_block";
 					}
 					else {
@@ -1164,27 +1164,24 @@ public class GroupFinderImpl
 				RolePermissions rolePermissions =
 					(RolePermissions)entry.getValue();
 
-				String name = rolePermissions.getName();
-				int scope = rolePermissions.getScope();
-				String actionId = rolePermissions.getActionId();
-				long roleId = rolePermissions.getRoleId();
-
 				ResourceAction resourceAction =
 					ResourceActionLocalServiceUtil.getResourceAction(
-						name, actionId);
+						rolePermissions.getName(),
+						rolePermissions.getActionId());
 
-				if (ResourceBlockLocalServiceUtil.isSupported(name)) {
+				if (ResourceBlockLocalServiceUtil.isSupported(
+						rolePermissions.getName())) {
 
 					// Scope is assumed to always be group
 
-					qPos.add(name);
-					qPos.add(roleId);
+					qPos.add(rolePermissions.getName());
+					qPos.add(rolePermissions.getRoleId());
 					qPos.add(resourceAction.getBitwiseValue());
 				}
 				else {
-					qPos.add(name);
-					qPos.add(scope);
-					qPos.add(roleId);
+					qPos.add(rolePermissions.getName());
+					qPos.add(rolePermissions.getScope());
+					qPos.add(rolePermissions.getRoleId());
 					qPos.add(resourceAction.getBitwiseValue());
 				}
 			}
@@ -1291,9 +1288,9 @@ public class GroupFinderImpl
 				RolePermissions rolePermissions =
 					(RolePermissions)entry.getValue();
 
-				String name = rolePermissions.getName();
+				if (ResourceBlockLocalServiceUtil.isSupported(
+						rolePermissions.getName())) {
 
-				if (ResourceBlockLocalServiceUtil.isSupported(name)) {
 					key = "rolePermissions_6_block";
 				}
 				else {

@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ADD_RECORD_BUTTON</td>
-	<td>//section[contains(@id,'portlet_169_')]//a[@role='menuitem']/span[contains(.,'Add')]</td>
+	<td>//div[contains(@id,'_DDLDisplayPortlet')]//a[@role='menuitem']/span[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>

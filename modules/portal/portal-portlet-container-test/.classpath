@@ -29,6 +29,7 @@
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.compendium.jar" />
+	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/com.liferay/aQute.bnd/jars/aQute.bnd-2.3.0.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.arquillian.core/arquillian-core-api/jars/arquillian-core-api-1.1.8.Final.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.arquillian.core/arquillian-core-spi/jars/arquillian-core-spi-1.1.8.Final.jar" />
@@ -50,7 +51,6 @@
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-spi/jars/shrinkwrap-spi-1.2.2.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-impl-base/jars/shrinkwrap-impl-base-1.2.2.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-container/jars/arquillian-junit-container-1.1.8.Final.jar" />
-	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.osgi/org.osgi.core/jars/org.osgi.core-5.0.0.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.osgi.metadata/jbosgi-metadata/jars/jbosgi-metadata-4.0.0.CR1.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.osgi/org.osgi.enterprise/jars/org.osgi.enterprise-5.0.0.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/com.liferay/com.liferay.arquillian.extension.junit.bridge/jars/com.liferay.arquillian.extension.junit.bridge-1.0.0-SNAPSHOT.jar" />

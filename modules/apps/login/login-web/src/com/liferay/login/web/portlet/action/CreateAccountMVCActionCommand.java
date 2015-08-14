@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.login.action;
+package com.liferay.login.web.portlet.action;
 
+import com.liferay.login.web.constants.LoginPortletKeys;
+import com.liferay.login.web.portlet.util.LoginUtil;
 import com.liferay.portal.AddressCityException;
 import com.liferay.portal.AddressStreetException;
 import com.liferay.portal.AddressZipException;
@@ -44,10 +46,10 @@ import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -68,10 +70,8 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.login.util.LoginUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -81,6 +81,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Amos Fong
@@ -88,12 +90,13 @@ import javax.servlet.http.HttpSession;
  * @author Sergio González
  * @author Peter Fellwock
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.FAST_LOGIN,
-		"javax.portlet.name=" + PortletKeys.LOGIN,
+		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
+		"javax.portlet.name=" + LoginPortletKeys.LOGIN,
 		"mvc.command.name=/login/create_account"
-	}
+	},
+	service = MVCActionCommand.class
 )
 public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
@@ -291,7 +294,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 				}
 				else {
 					actionResponse.setRenderParameter(
-						"mvcPath", "/html/portlet/login/update_account.jsp");
+						"mvcPath", "update_account.jsp");
 				}
 			}
 			else {

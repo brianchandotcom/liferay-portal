@@ -12,24 +12,25 @@
  * details.
  */
 
-package com.liferay.portlet.login.action;
+package com.liferay.login.web.portlet.action;
 
+import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.util.PortletKeys;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Peter Fellwock
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.FAST_LOGIN,
-		"javax.portlet.name=" + PortletKeys.LOGIN,
+		"javax.portlet.name=" + LoginPortletKeys.LOGIN,
 		"mvc.command.name=/login/login"
-	}
+	},
+	service = MVCRenderCommand.class
 )
 public class LoginMVCRenderCommand implements MVCRenderCommand {
 
@@ -37,7 +38,7 @@ public class LoginMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/html/portlet/login/login.jsp";
+		return "/login.jsp";
 	}
 
 }

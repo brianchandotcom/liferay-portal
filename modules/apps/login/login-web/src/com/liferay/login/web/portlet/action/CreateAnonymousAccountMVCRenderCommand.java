@@ -12,29 +12,34 @@
  * details.
  */
 
-package com.liferay.portlet.login.action;
+package com.liferay.login.web.portlet.action;
 
+import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 
+import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Peter Fellwock
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.FAST_LOGIN,
-		"javax.portlet.name=" + PortletKeys.LOGIN,
-		"mvc.command.name=/login/create_account"
-	}
+		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
+		"javax.portlet.name=" + LoginPortletKeys.LOGIN,
+		"mvc.command.name=/login/create_anonymous_account"
+	},
+	service = MVCRenderCommand.class
 )
-public class CreateAccountMVCRenderCommand implements MVCRenderCommand {
+public class CreateAnonymousAccountMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -46,12 +51,21 @@ public class CreateAccountMVCRenderCommand implements MVCRenderCommand {
 		Company company = themeDisplay.getCompany();
 
 		if (!company.isStrangers()) {
-			return "/html/portlet/login/open_id.jsp";
+			return "/login.jsp";
 		}
 
-		renderResponse.setTitle(themeDisplay.translate("create-account"));
+		PortletConfig portletConfig = (PortletConfig)renderRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		return "/html/portlet/login/create_account.jsp";
+		String portletName = portletConfig.getPortletName();
+
+		if (!portletName.equals(LoginPortletKeys.FAST_LOGIN)) {
+			return "/login.jsp";
+		}
+
+		renderResponse.setTitle(themeDisplay.translate("anonymous-account"));
+
+		return "/create_anonymous_account.jsp";
 	}
 
 }

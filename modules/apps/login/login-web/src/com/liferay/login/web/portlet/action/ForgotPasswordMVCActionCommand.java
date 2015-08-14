@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.login.action;
+package com.liferay.login.web.portlet.action;
 
+import com.liferay.login.web.constants.LoginPortletKeys;
+import com.liferay.login.web.portlet.util.LoginUtil;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.RequiredReminderQueryException;
 import com.liferay.portal.SendPasswordException;
@@ -27,8 +29,8 @@ import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -38,27 +40,28 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.login.util.LoginUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletSession;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Tibor Kovacs
  * @author Peter Fellwock
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.FAST_LOGIN,
-		"javax.portlet.name=" + PortletKeys.LOGIN,
+		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
+		"javax.portlet.name=" + LoginPortletKeys.LOGIN,
 		"mvc.command.name=/login/forgot_password"
-	}
+	},
+	service = MVCActionCommand.class
 )
 public class ForgotPasswordMVCActionCommand extends BaseMVCActionCommand {
 

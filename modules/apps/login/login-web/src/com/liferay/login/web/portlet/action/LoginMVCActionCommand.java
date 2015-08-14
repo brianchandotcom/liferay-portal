@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.login.action;
+package com.liferay.login.web.portlet.action;
 
+import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.portal.CompanyMaxUsersException;
 import com.liferay.portal.CookieNotSupportedException;
 import com.liferay.portal.NoSuchUserException;
@@ -26,9 +27,9 @@ import com.liferay.portal.UserScreenNameException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -37,7 +38,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -54,16 +54,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Peter Fellwock
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.FAST_LOGIN,
-		"javax.portlet.name=" + PortletKeys.LOGIN,
+		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
+		"javax.portlet.name=" + LoginPortletKeys.LOGIN,
 		"mvc.command.name=/login/login"
-	}
+	},
+	service = MVCActionCommand.class
 )
 public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
@@ -97,7 +100,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 
 			if (doActionAfterLogin) {
 				actionResponse.setRenderParameter(
-					"mvcPath", "/html/portlet/login/login_redirect.jsp");
+					"mvcPath", "/login_redirect.jsp");
 			}
 		}
 		catch (Exception e) {
@@ -242,7 +245,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		Layout layout = (Layout)actionRequest.getAttribute(WebKeys.LAYOUT);
 
 		PortletURL portletURL = new PortletURLImpl(
-			actionRequest, PortletKeys.LOGIN, layout.getPlid(),
+			actionRequest, LoginPortletKeys.LOGIN, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());

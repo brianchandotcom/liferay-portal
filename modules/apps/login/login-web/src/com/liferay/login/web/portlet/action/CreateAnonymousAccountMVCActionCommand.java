@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.login.action;
+package com.liferay.login.web.portlet.action;
 
+import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.portal.CompanyMaxUsersException;
 import com.liferay.portal.ContactNameException;
 import com.liferay.portal.EmailAddressException;
@@ -29,9 +30,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -47,7 +48,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -60,17 +60,20 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Sergio González
  * @author Peter Fellwock
  */
 
-@OSGiBeanProperties(
+@Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.FAST_LOGIN,
-		"javax.portlet.name=" + PortletKeys.LOGIN,
+		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
+		"javax.portlet.name=" + LoginPortletKeys.LOGIN,
 		"mvc.command.name=/login/create_anonymous_account"
-	}
+	},
+	service = MVCActionCommand.class
 )
 public class CreateAnonymousAccountMVCActionCommand
 	extends BaseMVCActionCommand {
@@ -146,7 +149,7 @@ public class CreateAnonymousAccountMVCActionCommand
 		String portletId = (String)actionRequest.getAttribute(
 			WebKeys.PORTLET_ID);
 
-		if (!portletId.equals(PortletKeys.FAST_LOGIN)) {
+		if (!portletId.equals(LoginPortletKeys.FAST_LOGIN)) {
 			super.addSuccessMessage(actionRequest, actionResponse);
 		}
 	}
@@ -171,7 +174,7 @@ public class CreateAnonymousAccountMVCActionCommand
 
 		String portletName = portletConfig.getPortletName();
 
-		if (!portletName.equals(PortletKeys.FAST_LOGIN)) {
+		if (!portletName.equals(LoginPortletKeys.FAST_LOGIN)) {
 			throw new PrincipalException("Unable to create anonymous account");
 		}
 
@@ -187,7 +190,7 @@ public class CreateAnonymousAccountMVCActionCommand
 			actionRequest, "emailAddress");
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, PortletKeys.FAST_LOGIN, themeDisplay.getPlid(),
+			actionRequest, LoginPortletKeys.FAST_LOGIN, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(

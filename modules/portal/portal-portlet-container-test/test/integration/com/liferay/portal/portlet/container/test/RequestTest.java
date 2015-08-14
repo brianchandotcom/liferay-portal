@@ -33,7 +33,9 @@ import com.liferay.util.Encryptor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import java.lang.reflect.Field;
+
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -52,10 +54,12 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

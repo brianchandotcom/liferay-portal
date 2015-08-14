@@ -29,11 +29,13 @@ import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import javax.portlet.Portlet;
+
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -41,16 +43,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.portlet.Portlet;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
+
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
@@ -87,14 +93,6 @@ public class BaseTestCase {
 		serviceRegistrations.clear();
 	}
 
-	protected String read(InputStream inputStream) throws IOException {
-		if (inputStream == null) {
-			return "";
-		}
-
-		return StringUtil.read(inputStream);
-	}
-
 	protected BundleContext getBundleContext() {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
@@ -124,6 +122,14 @@ public class BaseTestCase {
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		return httpServletRequest;
+	}
+
+	protected String read(InputStream inputStream) throws IOException {
+		if (inputStream == null) {
+			return "";
+		}
+
+		return StringUtil.read(inputStream);
 	}
 
 	protected Map<String, List<String>> request(String url) throws IOException {
@@ -172,8 +178,8 @@ public class BaseTestCase {
 			Map<String, List<String>> map = new HashMap<>(
 				httpURLConnection.getHeaderFields());
 
-			String responseCode =
-				String.valueOf(httpURLConnection.getResponseCode());
+			String responseCode = String.valueOf(
+				httpURLConnection.getResponseCode());
 
 			map.put("responseCode", Arrays.asList(responseCode));
 			map.put("responseBody", Arrays.asList(read(inputStream)));
@@ -188,17 +194,16 @@ public class BaseTestCase {
 	}
 
 	protected void setUpPortlet(
-			Portlet portlet,
-			Dictionary<String, Object> properties, String portletName)
+			Portlet portlet, Dictionary<String, Object> properties,
+			String portletName)
 		throws Exception {
 
 		setUpPortlet(portlet, properties, portletName, true);
 	}
 
 	protected void setUpPortlet(
-			Portlet portlet,
-			Dictionary<String, Object> properties, String portletName,
-			boolean addToLayout)
+			Portlet portlet, Dictionary<String, Object> properties,
+			String portletName, boolean addToLayout)
 		throws Exception {
 
 		Assert.assertNotNull(properties);
@@ -208,9 +213,7 @@ public class BaseTestCase {
 		properties.put("javax.portlet.name", portletName);
 
 		serviceRegistration = bundleContext.registerService(
-			new String[] {
-				Object.class.getName(), Portlet.class.getName()
-			},
+			new String[] {Object.class.getName(), Portlet.class.getName()},
 			portlet, properties);
 
 		serviceRegistrations.add(serviceRegistration);

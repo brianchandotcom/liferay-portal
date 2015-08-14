@@ -106,7 +106,9 @@
 				<for list="${breadcrumbListVisible}" param="breadcrumbName">
 					<var name="key_breadcrumbName" value="${breadcrumbName}" />
 
-					<execute function="AssertTextEquals" locator1="PGBreadcrumbConfiguration#BREADCRUMB_PREVIEW_PAGE" value1="${breadcrumbName}" />
+					<var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
+
+					<execute function="AssertTextEquals" locator1="PGBreadcrumbConfiguration#BREADCRUMB_PREVIEW_PAGE" value1="${breadcrumbNameUppercase}" />
 				</for>
 			</then>
 		</if>
@@ -132,7 +134,9 @@
 				<for list="${breadcrumbListVisible}" param="breadcrumbName">
 					<var name="key_breadcrumbName" value="${breadcrumbName}" />
 
-					<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_${pathLocator}" value1="${breadcrumbName}" />
+					<var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
+
+					<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_${pathLocator}" value1="${breadcrumbNameUppercase}" />
 				</for>
 			</then>
 		</if>

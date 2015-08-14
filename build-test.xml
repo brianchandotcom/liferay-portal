@@ -2285,6 +2285,18 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-test-smtp-server">
+		<sequential>
+            <fail message="Please set the property ${test.smtp.server.dir}." unless="test.smtp.server.dir" />
+
+            <parallel>
+                <daemons>
+                    <java dir="${test.smtp.server.dir}" jar="${test.smtp.server.dir}\MockMock.jar" fork="true" />
+                </daemons>
+            </parallel>
+        </sequential>
+	</macrodef>
+
 	<macrodef name="stop-android-device">
 		<sequential>
 			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
@@ -5286,6 +5298,17 @@ module.framework.properties.osgi.console=11312</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="test.smtp.server.enabled" />
+
+		<if>
+			<equals arg1="${test.smtp.server.enabled}" arg2="true" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					test.smtp.server.enabled=${test.smtp.server.enabled}
+				</echo>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="cmis.repository.type" />
 
 		<if>
@@ -6309,6 +6332,15 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<start-android-device />
 
 				<start-appium />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="test.smtp.server.enabled" />
+
+		<if>
+			<equals arg1="${test.smtp.server.enabled}" arg2="true" />
+			<then>
+				<start-test-smtp-server />
 			</then>
 		</if>
 

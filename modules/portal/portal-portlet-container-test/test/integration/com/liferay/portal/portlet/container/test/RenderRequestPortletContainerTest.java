@@ -70,7 +70,7 @@ public class RenderRequestPortletContainerTest
 			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
 
 	@Test
-	public void testRenderRequest_invalidPortletId() throws Exception {
+	public void testInvalidPortletId() throws Exception {
 		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 		String url =
@@ -100,7 +100,7 @@ public class RenderRequestPortletContainerTest
 	}
 
 	@Test
-	public void testRenderRequest_isAccessGrantedByPortletAuthenticationToken()
+	public void testIsAccessGrantedByPortletAuthenticationToken()
 		throws Exception {
 
 		final String portletToTarget = "TEST_TARGET";
@@ -184,9 +184,7 @@ public class RenderRequestPortletContainerTest
 	}
 
 	@Test
-	public void testRenderRequest_isAccessGrantedByPortletOnPage()
-		throws Exception {
-
+	public void testIsAccessGrantedByPortletOnPage() throws Exception {
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
 		HttpServletRequest httpServletRequest = getHttpServletRequest();
@@ -202,9 +200,7 @@ public class RenderRequestPortletContainerTest
 	}
 
 	@Test
-	public void testRenderRequest_isAccessGrantedByRuntimePortlet()
-		throws Exception {
-
+	public void testIsAccessGrantedByRuntimePortlet() throws Exception {
 		Map<String, String> ignored = new HashMap<>();
 
 		testPortlet = new TestPortlet(ignored) {

@@ -68,7 +68,7 @@ public class ResourceRequestPortletContainerTest
 			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
 
 	@Test
-	public void testResourceRequest_invalidPortletId() throws Exception {
+	public void testInvalidPortletId() throws Exception {
 		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 		String rootUrl = layout.getRegularURL(httpServletRequest);
@@ -104,10 +104,7 @@ public class ResourceRequestPortletContainerTest
 	}
 
 	@Test
-	public void
-			testResourceRequest_isAccessGrantedByPortletAuthenticationToken()
-		throws Exception {
-
+	public void isAccessGrantedByPortletAuthenticationToken() throws Exception {
 		final String portletToTarget = "TEST_TARGET";
 
 		properties.put(
@@ -189,9 +186,7 @@ public class ResourceRequestPortletContainerTest
 	}
 
 	@Test
-	public void testResourceRequest_isAccessGrantedByPortletOnPage()
-		throws Exception {
-
+	public void testIsAccessGrantedByPortletOnPage() throws Exception {
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
 		HttpServletRequest httpServletRequest = getHttpServletRequest();
@@ -207,9 +202,7 @@ public class ResourceRequestPortletContainerTest
 	}
 
 	@Test
-	public void testResourceRequest_isAccessGrantedByRuntimePortlet()
-		throws Exception {
-
+	public void testIsAccessGrantedByRuntimePortlet() throws Exception {
 		Map<String, String> ignored = new HashMap<>();
 
 		testPortlet = new TestPortlet(ignored) {

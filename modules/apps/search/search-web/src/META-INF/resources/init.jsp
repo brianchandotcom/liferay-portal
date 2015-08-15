@@ -96,6 +96,7 @@ page import="com.liferay.search.web.util.SearchFacet" %><%@
 page import="com.liferay.search.web.util.SearchFacetTracker" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
+page import="com.liferay.taglib.servlet.PipingServletResponse" %><%@
 page import="com.liferay.util.PropertyComparator" %>
 
 <%@ page import="java.util.ArrayList" %><%@

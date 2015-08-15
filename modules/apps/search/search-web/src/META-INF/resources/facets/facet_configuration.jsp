@@ -27,7 +27,7 @@ SearchFacet searchFacet = (SearchFacet)request.getAttribute("facet_configuration
 		<aui:input label="weight" name='<%= searchFacet.getClassName() + "weight" %>' value="<%= searchFacet.getWeight() %>" />
 
 		<%
-		searchFacet.includeConfiguration(request, response);
+		searchFacet.includeConfiguration(request, new PipingServletResponse(pageContext));
 		%>
 
 	</div>

@@ -97,9 +97,9 @@
 	<command name="clickAtSidebarClickAt">
 		<execute argument1="1000" selenium="pause" />
 
-		<execute argument1="//ul[@class='control-menu']" selenium="clickAt" />
+		<execute argument1="//ul[contains(@data-namespace,'ControlMenuPortlet')]" selenium="clickAt" />
 
-		<execute argument1="//script[contains(@src,'/liferay/node.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/classic/js/main.js')]" selenium="waitForElementPresent" />
 
 		<execute argument1="1000" selenium="pause" />
 

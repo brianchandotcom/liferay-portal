@@ -20,14 +20,16 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="Site Name" />
 			<var name="sitePageName" value="Parent Page Name" />
 			<var name="sitePagePrivacy" value="Public" />
+			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoCP">

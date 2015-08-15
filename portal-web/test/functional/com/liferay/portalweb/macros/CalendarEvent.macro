@@ -918,7 +918,7 @@
 		<execute function="Click" locator1="PGCalendarEditevent#SAVE_BUTTON" />
 
 		<if>
-			<equals arg1="${inviteResource}" arg2="true" />
+			<equals arg1="${optionSetValue}" arg2="inviteResource" />
 			<then>
 				<execute function="AssertElementPresent" locator1="PGCalendarAreYouSureDialogBox#ARE_YOU_SURE_DIALOG_BOX_HEADER" value1="Are you sure?" />
 				<execute function="AssertTextEquals" locator1="PGCalendarAreYouSureDialogBox#ARE_YOU_SURE_DIALOG_BOX_BODY" value1="You are about to make changes that will only affect your calendar (${calendarName})." />

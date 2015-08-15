@@ -74,7 +74,8 @@ public class ResourceRequestPortletContainerTest
 		String layoutURL = layout.getRegularURL(httpServletRequest);
 
 		String url =
-			layoutURL + "?p_p_id='\"><script>alert(1)</script>&p_p_lifecycle=2&";
+			layoutURL +
+				"?p_p_id='\"><script>alert(1)</script>&p_p_lifecycle=2&";
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
@@ -106,20 +107,19 @@ public class ResourceRequestPortletContainerTest
 	}
 
 	@Test
-	public void isAccessGrantedByPortletAuthenticationToken() throws Exception {
-		final String portletToTarget = "TEST_TARGET";
+	public void testIsAccessGrantedByPortletAuthenticationToken()
+		throws Exception {
+
+		final String testTargetPortletId = "testTargetPortletId";
 
 		properties.put(
 			"com.liferay.portlet.add-default-resource", Boolean.TRUE);
 		properties.put("com.liferay.portlet.system", Boolean.TRUE);
 
-		setUpPortlet(new TestPortlet(map), properties, portletToTarget, false);
+		setUpPortlet(
+			new TestPortlet(map), properties, testTargetPortletId, false);
 
-		properties = new Hashtable<>();
-
-		Map<String, String> ignored = new HashMap<>();
-
-		testPortlet = new TestPortlet(ignored) {
+		testPortlet = new TestPortlet() {
 
 			@Override
 			public void serveResource(
@@ -127,8 +127,10 @@ public class ResourceRequestPortletContainerTest
 					ResourceResponse resourceResponse)
 				throws IOException {
 
+				PrintWriter printWriter = resourceResponse.getWriter();
+
 				PortletURL portletURL = PortletURLFactoryUtil.create(
-					resourceRequest, portletToTarget, layout.getPlid(),
+					resourceRequest, testTargetPortletId, layout.getPlid(),
 					PortletRequest.RENDER_PHASE);
 
 				String queryString = HttpUtil.getQueryString(
@@ -137,20 +139,21 @@ public class ResourceRequestPortletContainerTest
 				Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
 					queryString);
 
-				String p_p_auth = MapUtil.getString(parameterMap, "p_p_auth");
+				String portletAuthenticationToken = MapUtil.getString(
+					parameterMap, "p_p_auth");
 
-				PrintWriter writer = resourceResponse.getWriter();
-
-				writer.write(p_p_auth);
+				printWriter.write(portletAuthenticationToken);
 			}
 
 		};
 
+		properties = new Hashtable<>();
+
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		// Get the portlet authentication token by making a resource request
 
-		// Get the p_p_auth by making a resource request
+		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 		PortletURL portletURL = new PortletURLImpl(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
@@ -158,24 +161,25 @@ public class ResourceRequestPortletContainerTest
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 
-		String p_p_auth = getString(responseMap, "body");
+		String portletAuthenticationToken = getString(responseMap, "body");
 
 		List<String> cookies = responseMap.get("Set-Cookie");
 
 		map.clear();
 
-		// Now make the render request to the target portlet using the p_p_auth
-		// parameter
+		// Make a resource request to the target portlet using the portlet
+		// authentication token
 
 		portletURL = new PortletURLImpl(
-			httpServletRequest, portletToTarget, layout.getPlid(),
+			httpServletRequest, testTargetPortletId, layout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
 		portletURL.setWindowState(WindowState.MAXIMIZED);
 
 		String url = portletURL.toString();
 
-		url = HttpUtil.setParameter(url, "p_p_auth", p_p_auth);
+		url = HttpUtil.setParameter(
+			url, "p_p_auth", portletAuthenticationToken);
 
 		Map<String, List<String>> headers = new HashMap<>();
 
@@ -205,9 +209,7 @@ public class ResourceRequestPortletContainerTest
 
 	@Test
 	public void testIsAccessGrantedByRuntimePortlet() throws Exception {
-		Map<String, String> ignored = new HashMap<>();
-
-		testPortlet = new TestPortlet(ignored) {
+		testPortlet = new TestPortlet() {
 
 			@Override
 			public void serveResource(
@@ -217,17 +219,15 @@ public class ResourceRequestPortletContainerTest
 
 				PortletContext portletContext = getPortletContext();
 
-				PortletRequestDispatcher requestDispatcher =
+				PortletRequestDispatcher portletRequestDispatcher =
 					portletContext.getRequestDispatcher("/runtime_portlet.jsp");
 
-				requestDispatcher.include(resourceRequest, resourceResponse);
+				portletRequestDispatcher.include(
+					resourceRequest, resourceResponse);
 			}
 
 		};
 
-		String testRuntimePortletId = "TEST_EMBEDDED";
-
-		setUpPortlet(new TestPortlet(map), properties, testRuntimePortletId, false);
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
 		HttpServletRequest httpServletRequest = getHttpServletRequest();
@@ -235,6 +235,11 @@ public class ResourceRequestPortletContainerTest
 		PortletURL portletURL = new PortletURLImpl(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
+
+		String testRuntimePortletId = "testRuntimePortletId";
+
+		setUpPortlet(
+			new TestPortlet(map), properties, testRuntimePortletId, false);
 
 		portletURL.setParameter("testRuntimePortletId", testRuntimePortletId);
 

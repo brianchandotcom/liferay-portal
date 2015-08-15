@@ -130,12 +130,12 @@ public class RenderRequestPortletContainerTest
 				String queryString = HttpUtil.getQueryString(
 					portletURL.toString());
 
-				Map<String, String[]> parameterMap =
-					HttpUtil.getParameterMap(queryString);
+				Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
+					queryString);
 
 				String portletAuthenticationToken = MapUtil.getString(
 					parameterMap, "p_p_auth");
-	
+
 				printWriter.write(portletAuthenticationToken);
 			}
 
@@ -145,7 +145,7 @@ public class RenderRequestPortletContainerTest
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		// Get the p_p_auth by making a resource request
+		// Get the portlet authentication token by making a resource request
 
 		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
@@ -161,7 +161,8 @@ public class RenderRequestPortletContainerTest
 
 		map.clear();
 
-		// Make a render request to the target portlet using the p_p_auth value
+		// Make a render request to the target portlet using the portlet
+		// authentication token
 
 		portletURL = new PortletURLImpl(
 			httpServletRequest, testTargetPortletId, layout.getPlid(),
@@ -171,7 +172,8 @@ public class RenderRequestPortletContainerTest
 
 		String url = portletURL.toString();
 
-		url = HttpUtil.setParameter(url, "p_p_auth", portletAuthenticationToken);
+		url = HttpUtil.setParameter(
+			url, "p_p_auth", portletAuthenticationToken);
 
 		Map<String, List<String>> headers = new HashMap<>();
 

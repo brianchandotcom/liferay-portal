@@ -134,9 +134,7 @@ public class ActionRequestPortletContainerTest
 	}
 
 	@Test
-	public void testAuthTokenIgnorePortlets()
-		throws Exception {
-
+	public void testAuthTokenIgnorePortlets() throws Exception {
 		Field field = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "AUTH_TOKEN_IGNORE_PORTLETS");
 

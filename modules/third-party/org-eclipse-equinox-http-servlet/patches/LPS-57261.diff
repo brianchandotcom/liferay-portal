@@ -1,0 +1,25 @@
+diff --git a/org/eclipse/equinox/http/servlet/internal/servlet/HttpSessionAdaptor.java b/org/eclipse/equinox/http/servlet/internal/servlet/HttpSessionAdaptor.java
+index b6d911b..68748e9 100644
+--- a/org/eclipse/equinox/http/servlet/internal/servlet/HttpSessionAdaptor.java
++++ b/org/eclipse/equinox/http/servlet/internal/servlet/HttpSessionAdaptor.java
+@@ -19,6 +19,8 @@ import javax.servlet.http.*;
+ import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+ import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
+ 
++/* @generated */
++
+ // This class adapts HttpSessions in order to return the right ServletContext and attributes
+ public class HttpSessionAdaptor implements HttpSession, Serializable {
+ 	private static final long serialVersionUID = 3418610936889860782L;
+@@ -181,6 +183,11 @@ public class HttpSessionAdaptor implements HttpSession, Serializable {
+ 
+ 	public Object getAttribute(String arg0) {
+ 		Object result = session.getAttribute(attributePrefix + arg0);
++
++		if (result == null) {
++			result = session.getAttribute(arg0);
++		}
++
+ 		if (result instanceof HttpSessionAttributeWrapper) {
+ 			result = ((HttpSessionAttributeWrapper) result).value;
+ 		}

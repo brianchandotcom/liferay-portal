@@ -178,6 +178,7 @@
 	<classpathentry kind="lib" path="lib/portal/hessian.jar"/>
 	<classpathentry kind="lib" path="lib/portal/hibernate-commons-annotations.jar"/>
 	<classpathentry kind="lib" path="lib/portal/hibernate-core.jar"/>
+	<classpathentry kind="lib" path="lib/portal/hikaricp.jar"/>
 	<classpathentry kind="lib" path="lib/portal/htmlparser.jar"/>
 	<classpathentry kind="lib" path="lib/portal/httpclient.jar"/>
 	<classpathentry kind="lib" path="lib/portal/httpcore.jar"/>

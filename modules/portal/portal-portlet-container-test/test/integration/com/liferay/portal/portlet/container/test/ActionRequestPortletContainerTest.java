@@ -70,7 +70,7 @@ public class ActionRequestPortletContainerTest
 			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
 
 	@Test
-	public void testActionRequest_AUTH_TOKEN_CHECK_ENABLED() throws Exception {
+	public void testAuthTokenCheckEnabled() throws Exception {
 		Field field = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "AUTH_TOKEN_CHECK_ENABLED");
 
@@ -99,7 +99,7 @@ public class ActionRequestPortletContainerTest
 	}
 
 	@Test
-	public void testActionRequest_AUTH_TOKEN_IGNORE_ORIGINS() throws Exception {
+	public void testAuthTokenIgnoreOrigins() throws Exception {
 		Field field = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "AUTH_TOKEN_IGNORE_ORIGINS");
 
@@ -134,7 +134,7 @@ public class ActionRequestPortletContainerTest
 	}
 
 	@Test
-	public void testActionRequest_AUTH_TOKEN_IGNORE_PORTLETS()
+	public void testAuthTokenIgnorePortlets()
 		throws Exception {
 
 		Field field = ReflectionUtil.getDeclaredField(
@@ -169,7 +169,7 @@ public class ActionRequestPortletContainerTest
 	}
 
 	@Test
-	public void testActionRequest_initParam() throws Exception {
+	public void testInitParam() throws Exception {
 		properties.put(
 			"javax.portlet.init-param.check-auth-token",
 			Boolean.FALSE.toString());
@@ -247,7 +247,7 @@ public class ActionRequestPortletContainerTest
 	}
 
 	@Test
-	public void testActionRequest_p_auth() throws Exception {
+	public void testPAuth() throws Exception {
 		testPortlet = new TestPortlet(map) {
 
 			@Override
@@ -312,7 +312,7 @@ public class ActionRequestPortletContainerTest
 	}
 
 	@Test
-	public void testActionRequest_p_auth_secret() throws Exception {
+	public void testPAuthSecret() throws Exception {
 		Field field = ReflectionUtil.getDeclaredField(
 			PropsValues.class, "AUTH_TOKEN_SHARED_SECRET");
 
@@ -343,7 +343,7 @@ public class ActionRequestPortletContainerTest
 	}
 
 	@Test
-	public void testActionRequest_struts_action() throws Exception {
+	public void testStrutsAction() throws Exception {
 		properties.put(PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS, "/test/portlet/1");
 		properties.put("com.liferay.portlet.struts-path", "test/portlet");
 
@@ -364,7 +364,7 @@ public class ActionRequestPortletContainerTest
 	}
 
 	@Test
-	public void testActionRequest_X_CSRF_Token() throws Exception {
+	public void testXCSRFToken() throws Exception {
 		testPortlet = new TestPortlet(map) {
 
 			@Override

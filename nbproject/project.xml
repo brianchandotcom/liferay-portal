@@ -404,6 +404,7 @@
 				<classpath mode="compile">lib/portal/hessian.jar</classpath>
 				<classpath mode="compile">lib/portal/hibernate-commons-annotations.jar</classpath>
 				<classpath mode="compile">lib/portal/hibernate-core.jar</classpath>
+				<classpath mode="compile">lib/portal/hikaricp.jar</classpath>
 				<classpath mode="compile">lib/portal/htmlparser.jar</classpath>
 				<classpath mode="compile">lib/portal/httpclient.jar</classpath>
 				<classpath mode="compile">lib/portal/httpcore.jar</classpath>

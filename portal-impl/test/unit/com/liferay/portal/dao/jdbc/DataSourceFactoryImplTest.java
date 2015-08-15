@@ -21,7 +21,11 @@ import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.JarUtil;
+import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
@@ -34,6 +38,7 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.management.MBeanServer;
@@ -41,9 +46,13 @@ import javax.management.ObjectName;
 
 import javax.sql.DataSource;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -51,6 +60,21 @@ import org.junit.Test;
  * @author Dante Wang
  */
 public class DataSourceFactoryImplTest {
+
+	@BeforeClass
+	public static void setUpClass() throws IOException {
+
+		// Run before testing jvm starts to ensure the dynamic download actually
+		// happens during the test run.
+
+		PropsUtil.setProps(new PropsImpl());
+
+		String jarName = PropsUtil.get(
+			PropsKeys.SETUP_LIFERAY_POOL_PROVIDER_JAR_NAME,
+			new Filter("hikaricp"));
+
+		Files.deleteIfExists(Paths.get("lib/portal", jarName));
+	}
 
 	@Before
 	public void setUp() {
@@ -82,8 +106,43 @@ public class DataSourceFactoryImplTest {
 
 		ServerDetector.init(ServerDetector.TOMCAT_ID);
 
-		DataSource dataSource = DataSourceFactoryUtil.initDataSource(
-			_properties);
+		DataSource dataSource = null;
+
+		try (CaptureAppender captureAppender =
+			Log4JLoggerTestUtil.configureLog4JLogger(
+				JarUtil.class.getName(), Level.INFO)) {
+
+			dataSource = DataSourceFactoryUtil.initDataSource(_properties);
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(4, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			String message = (String)loggingEvent.getMessage();
+
+			Assert.assertTrue(message.startsWith("Downloading "));
+
+			loggingEvent = loggingEvents.get(1);
+
+			message = (String)loggingEvent.getMessage();
+
+			Assert.assertTrue(message.startsWith("Downloaded "));
+
+			loggingEvent = loggingEvents.get(2);
+
+			message = (String)loggingEvent.getMessage();
+
+			Assert.assertTrue(message.startsWith("Installing "));
+
+			loggingEvent = loggingEvents.get(3);
+
+			message = (String)loggingEvent.getMessage();
+
+			Assert.assertTrue(message.startsWith("Installed "));
+		}
 
 		Class<?> dataSourceClass = dataSource.getClass();
 

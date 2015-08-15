@@ -210,7 +210,7 @@ public class ActionRequestPortletContainerTest
 	 * session</li>
 	 */
 	@Test
-	public void testActionRequest_noTokens() throws Exception {
+	public void testNoTokens() throws Exception {
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
 		HttpServletRequest httpServletRequest = getHttpServletRequest();

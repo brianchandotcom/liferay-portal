@@ -187,7 +187,7 @@ public class ActionRequestPortletContainerTest
 	}
 
 	@Test
-	public void testNoTokens() throws Exception {
+	public void testNoPortalAuthenticationTokens() throws Exception {
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
 		HttpServletRequest httpServletRequest = getHttpServletRequest();
@@ -199,8 +199,9 @@ public class ActionRequestPortletContainerTest
 		String url = portletURL.toString();
 
 		try (CaptureAppender captureAppender =
-			Log4JLoggerTestUtil.configureLog4JLogger(
-				SecurityPortletContainerWrapper.class.getName(), Level.WARN)) {
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					SecurityPortletContainerWrapper.class.getName(),
+					Level.WARN)) {
 
 			Map<String, List<String>> responseMap = request(url);
 

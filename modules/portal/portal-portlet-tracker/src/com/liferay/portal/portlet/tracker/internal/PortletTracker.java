@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
+import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -54,7 +55,10 @@ import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.InvokerPortlet;
 import com.liferay.portlet.PortletBagFactory;
+import com.liferay.portlet.PortletContextBag;
+import com.liferay.portlet.PortletContextBagPool;
 import com.liferay.portlet.PortletInstanceFactory;
 import com.liferay.registry.util.StringPlus;
 import com.liferay.util.log4j.Log4JUtil;
@@ -83,6 +87,10 @@ import javax.portlet.WindowState;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -280,13 +288,19 @@ public class PortletTracker
 		collectJxPortletFeatures(serviceReference, portletModel);
 		collectLiferayFeatures(serviceReference, portletModel);
 
+		PortletContextBag portletContextBag = new PortletContextBag(
+			bundlePortletApp.getServletContextName());
+
+		PortletContextBagPool.put(
+			bundlePortletApp.getServletContextName(), portletContextBag);
+
 		PortletBagFactory portletBagFactory = new BundlePortletBagFactory(
 			portlet);
 
 		portletBagFactory.setClassLoader(bundleWiring.getClassLoader());
 		portletBagFactory.setServletContext(
 			bundlePortletApp.getServletContext());
-		portletBagFactory.setWARFile(false);
+		portletBagFactory.setWARFile(true);
 
 		try {
 			portletBagFactory.create(portletModel);
@@ -317,7 +331,10 @@ public class PortletTracker
 			return portletModel;
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			_log.error(
+				"Portlet " + portletId + " from " + bundle +
+					" failed to initialize",
+				e);
 
 			return null;
 		}
@@ -408,6 +425,8 @@ public class PortletTracker
 			createDefaultServlet(bundleContext, contextName));
 		serviceRegistrations.addServiceRegistration(
 			createJspServlet(bundleContext, contextName, classLoader));
+		serviceRegistrations.addServiceRegistration(
+			createPortletServlet(bundleContext, contextName, classLoader));
 	}
 
 	protected void collectCacheScope(
@@ -441,6 +460,9 @@ public class PortletTracker
 				GetterUtil.getString(
 					serviceReference.getProperty(initParamKey)));
 		}
+
+		initParams.put(
+			InvokerPortlet.INIT_INVOKER_PORTLET_NAME, "portlet-servlet");
 
 		portletModel.setInitParams(initParams);
 	}
@@ -1099,6 +1121,26 @@ public class PortletTracker
 			Servlet.class, servlet, properties);
 	}
 
+	protected ServiceRegistration<Servlet> createPortletServlet(
+		BundleContext bundleContext, String contextName,
+		ClassLoader classLoader) {
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+			contextName);
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
+			"Portlet Servlet");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
+			"/portlet-servlet/*");
+
+		return bundleContext.registerService(
+			Servlet.class, new PortletServletWrapper(), properties);
+	}
+
 	@Deactivate
 	protected void deactivate() {
 		_serviceTracker.close();
@@ -1305,6 +1347,20 @@ public class PortletTracker
 		_serviceRegistrations = new ConcurrentHashMap<>();
 	private ServiceTracker<Portlet, com.liferay.portal.model.Portlet>
 		_serviceTracker;
+
+	private class PortletServletWrapper extends HttpServlet {
+
+		@Override
+		protected void service(
+				HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
+			_servlet.service(request, response);
+		}
+
+		private final Servlet _servlet = new PortletServlet();
+
+	}
 
 	private class ServiceRegistrations {
 

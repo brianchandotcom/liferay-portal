@@ -91,6 +91,12 @@ public class GroupPermissionImpl
 			return false;
 		}
 
+		if (actionId.equals(ActionKeys.VIEW_SITE_ADMINISTRATION) &&
+			group.isLayoutPrototype()) {
+
+			return false;
+		}
+
 		long groupId = group.getGroupId();
 
 		if (group.isStagingGroup()) {

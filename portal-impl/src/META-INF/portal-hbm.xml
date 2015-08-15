@@ -5,7 +5,6 @@
 	<import class="com.liferay.counter.model.Counter" />
 	<import class="com.liferay.portal.model.Account" />
 	<import class="com.liferay.portal.model.Address" />
-	<import class="com.liferay.portal.model.BackgroundTask" />
 	<import class="com.liferay.portal.model.BrowserTracker" />
 	<import class="com.liferay.portal.model.ClassName" />
 	<import class="com.liferay.portal.model.ClusterGroup" />
@@ -189,26 +188,6 @@
 		<property name="mailing" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="primary" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="primary_" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.portal.model.impl.BackgroundTaskImpl" table="BackgroundTask" dynamic-update="true">
-		<id name="backgroundTaskId" type="long">
-			<generator class="assigned" />
-		</id>
-		<version name="mvccVersion" type="long" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="servletContextNames" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="taskExecutorClassName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="taskContextMap" type="com.liferay.portal.dao.orm.hibernate.MapType" />
-		<property name="completed" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="completionDate" type="org.hibernate.type.TimestampType" />
-		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="statusMessage" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.BrowserTrackerImpl" table="BrowserTracker" dynamic-update="true">
 		<id name="browserTrackerId" type="long">

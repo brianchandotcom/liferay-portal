@@ -273,12 +273,6 @@ public class BackgroundTaskManagerUtil {
 		_backgroundTaskManager.triggerBackgroundTask(backgroundTaskId);
 	}
 
-	public static BackgroundTask updateBackgroundTask(
-		BackgroundTask backgroundTask) {
-
-		return _backgroundTaskManager.updateBackgroundTask(backgroundTask);
-	}
-
 	private static final BackgroundTaskManager
 		_backgroundTaskManager = ProxyFactory.newServiceTrackedInstance(
 			BackgroundTaskManager.class);

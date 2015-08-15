@@ -17,14 +17,6 @@
 		<property name="service" ref="com.liferay.portal.service.AddressService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.AddressService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_BackgroundTaskService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.BackgroundTaskService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.BackgroundTaskService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_BackgroundTaskService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.BackgroundTaskService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.BackgroundTaskService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_ClassNameService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.ClassNameService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.ClassNameService" />

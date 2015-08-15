@@ -146,6 +146,4 @@ public interface BackgroundTaskManager {
 
 	public void triggerBackgroundTask(long backgroundTaskId);
 
-	public BackgroundTask updateBackgroundTask(BackgroundTask backgroundTask);
-
 }

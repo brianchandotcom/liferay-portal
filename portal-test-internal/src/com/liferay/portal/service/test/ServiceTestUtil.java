@@ -68,7 +68,7 @@ import java.util.Set;
  */
 public class ServiceTestUtil {
 
-	public static final int THREAD_COUNT = 25;
+	public static final int THREAD_COUNT = 10;
 
 	/**
 	 * @deprecated As of 7.0.0

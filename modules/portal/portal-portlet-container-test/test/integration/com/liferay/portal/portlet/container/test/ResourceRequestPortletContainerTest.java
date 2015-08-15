@@ -71,13 +71,15 @@ public class ResourceRequestPortletContainerTest
 	public void testInvalidPortletId() throws Exception {
 		HttpServletRequest httpServletRequest = getHttpServletRequest();
 
-		String rootUrl = layout.getRegularURL(httpServletRequest);
+		String layoutURL = layout.getRegularURL(httpServletRequest);
+
 		String url =
-			rootUrl + "?p_p_id='\"><script>alert(1)</script>&p_p_lifecycle=2&";
+			layoutURL + "?p_p_id='\"><script>alert(1)</script>&p_p_lifecycle=2&";
 
 		try (CaptureAppender captureAppender =
-			Log4JLoggerTestUtil.configureLog4JLogger(
-				SecurityPortletContainerWrapper.class.getName(), Level.WARN)) {
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					SecurityPortletContainerWrapper.class.getName(),
+					Level.WARN)) {
 
 			Map<String, List<String>> responseMap = request(url);
 
@@ -95,7 +97,7 @@ public class ResourceRequestPortletContainerTest
 			loggingEvent = loggingEvents.get(1);
 
 			Assert.assertEquals(
-				"Reject serveResource for " + rootUrl +
+				"Reject serveResource for " + layoutURL +
 					" on '\"><script>alert(1)</script>",
 				loggingEvent.getMessage());
 
@@ -223,9 +225,9 @@ public class ResourceRequestPortletContainerTest
 
 		};
 
-		String portletToEmbbed = "TEST_EMBEDDED";
+		String testRuntimePortletId = "TEST_EMBEDDED";
 
-		setUpPortlet(new TestPortlet(map), properties, portletToEmbbed, false);
+		setUpPortlet(new TestPortlet(map), properties, testRuntimePortletId, false);
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
 		HttpServletRequest httpServletRequest = getHttpServletRequest();
@@ -234,7 +236,7 @@ public class ResourceRequestPortletContainerTest
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
-		portletURL.setParameter("portletToEmbbed", portletToEmbbed);
+		portletURL.setParameter("testRuntimePortletId", testRuntimePortletId);
 
 		Map<String, List<String>> responseMap = request(portletURL.toString());
 

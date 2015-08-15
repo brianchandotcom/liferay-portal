@@ -15,7 +15,7 @@
 package com.liferay.portal.portlet.container.test;
 
 import java.io.IOException;
-
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -31,6 +31,10 @@ import javax.portlet.ResourceResponse;
  * @author Raymond Augé
  */
 public class TestPortlet extends GenericPortlet {
+
+	public TestPortlet() {
+		this(new HashMap<String, String>());
+	}
 
 	public TestPortlet(Map<String, String> map) {
 		_map = map;

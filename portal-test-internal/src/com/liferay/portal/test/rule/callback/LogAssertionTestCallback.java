@@ -26,6 +26,9 @@ import com.liferay.portal.test.rule.ExpectedLogs;
 import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.LogAssertionAppender;
 import com.liferay.portal.test.rule.LogAssertionHandler;
+import com.liferay.portal.test.rule.LogAssertionUncaughtExceptionHandler;
+
+import java.lang.Thread.UncaughtExceptionHandler;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -79,6 +82,8 @@ public class LogAssertionTestCallback
 			}
 		}
 
+		Thread.setDefaultUncaughtExceptionHandler(_uncaughtExceptionHandler);
+
 		_thread = null;
 
 		try {
@@ -102,6 +107,11 @@ public class LogAssertionTestCallback
 
 	public static CaptureAppender startAssert(ExpectedLogs expectedLogs) {
 		_thread = Thread.currentThread();
+		_uncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
+
+		Thread.setDefaultUncaughtExceptionHandler(
+			new LogAssertionUncaughtExceptionHandler(
+				_uncaughtExceptionHandler));
 
 		CaptureAppender captureAppender = null;
 
@@ -210,5 +220,6 @@ public class LogAssertionTestCallback
 	private static final Map<Thread, Error> _concurrentFailures =
 		new ConcurrentHashMap<>();
 	private static volatile Thread _thread;
+	private static volatile UncaughtExceptionHandler _uncaughtExceptionHandler;
 
 }

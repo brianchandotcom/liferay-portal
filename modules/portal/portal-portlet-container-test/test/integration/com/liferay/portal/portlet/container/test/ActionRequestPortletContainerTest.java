@@ -212,11 +212,10 @@ public class ActionRequestPortletContainerTest
 
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
-			String rootUrl = url.substring(0, url.indexOf('?'));
-
 			Assert.assertEquals(
-				"User 0 is not allowed to access URL " + rootUrl +
-					" and portlet " + TEST_PORTLET_ID,
+				"User 0 is not allowed to access URL " +
+					url.substring(0, url.indexOf('?')) + " and portlet " +
+						TEST_PORTLET_ID,
 				loggingEvent.getMessage());
 
 			Assert.assertEquals("200", getString(responseMap, "code"));

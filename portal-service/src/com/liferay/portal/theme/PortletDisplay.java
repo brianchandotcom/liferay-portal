@@ -14,8 +14,8 @@
 
 package com.liferay.portal.theme;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.toolbar.PortletToolbar;
@@ -237,12 +237,12 @@ public class PortletDisplay implements Serializable {
 	}
 
 	public <T> T getPortletInstanceConfiguration(Class<T> clazz)
-		throws ModuleConfigurationException {
+		throws ConfigurationException {
 
 		String portletId = Validator.isNull(
 			_portletResource) ? _id : _portletResource;
 
-		return ModuleConfigurationFactoryUtil.getModuleConfiguration(
+		return ConfigurationFactoryUtil.getConfiguration(
 			clazz,
 			new PortletInstanceSettingsLocator(
 				_themeDisplay.getLayout(), portletId));

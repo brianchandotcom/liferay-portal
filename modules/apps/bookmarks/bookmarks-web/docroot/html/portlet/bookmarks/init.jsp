@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%
-BookmarksGroupServiceOverriddenConfiguration bookmarksGroupServiceConfiguration = ModuleConfigurationFactoryUtil.getModuleConfiguration(BookmarksGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(scopeGroupId, BookmarksConstants.SERVICE_NAME));
+BookmarksGroupServiceOverriddenConfiguration bookmarksGroupServiceConfiguration = ConfigurationFactoryUtil.getConfiguration(BookmarksGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(scopeGroupId, BookmarksConstants.SERVICE_NAME));
 
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 

@@ -14,8 +14,8 @@
 
 package com.liferay.service.access.policy;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -90,12 +90,12 @@ public class ServiceAccessPolicyManagerImpl
 
 	protected SAPConfiguration getSAPConfiguration(long companyId) {
 		try {
-			return _moduleConfigurationFactory.getModuleConfiguration(
+			return _configurationFactory.getConfiguration(
 				SAPConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, SAPConstants.SERVICE_NAME));
 		}
-		catch (ModuleConfigurationException mce) {
+		catch (ConfigurationException mce) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to get SAP configuration", mce);
 			}
@@ -105,10 +105,10 @@ public class ServiceAccessPolicyManagerImpl
 	}
 
 	@Reference(unbind = "-")
-	protected void setModuleConfigurationFactory(
-		ModuleConfigurationFactory moduleConfigurationFactory) {
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
 
-		_moduleConfigurationFactory = moduleConfigurationFactory;
+		_configurationFactory = configurationFactory;
 	}
 
 	@Reference(unbind = "-")
@@ -147,7 +147,7 @@ public class ServiceAccessPolicyManagerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceAccessPolicyManagerImpl.class);
 
-	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 	private SAPEntryService _sapEntryService;
 
 }

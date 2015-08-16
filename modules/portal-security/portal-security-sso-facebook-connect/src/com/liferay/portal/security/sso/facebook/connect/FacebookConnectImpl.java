@@ -14,8 +14,8 @@
 
 package com.liferay.portal.security.sso.facebook.connect;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -230,14 +230,14 @@ public class FacebookConnectImpl implements FacebookConnect {
 
 		try {
 			FacebookConnectConfiguration facebookConnectCompanyServiceSettings =
-				_moduleConfigurationFactory.getModuleConfiguration(
+				_configurationFactory.getConfiguration(
 					FacebookConnectConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, FacebookConnectConstants.SERVICE_NAME));
 
 			return facebookConnectCompanyServiceSettings;
 		}
-		catch (ModuleConfigurationException mce) {
+		catch (ConfigurationException mce) {
 			_log.error("Unable to get Facebook Connect configuration", mce);
 		}
 
@@ -245,15 +245,15 @@ public class FacebookConnectImpl implements FacebookConnect {
 	}
 
 	@Reference(unbind = "-")
-	protected void setModuleConfigurationFactory(
-		ModuleConfigurationFactory moduleConfigurationFactory) {
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
 
-		_moduleConfigurationFactory = moduleConfigurationFactory;
+		_configurationFactory = configurationFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FacebookConnectImpl.class);
 
-	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

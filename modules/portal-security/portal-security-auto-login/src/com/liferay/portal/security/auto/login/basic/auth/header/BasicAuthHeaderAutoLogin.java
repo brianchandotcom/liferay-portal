@@ -14,8 +14,8 @@
 
 package com.liferay.portal.security.auto.login.basic.auth.header;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
@@ -129,10 +129,10 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 	}
 
 	@Reference(unbind = "-")
-	protected void setModuleConfigurationFactory(
-		ModuleConfigurationFactory moduleConfigurationFactory) {
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
 
-		_moduleConfigurationFactory = moduleConfigurationFactory;
+		_configurationFactory = configurationFactory;
 	}
 
 	private BasicAuthHeaderAutoLoginConfiguration
@@ -141,7 +141,7 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 		try {
 			BasicAuthHeaderAutoLoginConfiguration
 				basicAuthHeaderAutoLoginConfiguration =
-					_moduleConfigurationFactory.getModuleConfiguration(
+					_configurationFactory.getConfiguration(
 						BasicAuthHeaderAutoLoginConfiguration.class,
 						new CompanyServiceSettingsLocator(
 							companyId,
@@ -149,7 +149,7 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 
 			return basicAuthHeaderAutoLoginConfiguration;
 		}
-		catch (ModuleConfigurationException mce) {
+		catch (ConfigurationException mce) {
 			_log.error("Unable to get basic auth header configuration", mce);
 		}
 
@@ -159,6 +159,6 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasicAuthHeaderAutoLogin.class);
 
-	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

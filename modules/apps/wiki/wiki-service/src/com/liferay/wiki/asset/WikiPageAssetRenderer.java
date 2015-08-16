@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.asset;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -76,7 +76,7 @@ public class WikiPageAssetRenderer
 		_page = page;
 
 		_wikiGroupServiceConfiguration =
-			ModuleConfigurationFactoryUtil.getModuleConfiguration(
+			ConfigurationFactoryUtil.getConfiguration(
 				WikiGroupServiceOverriddenConfiguration.class,
 			new GroupServiceSettingsLocator(
 				page.getGroupId(), WikiConstants.SERVICE_NAME));

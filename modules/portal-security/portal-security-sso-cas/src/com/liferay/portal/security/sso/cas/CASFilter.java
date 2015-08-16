@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.cas;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
@@ -77,7 +77,7 @@ public class CASFilter extends BaseFilter {
 			long companyId = PortalUtil.getCompanyId(request);
 
 			CASConfiguration casConfiguration =
-				_moduleConfigurationFactory.getModuleConfiguration(
+				_configurationFactory.getConfiguration(
 					CASConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, CASConstants.SERVICE_NAME));
@@ -108,7 +108,7 @@ public class CASFilter extends BaseFilter {
 		}
 
 		CASConfiguration casConfiguration =
-			_moduleConfigurationFactory.getModuleConfiguration(
+			_configurationFactory.getConfiguration(
 				CASConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, CASConstants.SERVICE_NAME));
@@ -145,7 +145,7 @@ public class CASFilter extends BaseFilter {
 		long companyId = PortalUtil.getCompanyId(request);
 
 		CASConfiguration casConfiguration =
-			_moduleConfigurationFactory.getModuleConfiguration(
+			_configurationFactory.getConfiguration(
 				CASConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, CASConstants.SERVICE_NAME));
@@ -224,10 +224,10 @@ public class CASFilter extends BaseFilter {
 	}
 
 	@Reference(unbind = "-")
-	protected void setModuleConfigurationFactory(
-		ModuleConfigurationFactory moduleConfigurationFactory) {
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
 
-		_moduleConfigurationFactory = moduleConfigurationFactory;
+		_configurationFactory = configurationFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(CASFilter.class);
@@ -235,6 +235,6 @@ public class CASFilter extends BaseFilter {
 	private static final Map<Long, TicketValidator> _ticketValidators =
 		new ConcurrentHashMap<>();
 
-	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

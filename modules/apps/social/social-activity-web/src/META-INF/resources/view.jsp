@@ -80,7 +80,7 @@ Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttr
 				counterSettings: {
 
 					<%
-					SocialActivityGroupServiceConfiguration socialActivityGroupServiceConfiguration = ModuleConfigurationFactoryUtil.getModuleConfiguration(SocialActivityGroupServiceConfiguration.class, new CompanyServiceSettingsLocator(company.getCompanyId(), "com.liferay.social.activity.configuration.SocialActivityGroupServiceConfiguration"));
+					SocialActivityGroupServiceConfiguration socialActivityGroupServiceConfiguration = ConfigurationFactoryUtil.getConfiguration(SocialActivityGroupServiceConfiguration.class, new CompanyServiceSettingsLocator(company.getCompanyId(), "com.liferay.social.activity.configuration.SocialActivityGroupServiceConfiguration"));
 					%>
 
 					contributionIncrements: [<%= StringUtil.merge(socialActivityGroupServiceConfiguration.contributionIncrements()) %>],

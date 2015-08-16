@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-userStatisticsPortletInstanceConfiguration = ModuleConfigurationFactoryUtil.getModuleConfiguration(UserStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource()));
+userStatisticsPortletInstanceConfiguration = ConfigurationFactoryUtil.getConfiguration(UserStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource()));
 
 String displayActivityCounterName = "";
 

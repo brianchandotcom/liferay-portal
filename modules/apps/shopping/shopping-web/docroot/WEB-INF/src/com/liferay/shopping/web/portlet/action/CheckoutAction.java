@@ -14,7 +14,7 @@
 
 package com.liferay.shopping.web.portlet.action;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Constants;
@@ -165,7 +165,7 @@ public class CheckoutAction extends CartAction {
 
 		ShoppingGroupServiceOverriddenConfiguration
 			shoppingGroupServiceOverriddenConfiguration =
-				ModuleConfigurationFactoryUtil.getModuleConfiguration(
+				ConfigurationFactoryUtil.getConfiguration(
 					ShoppingGroupServiceOverriddenConfiguration.class,
 					new GroupServiceSettingsLocator(
 						themeDisplay.getScopeGroupId(),

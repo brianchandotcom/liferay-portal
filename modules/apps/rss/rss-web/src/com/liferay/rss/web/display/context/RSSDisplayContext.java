@@ -14,7 +14,7 @@
 
 package com.liferay.rss.web.display.context;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -35,7 +35,7 @@ public class RSSDisplayContext {
 
 	public RSSDisplayContext(
 			HttpServletRequest request, RSSWebConfiguration rssWebConfiguration)
-		throws ModuleConfigurationException {
+		throws ConfigurationException {
 
 		_request = request;
 		_rssWebConfiguration = rssWebConfiguration;

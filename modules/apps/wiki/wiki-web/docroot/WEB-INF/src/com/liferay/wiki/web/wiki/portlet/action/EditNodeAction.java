@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.web.wiki.portlet.action;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
@@ -200,7 +200,7 @@ public class EditNodeAction extends PortletAction {
 
 		WikiPortletInstanceOverriddenConfiguration
 			wikiPortletInstanceConfiguration =
-				ModuleConfigurationFactoryUtil.getModuleConfiguration(
+				ConfigurationFactoryUtil.getConfiguration(
 					WikiPortletInstanceOverriddenConfiguration.class,
 					new PortletInstanceSettingsLocator(
 						themeDisplay.getLayout(), portletDisplay.getId()));

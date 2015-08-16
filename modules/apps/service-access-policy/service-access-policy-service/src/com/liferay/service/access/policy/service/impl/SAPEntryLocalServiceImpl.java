@@ -16,7 +16,7 @@ package com.liferay.service.access.policy.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -97,7 +97,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 	@Override
 	public void checkDefaultSAPEntry(long companyId) throws PortalException {
 		SAPConfiguration sapConfiguration =
-			moduleConfigurationFactory.getModuleConfiguration(
+			configurationFactory.getConfiguration(
 				SAPConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, SAPConstants.SERVICE_NAME));
@@ -272,7 +272,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 		}
 	}
 
-	@ServiceReference(type = ModuleConfigurationFactory.class)
-	protected ModuleConfigurationFactory moduleConfigurationFactory;
+	@ServiceReference(type = ConfigurationFactory.class)
+	protected ConfigurationFactory configurationFactory;
 
 }

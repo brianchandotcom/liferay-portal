@@ -16,7 +16,7 @@ package com.liferay.portal.security.sso.ntlm.servlet.filters;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -80,7 +80,7 @@ public class NtlmFilter extends BaseFilter {
 			long companyId = PortalInstances.getCompanyId(request);
 
 			NtlmConfiguration ntlmConfiguration =
-				_moduleConfigurationFactory.getModuleConfiguration(
+				_configurationFactory.getConfiguration(
 					NtlmConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, NtlmConstants.SERVICE_NAME));
@@ -134,7 +134,7 @@ public class NtlmFilter extends BaseFilter {
 
 	protected NtlmManager getNtlmManager(long companyId) throws Exception {
 		NtlmConfiguration ntlmConfiguration =
-			_moduleConfigurationFactory.getModuleConfiguration(
+			_configurationFactory.getConfiguration(
 				NtlmConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, NtlmConstants.SERVICE_NAME));
@@ -315,15 +315,15 @@ public class NtlmFilter extends BaseFilter {
 	}
 
 	@Reference(unbind = "-")
-	protected void setModuleConfigurationFactory(
-		ModuleConfigurationFactory moduleConfigurationFactory) {
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
 
-		_moduleConfigurationFactory = moduleConfigurationFactory;
+		_configurationFactory = configurationFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(NtlmFilter.class);
 
-	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 	private NetlogonConnectionManager _netlogonConnectionManager;
 	private final Map<Long, NtlmManager> _ntlmManagers =
 		new ConcurrentHashMap<>();

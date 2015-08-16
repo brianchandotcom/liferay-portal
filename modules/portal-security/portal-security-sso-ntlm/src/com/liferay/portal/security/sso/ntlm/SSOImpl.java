@@ -14,8 +14,8 @@
 
 package com.liferay.portal.security.sso.ntlm;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.sso.SSO;
@@ -49,14 +49,14 @@ public class SSOImpl implements SSO {
 	public boolean isLoginRedirectRequired(long companyId) {
 		try {
 			NtlmConfiguration ntlmConfiguration =
-				_moduleConfigurationFactory.getModuleConfiguration(
+				_configurationFactory.getConfiguration(
 					NtlmConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, NtlmConstants.SERVICE_NAME));
 
 			return ntlmConfiguration.enabled();
 		}
-		catch (ModuleConfigurationException mce) {
+		catch (ConfigurationException mce) {
 			_log.error("Unable to get NTLM configuration", mce);
 		}
 
@@ -74,14 +74,14 @@ public class SSOImpl implements SSO {
 	}
 
 	@Reference(unbind = "-")
-	protected void setModuleConfigurationFactory(
-		ModuleConfigurationFactory moduleConfigurationFactory) {
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
 
-		_moduleConfigurationFactory = moduleConfigurationFactory;
+		_configurationFactory = configurationFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(SSOImpl.class);
 
-	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.opensso.servlet.filters;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.sso.OpenSSO;
@@ -89,7 +89,7 @@ public class OpenSSOFilter extends BaseFilter {
 	protected OpenSSOConfiguration getOpenSSOConfiguration(long companyId)
 		throws Exception {
 
-		return _moduleConfigurationFactory.getModuleConfiguration(
+		return _configurationFactory.getConfiguration(
 			OpenSSOConfiguration.class,
 			new CompanyServiceSettingsLocator(
 				companyId, OpenSSOConstants.SERVICE_NAME));
@@ -193,10 +193,10 @@ public class OpenSSOFilter extends BaseFilter {
 	}
 
 	@Reference(unbind = "-")
-	protected void setModuleConfigurationFactory(
-		ModuleConfigurationFactory moduleConfigurationFactory) {
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
 
-		_moduleConfigurationFactory = moduleConfigurationFactory;
+		_configurationFactory = configurationFactory;
 	}
 
 	@Reference
@@ -208,7 +208,7 @@ public class OpenSSOFilter extends BaseFilter {
 
 	private static final Log _log = LogFactoryUtil.getLog(OpenSSOFilter.class);
 
-	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 	private OpenSSO _openSSO;
 
 }

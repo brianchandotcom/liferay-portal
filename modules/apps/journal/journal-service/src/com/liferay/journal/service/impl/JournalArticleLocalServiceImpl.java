@@ -59,8 +59,8 @@ import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -7003,9 +7003,9 @@ public class JournalArticleLocalServiceImpl
 
 	protected JournalGroupServiceConfiguration
 			getJournalGroupServiceConfiguration(long groupId)
-		throws ModuleConfigurationException {
+		throws ConfigurationException {
 
-		return moduleConfigurationFactory.getModuleConfiguration(
+		return configurationFactory.getConfiguration(
 			JournalGroupServiceConfiguration.class,
 			new GroupServiceSettingsLocator(
 				groupId, JournalConstants.SERVICE_NAME));
@@ -7775,6 +7775,9 @@ public class JournalArticleLocalServiceImpl
 				" for folder " + folderId);
 	}
 
+	@ServiceReference(type = ConfigurationFactory.class)
+	protected ConfigurationFactory configurationFactory;
+
 	@ServiceReference(type = DDMStorageLinkLocalService.class)
 	protected DDMStorageLinkLocalService ddmStorageLinkLocalService;
 
@@ -7786,9 +7789,6 @@ public class JournalArticleLocalServiceImpl
 
 	@ServiceReference(type = DDMTemplateLocalService.class)
 	protected DDMTemplateLocalService ddmTemplateLocalService;
-
-	@ServiceReference(type = ModuleConfigurationFactory.class)
-	protected ModuleConfigurationFactory moduleConfigurationFactory;
 
 	private static final long _JOURNAL_ARTICLE_CHECK_INTERVAL =
 		JournalServiceConfigurationValues.JOURNAL_ARTICLE_CHECK_INTERVAL

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.security.auto.login.request.header;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
@@ -157,10 +157,10 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 	}
 
 	@Reference(unbind = "-")
-	protected void setModuleConfigurationFactory(
-		ModuleConfigurationFactory moduleConfigurationFactory) {
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
 
-		_moduleConfigurationFactory = moduleConfigurationFactory;
+		_configurationFactory = configurationFactory;
 	}
 
 	private RequestHeaderAutoLoginConfiguration
@@ -169,7 +169,7 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 		try {
 			RequestHeaderAutoLoginConfiguration
 				requestHeaderAutoLoginConfiguration =
-					_moduleConfigurationFactory.getModuleConfiguration(
+					_configurationFactory.getConfiguration(
 						RequestHeaderAutoLoginConfiguration.class,
 						new CompanyServiceSettingsLocator(
 							companyId,
@@ -177,7 +177,7 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 
 			return requestHeaderAutoLoginConfiguration;
 		}
-		catch (ModuleConfigurationException mce) {
+		catch (ConfigurationException mce) {
 			_log.error(
 				"Unable to get request header auto login configuration", mce);
 		}
@@ -188,6 +188,6 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RequestHeaderAutoLogin.class);
 
-	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

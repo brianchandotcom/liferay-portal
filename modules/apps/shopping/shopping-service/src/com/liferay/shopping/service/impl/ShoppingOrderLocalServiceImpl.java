@@ -15,8 +15,8 @@
 package com.liferay.shopping.service.impl;
 
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -783,9 +783,9 @@ public class ShoppingOrderLocalServiceImpl
 
 	private ShoppingGroupServiceOverriddenConfiguration
 			_getShoppingGroupServiceOverriddenConfiguration(long groupId)
-		throws ModuleConfigurationException {
+		throws ConfigurationException {
 
-		return ModuleConfigurationFactoryUtil.getModuleConfiguration(
+		return ConfigurationFactoryUtil.getConfiguration(
 			ShoppingGroupServiceOverriddenConfiguration.class,
 			new GroupServiceSettingsLocator(
 				groupId, ShoppingConstants.SERVICE_NAME));

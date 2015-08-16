@@ -14,7 +14,7 @@
 
 package com.liferay.site.navigation.menu.web.display.context;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,7 +37,7 @@ public class SiteNavigationMenuDisplayContext {
 	public SiteNavigationMenuDisplayContext(
 			HttpServletRequest request,
 			SiteNavigationMenuWebConfiguration navigationMenuWebConfiguration)
-		throws ModuleConfigurationException {
+		throws ConfigurationException {
 
 		_request = request;
 		_siteNavigationMenuWebConfiguration = navigationMenuWebConfiguration;

@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.web.display.context.util;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.display.context.util.BaseStrutsRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -57,7 +57,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 
 				if (Validator.isNotNull(portletResource)) {
 					_wikiGroupServiceOverriddenConfiguration =
-						ModuleConfigurationFactoryUtil.getModuleConfiguration(
+						ConfigurationFactoryUtil.getConfiguration(
 							WikiGroupServiceOverriddenConfiguration.class,
 							new ParameterMapSettingsLocator(
 								getRequest().getParameterMap(),
@@ -67,7 +67,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 				}
 				else {
 					_wikiGroupServiceOverriddenConfiguration =
-						ModuleConfigurationFactoryUtil.getModuleConfiguration(
+						ConfigurationFactoryUtil.getConfiguration(
 							WikiGroupServiceOverriddenConfiguration.class,
 							new GroupServiceSettingsLocator(
 								getSiteGroupId(), WikiConstants.SERVICE_NAME));
@@ -100,7 +100,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 
 				if (Validator.isNotNull(portletResource)) {
 					_wikiPortletInstanceConfiguration =
-						ModuleConfigurationFactoryUtil.getModuleConfiguration(
+						ConfigurationFactoryUtil.getConfiguration(
 							WikiPortletInstanceOverriddenConfiguration.class,
 							new ParameterMapSettingsLocator(
 								getRequest().getParameterMap(),
@@ -109,7 +109,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 				}
 				else {
 					_wikiPortletInstanceConfiguration =
-						ModuleConfigurationFactoryUtil.getModuleConfiguration(
+						ConfigurationFactoryUtil.getConfiguration(
 							WikiPortletInstanceOverriddenConfiguration.class,
 							new PortletInstanceSettingsLocator(
 								getLayout(), getPortletId()));

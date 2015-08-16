@@ -20,20 +20,20 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Jürgen Kappler
  * @author Jorge Ferrer
  */
-public class ModuleConfigurationException extends PortalException {
+public class ConfigurationException extends PortalException {
 
-	public ModuleConfigurationException() {
+	public ConfigurationException() {
 	}
 
-	public ModuleConfigurationException(String msg) {
+	public ConfigurationException(String msg) {
 		super(msg);
 	}
 
-	public ModuleConfigurationException(String msg, Throwable cause) {
+	public ConfigurationException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public ModuleConfigurationException(Throwable cause) {
+	public ConfigurationException(Throwable cause) {
 		super(cause);
 	}
 

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.security.auto.login.request.parameter;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
@@ -140,10 +140,10 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 	}
 
 	@Reference(unbind = "-")
-	protected void setModuleConfigurationFactory(
-		ModuleConfigurationFactory moduleConfigurationFactory) {
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
 
-		_moduleConfigurationFactory = moduleConfigurationFactory;
+		_configurationFactory = configurationFactory;
 	}
 
 	private RequestParameterAutoLoginConfiguration
@@ -152,7 +152,7 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		try {
 			RequestParameterAutoLoginConfiguration
 				requestParameterAutoLoginConfiguration =
-					_moduleConfigurationFactory.getModuleConfiguration(
+					_configurationFactory.getConfiguration(
 						RequestParameterAutoLoginConfiguration.class,
 						new CompanyServiceSettingsLocator(
 							companyId,
@@ -160,7 +160,7 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 
 			return requestParameterAutoLoginConfiguration;
 		}
-		catch (ModuleConfigurationException mce) {
+		catch (ConfigurationException mce) {
 			_log.error(
 				"Unable to get request parameter auto login configuration",
 				mce);
@@ -176,6 +176,6 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RequestParameterAutoLogin.class);
 
-	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

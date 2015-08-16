@@ -98,9 +98,8 @@ public class PortalPreferencesImpl
 				getOwnerId(), getOwnerType(), getOriginalXML(),
 				new HashMap<>(getOriginalPreferences()), isSignedIn());
 		}
-		else {
-			return new PortalPreferencesImpl(_portalPreferences, isSignedIn());
-		}
+
+		return new PortalPreferencesImpl(_portalPreferences, isSignedIn());
 	}
 
 	@Override
@@ -335,7 +334,7 @@ public class PortalPreferencesImpl
 				PortalPreferencesLocalServiceUtil.updatePortalPreferences(
 					_portalPreferences);
 
-				_portalPreferences = reload(getOwnerId(), getOwnerType());
+				_portalPreferences = _reload(getOwnerId(), getOwnerType());
 			}
 		}
 		catch (Throwable t) {
@@ -382,7 +381,7 @@ public class PortalPreferencesImpl
 					int ownerType = getOwnerType();
 
 					com.liferay.portal.model.PortalPreferences
-						portalPreferences = reload(ownerId, ownerType);
+						portalPreferences = _reload(ownerId, ownerType);
 
 					if (portalPreferences == null) {
 						continue;
@@ -431,7 +430,7 @@ public class PortalPreferencesImpl
 		}
 	}
 
-	private com.liferay.portal.model.PortalPreferences reload(
+	private com.liferay.portal.model.PortalPreferences _reload(
 			final long ownerId, final int ownerType)
 		throws Throwable {
 

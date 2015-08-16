@@ -15,7 +15,7 @@
 package com.liferay.wiki.service.impl;
 
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -227,7 +227,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Message boards
 
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-			moduleConfigurationFactory.getModuleConfiguration(
+			configurationFactory.getConfiguration(
 				WikiGroupServiceOverriddenConfiguration.class,
 				new GroupServiceSettingsLocator(
 					node.getGroupId(), WikiConstants.SERVICE_NAME));
@@ -256,7 +256,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiNode node = wikiNodePersistence.findByPrimaryKey(nodeId);
 
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-			moduleConfigurationFactory.getModuleConfiguration(
+			configurationFactory.getConfiguration(
 				WikiGroupServiceOverriddenConfiguration.class,
 				new GroupServiceSettingsLocator(
 					node.getGroupId(), WikiConstants.SERVICE_NAME));
@@ -2121,7 +2121,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			WikiGroupServiceConfiguration
 				wikiGroupServiceConfiguration =
-					moduleConfigurationFactory.getModuleConfiguration(
+					configurationFactory.getConfiguration(
 						WikiGroupServiceOverriddenConfiguration.class,
 						new GroupServiceSettingsLocator(
 							page.getGroupId(), WikiConstants.SERVICE_NAME));
@@ -3080,7 +3080,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-			moduleConfigurationFactory.getModuleConfiguration(
+			configurationFactory.getConfiguration(
 				WikiGroupServiceOverriddenConfiguration.class,
 				new GroupServiceSettingsLocator(
 					page.getGroupId(), WikiConstants.SERVICE_NAME));
@@ -3370,7 +3370,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Social
 
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-			moduleConfigurationFactory.getModuleConfiguration(
+			configurationFactory.getConfiguration(
 				WikiGroupServiceOverriddenConfiguration.class,
 				new GroupServiceSettingsLocator(
 					node.getGroupId(), WikiConstants.SERVICE_NAME));
@@ -3430,8 +3430,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		validate(nodeId, content, format);
 	}
 
-	@ServiceReference(type = ModuleConfigurationFactory.class)
-	protected ModuleConfigurationFactory moduleConfigurationFactory;
+	@ServiceReference(type = ConfigurationFactory.class)
+	protected ConfigurationFactory configurationFactory;
 
 	@ServiceReference(type = WikiGroupServiceConfiguration.class)
 	protected WikiGroupServiceConfiguration wikiGroupServiceConfiguration;

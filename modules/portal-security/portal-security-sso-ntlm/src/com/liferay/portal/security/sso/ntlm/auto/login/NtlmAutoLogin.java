@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.ntlm.auto.login;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
@@ -48,7 +48,7 @@ public class NtlmAutoLogin extends BaseAutoLogin {
 		long companyId = PortalUtil.getCompanyId(request);
 
 		NtlmConfiguration ntlmConfiguration =
-			_moduleConfigurationFactory.getModuleConfiguration(
+			_configurationFactory.getConfiguration(
 				NtlmConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, NtlmConstants.SERVICE_NAME));
@@ -85,12 +85,12 @@ public class NtlmAutoLogin extends BaseAutoLogin {
 	}
 
 	@Reference(unbind = "-")
-	protected void setModuleConfigurationFactory(
-		ModuleConfigurationFactory moduleConfigurationFactory) {
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
 
-		_moduleConfigurationFactory = moduleConfigurationFactory;
+		_configurationFactory = configurationFactory;
 	}
 
-	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

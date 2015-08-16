@@ -14,8 +14,8 @@
 
 package com.liferay.shopping.util;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -1152,9 +1152,9 @@ public class ShoppingUtil {
 
 	private static ShoppingGroupServiceOverriddenConfiguration
 			getShoppingGroupServiceOverriddenConfiguration(long groupId)
-		throws ModuleConfigurationException {
+		throws ConfigurationException {
 
-		return ModuleConfigurationFactoryUtil.getModuleConfiguration(
+		return ConfigurationFactoryUtil.getConfiguration(
 			ShoppingGroupServiceOverriddenConfiguration.class,
 			new GroupServiceSettingsLocator(
 				groupId, ShoppingConstants.SERVICE_NAME));

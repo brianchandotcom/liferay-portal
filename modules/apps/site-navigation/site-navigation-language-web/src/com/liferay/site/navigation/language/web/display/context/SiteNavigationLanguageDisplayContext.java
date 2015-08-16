@@ -14,7 +14,7 @@
 
 package com.liferay.site.navigation.language.web.display.context;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -45,7 +45,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteNavigationLanguageDisplayContext {
 
 	public SiteNavigationLanguageDisplayContext(HttpServletRequest request)
-		throws ModuleConfigurationException {
+		throws ConfigurationException {
 
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.module.configuration;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
@@ -31,14 +31,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Jürgen Kappler
  * @author Jorge Ferrer
  */
-@Component(immediate = true, service = ModuleConfigurationFactory.class)
-public class ModuleConfigurationFactoryImpl
-	implements ModuleConfigurationFactory {
+@Component(immediate = true, service = ConfigurationFactory.class)
+public class ConfigurationFactoryImpl implements ConfigurationFactory {
 
 	@Override
-	public <T> T getModuleConfiguration(
+	public <T> T getConfiguration(
 			Class<T> clazz, SettingsLocator settingsLocator)
-		throws ModuleConfigurationException {
+		throws ConfigurationException {
 
 		try {
 			Settings settings = SettingsFactoryUtil.getSettings(
@@ -59,18 +58,18 @@ public class ModuleConfigurationFactoryImpl
 					typedSettings);
 			}
 
-			ModuleConfigurationInvocationHandler<T>
-				moduleConfigurationInvocationHandler =
-					new ModuleConfigurationInvocationHandler<>(
+			ConfigurationInvocationHandler<T>
+				configurationInvocationHandler =
+					new ConfigurationInvocationHandler<>(
 						clazz, configurationOverrideInstance, typedSettings);
 
-			return moduleConfigurationInvocationHandler.createProxy();
+			return configurationInvocationHandler.createProxy();
 		}
 		catch (NoSuchMethodException | InvocationTargetException |
 			InstantiationException | IllegalAccessException |
 			SettingsException e) {
 
-			throw new ModuleConfigurationException(
+			throw new ConfigurationException(
 				"Unable to load configuration of type " + clazz.getName(), e);
 		}
 	}

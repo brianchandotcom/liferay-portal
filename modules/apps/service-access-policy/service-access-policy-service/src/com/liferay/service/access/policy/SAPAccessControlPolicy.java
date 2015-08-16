@@ -14,8 +14,8 @@
 
 package com.liferay.service.access.policy;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.access.control.AccessControlPolicy;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
@@ -62,14 +62,13 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 		SAPConfiguration sapConfiguration = null;
 
 		try {
-			sapConfiguration =
-				_moduleConfigurationFactory.getModuleConfiguration(
-					SAPConfiguration.class,
-					new CompanyServiceSettingsLocator(
-						CompanyThreadLocal.getCompanyId(),
-						SAPConstants.SERVICE_NAME));
+			sapConfiguration = _configurationFactory.getConfiguration(
+				SAPConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					CompanyThreadLocal.getCompanyId(),
+					SAPConstants.SERVICE_NAME));
 		}
-		catch (ModuleConfigurationException mce) {
+		catch (ConfigurationException mce) {
 			throw new SecurityException(
 				"Unable to get service access policy configuration", mce);
 		}
@@ -252,10 +251,10 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 	}
 
 	@Reference(unbind = "-")
-	protected void setModuleConfigurationFactory(
-		ModuleConfigurationFactory moduleConfigurationFactory) {
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
 
-		_moduleConfigurationFactory = moduleConfigurationFactory;
+		_configurationFactory = configurationFactory;
 	}
 
 	@Reference(unbind = "-")
@@ -265,7 +264,7 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 		_sapEntryLocalService = sapEntryLocalService;
 	}
 
-	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 	private SAPEntryLocalService _sapEntryLocalService;
 
 }

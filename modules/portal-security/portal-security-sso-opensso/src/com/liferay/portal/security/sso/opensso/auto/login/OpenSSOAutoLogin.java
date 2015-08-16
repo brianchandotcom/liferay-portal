@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.opensso.auto.login;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactory;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -228,17 +228,17 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 	protected OpenSSOConfiguration getOpenSSOConfiguration(long companyId)
 		throws Exception {
 
-		return _moduleConfigurationFactory.getModuleConfiguration(
+		return _configurationFactory.getConfiguration(
 			OpenSSOConfiguration.class,
 			new CompanyServiceSettingsLocator(
 				companyId, OpenSSOConstants.SERVICE_NAME));
 	}
 
 	@Reference(unbind = "-")
-	protected void setModuleConfigurationFactory(
-		ModuleConfigurationFactory moduleConfigurationFactory) {
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
 
-		_moduleConfigurationFactory = moduleConfigurationFactory;
+		_configurationFactory = configurationFactory;
 	}
 
 	@Reference
@@ -256,7 +256,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenSSOAutoLogin.class);
 
-	private volatile ModuleConfigurationFactory _moduleConfigurationFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 	private OpenSSO _openSSO;
 	private ScreenNameGenerator _screenNameGenerator;
 

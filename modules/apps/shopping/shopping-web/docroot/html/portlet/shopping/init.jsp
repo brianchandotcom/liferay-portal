@@ -27,7 +27,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
-page import="com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.configuration.module.ConfigurationFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -187,7 +187,7 @@ String currentURL = currentURLObj.toString();
 
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-ShoppingGroupServiceOverriddenConfiguration shoppingGroupServiceOverriddenConfiguration = ModuleConfigurationFactoryUtil.getModuleConfiguration(ShoppingGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(scopeGroupId, ShoppingConstants.SERVICE_NAME));
+ShoppingGroupServiceOverriddenConfiguration shoppingGroupServiceOverriddenConfiguration = ConfigurationFactoryUtil.getConfiguration(ShoppingGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(scopeGroupId, ShoppingConstants.SERVICE_NAME));
 
 Currency currency = Currency.getInstance(shoppingGroupServiceOverriddenConfiguration.getCurrencyId());
 

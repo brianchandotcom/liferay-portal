@@ -14,7 +14,7 @@
 
 package com.liferay.site.navigation.directory.web.display.context;
 
-import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SitesDirectoryDisplayContext {
 
 	public SitesDirectoryDisplayContext(HttpServletRequest request)
-		throws ModuleConfigurationException {
+		throws ConfigurationException {
 
 		_request = request;
 

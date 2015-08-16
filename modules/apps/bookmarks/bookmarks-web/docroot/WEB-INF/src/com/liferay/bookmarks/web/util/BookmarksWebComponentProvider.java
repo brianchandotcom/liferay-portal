@@ -15,7 +15,6 @@
 package com.liferay.bookmarks.web.util;
 
 import com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -40,10 +39,6 @@ public class BookmarksWebComponentProvider {
 		return _bookmarksGroupServiceConfiguration;
 	}
 
-	public SettingsFactory getSettingsFactory() {
-		return _settingsFactory;
-	}
-
 	@Activate
 	protected void activate() {
 		_bookmarksWebComponentProvider = this;
@@ -62,11 +57,6 @@ public class BookmarksWebComponentProvider {
 			bookmarksGroupServiceConfiguration;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
-	}
-
 	protected void unsetBookmarksGroupServiceConfiguration(
 		BookmarksGroupServiceConfiguration bookmarksGroupServiceConfiguration) {
 
@@ -77,6 +67,5 @@ public class BookmarksWebComponentProvider {
 
 	private BookmarksGroupServiceConfiguration
 		_bookmarksGroupServiceConfiguration;
-	private SettingsFactory _settingsFactory;
 
 }

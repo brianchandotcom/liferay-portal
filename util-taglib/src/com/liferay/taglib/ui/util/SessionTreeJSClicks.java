@@ -72,7 +72,9 @@ public class SessionTreeJSClicks {
 				openNodesString = StringUtil.removeFromList(
 					openNodesString, nodeId);
 
-				put(request, treeId, openNodesString, portalPreferences);
+				portalPreferences.setValue(
+					SessionTreeJSClicks.class.getName(), treeId,
+					openNodesString);
 
 				return;
 			}
@@ -90,12 +92,12 @@ public class SessionTreeJSClicks {
 	public static void closeNodes(HttpServletRequest request, String treeId) {
 		while (true) {
 			try {
-				String openNodesString = StringPool.BLANK;
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-				put(
-					request, treeId, openNodesString,
-					PortletPreferencesFactoryUtil.getPortalPreferences(
-						request));
+				portalPreferences.setValue(
+					SessionTreeJSClicks.class.getName(), treeId,
+					StringPool.BLANK);
 
 				return;
 			}
@@ -126,7 +128,9 @@ public class SessionTreeJSClicks {
 						openNodesString, nodeId);
 				}
 
-				put(request, treeId, openNodesString, portalPreferences);
+				portalPreferences.setValue(
+					SessionTreeJSClicks.class.getName(), treeId,
+					openNodesString);
 
 				return;
 			}
@@ -193,7 +197,9 @@ public class SessionTreeJSClicks {
 
 				openNodesString = StringUtil.add(openNodesString, nodeId);
 
-				put(request, treeId, openNodesString, portalPreferences);
+				portalPreferences.setValue(
+					SessionTreeJSClicks.class.getName(), treeId,
+					openNodesString);
 
 				return;
 			}
@@ -223,7 +229,9 @@ public class SessionTreeJSClicks {
 					openNodesString = StringUtil.add(openNodesString, nodeId);
 				}
 
-				put(request, treeId, openNodesString, portalPreferences);
+				portalPreferences.setValue(
+					SessionTreeJSClicks.class.getName(), treeId,
+					openNodesString);
 
 				return;
 			}
@@ -256,22 +264,6 @@ public class SessionTreeJSClicks {
 		}
 
 		return layoutIds;
-	}
-
-	protected static void put(
-		HttpServletRequest request, String key, String value,
-		PortalPreferences portalPreferences) {
-
-		try {
-			portalPreferences.setValue(
-				SessionTreeJSClicks.class.getName(), key, value);
-		}
-		catch (ConcurrentModificationException cme) {
-			throw cme;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

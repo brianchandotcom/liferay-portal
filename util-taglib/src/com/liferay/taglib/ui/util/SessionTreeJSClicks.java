@@ -63,7 +63,8 @@ public class SessionTreeJSClicks {
 
 		while (true) {
 			try {
-				PortalPreferences portalPreferences = get(request);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
 				String openNodesString = portalPreferences.getValue(
 					SessionTreeJSClicks.class.getName(), treeId);
@@ -91,7 +92,10 @@ public class SessionTreeJSClicks {
 			try {
 				String openNodesString = StringPool.BLANK;
 
-				put(request, treeId, openNodesString, get(request));
+				put(
+					request, treeId, openNodesString,
+					PortletPreferencesFactoryUtil.getPortalPreferences(
+						request));
 
 				return;
 			}
@@ -111,7 +115,8 @@ public class SessionTreeJSClicks {
 
 		while (true) {
 			try {
-				PortalPreferences portalPreferences = get(request);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
 				String openNodesString = portalPreferences.getValue(
 					SessionTreeJSClicks.class.getName(), treeId);
@@ -140,7 +145,8 @@ public class SessionTreeJSClicks {
 		HttpServletRequest request, String treeId) {
 
 		try {
-			PortalPreferences portalPreferences = get(request);
+			PortalPreferences portalPreferences =
+				PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
 			return portalPreferences.getValue(
 				SessionTreeJSClicks.class.getName(), treeId);
@@ -179,7 +185,8 @@ public class SessionTreeJSClicks {
 
 		while (true) {
 			try {
-				PortalPreferences portalPreferences = get(request);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
 				String openNodesString = portalPreferences.getValue(
 					SessionTreeJSClicks.class.getName(), treeId);
@@ -206,7 +213,8 @@ public class SessionTreeJSClicks {
 
 		while (true) {
 			try {
-				PortalPreferences portalPreferences = get(request);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
 				String openNodesString = portalPreferences.getValue(
 					SessionTreeJSClicks.class.getName(), treeId);
@@ -227,17 +235,6 @@ public class SessionTreeJSClicks {
 
 				return;
 			}
-		}
-	}
-
-	protected static PortalPreferences get(HttpServletRequest request) {
-		try {
-			return PortletPreferencesFactoryUtil.getPortalPreferences(request);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			return null;
 		}
 	}
 

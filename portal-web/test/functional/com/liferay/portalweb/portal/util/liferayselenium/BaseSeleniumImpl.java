@@ -486,6 +486,16 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void javaScriptMouseDown(String locator) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void javaScriptMouseUp(String locator) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void keyDownAndWait(String locator, String keySequence) {
 		super.keyDown(locator, keySequence);
 		super.waitForPageToLoad("30000");

@@ -71,18 +71,15 @@ public class PortalPreferencesImpl
 		com.liferay.portal.model.PortalPreferences portalPreferences,
 		boolean signedIn) {
 
-		super(
+		this(
 			portalPreferences.getOwnerId(), portalPreferences.getOwnerType(),
-			portalPreferences.getPreferences(), null);
-
-		setOriginalPreferences(
+			portalPreferences.getPreferences(),
 			PortletPreferencesFactoryImpl.createPreferencesMap(
-				portalPreferences.getPreferences()));
+				portalPreferences.getPreferences()),
+			signedIn);
 
 		_portalPreferences = (com.liferay.portal.model.PortalPreferences)
 			portalPreferences.clone();
-
-		_signedIn = signedIn;
 	}
 
 	public PortalPreferencesImpl(

@@ -406,19 +406,13 @@ public class PortalPreferencesImpl
 
 					setOriginalXML(portalPreferences.getPreferences());
 
-					setPortalPreferences(portalPreferences);
+					_portalPreferences = portalPreferences;
 				}
 				else {
 					throw e;
 				}
 			}
 		}
-	}
-
-	protected void setPortalPreferences(
-		com.liferay.portal.model.PortalPreferences portalPreferences) {
-
-		_portalPreferences = portalPreferences;
 	}
 
 	private String _encodeKey(String namespace, String key) {

@@ -12,23 +12,15 @@
  * details.
  */
 
-package com.liferay.site.navigation.breadcrumb.web.settings.internal;
-
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbPortletInstanceConfiguration;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.site.navigation.breadcrumb.web.constants;
 
 /**
- * @author Juergen Kappler
+ * @author Eudaldo Alonso
  */
-@Component
-public class BreadcrumbPortletInstanceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+public class SiteNavigationBreadcrumbPortletKeys {
 
-	@Override
-	public Class<?> getConfigurationBeanClass() {
-		return BreadcrumbPortletInstanceConfiguration.class;
-	}
+	public static final String SITE_NAVIGATION_BREADCRUMB =
+		"com_liferay_site_navigation_breadcrumb_web_portlet_" +
+			"SiteNavigationBreadcrumbPortlet";
 
 }

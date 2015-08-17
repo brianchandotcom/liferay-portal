@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = BreadcrumbWebUpgrade.class)
-public class BreadcrumbWebUpgrade {
+@Component(immediate = true, service = SiteNavigationBreadcrumbWebUpgrade.class)
+public class SiteNavigationBreadcrumbWebUpgrade {
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(

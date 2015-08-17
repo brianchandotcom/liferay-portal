@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.site.navigation.breadcrumb.web.configuration;
+package com.liferay.site.navigation.breadcrumb.web.settings.internal;
 
-import aQute.bnd.annotation.metatype.Meta;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbPortletInstanceConfiguration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Juergen Kappler
  */
-@Meta.OCD(
-	id = "com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbWebConfiguration"
-)
-public interface BreadcrumbWebConfiguration {
+@Component
+public class SiteNavigationBreadcrumbPortletInstanceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	@Meta.AD(deflt = "breadcrumb-horizontal-ftl", required = false)
-	public String ddmTemplateKeyDefault();
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return SiteNavigationBreadcrumbPortletInstanceConfiguration.class;
+	}
 
 }

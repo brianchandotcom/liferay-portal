@@ -15,7 +15,7 @@
 package com.liferay.site.navigation.breadcrumb.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.site.navigation.breadcrumb.web.upgrade.BreadcrumbWebUpgrade;
+import com.liferay.site.navigation.breadcrumb.web.upgrade.SiteNavigationBreadcrumbWebUpgrade;
 
 import javax.portlet.Portlet;
 
@@ -49,11 +49,11 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-public class BreadcrumbPortlet extends MVCPortlet {
+public class SiteNavigationBreadcrumbPortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
-	protected void setBreadcrumbWebUpgrade(
-		BreadcrumbWebUpgrade breadcrumbWebUpgrade) {
+	protected void setSiteNavigationBreadcrumbWebUpgrade(
+		SiteNavigationBreadcrumbWebUpgrade breadcrumbWebUpgrade) {
 	}
 
 }

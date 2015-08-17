@@ -16,7 +16,7 @@ package com.liferay.site.navigation.breadcrumb.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.site.navigation.breadcrumb.web.constants.BreadcrumbPortletKeys;
+import com.liferay.site.navigation.breadcrumb.web.constants.SiteNavigationBreadcrumbPortletKeys;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -29,10 +29,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + BreadcrumbPortletKeys.BREADCRUMB},
+	property = {"javax.portlet.name=" + SiteNavigationBreadcrumbPortletKeys.SITE_NAVIGATION_BREADCRUMB},
 	service = ConfigurationAction.class
 )
-public class BreadcrumbConfigurationAction extends DefaultConfigurationAction {
+public class SiteNavigationBreadcrumbConfigurationAction
+	extends DefaultConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {

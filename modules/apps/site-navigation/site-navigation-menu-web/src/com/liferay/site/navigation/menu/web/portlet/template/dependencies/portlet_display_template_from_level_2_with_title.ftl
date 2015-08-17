@@ -5,7 +5,11 @@
 
 	<div class="nav-menu nav-menu-style-${bulletStyle}">
 		<h2>
-			<a href="${rootNavigationItem.getRegularURL()}" ${rootNavigationItem.getTarget()}>${rootNavigationItem.getName()}</a>
+			<#if rootNavigationItem.isBrowsable()>
+				<a href="${rootNavigationItem.getRegularURL()!""}" ${rootNavigationItem.getTarget()}>${htmlUtil.escape(rootNavigationItem.getName())}</a>
+			<#else>
+				${htmlUtil.escape(rootNavigationItem.getName())}
+			</#if>
 		</h2>
 
 		<@displayChildNavigation childLayoutLevel=2 childNavigationItems=rootNavigationItem.getChildren() includeAllChildEntries=false />

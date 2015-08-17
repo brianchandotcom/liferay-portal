@@ -51,7 +51,13 @@
 			<div class="breadcrumb breadcrumb-horizontal">
 				<ul>
 					<#list entries as entry>
-						<li><a href="${entry.getURL()!""}">${htmlUtil.escape(entry.getName())}</a></li>
+						<li>
+							<#if entry.isBrowsable()>
+								<a href="${entry.getURL()!""}" ${entry.getTarget()}>${htmlUtil.escape(entry.getName())}</a>
+							<#else>
+								${htmlUtil.escape(entry.getName())}
+							</#if>
+						</li>
 					</#list>
 				</ul>
 			</div>
@@ -63,7 +69,11 @@
 			<ul class="layouts level-${layoutLevel}">
 				<#list rootNavigationItems as rootNavigationItem>
 					<li class="open">
-						<a href="${rootNavigationItem.getRegularURL()!""} ">${htmlUtil.escape(rootNavigationItem.getName())}</a>
+						<#if entry.isBrowsable()>
+							<a href="${rootNavigationItem.getRegularURL()!""}" ${rootNavigationItem.getTarget()}>${htmlUtil.escape(rootNavigationItem.getName())}</a>
+						<#else>
+							${htmlUtil.escape(rootNavigationItem.getName())}
+						</#if>
 
 						<#if includeAllChildEntries || rootNavigationItem.isInNavigation(entries) >
 							<@displayChildNavigation childLayoutLevel=(layoutLevel + 1) childNavigationItems=rootNavigationItem.getChildren() includeAllChildEntries=includeAllChildEntries />

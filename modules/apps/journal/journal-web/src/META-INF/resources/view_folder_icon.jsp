@@ -17,11 +17,22 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalFolder folder = (JournalFolder)request.getAttribute("view_entries.jsp-folder");
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-String folderImage = (String)request.getAttribute("view_entries.jsp-folderImage");
+JournalFolder folder = null;
 
-PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempRowURL");
+if (row != null) {
+	folder = (JournalFolder)row.getObject();
+}
+else {
+	folder = (JournalFolder)request.getAttribute("view_entries.jsp-folder");
+}
+
+PortletURL rowURL = liferayPortletResponse.createRenderURL();
+
+rowURL.setParameter("redirect", currentURL);
+rowURL.setParameter("groupId", String.valueOf(folder.getGroupId()));
+rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 %>
 
 <liferay-ui:app-view-entry
@@ -36,5 +47,5 @@ PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempR
 	thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
 	thumbnailStyle="max-height: 128px; max-width: 128px;"
 	title="<%= HtmlUtil.escape(folder.getName()) %>"
-	url="<%= tempRowURL.toString() %>"
+	url="<%= rowURL.toString() %>"
 />

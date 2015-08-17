@@ -35,9 +35,9 @@ import com.liferay.portlet.documentlibrary.display.context.DLViewFileVersionDisp
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManagerUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.IOException;
 

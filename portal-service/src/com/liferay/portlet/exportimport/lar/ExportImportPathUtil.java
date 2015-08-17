@@ -76,14 +76,14 @@ public class ExportImportPathUtil {
 	 *
 	 * <p>
 	 * For example, if you had the entity path of
-	 * <code>/group/10184/com.liferay.portlet.dynamicdatamapping.model.DDMStructure/10951.xml</code>,
+	 * <code>/group/10184/com.liferay.portlet.dynamicdatamapping.DDMStructure/10951.xml</code>,
 	 * the returned expando-specific path would be the following:
 	 * </p>
 	 *
 	 * <p>
 	 * <pre>
 	 * <code>
-	 * /group/10184/com.liferay.portlet.dynamicdatamapping.model.DDMStructure/10951-expando.xml
+	 * /group/10184/com.liferay.portlet.dynamicdatamapping.DDMStructure/10951-expando.xml
 	 * </code>
 	 * </pre>
 	 * </p>

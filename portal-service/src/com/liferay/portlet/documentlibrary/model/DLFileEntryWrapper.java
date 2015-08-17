@@ -373,7 +373,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues> getDDMFormValuesMap(
+	public Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.DDMFormValues> getDDMFormValuesMap(
 		long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntry.getDDMFormValuesMap(fileVersionId);

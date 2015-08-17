@@ -18,21 +18,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.exportimport.lar.PortletDataContext;
-import com.liferay.portlet.exportimport.lar.PortletDataException;
 
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.portlet.PortletRequest;
 
 /**
  * @author Leonardo Barros
@@ -71,11 +63,6 @@ public interface DDMStructureManager {
 
 	public void deleteStructure(long structureId) throws PortalException;
 
-	public <T extends StagedModel> Element exportDDMStructureStagedModel(
-			PortletDataContext portletDataContext, T referrerStagedModel,
-			long structureId, String referenceType)
-		throws PortletDataException;
-
 	public String extractAttributes(
 			long structureId, DDMFormValues ddmFormValues, Locale locale)
 		throws PortalException;
@@ -96,9 +83,6 @@ public interface DDMStructureManager {
 
 	public List<DDMStructure> getClassStructures(
 		long companyId, long classNameId, int start, int end);
-
-	public DDMForm getDDMForm(PortletRequest portletRequest)
-		throws PortalException;
 
 	public JSONArray getDDMFormFieldsJSONArray(long structureId, String script)
 		throws PortalException;

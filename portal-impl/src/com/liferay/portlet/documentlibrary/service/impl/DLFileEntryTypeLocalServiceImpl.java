@@ -46,6 +46,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.dynamicdatamapping.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureLink;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureLinkManagerUtil;
@@ -53,7 +54,6 @@ import com.liferay.portlet.dynamicdatamapping.DDMStructureManager;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManager;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
 import java.util.ArrayList;
 import java.util.HashMap;

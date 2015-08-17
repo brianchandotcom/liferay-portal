@@ -14,15 +14,15 @@
 
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.taglib.servlet.ServletContextUtil;
 import com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base.BaseTemplateSelectorTag;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
+import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -48,7 +48,7 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 		DDMTemplate portletDisplayDDMTemplate = getPortletDisplayDDMTemplate();
 
 		if (portletDisplayDDMTemplate != null) {
-			return PortletDisplayTemplateManagerUtil.getDisplayStyle(
+			return PortletDisplayTemplateUtil.getDisplayStyle(
 				portletDisplayDDMTemplate.getTemplateKey());
 		}
 
@@ -87,7 +87,7 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 			displayStyle = getDefaultDisplayStyle();
 		}
 
-		return PortletDisplayTemplateManagerUtil.getDDMTemplate(
+		return PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
 			getDisplayStyleGroupId(), PortalUtil.getClassNameId(getClassName()),
 			displayStyle, true);
 	}

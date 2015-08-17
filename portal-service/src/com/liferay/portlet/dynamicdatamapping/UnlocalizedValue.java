@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.model;
+package com.liferay.portlet.dynamicdatamapping;
 
-import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -24,31 +23,22 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author Pablo Carvalho
+ * @author Marcellus Tavares
  */
-public class LocalizedValue implements Value {
+public class UnlocalizedValue implements Value {
 
-	public LocalizedValue() {
-		this(LocaleUtil.getDefault());
+	public UnlocalizedValue(String value) {
+		_values.put(LocaleUtil.ROOT, value);
 	}
 
-	public LocalizedValue(Locale defaultLocale) {
-		setDefaultLocale(defaultLocale);
-	}
-
-	public LocalizedValue(LocalizedValue localizedValue) {
-		_defaultLocale = localizedValue._defaultLocale;
-
-		Map<Locale, String> values = localizedValue._values;
-
-		for (Map.Entry<Locale, String> entry : values.entrySet()) {
-			addString(entry.getKey(), entry.getValue());
-		}
+	public UnlocalizedValue(UnlocalizedValue unlocalizedValue) {
+		_values.put(
+			LocaleUtil.ROOT, unlocalizedValue.getString(LocaleUtil.ROOT));
 	}
 
 	@Override
 	public void addString(Locale locale, String value) {
-		_values.put(locale, value);
+		_values.put(LocaleUtil.ROOT, value);
 	}
 
 	@Override
@@ -57,15 +47,13 @@ public class LocalizedValue implements Value {
 			return true;
 		}
 
-		if (!(obj instanceof LocalizedValue)) {
+		if (!(obj instanceof UnlocalizedValue)) {
 			return false;
 		}
 
-		LocalizedValue localizedValue = (LocalizedValue)obj;
+		UnlocalizedValue unlocalizedValue = (UnlocalizedValue)obj;
 
-		if (Validator.equals(_defaultLocale, localizedValue._defaultLocale) &&
-			Validator.equals(_values, localizedValue._values)) {
-
+		if (Validator.equals(_values, unlocalizedValue._values)) {
 			return true;
 		}
 
@@ -79,18 +67,12 @@ public class LocalizedValue implements Value {
 
 	@Override
 	public Locale getDefaultLocale() {
-		return _defaultLocale;
+		return LocaleUtil.ROOT;
 	}
 
 	@Override
 	public String getString(Locale locale) {
-		String value = _values.get(locale);
-
-		if (value == null) {
-			value = _values.get(_defaultLocale);
-		}
-
-		return value;
+		return _values.get(LocaleUtil.ROOT);
 	}
 
 	@Override
@@ -100,22 +82,19 @@ public class LocalizedValue implements Value {
 
 	@Override
 	public int hashCode() {
-		int hash = HashUtil.hash(0, _defaultLocale);
-
-		return HashUtil.hash(hash, _values);
+		return _values.hashCode();
 	}
 
 	@Override
 	public boolean isLocalized() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public void setDefaultLocale(Locale defaultLocale) {
-		_defaultLocale = defaultLocale;
+		throw new UnsupportedOperationException();
 	}
 
-	private Locale _defaultLocale;
 	private final Map<Locale, String> _values = new HashMap<>();
 
 }

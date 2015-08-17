@@ -33,9 +33,9 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Collections;

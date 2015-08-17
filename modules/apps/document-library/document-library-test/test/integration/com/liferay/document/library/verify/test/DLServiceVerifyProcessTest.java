@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
-import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -58,11 +58,11 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.UnlocalizedValue;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
@@ -365,7 +365,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 			DDMFormXSDDeserializerUtil.deserialize(new String(bytes));
 
 		serviceContext.setAttribute(
-			"ddmForm", DDMBeanCopyUtil.copyDDMForm(ddmForm));
+			"ddmForm", DDMBeanTranslatorUtil.translate(ddmForm));
 
 		User user = TestPropsValues.getUser();
 
@@ -384,7 +384,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 			ddmStructures.get(0);
 
 		Map<String,
-			com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues>
+			com.liferay.portlet.dynamicdatamapping.DDMFormValues>
 				ddmFormValuesMap = getDDMFormValuesMap(
 					ddmStructure.getStructureKey(), user.getLocale());
 

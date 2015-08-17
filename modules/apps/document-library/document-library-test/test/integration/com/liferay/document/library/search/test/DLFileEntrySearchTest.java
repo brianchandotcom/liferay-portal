@@ -22,7 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.search.TestOrderHelper;
-import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexerUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -63,9 +63,9 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.LocalizedValue;
 
 import java.io.File;
 import java.io.InputStream;
@@ -273,7 +273,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		String content = "Content: Enterprise. Open Source. For Life.";
 
 		DDMFormValues ddmFormValues = createDDMFormValues(
-			DDMBeanCopyUtil.copyDDMForm(_ddmStructure.getDDMForm()));
+			DDMBeanTranslatorUtil.translate(_ddmStructure.getDDMForm()));
 
 		for (String keyword : keywords) {
 			ddmFormValues.addDDMFormFieldValue(
@@ -335,7 +335,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	}
 
 	protected DDMFormValues createDDMFormValues(
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm) {
+		com.liferay.portlet.dynamicdatamapping.DDMForm ddmForm) {
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 

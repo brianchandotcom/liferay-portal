@@ -47,7 +47,7 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel, TreeModel
 
 	public long getDataRepositoryId();
 
-	public java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues> getDDMFormValuesMap(
+	public java.util.Map<java.lang.String, com.liferay.portlet.dynamicdatamapping.DDMFormValues> getDDMFormValuesMap(
 		long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

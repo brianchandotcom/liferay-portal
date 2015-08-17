@@ -18,21 +18,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-import com.liferay.portlet.exportimport.lar.PortletDataContext;
-import com.liferay.portlet.exportimport.lar.PortletDataException;
 
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.portlet.PortletRequest;
 
 /**
  * @author Leonardo Barros
@@ -64,16 +56,6 @@ public class DDMStructureManagerUtil {
 		throws PortalException {
 
 		_ddmStructureManager.deleteStructure(structureId);
-	}
-
-	public static <T extends StagedModel> Element exportDDMStructureStagedModel(
-			PortletDataContext portletDataContext, T referrerStagedModel,
-			long structureId, String referenceType)
-		throws PortletDataException {
-
-		return _ddmStructureManager.exportDDMStructureStagedModel(
-			portletDataContext, referrerStagedModel, structureId,
-			referenceType);
 	}
 
 	public static String extractAttributes(
@@ -120,12 +102,6 @@ public class DDMStructureManagerUtil {
 
 		return _ddmStructureManager.getClassStructures(
 			companyId, classNameId, start, end);
-	}
-
-	public static DDMForm getDDMForm(PortletRequest portletRequest)
-		throws PortalException {
-
-		return _ddmStructureManager.getDDMForm(portletRequest);
 	}
 
 	public static JSONArray getDDMFormFieldsJSONArray(

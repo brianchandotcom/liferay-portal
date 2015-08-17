@@ -17,7 +17,6 @@ package com.liferay.portlet.dynamicdatamapping;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 /**
  * @author Rafael Praxedes
@@ -35,12 +34,6 @@ public class StorageEngineManagerUtil {
 
 	public static void deleteByClass(long classPK) throws PortalException {
 		_storageEngineManager.deleteByClass(classPK);
-	}
-
-	public static void deleteByDDMStructure(long ddmStructureId)
-		throws PortalException {
-
-		_storageEngineManager.deleteByDDMStructure(ddmStructureId);
 	}
 
 	public static DDMFormValues getDDMFormValues(long classPK)

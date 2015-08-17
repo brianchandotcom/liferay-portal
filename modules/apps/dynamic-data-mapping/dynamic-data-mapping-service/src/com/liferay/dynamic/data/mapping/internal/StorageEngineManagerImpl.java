@@ -16,12 +16,12 @@ package com.liferay.dynamic.data.mapping.internal;
 
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DDMBeanCopyUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManager;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,8 +41,7 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 		try {
 			return _storageEngine.create(
 				companyId, ddmStructureId,
-				DDMBeanCopyUtil.copyDDMFormValues(ddmFormValues),
-				serviceContext);
+				_ddmBeanTranslator.translate(ddmFormValues), serviceContext);
 		}
 		catch (PortalException pe) {
 			throw translate(pe);
@@ -55,15 +54,8 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	}
 
 	@Override
-	public void deleteByDDMStructure(long ddmStructureId)
-		throws PortalException {
-
-		_storageEngine.deleteByDDMStructure(ddmStructureId);
-	}
-
-	@Override
 	public DDMFormValues getDDMFormValues(long classPK) throws PortalException {
-		return DDMBeanCopyUtil.copyDDMFormValues(
+		return _ddmBeanTranslator.translate(
 			_storageEngine.getDDMFormValues(classPK));
 	}
 
@@ -73,7 +65,7 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return DDMBeanCopyUtil.copyDDMFormValues(
+		return _ddmBeanTranslator.translate(
 			_ddm.getDDMFormValues(
 				ddmStructureId, fieldNamespace, serviceContext));
 	}
@@ -86,7 +78,7 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 
 		try {
 			_storageEngine.update(
-				classPK, DDMBeanCopyUtil.copyDDMFormValues(ddmFormValues),
+				classPK, _ddmBeanTranslator.translate(ddmFormValues),
 				serviceContext);
 		}
 		catch (PortalException pe) {
@@ -97,6 +89,11 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	@Reference
 	protected void setDDM(DDM ddm) {
 		_ddm = ddm;
+	}
+
+	@Reference
+	protected void setDDMBeanTranslator(DDMBeanTranslator ddmBeanTranslator) {
+		_ddmBeanTranslator = ddmBeanTranslator;
 	}
 
 	@Reference
@@ -117,6 +114,7 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	}
 
 	private DDM _ddm;
+	private DDMBeanTranslator _ddmBeanTranslator;
 	private StorageEngine _storageEngine;
 
 }

@@ -31,7 +31,7 @@
 		>
 			<jvmarg value="-Dtagbuilder.components.xml=liferay-ddm.xml" />
 			<jvmarg value="-Dtagbuilder.copyright.year=present" />
-			<jvmarg value="-Dtagbuilder.docroot.dir=src/META-INF/resources/" />
+			<jvmarg value="-Dtagbuilder.jsp.parent.dir=src/META-INF/resources/" />
 			<jvmarg value="-Dtagbuilder.java.dir=src/com/liferay/dynamic/data/mapping/taglib/servlet/" />
 			<jvmarg value="-Dtagbuilder.java.package=com.liferay.dynamic.data.mapping.taglib.servlet" />
 			<jvmarg value="-Dtagbuilder.jsp.common.init.path=/init.jsp" />

@@ -26,8 +26,7 @@ import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 
 import javax.portlet.PortletPreferences;
 
@@ -86,8 +85,8 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 				false);
 
 		if (ddmTemplate != null) {
-			getPortletDisplayTemplate().exportDDMTemplateStagedModel(
-				portletDataContext, portletId, ddmTemplate.getTemplateId());
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, portletId, ddmTemplate);
 		}
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
@@ -145,12 +144,6 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 		}
 
 		return 0;
-	}
-
-	protected PortletDisplayTemplate getPortletDisplayTemplate() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		return registry.getService(PortletDisplayTemplate.class);
 	}
 
 }

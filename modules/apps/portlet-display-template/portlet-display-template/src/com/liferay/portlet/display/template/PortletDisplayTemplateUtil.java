@@ -18,8 +18,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portlet.exportimport.lar.PortletDataContext;
-import com.liferay.portlet.exportimport.lar.PortletDataException;
 
 import java.util.List;
 import java.util.Map;
@@ -145,15 +143,6 @@ public class PortletDisplayTemplateUtil {
 
 		return getPortletDisplayTemplate().renderDDMTemplate(
 			request, response, ddmTemplateId, entries, contextObjects);
-	}
-
-	public void exportDDMTemplateStagedModel(
-			PortletDataContext portletDataContext, String portletId,
-			long ddmTemplateId)
-		throws PortletDataException {
-
-		getPortletDisplayTemplate().exportDDMTemplateStagedModel(
-			portletDataContext, portletId, ddmTemplateId);
 	}
 
 	private static final ServiceTracker

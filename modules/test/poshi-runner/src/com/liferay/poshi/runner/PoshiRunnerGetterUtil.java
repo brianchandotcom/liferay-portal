@@ -287,6 +287,10 @@ public class PoshiRunnerGetterUtil {
 						parameterValue);
 				}
 
+				if (parameterValue.contains("\'")) {
+					parameterValue = parameterValue.replaceAll("\\\\'", "'");
+				}
+
 				params.add(parameterValue);
 			}
 

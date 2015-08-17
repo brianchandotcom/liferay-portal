@@ -25,16 +25,16 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface CXFEndpointPublisherConfiguration {
 
-	@Meta.AD(required = true)
-	public String contextPath();
-
-	@Meta.AD(name = "required.extensions", required = false)
-	public String[] extensions();
-
 	@Meta.AD(
 		deflt = "auth.verifier.PortalSessionAuthVerifier.urls.includes=*",
 		name = "auth.verifier.properties", required = false
 	)
 	public String[] authVerifierProperties();
+
+	@Meta.AD(required = true)
+	public String contextPath();
+
+	@Meta.AD(name = "required.extensions", required = false)
+	public String[] extensions();
 
 }

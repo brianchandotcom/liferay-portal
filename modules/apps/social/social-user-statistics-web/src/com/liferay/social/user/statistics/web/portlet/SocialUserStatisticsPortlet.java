@@ -15,8 +15,8 @@
 package com.liferay.social.user.statistics.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.social.user.statistics.web.constants.UserStatisticsPortletKeys;
-import com.liferay.social.user.statistics.web.upgrade.UserStatisticsWebUpgrade;
+import com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPortletKeys;
+import com.liferay.social.user.statistics.web.upgrade.SocialUserStatisticsWebUpgrade;
 
 import javax.portlet.Portlet;
 
@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + UserStatisticsPortletKeys.USER_STATISTICS,
+		"javax.portlet.name=" + SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS,
 		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
@@ -48,11 +48,11 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-public class UserStatisticsPortlet extends MVCPortlet {
+public class SocialUserStatisticsPortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
-	protected void setUserStatisticsWebUpgrade(
-		UserStatisticsWebUpgrade userStatisticsWebUpgrade) {
+	protected void setSocialUserStatisticsWebUpgrade(
+		SocialUserStatisticsWebUpgrade userStatisticsWebUpgrade) {
 	}
 
 }

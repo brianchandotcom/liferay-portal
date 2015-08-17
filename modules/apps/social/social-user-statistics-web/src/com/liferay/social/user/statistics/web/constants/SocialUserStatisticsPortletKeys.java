@@ -17,9 +17,10 @@ package com.liferay.social.user.statistics.web.constants;
 /**
  * @author Iván Zaera
  */
-public class UserStatisticsPortletKeys {
+public class SocialUserStatisticsPortletKeys {
 
-	public static final String USER_STATISTICS =
-		"com_liferay_social_user_statistics_web_portlet_UserStatisticsPortlet";
+	public static final String SOCIAL_USER_STATISTICS =
+		"com_liferay_social_user_statistics_web_portlet_" +
+			"SocialUserStatisticsPortlet";
 
 }

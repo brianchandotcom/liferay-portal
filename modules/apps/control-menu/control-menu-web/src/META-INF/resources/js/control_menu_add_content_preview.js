@@ -185,10 +185,16 @@ AUI.add(
 
 				var tooltip = instance._getTooltip();
 
-				tooltip.set(BODY_CONTENT, TPL_LOADING);
-				tooltip.set(STR_ALIGN_NODE, currentNode);
+				if (!tooltip.get('visible') || !currentNode.compareTo(instance._panelNode)) {
+					tooltip.hide();
 
-				instance._loadPreviewTask(currentNode.attr('data-class-name'), currentNode.attr('data-class-pk'));
+					instance._panelNode = currentNode;
+
+					tooltip.set(BODY_CONTENT, TPL_LOADING);
+					tooltip.set(STR_ALIGN_NODE, currentNode);
+
+					instance._loadPreviewTask(currentNode.attr('data-class-name'), currentNode.attr('data-class-pk'));
+				}
 			}
 		};
 

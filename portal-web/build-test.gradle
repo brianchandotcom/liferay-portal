@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.GradleUtil
+
 buildscript {
 	repositories {
 		mavenLocal()
@@ -89,7 +91,7 @@ runPoshi {
 	jvmArgs "-Dfile.encoding=UTF-8"
 }
 
-if (project.properties["local"] == "true") {
+if (GradleUtil.getProperty(project, "local", false)) {
 	dependencies {
 		poshiRunner fileTree(dir: localPoshiDir, include: "*.jar")
 	}

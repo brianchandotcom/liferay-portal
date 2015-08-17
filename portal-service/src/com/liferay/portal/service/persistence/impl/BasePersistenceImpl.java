@@ -28,8 +28,11 @@ import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NullSafeStringComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
@@ -425,11 +428,24 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 		String[] orderByFields = orderByComparator.getOrderByFields();
 
-		for (int i = 0; i < orderByFields.length; i++) {
+		String dbType = _db.getType();
+
+		int length = orderByFields.length;
+
+		if (dbType.equals(DB.TYPE_SYBASE)) {
+			int orderByMax = GetterUtil.getInteger(
+				PropsUtil.get(PropsKeys.DATABASE_SYBASE_ORDER_BY_MAXIMUM));
+
+			if (orderByMax < length) {
+				length = orderByMax;
+			}
+		}
+
+		for (int i = 0; i < length; i++) {
 			query.append(
 				getColumnName(entityAlias, orderByFields[i], sqlQuery));
 
-			if ((i + 1) < orderByFields.length) {
+			if ((i + 1) < length) {
 				if (orderByComparator.isAscending(orderByFields[i])) {
 					query.append(ORDER_BY_ASC_HAS_NEXT);
 				}

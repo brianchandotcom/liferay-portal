@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.GradleUtil
+
 buildCSS {
 	ext {
 		autoClean = false
@@ -14,4 +16,13 @@ dependencies {
 	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
 	compile group: "org.seleniumhq.selenium", name: "selenium-java", version: "2.44.0"
 	compile group: "org.sikuli", name: "sikuli-api", version: "1.2.0"
+}
+
+task deployWithDependencies(type: Copy)
+
+deployWithDependencies {
+	from configurations.runtime
+	from jar
+
+	into GradleUtil.getProperty(project, "destinationDir", (File)null)
 }

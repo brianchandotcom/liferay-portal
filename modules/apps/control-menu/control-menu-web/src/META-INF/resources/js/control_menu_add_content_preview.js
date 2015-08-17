@@ -82,6 +82,7 @@ AUI.add(
 
 				tooltip.setStdModContent(A.WidgetStdMod.BODY, event.currentTarget.get(STR_RESPONSE_DATA));
 				tooltip.align();
+				tooltip.show();
 
 				instance._eventHandles.push(
 					tooltip.get(STR_BOUNDING_BOX).one('.add-button-preview').on(STR_CLICK, instance._addContent, instance)
@@ -186,8 +187,6 @@ AUI.add(
 
 				tooltip.set(BODY_CONTENT, TPL_LOADING);
 				tooltip.set(STR_ALIGN_NODE, currentNode);
-
-				tooltip.show();
 
 				instance._loadPreviewTask(currentNode.attr('data-class-name'), currentNode.attr('data-class-pk'));
 			}

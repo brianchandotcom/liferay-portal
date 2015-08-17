@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -282,8 +281,6 @@ public class JournalArticleIndexer
 			final Indexer<JournalArticle> indexer =
 				IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
 
-			_indexAllVersions.set(false);
-
 			final ActionableDynamicQuery actionableDynamicQuery =
 				_journalArticleLocalService.getActionableDynamicQuery();
 
@@ -323,7 +320,9 @@ public class JournalArticleIndexer
 						JournalArticle article = (JournalArticle)object;
 
 						try {
-							indexer.reindex(article);
+							indexer.reindex(
+								indexer.getClassName(),
+								article.getResourcePrimKey());
 						}
 						catch (Exception e) {
 							throw new PortalException(e);
@@ -594,19 +593,7 @@ public class JournalArticleIndexer
 	}
 
 	@Override
-	protected void doReindex(JournalArticle journalArticle) throws Exception {
-		Boolean indexAllVersions = _indexAllVersions.get();
-
-		if (indexAllVersions == null) {
-			indexAllVersions = true;
-		}
-
-		doReindex(journalArticle, indexAllVersions);
-	}
-
-	protected void doReindex(JournalArticle article, boolean allVersions)
-		throws Exception {
-
+	protected void doReindex(JournalArticle article) throws Exception {
 		if (PortalUtil.getClassNameId(DDMStructure.class) ==
 				article.getClassNameId()) {
 
@@ -619,21 +606,7 @@ public class JournalArticleIndexer
 			return;
 		}
 
-		if (allVersions) {
-			reindexArticleVersions(article);
-		}
-		else {
-			if (!JournalServiceConfigurationValues.
-					JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-
-				article = fetchLatestIndexableArticleVersion(
-					article.getResourcePrimKey());
-			}
-
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), article.getCompanyId(),
-				getDocument(article), isCommitImmediately());
-		}
+		reindexArticleVersions(article);
 	}
 
 	@Override
@@ -887,9 +860,6 @@ public class JournalArticleIndexer
 		JournalArticleIndexer.class);
 
 	private DDMStructureLocalService _ddmStructureLocalService;
-	private final ThreadLocal<Boolean> _indexAllVersions =
-		new AutoResetThreadLocal<>(
-			JournalArticleIndexer.class + "._indexAllVersions", true);
 	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalConverter _journalConverter;
 

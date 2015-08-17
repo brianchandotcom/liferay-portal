@@ -23,6 +23,7 @@ import com.liferay.portal.model.Layout;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -52,6 +53,10 @@ public class SearchContext implements Serializable {
 		}
 
 		_fullQueryEntryClassNames.add(entryClassName);
+	}
+
+	public void addStats(Stats stats) {
+		_stats.put(stats.getField(), stats);
 	}
 
 	public void clearFullQueryEntryClassNames() {
@@ -189,6 +194,14 @@ public class SearchContext implements Serializable {
 
 	public int getStart() {
 		return _start;
+	}
+
+	public Map<String, Stats> getStats() {
+		return Collections.unmodifiableMap(_stats);
+	}
+
+	public Stats getStats(String fieldName) {
+		return _stats.get(fieldName);
 	}
 
 	public TimeZone getTimeZone() {
@@ -434,6 +447,7 @@ public class SearchContext implements Serializable {
 	private String _searchEngineId;
 	private Sort[] _sorts;
 	private int _start = QueryUtil.ALL_POS;
+	private final Map<String, Stats> _stats = new ConcurrentHashMap<>();
 	private TimeZone _timeZone;
 	private long _userId;
 

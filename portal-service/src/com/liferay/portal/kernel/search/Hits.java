@@ -24,6 +24,8 @@ import java.util.Map;
  */
 public interface Hits extends Serializable {
 
+	public void addStatsResults(StatsResults statsResults);
+
 	public void copy(Hits hits);
 
 	public Document doc(int n);
@@ -49,6 +51,8 @@ public interface Hits extends Serializable {
 	public Map<String, List<String>> getSpellCheckResults();
 
 	public long getStart();
+
+	public Map<String, StatsResults> getStatsResults();
 
 	public float score(int n);
 

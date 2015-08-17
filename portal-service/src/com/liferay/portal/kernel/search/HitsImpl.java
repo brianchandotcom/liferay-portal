@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,11 @@ import java.util.Map;
 public class HitsImpl implements Hits {
 
 	public HitsImpl() {
+	}
+
+	@Override
+	public void addStatsResults(StatsResults statsResults) {
+		_statsResults.put(statsResults.getField(), statsResults);
 	}
 
 	@Override
@@ -114,6 +120,11 @@ public class HitsImpl implements Hits {
 	@Override
 	public long getStart() {
 		return _start;
+	}
+
+	@Override
+	public Map<String, StatsResults> getStatsResults() {
+		return Collections.unmodifiableMap(_statsResults);
 	}
 
 	@Override
@@ -205,5 +216,6 @@ public class HitsImpl implements Hits {
 	private String[] _snippets = {};
 	private Map<String, List<String>> _spellCheckResults;
 	private long _start;
+	private final Map<String, StatsResults> _statsResults;
 
 }

@@ -19,6 +19,9 @@ import com.liferay.portal.rest.extender.test.service.Greeter;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.ws.rs.core.Application;
 
@@ -33,6 +36,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -115,7 +119,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			}
 
 			if (servers.isEmpty()) {
-				cleanUp();
+				cleanUp(bundleContext);
 
 				throw new IllegalStateException(
 					"Endpoint was not registered within 10 seconds");
@@ -128,10 +132,37 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		cleanUp();
+		cleanUp(bundleContext);
 	}
 
-	private void cleanUp() {
+	private void cleanUp(BundleContext bundleContext) throws Exception {
+		final CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		ServiceTracker<ServletContextHelper, ServletContextHelper>
+			serviceTracker =
+				new ServiceTracker<ServletContextHelper, ServletContextHelper>(
+					bundleContext, ServletContextHelper.class, null) {
+
+					@Override
+					public void removedService(
+						ServiceReference<ServletContextHelper> reference,
+						ServletContextHelper service) {
+
+						Object contextName = reference.getProperty(
+							HttpWhiteboardConstants.
+								HTTP_WHITEBOARD_CONTEXT_NAME);
+
+						if ("rest-test".equals(contextName)) {
+							countDownLatch.countDown();
+
+							close();
+						}
+					}
+
+				};
+
+		serviceTracker.open();
+
 		try {
 			_serviceRegistration.unregister();
 		}
@@ -148,6 +179,10 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			_cxfConfiguration.delete();
 		}
 		catch (Exception e) {
+		}
+
+		if (!countDownLatch.await(10, TimeUnit.MINUTES)) {
+			throw new TimeoutException("Service unregister waiting timeout");
 		}
 	}
 

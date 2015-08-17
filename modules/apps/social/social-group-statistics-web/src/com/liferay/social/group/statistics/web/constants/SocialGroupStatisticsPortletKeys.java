@@ -12,28 +12,15 @@
  * details.
  */
 
-package com.liferay.social.group.statistics.web.configuration;
-
-import aQute.bnd.annotation.metatype.Meta;
+package com.liferay.social.group.statistics.web.constants;
 
 /**
  * @author Iván Zaera
  */
-@Meta.OCD(
-	id = "com.liferay.social.group.statistics.web.configuration.GroupStatisticsPortletInstanceConfiguration"
-)
-public interface GroupStatisticsPortletInstanceConfiguration {
+public class SocialGroupStatisticsPortletKeys {
 
-	@Meta.AD(required = false)
-	public String[] chartType();
-
-	@Meta.AD(required = false)
-	public String[] chartWidth();
-
-	@Meta.AD(required = false)
-	public String[] dataRange();
-
-	@Meta.AD(required = false)
-	public String[] displayActivityCounterName();
+	public static final String SOCIAL_GROUP_STATISTICS =
+		"com_liferay_social_group_statistics_web_portlet_" +
+			"SocialGroupStatisticsPortlet";
 
 }

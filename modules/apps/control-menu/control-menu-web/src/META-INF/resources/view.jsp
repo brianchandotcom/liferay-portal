@@ -82,7 +82,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 						<li>
 							<liferay-ui:icon
 								data="<%= data %>"
-								iconCssClass="icon-plus"
+								iconCssClass="icon-plus icon-monospaced"
 								id="addPanel"
 								label="add"
 								linkCssClass="control-menu-icon"
@@ -107,7 +107,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 
 						<li>
 							<liferay-ui:icon
-								iconCssClass="icon-cog"
+								iconCssClass="icon-cog icon-monospaced"
 								label="edit"
 								linkCssClass="control-menu-icon"
 								url="<%= editPageURL.toString() %>"
@@ -125,7 +125,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 					<c:if test="<%= (user.isSetupComplete() || themeDisplay.isImpersonated()) && hasMessages %>">
 						<li>
 							<liferay-ui:icon
-								iconCssClass="icon-info"
+								iconCssClass="icon-info icon-monospaced"
 								id="infoButton"
 								linkCssClass="control-menu-icon"
 								url="javascript:;"
@@ -152,7 +152,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 					<c:if test="<%= (user.isSetupComplete() || themeDisplay.isImpersonated()) && themeDisplay.isShowStagingIcon() %>">
 						<li>
 							<liferay-ui:icon
-								iconCssClass="icon-circle-blank"
+								iconCssClass="icon-circle-blank icon-monospaced"
 								id="stagingBarButton"
 								label="staging"
 								linkCssClass="control-menu-icon"
@@ -179,7 +179,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 						<li id="<portlet:namespace />toggleControls">
 							<liferay-ui:icon
 								cssClass="toggle-controls"
-								iconCssClass='<%= "controls-state-icon " + (toggleControlsState.equals("visible") ? "icon-eye-open" : "icon-eye-close") %>'
+								iconCssClass='<%= "controls-state-icon " + (toggleControlsState.equals("visible") ? "icon-eye-open icon-monospaced" : "icon-eye-close icon-monospaced") %>'
 								label="edit-controls"
 								linkCssClass="control-menu-icon"
 								url="javascript:;"
@@ -201,7 +201,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 						<li>
 							<liferay-ui:icon
 								data="<%= data %>"
-								iconCssClass="icon-desktop"
+								iconCssClass="icon-desktop icon-monospaced"
 								id="previewPanel"
 								label="preview"
 								linkCssClass="control-menu-icon"

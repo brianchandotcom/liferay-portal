@@ -20,9 +20,9 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Iván Zaera
  */
 @Meta.OCD(
-	id = "com.liferay.social.user.statistics.web.configuration.UserStatisticsPortletInstanceConfiguration"
+	id = "com.liferay.social.user.statistics.web.configuration.SocialUserStatisticsPortletInstanceConfiguration"
 )
-public interface UserStatisticsPortletInstanceConfiguration {
+public interface SocialUserStatisticsPortletInstanceConfiguration {
 
 	@Meta.AD(deflt = "user.achievements", required = false)
 	public String[] displayActivityCounterName();

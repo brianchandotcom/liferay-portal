@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera
  */
-@Component(immediate = true, service = UserStatisticsWebUpgrade.class)
-public class UserStatisticsWebUpgrade {
+@Component(immediate = true, service = SocialUserStatisticsWebUpgrade.class)
+public class SocialUserStatisticsWebUpgrade {
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(

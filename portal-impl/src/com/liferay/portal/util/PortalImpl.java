@@ -1744,10 +1744,16 @@ public class PortalImpl implements Portal {
 
 		Layout layout = getControlPanelLayout(themeDisplay, group);
 
+		Layout previousLayout =
+			(Layout)request.getAttribute(WebKeys.LAYOUT);
+
 		request.setAttribute(WebKeys.LAYOUT, layout);
 
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
 			request, portletId, layout.getPlid(), lifecycle);
+
+		request.setAttribute(WebKeys.LAYOUT, previousLayout);
+
 
 		if (refererPlid > 0) {
 			liferayPortletURL.setRefererPlid(refererPlid);
@@ -1782,10 +1788,15 @@ public class PortalImpl implements Portal {
 
 		Layout layout = getControlPanelLayout(themeDisplay, group);
 
+		Layout previousLayout =
+			(Layout)portletRequest.getAttribute(WebKeys.LAYOUT);
+
 		portletRequest.setAttribute(WebKeys.LAYOUT, layout);
 
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
 			portletRequest, portletId, layout.getPlid(), lifecycle);
+
+		portletRequest.setAttribute(WebKeys.LAYOUT, previousLayout);
 
 		if (refererPlid > 0) {
 			liferayPortletURL.setRefererPlid(refererPlid);

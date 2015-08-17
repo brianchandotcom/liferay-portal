@@ -87,6 +87,10 @@ public abstract class BaseControlPanelEntryPanelApp implements PanelApp {
 	protected ControlPanelEntry getControlPanelEntry() {
 		Portlet portlet = getPortlet();
 
+		if (portlet == null) {
+			return null;
+		}
+
 		return portlet.getControlPanelEntryInstance();
 	}
 

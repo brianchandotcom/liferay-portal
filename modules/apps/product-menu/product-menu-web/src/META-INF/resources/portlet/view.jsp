@@ -139,9 +139,9 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 </div>
 
 <aui:script use="liferay-store">
-	$('#sidenavToggleId').sideNavigation();
+	AUI.$('#sidenavToggleId').sideNavigation();
 
-	var sidenavSlider = $('#sidenavSliderId');
+	var sidenavSlider = AUI.$('#sidenavSliderId');
 
 	sidenavSlider.on(
 		'closed.lexicon.sidenav',

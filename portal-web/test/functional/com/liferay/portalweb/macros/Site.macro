@@ -306,6 +306,8 @@
 
 		<var name="key_roleName" value="${roleName}" />
 
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="Type" locator1="CPSitemembershipsAssignuserroles#ROLES_SEARCH_FIELD" value1="${roleName}" />
 		<execute function="Click" locator1="CPSitemembershipsAssignuserroles#ROLES_SEARCH_BUTTON" />
 		<execute function="AssertTextEquals" locator1="CPSitemembershipsAssignuserroles#ROLE_TABLE_TITLE" value1="${roleName}" />

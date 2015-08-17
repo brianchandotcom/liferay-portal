@@ -14,8 +14,15 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.plugin.Version;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class ReleaseImpl extends ReleaseBaseImpl {
+
+	public Version getVersion() {
+		return Version.getInstance(getBuildNumber());
+	}
+
 }

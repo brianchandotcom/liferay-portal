@@ -63,8 +63,8 @@ public class JournalContentSearchWebUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.journal.content.search.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 1,
-			false);
+			Collections.<UpgradeProcess>singletonList(upgradePortletId),
+			"1.0.0.0", "1.0.0.0", false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

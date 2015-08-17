@@ -52,7 +52,8 @@ public class LockServiceUpgrade {
 		upgradeProcesses.add(new UpgradeLock());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.portal.lock.service", upgradeProcesses, 1, 1, false);
+			"com.liferay.portal.lock.service", upgradeProcesses, "1.0.0.0",
+			"1.0.0.0", false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

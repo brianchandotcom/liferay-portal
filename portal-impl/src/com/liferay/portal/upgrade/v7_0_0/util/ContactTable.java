@@ -16,6 +16,9 @@ package com.liferay.portal.upgrade.v7_0_0.util;
 
 import java.sql.Types;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author	  Brian Wing Shun Chan
  * @generated
@@ -61,6 +64,78 @@ public class ContactTable {
 		{"hoursOfOperation", Types.VARCHAR}
 	};
 
+	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
+
+static {
+TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("contactId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
+
+TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+
+TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("accountId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("parentContactId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("emailAddress", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("firstName", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("middleName", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("lastName", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("prefixId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("suffixId", Types.BIGINT);
+
+TABLE_COLUMNS_MAP.put("male", Types.BOOLEAN);
+
+TABLE_COLUMNS_MAP.put("birthday", Types.TIMESTAMP);
+
+TABLE_COLUMNS_MAP.put("smsSn", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("aimSn", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("facebookSn", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("icqSn", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("jabberSn", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("msnSn", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("mySpaceSn", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("skypeSn", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("twitterSn", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("ymSn", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("employeeStatusId", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("employeeNumber", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("jobTitle", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("jobClass", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("hoursOfOperation", Types.VARCHAR);
+
+}
 	public static final String TABLE_SQL_CREATE = "create table Contact_ (mvccVersion LONG default 0,contactId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,accountId LONG,parentContactId LONG,emailAddress VARCHAR(75) null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,prefixId LONG,suffixId LONG,male BOOLEAN,birthday DATE null,smsSn VARCHAR(75) null,aimSn VARCHAR(75) null,facebookSn VARCHAR(75) null,icqSn VARCHAR(75) null,jabberSn VARCHAR(75) null,msnSn VARCHAR(75) null,mySpaceSn VARCHAR(75) null,skypeSn VARCHAR(75) null,twitterSn VARCHAR(75) null,ymSn VARCHAR(75) null,employeeStatusId VARCHAR(75) null,employeeNumber VARCHAR(75) null,jobTitle VARCHAR(100) null,jobClass VARCHAR(75) null,hoursOfOperation VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Contact_";

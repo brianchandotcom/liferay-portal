@@ -54,7 +54,8 @@ public class BookmarksWebUpgrade {
 		upgradeProcesses.add(new UpgradePortletPreferences());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.bookmarks.web", upgradeProcesses, 1, 1, false);
+			"com.liferay.bookmarks.web", upgradeProcesses, "1.0.0.0", "1.0.0.0",
+			false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

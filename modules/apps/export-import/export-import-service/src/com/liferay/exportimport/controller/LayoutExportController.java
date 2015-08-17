@@ -250,7 +250,7 @@ public class LayoutExportController implements ExportController {
 				LanguageUtil.getAvailableLocales(
 					portletDataContext.getScopeGroupId())));
 		headerElement.addAttribute(
-			"build-number", String.valueOf(ReleaseInfo.getBuildNumber()));
+			"build-number", String.valueOf(ReleaseInfo.getVersion()));
 		headerElement.addAttribute("export-date", Time.getRFC822());
 
 		if (portletDataContext.hasDateRange()) {

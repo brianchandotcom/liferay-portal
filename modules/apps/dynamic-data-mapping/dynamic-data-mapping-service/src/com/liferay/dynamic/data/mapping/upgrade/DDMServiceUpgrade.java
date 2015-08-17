@@ -59,8 +59,8 @@ public class DDMServiceUpgrade {
 		upgradeProcesses.add(new UpgradeLastPublishDate());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.dynamic.data.mapping.service", upgradeProcesses, 1, 1,
-			false);
+			"com.liferay.dynamic.data.mapping.service", upgradeProcesses,
+			"1.0.0.0", "1.0.0.0", false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

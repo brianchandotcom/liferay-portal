@@ -52,8 +52,8 @@ public class MobileDeviceRulesWebUpgrade {
 		upgradeProcesses.add(new UpgradePortletId());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.mobile.device.rules.web", upgradeProcesses, 1, 1,
-			false);
+			"com.liferay.mobile.device.rules.web", upgradeProcesses, "1.0.0.0",
+			"1.0.0.0", false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

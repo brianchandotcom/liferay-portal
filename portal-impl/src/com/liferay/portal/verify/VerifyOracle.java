@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -35,7 +36,7 @@ import java.sql.SQLException;
 public class VerifyOracle extends VerifyProcess {
 
 	protected void alterVarchar2Columns() throws Exception {
-		int buildNumber = getBuildNumber();
+		Version version = getBuildNumber();
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -62,11 +63,11 @@ public class VerifyOracle extends VerifyProcess {
 				int dataLength = rs.getInt(3);
 
 				if (isBetweenBuildNumbers(
-						buildNumber, ReleaseInfo.RELEASE_5_2_9_BUILD_NUMBER,
-						ReleaseInfo.RELEASE_6_0_0_BUILD_NUMBER) ||
+						version, ReleaseInfo.RELEASE_5_2_0_9_VERSION,
+						ReleaseInfo.RELEASE_6_0_0_0_VERSION) ||
 					isBetweenBuildNumbers(
-						buildNumber, ReleaseInfo.RELEASE_6_0_5_BUILD_NUMBER,
-						ReleaseInfo.RELEASE_6_1_20_BUILD_NUMBER)) {
+						version, ReleaseInfo.RELEASE_6_0_0_5_VERSION,
+						ReleaseInfo.RELEASE_6_1_2_0_VERSION)) {
 
 					// LPS-33903
 
@@ -122,10 +123,11 @@ public class VerifyOracle extends VerifyProcess {
 	}
 
 	protected boolean isBetweenBuildNumbers(
-		int buildNumber, int startBuildNumber, int endBuildNumber) {
+		Version buildVersion, Version startBuildVersion,
+		Version endBuildVersion) {
 
-		if ((buildNumber >= startBuildNumber) &&
-			(buildNumber < endBuildNumber)) {
+		if ((buildVersion.compareTo(startBuildVersion) >= 0) &&
+			(buildVersion.compareTo(endBuildVersion) < 0)) {
 
 			return true;
 		}

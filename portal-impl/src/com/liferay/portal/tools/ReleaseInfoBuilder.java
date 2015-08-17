@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools;
 
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.FileImpl;
 
 import java.io.File;
@@ -59,12 +58,12 @@ public class ReleaseInfoBuilder {
 
 			// Get build
 
-			x = content.indexOf("String _BUILD = \"");
+			x = content.indexOf("private static final String _VERSION = \"");
 			x = content.indexOf("\"", x) + 1;
 
 			y = content.indexOf("\"", x);
 
-			int build = GetterUtil.getInteger(content.substring(x, y)) + 1;
+			String build = content.substring(x, y) + 1;
 
 			content = content.substring(0, x) + build + content.substring(y);
 

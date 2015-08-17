@@ -1231,7 +1231,7 @@ create table Release_ (
 	createDate DATE null,
 	modifiedDate DATE null,
 	servletContextName VARCHAR(75) null,
-	buildNumber INTEGER,
+	buildNumber VARCHAR(75) null,
 	buildDate DATE null,
 	verified BOOLEAN,
 	state_ INTEGER,

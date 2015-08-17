@@ -135,11 +135,11 @@ public class ReleaseSoap implements Serializable {
 		_servletContextName = servletContextName;
 	}
 
-	public int getBuildNumber() {
+	public String getBuildNumber() {
 		return _buildNumber;
 	}
 
-	public void setBuildNumber(int buildNumber) {
+	public void setBuildNumber(String buildNumber) {
 		_buildNumber = buildNumber;
 	}
 
@@ -184,7 +184,7 @@ public class ReleaseSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _servletContextName;
-	private int _buildNumber;
+	private String _buildNumber;
 	private Date _buildDate;
 	private boolean _verified;
 	private int _state;

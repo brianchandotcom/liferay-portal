@@ -70,7 +70,8 @@ public class WikiServiceUpgrade {
 		upgradeProcesses.add(new UpgradeWikiPageResource());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.wiki.service", upgradeProcesses, 1, 1, false);
+			"com.liferay.wiki.service", upgradeProcesses, "1.0.0.0", "1.0.0.0",
+			false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

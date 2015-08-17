@@ -50,6 +50,11 @@ public class PortalServiceWrapper implements PortalService,
 		return _portalService.getBuildNumber();
 	}
 
+	@Override
+	public java.lang.String getVersion() {
+		return _portalService.getVersion();
+	}
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

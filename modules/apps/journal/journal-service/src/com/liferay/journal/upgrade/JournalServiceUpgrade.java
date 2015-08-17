@@ -86,7 +86,8 @@ public class JournalServiceUpgrade {
 		upgradeProcesses.add(new UpgradeLastPublishDate());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.journal.service", upgradeProcesses, 1, 1, false);
+			"com.liferay.journal.service", upgradeProcesses, "1.0.0.0",
+			"1.0.0.0", false);
 
 		deleteTempImages();
 	}

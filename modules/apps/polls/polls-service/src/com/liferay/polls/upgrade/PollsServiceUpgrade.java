@@ -57,7 +57,8 @@ public class PollsServiceUpgrade {
 		upgradeProcesses.add(new UpgradeLastPublishDate());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.polls.service", upgradeProcesses, 1, 1, false);
+			"com.liferay.polls.service", upgradeProcesses, "1.0.0.0", "1.0.0.0",
+			false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

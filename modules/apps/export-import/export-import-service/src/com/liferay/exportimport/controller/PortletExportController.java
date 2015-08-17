@@ -386,8 +386,7 @@ public class PortletExportController implements ExportController {
 				LanguageUtil.getAvailableLocales(
 					PortalUtil.getSiteGroupId(
 						portletDataContext.getScopeGroupId()))));
-		headerElement.addAttribute(
-			"build-number", String.valueOf(ReleaseInfo.getBuildNumber()));
+		headerElement.addAttribute("build-number", ReleaseInfo.getVersion());
 		headerElement.addAttribute("export-date", Time.getRFC822());
 
 		if (portletDataContext.hasDateRange()) {

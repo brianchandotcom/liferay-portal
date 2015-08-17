@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -161,6 +162,14 @@ public class UpgradeProcessUtil {
 		}
 
 		return ranUpgradeProcess;
+	}
+
+	public static boolean upgradeProcess(
+			Version version, List<UpgradeProcess> upgradeProcesses)
+		throws UpgradeException {
+
+		return upgradeProcess(
+			version.toInt(), upgradeProcesses, _INDEX_ON_UPGRADE);
 	}
 
 	private static boolean _upgradeProcess(

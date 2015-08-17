@@ -65,7 +65,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "servletContextName", Types.VARCHAR },
-			{ "buildNumber", Types.INTEGER },
+			{ "buildNumber", Types.VARCHAR },
 			{ "buildDate", Types.TIMESTAMP },
 			{ "verified", Types.BOOLEAN },
 			{ "state_", Types.INTEGER },
@@ -79,14 +79,14 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("servletContextName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("buildNumber", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("buildNumber", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("buildDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("verified", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("state_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("testString", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Release_ (mvccVersion LONG default 0,releaseId LONG not null primary key,createDate DATE null,modifiedDate DATE null,servletContextName VARCHAR(75) null,buildNumber INTEGER,buildDate DATE null,verified BOOLEAN,state_ INTEGER,testString VARCHAR(1024) null)";
+	public static final String TABLE_SQL_CREATE = "create table Release_ (mvccVersion LONG default 0,releaseId LONG not null primary key,createDate DATE null,modifiedDate DATE null,servletContextName VARCHAR(75) null,buildNumber VARCHAR(75) null,buildDate DATE null,verified BOOLEAN,state_ INTEGER,testString VARCHAR(1024) null)";
 	public static final String TABLE_SQL_DROP = "drop table Release_";
 	public static final String ORDER_BY_JPQL = " ORDER BY release.releaseId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Release_.releaseId ASC";
@@ -193,7 +193,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 			setServletContextName(servletContextName);
 		}
 
-		Integer buildNumber = (Integer)attributes.get("buildNumber");
+		String buildNumber = (String)attributes.get("buildNumber");
 
 		if (buildNumber != null) {
 			setBuildNumber(buildNumber);
@@ -296,12 +296,17 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	}
 
 	@Override
-	public int getBuildNumber() {
-		return _buildNumber;
+	public String getBuildNumber() {
+		if (_buildNumber == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _buildNumber;
+		}
 	}
 
 	@Override
-	public void setBuildNumber(int buildNumber) {
+	public void setBuildNumber(String buildNumber) {
 		_buildNumber = buildNumber;
 	}
 
@@ -501,6 +506,12 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 		releaseCacheModel.buildNumber = getBuildNumber();
 
+		String buildNumber = releaseCacheModel.buildNumber;
+
+		if ((buildNumber != null) && (buildNumber.length() == 0)) {
+			releaseCacheModel.buildNumber = null;
+		}
+
 		Date buildDate = getBuildDate();
 
 		if (buildDate != null) {
@@ -619,7 +630,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	private boolean _setModifiedDate;
 	private String _servletContextName;
 	private String _originalServletContextName;
-	private int _buildNumber;
+	private String _buildNumber;
 	private Date _buildDate;
 	private boolean _verified;
 	private int _state;

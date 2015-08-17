@@ -58,7 +58,8 @@ public class WikiWebUpgrade {
 		upgradeProcesses.add(new UpgradePortletSettings(_settingsFactory));
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.wiki.web", upgradeProcesses, 1, 1, false);
+			"com.liferay.wiki.web", upgradeProcesses, "1.0.0.0", "1.0.0.0",
+			false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

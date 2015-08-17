@@ -19,6 +19,7 @@ import com.liferay.marketplace.service.AppLocalServiceUtil;
 import com.liferay.marketplace.service.AppServiceUtil;
 import com.liferay.marketplace.store.web.configuration.MarketplaceStoreWebConfigurationValues;
 import com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys;
+import com.liferay.marketplace.store.web.constants.MarketplaceStoreWebKeys;
 import com.liferay.marketplace.store.web.oauth.util.OAuthManager;
 import com.liferay.marketplace.store.web.util.MarketplaceLicenseUtil;
 import com.liferay.marketplace.util.MarketplaceUtil;
@@ -412,6 +413,9 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		catch (PortalException pe) {
 			throw new PortletException(pe);
 		}
+
+		renderRequest.setAttribute(
+			MarketplaceStoreWebKeys.OAUTH_AUTHORIZED, Boolean.TRUE);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

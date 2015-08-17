@@ -142,7 +142,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			portletId: '<%= portletDisplay.getId() %>',
 			rowIds: '<portlet:namespace /><%= RowChecker.ROW_IDS %>',
 			select: {
-				displayStyleCSSClass: 'list-group-item',
+				displayStyleCSSClass: 'entry-display-style',
 				selectedCSSClass: 'active'
 			}
 		}

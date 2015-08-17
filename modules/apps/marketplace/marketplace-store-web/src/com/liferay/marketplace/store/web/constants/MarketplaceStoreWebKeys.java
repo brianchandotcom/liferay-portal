@@ -19,6 +19,8 @@ package com.liferay.marketplace.store.web.constants;
  */
 public class MarketplaceStoreWebKeys {
 
+	public static final String OAUTH_AUTHORIZED = "OAUTH_AUTHORIZED";
+
 	public static final String OAUTH_REQUEST_TOKEN = "OAUTH_REQUEST_TOKEN";
 
 }

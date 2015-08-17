@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.site.navigation.breadcrumb.web.configuration;
-
-import com.liferay.portal.kernel.util.GetterUtil;
+package com.liferay.site.navigation.breadcrumb.web.constants;
 
 /**
  * @author Eudaldo Alonso
  */
-public class BreadcrumbConfigurationValues {
+public class SiteNavigationBreadcrumbPortletKeys {
 
-	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		BreadcrumbWebConfigurationUtil.get("display.templates.config"));
+	public static final String SITE_NAVIGATION_BREADCRUMB =
+		"com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet";
 
 }

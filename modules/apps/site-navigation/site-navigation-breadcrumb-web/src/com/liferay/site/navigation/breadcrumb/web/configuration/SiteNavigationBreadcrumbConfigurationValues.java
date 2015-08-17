@@ -14,20 +14,14 @@
 
 package com.liferay.site.navigation.breadcrumb.web.configuration;
 
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Eudaldo Alonso
  */
-public class BreadcrumbWebConfigurationUtil {
+public class SiteNavigationBreadcrumbConfigurationValues {
 
-	public static String get(String key) {
-		return _configuration.get(key);
-	}
-
-	private static final Configuration _configuration =
-		ConfigurationFactoryUtil.getConfiguration(
-			BreadcrumbWebConfigurationUtil.class.getClassLoader(), "portlet");
+	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
+		SiteNavigationBreadcrumbWebConfigurationUtil.get("display.templates.config"));
 
 }

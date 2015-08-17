@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.Stats;
+import com.liferay.portal.kernel.search.StatsResults;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.filter.FilterTranslator;
@@ -50,6 +52,7 @@ import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch.internal.facet.CompositeFacetProcessor;
 import com.liferay.portal.search.elasticsearch.internal.facet.ElasticsearchFacetFieldCollector;
 import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
+import com.liferay.portal.search.elasticsearch.stats.StatsTranslator;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -407,6 +410,17 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
+	protected void addStats(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchContext searchContext) {
+
+		Map<String, Stats> statsMap = searchContext.getStats();
+
+		for (Stats stats : statsMap.values()) {
+			_statsTranslator.translate(searchRequestBuilder, stats);
+		}
+	}
+
 	protected SearchResponse doSearch(
 			SearchContext searchContext, Query query, int start, int end,
 			boolean count)
@@ -420,6 +434,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			getSelectedIndexNames(queryConfig, searchContext));
 
 		searchRequestBuilder.setTypes(getSelectedTypes(queryConfig));
+
+		addStats(searchRequestBuilder, searchContext);
 
 		if (!count) {
 			addFacets(searchRequestBuilder, searchContext);
@@ -523,6 +539,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		Hits hits = new HitsImpl();
 
+		updateStatsResults(searchContext, searchResponse, hits);
+
 		List<Document> documents = new ArrayList<>();
 		Set<String> queryTerms = new HashSet<>();
 		List<Float> scores = new ArrayList<>();
@@ -611,6 +629,11 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		_queryTranslator = queryTranslator;
 	}
 
+	@Reference(unbind = "-")
+	protected void setStatsTranslator(StatsTranslator statsTranslator) {
+		_statsTranslator = statsTranslator;
+	}
+
 	protected void updateFacetCollectors(
 		SearchContext searchContext, SearchResponse searchResponse) {
 
@@ -638,6 +661,35 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
+	protected void updateStatsResults(
+		SearchContext searchContext, SearchResponse searchResponse, Hits hits) {
+
+		Map<String, Stats> statsMap = searchContext.getStats();
+
+		if (statsMap.isEmpty()) {
+			return;
+		}
+
+		Aggregations aggregations = searchResponse.getAggregations();
+
+		if (aggregations == null) {
+			return;
+		}
+
+		Map<String, Aggregation> aggregationsMap = aggregations.getAsMap();
+
+		for (Stats stats : statsMap.values()) {
+			if (!stats.isEnabled()) {
+				continue;
+			}
+
+			StatsResults statsResults = _statsTranslator.translate(
+				aggregationsMap, stats);
+
+			hits.addStatsResults(statsResults);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchIndexSearcher.class);
 
@@ -647,5 +699,6 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	private FilterTranslator<FilterBuilder> _filterTranslator;
 	private boolean _logExceptionsOnly;
 	private QueryTranslator<QueryBuilder> _queryTranslator;
+	private StatsTranslator _statsTranslator;
 
 }

@@ -356,16 +356,14 @@
 			<isset var="eventCommentList" />
 			<then>
 				<for list="${eventCommentList}" param="eventComment">
-					<var name="key_eventComment" value="${eventComment}" />
-					<var name="key_user" value="${user}" />
+					<var name="key_entryComment" value="${eventComment}" />
 
 					<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${user}" />
 					<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${eventComment}" />
 				</for>
 			</then>
 			<else>
-				<var name="key_eventComment" value="${eventComment}" />
-				<var name="key_user" value="${user}" />
+				<var name="key_entryComment" value="${eventComment}" />
 
 				<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${user}" />
 				<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${eventComment}" />
@@ -1317,16 +1315,14 @@
 			<isset var="eventCommentList" />
 			<then>
 				<for list="${eventCommentList}" param="eventComment">
-					<var name="key_eventComment" value="${eventComment}" />
-					<var name="key_user" value="${user}" />
+					<var name="key_entryComment" value="${eventComment}" />
 
 					<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${user}" />
 					<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${eventComment}" />
 				</for>
 			</then>
 			<else>
-				<var name="key_eventComment" value="${eventComment}" />
-				<var name="key_user" value="${user}" />
+				<var name="key_entryComment" value="${eventComment}" />
 
 				<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${user}" />
 				<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${eventComment}" />

@@ -22,7 +22,6 @@ import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.RegexUtil;
-import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.Validator;
 
 import java.lang.reflect.Method;

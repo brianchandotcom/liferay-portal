@@ -128,9 +128,6 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	public void setDDMForm(
 		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm);
 
-	public void setFullHierarchyDDMForm(
-		com.liferay.dynamic.data.mapping.model.DDMForm fullHierarchyDDMForm);
-
 	public void updateDDMForm(
 		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm);
 }

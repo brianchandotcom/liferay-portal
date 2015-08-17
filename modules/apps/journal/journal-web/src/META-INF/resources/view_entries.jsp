@@ -289,153 +289,93 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 String displayStyle = journalDisplayContext.getDisplayStyle();
 %>
 
-<c:choose>
-	<c:when test='<%= displayStyle.equals("icon") %>'>
+<liferay-ui:search-container
+	searchContainer="<%= articleSearchContainer %>"
+	totalVar="articleSearchContainerTotal"
+>
+	<liferay-ui:search-container-results
+		results="<%= results %>"
+		resultsVar="articleSearchContainerResults"
+		total="<%= total %>"
+	/>
+
+	<liferay-ui:search-container-row
+		className="Object"
+		cssClass="entry-display-style selectable"
+		modelVar="object"
+	>
 
 		<%
-		for (int i = 0; i < results.size(); i++) {
-			Object result = results.get(i);
-		%>
+		JournalArticle curArticle = null;
+		JournalFolder curFolder = null;
 
-			<%@ include file="/cast_result.jspf" %>
+		Object result = row.getObject();
 
-			<c:choose>
-				<c:when test="<%= curArticle != null %>">
-					<liferay-portlet:renderURL varImpl="tempRowURL">
-						<portlet:param name="mvcPath" value="/edit_article.jsp" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="backURL" value="<%= currentURL %>" />
-						<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(curArticle.getGroupId()) %>" />
-						<portlet:param name="folderId" value="<%= String.valueOf(curArticle.getFolderId()) %>" />
-						<portlet:param name="articleId" value="<%= curArticle.getArticleId() %>" />
-						<portlet:param name="version" value="<%= String.valueOf(curArticle.getVersion()) %>" />
-					</liferay-portlet:renderURL>
-
-					<%
-					request.setAttribute("view_entries.jsp-article", curArticle);
-
-					request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
-					%>
-
-					<liferay-util:include page="/view_article_icon.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:when test="<%= curFolder != null %>">
-
-					<%
-					String folderImage = "folder_empty_article";
-
-					if (JournalServiceConfigurationValues.JOURNAL_FOLDER_ICON_CHECK_COUNT && (JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, curFolder.getFolderId()) > 0)) {
-						folderImage = "folder_full_article";
-					}
-
-					PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
-
-					tempRowURL.setParameter("redirect", currentURL);
-					tempRowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
-					tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-
-					request.setAttribute("view_entries.jsp-folder", curFolder);
-
-					request.setAttribute("view_entries.jsp-folderImage", folderImage);
-
-					request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
-					%>
-
-					<liferay-util:include page="/view_folder_icon.jsp" servletContext="<%= application %>" />
-				</c:when>
-			</c:choose>
-
-		<%
+		if (result instanceof JournalFolder) {
+			curFolder = (JournalFolder)result;
+		}
+		else {
+			curArticle = (JournalArticle)result;
 		}
 		%>
 
-	</c:when>
-	<c:otherwise>
-		<liferay-ui:search-container
-			searchContainer="<%= articleSearchContainer %>"
-			totalVar="articleSearchContainerTotal"
-		>
-			<liferay-ui:search-container-results
-				results="<%= results %>"
-				resultsVar="articleSearchContainerResults"
-				total="<%= total %>"
-			/>
-
-			<liferay-ui:search-container-row
-				className="Object"
-				cssClass="entry-display-style selectable"
-				modelVar="object"
-			>
+		<c:choose>
+			<c:when test="<%= curArticle != null %>">
 
 				<%
-				JournalArticle curArticle = null;
-				JournalFolder curFolder = null;
+				Map<String, Object> rowData = new HashMap<String, Object>();
 
-				Object result = row.getObject();
+				rowData.put("draggable", JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE));
+				rowData.put("title", HtmlUtil.escape(curArticle.getTitle(locale)));
 
-				if (result instanceof JournalFolder) {
-					curFolder = (JournalFolder)result;
-				}
-				else {
-					curArticle = (JournalArticle)result;
-				}
+				row.setData(rowData);
+
+				row.setPrimaryKey(HtmlUtil.escape(curArticle.getArticleId()));
 				%>
 
 				<c:choose>
-					<c:when test="<%= curArticle != null %>">
-
-						<%
-						Map<String, Object> rowData = new HashMap<String, Object>();
-
-						rowData.put("draggable", JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE));
-						rowData.put("title", HtmlUtil.escape(curArticle.getTitle(locale)));
-
-						row.setData(rowData);
-
-						row.setPrimaryKey(HtmlUtil.escape(curArticle.getArticleId()));
-						%>
-
-						<c:choose>
-							<c:when test='<%= displayStyle.equals("descriptive") %>'>
-								<%@ include file="/article_columns_descriptive.jspf" %>
-							</c:when>
-							<c:otherwise>
-								<%@ include file="/article_columns_list.jspf" %>
-							</c:otherwise>
-						</c:choose>
+					<c:when test='<%= displayStyle.equals("icon") %>'>
+						<%@ include file="/article_columns_icon.jspf" %>
 					</c:when>
-					<c:when test="<%= curFolder != null %>">
-
-						<%
-						Map<String, Object> rowData = new HashMap<String, Object>();
-
-						rowData.put("draggable", JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE));
-						rowData.put("folder", true);
-						rowData.put("folder-id", curFolder.getFolderId());
-						rowData.put("title", HtmlUtil.escape(curFolder.getName()));
-
-						row.setData(rowData);
-						row.setPrimaryKey(String.valueOf(curFolder.getPrimaryKey()));
-						%>
-
-						<c:choose>
-							<c:when test='<%= displayStyle.equals("descriptive") %>'>
-							<%@ include file="/folder_columns_descriptive.jspf" %>
-							</c:when>
-							<c:otherwise>
-								<%@ include file="/folder_columns_list.jspf" %>
-							</c:otherwise>
-						</c:choose>
+					<c:when test='<%= displayStyle.equals("descriptive") %>'>
+						<%@ include file="/article_columns_descriptive.jspf" %>
 					</c:when>
+					<c:otherwise>
+						<%@ include file="/article_columns_list.jspf" %>
+					</c:otherwise>
 				</c:choose>
+			</c:when>
+			<c:when test="<%= curFolder != null %>">
 
-			</liferay-ui:search-container-row>
+				<%
+				Map<String, Object> rowData = new HashMap<String, Object>();
 
-			<liferay-ui:search-iterator displayStyle='<%= displayStyle.equals("descriptive") ? displayStyle : null %>' paginate="<%= false %>" searchContainer="<%= articleSearchContainer %>" />
-		</liferay-ui:search-container>
-	</c:otherwise>
-</c:choose>
+				rowData.put("draggable", JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE));
+				rowData.put("folder", true);
+				rowData.put("folder-id", curFolder.getFolderId());
+				rowData.put("title", HtmlUtil.escape(curFolder.getName()));
+
+				row.setData(rowData);
+				row.setPrimaryKey(String.valueOf(curFolder.getPrimaryKey()));
+				%>
+
+				<c:choose>
+					<c:when test='<%= displayStyle.equals("icon") %>'>
+						<%@ include file="/folder_columns_icon.jspf" %>
+					</c:when>
+					<c:when test='<%= displayStyle.equals("descriptive") %>'>
+						<%@ include file="/folder_columns_descriptive.jspf" %>
+					</c:when>
+					<c:otherwise>
+						<%@ include file="/folder_columns_list.jspf" %>
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+		</c:choose>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator displayStyle='<%= displayStyle.equals("list") ? null : displayStyle %>' paginate="<%= false %>" searchContainer="<%= articleSearchContainer %>" />
+</liferay-ui:search-container>
 
 <div class="article-entries-pagination">
 	<liferay-ui:search-paginator searchContainer="<%= articleSearchContainer %>" />

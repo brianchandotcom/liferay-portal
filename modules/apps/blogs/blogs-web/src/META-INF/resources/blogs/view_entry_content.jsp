@@ -41,7 +41,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 					<liferay-ui:icon-menu cssClass="entry-options" direction="right" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" scroll="<%= false %>" showWhenSingleIcon="<%= true %>" triggerCssClass="text-muted" view="lexicon">
 						<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
-							<portlet:renderURL var="editEntryURL">
+							<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 								<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="backURL" value="<%= currentURL %>" />
@@ -101,7 +101,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</div>
 				</c:if>
 
-				<portlet:renderURL var="viewEntryURL">
+				<portlet:renderURL var="viewEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 					<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
@@ -233,7 +233,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						int messagesCount = CommentManagerUtil.getCommentsCount(BlogsEntry.class.getName(), entry.getEntryId());
 						%>
 
-						<portlet:renderURL var="viewEntryCommentsURL">
+						<portlet:renderURL var="viewEntryCommentsURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 							<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="scroll" value='<%= renderResponse.getNamespace() + "discussionContainer" %>' />

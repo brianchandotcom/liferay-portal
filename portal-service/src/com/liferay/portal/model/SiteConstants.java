@@ -35,7 +35,7 @@ public class SiteConstants {
 
 	public static final String NAME_RESERVED_WORDS = StringPool.NULL;
 
-	public static final String getNameGeneralRestrictions(Locale locale) {
+	public static String getNameGeneralRestrictions(Locale locale) {
 		return StringUtil.toLowerCase(LanguageUtil.get(locale, "blank")) +
 			StringPool.COMMA_AND_SPACE + StringUtil.toLowerCase(
 				LanguageUtil.get(locale, "numeric"));

@@ -34,7 +34,7 @@ public class UserGroupConstants {
 
 	public static final String NAME_RESERVED_WORDS = StringPool.NULL;
 
-	public static final String getNameGeneralRestrictions(
+	public static String getNameGeneralRestrictions(
 		Locale locale, boolean userGroupNameAllowNumeric) {
 
 		String userGroupNameGeneralRestrictions = StringUtil.toLowerCase(

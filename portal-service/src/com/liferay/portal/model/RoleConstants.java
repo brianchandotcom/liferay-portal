@@ -104,7 +104,7 @@ public class RoleConstants {
 
 	public static final String USER = "User";
 
-	public static final String getNameGeneralRestrictions(
+	public static String getNameGeneralRestrictions(
 		Locale locale, boolean roleNameAllowNumeric) {
 
 		String roleNameGeneralRestrictions = StringUtil.toLowerCase(
@@ -112,7 +112,7 @@ public class RoleConstants {
 
 		if (!roleNameAllowNumeric) {
 			roleNameGeneralRestrictions += StringPool.COMMA_AND_SPACE +
-			StringUtil.toLowerCase(LanguageUtil.get(locale, "numeric"));
+				StringUtil.toLowerCase(LanguageUtil.get(locale, "numeric"));
 		}
 
 		return roleNameGeneralRestrictions;

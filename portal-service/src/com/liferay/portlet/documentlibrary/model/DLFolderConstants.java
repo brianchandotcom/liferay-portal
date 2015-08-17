@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.model;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
@@ -74,31 +75,39 @@ public class DLFolderConstants {
 		}
 	}
 
-	public static final String getNameInvalidCharacters(
+	public static String getNameInvalidCharacters(
 		String[] documentLibraryCharBlacklist) {
 
 		return StringUtil.merge(documentLibraryCharBlacklist, StringPool.SPACE);
 	}
 
-	public static final String getNameInvalidEndCharacters(
+	public static String getNameInvalidEndCharacters(
 		String[] documentLibraryCharLastBlacklist) {
 
-		String folderNameInvalidEndCharacters = StringPool.BLANK;
+		StringBundler sb = new StringBundler(
+			documentLibraryCharLastBlacklist.length * 2);
 
-		for (String blacklistLastChar : documentLibraryCharLastBlacklist) {
+		sb.append(StringPool.BLANK);
+
+		for (int i = 0; i < documentLibraryCharLastBlacklist.length; i++) {
+			String blacklistLastChar = documentLibraryCharLastBlacklist[i];
+
 			if (blacklistLastChar.startsWith("\\u")) {
 				blacklistLastChar = UnicodeFormatter.parseString(
 					blacklistLastChar);
 			}
 
-			folderNameInvalidEndCharacters += blacklistLastChar +
-				StringPool.SPACE;
+			sb.append(blacklistLastChar);
+
+			if ((i + 1) < documentLibraryCharLastBlacklist.length) {
+				sb.append(StringPool.SPACE);
+			}
 		}
 
-		return StringUtil.trimTrailing(folderNameInvalidEndCharacters);
+		return sb.toString();
 	}
 
-	public static final String getNameReservedWords(
+	public static String getNameReservedWords(
 		String[] documentLibraryNameBlacklist) {
 
 		return StringPool.NULL + StringPool.COMMA_AND_SPACE + StringUtil.merge(

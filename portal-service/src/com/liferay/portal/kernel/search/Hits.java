@@ -24,6 +24,8 @@ import java.util.Map;
  */
 public interface Hits extends Serializable {
 
+	public void addGroupedHits(String groupValue, Hits hits);
+
 	public void addStatsResults(StatsResults statsResults);
 
 	public void copy(Hits hits);
@@ -33,6 +35,8 @@ public interface Hits extends Serializable {
 	public String getCollatedSpellCheckResult();
 
 	public Document[] getDocs();
+
+	public Map<String, Hits> getGroupedHits();
 
 	public int getLength();
 
@@ -53,6 +57,8 @@ public interface Hits extends Serializable {
 	public long getStart();
 
 	public Map<String, StatsResults> getStatsResults();
+
+	public boolean isGroupedHits();
 
 	public float score(int n);
 

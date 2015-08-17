@@ -136,6 +136,10 @@ public class SearchContext implements Serializable {
 			new String[_fullQueryEntryClassNames.size()]);
 	}
 
+	public GroupBy getGroupBy() {
+		return _groupBy;
+	}
+
 	public long[] getGroupIds() {
 		return _groupIds;
 	}
@@ -325,6 +329,10 @@ public class SearchContext implements Serializable {
 		_folderIds = folderIds;
 	}
 
+	public void setGroupBy(GroupBy groupBy) {
+		_groupBy = groupBy;
+	}
+
 	public void setGroupIds(long[] groupIds) {
 		_groupIds = groupIds;
 	}
@@ -427,6 +435,7 @@ public class SearchContext implements Serializable {
 	private final Map<String, Facet> _facets = new ConcurrentHashMap<>();
 	private long[] _folderIds;
 	private Set<String> _fullQueryEntryClassNames;
+	private GroupBy _groupBy;
 	private long[] _groupIds;
 	private boolean _includeAttachments;
 	private boolean _includeDiscussions;

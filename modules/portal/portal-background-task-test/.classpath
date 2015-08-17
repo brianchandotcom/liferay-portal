@@ -28,12 +28,9 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
-	<classpathentry kind="lib" path="lib/com.liferay.portal.backgroundtask.api.jar" />
-	<classpathentry kind="lib" path="lib/com.liferay.portal.backgroundtask.service.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.portal.background.task.api.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.portal.background.task.service.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.portal.spring.extender.jar" />
-	<classpathentry kind="lib" path="lib/com.liferay.portal.workflow.kaleo.api.jar" />
-	<classpathentry kind="lib" path="lib/com.liferay.portal.workflow.kaleo.service.jar" />
-	<classpathentry kind="lib" path="lib/jabsorb.jar" />
 	<classpathentry kind="lib" path="lib/org.apache.felix.dependencymanager.jar" />
 	<classpathentry kind="lib" path="lib/org.apache.felix.dependencymanager.shell.jar" />
 	<classpathentry kind="lib" path="lib/org.apache.felix.gogo.runtime.jar" />

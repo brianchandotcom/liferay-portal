@@ -98,8 +98,8 @@ public class WikiPageStagedModelDataHandler
 		String uuid, long companyId) {
 
 		return WikiPageLocalServiceUtil.getWikiPagesByUuidAndCompanyId(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new StagedModelModifiedDateComparator<WikiPage>());
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<WikiPage>());
 	}
 
 	@Override
@@ -187,50 +187,49 @@ public class WikiPageStagedModelDataHandler
 
 		WikiPage importedPage = null;
 
-		WikiPage existingPage = WikiPageLocalServiceUtil.fetchPage(
-			nodeId, page.getTitle());
+		if (portletDataContext.isDataStrategyMirror()) {
+			serviceContext.setUuid(page.getUuid());
 
-		if (existingPage == null) {
-			importedPage = WikiPageLocalServiceUtil.addPage(
-				userId, nodeId, page.getTitle(), page.getVersion(),
-				page.getContent(), page.getSummary(), page.isMinorEdit(),
-				page.getFormat(), page.getHead(), page.getParentTitle(),
-				page.getRedirectTitle(), serviceContext);
+			WikiPage existingPage = fetchExistingWikiPage(
+				page.getUuid(), portletDataContext.getScopeGroupId(), nodeId,
+				page.getTitle(), page.getVersion());
 
-			WikiPageResource pageResource =
-				WikiPageResourceLocalServiceUtil.getPageResource(
-					importedPage.getResourcePrimKey());
+			if (existingPage == null) {
+				importedPage = WikiPageLocalServiceUtil.addPage(
+					userId, nodeId, page.getTitle(), page.getVersion(),
+					page.getContent(), page.getSummary(), page.isMinorEdit(),
+					page.getFormat(), page.getHead(), page.getParentTitle(),
+					page.getRedirectTitle(), serviceContext);
 
-			String pageResourceUuid = GetterUtil.getString(
-				pageElement.attributeValue("page-resource-uuid"));
+				WikiPageResource pageResource =
+					WikiPageResourceLocalServiceUtil.getPageResource(
+						importedPage.getResourcePrimKey());
 
-			if (Validator.isNotNull(pageResourceUuid)) {
-				pageResource.setUuid(
+				String pageResourceUuid = GetterUtil.getString(
 					pageElement.attributeValue("page-resource-uuid"));
 
-				WikiPageResourceLocalServiceUtil.updateWikiPageResource(
-					pageResource);
-			}
-		}
-		else {
-			existingPage = fetchStagedModelByUuidAndGroupId(
-				page.getUuid(), portletDataContext.getScopeGroupId());
+				if (Validator.isNotNull(pageResourceUuid)) {
+					pageResource.setUuid(
+						pageElement.attributeValue("page-resource-uuid"));
 
-			if (existingPage == null) {
-				existingPage = WikiPageLocalServiceUtil.fetchPage(
-					nodeId, page.getTitle(), page.getVersion());
+					WikiPageResourceLocalServiceUtil.updateWikiPageResource(
+						pageResource);
+				}
 			}
-
-			if (existingPage == null) {
+			else {
 				importedPage = WikiPageLocalServiceUtil.updatePage(
 					userId, nodeId, page.getTitle(), 0.0, page.getContent(),
 					page.getSummary(), page.isMinorEdit(), page.getFormat(),
 					page.getParentTitle(), page.getRedirectTitle(),
 					serviceContext);
 			}
-			else {
-				importedPage = existingPage;
-			}
+		}
+		else {
+			importedPage = WikiPageLocalServiceUtil.addPage(
+				userId, nodeId, page.getTitle(), page.getVersion(),
+				page.getContent(), page.getSummary(), page.isMinorEdit(),
+				page.getFormat(), page.getHead(), page.getParentTitle(),
+				page.getRedirectTitle(), serviceContext);
 		}
 
 		if (page.isHead()) {
@@ -317,6 +316,24 @@ public class WikiPageStagedModelDataHandler
 			trashHandler.restoreTrashEntry(
 				userId, existingPage.getResourcePrimKey());
 		}
+	}
+
+	protected WikiPage fetchExistingWikiPage(
+		String uuid, long groupId, long nodeId, String title, double version) {
+
+		WikiPage existingPage = WikiPageLocalServiceUtil.fetchPage(
+			nodeId, title);
+
+		if (existingPage == null) {
+			existingPage = fetchStagedModelByUuidAndGroupId(uuid, groupId);
+		}
+
+		if (existingPage == null) {
+			existingPage = WikiPageLocalServiceUtil.fetchPage(
+				nodeId, title, version);
+		}
+
+		return existingPage;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

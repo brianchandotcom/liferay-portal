@@ -584,6 +584,8 @@ public class UpgradeSharding extends UpgradeProcess {
 			"(select dlf.companyId, r.statsId from DLFolder dlf, " +
 				"RatingsStats r where dlf.folderId=r.classPK)");
 
+		select.append(" union ");
+
 		// JournalArticle
 
 		select.append(

@@ -47,6 +47,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateGroupsOrgs();
 		_updateGroupsRoles();
 		_updateGroupsUserGroups();
+		_updateImage();
 		_updateJournalArticleImage();
 		_updateJournalArticleResource();
 		_updateMarketplaceModule();
@@ -356,6 +357,48 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"Groups_UserGroups", select, update, "companyId", "groupId",
 			"userGroupId");
+	}
+
+	private void _updateImage() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement("select imageId from Image");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long imageId = rs.getLong("imageId");
+
+				long companyId = _DEFAULT_COMPANY_ID;
+
+				if (PropsValues.WEB_SERVER_SERVLET_CHECK_IMAGE_GALLERY) {
+					PreparedStatement ps2 = con.prepareStatement(
+						"select companyId from DLFileEntry " +
+							"where largeImageId = " + imageId);
+
+					ResultSet rs2 = ps2.executeQuery();
+
+					companyId = rs2.getLong("companyId");
+				}
+
+				runSQL(
+					"update Image set companyId = " + companyId +
+						" where imageId = " + imageId);
+			}
+		}
+		catch (SQLException sqle) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("The companyId was not updated in Image table", sqle);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	private void _updateJournalArticleImage() throws Exception {
@@ -848,6 +891,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"WikiPageResource", select, update, "companyId", "resourcePrimKey");
 	}
+
+	private static final long _DEFAULT_COMPANY_ID = 0;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeSharding.class);

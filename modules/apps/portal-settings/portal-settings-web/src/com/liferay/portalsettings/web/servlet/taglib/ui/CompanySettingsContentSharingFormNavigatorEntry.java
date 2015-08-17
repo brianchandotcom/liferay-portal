@@ -12,32 +12,50 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.portalsettings.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
+ * @author Philip Jones
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=30"})
-public class CompanySettingsPhoneNumbersFormNavigatorEntry
+@Component(
+		immediate = true, property = {"service.ranking:Integer=20"},
+		service = FormNavigatorEntry.class
+)
+public class CompanySettingsContentSharingFormNavigatorEntry
 	extends BaseCompanySettingsFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
 		return
-			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_IDENTIFICATION;
+			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_CONFIGURATION;
 	}
 
 	@Override
 	public String getKey() {
-		return "phone-numbers";
+		return "content-sharing";
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/portal_settings/phone_numbers.jsp";
+		return "/content_sharing.jsp";
 	}
 
 }

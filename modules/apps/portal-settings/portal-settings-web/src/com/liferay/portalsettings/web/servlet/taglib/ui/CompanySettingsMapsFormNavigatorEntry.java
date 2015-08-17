@@ -12,32 +12,50 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.portalsettings.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
+ * @author Philip Jones
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=40"})
-public class CompanySettingsAddressesFormNavigatorEntry
+@Component(
+		immediate = true, property = {"service.ranking:Integer=20"},
+		service = FormNavigatorEntry.class
+)
+public class CompanySettingsMapsFormNavigatorEntry
 	extends BaseCompanySettingsFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
 		return
-			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_IDENTIFICATION;
+			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_MISCELLANEOUS;
 	}
 
 	@Override
 	public String getKey() {
-		return "addresses";
+		return "maps";
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/portal_settings/addresses.jsp";
+		return "/maps.jsp";
 	}
 
 }

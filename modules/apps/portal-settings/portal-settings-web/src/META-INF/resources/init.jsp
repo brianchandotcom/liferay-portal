@@ -31,18 +31,9 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.counter.service.CounterLocalServiceUtil" %><%@
 page import="com.liferay.portal.AccountNameException" %><%@
-page import="com.liferay.portal.AddressCityException" %><%@
-page import="com.liferay.portal.AddressStreetException" %><%@
-page import="com.liferay.portal.AddressZipException" %><%@
 page import="com.liferay.portal.CompanyMxException" %><%@
 page import="com.liferay.portal.CompanyVirtualHostException" %><%@
-page import="com.liferay.portal.EmailAddressException" %><%@
 page import="com.liferay.portal.LocaleException" %><%@
-page import="com.liferay.portal.NoSuchCountryException" %><%@
-page import="com.liferay.portal.NoSuchListTypeException" %><%@
-page import="com.liferay.portal.NoSuchRegionException" %><%@
-page import="com.liferay.portal.PhoneNumberException" %><%@
-page import="com.liferay.portal.WebsiteURLException" %><%@
 page import="com.liferay.portal.facebook.FacebookConnectUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
@@ -102,7 +93,6 @@ page import="java.net.URL" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Arrays" %><%@
-page import="java.util.Collections" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@

@@ -12,18 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.portalsettings.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
+ * @author Philip Jones
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=10"})
-public class CompanySettingsRecycleBinFormNavigatorEntry
+@Component(
+		immediate = true, property = {"service.ranking:Integer=40"},
+		service = FormNavigatorEntry.class
+)
+public class CompanySettingsMailHostNamesFormNavigatorEntry
 	extends BaseCompanySettingsFormNavigatorEntry {
 
 	@Override
@@ -34,17 +41,21 @@ public class CompanySettingsRecycleBinFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "recycle-bin";
+		return "mail-host-names";
 	}
 
 	@Override
-	public boolean isVisible(User user, Company company) {
-		return false;
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/portal_settings/recycle_bin.jsp";
+		return "/mail_host_names.jsp";
 	}
 
 }

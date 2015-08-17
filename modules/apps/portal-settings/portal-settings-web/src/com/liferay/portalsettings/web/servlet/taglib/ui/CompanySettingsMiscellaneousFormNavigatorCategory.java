@@ -12,19 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.portalsettings.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Sergio González
+ * @author Philip Jones
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=20"})
+@Component(
+		immediate = true, property = {"service.ranking:Integer=20"},
+		service = FormNavigatorCategory.class
+)
 public class CompanySettingsMiscellaneousFormNavigatorCategory
 	implements FormNavigatorCategory {
 

@@ -12,20 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.portalsettings.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorCategory;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.model.Company;
 
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @author Pei-Jung Lan
+ * @author Sergio González
+ * @author Philip Jones
  */
-public abstract class BaseCompanySettingsFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry<Company> {
+@Component(
+		immediate = true, property = {"service.ranking:Integer=10"},
+		service = FormNavigatorCategory.class
+)
+public class CompanySettingsSocialFormNavigatorCategory
+	implements FormNavigatorCategory {
 
 	@Override
 	public String getFormNavigatorId() {
@@ -33,8 +39,13 @@ public abstract class BaseCompanySettingsFormNavigatorEntry
 	}
 
 	@Override
+	public String getKey() {
+		return FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_SOCIAL;
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, getKey());
+		return LanguageUtil.get(locale, "social");
 	}
 
 }

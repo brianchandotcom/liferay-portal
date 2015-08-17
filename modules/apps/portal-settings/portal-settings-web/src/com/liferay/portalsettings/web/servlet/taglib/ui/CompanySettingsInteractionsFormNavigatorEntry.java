@@ -12,32 +12,49 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.portalsettings.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eduardo Garcia
+ * @author Pei-Jung Lan
+ * @author Philip Jones
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=50"})
-public class CompanySettingsTermsOfUseFormNavigatorEntry
+@Component(
+		immediate = true, property = {"service.ranking:Integer=10"},
+		service = FormNavigatorEntry.class
+)
+public class CompanySettingsInteractionsFormNavigatorEntry
 	extends BaseCompanySettingsFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return
-			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_CONFIGURATION;
+		return FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_SOCIAL;
 	}
 
 	@Override
 	public String getKey() {
-		return "terms-of-use";
+		return "interactions";
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.portal.settings.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/portal_settings/terms_of_use.jsp";
+		return "/interactions.jsp";
 	}
 
 }

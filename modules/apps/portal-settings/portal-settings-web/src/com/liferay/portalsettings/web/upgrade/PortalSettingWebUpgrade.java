@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.web.upgrade;
+package com.liferay.portalsettings.web.upgrade;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;

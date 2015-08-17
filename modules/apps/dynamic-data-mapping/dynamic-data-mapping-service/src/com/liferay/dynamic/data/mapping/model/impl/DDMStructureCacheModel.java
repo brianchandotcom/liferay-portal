@@ -217,8 +217,6 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 
 		ddmStructureImpl.setDDMForm(_ddmForm);
 
-		ddmStructureImpl.setFullHierarchyDDMForm(_fullHierarchyDDMForm);
-
 		return ddmStructureImpl;
 	}
 
@@ -247,7 +245,6 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		lastPublishDate = objectInput.readLong();
 
 		_ddmForm = (com.liferay.dynamic.data.mapping.model.DDMForm)objectInput.readObject();
-		_fullHierarchyDDMForm = (com.liferay.dynamic.data.mapping.model.DDMForm)objectInput.readObject();
 	}
 
 	@Override
@@ -332,7 +329,6 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeObject(_ddmForm);
-		objectOutput.writeObject(_fullHierarchyDDMForm);
 	}
 
 	public String uuid;
@@ -356,5 +352,4 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	public int type;
 	public long lastPublishDate;
 	public com.liferay.dynamic.data.mapping.model.DDMForm _ddmForm;
-	public com.liferay.dynamic.data.mapping.model.DDMForm _fullHierarchyDDMForm;
 }

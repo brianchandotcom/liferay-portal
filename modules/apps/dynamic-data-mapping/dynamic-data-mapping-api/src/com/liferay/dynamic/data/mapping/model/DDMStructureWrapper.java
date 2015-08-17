@@ -953,12 +953,6 @@ public class DDMStructureWrapper implements DDMStructure,
 		_ddmStructure.setExpandoBridgeAttributes(serviceContext);
 	}
 
-	@Override
-	public void setFullHierarchyDDMForm(
-		com.liferay.dynamic.data.mapping.model.DDMForm fullHierarchyDDMForm) {
-		_ddmStructure.setFullHierarchyDDMForm(fullHierarchyDDMForm);
-	}
-
 	/**
 	* Sets the group ID of this d d m structure.
 	*

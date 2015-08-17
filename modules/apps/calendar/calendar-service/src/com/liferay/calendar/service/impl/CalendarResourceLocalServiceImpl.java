@@ -22,6 +22,7 @@ import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.base.CalendarResourceLocalServiceBaseImpl;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
+import com.liferay.calendar.util.comparator.CalendarResourceCodeComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.CharPool;
@@ -208,6 +209,12 @@ public class CalendarResourceLocalServiceImpl
 		long classNameId, long classPK) {
 
 		return calendarResourcePersistence.fetchByC_C(classNameId, classPK);
+	}
+
+	@Override
+	public CalendarResource fetchCalendarResource(long groupId, String code) {
+		return calendarResourcePersistence.fetchByG_C_First(
+			groupId, code, new CalendarResourceCodeComparator());
 	}
 
 	@Override

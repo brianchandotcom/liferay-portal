@@ -192,7 +192,9 @@ public class CalendarResourceStagedModelDataHandler
 						userId, portletDataContext.getScopeGroupId(),
 						calendarResource.getClassNameId(), classPK,
 						calendarResource.getClassUuid(),
-						calendarResource.getCode(), calendarResourceNameMap,
+						getUniqueCalendarResourceCode(
+							portletDataContext, calendarResource),
+						calendarResourceNameMap,
 						calendarResource.getDescriptionMap(),
 						calendarResource.isActive(), serviceContext);
 			}
@@ -210,7 +212,9 @@ public class CalendarResourceStagedModelDataHandler
 				CalendarResourceLocalServiceUtil.addCalendarResource(
 					userId, portletDataContext.getScopeGroupId(),
 					calendarResource.getClassNameId(), classPK,
-					calendarResource.getClassUuid(), calendarResource.getCode(),
+					calendarResource.getClassUuid(),
+					getUniqueCalendarResourceCode(
+						portletDataContext, calendarResource),
 					calendarResourceNameMap,
 					calendarResource.getDescriptionMap(),
 					calendarResource.isActive(), serviceContext);
@@ -269,6 +273,28 @@ public class CalendarResourceStagedModelDataHandler
 		}
 
 		return classPK;
+	}
+
+	protected String getUniqueCalendarResourceCode(
+			PortletDataContext portletDataContext,
+			CalendarResource calendarResource)
+		throws Exception {
+
+		String code = calendarResource.getCode();
+
+		for (int i = 1;; i++) {
+			CalendarResource existingCalendarResource =
+				CalendarResourceLocalServiceUtil.fetchCalendarResource(
+					portletDataContext.getScopeGroupId(), code);
+
+			if (existingCalendarResource == null) {
+				break;
+			}
+
+			code = code.concat(String.valueOf(i));
+		}
+
+		return code;
 	}
 
 	protected void updateCalendars(

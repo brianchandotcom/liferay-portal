@@ -214,6 +214,12 @@ public class CalendarResourceLocalServiceWrapper
 			classPK);
 	}
 
+	@Override
+	public com.liferay.calendar.model.CalendarResource fetchCalendarResource(
+		long groupId, java.lang.String code) {
+		return _calendarResourceLocalService.fetchCalendarResource(groupId, code);
+	}
+
 	/**
 	* Returns the calendar resource matching the UUID and group.
 	*

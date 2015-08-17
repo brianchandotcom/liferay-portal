@@ -183,6 +183,10 @@ public interface CalendarResourceLocalService extends BaseLocalService,
 	public com.liferay.calendar.model.CalendarResource fetchCalendarResource(
 		long classNameId, long classPK);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.calendar.model.CalendarResource fetchCalendarResource(
+		long groupId, java.lang.String code);
+
 	/**
 	* Returns the calendar resource matching the UUID and group.
 	*

@@ -155,6 +155,13 @@ public class AddLayoutSetPrototypeAction {
 		_userLocalService = userLocalService;
 	}
 
+	@Reference(
+		target = "(javax.portlet.name=" + UserStatisticsPortletKeys.USER_STATISTICS + ")",
+		unbind = "-"
+	)
+	protected void setUserStatisticsPortletKeys(Portlet portlet) {
+	}
+
 	private CompanyLocalService _companyLocalService;
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 	private UserLocalService _userLocalService;

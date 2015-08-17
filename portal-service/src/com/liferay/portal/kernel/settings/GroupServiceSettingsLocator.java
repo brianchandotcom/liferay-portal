@@ -24,9 +24,9 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
  */
 public class GroupServiceSettingsLocator implements SettingsLocator {
 
-	public GroupServiceSettingsLocator(long groupId, String serviceName) {
+	public GroupServiceSettingsLocator(long groupId, String settingsId) {
 		_groupId = groupId;
-		_serviceName = serviceName;
+		_settingsId = settingsId;
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class GroupServiceSettingsLocator implements SettingsLocator {
 
 		Settings configurationBeanSettings =
 			_settingsLocatorHelper.getConfigurationBeanSettings(
-				_serviceName, portalPropertiesSettings);
+				_settingsId, portalPropertiesSettings);
 
 		Settings portalPreferencesSettings =
 			_settingsLocatorHelper.getPortalPreferencesSettings(
@@ -46,15 +46,15 @@ public class GroupServiceSettingsLocator implements SettingsLocator {
 
 		Settings companyPortletPreferencesSettings =
 			_settingsLocatorHelper.getCompanyPortletPreferencesSettings(
-				companyId, _serviceName, portalPreferencesSettings);
+				companyId, _settingsId, portalPreferencesSettings);
 
 		return _settingsLocatorHelper.getGroupPortletPreferencesSettings(
-			_groupId, _serviceName, companyPortletPreferencesSettings);
+			_groupId, _settingsId, companyPortletPreferencesSettings);
 	}
 
 	@Override
 	public String getSettingsId() {
-		return _serviceName;
+		return _settingsId;
 	}
 
 	protected long getCompanyId(long groupId) throws SettingsException {
@@ -69,7 +69,7 @@ public class GroupServiceSettingsLocator implements SettingsLocator {
 	}
 
 	private final long _groupId;
-	private final String _serviceName;
+	private final String _settingsId;
 	private final SettingsLocatorHelper _settingsLocatorHelper =
 		SettingsLocatorHelperUtil.getSettingsLocatorHelper();
 

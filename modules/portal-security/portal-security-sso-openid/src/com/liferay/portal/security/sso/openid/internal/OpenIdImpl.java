@@ -14,12 +14,12 @@
 
 package com.liferay.portal.security.sso.openid.internal;
 
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.openid.OpenId;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.security.sso.openid.configuration.OpenIdConfiguration;
 import com.liferay.portal.security.sso.openid.constants.OpenIdConstants;
 
@@ -39,27 +39,29 @@ public class OpenIdImpl implements OpenId {
 	public boolean isEnabled(long companyId) {
 		try {
 			OpenIdConfiguration openIdConfiguration =
-				_settingsFactory.getSettings(
+				_configurationFactory.getConfiguration(
 					OpenIdConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, OpenIdConstants.SERVICE_NAME));
 
 			return openIdConfiguration.enabled();
 		}
-		catch (SettingsException se) {
-			_log.error("Unable to get OpenId configuration", se);
+		catch (ConfigurationException mce) {
+			_log.error("Unable to get OpenId configuration", mce);
 		}
 
 		return false;
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(OpenIdImpl.class);
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

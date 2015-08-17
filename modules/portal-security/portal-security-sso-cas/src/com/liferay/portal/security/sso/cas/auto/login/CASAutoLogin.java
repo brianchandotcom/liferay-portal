@@ -15,13 +15,13 @@
 package com.liferay.portal.security.sso.cas.auto.login;
 
 import com.liferay.portal.NoSuchUserException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -92,10 +92,11 @@ public class CASAutoLogin extends BaseAutoLogin {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		CASConfiguration casConfiguration = _settingsFactory.getSettings(
-			CASConfiguration.class,
-			new CompanyServiceSettingsLocator(
-				companyId, CASConstants.SERVICE_NAME));
+		CASConfiguration casConfiguration =
+			_configurationFactory.getConfiguration(
+				CASConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, CASConstants.SERVICE_NAME));
 
 		if (!casConfiguration.enabled()) {
 			return null;
@@ -165,13 +166,15 @@ public class CASAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(CASAutoLogin.class);
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

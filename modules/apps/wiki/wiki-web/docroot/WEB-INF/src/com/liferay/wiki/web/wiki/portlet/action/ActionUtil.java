@@ -14,9 +14,9 @@
 
 package com.liferay.wiki.web.wiki.portlet.action;
 
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,7 +44,7 @@ import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.util.WikiUtil;
-import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
+import com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration;
 import com.liferay.wiki.web.util.WikiWebComponentProvider;
 
 import java.util.Arrays;
@@ -73,23 +73,19 @@ public class ActionUtil {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		WikiWebComponentProvider wikiWebComponentProvider =
-			WikiWebComponentProvider.getWikiWebComponentProvider();
+		WikiPortletInstanceOverriddenConfiguration
+			wikiPortletInstanceConfiguration =
+				ConfigurationFactoryUtil.getConfiguration(
+					WikiPortletInstanceOverriddenConfiguration.class,
+					new PortletInstanceSettingsLocator(
+						themeDisplay.getLayout(), portletDisplay.getId()));
 
-		SettingsFactory settingsFactory =
-			wikiWebComponentProvider.getSettingsFactory();
-
-		WikiPortletInstanceSettings wikiPortletInstanceSettings =
-			settingsFactory.getSettings(
-				WikiPortletInstanceSettings.class,
-				new PortletInstanceSettingsLocator(
-					themeDisplay.getLayout(), portletDisplay.getId()));
-
-		String[] visibleNodeNames = wikiPortletInstanceSettings.visibleNodes();
+		String[] visibleNodeNames =
+			wikiPortletInstanceConfiguration.visibleNodes();
 
 		nodes = WikiUtil.orderNodes(nodes, visibleNodeNames);
 
-		String[] hiddenNodes = wikiPortletInstanceSettings.hiddenNodes();
+		String[] hiddenNodes = wikiPortletInstanceConfiguration.hiddenNodes();
 		Arrays.sort(hiddenNodes);
 
 		for (WikiNode node : nodes) {

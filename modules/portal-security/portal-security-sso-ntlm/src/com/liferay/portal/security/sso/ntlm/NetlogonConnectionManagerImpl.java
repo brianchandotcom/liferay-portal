@@ -14,13 +14,13 @@
 
 package com.liferay.portal.security.sso.ntlm;
 
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
@@ -145,11 +145,12 @@ public class NetlogonConnectionManagerImpl
 		int negotiateFlags = 0x600FFFFF;
 
 		try {
-			NtlmConfiguration ntlmConfiguration = _settingsFactory.getSettings(
-				NtlmConfiguration.class,
-				new CompanyServiceSettingsLocator(
-					CompanyThreadLocal.getCompanyId(),
-					NtlmConstants.SERVICE_NAME));
+			NtlmConfiguration ntlmConfiguration =
+				_configurationFactory.getConfiguration(
+					NtlmConfiguration.class,
+					new CompanyServiceSettingsLocator(
+						CompanyThreadLocal.getCompanyId(),
+						NtlmConstants.SERVICE_NAME));
 
 			String negotiateFlagsString = ntlmConfiguration.negotiateFlags();
 
@@ -158,21 +159,23 @@ public class NetlogonConnectionManagerImpl
 					negotiateFlagsString.substring(2), 16);
 			}
 		}
-		catch (SettingsException se) {
-			_log.error("Unable to get NTLM configuration", se);
+		catch (ConfigurationException mce) {
+			_log.error("Unable to get NTLM configuration", mce);
 		}
 
 		return negotiateFlags;
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		NetlogonConnectionManagerImpl.class);
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

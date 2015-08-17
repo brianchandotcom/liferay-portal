@@ -25,7 +25,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.bookmarks.constants.BookmarksConstants" %><%@
+<%@ page import="com.liferay.bookmarks.configuration.BookmarksGroupServiceOverriddenConfiguration" %><%@
+page import="com.liferay.bookmarks.constants.BookmarksConstants" %><%@
 page import="com.liferay.bookmarks.constants.BookmarksPortletKeys" %><%@
 page import="com.liferay.bookmarks.constants.BookmarksWebKeys" %><%@
 page import="com.liferay.bookmarks.exception.EntryURLException" %><%@
@@ -41,10 +42,9 @@ page import="com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil" %><%
 page import="com.liferay.bookmarks.service.BookmarksFolderServiceUtil" %><%@
 page import="com.liferay.bookmarks.service.permission.BookmarksEntryPermissionChecker" %><%@
 page import="com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker" %><%@
-page import="com.liferay.bookmarks.settings.BookmarksGroupServiceSettings" %><%@
 page import="com.liferay.bookmarks.web.portlet.util.BookmarksUtil" %><%@
-page import="com.liferay.bookmarks.web.util.BookmarksWebComponentProvider" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.configuration.module.ConfigurationFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchEntry" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -54,8 +54,6 @@ page import="com.liferay.portal.kernel.search.Indexer" %><%@
 page import="com.liferay.portal.kernel.search.SearchContext" %><%@
 page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
 page import="com.liferay.portal.kernel.settings.GroupServiceSettingsLocator" %><%@
-page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><%@
-page import="com.liferay.portal.kernel.settings.SettingsFactory" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@

@@ -14,12 +14,12 @@
 
 package com.liferay.portal.security.sso.token.internal.events;
 
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.token.events.LogoutProcessor;
@@ -57,7 +57,7 @@ public class TokenLogoutAction extends Action {
 			long companyId = PortalUtil.getCompanyId(request);
 
 			TokenConfiguration tokenCompanyServiceSettings =
-				_settingsFactory.getSettings(
+				_configurationFactory.getConfiguration(
 					TokenConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, TokenConstants.SERVICE_NAME));
@@ -97,6 +97,13 @@ public class TokenLogoutAction extends Action {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.AT_LEAST_ONE,
 		policy = ReferencePolicy.DYNAMIC,
@@ -107,11 +114,6 @@ public class TokenLogoutAction extends Action {
 			logoutProcessor.getLogoutProcessorType(), logoutProcessor);
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
-	}
-
 	protected void unsetLogoutProcessor(LogoutProcessor logoutProcessor) {
 		_logoutProcessors.remove(logoutProcessor.getLogoutProcessorType());
 	}
@@ -119,8 +121,8 @@ public class TokenLogoutAction extends Action {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TokenLogoutAction.class);
 
+	private volatile ConfigurationFactory _configurationFactory;
 	private final Map<LogoutProcessorType, LogoutProcessor> _logoutProcessors =
 		new ConcurrentHashMap<>();
-	private volatile SettingsFactory _settingsFactory;
 
 }

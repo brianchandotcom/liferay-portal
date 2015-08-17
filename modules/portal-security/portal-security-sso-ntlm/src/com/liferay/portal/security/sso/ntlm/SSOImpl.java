@@ -14,12 +14,12 @@
 
 package com.liferay.portal.security.sso.ntlm;
 
+import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.sso.SSO;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
 
@@ -48,15 +48,16 @@ public class SSOImpl implements SSO {
 	@Override
 	public boolean isLoginRedirectRequired(long companyId) {
 		try {
-			NtlmConfiguration ntlmConfiguration = _settingsFactory.getSettings(
-				NtlmConfiguration.class,
-				new CompanyServiceSettingsLocator(
-					companyId, NtlmConstants.SERVICE_NAME));
+			NtlmConfiguration ntlmConfiguration =
+				_configurationFactory.getConfiguration(
+					NtlmConfiguration.class,
+					new CompanyServiceSettingsLocator(
+						companyId, NtlmConstants.SERVICE_NAME));
 
 			return ntlmConfiguration.enabled();
 		}
-		catch (SettingsException se) {
-			_log.error("Unable to get NTLM configuration", se);
+		catch (ConfigurationException mce) {
+			_log.error("Unable to get NTLM configuration", mce);
 		}
 
 		return false;
@@ -72,13 +73,15 @@ public class SSOImpl implements SSO {
 		return false;
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(SSOImpl.class);
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

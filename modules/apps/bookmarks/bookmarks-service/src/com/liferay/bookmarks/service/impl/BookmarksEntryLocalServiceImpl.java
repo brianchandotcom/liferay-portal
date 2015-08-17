@@ -16,6 +16,7 @@ package com.liferay.bookmarks.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.bookmarks.configuration.BookmarksGroupServiceOverriddenConfiguration;
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.exception.EntryURLException;
@@ -24,9 +25,9 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.base.BookmarksEntryLocalServiceBaseImpl;
 import com.liferay.bookmarks.service.permission.BookmarksResourcePermissionChecker;
-import com.liferay.bookmarks.settings.BookmarksGroupServiceSettings;
 import com.liferay.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
+import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -50,7 +51,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -723,16 +723,17 @@ public class BookmarksEntryLocalServiceImpl
 			return;
 		}
 
-		BookmarksGroupServiceSettings bookmarksGroupServiceSettings =
-			settingsFactory.getSettings(
-				BookmarksGroupServiceSettings.class,
-				new GroupServiceSettingsLocator(
-					entry.getGroupId(), BookmarksConstants.SERVICE_NAME));
+		BookmarksGroupServiceOverriddenConfiguration
+			bookmarksGroupServiceConfiguration =
+				configurationFactory.getConfiguration(
+					BookmarksGroupServiceOverriddenConfiguration.class,
+					new GroupServiceSettingsLocator(
+						entry.getGroupId(), BookmarksConstants.SERVICE_NAME));
 
 		if ((serviceContext.isCommandAdd() &&
-			 !bookmarksGroupServiceSettings.emailEntryAddedEnabled()) ||
+			 !bookmarksGroupServiceConfiguration.emailEntryAddedEnabled()) ||
 			(serviceContext.isCommandUpdate() &&
-			 !bookmarksGroupServiceSettings.emailEntryUpdatedEnabled())) {
+			 !bookmarksGroupServiceConfiguration.emailEntryUpdatedEnabled())) {
 
 			return;
 		}
@@ -754,23 +755,24 @@ public class BookmarksEntryLocalServiceImpl
 			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "bookmarks" +
 				StringPool.SLASH + entry.getEntryId();
 
-		String fromName = bookmarksGroupServiceSettings.emailFromName();
-		String fromAddress = bookmarksGroupServiceSettings.emailFromAddress();
+		String fromName = bookmarksGroupServiceConfiguration.emailFromName();
+		String fromAddress =
+			bookmarksGroupServiceConfiguration.emailFromAddress();
 
 		LocalizedValuesMap subjectLocalizedValuesMap = null;
 		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
 		if (serviceContext.isCommandUpdate()) {
 			subjectLocalizedValuesMap =
-				bookmarksGroupServiceSettings.emailEntryUpdatedSubject();
+				bookmarksGroupServiceConfiguration.emailEntryUpdatedSubject();
 			bodyLocalizedValuesMap =
-				bookmarksGroupServiceSettings.emailEntryUpdatedBody();
+				bookmarksGroupServiceConfiguration.emailEntryUpdatedBody();
 		}
 		else {
 			subjectLocalizedValuesMap =
-				bookmarksGroupServiceSettings.emailEntryAddedSubject();
+				bookmarksGroupServiceConfiguration.emailEntryAddedSubject();
 			bodyLocalizedValuesMap =
-				bookmarksGroupServiceSettings.emailEntryAddedBody();
+				bookmarksGroupServiceConfiguration.emailEntryAddedBody();
 		}
 
 		SubscriptionSender subscriptionSender =
@@ -845,8 +847,8 @@ public class BookmarksEntryLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = SettingsFactory.class)
-	protected SettingsFactory settingsFactory;
+	@ServiceReference(type = ConfigurationFactory.class)
+	protected ConfigurationFactory configurationFactory;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksEntryLocalServiceImpl.class);

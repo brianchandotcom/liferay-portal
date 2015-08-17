@@ -16,29 +16,38 @@
 
 <%@ include file="/html/taglib/ui/user_display/init.jsp" %>
 
-<div class="profile-header">
-	<div class="nameplate">
-		<div class="nameplate-field">
-			<div class="user-icon <%= userIconCssClass %> user-icon-success">
-				<img alt="" class="img-responsive <%= imageCssClass %>" src="<%= HtmlUtil.escape(taglibSrc) %>">
-			</div>
+<c:choose>
+	<c:when test="<%= showUserDetails == false && showUserName == false %>">
+		<div class="<%= userIconCssClass %> user-icon user-icon-lg">
+			<img alt="thumbnail" class="img-responsive" src="<%= HtmlUtil.escape(taglibSrc) %>">
 		</div>
-		<c:if test="<%= showUserName %>">
-			<div class="nameplate-content">
-				<div class="heading4">
-					<c:choose>
-						<c:when test="<%= showLink %>">
-							<aui:a href="<%= url %>">
-								<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
-							</aui:a>
-						</c:when>
-						<c:otherwise>
-							<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
-						</c:otherwise>
-					</c:choose>
+	</c:when>
+	<c:otherwise>
+		<div class="profile-header">
+			<div class="nameplate">
+				<div class="nameplate-field">
+					<div class="user-icon <%= userIconCssClass %>">
+						<img alt="" class="img-responsive <%= imageCssClass %>" src="<%= HtmlUtil.escape(taglibSrc) %>">
+					</div>
 				</div>
-		</c:if>
+				<c:if test="<%= showUserName %>">
+					<div class="nameplate-content">
+						<div class="heading4">
+							<c:choose>
+								<c:when test="<%= showLink %>">
+									<aui:a href="<%= url %>">
+										<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
+									</aui:a>
+								</c:when>
+								<c:otherwise>
+									<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
+								</c:otherwise>
+							</c:choose>
+						</div>
+				</c:if>
 
-		<c:if test="<%= showUserDetails %>">
-			<div class="nameplate-content">
-		</c:if>
+				<c:if test="<%= showUserDetails %>">
+					<div class="nameplate-content">
+				</c:if>
+	</c:otherwise>
+</c:choose>

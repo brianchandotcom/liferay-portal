@@ -16,11 +16,13 @@
 
 <%@ include file="/html/taglib/ui/user_display/init.jsp" %>
 
-		<c:if test="<%= showUserName %>">
-			</div>
-		</c:if>
-		<c:if test="<%= showUserDetails %>">
-			</div>
-		</c:if>
+<c:if test="<%= showUserDetails && showUserName %>">
+			<c:if test="<%= showUserName %>">
+				</div>
+			</c:if>
+			<c:if test="<%= showUserDetails %>">
+				</div>
+			</c:if>
+		</div>
 	</div>
-</div>
+</c:if>

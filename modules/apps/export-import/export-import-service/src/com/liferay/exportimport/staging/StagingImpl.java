@@ -297,7 +297,7 @@ public class StagingImpl implements Staging {
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
 
-		long remoteGroupId = MapUtil.getLong(settingsMap, "remoteGroupId");
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
 		String remoteAddress = MapUtil.getString(settingsMap, "remoteAddress");
 		int remotePort = MapUtil.getInteger(settingsMap, "remotePort");
 		String remotePathContext = MapUtil.getString(
@@ -306,7 +306,7 @@ public class StagingImpl implements Staging {
 			settingsMap, "secureConnection");
 
 		validateRemoteGroup(
-			exportImportConfiguration.getGroupId(), remoteGroupId,
+			exportImportConfiguration.getGroupId(), targetGroupId,
 			remoteAddress, remotePort, remotePathContext, secureConnection);
 
 		boolean remotePrivateLayout = MapUtil.getBoolean(

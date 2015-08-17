@@ -43,17 +43,7 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 String coverImageCaption = BeanParamUtil.getString(entry, request, "coverImageCaption");
 long coverImageFileEntryId = BeanParamUtil.getLong(entry, request, "coverImageFileEntryId");
 long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFileEntryId");
-
-boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 %>
-
-<c:if test="<%= showHeader %>">
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		localizeTitle="<%= (entry == null) %>"
-		title='<%= (entry == null) ? "new-blog-entry" : entry.getTitle() %>'
-	/>
-</c:if>
 
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 
@@ -65,6 +55,15 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
 		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
+
+		<div class="entry-options">
+			<div class="status"><%= entry.getStatus() %></div>
+			<c:if test="<%= (entry == null) || !entry.isApproved() %>">
+				<div class="save-status" id="<portlet:namespace />saveStatus" style="text-align: center"></div>
+			</c:if>
+
+			<aui:button cssClass="icon-monospaced" icon="icon-cog" />
+		</div>
 
 		<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />
 		<liferay-ui:error exception="<%= EntryDescriptionException.class %>" message="please-enter-a-valid-abstract" />
@@ -93,10 +92,6 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 		<aui:model-context bean="<%= entry %>" model="<%= BlogsEntry.class %>" />
 
-		<c:if test="<%= (entry == null) || !entry.isApproved() %>">
-			<div class="save-status" id="<portlet:namespace />saveStatus"></div>
-		</c:if>
-
 		<%
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
 		%>
@@ -106,12 +101,8 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			refresh="<%= false %>"
 			type="pills"
 		>
-			<div class="<%= (entry != null) ? "entry-status " + WorkflowConstants.getStatusLabel(entry.getStatus()) : StringPool.BLANK %>">
+			<div class="<%= (entry != null) ? "entry-body " : StringPool.BLANK %>">
 				<liferay-ui:section>
-					<c:if test="<%= entry != null %>">
-						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
-					</c:if>
-
 					<portlet:actionURL name="/blogs/upload_temp_image" var="uploadTempImageURL" />
 
 					<div class="lfr-blogs-cover-image-selector">
@@ -120,8 +111,10 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 					<aui:input name="coverImageCaption" type="hidden" />
 
-					<div class="entry-cover-image-caption <%= (coverImageFileEntryId == 0) ? "invisible" : "" %>">
-						<liferay-ui:input-editor contents="<%= HtmlUtil.escape(coverImageCaption) %>" editorName="alloyeditor" name="coverImageCaptionEditor" placeholder="caption" showSource="<%= false %>" />
+					<div class="cover-image-caption <%= (coverImageFileEntryId == 0) ? "invisible" : "" %>">
+						<small>
+							<liferay-ui:input-editor contents="<%= coverImageCaption %>" editorName="alloyeditor" name="coverImageCaptionEditor" placeholder="caption" showSource="<%= false %>" />
+						</small>
 					</div>
 
 					<div class="entry-title">
@@ -136,7 +129,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 					<aui:input name="subtitle" type="hidden" />
 
-					<div class="entry-body">
+					<div class="entry-content">
 						<liferay-ui:input-editor contents="<%= content %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp") %>' name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" />
 					</div>
 
@@ -298,7 +291,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			</div>
 		</liferay-ui:tabs>
 
-		<aui:fieldset>
+		<aui:fieldset cssClass="entry-footer">
 
 			<%
 			boolean pending = false;
@@ -340,7 +333,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 				<aui:button name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
-				<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
+				<aui:button cssClass="btn-link" href="<%= redirect %>" name="cancelButton" type="cancel" />
 			</aui:button-row>
 		</aui:fieldset>
 	</aui:form>

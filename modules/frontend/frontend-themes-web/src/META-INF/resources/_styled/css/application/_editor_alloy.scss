@@ -22,17 +22,10 @@
 }
 
 .alloy-editor-switch {
-	border: dashed 0 #DDD;
-	border-bottom-width: 1px;
 	position: relative;
 
-	&.show-source {
-		border-bottom-width: 2px;
-		border-style: solid;
-	}
-
 	.btn {
-		bottom: 20px;
+		bottom: 25px;
 		float: right;
 		position: relative;
 	}

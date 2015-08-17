@@ -5,10 +5,20 @@
 
 .portlet-blogs {
 	.entry-options {
-		background-color: #FFF;
-		position: absolute;
-		right: 0;
-		top: 0;
+		position: relative;
+		text-align: right;
+		margin-bottom: 10px;
+
+		&.inline {
+			background-color: #FFF;
+			right: 0;
+			top: 0;
+			position: absolute;
+		}
+
+		& > div {
+			padding: 5px;
+		}
 	}
 
 	.taglib-custom-attributes-list {
@@ -155,33 +165,20 @@
 	}
 
 	.edit-entry {
-		.entry-status {
-			padding-left: 30px;
-		}
-
-		.entry-title, .entry-subtitle, .entry-body {
-			margin-left: 24px;
-		}
-
 		.entry-body {
-			padding-bottom: 60px;
+			padding-bottom: 30px;
 		}
 
-		.entry-subtitle {
+		.entry-subtitle, .entry-footer {
 			margin-bottom: 30px;
 		}
 
-		.entry-cover-image-caption {
-			font-size: 12px;
-			margin-bottom: 35px;
+		.cover-image-caption .alloy-editor {
+			color: #868889;
+			padding-left: 0;
 
-			.alloy-editor {
-				color: #868889;
-				padding-left: 0;
-
-				&.alloy-editor-placeholder:empty:not(:focus) {
-					border-left-width: 0;
-				}
+			&.alloy-editor-placeholder:empty:not(:focus) {
+				border-left-width: 0;
 			}
 		}
 	}

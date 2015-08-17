@@ -39,41 +39,60 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				%>
 
 				<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
-					<liferay-ui:icon-menu cssClass="entry-options" direction="right" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" scroll="<%= false %>" showWhenSingleIcon="<%= true %>" triggerCssClass="text-muted" view="lexicon">
-						<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
-							<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-								<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="backURL" value="<%= currentURL %>" />
-								<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-							</portlet:renderURL>
 
-							<liferay-ui:icon
-								iconCssClass="icon-edit"
-								label="<%= true %>"
-								message="edit"
-								url="<%= editEntryURL %>"
-							/>
-						</c:if>
+					<c:choose>
+						<c:when test="<%= !viewSingleEntry %>">
+							<liferay-ui:icon-menu cssClass="entry-options inline" direction="right" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" scroll="<%= false %>" showWhenSingleIcon="<%= true %>" triggerCssClass="text-muted" view="lexicon">
+								<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
+									<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+										<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
+										<portlet:param name="redirect" value="<%= currentURL %>" />
+										<portlet:param name="backURL" value="<%= currentURL %>" />
+										<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+									</portlet:renderURL>
 
-						<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
-							<portlet:renderURL var="viewURL">
-								<portlet:param name="mvcRenderCommandName" value="/blogs/view" />
-							</portlet:renderURL>
+									<liferay-ui:icon
+										iconCssClass="icon-edit"
+										label="<%= true %>"
+										message="edit"
+										url="<%= editEntryURL %>"
+									/>
+								</c:if>
 
-							<portlet:actionURL name="/blogs/edit_entry" var="deleteEntryURL">
-								<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-								<portlet:param name="redirect" value="<%= viewURL %>" />
-								<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-							</portlet:actionURL>
+								<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
+									<portlet:renderURL var="viewURL">
+										<portlet:param name="mvcRenderCommandName" value="/blogs/view" />
+									</portlet:renderURL>
 
-							<liferay-ui:icon-delete
-								label="<%= true %>"
-								trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
-								url="<%= deleteEntryURL %>"
-							/>
-						</c:if>
-					</liferay-ui:icon-menu>
+									<portlet:actionURL name="/blogs/edit_entry" var="deleteEntryURL">
+										<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
+										<portlet:param name="redirect" value="<%= viewURL %>" />
+										<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+									</portlet:actionURL>
+
+									<liferay-ui:icon-delete
+										label="<%= true %>"
+										trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>"
+										url="<%= deleteEntryURL %>"
+									/>
+								</c:if>
+							</liferay-ui:icon-menu>
+						</c:when>
+						<c:otherwise>
+							<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
+								<portlet:renderURL var="editEntryURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+									<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="backURL" value="<%= currentURL %>" />
+									<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+								</portlet:renderURL>
+
+								<div class="entry-options">
+									<aui:button cssClass="icon-monospaced" href="<%= editEntryURL %>" icon="icon-edit" />
+								</div>
+							</c:if>
+						</c:otherwise>
+					</c:choose>
 				</c:if>
 
 				<%

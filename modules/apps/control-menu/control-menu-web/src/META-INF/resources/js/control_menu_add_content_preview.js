@@ -6,8 +6,6 @@ AUI.add(
 
 		var BODY_CONTENT = 'bodyContent';
 
-		var CSS_OVER = 'over';
-
 		var STR_ACTION = 'action';
 
 		var STR_ALIGN_NODE = 'align.node';
@@ -17,8 +15,6 @@ AUI.add(
 		var STR_CLICK = 'click';
 
 		var STR_CLICKOUTSIDE = 'clickoutside';
-
-		var STR_CURRENT_NODE = 'currentNode';
 
 		var STR_MOUSEENTER = 'mouseenter';
 

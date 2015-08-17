@@ -108,7 +108,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="TemplateRenderer" bodyContent="true" writeJSP="true">
+	<component name="TemplateRenderer" bodyContent="true" writeEndJSP="false" writeJSP="true">
 		<attributes>
 			<attribute>
 				<name>className</name>

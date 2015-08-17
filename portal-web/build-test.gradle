@@ -70,6 +70,29 @@ repositories {
 	}
 }
 
+File localPoshiDir = new File(buildDir, "poshi")
+
+task copyLocalPoshi(type: GradleBuild)
+
+copyLocalPoshi {
+	configure(startParameter) {
+		configureOnDemand = true
+		gradleUserHomeDir = file("../.gradle")
+		projectProperties = ["destinationDir": new File(buildDir, "poshi")]
+	}
+
+	dir = file("../modules/test/poshi-runner")
+	tasks = ["deployWithDependencies"]
+}
+
 runPoshi {
 	jvmArgs "-Dfile.encoding=UTF-8"
+}
+
+if (project.properties["local"] == "true") {
+	dependencies {
+		poshiRunner fileTree(dir: localPoshiDir, include: "*.jar")
+	}
+
+	[runPoshi, validatePoshi, writePoshiProperties]*.dependsOn copyLocalPoshi
 }

@@ -14,9 +14,8 @@
 
 package com.liferay.social.group.statistics.web.settings.internal;
 
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
-import com.liferay.social.group.statistics.web.configuration.GroupStatisticsPortletInstanceConfiguration;
-import com.liferay.social.group.statistics.web.constants.GroupStatisticsPortletKeys;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.social.group.statistics.web.configuration.SocialGroupStatisticsPortletInstanceConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Iván Zaera
  */
 @Component
-public class GroupStatisticsPortletInstanceSettingsIdMapping
-	implements SettingsIdMapping {
+public class SocialGroupStatisticsPortletInstanceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return GroupStatisticsPortletInstanceConfiguration.class;
-	}
-
-	@Override
-	public String getSettingsId() {
-		return GroupStatisticsPortletKeys.GROUP_STATISTICS;
+		return SocialGroupStatisticsPortletInstanceConfiguration.class;
 	}
 
 }

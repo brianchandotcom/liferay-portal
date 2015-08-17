@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.social.group.statistics.web.constants.GroupStatisticsPortletKeys;
+import com.liferay.social.group.statistics.web.constants.SocialGroupStatisticsPortletKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +36,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + GroupStatisticsPortletKeys.GROUP_STATISTICS},
+	property = {"javax.portlet.name=" + SocialGroupStatisticsPortletKeys.SOCIAL_GROUP_STATISTICS},
 	service = ConfigurationAction.class
 )
-public class GroupStatisticsConfigurationAction
+public class SocialGroupStatisticsConfigurationAction
 	extends BaseJSPSettingsConfigurationAction {
 
 	@Override

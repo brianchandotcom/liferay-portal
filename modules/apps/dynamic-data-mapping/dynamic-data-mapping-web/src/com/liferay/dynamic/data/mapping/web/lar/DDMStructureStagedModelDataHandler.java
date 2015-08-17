@@ -348,15 +348,8 @@ public class DDMStructureStagedModelDataHandler
 	protected boolean isModifiedStructure(
 		DDMStructure existingStructure, DDMStructure structure) {
 
-		if (DateUtil.compareTo(
-				existingStructure.getModifiedDate(),
-				structure.getModifiedDate()) > 0) {
-
-			return true;
-		}
-
 		if (!Validator.equals(
-				existingStructure.getNameMap(), structure.getNameMap())) {
+				existingStructure.getDefinition(), structure.getDefinition())) {
 
 			return true;
 		}
@@ -368,8 +361,15 @@ public class DDMStructureStagedModelDataHandler
 			return true;
 		}
 
+		if (DateUtil.compareTo(
+				existingStructure.getModifiedDate(),
+				structure.getModifiedDate()) > 0) {
+
+			return true;
+		}
+
 		if (!Validator.equals(
-				existingStructure.getDefinition(), structure.getDefinition())) {
+				existingStructure.getNameMap(), structure.getNameMap())) {
 
 			return true;
 		}

@@ -178,7 +178,7 @@ public class UpgradeSharding extends UpgradeProcess {
 				}
 
 				if (supportsBatchUpdates) {
-					ps.addBatch();
+					ps2.addBatch();
 
 					if (count == PropsValues.HIBERNATE_JDBC_BATCH_SIZE) {
 						ps2.executeBatch();
@@ -192,10 +192,10 @@ public class UpgradeSharding extends UpgradeProcess {
 				else {
 					ps2.executeUpdate();
 				}
-			}
 
-			if (supportsBatchUpdates && (count > 0)) {
-				ps.executeBatch();
+				if (supportsBatchUpdates && (count > 0)) {
+					ps.executeBatch();
+				}
 			}
 		}
 		catch (SQLException sqle) {
@@ -206,8 +206,8 @@ public class UpgradeSharding extends UpgradeProcess {
 			}
 		}
 		finally {
+			DataAccess.cleanUp(con, ps2);
 			DataAccess.cleanUp(con, ps, rs);
-			DataAccess.cleanUp(ps2);
 		}
 	}
 

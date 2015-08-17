@@ -12,27 +12,32 @@
  * details.
  */
 
-package com.liferay.message.boards.web.notifications;
+package com.liferay.message.boards.web.portlet.route;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
-import com.liferay.portal.kernel.notifications.UserNotificationHandler;
+import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Adolfo Pérez
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS},
-	service = UserNotificationHandler.class
+	property = {
+		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/routes.xml",
+		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS
+	},
+	service = FriendlyURLMapper.class
 )
-public class MessageBoardsUserNotificationHandler
-	extends BaseModelUserNotificationHandler {
+public class MBFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
-	public MessageBoardsUserNotificationHandler() {
-		setPortletId(MBPortletKeys.MESSAGE_BOARDS);
+	@Override
+	public String getMapping() {
+		return _MAPPING;
 	}
+
+	private static final String _MAPPING = "message_boards";
 
 }

@@ -12,32 +12,27 @@
  * details.
  */
 
-package com.liferay.message.boards.web.portlet.route;
+package com.liferay.message.boards.web.portlet.action;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
-import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Adolfo Pérez
+ * @author Brian Wing Shun Chan
  */
 @Component(
-	immediate = true,
 	property = {
-		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/routes.xml",
-		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS
+		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+		"mvc.command.name=/", "mvc.command.name=/message_boards_admin/view"
 	},
-	service = FriendlyURLMapper.class
+	service = MVCRenderCommand.class
 )
-public class MessageBoardsFriendlyURLMapper extends DefaultFriendlyURLMapper {
+public class MBAdminViewMVCRenderCommand extends BaseViewMVCRenderCommand {
 
-	@Override
-	public String getMapping() {
-		return _MAPPING;
+	public MBAdminViewMVCRenderCommand() {
+		super("/message_boards_admin/view.jsp");
 	}
-
-	private static final String _MAPPING = "message_boards";
 
 }

@@ -12,28 +12,27 @@
  * details.
  */
 
-package com.liferay.message.boards.web.portlet.action;
+package com.liferay.message.boards.web.notifications;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
+import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Sergio González
  */
 @Component(
-	property = {
-		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
-		"mvc.command.name=/", "mvc.command.name=/message_boards_admin/view"
-	},
-	service = MVCRenderCommand.class
+	immediate = true,
+	property = {"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS},
+	service = UserNotificationHandler.class
 )
-public class MessageBoardsAdminViewMVCRenderCommand
-	extends BaseViewMVCRenderCommand {
+public class MBUserNotificationHandler
+	extends BaseModelUserNotificationHandler {
 
-	public MessageBoardsAdminViewMVCRenderCommand() {
-		super("/message_boards_admin/view.jsp");
+	public MBUserNotificationHandler() {
+		setPortletId(MBPortletKeys.MESSAGE_BOARDS);
 	}
 
 }

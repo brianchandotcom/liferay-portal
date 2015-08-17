@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 		ViewPortletProvider.class
 	}
 )
-public class MessageBoardsAdminPortletProvider
+public class MBAdminPortletProvider
 	extends BasePortletProvider
 	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
 

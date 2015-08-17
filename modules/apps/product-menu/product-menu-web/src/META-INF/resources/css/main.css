@@ -1,7 +1,7 @@
 @import "mixins";
 
-@include respond-to(tablet, desktop) {
-	#wrapper.open {
+@include sm() {
+	body.open {
 		padding-left: 320px;
 	}
 }

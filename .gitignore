@@ -97,6 +97,7 @@
 /portal-web/*.iml
 /portal-web/*.ipr
 /portal-web/*.iws
+/portal-web/build
 /portal-web/classes
 /portal-web/docroot/aui
 /portal-web/docroot/dtd

@@ -189,12 +189,12 @@ public class CXFEndpointPublisher {
 			_servletServiceRegistration = _bundleContext.registerService(
 				Servlet.class, cxfNonSpringServlet, properties);
 
-			Object portalAuthConfigurationObject = _properties.get(
-				"portalAuthConfiguration");
+			Object authVerifierPropertiesObject = _properties.get(
+				"authVerifierProperties");
 
-			if (portalAuthConfigurationObject != null) {
-				String[] portalAuthConfiguration =
-					(String[])portalAuthConfigurationObject;
+			if (authVerifierPropertiesObject != null) {
+				String[] authVerifierProperties =
+					(String[])authVerifierPropertiesObject;
 
 				properties = new Hashtable<>();
 
@@ -208,13 +208,15 @@ public class CXFEndpointPublisher {
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET,
 					"CXFServlet");
 
-				for (String configuration : portalAuthConfiguration) {
-					String[] keyValuePair = configuration.split("=");
+				for (String authVerifierProperty : authVerifierProperties) {
+					String[] authVerifierPropertyParts =
+						authVerifierProperty.split("=");
+
 					properties.put(
 						HttpWhiteboardConstants.
 							HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX +
-							keyValuePair[0],
-						keyValuePair[1]);
+							authVerifierPropertyParts[0],
+						authVerifierPropertyParts[1]);
 				}
 
 				_authVerifierFilterServiceRegistration =

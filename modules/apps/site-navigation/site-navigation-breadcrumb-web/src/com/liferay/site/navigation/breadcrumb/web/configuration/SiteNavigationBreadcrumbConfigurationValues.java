@@ -19,9 +19,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 /**
  * @author Eudaldo Alonso
  */
-public class BreadcrumbConfigurationValues {
+public class SiteNavigationBreadcrumbConfigurationValues {
 
 	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		BreadcrumbWebConfigurationUtil.get("display.templates.config"));
+		SiteNavigationBreadcrumbWebConfigurationUtil.get(
+			"display.templates.config"));
 
 }

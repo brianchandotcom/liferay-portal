@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.site.navigation.breadcrumb.web.constants.BreadcrumbPortletKeys;
+import com.liferay.site.navigation.breadcrumb.web.constants.SiteNavigationBreadcrumbPortletKeys;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
@@ -33,7 +33,9 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String[] getPortletIds() {
-		return new String[] {BreadcrumbPortletKeys.BREADCRUMB};
+		return new String[] {
+			SiteNavigationBreadcrumbPortletKeys.SITE_NAVIGATION_BREADCRUMB
+		};
 	}
 
 	protected void upgradeDisplayStyle(PortletPreferences portletPreferences)

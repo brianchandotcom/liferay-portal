@@ -12,14 +12,19 @@
  * details.
  */
 
-package com.liferay.site.navigation.breadcrumb.web.constants;
+package com.liferay.site.navigation.breadcrumb.web.configuration;
+
+import aQute.bnd.annotation.metatype.Meta;
 
 /**
- * @author Eudaldo Alonso
+ * @author Juergen Kappler
  */
-public class BreadcrumbPortletKeys {
+@Meta.OCD(
+	id = "com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbWebConfiguration"
+)
+public interface SiteNavigationBreadcrumbWebConfiguration {
 
-	public static final String BREADCRUMB =
-		"com_liferay_site_navigation_breadcrumb_web_portlet_BreadcrumbPortlet";
+	@Meta.AD(deflt = "breadcrumb-horizontal-ftl", required = false)
+	public String ddmTemplateKeyDefault();
 
 }

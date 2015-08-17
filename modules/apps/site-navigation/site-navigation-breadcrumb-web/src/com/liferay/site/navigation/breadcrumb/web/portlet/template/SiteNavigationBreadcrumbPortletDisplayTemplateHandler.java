@@ -25,9 +25,9 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
-import com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbConfigurationValues;
-import com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbWebConfiguration;
-import com.liferay.site.navigation.breadcrumb.web.constants.BreadcrumbPortletKeys;
+import com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbConfigurationValues;
+import com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbWebConfiguration;
+import com.liferay.site.navigation.breadcrumb.web.constants.SiteNavigationBreadcrumbPortletKeys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,12 +44,12 @@ import org.osgi.service.component.annotations.Modified;
  * @author José Manuel Navarro
  */
 @Component(
-	configurationPid = "com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbWebConfiguration",
+	configurationPid = "com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbWebConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	property = {"javax.portlet.name=" + BreadcrumbPortletKeys.BREADCRUMB},
+	property = {"javax.portlet.name=" + SiteNavigationBreadcrumbPortletKeys.SITE_NAVIGATION_BREADCRUMB},
 	service = TemplateHandler.class
 )
-public class BreadcrumbPortletDisplayTemplateHandler
+public class SiteNavigationBreadcrumbPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
 	@Override
@@ -77,7 +77,8 @@ public class BreadcrumbPortletDisplayTemplateHandler
 			"content.Language", locale);
 
 		String portletTitle = PortalUtil.getPortletTitle(
-			BreadcrumbPortletKeys.BREADCRUMB, resourceBundle);
+			SiteNavigationBreadcrumbPortletKeys.SITE_NAVIGATION_BREADCRUMB,
+			resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -85,7 +86,7 @@ public class BreadcrumbPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return BreadcrumbPortletKeys.BREADCRUMB;
+		return SiteNavigationBreadcrumbPortletKeys.SITE_NAVIGATION_BREADCRUMB;
 	}
 
 	@Override
@@ -125,14 +126,16 @@ public class BreadcrumbPortletDisplayTemplateHandler
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_breadcrumbWebConfiguration = Configurable.createConfigurable(
-			BreadcrumbWebConfiguration.class, properties);
+			SiteNavigationBreadcrumbWebConfiguration.class, properties);
 	}
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return BreadcrumbConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
+		return SiteNavigationBreadcrumbConfigurationValues.
+			DISPLAY_TEMPLATES_CONFIG;
 	}
 
-	private volatile BreadcrumbWebConfiguration _breadcrumbWebConfiguration;
+	private volatile SiteNavigationBreadcrumbWebConfiguration
+		_breadcrumbWebConfiguration;
 
 }

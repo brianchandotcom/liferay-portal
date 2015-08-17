@@ -20,9 +20,9 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Juergen Kappler
  */
 @Meta.OCD(
-	id = "com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbPortletInstanceConfiguration"
+	id = "com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbPortletInstanceConfiguration"
 )
-public interface BreadcrumbPortletInstanceConfiguration {
+public interface SiteNavigationBreadcrumbPortletInstanceConfiguration {
 
 	/**
 	 * Set a DDM template ID that starts with the prefix "ddmTemplate_" (i.e.

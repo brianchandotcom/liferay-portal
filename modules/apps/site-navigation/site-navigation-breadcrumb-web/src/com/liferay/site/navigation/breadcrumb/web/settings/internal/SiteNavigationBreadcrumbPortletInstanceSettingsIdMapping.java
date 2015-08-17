@@ -15,8 +15,8 @@
 package com.liferay.site.navigation.breadcrumb.web.settings.internal;
 
 import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
-import com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbPortletInstanceConfiguration;
-import com.liferay.site.navigation.breadcrumb.web.constants.BreadcrumbPortletKeys;
+import com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbPortletInstanceConfiguration;
+import com.liferay.site.navigation.breadcrumb.web.constants.SiteNavigationBreadcrumbPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Juergen Kappler
  */
 @Component
-public class BreadcrumbPortletInstanceSettingsIdMapping
+public class SiteNavigationBreadcrumbPortletInstanceSettingsIdMapping
 	implements SettingsIdMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return BreadcrumbPortletInstanceConfiguration.class;
+		return SiteNavigationBreadcrumbPortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getSettingsId() {
-		return BreadcrumbPortletKeys.BREADCRUMB;
+		return SiteNavigationBreadcrumbPortletKeys.SITE_NAVIGATION_BREADCRUMB;
 	}
 
 }

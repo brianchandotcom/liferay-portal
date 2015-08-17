@@ -24,16 +24,16 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbPortletInstanceConfiguration;
+import com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbPortletInstanceConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Julio Camarero
  */
-public class BreadcrumbDisplayContext {
+public class SiteNavigationBreadcrumbDisplayContext {
 
-	public BreadcrumbDisplayContext(HttpServletRequest request)
+	public SiteNavigationBreadcrumbDisplayContext(HttpServletRequest request)
 		throws SettingsException {
 
 		_request = request;
@@ -45,7 +45,7 @@ public class BreadcrumbDisplayContext {
 
 		_breadcrumbPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
-				BreadcrumbPortletInstanceConfiguration.class);
+				SiteNavigationBreadcrumbPortletInstanceConfiguration.class);
 	}
 
 	public String getDDMTemplateKey() {
@@ -174,9 +174,9 @@ public class BreadcrumbDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BreadcrumbDisplayContext.class);
+		SiteNavigationBreadcrumbDisplayContext.class);
 
-	private final BreadcrumbPortletInstanceConfiguration
+	private final SiteNavigationBreadcrumbPortletInstanceConfiguration
 		_breadcrumbPortletInstanceConfiguration;
 	private String _ddmTemplateKey;
 	private String _displayStyle;

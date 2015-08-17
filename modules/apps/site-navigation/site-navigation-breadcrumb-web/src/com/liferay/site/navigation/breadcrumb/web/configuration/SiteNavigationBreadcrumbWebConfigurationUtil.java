@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 /**
  * @author Eudaldo Alonso
  */
-public class BreadcrumbWebConfigurationUtil {
+public class SiteNavigationBreadcrumbWebConfigurationUtil {
 
 	public static String get(String key) {
 		return _configuration.get(key);
@@ -28,6 +28,7 @@ public class BreadcrumbWebConfigurationUtil {
 
 	private static final Configuration _configuration =
 		ConfigurationFactoryUtil.getConfiguration(
-			BreadcrumbWebConfigurationUtil.class.getClassLoader(), "portlet");
+			SiteNavigationBreadcrumbWebConfigurationUtil.class.getClassLoader(),
+			"portlet");
 
 }

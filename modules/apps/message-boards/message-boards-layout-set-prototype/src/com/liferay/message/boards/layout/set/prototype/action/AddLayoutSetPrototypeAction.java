@@ -33,7 +33,7 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.util.DefaultLayoutSetPrototypesUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.social.user.statistics.web.constants.UserStatisticsPortletKeys;
+import com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPortletKeys;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -99,7 +99,7 @@ public class AddLayoutSetPrototypeAction {
 		DefaultLayoutPrototypesUtil.addPortletId(layout, portletId, "column-1");
 
 		DefaultLayoutPrototypesUtil.addPortletId(
-			layout, UserStatisticsPortletKeys.USER_STATISTICS, "column-2");
+			layout, SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS, "column-2");
 
 		// Wiki layout
 
@@ -156,10 +156,10 @@ public class AddLayoutSetPrototypeAction {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + UserStatisticsPortletKeys.USER_STATISTICS + ")",
+		target = "(javax.portlet.name=" + SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS + ")",
 		unbind = "-"
 	)
-	protected void setUserStatisticsPortletKeys(Portlet portlet) {
+	protected void setSocialUserStatisticsPortletKeys(Portlet portlet) {
 	}
 
 	private CompanyLocalService _companyLocalService;

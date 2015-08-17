@@ -15,7 +15,7 @@
 package com.liferay.social.user.statistics.web.settings.internal;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.social.user.statistics.web.configuration.UserStatisticsPortletInstanceConfiguration;
+import com.liferay.social.user.statistics.web.configuration.SocialUserStatisticsPortletInstanceConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Iván Zaera
  */
 @Component
-public class UserStatisticsPortletInstanceConfigurationBeanDeclaration
+public class SocialUserStatisticsPortletInstanceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return UserStatisticsPortletInstanceConfiguration.class;
+		return SocialUserStatisticsPortletInstanceConfiguration.class;
 	}
 
 }

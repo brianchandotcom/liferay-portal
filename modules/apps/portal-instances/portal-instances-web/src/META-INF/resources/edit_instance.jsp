@@ -60,7 +60,9 @@ catch (Exception e) {
 				<aui:input name="web-id" type="resource" value="<%= selCompany.getWebId() %>" />
 			</c:when>
 			<c:otherwise>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="webId" />
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="webId">
+					<aui:validator name="required" />
+				</aui:input>
 			</c:otherwise>
 		</c:choose>
 

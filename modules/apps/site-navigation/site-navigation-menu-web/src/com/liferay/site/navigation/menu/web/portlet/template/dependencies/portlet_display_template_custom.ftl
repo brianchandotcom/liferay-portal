@@ -52,13 +52,12 @@
 				<ul>
 					<#list entries as entry>
 						<li>
-							<a
-
 							<#if entry.isBrowsable()>
-					   			href="${entry.getURL()!""}" ${entry.getTarget()}
+								<a href="${entry.getURL()!""}" ${entry.getTarget()}>${htmlUtil.escape(entry.getName())}</a>
+							<#else>
+								${htmlUtil.escape(entry.getName())}
 							</#if>
-
-							>${htmlUtil.escape(entry.getName())}</a></li>
+						</li>
 					</#list>
 				</ul>
 			</div>
@@ -70,13 +69,11 @@
 			<ul class="layouts level-${layoutLevel}">
 				<#list rootNavigationItems as rootNavigationItem>
 					<li class="open">
-						<a
-
 						<#if entry.isBrowsable()>
-							href="${rootNavigationItem.getRegularURL()!""} " ${rootNavigationItem.getTarget()}
+							<a href="${rootNavigationItem.getRegularURL()!""}" ${rootNavigationItem.getTarget()}>${htmlUtil.escape(rootNavigationItem.getName())}</a>
+						<#else>
+							${htmlUtil.escape(rootNavigationItem.getName())}
 						</#if>
-
-						>${htmlUtil.escape(rootNavigationItem.getName())}</a>
 
 						<#if includeAllChildEntries || rootNavigationItem.isInNavigation(entries) >
 							<@displayChildNavigation childLayoutLevel=(layoutLevel + 1) childNavigationItems=rootNavigationItem.getChildren() includeAllChildEntries=includeAllChildEntries />

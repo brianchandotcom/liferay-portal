@@ -7,13 +7,11 @@
 		<ul class="layouts level-${childLayoutLevel}">
 			<#list childNavigationItems as childNavigationItem>
 				<li class="open">
-					<a
-
-					<#if childNavigationItems.isBrowsable()>
-						href="${childNavigationItem.getRegularURL()!""} ${rootNavigationItem.getTarget()}"
+					<#if childNavigationItem.isBrowsable()>
+						<a href="${childNavigationItem.getRegularURL()!""}" ${childNavigationItem.getTarget()}>${htmlUtil.escape(childNavigationItem.getName())}</a>
+					<#else>
+						${htmlUtil.escape(childNavigationItem.getName())}
 					</#if>
-
-					>${htmlUtil.escape(childNavigationItem.getName())}</a>
 
 					<#if includeAllChildEntries || childNavigationItem.isInNavigation(entries) >
 						<@displayChildNavigation childLayoutLevel=(childLayoutLevel + 1) childNavigationItems=childNavigationItem.getChildren() includeAllChildEntries=includeAllChildEntries/>

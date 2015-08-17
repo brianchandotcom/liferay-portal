@@ -5,7 +5,13 @@
 
 	<div class="nav-menu nav-menu-style-${bulletStyle}">
 		<h2>
-			<a href="${rootNavigationItem.getRegularURL()}" ${rootNavigationItem.getTarget()}>${rootNavigationItem.getName()}</a>
+			<a
+
+			<#if rootNavigationItem.isBrowsable()>
+				href="${rootNavigationItem.getRegularURL()!""} " ${rootNavigationItem.getTarget()}
+			</#if>
+
+			>${rootNavigationItem.getName()}</a>
 		</h2>
 
 		<@displayChildNavigation childLayoutLevel=2 childNavigationItems=rootNavigationItem.getChildren() includeAllChildEntries=false />

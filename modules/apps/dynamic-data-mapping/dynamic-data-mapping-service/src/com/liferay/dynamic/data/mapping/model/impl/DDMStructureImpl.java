@@ -62,8 +62,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
 	public DDMForm createFullHierarchyDDMForm() throws PortalException {
-		DDMForm fullHierarchyDDMForm = DDMFormJSONDeserializerUtil.deserialize(
-			getDefinition());
+		DDMForm fullHierarchyDDMForm = getDDMForm();
 
 		DDMStructure parentDDMStructure = getParentDDMStructure();
 
@@ -249,16 +248,16 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
 	public DDMForm getFullHierarchyDDMForm() {
-		if (_fullHierarchyDDMForm == null) {
-			try {
-				_fullHierarchyDDMForm = createFullHierarchyDDMForm();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		try {
+			DDMForm fullHierarchyDDMForm = createFullHierarchyDDMForm();
+
+			return new DDMForm(fullHierarchyDDMForm);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
-		return new DDMForm(_fullHierarchyDDMForm);
+		return new DDMForm();
 	}
 
 	@Override
@@ -425,12 +424,6 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		super.setDefinition(definition);
 
 		_ddmForm = null;
-		_fullHierarchyDDMForm = null;
-	}
-
-	@Override
-	public void setFullHierarchyDDMForm(DDMForm fullHierarchyDDMForm) {
-		_fullHierarchyDDMForm = fullHierarchyDDMForm;
 	}
 
 	@Override
@@ -485,8 +478,5 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@CacheField(methodName = "DDMForm")
 	private DDMForm _ddmForm;
-
-	@CacheField(methodName = "FullHierarchyDDMForm")
-	private DDMForm _fullHierarchyDDMForm;
 
 }

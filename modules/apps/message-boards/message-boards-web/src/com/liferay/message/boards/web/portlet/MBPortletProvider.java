@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = {EditPortletProvider.class, ViewPortletProvider.class}
 )
-public class MessageBoardsPortletProvider
+public class MBPortletProvider
 	extends BasePortletProvider
 	implements EditPortletProvider, ViewPortletProvider {
 

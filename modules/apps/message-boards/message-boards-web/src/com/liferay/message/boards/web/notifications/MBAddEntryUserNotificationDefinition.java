@@ -29,10 +29,10 @@ import org.osgi.service.component.annotations.Component;
 	property = {"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS},
 	service = UserNotificationDefinition.class
 )
-public class MessageBoardsAddEntryUserNotificationDefinition
+public class MBAddEntryUserNotificationDefinition
 	extends UserNotificationDefinition {
 
-	public MessageBoardsAddEntryUserNotificationDefinition() {
+	public MBAddEntryUserNotificationDefinition() {
 		super(
 			MBPortletKeys.MESSAGE_BOARDS, 0,
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,

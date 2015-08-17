@@ -20,9 +20,9 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Sergio González
  */
 @Meta.OCD(
-	id = "com.liferay.message.boards.configuration.MessageBoardsConfiguration"
+	id = "com.liferay.message.boards.configuration.MBConfiguration"
 )
-public interface MessageBoardsConfiguration {
+public interface MBConfiguration {
 
 	/**
 	 * Enter time in minutes on how often this job is run. If a user's ban is

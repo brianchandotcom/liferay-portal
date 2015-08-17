@@ -12,39 +12,45 @@
  * details.
  */
 
-package com.liferay.message.boards.web.portlet;
+package com.liferay.message.boards.web.application.list;
 
+import com.liferay.application.list.BaseControlPanelEntryPanelApp;
+import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.portal.kernel.portlet.ManagePortletProvider;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.service.PortletLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Adolfo Pérez
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
-		"model.class.name=com.liferay.portlet.messageboards.model.MBCategory",
-		"model.class.name=com.liferay.portlet.messageboards.model.MBDiscussion",
-		"model.class.name=com.liferay.portlet.messageboards.model.MBMessage",
-		"model.class.name=com.liferay.portlet.messageboards.model.MBThread"
+		"panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,
+		"service.ranking:Integer=600"
 	},
-	service = {
-		EditPortletProvider.class, ManagePortletProvider.class,
-		ViewPortletProvider.class
-	}
+	service = PanelApp.class
 )
-public class MessageBoardsAdminPortletProvider
-	extends BasePortletProvider
-	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
+public class MBPanelApp extends BaseControlPanelEntryPanelApp {
+
+	@Override
+	public String getParentCategoryKey() {
+		return PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT;
+	}
 
 	@Override
 	public String getPortletId() {
 		return MBPortletKeys.MESSAGE_BOARDS_ADMIN;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
 	}
 
 }

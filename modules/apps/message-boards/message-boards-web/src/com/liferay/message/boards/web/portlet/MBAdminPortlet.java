@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-public class MessageBoardsAdminPortlet extends MVCPortlet {
+public class MBAdminPortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
 	protected void setMBWebUpgrade(MBWebUpgrade mbWebUpgrade) {

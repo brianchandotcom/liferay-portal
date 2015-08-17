@@ -1,3 +1,9 @@
+buildService {
+	apiDirName = "../shopping-api/src"
+	autoNamespaceTables = false
+	testDirName = "../shopping-test/test/integration"
+}
+
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", transitive: false, version: "1.0.2"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"

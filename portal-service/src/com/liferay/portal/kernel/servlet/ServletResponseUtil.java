@@ -499,13 +499,13 @@ public class ServletResponseUtil {
 			// LEP-3122
 
 			if (!response.isCommitted()) {
-				int contentLength = 0;
+				long contentLength = 0;
 
 				for (byte[] bytes : bytesArray) {
 					contentLength += bytes.length;
 				}
 
-				response.setContentLength(contentLength);
+				setContentLength(response, contentLength);
 
 				response.flushBuffer();
 
@@ -582,9 +582,9 @@ public class ServletResponseUtil {
 			FileInputStream fileInputStream = new FileInputStream(file);
 
 			try (FileChannel fileChannel = fileInputStream.getChannel()) {
-				int contentLength = (int)fileChannel.size();
+				long contentLength = fileChannel.size();
 
-				response.setContentLength(contentLength);
+				setContentLength(response, contentLength);
 
 				response.flushBuffer();
 
@@ -683,6 +683,13 @@ public class ServletResponseUtil {
 		return copyRange(
 			new RandomAccessInputStream(inputStream), outputStream, start,
 			length);
+	}
+
+	protected static void setContentLength(
+		HttpServletResponse response, long contentLength) {
+
+		response.setHeader(
+			HttpHeaders.CONTENT_LENGTH, String.valueOf(contentLength));
 	}
 
 	protected static void setHeaders(

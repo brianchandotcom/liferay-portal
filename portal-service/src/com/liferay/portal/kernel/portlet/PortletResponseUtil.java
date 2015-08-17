@@ -227,7 +227,7 @@ public class PortletResponseUtil {
 
 		// LEP-536
 
-		int contentLength = 0;
+		long contentLength = 0;
 
 		for (byte[] bytes : bytesArray) {
 			contentLength += bytes.length;
@@ -236,7 +236,7 @@ public class PortletResponseUtil {
 		if (mimeResponse instanceof ResourceResponse) {
 			ResourceResponse resourceResponse = (ResourceResponse)mimeResponse;
 
-			resourceResponse.setContentLength(contentLength);
+			setContentLength(resourceResponse, contentLength);
 		}
 
 		OutputStream outputStream = mimeResponse.getPortletOutputStream();
@@ -252,13 +252,13 @@ public class PortletResponseUtil {
 		FileInputStream fileInputStream = new FileInputStream(file);
 
 		try (FileChannel fileChannel = fileInputStream.getChannel()) {
-			int contentLength = (int)fileChannel.size();
+			long contentLength = fileChannel.size();
 
 			if (mimeResponse instanceof ResourceResponse) {
 				ResourceResponse resourceResponse =
 					(ResourceResponse)mimeResponse;
 
-				resourceResponse.setContentLength(contentLength);
+				setContentLength(resourceResponse, contentLength);
 			}
 
 			fileChannel.transferTo(
@@ -300,6 +300,13 @@ public class PortletResponseUtil {
 		throws IOException {
 
 		write(mimeResponse, s.getBytes(StringPool.UTF8));
+	}
+
+	protected static void setContentLength(
+		ResourceResponse response, long contentLength) {
+
+		response.setProperty(
+			HttpHeaders.CONTENT_LENGTH, String.valueOf(contentLength));
 	}
 
 	protected static void setHeaders(

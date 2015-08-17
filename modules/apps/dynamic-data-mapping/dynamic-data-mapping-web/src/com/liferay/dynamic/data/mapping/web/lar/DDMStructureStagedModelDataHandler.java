@@ -349,40 +349,40 @@ public class DDMStructureStagedModelDataHandler
 		DDMStructure existingStructure, DDMStructure structure) {
 
 		if (DateUtil.compareTo(
-				structure.getModifiedDate(),
-				existingStructure.getModifiedDate()) > 0) {
+				existingStructure.getModifiedDate(),
+				structure.getModifiedDate()) > 0) {
 
 			return true;
 		}
 
 		if (!Validator.equals(
-				structure.getNameMap(), existingStructure.getNameMap())) {
+				existingStructure.getNameMap(), structure.getNameMap())) {
 
 			return true;
 		}
 
 		if (!Validator.equals(
-				structure.getDescriptionMap(),
-				existingStructure.getDescriptionMap())) {
+				existingStructure.getDescriptionMap(),
+				structure.getDescriptionMap())) {
 
 			return true;
 		}
 
 		if (!Validator.equals(
-				structure.getDefinition(), existingStructure.getDefinition())) {
+				existingStructure.getDefinition(), structure.getDefinition())) {
 
 			return true;
 		}
 
 		if (!Validator.equals(
-				structure.getStorageType(),
-				existingStructure.getStorageType())) {
+				existingStructure.getStorageType(),
+				structure.getStorageType())) {
 
 			return true;
 		}
 
 		if (!Validator.equals(
-				structure.getType(), existingStructure.getType())) {
+				existingStructure.getType(), structure.getType())) {
 
 			return true;
 		}

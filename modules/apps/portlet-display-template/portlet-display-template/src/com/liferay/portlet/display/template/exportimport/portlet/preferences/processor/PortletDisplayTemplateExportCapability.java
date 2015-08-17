@@ -23,6 +23,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
 import com.liferay.registry.Registry;
@@ -79,7 +80,7 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 		}
 
 		DDMTemplate ddmTemplate =
-			getPortletDisplayTemplate().getPortletDisplayTemplateDDMTemplate(
+			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
 				portletDataContext.getGroupId(),
 				getClassNameId(portletDataContext, portletId), displayStyle,
 				false);

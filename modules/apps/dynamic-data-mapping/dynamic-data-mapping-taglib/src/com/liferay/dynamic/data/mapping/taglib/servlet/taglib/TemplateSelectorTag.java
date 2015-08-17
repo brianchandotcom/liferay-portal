@@ -22,9 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
+import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -50,7 +48,7 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 		DDMTemplate portletDisplayDDMTemplate = getPortletDisplayDDMTemplate();
 
 		if (portletDisplayDDMTemplate != null) {
-			return getPortletDisplayTemplate().getDisplayStyle(
+			return PortletDisplayTemplateUtil.getDisplayStyle(
 				portletDisplayDDMTemplate.getTemplateKey());
 		}
 
@@ -89,15 +87,9 @@ public class TemplateSelectorTag extends BaseTemplateSelectorTag {
 			displayStyle = getDefaultDisplayStyle();
 		}
 
-		return getPortletDisplayTemplate().getPortletDisplayTemplateDDMTemplate(
+		return PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
 			getDisplayStyleGroupId(), PortalUtil.getClassNameId(getClassName()),
 			displayStyle, true);
-	}
-
-	protected PortletDisplayTemplate getPortletDisplayTemplate() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		return registry.getService(PortletDisplayTemplate.class);
 	}
 
 	@Override

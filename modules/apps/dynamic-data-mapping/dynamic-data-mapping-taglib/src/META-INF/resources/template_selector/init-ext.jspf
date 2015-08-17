@@ -29,3 +29,5 @@
 <%@ page import="com.liferay.portal.service.GroupLocalServiceUtil" %>
 <%@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="com.liferay.portal.util.PortletKeys" %>
+<%@ page import="com.liferay.portlet.display.template.PortletDisplayTemplate" %>
+<%@ page import="com.liferay.portlet.display.template.PortletDisplayTemplateUtil" %>

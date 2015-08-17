@@ -136,7 +136,7 @@ if (Validator.isNotNull(portletResource)) {
 
 			List resultRows = searchContainer.getResultRows();
 
-			List<TemplateHandler> templateHandlers = _getPortletDisplayTemplate().getPortletDisplayTemplateHandlers();
+			List<TemplateHandler> templateHandlers = PortletDisplayTemplateUtil.getPortletDisplayTemplateHandlers();
 
 			ListUtil.sort(templateHandlers, new TemplateHandlerComparator(locale));
 
@@ -202,13 +202,5 @@ if (Validator.isNotNull(portletResource)) {
 	resourceURL.setParameter("portletResource", portletResource);
 
 	PortalUtil.addPortletBreadcrumbEntry(request, portletResourceLabel, resourceURL.toString());
-}
-%>
-
-<%!
-private PortletDisplayTemplate _getPortletDisplayTemplate() {
-	Registry registry = RegistryUtil.getRegistry();
-
-	return registry.getService(PortletDisplayTemplate.class);
 }
 %>

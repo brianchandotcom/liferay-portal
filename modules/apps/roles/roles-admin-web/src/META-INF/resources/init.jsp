@@ -96,7 +96,7 @@ page import="com.liferay.portal.util.WebAppPool" %><%@
 page import="com.liferay.portal.util.WebKeys" %><%@
 page import="com.liferay.portal.util.comparator.PortletTitleComparator" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.display.template.PortletDisplayTemplate" %><%@
+page import="com.liferay.portlet.display.template.PortletDisplayTemplateUtil" %><%@
 page import="com.liferay.portlet.rolesadmin.search.ResourceActionRowChecker" %><%@
 page import="com.liferay.portlet.rolesadmin.search.RoleSearch" %><%@
 page import="com.liferay.portlet.rolesadmin.search.RoleSearchTerms" %><%@
@@ -104,8 +104,6 @@ page import="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
 page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %><%@
-page import="com.liferay.registry.Registry" %><%@
-page import="com.liferay.registry.RegistryUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.ArrayList" %><%@

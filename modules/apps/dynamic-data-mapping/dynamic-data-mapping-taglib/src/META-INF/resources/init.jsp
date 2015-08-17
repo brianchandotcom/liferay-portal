@@ -20,10 +20,7 @@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portlet.display.template.PortletDisplayTemplate" %><%@
-page import="com.liferay.registry.Registry" %><%@
-page import="com.liferay.registry.RegistryUtil" %>
+page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.HashMap" %><%@
@@ -47,11 +44,5 @@ private static ArrayList<Object> _toArrayList(Object obj) {
 
 private static HashMap<String, Object> _toHashMap(Object obj) {
 	return (HashMap<String, Object>)_deserialize(obj);
-}
-
-private PortletDisplayTemplate _getPortletDisplayTemplate() {
-	Registry registry = RegistryUtil.getRegistry();
-
-	return registry.getService(PortletDisplayTemplate.class);
 }
 %>

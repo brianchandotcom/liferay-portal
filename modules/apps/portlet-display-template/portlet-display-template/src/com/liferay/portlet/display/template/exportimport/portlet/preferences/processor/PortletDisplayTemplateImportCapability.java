@@ -26,12 +26,10 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
 import java.util.Map;
 
@@ -118,12 +116,6 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 		return 0;
 	}
 
-	protected PortletDisplayTemplate getPortletDisplayTemplate() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		return registry.getService(PortletDisplayTemplate.class);
-	}
-
 	protected PortletPreferences importDisplayStyle(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
@@ -156,7 +148,7 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 			groupIds, displayStyleGroupId, displayStyleGroupId);
 
 		DDMTemplate ddmTemplate =
-			getPortletDisplayTemplate().getPortletDisplayTemplateDDMTemplate(
+			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
 				groupId, getClassNameId(portletDataContext, portletId),
 				displayStyle, false);
 

@@ -177,6 +177,10 @@ sourceSets {
 	}
 }
 
+tasks.eclipse {
+	dependsOn cleanEclipse
+}
+
 whip {
 	version = project.properties["com.liferay.whip.version"]
 }

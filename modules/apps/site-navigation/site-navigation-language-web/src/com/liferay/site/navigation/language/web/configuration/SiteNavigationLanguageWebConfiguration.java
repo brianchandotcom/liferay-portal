@@ -12,14 +12,19 @@
  * details.
  */
 
-package com.liferay.site.navigation.language.web.constants;
+package com.liferay.site.navigation.language.web.configuration;
+
+import aQute.bnd.annotation.metatype.Meta;
 
 /**
- * @author Eudaldo Alonso
+ * @author Juergen Kappler
  */
-public class LanguagePortletKeys {
+@Meta.OCD(
+	id = "com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguageWebConfiguration"
+)
+public interface SiteNavigationLanguageWebConfiguration {
 
-	public static final String LANGUAGE =
-		"com_liferay_site_navigation_language_web_portlet_LanguagePortlet";
+	@Meta.AD(deflt = "language-icon-ftl", required = false)
+	public String ddmTemplateKey();
 
 }

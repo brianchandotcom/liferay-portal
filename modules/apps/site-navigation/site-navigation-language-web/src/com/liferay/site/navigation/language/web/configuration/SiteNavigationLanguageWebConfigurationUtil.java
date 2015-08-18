@@ -14,14 +14,20 @@
 
 package com.liferay.site.navigation.language.web.configuration;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 
 /**
  * @author Eudaldo Alonso
  */
-public class LanguageWebConfigurationValues {
+public class SiteNavigationLanguageWebConfigurationUtil {
 
-	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		LanguageWebConfigurationUtil.get("display.templates.config"));
+	public static String get(String key) {
+		return _configuration.get(key);
+	}
+
+	private static final Configuration _configuration =
+		ConfigurationFactoryUtil.getConfiguration(
+			SiteNavigationLanguageWebConfigurationUtil.class.getClassLoader(), "portlet");
 
 }

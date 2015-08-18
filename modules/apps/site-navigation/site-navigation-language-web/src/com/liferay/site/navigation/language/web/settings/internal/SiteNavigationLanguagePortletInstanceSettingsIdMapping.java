@@ -15,8 +15,8 @@
 package com.liferay.site.navigation.language.web.settings.internal;
 
 import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
-import com.liferay.site.navigation.language.web.configuration.LanguagePortletInstanceConfiguration;
-import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
+import com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguagePortletInstanceConfiguration;
+import com.liferay.site.navigation.language.web.constants.SiteNavigationLanguagePortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Juergen Kappler
  */
 @Component
-public class LanguagePortletInstanceSettingsIdMapping
+public class SiteNavigationLanguagePortletInstanceSettingsIdMapping
 	implements SettingsIdMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return LanguagePortletInstanceConfiguration.class;
+		return SiteNavigationLanguagePortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getSettingsId() {
-		return LanguagePortletKeys.LANGUAGE;
+		return SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE;
 	}
 
 }

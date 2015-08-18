@@ -15,7 +15,7 @@
 package com.liferay.site.navigation.language.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.site.navigation.language.web.upgrade.LanguageWebUpgrade;
+import com.liferay.site.navigation.language.web.upgrade.SiteNavigationLanguageWebUpgrade;
 
 import javax.portlet.Portlet;
 
@@ -48,11 +48,11 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-public class LanguagePortlet extends MVCPortlet {
+public class SiteNavigationLanguagePortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
-	protected void setLanguageWebUpgrade(
-		LanguageWebUpgrade LanguageWebUpgrade) {
+	protected void setSiteNavigationLanguageWebUpgrade(
+		SiteNavigationLanguageWebUpgrade SiteNavigationLanguageWebUpgrade) {
 	}
 
 }

@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.site.navigation.language.web.configuration;
+package com.liferay.site.navigation.language.web.settings.internal;
 
-import aQute.bnd.annotation.metatype.Meta;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguagePortletInstanceConfiguration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Juergen Kappler
  */
-@Meta.OCD(
-	id = "com.liferay.site.navigation.language.web.configuration.LanguageWebConfiguration"
-)
-public interface LanguageWebConfiguration {
+@Component
+public class SiteNavigationLanguagePortletInstanceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	@Meta.AD(deflt = "language-icon-ftl", required = false)
-	public String ddmTemplateKey();
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return SiteNavigationLanguagePortletInstanceConfiguration.class;
+	}
 
 }

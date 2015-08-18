@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache.internal.event;
+package com.liferay.portal.cache.ehcache.event;
 
-import com.liferay.portal.cache.ehcache.internal.EhcacheUnwrapUtil;
+import com.liferay.portal.cache.ehcache.EhcacheUnwrapUtil;
 import com.liferay.portal.cache.io.SerializableObjectWrapper;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;

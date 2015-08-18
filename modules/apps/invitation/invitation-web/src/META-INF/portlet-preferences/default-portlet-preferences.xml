@@ -5,12 +5,4 @@
 		<name>emailMaxRecipients</name>
 		<value>20</value>
 	</preference>
-	<preference>
-		<name>emailMessageBody</name>
-		<value>com/liferay/invitation/web/util/dependencies/email_message_body.tmpl</value>
-	</preference>
-	<preference>
-		<name>emailMessageSubject</name>
-		<value>com/liferay/invitation/web/util/dependencies/email_message_subject.tmpl</value>
-	</preference>
 </portlet-preferences>

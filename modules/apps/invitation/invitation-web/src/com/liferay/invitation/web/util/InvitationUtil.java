@@ -17,12 +17,15 @@ package com.liferay.invitation.web.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.util.ContentUtil;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -70,8 +73,21 @@ public class InvitationUtil {
 	public static Map<Locale, String> getEmailMessageBodyMap(
 		PortletPreferences preferences) {
 
-		return LocalizationUtil.getLocalizationMap(
-			preferences, "emailMessageBody", "emailMessageBody");
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailMessageBody");
+
+		String value = map.get(LocaleUtil.getDefault());
+
+		if (Validator.isNull(value)) {
+			map.put(
+				LocaleUtil.getDefault(),
+				ContentUtil.get(
+					InvitationUtil.class.getClassLoader(),
+					"com/liferay/invitation/web/util/dependencies/" +
+						"email_message_body.tmpl"));
+		}
+
+		return map;
 	}
 
 	public static int getEmailMessageMaxRecipients(
@@ -85,8 +101,21 @@ public class InvitationUtil {
 	public static Map<Locale, String> getEmailMessageSubjectMap(
 		PortletPreferences preferences) {
 
-		return LocalizationUtil.getLocalizationMap(
-			preferences, "emailMessageSubject", "emailMessageSubject");
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailMessageSubject");
+
+		String value = map.get(LocaleUtil.getDefault());
+
+		if (Validator.isNull(value)) {
+			map.put(
+				LocaleUtil.getDefault(),
+				ContentUtil.get(
+					InvitationUtil.class.getClassLoader(),
+					"com/liferay/invitation/web/util/dependencies/" +
+						"email_message_subject.tmpl"));
+		}
+
+		return map;
 	}
 
 }

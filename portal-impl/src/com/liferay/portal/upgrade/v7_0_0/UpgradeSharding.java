@@ -666,10 +666,10 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateSCLicensesSCProductEntries() throws Exception {
 		String select =
 			"select pe.companyId, lpe.licenseId, " +
-				"lpe.productVersionId from SCLicense l, " +
+				"lpe.productEntryId from SCLicense l, " +
 					"SCLicenses_SCProductEntries lpe, SCProductEntry pe " +
 						"where l.licenseId=lpe.licenseId and " +
-							"lpe.productVersionId=pe.productVersionId";
+							"lpe.productEntryId=pe.productEntryId";
 
 		String update =
 			"update SCLicenses_SCProductEntries set companyId = ? " +
@@ -786,7 +786,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateUserIdMapper() throws Exception {
 		String select =
 			"select u.companyId, uim.userIdMapperId from User_ u, " +
-				"UserIdMapper uim where u.userId=ui.userId";
+				"UserIdMapper uim where u.userId=uim.userId";
 
 		String update =
 			"update UserIdMapper set companyId = ? where userIdMapperId = ?";

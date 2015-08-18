@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -27,9 +28,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 
@@ -68,16 +67,6 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 			ResourcePermissionLocalServiceUtil.deleteResourcePermission(
 				resourcePermissionId);
 		}
-
-		_resourcePermissionIds = null;
-
-		CompanyLocalServiceUtil.deleteCompany(_company);
-
-		_company = null;
-
-		UserLocalServiceUtil.deleteUser(_user);
-
-		_user = null;
 	}
 
 	@Test
@@ -140,8 +129,12 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 		return resourcePermission.getResourcePermissionId();
 	}
 
+	@DeleteAfterTestRun
 	private Company _company;
+
 	private List<Long> _resourcePermissionIds = new ArrayList<>();
+	
+	@DeleteAfterTestRun
 	private User _user;
 
 }

@@ -115,6 +115,14 @@ public abstract class BaseElasticsearchConnection
 		}
 	}
 
+	public boolean isConnected() {
+		if (_client != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public void setIndexFactory(IndexFactory indexFactory) {
 		_indexFactory = indexFactory;
 	}

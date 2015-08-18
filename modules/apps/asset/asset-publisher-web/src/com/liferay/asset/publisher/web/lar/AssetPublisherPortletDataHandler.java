@@ -19,6 +19,7 @@ import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -34,7 +35,8 @@ import org.osgi.service.component.annotations.Component;
 public class AssetPublisherPortletDataHandler
 	extends DefaultConfigurationPortletDataHandler {
 
-	public AssetPublisherPortletDataHandler() {
+	@Activate
+	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setPublishToLiveByDefault(true);
 	}

@@ -40,7 +40,11 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Juan Fernández
@@ -53,12 +57,6 @@ public class PortletDisplayTemplatePortletDataHandler
 	extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "portlet_display_template";
-
-	public PortletDisplayTemplatePortletDataHandler() {
-		setExportControls(
-			new PortletDataHandlerBoolean(
-				NAMESPACE, "application-display-templates", true, true));
-	}
 
 	@Override
 	public StagedModelType[] getDeletionSystemEventStagedModelTypes() {
@@ -87,6 +85,13 @@ public class PortletDisplayTemplatePortletDataHandler
 		}
 
 		return totalModelCount;
+	}
+
+	@Activate
+	protected void activate() {
+		setExportControls(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "application-display-templates", true, true));
 	}
 
 	@Override
@@ -207,6 +212,10 @@ public class PortletDisplayTemplatePortletDataHandler
 			new StagedModelType[stagedModelTypes.size()]);
 
 		return _stagedModelTypes;
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	private StagedModelType[] _stagedModelTypes;

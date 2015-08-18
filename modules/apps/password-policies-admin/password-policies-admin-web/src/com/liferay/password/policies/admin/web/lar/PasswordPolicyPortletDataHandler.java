@@ -34,7 +34,11 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniela Zapata Riesco
@@ -49,7 +53,8 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "password_policies_admin";
 
-	public PasswordPolicyPortletDataHandler() {
+	@Activate
+	protected void activate() {
 		setDataLevel(DataLevel.PORTAL);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(PasswordPolicy.class));
@@ -163,6 +168,10 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 			});
 
 		return actionableDynamicQuery;
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	protected static final String RESOURCE_NAME =

@@ -9,7 +9,6 @@
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>bookmarks</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/bookmarks/web/portlet/route/bookmarks-friendly-url-routes.xml</friendly-url-routes>
-		<portlet-data-handler-class>com.liferay.bookmarks.lar.BookmarksPortletDataHandler</portlet-data-handler-class>
 		<social-activity-interpreter-class>com.liferay.bookmarks.social.BookmarksEntryActivityInterpreter</social-activity-interpreter-class>
 		<social-activity-interpreter-class>com.liferay.bookmarks.social.BookmarksFolderActivityInterpreter</social-activity-interpreter-class>
 		<user-notification-definitions>com/liferay/bookmarks/notifications/bookmarks-user-notification-definitions.xml</user-notification-definitions>

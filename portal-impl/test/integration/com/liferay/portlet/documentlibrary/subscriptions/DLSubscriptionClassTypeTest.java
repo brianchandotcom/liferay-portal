@@ -28,7 +28,7 @@ import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -82,7 +82,7 @@ public class DLSubscriptionClassTypeTest
 	@Override
 	protected long addClassType() throws Exception {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			DLFileEntry.class.getName());
+			DLFileEntryMetadata.class.getName());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

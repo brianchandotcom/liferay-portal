@@ -25,6 +25,7 @@
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.css.builder.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.jasper.jspc.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.javadoc.formatter.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.js.transpiler.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.lang.builder.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.patcher.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.service.builder.jar" />
@@ -40,6 +41,7 @@
 	<classpathentry kind="lib" path="lib/commons-io.jar" />
 	<classpathentry kind="lib" path="lib/gradle-bundle-plugin.jar" />
 	<classpathentry kind="lib" path="lib/gradle-extra-configurations-plugin.jar" />
+	<classpathentry kind="lib" path="lib/gradle-node-plugin.jar" />
 	<classpathentry kind="lib" path="lib/groovy-all.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-base-services-groovy.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-base-services.jar" />

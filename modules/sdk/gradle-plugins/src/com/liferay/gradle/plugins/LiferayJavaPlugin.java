@@ -21,6 +21,8 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
+import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
+import com.liferay.gradle.plugins.js.transpiler.TranspileJSTask;
 import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.patcher.PatchTask;
@@ -181,6 +183,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskBuildWSDD(project);
 		configureTaskBuildWSDL(project);
 		configureTaskBuildXSD(project);
+		configureTaskTranspileJS(project);
 		configureTasksTest(project);
 
 		project.afterEvaluate(
@@ -868,6 +871,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
 
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
+		GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, JspCPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
@@ -1937,6 +1941,34 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		whipTaskExtension.excludes(
 			".*Test", ".*Test\\$.*", ".*\\$Proxy.*", "com/liferay/whip/.*");
 		whipTaskExtension.includes("com/liferay/.*");
+	}
+
+	protected void configureTaskTranspileJS(Project project) {
+		TranspileJSTask transpileJSTask = (TranspileJSTask)GradleUtil.getTask(
+			project, JSTranspilerPlugin.TRANSPILE_JS_TASK_NAME);
+
+		configureTaskTranspileJSDependsOn(transpileJSTask);
+		configureTaskTranspileJSSourceDir(transpileJSTask);
+		configureTaskTranspileJSIncludes(transpileJSTask);
+	}
+
+	protected void configureTaskTranspileJSDependsOn(
+		TranspileJSTask transpileJSTask) {
+
+		transpileJSTask.dependsOn(JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+	}
+
+	protected void configureTaskTranspileJSIncludes(
+		TranspileJSTask transpileJSTask) {
+
+		transpileJSTask.setIncludes(Collections.singleton("**/*.es.js"));
+	}
+
+	protected void configureTaskTranspileJSSourceDir(
+		TranspileJSTask transpileJSTask) {
+
+		transpileJSTask.setSourceDir(
+			getResourcesDir(transpileJSTask.getProject()));
 	}
 
 	protected void configureTestResultsDir(Project project) {

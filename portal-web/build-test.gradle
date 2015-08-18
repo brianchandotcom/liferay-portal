@@ -84,7 +84,7 @@ copyLocalPoshi {
 	configure(startParameter) {
 		configureOnDemand = true
 		gradleUserHomeDir = file("../.gradle")
-		projectProperties = ["destinationDir": new File(buildDir, "poshi")]
+		projectProperties = ["destinationDir": localPoshiDir]
 	}
 
 	dir = file("../modules/test/poshi-runner")

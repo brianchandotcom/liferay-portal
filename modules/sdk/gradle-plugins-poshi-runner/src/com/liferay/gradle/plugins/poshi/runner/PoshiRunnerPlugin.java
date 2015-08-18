@@ -273,12 +273,12 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		Test test = (Test)GradleUtil.getTask(project, RUN_POSHI_TASK_NAME);
 
-		configureTasksRunPoshiBinResultsDir(test);
-		configureTasksRunPoshiReports(test);
-		configureTasksRunPoshiSystemProperties(test, poshiRunnerExtension);
+		configureTaskRunPoshiBinResultsDir(test);
+		configureTaskRunPoshiReports(test);
+		configureTaskRunPoshiSystemProperties(test, poshiRunnerExtension);
 	}
 
-	protected void configureTasksRunPoshiBinResultsDir(Test test) {
+	protected void configureTaskRunPoshiBinResultsDir(Test test) {
 		if (test.getBinResultsDir() != null) {
 			return;
 		}
@@ -289,7 +289,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			project.file("test-results/binary/" + RUN_POSHI_TASK_NAME));
 	}
 
-	protected void configureTasksRunPoshiReports(Test test) {
+	protected void configureTaskRunPoshiReports(Test test) {
 		Project project = test.getProject();
 		TestTaskReports testTaskReports = test.getReports();
 
@@ -306,7 +306,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureTasksRunPoshiSystemProperties(
+	protected void configureTaskRunPoshiSystemProperties(
 		Test test, PoshiRunnerExtension poshiRunnerExtension) {
 
 		Map<String, Object> systemProperties = test.getSystemProperties();

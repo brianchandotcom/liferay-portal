@@ -58,6 +58,7 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 	@Before
 	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();
+
 		_user = UserTestUtil.addUser();
 	}
 

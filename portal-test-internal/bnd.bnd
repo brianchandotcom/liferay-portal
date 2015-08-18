@@ -25,5 +25,6 @@ Include-Resource:\
 	classes,\
 	@${project.dir}/../lib/development/dumbster.jar,\
 	@${project.dir}/../lib/portal/juniversalchardet.jar,\
+	@${project.dir}/../lib/portal/poi.jar,\
 	@${project.dir}/../lib/portal/tika-core.jar,\
 	@${project.dir}/../lib/portal/tika-parsers.jar

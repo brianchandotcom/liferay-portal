@@ -128,6 +128,18 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIncorrectVariableNames() throws Exception {
+		test(
+			"IncorrectVariableNames1.testjava",
+			new String[] {
+				"Only private var should start with underscore:",
+				"Only private var should start with underscore:"
+			},
+			new Integer[] {19, 25});
+		test("IncorrectVariableNames2.testjava");
+	}
+
+	@Test
 	public void testIncorrectWhitespace() throws Exception {
 		test("IncorrectWhitespace.testjava");
 	}

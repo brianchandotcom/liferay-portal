@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="export-import-service,../bookmarks/bookmarks-test,../journal/journal-content-web,../journal/journal-test" />
+	<property name="import.shared" value="export-import-service,../bookmarks/bookmarks-test,../journal/journal-content-web,../journal/journal-test,../../portal/portal-background-task-service" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 </project>

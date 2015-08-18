@@ -27,7 +27,7 @@ import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 
 import java.io.Serializable;
 
@@ -35,9 +35,13 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = BackgroundTaskThreadLocalManager.class)
 public class BackgroundTaskThreadLocalManagerImpl
 	implements BackgroundTaskThreadLocalManager {
 
@@ -92,12 +96,6 @@ public class BackgroundTaskThreadLocalManagerImpl
 		taskContextThreadLocalValues.putAll(currentThreadLocalValues);
 	}
 
-	public void setPermissionCheckerFactory(
-		PermissionCheckerFactory permissionCheckerFactory) {
-
-		_permissionCheckerFactory = permissionCheckerFactory;
-	}
-
 	@Override
 	public void setThreadLocalValues(
 		Map<String, Serializable> threadLocalValues) {
@@ -139,7 +137,7 @@ public class BackgroundTaskThreadLocalManagerImpl
 
 		if (Validator.isNotNull(principalName)) {
 			try {
-				User user = UserLocalServiceUtil.fetchUser(
+				User user = _userLocalService.fetchUser(
 					PrincipalThreadLocal.getUserId());
 
 				PermissionChecker permissionChecker =
@@ -167,8 +165,21 @@ public class BackgroundTaskThreadLocalManagerImpl
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setPermissionCheckerFactory(
+		PermissionCheckerFactory permissionCheckerFactory) {
+
+		_permissionCheckerFactory = permissionCheckerFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	protected static final String KEY_THREAD_LOCAL_VALUES = "threadLocalValues";
 
 	private PermissionCheckerFactory _permissionCheckerFactory;
+	private UserLocalService _userLocalService;
 
 }

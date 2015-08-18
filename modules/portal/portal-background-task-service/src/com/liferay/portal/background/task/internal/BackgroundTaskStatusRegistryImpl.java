@@ -17,7 +17,7 @@ package com.liferay.portal.background.task.internal;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil;
-import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -29,15 +29,19 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true, service = BackgroundTaskStatusRegistry.class)
 public class BackgroundTaskStatusRegistryImpl
 	implements BackgroundTaskStatusRegistry {
 
 	@Override
 	public BackgroundTaskStatus getBackgroundTaskStatus(long backgroundTaskId) {
-		if (!ClusterMasterExecutorUtil.isMaster()) {
+		if (!_clusterMasterExecutor.isMaster()) {
 			return getMasterBackgroundTaskStatus(backgroundTaskId);
 		}
 
@@ -108,7 +112,7 @@ public class BackgroundTaskStatusRegistryImpl
 				backgroundTaskId);
 
 			Future<BackgroundTaskStatus> future =
-				ClusterMasterExecutorUtil.executeOnMaster(methodHandler);
+				_clusterMasterExecutor.executeOnMaster(methodHandler);
 
 			return future.get();
 		}
@@ -119,11 +123,19 @@ public class BackgroundTaskStatusRegistryImpl
 		return null;
 	}
 
+	@Reference(unbind = "-")
+	protected void setClusterMasterExecutor(
+		ClusterMasterExecutor clusterMasterExecutor) {
+
+		_clusterMasterExecutor = clusterMasterExecutor;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BackgroundTaskStatusRegistryImpl.class);
 
 	private final Map<Long, BackgroundTaskStatus> _backgroundTaskStatuses =
 		new HashMap<>();
+	private ClusterMasterExecutor _clusterMasterExecutor;
 	private final ReadWriteLock _readWriteLock = new ReentrantReadWriteLock();
 
 }

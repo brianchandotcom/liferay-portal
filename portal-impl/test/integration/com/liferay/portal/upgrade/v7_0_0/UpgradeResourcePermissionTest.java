@@ -114,7 +114,6 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 		resourcePermission.setName("com.lifeary.rocks");
 		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
 		resourcePermission.setPrimKey(primKey);
-		resourcePermission.setPrimKeyId(-1L);
 		resourcePermission.setOwnerId(_user.getUserId());
 		resourcePermission.setActionIds(actionIds);
 		resourcePermission.setViewActionId(actionIds % 2!= 1);

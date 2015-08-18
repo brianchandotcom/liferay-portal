@@ -12,7 +12,7 @@
 	${theme.include(top_head_include)}
 </head>
 
-<body class="${css_class}">
+<body class="${liferay_product_menu_state} ${css_class}">
 
 <@liferay.quick_access content_id="#main-content" />
 
@@ -24,7 +24,7 @@ ${theme.include(body_top_include)}
 	</div>
 </div>
 
-<div class="${liferay_product_menu_state} container-fluid" id="wrapper">
+<div class="container-fluid" id="wrapper">
 	<header id="banner" role="banner">
 		<div id="heading">
 			<h1 class="site-title">

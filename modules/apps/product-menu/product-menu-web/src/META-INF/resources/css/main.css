@@ -1,7 +1,15 @@
 @import "mixins";
 
-@include respond-to(tablet, desktop) {
-	#wrapper.open {
+
+body.open,
+body.sidenav-transition {
+	@include sm() {
+		overflow-x: hidden;
+	}
+}
+
+body.open {
+	@include sm() {
 		padding-left: 320px;
 	}
 }

@@ -15,17 +15,17 @@
 </tr>
 <tr>
 	<td>ADD_ICON</td>
-	<td>//a/i[@class='icon-plus']</td>
+	<td>//a/i[contains(@class,'icon-plus')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW</td>
-	<td>//a/i[@class='icon-desktop']</td>
+	<td>//a/i[contains(@class,'icon-desktop')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//a/i[@class='icon-cog']</td>
+	<td>//a/i[contains(@class,'icon-cog')]</td>
 	<td></td>
 </tr>
 <tr>

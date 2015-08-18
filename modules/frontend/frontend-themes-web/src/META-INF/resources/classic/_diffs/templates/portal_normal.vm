@@ -12,7 +12,7 @@
 	$theme.include($top_head_include)
 </head>
 
-<body class="$css_class">
+<body class="$liferay_product_menu_state $css_class">
 
 #quick_access("#main-content")
 
@@ -24,7 +24,7 @@ $theme.include($body_top_include)
 	</div>
 </div>
 
-<div class="$liferay_product_menu_state" id="wrapper">
+<div id="wrapper">
 	<header class="container-fluid-1280" id="banner" role="banner">
 		<div class="row">
 			<div class="navbar-header" id="heading">

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.backgroundtask.messaging;
+package com.liferay.portal.background.task.internal.messaging;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;

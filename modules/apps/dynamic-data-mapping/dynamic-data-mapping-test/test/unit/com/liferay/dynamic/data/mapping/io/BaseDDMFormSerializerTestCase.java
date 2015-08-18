@@ -133,6 +133,14 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		return parentDDMFormField;
 	}
 
+	protected void createNotEmptyValidation(DDMFormField ddmFormField) {
+		ddmFormField.setValidationExpression(
+			"!" + ddmFormField.getName() + ".isEmpty()");
+
+		ddmFormField.setValidationMessage(
+			"Field " + ddmFormField.getName() + " must not be empty.");
+	}
+
 	protected DDMFormField createRadioDDMFormField(String name) {
 		DDMFormField ddmFormField = new DDMFormField(name, "radio");
 
@@ -144,6 +152,8 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		ddmFormField.setRequired(true);
 		ddmFormField.setShowLabel(false);
 		ddmFormField.setVisibilityExpression("false");
+
+		createNotEmptyValidation(ddmFormField);
 
 		return ddmFormField;
 	}
@@ -160,6 +170,8 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		ddmFormField.setRequired(false);
 		ddmFormField.setShowLabel(true);
 		ddmFormField.setVisibilityExpression("true");
+
+		createNotEmptyValidation(ddmFormField);
 
 		DDMFormFieldOptions ddmFormFieldOptions = createDDMFormFieldOptions();
 
@@ -183,6 +195,8 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		ddmFormField.setRequired(false);
 		ddmFormField.setShowLabel(true);
 		ddmFormField.setVisibilityExpression("true");
+
+		createNotEmptyValidation(ddmFormField);
 
 		return ddmFormField;
 	}

@@ -31,7 +31,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutDescription;
 import com.liferay.portal.util.LayoutListUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.site.navigation.site.map.web.configuration.SiteMapPortletInstanceConfiguration;
+import com.liferay.site.navigation.site.map.web.configuration.SiteNavigationSiteMapPortletInstanceConfiguration;
 
 import java.util.List;
 
@@ -40,9 +40,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Juergen Kappler
  */
-public class SiteMapDisplayContext {
+public class SiteNavigationSiteMapDisplayContext {
 
-	public SiteMapDisplayContext(HttpServletRequest request)
+	public SiteNavigationSiteMapDisplayContext(HttpServletRequest request)
 		throws SettingsException {
 
 		_request = request;
@@ -54,7 +54,7 @@ public class SiteMapDisplayContext {
 
 		_siteMapPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
-				SiteMapPortletInstanceConfiguration.class);
+				SiteNavigationSiteMapPortletInstanceConfiguration.class);
 	}
 
 	public String buildSiteMap() throws Exception {
@@ -143,8 +143,8 @@ public class SiteMapDisplayContext {
 			layout.getGroupId(), layout.isPrivateLayout(), getRootLayoutId());
 	}
 
-	public SiteMapPortletInstanceConfiguration
-		getSiteMapPortletInstanceConfiguration() {
+	public SiteNavigationSiteMapPortletInstanceConfiguration
+		getSiteNavigationSiteMapPortletInstanceConfiguration() {
 
 		return _siteMapPortletInstanceConfiguration;
 	}
@@ -289,7 +289,7 @@ public class SiteMapDisplayContext {
 	private final HttpServletRequest _request;
 	private Layout _rootLayout;
 	private Long _rootLayoutId;
-	private final SiteMapPortletInstanceConfiguration
+	private final SiteNavigationSiteMapPortletInstanceConfiguration
 		_siteMapPortletInstanceConfiguration;
 	private final ThemeDisplay _themeDisplay;
 

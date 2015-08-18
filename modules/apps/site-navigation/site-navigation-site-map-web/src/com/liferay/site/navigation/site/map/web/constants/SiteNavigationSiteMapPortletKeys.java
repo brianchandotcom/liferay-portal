@@ -17,9 +17,10 @@ package com.liferay.site.navigation.site.map.web.constants;
 /**
  * @author Eudaldo Alonso
  */
-public class SiteMapPortletKeys {
+public class SiteNavigationSiteMapPortletKeys {
 
-	public static final String SITE_MAP =
-		"com_liferay_site_navigation_site_map_web_portlet_SiteMapPortlet";
+	public static final String SITE_NAVIGATION_SITE_MAP =
+		"com_liferay_site_navigation_site_map_web_portlet_" +
+			"SiteNavigationSiteMapPortlet";
 
 }

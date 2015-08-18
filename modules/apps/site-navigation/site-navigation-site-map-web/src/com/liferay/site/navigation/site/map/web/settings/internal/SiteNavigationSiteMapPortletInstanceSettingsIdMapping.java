@@ -15,8 +15,8 @@
 package com.liferay.site.navigation.site.map.web.settings.internal;
 
 import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
-import com.liferay.site.navigation.site.map.web.configuration.SiteMapPortletInstanceConfiguration;
-import com.liferay.site.navigation.site.map.web.constants.SiteMapPortletKeys;
+import com.liferay.site.navigation.site.map.web.configuration.SiteNavigationSiteMapPortletInstanceConfiguration;
+import com.liferay.site.navigation.site.map.web.constants.SiteNavigationSiteMapPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +24,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Juergen Kappler
  */
 @Component
-public class SiteMapPortletInstanceSettingsIdMapping
+public class SiteNavigationSiteMapPortletInstanceSettingsIdMapping
 	implements SettingsIdMapping {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return SiteMapPortletInstanceConfiguration.class;
+		return SiteNavigationSiteMapPortletInstanceConfiguration.class;
 	}
 
 	@Override
 	public String getSettingsId() {
-		return SiteMapPortletKeys.SITE_MAP;
+		return SiteNavigationSiteMapPortletKeys.SITE_NAVIGATION_SITE_MAP;
 	}
 
 }

@@ -19,9 +19,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 /**
  * @author Eudaldo Alonso
  */
-public class SiteMapWebConfigurationValues {
+public class SiteNavigationSiteMapWebConfigurationValues {
 
 	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		SiteMapWebConfigurationUtil.get("display.templates.config"));
+		SiteNavigationSiteMapWebConfigurationUtil.get(
+			"display.templates.config"));
 
 }

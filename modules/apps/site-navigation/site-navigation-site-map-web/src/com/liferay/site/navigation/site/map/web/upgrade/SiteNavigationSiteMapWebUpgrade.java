@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
-import com.liferay.site.navigation.site.map.web.constants.SiteMapPortletKeys;
+import com.liferay.site.navigation.site.map.web.constants.SiteNavigationSiteMapPortletKeys;
 
 import java.util.Collections;
 
@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = SiteMapWebUpgrade.class)
-public class SiteMapWebUpgrade {
+@Component(immediate = true, service = SiteNavigationSiteMapWebUpgrade.class)
+public class SiteNavigationSiteMapWebUpgrade {
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
@@ -52,7 +52,10 @@ public class SiteMapWebUpgrade {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
-					new String[] {"85", SiteMapPortletKeys.SITE_MAP}
+					new String[] {"85",
+						SiteNavigationSiteMapPortletKeys.
+							SITE_NAVIGATION_SITE_MAP
+					}
 				};
 			}
 

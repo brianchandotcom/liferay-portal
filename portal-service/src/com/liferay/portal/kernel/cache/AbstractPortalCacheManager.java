@@ -108,12 +108,8 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 					getPortalCacheBootstrapLoaderConfiguration();
 
 			if (portalCacheBootstrapLoaderConfiguration != null) {
-				CallbackFactory<?> callbackFactory =
-					portalCacheBootstrapLoaderConfiguration.
-						getCallbackFactory();
-
 				PortalCacheBootstrapLoader portalCacheBootstrapLoader =
-					callbackFactory.createPortalCacheBootstrapLoader(
+					portalCacheBootstrapLoaderFactory.create(
 						portalCacheBootstrapLoaderConfiguration.
 							getProperties());
 
@@ -261,12 +257,8 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 				_portalCacheManagerConfiguration.
 					getPortalCacheManagerListenerConfigurations()) {
 
-			CallbackFactory<PortalCacheManager<?, ?>> callbackFactory =
-				(CallbackFactory<PortalCacheManager<?, ?>>)
-					callbackConfiguration.getCallbackFactory();
-
 			PortalCacheManagerListener portalCacheManagerListener =
-				callbackFactory.createPortalCacheManagerListener(
+				portalCacheManagerListenerFactory.create(
 					this, callbackConfiguration.getProperties());
 
 			if (portalCacheManagerListener != null) {
@@ -318,6 +310,11 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	protected final AggregatedPortalCacheManagerListener
 		aggregatedPortalCacheManagerListener =
 			new AggregatedPortalCacheManagerListener();
+	protected PortalCacheBootstrapLoaderFactory
+		portalCacheBootstrapLoaderFactory;
+	protected PortalCacheListenerFactory portalCacheListenerFactory;
+	protected PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
+		portalCacheManagerListenerFactory;
 	protected final ConcurrentMap<String, PortalCache<K, V>> portalCaches =
 		new ConcurrentHashMap<>();
 
@@ -338,11 +335,8 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 			CallbackConfiguration callbackConfiguration = entry.getKey();
 
-			CallbackFactory<?> callbackFactory =
-				callbackConfiguration.getCallbackFactory();
-
 			PortalCacheListener<K, V> portalCacheListener =
-				callbackFactory.createPortalCacheListener(
+				portalCacheListenerFactory.create(
 					callbackConfiguration.getProperties());
 
 			portalCache.registerPortalCacheListener(

@@ -13,7 +13,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command known-issues="LPS-56538" name="ElasticsearchSmokeTest" priority="5">
+	<command name="ElasticsearchSmokeTest" priority="5">
 		<description message="This test asserts Elasticsearch clustering to add/remove replicas as nodes are added/removed from the portal cluster. Also, we want to maintain no loss in search functionality as replicas are being added or removed." />
 
 		<property name="app.server.bundles.size" value="1" />

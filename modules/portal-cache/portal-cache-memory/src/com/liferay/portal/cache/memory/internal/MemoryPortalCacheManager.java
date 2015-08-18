@@ -18,8 +18,7 @@ import com.liferay.portal.kernel.cache.AbstractPortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
-import com.liferay.portal.kernel.cache.cluster.ClusterLinkCallbackFactory;
-import com.liferay.portal.kernel.cache.configuration.CallbackConfiguration;
+import com.liferay.portal.kernel.cache.PortalCacheReplicator;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -123,24 +122,23 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	protected PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration() {
 
-		Map<CallbackConfiguration, PortalCacheListenerScope>
+		Map<Properties, PortalCacheListenerScope>
 			cacheListenerConfigurations = null;
-		CallbackConfiguration bootstrapLoaderConfiguration = null;
+		Properties bootstrapLoaderConfiguration = null;
 
 		if (isClusterAware() &&
 			GetterUtil.getBoolean(props.get(PropsKeys.CLUSTER_LINK_ENABLED))) {
 
-			CallbackConfiguration cacheListenerConfiguration =
-				new CallbackConfiguration(
-					ClusterLinkCallbackFactory.INSTANCE, new Properties());
+			Properties properties = new Properties();
+
+			properties.put(PortalCacheReplicator.REPLICATOR, true);
 
 			cacheListenerConfigurations = new HashMap<>();
 
 			cacheListenerConfigurations.put(
-				cacheListenerConfiguration, PortalCacheListenerScope.ALL);
+				properties, PortalCacheListenerScope.ALL);
 
-			bootstrapLoaderConfiguration = new CallbackConfiguration(
-				ClusterLinkCallbackFactory.INSTANCE, new Properties());
+			bootstrapLoaderConfiguration = new Properties();
 		}
 
 		return new PortalCacheManagerConfiguration(

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author Tina Tian
@@ -30,9 +31,9 @@ public class PortalCacheConfiguration {
 
 	public PortalCacheConfiguration(
 		String portalCacheName,
-		Map<CallbackConfiguration, PortalCacheListenerScope>
+		Map<Properties, PortalCacheListenerScope>
 			portalCacheListenerConfigurations,
-		CallbackConfiguration portalCacheBootstrapLoaderConfiguration) {
+		Properties portalCacheBootstrapLoaderConfiguration) {
 
 		if (portalCacheName == null) {
 			throw new NullPointerException("Portal cache name is null");
@@ -52,13 +53,13 @@ public class PortalCacheConfiguration {
 			portalCacheBootstrapLoaderConfiguration;
 	}
 
-	public CallbackConfiguration
+	public Properties
 		getPortalCacheBootstrapLoaderConfiguration() {
 
 		return _portalCacheBootstrapLoaderConfiguration;
 	}
 
-	public Map<CallbackConfiguration, PortalCacheListenerScope>
+	public Map<Properties, PortalCacheListenerScope>
 		getPortalCacheListenerConfigurations() {
 
 		return Collections.unmodifiableMap(_portalCacheListenerConfigurations);
@@ -76,9 +77,8 @@ public class PortalCacheConfiguration {
 			_portalCacheBootstrapLoaderConfiguration);
 	}
 
-	private final CallbackConfiguration
-		_portalCacheBootstrapLoaderConfiguration;
-	private final Map<CallbackConfiguration, PortalCacheListenerScope>
+	private final Properties _portalCacheBootstrapLoaderConfiguration;
+	private final Map<Properties, PortalCacheListenerScope>
 		_portalCacheListenerConfigurations;
 	private final String _portalCacheName;
 

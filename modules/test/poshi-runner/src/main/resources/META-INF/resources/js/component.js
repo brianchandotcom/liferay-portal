@@ -162,6 +162,10 @@ YUI.add(
 
 						var currentTargetAncestor = event.currentTarget.ancestor();
 
+						if (!currentTargetAncestor.hasClass('current-scope')) {
+							event.halt(true);
+						}
+
 						if (currentTargetAncestor) {
 							instance._parseCommandLog(currentTargetAncestor);
 
@@ -178,13 +182,15 @@ YUI.add(
 					handleCurrentScopeSelect: function(event) {
 						var instance = this;
 
-						var currentTarget = event.currentTarget.ancestor();
+						var currentTargetAncestor = event.currentTarget.ancestor();
 
-						event.stopPropagation();
+						if (!currentTargetAncestor.hasClass('current-scope')) {
+							event.halt(true);
+						}
 
-						instance._displayNode(currentTarget);
+						instance._displayNode(currentTargetAncestor);
 
-						instance._selectCurrentScope(currentTarget);
+						instance._selectCurrentScope(currentTargetAncestor);
 					},
 
 					handleErrorBtns: function(event) {
@@ -269,6 +275,18 @@ YUI.add(
 
 						var currentTarget = event.currentTarget;
 
+						if (!currentTarget.hasClass('btn')) {
+							currentTarget = currentTarget.previous();
+
+							if (!inSidebar) {
+								currentTarget = currentTarget.one('.btn-collapse');
+							}
+
+							if (!currentTarget) {
+								return;
+							}
+						}
+
 						var lookUpScope = instance.get(STR_XML_LOG);
 
 						if (inSidebar) {
@@ -303,6 +321,12 @@ YUI.add(
 							'click',
 							A.bind('handleCurrentCommandSelect', instance),
 							'.linkable .line-container'
+						);
+
+						sidebar.delegate(
+							'click',
+							A.rbind('handleToggleCollapseBtn', instance, true),
+							'.linkable.current-scope .line-container'
 						);
 
 						sidebar.delegate(
@@ -358,6 +382,12 @@ YUI.add(
 							'click',
 							A.rbind('handleToggleCollapseBtn', instance, false),
 							'.btn-collapse, .btn-var'
+						);
+
+						xmlLog.delegate(
+							'click',
+							A.rbind('handleToggleCollapseBtn', instance, false),
+							'.current-scope > .line-container'
 						);
 
 						xmlLog.delegate(

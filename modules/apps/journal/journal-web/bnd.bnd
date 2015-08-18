@@ -10,6 +10,7 @@ Export-Package:\
 	com.liferay.journal.web.util
 Import-Package:\
 	javax.servlet;version='[2.3.0,4.0.0)',\
+	com.liferay.frontend.taglib.servlet.taglib,\
 	*
 Include-Resource:\
 	classes,\
@@ -19,5 +20,6 @@ Include-Resource:\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class
 Require-Capability:\
-	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/ddm";version:Version="1.0.0"
+	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/ddm";version:Version="1.0.0",\
+	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/frontend";version:Version="1.0.0"
 Web-ContextPath: /journal-web

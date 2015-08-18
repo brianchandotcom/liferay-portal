@@ -67,7 +67,7 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 	}
 
 	@Test
-	public void testUpgradeData() throws Exception {
+	public void testUpgrade() throws Exception {
 		String primKey1 = "123";
 		long actionIds1 = 4;
 

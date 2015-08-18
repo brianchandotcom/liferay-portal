@@ -18,6 +18,8 @@ import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.StringUtil;
 
+import groovy.lang.Closure;
+
 import java.io.File;
 
 import java.util.Iterator;
@@ -79,7 +81,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					configureTaskExpandPoshiRunner(project);
 					configureTaskRunPoshi(project, poshiRunnerExtension);
 					configureTaskValidatePoshi(project, poshiRunnerExtension);
 					configureTaskWritePoshiProperties(
@@ -175,10 +176,35 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			true);
 	}
 
-	protected void addTaskExpandPoshiRunner(Project project) {
+	protected void addTaskExpandPoshiRunner(final Project project) {
 		Copy copy = GradleUtil.addTask(
 			project, EXPAND_POSHI_RUNNER_TASK_NAME, Copy.class);
 
+		Closure<Void> closure = new Closure<Void>(null) {
+
+			@SuppressWarnings("unused")
+			public FileTree doCall() {
+				Configuration configuration = GradleUtil.getConfiguration(
+					project, POSHI_RUNNER_CONFIGURATION_NAME);
+
+				Iterator<File> iterator = configuration.iterator();
+
+				while (iterator.hasNext()) {
+					File file = iterator.next();
+
+					String fileName = file.getName();
+
+					if (fileName.startsWith("com.liferay.poshi.runner-")) {
+						return project.zipTree(file);
+					}
+				}
+
+				return null;
+			}
+
+		};
+
+		copy.from(closure);
 		copy.into(getExpandedPoshiRunnerDir(project));
 	}
 
@@ -242,13 +268,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		javaExec.setMain("com.liferay.poshi.runner.PoshiRunnerContext");
 	}
 
-	protected void configureTaskExpandPoshiRunner(Project project) {
-		Copy copy = (Copy)GradleUtil.getTask(
-			project, EXPAND_POSHI_RUNNER_TASK_NAME);
-
-		configureTasksExpandPoshiRunnerFrom(copy);
-	}
-
 	protected void configureTaskRunPoshi(
 		Project project, PoshiRunnerExtension poshiRunnerExtension) {
 
@@ -257,29 +276,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		configureTasksRunPoshiBinResultsDir(test);
 		configureTasksRunPoshiReports(test);
 		configureTasksRunPoshiSystemProperties(test, poshiRunnerExtension);
-	}
-
-	protected void configureTasksExpandPoshiRunnerFrom(Copy copy) {
-		Project project = copy.getProject();
-
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, POSHI_RUNNER_CONFIGURATION_NAME);
-
-		Iterator<File> iterator = configuration.iterator();
-
-		while (iterator.hasNext()) {
-			File file = iterator.next();
-
-			String fileName = file.getName();
-
-			if (fileName.startsWith("com.liferay.poshi.runner-")) {
-				FileTree fileTree = project.zipTree(file);
-
-				copy.from(fileTree);
-
-				return;
-			}
-		}
 	}
 
 	protected void configureTasksRunPoshiBinResultsDir(Test test) {

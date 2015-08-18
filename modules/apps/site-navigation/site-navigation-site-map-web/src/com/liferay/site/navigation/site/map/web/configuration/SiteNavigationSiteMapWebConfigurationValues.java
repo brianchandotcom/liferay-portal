@@ -12,23 +12,16 @@
  * details.
  */
 
-package com.liferay.site.navigation.site.map.web.settings.internal;
+package com.liferay.site.navigation.site.map.web.configuration;
 
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.site.navigation.site.map.web.configuration.SiteMapPortletInstanceConfiguration;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
- * @author Juergen Kappler
+ * @author Eudaldo Alonso
  */
-@Component
-public class SiteMapPortletInstanceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+public class SiteNavigationSiteMapWebConfigurationValues {
 
-	@Override
-	public Class<?> getConfigurationBeanClass() {
-		return SiteMapPortletInstanceConfiguration.class;
-	}
+	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
+		SiteNavigationSiteMapWebConfigurationUtil.get("display.templates.config"));
 
 }

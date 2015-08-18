@@ -14,14 +14,20 @@
 
 package com.liferay.site.navigation.site.map.web.configuration;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 
 /**
  * @author Eudaldo Alonso
  */
-public class SiteMapWebConfigurationValues {
+public class SiteNavigationSiteMapWebConfigurationUtil {
 
-	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		SiteMapWebConfigurationUtil.get("display.templates.config"));
+	public static String get(String key) {
+		return _configuration.get(key);
+	}
+
+	private static final Configuration _configuration =
+		ConfigurationFactoryUtil.getConfiguration(
+			SiteNavigationSiteMapWebConfigurationUtil.class.getClassLoader(), "portlet");
 
 }

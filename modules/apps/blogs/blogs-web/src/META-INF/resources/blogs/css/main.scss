@@ -5,19 +5,26 @@
 
 .portlet-blogs {
 	.entry-options {
-		position: relative;
-		text-align: right;
 		margin-bottom: 10px;
+		min-height: 30px;
+		position: relative;
 
 		&.inline {
 			background-color: #FFF;
+			position: absolute;
 			right: 0;
 			top: 0;
-			position: absolute;
 		}
 
 		& > div {
 			padding: 5px;
+			text-align: center;
+		}
+
+		& > .btn {
+			position: absolute;
+			right: 0;
+			top: 0;
 		}
 	}
 
@@ -237,11 +244,6 @@
 			background-size: cover;
 			height: 140px;
 		}
-	}
-
-	.lfr-blogs-cover-image-selector {
-		margin: 0 0 10px;
-		padding-top: 10px;
 	}
 
 	.nameplate-content {

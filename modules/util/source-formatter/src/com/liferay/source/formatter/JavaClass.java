@@ -476,31 +476,31 @@ public class JavaClass {
 	protected void checkMutableFieldType(JavaTerm javaTerm) {
 		String javaTermName = javaTerm.getName();
 
-		String newName = javaTermName;
+		if (!StringUtil.isUpperCase(javaTermName)) {
+			return;
+		}
 
-		if (StringUtil.isUpperCase(newName)) {
-			StringBundler sb = new StringBundler(newName.length());
+		StringBundler sb = new StringBundler(javaTermName.length());
 
-			for (int i = 0; i < newName.length(); i++) {
-				char c = newName.charAt(i);
+		for (int i = 0; i < javaTermName.length(); i++) {
+			char c = javaTermName.charAt(i);
 
-				if (i > 1) {
-					if (c == CharPool.UNDERLINE) {
-						continue;
-					}
-
-					if (newName.charAt(i - 1) == CharPool.UNDERLINE) {
-						sb.append(c);
-
-						continue;
-					}
+			if (i > 1) {
+				if (c == CharPool.UNDERLINE) {
+					continue;
 				}
 
-				sb.append(Character.toLowerCase(c));
+				if (javaTermName.charAt(i - 1) == CharPool.UNDERLINE) {
+					sb.append(c);
+
+					continue;
+				}
 			}
 
-			newName = sb.toString();
+			sb.append(Character.toLowerCase(c));
 		}
+
+		String newName = sb.toString();
 
 		if (!newName.equals(javaTermName)) {
 			_content = _content.replaceAll(

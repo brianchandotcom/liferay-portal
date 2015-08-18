@@ -321,52 +321,34 @@
 			<var name="eventType" value="${eventType}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGCalendarVieweventdetails#COMMENTS_BE_THE_FIRST" value1="Be the first." />
-
 		<if>
 			<isset var="eventCommentList" />
 			<then>
 				<for list="${eventCommentList}" param="eventComment">
 
 					<if>
-						<condition function="IsElementPresent" locator1="PGCalendarVieweventdetails#COMMENTS_ADD_COMMENT_LINK" />
+						<condition function="IsElementPresent" locator1="Comments#ADD_COMMENT_LINK" />
 						<then>
-							<execute function="AssertClick" locator1="PGCalendarVieweventdetails#COMMENTS_ADD_COMMENT_LINK" value1="Add Comment" />
-							<execute function="MakeVisible" locator1="PGCalendarVieweventdetails#COMMENTS_TEXT_AREA" />
-							<execute function="Type" locator1="PGCalendarVieweventdetails#COMMENTS_TEXT_AREA" value1="${eventComment}" />
+							<execute function="AssertClick" locator1="Comments#ADD_COMMENT_LINK" value1="Add Comment" />
+							<execute function="MakeVisible" locator1="Comments#COMMENT_FIELD" />
+							<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${eventComment}" />
 						</then>
 						<else>
-							<execute function="Type" locator1="PGCalendarVieweventdetails#COMMENTS_TEXT_AREA" value1="${eventComment}" />
+							<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${eventComment}" />
 						</else>
 					</if>
 
-					<if>
-						<condition function="IsElementPresent" locator1="PGCalendarVieweventdetails#COMMENTS_SUBMIT_BUTTON" />
-						<then>
-							<execute function="AssertClick" locator1="PGCalendarVieweventdetails#COMMENTS_SUBMIT_BUTTON" value1="Submit" />
-						</then>
-						<else>
-							<execute function="AssertClick" locator1="PGCalendarVieweventdetails#COMMENTS_REPLY_BUTTON" value1="Reply" />
-						</else>
-					</if>
+					<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#SUCCESS_MESSAGE" value1="Your request processed successfully." />
+					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
 				</for>
 			</then>
 			<else>
-				<execute function="Type" locator1="PGCalendarVieweventdetails#COMMENTS_TEXT_AREA" value1="${eventComment}" />
+				<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${eventComment}" />
 
-				<if>
-					<condition function="IsElementPresent" locator1="PGCalendarVieweventdetails#COMMENTS_SUBMIT_BUTTON" />
-					<then>
-						<execute function="AssertClick" locator1="PGCalendarVieweventdetails#COMMENTS_SUBMIT_BUTTON" value1="Submit" />
-					</then>
-					<else>
-						<execute function="AssertClick" locator1="PGCalendarVieweventdetails#COMMENTS_REPLY_BUTTON" value1="Reply" />
-					</else>
-				</if>
+				<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 
-				<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#SUCCESS_MESSAGE" value1="Your request processed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
 			</else>
 		</if>
 
@@ -374,19 +356,17 @@
 			<isset var="eventCommentList" />
 			<then>
 				<for list="${eventCommentList}" param="eventComment">
-					<var name="key_eventComment" value="${eventComment}" />
-					<var name="key_user" value="${user}" />
+					<var name="key_entryComment" value="${eventComment}" />
 
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${user} (You)" />
+					<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${eventComment}" />
 				</for>
 			</then>
 			<else>
-				<var name="key_eventComment" value="${eventComment}" />
-				<var name="key_user" value="${user}" />
+				<var name="key_entryComment" value="${eventComment}" />
 
-				<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-				<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+				<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${user} (You)" />
+				<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${eventComment}" />
 			</else>
 		</if>
 
@@ -1166,11 +1146,11 @@
 				<isset var="month" />
 			</and>
 			<then>
-				<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_DIALOG_SUMMARY" value1="${frequency} On The ${position} ${weekday} Of ${month}" />
+				<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_DIALOG_SUMMARY" value1="${frequency}, On The ${position} ${weekday} Of ${month}" />
 
 				<execute function="AssertClick" locator1="PGCalendarAddevent#REPEAT_DONE_BUTTON" value1="Done" />
 
-				<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY" value1="${frequency} On The ${position} ${weekday} Of ${month}" />
+				<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_SUMMARY" value1="${frequency}, On The ${position} ${weekday} Of ${month}" />
 			</then>
 			<elseif>
 				<and>
@@ -1335,19 +1315,17 @@
 			<isset var="eventCommentList" />
 			<then>
 				<for list="${eventCommentList}" param="eventComment">
-					<var name="key_eventComment" value="${eventComment}" />
-					<var name="key_user" value="${user}" />
+					<var name="key_entryComment" value="${eventComment}" />
 
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${user} (You)" />
+					<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${eventComment}" />
 				</for>
 			</then>
 			<else>
-				<var name="key_eventComment" value="${eventComment}" />
-				<var name="key_user" value="${user}" />
+				<var name="key_entryComment" value="${eventComment}" />
 
-				<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-				<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+				<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${user} (You)" />
+				<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${eventComment}" />
 			</else>
 		</if>
 

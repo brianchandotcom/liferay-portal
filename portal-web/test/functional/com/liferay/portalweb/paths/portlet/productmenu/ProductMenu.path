@@ -14,8 +14,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PRODUCT_MENU_SIDEBAR</td>
-	<td>//div[contains(@class,'sidenav-menu')]</td>
+	<td>PRODUCT_MENU_SIDEBAR_OPEN</td>
+	<td>//div[contains(@id,'sidenavSliderId') and not(contains(@class,'closed'))]</td>
 	<td></td>
 </tr>
 <tr>

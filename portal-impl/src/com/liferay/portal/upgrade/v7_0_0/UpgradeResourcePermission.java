@@ -18,12 +18,10 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.upgrade.v7_0_0.util.ResourcePermissionTable;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * @author Sampsa Sohlman
@@ -32,29 +30,6 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL(
-				"alter table ResourcePermission add mvccVersion LONG " +
-					"default 0");
-			runSQL(
-				"alter table ResourcePermission add primKeyId LONG default -1");
-			runSQL(
-				"alter table ResourcePermission add viewPermission BOOLEAN " +
-					"default [$FALSE$]");
-		}
-		catch (SQLException sqle)
-		{
-			upgradeTable(
-				ResourcePermissionTable.TABLE_NAME,
-				ResourcePermissionTable.TABLE_COLUMNS,
-				ResourcePermissionTable.TABLE_SQL_CREATE,
-				ResourcePermissionTable.TABLE_SQL_ADD_INDEXES);
-		}
-
-		upgradeData();
-	}
-
-	protected void upgradeData() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

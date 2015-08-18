@@ -124,24 +124,10 @@ public class WikiNodeStagedModelDataHandler
 		WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
 			wikiServiceComponentProvider.getWikiGroupServiceConfiguration();
 
+		WikiNode existingNode = fetchStagedModelByUuidAndGroupId(
+			node.getUuid(), portletDataContext.getScopeGroupId());
+
 		if (portletDataContext.isDataStrategyMirror()) {
-			WikiNode existingNode = fetchStagedModelByUuidAndGroupId(
-				node.getUuid(), portletDataContext.getScopeGroupId());
-
-			String initialNodeName =
-				wikiGroupServiceConfiguration.initialNodeName();
-
-			if ((existingNode == null) &&
-				initialNodeName.equals(node.getName())) {
-
-				WikiNode initialNode = WikiNodeLocalServiceUtil.fetchNode(
-					portletDataContext.getScopeGroupId(), node.getName());
-
-				if (initialNode != null) {
-					WikiNodeLocalServiceUtil.deleteWikiNode(initialNode);
-				}
-			}
-
 			if (existingNode == null) {
 				serviceContext.setUuid(node.getUuid());
 
@@ -159,20 +145,20 @@ public class WikiNodeStagedModelDataHandler
 			String initialNodeName =
 				wikiGroupServiceConfiguration.initialNodeName();
 
-			if (initialNodeName.equals(node.getName())) {
-				WikiNode initialNode = WikiNodeLocalServiceUtil.fetchNode(
-					portletDataContext.getScopeGroupId(), node.getName());
+			if ((existingNode != null) &&
+				initialNodeName.equals(existingNode.getName())) {
 
-				if (initialNode != null) {
-					WikiNodeLocalServiceUtil.deleteWikiNode(initialNode);
-				}
+				importedNode = WikiNodeLocalServiceUtil.updateNode(
+					existingNode.getNodeId(), node.getName(),
+					node.getDescription(), serviceContext);
 			}
+			else {
+				String nodeName = getNodeName(
+					portletDataContext, node, node.getName(), 2);
 
-			String nodeName = getNodeName(
-				portletDataContext, node, node.getName(), 2);
-
-			importedNode = WikiNodeLocalServiceUtil.addNode(
-				userId, nodeName, node.getDescription(), serviceContext);
+				importedNode = WikiNodeLocalServiceUtil.addNode(
+					userId, nodeName, node.getDescription(), serviceContext);
+			}
 		}
 
 		portletDataContext.importClassedModel(node, importedNode);

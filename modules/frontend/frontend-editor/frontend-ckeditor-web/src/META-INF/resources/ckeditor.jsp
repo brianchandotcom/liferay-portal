@@ -88,7 +88,7 @@ if (editorOptions != null) {
 		</style>
 
 		<%
-		long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITORS);
+		long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_CKEDITOR);
 		%>
 
 		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathEditors() + "/ckeditor/ckeditor.js", javaScriptLastModified)) %>" type="text/javascript"></script>

@@ -16,7 +16,7 @@ package com.liferay.site.navigation.site.map.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.site.navigation.site.map.web.constants.SiteMapPortletKeys;
+import com.liferay.site.navigation.site.map.web.constants.SiteNavigationSiteMapPortletKeys;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -29,10 +29,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + SiteMapPortletKeys.SITE_MAP},
+	property = {"javax.portlet.name=" + SiteNavigationSiteMapPortletKeys.SITE_NAVIGATION_SITE_MAP},
 	service = ConfigurationAction.class
 )
-public class SiteMapConfigurationAction extends DefaultConfigurationAction {
+public class SiteNavigationSiteMapConfigurationAction
+	extends DefaultConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {

@@ -23,9 +23,9 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
-import com.liferay.site.navigation.site.map.web.configuration.SiteMapWebConfigurationValues;
-import com.liferay.site.navigation.site.map.web.constants.SiteMapPortletKeys;
-import com.liferay.site.navigation.site.map.web.display.context.SiteMapDisplayContext;
+import com.liferay.site.navigation.site.map.web.configuration.SiteNavigationSiteMapWebConfigurationValues;
+import com.liferay.site.navigation.site.map.web.constants.SiteNavigationSiteMapPortletKeys;
+import com.liferay.site.navigation.site.map.web.display.context.SiteNavigationSiteMapDisplayContext;
 
 import java.util.List;
 import java.util.Locale;
@@ -39,10 +39,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + SiteMapPortletKeys.SITE_MAP},
+	property = {"javax.portlet.name=" + SiteNavigationSiteMapPortletKeys.SITE_NAVIGATION_SITE_MAP},
 	service = TemplateHandler.class
 )
-public class SiteMapPortletDisplayTemplateHandler
+public class SiteNavigationSiteMapPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
 	@Override
@@ -56,7 +56,8 @@ public class SiteMapPortletDisplayTemplateHandler
 			"content.Language", locale);
 
 		String portletTitle = PortalUtil.getPortletTitle(
-			SiteMapPortletKeys.SITE_MAP, resourceBundle);
+			SiteNavigationSiteMapPortletKeys.SITE_NAVIGATION_SITE_MAP,
+			resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -64,7 +65,7 @@ public class SiteMapPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return SiteMapPortletKeys.SITE_MAP;
+		return SiteNavigationSiteMapPortletKeys.SITE_NAVIGATION_SITE_MAP;
 	}
 
 	@Override
@@ -84,15 +85,16 @@ public class SiteMapPortletDisplayTemplateHandler
 			"pages", List.class, PortletDisplayTemplateConstants.ENTRIES,
 			"page", Layout.class, "curPage", "getName(locale)");
 		templateVariableGroup.addVariable(
-			"site-map-display-context", SiteMapDisplayContext.class,
-			"siteMapDisplayContext");
+			"site-map-display-context",
+			SiteNavigationSiteMapDisplayContext.class, "siteMapDisplayContext");
 
 		return templateVariableGroups;
 	}
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return SiteMapWebConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
+		return SiteNavigationSiteMapWebConfigurationValues.
+			DISPLAY_TEMPLATES_CONFIG;
 	}
 
 }

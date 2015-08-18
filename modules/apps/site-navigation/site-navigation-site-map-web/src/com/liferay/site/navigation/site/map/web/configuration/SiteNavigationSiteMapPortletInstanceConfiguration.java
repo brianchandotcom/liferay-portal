@@ -20,9 +20,9 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Juergen Kappler
  */
 @Meta.OCD(
-	id = "com.liferay.site.navigation.site.map.web.configuration.SiteMapPortletInstanceConfiguration"
+	id = "com.liferay.site.navigation.site.map.web.configuration.SiteNavigationSiteMapPortletInstanceConfiguration"
 )
-public interface SiteMapPortletInstanceConfiguration {
+public interface SiteNavigationSiteMapPortletInstanceConfiguration {
 
 	@Meta.AD(deflt = "0", required = false)
 	public int displayDepth();

@@ -12,22 +12,23 @@
  * details.
  */
 
-package com.liferay.site.navigation.site.map.web.configuration;
+package com.liferay.site.navigation.site.map.web.settings.internal;
 
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.site.navigation.site.map.web.configuration.SiteNavigationSiteMapPortletInstanceConfiguration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eudaldo Alonso
+ * @author Juergen Kappler
  */
-public class SiteMapWebConfigurationUtil {
+@Component
+public class SiteNavigationSiteMapPortletInstanceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	public static String get(String key) {
-		return _configuration.get(key);
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return SiteNavigationSiteMapPortletInstanceConfiguration.class;
 	}
-
-	private static final Configuration _configuration =
-		ConfigurationFactoryUtil.getConfiguration(
-			SiteMapWebConfigurationUtil.class.getClassLoader(), "portlet");
 
 }

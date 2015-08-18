@@ -1713,7 +1713,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		</#list>
 
 		<#if isMappeable>
-			@BeanReference(type = ServiceCompanyProvider.class)
+			@BeanReference(type = CompanyProviderHolder.class)
 			protected CompanyProviderHolder companyProviderHolder;
 		</#if>
 	</#if>

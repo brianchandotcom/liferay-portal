@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.backgroundtask;
+package com.liferay.portal.background.task.internal;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;

@@ -17,9 +17,6 @@ package com.liferay.portal.background.task.internal;
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -29,6 +26,7 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.service.UserLocalService;
 
 import java.io.Serializable;
 
@@ -58,10 +56,8 @@ public abstract class BaseBackgroundTaskTestCase {
 		PermissionChecker permissionChecker = Mockito.mock(
 			PermissionChecker.class);
 
-		User user = Mockito.mock(User.class);
-
 		Mockito.when(
-			permissionCheckerFactory.create(user)
+			permissionCheckerFactory.create(Mockito.any(User.class))
 		).thenReturn(
 			permissionChecker
 		);
@@ -69,15 +65,26 @@ public abstract class BaseBackgroundTaskTestCase {
 		backgroundTaskThreadLocalManagerImpl.setPermissionCheckerFactory(
 			permissionCheckerFactory);
 
-		_companyId = TestPropsValues.getCompanyId();
+		UserLocalService userLocalService = Mockito.mock(
+			UserLocalService.class);
+
+		Mockito.when(
+			userLocalService.fetchUser(Mockito.anyLong())
+		).thenReturn(
+			Mockito.mock(User.class)
+		);
+
+		_backgroundTaskThreadLocalManagerImpl.setUserLocalService(
+			userLocalService);
+
+		_companyId = 1234l;
 		_clusterInvokeEnabled = true;
 		_defaultLocale = Locale.US;
-		_groupId = TestPropsValues.getGroupId();
+		_groupId = 1234l;
 		_siteDefaultLocale = Locale.CANADA;
 		_themeDisplayLocale = Locale.FRANCE;
-		_user = UserTestUtil.addUser();
 
-		_principalName = String.valueOf(_user.getUserId());
+		_principalName = String.valueOf(1234l);
 	}
 
 	@After
@@ -162,8 +169,5 @@ public abstract class BaseBackgroundTaskTestCase {
 	private String _principalName;
 	private Locale _siteDefaultLocale;
 	private Locale _themeDisplayLocale;
-
-	@DeleteAfterTestRun
-	private User _user;
 
 }

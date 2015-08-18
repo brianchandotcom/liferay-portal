@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -45,12 +46,6 @@ import com.liferay.portal.service.ServiceContext;
  * @author Michael C. Han
  */
 public class BackgroundTaskMessageListener extends BaseMessageListener {
-
-	public void setBackgroundTaskThreadLocalManager(
-		BackgroundTaskThreadLocalManager backgroundTaskThreadLocalManager) {
-
-		_backgroundTaskThreadLocalManager = backgroundTaskThreadLocalManager;
-	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -204,6 +199,9 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BackgroundTaskMessageListener.class);
 
-	private BackgroundTaskThreadLocalManager _backgroundTaskThreadLocalManager;
+	private final BackgroundTaskThreadLocalManager
+		_backgroundTaskThreadLocalManager =
+			ProxyFactory.newServiceTrackedInstance(
+				BackgroundTaskThreadLocalManager.class);
 
 }

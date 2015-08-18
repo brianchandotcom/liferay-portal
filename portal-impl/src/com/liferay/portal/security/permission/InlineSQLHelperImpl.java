@@ -545,7 +545,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		permissionJoin += CustomSQLUtil.get(JOIN_RESOURCE_PERMISSION);
 
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append("((ResourcePermission.primKeyId = ");
 		sb.append(classPKField);

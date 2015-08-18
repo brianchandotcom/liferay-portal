@@ -18,9 +18,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
@@ -119,8 +121,16 @@ public class TeamStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(team.getUserUuid());
 
+		long liveGroupId = portletDataContext.getScopeGroupId();
+
+		Group group = GroupLocalServiceUtil.getGroup(liveGroupId);
+
+		if (group.isStagingGroup()) {
+			liveGroupId = group.getLiveGroupId();
+		}
+
 		Team existingTeam = TeamLocalServiceUtil.fetchTeamByUuidAndGroupId(
-			team.getUuid(), portletDataContext.getScopeGroupId());
+			team.getUuid(), liveGroupId);
 
 		Team importedTeam = null;
 
@@ -131,8 +141,8 @@ public class TeamStagedModelDataHandler
 			serviceContext.setUuid(team.getUuid());
 
 			importedTeam = TeamLocalServiceUtil.addTeam(
-				userId, portletDataContext.getScopeGroupId(), team.getName(),
-				team.getDescription(), serviceContext);
+				userId, liveGroupId, team.getName(), team.getDescription(),
+				serviceContext);
 		}
 		else {
 			importedTeam = TeamLocalServiceUtil.updateTeam(

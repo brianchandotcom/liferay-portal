@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.TeamServiceUtil;
@@ -102,9 +104,16 @@ public class SiteTeamsPortlet extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Team.class.getName(), actionRequest);
 
+			long liveGroupId = themeDisplay.getSiteGroupId();
+
+			Group group = GroupLocalServiceUtil.getGroup(liveGroupId);
+
+			if (group.isStagingGroup()) {
+				liveGroupId = group.getLiveGroupId();
+			}
+
 			TeamServiceUtil.addTeam(
-				themeDisplay.getSiteGroupId(), name, description,
-				serviceContext);
+				liveGroupId, name, description, serviceContext);
 		}
 		else {
 

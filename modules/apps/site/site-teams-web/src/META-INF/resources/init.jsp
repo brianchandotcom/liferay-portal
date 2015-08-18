@@ -81,6 +81,12 @@ WindowState windowState = liferayPortletRequest.getWindowState();
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 
 String currentURL = currentURLObj.toString();
+
+Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
+
+if (scopeGroup.isStagingGroup()) {
+	scopeGroupId = scopeGroup.getLiveGroupId();
+}
 %>
 
 <%@ include file="/init-ext.jsp" %>

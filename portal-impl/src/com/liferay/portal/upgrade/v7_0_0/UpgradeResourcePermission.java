@@ -38,24 +38,24 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"SELECT resourcePermissionId, primKey, primKeyId, actionIds, " +
-					"viewActionId FROM ResourcePermission");
+				"select resourcePermissionId, primKey, primKeyId, actionIds, " +
+					"viewActionId from ResourcePermission");
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				long actionIds = rs.getLong("actionIds");
-				long primKeyId = rs.getLong("primKeyId");
 				long resourcePermissionId = rs.getLong("resourcePermissionId");
+				long primKeyId = rs.getLong("primKeyId");
+				long actionIds = rs.getLong("actionIds");
 				boolean viewActionId = rs.getBoolean("viewActionId");
 
 				long newPrimKeyId = GetterUtil.getLong(rs.getString("primKey"));
 				boolean newViewActionId = (actionIds % 2 == 1);
 
-				if ((newViewActionId != viewActionId) ||
-					(primKeyId != newPrimKeyId)) {
+				if ((primKeyId != newPrimKeyId) ||
+					(newViewActionId != viewActionId)) {
 
-					StringBundler sb = new StringBundler();
+					StringBundler sb = new StringBundler(6);
 
 					sb.append("update ResourcePermission set primKeyId = ");
 					sb.append(newPrimKeyId);

@@ -58,7 +58,7 @@ public class TikaSafeRandomizerBumper implements RandomizerBumper<byte[]> {
 
 			return contentType.contains(_contentType);
 		}
-		catch (Exception e) {
+		catch (Throwable t) {
 			return false;
 		}
 	}

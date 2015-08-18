@@ -46,4 +46,7 @@ public class CalendarServiceConfigurationValues {
 			CalendarServiceConfigurationUtil.get(
 				"calendar.resource.force.autogenerate.code"));
 
+	public static final String CALENDAR_RSS_TEMPLATE = GetterUtil.getString(
+		CalendarServiceConfigurationUtil.get("calendar.rss.template"));
+
 }

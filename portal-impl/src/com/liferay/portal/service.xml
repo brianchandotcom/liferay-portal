@@ -2058,7 +2058,7 @@
 			<finder-column name="primKey" />
 			<finder-column name="roleId" arrayable-operator="OR" />
 		</finder>
-		<finder name="C_N_S_PI_R_V" return-type="Collection" unique="false" db-index="true">
+		<finder name="C_N_S_PI_R_V" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 			<finder-column name="scope" />

@@ -364,12 +364,6 @@
 </c:if>
 
 <script type="text/javascript">
-	(function() {
-		<liferay-util:dynamic-include key="com.liferay.frontend.js.web#loader#configModules" />
-	}());
-</script>
-
-<script type="text/javascript">
 	// <![CDATA[
 		<c:if test="<%= (layoutTypePortlet != null) %>">
 

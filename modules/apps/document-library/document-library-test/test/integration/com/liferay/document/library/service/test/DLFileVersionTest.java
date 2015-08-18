@@ -138,7 +138,7 @@ public class DLFileVersionTest {
 		_serviceContext = getServiceContext();
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_group.getGroupId(), parentFolder.getFolderId(), _SOURCE_FILE_NAME,
+			_group.getGroupId(), _parentFolder.getFolderId(), _SOURCE_FILE_NAME,
 			ContentTypes.APPLICATION_OCTET_STREAM, _TITLE, StringPool.BLANK,
 			StringPool.BLANK, _DATA_VERSION_1, _serviceContext);
 
@@ -370,7 +370,7 @@ public class DLFileVersionTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		parentFolder = DLAppServiceUtil.addFolder(
+		_parentFolder = DLAppServiceUtil.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"Test Folder", RandomTestUtil.randomString(), serviceContext);
 	}
@@ -520,7 +520,7 @@ public class DLFileVersionTest {
 
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
+	private Folder _parentFolder;
 	private ServiceContext _serviceContext;
-	private Folder parentFolder;
 
 }

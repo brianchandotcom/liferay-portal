@@ -32,11 +32,11 @@ public class PwdGenerator {
 	public static final String KEY3 = "abcdefghijklmnopqrstuvwxyz";
 
 	public static String getPassword() {
-		return getPassword(8, KEYS);
+		return getPassword(8, _KEYS);
 	}
 
 	public static String getPassword(int length) {
-		return getPassword(length, KEYS);
+		return getPassword(length, _KEYS);
 	}
 
 	public static String getPassword(int length, String... keys) {
@@ -133,9 +133,9 @@ public class PwdGenerator {
 		return getPassword(4, KEY1);
 	}
 
-	private static final double _MULTIPLIER = Long.SIZE * Math.log(2);
+	private static final String[] _KEYS = {KEY1, KEY2, KEY3};
 
-	private static final String[] KEYS = {KEY1, KEY2, KEY3};
+	private static final double _MULTIPLIER = Long.SIZE * Math.log(2);
 
 	private static final Log _log = LogFactoryUtil.getLog(PwdGenerator.class);
 

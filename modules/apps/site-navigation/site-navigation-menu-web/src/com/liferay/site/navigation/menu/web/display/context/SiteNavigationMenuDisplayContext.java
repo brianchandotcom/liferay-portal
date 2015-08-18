@@ -24,19 +24,21 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.site.navigation.menu.web.configuration.NavigationMenuPortletInstanceConfiguration;
-import com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration;
+import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuPortletInstanceConfiguration;
+import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Juergen Kappler
  */
-public class NavigationMenuDisplayContext {
+public class SiteNavigationMenuDisplayContext
+ {
 
-	public NavigationMenuDisplayContext(
+	public SiteNavigationMenuDisplayContext
+(
 			HttpServletRequest request,
-			NavigationMenuWebConfiguration navigationMenuWebConfiguration)
+			SiteNavigationMenuWebConfiguration navigationMenuWebConfiguration)
 		throws SettingsException {
 
 		_request = request;
@@ -49,7 +51,7 @@ public class NavigationMenuDisplayContext {
 
 		_navigationMenuPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
-				NavigationMenuPortletInstanceConfiguration.class);
+				SiteNavigationMenuPortletInstanceConfiguration.class);
 	}
 
 	public String getBulletStyle() {
@@ -211,9 +213,9 @@ public class NavigationMenuDisplayContext {
 	private long _displayStyleGroupId;
 	private String _headerType;
 	private String _includedLayouts;
-	private final NavigationMenuPortletInstanceConfiguration
+	private final SiteNavigationMenuPortletInstanceConfiguration
 		_navigationMenuPortletInstanceConfiguration;
-	private final NavigationMenuWebConfiguration
+	private final SiteNavigationMenuWebConfiguration
 		_navigationMenuWebConfiguration;
 	private Boolean _nestedChildren;
 	private Boolean _preview;

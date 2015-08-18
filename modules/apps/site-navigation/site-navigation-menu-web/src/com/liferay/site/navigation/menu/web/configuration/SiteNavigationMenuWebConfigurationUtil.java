@@ -12,14 +12,23 @@
  * details.
  */
 
-package com.liferay.site.navigation.menu.web.constants;
+package com.liferay.site.navigation.menu.web.configuration;
+
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 
 /**
  * @author Eudaldo Alonso
  */
-public class NavigationMenuPortletKeys {
+public class SiteNavigationMenuWebConfigurationUtil {
 
-	public static final String NAVIGATION =
-		"com_liferay_site_navigation_menu_web_portlet_NavigationMenuPortlet";
+	public static String get(String key) {
+		return _configuration.get(key);
+	}
+
+	private static final Configuration _configuration =
+		ConfigurationFactoryUtil.getConfiguration(
+			SiteNavigationMenuWebConfigurationUtil.class.getClassLoader(),
+			"portlet");
 
 }

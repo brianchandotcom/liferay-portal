@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
-import com.liferay.site.navigation.menu.web.constants.NavigationMenuPortletKeys;
+import com.liferay.site.navigation.menu.web.constants.SiteNavigationMenuPortletKeys;
 
 import java.util.Collections;
 
@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = NavigationMenuWebUpgrade.class)
-public class NavigationMenuWebUpgrade {
+@Component(immediate = true, service = SiteNavigationMenuWebUpgrade.class)
+public class SiteNavigationMenuWebUpgrade {
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
@@ -52,7 +52,7 @@ public class NavigationMenuWebUpgrade {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
-					new String[] {"71", NavigationMenuPortletKeys.NAVIGATION}
+					new String[] {"71", SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU}
 				};
 			}
 

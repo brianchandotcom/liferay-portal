@@ -16,7 +16,7 @@ package com.liferay.site.navigation.menu.web.portlet;
 
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.site.navigation.menu.web.constants.NavigationMenuPortletKeys;
+import com.liferay.site.navigation.menu.web.constants.SiteNavigationMenuPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,12 +28,12 @@ import org.osgi.service.component.annotations.Component;
 	property = {"model.class.name=com.liferay.portal.theme.NavItem"},
 	service = ViewPortletProvider.class
 )
-public class NavigationMenuViewPortletProvider
+public class SiteNavigationMenuViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return NavigationMenuPortletKeys.NAVIGATION;
+		return SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU;
 	}
 
 }

@@ -26,9 +26,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.theme.NavItem;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
-import com.liferay.site.navigation.menu.web.configuration.NavigationMenuConfigurationValues;
-import com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration;
-import com.liferay.site.navigation.menu.web.constants.NavigationMenuPortletKeys;
+import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuConfigurationValues;
+import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration;
+import com.liferay.site.navigation.menu.web.constants.SiteNavigationMenuPortletKeys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,12 +45,12 @@ import org.osgi.service.component.annotations.Modified;
  * @author Juergen Kappler
  */
 @Component(
-	configurationPid = "com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration",
+	configurationPid = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	property = {"javax.portlet.name=" + NavigationMenuPortletKeys.NAVIGATION},
+	property = {"javax.portlet.name=" + SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU},
 	service = TemplateHandler.class
 )
-public class NavigationMenuPortletDisplayTemplateHandler
+public class SiteNavigationMenuPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
 	@Override
@@ -78,7 +78,7 @@ public class NavigationMenuPortletDisplayTemplateHandler
 			"content.Language", locale);
 
 		String portletTitle = PortalUtil.getPortletTitle(
-			NavigationMenuPortletKeys.NAVIGATION, resourceBundle);
+			SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU, resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -86,7 +86,7 @@ public class NavigationMenuPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return NavigationMenuPortletKeys.NAVIGATION;
+		return SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU;
 	}
 
 	@Override
@@ -129,12 +129,12 @@ public class NavigationMenuPortletDisplayTemplateHandler
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_navigationMenuWebConfiguration = Configurable.createConfigurable(
-			NavigationMenuWebConfiguration.class, properties);
+			SiteNavigationMenuWebConfiguration.class, properties);
 	}
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return NavigationMenuConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
+		return SiteNavigationMenuConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
 	}
 
 	protected TemplateVariableGroup getUtilTemplateVariableGroup() {
@@ -147,9 +147,9 @@ public class NavigationMenuPortletDisplayTemplateHandler
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		NavigationMenuPortletDisplayTemplateHandler.class);
+		SiteNavigationMenuPortletDisplayTemplateHandler.class);
 
-	private volatile NavigationMenuWebConfiguration
+	private volatile SiteNavigationMenuWebConfiguration
 		_navigationMenuWebConfiguration;
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache;
+package com.liferay.portal.cache.io;
 
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.io.Serializer;

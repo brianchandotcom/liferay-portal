@@ -14,7 +14,7 @@ ext {
 	alloyBootstrapVersion = "3.2.0-2"
 	alloyFontAwesomeVersion = "2.0.0"
 	alloyVersion = "3.0.1"
-	lexiconVersion = "0.1.10"
+	lexiconVersion = "0.1.11"
 }
 
 liferay {

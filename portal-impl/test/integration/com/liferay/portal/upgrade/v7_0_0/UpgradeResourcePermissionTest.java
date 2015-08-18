@@ -80,7 +80,7 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 		long resourcePermissionId2 = addResourcePermission(
 			primKey2, actionIds2);
 
-		doUpgrade();
+		upgrade();
 
 		CacheRegistryUtil.clear();
 

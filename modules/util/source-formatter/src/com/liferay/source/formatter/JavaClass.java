@@ -426,12 +426,20 @@ public class JavaClass {
 			return;
 		}
 
-		if (javaTerm.isPrivate() && !javaTermName.equals("serialVersionUID") &&
-			(javaTermName.charAt(0) != CharPool.UNDERLINE)) {
+		if ((javaTerm.isPrivate() && !javaTermName.equals("serialVersionUID")) ^
+			(javaTermName.charAt(0) == CharPool.UNDERLINE)) {
 
-			_content = _content.replaceAll(
-				"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b",
-				StringPool.UNDERLINE.concat(javaTermName));
+			if (javaTerm.isPrivate()) {
+				_content = _content.replaceAll(
+					"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b",
+					StringPool.UNDERLINE.concat(javaTermName));
+			}
+			else {
+				_javaSourceProcessor.processErrorMessage(
+					_fileName,
+					"Only private var should start with underscore: " +
+						_fileName + " " + javaTerm.getLineCount());
+			}
 		}
 
 		String modifierDefinition = StringUtil.trim(

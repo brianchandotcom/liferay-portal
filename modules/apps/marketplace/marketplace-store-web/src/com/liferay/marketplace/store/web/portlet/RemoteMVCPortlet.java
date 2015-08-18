@@ -237,6 +237,8 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		OAuthRequest oAuthRequest = getOAuthRequest(
 			actionRequest, actionResponse, Verb.POST);
 
+		addOAuthParameter(oAuthRequest, "p_p_lifecycle", "1");
+
 		oAuthRequest.send();
 	}
 

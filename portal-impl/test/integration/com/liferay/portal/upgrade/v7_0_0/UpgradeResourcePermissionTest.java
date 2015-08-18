@@ -20,10 +20,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.User;
@@ -57,8 +55,6 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
 		_user = UserTestUtil.addUser();
 	}
 
@@ -114,7 +110,7 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 			ResourcePermission.class.getName());
 
 		resourcePermission.setResourcePermissionId(resourcePermissionId);
-		resourcePermission.setCompanyId(_company.getCompanyId());
+		resourcePermission.setCompanyId(_user.getCompanyId());
 		resourcePermission.setName("com.lifeary.rocks");
 		resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
 		resourcePermission.setOwnerId(_user.getUserId());
@@ -129,9 +125,6 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 
 		return resourcePermission.getResourcePermissionId();
 	}
-
-	@DeleteAfterTestRun
-	private Company _company;
 
 	private List<Long> _resourcePermissionIds = new ArrayList<>();
 	

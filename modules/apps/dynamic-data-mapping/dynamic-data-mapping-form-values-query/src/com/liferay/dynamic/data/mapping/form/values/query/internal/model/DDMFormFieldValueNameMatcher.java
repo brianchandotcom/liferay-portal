@@ -23,13 +23,13 @@ public class DDMFormFieldValueNameMatcher implements DDMFormFieldValueMatcher {
 
 	@Override
 	public boolean matches(DDMFormFieldValue ddmFormFieldValue) {
-		return _name.equals(ddmFormFieldValue.getName());
+		return name.equals(ddmFormFieldValue.getName());
 	}
 
 	public void setName(String name) {
-		_name = name;
+		this.name = name;
 	}
 
-	public String _name;
+	public String name;
 
 }

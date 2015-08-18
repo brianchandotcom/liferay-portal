@@ -53,7 +53,7 @@ public class WorkflowConfigurationPanelApp
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
-		_portletLocalService = portletLocalService;
+		this.portletLocalService = portletLocalService;
 	}
 
 }

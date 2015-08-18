@@ -50,7 +50,7 @@ public class BackgroundTaskThreadLocalManagerImplTest
 			BackgroundTaskThreadLocalManagerImpl.KEY_THREAD_LOCAL_VALUES,
 			threadLocalValues);
 
-		_backgroundTaskThreadLocalManagerImpl.deserializeThreadLocals(
+		backgroundTaskThreadLocalManagerImpl.deserializeThreadLocals(
 			taskContextMap);
 
 		assertThreadLocalValues();
@@ -61,7 +61,7 @@ public class BackgroundTaskThreadLocalManagerImplTest
 		initalizeThreadLocals();
 
 		Map<String, Serializable> threadLocalValues =
-			_backgroundTaskThreadLocalManagerImpl.getThreadLocalValues();
+			backgroundTaskThreadLocalManagerImpl.getThreadLocalValues();
 
 		assertThreadLocalValues(threadLocalValues);
 	}
@@ -72,7 +72,7 @@ public class BackgroundTaskThreadLocalManagerImplTest
 
 		Map<String, Serializable> taskContextMap = new HashMap<>();
 
-		_backgroundTaskThreadLocalManagerImpl.serializeThreadLocals(
+		backgroundTaskThreadLocalManagerImpl.serializeThreadLocals(
 			taskContextMap);
 
 		Map<String, Serializable> threadLocalValues =
@@ -87,7 +87,7 @@ public class BackgroundTaskThreadLocalManagerImplTest
 		Map<String, Serializable> threadLocalValues =
 			initializeThreadLocalValues();
 
-		_backgroundTaskThreadLocalManagerImpl.setThreadLocalValues(
+		backgroundTaskThreadLocalManagerImpl.setThreadLocalValues(
 			threadLocalValues);
 
 		assertThreadLocalValues();

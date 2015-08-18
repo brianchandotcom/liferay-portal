@@ -90,7 +90,7 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 					exportImportConfiguration);
 
 		exportImportConfigurationTrashRenderer.setServletContext(
-			_servletContext);
+			servletContext);
 
 		return exportImportConfigurationTrashRenderer;
 	}
@@ -117,7 +117,7 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
+		this.servletContext = servletContext;
 	}
 
 	@Activate
@@ -139,6 +139,6 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 		return GroupPermissionUtil.contains(permissionChecker, group, actionId);
 	}
 
-	protected ServletContext _servletContext;
+	protected ServletContext servletContext;
 
 }

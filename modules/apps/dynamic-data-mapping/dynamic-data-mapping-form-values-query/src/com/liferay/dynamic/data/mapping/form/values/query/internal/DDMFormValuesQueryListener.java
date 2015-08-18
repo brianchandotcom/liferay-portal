@@ -51,21 +51,21 @@ public class DDMFormValuesQueryListener extends DDMFormValuesQueryBaseListener {
 
 	@Override
 	public void enterAttributeType(AttributeTypeContext attributeTypeContext) {
-		_ddmFormFieldValueMatchers.push(new DDMFormFieldValueTypeMatcher());
+		ddmFormFieldValueMatchers.push(new DDMFormFieldValueTypeMatcher());
 	}
 
 	@Override
 	public void enterAttributeValue(
 		AttributeValueContext attributeValueContext) {
 
-		_ddmFormFieldValueMatchers.push(new DDMFormFieldValueValueMatcher());
+		ddmFormFieldValueMatchers.push(new DDMFormFieldValueValueMatcher());
 	}
 
 	@Override
 	public void enterFieldSelectorExpression(
 		FieldSelectorExpressionContext fieldSelectorExpressionContext) {
 
-		_ddmFormFieldValueMatchers.push(
+		ddmFormFieldValueMatchers.push(
 			new DDMFormFieldValueMatchesAllMatcher());
 	}
 
@@ -73,7 +73,7 @@ public class DDMFormValuesQueryListener extends DDMFormValuesQueryBaseListener {
 	public void enterPredicateAndExpression(
 		PredicateAndExpressionContext predicateAndExpressionContext) {
 
-		_ddmFormFieldValueMatchers.push(
+		ddmFormFieldValueMatchers.push(
 			new DDMFormFieldValueMatchesAllMatcher());
 	}
 
@@ -81,7 +81,7 @@ public class DDMFormValuesQueryListener extends DDMFormValuesQueryBaseListener {
 	public void enterPredicateOrExpression(
 		PredicateOrExpressionContext predicateOrExpressionContext) {
 
-		_ddmFormFieldValueMatchers.push(
+		ddmFormFieldValueMatchers.push(
 			new DDMFormFieldValueMatchesAnyMatcher());
 	}
 
@@ -89,7 +89,7 @@ public class DDMFormValuesQueryListener extends DDMFormValuesQueryBaseListener {
 	public void enterSelectorExpression(
 		SelectorExpressionContext selectorExpressionContext) {
 
-		_ddmFormValuesFilters.add(new DDMFormValuesFilterImpl());
+		ddmFormValuesFilters.add(new DDMFormValuesFilterImpl());
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public class DDMFormValuesQueryListener extends DDMFormValuesQueryBaseListener {
 		DDMFormFieldValueMatchesAllMatcher
 			previousDDMFormFieldValueMatchesAllMatcher =
 				(DDMFormFieldValueMatchesAllMatcher)
-					_ddmFormFieldValueMatchers.peek();
+					ddmFormFieldValueMatchers.peek();
 
 		previousDDMFormFieldValueMatchesAllMatcher.addDDMFormFieldValueMatcher(
 			ddmFormFieldValueNameMatcher);
@@ -119,10 +119,10 @@ public class DDMFormValuesQueryListener extends DDMFormValuesQueryBaseListener {
 		FieldSelectorExpressionContext fieldSelectorExpressionContext) {
 
 		DDMFormFieldValueMatcher ddmFormFieldValueMatcher =
-			_ddmFormFieldValueMatchers.pop();
+			ddmFormFieldValueMatchers.pop();
 
-		DDMFormValuesFilter lastDDMFormValuesFilter = _ddmFormValuesFilters.get(
-			_ddmFormValuesFilters.size() - 1);
+		DDMFormValuesFilter lastDDMFormValuesFilter = ddmFormValuesFilters.get(
+			ddmFormValuesFilters.size() - 1);
 
 		lastDDMFormValuesFilter.setDDMFormFieldValueMatcher(
 			ddmFormFieldValueMatcher);
@@ -137,7 +137,7 @@ public class DDMFormValuesQueryListener extends DDMFormValuesQueryBaseListener {
 		String languageId = StringUtil.unquote(stringLiteral.getText());
 
 		DDMFormFieldValueValueMatcher lastDDMFormFieldValueValueMatcher =
-			(DDMFormFieldValueValueMatcher)_ddmFormFieldValueMatchers.peek();
+			(DDMFormFieldValueValueMatcher)ddmFormFieldValueMatchers.peek();
 
 		lastDDMFormFieldValueValueMatcher.setLocale(
 			LocaleUtil.fromLanguageId(languageId));
@@ -148,12 +148,12 @@ public class DDMFormValuesQueryListener extends DDMFormValuesQueryBaseListener {
 		PredicateAndExpressionContext predicateAndExpressionContext) {
 
 		DDMFormFieldValueMatcher andDDMFormFieldValueMatcher =
-			_ddmFormFieldValueMatchers.pop();
+			ddmFormFieldValueMatchers.pop();
 
 		DDMFormFieldValueMatchesAnyMatcher
 			orDDMFormFieldValueMatchesAnyMatcher =
 				(DDMFormFieldValueMatchesAnyMatcher)
-					_ddmFormFieldValueMatchers.peek();
+					ddmFormFieldValueMatchers.peek();
 
 		orDDMFormFieldValueMatchesAnyMatcher.addDDMFormFieldValueMatcher(
 			andDDMFormFieldValueMatcher);
@@ -164,7 +164,7 @@ public class DDMFormValuesQueryListener extends DDMFormValuesQueryBaseListener {
 		PredicateEqualityExpressionContext predicateEqualityExpressionContext) {
 
 		DDMFormFieldValueMatcher lastDDMFormFieldValueMatcher =
-			_ddmFormFieldValueMatchers.pop();
+			ddmFormFieldValueMatchers.pop();
 
 		ParseTree stringLiteral =
 			predicateEqualityExpressionContext.STRING_LITERAL();
@@ -189,7 +189,7 @@ public class DDMFormValuesQueryListener extends DDMFormValuesQueryBaseListener {
 		DDMFormFieldValueMatchesAllMatcher
 			andDDMFormFieldValueMatchesAllMatcher =
 				(DDMFormFieldValueMatchesAllMatcher)
-					_ddmFormFieldValueMatchers.peek();
+					ddmFormFieldValueMatchers.peek();
 
 		andDDMFormFieldValueMatchesAllMatcher.addDDMFormFieldValueMatcher(
 			lastDDMFormFieldValueMatcher);
@@ -200,12 +200,12 @@ public class DDMFormValuesQueryListener extends DDMFormValuesQueryBaseListener {
 		PredicateOrExpressionContext predicateOrExpressionContext) {
 
 		DDMFormFieldValueMatcher orDDMFormFieldValueMatcher =
-			_ddmFormFieldValueMatchers.pop();
+			ddmFormFieldValueMatchers.pop();
 
 		DDMFormFieldValueMatchesAllMatcher
 			previousDDMFormFieldValueMatchesAllMatcher =
 				(DDMFormFieldValueMatchesAllMatcher)
-					_ddmFormFieldValueMatchers.peek();
+					ddmFormFieldValueMatchers.peek();
 
 		previousDDMFormFieldValueMatchesAllMatcher.addDDMFormFieldValueMatcher(
 			orDDMFormFieldValueMatcher);
@@ -215,8 +215,8 @@ public class DDMFormValuesQueryListener extends DDMFormValuesQueryBaseListener {
 	public void exitStepType(StepTypeContext stepTypeContext) {
 		String text = stepTypeContext.getText();
 
-		DDMFormValuesFilter lastDDMFormValuesFilter = _ddmFormValuesFilters.get(
-			_ddmFormValuesFilters.size() - 1);
+		DDMFormValuesFilter lastDDMFormValuesFilter = ddmFormValuesFilters.get(
+			ddmFormValuesFilters.size() - 1);
 
 		if (text.equals(StringPool.SLASH)) {
 			lastDDMFormValuesFilter.setGreedy(false);
@@ -227,11 +227,11 @@ public class DDMFormValuesQueryListener extends DDMFormValuesQueryBaseListener {
 	}
 
 	public List<DDMFormValuesFilter> getDDMFormValuesFilters() {
-		return _ddmFormValuesFilters;
+		return ddmFormValuesFilters;
 	}
 
-	public Stack<DDMFormFieldValueMatcher> _ddmFormFieldValueMatchers =
+	public Stack<DDMFormFieldValueMatcher> ddmFormFieldValueMatchers =
 		new Stack<>();
-	public List<DDMFormValuesFilter> _ddmFormValuesFilters = new ArrayList<>();
+	public List<DDMFormValuesFilter> ddmFormValuesFilters = new ArrayList<>();
 
 }

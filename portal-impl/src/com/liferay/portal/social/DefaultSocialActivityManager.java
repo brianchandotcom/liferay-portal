@@ -29,10 +29,10 @@ public class DefaultSocialActivityManager
 
 	@Override
 	protected SocialActivityLocalService getSocialActivityLocalService() {
-		return _socialActivityLocalService;
+		return socialActivityLocalService;
 	}
 
 	@BeanReference(type = SocialActivityLocalService.class)
-	protected SocialActivityLocalService _socialActivityLocalService;
+	protected SocialActivityLocalService socialActivityLocalService;
 
 }

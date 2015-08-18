@@ -589,7 +589,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 		LanguageUtil languageUtil = new LanguageUtil();
 
-		languageUtil.setLanguage(_language);
+		languageUtil.setLanguage(language);
 	}
 
 	protected void setUpLocaleUtil() {
@@ -709,7 +709,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		Locale locale, String key, String returnValue) {
 
 		when(
-			_language.get(Matchers.eq(locale), Matchers.eq(key))
+			language.get(Matchers.eq(locale), Matchers.eq(key))
 		).thenReturn(
 			returnValue
 		);
@@ -719,7 +719,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		Set<Locale> availableLocales) {
 
 		when(
-			_language.getAvailableLocales()
+			language.getAvailableLocales()
 		).thenReturn(
 			availableLocales
 		);
@@ -727,7 +727,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 	protected void whenLanguageGetLanguageId(Locale locale, String languageId) {
 		when(
-			_language.getLanguageId(Matchers.eq(locale))
+			language.getLanguageId(Matchers.eq(locale))
 		).thenReturn(
 				languageId
 		);
@@ -735,14 +735,14 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 	protected void whenLanguageIsAvailableLocale(String languageId) {
 		when(
-			_language.isAvailableLocale(Matchers.eq(languageId))
+			language.isAvailableLocale(Matchers.eq(languageId))
 		).thenReturn(
 			true
 		);
 	}
 
 	@Mock
-	protected Language _language;
+	protected Language language;
 
 	protected Map<Long, DDMStructure> structures = new HashMap<>();
 	protected Map<Long, DDMTemplate> templates = new HashMap<>();

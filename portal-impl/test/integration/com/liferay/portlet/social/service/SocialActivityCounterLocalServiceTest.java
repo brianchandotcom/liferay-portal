@@ -53,57 +53,55 @@ public class SocialActivityCounterLocalServiceTest
 		super.setUp();
 
 		SocialActivitySettingLocalServiceUtil.updateActivitySetting(
-			_group.getGroupId(), TEST_MODEL, true);
+			group.getGroupId(), TEST_MODEL, true);
 	}
 
 	@Test
 	public void testAddActivity() throws Exception {
-		SocialActivityTestUtil.addActivity(
-			_creatorUser, _group, _assetEntry, 1);
+		SocialActivityTestUtil.addActivity(creatorUser, group, assetEntry, 1);
 
 		SocialActivityCounter contribution =
 			SocialActivityTestUtil.getActivityCounter(
-				_group.getGroupId(),
-				SocialActivityCounterConstants.NAME_CONTRIBUTION, _creatorUser);
+				group.getGroupId(),
+				SocialActivityCounterConstants.NAME_CONTRIBUTION, creatorUser);
 
 		Assert.assertNull(contribution);
 
 		SocialActivityCounter participation =
 			SocialActivityTestUtil.getActivityCounter(
-				_group.getGroupId(),
-				SocialActivityCounterConstants.NAME_PARTICIPATION,
-				_creatorUser);
+				group.getGroupId(),
+				SocialActivityCounterConstants.NAME_PARTICIPATION, creatorUser);
 
 		Assert.assertEquals(2, participation.getCurrentValue());
 
-		SocialActivityTestUtil.addActivity(_actorUser, _group, _assetEntry, 2);
+		SocialActivityTestUtil.addActivity(actorUser, group, assetEntry, 2);
 
 		contribution = SocialActivityTestUtil.getActivityCounter(
-			_group.getGroupId(),
-			SocialActivityCounterConstants.NAME_CONTRIBUTION, _creatorUser);
+			group.getGroupId(),
+			SocialActivityCounterConstants.NAME_CONTRIBUTION, creatorUser);
 
 		Assert.assertNotNull(contribution);
 		Assert.assertEquals(1, contribution.getCurrentValue());
 
 		participation = SocialActivityTestUtil.getActivityCounter(
-			_group.getGroupId(),
-			SocialActivityCounterConstants.NAME_PARTICIPATION, _actorUser);
+			group.getGroupId(),
+			SocialActivityCounterConstants.NAME_PARTICIPATION, actorUser);
 
 		Assert.assertNotNull(participation);
 		Assert.assertEquals(1, participation.getCurrentValue());
 
 		SocialActivityLimit activityLimit =
 			SocialActivityTestUtil.getActivityLimit(
-				_group.getGroupId(), _actorUser, _assetEntry, 2,
+				group.getGroupId(), actorUser, assetEntry, 2,
 				SocialActivityCounterConstants.NAME_PARTICIPATION);
 
 		Assert.assertNotNull(activityLimit);
 		Assert.assertEquals(1, activityLimit.getCount());
 
-		SocialActivityTestUtil.addActivity(_actorUser, _group, _assetEntry, 2);
+		SocialActivityTestUtil.addActivity(actorUser, group, assetEntry, 2);
 
 		activityLimit = SocialActivityTestUtil.getActivityLimit(
-			_group.getGroupId(), _actorUser, _assetEntry, 2,
+			group.getGroupId(), actorUser, assetEntry, 2,
 			SocialActivityCounterConstants.NAME_PARTICIPATION);
 
 		Assert.assertNotNull(activityLimit);
@@ -112,69 +110,68 @@ public class SocialActivityCounterLocalServiceTest
 
 	@Test
 	public void testToggleActivities() throws Exception {
-		SocialActivityTestUtil.addActivity(
-			_creatorUser, _group, _assetEntry, 1);
+		SocialActivityTestUtil.addActivity(creatorUser, group, assetEntry, 1);
 
-		SocialActivityTestUtil.addActivity(_actorUser, _group, _assetEntry, 2);
+		SocialActivityTestUtil.addActivity(actorUser, group, assetEntry, 2);
 
 		SocialActivityCounter contribution =
 			SocialActivityTestUtil.getActivityCounter(
-				_group.getGroupId(),
-				SocialActivityCounterConstants.NAME_CONTRIBUTION, _creatorUser);
+				group.getGroupId(),
+				SocialActivityCounterConstants.NAME_CONTRIBUTION, creatorUser);
 
 		Assert.assertNotNull(contribution);
 		Assert.assertEquals(1, contribution.getCurrentValue());
 
 		List<SocialActivityCounter> counters =
 			SocialActivityCounterLocalServiceUtil.getPeriodActivityCounters(
-				_group.getGroupId(), "asset.test.2",
+				group.getGroupId(), "asset.test.2",
 				SocialCounterPeriodUtil.getStartPeriod(), -1);
 
 		Assert.assertEquals(1, counters.size());
 
 		SocialActivityCounterLocalServiceUtil.disableActivityCounters(
-			_assetEntry.getClassName(), _assetEntry.getClassPK());
+			assetEntry.getClassName(), assetEntry.getClassPK());
 
 		contribution = SocialActivityTestUtil.getActivityCounter(
-			_group.getGroupId(),
-			SocialActivityCounterConstants.NAME_CONTRIBUTION, _creatorUser);
+			group.getGroupId(),
+			SocialActivityCounterConstants.NAME_CONTRIBUTION, creatorUser);
 
 		Assert.assertNotNull(contribution);
 		Assert.assertEquals(0, contribution.getCurrentValue());
 
 		SocialActivityCounter counter =
 			SocialActivityTestUtil.getActivityCounter(
-				_group.getGroupId(), "asset.test.2", _assetEntry);
+				group.getGroupId(), "asset.test.2", assetEntry);
 
 		Assert.assertNotNull(counter);
 		Assert.assertEquals(false, counter.isActive());
 
 		counters =
 			SocialActivityCounterLocalServiceUtil.getPeriodActivityCounters(
-				_group.getGroupId(), "asset.test.2",
+				group.getGroupId(), "asset.test.2",
 				SocialCounterPeriodUtil.getStartPeriod(), -1);
 
 		Assert.assertEquals(0, counters.size());
 
 		SocialActivityCounterLocalServiceUtil.enableActivityCounters(
-			_assetEntry.getClassName(), _assetEntry.getClassPK());
+			assetEntry.getClassName(), assetEntry.getClassPK());
 
 		contribution = SocialActivityTestUtil.getActivityCounter(
-			_group.getGroupId(),
-			SocialActivityCounterConstants.NAME_CONTRIBUTION, _creatorUser);
+			group.getGroupId(),
+			SocialActivityCounterConstants.NAME_CONTRIBUTION, creatorUser);
 
 		Assert.assertNotNull(contribution);
 		Assert.assertEquals(1, contribution.getCurrentValue());
 
 		counter = SocialActivityTestUtil.getActivityCounter(
-			_group.getGroupId(), "asset.test.2", _assetEntry);
+			group.getGroupId(), "asset.test.2", assetEntry);
 
 		Assert.assertNotNull(counter);
 		Assert.assertEquals(true, counter.isActive());
 
 		counters =
 			SocialActivityCounterLocalServiceUtil.getPeriodActivityCounters(
-				_group.getGroupId(), "asset.test.2",
+				group.getGroupId(), "asset.test.2",
 				SocialCounterPeriodUtil.getStartPeriod(), -1);
 
 		Assert.assertEquals(1, counters.size());

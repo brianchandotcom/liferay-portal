@@ -176,8 +176,7 @@ public class RepositoryProviderImpl
 			return localRepository;
 		}
 
-		localRepository = _repositoryFactory.createLocalRepository(
-			repositoryId);
+		localRepository = repositoryFactory.createLocalRepository(repositoryId);
 
 		checkRepository(repositoryId);
 		checkRepositoryAccess(repositoryId);
@@ -200,7 +199,7 @@ public class RepositoryProviderImpl
 			return repository;
 		}
 
-		repository = _repositoryFactory.createRepository(repositoryId);
+		repository = repositoryFactory.createRepository(repositoryId);
 
 		checkRepository(repositoryId);
 		checkRepositoryAccess(repositoryId);
@@ -226,7 +225,7 @@ public class RepositoryProviderImpl
 	protected void checkFileEntryPermissions(long fileEntryId)
 		throws PortalException {
 
-		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+		DLFileEntry dlFileEntry = dlFileEntryLocalService.fetchDLFileEntry(
 			fileEntryId);
 
 		PermissionChecker permissionChecker =
@@ -242,7 +241,7 @@ public class RepositoryProviderImpl
 		throws PortalException {
 
 		DLFileShortcut dlFileShortcut =
-			_dlFileShortcutLocalService.fetchDLFileShortcut(fileShortcutId);
+			dlFileShortcutLocalService.fetchDLFileShortcut(fileShortcutId);
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -258,7 +257,7 @@ public class RepositoryProviderImpl
 		throws PortalException {
 
 		DLFileVersion dlFileVersion =
-			_dlFileVersionLocalService.fetchDLFileVersion(fileVersionId);
+			dlFileVersionLocalService.fetchDLFileVersion(fileVersionId);
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -273,7 +272,7 @@ public class RepositoryProviderImpl
 	protected void checkFolderPermissions(long folderId)
 		throws PortalException {
 
-		DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(folderId);
+		DLFolder dlFolder = dlFolderLocalService.fetchDLFolder(folderId);
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -285,14 +284,14 @@ public class RepositoryProviderImpl
 	}
 
 	protected void checkRepository(long repositoryId) throws PortalException {
-		Group group = _groupLocalService.fetchGroup(repositoryId);
+		Group group = groupLocalService.fetchGroup(repositoryId);
 
 		if (group != null) {
 			return;
 		}
 
 		try {
-			_repositoryLocalService.getRepository(repositoryId);
+			repositoryLocalService.getRepository(repositoryId);
 		}
 		catch (NoSuchRepositoryException nsre) {
 			throw new InvalidRepositoryIdException(nsre.getMessage());
@@ -302,7 +301,7 @@ public class RepositoryProviderImpl
 	protected void checkRepositoryAccess(long repositoryId)
 		throws PortalException {
 
-		Group group = _groupLocalService.fetchGroup(repositoryId);
+		Group group = groupLocalService.fetchGroup(repositoryId);
 
 		if (group != null) {
 			return;
@@ -310,7 +309,7 @@ public class RepositoryProviderImpl
 
 		try {
 			com.liferay.portal.model.Repository repository =
-				_repositoryLocalService.fetchRepository(repositoryId);
+				repositoryLocalService.fetchRepository(repositoryId);
 
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
@@ -333,7 +332,7 @@ public class RepositoryProviderImpl
 	}
 
 	protected long getFileEntryRepositoryId(long fileEntryId) {
-		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+		DLFileEntry dlFileEntry = dlFileEntryLocalService.fetchDLFileEntry(
 			fileEntryId);
 
 		if (dlFileEntry != null) {
@@ -341,7 +340,7 @@ public class RepositoryProviderImpl
 		}
 
 		RepositoryEntry repositoryEntry =
-			_repositoryEntryLocalService.fetchRepositoryEntry(fileEntryId);
+			repositoryEntryLocalService.fetchRepositoryEntry(fileEntryId);
 
 		if (repositoryEntry != null) {
 			return repositoryEntry.getRepositoryId();
@@ -353,7 +352,7 @@ public class RepositoryProviderImpl
 
 	protected long getFileShortcutRepositoryId(long fileShortcutId) {
 		DLFileShortcut dlFileShortcut =
-			_dlFileShortcutLocalService.fetchDLFileShortcut(fileShortcutId);
+			dlFileShortcutLocalService.fetchDLFileShortcut(fileShortcutId);
 
 		if (dlFileShortcut != null) {
 			return dlFileShortcut.getRepositoryId();
@@ -365,14 +364,14 @@ public class RepositoryProviderImpl
 
 	protected long getFileVersionRepositoryId(long fileVersionId) {
 		DLFileVersion dlFileVersion =
-			_dlFileVersionLocalService.fetchDLFileVersion(fileVersionId);
+			dlFileVersionLocalService.fetchDLFileVersion(fileVersionId);
 
 		if (dlFileVersion != null) {
 			return dlFileVersion.getRepositoryId();
 		}
 
 		RepositoryEntry repositoryEntry =
-			_repositoryEntryLocalService.fetchRepositoryEntry(fileVersionId);
+			repositoryEntryLocalService.fetchRepositoryEntry(fileVersionId);
 
 		if (repositoryEntry != null) {
 			return repositoryEntry.getRepositoryId();
@@ -383,7 +382,7 @@ public class RepositoryProviderImpl
 	}
 
 	protected long getFolderRepositoryId(long folderId) {
-		DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(folderId);
+		DLFolder dlFolder = dlFolderLocalService.fetchDLFolder(folderId);
 
 		if (dlFolder != null) {
 			if (dlFolder.isMountPoint()) {
@@ -395,7 +394,7 @@ public class RepositoryProviderImpl
 		}
 
 		RepositoryEntry repositoryEntry =
-			_repositoryEntryLocalService.fetchRepositoryEntry(folderId);
+			repositoryEntryLocalService.fetchRepositoryEntry(folderId);
 
 		if (repositoryEntry != null) {
 			return repositoryEntry.getRepositoryId();
@@ -407,7 +406,7 @@ public class RepositoryProviderImpl
 
 	protected List<Long> getGroupRepositoryIds(long groupId) {
 		List<com.liferay.portal.model.Repository> repositories =
-			_repositoryLocalService.getGroupRepositories(groupId);
+			repositoryLocalService.getGroupRepositories(groupId);
 
 		List<Long> repositoryIds = new ArrayList<>(repositories.size() + 1);
 
@@ -433,28 +432,28 @@ public class RepositoryProviderImpl
 	}
 
 	@BeanReference(type = DLFileEntryLocalService.class)
-	protected DLFileEntryLocalService _dlFileEntryLocalService;
+	protected DLFileEntryLocalService dlFileEntryLocalService;
 
 	@BeanReference(type = DLFileShortcutLocalService.class)
-	protected DLFileShortcutLocalService _dlFileShortcutLocalService;
+	protected DLFileShortcutLocalService dlFileShortcutLocalService;
 
 	@BeanReference(type = DLFileVersionLocalService.class)
-	protected DLFileVersionLocalService _dlFileVersionLocalService;
+	protected DLFileVersionLocalService dlFileVersionLocalService;
 
 	@BeanReference(type = DLFolderLocalService.class)
-	protected DLFolderLocalService _dlFolderLocalService;
+	protected DLFolderLocalService dlFolderLocalService;
 
 	@BeanReference(type = GroupLocalService.class)
-	protected GroupLocalService _groupLocalService;
+	protected GroupLocalService groupLocalService;
 
 	@BeanReference(type = RepositoryEntryLocalService.class)
-	protected RepositoryEntryLocalService _repositoryEntryLocalService;
+	protected RepositoryEntryLocalService repositoryEntryLocalService;
 
 	@BeanReference(type = RepositoryFactory.class)
-	protected RepositoryFactory _repositoryFactory;
+	protected RepositoryFactory repositoryFactory;
 
 	@BeanReference(type = RepositoryLocalService.class)
-	protected RepositoryLocalService _repositoryLocalService;
+	protected RepositoryLocalService repositoryLocalService;
 
 	private final Map<Long, LocalRepository> _localRepositories =
 		new ConcurrentHashMap<>();

@@ -50,7 +50,7 @@ public class RolesPanelApp extends BaseControlPanelEntryPanelApp {
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
-		_portletLocalService = portletLocalService;
+		this.portletLocalService = portletLocalService;
 	}
 
 }

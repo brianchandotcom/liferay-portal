@@ -66,7 +66,7 @@ public class MBThreadSocialActivityManager
 
 		extraDataJSONObject.put("threadId", thread.getThreadId());
 
-		_socialActivityLocalService.addActivity(
+		socialActivityLocalService.addActivity(
 			userId, groupId, MBMessage.class.getName(),
 			thread.getRootMessageId(), SocialActivityConstants.TYPE_SUBSCRIBE,
 			extraDataJSONObject.toString(), 0);
@@ -81,34 +81,34 @@ public class MBThreadSocialActivityManager
 			return;
 		}
 
-		MBMessage rootMessage = _mbMessageLocalService.getMessage(
+		MBMessage rootMessage = mbMessageLocalService.getMessage(
 			thread.getRootMessageId());
 
-		_socialActivityLocalService.addActivity(
+		socialActivityLocalService.addActivity(
 			userId, rootMessage.getGroupId(), MBMessage.class.getName(),
 			rootMessage.getMessageId(), type, extraData, receiverUserId);
 	}
 
 	@Override
 	protected SocialActivityLocalService getSocialActivityLocalService() {
-		return _socialActivityLocalService;
+		return socialActivityLocalService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setMBMessageLocalService(
 		MBMessageLocalService mbMessageLocalService) {
 
-		_mbMessageLocalService = mbMessageLocalService;
+		this.mbMessageLocalService = mbMessageLocalService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setSocialActivityLocalService(
 		SocialActivityLocalService socialActivityLocalService) {
 
-		_socialActivityLocalService = socialActivityLocalService;
+		this.socialActivityLocalService = socialActivityLocalService;
 	}
 
-	protected MBMessageLocalService _mbMessageLocalService;
-	protected SocialActivityLocalService _socialActivityLocalService;
+	protected MBMessageLocalService mbMessageLocalService;
+	protected SocialActivityLocalService socialActivityLocalService;
 
 }

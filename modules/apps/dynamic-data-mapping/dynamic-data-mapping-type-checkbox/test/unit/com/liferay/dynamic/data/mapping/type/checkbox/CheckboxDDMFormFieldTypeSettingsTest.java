@@ -70,17 +70,17 @@ public class CheckboxDDMFormFieldTypeSettingsTest extends PowerMockito {
 			new Locale[] {LocaleUtil.US});
 
 		when(
-			_language.getAvailableLocales()
+			language.getAvailableLocales()
 		).thenReturn(
 			availableLocales
 		);
 
 		LanguageUtil languageUtil = new LanguageUtil();
 
-		languageUtil.setLanguage(_language);
+		languageUtil.setLanguage(language);
 	}
 
 	@Mock
-	protected Language _language;
+	protected Language language;
 
 }

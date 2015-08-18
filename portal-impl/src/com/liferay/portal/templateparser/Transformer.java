@@ -181,7 +181,7 @@ public class Transformer {
 
 			ClassLoader classLoader = clazz.getClassLoader();
 
-			String errorTemplateId = _errorTemplateIds.get(langType);
+			String errorTemplateId = errorTemplateIds.get(langType);
 
 			URL url = classLoader.getResource(errorTemplateId);
 
@@ -275,7 +275,7 @@ public class Transformer {
 				errorTemplatePropertyKey, langType);
 
 			if (Validator.isNotNull(errorTemplateId)) {
-				_errorTemplateIds.put(langType, errorTemplateId);
+				errorTemplateIds.put(langType, errorTemplateId);
 			}
 		}
 	}
@@ -300,7 +300,7 @@ public class Transformer {
 					(TransformerListener)InstanceFactory.newInstance(
 						classLoader, transformerListenerClassName);
 
-				_transformerListeners.add(transformerListener);
+				transformerListeners.add(transformerListener);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -308,8 +308,8 @@ public class Transformer {
 		}
 	}
 
-	protected final Map<String, String> _errorTemplateIds = new HashMap<>();
-	protected final Set<TransformerListener> _transformerListeners =
+	protected final Map<String, String> errorTemplateIds = new HashMap<>();
+	protected final Set<TransformerListener> transformerListeners =
 		new HashSet<>();
 
 	private static final Log _log = LogFactoryUtil.getLog(Transformer.class);

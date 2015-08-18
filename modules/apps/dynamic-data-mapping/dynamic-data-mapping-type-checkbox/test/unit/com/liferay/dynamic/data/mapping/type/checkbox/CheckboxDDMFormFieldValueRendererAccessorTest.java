@@ -90,20 +90,20 @@ public class CheckboxDDMFormFieldValueRendererAccessorTest
 
 		LanguageUtil languageUtil = new LanguageUtil();
 
-		languageUtil.setLanguage(_language);
+		languageUtil.setLanguage(language);
 	}
 
 	protected void whenLanguageGet(
 		Locale locale, String key, String returnValue) {
 
 		when(
-			_language.get(Matchers.eq(locale), Matchers.eq(key))
+			language.get(Matchers.eq(locale), Matchers.eq(key))
 		).thenReturn(
 			returnValue
 		);
 	}
 
 	@Mock
-	protected Language _language;
+	protected Language language;
 
 }

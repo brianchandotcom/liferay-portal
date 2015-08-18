@@ -54,7 +54,7 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 				if ((primKeyId == newPrimKeyId) &&
 					(newViewActionId == viewActionId)) {
-					
+
 					continue;
 				}
 

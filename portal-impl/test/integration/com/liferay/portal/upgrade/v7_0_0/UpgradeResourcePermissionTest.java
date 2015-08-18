@@ -125,8 +125,8 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 		return resourcePermission.getResourcePermissionId();
 	}
 
-	private List<Long> _resourcePermissionIds = new ArrayList<>();
-	
+	private final List<Long> _resourcePermissionIds = new ArrayList<>();
+
 	@DeleteAfterTestRun
 	private User _user;
 

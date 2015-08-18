@@ -910,6 +910,10 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			<arg value="testClasses" />
 			<arg value="testIntegrationClasses" />
 		</gradle-execute>
+
+		<gradle-execute dir="modules/sdk/gradle-util" failonerror="false" forcedcacheenabled="false" task="findbugsMain">
+			<arg value="-Dmaven.local.ignore=true" />
+		</gradle-execute>
 	</target>
 
 	<target name="update-ivy-cache">

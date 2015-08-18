@@ -130,12 +130,16 @@
 		<print-gradle-alternative args="uploadArchives -Psnapshot" />
 	</target>
 
+	<target name="run-findbugs">
+		<print-gradle-alternative args="findbugsMain" />
+	</target>
+
 	<target name="setup-eclipse">
 		<print-gradle-alternative args="eclipse" />
 	</target>
 
 	<target name="test">
-		<print-gradle-alternative args="check" />
+		<print-gradle-alternative args="test testIntegration" />
 	</target>
 
 	<target name="test-class">
@@ -151,7 +155,7 @@
 	</target>
 
 	<target name="test-unit">
-		<print-gradle-alternative args="testUnit" />
+		<print-gradle-alternative args="test" />
 	</target>
 
 	<target name="war">

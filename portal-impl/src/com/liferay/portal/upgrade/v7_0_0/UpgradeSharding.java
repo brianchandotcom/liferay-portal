@@ -78,6 +78,76 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateWikiPageResource();
 	}
 
+	private void _checkNotUpdated(String tableName, String... columnNames)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBuilder sbSelect = new StringBuilder();
+
+			sbSelect.append("select ");
+
+			for (String columnName : columnNames) {
+				sbSelect.append(columnName);
+				sbSelect.append(", ");
+			}
+
+			sbSelect.setLength(sbSelect.length() - 2);
+
+			sbSelect.append(" from ");
+			sbSelect.append(tableName);
+			sbSelect.append(" where companyId IS NULL");
+
+			ps = con.prepareStatement(sbSelect.toString());
+
+			rs = ps.executeQuery();
+
+			if (!rs.next()) {
+				return;
+			}
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Has not be posible to update the companyId of ");
+			sb.append("the following rows in the table ");
+			sb.append(tableName);
+
+			while (rs.next()) {
+				sb.append(" {");
+
+				for (String columnName : columnNames) {
+					long columnValue = rs.getLong(columnName);
+
+					sb.append(columnName);
+					sb.append(": ");
+					sb.append(columnValue);
+					sb.append(", ");
+				}
+
+				sb.setLength(sb.length() - 2);
+
+				sb.append("}");
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(sb.toString());
+			}
+		}
+		catch (SQLException sqle) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(sqle.getMessage(), sqle);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	private void _updateAnnouncementsFlags() throws Exception {
 		String select =
 			"select a.flagId, a.userId, u.companyId from AnnouncementsFlag a," +
@@ -88,6 +158,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"AnnouncementsFlag", select, update, "companyId", "flagId");
+
+		_checkNotUpdated("AnnouncementsFlag", "flagId");
 	}
 
 	private void _updateAssetEntriesAssetCategories() throws Exception {
@@ -103,6 +175,9 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"AssetEntries_AssetCategories", select, update, "companyId",
 			"categoryId", "entryId");
+
+		_checkNotUpdated(
+			"AssetEntries_AssetCategories", "categoryId", "entryId");
 	}
 
 	private void _updateAssetEntriesAssetTags() throws Exception {
@@ -117,6 +192,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"AssetEntries_AssetTags", select, update, "companyId", "entryId",
 			"tagId");
+
+		_checkNotUpdated("AssetEntries_AssetTags", "tagId", "entryId");
 	}
 
 	private void _updateAssetTagStats() throws Exception {
@@ -129,6 +206,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"AssetTagStats", select, update, "companyId", "tagStatsId");
+
+		_checkNotUpdated("AssetTagStats", "tagStatsId");
 	}
 
 	private void _updateBrowserTracker() throws Exception {
@@ -142,6 +221,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"BrowserTracker", select, update, "companyId", "browserTrackerId");
+
+		_checkNotUpdated("BrowserTracker", "browserTrackerId");
 	}
 
 	private void _updateCompanyColumnOnTable(
@@ -221,6 +302,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"DDMStorageLink", select, update, "companyId", "structureId");
+
+		_checkNotUpdated("DDMStorageLink", "structureId");
 	}
 
 	private void _updateDDMStructureLink() throws Exception {
@@ -233,6 +316,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"DDMStructureLink", select, update, "companyId", "structureId");
+
+		_checkNotUpdated("DDMStructureLink", "structureId");
 	}
 
 	private void _updateDDMTemplateLink() throws Exception {
@@ -245,6 +330,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"DDMTemplateLink", select, update, "companyId", "templateId");
+
+		_checkNotUpdated("DDMTemplateLink", "templateId");
 	}
 
 	private void _updateDLFileEntryMetadata() throws Exception {
@@ -260,6 +347,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"DLFileEntryMetadata", select, update, "companyId",
 			"fileEntryMetadataId");
+
+		_checkNotUpdated("DLFileEntryMetadata", "fileEntryMetadataId");
 	}
 
 	private void _updateDLFileEntryTypes_DLFolders() throws Exception {
@@ -278,6 +367,9 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"DLFileEntryTypes_DLFolders", select, update, "companyId",
 			"fileEntryTypeId", "folderId");
+
+		_checkNotUpdated(
+			"DLFileEntryTypes_DLFolders", "fileEntryTypeId", "folderId");
 	}
 
 	private void _updateDLSyncEvent() throws Exception {
@@ -311,6 +403,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"DLSyncEvent", select, update, "companyId", "syncEventId");
+
+		_checkNotUpdated("DLSyncEvent", "syncEventId");
 	}
 
 	private void _updateGroupsOrgs() throws Exception {
@@ -327,6 +421,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"Groups_Orgs", select, update, "companyId", "groupId",
 			"organizationId");
+
+		_checkNotUpdated("Groups_Orgs", "groupId", "organizationId");
 	}
 
 	private void _updateGroupsRoles() throws Exception {
@@ -341,6 +437,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"Groups_Roles", select, update, "companyId", "groupId", "roleId");
+
+		_checkNotUpdated("Groups_Roles", "groupId", "roleId");
 	}
 
 	private void _updateGroupsUserGroups() throws Exception {
@@ -357,6 +455,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"Groups_UserGroups", select, update, "companyId", "groupId",
 			"userGroupId");
+
+		_checkNotUpdated("Groups_UserGroups", "groupId", "userGroupId");
 	}
 
 	private void _updateImage() throws Exception {
@@ -399,6 +499,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
+
+		_checkNotUpdated("Image", "imageId");
 	}
 
 	private void _updateJournalArticleImage() throws Exception {
@@ -413,6 +515,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"JournalArticleImage", select, update, "companyId",
 			"articleImageId");
+
+		_checkNotUpdated("JournalArticleImage", "articleImageId");
 	}
 
 	private void _updateJournalArticleResource() throws Exception {
@@ -428,6 +532,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"JournalArticleResource", select, update, "companyId",
 			"resourcePrimKey");
+
+		_checkNotUpdated("JournalArticleResource", "resourcePrimKey");
 	}
 
 	private void _updateMarketplaceModule() throws Exception {
@@ -441,6 +547,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"Marketplace_Module", select, update, "companyId", "moduleId");
+
+		_checkNotUpdated("Marketplace_Module", "moduleId");
 	}
 
 	private void _updateMBStatsUser() throws Exception {
@@ -453,6 +561,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"MBStatsUser", select, update, "companyId", "statsUserId");
+
+		_checkNotUpdated("MBStatsUser", "statsUserId");
 	}
 
 	private void _updateOrgGroupRole() throws Exception {
@@ -469,6 +579,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"OrgGroupRole", select, update, "companyId", "organizationId",
 			"groupId", "roleId");
+
+		_checkNotUpdated("OrgGroupRole", "roleId", "groupId", "organizationId");
 	}
 
 	private void _updateOrgLabor() throws Exception {
@@ -481,6 +593,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"OrgLabor", select, update, "companyId", "orgLaborId");
+
+		_checkNotUpdated("OrgLabor", "orgLaborId");
 	}
 
 	private void _updatePasswordPolicyRel() throws Exception {
@@ -496,6 +610,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"PasswordPolicyRel", select, update, "companyId",
 			"passwordPolicyRelId");
+
+		_checkNotUpdated("PasswordPolicyRel", "passwordPolicyRelId");
 	}
 
 	private void _updatePasswordTracker() throws Exception {
@@ -510,6 +626,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"PasswordTracker", select, update, "companyId",
 			"passwordTrackerId");
+
+		_checkNotUpdated("PasswordTracker", "passwordTrackerId");
 	}
 
 	private void _updatePortletPreferences() throws Exception {
@@ -525,6 +643,21 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"PortletPreferences", select, update, "companyId",
 			"portletPreferencesId");
+
+		select =
+			"select l.companyId, pp.portletPreferencesId " +
+				"from Layout l, PortletPreferences pp where " +
+				"l.plid=pp.plid";
+
+		update =
+			"update PortletPreferences set companyId = ? " +
+				"where portletPreferencesId = ?";
+
+		_updateCompanyColumnOnTable(
+			"PortletPreferences", select, update, "companyId",
+			"portletPreferencesId");
+
+		_checkNotUpdated("PortletPreferences", "portletPreferencesId");
 	}
 
 	private void _updateRatingsStats() throws Exception {
@@ -629,6 +762,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"RatingsStats", select.toString(), update, "companyId", "statsId");
+
+		_checkNotUpdated("RatingsStats", "statsId");
 	}
 
 	private void _updateResourceBlockPermission() throws Exception {
@@ -644,6 +779,9 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"ResourceBlockPermission", select, update, "companyId",
 			"resourceBlockPermissionId");
+
+		_checkNotUpdated(
+			"ResourceBlockPermission", "resourceBlockPermissionId");
 	}
 
 	private void _updateSCFrameworkVersionSCProductVersion() throws Exception {
@@ -661,6 +799,10 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"SCFrameworkVersi_SCProductVers", select, update, "companyId",
 			"frameworkVersionId", "productVersionId");
+
+		_checkNotUpdated(
+			"SCFrameworkVersi_SCProductVers", "frameworkVersionId",
+			"productVersionId");
 	}
 
 	private void _updateSCLicensesSCProductEntries() throws Exception {
@@ -679,12 +821,17 @@ public class UpgradeSharding extends UpgradeProcess {
 			"SCLicenses_SCProductEntries", select, update, "companyId",
 			"licenseId", "productEntryId");
 
+		_checkNotUpdated(
+			"SCLicenses_SCProductEntries", "licenseId", "productEntryId");
+
 		// SCLicense
 
 		update = "update SCLicense set companyId = ? where licenseId = ?";
 
 		_updateCompanyColumnOnTable(
 			"SCLicense", select, update, "companyId", "licenseId");
+
+		_checkNotUpdated("SCLicense", "licenseId");
 	}
 
 	private void _updateShoppingItemField() throws Exception {
@@ -697,6 +844,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"ShoppingItemField", select, update, "companyId", "itemFieldId");
+
+		_checkNotUpdated("ShoppingItemField", "itemFieldId");
 	}
 
 	private void _updateShoppingItemPrice() throws Exception {
@@ -709,6 +858,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"ShoppingItemPrice", select, update, "companyId", "itemPriceId");
+
+		_checkNotUpdated("ShoppingItemPrice", "itemPriceId");
 	}
 
 	private void _updateShoppingOrderItem() throws Exception {
@@ -721,6 +872,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"ShoppingOrderItem", select, update, "companyId", "orderItemId");
+
+		_checkNotUpdated("ShoppingOrderItem", "orderItemId");
 	}
 
 	private void _updateTrashVersion() throws Exception {
@@ -733,6 +886,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"TrashVersion", select, update, "companyId", "versionId");
+
+		_checkNotUpdated("TrashVersion", "versionId");
 	}
 
 	private void _updateUserGroupGroupRole() throws Exception {
@@ -750,6 +905,9 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"UserGroupGroupRole", select, update, "companyId", "userGroupId",
 			"groupId", "roleId");
+
+		_checkNotUpdated(
+			"UserGroupGroupRole", "userGroupId", "groupId", "roleId");
 	}
 
 	private void _updateUserGroupRole() throws Exception {
@@ -766,6 +924,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"UserGroupRole", select, update, "companyId", "userId", "groupId",
 			"roleId");
+
+		_checkNotUpdated("UserGroupRole", "userId", "groupId", "roleId");
 	}
 
 	private void _updateUserGroupsTeams() throws Exception {
@@ -781,6 +941,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"UserGroups_Teams", select, update, "companyId", "teamId",
 			"userGroupId");
+
+		_checkNotUpdated("UserGroups_Teams", "teamId");
 	}
 
 	private void _updateUserIdMapper() throws Exception {
@@ -793,6 +955,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"UserIdMapper", select, update, "companyId", "userIdMapperId");
+
+		_checkNotUpdated("UserIdMapper", "userIdMapperId");
 	}
 
 	private void _updateUsersGroups() throws Exception {
@@ -807,6 +971,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"Users_Groups", select, update, "companyId", "userId", "groupId");
+
+		_checkNotUpdated("Users_Groups", "userId", "groupId");
 	}
 
 	private void _updateUsersOrgs() throws Exception {
@@ -822,6 +988,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"Users_Orgs", select, update, "companyId", "userId",
 			"organizationId");
+
+		_checkNotUpdated("Users_Orgs", "userId", "organizationId");
 	}
 
 	private void _updateUsersRoles() throws Exception {
@@ -836,6 +1004,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"Users_Roles", select, update, "companyId", "userId", "roleId");
+
+		_checkNotUpdated("Users_Roles", "userId", "roleId");
 	}
 
 	private void _updateUsersTeams() throws Exception {
@@ -850,6 +1020,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"Users_Teams", select, update, "companyId", "userId", "teamId");
+
+		_checkNotUpdated("Users_Teams", "userId", "teamId");
 	}
 
 	private void _updateUsersUserGroups() throws Exception {
@@ -865,6 +1037,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"Users_UserGroups", select, update, "companyId", "userId",
 			"userGroupId");
+
+		_checkNotUpdated("Users_UserGroups", "userId", "userGroupId");
 	}
 
 	private void _updateUserTrackerPath() throws Exception {
@@ -879,6 +1053,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		_updateCompanyColumnOnTable(
 			"UserTrackerPath", select, update, "companyId",
 			"userTrackerPathId");
+
+		_checkNotUpdated("UserTrackerPath", "userTrackerPathId");
 	}
 
 	private void _updateWikiPageResource() throws Exception {
@@ -892,6 +1068,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"WikiPageResource", select, update, "companyId", "resourcePrimKey");
+
+		_checkNotUpdated("WikiPageResource", "resourcePrimKey");
 	}
 
 	private static final long _DEFAULT_COMPANY_ID = 0;

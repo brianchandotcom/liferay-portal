@@ -20,9 +20,9 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Juergen Kappler
  */
 @Meta.OCD(
-	id = "com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration"
+	id = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration"
 )
-public interface NavigationMenuWebConfiguration {
+public interface SiteNavigationMenuWebConfiguration {
 
 	@Meta.AD(deflt = "relative-with-breadcrumb-ftl", required = false)
 	public String ddmTemplateKeyDefault();

@@ -17,8 +17,8 @@ package com.liferay.site.navigation.menu.web.portlet;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration;
-import com.liferay.site.navigation.menu.web.upgrade.NavigationMenuWebUpgrade;
+import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration;
+import com.liferay.site.navigation.menu.web.upgrade.SiteNavigationMenuWebUpgrade;
 
 import java.io.IOException;
 
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = "com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration",
+	configurationPid = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-public class NavigationMenuPortlet extends MVCPortlet {
+public class SiteNavigationMenuPortlet extends MVCPortlet {
 
 	@Override
 	public void doView(
@@ -71,7 +71,7 @@ public class NavigationMenuPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			NavigationMenuWebConfiguration.class.getName(),
+			SiteNavigationMenuWebConfiguration.class.getName(),
 			_navigationMenuWebConfiguration);
 
 		super.doView(renderRequest, renderResponse);
@@ -81,15 +81,15 @@ public class NavigationMenuPortlet extends MVCPortlet {
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_navigationMenuWebConfiguration = Configurable.createConfigurable(
-			NavigationMenuWebConfiguration.class, properties);
+			SiteNavigationMenuWebConfiguration.class, properties);
 	}
 
 	@Reference(unbind = "-")
 	protected void setNavigationWebUpgrade(
-		NavigationMenuWebUpgrade navigationWebUpgrade) {
+		SiteNavigationMenuWebUpgrade navigationWebUpgrade) {
 	}
 
-	private volatile NavigationMenuWebConfiguration
+	private volatile SiteNavigationMenuWebConfiguration
 		_navigationMenuWebConfiguration;
 
 }

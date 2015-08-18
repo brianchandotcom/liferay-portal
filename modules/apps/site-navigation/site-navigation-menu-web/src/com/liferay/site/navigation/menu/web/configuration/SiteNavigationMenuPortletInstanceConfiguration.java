@@ -20,9 +20,9 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Juergen Kappler
  */
 @Meta.OCD(
-	id = "com.liferay.site.navigation.menu.web.configuration.NavigationMenuPortletInstanceConfiguration"
+	id = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuPortletInstanceConfiguration"
 )
-public interface NavigationMenuPortletInstanceConfiguration {
+public interface SiteNavigationMenuPortletInstanceConfiguration {
 
 	@Meta.AD(deflt = "", required = false)
 	public String bulletStyle();

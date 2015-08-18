@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  * @author Julio Camarero
  */
-@Component(immediate = true, service = LanguageWebUpgrade.class)
-public class LanguageWebUpgrade {
+@Component(immediate = true, service = SiteNavigationLanguageWebUpgrade.class)
+public class SiteNavigationLanguageWebUpgrade {
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(

@@ -12,14 +12,17 @@
  * details.
  */
 
-package com.liferay.site.navigation.language.web.constants;
+package com.liferay.site.navigation.language.web.configuration;
+
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Eudaldo Alonso
  */
-public class LanguagePortletKeys {
+public class SiteNavigationLanguageWebConfigurationValues {
 
-	public static final String LANGUAGE =
-		"com_liferay_site_navigation_language_web_portlet_LanguagePortlet";
+	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
+		SiteNavigationLanguageWebConfigurationUtil.get(
+			"display.templates.config"));
 
 }

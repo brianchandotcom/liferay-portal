@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
-import com.liferay.site.navigation.language.web.configuration.LanguageWebConfiguration;
-import com.liferay.site.navigation.language.web.configuration.LanguageWebConfigurationValues;
-import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
+import com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguageWebConfiguration;
+import com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguageWebConfigurationValues;
+import com.liferay.site.navigation.language.web.constants.SiteNavigationLanguagePortletKeys;
 
 import java.util.List;
 import java.util.Locale;
@@ -42,12 +42,12 @@ import org.osgi.service.component.annotations.Modified;
  * @author Eduardo Garcia
  */
 @Component(
-	configurationPid = "com.liferay.site.navigation.language.web.configuration.LanguageWebConfiguration",
+	configurationPid = "com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguageWebConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	property = {"javax.portlet.name="+ LanguagePortletKeys.LANGUAGE},
+	property = {"javax.portlet.name="+ SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE},
 	service = TemplateHandler.class
 )
-public class LanguagePortletDisplayTemplateHandler
+public class SiteNavigationLanguagePortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
 	@Override
@@ -66,7 +66,8 @@ public class LanguagePortletDisplayTemplateHandler
 			"content.Language", locale);
 
 		String portletTitle = PortalUtil.getPortletTitle(
-			LanguagePortletKeys.LANGUAGE, resourceBundle);
+			SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE,
+			resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -74,7 +75,7 @@ public class LanguagePortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return LanguagePortletKeys.LANGUAGE;
+		return SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE;
 	}
 
 	@Override
@@ -101,14 +102,16 @@ public class LanguagePortletDisplayTemplateHandler
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_languageWebConfiguration = Configurable.createConfigurable(
-			LanguageWebConfiguration.class, properties);
+			SiteNavigationLanguageWebConfiguration.class, properties);
 	}
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return LanguageWebConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
+		return SiteNavigationLanguageWebConfigurationValues.
+			DISPLAY_TEMPLATES_CONFIG;
 	}
 
-	private volatile LanguageWebConfiguration _languageWebConfiguration;
+	private volatile SiteNavigationLanguageWebConfiguration
+		_languageWebConfiguration;
 
 }

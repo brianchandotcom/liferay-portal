@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.exportimport.staging.permission.StagingPermissionCheckerWrapper;
 
 /**
  * @author Charles May
@@ -33,7 +34,12 @@ public class PermissionCheckerFactoryImpl implements PermissionCheckerFactory {
 			(Class<PermissionChecker>)Class.forName(
 				PropsValues.PERMISSIONS_CHECKER);
 
-		_permissionChecker = clazz.newInstance();
+		PermissionChecker permissionChecker = clazz.newInstance();
+
+		permissionChecker = new StagingPermissionCheckerWrapper(
+			permissionChecker);
+
+		_permissionChecker = permissionChecker;
 	}
 
 	@Override

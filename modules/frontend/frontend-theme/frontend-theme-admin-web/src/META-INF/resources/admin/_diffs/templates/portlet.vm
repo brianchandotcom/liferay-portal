@@ -6,7 +6,7 @@
 #set ($portlet_title = $htmlUtil.escape($portlet_display.getTitle()))
 #set ($portlet_description = $portlet_display.getDescription())
 #set ($portlet_back_url = $htmlUtil.escapeHREF($portlet_display.getURLBack()))
-#set ($valid_portlet_description = $validator.isNotNull($portlet_description) && $portlet_description.indexOf('javax.portlet.description') == -1)
+#set ($valid_portlet_description = $validator.isNotNull($portlet_description) && $portlet_description.indexOf('javax.portlet.description') == -1 && $portlet_description != $portlet_id)
 
 #set ($portlet_topper_css_class = "portlet-topper")
 

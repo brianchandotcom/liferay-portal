@@ -316,6 +316,46 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="set-testray-required-properties">
+		<sequential>
+			<get-env-app-server />
+			<get-env-browser />
+			<get-env-database />
+			<get-env-java-jdk />
+			<get-env-liferay-portal />
+			<get-env-operating-system />
+			<get-testray-case-defect />
+			<get-testray-components />
+			<get-testray-logs />
+			<get-testray-project-name />
+			<get-testray-run-id />
+			<get-testray-team-name />
+			<get-testray-testcase-description />
+			<get-testray-testcase-name />
+			<get-testray-testcase-product-edition />
+
+			<if>
+				<not>
+					<isset property="testray.testcase.priority" />
+				</not>
+				<then>
+					<get-testray-testcase-priority />
+				</then>
+			</if>
+
+			<if>
+				<not>
+					<isset property="testray.run.id" />
+				</not>
+				<then>
+					<get-testray-testcase-run-id />
+				</then>
+			</if>
+
+			<property name="testray.axis.name" value="${test.batch.name}#${axis.variable}" />
+		</sequential>
+	</macrodef>
+
 	<target name="functional-tomcat-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>

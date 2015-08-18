@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache.internal.bootstrap;
+package com.liferay.portal.cache.ehcache.cluster.internal.bootstrap;
 
 import com.liferay.portal.cache.ehcache.EhcacheUnwrapUtil;
 import com.liferay.portal.kernel.cache.PortalCache;

@@ -12,57 +12,50 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache.internal.distribution;
+package com.liferay.portal.cache.ehcache.cluster.internal.bootstrap;
 
 import com.liferay.portal.cache.ehcache.EhcacheConstants;
-import com.liferay.portal.kernel.cache.PortalCacheReplicator;
-import com.liferay.portal.kernel.cache.PortalCacheReplicatorFactory;
+import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoader;
+import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoaderFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.Serializable;
-
 import java.util.Properties;
 
-import net.sf.ehcache.event.CacheEventListener;
-import net.sf.ehcache.event.CacheEventListenerFactory;
+import net.sf.ehcache.bootstrap.BootstrapCacheLoaderFactory;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Tina Tian
  */
-@Component(immediate = true, service = PortalCacheReplicatorFactory.class)
-public class EhcachePortalCacheReplicatorFactory
-	implements PortalCacheReplicatorFactory {
+@Component(immediate = true, service = PortalCacheBootstrapLoaderFactory.class)
+public class EhcachePortalCacheBootstrapLoaderFactory
+	implements PortalCacheBootstrapLoaderFactory {
 
 	@Override
-	public <K extends Serializable, V extends Serializable>
-		PortalCacheReplicator<K, V> create(Properties properties) {
-
+	public PortalCacheBootstrapLoader create(Properties properties) {
 		String className = properties.getProperty(
-			EhcacheConstants.CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME);
+			EhcacheConstants.BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME);
 
 		if (Validator.isNull(className)) {
 			return null;
 		}
 
 		try {
-			CacheEventListenerFactory cacheEventListenerFactory =
-				(CacheEventListenerFactory)InstanceFactory.newInstance(
+			BootstrapCacheLoaderFactory<?> bootstrapCacheLoaderFactory =
+				(BootstrapCacheLoaderFactory<?>)InstanceFactory.newInstance(
 					getClassLoader(), className);
 
-			CacheEventListener cacheEventListener =
-				cacheEventListenerFactory.createCacheEventListener(properties);
-
-			return new EhcachePortalCacheReplicatorAdapter<>(
-						cacheEventListener);
+			return new EhcachePortalCacheBootstrapLoaderAdapter(
+				bootstrapCacheLoaderFactory.createBootstrapCacheLoader(
+					properties));
 		}
 		catch (Exception e) {
 			_log.error(
-				"Unable to instantiate cache event listener factory " +
+				"Unable to instantiate bootstrap cache loader factory " +
 					className,
 				e);
 
@@ -77,6 +70,6 @@ public class EhcachePortalCacheReplicatorFactory
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EhcachePortalCacheReplicatorFactory.class);
+		EhcachePortalCacheBootstrapLoaderFactory.class);
 
 }

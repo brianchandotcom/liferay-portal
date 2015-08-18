@@ -4,5 +4,5 @@ Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources
-JS-Config: /META-INF/resources/modules.js
+JS-Config: /META-INF/resources/config.js
 Web-ContextPath: /ddm-type-validation

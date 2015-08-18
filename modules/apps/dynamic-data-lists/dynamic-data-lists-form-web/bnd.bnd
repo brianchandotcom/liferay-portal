@@ -6,5 +6,5 @@ Include-Resource:\
 	META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\
 	META-INF/resources=src/META-INF/resources,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/log4j/Log4JUtil.class
-JS-Config: /META-INF/resources/admin/js/modules.js
+JS-Config: /META-INF/resources/admin/js/config.js
 Web-ContextPath: /ddl-form-web

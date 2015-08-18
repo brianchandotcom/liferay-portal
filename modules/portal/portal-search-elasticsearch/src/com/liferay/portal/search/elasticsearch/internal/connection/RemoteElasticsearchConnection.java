@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -33,7 +34,6 @@ import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 
 import java.net.InetAddress;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -162,6 +162,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 		if (isConnected()) {
 			close();
+
 			connect();
 		}
 	}
@@ -182,7 +183,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		String[] transportAddresses =
 			elasticsearchConfiguration.transportAddresses();
 
-		setTransportAddresses(new HashSet<>(Arrays.asList(transportAddresses)));
+		setTransportAddresses(SetUtil.fromArray(transportAddresses));
 	}
 
 	@Reference(unbind = "-")

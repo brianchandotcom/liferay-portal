@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.backgroundtask;
+package com.liferay.portal.background.task.internal;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.cluster.BaseClusterMasterTokenTransitionListener;

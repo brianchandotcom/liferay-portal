@@ -30,9 +30,15 @@
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.dynamic.data.mapping.api.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.dynamic.data.mapping.form.evaluator.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.dynamic.data.mapping.service.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.mobile.device.rules.api.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.osgi.service.tracker.map.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.portal.expression.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.portal.spring.extender.jar" />
+	<classpathentry kind="lib" path="lib/commons-compiler.jar" />
+	<classpathentry kind="lib" path="lib/janino.jar" />
+	<classpathentry kind="lib" path="lib/javax.ws.rs-api.jar" />
 	<classpathentry kind="lib" path="lib/json.jar" />
 	<classpathentry kind="lib" path="lib/jsonassert.jar" />
 	<classpathentry kind="lib" path="lib/org.apache.felix.dependencymanager.jar" />

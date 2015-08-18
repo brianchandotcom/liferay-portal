@@ -88,8 +88,6 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		translatedDDMFormField.setShowLabel(ddmFormField.isShowLabel());
 		translatedDDMFormField.setStyle(translateLocalizedValue(ddmFormField.getStyle()));
 		translatedDDMFormField.setTip(translateLocalizedValue(ddmFormField.getTip()));
-		translatedDDMFormField.setVisibilityExpression(
-			ddmFormField.getVisibilityExpression());
 
 		for (com.liferay.portlet.dynamicdatamapping.DDMFormField
 			nestedDDMFormField : ddmFormField.getNestedDDMFormFields()) {
@@ -181,8 +179,6 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		translatedDDMFormField.setShowLabel(ddmFormField.isShowLabel());
 		translatedDDMFormField.setStyle(translateLocalizedValue(ddmFormField.getStyle()));
 		translatedDDMFormField.setTip(translateLocalizedValue(ddmFormField.getTip()));
-		translatedDDMFormField.setVisibilityExpression(
-			ddmFormField.getVisibilityExpression());
 
 		for (DDMFormField nestedDDMFormField :
 				ddmFormField.getNestedDDMFormFields()) {

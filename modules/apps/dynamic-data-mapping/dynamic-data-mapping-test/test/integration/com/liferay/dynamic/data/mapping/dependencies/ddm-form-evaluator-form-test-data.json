@@ -1,0 +1,80 @@
+{
+	"availableLanguageIds": ["en_US"],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text"
+			},
+			"localizable": true,
+			"name": "Text",
+			"nestedFields": [
+				{
+					"dataType": "integer",
+					"fieldNamespace": "ddm",
+					"indexType": "keyword",
+					"label":{
+						"en_US": "Integer"
+					},
+					"localizable": true,
+					"name": "Integer",
+					"predefinedValue": {
+						"en_US": ""
+					},
+					"readOnly": false,
+					"repeatable": true,
+					"required": false,
+					"showLabel": true,
+					"tip": {
+						"en_US":""
+					},
+					"type": "ddm-integer",
+					"validationExpression" : "Integer == 0",
+					"validationMessage": "Integer must be equals to zero",
+					"visibilityExpression": "false"
+				}
+			],
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "text",
+			"validationExpression": "false",
+			"validationMessage": "This field is never valid",
+			"visibilityExpression": "true"
+		},
+		{
+			"dataType": "boolean",
+			"fieldNamespace": "",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Boolean"
+			},
+			"localizable": true,
+			"name": "Boolean",
+			"predefinedValue": {
+				"en_US": "false"
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "checkbox",
+			"validationExpression": "Boolean",
+			"validationMessage": "This field must be checked",
+			"visibilityExpression": "!Boolean"
+		}
+	]
+}

@@ -138,6 +138,14 @@ public class DDMFormField implements Serializable {
 		return MapUtil.getString(_properties, "type");
 	}
 
+	public String getValidationExpression() {
+		return MapUtil.getString(_properties, "validationExpression");
+	}
+
+	public String getValidationMessage() {
+		return MapUtil.getString(_properties, "validationMessage");
+	}
+
 	public String getVisibilityExpression() {
 		return MapUtil.getString(_properties, "visibilityExpression");
 	}
@@ -254,6 +262,14 @@ public class DDMFormField implements Serializable {
 
 	public void setType(String type) {
 		_properties.put("type", type);
+	}
+
+	public void setValidationExpression(String validationExpression) {
+		_properties.put("validationExpression", validationExpression);
+	}
+
+	public void setValidationMessage(String validationMessage) {
+		_properties.put("validationMessage", validationMessage);
 	}
 
 	public void setVisibilityExpression(String visibilityExpression) {

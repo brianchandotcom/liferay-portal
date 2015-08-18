@@ -5,4 +5,5 @@ Export-Package: com.liferay.dynamic.data.mapping.form.renderer
 Include-Resource:\
 	classes,\
 	META-INF=src/META-INF
+JS-Config: /META-INF/resources/js/modules.js
 Web-ContextPath: /ddm-form-renderer

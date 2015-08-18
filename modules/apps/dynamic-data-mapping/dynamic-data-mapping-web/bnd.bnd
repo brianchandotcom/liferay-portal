@@ -5,4 +5,5 @@ Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/ContentUtil.class
+JS-Config: /META-INF/resources/js/modules.js
 Web-ContextPath: /ddm-web

@@ -145,7 +145,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.css-class-wrapper=portlet-journal",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.header-portlet-javascript=/js/modules.js",
 		"com.liferay.portlet.icon=/icons/journal.png",
 		"com.liferay.portlet.layout-cacheable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",

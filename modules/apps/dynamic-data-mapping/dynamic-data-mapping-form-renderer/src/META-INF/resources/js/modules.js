@@ -1,145 +1,11 @@
 ;(function() {
+	var PATH_FORM_RENDERER = Liferay.ThemeDisplay.getPathContext() + '/o/ddm-form-renderer';
+
 	AUI().applyConfig(
 		{
 			groups: {
-				'field-checkbox': {
-					base: '/o/ddm-type-checkbox/',
-					modules: {
-						'liferay-ddm-form-field-checkbox': {
-							condition: {
-								trigger: 'liferay-ddm-form-renderer'
-							},
-							path: 'checkbox_field.js',
-							requires: [
-								'liferay-ddm-form-renderer-field'
-							]
-						},
-						'liferay-ddm-form-field-checkbox-template': {
-							condition: {
-								trigger: 'liferay-ddm-form-renderer'
-							},
-							path: 'checkbox.soy.js',
-							requires: [
-								'soyutils'
-							]
-						}
-					},
-					root: '/o/ddm-type-checkbox/'
-				},
-				'field-options': {
-					base: '/o/ddm-type-options/',
-					modules: {
-						'liferay-ddm-form-field-options': {
-							condition: {
-								trigger: 'liferay-ddm-form-renderer'
-							},
-							path: 'options_field.js',
-							requires: [
-								'liferay-auto-fields',
-								'liferay-ddm-form-renderer-field'
-							]
-						},
-						'liferay-ddm-form-field-options-template': {
-							condition: {
-								trigger: 'liferay-ddm-form-renderer'
-							},
-							path: 'options.soy.js',
-							requires: [
-								'soyutils'
-							]
-						}
-					},
-					root: '/o/ddm-type-options/'
-				},
-				'field-radio': {
-					base: '/o/ddm-type-radio/',
-					modules: {
-						'liferay-ddm-form-field-radio': {
-							condition: {
-								trigger: 'liferay-ddm-form-renderer'
-							},
-							path: 'radio_field.js',
-							requires: [
-								'liferay-ddm-form-renderer-field'
-							]
-						},
-						'liferay-ddm-form-field-radio-template': {
-							condition: {
-								trigger: 'liferay-ddm-form-renderer'
-							},
-							path: 'radio.soy.js',
-							requires: [
-								'soyutils'
-							]
-						}
-					},
-					root: '/o/ddm-type-radio/'
-				},
-				'field-select': {
-					base: '/o/ddm-type-select/',
-					modules: {
-						'liferay-ddm-form-field-select': {
-							condition: {
-								trigger: 'liferay-ddm-form-renderer'
-							},
-							path: 'select_field.js',
-							requires: [
-								'liferay-ddm-form-renderer-field'
-							]
-						},
-						'liferay-ddm-form-field-select-template': {
-							condition: {
-								trigger: 'liferay-ddm-form-renderer'
-							},
-							path: 'select.soy.js',
-							requires: [
-								'soyutils'
-							]
-						}
-					},
-					root: '/o/ddm-type-select/'
-				},
-				'field-text': {
-					base: '/o/ddm-type-text/',
-					modules: {
-						'liferay-ddm-form-field-text-template': {
-							condition: {
-								trigger: 'liferay-ddm-form-renderer'
-							},
-							path: 'text.soy.js',
-							requires: [
-								'soyutils'
-							]
-						}
-					},
-					root: '/o/ddm-type-text/'
-				},
-				'field-validation': {
-					base: '/o/ddm-type-validation/',
-					modules: {
-						'liferay-ddm-form-field-validation': {
-							condition: {
-								trigger: 'liferay-ddm-form-renderer'
-							},
-							path: 'validation_field.js',
-							requires: [
-								'liferay-ddm-form-renderer-field'
-							]
-						},
-						'liferay-ddm-form-field-validation-template': {
-							condition: {
-								trigger: 'liferay-ddm-form-renderer'
-							},
-							path: 'validation.soy.js',
-							requires: [
-								'soyutils'
-							]
-						}
-					},
-					root: '/o/ddm-type-validation/'
-				},
 				'form': {
-					base: '/o/ddm-form-renderer/js/',
+					base: PATH_FORM_RENDERER + '/js/',
 					modules: {
 						'liferay-ddm-form-renderer': {
 							path: 'form.js',
@@ -272,7 +138,7 @@
 							]
 						}
 					},
-					root: '/o/ddm-form-renderer/js/'
+					root: PATH_FORM_RENDERER + '/js/'
 				}
 			}
 		}

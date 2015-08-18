@@ -59,14 +59,14 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 	@Before
 	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();
-		_resourcePermissionIds = new ArrayList<>();
 		_user = UserTestUtil.addUser();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		for (Long id : _resourcePermissionIds) {
-			ResourcePermissionLocalServiceUtil.deleteResourcePermission(id);
+		for (long resourcePermissionId : _resourcePermissionIds) {
+			ResourcePermissionLocalServiceUtil.deleteResourcePermission(
+				resourcePermissionId);
 		}
 
 		_resourcePermissionIds = null;
@@ -141,7 +141,7 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 	}
 
 	private Company _company;
-	private List<Long> _resourcePermissionIds;
+	private List<Long> _resourcePermissionIds = new ArrayList<>();
 	private User _user;
 
 }

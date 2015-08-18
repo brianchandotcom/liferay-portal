@@ -20,7 +20,6 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchLayoutSetException;
-import com.liferay.portal.backgroundtask.messaging.BackgroundTaskMessageListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -163,7 +162,8 @@ public class ExportImportLifecycleEventTest {
 	public void testFailedLayoutLocalPublishing() throws Exception {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					BackgroundTaskMessageListener.class.getName(),
+					"com.liferay.portal.background.task.internal.messaging." +
+						"BackgroundTaskMessageListener",
 					Level.ERROR)) {
 
 			StagingUtil.publishLayouts(
@@ -266,7 +266,8 @@ public class ExportImportLifecycleEventTest {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					BackgroundTaskMessageListener.class.getName(),
+					"com.liferay.portal.background.task.internal.messaging." +
+						"BackgroundTaskMessageListener",
 					Level.ERROR)) {
 
 			StagingUtil.publishPortlet(

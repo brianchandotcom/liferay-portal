@@ -36,6 +36,7 @@ Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 if (group != null) {
 	group = StagingUtil.getLiveGroup(group.getGroupId());
+	groupId = group.getGroupId();
 }
 
 User selUser = PortalUtil.getSelectedUser(request, false);

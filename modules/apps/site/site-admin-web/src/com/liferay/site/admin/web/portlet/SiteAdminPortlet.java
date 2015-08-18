@@ -254,20 +254,27 @@ public class SiteAdminPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		long liveGroupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		Group group = GroupLocalServiceUtil.getGroup(liveGroupId);
+
+		if (group.isStagingGroup()) {
+			liveGroupId = group.getLiveGroupId();
+		}
 
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		removeUserIds = filterRemoveUserIds(groupId, removeUserIds);
+		removeUserIds = filterRemoveUserIds(liveGroupId, removeUserIds);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		UserServiceUtil.unsetGroupUsers(groupId, removeUserIds, serviceContext);
+		UserServiceUtil.unsetGroupUsers(
+			liveGroupId, removeUserIds, serviceContext);
 
 		LiveUsers.leaveGroup(
-			themeDisplay.getCompanyId(), groupId, removeUserIds);
+			themeDisplay.getCompanyId(), liveGroupId, removeUserIds);
 	}
 
 	/**

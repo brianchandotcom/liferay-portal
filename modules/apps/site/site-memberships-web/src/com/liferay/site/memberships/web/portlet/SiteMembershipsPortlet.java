@@ -25,11 +25,13 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.liveusers.LiveUsers;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.MembershipRequestConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.MembershipRequestServiceUtil;
 import com.liferay.portal.service.OrganizationServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -100,10 +102,12 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		long[] removeOrganizationIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeOrganizationIds"), 0L);
 
+		long liveGroupId = getLiveGroupId(themeDisplay.getSiteGroupId());
+
 		OrganizationServiceUtil.addGroupOrganizations(
-			themeDisplay.getSiteGroupId(), addOrganizationIds);
+			liveGroupId, addOrganizationIds);
 		OrganizationServiceUtil.unsetGroupOrganizations(
-			themeDisplay.getSiteGroupId(), removeOrganizationIds);
+			liveGroupId, removeOrganizationIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -125,10 +129,11 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		long[] removeUserGroupIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
 
-		UserGroupServiceUtil.addGroupUserGroups(
-			themeDisplay.getSiteGroupId(), addUserGroupIds);
+		long liveGroupId = getLiveGroupId(themeDisplay.getSiteGroupId());
+
+		UserGroupServiceUtil.addGroupUserGroups(liveGroupId, addUserGroupIds);
 		UserGroupServiceUtil.unsetGroupUserGroups(
-			themeDisplay.getSiteGroupId(), removeUserGroupIds);
+			liveGroupId, removeUserGroupIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -145,27 +150,29 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long groupId = themeDisplay.getSiteGroupId();
+		long liveGroupId = getLiveGroupId(themeDisplay.getSiteGroupId());
 
 		long[] addUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
 
-		addUserIds = filterAddUserIds(groupId, addUserIds);
+		addUserIds = filterAddUserIds(liveGroupId, addUserIds);
 
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		removeUserIds = filterRemoveUserIds(groupId, removeUserIds);
+		removeUserIds = filterRemoveUserIds(liveGroupId, removeUserIds);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		UserServiceUtil.addGroupUsers(groupId, addUserIds, serviceContext);
-		UserServiceUtil.unsetGroupUsers(groupId, removeUserIds, serviceContext);
+		UserServiceUtil.addGroupUsers(liveGroupId, addUserIds, serviceContext);
+		UserServiceUtil.unsetGroupUsers(
+			liveGroupId, removeUserIds, serviceContext);
 
-		LiveUsers.joinGroup(themeDisplay.getCompanyId(), groupId, addUserIds);
+		LiveUsers.joinGroup(
+			themeDisplay.getCompanyId(), liveGroupId, addUserIds);
 		LiveUsers.leaveGroup(
-			themeDisplay.getCompanyId(), groupId, removeUserIds);
+			themeDisplay.getCompanyId(), liveGroupId, removeUserIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -189,10 +196,12 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		long[] removeRoleIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeRoleIds"), 0L);
 
+		long liveGroupId = getLiveGroupId(themeDisplay.getSiteGroupId());
+
 		UserGroupGroupRoleServiceUtil.addUserGroupGroupRoles(
-			userGroupId, themeDisplay.getSiteGroupId(), addRoleIds);
+			userGroupId, liveGroupId, addRoleIds);
 		UserGroupGroupRoleServiceUtil.deleteUserGroupGroupRoles(
-			userGroupId, themeDisplay.getSiteGroupId(), removeRoleIds);
+			userGroupId, liveGroupId, removeRoleIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -220,10 +229,12 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 		long[] removeRoleIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeRoleIds"), 0L);
 
+		long liveGroupId = getLiveGroupId(themeDisplay.getSiteGroupId());
+
 		UserGroupRoleServiceUtil.addUserGroupRoles(
-			user.getUserId(), themeDisplay.getSiteGroupId(), addRoleIds);
+			user.getUserId(), liveGroupId, addRoleIds);
 		UserGroupRoleServiceUtil.deleteUserGroupRoles(
-			user.getUserId(), themeDisplay.getSiteGroupId(), removeRoleIds);
+			user.getUserId(), liveGroupId, removeRoleIds);
 
 		String redirect = ParamUtil.getString(
 			actionRequest, "assignmentsRedirect");
@@ -315,6 +326,16 @@ public class SiteMembershipsPortlet extends MVCPortlet {
 
 		return ArrayUtil.toArray(
 			filteredUserIds.toArray(new Long[filteredUserIds.size()]));
+	}
+
+	protected long getLiveGroupId(long groupId) {
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if ((group != null) && group.isStagingGroup()) {
+			return group.getLiveGroupId();
+		}
+
+		return groupId;
 	}
 
 	@Override

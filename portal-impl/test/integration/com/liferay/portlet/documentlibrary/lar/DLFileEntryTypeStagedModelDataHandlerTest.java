@@ -25,6 +25,7 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
@@ -61,7 +62,7 @@ public class DLFileEntryTypeStagedModelDataHandlerTest
 			new HashMap<>();
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			group.getGroupId(), DLFileEntryType.class.getName());
+			group.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		addDependentStagedModel(
 			dependentStagedModelsMap,

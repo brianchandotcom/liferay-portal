@@ -14,13 +14,6 @@
 
 package com.liferay.portalsettings.web.action;
 
-import java.util.List;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.AccountNameException;
 import com.liferay.portal.AddressCityException;
 import com.liferay.portal.AddressStreetException;
@@ -57,6 +50,13 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
+
+import java.util.List;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan

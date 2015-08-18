@@ -14,13 +14,13 @@
 
 package com.liferay.portalsettings.web.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.util.PortletKeys;
+
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.util.PortletKeys;
 
 /**
  * @author Philip Jones

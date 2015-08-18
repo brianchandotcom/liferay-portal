@@ -3,7 +3,7 @@
 <project name="portal-test-batch" basedir="." xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
 	<import file="build-test.xml" />
 
-	<condition else="0" property="jenkins.axis.variable" value="${env.AXIS_VARIABLE}">
+	<condition else="0" property="axis.variable" value="${env.AXIS_VARIABLE}">
 		<isset property="env.AXIS_VARIABLE" />
 	</condition>
 
@@ -152,77 +152,28 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="record-test-environment-properties">
-		<sequential>
-			<if>
-				<isset property="env.WORKSPACE" />
-				<then>
-					<get-env-app-server />
-					<get-env-browser />
-					<get-env-database />
-					<get-env-java-jdk />
-					<get-env-liferay-portal />
-					<get-env-operating-system />
-
-					<echoproperties destfile="${env.WORKSPACE}/test-environment.properties">
-						<propertyset>
-							<propertyref prefix="app.server.type" />
-							<propertyref prefix="app.server.version" />
-							<propertyref prefix="browser.type" />
-							<propertyref prefix="browser.version" />
-							<propertyref prefix="database.type" />
-							<propertyref prefix="database.version" />
-							<propertyref prefix="env.option.app.server" />
-							<propertyref prefix="env.option.browser" />
-							<propertyref prefix="env.option.database" />
-							<propertyref prefix="env.option.java.jdk" />
-							<propertyref prefix="env.option.operating.system" />
-							<propertyref prefix="java.jdk.type" />
-							<propertyref prefix="java.jdk.version" />
-							<propertyref prefix="liferay.compare.urls" />
-							<propertyref prefix="liferay.plugins.git.id" />
-							<propertyref prefix="liferay.portal.branch" />
-							<propertyref prefix="liferay.portal.bundle" />
-							<propertyref prefix="liferay.portal.git.id" />
-							<propertyref prefix="operating.system.type" />
-							<propertyref prefix="operating.system.version" />
-						</propertyset>
-					</echoproperties>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="run-batch-test">
-		<attribute name="test.class.group.index" />
 		<attribute name="tomcat.gc.log" default="false" />
 		<attribute name="tsant.gc.log" default="false" />
-		<attribute name="unit.test" default="false" />
 		<element name="test-action" />
+		<element name="test-set-up" optional="true" />
+		<element name="test-tear-down" optional="true" />
+
 		<sequential>
-			<if>
-				<not>
-					<equals arg1="@{test.class.group.index}" arg2="default" />
-				</not>
-				<then>
-					<prepare-test-build unless:true="@{unit.test}" />
+			<test-set-up />
 
-					<prepare-test-build-unit if:true="@{unit.test}" />
+			<test-action />
 
-					<test-action />
+			<merge-test-results />
 
-					<record-test-environment-properties />
+			<check-deprecated-method />
 
-					<merge-test-results />
+			<test-tear-down />
 
-					<check-deprecated-method />
-
-					<print-gc-logs
-						tomcat.gc.log="@{tomcat.gc.log}"
-						tsant.gc.log="@{tsant.gc.log}"
-					/>
-				</then>
-			</if>
+			<print-gc-logs
+				tomcat.gc.log="@{tomcat.gc.log}"
+				tsant.gc.log="@{tsant.gc.log}"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -237,74 +188,87 @@
 		<attribute name="database.type" />
 		<attribute name="tomcat.gc.log" default="false" />
 		<attribute name="tsant.gc.log" default="false" />
+
 		<sequential>
+			<var name="app.server.type" unset="true" />
+
+			<property name="app.server.type" value="@{app.server.type}" />
+
 			<property name="test.class" value="${axis.variable}" />
 
-			<antcall target="compile" />
-
-			<ant antfile="build-dist.xml" target="build-dist-@{app.server.type}" />
-
-			<antcall target="record-test-generated-properties" />
-
-			<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
-
-			<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
-
-			<database-test-run-test database.type="@{database.type}">
+			<run-batch-test tomcat.gc.log="@{tomcat.gc.log}" tsant.gc.log="@{tsant.gc.log}">
 				<test-action>
-					<ant antfile="build-test-@{app.server.type}.xml" inheritAll="false" target="run-selenium-@{app.server.type}">
-						<property name="database.type" value="@{database.type}" />
-						<property name="test.class" value="${axis.variable}" />
-					</ant>
+					<database-test-run-test database.type="@{database.type}">
+						<test-action>
+							<ant antfile="build-test-@{app.server.type}.xml" inheritAll="false" target="run-selenium-@{app.server.type}">
+								<property name="database.type" value="@{database.type}" />
+								<property name="test.class" value="${axis.variable}" />
+							</ant>
+						</test-action>
+					</database-test-run-test>
 				</test-action>
-			</database-test-run-test>
 
-			<merge-test-results />
+				<test-set-up>
+					<antcall target="compile" />
 
-			<check-deprecated-method />
+					<ant antfile="build-dist.xml" target="build-dist-@{app.server.type}" />
 
-			<if>
-				<available file=".testable.portal.started" />
-				<then>
-					<antcall target="stop-app-server" />
+					<antcall target="record-test-generated-properties" />
 
-					<delete file=".testable.portal.started" failonerror="false" />
-				</then>
-			</if>
+					<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
 
-			<print-gc-logs tomcat.gc.log="@{tomcat.gc.log}" tsant.gc.log="@{tsant.gc.log}" />
+					<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
+				</test-set-up>
+
+				<test-tear-down>
+					<if>
+						<available file=".testable.portal.started" />
+						<then>
+							<antcall target="stop-app-server" />
+
+							<delete file=".testable.portal.started" failonerror="false" />
+						</then>
+					</if>
+				</test-tear-down>
+			</run-batch-test>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="run-integration-test">
 		<attribute name="database.type" />
+
 		<sequential>
-			<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+			<run-batch-test>
 				<test-action>
 					<database-test-run-test database.type="@{database.type}">
 						<test-action>
-							<print-test-class-group test.class.group.index="@{test.class.group.index}" />
+							<print-test-class-group test.class.group.index="${axis.variable}" />
 
 							<ant dir="portal-impl" target="test-class-group" inheritAll="false">
 								<property name="database.type" value="@{database.type}" />
-								<property name="test.class.group.index" value="@{test.class.group.index}" />
+								<property name="test.class.group.index" value="${axis.variable}" />
 								<property name="test.type" value="integration" />
 							</ant>
 						</test-action>
 					</database-test-run-test>
 				</test-action>
+
+				<test-set-up>
+					<prepare-test-build />
+				</test-set-up>
 			</run-batch-test>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="run-modules-integration-test">
 		<attribute name="database.type" />
+
 		<sequential>
-			<run-batch-test test.class.group.index="${jenkins.axis.variable}" tomcat.gc.log="true">
+			<run-batch-test tomcat.gc.log="true">
 				<test-action>
 					<database-test-run-test database.type="@{database.type}" stop.app.server="true">
 						<test-action>
-							<print-test-class-group test.class.group.index="@{test.class.group.index}" />
+							<print-test-class-group test.class.group.index="${axis.variable}" />
 
 							<antcall target="prepare-portal-ext-properties" inheritAll="false">
 								<param name="database.type" value="@{database.type}" />
@@ -313,7 +277,7 @@
 							<antcall target="prepare-system-ext-properties" inheritAll="false" />
 
 							<ant dir="modules" target="test-class-group" inheritAll="false">
-								<property name="test.class.group.index" value="@{test.class.group.index}" />
+								<property name="test.class.group.index" value="${axis.variable}" />
 								<property name="test.type" value="integration" />
 							</ant>
 
@@ -323,6 +287,10 @@
 						</test-action>
 					</database-test-run-test>
 				</test-action>
+
+				<test-set-up>
+					<prepare-test-build />
+				</test-set-up>
 			</run-batch-test>
 		</sequential>
 	</macrodef>
@@ -372,28 +340,36 @@
 	</target>
 
 	<target name="modules-unit">
-		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+		<run-batch-test>
 			<test-action>
 				<ant dir="modules" target="test-class-group" inheritAll="false">
-					<property name="test.class.group.index" value="@{test.class.group.index}" />
+					<property name="test.class.group.index" value="${axis.variable}" />
 					<property name="test.type" value="unit" />
 				</ant>
 			</test-action>
+
+			<test-set-up>
+				<prepare-test-build />
+			</test-set-up>
 		</run-batch-test>
 	</target>
 
 	<target name="plugins">
-		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+		<run-batch-test>
 			<test-action>
 				<ant antfile="build-test-plugins.xml" target="test-plugin-group">
-					<property name="test.plugin.group.index" value="@{test.class.group.index}" />
+					<property name="test.plugin.group.index" value="${axis.variable}" />
 				</ant>
 			</test-action>
+
+			<test-set-up>
+				<prepare-test-build />
+			</test-set-up>
 		</run-batch-test>
 	</target>
 
 	<target name="portal-web">
-		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+		<run-batch-test>
 			<test-action>
 				<database-test-run-test database.type="mysql">
 					<test-action>
@@ -408,11 +384,15 @@
 					</test-action>
 				</database-test-run-test>
 			</test-action>
+
+			<test-set-up>
+				<prepare-test-build />
+			</test-set-up>
 		</run-batch-test>
 	</target>
 
 	<target name="service-builder">
-		<run-batch-test test.class.group.index="${jenkins.axis.variable}">
+		<run-batch-test>
 			<test-action>
 				<ant dir="modules/util/portal-tools-service-builder" target="clean" />
 
@@ -420,11 +400,15 @@
 
 				<ant dir="portal-impl" target="build-services" />
 			</test-action>
+
+			<test-set-up>
+				<prepare-test-build />
+			</test-set-up>
 		</run-batch-test>
 	</target>
 
 	<target name="tck">
-		<run-batch-test test.class.group.index="${jenkins.axis.variable}" tomcat.gc.log="true" tsant.gc.log="true">
+		<run-batch-test tomcat.gc.log="true" tsant.gc.log="true">
 			<test-action>
 				<database-test-run-test database.type="mysql" stop.app.server="true">
 					<test-action>
@@ -433,30 +417,38 @@
 						</ant>
 
 						<ant antfile="build-test-tck.xml" target="test-class-group">
-							<property name="test.class.group.index" value="@{test.class.group.index}" />
+							<property name="test.class.group.index" value="${axis.variable}" />
 						</ant>
 					</test-action>
 				</database-test-run-test>
 			</test-action>
+
+			<test-set-up>
+				<prepare-test-build />
+			</test-set-up>
 		</run-batch-test>
 	</target>
 
 	<target name="unit">
-		<run-batch-test test.class.group.index="${jenkins.axis.variable}" unit.test="true">
+		<run-batch-test>
 			<test-action>
 				<ant dir="portal-service" target="test-class-group" inheritAll="false">
-					<property name="test.class.group.index" value="@{test.class.group.index}" />
+					<property name="test.class.group.index" value="${axis.variable}" />
 				</ant>
 
 				<ant dir="portal-impl" target="test-class-group" inheritAll="false">
-					<property name="test.class.group.index" value="@{test.class.group.index}" />
+					<property name="test.class.group.index" value="${axis.variable}" />
 					<property name="test.type" value="unit" />
 				</ant>
 
 				<ant dir="util-java" target="test-class-group" inheritAll="false">
-					<property name="test.class.group.index" value="@{test.class.group.index}" />
+					<property name="test.class.group.index" value="${axis.variable}" />
 				</ant>
 			</test-action>
+
+			<test-set-up>
+				<prepare-test-build-unit />
+			</test-set-up>
 		</run-batch-test>
 	</target>
 </project>

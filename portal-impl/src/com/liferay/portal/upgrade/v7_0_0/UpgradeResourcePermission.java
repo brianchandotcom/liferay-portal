@@ -52,27 +52,29 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 				long newPrimKeyId = GetterUtil.getLong(rs.getString("primKey"));
 				boolean newViewActionId = (actionIds % 2 == 1);
 
-				if ((primKeyId != newPrimKeyId) ||
-					(newViewActionId != viewActionId)) {
-
-					StringBundler sb = new StringBundler(6);
-
-					sb.append("update ResourcePermission set primKeyId = ");
-					sb.append(newPrimKeyId);
-					sb.append(", viewActionId = ");
-
-					if (newViewActionId) {
-						sb.append("[$TRUE$]");
-					}
-					else {
-						sb.append("[$FALSE$]");
-					}
-
-					sb.append(" where resourcePermissionId = ");
-					sb.append(resourcePermissionId);
-
-					runSQL(sb.toString());
+				if ((primKeyId == newPrimKeyId) &&
+					(newViewActionId == viewActionId)) {
+					
+					continue;
 				}
+
+				StringBundler sb = new StringBundler(6);
+
+				sb.append("update ResourcePermission set primKeyId = ");
+				sb.append(newPrimKeyId);
+				sb.append(", viewActionId = ");
+
+				if (newViewActionId) {
+					sb.append("[$TRUE$]");
+				}
+				else {
+					sb.append("[$FALSE$]");
+				}
+
+				sb.append(" where resourcePermissionId = ");
+				sb.append(resourcePermissionId);
+
+				runSQL(sb.toString());
 			}
 		}
 		finally {

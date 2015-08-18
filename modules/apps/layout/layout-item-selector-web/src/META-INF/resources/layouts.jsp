@@ -224,7 +224,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 				<c:when test="<%= itemSelectorReturnTypeName.equals(URLItemSelectorReturnType.class.getName()) %>">
 					button.attr('data-value', url);
 				</c:when>
-				<c:when test="<%= Validator.equals(ClassUtil.getClassName(itemSelectorReturnTypeName), UUIDItemSelectorReturnType.class.getName()) %>">
+				<c:when test="<%= Validator.equals(itemSelectorReturnTypeName, UUIDItemSelectorReturnType.class.getName()) %>">
 					button.attr('data-value', uuid);
 				</c:when>
 			</c:choose>

@@ -33,7 +33,7 @@ import net.sf.ehcache.event.CacheEventListener;
 public class EhcachePortalCacheReplicatorAdapter
 	<K extends Serializable, V extends Serializable>
 		extends EhcachePortalCacheListenerAdapter<K, V>
-		implements PortalCacheReplicator {
+		implements PortalCacheReplicator<K, V> {
 
 	public EhcachePortalCacheReplicatorAdapter(
 		CacheEventListener cacheEventListener) {

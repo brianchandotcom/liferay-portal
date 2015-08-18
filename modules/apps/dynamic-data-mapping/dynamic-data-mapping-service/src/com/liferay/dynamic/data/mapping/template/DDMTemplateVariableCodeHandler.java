@@ -70,7 +70,7 @@ public class DDMTemplateVariableCodeHandler
 
 		StringBundler sb = new StringBundler(3);
 
-		sb.append(_templatePath);
+		sb.append(getTemplatePath());
 		sb.append(dataType);
 		sb.append(".ftl");
 
@@ -100,12 +100,16 @@ public class DDMTemplateVariableCodeHandler
 		return StringUtil.trim(writer.toString());
 	}
 
+	protected String getTemplatePath() {
+		return _templatePath;
+	}
+
 	protected String handleRepeatableField(
 			TemplateVariableDefinition templateVariableDefinition,
 			String language, String templateContent)
 		throws Exception {
 
-		Template template = getTemplate(_templatePath + "repeatable.ftl");
+		Template template = getTemplate(getTemplatePath() + "repeatable.ftl");
 
 		templateContent = StringUtil.replace(
 			templateContent, StringPool.NEW_LINE,

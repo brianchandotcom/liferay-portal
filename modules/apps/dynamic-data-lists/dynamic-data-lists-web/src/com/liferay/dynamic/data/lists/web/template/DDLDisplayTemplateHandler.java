@@ -26,9 +26,8 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
-import com.liferay.dynamic.data.mapping.storage.Field;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.template.BaseDDMTemplateHandler;
-import com.liferay.dynamic.data.mapping.template.DDMTemplateVariableCodeHandler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
@@ -36,6 +35,7 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -59,6 +59,15 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 	@Override
 	public String getClassName() {
 		return DDLRecordSet.class.getName();
+	}
+
+	@Override
+	public Map<String, Object> getCustomContextObjects() {
+		Map<String, Object> contextObjects = new HashMap<>(1);
+
+		contextObjects.put("ddlHelper", new DDLDisplayTemplateHelper());
+
+		return contextObjects;
 	}
 
 	@Override
@@ -98,6 +107,10 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 			templateVariableGroups, structureFieldsTemplateVariableGroup);
 
 		addTemplateVariableGroup(
+			templateVariableGroups,
+			getDDLUtilVariablesTemplateVariableGroups());
+
+		addTemplateVariableGroup(
 			templateVariableGroups, getUtilTemplateVariableGroup());
 
 		String[] restrictedVariables = getRestrictedVariables(language);
@@ -119,6 +132,19 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 			ddlServicesTemplateVariableGroup);
 
 		return templateVariableGroups;
+	}
+
+	protected TemplateVariableGroup
+		getDDLUtilVariablesTemplateVariableGroups() {
+
+		TemplateVariableGroup ddlUtilTemplateVariableGroup =
+			new TemplateVariableGroup("data-list-util");
+
+		ddlUtilTemplateVariableGroup.addVariable(
+			"data-list-helper", DDLDisplayTemplateHelper.class, "ddlHelper",
+			null);
+
+		return ddlUtilTemplateVariableGroup;
 	}
 
 	protected TemplateVariableGroup getDDLVariablesTemplateVariableGroups() {
@@ -146,7 +172,7 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 
 	@Override
 	protected Class<?> getFieldVariableClass() {
-		return Field.class;
+		return DDMFormFieldValue.class;
 	}
 
 	@Override
@@ -155,7 +181,7 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 	}
 
 	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
-		new DDMTemplateVariableCodeHandler(
+		new DDLTemplateVariableCodeHandler(
 			DDLDisplayTemplateHandler.class.getClassLoader(),
 			"com/liferay/dynamic/data/lists/web/template/dependencies/"
 		);

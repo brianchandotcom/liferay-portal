@@ -204,7 +204,7 @@ if (layout != null) {
 
 		var checkBackgroundTasks = function() {
 			Liferay.Service(
-				'/backgroundtask/get-background-tasks-count',
+				'/backgroundtask.backgroundtask/get-background-tasks-count',
 				{
 					completed: false,
 					groupId: '<%= liveGroup.getGroupId() %>',

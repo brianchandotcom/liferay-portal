@@ -97,8 +97,9 @@ runPoshi {
 
 if (GradleUtil.getProperty(project, "local", false)) {
 	dependencies {
-		poshiRunner fileTree(dir: localPoshiDir, include: "*.jar")
+		poshiRunner fileTree(localPoshiDir) {
+			builtBy copyLocalPoshi
+			include "*.jar"
+		}
 	}
-
-	[runPoshi, validatePoshi, writePoshiProperties]*.dependsOn copyLocalPoshi
 }

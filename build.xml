@@ -914,6 +914,12 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		<gradle-execute dir="modules/sdk/gradle-util" failonerror="false" forcedcacheenabled="false" task="findbugsMain">
 			<arg value="-Dmaven.local.ignore=true" />
 		</gradle-execute>
+
+		<gradle-execute forcedcacheenabled="false" task="runPoshi">
+			<arg value="--build-file=portal-web/build-test.gradle" />
+			<arg value="--dry-run" />
+			<arg value="-Dmaven.local.ignore=true" />
+		</gradle-execute>
 	</target>
 
 	<target name="update-ivy-cache">

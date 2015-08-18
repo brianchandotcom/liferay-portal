@@ -21,6 +21,8 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
+import com.liferay.gradle.plugins.js.module.config.generator.ConfigJSModulesTask;
+import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.js.transpiler.TranspileJSTask;
 import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
@@ -183,6 +185,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskBuildWSDD(project);
 		configureTaskBuildWSDL(project);
 		configureTaskBuildXSD(project);
+		configureTaskConfigJSModules(project);
 		configureTaskTranspileJS(project);
 		configureTasksTest(project);
 
@@ -871,6 +874,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
 
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
+		GradleUtil.applyPlugin(project, JSModuleConfigGeneratorPlugin.class);
 		GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, JspCPlugin.class);
@@ -1486,6 +1490,65 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		cleanTask.dependsOn(
 			compileConfiguration.getTaskDependencyFromProjectDependency(
 				true, BasePlugin.CLEAN_TASK_NAME));
+	}
+
+	protected void configureTaskConfigJSModules(Project project) {
+		ConfigJSModulesTask configJSModulesTask =
+			(ConfigJSModulesTask)GradleUtil.getTask(
+				project,
+				JSModuleConfigGeneratorPlugin.CONFIG_JS_MODULES_TASK_NAME);
+
+		configureTaskConfigJSModulesDependsOn(configJSModulesTask);
+		configureTaskConfigJSModulesIgnorePath(configJSModulesTask);
+		configureTaskConfigJSModulesIncludes(configJSModulesTask);
+		configureTaskConfigJSModulesModuleFormat(configJSModulesTask);
+		configureTaskConfigJSModulesSourceDir(configJSModulesTask);
+	}
+
+	protected void configureTaskConfigJSModulesDependsOn(
+		ConfigJSModulesTask configJSModulesTask) {
+
+		configJSModulesTask.dependsOn(
+			JavaPlugin.PROCESS_RESOURCES_TASK_NAME,
+			JSTranspilerPlugin.TRANSPILE_JS_TASK_NAME);
+	}
+
+	protected void configureTaskConfigJSModulesIgnorePath(
+		ConfigJSModulesTask configJSModulesTask) {
+
+		configJSModulesTask.setIgnorePath(true);
+	}
+
+	protected void configureTaskConfigJSModulesIncludes(
+		ConfigJSModulesTask configJSModulesTask) {
+
+		configJSModulesTask.setIncludes(Collections.singleton("**/*.es.js"));
+	}
+
+	protected void configureTaskConfigJSModulesModuleFormat(
+		ConfigJSModulesTask configJSModulesTask) {
+
+		configJSModulesTask.setModuleFormat("/_/g,-");
+	}
+
+	protected void configureTaskConfigJSModulesSourceDir(
+		final ConfigJSModulesTask configJSModulesTask) {
+
+		configJSModulesTask.setSourceDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					TranspileJSTask transpileJSTask =
+						(TranspileJSTask)GradleUtil.getTask(
+							configJSModulesTask.getProject(),
+							JSTranspilerPlugin.TRANSPILE_JS_TASK_NAME);
+
+					return new File(
+						transpileJSTask.getOutputDir(), "META-INF/resources");
+				}
+
+			});
 	}
 
 	protected void configureTaskDeploy(

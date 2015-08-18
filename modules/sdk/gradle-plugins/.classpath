@@ -25,6 +25,7 @@
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.css.builder.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.jasper.jspc.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.javadoc.formatter.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.js.module.config.generator.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.js.transpiler.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.lang.builder.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.patcher.jar" />

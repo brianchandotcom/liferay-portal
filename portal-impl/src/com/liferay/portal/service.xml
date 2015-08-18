@@ -2026,7 +2026,7 @@
 		<column name="roleId" type="long" />
 		<column name="ownerId" type="long" />
 		<column name="actionIds" type="long" />
-		<column name="viewPermission" type="boolean" />
+		<column name="viewActionId" type="boolean" />
 
 		<!-- Finder methods -->
 
@@ -2064,7 +2064,7 @@
 			<finder-column name="scope" />
 			<finder-column name="primKeyId" />
 			<finder-column name="roleId" arrayable-operator="OR" />
-			<finder-column name="viewPermission" />
+			<finder-column name="viewActionId" />
 		</finder>
 
 		<!-- References -->

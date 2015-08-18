@@ -118,16 +118,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testIncorrectTabs() throws Exception {
-		/*
-		test(
-			"IncorrectTabs.testjava",
-			new String[] {"tab:", "tab:", "tab:", "tab:"},
-			new Integer[] {23, 27, 33, 40});
-		*/
-	}
-
-	@Test
 	public void testIncorrectVariableNames() throws Exception {
 		test(
 			"IncorrectVariableNames1.testjava",

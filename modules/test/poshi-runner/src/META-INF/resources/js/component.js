@@ -479,10 +479,20 @@ YUI.add(
 
 						var ease = 'ease-in';
 
+						var margin = 0;
+
 						if (collapsing) {
 							ease = 'ease-out';
 
 							height = 0;
+						}
+
+						else {
+							targetNode.addClass('in');
+
+							margin = targetNode.getStyle('marginTop');
+
+							targetNode.removeClass('in');
 						}
 
 						targetNode.transition(
@@ -491,11 +501,24 @@ YUI.add(
 									duration: duration,
 									easing: ease,
 									value: height
+								},
+
+								marginTop: {
+									duration: 0.1,
+									easing: ease,
+									value: margin
+								},
+
+								marginBottom: {
+									duration: 0.1,
+									easing: ease,
+									value: margin
 								}
 							},
 							function() {
 								if (collapsing) {
 									targetNode.addClass(CSS_COLLAPSE);
+									targetNode.removeAttribute('Style');
 								}
 								else {
 									targetNode.height('auto');

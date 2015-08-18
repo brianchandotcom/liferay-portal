@@ -8,11 +8,21 @@
 	color: $xml-log-default-text-color;
 	display: block;
 	position: relative;
+	transition: width 0.4s ease-out;
 	width: 80%;
+
+	.current-scope {
+		background-color: $line-container-current-scope-bg-color;
+
+		> .line-container {
+			background-color: $line-container-bg-color;
+			box-shadow: $line-container-box-shadow, $line-container-current-scope-border-box-shadow;
+		}
+	}
 }
 
 .command-logger .xml-log {
-	width: 60%;
+	width: 70%;
 }
 
 .minimized-sidebar .xml-log {
@@ -21,12 +31,69 @@
 
 .xml-log-container {
 	border-width: 0;
-	height: 100%;
 	padding-left: 100px;
 }
 
 .line-container {
-	padding: 5px 3px;
+	display: block;
+	padding: 8px;
+	transition: border-width 0.1s cubic-bezier(1, 0.79, 0, 1.77), background-color 0.3s cubic-bezier(1, 0.44, 1, 1), background 0.2s ease;
+	z-index: 1;
+}
+
+.xml-log .line-container {
+	-webkit-filter: blur(0);
+	-webkit-font-smoothing: subpixel-antialiased;
+	padding-right: 2%;
+	position: relative;
+	width: 102%;
+}
+
+.xml-log {
+	.current-scope > .line-container:nth-child(2) {
+		&:before, &:after {
+			background-color: $neutral;
+			content: "";
+			margin-right: 26px;
+			opacity: 1;
+			position: absolute;
+			top: 24px;
+			transform: translateY(-50%) translateZ(0);
+		}
+
+		&:before {
+			height: 1px;
+			left: calc(-100vw - 44px);
+			transition: height 0.2s ease, opacity 0.15s ease, background-color 0.2s ease;
+			width: 100vw;
+			z-index: -4;
+		}
+
+		&:after {
+			background-clip: content-box;
+			border: 1px solid $neutral;
+			border-radius: 25px;
+			height: 8px;
+			padding: 10px;
+			right: 100%;
+			transform-origin: top;
+			transition: border-color 0.15s ease;
+			width: 8px;
+		}
+	}
+
+	.transitioning .current-scope > .line-container:nth-child(2) {
+		&:before, &:after {
+			display: none;
+			opacity: 0;
+		}
+	}
+
+	*:not(.transitioning) .current-scope > .line-container:nth-child(2) {
+		&:after {
+			animation: ping 0.25s cubic-bezier(1, 0.9, 0.47, 1.92);
+		}
+	}
 }
 
 .function > .line-container, .macro > .line-container:nth-of-type(2) {
@@ -36,13 +103,22 @@
 .macro > .child-container {
 	background-color: $macro-child-container-bg-color;
 	box-shadow: $macro-child-container-box-shadow;
+	padding: 1px 0 1px 12px;
+
+	&.in {
+		margin: 40px 0 40px 24px;
+	}
+}
+
+.macro.hover {
+	background-color: $line-group-hover-bg-color;
 }
 
 .child-container {
 	border-left: 1px solid $child-container-left-border-color;
 	height: 0;
 	list-style-type: none;
-	margin-left: 20px;
+	margin: 0 0 0 24px;
 	overflow: visible;
 	padding: 1px 0;
 
@@ -53,20 +129,37 @@
 
 	&.transitioning {
 		overflow: hidden;
+		transform: translateZ(0);
+		will-change: height, margin;
+
+		.btn-container, .line-number {
+			opacity: 0;
+			transition: opacity 0s;
+		}
 	}
 }
 
-.header > .child-container {
-	height: auto;
+.header {
+	> .line-container {
+		padding: 4px 0 8px;
+	}
+
+	> .child-container {
+		height: auto;
+	}
 }
 
 .btn-container {
 	left: 0;
+	opacity: 1;
+	padding-top: 8px;
 	position: absolute;
+	transition: opacity 0.2s ease;
+	z-index: 3;
 }
 
 .parameter-container {
-	border: 1px dashed $parameter-container-border-color;
+	border: 1px solid $parameter-container-border-color;
 	border-right-width: 0;
 	border-top-width: 0;
 	height: 0;
@@ -74,7 +167,7 @@
 	overflow: hidden;
 
 	.line-container {
-		padding: 5px 10px;
+		padding: 12px;
 	}
 
 	.line-number {
@@ -89,6 +182,7 @@
 	cursor: pointer;
 	display: inline-block;
 	font-size: 10px;
+	line-height: 31px;
 	margin-left: 5px;
 	min-width: 26px;
 	opacity: 0.2;
@@ -101,45 +195,41 @@
 /* ---------- Command-logger mode ---------- */
 
 .command-logger {
+	.pass, .fail, .pending {
+		&:not(.current-scope) > .line-container {
+			box-shadow: $line-container-box-shadow;
+		}
+
+		> .line-container {
+			border-left: 7px solid transparent;
+		}
+	}
+
 	.pass {
 		&.conditional-failed > .line-container {
 			background: transparent;
 		}
 
 		> .line-container {
-			background-color: $passed-line-bg-color;
-			margin-top: 1px;
-			padding-right: 2%;
-			width: 102%;
+			border-left-color: $passed-color;
 		}
 	}
 
 	.pending > .line-container {
-		background-color: $pending-border-bg-color;
-		border: 3px dotted $pending-border-color;
-		padding: 4px;
+		border-left-color: $pending-color;
 	}
 
-	.hover {
-		&.pass {
-			&.function {
-				background: transparent;
-				outline-width: 0;
-			}
-
-			&, &.pending {
-				> .line-container {
-					background-color: $logger-mode-hover-line-bg-color;
-				}
+	.function, .macro {
+		&.pass, &.fail, &.pending {
+			&:not(.macro) > .line-container:hover, &.hover > .line-container {
+				-webkit-filter: blur(0);
+				background-color: $line-container-bg-color;
+				box-shadow: $line-container-box-shadow-hover;
+				transform: scale(1.007);
+				transition: transform 0.15s cubic-bezier(1, 0.51, 0.44, 1.21) 0.1s, box-shadow 0.14s cubic-bezier(1, 0.12, 0.51, 0.98) 0.1s, background-color 0.2s cubic-bezier(1, 0.44, 1, 1);
+				z-index: 2;
 			}
 		}
-	}
-
-	.function.pass .line-container:hover {
-		background-color: $passed-function-hover-bg-color;
-		border: 1px solid $passed-function-hover-border-color;
-		border-right-width: 0;
-		padding: 4px 2% 4px 2px;
 	}
 
 	.current-scope {
@@ -150,133 +240,58 @@
 			}
 		}
 
+		&.fail > .line-container:nth-child(2) {
+			&:before {
+				background: linear-gradient(rgba(0, 0, 0, 0) 23px, $failed-color 24px, rgba(27, 27, 27, 0) 25px);
+				background-color: transparentize($failed-color, 0.84);
+				top: 50%;
+			}
+
+			&:after {
+				background-color: $failed-color;
+				border-color: $failed-color;
+			}
+		}
+
 		&.pass, &.pending {
-			> .line-container {
-				background-color: $logger-mode-scoped-line-bg-color;
+			> .line-container:nth-child(2) {
+				&:before {
+					background: linear-gradient(rgba(0, 0, 0, 0) 24px, $neutral 25px, rgba(27, 27, 27, 0) 26px);
+					background-color: transparentize($neutral, 0.84);
+				}
+
+				&:after {
+					background-color: $neutral;
+					border-color: $neutral;
+				}
+			}
+		}
+
+		&.pass, &.pending, &.fail {
+			> .line-container:nth-child(2):before {
+				background-repeat: no-repeat;
+				background-size: calc(100vw - 32px);
+				content: '';
+				height: 100%;
+				left: calc(-100vw - 7px);
+				position: absolute;
+				top: 50%;
+				width: 100vw;
 			}
 		}
 	}
 
-	.running .pending.function {
-		> .line-container {
-			background-color: $running-line-bg-color;
+	.fail {
+		.line-number {
+			color: $failed-color;
 		}
-	}
-}
 
-.fail {
-	.btn-container {
-		margin-top: 1px;
-	}
-
-	.line-number {
-		color: $fail-line-number-color;
-		font-weight: bold;
-	}
-
-	.line-container {
-		background-color: $fail-line-container-bg-color;
-		border: 1px solid $fail-line-container-border-color;
-		position: relative;
-
-		&:before {
-			background-color: $fail-line-container-before-bg;
-			content: '';
-			height: 100%;
-			position: absolute;
-			right: 0;
-			top: 0;
-			transition: all 0.2s ease;
-			width: 100vw;
-			z-index: -1;
+		.line-container {
+			border-left-color: $failed-color;
 		}
 	}
 }
 
 .collapse .fail:after, .transitioning .fail:after, .transitioning .fail .line-container:before {
 	opacity: 0;
-}
-
-.console, .screenshots {
-	border: 6px solid $error-panel-border-color;
-	color: $error-panel-text-color;
-	left: 50%;
-	max-height: 1000px;
-	overflow-Y: auto;
-	position: absolute;
-	width: 94%;
-	z-index: 2;
-
-	&.toggle {
-		border-width: 0;
-		max-height: 0;
-		overflow: hidden;
-		padding: 0;
-		transition: max-height 0.3s ease, padding 0.1s ease 0.2s, width 0.2s ease 0.3s, border-width 0.1s 0.7s;
-		width: 0;
-	}
-}
-
-.console {
-	background-color: $console-error-bg-color;
-	font-size: 12px;
-	margin-top: 25px;
-	padding: 10px 10px 50px;
-	word-wrap: break-word;
-}
-
-.screenshots {
-	background-color: $screenshot-error-bg-color;
-	margin-top: -25px;
-	padding: 30px 10px;
-	text-align: center;
-
-	div {
-		display: inline-block;
-		min-width: 600px;
-		width: 49%;
-	}
-
-	img {
-		border: 3px solid $screenshot-img-border-color;
-		height: auto;
-		max-width: 100%;
-	}
-
-	span {
-		display: block;
-		padding: 5px 10px;
-		text-align: left;
-	}
-}
-
-.fullscreen-image {
-	height: 100%;
-	position: fixed;
-	top: 0;
-	width: 100%;
-	z-index: 9999;
-
-	&:before {
-		background: #111;
-		content: '';
-		height: 100%;
-		position: absolute;
-		width: 100%;
-	}
-
-	img {
-		height: 95%;
-		left: 0;
-		left: 50%;
-		position: absolute;
-		right: 0;
-		top: 50%;
-	}
-
-	&.toggle {
-		&, img {
-			height: 0;
-		}
-	}
 }

@@ -12,22 +12,15 @@
  * details.
  */
 
-package com.liferay.site.navigation.language.web.configuration;
-
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+package com.liferay.site.navigation.language.web.constants;
 
 /**
  * @author Eudaldo Alonso
  */
-public class LanguageWebConfigurationUtil {
+public class SiteNavigationLanguagePortletKeys {
 
-	public static String get(String key) {
-		return _configuration.get(key);
-	}
-
-	private static final Configuration _configuration =
-		ConfigurationFactoryUtil.getConfiguration(
-			LanguageWebConfigurationUtil.class.getClassLoader(), "portlet");
+	public static final String SITE_NAVIGATION_LANGUAGE =
+		"com_liferay_site_navigation_language_web_portlet_" +
+			"SiteNavigationLanguagePortlet";
 
 }

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
+import com.liferay.site.navigation.language.web.constants.SiteNavigationLanguagePortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,12 +32,12 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ViewPortletProvider.class
 )
-public class LanguageEntryViewPortletProvider
+public class SiteNavigationLanguageEntryViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return LanguagePortletKeys.LANGUAGE;
+		return SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE;
 	}
 
 	@Override

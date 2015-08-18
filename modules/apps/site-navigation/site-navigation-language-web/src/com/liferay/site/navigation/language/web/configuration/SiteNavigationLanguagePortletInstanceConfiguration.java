@@ -12,23 +12,28 @@
  * details.
  */
 
-package com.liferay.site.navigation.language.web.settings.internal;
+package com.liferay.site.navigation.language.web.configuration;
 
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.site.navigation.language.web.configuration.LanguagePortletInstanceConfiguration;
-
-import org.osgi.service.component.annotations.Component;
+import aQute.bnd.annotation.metatype.Meta;
 
 /**
  * @author Juergen Kappler
  */
-@Component
-public class LanguagePortletInstanceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+@Meta.OCD(
+	id = "com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguagePortletInstanceConfiguration"
+)
+public interface SiteNavigationLanguagePortletInstanceConfiguration {
 
-	@Override
-	public Class<?> getConfigurationBeanClass() {
-		return LanguagePortletInstanceConfiguration.class;
-	}
+	@Meta.AD(deflt = "true", required = false)
+	public boolean displayCurrentLocale();
+
+	@Meta.AD(deflt = "", required = false)
+	public String displayStyle();
+
+	@Meta.AD(deflt = "0", required = false)
+	public long displayStyleGroupId();
+
+	@Meta.AD(deflt = "", required = false)
+	public String languageIds();
 
 }

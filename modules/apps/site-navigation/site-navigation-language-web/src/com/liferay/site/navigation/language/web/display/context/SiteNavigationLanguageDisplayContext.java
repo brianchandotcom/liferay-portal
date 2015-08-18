@@ -29,7 +29,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.site.navigation.language.web.configuration.LanguagePortletInstanceConfiguration;
+import com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguagePortletInstanceConfiguration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,9 +42,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Julio Camarero
  */
-public class LanguageDisplayContext {
+public class SiteNavigationLanguageDisplayContext {
 
-	public LanguageDisplayContext(HttpServletRequest request)
+	public SiteNavigationLanguageDisplayContext(HttpServletRequest request)
 		throws SettingsException {
 
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -54,7 +54,7 @@ public class LanguageDisplayContext {
 
 		_languagePortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
-				LanguagePortletInstanceConfiguration.class);
+				SiteNavigationLanguagePortletInstanceConfiguration.class);
 	}
 
 	public List<KeyValuePair> getAvailableLanguageIdKVPs() {
@@ -158,8 +158,8 @@ public class LanguageDisplayContext {
 		return _languageIds;
 	}
 
-	public LanguagePortletInstanceConfiguration
-		getLanguagePortletInstanceConfiguration() {
+	public SiteNavigationLanguagePortletInstanceConfiguration
+		getSiteNavigationLanguagePortletInstanceConfiguration() {
 
 		return _languagePortletInstanceConfiguration;
 	}
@@ -174,7 +174,7 @@ public class LanguageDisplayContext {
 	private String _ddmTemplateKey;
 	private long _displayStyleGroupId;
 	private String[] _languageIds;
-	private final LanguagePortletInstanceConfiguration
+	private final SiteNavigationLanguagePortletInstanceConfiguration
 		_languagePortletInstanceConfiguration;
 	private final ThemeDisplay _themeDisplay;
 

@@ -16,7 +16,7 @@ package com.liferay.site.navigation.language.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
+import com.liferay.site.navigation.language.web.constants.SiteNavigationLanguagePortletKeys;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -28,10 +28,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = {"javax.portlet.name=" + LanguagePortletKeys.LANGUAGE},
+	property = {"javax.portlet.name=" + SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE},
 	service = ConfigurationAction.class
 )
-public class LanguageConfigurationAction extends DefaultConfigurationAction {
+public class SiteNavigationLanguageConfigurationAction
+	extends DefaultConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {

@@ -14,26 +14,21 @@
 
 package com.liferay.site.navigation.language.web.configuration;
 
-import aQute.bnd.annotation.metatype.Meta;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 
 /**
- * @author Juergen Kappler
+ * @author Eudaldo Alonso
  */
-@Meta.OCD(
-	id = "com.liferay.site.navigation.language.web.configuration.LanguagePortletInstanceConfiguration"
-)
-public interface LanguagePortletInstanceConfiguration {
+public class SiteNavigationLanguageWebConfigurationUtil {
 
-	@Meta.AD(deflt = "true", required = false)
-	public boolean displayCurrentLocale();
+	public static String get(String key) {
+		return _configuration.get(key);
+	}
 
-	@Meta.AD(deflt = "", required = false)
-	public String displayStyle();
-
-	@Meta.AD(deflt = "0", required = false)
-	public long displayStyleGroupId();
-
-	@Meta.AD(deflt = "", required = false)
-	public String languageIds();
+	private static final Configuration _configuration =
+		ConfigurationFactoryUtil.getConfiguration(
+			SiteNavigationLanguageWebConfigurationUtil.class.getClassLoader(),
+			"portlet");
 
 }

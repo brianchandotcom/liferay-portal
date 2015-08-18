@@ -6,22 +6,19 @@
 	<#assign localeVariable = "$" + localeVariable>
 </#if>
 
-<#-- Field -->
-
-<#assign fieldType = "cur_record.getFieldType(\"" + name + "\")">
-
-<#assign fieldValue = "cur_record.getFieldValue(\"" + name + "\", " + localeVariable + ")">
-
-<#if repeatable>
-	<#assign fieldValue = "curValue_" + name>
-</#if>
-
 <#-- Util -->
-
 <#function getVariableReferenceCode variableName>
 	<#if language == "ftl">
 		<#return "${" + variableName + "}">
 	<#else>
 		<#return "$" + variableName>
+	</#if>
+</#function>
+
+<#function render>
+	<#if language == "ftl">
+		<#return "${" + "ddlHelper.render(cur_record, \"" + name + "\", " + localeVariable + ")}">
+	<#else>
+		<#return "$ddlHelper.render($cur_record, \"" + name + "\", " + localeVariable + ")">
 	</#if>
 </#function>

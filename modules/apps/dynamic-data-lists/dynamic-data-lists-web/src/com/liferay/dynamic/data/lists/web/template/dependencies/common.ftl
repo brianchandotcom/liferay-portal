@@ -1,3 +1,3 @@
 <#include "init.ftl">
 
-${getVariableReferenceCode(fieldValue)}
+${render()}

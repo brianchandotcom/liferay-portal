@@ -1,5 +1,5 @@
-<#include "init-display.ftl">
+<#include "init.ftl">
 
-<a href="${getVariableReferenceCode(displayFieldValue)}">
+<a href="${render()}">
 	${label}
 </a>

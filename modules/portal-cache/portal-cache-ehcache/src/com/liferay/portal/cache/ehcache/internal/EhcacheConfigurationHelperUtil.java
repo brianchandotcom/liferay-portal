@@ -15,6 +15,7 @@
 package com.liferay.portal.cache.ehcache.internal;
 
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
+import com.liferay.portal.kernel.cache.PortalCacheReplicator;
 import com.liferay.portal.kernel.cache.cluster.ClusterLinkCallbackFactory;
 import com.liferay.portal.kernel.cache.configuration.CallbackConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheConfiguration;
@@ -315,6 +316,8 @@ public class EhcacheConfigurationHelperUtil {
 								EhcacheCallbackFactory.INSTANCE, properties),
 							portalCacheListenerScope);
 					}
+
+					properties.put(PortalCacheReplicator.REPLICATOR, true);
 				}
 			}
 			else if (!usingDefault) {

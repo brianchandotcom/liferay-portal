@@ -40,4 +40,6 @@ public interface PortalCacheReplicator {
 	public static final String REPLICATE_UPDATES_VIA_COPY =
 		"replicateUpdatesViaCopy";
 
+	public static final String REPLICATOR = "replicator";
+
 }

@@ -24,17 +24,17 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.site.navigation.language.web.configuration.LanguagePortletInstanceConfiguration" %><%@
-page import="com.liferay.site.navigation.language.web.display.context.LanguageDisplayContext" %>
+page import="com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguagePortletInstanceConfiguration" %><%@
+page import="com.liferay.site.navigation.language.web.display.context.SiteNavigationLanguageDisplayContext" %>
 
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
 
 <%
-LanguageDisplayContext languageDisplayContext = new LanguageDisplayContext(request);
+SiteNavigationLanguageDisplayContext languageDisplayContext = new SiteNavigationLanguageDisplayContext(request);
 
-LanguagePortletInstanceConfiguration languagePortletInstanceConfiguration = languageDisplayContext.getLanguagePortletInstanceConfiguration();
+SiteNavigationLanguagePortletInstanceConfiguration languagePortletInstanceConfiguration = languageDisplayContext.getSiteNavigationLanguagePortletInstanceConfiguration();
 %>
 
 <%@ include file="/init-ext.jsp" %>

@@ -16,7 +16,7 @@ package com.liferay.portal.background.task.internal.messaging;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -30,11 +30,13 @@ public class BackgroundTaskStatusMessageListener extends BaseMessageListener {
 	public BackgroundTaskStatusMessageListener(
 		long backgroundTaskId,
 		BackgroundTaskStatusMessageTranslator
-			backgroundTaskStatusMessageTranslator) {
+			backgroundTaskStatusMessageTranslator,
+		BackgroundTaskStatusRegistry backgroundTaskStatusRegistry) {
 
 		_backgroundTaskId = backgroundTaskId;
 		_backgroundTaskStatusMessageTranslator =
 			backgroundTaskStatusMessageTranslator;
+		_backgroundTaskStatusRegistry = backgroundTaskStatusRegistry;
 	}
 
 	@Override
@@ -46,7 +48,7 @@ public class BackgroundTaskStatusMessageListener extends BaseMessageListener {
 		}
 
 		BackgroundTaskStatus backgroundTaskStatus =
-			BackgroundTaskStatusRegistryUtil.getBackgroundTaskStatus(
+			_backgroundTaskStatusRegistry.getBackgroundTaskStatus(
 				backgroundTaskId);
 
 		if (backgroundTaskStatus == null) {
@@ -69,5 +71,6 @@ public class BackgroundTaskStatusMessageListener extends BaseMessageListener {
 	private final long _backgroundTaskId;
 	private final BackgroundTaskStatusMessageTranslator
 		_backgroundTaskStatusMessageTranslator;
+	private final BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
 
 }

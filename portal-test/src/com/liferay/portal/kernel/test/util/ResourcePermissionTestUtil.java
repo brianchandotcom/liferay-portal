@@ -59,7 +59,7 @@ public class ResourcePermissionTestUtil {
 		resourcePermission.setPrimKeyId(GetterUtil.getLong(primKey));
 		resourcePermission.setRoleId(roleId);
 		resourcePermission.setActionIds(actionIds);
-		resourcePermission.setViewPermission(actionIds % 2 == 1);
+		resourcePermission.setViewActionId(actionIds % 2 == 1);
 
 		return ResourcePermissionLocalServiceUtil.addResourcePermission(
 			resourcePermission);

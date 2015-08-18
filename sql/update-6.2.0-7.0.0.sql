@@ -75,7 +75,7 @@ update Region set regionCode = 'BB' where regionId = 4004 and regionCode = 'BR';
 update Region set name = 'Monza e Brianza', regionCode = 'MB' where regionId = 8060 and regionCode = 'MZ';
 
 alter table ResourcePermission add primKeyId LONG;
-alter table ResourcePermission add viewPermission BOOLEAN;
+alter table ResourcePermission add viewActionId BOOLEAN;
 
 alter table Subscription add groupId LONG;
 

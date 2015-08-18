@@ -2864,7 +2864,7 @@ public class DataFactory {
 		resourcePermissionModel.setRoleId(roleId);
 		resourcePermissionModel.setOwnerId(ownerId);
 		resourcePermissionModel.setActionIds(1);
-		resourcePermissionModel.setViewPermission(true);
+		resourcePermissionModel.setViewActionId(true);
 
 		return resourcePermissionModel;
 	}

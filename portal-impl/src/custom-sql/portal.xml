@@ -45,7 +45,7 @@
 				(ResourcePermission.companyId = [$COMPANY_ID$]) AND
 				(ResourcePermission.name = '[$CLASS_NAME$]') AND
 				(ResourcePermission.scope = [$RESOURCE_SCOPE_INDIVIDUAL$]) AND
-				(ResourcePermission.viewPermission = [$TRUE$]) AND
+				(ResourcePermission.viewActionId = [$TRUE$]) AND
 				[$ROLE_IDS_OR_OWNER_ID$] AND
 				[$PRIM_KEYS$]
 		]]>

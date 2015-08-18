@@ -39,7 +39,7 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 			ps = con.prepareStatement(
 				"SELECT resourcePermissionId, primKey, primKeyId, actionIds, " +
-					"viewPermission FROM ResourcePermission");
+					"viewActionId FROM ResourcePermission");
 
 			rs = ps.executeQuery();
 
@@ -47,21 +47,21 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 				long actionIds = rs.getLong("actionIds");
 				long primKeyId = rs.getLong("primKeyId");
 				long resourcePermissionId = rs.getLong("resourcePermissionId");
-				boolean viewPermission = rs.getBoolean("viewPermission");
+				boolean viewActionId = rs.getBoolean("viewActionId");
 
 				long newPrimKeyId = GetterUtil.getLong(rs.getString("primKey"));
-				boolean newViewPermission = (actionIds % 2 == 1);
+				boolean newViewActionId = (actionIds % 2 == 1);
 
-				if ((newViewPermission != viewPermission) ||
+				if ((newViewActionId != viewActionId) ||
 					(primKeyId != newPrimKeyId)) {
 
 					StringBundler sb = new StringBundler();
 
 					sb.append("update ResourcePermission set primKeyId = ");
 					sb.append(newPrimKeyId);
-					sb.append(", viewPermission = ");
+					sb.append(", viewActionId = ");
 
-					if (newViewPermission) {
+					if (newViewActionId) {
 						sb.append("[$TRUE$]");
 					}
 					else {

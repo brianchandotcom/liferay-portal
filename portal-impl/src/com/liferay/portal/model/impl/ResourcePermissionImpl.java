@@ -98,7 +98,7 @@ public class ResourcePermissionImpl extends ResourcePermissionBaseImpl {
 		long actionIds = getActionIds() | resourceAction.getBitwiseValue();
 
 		setActionIds(actionIds);
-		setViewPermission(actionIds % 2 == 1);
+		setViewActionId(actionIds % 2 == 1);
 	}
 
 	@Override
@@ -130,7 +130,7 @@ public class ResourcePermissionImpl extends ResourcePermissionBaseImpl {
 		long actionIds = getActionIds() & (~resourceAction.getBitwiseValue());
 
 		setActionIds(actionIds);
-		setViewPermission(actionIds % 2 == 1);
+		setViewActionId(actionIds % 2 == 1);
 	}
 
 }

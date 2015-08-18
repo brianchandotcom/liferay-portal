@@ -17,8 +17,8 @@ package com.liferay.portal.js.loader.modules.extender;
 import aQute.lib.converter.Converter;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
-import java.io.Reader;
 
 import java.net.URL;
 
@@ -33,6 +33,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import org.apache.felix.utils.log.Logger;
 
 import org.osgi.service.component.ComponentContext;
@@ -61,7 +63,10 @@ public class JSLoaderModulesServlet extends HttpServlet implements Servlet {
 			ComponentContext componentContext, Map<String, Object> properties)
 		throws Exception {
 
+		_logger = new Logger(componentContext.getBundleContext());
+
 		setDetails(Converter.cnv(Details.class, properties));
+	}
 
 	@Override
 	protected void service(
@@ -70,7 +75,9 @@ public class JSLoaderModulesServlet extends HttpServlet implements Servlet {
 
 		response.setContentType(Details.CONTENT_TYPE);
 
-		PrintWriter printWriter = response.getWriter();
+		ServletOutputStream outputStream = response.getOutputStream();
+
+		PrintWriter printWriter = new PrintWriter(outputStream, true);
 
 		printWriter.println("(function() {");
 		printWriter.print(_details.globalJSVariable());
@@ -178,11 +185,31 @@ public class JSLoaderModulesServlet extends HttpServlet implements Servlet {
 		printWriter.println("\n};");
 		printWriter.println("}());");
 
+		Collection<URL> jsConfigURLs = _jsBundleConfigTracker.getJsConfigURLs();
+
+		for (URL jsConfigURL : jsConfigURLs) {
+			try (InputStream inputStream = jsConfigURL.openStream()) {
+				StreamUtil.transfer(inputStream, outputStream, false);
+
+				outputStream.println();
+			}
+			catch (Exception e) {
+				_logger.log(Logger.LOG_ERROR, "Could not open resource", e);
+			}
+		}
+
 		printWriter.close();
 	}
 
 	protected void setDetails(Details details) {
 		_details = details;
+	}
+
+	@Reference
+	protected void setJsBundleConfigTracker(
+		JSBundleConfigTracker jsBundleConfigTracker) {
+
+		_jsBundleConfigTracker = jsBundleConfigTracker;
 	}
 
 	@Reference
@@ -193,6 +220,8 @@ public class JSLoaderModulesServlet extends HttpServlet implements Servlet {
 	}
 
 	private volatile Details _details;
+	private JSBundleConfigTracker _jsBundleConfigTracker;
 	private JSLoaderModulesTracker _jsLoaderModulesTracker;
+	private Logger _logger;
 
 }

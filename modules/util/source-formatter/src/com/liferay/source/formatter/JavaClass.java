@@ -386,20 +386,20 @@ public class JavaClass {
 	}
 
 	protected void checkImmutableFieldType(JavaTerm javaTerm) {
-		String oldName = javaTerm.getName();
+		String javaTermName = javaTerm.getName();
 
-		if (oldName.equals("serialVersionUID")) {
+		if (javaTermName.equals("serialVersionUID")) {
 			return;
 		}
 
-		Matcher matcher = _camelCasePattern.matcher(oldName);
+		Matcher matcher = _camelCasePattern.matcher(javaTermName);
 
 		String newName = matcher.replaceAll("$1_$2");
 
 		newName = StringUtil.toUpperCase(newName);
 
 		_content = _content.replaceAll(
-			"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
+			"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b", newName);
 	}
 
 	protected void checkJavaFieldType(
@@ -474,9 +474,9 @@ public class JavaClass {
 	}
 
 	protected void checkMutableFieldType(JavaTerm javaTerm) {
-		String oldName = javaTerm.getName();
+		String javaTermName = javaTerm.getName();
 
-		String newName = oldName;
+		String newName = javaTermName;
 
 		if (StringUtil.isUpperCase(newName)) {
 			StringBundler sb = new StringBundler(newName.length());
@@ -502,9 +502,9 @@ public class JavaClass {
 			newName = sb.toString();
 		}
 
-		if (!newName.equals(oldName)) {
+		if (!newName.equals(javaTermName)) {
 			_content = _content.replaceAll(
-				"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
+				"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b", newName);
 		}
 	}
 

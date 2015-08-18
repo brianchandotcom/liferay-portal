@@ -398,10 +398,6 @@ public class JavaClass {
 
 		newName = StringUtil.toUpperCase(newName);
 
-		if (newName.charAt(0) != CharPool.UNDERLINE) {
-			newName = StringPool.UNDERLINE.concat(newName);
-		}
-
 		_content = _content.replaceAll(
 			"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
 	}
@@ -415,10 +411,12 @@ public class JavaClass {
 			return;
 		}
 
+		String javaTermName = javaTerm.getName();
+
 		Pattern pattern = Pattern.compile(
 			"\t(private |protected |public )" +
 				"(((final|static|transient)( |\n))*)([\\s\\S]*?)" +
-					javaTerm.getName());
+					javaTermName);
 
 		String javaTermContent = javaTerm.getContent();
 
@@ -426,6 +424,14 @@ public class JavaClass {
 
 		if (!matcher.find()) {
 			return;
+		}
+
+		if (javaTerm.isPrivate() && !javaTermName.equals("serialVersionUID") &&
+			(javaTermName.charAt(0) != CharPool.UNDERLINE)) {
+
+			_content = _content.replaceAll(
+				"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b",
+				StringPool.UNDERLINE.concat(javaTermName));
 		}
 
 		String modifierDefinition = StringUtil.trim(
@@ -463,10 +469,6 @@ public class JavaClass {
 		String oldName = javaTerm.getName();
 
 		String newName = oldName;
-
-		if (javaTerm.isPrivate() && (newName.charAt(0) != CharPool.UNDERLINE)) {
-			newName = StringPool.UNDERLINE.concat(newName);
-		}
 
 		if (StringUtil.isUpperCase(newName)) {
 			StringBundler sb = new StringBundler(newName.length());

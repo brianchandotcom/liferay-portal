@@ -1,0 +1,10 @@
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile project(":apps:application-list:application-list-api")
+	compile project(":apps:shopping:shopping-service")
+}
+
+liferay {
+	autoUpdateXml = true
+	deployDir = file("${liferayHome}/osgi/modules")
+}

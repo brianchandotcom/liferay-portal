@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="build-module">
+	<dirname file="${ant.file.build-module}" property="modules.dir" />
+
+	<property name="gradle.wrapper.path" relative="yes" value="${modules.dir}/../gradlew" />
+
+	<macrodef name="print-gradle-alternative">
+		<attribute name="args" />
+
+		<sequential>
+			<echo>Please run this command instead: ${gradle.wrapper.path} @{args}</echo>
+		</sequential>
+	</macrodef>
+
+	<target name="all">
+		<print-gradle-alternative args="clean deploy" />
+	</target>
+
+	<target name="build-css">
+		<print-gradle-alternative args="buildCSS" />
+	</target>
+
+	<target name="build-lang">
+		<print-gradle-alternative args="buildLang" />
+	</target>
+
+	<target name="build-service">
+		<print-gradle-alternative args="buildService" />
+	</target>
+
+	<target name="build-upgrade-table">
+		<print-gradle-alternative args="buildUpgradeTable" />
+	</target>
+
+	<target name="build-wsdd">
+		<print-gradle-alternative args="buildWSDD" />
+	</target>
+
+	<target name="build-wsdl">
+		<print-gradle-alternative args="buildWSDL" />
+	</target>
+
+	<target name="build-xsd">
+		<print-gradle-alternative args="buildXSD" />
+	</target>
+
+	<target name="clean">
+		<print-gradle-alternative args="clean" />
+	</target>
+
+	<target name="compile">
+		<print-gradle-alternative args="classes" />
+	</target>
+
+	<target name="compile-jsp">
+		<print-gradle-alternative args="compileJSP" />
+	</target>
+
+	<target name="compile-test">
+		<print-gradle-alternative args="testClasses testIntegrationClasses" />
+	</target>
+
+	<target name="compile-test-integration">
+		<print-gradle-alternative args="testIntegrationClasses" />
+	</target>
+
+	<target name="compile-test-unit">
+		<print-gradle-alternative args="testClasses" />
+	</target>
+
+	<target name="deploy">
+		<print-gradle-alternative args="deploy" />
+	</target>
+
+	<target name="format-javadoc">
+		<print-gradle-alternative args="formatJavadoc" />
+	</target>
+
+	<target name="format-source">
+		<print-gradle-alternative args="formatSource" />
+	</target>
+
+	<target name="format-tld">
+		<print-gradle-alternative args="formatTLD" />
+	</target>
+
+	<target name="format-wsdl">
+		<print-gradle-alternative args="formatWSDL" />
+	</target>
+
+	<target name="format-xsd">
+		<print-gradle-alternative args="formatXSD" />
+	</target>
+
+	<target name="install">
+		<print-gradle-alternative args="install" />
+	</target>
+
+	<target name="jar">
+		<print-gradle-alternative args="jar" />
+	</target>
+
+	<target name="jar-javadoc">
+		<print-gradle-alternative args="zipJavadoc" />
+	</target>
+
+	<target name="jar-source">
+		<print-gradle-alternative args="jarSources" />
+	</target>
+
+	<target name="javadoc">
+		<print-gradle-alternative args="javadoc" />
+	</target>
+
+	<target name="publish-local-m2-release">
+		<print-gradle-alternative args="install" />
+	</target>
+
+	<target name="publish-local-m2-snapshot">
+		<print-gradle-alternative args="install -Psnapshot" />
+	</target>
+
+	<target name="publish-remote-m2-release">
+		<print-gradle-alternative args="uploadArchives" />
+	</target>
+
+	<target name="publish-remote-m2-snapshot">
+		<print-gradle-alternative args="uploadArchives -Psnapshot" />
+	</target>
+
+	<target name="setup-eclipse">
+		<print-gradle-alternative args="eclipse" />
+	</target>
+
+	<target name="test">
+		<print-gradle-alternative args="check" />
+	</target>
+
+	<target name="test-class">
+		<print-gradle-alternative args="test (or testIntegration) --tests com.liferay.some.package.SomeClass" />
+	</target>
+
+	<target name="test-integration">
+		<print-gradle-alternative args="testIntegration" />
+	</target>
+
+	<target name="test-package">
+		<print-gradle-alternative args="test (or testIntegration) --tests com.liferay.some.package.*" />
+	</target>
+
+	<target name="test-unit">
+		<print-gradle-alternative args="testUnit" />
+	</target>
+
+	<target name="war">
+		<print-gradle-alternative args="jar" />
+	</target>
+</project>

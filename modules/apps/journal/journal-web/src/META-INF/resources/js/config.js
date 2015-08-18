@@ -1,5 +1,5 @@
 ;(function() {
-	var PATH_JOURNAL_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/comliferayjournalweb';
+	var PATH_JOURNAL_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/journal-web';
 
 	AUI().applyConfig(
 		{

@@ -1,5 +1,5 @@
 ;(function() {
-	var PATH_BLOGS_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/comliferayblogsweb';
+	var PATH_BLOGS_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/blogs-web';
 
 	AUI().applyConfig(
 		{

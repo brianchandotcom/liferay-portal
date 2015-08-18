@@ -5,3 +5,4 @@ Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources
 JS-Config: /META-INF/resources/js/config.js
+Web-ContextPath: /control-menu-web

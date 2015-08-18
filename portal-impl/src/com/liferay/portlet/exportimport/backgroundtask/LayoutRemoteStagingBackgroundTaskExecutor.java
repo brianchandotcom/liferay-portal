@@ -93,7 +93,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 			Map<Long, Boolean> layoutIdMap =
 				(Map<Long, Boolean>)settingsMap.get("layoutIdMap");
-			long remoteGroupId = MapUtil.getLong(settingsMap, "remoteGroupId");
+			long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
 
 			Map<String, Serializable> taskContextMap =
 				backgroundTask.getTaskContextMap();
@@ -101,13 +101,13 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			httpPrincipal = (HttpPrincipal)taskContextMap.get("httpPrincipal");
 
 			file = exportLayoutsAsFile(
-				exportImportConfiguration, layoutIdMap, remoteGroupId,
+				exportImportConfiguration, layoutIdMap, targetGroupId,
 				httpPrincipal);
 
 			String checksum = FileUtil.getMD5Checksum(file);
 
 			stagingRequestId = StagingServiceHttp.createStagingRequest(
-				httpPrincipal, remoteGroupId, checksum);
+				httpPrincipal, targetGroupId, checksum);
 
 			transferFileToRemoteLive(file, stagingRequestId, httpPrincipal);
 

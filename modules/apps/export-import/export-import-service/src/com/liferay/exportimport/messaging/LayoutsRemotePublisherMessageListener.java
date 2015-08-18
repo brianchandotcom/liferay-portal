@@ -77,7 +77,7 @@ public class LayoutsRemotePublisherMessageListener
 			settingsMap, "remotePathContext");
 		boolean secureConnection = MapUtil.getBoolean(
 			settingsMap, "secureConnection");
-		long remoteGroupId = MapUtil.getLong(settingsMap, "remoteGroupId");
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
 		boolean remotePrivateLayout = MapUtil.getBoolean(
 			settingsMap, "remotePrivateLayout");
 
@@ -91,7 +91,7 @@ public class LayoutsRemotePublisherMessageListener
 			StagingUtil.copyRemoteLayouts(
 				sourceGroupId, privateLayout, layoutIdMap, parameterMap,
 				remoteAddress, remotePort, remotePathContext, secureConnection,
-				remoteGroupId, remotePrivateLayout);
+				targetGroupId, remotePrivateLayout);
 		}
 		finally {
 			resetThreadLocals();

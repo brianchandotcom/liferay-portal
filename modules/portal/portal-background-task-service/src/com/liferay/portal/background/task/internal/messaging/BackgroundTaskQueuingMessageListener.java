@@ -17,14 +17,24 @@ package com.liferay.portal.background.task.internal.messaging;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskLockHelperUtil;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.Validator;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = {"destination.name=liferay/background_task_status"},
+	service = MessageListener.class
+)
 public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 
 	@Override
@@ -48,7 +58,7 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 			long backgroundTaskId = (Long)message.get("backgroundTaskId");
 
 			BackgroundTask backgroundTask =
-				BackgroundTaskManagerUtil.fetchBackgroundTask(backgroundTaskId);
+				_backgroundTaskManager.fetchBackgroundTask(backgroundTaskId);
 
 			if (!BackgroundTaskLockHelperUtil.isLockedBackgroundTask(
 					backgroundTask)) {
@@ -58,17 +68,33 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setBackgroundTaskManager(
+		BackgroundTaskManager backgroundTaskManager) {
+
+		_backgroundTaskManager = backgroundTaskManager;
+	}
+
+	@Reference(
+		target = "(destination.name=liferay/background_task_status)",
+		unbind = "-"
+	)
+	protected void setDestination(Destination destination) {
+	}
+
 	private void executeQueuedBackgroundTasks(String taskExecutorClassName) {
 		BackgroundTask backgroundTask =
-			BackgroundTaskManagerUtil.fetchFirstBackgroundTask(
+			_backgroundTaskManager.fetchFirstBackgroundTask(
 				taskExecutorClassName, BackgroundTaskConstants.STATUS_QUEUED);
 
 		if (backgroundTask == null) {
 			return;
 		}
 
-		BackgroundTaskManagerUtil.resumeBackgroundTask(
+		_backgroundTaskManager.resumeBackgroundTask(
 			backgroundTask.getBackgroundTaskId());
 	}
+
+	private BackgroundTaskManager _backgroundTaskManager;
 
 }

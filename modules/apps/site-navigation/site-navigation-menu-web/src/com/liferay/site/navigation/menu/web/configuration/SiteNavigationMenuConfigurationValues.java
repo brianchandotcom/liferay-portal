@@ -12,23 +12,16 @@
  * details.
  */
 
-package com.liferay.site.navigation.menu.web.settings.internal;
+package com.liferay.site.navigation.menu.web.configuration;
 
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.site.navigation.menu.web.configuration.NavigationMenuPortletInstanceConfiguration;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Juergen Kappler
  */
-@Component
-public class NavigationMenuPortletInstanceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+public class SiteNavigationMenuConfigurationValues {
 
-	@Override
-	public Class<?> getConfigurationBeanClass() {
-		return NavigationMenuPortletInstanceConfiguration.class;
-	}
+	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
+		SiteNavigationMenuWebConfigurationUtil.get("display.templates.config"));
 
 }

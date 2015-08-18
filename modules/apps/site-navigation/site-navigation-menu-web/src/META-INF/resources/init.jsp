@@ -30,8 +30,8 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.theme.NavItem" %><%@
-page import="com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration" %><%@
-page import="com.liferay.site.navigation.menu.web.display.context.NavigationMenuDisplayContext" %>
+page import="com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration" %><%@
+page import="com.liferay.site.navigation.menu.web.display.context.SiteNavigationMenuDisplayContext" %>
 
 <portlet:defineObjects />
 
@@ -40,9 +40,9 @@ page import="com.liferay.site.navigation.menu.web.display.context.NavigationMenu
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-NavigationMenuWebConfiguration navigationMenuWebConfiguration = (NavigationMenuWebConfiguration)renderRequest.getAttribute(NavigationMenuWebConfiguration.class.getName());
+SiteNavigationMenuWebConfiguration navigationMenuWebConfiguration = (SiteNavigationMenuWebConfiguration)renderRequest.getAttribute(SiteNavigationMenuWebConfiguration.class.getName());
 
-NavigationMenuDisplayContext navigationMenuDisplayContext = new NavigationMenuDisplayContext(request, navigationMenuWebConfiguration);
+SiteNavigationMenuDisplayContext navigationMenuDisplayContext = new SiteNavigationMenuDisplayContext(request, navigationMenuWebConfiguration);
 %>
 
 <%@ include file="/init-ext.jsp" %>

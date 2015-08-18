@@ -20,7 +20,7 @@
 
 <%
 java.lang.String className = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-ddm:template-selector:className"));
-java.lang.String defaultDisplayStyle = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-ddm:template-selector:defaultDisplayStyle"));
+java.lang.String defaultDisplayStyle = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-ddm:template-selector:defaultDisplayStyle"), com.liferay.portal.kernel.util.StringPool.BLANK);
 java.lang.String displayStyle = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-ddm:template-selector:displayStyle"));
 long displayStyleGroupId = GetterUtil.getLong(String.valueOf(request.getAttribute("liferay-ddm:template-selector:displayStyleGroupId")));
 java.util.List<java.lang.String> displayStyles = (java.util.List<java.lang.String>)request.getAttribute("liferay-ddm:template-selector:displayStyles");

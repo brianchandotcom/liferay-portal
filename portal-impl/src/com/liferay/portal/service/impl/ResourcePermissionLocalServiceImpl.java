@@ -240,6 +240,7 @@ public class ResourcePermissionLocalServiceImpl
 
 				resourcePermission.setPrimKey(primKey);
 				resourcePermission.setPrimKeyId(GetterUtil.getLong(primKey));
+
 				resourcePermission.setRoleId((Long)resourcePermissionArray[4]);
 				resourcePermission.setActionIds(resourceActionBitwiseValue);
 				resourcePermission.setViewPermission(

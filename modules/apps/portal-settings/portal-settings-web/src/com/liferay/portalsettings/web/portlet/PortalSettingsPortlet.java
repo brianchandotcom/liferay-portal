@@ -15,6 +15,7 @@
 package com.liferay.portalsettings.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portalsettings.web.constants.PortalSettingsPortletKeys;
 
 import javax.portlet.Portlet;
 
@@ -41,6 +42,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/edit_company.jsp",
+		"javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"

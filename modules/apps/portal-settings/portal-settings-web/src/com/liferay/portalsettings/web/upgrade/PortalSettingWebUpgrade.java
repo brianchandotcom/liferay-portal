@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
+import com.liferay.portalsettings.web.constants.PortalSettingsPortletKeys;
 
 import java.util.Collections;
 
@@ -52,8 +53,7 @@ public class PortalSettingWebUpgrade {
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
 					new String[] {
-						"130",
-				"com_liferay_portal_settings_web_portlet_PortalSettingsPortlet"
+						"130", PortalSettingsPortletKeys.PORTAL_SETTINGS
 					}
 				};
 			}

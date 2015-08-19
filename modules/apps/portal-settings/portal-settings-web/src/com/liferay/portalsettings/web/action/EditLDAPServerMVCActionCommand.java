@@ -35,9 +35,9 @@ import com.liferay.portal.security.ldap.LDAPSettingsUtil;
 import com.liferay.portal.service.CompanyServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portalsettings.web.constants.PortalSettingsPortletKeys;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.PORTAL_SETTINGS,
+		"javax.portlet.name=" + PortalSettingsPortletKeys.PORTAL_SETTINGS,
 		"mvc.command.name=/portal_settings/edit_ldap_server"
 	},
 	service = MVCActionCommand.class

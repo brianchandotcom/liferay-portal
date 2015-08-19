@@ -15,6 +15,7 @@
 package com.liferay.poshi.runner.selenium;
 
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
+import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.util.AntCommands;
 import com.liferay.poshi.runner.util.EmailCommands;
 import com.liferay.poshi.runner.util.FileUtil;
@@ -84,6 +85,10 @@ public class LiferaySeleniumHelper {
 
 	public static void addToLiferayExceptions(Exception exception) {
 		_liferayExceptions.add(exception);
+	}
+
+	public static void addToLiferayExceptions(List<Exception> exceptions) {
+		_liferayExceptions.addAll(exceptions);
 	}
 
 	public static void antCommand(
@@ -250,6 +255,7 @@ public class LiferaySeleniumHelper {
 		Element rootElement = document.getRootElement();
 
 		List<Element> eventElements = rootElement.elements("event");
+		List<Exception> exceptions = new ArrayList<>();
 
 		for (Element eventElement : eventElements) {
 			String level = eventElement.attributeValue("level");
@@ -270,25 +276,28 @@ public class LiferaySeleniumHelper {
 					continue;
 				}
 
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("LIFERAY_ERROR: ");
+				sb.append(messageText);
+
 				Element throwableElement = eventElement.element("throwable");
 
-				Exception exception = null;
-
 				if (throwableElement != null) {
-					exception = new Exception(
-						messageText + throwableElement.getText());
-
-					addToLiferayExceptions(exception);
-
-					throw exception;
+					sb.append("\n");
+					sb.append(throwableElement.getText());
 				}
 
-				exception = new Exception(messageText);
+				System.out.println(sb.toString());
 
-				addToLiferayExceptions(exception);
-
-				throw exception;
+				exceptions.add(new PoshiRunnerWarningException(sb.toString()));
 			}
+		}
+
+		if (!exceptions.isEmpty()) {
+			addToLiferayExceptions(exceptions);
+
+			throw exceptions.get(0);
 		}
 	}
 

@@ -14,17 +14,35 @@
 
 package com.liferay.shopping.lar;
 
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.shopping.constants.ShoppingConstants;
+import com.liferay.shopping.constants.ShoppingPortletKeys;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
  */
+@Component(
+	property = {
+		"javax.portlet.name=" + ShoppingPortletKeys.SHOPPING,
+		"javax.portlet.name=" + ShoppingPortletKeys.SHOPPING_ADMIN
+	},
+	service = PortletDataHandler.class
+)
 public class ShoppingPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	public String getServiceName() {
 		return ShoppingConstants.SERVICE_NAME;
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

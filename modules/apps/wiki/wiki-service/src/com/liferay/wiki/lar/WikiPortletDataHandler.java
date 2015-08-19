@@ -15,6 +15,7 @@
 package com.liferay.wiki.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
@@ -42,8 +43,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -268,8 +267,9 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		return portletPreferences;
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

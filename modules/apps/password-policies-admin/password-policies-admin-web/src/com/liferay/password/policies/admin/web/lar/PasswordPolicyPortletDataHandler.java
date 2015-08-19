@@ -17,6 +17,7 @@ package com.liferay.password.policies.admin.web.lar;
 import com.liferay.password.policies.admin.web.constants.PasswordPoliciesAdminPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.impl.PasswordPolicyImpl;
@@ -33,8 +34,6 @@ import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -170,8 +169,9 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 		return actionableDynamicQuery;
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	protected static final String RESOURCE_NAME =

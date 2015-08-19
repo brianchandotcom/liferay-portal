@@ -26,6 +26,7 @@ import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
 import com.liferay.polls.service.PollsVoteLocalServiceUtil;
 import com.liferay.polls.service.permission.PollsResourcePermissionChecker;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -39,8 +40,6 @@ import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -216,8 +215,9 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 		voteActionableDynamicQuery.performCount();
 	}
 
-	@Reference(target = "(original.bean=*)", unbind = "-")
-	protected void setServletContext(ServletContext servletContext) {
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.backgroundtask.messaging;
+package com.liferay.portal.background.task.internal.messaging;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager;
 import com.liferay.portal.kernel.backgroundtask.ClassLoaderAwareBackgroundTaskExecutor;
@@ -31,9 +31,11 @@ import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.StackTraceUtil;
@@ -41,16 +43,17 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true, property = {"destination.name=liferay/background_task"},
+	service = MessageListener.class
+)
 public class BackgroundTaskMessageListener extends BaseMessageListener {
-
-	public void setBackgroundTaskThreadLocalManager(
-		BackgroundTaskThreadLocalManager backgroundTaskThreadLocalManager) {
-
-		_backgroundTaskThreadLocalManager = backgroundTaskThreadLocalManager;
-	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -61,7 +64,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		ServiceContext serviceContext = new ServiceContext();
 
 		BackgroundTask backgroundTask =
-			BackgroundTaskManagerUtil.amendBackgroundTask(
+			_backgroundTaskManager.amendBackgroundTask(
 				backgroundTaskId, null,
 				BackgroundTaskConstants.STATUS_IN_PROGRESS, serviceContext);
 
@@ -94,7 +97,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			backgroundTaskExecutor = wrapBackgroundTaskExecutor(
 				backgroundTaskExecutor, classLoader);
 
-			BackgroundTaskStatusRegistryUtil.registerBackgroundTaskStatus(
+			_backgroundTaskStatusRegistry.registerBackgroundTaskStatus(
 				backgroundTaskId);
 
 			BackgroundTaskStatusMessageTranslator
@@ -105,15 +108,15 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			if (backgroundTaskStatusMessageTranslator != null) {
 				backgroundTaskStatusMessageListener =
 					new BackgroundTaskStatusMessageListener(
-						backgroundTaskId,
-						backgroundTaskStatusMessageTranslator);
+						backgroundTaskId, backgroundTaskStatusMessageTranslator,
+						_backgroundTaskStatusRegistry);
 
-				MessageBusUtil.registerMessageListener(
+				_messageBus.registerMessageListener(
 					DestinationNames.BACKGROUND_TASK_STATUS,
 					backgroundTaskStatusMessageListener);
 			}
 
-			backgroundTask = BackgroundTaskManagerUtil.fetchBackgroundTask(
+			backgroundTask = _backgroundTaskManager.fetchBackgroundTask(
 				backgroundTask.getBackgroundTaskId());
 
 			BackgroundTaskResult backgroundTaskResult =
@@ -154,14 +157,14 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			_log.error("Unable to execute background task", e);
 		}
 		finally {
-			BackgroundTaskManagerUtil.amendBackgroundTask(
+			_backgroundTaskManager.amendBackgroundTask(
 				backgroundTaskId, null, status, statusMessage, serviceContext);
 
-			BackgroundTaskStatusRegistryUtil.unregisterBackgroundTaskStatus(
+			_backgroundTaskStatusRegistry.unregisterBackgroundTaskStatus(
 				backgroundTaskId);
 
 			if (backgroundTaskStatusMessageListener != null) {
-				MessageBusUtil.unregisterMessageListener(
+				_messageBus.unregisterMessageListener(
 					DestinationNames.BACKGROUND_TASK_STATUS,
 					backgroundTaskStatusMessageListener);
 			}
@@ -176,9 +179,41 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 				"taskExecutorClassName",
 				backgroundTask.getTaskExecutorClassName());
 
-			MessageBusUtil.sendMessage(
+			_messageBus.sendMessage(
 				DestinationNames.BACKGROUND_TASK_STATUS, responseMessage);
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setBackgroundTaskManager(
+		BackgroundTaskManager backgroundTaskManager) {
+
+		_backgroundTaskManager = backgroundTaskManager;
+	}
+
+	@Reference(unbind = "-")
+	protected void setBackgroundTaskStatusRegistry(
+		BackgroundTaskStatusRegistry backgroundTaskStatusRegistry) {
+
+		_backgroundTaskStatusRegistry = backgroundTaskStatusRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setBackgroundTaskThreadLocalManager(
+		BackgroundTaskThreadLocalManager backgroundTaskThreadLocalManager) {
+
+		_backgroundTaskThreadLocalManager = backgroundTaskThreadLocalManager;
+	}
+
+	@Reference(
+		target = "(destination.name=liferay/background_task)", unbind = "-"
+	)
+	protected void setDestination(Destination destination) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setMessageBus(MessageBus messageBus) {
+		_messageBus = messageBus;
 	}
 
 	protected BackgroundTaskExecutor wrapBackgroundTaskExecutor(
@@ -204,6 +239,9 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BackgroundTaskMessageListener.class);
 
+	private BackgroundTaskManager _backgroundTaskManager;
+	private BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
 	private BackgroundTaskThreadLocalManager _backgroundTaskThreadLocalManager;
+	private MessageBus _messageBus;
 
 }

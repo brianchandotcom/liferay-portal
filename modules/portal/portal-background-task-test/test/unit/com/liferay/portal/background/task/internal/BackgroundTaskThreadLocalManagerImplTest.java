@@ -12,19 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.backgroundtask;
-
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
+package com.liferay.portal.background.task.internal;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -32,12 +26,6 @@ import org.junit.Test;
  */
 public class BackgroundTaskThreadLocalManagerImplTest
 	extends BaseBackgroundTaskTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Test
 	public void testDeserializeThreadLocals() {

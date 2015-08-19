@@ -886,26 +886,17 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		<setup-sdk />
 
 		<gradle-execute dir="modules" forcedcacheenabled="false" task="clean">
-			<arg value="--parallel" />
 			<arg value="-Dgradle.user.home=${basedir}/.gradle" />
-			<arg value="-Djavax.net.ssl.trustStore=${env.JAVA_HOME}/jre/lib/security/cacerts" />
-			<arg value="-Djavax.net.ssl.trustStorePassword=changeit" />
 			<arg value="-Dmaven.local.ignore=true" />
 		</gradle-execute>
 
 		<gradle-execute dir="modules/core/registry-api" forcedcacheenabled="false" task="deploy">
-			<arg value="--parallel" />
 			<arg value="-Dgradle.user.home=${basedir}/.gradle" />
-			<arg value="-Djavax.net.ssl.trustStore=${env.JAVA_HOME}/jre/lib/security/cacerts" />
-			<arg value="-Djavax.net.ssl.trustStorePassword=changeit" />
 			<arg value="-Dmaven.local.ignore=true" />
 		</gradle-execute>
 
 		<gradle-execute dir="modules" forcedcacheenabled="false" task="classes">
-			<arg value="--parallel" />
 			<arg value="-Dgradle.user.home=${basedir}/.gradle" />
-			<arg value="-Djavax.net.ssl.trustStore=${env.JAVA_HOME}/jre/lib/security/cacerts" />
-			<arg value="-Djavax.net.ssl.trustStorePassword=changeit" />
 			<arg value="-Dmaven.local.ignore=true" />
 			<arg value="testClasses" />
 			<arg value="testIntegrationClasses" />

@@ -316,7 +316,7 @@ public class InputEditorTag extends IncludeTag {
 	protected String getPage() {
 		Editor editor = getEditor(request);
 
-		return editor.getJspPath(request);
+		return editor.getJspPath();
 	}
 
 	protected RequestBackedPortletURLFactory

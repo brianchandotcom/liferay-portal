@@ -14,14 +14,12 @@
 
 package com.liferay.portal.kernel.editor;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Roberto Díaz
  */
 public interface Editor {
 
-	public String getJspPath(HttpServletRequest request);
+	public String getJspPath();
 
 	public String getName();
 

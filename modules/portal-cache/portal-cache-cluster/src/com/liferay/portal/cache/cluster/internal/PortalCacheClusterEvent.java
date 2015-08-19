@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.cluster.internal;
 
+import com.liferay.portal.cache.io.SerializableObjectWrapper;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -67,8 +68,8 @@ public class PortalCacheClusterEvent implements Serializable {
 
 		_portalCacheManagerName = portalCacheManagerName;
 		_portalCacheName = portalCacheName;
-		_elementKey = elementKey;
-		_elementValue = elementValue;
+		_elementKey = new SerializableObjectWrapper(elementKey);
+		_elementValue = new SerializableObjectWrapper(elementValue);
 		_timeToLive = timeToLive;
 		_portalCacheClusterEventType = portalCacheClusterEventType;
 	}
@@ -106,11 +107,11 @@ public class PortalCacheClusterEvent implements Serializable {
 	}
 
 	public Serializable getElementKey() {
-		return _elementKey;
+		return SerializableObjectWrapper.unwrap(_elementKey);
 	}
 
 	public Serializable getElementValue() {
-		return _elementValue;
+		return SerializableObjectWrapper.unwrap(_elementValue);
 	}
 
 	public PortalCacheClusterEventType getEventType() {
@@ -135,7 +136,7 @@ public class PortalCacheClusterEvent implements Serializable {
 	}
 
 	public void setElementValue(Serializable elementValue) {
-		_elementValue = elementValue;
+		_elementValue = new SerializableObjectWrapper(elementValue);
 	}
 
 	public void setTimeToLive(int timeToLive) {
@@ -167,8 +168,8 @@ public class PortalCacheClusterEvent implements Serializable {
 		return sb.toString();
 	}
 
-	private final Serializable _elementKey;
-	private Serializable _elementValue;
+	private final SerializableObjectWrapper _elementKey;
+	private SerializableObjectWrapper _elementValue;
 	private final PortalCacheClusterEventType _portalCacheClusterEventType;
 	private final String _portalCacheManagerName;
 	private final String _portalCacheName;

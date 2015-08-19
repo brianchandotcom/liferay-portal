@@ -17,10 +17,8 @@ package com.liferay.portal.cache.cluster.internal.clusterlink;
 import com.liferay.portal.cache.cluster.internal.PortalCacheClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.Priority;
-import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.messaging.Message;
-
-import java.nio.ByteBuffer;
+import com.liferay.util.SerializableUtil;
 
 /**
  * @author Shuyang Zhou
@@ -42,13 +40,7 @@ public class ClusterLinkPortalCacheClusterChannel
 
 		message.setDestinationName(_destinationName);
 
-		Serializer serializer = new Serializer();
-
-		serializer.writeObject(portalCacheClusterEvent);
-
-		ByteBuffer byteBuffer = serializer.toByteBuffer();
-
-		message.setPayload(byteBuffer.array());
+		message.setPayload(SerializableUtil.serialize(portalCacheClusterEvent));
 
 		_clusterLink.sendMulticastMessage(message, _priority);
 	}

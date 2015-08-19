@@ -20,15 +20,13 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
-import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.util.SerializableUtil;
 
 import java.io.Serializable;
-
-import java.nio.ByteBuffer;
 
 /**
  * @author Shuyang Zhou
@@ -39,10 +37,8 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		byte[] data = (byte[])message.getPayload();
 
-		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(data));
-
 		PortalCacheClusterEvent portalCacheClusterEvent =
-			(PortalCacheClusterEvent)deserializer.readObject();
+			(PortalCacheClusterEvent)SerializableUtil.deserialize(data);
 
 		if (portalCacheClusterEvent == null) {
 			if (_log.isWarnEnabled()) {

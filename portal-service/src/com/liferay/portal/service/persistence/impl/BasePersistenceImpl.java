@@ -299,6 +299,11 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		_sessionFactory = sessionFactory;
 		_dialect = _sessionFactory.getDialect();
 		_db = DBFactoryUtil.getDB(_dialect);
+
+		_databaseOrderByColumnsMaximum = GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.DATABASE_ORDER_BY_COLUMNS_MAXIMUM,
+				new Filter(_db.getType())));
 	}
 
 	@Override
@@ -429,17 +434,12 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 		String[] orderByFields = orderByComparator.getOrderByFields();
 
-		int databaseOrderByColumnsMaximum = GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.DATABASE_ORDER_BY_COLUMNS_MAXIMUM,
-				new Filter(_db.getType())));
-
 		int length = orderByFields.length;
 
-		if ((databaseOrderByColumnsMaximum > 0) &&
-			(databaseOrderByColumnsMaximum < length)) {
+		if ((_databaseOrderByColumnsMaximum > 0) &&
+			(_databaseOrderByColumnsMaximum < length)) {
 
-			length = databaseOrderByColumnsMaximum;
+			length = _databaseOrderByColumnsMaximum;
 		}
 
 		for (int i = 0; i < length; i++) {
@@ -587,6 +587,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasePersistenceImpl.class);
 
+	private int _databaseOrderByColumnsMaximum;
 	private DataSource _dataSource;
 	private DB _db;
 	private Dialect _dialect;

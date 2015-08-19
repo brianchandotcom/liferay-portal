@@ -25,11 +25,11 @@ import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.shopping.configuration.ShoppingGroupServiceOverriddenConfiguration;
 import com.liferay.shopping.constants.ShoppingConstants;
 import com.liferay.shopping.exception.NoSuchOrderException;
 import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.service.ShoppingOrderLocalServiceUtil;
-import com.liferay.shopping.settings.ShoppingGroupServiceOverriddenConfiguration;
 import com.liferay.shopping.util.ShoppingUtil;
 import com.liferay.shopping.web.util.ShoppingWebComponentProvider;
 

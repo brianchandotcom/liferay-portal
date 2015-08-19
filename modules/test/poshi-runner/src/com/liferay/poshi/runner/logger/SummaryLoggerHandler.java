@@ -57,7 +57,14 @@ public final class SummaryLoggerHandler {
 
 	public static void passSummary(Element element) {
 		if (_isCurrentMajorStep(element)) {
-			_passStepLoggerElement(_majorStepLoggerElement);
+			if (_containsMinorStepWarning) {
+				_warnStepLoggerElement(_majorStepLoggerElement);
+
+				_containsMinorStepWarning = false;
+			}
+			else {
+				_passStepLoggerElement(_majorStepLoggerElement);
+			}
 
 			_stopMajorStep();
 		}
@@ -113,6 +120,8 @@ public final class SummaryLoggerHandler {
 			_causeBodyLoggerElement.setText(message);
 
 			_warnStepLoggerElement(_minorStepLoggerElement);
+
+			_containsMinorStepWarning = true;
 
 			_stopMinorStep();
 		}
@@ -468,6 +477,7 @@ public final class SummaryLoggerHandler {
 	}
 
 	private static LoggerElement _causeBodyLoggerElement;
+	private static boolean _containsMinorStepWarning = false;
 	private static Element _majorStepElement;
 	private static LoggerElement _majorStepLoggerElement;
 	private static LoggerElement _majorStepsLoggerElement;

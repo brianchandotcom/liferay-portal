@@ -23,6 +23,9 @@ apply plugin: "findbugs"
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")
 File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 File moduleFrameworkBaseDir = new File(liferay.liferayHome, "osgi")
+File nodejsDir = new File(buildDir, "nodejs")
+
+task setupNpmCache(type: NpmTask)
 
 group = "com.liferay"
 distsDirName = FileUtil.relativize(rootProject.file("../tools/sdk/dist2"), buildDir)
@@ -150,6 +153,22 @@ jspC {
 	jspCVersion = project.properties["com.liferay.jasper.jspc.version"]
 }
 
+node {
+	download = true
+	nodeModulesDir = nodejsDir
+	npmVersion = project.properties["nodejs.npm.version"]
+	version = project.properties["nodejs.version"]
+	workDir = nodejsDir
+}
+
+npmSetup {
+	finalizedBy setupNpmCache
+}
+
+setupNpmCache {
+	args = ["config", "set", "cache", new File(nodejsDir, ".cache"), "--global"]
+}
+
 repositories {
 	if (!Boolean.getBoolean("maven.local.ignore")) {
 		mavenLocal()
@@ -202,34 +221,6 @@ pluginManager.withPlugin("com.liferay.maven.plugin.builder") {
 	}
 }
 
-pluginManager.withPlugin("com.moowork.node") {
-	File nodejsDir = new File(buildDir, "nodejs")
-
-	task setupNpmCache(type: NpmTask)
-
-	node {
-		download = true
-		nodeModulesDir = nodejsDir
-		npmVersion = project.properties["nodejs.npm.version"]
-		version = project.properties["nodejs.version"]
-		workDir = nodejsDir
-	}
-
-	npmSetup {
-		finalizedBy setupNpmCache
-	}
-
-	setupNpmCache {
-		args = ["config", "set", "cache", new File(nodejsDir, ".cache"), "--global"]
-	}
-
-	tasks.withType(NpmTask) {
-		if (it != npmSetup) {
-			dependsOn npmSetup
-		}
-	}
-}
-
 tasks.withType(FindBugs) {
 	maxHeapSize = "1g"
 
@@ -242,6 +233,12 @@ tasks.withType(FindBugs) {
 tasks.withType(JavaCompile) {
 	options.encoding = "UTF-8"
 	options.warnings = false
+}
+
+tasks.withType(NpmTask) {
+	if (it != npmSetup) {
+		dependsOn npmSetup
+	}
 }
 
 String testClassGroupIndex = System.getProperty("test.class.group.index")

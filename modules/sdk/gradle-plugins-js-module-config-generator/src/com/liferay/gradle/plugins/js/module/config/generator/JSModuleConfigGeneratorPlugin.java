@@ -63,7 +63,8 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 			addTaskDownloadModule(
 				project, DOWNLOAD_LFR_MODULE_CONFIG_GENERATOR_TASK_NAME);
 
-		addTaskConfigJSModules(project);
+		final ConfigJSModulesTask configJSModulesTask = addTaskConfigJSModules(
+			project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -74,6 +75,8 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 						downloadLfrModuleConfigGeneratorTask,
 						"lfr-module-config-generator",
 						jsModuleConfigGeneratorExtension.getVersion());
+
+					configureTaskConfigJSModules(configJSModulesTask);
 				}
 
 			});
@@ -88,16 +91,6 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 				"combobox in Liferay.");
 		configJSModulesTask.setGroup(BasePlugin.BUILD_GROUP);
 		configJSModulesTask.setModuleConfigFile(project.file("bower.json"));
-
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
-		File outputFile = new File(
-			sourceSetOutput.getResourcesDir(), "META-INF/config.json");
-
-		configJSModulesTask.setOutputFile(outputFile);
 
 		Task classesTask = GradleUtil.getTask(
 			project, JavaPlugin.CLASSES_TASK_NAME);
@@ -128,6 +121,30 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 			});
 
 		return npmTask;
+	}
+
+	protected void configureTaskConfigJSModules(
+		ConfigJSModulesTask configJSModulesTask) {
+
+		configureTaskConfigJSModulesOutputFile(configJSModulesTask);
+	}
+
+	protected void configureTaskConfigJSModulesOutputFile(
+		ConfigJSModulesTask configJSModulesTask) {
+
+		if (configJSModulesTask.getOutputFile() != null) {
+			return;
+		}
+
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			configJSModulesTask.getProject(), SourceSet.MAIN_SOURCE_SET_NAME);
+
+		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+		File outputFile = new File(
+			sourceSetOutput.getResourcesDir(), "META-INF/config.json");
+
+		configJSModulesTask.setOutputFile(outputFile);
 	}
 
 	protected void configureTaskDownloadModule(

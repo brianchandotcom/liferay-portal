@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.js.module.config.generator;
 
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 
 import com.moowork.gradle.node.NodeExtension;
@@ -37,11 +38,13 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.FileTreeElement;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.util.PatternFilterable;
@@ -57,6 +60,8 @@ public class ConfigJSModulesTask extends NodeTask {
 		dependsOn(
 			JSModuleConfigGeneratorPlugin.
 				DOWNLOAD_LFR_MODULE_CONFIG_GENERATOR_TASK_NAME);
+		dependsOn(
+			BasePlugin.CLEAN_TASK_NAME + StringUtil.capitalize(getName()));
 		dependsOn(SetupTask.NAME);
 
 		onlyIf(
@@ -127,24 +132,31 @@ public class ConfigJSModulesTask extends NodeTask {
 	public void exec() {
 		Project project = getProject();
 
-		final File sourceTmpDir = new File(getTemporaryDir(), "files");
-
-		project.delete(sourceTmpDir);
-
 		project.copy(
 			new Action<CopySpec>() {
 
 				@Override
 				public void execute(CopySpec copySpec) {
 					copySpec.from(getSourceFiles());
-					copySpec.into(sourceTmpDir);
+					copySpec.into(getOutputDir());
 				}
 
 			});
 
-		setArgs(getCompleteArgs(sourceTmpDir));
+		setArgs(getCompleteArgs());
 
 		super.exec();
+
+		project.copy(
+			new Action<CopySpec>() {
+
+				@Override
+				public void execute(CopySpec copySpec) {
+					copySpec.from(getOutputDir());
+					copySpec.into(getSourceDir());
+				}
+
+			});
 	}
 
 	@Input
@@ -177,6 +189,11 @@ public class ConfigJSModulesTask extends NodeTask {
 	@Optional
 	public String getModuleFormat() {
 		return GradleUtil.toString(_moduleFormat);
+	}
+
+	@OutputDirectory
+	public File getOutputDir() {
+		return new File(getTemporaryDir(), "files");
 	}
 
 	@OutputFile
@@ -289,7 +306,7 @@ public class ConfigJSModulesTask extends NodeTask {
 		_sourceDir = sourceDir;
 	}
 
-	protected List<Object> getCompleteArgs(File sourceTmpDir) {
+	protected List<Object> getCompleteArgs() {
 		List<Object> completeArgs = new ArrayList<>();
 
 		GUtil.addToCollection(completeArgs, getArgs());
@@ -315,14 +332,26 @@ public class ConfigJSModulesTask extends NodeTask {
 			completeArgs.add(moduleFormat);
 		}
 
-		completeArgs.add("--ignorePath");
-		completeArgs.add(isIgnorePath());
+		boolean ignorePath = isIgnorePath();
 
-		completeArgs.add("--keepExtension");
-		completeArgs.add(isKeepFileExtension());
+		if (ignorePath) {
+			completeArgs.add("--ignorePath");
+			completeArgs.add(ignorePath);
+		}
 
-		completeArgs.add("--lowerCase");
-		completeArgs.add(isLowerCase());
+		boolean keepFileExtension = isKeepFileExtension();
+
+		if (keepFileExtension) {
+			completeArgs.add("--keepExtension");
+			completeArgs.add(keepFileExtension);
+		}
+
+		boolean lowerCase = isLowerCase();
+
+		if (lowerCase) {
+			completeArgs.add("--lowerCase");
+			completeArgs.add(lowerCase);
+		}
 
 		completeArgs.add("--moduleConfig");
 		completeArgs.add(FileUtil.getAbsolutePath(getModuleConfigFile()));
@@ -330,11 +359,12 @@ public class ConfigJSModulesTask extends NodeTask {
 		completeArgs.add("--output");
 		completeArgs.add(FileUtil.getAbsolutePath(getOutputFile()));
 
-		completeArgs.add("--moduleRoot");
-		completeArgs.add(FileUtil.getAbsolutePath(sourceTmpDir));
+		File outputDir = getOutputDir();
 
-		completeArgs.add(
-			FileUtil.getAbsolutePath(sourceTmpDir.getParentFile()));
+		completeArgs.add("--moduleRoot");
+		completeArgs.add(FileUtil.getAbsolutePath(outputDir));
+
+		completeArgs.add(FileUtil.getAbsolutePath(outputDir.getParentFile()));
 
 		return completeArgs;
 	}

@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="portal-cache-ehcache-provider" />
+	<property name="import.shared" value="portal-cache,portal-cache-ehcache-provider" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 

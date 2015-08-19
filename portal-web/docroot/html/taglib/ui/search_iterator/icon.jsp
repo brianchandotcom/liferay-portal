@@ -58,6 +58,8 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 	<%
 	boolean allRowsIsChecked = true;
 
+	request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_CHECKER, rowChecker);
+
 	for (int i = 0; i < resultRows.size(); i++) {
 		com.liferay.portal.kernel.dao.search.ResultRow row = (com.liferay.portal.kernel.dao.search.ResultRow)resultRows.get(i);
 

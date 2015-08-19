@@ -74,7 +74,7 @@ public abstract class BaseBackgroundTaskTestCase {
 			Mockito.mock(User.class)
 		);
 
-		_backgroundTaskThreadLocalManagerImpl.setUserLocalService(
+		backgroundTaskThreadLocalManagerImpl.setUserLocalService(
 			userLocalService);
 
 		_companyId = 1234l;

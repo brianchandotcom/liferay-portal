@@ -592,6 +592,9 @@
 
 		<execute function="AssertTextEquals" locator1="PGMysites#INFO_MESSAGE" value1="No sites were found." />
 		<execute function="AssertClick" locator1="PGMysites#NAVIGATION_AVAILABLE_SITES" value1="Available Sites" />
+
+		<execute function="Pause" locator1="3000" />
+
 		<execute function="Type" locator1="PGMysitesAvailablesites#SEARCH_FIELD" value1="${siteName}" />
 		<execute function="AssertClick" locator1="PGMysitesAvailablesites#SEARCH_BUTTON" value1="Search" />
 

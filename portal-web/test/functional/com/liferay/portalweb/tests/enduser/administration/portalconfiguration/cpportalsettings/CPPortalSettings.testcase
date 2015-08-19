@@ -602,7 +602,10 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPGViaAP" />
+		<execute macro="BlogsEntry#addPGViaAP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
 		<execute macro="Page#openURL" />
 

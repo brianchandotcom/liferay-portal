@@ -2190,6 +2190,7 @@
 		<execute macro="SitePage#addCP">
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${sitePageName}" />
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">

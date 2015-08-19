@@ -25,4 +25,6 @@ public interface Editor {
 
 	public String getName();
 
+	public String getResourceType();
+
 }

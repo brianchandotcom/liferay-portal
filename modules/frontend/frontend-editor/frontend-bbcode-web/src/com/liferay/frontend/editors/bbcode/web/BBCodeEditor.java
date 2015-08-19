@@ -15,6 +15,7 @@
 package com.liferay.frontend.editors.web;
 
 import com.liferay.portal.kernel.editor.Editor;
+import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,6 +29,11 @@ public class BBCodeEditor extends BaseEditor {
 	@Override
 	public String getName() {
 		return "bbcode";
+	}
+
+	@Override
+	public String getResourceType() {
+		return PortalWebResourceConstants.RESOURCE_TYPE_BBCODEEDITOR;
 	}
 
 	@Override

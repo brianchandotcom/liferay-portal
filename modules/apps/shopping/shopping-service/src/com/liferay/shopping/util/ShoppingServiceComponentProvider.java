@@ -14,7 +14,6 @@
 
 package com.liferay.shopping.util;
 
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration;
 
 import org.osgi.service.component.annotations.Activate;
@@ -34,10 +33,6 @@ public class ShoppingServiceComponentProvider {
 		return _shoppingServiceComponentProvider;
 	}
 
-	public SettingsFactory getSettingsFactory() {
-		return _settingsFactory;
-	}
-
 	public ShoppingGroupServiceConfiguration
 		getShoppingGroupServiceConfiguration() {
 
@@ -52,11 +47,6 @@ public class ShoppingServiceComponentProvider {
 	@Deactivate
 	protected void deactivate() {
 		_shoppingServiceComponentProvider = null;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
 	}
 
 	@Reference
@@ -75,7 +65,6 @@ public class ShoppingServiceComponentProvider {
 	private static ShoppingServiceComponentProvider
 		_shoppingServiceComponentProvider;
 
-	private SettingsFactory _settingsFactory;
 	private ShoppingGroupServiceConfiguration
 		_shoppingGroupServiceConfiguration;
 

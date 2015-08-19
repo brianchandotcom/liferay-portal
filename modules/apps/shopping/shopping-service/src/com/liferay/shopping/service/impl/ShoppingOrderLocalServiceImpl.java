@@ -15,11 +15,11 @@
 package com.liferay.shopping.service.impl;
 
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationException;
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
@@ -63,7 +63,6 @@ import com.liferay.shopping.model.ShoppingOrderConstants;
 import com.liferay.shopping.model.ShoppingOrderItem;
 import com.liferay.shopping.model.impl.ShoppingCartItemImpl;
 import com.liferay.shopping.service.base.ShoppingOrderLocalServiceBaseImpl;
-import com.liferay.shopping.util.ShoppingServiceComponentProvider;
 import com.liferay.shopping.util.ShoppingUtil;
 import com.liferay.shopping.util.comparator.OrderDateComparator;
 import com.liferay.util.CreditCard;
@@ -783,17 +782,10 @@ public class ShoppingOrderLocalServiceImpl
 	}
 
 	private ShoppingGroupServiceOverriddenConfiguration
-				_getShoppingGroupServiceOverriddenConfiguration(long groupId)
-		throws SettingsException {
+			_getShoppingGroupServiceOverriddenConfiguration(long groupId)
+		throws ModuleConfigurationException {
 
-		ShoppingServiceComponentProvider shoppingServiceComponentProvider =
-			ShoppingServiceComponentProvider.
-				getShoppingServiceComponentProvider();
-
-		SettingsFactory settingsFactory =
-			shoppingServiceComponentProvider.getSettingsFactory();
-
-		return settingsFactory.getSettings(
+		return ModuleConfigurationFactoryUtil.getModuleConfiguration(
 			ShoppingGroupServiceOverriddenConfiguration.class,
 			new GroupServiceSettingsLocator(
 				groupId, ShoppingConstants.SERVICE_NAME));

@@ -62,7 +62,7 @@ import com.liferay.shopping.model.ShoppingOrderConstants;
 import com.liferay.shopping.model.ShoppingOrderItem;
 import com.liferay.shopping.model.impl.ShoppingCartItemImpl;
 import com.liferay.shopping.service.base.ShoppingOrderLocalServiceBaseImpl;
-import com.liferay.shopping.settings.ShoppingGroupServiceSettings;
+import com.liferay.shopping.settings.ShoppingGroupServiceOverriddenConfiguration;
 import com.liferay.shopping.util.ShoppingServiceComponentProvider;
 import com.liferay.shopping.util.ShoppingUtil;
 import com.liferay.shopping.util.comparator.OrderDateComparator;
@@ -301,10 +301,14 @@ public class ShoppingOrderLocalServiceImpl
 
 		Map<ShoppingCartItem, Integer> items = cart.getItems();
 
-		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
-			_getShoppingGroupServiceSettings(cart.getGroupId());
+		ShoppingGroupServiceOverriddenConfiguration
+			shoppingGroupServiceOverriddenConfiguration =
+				_getShoppingGroupServiceOverriddenConfiguration(
+					cart.getGroupId());
 
-		if (!ShoppingUtil.meetsMinOrder(shoppingGroupServiceSettings, items)) {
+		if (!ShoppingUtil.meetsMinOrder(
+				shoppingGroupServiceOverriddenConfiguration, items)) {
+
 			throw new CartMinOrderException();
 		}
 
@@ -351,8 +355,8 @@ public class ShoppingOrderLocalServiceImpl
 			ShoppingUtil.calculateAlternativeShipping(
 				items, cart.getAltShipping()));
 		order.setAltShipping(
-			shoppingGroupServiceSettings.getAlternativeShippingName(
-				cart.getAltShipping()));
+			shoppingGroupServiceOverriddenConfiguration.
+				getAlternativeShippingName(cart.getAltShipping()));
 		order.setRequiresShipping(requiresShipping);
 		order.setInsure(cart.isInsure());
 		order.setInsurance(ShoppingUtil.calculateInsurance(items));
@@ -417,21 +421,26 @@ public class ShoppingOrderLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
-			_getShoppingGroupServiceSettings(order.getGroupId());
+		ShoppingGroupServiceOverriddenConfiguration
+			shoppingGroupServiceOverriddenConfiguration =
+				_getShoppingGroupServiceOverriddenConfiguration(
+					order.getGroupId());
 
 		if (emailType.equals("confirmation") &&
-			shoppingGroupServiceSettings.isEmailOrderConfirmationEnabled()) {
+			shoppingGroupServiceOverriddenConfiguration.
+				isEmailOrderConfirmationEnabled()) {
 		}
 		else if (emailType.equals("shipping") &&
-				 shoppingGroupServiceSettings.isEmailOrderShippingEnabled()) {
+				 shoppingGroupServiceOverriddenConfiguration.
+					 isEmailOrderShippingEnabled()) {
 		}
 		else {
 			return;
 		}
 
 		notifyUser(
-			order, emailType, shoppingGroupServiceSettings, serviceContext);
+			order, emailType, shoppingGroupServiceOverriddenConfiguration,
+			serviceContext);
 
 		if (emailType.equals("confirmation") && order.isSendOrderEmail()) {
 			order.setSendOrderEmail(false);
@@ -509,17 +518,19 @@ public class ShoppingOrderLocalServiceImpl
 		ShoppingOrder order = shoppingOrderPersistence.findByPrimaryKey(
 			orderId);
 
-		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
-			_getShoppingGroupServiceSettings(order.getGroupId());
+		ShoppingGroupServiceOverriddenConfiguration
+			shoppingGroupServiceOverriddenConfiguration =
+				_getShoppingGroupServiceOverriddenConfiguration(
+					order.getGroupId());
 
 		validate(
-			shoppingGroupServiceSettings, billingFirstName, billingLastName,
-			billingEmailAddress, billingStreet, billingCity, billingState,
-			billingZip, billingCountry, billingPhone, shipToBilling,
-			shippingFirstName, shippingLastName, shippingEmailAddress,
-			shippingStreet, shippingCity, shippingState, shippingZip,
-			shippingCountry, shippingPhone, ccName, ccType, ccNumber,
-			ccExpMonth, ccExpYear, ccVerNumber);
+			shoppingGroupServiceOverriddenConfiguration, billingFirstName,
+			billingLastName, billingEmailAddress, billingStreet, billingCity,
+			billingState, billingZip, billingCountry, billingPhone,
+			shipToBilling, shippingFirstName, shippingLastName,
+			shippingEmailAddress, shippingStreet, shippingCity, shippingState,
+			shippingZip, shippingCountry, shippingPhone, ccName, ccType,
+			ccNumber, ccExpMonth, ccExpYear, ccVerNumber);
 
 		order.setBillingFirstName(billingFirstName);
 		order.setBillingLastName(billingLastName);
@@ -586,14 +597,15 @@ public class ShoppingOrderLocalServiceImpl
 
 	protected void notifyUser(
 			ShoppingOrder order, String emailType,
-			ShoppingGroupServiceSettings shoppingGroupServiceSettings,
+			ShoppingGroupServiceOverriddenConfiguration
+				shoppingGroupServiceOverriddenConfiguration,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(order.getUserId());
 
 		Currency currency = Currency.getInstance(
-			shoppingGroupServiceSettings.getCurrencyId());
+			shoppingGroupServiceOverriddenConfiguration.getCurrencyId());
 
 		String billingAddress =
 			order.getBillingFirstName() + " " + order.getBillingLastName() +
@@ -619,8 +631,10 @@ public class ShoppingOrderLocalServiceImpl
 
 		double total = ShoppingUtil.calculateTotal(order);
 
-		String fromName = shoppingGroupServiceSettings.getEmailFromName();
-		String fromAddress = shoppingGroupServiceSettings.getEmailFromAddress();
+		String fromName =
+			shoppingGroupServiceOverriddenConfiguration.getEmailFromName();
+		String fromAddress =
+			shoppingGroupServiceOverriddenConfiguration.getEmailFromAddress();
 
 		String toName = user.getFullName();
 		String toAddress = user.getEmailAddress();
@@ -630,15 +644,19 @@ public class ShoppingOrderLocalServiceImpl
 
 		if (emailType.equals("confirmation")) {
 			subjectLocalizedValuesMap =
-				shoppingGroupServiceSettings.getEmailOrderConfirmationSubject();
+				shoppingGroupServiceOverriddenConfiguration.
+					getEmailOrderConfirmationSubject();
 			bodyLocalizedValuesMap =
-				shoppingGroupServiceSettings.getEmailOrderConfirmationBody();
+				shoppingGroupServiceOverriddenConfiguration.
+					getEmailOrderConfirmationBody();
 		}
 		else if (emailType.equals("shipping")) {
 			subjectLocalizedValuesMap =
-				shoppingGroupServiceSettings.getEmailOrderShippingSubject();
+				shoppingGroupServiceOverriddenConfiguration.
+					getEmailOrderShippingSubject();
 			bodyLocalizedValuesMap =
-				shoppingGroupServiceSettings.getEmailOrderShippingBody();
+				shoppingGroupServiceOverriddenConfiguration.
+					getEmailOrderShippingBody();
 		}
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
@@ -673,7 +691,8 @@ public class ShoppingOrderLocalServiceImpl
 	}
 
 	protected void validate(
-			ShoppingGroupServiceSettings shoppingGroupServiceSettings,
+			ShoppingGroupServiceOverriddenConfiguration
+				shoppingGroupServiceOverriddenConfiguration,
 			String billingFirstName, String billingLastName,
 			String billingEmailAddress, String billingStreet,
 			String billingCity, String billingState, String billingZip,
@@ -744,8 +763,9 @@ public class ShoppingOrderLocalServiceImpl
 			}
 		}
 
-		if (!shoppingGroupServiceSettings.usePayPal() &&
-			(shoppingGroupServiceSettings.getCcTypes().length > 0)) {
+		if (!shoppingGroupServiceOverriddenConfiguration.usePayPal() &&
+			(shoppingGroupServiceOverriddenConfiguration.getCcTypes().length >
+				0)) {
 
 			if (Validator.isNull(ccName)) {
 				throw new CCNameException();
@@ -762,8 +782,8 @@ public class ShoppingOrderLocalServiceImpl
 		}
 	}
 
-	private ShoppingGroupServiceSettings _getShoppingGroupServiceSettings(
-			long groupId)
+	private ShoppingGroupServiceOverriddenConfiguration
+				_getShoppingGroupServiceOverriddenConfiguration(long groupId)
 		throws SettingsException {
 
 		ShoppingServiceComponentProvider shoppingServiceComponentProvider =
@@ -774,7 +794,7 @@ public class ShoppingOrderLocalServiceImpl
 			shoppingServiceComponentProvider.getSettingsFactory();
 
 		return settingsFactory.getSettings(
-			ShoppingGroupServiceSettings.class,
+			ShoppingGroupServiceOverriddenConfiguration.class,
 			new GroupServiceSettingsLocator(
 				groupId, ShoppingConstants.SERVICE_NAME));
 	}

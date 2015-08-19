@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/shopping/init.jsp" %>
 
 <%
-shoppingGroupServiceSettings = settingsFactory.getSettings(ShoppingGroupServiceSettings.class, new ParameterMapSettingsLocator(request.getParameterMap(), new GroupServiceSettingsLocator(scopeGroupId, ShoppingConstants.SERVICE_NAME)));
+shoppingGroupServiceOverriddenConfiguration = settingsFactory.getSettings(ShoppingGroupServiceOverriddenConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new GroupServiceSettingsLocator(scopeGroupId, ShoppingConstants.SERVICE_NAME)));
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
@@ -55,13 +55,13 @@ shoppingGroupServiceSettings = settingsFactory.getSettings(ShoppingGroupServiceS
 			</div>
 
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="paypal-email-address" name="preferences--paypalEmailAddress--" type="text" value="<%= shoppingGroupServiceSettings.getPayPalEmailAddress() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="paypal-email-address" name="preferences--paypalEmailAddress--" type="text" value="<%= shoppingGroupServiceOverriddenConfiguration.getPayPalEmailAddress() %>" />
 
 				<aui:field-wrapper label="credit-cards">
 
 					<%
-					String[] ccTypes1 = ShoppingGroupServiceSettings.CC_TYPES;
-					String[] ccTypes2 = shoppingGroupServiceSettings.getCcTypes();
+					String[] ccTypes1 = ShoppingGroupServiceOverriddenConfiguration.CC_TYPES;
+					String[] ccTypes2 = shoppingGroupServiceOverriddenConfiguration.getCcTypes();
 
 					// Left list
 
@@ -96,12 +96,12 @@ shoppingGroupServiceSettings = settingsFactory.getSettings(ShoppingGroupServiceS
 				<aui:select label="currency" name="preferences--currencyId--">
 
 					<%
-					String[] currencyIds = shoppingGroupServiceSettings.getCurrencyIds();
+					String[] currencyIds = shoppingGroupServiceOverriddenConfiguration.getCurrencyIds();
 
 					for (int i = 0; i < currencyIds.length; i++) {
 					%>
 
-						<aui:option label="<%= currencyIds[i] %>" selected="<%= shoppingGroupServiceSettings.getCurrencyId().equals(currencyIds[i]) %>" />
+						<aui:option label="<%= currencyIds[i] %>" selected="<%= shoppingGroupServiceOverriddenConfiguration.getCurrencyId().equals(currencyIds[i]) %>" />
 
 					<%
 					}
@@ -115,7 +115,7 @@ shoppingGroupServiceSettings = settingsFactory.getSettings(ShoppingGroupServiceS
 					for (int i = 0; i < StateUtil.STATES.length; i++) {
 					%>
 
-						<aui:option label="<%= StateUtil.STATES[i].getName() %>" selected="<%= shoppingGroupServiceSettings.getTaxState().equals(StateUtil.STATES[i].getId()) %>" value="<%= StateUtil.STATES[i].getId() %>" />
+						<aui:option label="<%= StateUtil.STATES[i].getName() %>" selected="<%= shoppingGroupServiceOverriddenConfiguration.getTaxState().equals(StateUtil.STATES[i].getId()) %>" value="<%= StateUtil.STATES[i].getId() %>" />
 
 					<%
 					}
@@ -123,9 +123,9 @@ shoppingGroupServiceSettings = settingsFactory.getSettings(ShoppingGroupServiceS
 
 				</aui:select>
 
-				<aui:input maxlength="7" name="taxRate" size="7" type="text" value="<%= taxFormat.format(shoppingGroupServiceSettings.getTaxRate()) %>" />
+				<aui:input maxlength="7" name="taxRate" size="7" type="text" value="<%= taxFormat.format(shoppingGroupServiceOverriddenConfiguration.getTaxRate()) %>" />
 
-				<aui:input label="minimum-order" maxlength="7" name="preferences--minOrder--" size="7" type="text" value="<%= doubleFormat.format(shoppingGroupServiceSettings.getMinOrder()) %>" />
+				<aui:input label="minimum-order" maxlength="7" name="preferences--minOrder--" size="7" type="text" value="<%= doubleFormat.format(shoppingGroupServiceOverriddenConfiguration.getMinOrder()) %>" />
 			</aui:fieldset>
 		</liferay-ui:section>
 
@@ -136,8 +136,8 @@ shoppingGroupServiceSettings = settingsFactory.getSettings(ShoppingGroupServiceS
 
 			<aui:fieldset>
 				<aui:select label="formula" name="preferences--shippingFormula--">
-					<aui:option label="flat-amount" selected='<%= shoppingGroupServiceSettings.getShippingFormula().equals("flat") %>' value="flat" />
-					<aui:option label="percentage" selected='<%= shoppingGroupServiceSettings.getShippingFormula().equals("percentage") %>' />
+					<aui:option label="flat-amount" selected='<%= shoppingGroupServiceOverriddenConfiguration.getShippingFormula().equals("flat") %>' value="flat" />
+					<aui:option label="percentage" selected='<%= shoppingGroupServiceOverriddenConfiguration.getShippingFormula().equals("percentage") %>' />
 				</aui:select>
 
 				<aui:field-wrapper label="values">
@@ -146,8 +146,8 @@ shoppingGroupServiceSettings = settingsFactory.getSettings(ShoppingGroupServiceS
 					int shippingRange = 0;
 
 					for (int i = 0; i < 5; i++) {
-						double shippingRangeA = ShoppingGroupServiceSettings.INSURANCE_RANGE[shippingRange++];
-						double shippingRangeB = ShoppingGroupServiceSettings.INSURANCE_RANGE[shippingRange++];
+						double shippingRangeA = ShoppingGroupServiceOverriddenConfiguration.INSURANCE_RANGE[shippingRange++];
+						double shippingRangeB = ShoppingGroupServiceOverriddenConfiguration.INSURANCE_RANGE[shippingRange++];
 					%>
 
 					<%= currencyFormat.format(shippingRangeA) %>
@@ -160,7 +160,7 @@ shoppingGroupServiceSettings = settingsFactory.getSettings(ShoppingGroupServiceS
 						and over
 					</c:if>
 
-					<aui:input label="" maxlength="6" name='<%= "shipping" + i %>' size="6" title="shipping" type="text" value="<%= GetterUtil.getString(shoppingGroupServiceSettings.getShipping()[i]) %>" />
+					<aui:input label="" maxlength="6" name='<%= "shipping" + i %>' size="6" title="shipping" type="text" value="<%= GetterUtil.getString(shoppingGroupServiceOverriddenConfiguration.getShipping()[i]) %>" />
 
 					<%
 					}
@@ -177,8 +177,8 @@ shoppingGroupServiceSettings = settingsFactory.getSettings(ShoppingGroupServiceS
 
 			<aui:fieldset>
 				<aui:select label="formula" name="preferences--insuranceFormula--">
-					<aui:option label="flat-amount" selected='<%= shoppingGroupServiceSettings.getInsuranceFormula().equals("flat") %>' value="flat" />
-					<aui:option label="percentage" selected='<%= shoppingGroupServiceSettings.getInsuranceFormula().equals("percentage") %>' />
+					<aui:option label="flat-amount" selected='<%= shoppingGroupServiceOverriddenConfiguration.getInsuranceFormula().equals("flat") %>' value="flat" />
+					<aui:option label="percentage" selected='<%= shoppingGroupServiceOverriddenConfiguration.getInsuranceFormula().equals("percentage") %>' />
 				</aui:select>
 
 				<aui:field-wrapper label="values">
@@ -187,8 +187,8 @@ shoppingGroupServiceSettings = settingsFactory.getSettings(ShoppingGroupServiceS
 					int insuranceRange = 0;
 
 					for (int i = 0; i < 5; i++) {
-						double insuranceRangeA = ShoppingGroupServiceSettings.INSURANCE_RANGE[insuranceRange++];
-						double insuranceRangeB = ShoppingGroupServiceSettings.INSURANCE_RANGE[insuranceRange++];
+						double insuranceRangeA = ShoppingGroupServiceOverriddenConfiguration.INSURANCE_RANGE[insuranceRange++];
+						double insuranceRangeB = ShoppingGroupServiceOverriddenConfiguration.INSURANCE_RANGE[insuranceRange++];
 					%>
 
 					<%= currencyFormat.format(insuranceRangeA) %>
@@ -201,7 +201,7 @@ shoppingGroupServiceSettings = settingsFactory.getSettings(ShoppingGroupServiceS
 						and over
 					</c:if>
 
-					<aui:input label="" maxlength="6" name='<%= "insurance" + i %>' size="6" title="insurance" type="text" value="<%= GetterUtil.getString(shoppingGroupServiceSettings.getInsurance()[i]) %>" />
+					<aui:input label="" maxlength="6" name='<%= "insurance" + i %>' size="6" title="insurance" type="text" value="<%= GetterUtil.getString(shoppingGroupServiceOverriddenConfiguration.getInsurance()[i]) %>" />
 
 					<%
 					}
@@ -213,33 +213,33 @@ shoppingGroupServiceSettings = settingsFactory.getSettings(ShoppingGroupServiceS
 
 		<liferay-ui:section>
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" type="text" value="<%= shoppingGroupServiceSettings.getEmailFromName() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" type="text" value="<%= shoppingGroupServiceOverriddenConfiguration.getEmailFromName() %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" type="text" value="<%= shoppingGroupServiceSettings.getEmailFromAddress() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" type="text" value="<%= shoppingGroupServiceOverriddenConfiguration.getEmailFromAddress() %>" />
 			</aui:fieldset>
 		</liferay-ui:section>
 
 		<%
-		Map<String, String> emailDefinitionTerms = ShoppingUtil.getEmailDefinitionTerms(renderRequest, shoppingGroupServiceSettings.getEmailFromAddress(), shoppingGroupServiceSettings.getEmailFromName());
+		Map<String, String> emailDefinitionTerms = ShoppingUtil.getEmailDefinitionTerms(renderRequest, shoppingGroupServiceOverriddenConfiguration.getEmailFromAddress(), shoppingGroupServiceOverriddenConfiguration.getEmailFromName());
 		%>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= shoppingGroupServiceSettings.getEmailOrderConfirmationBodyXml() %>"
+				emailBody="<%= shoppingGroupServiceOverriddenConfiguration.getEmailOrderConfirmationBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= shoppingGroupServiceSettings.isEmailOrderConfirmationEnabled() %>"
+				emailEnabled="<%= shoppingGroupServiceOverriddenConfiguration.isEmailOrderConfirmationEnabled() %>"
 				emailParam="emailOrderConfirmation"
-				emailSubject="<%= shoppingGroupServiceSettings.getEmailOrderConfirmationSubjectXml() %>"
+				emailSubject="<%= shoppingGroupServiceOverriddenConfiguration.getEmailOrderConfirmationSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= shoppingGroupServiceSettings.getEmailOrderShippingBodyXml() %>"
+				emailBody="<%= shoppingGroupServiceOverriddenConfiguration.getEmailOrderShippingBodyXml() %>"
 				emailDefinitionTerms="<%= emailDefinitionTerms %>"
-				emailEnabled="<%= shoppingGroupServiceSettings.isEmailOrderShippingEnabled() %>"
+				emailEnabled="<%= shoppingGroupServiceOverriddenConfiguration.isEmailOrderShippingEnabled() %>"
 				emailParam="emailOrderShipping"
-				emailSubject="<%= shoppingGroupServiceSettings.getEmailOrderShippingSubjectXml() %>"
+				emailSubject="<%= shoppingGroupServiceOverriddenConfiguration.getEmailOrderShippingSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 	</liferay-ui:tabs>

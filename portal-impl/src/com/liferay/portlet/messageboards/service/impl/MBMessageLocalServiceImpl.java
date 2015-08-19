@@ -191,6 +191,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
 		boolean anonymous = false;
+		Date now = new Date();
 		double priority = 0.0;
 		boolean allowPingbacks = false;
 
@@ -198,6 +199,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setAttribute("className", className);
 		serviceContext.setAttribute("classPK", String.valueOf(classPK));
+		serviceContext.setCreateDate(now);
+		serviceContext.setModifiedDate(now);
 
 		MBMessage message = addMessage(
 			userId, userName, groupId, categoryId, threadId, parentMessageId,

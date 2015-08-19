@@ -2654,6 +2654,13 @@ public class PortalImpl implements Portal {
 	public HttpServletRequest getHttpServletRequest(
 		PortletRequest portletRequest) {
 
+		if (portletRequest instanceof LiferayPortletRequest) {
+			LiferayPortletRequest liferayPortletRequest =
+				(LiferayPortletRequest)portletRequest;
+
+			return liferayPortletRequest.getHttpServletRequest();
+		}
+
 		PortletRequestImpl portletRequestImpl =
 			PortletRequestImpl.getPortletRequestImpl(portletRequest);
 
@@ -2663,6 +2670,13 @@ public class PortalImpl implements Portal {
 	@Override
 	public HttpServletResponse getHttpServletResponse(
 		PortletResponse portletResponse) {
+
+		if (portletResponse instanceof LiferayPortletResponse) {
+			LiferayPortletResponse liferayPortletResponse =
+				(LiferayPortletResponse)portletResponse;
+
+			return liferayPortletResponse.getHttpServletResponse();
+		}
 
 		PortletResponseImpl portletResponseImpl =
 			PortletResponseImpl.getPortletResponseImpl(portletResponse);
@@ -3180,6 +3194,10 @@ public class PortalImpl implements Portal {
 	public LiferayPortletRequest getLiferayPortletRequest(
 		PortletRequest portletRequest) {
 
+		if (portletRequest instanceof LiferayPortletRequest) {
+			return (LiferayPortletRequest)portletRequest;
+		}
+
 		PortletRequestImpl portletRequestImpl =
 			PortletRequestImpl.getPortletRequestImpl(portletRequest);
 
@@ -3189,6 +3207,10 @@ public class PortalImpl implements Portal {
 	@Override
 	public LiferayPortletResponse getLiferayPortletResponse(
 		PortletResponse portletResponse) {
+
+		if (portletResponse instanceof LiferayPortletResponse) {
+			return (LiferayPortletResponse)portletResponse;
+		}
 
 		PortletResponseImpl portletResponseImpl =
 			PortletResponseImpl.getPortletResponseImpl(portletResponse);

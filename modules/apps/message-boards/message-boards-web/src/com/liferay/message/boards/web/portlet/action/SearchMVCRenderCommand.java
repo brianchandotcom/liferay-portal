@@ -38,7 +38,7 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/portlet/message_boards/search.jsp";
+		return "/message_boards/search.jsp";
 	}
 
 }

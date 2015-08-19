@@ -83,6 +83,10 @@ public class LiferaySeleniumHelper {
 		_javaScriptExceptions.add(exception);
 	}
 
+	public static void addToJavaScriptExceptions(List<Exception> exceptions) {
+		_javaScriptExceptions.addAll(exceptions);
+	}
+
 	public static void addToLiferayExceptions(Exception exception) {
 		_liferayExceptions.add(exception);
 	}

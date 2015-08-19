@@ -100,6 +100,24 @@ public final class SummaryLoggerHandler {
 		}
 	}
 
+	public static void warnSummary(Element element, String message) {
+		if (_isCurrentMajorStep(element)) {
+			_causeBodyLoggerElement.setText(message);
+
+			_warnStepLoggerElement(_majorStepLoggerElement);
+
+			_stopMajorStep();
+		}
+
+		if (_isCurrentMinorStep(element)) {
+			_causeBodyLoggerElement.setText(message);
+
+			_warnStepLoggerElement(_minorStepLoggerElement);
+
+			_stopMinorStep();
+		}
+	}
+
 	private static void _failStepLoggerElement(
 		LoggerElement stepLoggerElement) {
 
@@ -434,6 +452,19 @@ public final class SummaryLoggerHandler {
 	private static void _stopMinorStep() {
 		_minorStepElement = null;
 		_minorStepLoggerElement = null;
+	}
+
+	private static void _warnStepLoggerElement(
+		LoggerElement stepLoggerElement) {
+
+		stepLoggerElement.addClassName("summary-warning");
+
+		LoggerElement lineContainerLoggerElement =
+			stepLoggerElement.loggerElement("div");
+
+		lineContainerLoggerElement.addChildLoggerElement(
+			_getStatusLoggerElement("WARNING"));
+		lineContainerLoggerElement.setName("strong");
 	}
 
 	private static LoggerElement _causeBodyLoggerElement;

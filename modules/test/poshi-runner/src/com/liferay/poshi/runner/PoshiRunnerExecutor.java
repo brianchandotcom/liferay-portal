@@ -384,10 +384,10 @@ public class PoshiRunnerExecutor {
 
 		if (_functionExecuteElement == executeElement) {
 			if (_functionWarningMessage != null) {
-				SummaryLoggerHandler.failSummary(
+				SummaryLoggerHandler.warnSummary(
 					_functionExecuteElement, _functionWarningMessage);
 
-				CommandLoggerHandler.failCommand(_functionExecuteElement);
+				CommandLoggerHandler.warnCommand(_functionExecuteElement);
 			}
 			else {
 				SummaryLoggerHandler.passSummary(executeElement);

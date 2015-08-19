@@ -12,29 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.configuration.module;
+package com.liferay.portal.kernel.module.configuration;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.settings.SettingsLocator;
 
 /**
- * @author Jürgen Kappler
  * @author Jorge Ferrer
  */
-public class ConfigurationException extends PortalException {
+public interface ConfigurationFactory {
 
-	public ConfigurationException() {
-	}
-
-	public ConfigurationException(String msg) {
-		super(msg);
-	}
-
-	public ConfigurationException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public ConfigurationException(Throwable cause) {
-		super(cause);
-	}
+	public <T> T getConfiguration(
+			Class<T> clazz, SettingsLocator settingsLocator)
+		throws ConfigurationException;
 
 }

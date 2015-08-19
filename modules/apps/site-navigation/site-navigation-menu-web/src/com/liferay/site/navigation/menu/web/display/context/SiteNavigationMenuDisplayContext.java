@@ -14,7 +14,7 @@
 
 package com.liferay.site.navigation.menu.web.display.context;
 
-import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;

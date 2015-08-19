@@ -809,9 +809,11 @@
 		<field name="primKey" type="String">
 			<hint name="max-length">255</hint>
 		</field>
+		<field name="primKeyId" type="long" />
 		<field name="roleId" type="long" />
 		<field name="ownerId" type="long" />
 		<field name="actionIds" type="long" />
+		<field name="viewActionId" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.ResourceTypePermission">
 		<field name="mvccVersion" type="long" />

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -234,10 +235,16 @@ public class ResourcePermissionLocalServiceImpl
 				resourcePermission.setName((String)resourcePermissionArray[1]);
 				resourcePermission.setScope(
 					(Integer)resourcePermissionArray[2]);
-				resourcePermission.setPrimKey(
-					(String)resourcePermissionArray[3]);
+
+				String primKey = (String)resourcePermissionArray[3];
+
+				resourcePermission.setPrimKey(primKey);
+				resourcePermission.setPrimKeyId(GetterUtil.getLong(primKey));
+
 				resourcePermission.setRoleId((Long)resourcePermissionArray[4]);
 				resourcePermission.setActionIds(resourceActionBitwiseValue);
+				resourcePermission.setViewActionId(
+					resourceActionBitwiseValue % 2 == 1);
 
 				session.save(resourcePermission);
 
@@ -1219,6 +1226,7 @@ public class ResourcePermissionLocalServiceImpl
 			resourcePermission.setName(name);
 			resourcePermission.setScope(scope);
 			resourcePermission.setPrimKey(primKey);
+			resourcePermission.setPrimKeyId(GetterUtil.getLong(primKey));
 			resourcePermission.setRoleId(roleId);
 			resourcePermission.setOwnerId(ownerId);
 		}
@@ -1265,6 +1273,7 @@ public class ResourcePermissionLocalServiceImpl
 		}
 
 		resourcePermission.setActionIds(actionIdsLong);
+		resourcePermission.setViewActionId(actionIdsLong % 2 == 1);
 
 		resourcePermissionPersistence.update(resourcePermission);
 

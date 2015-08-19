@@ -630,7 +630,11 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
+		<execute macro="Page#changeSiteScope">
+			<var name="portletCategoryName" value="My Sites" />
+			<var name="siteName" value="Liferay" />
+		</execute>
+
 		<execute function="AssertElementNotPresent" locator1="Dockbar#ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
 	</command>
 

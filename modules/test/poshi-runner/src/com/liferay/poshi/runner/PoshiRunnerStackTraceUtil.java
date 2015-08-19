@@ -43,11 +43,15 @@ public final class PoshiRunnerStackTraceUtil {
 			sb.append(PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath));
 		}
 
-		sb.append(
-			PoshiRunnerGetterUtil.getFileNameFromFilePath(_filePaths.peek()));
+		String currentFilePath = _filePaths.peek();
 
-		sb.append(":");
-		sb.append(_currentElement.attributeValue("line-number"));
+		if (!currentFilePath.contains(".function")) {
+			sb.append(
+				PoshiRunnerGetterUtil.getFileNameFromFilePath(currentFilePath));
+
+			sb.append(":");
+			sb.append(_currentElement.attributeValue("line-number"));
+		}
 
 		return sb.toString();
 	}

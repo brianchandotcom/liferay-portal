@@ -18,6 +18,7 @@ import com.liferay.poshi.runner.logger.CommandLoggerHandler;
 import com.liferay.poshi.runner.logger.LoggerUtil;
 import com.liferay.poshi.runner.logger.SummaryLoggerHandler;
 import com.liferay.poshi.runner.logger.XMLLoggerHandler;
+import com.liferay.poshi.runner.selenium.LiferaySeleniumHelper;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 
@@ -98,6 +99,10 @@ public class PoshiRunner {
 			_runSetUp();
 
 			_runCommand();
+
+			LiferaySeleniumHelper.writePoshiWarnings();
+
+			LiferaySeleniumHelper.assertNoPoshiWarnings();
 		}
 		catch (Exception e) {
 			PoshiRunnerStackTraceUtil.printStackTrace(e.getMessage());

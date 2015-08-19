@@ -27,6 +27,11 @@ import org.osgi.service.component.annotations.Component;
 public class SimpleEditor implements Editor {
 
 	@Override
+	public String getJspPath() {
+		return "/simple.jsp";
+	}
+
+	@Override
 	public String getName() {
 		return "simple";
 	}
@@ -34,11 +39,6 @@ public class SimpleEditor implements Editor {
 	@Override
 	public String getResourceType() {
 		return PortalWebResourceConstants.RESOURCE_TYPE_SIMPLEEDITOR;
-	}
-
-	@Override
-	protected String getJspPath() {
-		return "/simple.jsp";
 	}
 
 }

@@ -27,6 +27,11 @@ import org.osgi.service.component.annotations.Component;
 public class CKEditorCreoleEditor implements Editor {
 
 	@Override
+	public String getJspPath() {
+		return "/ckeditor.jsp";
+	}
+
+	@Override
 	public String getName() {
 		return "ckeditor_creole";
 	}
@@ -34,11 +39,6 @@ public class CKEditorCreoleEditor implements Editor {
 	@Override
 	public String getResourceType() {
 		return PortalWebResourceConstants.RESOURCE_TYPE_CKEDITOR;
-	}
-
-	@Override
-	protected String getJspPath() {
-		return "/ckeditor.jsp";
 	}
 
 }

@@ -27,6 +27,11 @@ import org.osgi.service.component.annotations.Component;
 public class AlloyEditorEditor implements Editor {
 
 	@Override
+	public String getJspPath() {
+		return "/alloyeditor.jsp";
+	}
+
+	@Override
 	public String getName() {
 		return "alloyeditor";
 	}
@@ -34,11 +39,6 @@ public class AlloyEditorEditor implements Editor {
 	@Override
 	public String getResourceType() {
 		return PortalWebResourceConstants.RESOURCE_TYPE_ALLOYEDITOR;
-	}
-
-	@Override
-	protected String getJspPath() {
-		return "/alloyeditor.jsp";
 	}
 
 }

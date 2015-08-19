@@ -27,6 +27,11 @@ import org.osgi.service.component.annotations.Component;
 public class BBCodeEditor implements Editor {
 
 	@Override
+	public String getJspPath() {
+		return "/bbcode.jsp";
+	}
+
+	@Override
 	public String getName() {
 		return "bbcode";
 	}
@@ -34,11 +39,6 @@ public class BBCodeEditor implements Editor {
 	@Override
 	public String getResourceType() {
 		return PortalWebResourceConstants.RESOURCE_TYPE_BBCODEEDITOR;
-	}
-
-	@Override
-	protected String getJspPath() {
-		return "/bbcode.jsp";
 	}
 
 }

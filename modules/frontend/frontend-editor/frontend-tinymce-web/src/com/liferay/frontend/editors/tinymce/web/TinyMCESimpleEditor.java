@@ -27,6 +27,11 @@ import org.osgi.service.component.annotations.Component;
 public class TinyMCESimpleEditor implements Editor {
 
 	@Override
+	public String getJspPath() {
+		return "/tinymce_simple.jsp";
+	}
+
+	@Override
 	public String getName() {
 		return "tinymce_simple";
 	}
@@ -34,11 +39,6 @@ public class TinyMCESimpleEditor implements Editor {
 	@Override
 	public String getResourceType() {
 		return PortalWebResourceConstants.RESOURCE_TYPE_TINYMCEEDITOR;
-	}
-
-	@Override
-	protected String getJspPath() {
-		return "/tinymce_simple.jsp";
 	}
 
 }

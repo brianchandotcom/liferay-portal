@@ -5813,6 +5813,7 @@ if (ppstate.equals("normal")) {
 	<target name="record-test-case-method-names">
 		<gradle-execute failonerror="false" task="writePoshiProperties">
 			<arg value="--build-file=portal-web/build-test.gradle" />
+			<arg value="-Plocal=${test.poshi.runner.local.release}" />
 			<arg value="-PcomponentNames=${component.names}" />
 			<arg value="-PproductNames=${product.names}" />
 			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
@@ -5833,6 +5834,7 @@ if (ppstate.equals("normal")) {
 		<gradle-execute failonerror="false" task="writePoshiProperties">
 			<arg value="--build-file=portal-web/build-test.gradle" />
 			<arg value="-PcomponentNames=${component.names}" />
+			<arg value="-Plocal=${test.poshi.runner.local.release}" />
 			<arg value="-PposhiTestName=${poshi.test.name}" />
 			<arg value="-PproductNames=${product.names}" />
 			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
@@ -6078,6 +6080,7 @@ if (ppstate.equals("normal")) {
 
 		<gradle-execute failonerror="false" task="runPoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />
+			<arg value="-Plocal=${test.poshi.runner.local.release}" />
 			<arg value="-PposhiTestName=${poshi.test.name}" />
 			<arg value="-PprojectDir=${project.dir}" />
 			<arg value="-PsaveScreenshot=${test.save.screenshot}" />
@@ -6092,6 +6095,7 @@ if (ppstate.equals("normal")) {
 	<target name="run-poshi-validation">
 		<gradle-execute failonerror="false" task="validatePoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />
+			<arg value="-Plocal=${test.poshi.runner.local.release}" />
 			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
 		</gradle-execute>
 	</target>

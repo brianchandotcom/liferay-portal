@@ -20,11 +20,15 @@
 JournalArticle article = journalContentDisplayContext.getArticle();
 AssetRenderer<JournalArticle> assetRenderer = journalContentDisplayContext.getAssetRenderer();
 
-String articleGroupName = StringPool.BLANK;
-
 Group articleGroup = GroupLocalServiceUtil.getGroup(article.getGroupId());
 
-articleGroupName = articleGroup.getDescriptiveName(locale);
+StringBundler sb = new StringBundler(5);
+
+sb.append(assetRenderer.getTitle(locale));
+sb.append(StringPool.SPACE);
+sb.append(StringPool.OPEN_PARENTHESIS);
+sb.append(articleGroup.getDescriptiveName(locale));
+sb.append(StringPool.CLOSE_PARENTHESIS);
 %>
 
 <div class="article-preview-content">
@@ -37,7 +41,7 @@ articleGroupName = articleGroup.getDescriptiveName(locale);
 			<div class="card-col-7 card-col-gutters">
 				<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
 
-				<h4><%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(locale) + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + articleGroupName + StringPool.CLOSE_PARENTHESIS) %></h4>
+				<h4><%= HtmlUtil.escapeAttribute(sb.toString()) %></h4>
 
 				<p><%= assetRenderer.getSummary() %></p>
 

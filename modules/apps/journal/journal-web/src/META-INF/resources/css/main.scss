@@ -196,6 +196,10 @@
 				top: 50%;
 			}
 		}
+
+		.card-horizontal, .card-row, .card-row [class*="card-col"] {
+			overflow: visible;
+		}
 	}
 
 	.journal-container, .article-entries-pagination {

@@ -16,7 +16,7 @@ package com.liferay.portal.cache.cluster.clusterlink;
 
 import com.liferay.portal.kernel.cache.cluster.BasePortalCacheClusterChannel;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEvent;
-import com.liferay.portal.kernel.cluster.ClusterLinkUtil;
+import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.messaging.Message;
@@ -30,8 +30,9 @@ public class ClusterLinkPortalCacheClusterChannel
 	extends BasePortalCacheClusterChannel {
 
 	public ClusterLinkPortalCacheClusterChannel(
-		String destinationName, Priority priority) {
+		ClusterLink clusterLink, String destinationName, Priority priority) {
 
+		_clusterLink = clusterLink;
 		_destinationName = destinationName;
 		_priority = priority;
 	}
@@ -50,9 +51,10 @@ public class ClusterLinkPortalCacheClusterChannel
 
 		message.setPayload(byteBuffer.array());
 
-		ClusterLinkUtil.sendMulticastMessage(message, _priority);
+		_clusterLink.sendMulticastMessage(message, _priority);
 	}
 
+	private final ClusterLink _clusterLink;
 	private final String _destinationName;
 	private final Priority _priority;
 

@@ -31,7 +31,9 @@ public class ClusterLinkPortalCacheReplicator
 	<K extends Serializable, V extends Serializable>
 		implements PortalCacheReplicator<K, V> {
 
-	public ClusterLinkPortalCacheReplicator(Properties properties) {
+	public ClusterLinkPortalCacheReplicator(
+		Properties properties, PortalCacheClusterLink portalCacheClusterLink) {
+
 		_replicatePuts = GetterUtil.getBoolean(
 			properties.getProperty(PortalCacheReplicator.REPLICATE_PUTS),
 			PortalCacheReplicator.DEFAULT_REPLICATE_PUTS);
@@ -49,6 +51,8 @@ public class ClusterLinkPortalCacheReplicator
 			properties.getProperty(
 				PortalCacheReplicator.REPLICATE_UPDATES_VIA_COPY),
 			PortalCacheReplicator.DEFAULT_REPLICATE_UPDATES_VIA_COPY);
+
+		_portalCacheClusterLink = portalCacheClusterLink;
 	}
 
 	@Override
@@ -88,7 +92,7 @@ public class ClusterLinkPortalCacheReplicator
 			portalCacheClusterEvent.setTimeToLive(timeToLive);
 		}
 
-		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
+		_portalCacheClusterLink.sendEvent(portalCacheClusterEvent);
 	}
 
 	@Override
@@ -109,7 +113,7 @@ public class ClusterLinkPortalCacheReplicator
 				portalCache.getPortalCacheName(), key,
 				PortalCacheClusterEventType.REMOVE);
 
-		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
+		_portalCacheClusterLink.sendEvent(portalCacheClusterEvent);
 	}
 
 	@Override
@@ -135,7 +139,7 @@ public class ClusterLinkPortalCacheReplicator
 			portalCacheClusterEvent.setTimeToLive(timeToLive);
 		}
 
-		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
+		_portalCacheClusterLink.sendEvent(portalCacheClusterEvent);
 	}
 
 	@Override
@@ -155,9 +159,10 @@ public class ClusterLinkPortalCacheReplicator
 				portalCache.getPortalCacheName(), null,
 				PortalCacheClusterEventType.REMOVE_ALL);
 
-		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
+		_portalCacheClusterLink.sendEvent(portalCacheClusterEvent);
 	}
 
+	private final PortalCacheClusterLink _portalCacheClusterLink;
 	private final boolean _replicatePuts;
 	private final boolean _replicatePutsViaCopy;
 	private final boolean _replicateRemovals;

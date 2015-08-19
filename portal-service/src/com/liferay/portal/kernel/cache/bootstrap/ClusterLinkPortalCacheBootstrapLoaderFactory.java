@@ -19,9 +19,12 @@ import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoaderFactory;
 
 import java.util.Properties;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Tina Tian
  */
+@Component(immediate = true, service = PortalCacheBootstrapLoaderFactory.class)
 public class ClusterLinkPortalCacheBootstrapLoaderFactory
 	implements PortalCacheBootstrapLoaderFactory {
 

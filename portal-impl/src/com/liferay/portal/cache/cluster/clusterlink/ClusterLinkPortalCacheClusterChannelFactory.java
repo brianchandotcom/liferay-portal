@@ -14,18 +14,30 @@
 
 package com.liferay.portal.cache.cluster.clusterlink;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterChannel;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterChannelFactory;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterException;
+import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.Priority;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
  */
+@Component(
+	configurationPid = "com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration",
+	immediate = true, service = PortalCacheClusterChannelFactory.class
+)
 public class ClusterLinkPortalCacheClusterChannelFactory
 	implements PortalCacheClusterChannelFactory {
 
@@ -35,27 +47,35 @@ public class ClusterLinkPortalCacheClusterChannelFactory
 
 		int count = _counter.getAndIncrement();
 
-		if (count >= _priorities.size()) {
+		if (count >= _priorities.length) {
 			throw new IllegalStateException(
-				"Cannot create more than " + _priorities.size() + " channels");
+				"Cannot create more than " + _priorities.length + " channels");
 		}
 
 		return new ClusterLinkPortalCacheClusterChannel(
-			_destinationName, _priorities.get(count));
+			_clusterLink, _destinationName, _priorities[count]);
 	}
 
-	public void setDestinationName(String destinationName) {
-		_destinationName = destinationName;
+	@Activate
+	@Modified
+	protected void activate(ComponentContext componentContext) {
+		PortalCacheClusterConfiguration portalCacheClusterConfiguration =
+			Configurable.createConfigurable(
+				PortalCacheClusterConfiguration.class,
+				componentContext.getProperties());
+
+		_destinationName = portalCacheClusterConfiguration.destinationName();
+		_priorities = portalCacheClusterConfiguration.priorities();
 	}
 
-	public void setPriorities(List<Priority> priorities) {
-		_priorities = priorities;
-
-		Collections.sort(priorities);
+	@Reference(unbind = "-")
+	protected void setClusterLink(ClusterLink clusterLink) {
+		_clusterLink = clusterLink;
 	}
 
+	private volatile ClusterLink _clusterLink;
 	private final AtomicInteger _counter = new AtomicInteger(0);
-	private String _destinationName;
-	private List<Priority> _priorities;
+	private volatile String _destinationName;
+	private volatile Priority[] _priorities;
 
 }

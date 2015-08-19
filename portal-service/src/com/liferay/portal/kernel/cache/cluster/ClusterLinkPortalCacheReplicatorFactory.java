@@ -21,9 +21,13 @@ import java.io.Serializable;
 
 import java.util.Properties;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Tina Tian
  */
+@Component(immediate = true, service = PortalCacheReplicatorFactory.class)
 public class ClusterLinkPortalCacheReplicatorFactory
 	implements PortalCacheReplicatorFactory {
 
@@ -31,7 +35,17 @@ public class ClusterLinkPortalCacheReplicatorFactory
 	public <K extends Serializable, V extends Serializable>
 		PortalCacheReplicator<K, V> create(Properties properties) {
 
-		return new ClusterLinkPortalCacheReplicator<>(properties);
+		return new ClusterLinkPortalCacheReplicator<K, V>(
+			properties, _portalCacheClusterLink);
 	}
+
+	@Reference(unbind = "-")
+	protected void setPortalCacheClusterLink(
+		PortalCacheClusterLink portalCacheClusterLink) {
+
+		_portalCacheClusterLink = portalCacheClusterLink;
+	}
+
+	private volatile PortalCacheClusterLink _portalCacheClusterLink;
 
 }

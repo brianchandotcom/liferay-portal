@@ -14,15 +14,70 @@
 
 package com.liferay.portal.kernel.cache.cluster;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Shuyang Zhou
  */
+@Component(
+	configurationPid = "com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration",
+	immediate = true, service = PortalCacheClusterLink.class
+)
 public class PortalCacheClusterLink {
 
-	public void afterPropertiesSet() {
+	public long getSubmittedEventNumber() {
+		return _portalCacheClusterChannelSelector.getSelectedNumber();
+	}
+
+	public void sendEvent(PortalCacheClusterEvent portalCacheClusterEvent) {
+		PortalCacheClusterChannel portalCacheClusterChannel =
+			_portalCacheClusterChannelSelector.select(
+				_portalCacheClusterChannels, portalCacheClusterEvent);
+
+		portalCacheClusterChannel.sendEvent(portalCacheClusterEvent);
+	}
+
+	@Reference(unbind = "-")
+	public void setPortalCacheClusterChannelFactory(
+		PortalCacheClusterChannelFactory portalCacheClusterChannelFactory) {
+
+		_portalCacheClusterChannelFactory = portalCacheClusterChannelFactory;
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC
+	)
+	public void setPortalCacheClusterChannelSelector(
+		PortalCacheClusterChannelSelector portalCacheClusterChannelSelector) {
+
+		_portalCacheClusterChannelSelector = portalCacheClusterChannelSelector;
+	}
+
+	@Activate
+	@Modified
+	protected void activate(ComponentContext componentContext) {
+		PortalCacheClusterConfiguration portalCacheClusterConfiguration =
+			Configurable.createConfigurable(
+				PortalCacheClusterConfiguration.class,
+				componentContext.getProperties());
+
+		_channelNumber = portalCacheClusterConfiguration.channelNumber();
+
 		_portalCacheClusterChannels = new ArrayList<>(_channelNumber);
 
 		for (int i = 0; i < _channelNumber; i++) {
@@ -37,7 +92,8 @@ public class PortalCacheClusterLink {
 		}
 	}
 
-	public void destroy() {
+	@Deactivate
+	protected void deactivate() {
 		for (PortalCacheClusterChannel portalCacheClusterChannel :
 				_portalCacheClusterChannels) {
 
@@ -45,40 +101,16 @@ public class PortalCacheClusterLink {
 		}
 	}
 
-	public long getSubmittedEventNumber() {
-		return _portalCacheClusterChannelSelector.getSelectedNumber();
-	}
-
-	public void sendEvent(PortalCacheClusterEvent portalCacheClusterEvent) {
-		PortalCacheClusterChannel portalCacheClusterChannel =
-			_portalCacheClusterChannelSelector.select(
-				_portalCacheClusterChannels, portalCacheClusterEvent);
-
-		portalCacheClusterChannel.sendEvent(portalCacheClusterEvent);
-	}
-
-	public void setChannelNumber(int channelNumber) {
-		_channelNumber = channelNumber;
-	}
-
-	public void setPortalCacheClusterChannelFactory(
-		PortalCacheClusterChannelFactory portalCacheClusterChannelFactory) {
-
-		_portalCacheClusterChannelFactory = portalCacheClusterChannelFactory;
-	}
-
-	public void setPortalCacheClusterChannelSelector(
+	protected void unsetPortalCacheClusterChannelSelector(
 		PortalCacheClusterChannelSelector portalCacheClusterChannelSelector) {
-
-		_portalCacheClusterChannelSelector = portalCacheClusterChannelSelector;
 	}
 
-	private static final int _DEFAULT_CHANNEL_NUMBER = 10;
-
-	private int _channelNumber = _DEFAULT_CHANNEL_NUMBER;
-	private PortalCacheClusterChannelFactory _portalCacheClusterChannelFactory;
-	private List<PortalCacheClusterChannel> _portalCacheClusterChannels;
-	private PortalCacheClusterChannelSelector
+	private volatile int _channelNumber;
+	private volatile PortalCacheClusterChannelFactory
+		_portalCacheClusterChannelFactory;
+	private volatile List<PortalCacheClusterChannel>
+		_portalCacheClusterChannels;
+	private volatile PortalCacheClusterChannelSelector
 		_portalCacheClusterChannelSelector;
 
 }

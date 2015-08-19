@@ -59,10 +59,18 @@ import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+
 /**
  * @author Shuyang Zhou
  * @author Sherry Yang
  */
+@Component(
+	immediate = true, service = ClusterLinkBootstrapLoaderHelperUtil.class
+)
 public class ClusterLinkBootstrapLoaderHelperUtil {
 
 	public static SocketAddress createServerSocketFromCluster(
@@ -262,7 +270,9 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 		}
 	}
 
-	public static synchronized void start() {
+	@Activate
+	@Modified
+	protected void activate(ComponentContext componentContext) {
 		if (!_started) {
 			_started = true;
 		}

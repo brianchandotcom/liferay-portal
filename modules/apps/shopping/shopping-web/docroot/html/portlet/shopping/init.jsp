@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -35,7 +36,6 @@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.settings.GroupServiceSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><%@
-page import="com.liferay.portal.kernel.settings.SettingsFactory" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarUtil" %><%@
@@ -155,7 +155,6 @@ page import="com.liferay.shopping.web.search.CouponSearch" %><%@
 page import="com.liferay.shopping.web.search.OrderDisplayTerms" %><%@
 page import="com.liferay.shopping.web.search.OrderSearch" %><%@
 page import="com.liferay.shopping.web.search.OrderSearchTerms" %><%@
-page import="com.liferay.shopping.web.util.ShoppingWebComponentProvider" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.util.CreditCard" %><%@
 page import="com.liferay.util.StateUtil" %>
@@ -188,11 +187,7 @@ String currentURL = currentURLObj.toString();
 
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-ShoppingWebComponentProvider shoppingWebComponentProvider = ShoppingWebComponentProvider.getShoppingWebComponentProvider();
-
-SettingsFactory settingsFactory = shoppingWebComponentProvider.getSettingsFactory();
-
-ShoppingGroupServiceOverriddenConfiguration shoppingGroupServiceOverriddenConfiguration = settingsFactory.getSettings(ShoppingGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(scopeGroupId, ShoppingConstants.SERVICE_NAME));
+ShoppingGroupServiceOverriddenConfiguration shoppingGroupServiceOverriddenConfiguration = ModuleConfigurationFactoryUtil.getModuleConfiguration(ShoppingGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(scopeGroupId, ShoppingConstants.SERVICE_NAME));
 
 Currency currency = Currency.getInstance(shoppingGroupServiceOverriddenConfiguration.getCurrencyId());
 

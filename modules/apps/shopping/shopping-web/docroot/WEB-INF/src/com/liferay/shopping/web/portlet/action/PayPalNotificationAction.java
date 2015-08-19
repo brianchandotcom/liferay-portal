@@ -14,11 +14,11 @@
 
 package com.liferay.shopping.web.portlet.action;
 
+import com.liferay.portal.kernel.configuration.module.ModuleConfigurationFactoryUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
@@ -31,7 +31,6 @@ import com.liferay.shopping.exception.NoSuchOrderException;
 import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.service.ShoppingOrderLocalServiceUtil;
 import com.liferay.shopping.util.ShoppingUtil;
-import com.liferay.shopping.web.util.ShoppingWebComponentProvider;
 
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -157,15 +156,9 @@ public class PayPalNotificationAction extends Action {
 
 		ShoppingOrder order = ShoppingOrderLocalServiceUtil.getOrder(ppInvoice);
 
-		ShoppingWebComponentProvider shoppingWebComponentProvider =
-			ShoppingWebComponentProvider.getShoppingWebComponentProvider();
-
-		SettingsFactory settingsFactory =
-			shoppingWebComponentProvider.getSettingsFactory();
-
 		ShoppingGroupServiceOverriddenConfiguration
 			shoppingGroupServiceOverriddenConfiguration =
-				settingsFactory.getSettings(
+				ModuleConfigurationFactoryUtil.getModuleConfiguration(
 					ShoppingGroupServiceOverriddenConfiguration.class,
 					new GroupServiceSettingsLocator(
 						order.getGroupId(), ShoppingConstants.SERVICE_NAME));

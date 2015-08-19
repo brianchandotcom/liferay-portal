@@ -16,6 +16,8 @@ package com.liferay.portlet.blogs;
 
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -184,6 +186,10 @@ public class BlogsEntryAttachmentFileEntryHelper {
 				groupId, folder.getFolderId(), fileName);
 		}
 		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return null;
 		}
 	}
@@ -192,5 +198,8 @@ public class BlogsEntryAttachmentFileEntryHelper {
 		"(\\s*?\\w+\\s*?=\\s*?\"[^\"]*\")*?\\s*?";
 
 	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BlogsEntryAttachmentFileEntryHelper.class);
 
 }

@@ -237,7 +237,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 
 		verifyFault(
 			PingbackMethodImpl.PINGBACK_ALREADY_REGISTERED,
-			"Pingback is already registered");
+			"Pingback is already registered: null");
 	}
 
 	@Test

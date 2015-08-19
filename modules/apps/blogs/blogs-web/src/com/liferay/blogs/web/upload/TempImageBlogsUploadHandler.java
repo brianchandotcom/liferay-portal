@@ -15,6 +15,8 @@
 package com.liferay.blogs.web.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -49,8 +51,15 @@ public class TempImageBlogsUploadHandler extends BaseBlogsUploadHandler {
 				groupId, userId, _TEMP_FOLDER_NAME, fileName);
 		}
 		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return null;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TempImageBlogsUploadHandler.class);
 
 }

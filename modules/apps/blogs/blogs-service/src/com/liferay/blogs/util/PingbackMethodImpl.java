@@ -104,7 +104,8 @@ public class PingbackMethodImpl implements Method {
 		}
 		catch (DuplicateCommentException dce) {
 			return XmlRpcUtil.createFault(
-				PINGBACK_ALREADY_REGISTERED, "Pingback is already registered");
+				PINGBACK_ALREADY_REGISTERED,
+				"Pingback is already registered: " + dce.getMessage());
 		}
 		catch (InvalidSourceURIException isue) {
 			return XmlRpcUtil.createFault(

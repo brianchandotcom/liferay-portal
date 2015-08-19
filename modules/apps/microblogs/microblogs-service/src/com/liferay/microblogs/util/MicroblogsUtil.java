@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -432,11 +434,16 @@ public class MicroblogsUtil {
 				content = StringUtil.replace(content, result, userLink);
 			}
 			catch (NoSuchUserException nsue) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsue, nsue);
+				}
 			}
 		}
 
 		return content;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(MicroblogsUtil.class);
 
 	private static final Pattern _hashtagPattern = Pattern.compile(
 		"\\#[a-zA-Z]\\w*");

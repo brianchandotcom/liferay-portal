@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.configuration.module;
+package com.liferay.portal.kernel.module.configuration;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.settings.SettingsLocator;

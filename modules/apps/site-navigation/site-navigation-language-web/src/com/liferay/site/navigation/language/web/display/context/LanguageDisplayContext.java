@@ -14,8 +14,8 @@
 
 package com.liferay.site.navigation.language.web.display.context;
 
-import com.liferay.portal.kernel.configuration.module.ConfigurationException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;

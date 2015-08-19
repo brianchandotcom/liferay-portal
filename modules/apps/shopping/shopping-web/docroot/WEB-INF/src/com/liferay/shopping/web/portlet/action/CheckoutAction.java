@@ -14,7 +14,7 @@
 
 package com.liferay.shopping.web.portlet.action;
 
-import com.liferay.portal.kernel.configuration.module.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Constants;

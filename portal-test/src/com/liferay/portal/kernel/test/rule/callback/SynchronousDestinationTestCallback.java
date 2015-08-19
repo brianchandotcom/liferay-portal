@@ -135,6 +135,7 @@ public class SynchronousDestinationTestCallback
 			replaceDestination(
 				DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
 			replaceDestination(DestinationNames.MAIL);
+			replaceDestination(DestinationNames.SCHEDULER_ENGINE);
 			replaceDestination(DestinationNames.SEARCH_READER);
 			replaceDestination(DestinationNames.SEARCH_WRITER);
 			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);

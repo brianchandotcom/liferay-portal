@@ -2712,7 +2712,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventTitleEdit" value="${eventTitleEdit}" />
 			<var name="eventType" value="${eventType}" />
-			<var name="inviteResource" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
 

@@ -16,27 +16,25 @@
 
 <%@ include file="/card/init.jsp" %>
 
-<div class="col-lg-4 entry-display-style <%= showCheckbox ? "selectable" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
-	<div class="checkbox checkbox-default toggle-card-dm">
-		<aui:input cssClass="<%= checkboxCSSClass %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" title="" type="checkbox" value="<%= checkboxId %>" wrappedField="<%= true %>" />
+<div class="col-lg-4 <%= cssClass %> <%= showCheckbox ? "selectable" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
+	<div class="<%= showCheckbox ? "checkbox checkbox-default toggle-card-dm" : StringPool.BLANK %>">
+		<c:if test="<%= showCheckbox %>">
+			<aui:input cssClass="<%= checkboxCSSClass %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" type="checkbox" value="<%= checkboxValue %>" wrappedField="<%= true %>" />
+		</c:if>
 
-		<div class="card card-dm toggle-card-container">
+		<div class="card card-dm <%= showCheckbox ? "toggle-card-container" : StringPool.BLANK %>">
 			<div class="aspect-ratio">
-				<c:choose>
-					<c:when test="<%= Validator.isNotNull(url) %>">
-						<a href="<%= url %>">
-							<img alt="" src="<%= image %>" />
-						</a>
-					</c:when>
-					<c:otherwise>
-						<img alt="" class="<%= imageCSSClass %>" src="<%= image %>" />
-					</c:otherwise>
-				</c:choose>
+				<aui:a href="<%= url %>">
+					<img alt="" class="<%= imageCSSClass %>" src="<%= imageUrl %>" />
+				</aui:a>
 
-				<div class="sticker sticker-bottom <%= smallImageCSSClass %>">
-					<img alt="thumbnail" class="img-responsive" src="<%= smallImageUrl %>">
-				</div>
+				<c:if test="<%= Validator.isNotNull(smallImageUrl) %>">
+					<div class="sticker sticker-bottom <%= smallImageCSSClass %>">
+						<img alt="thumbnail" class="img-responsive" src="<%= smallImageUrl %>">
+					</div>
+				</c:if>
 			</div>
+
 			<div class="card-footer">
 				<div class="card-dm-more-options">
 					<liferay-util:include page="<%= actionJsp %>" servletContext="<%= actionJspServletContext %>" />
@@ -50,16 +48,9 @@
 					</c:if>
 
 					<c:if test="<%= Validator.isNotNull(title) %>">
-						<c:choose>
-							<c:when test="<%= Validator.isNotNull(url) %>">
-								<a href="<%= url %>" title="">
-									<div class="card-dm-text-large"><%= title %></div>
-								</a>
-							</c:when>
-							<c:otherwise>
-								<div class="card-dm-text-large"><%= title %></div>
-							</c:otherwise>
-						</c:choose>
+						<aui:a href="<%= url %>">
+							<div class="card-dm-text-large"><%= title %></div>
+						</aui:a>
 					</c:if>
 
 					<c:if test="<%= Validator.isNotNull(subtitle) %>">

@@ -64,6 +64,16 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>checkboxValue</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -84,7 +94,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>image</name>
+			<name>imageUrl</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

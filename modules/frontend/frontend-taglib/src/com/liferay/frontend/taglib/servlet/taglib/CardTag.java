@@ -55,6 +55,14 @@ public class CardTag extends IncludeTag {
 		_checkboxName = checkboxName;
 	}
 
+	public void setCheckboxValue(String checkboxValue) {
+		_checkboxValue = checkboxValue;
+	}
+
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
+	}
+
 	public void setData(Map<String, Object> data) {
 		_data = data;
 	}
@@ -71,12 +79,12 @@ public class CardTag extends IncludeTag {
 		_horizontal = horizontal;
 	}
 
-	public void setImage(String image) {
-		_image = image;
-	}
-
 	public void setImageCSSClass(String imageCSSClass) {
 		_imageCSSClass = imageCSSClass;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		_imageUrl = imageUrl;
 	}
 
 	@Override
@@ -117,11 +125,13 @@ public class CardTag extends IncludeTag {
 		_checkboxCSSClass = null;
 		_checkboxId = null;
 		_checkboxName = null;
+		_checkboxValue = null;
+		_cssClass = null;
 		_data = null;
 		_footer = null;
 		_header = null;
 		_horizontal = false;
-		_image = null;
+		_imageUrl = null;
 		_imageCSSClass = null;
 		_showCheckbox = true;
 		_smallImageCSSClass = null;
@@ -160,9 +170,12 @@ public class CardTag extends IncludeTag {
 		request.setAttribute("liferay-frontend:card:checkboxId", _checkboxId);
 		request.setAttribute(
 			"liferay-frontend:card:checkboxName", _checkboxName);
+		request.setAttribute(
+			"liferay-frontend:card:checkboxValue", _checkboxValue);
+		request.setAttribute("liferay-frontend:card:cssClass", _cssClass);
 		request.setAttribute("liferay-frontend:card:data", _data);
 		request.setAttribute("liferay-frontend:card:header", _header);
-		request.setAttribute("liferay-frontend:card:image", _image);
+		request.setAttribute("liferay-frontend:card:imageUrl", _imageUrl);
 		request.setAttribute(
 			"liferay-frontend:card:imageCSSClass", _imageCSSClass);
 		request.setAttribute(
@@ -181,12 +194,14 @@ public class CardTag extends IncludeTag {
 	private String _checkboxCSSClass;
 	private String _checkboxId;
 	private String _checkboxName;
+	private String _checkboxValue;
+	private String _cssClass;
 	private Map<String, Object> _data;
 	private String _footer;
 	private String _header;
 	private boolean _horizontal = false;
-	private String _image;
 	private String _imageCSSClass;
+	private String _imageUrl;
 	private boolean _showCheckbox;
 	private String _smallImageCSSClass;
 	private String _smallImageUrl;

@@ -18,29 +18,23 @@
 
 <div class="col-lg-4">
 	<div class="card-horizontal">
-		<div class="card-row card-row-padded entry-display-style <%= showCheckbox ? "selectable" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %> >
+		<div class="card-row card-row-padded <%= cssClass %> <%= showCheckbox ? "selectable" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %> >
+			<c:if test="<%= showCheckbox %>">
+				<div class="card-col-field">
+					<aui:input cssClass="<%= checkboxCSSClass %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" type="checkbox" value="<%= checkboxValue %>" wrappedField="<%= true %>" />
+				</div>
+			</c:if>
+
 			<div class="card-col-field">
-				<c:if test="<%= showCheckbox %>">
-					<aui:input cssClass="<%= checkboxCSSClass %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" title="" type="checkbox" value="<%= checkboxId %>" wrappedField="<%= true %>" />
-				</c:if>
+				<span class="<%= imageCSSClass %> <%= imageUrl %>"></span>
 			</div>
-			<div class="card-col-field">
-				<span class="<%= imageCSSClass %> <%= image %>"></span>
-			</div>
+
 			<div class="card-col-content card-col-gutters">
 				<h4>
-					<c:choose>
-						<c:when test="<%= Validator.isNull(url) %>">
-							<%= HtmlUtil.escape(title) %>
-						</c:when>
-						<c:otherwise>
-							<a href="<%= url %>">
-								<%= HtmlUtil.escape(title) %>
-							</a>
-						</c:otherwise>
-					</c:choose>
+					<aui:a href="<%= url %>" label="<%= HtmlUtil.escape(title) %>" />
 				</h4>
 			</div>
+
 			<div class="card-col-content card-col-gutters">
 				<liferay-util:include page="<%= actionJsp %>" servletContext="<%= actionJspServletContext %>" />
 			</div>

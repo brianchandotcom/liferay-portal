@@ -70,17 +70,11 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 				</c:otherwise>
 			</c:choose>
 
-			<portlet:renderURL var="layoutBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcPath" value="/view_layout_branches.jsp" />
-				<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
-			</portlet:renderURL>
-
 			<div class="manage-page-variations page-variations">
 				<liferay-ui:icon
 					iconCssClass="icon-cog"
-					id="manageLayoutRevisions"
 					message="manage-page-variations"
-					url="<%= layoutBranchesURL %>"
+					url='<%= "javascript:" + renderResponse.getNamespace() + "manageLayoutRevisions();" %>'
 				/>
 			</div>
 		</div>
@@ -95,20 +89,19 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 		}
 	);
 
-	var layoutRevisionsLink = $('#<portlet:namespace />manageLayoutRevisions');
+	function <portlet:namespace />manageLayoutRevisions() {
+		Liferay.Util.openWindow(
+			{
+				id: '<portlet:namespace />layoutSetBranches',
+				title: '<%= UnicodeLanguageUtil.get(request, "manage-site-pages-variations") %>',
 
-	layoutRevisionsLink.on(
-		'click',
-		function(event) {
-			event.preventDefault();
+				<portlet:renderURL var="layoutBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="mvcPath" value="/view_layout_branches.jsp" />
+					<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
+				</portlet:renderURL>
 
-			Liferay.Util.openWindow(
-				{
-					id: '<portlet:namespace />layoutRevisions',
-					title: '<%= UnicodeLanguageUtil.get(request, "manage-page-variations") %>',
-					uri: layoutRevisionsLink.attr('href')
-				}
-			);
-		}
-	);
+				uri: '<%= HtmlUtil.escape(layoutBranchesURL) %>'
+			}
+		);
+	}
 </aui:script>

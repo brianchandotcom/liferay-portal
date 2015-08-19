@@ -17,26 +17,13 @@ package com.liferay.portal.portlet.container.test;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -47,8 +34,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.Portlet;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -58,8 +43,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
-
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Raymond Augé
@@ -101,106 +84,6 @@ public class BasePortletContainerTestCase {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		return bundle.getBundleContext();
-	}
-
-	protected HttpServletRequest getHttpServletRequest() throws Exception {
-		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
-
-		httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
-
-		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			layout.getCompanyId());
-
-		themeDisplay.setCompany(company);
-
-		themeDisplay.setLayout(layout);
-		themeDisplay.setPlid(layout.getPlid());
-		themeDisplay.setPortalURL(TestPropsValues.PORTAL_URL);
-		themeDisplay.setRequest(httpServletRequest);
-		themeDisplay.setScopeGroupId(group.getGroupId());
-		themeDisplay.setSiteGroupId(group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		return httpServletRequest;
-	}
-
-	protected String getString(Map<String, List<String>> map, String key) {
-		List<String> values = map.get(key);
-
-		return values.get(0);
-	}
-
-	protected String read(InputStream inputStream) throws IOException {
-		if (inputStream == null) {
-			return "";
-		}
-
-		return StringUtil.read(inputStream);
-	}
-
-	protected Map<String, List<String>> request(String url) throws IOException {
-		return request(url, null);
-	}
-
-	protected Map<String, List<String>> request(
-			String url, Map<String, List<String>> headers)
-		throws IOException {
-
-		URL urlObject = new URL(url);
-
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)urlObject.openConnection();
-
-		httpURLConnection.setInstanceFollowRedirects(true);
-		httpURLConnection.setConnectTimeout(1500 * 1000);
-		httpURLConnection.setReadTimeout(1500 * 1000);
-
-		if (headers != null) {
-			for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
-				String key = entry.getKey();
-
-				for (String value : entry.getValue()) {
-					if (key.equals("Cookie")) {
-						httpURLConnection.addRequestProperty(
-							key, value.split(";", 2)[0]);
-					}
-					else {
-						httpURLConnection.setRequestProperty(key, value);
-					}
-				}
-			}
-		}
-
-		InputStream inputStream = null;
-
-		try {
-			inputStream = httpURLConnection.getInputStream();
-		}
-		catch (IOException ioe) {
-			inputStream = httpURLConnection.getErrorStream();
-		}
-
-		try {
-			Map<String, List<String>> responseMap = new HashMap<>(
-				httpURLConnection.getHeaderFields());
-
-			responseMap.put("body", Arrays.asList(read(inputStream)));
-
-			String code = String.valueOf(httpURLConnection.getResponseCode());
-
-			responseMap.put("code", Arrays.asList(code));
-
-			return responseMap;
-		}
-		finally {
-			if (inputStream != null) {
-				inputStream.close();
-			}
-		}
 	}
 
 	protected void setUpPortlet(

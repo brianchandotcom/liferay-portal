@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.test.PortletContainerTestUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.SecurityPortletContainerWrapper;
@@ -69,7 +70,8 @@ public class ResourceRequestPortletContainerTest
 
 	@Test
 	public void testInvalidPortletId() throws Exception {
-		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		HttpServletRequest httpServletRequest =
+			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
 		String layoutURL = layout.getRegularURL(httpServletRequest);
 
@@ -82,7 +84,8 @@ public class ResourceRequestPortletContainerTest
 					SecurityPortletContainerWrapper.class.getName(),
 					Level.WARN)) {
 
-			Map<String, List<String>> responseMap = request(url);
+			Map<String, List<String>> responseMap =
+				PortletContainerTestUtil.request(url);
 
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
@@ -102,7 +105,8 @@ public class ResourceRequestPortletContainerTest
 					" on '\"><script>alert(1)</script>",
 				loggingEvent.getMessage());
 
-			Assert.assertEquals("400", getString(responseMap, "code"));
+			Assert.assertEquals(
+				"400", PortletContainerTestUtil.getString(responseMap, "code"));
 		}
 	}
 
@@ -153,15 +157,18 @@ public class ResourceRequestPortletContainerTest
 
 		// Get the portlet authentication token by making a resource request
 
-		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		HttpServletRequest httpServletRequest =
+			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
 		PortletURL portletURL = new PortletURLImpl(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
-		Map<String, List<String>> responseMap = request(portletURL.toString());
+		Map<String, List<String>> responseMap =
+			PortletContainerTestUtil.request(portletURL.toString());
 
-		String portletAuthenticationToken = getString(responseMap, "body");
+		String portletAuthenticationToken = PortletContainerTestUtil.getString(
+			responseMap, "body");
 
 		List<String> cookies = responseMap.get("Set-Cookie");
 
@@ -185,9 +192,10 @@ public class ResourceRequestPortletContainerTest
 
 		headers.put("Cookie", cookies);
 
-		responseMap = request(url, headers);
+		responseMap = PortletContainerTestUtil.request(url, headers);
 
-		Assert.assertEquals("200", getString(responseMap, "code"));
+		Assert.assertEquals(
+			"200", PortletContainerTestUtil.getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("serveResource"));
 	}
 
@@ -195,15 +203,18 @@ public class ResourceRequestPortletContainerTest
 	public void testIsAccessGrantedByPortletOnPage() throws Exception {
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		HttpServletRequest httpServletRequest =
+			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
 		PortletURL portletURL = new PortletURLImpl(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
-		Map<String, List<String>> responseMap = request(portletURL.toString());
+		Map<String, List<String>> responseMap =
+			PortletContainerTestUtil.request(portletURL.toString());
 
-		Assert.assertEquals("200", getString(responseMap, "code"));
+		Assert.assertEquals(
+			"200", PortletContainerTestUtil.getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("serveResource"));
 	}
 
@@ -230,7 +241,8 @@ public class ResourceRequestPortletContainerTest
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		HttpServletRequest httpServletRequest =
+			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
 		PortletURL portletURL = new PortletURLImpl(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
@@ -243,9 +255,11 @@ public class ResourceRequestPortletContainerTest
 
 		portletURL.setParameter("testRuntimePortletId", testRuntimePortletId);
 
-		Map<String, List<String>> responseMap = request(portletURL.toString());
+		Map<String, List<String>> responseMap =
+			PortletContainerTestUtil.request(portletURL.toString());
 
-		Assert.assertEquals("200", getString(responseMap, "code"));
+		Assert.assertEquals(
+			"200", PortletContainerTestUtil.getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("render"));
 	}
 

@@ -26,6 +26,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
+import com.liferay.shopping.configuration.ShoppingGroupServiceOverriddenConfiguration;
 import com.liferay.shopping.constants.ShoppingConstants;
 import com.liferay.shopping.exception.BillingCityException;
 import com.liferay.shopping.exception.BillingCountryException;
@@ -53,7 +54,6 @@ import com.liferay.shopping.exception.ShippingZipException;
 import com.liferay.shopping.model.ShoppingCart;
 import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.service.ShoppingOrderLocalServiceUtil;
-import com.liferay.shopping.settings.ShoppingGroupServiceOverriddenConfiguration;
 import com.liferay.shopping.util.ShoppingUtil;
 import com.liferay.shopping.web.util.ShoppingWebComponentProvider;
 

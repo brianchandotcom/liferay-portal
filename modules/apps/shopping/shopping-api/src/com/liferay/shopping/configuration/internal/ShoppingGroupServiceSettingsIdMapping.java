@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.shopping.settings.internal;
+package com.liferay.shopping.configuration.internal;
 
 import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
 import com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration;

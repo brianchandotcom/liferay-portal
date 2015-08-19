@@ -12,23 +12,17 @@
  * details.
  */
 
-package com.liferay.shopping.settings.internal;
+package com.liferay.shopping.configuration;
 
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.shopping.configuration.internal.ShoppingGroupServiceConfigurationOverrideImpl;
 
 /**
- * @author Peter Fellwock
+ * @author Brian Wing Shun Chan
+ * @author Eduardo Garcia
  */
-@Component
-public class ShoppingGroupServiceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
-
-	@Override
-	public Class<?> getConfigurationBeanClass() {
-		return ShoppingGroupServiceConfiguration.class;
-	}
-
+@Settings.OverrideClass(ShoppingGroupServiceConfigurationOverrideImpl.class)
+public interface ShoppingGroupServiceOverriddenConfiguration
+	extends ShoppingGroupServiceConfiguration,
+			ShoppingGroupServiceConfigurationOverride {
 }

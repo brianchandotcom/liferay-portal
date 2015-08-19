@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.shopping.settings.internal;
+package com.liferay.shopping.configuration.internal;
 
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.TypedSettings;
@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.shopping.settings.ShoppingGroupServiceConfigurationOverride;
+import com.liferay.shopping.configuration.ShoppingGroupServiceConfigurationOverride;
 
 import java.util.Currency;
 import java.util.Locale;

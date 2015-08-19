@@ -26,7 +26,6 @@ Import-Package:\
 	com.liferay.shopping.lar,\
 	com.liferay.shopping.model,\
 	com.liferay.shopping.model.impl,\
-	com.liferay.shopping.settings,\
 	com.liferay.shopping.service,\
 	com.liferay.shopping.service.base,\
 	com.liferay.shopping.service.http,\

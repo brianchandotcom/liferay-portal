@@ -385,6 +385,74 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	public static void assertNoPoshiWarnings() throws Exception {
+		StringBuilder sb = new StringBuilder();
+
+		if (!_javaScriptExceptions.isEmpty()) {
+			sb.append("\n");
+			sb.append("##\n");
+
+			sb.append("## ");
+			sb.append(_javaScriptExceptions.size());
+			sb.append(" Javascript Exception");
+
+			if (_javaScriptExceptions.size() > 1) {
+				sb.append("s were");
+			}
+			else {
+				sb.append(" was");
+			}
+
+			sb.append(" thrown\n");
+
+			sb.append("##\n");
+			sb.append("\n");
+
+			for (int i = 0; i < _javaScriptExceptions.size(); i++) {
+				Exception exception = _javaScriptExceptions.get(i);
+
+				sb.append(exception.getMessage());
+				sb.append("\n");
+			}
+
+			sb.append("\n");
+		}
+
+		if (!_liferayExceptions.isEmpty()) {
+			sb.append("\n");
+			sb.append("##\n");
+
+			sb.append("## ");
+			sb.append(_liferayExceptions.size());
+			sb.append(" Liferay Exception");
+
+			if (_liferayExceptions.size() > 1) {
+				sb.append("s were");
+			}
+			else {
+				sb.append(" was");
+			}
+
+			sb.append(" thrown\n");
+
+			sb.append("##\n");
+			sb.append("\n");
+
+			for (int i = 0; i < _liferayExceptions.size(); i++) {
+				Exception exception = _liferayExceptions.get(i);
+
+				sb.append(exception.getMessage());
+				sb.append("\n");
+			}
+
+			sb.append("\n");
+		}
+
+		if (Validator.isNotNull(sb.toString())) {
+			throw new Exception(sb.toString());
+		}
+	}
+
 	public static void assertNotAlert(
 		LiferaySelenium liferaySelenium, String pattern) {
 

@@ -34,7 +34,9 @@ String ddmTemplateImageURL = ddmTemplate.getTemplateImageURL(themeDisplay);
 	data-template-id="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : StringPool.BLANK %>"
 	data-template-key="<%= ddmTemplate.getTemplateKey() %>"
 >
-	<img alt="<%= ddmTemplate.getName(locale) %>" class="<%= Validator.isNull(ddmTemplateImageURL) ? "hidden " : StringPool.BLANK %>media-object pull-left template-image" src="<%= ddmTemplateImageURL %>">
+	<c:if test="<%= Validator.isNotNull(ddmTemplateImageURL) %>">
+		<img alt="<%= ddmTemplate.getName(locale) %>" class="<%= Validator.isNull(ddmTemplateImageURL) ? "hidden " : StringPool.BLANK %>media-object pull-left template-image" src="<%= ddmTemplateImageURL %>">
+	</c:if>
 
 	<div class="media-body">
 		<h2 class="heading4 template-title"><%= ddmTemplate.getName(locale) %></h2>

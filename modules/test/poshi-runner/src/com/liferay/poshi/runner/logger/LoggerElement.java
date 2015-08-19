@@ -76,6 +76,29 @@ public class LoggerElement {
 		setClassName(_className + " " + className);
 	}
 
+	public LoggerElement copy() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName(getClassName());
+		loggerElement.setName(getName());
+		loggerElement.setText(getText());
+
+		List<String> attributeNames = getAttributeNames();
+
+		for (String attributeName : attributeNames) {
+			loggerElement.setAttribute(
+				attributeName, getAttributeValue(attributeName));
+		}
+
+		List<LoggerElement> childLoggerElements = loggerElements();
+
+		for (LoggerElement childLoggerElement : childLoggerElements) {
+			loggerElement.addChildLoggerElement(childLoggerElement.copy());
+		}
+
+		return loggerElement;
+	}
+
 	public List<String> getAttributeNames() {
 		List<String> attributeNames = new ArrayList<>();
 

@@ -75,7 +75,7 @@
 </tr>
 <tr>
 	<td>ADMIN</td>
-	<td>//li[@id='_145_adminLinks']/a</td>
+	<td>//a[contains(@href,'sites_administration_sites')]</td>
 	<td>Admin Drop Down Button</td>
 </tr>
 <tr>
@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>MY_SITES</td>
-	<td>//li[@id='_145_mySites']/a</td>
+	<td>//a[contains(@href,'sites_administration_my_sites')]</td>
 	<td></td>
 </tr>
 <tr>

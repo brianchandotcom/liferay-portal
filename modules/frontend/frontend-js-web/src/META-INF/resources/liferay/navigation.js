@@ -170,7 +170,7 @@ AUI.add(
 							Liferay.on('dockbaraddpage:addPage', instance._onAddPage, instance);
 							Liferay.on('dockbaraddpage:previewPageTitle', instance._onPreviewPageTitle, instance);
 
-							navBlock.delegate('keypress', A.bind('_onKeypress', instance), 'input');
+							navBlock.delegate('keypress', A.bind('_onKeypress', instance), '.lfr-nav-item input');
 						}
 					},
 

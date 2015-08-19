@@ -15,9 +15,9 @@
 package com.liferay.shopping.service.impl;
 
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
-import com.liferay.portal.kernel.configuration.module.ConfigurationException;
-import com.liferay.portal.kernel.configuration.module.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.GetterUtil;

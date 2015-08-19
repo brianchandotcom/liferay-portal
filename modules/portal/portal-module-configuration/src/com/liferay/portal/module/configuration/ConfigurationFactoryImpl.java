@@ -14,8 +14,8 @@
 
 package com.liferay.portal.module.configuration;
 
-import com.liferay.portal.kernel.configuration.module.ConfigurationException;
-import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;

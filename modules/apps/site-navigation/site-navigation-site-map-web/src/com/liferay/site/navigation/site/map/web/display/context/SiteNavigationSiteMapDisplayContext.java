@@ -14,7 +14,7 @@
 
 package com.liferay.site.navigation.site.map.web.display.context;
 
-import com.liferay.portal.kernel.configuration.module.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;

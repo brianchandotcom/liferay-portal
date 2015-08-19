@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.ntlm.auto.login;
 
-import com.liferay.portal.kernel.configuration.module.ConfigurationFactory;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;

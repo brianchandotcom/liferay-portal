@@ -15,8 +15,8 @@
 package com.liferay.blogs.web.portlet.action;
 
 import com.liferay.blogs.configuration.BlogsGroupServiceOverriddenConfiguration;
-import com.liferay.portal.kernel.configuration.module.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;

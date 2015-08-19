@@ -31,7 +31,7 @@ public final class SummaryLoggerHandler {
 
 	public static void failSummary(Element element, String message) {
 		if (_isCurrentMajorStep(element)) {
-			_causeBodyLoggerElement.setText("ERROR: " + message);
+			_causeBodyLoggerElement.setText(message);
 
 			_failStepLoggerElement(_majorStepLoggerElement);
 
@@ -42,6 +42,8 @@ public final class SummaryLoggerHandler {
 		}
 
 		if (_isCurrentMinorStep(element)) {
+			_causeBodyLoggerElement.setText(message);
+
 			_failStepLoggerElement(_minorStepLoggerElement);
 
 			_stopMinorStep();

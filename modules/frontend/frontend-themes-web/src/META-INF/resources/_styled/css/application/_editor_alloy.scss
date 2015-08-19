@@ -1,11 +1,10 @@
 .alloy-editor {
 	&.alloy-editor-placeholder {
 		color: #2B4259;
-		padding-left: 10px;
 
 		&:empty:not(:focus) {
 			background: transparent;
-			border-left: 2px solid #DBDDE1;
+			border-left-color: #DBDDE1;
 			color: #B0B4BB;
 		}
 
@@ -15,34 +14,4 @@
 	}
 
 	outline: 0;
-
-	a {
-		cursor: auto;
-	}
-}
-
-.alloy-editor-switch {
-	position: relative;
-
-	.btn {
-		bottom: 25px;
-		float: right;
-		position: relative;
-	}
-}
-
-.alloy-editor-wrapper {
-	.lfr-source-editor {
-		display: none;
-	}
-
-	&.show-source {
-		.alloy-editor-placeholder {
-			display: none;
-		}
-
-		.lfr-source-editor {
-			display: block;
-		}
-	}
 }

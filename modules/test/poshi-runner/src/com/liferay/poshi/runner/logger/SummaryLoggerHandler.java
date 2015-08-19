@@ -103,6 +103,8 @@ public final class SummaryLoggerHandler {
 	private static void _failStepLoggerElement(
 		LoggerElement stepLoggerElement) {
 
+		stepLoggerElement.addClassName("summary-failure");
+
 		LoggerElement lineContainerLoggerElement =
 			stepLoggerElement.loggerElement("div");
 
@@ -115,6 +117,7 @@ public final class SummaryLoggerHandler {
 		LoggerElement loggerElement = new LoggerElement();
 
 		loggerElement.setClassName("cause-body");
+		loggerElement.setName("pre");
 
 		return loggerElement;
 	}

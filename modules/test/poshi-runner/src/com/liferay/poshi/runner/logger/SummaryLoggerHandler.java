@@ -35,9 +35,6 @@ public final class SummaryLoggerHandler {
 
 			_failStepLoggerElement(_majorStepLoggerElement);
 
-			_majorStepLoggerElement.addChildLoggerElement(
-				_minorStepsLoggerElement);
-
 			_stopMajorStep();
 		}
 
@@ -88,6 +85,9 @@ public final class SummaryLoggerHandler {
 				_majorStepLoggerElement);
 
 			_minorStepsLoggerElement = _getMinorStepsLoggerElement();
+
+			_majorStepLoggerElement.addChildLoggerElement(
+				_minorStepsLoggerElement);
 		}
 
 		if (_isMinorStep(element)) {

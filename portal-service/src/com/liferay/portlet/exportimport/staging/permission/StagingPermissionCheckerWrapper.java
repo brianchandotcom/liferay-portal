@@ -136,6 +136,12 @@ public class StagingPermissionCheckerWrapper implements PermissionChecker {
 
 		long liveGroupId = getLiveGroupId(groupId);
 
+		if (liveGroupId != groupId) {
+			if (primKey == groupId) {
+				primKey = liveGroupId;
+			}
+		}
+
 		return _permissionChecker.hasPermission(
 			liveGroupId, name, primKey, actionId);
 	}
@@ -145,6 +151,12 @@ public class StagingPermissionCheckerWrapper implements PermissionChecker {
 		long groupId, String name, String primKey, String actionId) {
 
 		long liveGroupId = getLiveGroupId(groupId);
+
+		if (liveGroupId != groupId) {
+			if (primKey.equals(String.valueOf(groupId))) {
+				primKey = String.valueOf(liveGroupId);
+			}
+		}
 
 		return _permissionChecker.hasPermission(
 			liveGroupId, name, primKey, actionId);

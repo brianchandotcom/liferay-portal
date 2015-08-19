@@ -213,11 +213,9 @@ if (organization != null) {
 
 					<%
 					boolean showOrganizations = false;
-					boolean showUsers = true;
 
-					if ((organization == null) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.IMPERSONATE)) {
+					if (organization == null) {
 						showOrganizations = true;
-						showUsers = false;
 					}
 
 					if (organizationsCount > 0) {
@@ -377,50 +375,48 @@ if (organization != null) {
 						</liferay-ui:panel>
 					</c:if>
 
-					<c:if test="<%= showUsers %>">
-						<liferay-util:buffer var="usersPanelTitle">
+					<liferay-util:buffer var="usersPanelTitle">
 
-							<%
-							boolean active = false;
+						<%
+						boolean active = false;
 
-							if (status == WorkflowConstants.STATUS_APPROVED) {
-								active = true;
-							}
+						if (status == WorkflowConstants.STATUS_APPROVED) {
+							active = true;
+						}
 
-							String usersTitle = null;
+						String usersTitle = null;
 
-							if (Validator.isNotNull(keywords) || ((organization == null) && (organizationsCount == 0))) {
-								usersTitle = LanguageUtil.get(request, (active ? "users" : "inactive-users"));
-							}
-							else if (organization == null) {
-								usersTitle = LanguageUtil.get(request, (active ? "users-without-an-organization" : "inactive-users-without-an-organization"));
-							}
-							else if ((usersCount == 0) && (inactiveUsersCount == 0)) {
-								usersTitle = StringPool.BLANK;
+						if (Validator.isNotNull(keywords) || ((organization == null) && (organizationsCount == 0))) {
+							usersTitle = LanguageUtil.get(request, (active ? "users" : "inactive-users"));
+						}
+						else if (organization == null) {
+							usersTitle = LanguageUtil.get(request, (active ? "users-without-an-organization" : "inactive-users-without-an-organization"));
+						}
+						else if ((usersCount == 0) && (inactiveUsersCount == 0)) {
+							usersTitle = StringPool.BLANK;
+						}
+						else {
+							if ((active && (usersCount == 1)) || (!active && (inactiveUsersCount == 1))) {
+								usersTitle = LanguageUtil.format(request, (active ? "x-user" : "x-inactive-user"), String.valueOf((active ? usersCount : inactiveUsersCount)), false);
 							}
 							else {
-								if ((active && (usersCount == 1)) || (!active && (inactiveUsersCount == 1))) {
-									usersTitle = LanguageUtil.format(request, (active ? "x-user" : "x-inactive-user"), String.valueOf((active ? usersCount : inactiveUsersCount)), false);
-								}
-								else {
-									usersTitle = LanguageUtil.format(request, (active ? "x-users" : "x-inactive-users"), String.valueOf((active ? usersCount : inactiveUsersCount)), false);
-								}
+								usersTitle = LanguageUtil.format(request, (active ? "x-users" : "x-inactive-users"), String.valueOf((active ? usersCount : inactiveUsersCount)), false);
 							}
-							%>
+						}
+						%>
 
-							<%= usersTitle %>
-						</liferay-util:buffer>
+						<%= usersTitle %>
+					</liferay-util:buffer>
 
-						<c:if test="<%= (organization != null) || (usersCount != 0) || (inactiveUsersCount == 0) %>">
+					<c:if test="<%= (organization != null) || (usersCount != 0) || (inactiveUsersCount == 0) %>">
 
-							<%
-							boolean organizationContextView = true;
-							%>
+						<%
+						boolean organizationContextView = true;
+						%>
 
-							<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminUsersPanel" persistState="<%= true %>" title="<%= usersPanelTitle %>">
-								<%@ include file="/view_flat_users.jspf" %>
-							</liferay-ui:panel>
-						</c:if>
+						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminUsersPanel" persistState="<%= true %>" title="<%= usersPanelTitle %>">
+							<%@ include file="/view_flat_users.jspf" %>
+						</liferay-ui:panel>
 					</c:if>
 				</liferay-ui:panel-container>
 			</aui:col>

@@ -1652,6 +1652,38 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	public static void writePoshiWarnings() throws Exception {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<property name=\"testray.testcase.warnings\">\n");
+
+		if (!_javaScriptExceptions.isEmpty()) {
+			for (int i = 0; i < _javaScriptExceptions.size(); i++) {
+				Exception exception = _javaScriptExceptions.get(i);
+
+				sb.append("<value><![CDATA[");
+				sb.append(exception.getMessage());
+				sb.append(")]]></value>\n");
+			}
+		}
+
+		if (!_liferayExceptions.isEmpty()) {
+			for (int i = 0; i < _liferayExceptions.size(); i++) {
+				Exception exception = _liferayExceptions.get(i);
+
+				sb.append("<value><![CDATA[");
+				sb.append(exception.getMessage());
+				sb.append(")]]></value>\n");
+			}
+		}
+
+		sb.append("</property>");
+
+		String projectDirName = PoshiRunnerGetterUtil.getProjectDirName();
+
+		FileUtil.write(projectDirName + "/poshi-warnings.xml", sb.toString());
+	}
+
 	private static List<ScreenRegion> getScreenRegions(
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {

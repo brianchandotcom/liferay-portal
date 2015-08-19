@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache.cluster;
+package com.liferay.portal.cache.cluster.internal.clusterlink;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration;
+import com.liferay.portal.cache.cluster.internal.PortalCacheClusterEvent;
 
 import java.util.ArrayList;
 import java.util.List;

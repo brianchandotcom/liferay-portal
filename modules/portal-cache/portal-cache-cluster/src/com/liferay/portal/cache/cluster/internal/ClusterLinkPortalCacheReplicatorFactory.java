@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache.cluster;
+package com.liferay.portal.cache.cluster.internal;
 
+import com.liferay.portal.cache.cluster.internal.clusterlink.PortalCacheClusterLink;
 import com.liferay.portal.kernel.cache.PortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCacheReplicatorFactory;
 
@@ -35,7 +36,7 @@ public class ClusterLinkPortalCacheReplicatorFactory
 	public <K extends Serializable, V extends Serializable>
 		PortalCacheReplicator<K, V> create(Properties properties) {
 
-		return new ClusterLinkPortalCacheReplicator<K, V>(
+		return new ClusterLinkPortalCacheReplicator<>(
 			properties, _portalCacheClusterLink);
 	}
 

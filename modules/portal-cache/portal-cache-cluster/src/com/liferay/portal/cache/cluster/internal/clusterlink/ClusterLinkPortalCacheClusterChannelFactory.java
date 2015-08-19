@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.cache.cluster.clusterlink;
+package com.liferay.portal.cache.cluster.internal.clusterlink;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration;
-import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterChannel;
-import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterChannelFactory;
-import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterException;
+import com.liferay.portal.cache.cluster.internal.PortalCacheClusterException;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.Priority;
 

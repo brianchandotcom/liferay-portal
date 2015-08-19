@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.cache.cluster.clusterlink.messaging;
+package com.liferay.portal.cache.cluster.internal.clusterlink.messaging;
 
+import com.liferay.portal.cache.cluster.internal.PortalCacheClusterEvent;
+import com.liferay.portal.cache.cluster.internal.PortalCacheClusterEventType;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
-import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEvent;
-import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEventType;
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

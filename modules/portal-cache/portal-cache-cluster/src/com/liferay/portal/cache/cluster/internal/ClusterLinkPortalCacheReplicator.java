@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache.cluster;
+package com.liferay.portal.cache.cluster.internal;
 
+import com.liferay.portal.cache.cluster.internal.clusterlink.PortalCacheClusterLink;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheManager;

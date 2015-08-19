@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.cache.cluster.clusterlink;
+package com.liferay.portal.cache.cluster.internal.clusterlink;
 
-import com.liferay.portal.kernel.cache.cluster.BasePortalCacheClusterChannel;
-import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEvent;
+import com.liferay.portal.cache.cluster.internal.PortalCacheClusterEvent;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.io.Serializer;

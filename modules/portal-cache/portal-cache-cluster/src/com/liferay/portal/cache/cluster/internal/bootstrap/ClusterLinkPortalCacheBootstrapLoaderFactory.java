@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache.bootstrap;
+package com.liferay.portal.cache.cluster.internal.bootstrap;
 
 import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoaderFactory;

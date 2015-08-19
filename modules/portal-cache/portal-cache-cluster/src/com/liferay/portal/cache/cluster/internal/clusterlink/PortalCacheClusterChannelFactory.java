@@ -12,26 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache.cluster;
+package com.liferay.portal.cache.cluster.internal.clusterlink;
+
+import com.liferay.portal.cache.cluster.internal.PortalCacheClusterException;
 
 /**
  * @author Shuyang Zhou
  */
-public class PortalCacheClusterException extends RuntimeException {
+public interface PortalCacheClusterChannelFactory {
 
-	public PortalCacheClusterException() {
-	}
-
-	public PortalCacheClusterException(String msg) {
-		super(msg);
-	}
-
-	public PortalCacheClusterException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public PortalCacheClusterException(Throwable cause) {
-		super(cause);
-	}
+	public PortalCacheClusterChannel createPortalCacheClusterChannel()
+		throws PortalCacheClusterException;
 
 }

@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache.cluster;
+package com.liferay.portal.cache.cluster.internal.clusterlink;
+
+import com.liferay.portal.cache.cluster.internal.PortalCacheClusterEvent;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;

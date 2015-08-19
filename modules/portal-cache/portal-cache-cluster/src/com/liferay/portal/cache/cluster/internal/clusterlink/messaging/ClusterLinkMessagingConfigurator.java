@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cache.cluster.clusterlink.messaging;
+package com.liferay.portal.cache.cluster.internal.clusterlink.messaging;
 
 import aQute.bnd.annotation.metatype.Configurable;
 

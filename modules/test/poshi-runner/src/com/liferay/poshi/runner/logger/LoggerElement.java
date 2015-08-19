@@ -155,6 +155,20 @@ public class LoggerElement {
 		return childLoggerElements;
 	}
 
+	public void removeChildLoggerElements(String name) {
+		List<LoggerElement> childLoggerElements = new ArrayList<>();
+
+		for (LoggerElement childLoggerElement : _childLoggerElements) {
+			if (Validator.equals(childLoggerElement.getName(), name)) {
+				childLoggerElements.add(childLoggerElement);
+			}
+		}
+
+		for (LoggerElement childLoggerElement : childLoggerElements) {
+			_childLoggerElements.remove(childLoggerElement);
+		}
+	}
+
 	public void removeClassName(String className) {
 		String[] classNames = StringUtil.split(_className, " ");
 

@@ -479,7 +479,6 @@ public abstract class LiferayConverter {
 	}
 
 	protected int getCodecBitRate(ICodec outputICodec, int originalBitRate) {
-
 		if ((originalBitRate == 0) || (originalBitRate > AUDIO_BIT_RATE_MAX)) {
 			originalBitRate = AUDIO_BIT_RATE_DEFAULT;
 		}

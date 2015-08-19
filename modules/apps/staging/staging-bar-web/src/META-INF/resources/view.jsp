@@ -81,7 +81,7 @@ if (layout != null) {
 			<c:choose>
 				<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
 					<c:if test="<%= stagingGroup != null %>">
-						<aui:button cssClass="active" id="stagingLing" value="staging" />
+						<aui:button cssClass="active" id="stagingLink" value="staging" />
 					</c:if>
 				</c:when>
 				<c:otherwise>
@@ -204,7 +204,7 @@ if (layout != null) {
 
 		var checkBackgroundTasks = function() {
 			Liferay.Service(
-				'/backgroundtask/get-background-tasks-count',
+				'/backgroundtask.backgroundtask/get-background-tasks-count',
 				{
 					completed: false,
 					groupId: '<%= liveGroup.getGroupId() %>',

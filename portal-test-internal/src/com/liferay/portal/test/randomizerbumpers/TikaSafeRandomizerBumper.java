@@ -31,6 +31,9 @@ import org.apache.tika.sax.WriteOutContentHandler;
  */
 public class TikaSafeRandomizerBumper implements RandomizerBumper<byte[]> {
 
+	public static final TikaSafeRandomizerBumper INSTANCE =
+		new TikaSafeRandomizerBumper(null);
+
 	public static final TikaSafeRandomizerBumper TEXT_PLAIN_INSTANCE =
 		new TikaSafeRandomizerBumper(ContentTypes.TEXT_PLAIN);
 
@@ -53,6 +56,10 @@ public class TikaSafeRandomizerBumper implements RandomizerBumper<byte[]> {
 				new UnsyncByteArrayInputStream(randomValue),
 				new WriteOutContentHandler(new DummyWriter()), metadata,
 				parserContext);
+
+			if (_contentType == null) {
+				return true;
+			}
 
 			String contentType = metadata.get("Content-Type");
 

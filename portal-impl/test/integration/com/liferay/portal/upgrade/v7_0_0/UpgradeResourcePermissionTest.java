@@ -122,6 +122,9 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 			ResourcePermissionLocalServiceUtil.addResourcePermission(
 				resourcePermission);
 
+		_resourcePermissionIds.add(
+			resourcePermission.getResourcePermissionId());
+
 		return resourcePermission.getResourcePermissionId();
 	}
 

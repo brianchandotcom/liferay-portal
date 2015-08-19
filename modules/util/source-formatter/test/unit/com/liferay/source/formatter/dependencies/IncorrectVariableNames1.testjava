@@ -14,32 +14,14 @@
 
 package com.liferay.source.formatter.dependencies;
 
-/**
- * @author Hugo Huijser
- */
-public class IncorrectTabs {
+public class IncorrectVariableNames1 {
 
-	public void method() {
-	return;
+	public static final int _TEST_1 = 1;
+
+	public int method1() {
+		return _TEST_1 + _test2;
 	}
 
-	public void methodWithLongNameInOrderToHaveThrowsExceptionOnNextLine1()
-	throws Exception {
-
-		return;
-	}
-
-	public void methodWithLongNameInOrderToHaveThrowsExceptionOnNextLine2()
-			throws Exception {
-
-		return;
-	}
-
-	public void methodWithLongNameInOrderToHaveThrowsExceptionOnNextLine3(
-		String s)
-		throws Exception {
-
-		return;
-	}
+	protected int _test2 = 2;
 
 }

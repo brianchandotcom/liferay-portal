@@ -401,7 +401,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			Token accessToken = _oAuthManager.getAccessToken(
+			Token accessToken = oAuthManager.getAccessToken(
 				themeDisplay.getUser());
 
 			if (accessToken == null) {

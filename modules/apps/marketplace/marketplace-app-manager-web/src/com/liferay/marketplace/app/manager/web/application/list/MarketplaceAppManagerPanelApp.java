@@ -63,7 +63,7 @@ public class MarketplaceAppManagerPanelApp
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
-		_portletLocalService = portletLocalService;
+		this.portletLocalService = portletLocalService;
 	}
 
 }

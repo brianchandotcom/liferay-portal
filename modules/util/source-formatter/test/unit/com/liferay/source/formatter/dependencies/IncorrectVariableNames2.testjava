@@ -12,24 +12,14 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.values.query.internal.model;
+package com.liferay.source.formatter.dependencies;
 
-import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+public class IncorrectVariableNames2 {
 
-/**
- * @author Pablo Carvalho
- */
-public class DDMFormFieldValueNameMatcher implements DDMFormFieldValueMatcher {
-
-	@Override
-	public boolean matches(DDMFormFieldValue ddmFormFieldValue) {
-		return name.equals(ddmFormFieldValue.getName());
+	public String method1() {
+		return STRING_1;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String name;
+	private static final String STRING_1 = "Hello World";
 
 }

@@ -74,7 +74,7 @@ public class MyAccountPanelApp extends BaseControlPanelEntryPanelApp {
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
-		_portletLocalService = portletLocalService;
+		this.portletLocalService = portletLocalService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

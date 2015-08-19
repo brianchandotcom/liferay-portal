@@ -114,23 +114,23 @@ public class JournalArticleAssetSearchTest extends BaseAssetSearchTestCase {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		if (_ddmStructure == null) {
-			_ddmStructure = DDMStructureTestUtil.addStructure(
+		if (ddmStructure == null) {
+			ddmStructure = DDMStructureTestUtil.addStructure(
 				serviceContext.getScopeGroupId(),
 				JournalArticle.class.getName());
 		}
 
-		if (_ddmTemplate == null) {
-			_ddmTemplate = DDMTemplateTestUtil.addTemplate(
+		if (ddmTemplate == null) {
+			ddmTemplate = DDMTemplateTestUtil.addTemplate(
 				serviceContext.getScopeGroupId(),
-				_ddmStructure.getStructureId());
+				ddmStructure.getStructureId());
 		}
 
 		String content = DDMStructureTestUtil.getSampleStructuredContent();
 
 		return JournalTestUtil.addArticleWithXMLContent(
 			serviceContext.getScopeGroupId(), content,
-			_ddmStructure.getStructureKey(), _ddmTemplate.getTemplateKey());
+			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
 	}
 
 	@Override
@@ -140,11 +140,11 @@ public class JournalArticleAssetSearchTest extends BaseAssetSearchTestCase {
 
 	@Override
 	protected long[] getClassTypeIds() {
-		if (_ddmStructure == null) {
+		if (ddmStructure == null) {
 			return null;
 		}
 
-		return new long[] {_ddmStructure.getStructureId()};
+		return new long[] {ddmStructure.getStructureId()};
 	}
 
 	@Override
@@ -152,7 +152,7 @@ public class JournalArticleAssetSearchTest extends BaseAssetSearchTestCase {
 		return "title";
 	}
 
-	protected DDMStructure _ddmStructure;
-	protected DDMTemplate _ddmTemplate;
+	protected DDMStructure ddmStructure;
+	protected DDMTemplate ddmTemplate;
 
 }

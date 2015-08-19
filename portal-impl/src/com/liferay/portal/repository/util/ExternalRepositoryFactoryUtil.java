@@ -34,7 +34,7 @@ public class ExternalRepositoryFactoryUtil {
 	 */
 	@Deprecated
 	public static String[] getExternalRepositoryClassNames() {
-		Set<String> classNames = externalRepositoryFactories.keySet();
+		Set<String> classNames = _externalRepositoryFactories.keySet();
 
 		return classNames.toArray(new String[classNames.size()]);
 	}
@@ -43,7 +43,7 @@ public class ExternalRepositoryFactoryUtil {
 		throws Exception {
 
 		ExternalRepositoryFactory externalRepositoryFactory =
-			externalRepositoryFactories.get(className);
+			_externalRepositoryFactories.get(className);
 
 		BaseRepository baseRepository = null;
 
@@ -62,14 +62,14 @@ public class ExternalRepositoryFactoryUtil {
 	public static void registerExternalRepositoryFactory(
 		String className, ExternalRepositoryFactory externalRepositoryFactory) {
 
-		externalRepositoryFactories.put(className, externalRepositoryFactory);
+		_externalRepositoryFactories.put(className, externalRepositoryFactory);
 	}
 
 	public static void unregisterExternalRepositoryFactory(String className) {
-		externalRepositoryFactories.remove(className);
+		_externalRepositoryFactories.remove(className);
 	}
 
 	private static final ConcurrentMap<String, ExternalRepositoryFactory>
-		externalRepositoryFactories = new ConcurrentHashMap<>();
+		_externalRepositoryFactories = new ConcurrentHashMap<>();
 
 }

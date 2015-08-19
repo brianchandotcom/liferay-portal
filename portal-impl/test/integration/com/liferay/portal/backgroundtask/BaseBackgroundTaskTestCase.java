@@ -49,7 +49,7 @@ public abstract class BaseBackgroundTaskTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_backgroundTaskThreadLocalManagerImpl =
+		backgroundTaskThreadLocalManagerImpl =
 			new BackgroundTaskThreadLocalManagerImpl();
 
 		PermissionCheckerFactory permissionCheckerFactory = Mockito.mock(
@@ -66,7 +66,7 @@ public abstract class BaseBackgroundTaskTestCase {
 			permissionChecker
 		);
 
-		_backgroundTaskThreadLocalManagerImpl.setPermissionCheckerFactory(
+		backgroundTaskThreadLocalManagerImpl.setPermissionCheckerFactory(
 			permissionCheckerFactory);
 
 		_companyId = TestPropsValues.getCompanyId();
@@ -153,7 +153,7 @@ public abstract class BaseBackgroundTaskTestCase {
 	}
 
 	protected BackgroundTaskThreadLocalManagerImpl
-		_backgroundTaskThreadLocalManagerImpl;
+		backgroundTaskThreadLocalManagerImpl;
 
 	private boolean _clusterInvokeEnabled;
 	private long _companyId;

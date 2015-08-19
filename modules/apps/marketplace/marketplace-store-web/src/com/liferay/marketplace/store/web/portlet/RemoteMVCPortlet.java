@@ -69,7 +69,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 
 		PortletSession portletSession = actionRequest.getPortletSession();
 
-		OAuthService oAuthService = _oAuthManager.getOAuthService();
+		OAuthService oAuthService = oAuthManager.getOAuthService();
 
 		Token requestToken = oAuthService.getRequestToken();
 
@@ -93,7 +93,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_oAuthManager.deleteAccessToken(themeDisplay.getUser());
+		oAuthManager.deleteAccessToken(themeDisplay.getUser());
 
 		LiferayPortletResponse liferayPortletResponse =
 			(LiferayPortletResponse)actionResponse;
@@ -211,10 +211,10 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Token token = _oAuthManager.getAccessToken(themeDisplay.getUser());
+		Token token = oAuthManager.getAccessToken(themeDisplay.getUser());
 
 		if (token != null) {
-			OAuthService oAuthService = _oAuthManager.getOAuthService();
+			OAuthService oAuthService = oAuthManager.getOAuthService();
 
 			oAuthService.signRequest(token, oAuthRequest);
 		}
@@ -275,7 +275,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 	}
 
 	protected void setOAuthManager(OAuthManager oAuthManager) {
-		_oAuthManager = oAuthManager;
+		this.oAuthManager = oAuthManager;
 	}
 
 	protected void setRequestParameters(
@@ -329,17 +329,17 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		Token requestToken = (Token)portletSession.getAttribute(
 			MarketplaceStoreWebKeys.OAUTH_REQUEST_TOKEN);
 
-		OAuthService oAuthService = _oAuthManager.getOAuthService();
+		OAuthService oAuthService = oAuthManager.getOAuthService();
 
 		Token accessToken = oAuthService.getAccessToken(
 			requestToken, new Verifier(oAuthVerifier));
 
-		_oAuthManager.updateAccessToken(themeDisplay.getUser(), accessToken);
+		oAuthManager.updateAccessToken(themeDisplay.getUser(), accessToken);
 
 		portletSession.removeAttribute(
 			MarketplaceStoreWebKeys.OAUTH_REQUEST_TOKEN);
 	}
 
-	protected OAuthManager _oAuthManager;
+	protected OAuthManager oAuthManager;
 
 }

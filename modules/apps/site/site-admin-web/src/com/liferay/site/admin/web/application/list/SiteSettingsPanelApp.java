@@ -50,7 +50,7 @@ public class SiteSettingsPanelApp extends BaseControlPanelEntryPanelApp {
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
-		_portletLocalService = portletLocalService;
+		this.portletLocalService = portletLocalService;
 	}
 
 }

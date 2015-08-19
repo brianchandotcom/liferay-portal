@@ -23,21 +23,21 @@ import java.util.concurrent.ThreadFactory;
 public class SetRecordUncaughtExceptionThreadFactory implements ThreadFactory {
 
 	public RecordUncaughtExceptionHandler getRecordUncaughtExceptionHandler() {
-		return recordUncaughtExceptionHandler;
+		return _recordUncaughtExceptionHandler;
 	}
 
 	@Override
 	public Thread newThread(Runnable runnable) {
 		Thread thread = _threadFactory.newThread(runnable);
 
-		thread.setUncaughtExceptionHandler(recordUncaughtExceptionHandler);
+		thread.setUncaughtExceptionHandler(_recordUncaughtExceptionHandler);
 
 		return thread;
 	}
 
+	private final RecordUncaughtExceptionHandler
+		_recordUncaughtExceptionHandler = new RecordUncaughtExceptionHandler();
 	private final ThreadFactory _threadFactory =
 		Executors.defaultThreadFactory();
-	private final RecordUncaughtExceptionHandler
-		recordUncaughtExceptionHandler = new RecordUncaughtExceptionHandler();
 
 }

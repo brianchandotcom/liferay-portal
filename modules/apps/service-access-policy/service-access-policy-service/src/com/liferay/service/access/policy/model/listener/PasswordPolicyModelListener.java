@@ -44,7 +44,7 @@ public class PasswordPolicyModelListener
 		}
 
 		try {
-			_sapEntryLocalService.checkDefaultSAPEntry(
+			sapEntryLocalService.checkDefaultSAPEntry(
 				passwordPolicy.getCompanyId());
 		}
 		catch (PortalException pe) {
@@ -62,12 +62,12 @@ public class PasswordPolicyModelListener
 
 		try {
 			List<SAPEntry> sapEntries =
-				_sapEntryLocalService.getCompanySAPEntries(
+				sapEntryLocalService.getCompanySAPEntries(
 					passwordPolicy.getCompanyId(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS);
 
 			for (SAPEntry sapEntry : sapEntries) {
-				_sapEntryLocalService.deleteSAPEntry(sapEntry);
+				sapEntryLocalService.deleteSAPEntry(sapEntry);
 			}
 		}
 		catch (PortalException pe) {
@@ -79,9 +79,9 @@ public class PasswordPolicyModelListener
 	protected void setSAPEntryLocalService(
 		SAPEntryLocalService sapEntryLocalService) {
 
-		_sapEntryLocalService = sapEntryLocalService;
+		this.sapEntryLocalService = sapEntryLocalService;
 	}
 
-	protected SAPEntryLocalService _sapEntryLocalService;
+	protected SAPEntryLocalService sapEntryLocalService;
 
 }

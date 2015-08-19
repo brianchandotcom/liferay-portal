@@ -386,24 +386,20 @@ public class JavaClass {
 	}
 
 	protected void checkImmutableFieldType(JavaTerm javaTerm) {
-		String oldName = javaTerm.getName();
+		String javaTermName = javaTerm.getName();
 
-		if (oldName.equals("serialVersionUID")) {
+		if (javaTermName.equals("serialVersionUID")) {
 			return;
 		}
 
-		Matcher matcher = _camelCasePattern.matcher(oldName);
+		Matcher matcher = _camelCasePattern.matcher(javaTermName);
 
 		String newName = matcher.replaceAll("$1_$2");
 
 		newName = StringUtil.toUpperCase(newName);
 
-		if (newName.charAt(0) != CharPool.UNDERLINE) {
-			newName = StringPool.UNDERLINE.concat(newName);
-		}
-
 		_content = _content.replaceAll(
-			"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
+			"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b", newName);
 	}
 
 	protected void checkJavaFieldType(
@@ -415,10 +411,12 @@ public class JavaClass {
 			return;
 		}
 
+		String javaTermName = javaTerm.getName();
+
 		Pattern pattern = Pattern.compile(
 			"\t(private |protected |public )" +
 				"(((final|static|transient)( |\n))*)([\\s\\S]*?)" +
-					javaTerm.getName());
+					javaTermName);
 
 		String javaTermContent = javaTerm.getContent();
 
@@ -426,6 +424,22 @@ public class JavaClass {
 
 		if (!matcher.find()) {
 			return;
+		}
+
+		if ((javaTerm.isPrivate() && !javaTermName.equals("serialVersionUID")) ^
+			(javaTermName.charAt(0) == CharPool.UNDERLINE)) {
+
+			if (javaTerm.isPrivate()) {
+				_content = _content.replaceAll(
+					"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b",
+					StringPool.UNDERLINE.concat(javaTermName));
+			}
+			else {
+				_javaSourceProcessor.processErrorMessage(
+					_fileName,
+					"Only private var should start with underscore: " +
+						_fileName + " " + javaTerm.getLineCount());
+			}
 		}
 
 		String modifierDefinition = StringUtil.trim(
@@ -460,41 +474,37 @@ public class JavaClass {
 	}
 
 	protected void checkMutableFieldType(JavaTerm javaTerm) {
-		String oldName = javaTerm.getName();
+		String javaTermName = javaTerm.getName();
 
-		String newName = oldName;
-
-		if (javaTerm.isPrivate() && (newName.charAt(0) != CharPool.UNDERLINE)) {
-			newName = StringPool.UNDERLINE.concat(newName);
+		if (!StringUtil.isUpperCase(javaTermName)) {
+			return;
 		}
 
-		if (StringUtil.isUpperCase(newName)) {
-			StringBundler sb = new StringBundler(newName.length());
+		StringBundler sb = new StringBundler(javaTermName.length());
 
-			for (int i = 0; i < newName.length(); i++) {
-				char c = newName.charAt(i);
+		for (int i = 0; i < javaTermName.length(); i++) {
+			char c = javaTermName.charAt(i);
 
-				if (i > 1) {
-					if (c == CharPool.UNDERLINE) {
-						continue;
-					}
-
-					if (newName.charAt(i - 1) == CharPool.UNDERLINE) {
-						sb.append(c);
-
-						continue;
-					}
+			if (i > 1) {
+				if (c == CharPool.UNDERLINE) {
+					continue;
 				}
 
-				sb.append(Character.toLowerCase(c));
+				if (javaTermName.charAt(i - 1) == CharPool.UNDERLINE) {
+					sb.append(c);
+
+					continue;
+				}
 			}
 
-			newName = sb.toString();
+			sb.append(Character.toLowerCase(c));
 		}
 
-		if (!newName.equals(oldName)) {
+		String newName = sb.toString();
+
+		if (!newName.equals(javaTermName)) {
 			_content = _content.replaceAll(
-				"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
+				"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b", newName);
 		}
 	}
 

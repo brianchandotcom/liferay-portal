@@ -38,7 +38,7 @@ public class TempImageBlogsUploadHandler extends BaseBlogsUploadHandler {
 		throws PortalException {
 
 		return TempFileEntryUtil.addTempFileEntry(
-			groupId, userId, _TEMP_FOLDER_NAME, fileName, inputStream,
+			groupId, userId, TEMP_FOLDER_NAME, fileName, inputStream,
 			contentType);
 	}
 
@@ -48,7 +48,7 @@ public class TempImageBlogsUploadHandler extends BaseBlogsUploadHandler {
 
 		try {
 			return TempFileEntryUtil.getTempFileEntry(
-				groupId, userId, _TEMP_FOLDER_NAME, fileName);
+				groupId, userId, TEMP_FOLDER_NAME, fileName);
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {

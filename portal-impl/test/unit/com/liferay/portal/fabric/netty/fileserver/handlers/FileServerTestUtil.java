@@ -47,9 +47,9 @@ public class FileServerTestUtil {
 	}
 
 	public static void cleanUp() {
-		FileHelperUtil.delete(true, _paths.toArray(new Path[_paths.size()]));
+		FileHelperUtil.delete(true, paths.toArray(new Path[paths.size()]));
 
-		_paths.clear();
+		paths.clear();
 	}
 
 	public static Path createEmptyFile(Path file) throws IOException {
@@ -57,7 +57,7 @@ public class FileServerTestUtil {
 
 		file = Files.createFile(file);
 
-		_paths.add(file);
+		paths.add(file);
 
 		return file;
 	}
@@ -65,7 +65,7 @@ public class FileServerTestUtil {
 	public static Path createFileWithData(Path file) throws IOException {
 		file = Files.write(file, createRandomData(1024));
 
-		_paths.add(file);
+		paths.add(file);
 
 		return file;
 	}
@@ -105,7 +105,7 @@ public class FileServerTestUtil {
 	public static Path createFolderWithFiles(Path folder) throws IOException {
 		FileHelperUtil.delete(folder);
 
-		_paths.add(Files.createDirectories(folder));
+		paths.add(Files.createDirectories(folder));
 
 		Path subFolder1 = folder.resolve("subFolder1");
 
@@ -161,7 +161,7 @@ public class FileServerTestUtil {
 	}
 
 	public static Path registerForCleanUp(Path path) {
-		_paths.add(path);
+		paths.add(path);
 
 		return path;
 	}
@@ -175,7 +175,7 @@ public class FileServerTestUtil {
 			data, data.length / 2, data.length - data.length / 2);
 	}
 
-	protected static final Set<Path> _paths = new HashSet<>();
+	protected static final Set<Path> paths = new HashSet<>();
 
 	protected static class FolderCompareFileVisitor
 		extends SimpleFileVisitor<Path> {

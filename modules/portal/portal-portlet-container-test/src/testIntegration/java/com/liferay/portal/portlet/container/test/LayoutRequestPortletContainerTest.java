@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.test.PortletContainerTestUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -47,12 +48,15 @@ public class LayoutRequestPortletContainerTest
 	public void testLayoutRequest() throws Exception {
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		HttpServletRequest httpServletRequest = getHttpServletRequest();
+		HttpServletRequest httpServletRequest =
+			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		Map<String, List<String>> responseMap = request(
-			layout.getRegularURL(httpServletRequest));
+		Map<String, List<String>> responseMap =
+			PortletContainerTestUtil.request(
+				layout.getRegularURL(httpServletRequest));
 
-		Assert.assertEquals("200", getString(responseMap, "code"));
+		Assert.assertEquals(
+			"200", PortletContainerTestUtil.getString(responseMap, "code"));
 		Assert.assertTrue(map.containsKey("render"));
 	}
 

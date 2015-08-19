@@ -157,6 +157,7 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 		};
 
 		copy.from(closure);
+
 		copy.include("META-INF/resources/**");
 		copy.into(new File(project.getBuildDir(), "portal-common-css"));
 		copy.setIncludeEmptyDirs(false);

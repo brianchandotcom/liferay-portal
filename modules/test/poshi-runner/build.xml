@@ -15,6 +15,10 @@
 	</target>
 
 	<target name="prepare-poshi-runner" depends="jar">
+		<tstamp>
+			<format property="current.date" pattern="yyyy-MM-dd" timezone="GMT" />
+		</tstamp>
+
 		<echo file="classes/poshi-runner-ext.properties">
 			component.names=\
 				extra-apps-content-targeting,\
@@ -206,6 +210,8 @@
 				theme.plugins.includes,\
 				web.plugins.includes,\
 				web.xml.timeout
+
+			test.console.log.file.name=${liferay.home}/logs/liferay.${current.date}.xml
 
 			test.name=${test.name}
 

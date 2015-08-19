@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.control-panel-entry-category=configuration",
 		"com.liferay.portlet.control-panel-entry-weight=1.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-users-admin",
-		"com.liferay.portlet.footer-portlet-javascript=/users_admin/js/main.js",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.header-portlet-css=/users_admin/css/main.css",
 		"com.liferay.portlet.icon=/icons/portal_settings.png",

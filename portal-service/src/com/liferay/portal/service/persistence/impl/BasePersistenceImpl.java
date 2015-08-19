@@ -15,6 +15,7 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Dialect;
@@ -428,17 +429,17 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 		String[] orderByFields = orderByComparator.getOrderByFields();
 
-		String dbType = _db.getType();
+		int databaseOrderByColumnsMaximum = GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.DATABASE_ORDER_BY_COLUMNS_MAXIMUM,
+				new Filter(_db.getType())));
 
 		int length = orderByFields.length;
 
-		if (dbType.equals(DB.TYPE_SYBASE)) {
-			int orderByMax = GetterUtil.getInteger(
-				PropsUtil.get(PropsKeys.DATABASE_SYBASE_ORDER_BY_MAXIMUM));
+		if ((databaseOrderByColumnsMaximum > 0) &&
+			(databaseOrderByColumnsMaximum < length)) {
 
-			if (orderByMax < length) {
-				length = orderByMax;
-			}
+			length = databaseOrderByColumnsMaximum;
 		}
 
 		for (int i = 0; i < length; i++) {

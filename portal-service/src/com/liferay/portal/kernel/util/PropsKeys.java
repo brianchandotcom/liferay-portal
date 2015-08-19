@@ -473,7 +473,7 @@ public interface PropsKeys {
 
 	public static final String DATABASE_MYSQL_ENGINE = "database.mysql.engine";
 
-	public static final String DATABASE_SYBASE_ORDER_BY_MAXIMUM = "database.sybase.order.by.maximum";
+	public static final String DATABASE_ORDER_BY_COLUMNS_MAXIMUM = "database.order.by.columns.maximum";
 
 	public static final String DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX = "default.admin.email.address.prefix";
 

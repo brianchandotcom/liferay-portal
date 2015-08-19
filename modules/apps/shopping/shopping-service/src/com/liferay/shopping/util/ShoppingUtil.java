@@ -55,7 +55,7 @@ import com.liferay.shopping.service.ShoppingCartLocalServiceUtil;
 import com.liferay.shopping.service.ShoppingCategoryLocalServiceUtil;
 import com.liferay.shopping.service.ShoppingOrderItemLocalServiceUtil;
 import com.liferay.shopping.service.persistence.ShoppingItemPriceUtil;
-import com.liferay.shopping.settings.ShoppingGroupServiceSettings;
+import com.liferay.shopping.settings.ShoppingGroupServiceOverriddenConfiguration;
 import com.liferay.shopping.util.comparator.ItemMinQuantityComparator;
 import com.liferay.shopping.util.comparator.ItemNameComparator;
 import com.liferay.shopping.util.comparator.ItemPriceComparator;
@@ -127,18 +127,20 @@ public class ShoppingUtil {
 		double shipping = calculateShipping(items);
 		double alternativeShipping = shipping;
 
-		ShoppingGroupServiceSettings shoppingGroupServiceSettings = null;
+		ShoppingGroupServiceOverriddenConfiguration
+			shoppingGroupServiceOverriddenConfiguration = null;
 
 		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();
 
 			ShoppingItem item = cartItem.getItem();
 
-			if (shoppingGroupServiceSettings == null) {
+			if (shoppingGroupServiceOverriddenConfiguration == null) {
 				ShoppingCategory category = item.getCategory();
 
-				shoppingGroupServiceSettings = getShoppingGroupServiceSettings(
-					category.getGroupId());
+				shoppingGroupServiceOverriddenConfiguration =
+					getShoppingGroupServiceOverriddenConfiguration(
+						category.getGroupId());
 
 				break;
 			}
@@ -147,16 +149,17 @@ public class ShoppingUtil {
 		// Calculate alternative shipping if shopping is configured to use
 		// alternative shipping and shipping price is greater than 0
 
-		if ((shoppingGroupServiceSettings != null) &&
-			shoppingGroupServiceSettings.useAlternativeShipping() &&
+		if ((shoppingGroupServiceOverriddenConfiguration != null) &&
+			shoppingGroupServiceOverriddenConfiguration.useAlternativeShipping(
+				) &&
 			(shipping > 0)) {
 
 			double altShippingDelta = 0.0;
 
 			try {
 				altShippingDelta = GetterUtil.getDouble(
-					shoppingGroupServiceSettings.getAlternativeShipping()
-						[1][altShipping]);
+					shoppingGroupServiceOverriddenConfiguration.
+						getAlternativeShipping()[1][altShipping]);
 			}
 			catch (Exception e) {
 				return alternativeShipping;
@@ -324,7 +327,8 @@ public class ShoppingUtil {
 		double insurance = 0.0;
 		double subtotal = 0.0;
 
-		ShoppingGroupServiceSettings shoppingGroupServiceSettings = null;
+		ShoppingGroupServiceOverriddenConfiguration
+			shoppingGroupServiceOverriddenConfiguration = null;
 
 		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();
@@ -332,11 +336,12 @@ public class ShoppingUtil {
 
 			ShoppingItem item = cartItem.getItem();
 
-			if (shoppingGroupServiceSettings == null) {
+			if (shoppingGroupServiceOverriddenConfiguration == null) {
 				ShoppingCategory category = item.getCategory();
 
-				shoppingGroupServiceSettings = getShoppingGroupServiceSettings(
-					category.getGroupId());
+				shoppingGroupServiceOverriddenConfiguration =
+					getShoppingGroupServiceOverriddenConfiguration(
+						category.getGroupId());
 			}
 
 			ShoppingItemPrice itemPrice = _getItemPrice(item, count.intValue());
@@ -344,13 +349,16 @@ public class ShoppingUtil {
 			subtotal += calculateActualPrice(itemPrice) * count.intValue();
 		}
 
-		if ((shoppingGroupServiceSettings == null) || (subtotal == 0)) {
+		if ((shoppingGroupServiceOverriddenConfiguration == null) ||
+			(subtotal == 0)) {
+
 			return insurance;
 		}
 
 		double insuranceRate = 0.0;
 
-		double[] range = ShoppingGroupServiceSettings.INSURANCE_RANGE;
+		double[] range =
+			ShoppingGroupServiceOverriddenConfiguration.INSURANCE_RANGE;
 
 		for (int i = 0; i < range.length - 1; i++) {
 			if ((subtotal > range[i]) && (subtotal <= range[i + 1])) {
@@ -361,11 +369,13 @@ public class ShoppingUtil {
 				}
 
 				insuranceRate = GetterUtil.getDouble(
-					shoppingGroupServiceSettings.getInsurance()[rangeId]);
+					shoppingGroupServiceOverriddenConfiguration.
+						getInsurance()[rangeId]);
 			}
 		}
 
-		String formula = shoppingGroupServiceSettings.getInsuranceFormula();
+		String formula =
+			shoppingGroupServiceOverriddenConfiguration.getInsuranceFormula();
 
 		if (formula.equals("flat")) {
 			insurance += insuranceRate;
@@ -391,7 +401,8 @@ public class ShoppingUtil {
 		double shipping = 0.0;
 		double subtotal = 0.0;
 
-		ShoppingGroupServiceSettings shoppingGroupServiceSettings = null;
+		ShoppingGroupServiceOverriddenConfiguration
+			shoppingGroupServiceOverriddenConfiguration = null;
 
 		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();
@@ -399,11 +410,12 @@ public class ShoppingUtil {
 
 			ShoppingItem item = cartItem.getItem();
 
-			if (shoppingGroupServiceSettings == null) {
+			if (shoppingGroupServiceOverriddenConfiguration == null) {
 				ShoppingCategory category = item.getCategory();
 
-				shoppingGroupServiceSettings = getShoppingGroupServiceSettings(
-					category.getGroupId());
+				shoppingGroupServiceOverriddenConfiguration =
+					getShoppingGroupServiceOverriddenConfiguration(
+						category.getGroupId());
 			}
 
 			if (item.isRequiresShipping()) {
@@ -420,13 +432,16 @@ public class ShoppingUtil {
 			}
 		}
 
-		if ((shoppingGroupServiceSettings == null) || (subtotal == 0)) {
+		if ((shoppingGroupServiceOverriddenConfiguration == null) ||
+			(subtotal == 0)) {
+
 			return shipping;
 		}
 
 		double shippingRate = 0.0;
 
-		double[] range = ShoppingGroupServiceSettings.SHIPPING_RANGE;
+		double[] range =
+			ShoppingGroupServiceOverriddenConfiguration.SHIPPING_RANGE;
 
 		for (int i = 0; i < range.length - 1; i++) {
 			if ((subtotal > range[i]) && (subtotal <= range[i + 1])) {
@@ -437,11 +452,13 @@ public class ShoppingUtil {
 				}
 
 				shippingRate = GetterUtil.getDouble(
-					shoppingGroupServiceSettings.getShipping()[rangeId]);
+					shoppingGroupServiceOverriddenConfiguration.
+						getShipping()[rangeId]);
 			}
 		}
 
-		String formula = shoppingGroupServiceSettings.getShippingFormula();
+		String formula =
+			shoppingGroupServiceOverriddenConfiguration.getShippingFormula();
 
 		if (formula.equals("flat")) {
 			shipping += shippingRate;
@@ -476,25 +493,28 @@ public class ShoppingUtil {
 
 		double tax = 0.0;
 
-		ShoppingGroupServiceSettings shoppingGroupServiceSettings = null;
+		ShoppingGroupServiceOverriddenConfiguration
+			shoppingGroupServiceOverriddenConfiguration = null;
 
 		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
 			ShoppingCartItem cartItem = entry.getKey();
 
 			ShoppingItem item = cartItem.getItem();
 
-			if (shoppingGroupServiceSettings == null) {
+			if (shoppingGroupServiceOverriddenConfiguration == null) {
 				ShoppingCategory category = item.getCategory();
 
-				shoppingGroupServiceSettings = getShoppingGroupServiceSettings(
-					category.getGroupId());
+				shoppingGroupServiceOverriddenConfiguration =
+					getShoppingGroupServiceOverriddenConfiguration(
+						category.getGroupId());
 
 				break;
 			}
 		}
 
-		if ((shoppingGroupServiceSettings != null) &&
-			shoppingGroupServiceSettings.getTaxState().equals(stateId)) {
+		if ((shoppingGroupServiceOverriddenConfiguration != null) &&
+			shoppingGroupServiceOverriddenConfiguration.getTaxState(
+				).equals(stateId)) {
 
 			double subtotal = 0.0;
 
@@ -511,7 +531,9 @@ public class ShoppingUtil {
 				}
 			}
 
-			tax = shoppingGroupServiceSettings.getTaxRate() * subtotal;
+			tax =
+				shoppingGroupServiceOverriddenConfiguration.getTaxRate() *
+					subtotal;
 		}
 
 		return tax;
@@ -916,11 +938,13 @@ public class ShoppingUtil {
 	}
 
 	public static String getPayPalRedirectURL(
-		ShoppingGroupServiceSettings shoppingGroupServiceSettings,
+		ShoppingGroupServiceOverriddenConfiguration
+			shoppingGroupServiceOverriddenConfiguration,
 		ShoppingOrder order, double total, String returnURL, String notifyURL) {
 
 		String payPalEmailAddress = HttpUtil.encodeURL(
-			shoppingGroupServiceSettings.getPayPalEmailAddress());
+			shoppingGroupServiceOverriddenConfiguration.
+				getPayPalEmailAddress());
 
 		NumberFormat doubleFormat = NumberFormat.getNumberInstance(
 			LocaleUtil.ENGLISH);
@@ -940,7 +964,8 @@ public class ShoppingUtil {
 		String state = HttpUtil.encodeURL(order.getBillingState());
 		String zip = HttpUtil.encodeURL(order.getBillingZip());
 
-		String currencyCode = shoppingGroupServiceSettings.getCurrencyId();
+		String currencyCode =
+			shoppingGroupServiceOverriddenConfiguration.getCurrencyId();
 
 		StringBundler sb = new StringBundler(45);
 
@@ -1075,13 +1100,14 @@ public class ShoppingUtil {
 	}
 
 	public static boolean meetsMinOrder(
-			ShoppingGroupServiceSettings shoppingGroupServiceSettings,
+			ShoppingGroupServiceOverriddenConfiguration
+				shoppingGroupServiceOverriddenConfiguration,
 			Map<ShoppingCartItem, Integer> items)
 		throws PortalException {
 
-		if ((shoppingGroupServiceSettings.getMinOrder() > 0) &&
+		if ((shoppingGroupServiceOverriddenConfiguration.getMinOrder() > 0) &&
 			(calculateSubtotal(items) <
-				shoppingGroupServiceSettings.getMinOrder())) {
+				shoppingGroupServiceOverriddenConfiguration.getMinOrder())) {
 
 			return false;
 		}
@@ -1124,8 +1150,9 @@ public class ShoppingUtil {
 		return itemPrice;
 	}
 
-	private static ShoppingGroupServiceSettings
-		getShoppingGroupServiceSettings(long groupId) throws SettingsException {
+	private static ShoppingGroupServiceOverriddenConfiguration
+			getShoppingGroupServiceOverriddenConfiguration(long groupId)
+		throws SettingsException {
 
 		ShoppingServiceComponentProvider shoppingServiceComponentProvider =
 			ShoppingServiceComponentProvider.
@@ -1135,7 +1162,7 @@ public class ShoppingUtil {
 			shoppingServiceComponentProvider.getSettingsFactory();
 
 		return settingsFactory.getSettings(
-					ShoppingGroupServiceSettings.class,
+					ShoppingGroupServiceOverriddenConfiguration.class,
 					new GroupServiceSettingsLocator(
 						groupId, ShoppingConstants.SERVICE_NAME));
 	}

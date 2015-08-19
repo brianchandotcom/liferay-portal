@@ -23,7 +23,7 @@ import com.liferay.shopping.settings.internal.ShoppingGroupServiceConfigurationO
  * @author Eduardo Garcia
  */
 @Settings.OverrideClass(ShoppingGroupServiceConfigurationOverrideImpl.class)
-public interface ShoppingGroupServiceSettings
+public interface ShoppingGroupServiceOverriddenConfiguration
 	extends ShoppingGroupServiceConfiguration,
 			ShoppingGroupServiceConfigurationOverride {
 }

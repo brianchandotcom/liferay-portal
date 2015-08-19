@@ -148,7 +148,7 @@ page import="com.liferay.shopping.service.permission.ShoppingCategoryPermission"
 page import="com.liferay.shopping.service.permission.ShoppingItemPermission" %><%@
 page import="com.liferay.shopping.service.permission.ShoppingOrderPermission" %><%@
 page import="com.liferay.shopping.service.permission.ShoppingPermission" %><%@
-page import="com.liferay.shopping.settings.ShoppingGroupServiceSettings" %><%@
+page import="com.liferay.shopping.settings.ShoppingGroupServiceOverriddenConfiguration" %><%@
 page import="com.liferay.shopping.util.ShoppingUtil" %><%@
 page import="com.liferay.shopping.web.search.CouponDisplayTerms" %><%@
 page import="com.liferay.shopping.web.search.CouponSearch" %><%@
@@ -192,9 +192,9 @@ ShoppingWebComponentProvider shoppingWebComponentProvider = ShoppingWebComponent
 
 SettingsFactory settingsFactory = shoppingWebComponentProvider.getSettingsFactory();
 
-ShoppingGroupServiceSettings shoppingGroupServiceSettings = settingsFactory.getSettings(ShoppingGroupServiceSettings.class, new GroupServiceSettingsLocator(scopeGroupId, ShoppingConstants.SERVICE_NAME));
+ShoppingGroupServiceOverriddenConfiguration shoppingGroupServiceOverriddenConfiguration = settingsFactory.getSettings(ShoppingGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(scopeGroupId, ShoppingConstants.SERVICE_NAME));
 
-Currency currency = Currency.getInstance(shoppingGroupServiceSettings.getCurrencyId());
+Currency currency = Currency.getInstance(shoppingGroupServiceOverriddenConfiguration.getCurrencyId());
 
 NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
 

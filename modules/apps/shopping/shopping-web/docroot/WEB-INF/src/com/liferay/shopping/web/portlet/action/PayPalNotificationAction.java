@@ -29,7 +29,7 @@ import com.liferay.shopping.constants.ShoppingConstants;
 import com.liferay.shopping.exception.NoSuchOrderException;
 import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.service.ShoppingOrderLocalServiceUtil;
-import com.liferay.shopping.settings.ShoppingGroupServiceSettings;
+import com.liferay.shopping.settings.ShoppingGroupServiceOverriddenConfiguration;
 import com.liferay.shopping.util.ShoppingUtil;
 import com.liferay.shopping.web.util.ShoppingWebComponentProvider;
 
@@ -163,18 +163,19 @@ public class PayPalNotificationAction extends Action {
 		SettingsFactory settingsFactory =
 			shoppingWebComponentProvider.getSettingsFactory();
 
-		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
-			settingsFactory.getSettings(
-				ShoppingGroupServiceSettings.class,
-				new GroupServiceSettingsLocator(
-					order.getGroupId(), ShoppingConstants.SERVICE_NAME));
+		ShoppingGroupServiceOverriddenConfiguration
+			shoppingGroupServiceOverriddenConfiguration =
+				settingsFactory.getSettings(
+					ShoppingGroupServiceOverriddenConfiguration.class,
+					new GroupServiceSettingsLocator(
+						order.getGroupId(), ShoppingConstants.SERVICE_NAME));
 
 		// Receiver email address
 
 		String ppReceiverEmail = ParamUtil.getString(request, "receiver_email");
 
 		String payPalEmailAddress =
-			shoppingGroupServiceSettings.getPayPalEmailAddress();
+			shoppingGroupServiceOverriddenConfiguration.getPayPalEmailAddress();
 
 		if (!payPalEmailAddress.equals(ppReceiverEmail)) {
 			return false;
@@ -194,7 +195,8 @@ public class PayPalNotificationAction extends Action {
 
 		String ppCurrency = ParamUtil.getString(request, "mc_currency");
 
-		String currencyId = shoppingGroupServiceSettings.getCurrencyId();
+		String currencyId =
+			shoppingGroupServiceOverriddenConfiguration.getCurrencyId();
 
 		if (!currencyId.equals(ppCurrency)) {
 			return false;

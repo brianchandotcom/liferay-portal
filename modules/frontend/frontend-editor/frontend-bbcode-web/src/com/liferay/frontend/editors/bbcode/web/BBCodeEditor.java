@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(service = Editor.class)
-public class BBCodeEditor extends BaseEditor {
+public class BBCodeEditor implements Editor {
 
 	@Override
 	public String getName() {

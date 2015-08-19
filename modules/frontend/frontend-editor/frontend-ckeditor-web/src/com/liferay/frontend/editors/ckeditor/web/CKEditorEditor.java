@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(service = Editor.class)
-public class CKEditorEditor extends BaseEditor {
+public class CKEditorEditor implements Editor {
 
 	@Override
 	public String getName() {

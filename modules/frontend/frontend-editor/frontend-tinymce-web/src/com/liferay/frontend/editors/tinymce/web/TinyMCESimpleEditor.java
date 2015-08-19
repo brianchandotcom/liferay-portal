@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(service = Editor.class)
-public class TinyMCESimpleEditor extends BaseEditor {
+public class TinyMCESimpleEditor implements Editor {
 
 	@Override
 	public String getName() {

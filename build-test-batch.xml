@@ -13,6 +13,203 @@
 	<property name="default.test.results.suite.dir" value="${default.test.results.dir}/test-suite" />
 	<property name="default.test.results.suite.file.name" value="TESTS-${test.batch.name}_${axis.variable}_results.xml" />
 
+	<macrodef name="build-testray-result">
+		<attribute name="test.results.file" />
+
+		<sequential>
+			<echo>Build testray result: @{test.results.file}</echo>
+			<if>
+				<isset property="testray.logs.report" />
+				<then>
+					<property name="test.case.attachments">
+						<![CDATA[
+							<attachments>
+								<file name="console.output" value="${testray.logs.console}" />
+								<file name="report.html" value="${testray.logs.report}" />
+							</attachments>
+						]]>
+					</property>
+				</then>
+				<else>
+					<property name="test.case.attachments">
+						<![CDATA[
+							<attachments>
+								<file name="console.output" value="${testray.logs.console}" />
+							</attachments>
+						]]>
+					</property>
+				</else>
+			</if>
+
+			<property name="test.case.properties">
+			<![CDATA[
+				<properties>
+					<property name="testray.case.defect" value="${testray.case.defect}" />
+					<property name="testray.component.names" value="${testray.component.names}" />
+					<property name="testray.main.component.name" value="${testray.main.component.name}" />
+					<property name="testray.team.name" value="${testray.team.name}" />
+					<property name="testray.testcase.description" value="${testray.testcase.description}" />
+					<property name="testray.testcase.name" value="${testray.testcase.name}" />
+					<property name="testray.testcase.priority" value="${testray.testcase.priority}" />
+					<property name="testray.testcase.product.edition" value="${testray.testcase.product.edition}" />
+				</properties>
+			]]>
+			</property>
+
+			<property name="test.suite.properties">
+				<![CDATA[
+					<environments>
+						<environment type="Application Server" option="${env.option.app.server}" />
+						<environment type="Browser" option="${env.option.browser}" />
+						<environment type="Database" option="${env.option.database}" />
+						<environment type="Java JDK" option="${env.option.java.jdk}" />
+						<environment type="Operating System" option="${env.option.operating.system}" />
+					</environments>
+					<properties>
+						<property name="app.server.type" value="${app.server.type}" />
+						<property name="app.server.version" value="${app.server.version}" />
+						<property name="browser.type" value="${browser.type}" />
+						<property name="browser.version" value="${browser.version}" />
+						<property name="database.type" value="${database.type}" />
+						<property name="database.version" value="${database.version}" />
+						<property name="liferay.compare.urls" value="${liferay.compare.urls}" />
+						<property name="liferay.plugins.git.id" value="${liferay.plugins.git.id}" />
+						<property name="liferay.portal.branch" value="${liferay.portal.branch}" />
+						<property name="liferay.portal.bundle" value="${liferay.portal.bundle}" />
+						<property name="liferay.portal.git.id" value="${liferay.portal.git.id}" />
+						<property name="java.jdk.type" value="${java.jdk.type}" />
+						<property name="java.jdk.version" value="${java.jdk.version}" />
+						<property name="operating.system.type" value="${operating.system.type}" />
+						<property name="operating.system.version" value="${operating.system.version}" />
+						<property name="testray.build.name" value="${testray.build.name}" />
+						<property name="testray.build.time" value="${testray.build.time}" />
+						<property name="testray.build.type" value="${testray.build.type}" />
+						<property name="testray.product.type" value="${testray.product.type}" />
+						<property name="testray.product.version" value="${testray.product.version}" />
+						<property name="testray.project.name" value="${testray.project.name}" />
+						<property name="testray.run.id" value="${testray.run.id}" />
+					</properties>
+				]]>
+			</property>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="g"
+				match="\^"
+				replace=""
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="gm"
+				match="&gt;([^&gt;^&lt;]*)&lt;"
+				replace="&gt;${line.separator}&lt;"
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="gm"
+				match="^\s*&lt;/?environment[^&gt;]*&gt;[\s]"
+				replace=""
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="gm"
+				match="^\s*&lt;/?propert[^&gt;]*&gt;[\s]"
+				replace=""
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="gm"
+				match="^\s*&lt;/?attachments[^&gt;]*&gt;[\s]"
+				replace=""
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="gm"
+				match="^\s*&lt;/?file[^&gt;]*&gt;[\s]"
+				replace=""
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="gm"
+				match="&lt;testcase[^&lt;]*?&lt;skipped[\s\S]*?testcase&gt;"
+				replace=""
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="g"
+				match="(\s*&lt;testcase[^/\n]*)/&gt;"
+				replace="\1&gt;${line.separator}&lt;/testcase&gt;"
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				match="&lt;testcase[^&gt;]*&gt;"
+				replace="${test.suite.properties}\0"
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="g"
+				match="&lt;testcase[^&gt;]*&gt;"
+				replace="\0${test.case.attachments}${line.separator}${test.case.properties}"
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="g"
+				match="(.*classname=&quot;\S+\.(\w+).*name=&quot;(\w+)[\s\S]+?)(\$\{testray\.testcase\.name\})"
+				replace="\1\2#\3"
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="g"
+				match="\$\{testray\.testcase\.name\}"
+				replace="${testray.main.component.name}"
+			/>
+
+			<if>
+				<contains string="@{test.results.file}" substring="EvaluateLog" />
+				<then>
+					<replaceregexp
+						file="@{test.results.file}"
+						flags="g"
+						match="testray\.testcase\.name.*(?=&quot;)"
+						replace="\0_EvaluateLog"
+					/>
+				</then>
+			</if>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="g"
+				match="(&lt;/?)error"
+				replace="\1failure"
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="g"
+				match="(&lt;failure\s*)type"
+				replace="\1message"
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="gm"
+				match="&gt;[^&gt;]*&lt;"
+				replace="&gt;${line.separator}&lt;"
+			/>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="check-deprecated-method">
 		<sequential>
 			<if>

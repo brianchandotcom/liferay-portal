@@ -2,9 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="../core/osgi-service-tracker-map" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
+	<import file="../../build-module.xml" />
 </project>

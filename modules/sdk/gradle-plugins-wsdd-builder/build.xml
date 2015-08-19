@@ -2,7 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="../util/portal-tools-wsdd-builder" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+	<import file="../../build-module.xml" />
 </project>

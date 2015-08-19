@@ -2,10 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="osgi.ide.dependencies" value="axis.jar" />
-	<property name="osgi.runtime.dependencies" value="commons-fileupload.jar,commons-io.jar,org.apache.felix.webconsole.jar,org.eclipse.equinox.http.servlet.jar" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
+	<import file="../../build-module.xml" />
 </project>

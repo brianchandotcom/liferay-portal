@@ -2,7 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="message-boards-comment,message-boards-web,../../../portal/portal-search" />
-
-	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
+	<import file="../../../build-module.xml" />
 </project>

@@ -2,39 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="jaxws-osgi-bridge,osgi-service-tracker-map,registry-impl" />
-	<property name="osgi.ide.dependencies" value="spring-beans.jar,spring-context.jar,spring-core.jar" />
-	<property name="osgi.runtime.dependencies" value="org.eclipse.osgi.jar,registry-impl.jar,com.liferay.osgi.servicetrackermap.jar" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/core" />
-
-	<target name="jar" depends="build-common.compile">
-		<mkdir dir="tmp" />
-
-		<manifest-helper />
-
-		<bndexpand propertyfile="${sdk.dir}/common.bnd" />
-
-		<bnd eclipse="false" exceptions="true" failok="false" inherit="true" output="tmp/system.packages.extra.jar">
-			<bndfiles>
-				<fileset dir="${basedir}">
-					<include name="system.packages.extra.bnd" />
-				</fileset>
-			</bndfiles>
-			<classpath>
-				<pathelement location="${plugin.classes.dir}" />
-			</classpath>
-			<property name="-sourcepath" value="${basedir}" />
-		</bnd>
-
-		<unjar dest="tmp" src="tmp/system.packages.extra.jar" overwrite="true">
-			<patternset includes="META-INF/MANIFEST.MF" />
-		</unjar>
-
-		<jar-macro
-			module.dir="${basedir}"
-		/>
-	</target>
+	<import file="../../build-module.xml" />
 </project>

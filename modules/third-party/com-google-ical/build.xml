@@ -2,39 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="javac.source" value="1.6" />
-	<property name="javac.target" value="1.6" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
-
-	<target name="compile">
-		<if>
-			<not>
-				<available file="src/com" />
-			</not>
-			<then>
-				<delete dir="src" />
-
-				<if>
-					<os family="unix" />
-					<then>
-						<exec dir="." executable="/bin/sh" failonerror="true">
-							<arg line="-c &quot;svn export http://google-rfc-2445.googlecode.com/svn/trunk/src@36 src&quot;" />
-						</exec>
-					</then>
-					<else>
-						<exec dir="." executable="cmd.exe" failonerror="true">
-							<arg line="/c &quot;svn export http://google-rfc-2445.googlecode.com/svn/trunk/src@36 src&quot;" />
-						</exec>
-					</else>
-				</if>
-			</then>
-		</if>
-
-		<compile
-			module.dir="${basedir}"
-		/>
-	</target>
+	<import file="../../build-module.xml" />
 </project>

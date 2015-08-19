@@ -479,6 +479,11 @@ public abstract class LiferayConverter {
 	}
 
 	protected int getCodecBitRate(ICodec outputICodec, int originalBitRate) {
+
+		if ((originalBitRate == 0) || (originalBitRate > AUDIO_BIT_RATE_MAX)) {
+			originalBitRate = AUDIO_BIT_RATE_DEFAULT;
+		}
+
 		ICodec.ID iCodecID = outputICodec.getID();
 
 		if (iCodecID.equals(ICodec.ID.CODEC_ID_VORBIS)) {
@@ -493,16 +498,16 @@ public abstract class LiferayConverter {
 	protected abstract IContainer getInputIContainer();
 
 	protected int getProperty(
-		int originalBitRate, int defaultBitRate, int maxBitRate) {
+		int originalValue, int defaultValue, int maxValue) {
 
-		if (originalBitRate <= 0) {
-			return defaultBitRate;
+		if (originalValue <= 0) {
+			return defaultValue;
 		}
-		else if (originalBitRate > maxBitRate) {
-			return maxBitRate;
+		else if (originalValue > maxValue) {
+			return maxValue;
 		}
 
-		return originalBitRate;
+		return originalValue;
 	}
 
 	protected int getProperty(

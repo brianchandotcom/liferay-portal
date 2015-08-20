@@ -19,9 +19,9 @@
 		</if>
 
 		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInpu#PASSWORD" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#PASSWORD" />
 			<then>
-				<execute function="Type" locator1="TextInpu#PASSWORD" value1="test" />
+				<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
 				<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test" />
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 			</then>

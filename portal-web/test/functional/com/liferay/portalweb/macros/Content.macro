@@ -16,7 +16,7 @@
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
 
 		<execute function="AssertClick#assertTextClickAtAddApplication" locator1="NavPill#CONTENT" value1="Content" />
-		<execute function="Type" locator1="Search#CONTENT_SEARCH_FIELD" value1="${assetTitle}" />
+		<execute function="Type" locator1="NavBar#CONTENT_SEARCH_FIELD" value1="${assetTitle}" />
 
 		<execute function="AssertTextEquals" locator1="DockbarAddPanel#CONTENT_TITLE" value1="${assetTitle}" />
 		<execute function="MouseOver" locator1="DockbarAddPanel#CONTENT_TITLE" />

@@ -187,6 +187,6 @@
 
 	<command name="viewRecyclebinViaSiteSettingsCP">
 		<execute function="AssertClick" locator1="SitesEditSite#MENU_BASIC_INFORMATION_RECYCLE_BIN" value1="Recycle Bin" />
-		<execute function="AssertTextEquals#assertValue" locator1="SiteSettingsRecyclebin#TRASH_ENTRIES_MAX_AGE_FIELD" value1="${maxAgeField}" />
+		<execute function="AssertTextEquals#assertValue" locator1="SiteSettingsRecycleBin#TRASH_ENTRIES_MAX_AGE_FIELD" value1="${maxAgeField}" />
 	</command>
 </definition>

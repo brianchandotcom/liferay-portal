@@ -150,10 +150,10 @@
 		<if>
 			<isset var="userMiddleName" />
 			<then>
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
+				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_USER_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
+				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_USER_NAME" value1="${userFirstName} ${userLastName}" />
 			</else>
 		</if>
 

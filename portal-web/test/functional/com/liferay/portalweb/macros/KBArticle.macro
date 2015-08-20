@@ -13,7 +13,7 @@
 	</command>
 
 	<command name="addChildPGViaKBDisplay">
-		<execute function="Click" locator1="Button#ACTIONS" />
+		<execute function="Click" locator1="KnowledgeBase#DISPLAY_ACTIONS_BUTTON" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CHILD_ARTICLE" value1="Add Child Article" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${kbArticleTitle}" />
@@ -56,7 +56,7 @@
 			<equals arg1="${kbArticleAddViaSource}" arg2="true" />
 			<then>
 				<execute function="AssertClick" locator1="Button#SOURCE" value1="Source" />
-				<execute function="Type" locator1="CKEditor#BODY_SOURCE_ON" value1="${kbArticleContentSource}" />
+				<execute function="Type" locator1="CKEditor#FIELD_SOURCE_ON" value1="${kbArticleContentSource}" />
 			</then>
 			<else>
 				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#IFRAME" value1="${kbArticleContent}" />
@@ -88,9 +88,9 @@
 			<isset var="kbArticleRelatedAssetType" />
 			<then>
 				<if>
-					<condition function="IsElementNotPresent" locator1="AssetRelatedAssets#EDIT_RELATED_ASSETS_HEADER_EXPANDED" />
+					<condition function="IsElementNotPresent" locator1="AssetRelatedAssets#HEADER_EXPANDED" />
 					<then>
-						<execute function="Click" locator1="AssetRelatedAssets#EDIT_RELATED_ASSETS_HEADER_COLLAPSED" />
+						<execute function="Click" locator1="AssetRelatedAssets#HEADER_COLLAPSED" />
 					</then>
 				</if>
 
@@ -240,7 +240,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
-		<execute function="AssertClick" locator1="Button#Save" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
@@ -334,7 +334,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
-		<execute function="AssertClick" locator1="Button#Save" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
@@ -350,17 +350,17 @@
 		<if>
 			<equals arg1="${useStarRatings}" arg2="true" />
 			<then>
-				<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#DISPLAY_SETTINGS_RATING_USE_STAR_RATINGS_RADIO" value1="Use Star Ratings" />
+				<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#DISPLAY_SETTINGS_USE_STAR_RATINGS_RADIO" value1="Use Star Ratings" />
 			</then>
 			<elseif>
 				<equals arg1="${useThumbsRatings}" arg2="true" />
 				<then>
-					<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#DISPLAY_SETTINGS_RATING_USE_THUMBS_RATINGS_RADIO" value1="Use Thumbs Up/Thumbs Down" />
+					<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#DISPLAY_SETTINGS_USE_THUMBS_RATINGS_RADIO" value1="Use Thumbs Up/Thumbs Down" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#Save" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertClick" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
@@ -387,7 +387,7 @@
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#NAVIGATION_TAB_DISPLAY_SETTINGS" value1="Display Settings" />
 
-		<execute function="Check" locator1="KnowledgeBaseConfiguration#DISPLAY_SETTINGS_SOCIAL_BOOKMARKS_CHECKBOX" />
+		<execute function="Check" locator1="KnowledgeBaseConfiguration#DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX" />
 
 		<if>
 			<isset var="enableSocialBookmarkSites" />
@@ -409,7 +409,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#Save" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertClick" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
@@ -430,7 +430,7 @@
 	</command>
 
 	<command name="deletePGViaKBDisplay">
-		<execute function="Click" locator1="Button#ACTIONS" />
+		<execute function="Click" locator1="KnowledgeBase#DISPLAY_ACTIONS_BUTTON" />
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 	</command>
@@ -484,7 +484,7 @@
 	</command>
 
 	<command name="editPGViaKBDisplay">
-		<execute function="Click" locator1="Button#ACTIONS" />
+		<execute function="Click" locator1="KnowledgeBase#DISPLAY_ACTIONS_BUTTON" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
@@ -540,15 +540,15 @@
 	<command name="gotoKBArticleViaKBDisplayHierarchyNavigationPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBase#DISPLAY_HIERARCHY_NAVIGATION" value1="${kbArticleTitle}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}" />
 	</command>
 
 	<command name="gotoKBChildArticleViaKBDisplayHierarchyNavigationPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBase#DISPLAY_HIERARCHY_NAVIGATION" value1="${kbArticleTitle}" />
-		<execute function="AssertClick" locator1="KnowledgeBase#DISPLAY_HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
 	</command>
 
 	<command name="gotoKBGrandchildArticleViaKBDisplayHierarchyNavigationPG">
@@ -556,9 +556,9 @@
 		<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
 		<var name="key_kbGrandchildArticleTitle" value="${kbGrandchildArticleTitle}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBase#DISPLAY_HIERARCHY_NAVIGATION" value1="${kbArticleTitle}" />
-		<execute function="AssertClick" locator1="KnowledgeBase#DISPLAY_HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
-		<execute function="AssertClick" locator1="KnowledgeBase#DISPLAY_HIERARCHY_NAVIGATION_GRANDCHILD" value1="${kbGrandchildArticleTitle}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_GRANDCHILD" value1="${kbGrandchildArticleTitle}" />
 	</command>
 
 	<command name="gotoNextArticlePG">
@@ -568,7 +568,7 @@
 	<command name="gotoPGViaKBSearchResult">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBase#SEARCH_ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_TITLE" value1="${kbArticleTitle}" />
 	</command>
 
 	<command name="gotoPGViaKBSection">
@@ -582,13 +582,13 @@
 	<command name="gotoRelatedAssetCP">
 		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBaseArticle#RELATED_ASSETS_LINK" value1="${kbArticleRelatedAssetTitle}" />
+		<execute function="AssertClick" locator1="KnowledgeBaseArticle#RELATED_ASSETS" value1="${kbArticleRelatedAssetTitle}" />
 	</command>
 
 	<command name="gotoRelatedAssetViaKBDisplayPG">
 		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="AssetRelatedAssets#RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="AssetRelatedAssets#KB_RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
 	</command>
 
 	<command name="gotoSuggestionsNavigationCP">
@@ -622,7 +622,7 @@
 		<var name="kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBase#DISPLAY_HIERARCHY_NAVIGATION" value1="${kbArticleTitle}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}" />
 	</command>
 
 	<command name="importCP">
@@ -666,7 +666,7 @@
 	<command name="moveArticleViaKBDisplayPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="Click" locator1="Button#ACTIONS" />
+		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${kbArticleTitle}" />
@@ -746,9 +746,9 @@
 
 	<command name="selectAttachmentCP">
 		<if>
-			<condition function="IsElementNotPresent" locator1="KnowledgeBaseArticle#EDIT_ATTACHMENTS_HEADER_EXPANDED" />
+			<condition function="IsElementNotPresent" locator1="KnowledgeBaseArticle#ATTACHMENTS_HEADER_EXPANDED" />
 			<then>
-				<execute function="Click" locator1="KnowledgeBaseArticle#EDIT_ATTACHMENTS_HEADER_COLLAPSED" />
+				<execute function="Click" locator1="KnowledgeBaseArticle#ATTACHMENTS_HEADER_COLLAPSED" />
 			</then>
 		</if>
 
@@ -789,8 +789,8 @@
 	<command name="selectParentViaKBDisplayPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="SelectFrame" locator1="KBSelectParentIFrame#IFRAME" />
-		<execute function="Click" locator1="KBSelectParentIFrame#CHOOSE_BUTTON" value1="Choose" />
+		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#IFRAME" />
+		<execute function="Click" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose" />
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_NEW_PARENT_TITLE_FIELD" value1="${kbArticleTitle}" />
 		<execute function="Click" locator1="Button#MOVE" />
@@ -840,10 +840,10 @@
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 
-		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#SCOPE" value1="Scope" />
-		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#SCOPE_MENU" value1="${currentKBPageScope}" />
-		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#SCOPE_MENULIST" value1="${newKBPageScope}" />
-		<execute function="AssertTextEquals" locator1="Message#Success" value1="You have successfully updated the setup." />
+		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#SECTION_SCOPE" value1="Scope" />
+		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#SCOPE_MENU_BUTTON" value1="${currentKBPageScope}" />
+		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#SCOPE_SELECTION" value1="${newKBPageScope}" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -938,21 +938,21 @@
 	</command>
 
 	<command name="viewArticleHistoryPG">
-		<execute function="AssertClick" locator1="KnowledgeBaseArticle#HISTORY_LINK" value1="History" />
+		<execute function="AssertClick" locator1="KnowledgeBaseArticle#HISTORY" value1="History" />
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#TITLE" value1="${kbArticleTitle}" />
 
 		<if>
 			<isset var="kbArticleTitleRemovedDiff" />
 			<then>
-				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#TITLE_EDIT_REMOVED_DIFF" value1="${kbArticleTitleRemovedDiff}" />
+				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HISTORY_TITLE_REMOVED_DIFF" value1="${kbArticleTitleRemovedDiff}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="kbArticleTitleAddedDiff" />
 			<then>
-				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#TITLE_EDIT_ADDED_DIFF" value1="${kbArticleTitleAddedDiff}" />
+				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HISTORY_TITLE_ADDED_DIFF" value1="${kbArticleTitleAddedDiff}" />
 			</then>
 		</if>
 
@@ -961,14 +961,14 @@
 		<if>
 			<isset var="kbArticleContentRemovedDiff" />
 			<then>
-				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#CONTENT_EDIT_REMOVED_DIFF" value1="${kbArticleContentRemovedDiff}" />
+				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HISTORY_CONTENT_REMOVED_DIFF" value1="${kbArticleContentRemovedDiff}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="kbArticleContentAddedDiff" />
 			<then>
-				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#CONTENT_EDIT_ADDED_DIFF" value1="${kbArticleContentAddedDiff}" />
+				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HISTORY_CONTENT_ADDED_DIFF" value1="${kbArticleContentAddedDiff}" />
 			</then>
 		</if>
 
@@ -989,8 +989,8 @@
 		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="AssertClick" locator1="KnowledgeBaseArticle#EDIT_ATTACHMENTS_HEADER_COLLAPSED" value1="Attachments" />
-		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#EDIT_ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER" />
+		<execute function="AssertClick" locator1="KnowledgeBaseArticle#ATTACHMENTS_HEADER_COLLAPSED" value1="Attachments" />
+		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER" />
 	</command>
 
 	<command name="viewChildArticleCP">
@@ -1011,13 +1011,13 @@
 	<command name="viewChildArticleHierarchyViaKBDisplayPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBase#DISPLAY_HIERARCHY_NAVIGATION" value1="${kbArticleTitle}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}" />
 
 		<var name="childCount" value="0" />
 		<var name="kbParentChild" value="${kbArticleTitle} Child" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="KnowledgeBase#DISPLAY_HIERARCHY_NAVIGATION_CHILD_GENERIC" />
+			<condition function="IsElementPresent" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD_GENERIC" />
 			<then>
 				<var method="MathUtil#sum('${childCount}', '1')" name="childCount" />
 				<var name="kbChildArticleTitle" value="${kbParentChild} ${childCount}" />
@@ -1028,7 +1028,7 @@
 					<then>
 						<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
 
-						<execute function="AssertClick" locator1="KnowledgeBase#DISPLAY_HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
+						<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
 					</then>
 				</if>
 			</then>
@@ -1039,7 +1039,7 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBase#DISPLAY_HIERARCHY_NAVIGATION_CHILD" value1="${key_kbChildArticleTitle}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${key_kbChildArticleTitle}" />
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DISPLAY_TITLE" value1="${kbChildArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DISPLAY_CONTENT" value1="${kbChildArticleContent}" />
@@ -1076,8 +1076,8 @@
 			<then>
 				<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
-				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#RELATED_ASSETS_HEADER" value1="Related Assets:" />
-				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#RELATED_ASSETS_LINK" value1="${kbArticleRelatedAssetTitle}" />
+				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#HEADER" value1="Related Assets:" />
+				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#KB_RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
 			</then>
 		</if>
 
@@ -1098,9 +1098,9 @@
 	</command>
 
 	<command name="viewDefaultKBDisplaySettingsPG">
-		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#LINK_SUBSCRIBE" value1="Subscribe" />
-		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#HISTORY_LINK" value1="History" />
-		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#PRINT_LINK" value1="Print" />
+		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#SUBSCRIBE" value1="Subscribe" />
+		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#HISTORY" value1="History" />
+		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#PRINT" value1="Print" />
 	</command>
 
 	<command name="viewDefaultViaKBArticlePG">
@@ -1149,18 +1149,18 @@
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${kbArticleTitle}" />
 
-		<execute function="SelectFrame" locator1="CKEditor#IFRAME_IFRAME" />
+		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
 		<execute function="AssertTextEquals" locator1="CKEditor#BODY" value1="${kbArticleContent}" />
 		<execute function="SelectFrame"  value1="relative=top" />
 
 		<if>
-			<condition function="IsElementNotPresent" locator1="KnowledgeBaseArticle#EDIT_ATTACHMENTS_HEADER_EXPANDED" />
+			<condition function="IsElementNotPresent" locator1="KnowledgeBaseArticle#ATTACHMENTS_HEADER_EXPANDED" />
 			<then>
-				<execute function="Click" locator1="KnowledgeBaseArticle#EDIT_ATTACHMENTS_HEADER_COLLAPSED" />
+				<execute function="Click" locator1="KnowledgeBaseArticle#ATTACHMENTS_HEADER_COLLAPSED" />
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#EDIT_ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER" value1="${kbArticleAttachment}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER" value1="${kbArticleAttachment}" />
 	</command>
 
 	<command name="viewKBDisplayPG">
@@ -1179,7 +1179,7 @@
 		<if>
 			<equals arg1="${sourceURL}" arg2="true" />
 			<then>
-				<execute function="AssertClick" locator1="KnowledgeBaseArticle#EDIT_ON_GITHUB_LINK" value1="Edit on GitHub" />
+				<execute function="AssertClick" locator1="KnowledgeBaseArticle#EDIT_ON_GITHUB" value1="Edit on GitHub" />
 
 				<var name="key_pageTitle" value="Google" />
 
@@ -1199,12 +1199,12 @@
 		<if>
 			<equals arg1="${subscribe}" arg2="true" />
 			<then>
-				<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#LINK_SUBSCRIBE" value1="Subscribe" />
+				<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#SUBSCRIBE" value1="Subscribe" />
 			</then>
 			<elseif>
 				<equals arg1="${subscribe}" arg2="false" />
 				<then>
-					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#LINK_SUBSCRIBE" value1="Subscribe" />
+					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#SUBSCRIBE" value1="Subscribe" />
 				</then>
 			</elseif>
 		</if>
@@ -1212,12 +1212,12 @@
 		<if>
 			<equals arg1="${history}" arg2="true" />
 			<then>
-				<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#HISTORY_LINK" value1="History" />
+				<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#HISTORY" value1="History" />
 			</then>
 			<elseif>
 				<equals arg1="${history}" arg2="false" />
 				<then>
-					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#HISTORY_LINK" value1="History" />
+					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#HISTORY" value1="History" />
 				</then>
 			</elseif>
 		</if>
@@ -1225,12 +1225,12 @@
 		<if>
 			<equals arg1="${print}" arg2="true" />
 			<then>
-				<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#PRINT_LINK" value1="Print" />
+				<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#PRINT" value1="Print" />
 			</then>
 			<elseif>
 				<equals arg1="${print}" arg2="false" />
 				<then>
-					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#PRINT_LINK" value1="Print" />
+					<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#PRINT" value1="Print" />
 				</then>
 			</elseif>
 		</if>
@@ -1240,7 +1240,7 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="pageName" value="${pageName}" />
 
-		<execute function="MouseOver" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_CREATE_DATE" />
+		<execute function="MouseOver" locator1="KnowledgeBase#ARTICLE_TABLE_CREATE_DATE" />
 
 		<var locator="KnowledgeBase#ARTICLE_TABLE_ARTICLE_CREATE_DATE_POPUP" name="publishDate" />
 
@@ -1348,7 +1348,7 @@
 	<command name="viewNoHierarchyPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="AssertElementNotPresent" locator1="KnowledgeBase#DISPLAY_HIERARCHY_NAVIGATION" />
+		<execute function="AssertElementNotPresent" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" />
 		<execute function="AssertElementPresent" locator1="PGKnowledgebasedisplay#FOLDER_NAVIGATION_MENULIST" />
 	</command>
 
@@ -1365,7 +1365,7 @@
 		<var name="count" value="0" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="KnowledgeBase#DISPLAY_HIERARCHY_NAVIGATION_GENERIC" />
+			<condition function="IsElementPresent" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_GENERIC" />
 			<then>
 				<var method="MathUtil#sum('${count}', '1')" name="count" />
 				<var name="kbParentTitle" value="${kbArticleTitle} ${count}" />
@@ -1374,7 +1374,7 @@
 				<if>
 					<condition function="IsElementPresent" locator1="xpath=//div[@class='kbarticle-navigation']/ul[${count}]" />
 					<then>
-						<execute function="AssertClick" locator1="KnowledgeBase#DISPLAY_HIERARCHY_NAVIGATION" value1="${kbParentTitle}" />
+						<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbParentTitle}" />
 					</then>
 				</if>
 			</then>
@@ -1426,14 +1426,14 @@
 		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
 		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#HEADER" value1="Related Assets:" />
-		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#KB_RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
 	</command>
 
 	<command name="viewSearchResultsPG">
 		<for list="${kbArticleTitleList}" param="kbArticleTitle">
 			<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-			<execute function="AssertTextEquals" locator1="KnowledgeBase#SEARCH_ARTICLE_TABLE_TITLE" value1="${kbArticleTitle}" />
+			<execute function="AssertTextEquals" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_TITLE" value1="${kbArticleTitle}" />
 		</for>
 	</command>
 
@@ -1461,7 +1461,7 @@
 		<var name="key_kbArticleSourceURL" value="${kbArticleSourceURL}" />
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="Click" locator1="Button#ACTIONS" />
+		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="CKEditor#SOURCE_URL" value1="${kbArticleSourceURL}" />
@@ -1489,7 +1489,7 @@
 				<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
 				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#HEADER" value1="Related Assets:" />
-				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+				<execute function="AssertTextEquals" locator1="AssetRelatedAssets#KB_RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
 			</then>
 		</if>
 	</command>

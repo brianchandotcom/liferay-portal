@@ -2,14 +2,14 @@
 	<command name="addCP">
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 
-		<execute function="Type" locator1="InputField#WEB_ID" value1="${webId}" />
-		<execute function="Type" locator1="InputField#VIRTUAL_HOST" value1="${virtualHost}" />
-		<execute function="Type" locator1="InputField#MAIL_DOMAIN" value1="${mailDomain}" />
+		<execute function="Type" locator1="TextInput#WEB_ID" value1="${webId}" />
+		<execute function="Type" locator1="TextInput#VIRTUAL_HOST" value1="${virtualHost}" />
+		<execute function="Type" locator1="TextInput#MAIL_DOMAIN" value1="${mailDomain}" />
 
 		<if>
 			<equals arg1="${maxUsers}" arg2="true" />
 			<then>
-				<execute function="Type" locator1="InputField#MAX_USERS" value1="${maxUserNumber}" />
+				<execute function="Type" locator1="TextInput#MAX_USERS" value1="${maxUserNumber}" />
 			</then>
 		</if>
 
@@ -28,7 +28,7 @@
 		<var name="key_virtualHost" value="${virtualHost}" />
 
 		<execute function="Click" locator1="PortalInstances#INSTANCE_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="Menulist#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Uncheck" locator1="Checkbox#ACTIVE" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -41,7 +41,7 @@
 
 		<execute function="AssertTextEquals" locator1="PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST" value1="${virtualHost}" />
 		<execute function="Click" locator1="PortalInstances#INSTANCE_TABLE_ACTIONS" />
-		<execute function="AssertClickNoError" locator1="Menulist#DELETE" value1="Delete" />
+		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -69,7 +69,7 @@
 			<condition function="IsElementPresent" locator1="PortalInstances#INSTANCE_TABLE_ACTIONS_GENERIC" />
 			<then>
 				<execute function="Click" locator1="PortalInstances#INSTANCE_TABLE_ACTIONS_GENERIC" />
-				<execute function="AssertClickNoError" locator1="Menulist#DELETE" value1="Delete" />
+				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>

@@ -3494,7 +3494,7 @@
 
 		<var name="key_contentName" value="Web Content" />
 
-		<execute function="AssertElementNotPresent" locator1="PageConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+		<execute function="AssertElementNotPresent" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 
 		<execute macro="Page#gotoPagesCP">
 			<var name="pageStaging" value="true" />

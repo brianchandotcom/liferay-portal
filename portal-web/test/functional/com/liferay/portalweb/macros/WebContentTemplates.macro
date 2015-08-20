@@ -144,9 +144,9 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
-		<execute function="AssertElementNotPresent" locator1="TextInput#NAME_REQUIRED" />
+		<execute function="AssertElementNotPresent" locator1="TextInput#REQUIRED_ALERT" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals" locator1="TextInput#NAME_REQUIRED" value1="This field is required." />
+		<execute function="AssertTextEquals" locator1="TextInput#REQUIRED_ALERT" value1="This field is required." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -165,14 +165,14 @@
 		<if>
 			<isset var="templateName" />
 			<then>
-				<execute function="Type" locator1="Search#ADVANCED_SEARCH_NAME_FIELD" value1="${templateName}" />
+				<execute function="Type" locator1="TextInput#NAME" value1="${templateName}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="templateDescription" />
 			<then>
-				<execute function="Type" locator1="Search#ADVANCED_SEARCH_DESCRIPTION_FIELD" value1="${templateDescription}" />
+				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${templateDescription}" />
 			</then>
 		</if>
 

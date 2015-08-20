@@ -5,16 +5,16 @@
 		<if>
 			<equals arg1="${roleType}" arg2="Organization" />
 			<then>
-				<execute function="AssertClick" locator1="NavBar#ADD_MENULIST_ORGANIZATION_ROLE" value1="Organization Role" />
+				<execute function="AssertClick" locator1="MenuItem#ORGANIZATION_ROLE" value1="Organization Role" />
 			</then>
 			<elseif>
 				<equals arg1="${roleType}" arg2="Site" />
 				<then>
-					<execute function="AssertClick" locator1="NavBar#ADD_MENULIST_SITE_ROLE" value1="Site Role" />
+					<execute function="AssertClick" locator1="MenuItem#SITE_ROLE" value1="Site Role" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertClick" locator1="NavBar#ADD_MENULIST_REGULAR_ROLE" value1="Regular Role" />
+				<execute function="AssertClick" locator1="MenuItem#REGULAR_ROLE" value1="Regular Role" />
 			</else>
 		</if>
 
@@ -487,75 +487,75 @@
 	</command>
 
 	<command name="localizeRoleDescriptionCmd">
-		<execute function="Click" locator1="TextArea#DESCRIPTION_LOCALIZATION_FLAG_ENGLISH" />
+		<execute function="Click" locator1="RolesEditRole#DESCRIPTION_FIELD_LOCALIZATION_FLAG_ENGLISH" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${roleName}" />
 
 		<if>
 			<equals arg1="${language}" arg2="Catalan (Spain)" />
 			<then>
-				<execute function="Click" locator1="TextArea#DESCRIPTION_LOCALIZATION_FLAG_CATALAN" />
+				<execute function="Click" locator1="RolesEditRole#DESCRIPTION_FIELD_LOCALIZATION_FLAG_CATALAN" />
 				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${roleDescriptionLocalized}" />
 			</then>
 			<elseif>
 				<equals arg1="${language}" arg2="Chinese (China)" />
 				<then>
-					<execute function="Click" locator1="TextArea#DESCRIPTION_LOCALIZATION_FLAG_CHINESE" />
+					<execute function="Click" locator1="RolesEditRole#DESCRIPTION_FIELD_LOCALIZATION_FLAG_CHINESE" />
 					<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Finnish (Finland)" />
 				<then>
-					<execute function="Click" locator1="TextArea#DESCRIPTION_LOCALIZATION_FLAG_FINNISH" />
+					<execute function="Click" locator1="RolesEditRole#DESCRIPTION_FIELD_LOCALIZATION_FLAG_FINNISH" />
 					<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="French (France)" />
 				<then>
-					<execute function="Click" locator1="TextArea#DESCRIPTION_LOCALIZATION_FLAG_FRENCH" />
+					<execute function="Click" locator1="RolesEditRole#DESCRIPTION_FIELD_LOCALIZATION_FLAG_FRENCH" />
 					<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="German (Germany)" />
 				<then>
-					<execute function="Click" locator1="TextArea#DESCRIPTION_LOCALIZATION_FLAG_GERMAN" />
+					<execute function="Click" locator1="RolesEditRole#DESCRIPTION_FIELD_LOCALIZATION_FLAG_GERMAN" />
 					<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Hebrew (Israel)" />
 				<then>
-					<execute function="Click" locator1="TextArea#DESCRIPTION_LOCALIZATION_FLAG_HEBREW" />
+					<execute function="Click" locator1="RolesEditRole#DESCRIPTION_FIELD_LOCALIZATION_FLAG_HEBREW" />
 					<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Hungarian (Hungary)" />
 				<then>
-					<execute function="Click" locator1="TextArea#DESCRIPTION_LOCALIZATION_FLAG_HUNGARIAN" />
+					<execute function="Click" locator1="RolesEditRole#DESCRIPTION_FIELD_LOCALIZATION_FLAG_HUNGARIAN" />
 					<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Japanese (Japan)" />
 				<then>
-					<execute function="Click" locator1="TextArea#DESCRIPTION_LOCALIZATION_FLAG_JAPANESE" />
+					<execute function="Click" locator1="RolesEditRole#DESCRIPTION_FIELD_LOCALIZATION_FLAG_JAPANESE" />
 					<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Portuguese (Brazil)" />
 				<then>
-					<execute function="Click" locator1="TextArea#DESCRIPTION_LOCALIZATION_FLAG_PORTUGUESE" />
+					<execute function="Click" locator1="RolesEditRole#DESCRIPTION_FIELD_LOCALIZATION_FLAG_PORTUGUESE" />
 					<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Spanish (Spain)" />
 				<then>
-					<execute function="Click" locator1="TextArea#DESCRIPTION_LOCALIZATION_FLAG_SPANISH" />
+					<execute function="Click" locator1="RolesEditRole#DESCRIPTION_FIELD_LOCALIZATION_FLAG_SPANISH" />
 					<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${roleDescriptionLocalized}" />
 				</then>
 			</elseif>
@@ -563,75 +563,75 @@
 	</command>
 
 	<command name="localizeRoleNameCmd">
-		<execute function="Click" locator1="TextInput#TITLE_LOCALIZATION_FLAG_ENGLISH" />
+		<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_ENGLISH" />
 		<execute function="Type" locator1="TextInput#TITLE" value1="${roleName}" />
 
 		<if>
 			<equals arg1="${language}" arg2="Catalan (Spain)" />
 			<then>
-				<execute function="Click" locator1="TextInput#TITLE_LOCALIZATION_FLAG_CATALAN" />
+				<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_CATALAN" />
 				<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
 			</then>
 			<elseif>
 				<equals arg1="${language}" arg2="Chinese (China)" />
 				<then>
-					<execute function="Click" locator1="TextInput#TITLE_LOCALIZATION_FLAG_CHINESE" />
+					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_CHINESE" />
 					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Finnish (Finland)" />
 				<then>
-					<execute function="Click" locator1="TextInput#TITLE_LOCALIZATION_FLAG_FINNISH" />
+					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_FINNISH" />
 					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="French (France)" />
 				<then>
-					<execute function="Click" locator1="TextInput#TITLE_LOCALIZATION_FLAG_FRENCH" />
+					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_FRENCH" />
 					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="German (Germany)" />
 				<then>
-					<execute function="Click" locator1="TextInput#TITLE_LOCALIZATION_FLAG_GERMAN" />
+					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_GERMAN" />
 					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Hebrew (Israel)" />
 				<then>
-					<execute function="Click" locator1="TextInput#TITLE_LOCALIZATION_FLAG_HEBREW" />
+					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_HEBREW" />
 					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Hungarian (Hungary)" />
 				<then>
-					<execute function="Click" locator1="TextInput#TITLE_LOCALIZATION_FLAG_HUNGARIAN" />
+					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_HUNGARIAN" />
 					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Japanese (Japan)" />
 				<then>
-					<execute function="Click" locator1="TextInput#TITLE_LOCALIZATION_FLAG_JAPANESE" />
+					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_JAPANESE" />
 					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Portuguese (Brazil)" />
 				<then>
-					<execute function="Click" locator1="TextInput#TITLE_LOCALIZATION_FLAG_PORTUGUESE" />
+					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_PORTUGUESE" />
 					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Spanish (Spain)" />
 				<then>
-					<execute function="Click" locator1="TextInput#TITLE_LOCALIZATION_FLAG_SPANISH" />
+					<execute function="Click" locator1="RolesEditRole#TITLE_FIELD_LOCALIZATION_FLAG_SPANISH" />
 					<execute function="Type" locator1="TextInput#TITLE" value1="${roleNameLocalized}" />
 				</then>
 			</elseif>

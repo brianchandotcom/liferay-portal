@@ -23,7 +23,7 @@
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no templates." />
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
-		<execute function="AssertClick" locator1="Button#ADD_MENULIST" value1="${adtType} Template" />
+		<execute function="AssertClick" locator1="MenuItem#ADT_TEMPLATE" value1="${adtType} Template" />
 
 		<execute function="AssertTextEquals" locator1="DDMEditTemplate#HEADER_TITLE" value1="New ${adtType} Template" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${adtType} Test ADT" />
@@ -56,7 +56,7 @@
 
 		<execute function="AssertClick#assertTextClick" locator1="Button#ADD" value1="Add" />
 
-		<execute function="AssertClick" locator1="Button#ADD_MENULIST_ADT_TEMPLATE" value1="RSS Template" />
+		<execute function="AssertClick" locator1="MenuItem#ADT_TEMPLATE" value1="RSS Template" />
 
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="RSS Test ADT" />
 
@@ -92,10 +92,10 @@
 
 		<var name="key_adtType" value="${adtType}" />
 
-		<execute function="AssertClick" locator1="Button#ADD_MENULIST_ADT_TEMPLATE" value1="${adtType} Template" />
+		<execute function="AssertClick" locator1="MenuItem#ADT_TEMPLATE" value1="${adtType} Template" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${adtType} Test ADT" />
-		<execute function="UploadCommonFile" locator1="ApplicationDisplayTemplatesEdit#SCRIPT_FIELD" value1="${adtFile}" />
+		<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${adtFile}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />

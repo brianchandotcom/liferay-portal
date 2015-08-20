@@ -248,8 +248,8 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="KBSelectParentIFrame#IFRAME" />
-		<execute function="AssertElementPresent" locator1="KBSelectParentIFrame#BREADCRUMB_HOME" />
+		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#IFRAME" />
+		<execute function="AssertElementPresent" locator1="KnowledgeBaseSelectParent#BREADCRUMB_HOME" />
 		<execute function="AssertElementNotPresent" locator1="//div[contains(@class,'breadcrumb')]//a[contains(.,'Home')]/following-sibling::ul[contains(@class,'breadcrumb')]" />
 	</command>
 

@@ -246,7 +246,7 @@
 		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME_1" value1="${communitySiteTranslation}" />
 		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME_2" value1="${intranetSiteTranslation}" />
 		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRIPTION_1" value1="${communitySiteDescriptionTranslation}" />
-		<execute function="AssertTextEquals" locator1="SiteTemplates#xSITE_TEMPLATE_TABLE_DESCRIPTION_2" value1="${intranetSiteDescriptionTranslation}" />
+		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRIPTION_2" value1="${intranetSiteDescriptionTranslation}" />
 	</command>
 
 	<command name="viewEditCP">

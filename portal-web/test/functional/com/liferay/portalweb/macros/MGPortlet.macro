@@ -2,7 +2,7 @@
 	<command name="configureShowAllPG">
 		<execute function="AssertElementPresent" locator1="Icon#COG" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Icon#COG" value1="Options" />
-		<execute function="AssertClick" locator1="Icon#COG_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 		<execute function="Check" locator1="Checkbox#SHOW_ACTIONS_CHECKBOX" />

@@ -56,7 +56,7 @@
 
 		<execute function="AssertVisible#pauseAssertVisible" locator1="${portletLocator}" />
 
-		<execute function="Type#sendKeysApplicationSearch" locator1="Search#APPLICATION_SEARCH_FIELD" value1="Bookmarks" />
+		<execute function="Type#sendKeysApplicationSearch" locator1="NavBar#APPLICATION_SEARCH_FIELD" value1="Bookmarks" />
 
 		<execute function="AssertVisible#pauseAssertVisible" locator1="${portletLocator}" />
 	</command>

@@ -222,7 +222,7 @@
 
 	<command name="deleteLivePG">
 		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" />
-		<execute function="ClickNoError" locator1="Icon#EDIT_LIVE_DELETE" />
+		<execute function="ClickNoError" locator1="DockbarTEMP#EDIT_LIVE_DELETE" />
 
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete the selected page?" />
 	</command>
@@ -253,7 +253,7 @@
 	</command>
 
 	<command name="gotoAdmin">
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN_DROP_DOWN_BUTTON" value1="Admin" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
 
 		<execute function="AssertClick" locator1="Dockbar#${portletCategoryKey}" value1="${portletCategoryName}" />
 
@@ -1182,12 +1182,13 @@
 		<execute function="AssertTextNotPresent" locator1="DockbarTEMP#USER_MY_PROFILE" value1="My Profile" />
 		<execute function="AssertTextNotPresent" locator1="DockbarTEMP#USER_MY_DASHBOARD" value1="My Dashboard" />
 	</command>
+
 	<command name="viewWithWorkflowPG">
 		<execute function="Pause" locator1="1073" />
 		<execute function="Pause" locator1="5000" />
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-		<execute function="AssertTextEquals" locator1="MESSAGE#STATUS" value1="${workflowStatus}" />
+		<execute function="AssertTextEquals" locator1="Message#STATUS" value1="${workflowStatus}" />
 		<execute function="AssertClick" locator1="Staging#LIVE_BUTTON" value1="Live" />
 
 		<var name="key_pageName" value="${pageName}" />

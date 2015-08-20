@@ -10,13 +10,13 @@
 
 		<var name="key_bookmarkFolderName" value="${bookmarkFolderName}" />
 
-		<execute function="AssertClick" locator1="BookmarksSelectfolder#FOLDER_TABLE_CHOOSE" value1="Choose" />
+		<execute function="AssertClick" locator1="BookmarksSelectFolder#FOLDER_TABLE_CHOOSE" value1="Choose" />
 
 		<execute function="SelectFrameTop" />
 
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
-		<execute function="Type" locator1="InputField#NAME" value1="${bookmarkName}" />
-		<execute function="Type" locator1="InputField#URL" value1="${bookmarkURL}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${bookmarkName}" />
+		<execute function="Type" locator1="TextInput#URL" value1="${bookmarkURL}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${bookmarkDescription}" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 	</command>
@@ -345,8 +345,8 @@
 	</command>
 
 	<command name="searchCP">
-		<execute function="Type" locator1="Search#BASIC_SEARCH_FIELD" value1="${bookmarkName}" />
-		<execute function="AssertClick" locator1="Search#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${bookmarkName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
@@ -354,8 +354,8 @@
 	</command>
 
 	<command name="searchNullCP">
-		<execute function="Type" locator1="Search#BASIC_SEARCH_FIELD" value1="${nullBookmarkName}" />
-		<execute function="AssertClick" locator1="Search#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${nullBookmarkName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<var name="key_bookmarkName" value="${nullBookmarkName}" />
 
@@ -369,8 +369,8 @@
 			<then>
 				<var name="key_bookmarkName" value="${bookmarkName}" />
 
-				<execute function="Type" locator1="Search#BASIC_SEARCH_FIELD" value1="${bookmarkName}" />
-				<execute function="AssertClick" locator1="Search#BASIC_SEARCH_BUTTON" value1="Search" />
+				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${bookmarkName}" />
+				<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 				<var name="key_bookmarkName" value="${bookmarkName}" />
 
@@ -381,8 +381,8 @@
 				<then>
 					<var name="key_bookmarkName" value="${bookmarkName}" />
 
-					<execute function="Type" locator1="Search#BASIC_SEARCH_FIELD" value1="asdf" />
-					<execute function="AssertClick" locator1="Search#BASIC_SEARCH_BUTTON" value1="Search" />
+					<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="asdf" />
+					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No entries were found that matched the keywords: asdf." />
 				</then>
@@ -392,8 +392,8 @@
 				<then>
 					<var name="quotes"><![CDATA["${bookmarkName}"]]></var>
 
-					<execute function="Type" locator1="Search#BASIC_SEARCH_FIELD" value1="${quotes}" />
-					<execute function="AssertClick" locator1="Search#BASIC_SEARCH_BUTTON" value1="Search" />
+					<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${quotes}" />
+					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 					<var name="key_bookmarkName" value="${bookmarkName}" />
 

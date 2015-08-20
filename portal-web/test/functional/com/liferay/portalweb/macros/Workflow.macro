@@ -86,8 +86,8 @@
 	</command>
 
 	<command name="approveTaskByNotifications">
-		<execute function="AssertClick" locator1="Notificationsdockbar#COUNT_ALERT" value1="${notificationCount}" />
-		<execute function="AssertClick" locator1="Notificationsdockbar#NOTIFICATIONS_CONTENT_GENERIC" value1="${notificationContent}" />
+		<execute function="AssertClick" locator1="NotificationsDockbar#COUNT_ALERT" value1="${notificationCount}" />
+		<execute function="AssertClick" locator1="NotificationsDockbar#NOTIFICATIONS_CONTENT_GENERIC" value1="${notificationContent}" />
 
 		<execute function="SelectFrame" locator1="MyWorkflowTasksTask#MANAGE_MY_ACCOUNT_IFRAME" />
 		<execute function="AssertTextEquals#assertValue" locator1="MyWorkflowTasksTask#ASSIGNED_TO" value1="${userName}" />
@@ -177,8 +177,8 @@
 	</command>
 
 	<command name="assignToMeTaskByNotifications">
-		<execute function="AssertClick" locator1="Notificationsdockbar#COUNT_ALERT" value1="${notificationCount}" />
-		<execute function="AssertClick" locator1="Notificationsdockbar#NOTIFICATIONS_CONTENT_GENERIC" value1="${notificationContent}" />
+		<execute function="AssertClick" locator1="NotificationsDockbar#COUNT_ALERT" value1="${notificationCount}" />
+		<execute function="AssertClick" locator1="NotificationsDockbar#NOTIFICATIONS_CONTENT_GENERIC" value1="${notificationContent}" />
 
 		<execute function="SelectFrame" locator1="MyWorkflowTasksTask#MANAGE_MY_ACCOUNT_IFRAME" />
 		<execute function="AssertTextEquals#assertValue" locator1="MyWorkflowTasksTask#ASSIGNED_TO" value1="Nobody" />
@@ -221,7 +221,7 @@
 
 	<command name="confirmAndViewSucessMessageViaActions">
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#OK" value1="OK" />
-		<execute function="AssertTextEquals" locator1="Message#xxxxxxxxxxxxx" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="confirmAndViewSucessMessageViaDetails">
@@ -564,7 +564,7 @@
 	</command>
 
 	<command name="viewCannotWithdrawTaskByActions">
-		<execute function="AssertClick"  locator1="WorkflowSubmissions#NAVIGATION_COMPLETED" value1="Completed" />
+		<execute function="AssertClick"  locator1="NavTab#COMPLETED" value1="Completed" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
@@ -579,7 +579,7 @@
 	</command>
 
 	<command name="viewCompletedTask">
-		<execute function="Click" locator1="MyWorkflowTasks#NAVIGATION_COMPLETED" value1="Completed" />
+		<execute function="Click" locator1="NavTab#COMPLETED" value1="Completed" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
@@ -601,7 +601,7 @@
 	</command>
 
 	<command name="viewCompletedTasks">
-		<execute function="AssertClick" locator1="MyWorkflowTasks#NAVIGATION_COMPLETED" value1="Completed" />
+		<execute function="AssertClick" locator1="NavTab#COMPLETED" value1="Completed" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
@@ -611,7 +611,7 @@
 	</command>
 
 	<command name="viewCompletedTasksTaskNotPresentCP">
-		<execute function="AssertClick" locator1="MyWorkflowTasks#NAVIGATION_COMPLETED" value1="Completed" />
+		<execute function="AssertClick" locator1="NavTab#COMPLETED" value1="Completed" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
@@ -622,7 +622,7 @@
 
 	<command name="viewDefaultMySubmissionsCP">
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no pending publications requested by me." />
-		<execute function="AssertClick" locator1="WorkflowSubmissions#NAVIGATION_COMPLETED" value1="Completed" />
+		<execute function="AssertClick" locator1="NavTab#COMPLETED" value1="Completed" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no completed publications requested by me." />
 	</command>
@@ -630,7 +630,7 @@
 	<command name="viewDefaultMyWorkflowTasksCP">
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_INFO_MESSAGE" value1="There are no pending tasks assigned to you." />
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_INFO_MESSAGE" value1="There are no pending tasks assigned to your roles." />
-		<execute function="AssertClick" locator1="MyWorkflowTasks#NAVIGATION_COMPLETED" value1="Completed" />
+		<execute function="AssertClick" locator1="NavTab#COMPLETED" value1="Completed" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no completed tasks." />
 	</command>
@@ -797,7 +797,7 @@
 	</command>
 
 	<command name="withdrawTaskCompletedNoByDetails">
-		<execute function="AssertClick"  locator1="WorkflowSubmissions#NAVIGATION_COMPLETED" value1="Completed" />
+		<execute function="AssertClick"  locator1="NavTab#COMPLETED" value1="Completed" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 

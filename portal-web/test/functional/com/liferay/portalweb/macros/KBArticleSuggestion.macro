@@ -1,7 +1,7 @@
 <definition>
 	<command name="addPG">
-		<execute function="AssertClick" locator1="KnowledgeBaseArticle#LINK_DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
-		<execute function="Type" locator1="KnowledgeBaseSuggestions#CONTENT_FIELD" value1="${kbSuggestionBody}" />
+		<execute function="AssertClick" locator1="KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
+		<execute function="Type" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Suggestion saved successfully." />
 	</command>
@@ -10,11 +10,11 @@
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasearticle#ARTICLE_TITLE" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasearticle#ARTICLE_CONTENT" value1="${kbArticleContent}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBaseArticle#LINK_DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
-		<execute function="Type" locator1="KnowledgeBaseSuggestions#CONTENT_FIELD" value1="${kbSuggestionBody}" />
+		<execute function="AssertClick" locator1="KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
+		<execute function="Type" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
 		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
-		<execute function="AssertNotVisible" locator1="KnowledgeBaseSuggestions#CONTENT_FIELD" />
-		<execute function="AssertNotVisible" locator1="KnowledgeBaseSuggestions#CONTENT_FIELD" />
+		<execute function="AssertNotVisible" locator1="KnowledgeBaseSuggestions#CONTENT" />
+		<execute function="AssertNotVisible" locator1="KnowledgeBaseSuggestions#CONTENT" />
 
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
@@ -111,7 +111,7 @@
 	</command>
 
 	<command name="viewNoSuggestionsPG">
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#LINK_DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
 		<execute function="AssertElementNotPresent" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" />
 	</command>
 
@@ -126,7 +126,7 @@
 	<command name="viewSubmittedSuggestionCountNoPermissionPG">
 		<var name="kbSuggestionCount" value="${kbSuggestionCount}" />
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#LINK_DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
 		<execute function="AssertElementNotPresent" locator1="KnowledgeBaseSuggestions#NAVIGATION_BAR" />
 
 		<if>
@@ -143,7 +143,7 @@
 	<command name="viewSuggestionCountPG">
 		<var name="kbSuggestionCount" value="${kbSuggestionCount}" />
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#LINK_DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
 
 		<if>
 			<equals arg1="${kbSuggestionCount}" arg2="1" />

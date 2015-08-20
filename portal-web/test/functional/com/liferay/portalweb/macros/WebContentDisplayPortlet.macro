@@ -273,7 +273,7 @@
 
 	<command name="viewAllSettingsEnabledPG">
 		<execute function="AssertTextEquals#assertPartialText" locator1="Icon#PRINT" value1="Print" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Comments#SUBCRIBE_TO_COMMENTS" value1="Subscribe to Comments" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" value1="Subscribe to Comments" />
 
 		<var name="key_assetTitle" value="${relatedAssetTitle}" />
 

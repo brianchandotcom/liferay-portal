@@ -54,7 +54,7 @@
 
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="" />
 
-		<execute function="SelectFrame" locator1="CKEditor#IFRAME_IFRAME" />
+		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
 		<execute function="AssertTextEquals" locator1="CKEditor#BODY" value1="${kbTemplateContent}" />
 	</command>
 </definition>

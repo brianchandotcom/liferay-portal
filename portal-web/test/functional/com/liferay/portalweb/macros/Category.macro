@@ -4,7 +4,7 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ADD_CATEGORY" value1="Add Category" />
+		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${categoryName}" />
 
@@ -25,7 +25,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Button#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addCategoryPropertyCP">
@@ -33,7 +33,7 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ADD_CATEGORY" value1="Add Category" />
+		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${categoryName}" />
 
@@ -76,7 +76,7 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Button#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addCategoryViewableByCP">
@@ -84,13 +84,13 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ADD_CATEGORY" value1="Add Category" />
+		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${categoryName}" />
 		<execute function="Select" locator1="CategoriesEditCategory#VIEWABLE_BY_SELECT" value1="${viewableBy}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Button#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addCP">
@@ -104,7 +104,7 @@
 			</then>
 			<else>
 				<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
-				<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ADD_CATEGORY" value1="Add Category" />
+				<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 			</else>
 		</if>
 
@@ -119,19 +119,19 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Button#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addWithNullTitleCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ADD_CATEGORY" value1="Add Category" />
+		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1=" " />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#TITLE_ERROR" value1="Name Required" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#TITLE_ERROR" value1="This field is required." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT" value1="Name Required" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT" value1="This field is required." />
 	</command>
 
 	<command name="deleteByActionsCP">
@@ -144,7 +144,7 @@
 		<execute function="AssertClick" locator1="Categories#ACTIONS_BUTTON" value1="Actions" />
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="Button#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no categories." />
 		<execute function="AssertTextNotPresent" value1="${categoryName}" />
 	</command>
@@ -157,7 +157,7 @@
 		<execute function="AssertClick" locator1="Categories#ACTIONS_BUTTON" value1="Actions" />
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="Button#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no categories." />
 	</command>
 
@@ -167,9 +167,9 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" />
-		<execute function="AssertClickNoError" locator1="Categories#CATEGORY_ENTRY_MENULIST_DELETE" value1="Delete" />
+		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="Button#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no categories." />
 		<execute function="AssertTextNotPresent" value1="${categoryName}" />
 	</command>
@@ -181,13 +181,13 @@
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_CATEGORY" value1="${categoryName}" />
 		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" />
-		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Click" locator1="CategoriesEditCategory#PROPERTIES_DELETE_ROW_BUTTON_2" />
 		<execute function="AssertElementPresent" locator1="CategoriesEditCategory#PROPERTIES_UNDO_MESSAGE" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Button#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deletePartialCategoryCP">
@@ -198,7 +198,7 @@
 		<execute function="AssertClick" locator1="Categories#ACTIONS_BUTTON" value1="Actions" />
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="Message#INFO_ALERT" value1="The following items could not be deleted: ${categoryName}" />
+		<execute function="AssertTextEquals" locator1="Message#INFO_RESPONSE" value1="The following items could not be deleted: ${categoryName}" />
 	</command>
 
 	<command name="editCategoryPropertyCP">
@@ -208,7 +208,7 @@
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_CATEGORY" value1="${categoryName}" />
 		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" />
-		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="CPCategoriesEdit#NAME_FIELD" value1="${categoryNameEdit}" />
 
@@ -223,7 +223,7 @@
 		<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1" value1="${propertiesValueFieldEdit}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Button#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editCP">
@@ -232,12 +232,12 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" />
-		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="CPCategoriesEdit#NAME_FIELD" value1="${categoryNameEdit}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Button#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="moveViaEditCP">
@@ -246,12 +246,12 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" />
-		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_MENULIST_MOVE" value1="Move" />
+		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 
 		<execute function="Select" locator1="CPCategoriesEdit#VOCABULARY_SELECT" value1="${vocabularyName2}" />
 		<execute function="AssertClick" locator1="Button#MOVE" value1="Move" />
 
-		<execute function="AssertTextEquals" locator1="Button#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="searchCP">
@@ -275,7 +275,7 @@
 			<then>
 				<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 				<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" />
-				<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_MENULIST_EDIT" value1="Edit" />
+				<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 				<var name="key_pathNumber" value="${pathNumber}" />
 
@@ -285,7 +285,7 @@
 			<else>
 				<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 				<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" />
-				<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_MENULIST_EDIT" value1="Edit" />
+				<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 				<while>
 					<not>
@@ -318,7 +318,7 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" value1="${categoryName}" />
-		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_MENULIST_PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="AssetPermissions#IFRAME" />
 

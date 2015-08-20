@@ -2,7 +2,7 @@
 	<command name="addCP">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute function="AssertClick" locator1="SiteTeams#ADD_TEAM_BUTTON" value1="Add Team" />
+		<execute function="AssertClick" locator1="Button#ADD_TEAM" value1="Add Team" />
 		<execute function="Pause" locator1="3000" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${teamName}" />
@@ -22,7 +22,7 @@
 		<execute function="Click" locator1="SiteTeams#TEAM_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
-		<execute function="AssertClick" locator1="SiteTeamsMembers#AVAILABLE" value1="Available" />
+		<execute function="AssertClick" locator1="SiteTeamsAssignMembers#AVAILABLE" value1="Available" />
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
@@ -32,12 +32,12 @@
 				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="SiteTeamsMembers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-				<execute function="Check" locator1="SiteTeamsMembers#USER_TABLE_CHECKBOX" />
+				<execute function="AssertTextEquals" locator1="SiteTeamsAssignMembers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+				<execute function="Check" locator1="SiteTeamsAssignMembers#USER_TABLE_CHECKBOX" />
 				<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
 
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-				<execute function="AssertChecked" locator1="SiteTeamsMembers#USER_TABLE_CHECKBOX" />
+				<execute function="AssertChecked" locator1="SiteTeamsAssignMembers#USER_TABLE_CHECKBOX" />
 			</else>
 		</if>
 	</command>
@@ -51,23 +51,23 @@
 		<execute function="Click" locator1="SiteTeams#TEAM_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
-		<execute function="AssertClick" locator1="SiteTeamsMembers#USER_GROUPS" value1="User Groups" />
-		<execute function="AssertClick" locator1="SiteTeamsMembers#AVAILABLE" value1="Available" />
+		<execute function="AssertClick" locator1="SiteTeamsAssignMembers#USER_GROUPS" value1="User Groups" />
+		<execute function="AssertClick" locator1="SiteTeamsAssignMembers#AVAILABLE" value1="Available" />
 
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<if>
 			<equals arg1="${userGroupsNameIsNotAvailable}" arg2="true" />
 			<then>
-				<execute function="AssertTextNotPresent" locator1="SiteTeamsMembers#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
+				<execute function="AssertTextNotPresent" locator1="SiteTeamsAssignMembers#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="SiteTeamsMembers#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
-				<execute function="Check" locator1="SiteTeamsMembers#USER_GROUPS_TABLE_CHECKBOX" />
+				<execute function="AssertTextEquals" locator1="SiteTeamsAssignMembers#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
+				<execute function="Check" locator1="SiteTeamsAssignMembers#USER_GROUPS_TABLE_CHECKBOX" />
 				<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
 
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-				<execute function="AssertChecked" locator1="SiteTeamsMembers#USER_GROUPS_TABLE_CHECKBOX" />
+				<execute function="AssertChecked" locator1="SiteTeamsAssignMembers#USER_GROUPS_TABLE_CHECKBOX" />
 			</else>
 		</if>
 	</command>

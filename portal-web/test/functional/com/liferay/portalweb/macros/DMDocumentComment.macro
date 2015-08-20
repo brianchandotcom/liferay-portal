@@ -20,7 +20,7 @@
 				<execute function="AssertClick" locator1="PGDocumentsandmediaDocument#COMMENTS_SUBMIT_BUTTON" value1="Submit" />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="Comments#REPLY" value1="Reply" />
+				<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 			</else>
 		</if>
 

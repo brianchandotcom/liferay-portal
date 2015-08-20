@@ -38,7 +38,7 @@
 			<if>
 				<isset var="friendlyURL" />
 				<then>
-					<execute function="AssertElementPresent" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD_LOCALIZED" />
+					<execute function="AssertElementPresent" locator1="SitePagesEditPage#FRIENDLY_URL_LOCALIZED" />
 				</then>
 				<else>
 					<execute function="AssertElementPresent" locator1="SitePagesEditPage#LOCALIZED_FLAG_ICON" />

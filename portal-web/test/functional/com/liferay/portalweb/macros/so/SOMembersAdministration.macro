@@ -160,7 +160,7 @@
 				<execute function="Close#closeWindow" locator1="SignInCreateAccount#CREATE_ACCOUNT_POP_UP_WINDOW" />
 			</then>
 			<else>
-				<execute function="Type" locator1="TextInpu#PASSWORD" value1="test" />
+				<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
 				<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test" />
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 

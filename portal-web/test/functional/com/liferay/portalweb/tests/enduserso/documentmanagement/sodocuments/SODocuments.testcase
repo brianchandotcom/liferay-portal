@@ -217,7 +217,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavListItem#BROWSE_BY_TYPE" value1="Browse by Type" />
-		<execute function="AssertClick" locator1="NavListItem#BROWSE_BY_TYPE_CONTRACT" value1="Contract" />
+		<execute function="AssertClick" locator1="NavListItem#CONTRACT" value1="Contract" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />
@@ -231,7 +231,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavListItem#BROWSE_BY_TYPE" value1="Browse by Type" />
-		<execute function="AssertClick" locator1="NavListItem#BROWSE_BY_TYPE_MARKETING_BANNER" value1="Marketing Banner" />
+		<execute function="AssertClick" locator1="NavListItem#MARKETING_BANNER" value1="Marketing Banner" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription2}" />
@@ -245,7 +245,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavListItem#BROWSE_BY_TYPE" value1="Browse by Type" />
-		<execute function="AssertClick" locator1="NavListItem#BROWSE_BY_TYPE_ONLINE_TRAINING" value1="Online Training" />
+		<execute function="AssertClick" locator1="NavListItem#ONLINE_TRAINING" value1="Online Training" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription3}" />
@@ -259,7 +259,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavListItem#BROWSE_BY_TYPE" value1="Browse by Type" />
-		<execute function="AssertClick" locator1="NavListItem#BROWSE_BY_TYPE_SALES_PRESENTATION" value1="Sales Presentation" />
+		<execute function="AssertClick" locator1="NavListItem#SALES_PRESENTATION" value1="Sales Presentation" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription4}" />
@@ -471,7 +471,7 @@
 
 		<var name="key_commentBody" value="${commentBody}" />
 
-		<execute function="AssertTextEquals" locator1="Comments#USERNAME" value1="${userName}" />
+		<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${userName}" />
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
 
 		<execute macro="User#logoutAndLoginPG">
@@ -2672,7 +2672,7 @@
 
 		<var name="key_commentBody" value="${commentBody}" />
 
-		<execute function="AssertTextEquals" locator1="Comments#USERNAME" value1="${userName}" />
+		<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${userName}" />
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${commentBodyEdit}" />
 
 		<execute macro="User#logoutAndLoginPG">

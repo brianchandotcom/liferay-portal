@@ -227,7 +227,7 @@
 	</command>
 
 	<command name="addTagPGViaWCD">
-		<execute function="AssertElementPresent" locator1="WCEditWebContent#BASIC_PREVIEW_BUTTON" />
+		<execute function="AssertElementPresent" locator1="Button#BASIC_PREVIEW" />
 		<execute function="AssertClick#assertTextClickAtViewHistory" locator1="WCEditWebContent#MENU_CATEGORIZATION" value1="Categorization" />
 
 		<var name="key_tagName" value="${tagName}" />
@@ -348,7 +348,7 @@
 
 		<var name="key_webContentTranslationLanguage" value="${webContentTranslationLanguage}" />
 
-		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="Translation#ADD_MENULIST_LANGUAGE_LANGUAGE" value1="${webContentTranslationLanguage}" />
+		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="MenuItem#WEB_CONTENT_LANGUAGE" value1="${webContentTranslationLanguage}" />
 		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="Translation#AVAILABLE_TRANSLATION" value1="${webContentTranslationLanguage}" />
 		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTranslationTitle}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#IFRAME" value1="${webContentTranslationContent}" />
@@ -576,7 +576,7 @@
 			<then>
 				<var name="key_fieldName" value="Text_Box" />
 
-				<execute function="Type" locator1="TextInput#TEXT_BOX" value1="${webContentTextBox}" />
+				<execute function="Type" locator1="DDMField#TEXT_BOX" value1="${webContentTextBox}" />
 			</then>
 		</if>
 
@@ -950,7 +950,7 @@
 
 		<execute function="AssertTextEquals" locator1="CPWebcontentEditwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="AssertTextEquals" locator1="CPWebcontentEditwebcontent#TEXT_FIELD" value1="${webContentText}" />
-		<execute function="AssertClick" locator1="WCEditWebContent#BASIC_PREVIEW_BUTTON" value1="Basic Preview" />
+		<execute function="AssertClick" locator1="Button#BASIC_PREVIEW" value1="Basic Preview" />
 
 		<execute function="SelectFrame" locator1="WCPreview#PREVIEW_IFRAME" />
 		<execute function="AssertTextEquals" locator1="WCPreview#BODY_FIELD" value1="Text: ${webContentText}" />
@@ -970,8 +970,8 @@
 		<var name="key_webContentFolder" value="${webContentFolder}" />
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="Type" locator1="Search#BASIC_SEARCH_FIELD" value1="${webContentTitle}" />
-		<execute function="AssertClick" locator1="Search#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${webContentTitle}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute function="AssertTextEquals" locator1="WC#SEARCH_TITLE" value1="${webContentTitle}" />
 		<execute function="AssertTextEquals" locator1="WC#SEARCH_FOLDER" value1="${webContentFolder}" />
 	</command>
@@ -997,8 +997,8 @@
 		<var name="key_webContentFolder" value="${webContentFolder}" />
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="Type" locator1="Search#BASIC_SEARCH_FIELD" value1="${searchQuery}" />
-		<execute function="AssertClick" locator1="Search#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${searchQuery}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute function="AssertTextEquals" locator1="WC#SEARCH_NONE" value1="No web content was found that matched the keywords: ${searchQuery}." />
 		<execute function="AssertTextNotPresent" locator1="WC#SEARCH_TITLE" value1="${webContentTitle}" />
 		<execute function="AssertTextNotPresent" locator1="WC#SEARCH_BODY" value1="${webContentContent}" />
@@ -1080,11 +1080,11 @@
 
 		<var name="key_webContentTranslationLanguage" value="${webContentTranslationLanguage1}" />
 
-		<execute function="AssertTextEquals" locator1="Translation#ADD_MENULIST_LANGUAGE_LANGUAGE" value1="${webContentTranslationLanguage1}" />
+		<execute function="AssertTextEquals" locator1="MenuItem#WEB_CONTENT_LANGUAGE" value1="${webContentTranslationLanguage1}" />
 
 		<var name="key_webContentTranslationLanguage" value="${webContentTranslationLanguage2}" />
 
-		<execute function="AssertTextNotPresent" locator1="Translation#ADD_MENULIST_LANGUAGE_LANGUAGE" value1="${webContentTranslationLanguage2}" />
+		<execute function="AssertTextNotPresent" locator1="MenuItem#WEB_CONTENT_LANGUAGE" value1="${webContentTranslationLanguage2}" />
 	</command>
 
 	<command name="viewCategorizationCategoryCP">
@@ -1115,7 +1115,7 @@
 		<for list="${vocabularyNameList}" param="vocabularyName">
 			<var name="key_vocabularyName" value="${vocabularyName}" />
 
-			<execute function="AssertTextEquals" locator1="AssetCategorization#VOCABULARY_LABEL" value1="${vocabularyName}" />
+			<execute function="AssertTextEquals" locator1="AssetCategorization#VOCABULARY" value1="${vocabularyName}" />
 		</for>
 	</command>
 
@@ -1387,7 +1387,7 @@
 	<command name="viewStatus">
 		<execute function="AssertTextEquals" locator1="WCEditWebContent#STATUS_LABEL" value1="${webContentStatus}" />
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-		<execute function="SelectFrame" locator1="CKEditor#IFRAME_IFRAME" />
+		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
 		<execute function="AssertTextEquals" locator1="TextInput#BODY" value1="${webContentContent}" />
 
 		<execute function="SelectFrameTop" />
@@ -1556,7 +1556,7 @@
 
 		<execute function="AssertTextEquals" locator1="AssetWorkflow#WORKFLOW_STATUS" value1="Pending (${workflowTask})" />
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-		<execute function="SelectFrame" locator1="CKEditor#IFRAME_IFRAME" />
+		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
 		<execute function="AssertTextEquals" locator1="TextInput#BODY" value1="${webContentContent}" />
 		<execute function="SelectFrameTop" />
 	</command>
@@ -1571,7 +1571,7 @@
 
 		<execute function="AssertTextEquals" locator1="WCEditWebContent#STATUS_LABEL" value1="Pending (${workflowTask})" />
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-		<execute function="SelectFrame" locator1="CKEditor#IFRAME_IFRAME" />
+		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
 		<execute function="AssertTextEquals" locator1="TextInput#BODY" value1="${webContentContent}" />
 	</command>
 </definition>

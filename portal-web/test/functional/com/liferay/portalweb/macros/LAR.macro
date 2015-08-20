@@ -30,7 +30,7 @@
 			<equals arg1="${deleteMissingPages}" arg2="true" />
 			<then>
 				<execute function="AssertClick" locator1="ExportImport#PAGES_CHANGE_LINK" value1="Change" />
-				<execute function="Check" locator1="PageConfiguration#PAGES_DELETE_MISSING_PAGES_CHECKBOX" />
+				<execute function="Check" locator1="PagesConfiguration#PAGES_DELETE_MISSING_PAGES_CHECKBOX" />
 				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
@@ -39,7 +39,7 @@
 			<equals arg1="${uncheckLogo}" arg2="true" />
 			<then>
 				<execute function="AssertClick" locator1="ExportImport#PAGES_CHANGE_LINK" value1="Change" />
-				<execute function="Uncheck" locator1="PageConfiguration#PAGES_LOGO_CHECKBOX" />
+				<execute function="Uncheck" locator1="PagesConfiguration#PAGES_LOGO_CHECKBOX" />
 				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
@@ -52,7 +52,7 @@
 				<for list="${checkPageName}" param="pageName">
 					<var name="key_pageName" value="${pageName}" />
 
-					<execute function="Click" locator1="PageConfiguration#PAGES_SPECIFIC_PAGE_NAME" />
+					<execute function="Click" locator1="PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME" />
 				</for>
 
 				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
@@ -106,15 +106,15 @@
 
 				<var name="key_applicationName" value="${mainApplication}" />
 
-				<execute function="AssertClick" locator1="PageConfiguration#APPLICATION_CONFIGURATION_APPLICATION_CHANGE_LINK" value1="Change" />
+				<execute function="AssertClick" locator1="PagesConfiguration#APPLICATION_CONFIGURATION_APPLICATION_CHANGE_LINK" value1="Change" />
 
 				<for list="${uncheckSubApplicationList}" param="uncheckSubApplication">
 					<var name="key_subApplication" value="${uncheckSubApplication}" />
 
-					<execute function="Uncheck" locator1="PageConfiguration#APPLICATION_CONFIGURATION_CHOOSE_APPLICATION_SUBAPPLICATION_CHECKBOX" />
+					<execute function="Uncheck" locator1="PagesConfiguration#APPLICATION_CONFIGURATION_CHOOSE_APPLICATION_SUBAPPLICATION_CHECKBOX" />
 				</for>
 
-				<execute function="Click" locator1="PageConfiguration#APPLICATION_CONFIGURATION_CHOOSE_APPLICATION_SUBAPPLICATION_OK_BUTTON" />
+				<execute function="Click" locator1="PagesConfiguration#APPLICATION_CONFIGURATION_CHOOSE_APPLICATION_SUBAPPLICATION_OK_BUTTON" />
 			</then>
 		</if>
 
@@ -152,7 +152,7 @@
 				<for list="${checkContentNameList}" param="contentName">
 					<var name="key_contentName" value="${contentName}" />
 
-					<execute function="Check" locator1="PageConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+					<execute function="Check" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				</for>
 			</then>
 		</if>
@@ -165,7 +165,7 @@
 				<for list="${uncheckContentNameList}" param="contentName">
 					<var name="key_contentName" value="${contentName}" />
 
-					<execute function="Uncheck" locator1="PageConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+					<execute function="Uncheck" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				</for>
 			</then>
 		</if>
@@ -177,7 +177,7 @@
 
 				<var name="key_contentName" value="${contentName}" />
 
-				<execute function="Check" locator1="PageConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+				<execute function="Check" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK" value1="Change" />
 
 				<var name="key_subContent" value="${uncheckSubContent}" />
@@ -194,7 +194,7 @@
 
 				<var name="key_contentName" value="${contentName}" />
 
-				<execute function="Check" locator1="PageConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+				<execute function="Check" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK" value1="Change" />
 
 				<var name="key_subContent" value="${subContent}" />

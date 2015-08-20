@@ -40,7 +40,7 @@
 					<execute function="Type" locator1="TextInput#NAME" value1="${tagName}" />
 					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-					<execute function="AssertTextEquals" locator1="Message#Success" value1="Your request completed successfully." />
+					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 					<var name="key_tagName" value="${tagName}" />
 
@@ -57,7 +57,7 @@
 				<execute function="Type" locator1="TextInput#NAME" value1="${tagName}" />
 				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-				<execute function="AssertTextEquals" locator1="Message#Success" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
@@ -177,8 +177,8 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#NAME_ERROR" value1="Name Required" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#NAME_ERROR" value1="This field is required." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT" value1="Name Required" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT" value1="This field is required." />
 	</command>
 
 	<command name="deleteCP">
@@ -206,7 +206,7 @@
 		</if>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="Message#Success" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no tags." />
 		<execute function="AssertTextNotPresent" value1="${tagName}" />
 	</command>
@@ -236,17 +236,17 @@
 
 		<execute function="AssertClick" locator1="CPTagsEdit#SAVE_BUTTON" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="Message#Success" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="mergeMultipleTags">
 		<execute function="Check" locator1="Tags#ALL_TAGS_CHECKBOX" />
 		<execute function="Click" locator1="Tags#TOOLBAR_ACTIONS" />
-		<execute function="AssertClick" locator1="Tags#MERGE" value1="Merge" />
+		<execute function="AssertClick" locator1="Button#MERGE" value1="Merge" />
 		<execute function="Select" locator1="Tags#MERGE_TAGS_INTO_THIS_TAG_SELECT" value1="${tagName2}" />
 		<execute function="AssertClickNoError" locator1="Button#MERGE" value1="Merge" />
 		<execute function="Confirm#assertPartialConfirmation" value1="${mergeConfirmation}" />
-		<execute function="AssertTextEquals" locator1="Message#Success" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<var name="key_tagName" value="${tagName2}" />
 
@@ -262,7 +262,7 @@
 
 		<execute function="Check" locator1="Tags#TAG_ENTRY_TABLE_CHECKBOX" />
 		<execute function="Click" locator1="Tags#TOOLBAR_ACTIONS" />
-		<execute function="AssertClickNoError" locator1="Tags#MERGE" value1="Merge" />
+		<execute function="AssertClickNoError" locator1="Button#MERGE" value1="Merge" />
 		<execute function="Confirm" value1="Please choose at least 2 tags." />
 	</command>
 
@@ -364,7 +364,7 @@
 
 	<command name="viewFrontPageTagPG">
 		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContent}" />
-		<execute function="AssertTextEquals" locator1="Wiki#WIKI_PAGE_TAG" value1="${wikiTagName}" />
+		<execute function="AssertTextEquals" locator1="Wiki#PAGE_TAG" value1="${wikiTagName}" />
 	</command>
 
 	<command name="viewMultipleViaBlogsPG">

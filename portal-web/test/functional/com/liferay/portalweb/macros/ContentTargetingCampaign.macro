@@ -3,26 +3,26 @@
 		<execute function="AssertClick" locator1="ContentTargeting#NAVIGATION_CAMPAIGNS" value1="Campaigns" />
 		<execute function="Click" locator1="ContentTargeting#ADD_CAMPAIGN_BUTTON" />
 
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_NAME_FIELD" value1="${campaignName}" />
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_DESCRIPTION_FIELD" value1="${campaignDescription}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_NAME_FIELD" value1="${campaignName}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_DESCRIPTION_FIELD" value1="${campaignDescription}" />
 
 		<if>
 			<isset var="userSegmentSelect" />
 			<then>
-				<execute function="Select" locator1="ContentTargetingEditcampaign#CAMPAIGN_USER_SEGMENT_SELECT" value1="${userSegmentSelect}" />
+				<execute function="Select" locator1="ContentTargetingEditCampaign#CAMPAIGN_USER_SEGMENT_SELECT" value1="${userSegmentSelect}" />
 			</then>
 		</if>
 
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_USER_SEGMENT_SELECT" value1="${campaignStartDate}" />
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_START_TIME_FIELD" value1="${campaignStartTime}" />
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_END_DATE_FIELD" value1="${campaignEndDate}" />
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_END_TIME_FIELD" value1="${campaignEndTime}" />
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_PRIORITY_FIELD" value1="${campaignPriorityField}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_USER_SEGMENT_SELECT" value1="${campaignStartDate}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_START_TIME_FIELD" value1="${campaignStartTime}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_END_DATE_FIELD" value1="${campaignEndDate}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_END_TIME_FIELD" value1="${campaignEndTime}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_PRIORITY_FIELD" value1="${campaignPriorityField}" />
 
 		<if>
 			<equals arg1="${campaignInactive}" arg2="true" />
 			<then>
-				<execute function="Uncheck" locator1="ContentTargetingEditcampaign#CAMPAIGN_ACTIVE_CHECKBOX" />
+				<execute function="Uncheck" locator1="ContentTargetingEditCampaign#CAMPAIGN_ACTIVE_CHECKBOX" />
 			</then>
 		</if>
 	</command>
@@ -32,19 +32,19 @@
 			<var name="campaignTrackingAction" value="Content" />
 		</execute>
 
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_ALIAS_FIELD" value1="${contentAlias}" />
-		<execute function="Click" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_BUTTON" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_ALIAS_FIELD" value1="${contentAlias}" />
+		<execute function="Click" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_BUTTON" />
 
 		<var name="key_menulistContent" value="${menulistContent}" />
 
-		<execute function="Click" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_MENULIST" />
-		<execute function="SelectFrame" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_IFRAME" />
+		<execute function="Click" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_MENULIST" />
+		<execute function="SelectFrame" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_IFRAME" />
 
 		<var name="key_contentTitle" value="${contentTitle}" />
 
-		<execute function="Click" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" />
+		<execute function="Click" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" />
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="AssertTextEquals" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_TRACKING_ACTION" value1="view" />
+		<execute function="AssertTextEquals" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_TRACKING_ACTION" value1="view" />
 	</command>
 
 	<command name="addTrackingActionFormCP">
@@ -52,9 +52,9 @@
 			<var name="campaignTrackingAction" value="Form" />
 		</execute>
 
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_FORM_ALIAS_FIELD" value1="${formAlias}" />
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_FORM_FORM_ID_FIELD" value1="${formId}" />
-		<execute function="Select" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_FORM_TRACKING_ACTION_SELECT" value1="${formTrackingActionSelect}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_FORM_ALIAS_FIELD" value1="${formAlias}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_FORM_FORM_ID_FIELD" value1="${formId}" />
+		<execute function="Select" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_FORM_TRACKING_ACTION_SELECT" value1="${formTrackingActionSelect}" />
 	</command>
 
 	<command name="addTrackingActionLinkCP">
@@ -62,9 +62,9 @@
 			<var name="campaignTrackingAction" value="Link" />
 		</execute>
 
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_LINK_ALIAS_FIELD" value1="${linkAlias}" />
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_LINK_ID_FIELD" value1="${linkId}" />
-		<execute function="AssertTextEquals" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_LINK_TRACKING_ACTION" value1="click" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_LINK_ALIAS_FIELD" value1="${linkAlias}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_LINK_ID_FIELD" value1="${linkId}" />
+		<execute function="AssertTextEquals" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_LINK_TRACKING_ACTION" value1="click" />
 	</command>
 
 	<command name="addTrackingActionPageCP">
@@ -72,24 +72,24 @@
 			<var name="campaignTrackingAction" value="Page" />
 		</execute>
 
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_PAGE_ALIAS_FIELD" value1="${pageAlias}" />
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_PAGE_FRIENDLY_URL_FIELD" value1="${pageFriendlyURL}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_PAGE_ALIAS_FIELD" value1="${pageAlias}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_PAGE_FRIENDLY_URL_FIELD" value1="${pageFriendlyURL}" />
 	</command>
 
 	<command name="addTrackingActionsCmd">
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_SEARCH_FIELD" value1="${campaignTrackingAction}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_SEARCH_FIELD" value1="${campaignTrackingAction}" />
 
 		<if>
 			<equals arg1="${campaignTrackingAction}" arg2="Youtube" />
 			<then>
 				<var name="key_campaignTrackingAction" value="Youtube" />
 
-				<execute function="DragAndDrop" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS" locator2="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_FORM_BUILDER" value1="Youtube Videos" />
+				<execute function="DragAndDrop" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS" locator2="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_FORM_BUILDER" value1="Youtube Videos" />
 			</then>
 			<else>
 				<var name="key_campaignTrackingAction" value="${campaignTrackingAction}" />
 
-				<execute function="DragAndDrop" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS" locator2="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_FORM_BUILDER" value1="${campaignTrackingAction}" />
+				<execute function="DragAndDrop" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS" locator2="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_FORM_BUILDER" value1="${campaignTrackingAction}" />
 			</else>
 		</if>
 	</command>
@@ -99,9 +99,9 @@
 			<var name="campaignTrackingAction" value="Youtube" />
 		</execute>
 
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS_ALIAS_FIELD" value1="${youtubeAlias}" />
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS_VIDEO_ID_FIELD" value1="${youtubeVideoId}" />
-		<execute function="Select" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS_TRACKING_ACTION_SELECT" value1="${youtubeTrackingActionSelect}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS_ALIAS_FIELD" value1="${youtubeAlias}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS_VIDEO_ID_FIELD" value1="${youtubeVideoId}" />
+		<execute function="Select" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS_TRACKING_ACTION_SELECT" value1="${youtubeTrackingActionSelect}" />
 	</command>
 
 	<command name="deleteAllCP">
@@ -121,7 +121,7 @@
 
 		<execute function="Check" locator1="ContentTargeting#CAMPAIGN_TABLE_CHECKBOX" />
 		<execute function="Click" locator1="ContentTargeting#CAMPAIGN_TABLE_ACTIONS" />
-		<execute function="ClickNoError" locator1="ContentTargeting#USER_SEGMENT_TABLE_ACTIONS_MENULIST_DELETE" />
+		<execute function="ClickNoError" locator1="MenuItem#DELETE" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 	</command>
 
@@ -131,45 +131,45 @@
 		<var name="key_campaignName" value="${campaignName}" />
 
 		<execute function="Click" locator1="ContentTargeting#CAMPAIGN_TABLE_ACTIONS" />
-		<execute function="Click" locator1="ContentTargeting#CAMPAIGN_TABLE_ACTIONS_MENULIST_EDIT" />
+		<execute function="Click" locator1="MenuItem#EDIT" />
 
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_NAME_FIELD" value1="${campaignNameEdit}" />
-		<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_DESCRIPTION_FIELD" value1="${campaignDescriptionEdit}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_NAME_FIELD" value1="${campaignNameEdit}" />
+		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_DESCRIPTION_FIELD" value1="${campaignDescriptionEdit}" />
 
 		<if>
 			<isset var="userSegmentSelectEdit" />
 			<then>
-				<execute function="Select" locator1="ContentTargetingEditcampaign#CAMPAIGN_USER_SEGMENT_SELECT" value1="${userSegmentSelectEdit}" />
+				<execute function="Select" locator1="ContentTargetingEditCampaign#CAMPAIGN_USER_SEGMENT_SELECT" value1="${userSegmentSelectEdit}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="campaignStartDateEdit" />
 			<then>
-				<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_USER_SEGMENT_SELECT" value1="${campaignStartDateEdit}" />
+				<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_USER_SEGMENT_SELECT" value1="${campaignStartDateEdit}" />
 			</then>
 			<elseif>
 				<isset var="campaignStartTimeEdit" />
 				<then>
-					<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_START_TIME_FIELD" value1="${campaignStartTimeEdit}" />
+					<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_START_TIME_FIELD" value1="${campaignStartTimeEdit}" />
 				</then>
 			</elseif>
 			<elseif>
 				<isset var="campaignEndDateEdit" />
 				<then>
-					<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_END_DATE_FIELD" value1="${campaignEndDateEdit}" />
+					<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_END_DATE_FIELD" value1="${campaignEndDateEdit}" />
 				</then>
 			</elseif>
 			<elseif>
 				<isset var="campaignEndTimeEdit" />
 				<then>
-					<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_END_TIME_FIELD" value1="${campaignEndTimeEdit}" />
+					<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_END_TIME_FIELD" value1="${campaignEndTimeEdit}" />
 				</then>
 			</elseif>
 			<elseif>
 				<isset var="campaignPriorityFieldEdit" />
 				<then>
-					<execute function="Type" locator1="ContentTargetingEditcampaign#CAMPAIGN_PRIORITY_FIELD" value1="${campaignPriorityFieldEdit}" />
+					<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_PRIORITY_FIELD" value1="${campaignPriorityFieldEdit}" />
 				</then>
 			</elseif>
 		</if>
@@ -261,41 +261,41 @@
 		<var name="key_campaignName" value="${campaignName}" />
 
 		<execute function="Click" locator1="ContentTargeting#CAMPAIGN_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="ContentTargeting#CAMPAIGN_TABLE_ACTIONS_MENULIST_REPORTS" value1="Reports" />
+		<execute function="AssertClick" locator1="MenuItem#REPORTS" value1="Reports" />
 
 		<if>
 			<equals arg1="contentViewsDescription" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="ContenttargetingCampaignReports#CONTENT_VIEWS_REPORT_DESCRIPTION" value1="Displays the number of times that content has been viewed by users in the context of the current campaign." />
+				<execute function="AssertTextEquals" locator1="ContentTargetingCampaignReports#CONTENT_VIEWS_REPORT_DESCRIPTION" value1="Displays the number of times that content has been viewed by users in the context of the current campaign." />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="trackingActionsDescription" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="ContenttargetingCampaignReports#TRACKING_ACTIONS_REPORT_DESCRIPTION" value1="Displays the number of times that the actions tracked for the current campaign have been triggered." />
+				<execute function="AssertTextEquals" locator1="ContentTargetingCampaignReports#TRACKING_ACTIONS_REPORT_DESCRIPTION" value1="Displays the number of times that the actions tracked for the current campaign have been triggered." />
 			</then>
 		</if>
 
 		<var name="key_reportType" value="${viewReportType}" />
 
-		<execute function="Click" locator1="ContenttargetingCampaignReports#REPORT_ACTIONS" />
-		<execute function="AssertClick" locator1="ContenttargetingCampaignReports#REPORT_ACTIONS_MENULIST_VIEW_REPORT" value1="View Report" />
-		<execute function="Click" locator1="ContenttargetingCampaignReports#UPDATE_REPORT_BUTTON" />
+		<execute function="Click" locator1="ContentTargetingCampaignReports#REPORT_ACTIONS" />
+		<execute function="AssertClick" locator1="ContentTargetingCampaignReports#REPORT_ACTIONS_MENULIST_VIEW_REPORT" value1="View Report" />
+		<execute function="Click" locator1="ContentTargetingCampaignReports#UPDATE_REPORT_BUTTON" />
 		<execute function="Pause" locator1="1000" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<if>
 			<equals arg1="${notEnoughInfoContentView}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="ContenttargetingCampaignReports#NOT_ENOUGH_DATA_MESSAGE" value1="There is not enough data to generate a content views report for the campaign ${campaignName}. Please make sure the Campaign Content Display application is available on any site page." />
+				<execute function="AssertTextEquals" locator1="ContentTargetingCampaignReports#NOT_ENOUGH_DATA_MESSAGE" value1="There is not enough data to generate a content views report for the campaign ${campaignName}. Please make sure the Campaign Content Display application is available on any site page." />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${notEnoughInfoTrackingAction}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="ContenttargetingCampaignReports#NOT_ENOUGH_DATA_MESSAGE" value1="There is not enough data to generate a tracking actions report for the campaign ${campaignName}. Please make sure that at least one tracking action has been set for this campaign." />
+				<execute function="AssertTextEquals" locator1="ContentTargetingCampaignReports#NOT_ENOUGH_DATA_MESSAGE" value1="There is not enough data to generate a tracking actions report for the campaign ${campaignName}. Please make sure that at least one tracking action has been set for this campaign." />
 			</then>
 		</if>
 	</command>
@@ -314,8 +314,8 @@
 			<isset var="userSegmentSelect" />
 			<then>
 				<execute function="Click" locator1="ContentTargeting#CAMPAIGN_TABLE_ACTIONS" />
-				<execute function="Click" locator1="ContentTargeting#CAMPAIGN_TABLE_ACTIONS_MENULIST_EDIT" />
-				<execute function="AssertSelectedLabel" locator1="ContentTargetingEditcampaign#CAMPAIGN_USER_SEGMENT_SELECT" value1="${userSegmentSelect}" />
+				<execute function="Click" locator1="MenuItem#EDIT" />
+				<execute function="AssertSelectedLabel" locator1="ContentTargetingEditCampaign#CAMPAIGN_USER_SEGMENT_SELECT" value1="${userSegmentSelect}" />
 			</then>
 		</if>
 	</command>
@@ -323,11 +323,11 @@
 	<command name="viewContentReportCP">
 		<var name="key_contentTitle" value="${contentTitle}" />
 
-		<execute function="AssertTextEquals" locator1="ContenttargetingCampaignReports#CONTENT_GRAPH_CONTENT_TITLE" value1="${contentTitle}" />
-		<execute function="AssertTextEquals" locator1="ContenttargetingCampaignReports#CONTENT_REPORT_TABLE_TITLE" value1="${contentTitle}" />
-		<execute function="AssertTextEquals" locator1="ContenttargetingCampaignReports#CONTENT_REPORT_TABLE_TYPE" value1="${contentType}" />
-		<execute function="AssertTextEquals" locator1="ContenttargetingCampaignReports#CONTENT_REPORT_TABLE_EVENT" value1="${contentEvent}" />
-		<execute function="AssertTextEquals" locator1="ContenttargetingCampaignReports#CONTENT_REPORT_TABLE_COUNT" value1="${contentEventCount}" />
+		<execute function="AssertTextEquals" locator1="ContentTargetingCampaignReports#CONTENT_GRAPH_CONTENT_TITLE" value1="${contentTitle}" />
+		<execute function="AssertTextEquals" locator1="ContentTargetingCampaignReports#CONTENT_REPORT_TABLE_TITLE" value1="${contentTitle}" />
+		<execute function="AssertTextEquals" locator1="ContentTargetingCampaignReports#CONTENT_REPORT_TABLE_TYPE" value1="${contentType}" />
+		<execute function="AssertTextEquals" locator1="ContentTargetingCampaignReports#CONTENT_REPORT_TABLE_EVENT" value1="${contentEvent}" />
+		<execute function="AssertTextEquals" locator1="ContentTargetingCampaignReports#CONTENT_REPORT_TABLE_COUNT" value1="${contentEventCount}" />
 	</command>
 
 	<command name="viewImportContentTrackingActionContentEmpty">
@@ -336,7 +336,7 @@
 		<var name="key_campaignName" value="${campaignName}" />
 
 		<execute function="Click" locator1="ContentTargeting#CAMPAIGN_TABLE_ACTIONS" />
-		<execute function="Click" locator1="ContentTargeting#CAMPAIGN_TABLE_ACTIONS_MENULIST_EDIT" />
+		<execute function="Click" locator1="MenuItem#EDIT" />
 
 		<execute function="AssertNotVisible" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_TITLE" />
 	</command>
@@ -355,7 +355,7 @@
 		<var name="key_campaignName" value="${campaignName}" />
 
 		<execute function="Click" locator1="ContentTargeting#CAMPAIGN_TABLE_ACTIONS" />
-		<execute function="Click" locator1="ContentTargeting#CAMPAIGN_TABLE_ACTIONS_MENULIST_EDIT" />
+		<execute function="Click" locator1="MenuItem#EDIT" />
 
 		<for list="${viewTrackingActionsList}" param="trackingAction">
 			<var name="key_trackingAction" value="${trackingAction}" />
@@ -396,9 +396,9 @@
 				<elseif>
 					<equals arg1="${trackingAction}" arg2="Link" />
 					<then>
-						<execute function="AssertTextEquals" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_LINK_ALIAS_FIELD" value1="${linkAlias}" />
-						<execute function="AssertTextEquals" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_LINK_ID_FIELD" value1="${linkId}" />
-						<execute function="AssertTextEquals" locator1="ContentTargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_LINK_TRACKING_ACTION" value1="click" />
+						<execute function="AssertTextEquals" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_LINK_ALIAS_FIELD" value1="${linkAlias}" />
+						<execute function="AssertTextEquals" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_LINK_ID_FIELD" value1="${linkId}" />
+						<execute function="AssertTextEquals" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_LINK_TRACKING_ACTION" value1="click" />
 					</then>
 				</elseif>
 			</if>
@@ -408,8 +408,8 @@
 	<command name="viewTrackingReportCP">
 		<var name="key_trackingAlias" value="${trackingAlias}" />
 
-		<execute function="AssertTextEquals" locator1="ContenttargetingCampaignReports#TRACKING_REPORT_TABLE_ALIAS" value1="${trackingAlias}" />
-		<execute function="AssertTextEquals" locator1="ContenttargetingCampaignReports#TRACKING_REPORT_TABLE_EVENT" value1="${trackingEvent}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="ContenttargetingCampaignReports#TRACKING_REPORT_TABLE_COUNT" value1="${trackingCount}" />
+		<execute function="AssertTextEquals" locator1="ContentTargetingCampaignReports#TRACKING_REPORT_TABLE_ALIAS" value1="${trackingAlias}" />
+		<execute function="AssertTextEquals" locator1="ContentTargetingCampaignReports#TRACKING_REPORT_TABLE_EVENT" value1="${trackingEvent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="ContentTargetingCampaignReports#TRACKING_REPORT_TABLE_COUNT" value1="${trackingCount}" />
 	</command>
 </definition>

@@ -86,32 +86,32 @@
 		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD" value1="Add" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD_USER" value1="User" />
 
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_SCREEN_NAME_FIELD" value1="${userScreenName}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_FIRST_NAME_FIELD" value1="${userFirstName}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
 
 		<if>
 			<isset var="userBirthday" />
 			<then>
-				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_BIRTHDAY_FIELD" value1="${userBirthday}" />
+				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD" value1="${userBirthday}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="userMiddleName" />
 			<then>
-				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_MIDDLE_NAME_FIELD" value1="${userMiddleName}" />
+				<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_MIDDLE_NAME_FIELD" value1="${userMiddleName}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="userGender" />
 			<then>
-				<execute function="Select" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_GENDER_FIELD" value1="${userGender}" />
+				<execute function="Select" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT" value1="${userGender}" />
 			</then>
 		</if>
 
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_LAST_NAME_FIELD" value1="${userLastName}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<if>
@@ -308,10 +308,10 @@
 		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD" value1="Add" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD_USER" value1="User" />
 
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_SCREEN_NAME_FIELD" value1="${userScreenName}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_FIRST_NAME_FIELD" value1="${userFirstName}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_LAST_NAME_FIELD" value1="${userLastName}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
@@ -322,10 +322,10 @@
 		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD" value1="Add" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD_USER" value1="User" />
 
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_SCREEN_NAME_FIELD" value1="${userScreenName}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_FIRST_NAME_FIELD" value1="${userFirstName}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_LAST_NAME_FIELD" value1="${userLastName}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
@@ -336,10 +336,10 @@
 		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD" value1="Add" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#ADD_USER" value1="User" />
 
-		<execute function="Paste" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_SCREEN_NAME_FIELD" value1="${siteID}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_FIRST_NAME_FIELD" value1="${userFirstName}" />
-		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_LAST_NAME_FIELD" value1="${userLastName}" />
+		<execute function="Paste" locator1="UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD" value1="${siteID}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
@@ -1253,7 +1253,7 @@
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-		<execute function="Select" locator1="UsersAndOrganizationsEditUser#DETAILS_TAB_GENDER_FIELD" value1="${userGender}" />
+		<execute function="Select" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT" value1="${userGender}" />
 
 		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -1519,7 +1519,7 @@
 		</if>
 
 		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInpu#PASSWORD" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#PASSWORD" />
 			<then>
 				<if>
 					<not>
@@ -1529,7 +1529,7 @@
 						</and>
 					</not>
 					<then>
-						<execute function="Type" locator1="TextInpu#PASSWORD" value1="test" />
+						<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
 						<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test" />
 						<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 					</then>
@@ -1693,14 +1693,14 @@
 		<execute function="AssertClick" locator1="Button#VERIFY" value1="Verify" />
 
 		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInpu#PASSWORD" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#PASSWORD" />
 			<then>
 				<if>
 					<not>
 						<equals arg1="${syntaxCheckingEnabled}" arg2="true" />
 					</not>
 					<then>
-						<execute function="Type" locator1="TextInpu#PASSWORD" value1="test" />
+						<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
 						<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test" />
 						<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 					</then>
@@ -1749,7 +1749,7 @@
 
 		<var name="key_roleName" value="${roleName}" />
 
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_TABLE_REMOVE" value1="Remove" />
+		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_TABLE_REMOVE_LINK" value1="Remove" />
 		<execute function="AssertElementNotPresent" locator1="UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_TABLE_TITLE" value1="${roleName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -1766,7 +1766,7 @@
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#USER_BLOCKED_MESSAGE" value1="This user account has been locked due to excessive failed login attempts." />
+		<execute function="AssertTextEquals" locator1="Message#USER_BLOCKED" value1="This user account has been locked due to excessive failed login attempts." />
 		<execute function="AssertClick" locator1="Button#UNLOCK" value1="Unlock" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />

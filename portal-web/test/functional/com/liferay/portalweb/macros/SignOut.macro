@@ -10,7 +10,6 @@
 		</if>
 	</command>
 
-
 	<command name="signOut">
 		<execute macro="Navigator#openURL" />
 

@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute function="SelectFrame" locator1="Iframe#CONFIGURATION" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 		<execute function="Type" locator1="TextInput#INITIAL_URL" value1="${initialURL}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />

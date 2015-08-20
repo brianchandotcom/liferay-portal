@@ -23,7 +23,7 @@
 	<command name="addPG">
 		<execute macro="DMMetadataSet#selectMetadataSetsFrame" />
 
-		<execute function="AssertClick" locator1="DocumentsandmediaMetadataSets#TOOLBAR_ADD" value1="Add" />
+		<execute function="AssertClick" locator1="DocumentsAndMediaMetadataSets#TOOLBAR_ADD" value1="Add" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${metadataSetName}" />
 
@@ -45,7 +45,7 @@
 
 		<var name="key_metadataSetName" value="${metadataSetName}" />
 
-		<execute function="AssertClick" locator1="DocumentsandmediaMetadataSets#METADATA_SETS_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_TABLE_ACTIONS" value1="Actions" />
 
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
@@ -61,7 +61,7 @@
 
 		<var name="key_metadataSetName" value="${metadataSetName}" />
 
-		<execute function="AssertClick" locator1="DocumentsandmediaMetadataSets#METADATA_SETS_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_TABLE_ACTIONS" value1="Actions" />
 
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
@@ -71,7 +71,7 @@
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Required structures could not be deleted." />
 
-		<execute function="AssertTextEquals" locator1="DocumentsandmediaMetadataSets#METADATA_SETS_TABLE_NAME" value1="${key_metadataSetName}" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_TABLE_NAME" value1="${key_metadataSetName}" />
 	</command>
 
 	<command name="gotoCP">
@@ -86,9 +86,9 @@
 
 	<command name="selectMetadataSetsFrame">
 		<if>
-			<condition function="IsElementPresent" locator1="DocumentsandmediaMetadataSets#METADATA_SETS_IFRAME" />
+			<condition function="IsElementPresent" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_IFRAME" />
 			<then>
-				<execute function="SelectFrame" locator1="DocumentsandmediaMetadataSets#METADATA_SETS_IFRAME" />
+				<execute function="SelectFrame" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_IFRAME" />
 			</then>
 		</if>
 	</command>
@@ -106,9 +106,9 @@
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="DocumentsandmediaMetadataSets#METADATA_SETS_TABLE_ACTIONS_1" />
+			<condition function="IsElementPresent" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_TABLE_ACTIONS_1" />
 			<then>
-				<execute function="AssertClick" locator1="DocumentsandmediaMetadataSets#METADATA_SETS_TABLE_ACTIONS_1" value1="Actions" />
+				<execute function="AssertClick" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_TABLE_ACTIONS_1" value1="Actions" />
 				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />

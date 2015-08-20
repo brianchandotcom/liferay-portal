@@ -40,18 +40,18 @@
 		<if>
 			<equals arg1="${siteType}" arg2="Blank" />
 			<then>
-				<execute function="AssertClick" locator1="Button#ADD_BLANK_SITE" value1="Blank Site" />
+				<execute function="AssertClick" locator1="MenuItem#BLANK_SITE" value1="Blank Site" />
 			</then>
 			<elseif>
 				<equals arg1="${siteType}" arg2="Community" />
 				<then>
-					<execute function="AssertClick" locator1="Button#ADD_COMMUNITY_SITE" value1="Community Site" />
+					<execute function="AssertClick" locator1="MenuItem#COMMUNITY_SITE" value1="Community Site" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${siteType}" arg2="Intranet" />
 				<then>
-					<execute function="AssertClick" locator1="Button#ADD_INTRANET_SITE" value1="Intranet Site" />
+					<execute function="AssertClick" locator1="MenuItem#INTRANET_SITE" value1="Intranet Site" />
 				</then>
 			</elseif>
 			<elseif>
@@ -59,7 +59,7 @@
 				<then>
 					<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-					<execute function="Click" locator1="Button#ADD_SITE_TEMPLATE_SITE" />
+					<execute function="Click" locator1="MenuItem#SITE_TEMPLATE_SITE" />
 				</then>
 			</elseif>
 			<else>
@@ -415,25 +415,25 @@
 			</else>
 		</if>
 
-		<execute function="Check" locator1="SiteSettingsDisplaysettings#DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO" />
+		<execute function="Check" locator1="SiteSettingsDisplaySettings#DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO" />
 
 		<if>
 			<isset var="currentSiteLanguages" />
 			<then>
 				<while>
-					<condition function="IsElementPresent" locator1="SiteSettingsDisplaysettings#AVAILABLE_LANGUAGES_CURRENT_PRESENT" />
+					<condition function="IsElementPresent" locator1="SiteSettingsDisplaySettings#AVAILABLE_LANGUAGES_CURRENT_PRESENT" />
 					<then>
-						<execute function="Click" locator1="SiteSettingsDisplaysettings#AVAILABLE_LANGUAGES_CURRENT_PRESENT" />
-						<execute function="Click" locator1="SiteSettingsDisplaysettings#MOVE_CURRENT_TO_AVAILABLE_BUTTON" />
+						<execute function="Click" locator1="SiteSettingsDisplaySettings#AVAILABLE_LANGUAGES_CURRENT_PRESENT" />
+						<execute function="Click" locator1="SiteSettingsDisplaySettings#MOVE_CURRENT_TO_AVAILABLE_BUTTON" />
 					</then>
 				</while>
 
 				<for list="${currentSiteLanguages}" param="currentSiteLanguage">
 					<var name="currentSiteLanguage" value="${currentSiteLanguage}" />
 
-					<execute function="Select" locator1="SiteSettingsDisplaysettings#AVAILABLE_LANGUAGES_AVAILABLE_SELECT" value1="${currentSiteLanguage}" />
-					<execute function="Click" locator1="SiteSettingsDisplaysettings#MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
-					<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsDisplaysettings#AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentSiteLanguage}" />
+					<execute function="Select" locator1="SiteSettingsDisplaySettings#AVAILABLE_LANGUAGES_AVAILABLE_SELECT" value1="${currentSiteLanguage}" />
+					<execute function="Click" locator1="SiteSettingsDisplaySettings#MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsDisplaySettings#AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentSiteLanguage}" />
 				</for>
 			</then>
 		</if>
@@ -443,7 +443,7 @@
 			<then>
 				<var name="defaultSiteLanguage" value="${defaultSiteLanguage}" />
 
-				<execute function="Select" locator1="SiteSettingsDisplaysettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultSiteLanguage}" />
+				<execute function="Select" locator1="SiteSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultSiteLanguage}" />
 			</then>
 		</if>
 
@@ -546,7 +546,7 @@
 
 		<execute function="AssertClick" locator1="SitePages#TOOLBAR_EXPORT" value1="Export" />
 
-		<execute function="SelectFrame" locator1="SitesExport#EXPORT_FRAME" />
+		<execute function="SelectFrame" locator1="SitesExport#EXPORT_IFRAME" />
 		<execute function="Type" locator1="SitesImport#EXPORT_FILE_NAME" value1="${fileName}" />
 		<execute function="AssertClick" locator1="SitesExport#EXPORT_BUTTON" value1="Export" />
 		<execute function="Pause" locator1="5000" />
@@ -555,7 +555,7 @@
 
 	<command name="gotoManageSitesTemplatesViaAddDropdown">
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
-		<execute function="AssertClick" locator1="Button#ADD_MANAGE_SITES_TEMPLATES" value1="Manage Sites Templates" />
+		<execute function="AssertClick" locator1="MenuItem#MANAGE_SITES_TEMPLATES" value1="Manage Sites Templates" />
 	</command>
 
 	<command name="importSite">
@@ -595,8 +595,8 @@
 
 		<execute function="Pause" locator1="3000" />
 
-		<execute function="Type" locator1="Seaarch#BASIC_SEARCH_FIELD" value1="${siteName}" />
-		<execute function="AssertClick" locator1="Seaarch#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<if>
 			<equals arg1="${membershipType}" arg2="Private" />
@@ -633,8 +633,8 @@
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
 		<execute function="AssertClick" locator1="MySites#NAVIGATION_AVAILABLE_SITES" value1="Available Sites" />
-		<execute function="Type" locator1="Seaarch#BASIC_SEARCH_FIELD" value1="${siteName}" />
-		<execute function="AssertClick" locator1="Seaarch#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="MySites#SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
 		<execute function="AssertClick" locator1="MySitesAvailableSites#SITE_TABLE_LEAVE_SITE_NAME" value1="Leave" />
@@ -842,7 +842,7 @@
 
 	<command name="viewCannotAdd">
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
-		<execute function="AssertClick" locator1="Button#ADD_BLANK_SITE" value1="Blank Site" />
+		<execute function="AssertClick" locator1="MenuItem#BLANK_SITE" value1="Blank Site" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${siteName}" />
 		<execute function="Click" locator1="Button#SAVE" value1="Save" />
 
@@ -947,18 +947,18 @@
 
 		<execute function="AssertClick" locator1="SitesEditSite#MENU_MISCELLANEOUS_DISPLAY_SETTINGS_LOCALIZED" value1="${displaySettings}" />
 
-		<execute function="Check" locator1="SiteSettingsDisplaysettings#DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO" value1="Display Settings" />
+		<execute function="Check" locator1="SiteSettingsDisplaySettings#DEFINE_DEFAULT_AND_AVAILABLE_SITE_LANGUAGES_RADIO" value1="Display Settings" />
 
 		<for list="${currentSiteLanguages}" param="currentSiteLanguage">
 			<var name="currentSiteLanguage" value="${currentSiteLanguage}" />
 
-			<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsDisplaysettings#AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentSiteLanguage}" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsDisplaySettings#AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentSiteLanguage}" />
 		</for>
 
 		<for list="${availableSiteLanguages}" param="availableSiteLanguage">
 			<var name="availableSiteLanguage" value="${availableSiteLanguage}" />
 
-			<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsDisplaysettings#AVAILABLE_LANGUAGES_AVAILABLE_SELECT" value1="${availableSiteLanguage}" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsDisplaySettings#AVAILABLE_LANGUAGES_AVAILABLE_SELECT" value1="${availableSiteLanguage}" />
 		</for>
 
 		<if>
@@ -966,7 +966,7 @@
 			<then>
 				<var name="defaultSiteLanguage" value="${defaultSiteLanguage}" />
 
-				<execute function="Select" locator1="SiteSettingsDisplaysettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultSiteLanguage}" />
+				<execute function="Select" locator1="SiteSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultSiteLanguage}" />
 			</then>
 		</if>
 	</command>
@@ -1071,10 +1071,10 @@
 		<if>
 			<equals arg1="${clonedFromTemplate}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsSitetemplate#SITE_CLONED_FROM_TEMPLATE_MESSAGE" value1="This site was cloned from site template ${siteTemplateName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsSiteTemplate#SITE_CLONED_FROM_TEMPLATE_MESSAGE" value1="This site was cloned from site template ${siteTemplateName}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsSitetemplate#SITE_NOT_CLONED_FROM_TEMPLATE_MESSAGE" value1="This site is not related to a site template." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsSiteTemplate#SITE_NOT_CLONED_FROM_TEMPLATE_MESSAGE" value1="This site is not related to a site template." />
 			</else>
 		</if>
 	</command>
@@ -1104,7 +1104,7 @@
 
 		<execute function="AssertClick" locator1="SitesEditSite#MENU_BASIC_INFORMATION_SITE_TEMPLATE" value1="Site Template" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsSitetemplate#SITE_CLONED_FROM_TEMPLATE_MESSAGE" value1="Site Template" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsSiteTemplate#SITE_CLONED_FROM_TEMPLATE_MESSAGE" value1="Site Template" />
 	</command>
 
 	<command name="viewSitePG">

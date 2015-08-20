@@ -1054,7 +1054,7 @@
 			<var name="eventType" value="${eventType}" />
 		</execute>
 
-		<execute function="Click" locator1="Ratings#YOUR_RATING_LABEL_STAR_CLICK_4" />
+		<execute function="Click" locator1="Ratings#YOUR_RATING_STAR_4" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -1372,43 +1372,43 @@
 			<equals arg1="${yourRating}" arg2="false" />
 			<then>
 				<execute function="AssertTextEquals" locator1="Ratings#YOUR_RATING_LABEL"  value1="Your Rating" />
-				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_1" />
-				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_2" />
-				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_3" />
-				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_4" />
-				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_5" />
-				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_EMPTY_1" />
-				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_EMPTY_2" />
-				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_EMPTY_3" />
-				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_EMPTY_4" />
-				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_EMPTY_5" />
+				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_1" />
+				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_2" />
+				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_3" />
+				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_4" />
+				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_5" />
+				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_1" />
+				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_2" />
+				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_3" />
+				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_4" />
+				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_5" />
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="Ratings#YOUR_RATING_LABEL"  value1="Your Rating" />
-				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_1" />
-				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_2" />
-				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_3" />
-				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_4" />
-				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_5" />
-				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_EMPTY_1" />
-				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_EMPTY_2" />
-				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_EMPTY_3" />
-				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_EMPTY_4" />
-				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_EMPTY_5" />
+				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_1" />
+				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_2" />
+				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_3" />
+				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_4" />
+				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_5" />
+				<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_1" />
+				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_2" />
+				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_3" />
+				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_4" />
+				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_5" />
 			</else>
 		</if>
 
 		<execute function="AssertTextEquals" locator1="Ratings#AVERAGE_LABEL"  value1="Average (1 Vote)" />
-		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL_STAR_1" />
-		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL_STAR_2" />
-		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL_STAR_3" />
-		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL_STAR_4" />
-		<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_LABEL_STAR_5" />
-		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL_STAR_EMPTY_1" />
-		<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_LABEL_STAR_EMPTY_2" />
-		<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_LABEL_STAR_EMPTY_3" />
-		<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_LABEL_STAR_EMPTY_4" />
-		<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_LABEL_STAR_EMPTY_5" />
+		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_1" />
+		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_2" />
+		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_3" />
+		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_4" />
+		<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_STAR_5" />
+		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_EMPTY_1" />
+		<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_STAR_EMPTY_2" />
+		<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_STAR_EMPTY_3" />
+		<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_STAR_EMPTY_4" />
+		<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_STAR_EMPTY_5" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

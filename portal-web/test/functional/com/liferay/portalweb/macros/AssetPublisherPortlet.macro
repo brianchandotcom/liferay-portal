@@ -180,7 +180,7 @@
 	<command name="configureAssetLinkBehaviorPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
-		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS_LINK" value1="Display Settings" />
+		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
 
 		<execute function="Select" locator1="APConfigurationDisplaysettings#ASSET_LINK_BEHAVIOR_SELECT" value1="${assetLinkBehavior}" />
 
@@ -200,7 +200,7 @@
 	<command name="configureDisplayConversionsPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
-		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS_LINK" value1="Display Settings" />
+		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
 
 		<for list="${documentTypes}" param="documentType">
 			<var method="StringUtil#upperCase('${documentType}')" name="documentTypeUppercase" />
@@ -226,7 +226,7 @@
 	<command name="configureDisplayFullContentPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
-		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS_LINK" value1="Display Settings" />
+		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
 
 		<execute function="Select" locator1="APConfigurationDisplaysettings#DISPLAY_TEMPLATE_SELECT" value1="Full Content" />
 
@@ -245,7 +245,7 @@
 
 	<command name="configureDisplayTemplatePG">
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS_LINK" value1="Display Settings" />
+		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
 
 		<execute function="Select" locator1="APConfigurationDisplaysettings#DISPLAY_TEMPLATE_SELECT" value1="${displayTemplate}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -302,7 +302,7 @@
 	<command name="configureFlaggableDisplaySettingsPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
-		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS_LINK" value1="Display Settings" />
+		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
 
 		<if>
 			<equals arg1="${enableRatings}" arg2="true" />
@@ -363,7 +363,7 @@
 	<command name="configurePaginationPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
-		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS_LINK" value1="Display Settings" />
+		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
 
 		<execute function="Type" locator1="APConfigurationDisplaysettings#NUMBER_OF_ITEMS_TO_DISPLAY_FIELD" value1="${paginationNumber}" />
 		<execute function="Select" locator1="APConfigurationDisplaysettings#PAGINATION_TYPE_SELECT" value1="${paginationType}" />
@@ -385,7 +385,7 @@
 	<command name="configureShowMetadataFieldsPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
-		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS_LINK" value1="Display Settings" />
+		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
 
 		<if>
 			<equals arg1="${addMetadata}" arg2="true" />
@@ -497,7 +497,7 @@
 	</command>
 
 	<command name="rate4StarsPG">
-		<execute function="Click#clickNoMouseOver" locator1="Ratings#YOUR_RATING_LABEL_STAR_EMPTY_4" />
+		<execute function="Click#clickNoMouseOver" locator1="Ratings#YOUR_RATING_STAR_EMPTY_4" />
 	</command>
 
 	<command name="restoreArchivedSetupPG">
@@ -615,7 +615,7 @@
 	<command name="viewConfigureFlaggableDisplaySettingsPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
-		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS_LINK" value1="Display Settings" />
+		<execute function="AssertClick" locator1="NavTab#DISPLAY_SETTINGS" value1="Display Settings" />
 
 		<if>
 			<equals arg1="${enableRatings}" arg2="true" />
@@ -910,20 +910,20 @@
 
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_1" />
-		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_2" />
-		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_3" />
-		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_4" />
-		<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_EMPTY_1" />
-		<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_LABEL_STAR_EMPTY_2" />
+		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_1" />
+		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_2" />
+		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_3" />
+		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_4" />
+		<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_1" />
+		<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_2" />
 
-		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL_STAR_1" />
-		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL_STAR_2" />
-		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL_STAR_3" />
-		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL_STAR_4" />
-		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL_STAR_EMPTY_5" />
-		<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_LABEL_STAR_EMPTY_1" />
-		<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_LABEL_STAR_EMPTY_2" />
+		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_1" />
+		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_2" />
+		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_3" />
+		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_4" />
+		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_EMPTY_5" />
+		<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_STAR_EMPTY_1" />
+		<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_STAR_EMPTY_2" />
 	</command>
 
 	<command name="viewRestoredSetupPG">

@@ -9,7 +9,7 @@
 		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
 
 		<execute function="Select" locator1="RelatedassetsConfiguration#FILTER_SELECT" value1="Categories" />
-		<execute function="AssertClick" locator1="RelatedassetsConfiguration#FILTER_SELECT_CATEGORIES_SELECT_BUTTON" value1="Select" />
+		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 

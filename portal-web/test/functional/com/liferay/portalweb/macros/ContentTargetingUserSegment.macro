@@ -267,7 +267,7 @@
 		<var name="key_userSegment" value="${userSegmentName}" />
 
 		<execute function="Click" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_TABLE_ACTIONS" />
-		<execute function="ClickNoError" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_TABLE_ACTIONS_MENULIST_DELETE" />
+		<execute function="ClickNoError" locator1="MenuItem#DELETE" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No User Segments were found" />
@@ -351,27 +351,27 @@
 		<var name="key_userSegmentName" value="${userSegmentName}" />
 
 		<execute function="AssertClick" locator1="ContentTargeting#USER_SEGMENT_TABLE_ACTIONS" value1="Actions" />
-		<execute function="AssertClick" locator1="ContentTargeting#USER_SEGMENT_TABLE_ACTIONS_MENULIST_REPORTS" value1="Reports" />
+		<execute function="AssertClick" locator1="MenuItem#REPORTS" value1="Reports" />
 
 		<var name="key_reportName" value="${reportName}" />
 
-		<execute function="AssertTextEquals" locator1="ContentTargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_NAME" value1="${reportName}" />
-		<execute function="AssertTextEquals" locator1="ContentTargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_DESCRIPTION" value1="Displays the number of times that content has been viewed by a user who belongs to the current user segment." />
+		<execute function="AssertTextEquals" locator1="ContenttargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_NAME" value1="${reportName}" />
+		<execute function="AssertTextEquals" locator1="ContenttargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_DESCRIPTION" value1="Displays the number of times that content has been viewed by a user who belongs to the current user segment." />
 
-		<execute function="AssertClick" locator1="ContentTargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_ACTIONS" value1="Actions" />
-		<execute function="AssertClick" locator1="ContentTargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_ACTIONS_MENULIST_VIEW_REPORT" value1="View Report" />
+		<execute function="AssertClick" locator1="ContenttargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="ContenttargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_ACTIONS_MENULIST_VIEW_REPORT" value1="View Report" />
 
-		<execute function="Click" locator1="ContentTargetingUserSegmentReports#UPDATE_REPORT" />
+		<execute function="Click" locator1="ContenttargetingUserSegmentReports#UPDATE_REPORT" />
 		<execute function="Pause" locator1="1000" />
 	</command>
 
 	<command name="viewReportContent">
 		<var name="key_reportTitle" value="${reportTitle}" />
 
-		<execute function="AssertTextEquals" locator1="ContentTargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_NAME" value1="${reportTitle}" />
-		<execute function="AssertTextEquals" locator1="ContentTargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_DESCRIPTION" value1="${reportType}" />
-		<execute function="AssertTextEquals" locator1="ContentTargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_ACTIONS" value1="${reportEvent}" />
-		<execute function="AssertTextEquals" locator1="ContentTargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_ACTIONS_MENULIST_VIEW_REPORT" value1="${reportCount}" />
+		<execute function="AssertTextEquals" locator1="ContenttargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_NAME" value1="${reportTitle}" />
+		<execute function="AssertTextEquals" locator1="ContenttargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_DESCRIPTION" value1="${reportType}" />
+		<execute function="AssertTextEquals" locator1="ContenttargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_ACTIONS" value1="${reportEvent}" />
+		<execute function="AssertTextEquals" locator1="ContenttargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_ACTIONS_MENULIST_VIEW_REPORT" value1="${reportCount}" />
 	</command>
 
 	<command name="viewRulesCP">

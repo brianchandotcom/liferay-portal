@@ -5,7 +5,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="Iframe#CONFIGURATION" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DROPDOWN_COLLAPSED" />
@@ -86,7 +86,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="Iframe#CONFIGURATION" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute function="AssertClick" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ROOT_FOLDER_SELECT_BUTTON" value1="Select" />
 		<execute function="SelectFrame" value1="relative=top" />
@@ -95,9 +95,9 @@
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaSelectDocument#FOLDER_TABLE_FOLDER" value1="${dmFolderName}" />
-		<execute function="AssertClick" locator1="DocumentsAndMediaSelectDocument#FOLDER_TABLE_FOLDER_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="AssertClick" locator1="DocumentsAndMediaSelectDocument#FOLDER_TABLE_FOLDER_CHOOSE" value1="Choose" />
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="Iframe#CONFIGURATION" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ROOT_FOLDER_FIELD" value1="${dmFolderName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
@@ -109,7 +109,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 
-		<execute function="SelectFrame" locator1="Iframe#CONFIGURATION" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute function="AssertClick" locator1="NavPill#SCOPE" value1="Scope" />
 
@@ -124,7 +124,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="Iframe#CONFIGURATION" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DROPDOWN_COLLAPSED" />
@@ -155,7 +155,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="Iframe#CONFIGURATION" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ROOT_FOLDER_FIELD" value1="${dmFolderName}" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//a/i[contains(@class,'icon-cog')]</td>
+	<td>//a[contains(@href,'layout_admin')]/i[contains(@class,'icon-cog')]</td>
 	<td></td>
 </tr>
 <tr>

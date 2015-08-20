@@ -210,6 +210,10 @@
 		</if>
 	</command>
 
+	<command name="viewSearchResultWithNoPermissions">
+		<execute function="AssertTextEquals" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="No results were found that matched the keywords: ${searchTerm}." />
+	</command>
+
 	<command name="viewUserFacetPG">
 		<var name="key_facetFrequency" value="${facetFrequency}" />
 		<var name="key_userLoginFullName" value="${userLoginFullName}" />

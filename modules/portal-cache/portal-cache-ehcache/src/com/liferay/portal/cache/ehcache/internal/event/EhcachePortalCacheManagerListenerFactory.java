@@ -19,6 +19,7 @@ import com.liferay.portal.cache.ehcache.event.EhcachePortalCacheManagerListenerA
 import com.liferay.portal.cache.ehcache.internal.EhcachePortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListenerFactory;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -62,12 +63,10 @@ public class EhcachePortalCacheManagerListenerFactory
 						properties));
 		}
 		catch (Exception e) {
-			_log.error(
+			throw new SystemException(
 				"Unable to instantiate cache manager event listener " +
-					"factory " + className,
+					className,
 				e);
-
-			return null;
 		}
 	}
 

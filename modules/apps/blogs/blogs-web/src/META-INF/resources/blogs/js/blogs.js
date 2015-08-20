@@ -137,6 +137,17 @@ AUI.add(
 							);
 						}
 
+						instance._editIcon = instance.one('#editIcon');
+						instance._settingsIcon = instance.one('#settingsIcon');
+
+						eventHandles.push(
+							instance._editIcon.on(STR_CLICK, instance._switchView, instance),
+							instance._settingsIcon.on(STR_CLICK, instance._switchView, instance)
+						);
+
+						instance._editSection = instance.one('#editSection');
+						instance._settingsSection = instance.one('#settingsSection');
+
 						instance._eventHandles = eventHandles;
 					},
 
@@ -234,7 +245,6 @@ AUI.add(
 						var instance = this;
 
 						var constants = instance.get('constants');
-						var entry = instance.get('entry');
 
 						var content = window[instance.ns('contentEditor')].getHTML();
 						var coverImageCaption = window[instance.ns('coverImageCaptionEditor')].getHTML();
@@ -397,6 +407,16 @@ AUI.add(
 						var instance = this;
 
 						instance._captionNode.removeClass(CSS_INVISIBLE);
+					},
+
+					_switchView: function() {
+						var instance = this;
+
+						instance._editSection.toggle();
+						instance._settingsSection.toggle();
+
+						instance._editIcon.toggle();
+						instance._settingsIcon.toggle();
 					},
 
 					_updateImages: function(persistentImages) {

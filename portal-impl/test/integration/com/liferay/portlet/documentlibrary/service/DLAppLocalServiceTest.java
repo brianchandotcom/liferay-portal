@@ -41,6 +41,7 @@ import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -403,7 +404,8 @@ public class DLAppLocalServiceTest {
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, "Old Title",
-			RandomTestUtil.randomString(), null, RandomTestUtil.randomBytes(),
+			RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 			serviceContext);
 	}
 
@@ -491,7 +493,8 @@ public class DLAppLocalServiceTest {
 			TestPropsValues.getUserId(), fileEntry.getFileEntryId(),
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, "New Title",
 			RandomTestUtil.randomString(), null, true,
-			RandomTestUtil.randomBytes(), serviceContext);
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			serviceContext);
 	}
 
 }

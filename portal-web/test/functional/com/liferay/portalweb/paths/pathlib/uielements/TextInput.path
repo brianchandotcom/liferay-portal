@@ -254,6 +254,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEW_NAME</td>
+	<td>//input[contains(@id,'newName')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEW_TITLE</td>
 	<td>//input[contains(@id,'newTitle')]</td>
 	<td></td>

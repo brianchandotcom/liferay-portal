@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -230,28 +230,30 @@ public class FacebookConnectImpl implements FacebookConnect {
 
 		try {
 			FacebookConnectConfiguration facebookConnectCompanyServiceSettings =
-				_settingsFactory.getSettings(
+				_configurationFactory.getConfiguration(
 					FacebookConnectConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, FacebookConnectConstants.SERVICE_NAME));
 
 			return facebookConnectCompanyServiceSettings;
 		}
-		catch (SettingsException se) {
-			_log.error("Unable to get Facebook Connect configuration", se);
+		catch (ConfigurationException mce) {
+			_log.error("Unable to get Facebook Connect configuration", mce);
 		}
 
 		return null;
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FacebookConnectImpl.class);
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

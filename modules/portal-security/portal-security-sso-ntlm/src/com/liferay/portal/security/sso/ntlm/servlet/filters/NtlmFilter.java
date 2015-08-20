@@ -19,12 +19,12 @@ import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.ntlm.NetlogonConnectionManager;
@@ -79,10 +79,11 @@ public class NtlmFilter extends BaseFilter {
 		try {
 			long companyId = PortalInstances.getCompanyId(request);
 
-			NtlmConfiguration ntlmConfiguration = _settingsFactory.getSettings(
-				NtlmConfiguration.class,
-				new CompanyServiceSettingsLocator(
-					companyId, NtlmConstants.SERVICE_NAME));
+			NtlmConfiguration ntlmConfiguration =
+				_configurationFactory.getConfiguration(
+					NtlmConfiguration.class,
+					new CompanyServiceSettingsLocator(
+						companyId, NtlmConstants.SERVICE_NAME));
 
 			if (BrowserSnifferUtil.isIe(request) &&
 				ntlmConfiguration.enabled()) {
@@ -132,10 +133,11 @@ public class NtlmFilter extends BaseFilter {
 	}
 
 	protected NtlmManager getNtlmManager(long companyId) throws Exception {
-		NtlmConfiguration ntlmConfiguration = _settingsFactory.getSettings(
-			NtlmConfiguration.class,
-			new CompanyServiceSettingsLocator(
-				companyId, NtlmConstants.SERVICE_NAME));
+		NtlmConfiguration ntlmConfiguration =
+			_configurationFactory.getConfiguration(
+				NtlmConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, NtlmConstants.SERVICE_NAME));
 
 		String domain = ntlmConfiguration.domain();
 		String domainController = ntlmConfiguration.domainController();
@@ -312,17 +314,19 @@ public class NtlmFilter extends BaseFilter {
 		processFilter(NtlmPostFilter.class, request, response, filterChain);
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(NtlmFilter.class);
 
+	private volatile ConfigurationFactory _configurationFactory;
 	private NetlogonConnectionManager _netlogonConnectionManager;
 	private final Map<Long, NtlmManager> _ntlmManagers =
 		new ConcurrentHashMap<>();
 	private PortalCache<String, byte[]> _portalCache;
-	private volatile SettingsFactory _settingsFactory;
 
 }

@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.bookmarks.web
 Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.bookmarks.asset,\
+	com.liferay.bookmarks.configuration,\
 	com.liferay.bookmarks.constants,\
 	com.liferay.bookmarks.lar,\
 	com.liferay.bookmarks.model,\
@@ -11,7 +12,6 @@ Import-Package:\
 	com.liferay.bookmarks.routes,\
 	com.liferay.bookmarks.service,\
 	com.liferay.bookmarks.service.permission,\
-	com.liferay.bookmarks.settings,\
 	com.liferay.bookmarks.social,\
 	com.liferay.bookmarks.search,\
 	com.liferay.bookmarks.trash,\

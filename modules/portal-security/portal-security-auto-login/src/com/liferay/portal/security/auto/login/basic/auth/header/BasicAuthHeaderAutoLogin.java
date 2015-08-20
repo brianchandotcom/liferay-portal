@@ -16,13 +16,13 @@ package com.liferay.portal.security.auto.login.basic.auth.header;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auto.login.basic.auth.header.configuration.BasicAuthHeaderAutoLoginConfiguration;
@@ -128,9 +128,11 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 		return basicAuthHeaderAutoLoginConfiguration.enabled();
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
 	}
 
 	private BasicAuthHeaderAutoLoginConfiguration
@@ -139,7 +141,7 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 		try {
 			BasicAuthHeaderAutoLoginConfiguration
 				basicAuthHeaderAutoLoginConfiguration =
-					_settingsFactory.getSettings(
+					_configurationFactory.getConfiguration(
 						BasicAuthHeaderAutoLoginConfiguration.class,
 						new CompanyServiceSettingsLocator(
 							companyId,
@@ -147,8 +149,8 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 
 			return basicAuthHeaderAutoLoginConfiguration;
 		}
-		catch (SettingsException se) {
-			_log.error("Unable to get basic auth header configuration", se);
+		catch (ConfigurationException mce) {
+			_log.error("Unable to get basic auth header configuration", mce);
 		}
 
 		return null;
@@ -157,6 +159,6 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasicAuthHeaderAutoLogin.class);
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

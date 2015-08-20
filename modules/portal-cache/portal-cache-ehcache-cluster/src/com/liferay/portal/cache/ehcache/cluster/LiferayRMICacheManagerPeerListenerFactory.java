@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache.internal.distribution;
+package com.liferay.portal.cache.ehcache.cluster;
 
-import com.liferay.portal.cache.ehcache.internal.LiferayCacheDecorator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 

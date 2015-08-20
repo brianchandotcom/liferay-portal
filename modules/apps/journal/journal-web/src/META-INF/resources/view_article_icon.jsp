@@ -64,8 +64,8 @@ else {
 	actionJspServletContext="<%= application %>"
 	cssClass="entry-display-style"
 	footer="<%= statusHtml %>"
-	header="<%= LanguageUtil.format(request, "x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - article.getModifiedDate().getTime(), true), HtmlUtil.escape(article.getUserName())}, false) %>"
-	imageUrl="<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>"
+	header='<%= LanguageUtil.format(request, "x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - article.getModifiedDate().getTime(), true), HtmlUtil.escape(article.getUserName())}, false) %>'
+	imageUrl='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 	showCheckbox="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) || JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>"
 	smallImageCSSClass="user-icon user-icon-lg"
 	smallImageUrl="<%= userPortraitURL %>"

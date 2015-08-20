@@ -14,16 +14,36 @@
 
 package com.liferay.portal.test.randomizerbumpers;
 
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 
 /**
  * @author Matthew Tambara
  */
 public class TikaSafeRandomizerBumperTest {
+
+	@ClassRule
+	public static final CodeCoverageAssertor codeCoverageAssertor =
+		CodeCoverageAssertor.INSTANCE;
+
+	@Test
+	public void testAcceptAny() {
+		TikaSafeRandomizerBumper tikaSafeRandomizerBumper =
+			TikaSafeRandomizerBumper.INSTANCE;
+
+		Assert.assertTrue(tikaSafeRandomizerBumper.accept(_EXE_BYTE_ARRAY));
+
+		String randomString = getRegularRandomString();
+
+		Assert.assertTrue(
+			tikaSafeRandomizerBumper.accept(randomString.getBytes()));
+		Assert.assertFalse(tikaSafeRandomizerBumper.accept(_BROKEN_EXE_BYTES));
+	}
 
 	@Test
 	public void testAcceptExe() {
@@ -63,6 +83,8 @@ public class TikaSafeRandomizerBumperTest {
 
 		return randomString;
 	}
+
+	private static final byte[] _BROKEN_EXE_BYTES = "MZ5gFGQt".getBytes();
 
 	// http://www.phreedom.org/research/tinype
 

@@ -54,8 +54,6 @@
 		<parent-struts-path>wiki</parent-struts-path>
 		<configuration-action-class>com.liferay.wiki.web.admin.portlet.action.WikiGroupServiceSettingsConfigurationAction</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
-		<control-panel-entry-weight>7.0</control-panel-entry-weight>
 		<permission-propagator>com.liferay.wiki.web.security.permission.WikiPermissionPropagatorImpl</permission-propagator>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>
 		<preferences-owned-by-group>true</preferences-owned-by-group>

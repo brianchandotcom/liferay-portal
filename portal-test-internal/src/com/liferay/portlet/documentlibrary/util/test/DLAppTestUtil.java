@@ -58,8 +58,7 @@ public abstract class DLAppTestUtil {
 				userId, groupId, folderId, sourceFileName,
 				ContentTypes.TEXT_PLAIN, title, StringPool.BLANK,
 				StringPool.BLANK,
-				RandomTestUtil.randomBytes(
-					TikaSafeRandomizerBumper.TEXT_PLAIN_INSTANCE),
+				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 				serviceContext);
 
 			if (approved) {

@@ -41,7 +41,7 @@ public class DLTestUtil {
 		DLFolder dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(dlFolderId);
 
 		byte[] bytes = RandomTestUtil.randomBytes(
-			TikaSafeRandomizerBumper.TEXT_PLAIN_INSTANCE);
+			TikaSafeRandomizerBumper.INSTANCE);
 
 		InputStream is = new ByteArrayInputStream(bytes);
 

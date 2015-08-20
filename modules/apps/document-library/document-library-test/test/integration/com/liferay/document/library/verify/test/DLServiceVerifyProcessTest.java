@@ -389,8 +389,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 					ddmStructure.getStructureKey(), user.getLocale());
 
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
-			RandomTestUtil.randomBytes(
-				TikaSafeRandomizerBumper.TEXT_PLAIN_INSTANCE));
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE));
 
 		return DLFileEntryLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
@@ -409,8 +408,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		return DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), folderId,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(
-				TikaSafeRandomizerBumper.TEXT_PLAIN_INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 			serviceContext);
 	}
 

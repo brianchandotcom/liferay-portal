@@ -1743,9 +1743,8 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
-		String projectDirName = PoshiRunnerGetterUtil.getProjectDirName();
-
-		FileUtil.write(projectDirName + "/poshi-warnings.xml", sb.toString());
+		FileUtil.write(
+			PropsValues.TEST_POSHI_WARNINGS_FILE_NAME, sb.toString());
 	}
 
 	private static List<ScreenRegion> getScreenRegions(

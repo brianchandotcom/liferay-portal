@@ -408,7 +408,7 @@
 		<var name="key_line" value="${line}" />
 
 		<execute function="DoubleClick" locator1="Kaleodesigner#SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE" />
-		<execute function="TypeScreen" locator1="Kaleodesigner#${kdSourceXML}" />
+		<execute function="TypeScreen" locator1="${kdSourceXML}" />
 	</command>
 
 	<command name="editWorkflowDefinitionTitleViaWorkflowCP">

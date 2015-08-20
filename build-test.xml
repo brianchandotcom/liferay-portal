@@ -6100,6 +6100,7 @@ if (ppstate.equals("normal")) {
 
 		<gradle-execute failonerror="false" task="runPoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />
+			<arg value="-PignoreErrorsFileName=${project.dir}/portal-web/test-ignorable-error-lines.xml" />
 			<arg value="-Plocal=${test.poshi.runner.local.release}" />
 			<arg value="-PportalProjectDir=${project.dir}" />
 			<arg value="-PposhiTestName=${poshi.test.name}" />

@@ -23,7 +23,9 @@ poshiRunner {
 		poshiProperty "component.names", project.properties["componentNames"]
 	}
 
-	poshiProperty "ignore.errors.file.name", "test-ignorable-error-lines.xml"
+	if (project.hasProperty("ignoreErrorsFileName")) {
+		poshiProperty "ignore.errors.file.name", project.properties["ignoreErrorsFileName"]
+	}
 
 	if (project.hasProperty("portalProjectDir")) {
 		poshiProperty "project.dir", project.properties["portalProjectDir"]

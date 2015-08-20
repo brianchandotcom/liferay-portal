@@ -17,7 +17,6 @@ package com.liferay.portal.test.randomizerbumpers;
 import com.liferay.portal.kernel.io.DummyWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.test.randomizerbumpers.RandomizerBumper;
-import com.liferay.portal.kernel.util.ContentTypes;
 
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.metadata.Metadata;
@@ -33,9 +32,6 @@ public class TikaSafeRandomizerBumper implements RandomizerBumper<byte[]> {
 
 	public static final TikaSafeRandomizerBumper INSTANCE =
 		new TikaSafeRandomizerBumper(null);
-
-	public static final TikaSafeRandomizerBumper TEXT_PLAIN_INSTANCE =
-		new TikaSafeRandomizerBumper(ContentTypes.TEXT_PLAIN);
 
 	public TikaSafeRandomizerBumper(String contentType) {
 		_contentType = contentType;

@@ -3,7 +3,7 @@
 		<execute function="Click" locator1="PGDynamicdatalists#OPTIONS_ICON" />
 		<execute function="AssertClick" locator1="PGDynamicdatalists#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute function="SelectFrame" locator1="PGDynamicdatalistsConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
 
 		<if>
 			<equals arg1="${configureChecked}" arg2="false" />
@@ -15,8 +15,8 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="PGDynamicdatalistsConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="viewDDLTemplateRecordFieldData">

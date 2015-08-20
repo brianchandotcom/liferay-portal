@@ -5,40 +5,40 @@
 	<command name="apiJsonwsUserView">
 		<execute function="Open" locator1="Home#API_JSON_URL" />
 
-		<execute function="Click" locator1="Jsonwebservices#USER_UPDATE_USER" />
+		<execute function="Click" locator1="JSONWS#USER_UPDATE_USER" />
 
-		<execute function="AssertTextEquals" locator1="JsonwebservicesAddress#API_METHOD" value1="/user/update-user" />
-		<execute function="AssertElementPresent" locator1="JsonwebservicesAddress#INVOKE_BUTTON" />
+		<execute function="AssertTextEquals" locator1="JSONWSAddress#API_METHOD" value1="/user/update-user" />
+		<execute function="AssertElementPresent" locator1="Button#INVOKE" />
 	</command>
 
 	<command name="editJsonwsUserView">
-		<execute function="AssertTextEquals" locator1="JsonwebservicesUser#API_METHOD" value1="/user/update-user" />
+		<execute function="AssertTextEquals" locator1="JSONWSUser#API_METHOD" value1="/user/update-user" />
 
-		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_USER_ID_FIELD" value1="${userId}" />
-		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_PASSWORD_RESET_FALSE_RADIO" value1="False" />
-		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_SCREEN_NAME_FIELD" value1="${userScreenName}" />
-		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_FACEBOOK_ID_FIELD" value1="${userFacebookId}" />
-		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_FIRST_NAME_FIELD" value1="${userFirstName}" />
-		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_LAST_NAME_FIELD" value1="${userLastName}" />
-		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_PREFIX_ID_FIELD" value1="${userPrefixId}" />
-		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_SUFFIX_ID_FIELD" value1="${userSuffixId}" />
-		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_MALE_TRUE_RADIO" value1="True" />
-		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_BIRTHDAY_MONTH_FIELD" value1="${userBirthdayMonth}" />
-		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_BIRTHDAY_DAY_FIELD" value1="${userBirthdayDay}" />
-		<execute function="Type" locator1="JsonwebservicesUser#API_EXECUTE_BIRTHDAY_YEAR_FIELD" value1="${userBirthdayYear}" />
+		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_USER_ID_FIELD" value1="${userId}" />
+		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_PASSWORD_RESET_FALSE_RADIO" value1="False" />
+		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_SCREEN_NAME_FIELD" value1="${userScreenName}" />
+		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_FACEBOOK_ID_FIELD" value1="${userFacebookId}" />
+		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_FIRST_NAME_FIELD" value1="${userFirstName}" />
+		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_LAST_NAME_FIELD" value1="${userLastName}" />
+		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_PREFIX_ID_FIELD" value1="${userPrefixId}" />
+		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_SUFFIX_ID_FIELD" value1="${userSuffixId}" />
+		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_MALE_TRUE_RADIO" value1="True" />
+		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_BIRTHDAY_MONTH_FIELD" value1="${userBirthdayMonth}" />
+		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_BIRTHDAY_DAY_FIELD" value1="${userBirthdayDay}" />
+		<execute function="Type" locator1="JSONWSUser#API_EXECUTE_BIRTHDAY_YEAR_FIELD" value1="${userBirthdayYear}" />
 
-		<execute function="AssertClick" locator1="JsonwebservicesUser#INVOKE_BUTTON" value1="Invoke" />
+		<execute function="AssertClick" locator1="Button#INVOKE" value1="Invoke" />
 	</command>
 
 	<command name="gotoPAuthURL">
 		<execute function="Open" locator1="Home#API_JSON_URL" />
 
-		<execute function="Click" locator1="Jsonwebservices#ADDRESS_ADD_ADDRESS" />
+		<execute function="Click" locator1="JSONWS#ADDRESS_ADD_ADDRESS" />
 
-		<execute function="AssertTextEquals" locator1="JsonwebservicesAddress#API_METHOD" value1="/address/add-address" />
+		<execute function="AssertTextEquals" locator1="JSONWSAddress#API_METHOD" value1="/address/add-address" />
 
-		<var locator="JsonwebservicesAddress#P_AUTH_FIELD" name="pAuth" />
+		<var locator="JSONWSAddress#P_AUTH_FIELD" name="pAuth" />
 
 		<execute function="Open" locator1="${url}${pAuth}" />
 	</command>

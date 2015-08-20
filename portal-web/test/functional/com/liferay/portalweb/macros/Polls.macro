@@ -1,6 +1,6 @@
 <definition>
 	<command name="addPollCP">
-		<execute function="Click" locator1="CPPolls#ADD_POLL" value1="Add Poll" />
+		<execute function="Click" locator1="MenuItem#ADD_POLL" value1="Add Poll" />
 
 		<execute function="Type" locator1="CPPollsAddquestion#TITLE_FIELD" value1="${pollsQuestionTitle}" />
 		<execute function="Type" locator1="CPPollsAddquestion#POLLS_QUESTION_FIELD" value1="${pollsQuestion}" />
@@ -35,28 +35,28 @@
 	</command>
 
 	<command name="addPollPG">
-		<execute function="Click" locator1="PGPollsdisplay#ADD_QUESTION" value1="Add Question" />
+		<execute function="Click" locator1="Polls#ADD_QUESTION" value1="Add Question" />
 
 		<execute function="SelectFrame" locator1="BasePortlet#IFRAME" />
 
-		<execute function="Type" locator1="PGPollsdisplayPollsquestion#TITLE_FIELD" value1="${pollsQuestionTitle}" />
-		<execute function="Type" locator1="PGPollsdisplayPollsquestion#POLLS_QUESTION_FIELD" value1="${pollsQuestion}" />
-		<execute function="Type" locator1="PGPollsdisplayPollsquestion#CHOICE_A_FIELD" value1="${pollsQuestionChoiceA}" />
-		<execute function="Type" locator1="PGPollsdisplayPollsquestion#CHOICE_B_FIELD" value1="${pollsQuestionChoiceB}" />
-		<execute function="AssertClick" locator1="PGPollsdisplayPollsquestion#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="TextInput#TITLE" value1="${pollsQuestionTitle}" />
+		<execute function="Type" locator1="TextArea#POLLS_QUESTION" value1="${pollsQuestion}" />
+		<execute function="Type" locator1="TextInput#POLL_CHOICE_A" value1="${pollsQuestionChoiceA}" />
+		<execute function="Type" locator1="TextInput#POLL_CHOICE_B" value1="${pollsQuestionChoiceB}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="selectPollPG">
-		<execute function="Click#makeVisibleClickAt" locator1="PGPollsdisplay#SELECT_QUESTION" />
+		<execute function="Click#makeVisibleClickAt" locator1="Polls#SELECT_QUESTION" />
 
 		<execute function="SelectFrame" locator1="BasePortlet#IFRAME" />
 
-		<execute function="Select" locator1="PGPollsdisplayConfiguration#TITLE_DROPDOWN_SELECT" value1="${pollsQuestionTitle}" />
-		<execute function="AssertClick" locator1="PGPollsdisplayConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertClick" locator1="PGPollsdisplayConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="AssertSelectedLabel" locator1="PGPollsdisplayConfiguration#TITLE_DROPDOWN_SELECT" value1="${pollsQuestionTitle}" />
+		<execute function="Select" locator1="Polls#TITLE_DROPDOWN_SELECT" value1="${pollsQuestionTitle}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertClick" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertSelectedLabel" locator1="Polls#TITLE_DROPDOWN_SELECT" value1="${pollsQuestionTitle}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -67,10 +67,10 @@
 		</execute>
 
 		<while>
-			<condition function="IsElementPresent" locator1="CPPolls#POLLS_TABLE_ACTIONS_GENERIC" />
+			<condition function="IsElementPresent" locator1="Polls#POLLS_TABLE_ACTIONS_GENERIC" />
 			<then>
-				<execute function="Click" locator1="CPPolls#POLLS_TABLE_ACTIONS_GENERIC" />
-				<execute function="AssertClick" locator1="CPPolls#POLLS_MENULIST_DELETE" value1="Delete" />
+				<execute function="Click" locator1="Polls#POLLS_TABLE_ACTIONS_GENERIC" />
+				<execute function="AssertClick" locator1="MenuItem#DELETE" value1="Delete" />
 				<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 				<execute function="AssertTextEquals" locator1="CPPolls#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -81,45 +81,45 @@
 	<command name="viewPollAsGuestPG">
 		<var name="key_pollsQuestion" value="${pollsQuestion}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGPollsdisplay#POLLS_QUESTION" value1="What is your favorite Liferay portlet?" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Polls#POLL_QUESTION" value1="What is your favorite Liferay portlet?" />
 
 		<for list="${pollsQuestionChoiceList}" param="questionChoiceList" >
 			<var name="key_pollsQuestionChoice" value="${questionChoiceList}" />
 
-			<execute function="AssertElementNotPresent" locator1="PGPollsdisplay#POLLS_QUESTION_CHOICE" />
+			<execute function="AssertElementNotPresent" locator1="Polls#POLL_QUESTION_CHOICE" />
 		</for>
 
-		<execute function="AssertElementNotPresent" locator1="PGPollsdisplay#VOTE_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="Button#VOTE" />
 		<execute function="AssertTextEquals" locator1="PGPollsdisplay#INFO_MESSAGE" value1="Please sign in to vote." />
 	</command>
 
 	<command name="viewPollPG">
 		<var name="key_pollsQuestion" value="${pollsQuestion}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGPollsdisplay#POLLS_QUESTION" value1="${pollsQuestion}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Polls#POLL_QUESTION" value1="${pollsQuestion}" />
 
 		<for list="${pollsQuestionChoiceList}" param="questionChoiceList" >
 			<var name="key_pollsQuestionChoice" value="${questionChoiceList}" />
 
-			<execute function="AssertTextPresent" locator1="PGPollsdisplay#POLLS_QUESTION_CHOICE" value1="${questionChoiceList}" />
+			<execute function="AssertTextPresent" locator1="Polls#POLL_QUESTION_CHOICE" value1="${questionChoiceList}" />
 		</for>
 
-		<execute function="AssertTextEquals" locator1="PGPollsdisplay#VOTE_BUTTON" value1="Vote" />
+		<execute function="AssertTextEquals" locator1="Button#VOTE" value1="Vote" />
 	</command>
 
 	<command name="viewVotedPollPG">
 		<var name="key_pollsQuestionChoice" value="${pollsQuestionChoice}" />
 
-		<execute function="AssertTextEquals" locator1="PGPollsdisplayVotes#POLLS_CHOICE_VOTES_PERCENTAGE" value1="${pollsQuestionVotePercent}" />
-		<execute function="AssertTextEquals" locator1="PGPollsdisplayVotes#POLLS_CHOICE_VOTES_NUMBER" value1="${pollsQuestionVoteCount}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGPollsdisplayVotes#POLLS_TOTAL_VOTES" value1="Total Votes: ${pollsQuestionTotalVotes}" />
+		<execute function="AssertTextEquals" locator1="Polls#VOTES_PERCENTAGE" value1="${pollsQuestionVotePercent}" />
+		<execute function="AssertTextEquals" locator1="Polls#VOTES_NUMBER" value1="${pollsQuestionVoteCount}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Polls#VOTES_TOTAL" value1="Total Votes: ${pollsQuestionTotalVotes}" />
 	</command>
 
 	<command name="votePollPG">
 		<var name="key_pollsQuestionChoice" value="${pollsQuestionChoice}" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGPollsdisplay#POLLS_QUESTION_CHOICE" value1="${pollsQuestionChoice}" />
-		<execute function="AssertClick" locator1="PGPollsdisplay#VOTE_BUTTON" value1="Vote" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Polls#POLL_QUESTION_CHOICE" value1="${pollsQuestionChoice}" />
+		<execute function="AssertClick" locator1="Button#VOTE" value1="Vote" />
 
 		<execute function="AssertTextEquals" locator1="PGPollsdisplayVotes#SUCCESS_MESSAGE" value1="Thank you for your vote." />
 	</command>

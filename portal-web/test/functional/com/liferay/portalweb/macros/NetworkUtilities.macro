@@ -2,9 +2,9 @@
 	<command name="searchPG">
 		<var name="key_networkDomain" value="${networkDomain}" />
 
-		<execute function="Type" locator1="Networkutilities#DNS_LOOKUP_FIELD" value1="${dnsDomain}" />
-		<execute function="AssertClick" locator1="Networkutilities#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="NetworkUtilities#DNS_LOOKUP_FIELD" value1="${dnsDomain}" />
+		<execute function="AssertClick" locator1="NetworkUtilities#SEARCH_BUTTON" value1="Search" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Networkutilities#NETWORK_DOMAIN" value1="${networkDomain}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="NetworkUtilities#NETWORK_DOMAIN" value1="${networkDomain}" />
 	</command>
 </definition>

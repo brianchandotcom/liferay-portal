@@ -2,9 +2,9 @@
 	<command name="addCP">
 		<var name="key_resourceName" value="${resourceName}" />
 
-		<execute function="AssertClick" locator1="CPCustomfields#RESOURCE_TABLE_RESOURCE_LINK" value1="${resourceName}" />
+		<execute function="AssertClick" locator1="CustomFields#RESOURCE_TABLE_RESOURCE_LINK" value1="${resourceName}" />
 
-		<execute function="AssertClick" locator1="CPCustomfieldsResource#ADD_CUSTOM_FIELD_BUTTON" value1="Add Custom Field" />
+		<execute function="AssertClick" locator1="Button#ADD_CUSTOM_FIELD" value1="Add Custom Field" />
 
 		<var method="StringUtil#lowerCase('${customFieldName}')" name="customFieldKey" />
 
@@ -15,19 +15,19 @@
 
 		<var name="key_customFieldName" value="${customFieldName}" />
 
-		<execute function="AssertTextEquals" locator1="CPCustomfieldsResource#CUSTOM_FIELDS_TABLE_NAME" value1="${customFieldName}" />
+		<execute function="AssertTextEquals" locator1="CustomFieldsResource#CUSTOM_FIELDS_TABLE_NAME" value1="${customFieldName}" />
 	</command>
 
 	<command name="editCP">
 		<var name="key_resourceName" value="${resourceName}" />
 
-		<execute function="AssertClick" locator1="CPCustomfields#RESOURCE_TABLE_RESOURCE_LINK" value1="${resourceName}" />
+		<execute function="AssertClick" locator1="CustomFields#RESOURCE_TABLE_RESOURCE_LINK" value1="${resourceName}" />
 
 		<var name="key_customFieldName" value="${customFieldName}" />
 
-		<execute function="Click" locator1="CPCustomfieldsResource#CUSTOM_FIELDS_TABLE_ACTIONS" />
+		<execute function="Click" locator1="CustomFieldsResource#CUSTOM_FIELDS_TABLE_ACTIONS" />
 
-		<execute function="AssertClick" locator1="CPCustomfieldsResource#CUSTOM_FIELDS_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<if>
 			<isset var="defaultValue" />
@@ -52,15 +52,15 @@
 		</execute>
 
 		<while>
-			<condition function="IsElementPresent" locator1="CPCustomfields#RESOURCE_TABLE_CUSTOM_FIELDS_LINK_GENERIC" />
+			<condition function="IsElementPresent" locator1="CustomFields#RESOURCE_TABLE_CUSTOM_FIELDS_LINK_GENERIC" />
 			<then>
-				<execute function="Click" locator1="CPCustomfields#RESOURCE_TABLE_CUSTOM_FIELDS_LINK_GENERIC" />
+				<execute function="Click" locator1="CustomFields#RESOURCE_TABLE_CUSTOM_FIELDS_LINK_GENERIC" />
 
 				<while>
-					<condition function="IsElementPresent" locator1="CPCustomfieldsResource#CUSTOM_FIELDS_TABLE_ACTIONS_GENERIC" />
+					<condition function="IsElementPresent" locator1="CustomFieldsResource#CUSTOM_FIELDS_TABLE_ACTIONS_GENERIC" />
 					<then>
-						<execute function="AssertClick" locator1="CPCustomfieldsResource#CUSTOM_FIELDS_TABLE_ACTIONS_GENERIC" value1="Actions" />
-						<execute function="AssertClickNoError" locator1="CPCustomfieldsResource#CUSTOM_FIELDS_MENULIST_DELETE" value1="Delete" />
+						<execute function="AssertClick" locator1="CustomFieldsResource#CUSTOM_FIELDS_TABLE_ACTIONS_GENERIC" value1="Actions" />
+						<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 						<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 						<execute function="AssertTextEquals" locator1="Comments#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 					</then>

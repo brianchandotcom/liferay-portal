@@ -23,55 +23,55 @@
 	</command>
 
 	<command name="addCP">
-		<execute function="AssertClick" locator1="CPTags#TOOLBAR_ADD" value1="Add Tag" />
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add Tag" />
 
 		<if>
 			<equals arg1="${tagNameVariation}" arg2="Variation" />
 			<then>
 				<var name="errorMessage1"><![CDATA[, = > / < [ { % | + # ` ? " ; / * ~.]]></var>
 
-				<execute function="Type" locator1="CPTagsAdd#NAME_FIELD" value1="${tagEntry}" />
-				<execute function="AssertClick" locator1="CPTagsAdd#SAVE_BUTTON" value1="Save" />
-				<execute function="AssertTextEquals" locator1="CPTags#ERROR_MESSAGE" value1="Your request failed to complete." />
+				<execute function="Type" locator1="TextInput#NAME" value1="${tagEntry}" />
+				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
 			</then>
 			<elseif>
 				<equals arg1="${tagNameVariation}" arg2="Duplicate" />
 				<then>
-					<execute function="Type" locator1="CPTagsAdd#NAME_FIELD" value1="${tagName}" />
-					<execute function="AssertClick" locator1="CPTagsAdd#SAVE_BUTTON" value1="Save" />
+					<execute function="Type" locator1="TextInput#NAME" value1="${tagName}" />
+					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-					<execute function="AssertTextEquals" locator1="CPTags#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+					<execute function="AssertTextEquals" locator1="Message#Success" value1="Your request completed successfully." />
 
 					<var name="key_tagName" value="${tagName}" />
 
-					<execute function="AssertTextEquals" locator1="CPTags#TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
+					<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
 
-					<execute function="AssertClick" locator1="CPTags#TOOLBAR_ADD" value1="Add Tag" />
+					<execute function="AssertClick" locator1="Button#ADD" value1="Add Tag" />
 
-					<execute function="Type" locator1="CPTagsAdd#NAME_FIELD" value1="${tagName}" />
-					<execute function="AssertClick" locator1="CPTagsAdd#SAVE_BUTTON" value1="Save" />
-					<execute function="AssertTextEquals" locator1="CPTags#ERROR_MESSAGE" value1="Your request failed to complete." />
+					<execute function="Type" locator1="TextInput#NAME" value1="${tagName}" />
+					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+					<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
 				</then>
 			</elseif>
 			<else>
-				<execute function="Type" locator1="CPTagsAdd#NAME_FIELD" value1="${tagName}" />
-				<execute function="AssertClick" locator1="CPTagsAdd#SAVE_BUTTON" value1="Save" />
+				<execute function="Type" locator1="TextInput#NAME" value1="${tagName}" />
+				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-				<execute function="AssertTextEquals" locator1="CPTags#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#Success" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
 
 	<command name="addFrontPageTagPG">
-		<execute function="AssertClick" locator1="PGWiki#ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
+		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
 
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${wikiPageContent}" />
-		<execute function="AssertClick" locator1="PGWikiAddpage#CATEGORIZATION_DROPDOWN" value1="Categorization" />
-		<execute function="Type" locator1="PGWikiAddpage#TAGS_FIELD" value1="${wikiTagName}" />
-		<execute function="AssertClick" locator1="PGWikiAddpage#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="AssertClick" locator1="AssetCategorization#PANEL_TOGGLE" value1="Categorization" />
+		<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${wikiTagName}" />
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="PGWiki#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="PGWiki#WIKI_PAGE_BODY" value1="${wikiPageContent}" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContent}" />
 	</command>
 
 	<command name="addMultipleViaBlogsPG">
@@ -162,23 +162,23 @@
 	</command>
 
 	<command name="addViaSiteCP">
-		<execute function="AssertClick" locator1="CPSitesettings#MENU_BASIC_INFORMATION_CATEGORIZATION" value1="Categorization" />
+		<execute function="AssertClick" locator1="SitesEditSite#MENU_BASIC_INFORMATION_CATEGORIZATION" value1="Categorization" />
 
-		<execute function="Type" locator1="CPSitesettingsCategorization#TAGS_NAME_FIELD" value1="${tagName}" />
-		<execute function="AssertClick" locator1="CPSitesettingsCategorization#TAGS_ADD_BUTTON" value1="Add" />
-		<execute function="AssertClick" locator1="CPSitesettingsCategorization#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertClick" locator1="CPSitesettingsCategorization#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
+		<execute function="AssertClick" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertClick" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addWithNullTitleCP">
-		<execute function="AssertClick" locator1="CPTags#TOOLBAR_ADD" value1="Add Tag" />
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add Tag" />
 
-		<execute function="Type" locator1="CPTagsAdd#NAME_FIELD" value1="${tagEntry}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${tagEntry}" />
 
-		<execute function="AssertClick" locator1="CPTagsAdd#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPTagsAdd#NAME_FIELD_ERROR" value1="Name Required" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPTagsAdd#NAME_FIELD_ERROR" value1="This field is required." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#NAME_ERROR" value1="Name Required" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#NAME_ERROR" value1="This field is required." />
 	</command>
 
 	<command name="deleteCP">
@@ -187,82 +187,82 @@
 		<if>
 			<equals arg1="${deleteMethod}" arg2="From List" />
 			<then>
-				<execute function="Click" locator1="CPTags#TAG_ENTRY_TABLE_ACTIONS_ARROW" />
-				<execute function="AssertClickNoError" locator1="CPTags#TAG_ENTRY_MENULIST_DELETE" value1="Delete" />
+				<execute function="Click" locator1="Tags#TAG_ENTRY_TABLE_ACTIONS_ARROW" />
+				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 			</then>
 			<elseif>
 				<equals arg1="${deleteMethod}" arg2="From Toolbar" />
 				<then>
-					<execute function="Check" locator1="CPTags#TAG_ENTRY_TABLE_CHECKBOX" />
-					<execute function="Click" locator1="CPTags#TOOLBAR_ACTIONS" />
-					<execute function="AssertClickNoError" locator1="CPTags#TAG_ENTRY_MENULIST_DELETE" value1="Delete" />
+					<execute function="Check" locator1="Tags#TAG_ENTRY_TABLE_CHECKBOX" />
+					<execute function="Click" locator1="Tags#TOOLBAR_ACTIONS" />
+					<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="Check" locator1="CPTags#ALL_TAGS_CHECKBOX" />
-				<execute function="Click" locator1="CPTags#TOOLBAR_ACTIONS" />
-				<execute function="AssertClickNoError" locator1="CPTags#ACTIONS_MENULIST_DELETE" value1="Delete" />
+				<execute function="Check" locator1="Tags#ALL_TAGS_CHECKBOX" />
+				<execute function="Click" locator1="Tags#TOOLBAR_ACTIONS" />
+				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 			</else>
 		</if>
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="CPTags#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="CPTags#INFO_MESSAGE" value1="There are no tags." />
+		<execute function="AssertTextEquals" locator1="Message#Success" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no tags." />
 		<execute function="AssertTextNotPresent" value1="${tagName}" />
 	</command>
 
 	<command name="editCancelCP">
 		<var name="key_tagName" value="${tagName}" />
 
-		<execute function="Click" locator1="CPTags#TAG_ENTRY_TABLE_ACTIONS_ARROW" />
-		<execute function="AssertClick" locator1="CPTags#TAG_ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute function="Click" locator1="Tags#TAG_ENTRY_TABLE_ACTIONS_ARROW" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="AssertTextEquals" locator1="CPTagsEdit#TAG_HEADER" value1="${tagName}" />
+		<execute function="AssertTextEquals" locator1="TagsEditTag#TAG_HEADER" value1="${tagName}" />
 		<execute function="AssertClick" locator1="CPTagsEdit#CANCEL_BUTTON" value1="Cancel" />
 
-		<execute function="AssertTextEquals" locator1="CPTags#TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
+		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
 	</command>
 
 	<command name="editCP">
 		<var name="key_tagName" value="${tagName}" />
 
-		<execute function="Click" locator1="CPTags#TAG_ENTRY_TABLE_ACTIONS_ARROW" />
+		<execute function="Click" locator1="Tags#TAG_ENTRY_TABLE_ACTIONS_ARROW" />
 
-		<execute function="AssertClick" locator1="CPTags#TAG_ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="AssertTextEquals" locator1="CPTagsEdit#TAG_HEADER" value1="${tagName}" />
+		<execute function="AssertTextEquals" locator1="TagsEditTag#TAG_HEADER" value1="${tagName}" />
 
 		<execute function="Type" locator1="CPTagsEdit#NAME_FIELD" value1="${tagNameEdit}" />
 
 		<execute function="AssertClick" locator1="CPTagsEdit#SAVE_BUTTON" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPTags#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#Success" value1="Your request completed successfully." />
 	</command>
 
 	<command name="mergeMultipleTags">
-		<execute function="Check" locator1="CPTags#ALL_TAGS_CHECKBOX" />
-		<execute function="Click" locator1="CPTags#TOOLBAR_ACTIONS" />
-		<execute function="AssertClick" locator1="CPTags#ACTIONS_MENULIST_MERGE" value1="Merge" />
-		<execute function="Select" locator1="CPTags#MERGE_TAGS_INTO_THIS_TAG_SELECT" value1="${tagName2}" />
-		<execute function="AssertClickNoError" locator1="CPTags#MERGE_TAGS_MERGE_BUTTON" value1="Merge" />
+		<execute function="Check" locator1="Tags#ALL_TAGS_CHECKBOX" />
+		<execute function="Click" locator1="Tags#TOOLBAR_ACTIONS" />
+		<execute function="AssertClick" locator1="Tags#MERGE" value1="Merge" />
+		<execute function="Select" locator1="Tags#MERGE_TAGS_INTO_THIS_TAG_SELECT" value1="${tagName2}" />
+		<execute function="AssertClickNoError" locator1="Button#MERGE" value1="Merge" />
 		<execute function="Confirm#assertPartialConfirmation" value1="${mergeConfirmation}" />
-		<execute function="AssertTextEquals" locator1="CPTags#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#Success" value1="Your request completed successfully." />
 
 		<var name="key_tagName" value="${tagName2}" />
 
-		<execute function="AssertTextEquals" locator1="CPTags#TAG_ENTRY_TABLE_NAME" value1="${tagName2}" />
+		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName2}" />
 
 		<var name="key_tagName" value="${tagName1}" />
 
-		<execute function="AssertTextNotPresent" locator1="CPTags#TAG_ENTRY_TABLE_NAME" value1="${tagName1}" />
+		<execute function="AssertTextNotPresent" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName1}" />
 	</command>
 
 	<command name="mergeSingleTagWarning">
 		<var name="key_tagName" value="${tagName}" />
 
-		<execute function="Check" locator1="CPTags#TAG_ENTRY_TABLE_CHECKBOX" />
-		<execute function="Click" locator1="CPTags#TOOLBAR_ACTIONS" />
-		<execute function="AssertClickNoError" locator1="CPTags#ACTIONS_MENULIST_MERGE" value1="Merge" />
+		<execute function="Check" locator1="Tags#TAG_ENTRY_TABLE_CHECKBOX" />
+		<execute function="Click" locator1="Tags#TOOLBAR_ACTIONS" />
+		<execute function="AssertClickNoError" locator1="Tags#MERGE" value1="Merge" />
 		<execute function="Confirm" value1="Please choose at least 2 tags." />
 	</command>
 
@@ -317,25 +317,25 @@
 	</command>
 
 	<command name="searchTagCP">
-		<execute function="Type" locator1="CPTags#SEARCH_FIELD" value1="3" />
+		<execute function="Type" locator1="Tags#SEARCH_FIELD" value1="3" />
 
 		<var name="key_tagName" value="${tagName3}" />
 
-		<execute function="AssertTextEquals" locator1="CPTags#TAG_ENTRY_TABLE_NAME" value1="${tagName3}" />
+		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName3}" />
 
-		<execute function="Type" locator1="CPTags#SEARCH_FIELD" value1="tag" />
+		<execute function="Type" locator1="Tags#SEARCH_FIELD" value1="tag" />
 
 		<var name="key_tagName" value="${tagName1}" />
 
-		<execute function="AssertTextEquals" locator1="CPTags#TAG_ENTRY_TABLE_NAME" value1="${tagName1}" />
+		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName1}" />
 
 		<var name="key_tagName" value="${tagName2}" />
 
-		<execute function="AssertTextEquals" locator1="CPTags#TAG_ENTRY_TABLE_NAME" value1="${tagName2}" />
+		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName2}" />
 
 		<var name="key_tagName" value="${tagName3}" />
 
-		<execute function="AssertTextEquals" locator1="CPTags#TAG_ENTRY_TABLE_NAME" value1="${tagName3}" />
+		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName3}" />
 	</command>
 
 	<command name="tearDownCP">
@@ -344,27 +344,27 @@
 		</execute>
 
 		<if>
-			<condition function="IsElementNotPresent" locator1="CPTags#INFO_MESSAGE" />
+			<condition function="IsElementNotPresent" locator1="Message#INFO" />
 			<then>
-				<execute function="Check" locator1="CPTags#ALL_TAGS_CHECKBOX" />
-				<execute function="AssertClick" locator1="CPTags#TOOLBAR_ACTIONS" value1="Actions" />
-				<execute function="AssertClickNoError" locator1="CPTags#ACTIONS_MENULIST_DELETE" value1="Delete" />
+				<execute function="Check" locator1="Tags#ALL_TAGS_CHECKBOX" />
+				<execute function="AssertClick" locator1="Tags#TOOLBAR_ACTIONS" value1="Actions" />
+				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="CPTags#INFO_MESSAGE" value1="There are no tags." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no tags." />
 	</command>
 
 	<command name="viewCP">
 		<var name="key_tagName" value="${tagName}" />
 
-		<execute function="AssertTextEquals" locator1="CPTags#TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
+		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName}" />
 	</command>
 
 	<command name="viewFrontPageTagPG">
-		<execute function="AssertTextEquals" locator1="PGWiki#WIKI_PAGE_BODY" value1="${wikiPageContent}" />
-		<execute function="AssertTextEquals" locator1="PGWiki#WIKI_PAGE_TAG" value1="${wikiTagName}" />
+		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContent}" />
+		<execute function="AssertTextEquals" locator1="Wiki#WIKI_PAGE_TAG" value1="${wikiTagName}" />
 	</command>
 
 	<command name="viewMultipleViaBlogsPG">
@@ -378,14 +378,14 @@
 	<command name="viewTagsCP">
 		<var name="key_tagName" value="${tagName1}" />
 
-		<execute function="AssertTextEquals" locator1="CPTags#TAG_ENTRY_TABLE_NAME" value1="${tagName1}" />
+		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName1}" />
 
 		<var name="key_tagName" value="${tagName2}" />
 
-		<execute function="AssertTextEquals" locator1="CPTags#TAG_ENTRY_TABLE_NAME" value1="${tagName2}" />
+		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName2}" />
 
 		<var name="key_tagName" value="${tagName3}" />
 
-		<execute function="AssertTextEquals" locator1="CPTags#TAG_ENTRY_TABLE_NAME" value1="${tagName3}" />
+		<execute function="AssertTextEquals" locator1="Tags#TAG_ENTRY_TABLE_NAME" value1="${tagName3}" />
 	</command>
 </definition>

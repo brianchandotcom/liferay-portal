@@ -55,11 +55,11 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
 
 		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
-		<execute function="Type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="りんご" />
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarAddpanelpage#ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute function="Type" locator1="TextInput#NAME" value1="りんご" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#ADD_PAGE" value1="Add Page" />
 
 		<var name="key_pageName" value="りんご" />
 
@@ -75,11 +75,11 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
 
 		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
-		<execute function="Type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${test}" />
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarAddpanelpage#ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${test}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#ADD_PAGE" value1="Add Page" />
 
 		<var name="key_pageName" value="${test}" />
 

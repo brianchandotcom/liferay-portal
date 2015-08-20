@@ -1,30 +1,30 @@
 <definition>
 	<command name="addCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_MANAGE" value1="Manage" />
-		<execute function="AssertClick" locator1="CPWebcontent#MANAGE_MENULIST_TEMPLATES" value1="Templates" />
+		<execute function="AssertClick" locator1="Toolbar#MANAGE" value1="Manage" />
+		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
-		<execute function="SelectFrame" locator1="CPWebcontentTemplates#TEMPLATES_IFRAME" />
-		<execute function="AssertClick" locator1="CPWebcontentTemplates#ADD" value1="Add" />
+		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
+		<execute function="AssertClick" locator1="DDMSelectTemplate#TOOLBAR_ADD_TEMPLATE" value1="Add" />
 		<execute function="SelectFrame" />
 
-		<execute function="SelectFrame" locator1="CPWebcontentTemplatesAddtemplate#TEMPLATES_IFRAME" />
-		<execute function="Type#clickAtSendKeys" locator1="CPWebcontentTemplatesAddtemplate#NAME_FIELD" value1="${templateName}" />
+		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
+		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${templateName}" />
 
 		<if>
 			<isset var="localization1NameKey" />
 			<then>
 				<var name="key_localizationName" value="${localization1NameKey}" />
 
-				<execute function="Click" locator1="CPWebcontentStructuresAddstructure#LOCALIZATION_NAME" />
-				<execute function="Type#clickAtSendKeys" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD" value1="${localization1Name}" />
+				<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
+				<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${localization1Name}" />
 
 				<if>
 					<isset var="localization2NameKey" />
 					<then>
 						<var name="key_localizationName" value="${localization2NameKey}" />
 
-						<execute function="Click" locator1="CPWebcontentStructuresAddstructure#LOCALIZATION_NAME" />
-						<execute function="Type#clickAtSendKeys" locator1="CPWebcontentStructuresAddstructure#NAME_FIELD" value1="${localization2Name}" />
+						<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
+						<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${localization2Name}" />
 					</then>
 				</if>
 			</then>
@@ -35,30 +35,30 @@
 		<if>
 			<isset var="templateDescription" />
 			<then>
-				<execute function="Type" locator1="CPWebcontentTemplatesAddtemplate#DESCRIPTION_FIELD" value1="${templateDescription}" />
+				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${templateDescription}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="structureName" />
 			<then>
-				<execute function="AssertClick" locator1="CPWebcontentTemplatesAddtemplate#SELECT_STRUCTURE" value1="Select" />
+				<execute function="AssertClick" locator1="DDMEditTemplate#DETAILS_SELECT_STRUCTURE" value1="Select" />
 
 				<execute function="SelectFrame" />
-				<execute function="SelectFrame" locator1="CPWebcontentTemplatesAddtemplateStructure#STRUCTURE_IFRAME" />
+				<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
 				<var name="key_structureName" value="${structureName}" />
 
-				<execute function="AssertTextEquals" locator1="CPWebcontentTemplatesAddtemplateStructure#STRUCTURE_TABLE_NAME" value1="${structureName}" />
-				<execute function="AssertClickNoError" locator1="CPWebcontentTemplatesAddtemplateStructure#STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+				<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${structureName}" />
+				<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 				<execute function="Confirm" value1="Selecting a new structure changes the available input fields and available templates. Do you want to proceed?" />
 
 				<execute function="SelectFrame" />
-				<execute function="SelectFrame" locator1="CPWebcontentTemplatesAddtemplate#TEMPLATES_IFRAME" />
+				<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 
 				<var name="key_structureName" value="${structureName}" />
 
-				<execute function="AssertElementPresent" locator1="CPWebcontentTemplatesAddtemplate#STRUCTURE" value1="${structureName}" />
+				<execute function="AssertElementPresent" locator1="DDMEditTemplate#DETAILS_STRUCTURE" value1="${structureName}" />
 
 				<if>
 					<equals arg1="${templateLanguage}" arg2="ftl" />
@@ -77,45 +77,45 @@
 		<if>
 			<equals arg1="${templateLanguage}" arg2="ftl" />
 			<then>
-				<execute function="Select" locator1="CPWebcontentTemplatesAddtemplate#LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
+				<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
 			</then>
 			<elseif>
 				<equals arg1="${templateLanguage}" arg2="xsl" />
 				<then>
-					<execute function="Select" locator1="CPWebcontentTemplatesAddtemplate#LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
+					<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="Select" locator1="CPWebcontentTemplatesAddtemplate#LANGUAGE_SELECT" value1="Velocity (.vm)" />
+				<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
 			</else>
 		</if>
 
 		<if>
 			<isset var="templateFile" />
 			<then>
-				<execute function="UploadCommonFile" locator1="CPWebcontentTemplatesAddtemplate#SCRIPT_CHOOSE_FILE" value1="${templateFile}" />
+				<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${templateFile}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="templateScript" />
 			<then>
-				<execute function="Type#typeAceEditor" locator1="CPWebcontentTemplatesAddtemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
+				<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPWebcontentTemplatesAddtemplate#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="SelectFrame" />
-		<execute function="SelectFrame" locator1="CPWebcontentTemplatesAddtemplate#TEMPLATES_IFRAME" />
-		<execute function="AssertTextEquals" locator1="CPWebcontentTemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<if>
 			<isset var="addRoleViewPermissions" />
 			<then>
 				<var name="key_templateName" value="${templateName}" />
 
-				<execute function="Click" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_ACTIONS" />
-				<execute function="AssertClick" locator1="CPWebcontentTemplates#TEMPLATE_MENULIST_PERMISSIONS" value1="Permissions" />
+				<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ACTIONS" />
+				<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 
 				<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
 					<var name="addOrRemoveViewPermission" value="Add" />
@@ -132,76 +132,76 @@
 		<var method="StringUtil#lowerCase('${fieldNameLabel}')" name="fieldNameLabel" />
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="AssertClick" locator1="CPWebcontentTemplatesAddtemplate#PALETTE_FIELD" value1="${fieldName}" />
+		<execute function="AssertClick" locator1="DDMEditTemplate#SCRIPT_FIELD" value1="${fieldName}" />
 	</command>
 
 	<command name="addNullCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_MANAGE" value1="Manage" />
-		<execute function="AssertClick" locator1="CPWebcontent#MANAGE_MENULIST_TEMPLATES" value1="Templates" />
+		<execute function="AssertClick" locator1="Toolbar#MANAGE" value1="Manage" />
+		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
-		<execute function="SelectFrame" locator1="CPWebcontentTemplates#TEMPLATES_IFRAME" />
-		<execute function="AssertClick" locator1="CPWebcontentTemplates#ADD" value1="Add" />
+		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
+		<execute function="AssertClick" locator1="DDMSelectTemplate#TOOLBAR_ADD_TEMPLATE" value1="Add" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="SelectFrame" locator1="CPWebcontentTemplatesAddtemplate#TEMPLATES_IFRAME" />
-		<execute function="AssertElementNotPresent" locator1="CPWebcontentTemplatesAddtemplate#NAME_FIELD_REQUIRED" />
-		<execute function="AssertClick" locator1="CPWebcontentTemplatesAddtemplate#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPWebcontentTemplatesAddtemplate#NAME_FIELD_REQUIRED" value1="This field is required." />
+		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
+		<execute function="AssertElementNotPresent" locator1="TextInput#NAME_REQUIRED" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="TextInput#NAME_REQUIRED" value1="This field is required." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="advancedSearchCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_MANAGE" value1="Manage" />
-		<execute function="AssertClick" locator1="CPWebcontent#MANAGE_MENULIST_TEMPLATES" value1="Templates" />
+		<execute function="AssertClick" locator1="Toolbar#MANAGE" value1="Manage" />
+		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
-		<execute function="SelectFrame" locator1="CPWebcontentTemplates#TEMPLATES_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 
 		<var name="key_templateName" value="${templateName}" />
 
-		<execute function="AssertTextEquals" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_NAME" value1="${templateName}" />
-		<execute function="Click" locator1="CPWebcontentTemplates#ADVANCED_SEARCH_ICON" />
+		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />
+		<execute function="Click" locator1="DDMSelectTemplate#TOOLBAR_ADVANCED_SEARCH_ICON" />
 
 		<if>
 			<isset var="templateName" />
 			<then>
-				<execute function="Type" locator1="CPWebcontentTemplates#ADVANCED_SEARCH_NAME_FIELD" value1="${templateName}" />
+				<execute function="Type" locator1="Search#ADVANCED_SEARCH_NAME_FIELD" value1="${templateName}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="templateDescription" />
 			<then>
-				<execute function="Type" locator1="CPWebcontentTemplates#ADVANCED_SEARCH_DESCRIPTION_FIELD" value1="${templateDescription}" />
+				<execute function="Type" locator1="Search#ADVANCED_SEARCH_DESCRIPTION_FIELD" value1="${templateDescription}" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPWebcontentTemplates#SEARCH_BUTTON" value1="Search" />
-		<execute function="AssertTextEquals" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_NAME" value1="${templateName}" />
-		<execute function="AssertTextEquals" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_DESCRIPTION" value1="${templateDescription}" />
+		<execute function="AssertClick" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />
+		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_DESCRIPTION" value1="${templateDescription}" />
 	</command>
 
 	<command name="deleteCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_MANAGE" value1="Manage" />
-		<execute function="AssertClick" locator1="CPWebcontent#MANAGE_MENULIST_TEMPLATES" value1="Templates" />
+		<execute function="AssertClick" locator1="Toolbar#MANAGE" value1="Manage" />
+		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
 		<var name="key_templateName" value="${templateName}" />
 
-		<execute function="SelectFrame" locator1="CPWebcontentTemplates#TEMPLATES_IFRAME" />
-		<execute function="Type" locator1="CPWebcontentTemplates#SEARCH_FIELD" value1="${templateName}" />
-		<execute function="AssertClick" locator1="CPWebcontentTemplates#SEARCH_BUTTON" value1="Search" />
-		<execute function="Click" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_ACTIONS" />
-		<execute function="AssertClickNoError" locator1="CPWebcontentTemplates#TEMPLATE_MENULIST_DELETE" value1="Delete" />
+		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
+		<execute function="Type" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_FIELD" value1="${templateName}" />
+		<execute function="AssertClick" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ACTIONS" />
+		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<if>
 			<equals arg1="${webContentHasReference}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPWebcontentTemplates#ERROR_MESSAGE_1" value1="Your request failed to complete." />
-				<execute function="AssertTextEquals" locator1="CPWebcontentTemplates#ERROR_MESSAGE_2" value1="Required templates could not be deleted. They are referenced by web content." />
+				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Required templates could not be deleted. They are referenced by web content." />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="CPWebcontentTemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
@@ -211,111 +211,111 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_MANAGE" value1="Manage" />
-		<execute function="AssertClick" locator1="CPWebcontent#MANAGE_MENULIST_TEMPLATES" value1="Templates" />
+		<execute function="AssertClick" locator1="Toolbar#MANAGE" value1="Manage" />
+		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
-		<execute function="SelectFrame" locator1="CPWebcontentTemplates#TEMPLATES_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 
-		<execute function="Type" locator1="CPWebcontentTemplates#SEARCH_FIELD" value1="2" />
-		<execute function="AssertClick" locator1="CPWebcontentTemplates#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_FIELD" value1="2" />
+		<execute function="AssertClick" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_BUTTON" value1="Search" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_ACTIONS_GENERIC" />
+			<condition function="IsElementPresent" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ACTIONS_GENERIC" />
 			<then>
-				<execute function="Check" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_SELECT_ALL_CHECKBOX" />
-				<execute function="AssertClickNoError" locator1="CPWebcontentTemplates#DELETE_BUTTON" value1="Delete" />
+				<execute function="Check" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ALL_CHECKBOX" />
+				<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals" locator1="CPWebcontentTemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 		</while>
 
-		<execute function="Type" locator1="CPWebcontentTemplates#SEARCH_FIELD" value1="template" />
-		<execute function="AssertClick" locator1="CPWebcontentTemplates#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_FIELD" value1="template" />
+		<execute function="AssertClick" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_BUTTON" value1="Search" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_ACTIONS_GENERIC" />
+			<condition function="IsElementPresent" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ACTIONS_GENERIC" />
 			<then>
-				<execute function="Check" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_SELECT_ALL_CHECKBOX" />
-				<execute function="AssertClickNoError" locator1="CPWebcontentTemplates#DELETE_BUTTON" value1="Delete" />
+				<execute function="Check" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ALL_CHECKBOX" />
+				<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals" locator1="CPWebcontentTemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 		</while>
 
-		<execute function="AssertTextEquals" locator1="CPWebcontentTemplates#INFO_MESSAGE" value1="There are no templates." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no templates." />
 	</command>
 
 	<command name="viewCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_MANAGE" value1="Manage" />
-		<execute function="AssertClick" locator1="CPWebcontent#MANAGE_MENULIST_TEMPLATES" value1="Templates" />
+		<execute function="AssertClick" locator1="Toolbar#MANAGE" value1="Manage" />
+		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
-		<execute function="SelectFrame" locator1="CPWebcontentTemplates#TEMPLATES_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 
 		<var name="key_templateName" value="${templateName}" />
 
-		<execute function="AssertTextEquals" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_NAME" value1="${templateName}" />
-		<execute function="AssertTextEquals" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_DESCRIPTION" value1="${templateDescription}" />
+		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />
+		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_DESCRIPTION" value1="${templateDescription}" />
 
 		<if>
 			<isset var="structureName" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_STRUCTURE" value1="${structureName}" />
+				<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_MODE" value1="${structureName}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${templateLanguage}" arg2="ftl" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_LANGUAGE" value1="FreeMarker" />
+				<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_LANGUAGE" value1="FreeMarker" />
 			</then>
 			<elseif>
 				<equals arg1="${templateLanguage}" arg2="xsl" />
 				<then>
-					<execute function="AssertTextEquals" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_LANGUAGE" value1="Extensible Stylesheet Language" />
+					<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_LANGUAGE" value1="Extensible Stylesheet Language" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertTextEquals" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_LANGUAGE" value1="Velocity" />
+				<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_LANGUAGE" value1="Velocity" />
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="CPWebcontentTemplates#TEMPLATE_TABLE_NAME" value1="${templateName}" />
+		<execute function="AssertClick" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />
 		<execute function="SelectFrame" />
 
-		<execute function="SelectFrame" locator1="CPWebcontentTemplatesEdittemplate#TEMPLATES_IFRAME" />
-		<execute function="AssertTextEquals" locator1="CPWebcontentTemplatesEdittemplate#NAME_FIELD" value1="${templateName}" />
+		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
+		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${templateName}" />
 
 		<execute macro="CPWebcontentTemplatesAddtemplate#showDetails" />
 
-		<execute function="AssertTextEquals" locator1="CPWebcontentTemplatesEdittemplate#DESCRIPTION_FIELD" value1="${templateDescription}" />
+		<execute function="AssertTextEquals" locator1="TextArea#DESCRIPTION" value1="${templateDescription}" />
 
 		<if>
 			<isset var="structureName" />
 			<then>
-				<execute function="AssertTextEquals#assertValue" locator1="CPWebcontentTemplatesEdittemplate#STRUCTURE" value1="${structureName}" />
+				<execute function="AssertTextEquals#assertValue" locator1="DDMEditTemplate#DETAILS_STRUCTURE" value1="${structureName}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${templateLanguage}" arg2="ftl" />
 			<then>
-				<execute function="AssertSelectedLabel" locator1="CPWebcontentTemplatesEdittemplate#LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
+				<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
 			</then>
 			<elseif>
 				<equals arg1="${templateLanguage}" arg2="xsl" />
 				<then>
-					<execute function="AssertSelectedLabel" locator1="CPWebcontentTemplatesEdittemplate#LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
+					<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertSelectedLabel" locator1="CPWebcontentTemplatesEdittemplate#LANGUAGE_SELECT" value1="Velocity (.vm)" />
+				<execute function="AssertSelectedLabel" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="Velocity (.vm)" />
 			</else>
 		</if>
 
 		<if>
 			<isset var="templateScript" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPWebcontentTemplatesEdittemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
+				<execute function="AssertTextEquals" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
 			</then>
 		</if>
 	</command>

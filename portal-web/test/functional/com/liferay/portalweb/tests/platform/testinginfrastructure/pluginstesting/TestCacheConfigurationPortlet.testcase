@@ -19,6 +19,6 @@
 			<var name="portletName" value="Test Cache Configuration" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="PGTestPortlet#TEST_PORTLET_BODY_FAILED" value1="FAILED" />
+		<execute function="AssertElementNotPresent" locator1="TestBlog#TEST_PORTLET_BODY_FAILED" value1="FAILED" />
 	</command>
 </definition>

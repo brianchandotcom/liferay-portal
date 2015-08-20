@@ -24,8 +24,8 @@
 	<command name="GoBackToSOProfileFromControlPanel" priority="4">
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
-		<execute function="AssertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
+		<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 		<execute function="Click" locator1="//a[@title='Back']" />
 
 		<execute function="AssertTextEquals" locator1="SOProfile#USER_NAME" value1="${adminName}" />

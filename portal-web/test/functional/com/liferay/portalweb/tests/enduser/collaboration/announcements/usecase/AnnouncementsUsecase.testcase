@@ -309,9 +309,9 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncements#ENTRY_TITLE" value1="${entryTitle} 1" />
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncements#ENTRY_TITLE" value1="${entryTitle} 2" />
-		<execute function="AssertClick" locator1="PGAnnouncements#PAGINATION_NEXT" value1="Next" />
+		<execute function="AssertTextNotPresent" locator1="Announcements#ENTRY_TITLE" value1="${entryTitle} 1" />
+		<execute function="AssertTextNotPresent" locator1="Announcements#ENTRY_TITLE" value1="${entryTitle} 2" />
+		<execute function="AssertClick" locator1="Pagination#NEXT_LINK" value1="Next" />
 
 		<execute macro="AnnouncementsEntry#viewViaEntriesPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -329,12 +329,12 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncements#ENTRY_TITLE" value1="${entryTitle} 3" />
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncements#ENTRY_TITLE" value1="${entryTitle} 4" />
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncements#ENTRY_TITLE" value1="${entryTitle} 5" />
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncements#ENTRY_TITLE" value1="${entryTitle} 6" />
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncements#ENTRY_TITLE" value1="${entryTitle} 7" />
-		<execute function="AssertClick" locator1="PGAnnouncements#PAGINATION_PREVIOUS" value1="Previous" />
+		<execute function="AssertTextNotPresent" locator1="Announcements#ENTRY_TITLE" value1="${entryTitle} 3" />
+		<execute function="AssertTextNotPresent" locator1="Announcements#ENTRY_TITLE" value1="${entryTitle} 4" />
+		<execute function="AssertTextNotPresent" locator1="Announcements#ENTRY_TITLE" value1="${entryTitle} 5" />
+		<execute function="AssertTextNotPresent" locator1="Announcements#ENTRY_TITLE" value1="${entryTitle} 6" />
+		<execute function="AssertTextNotPresent" locator1="Announcements#ENTRY_TITLE" value1="${entryTitle} 7" />
+		<execute function="AssertClick" locator1="Pagination#PREVIOUS_LINK" value1="Previous" />
 
 		<execute macro="AnnouncementsEntry#viewViaEntriesPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -373,14 +373,14 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncements#ENTRY_TITLE" value1="${entryTitle} 1" />
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncements#ENTRY_TITLE" value1="${entryTitle} 2" />
+		<execute function="AssertTextNotPresent" locator1="Announcements#ENTRY_TITLE" value1="${entryTitle} 1" />
+		<execute function="AssertTextNotPresent" locator1="Announcements#ENTRY_TITLE" value1="${entryTitle} 2" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGAnnouncements#NAVIGATION_MANAGE_ENTRIES" value1="Manage Entries" />
+		<execute function="AssertClick" locator1="Announcements#NAVIGATION_MANAGE_ENTRIES" value1="Manage Entries" />
 
 		<execute macro="AnnouncementsPortlet#configurePaginationManageEntriesPG">
 			<var name="distributionScope" value="${distributionScope}" />
@@ -417,10 +417,10 @@
 			<var name="entryTitle" value="${entryTitle} 5" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_TITLE" value1="${entryTitle} 6" />
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_TITLE" value1="${entryTitle} 7" />
+		<execute function="AssertTextNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="${entryTitle} 6" />
+		<execute function="AssertTextNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="${entryTitle} 7" />
 
-		<execute function="AssertClick" locator1="PGAnnouncementsManageentries#PAGINATION_NEXT" value1="Next" />
+		<execute function="AssertClick" locator1="Pagination#NEXT_LINK" value1="Next" />
 
 		<execute macro="AnnouncementsEntry#viewViaManageEntriesPG">
 			<var name="announcementType" value="${announcementType}" />
@@ -434,13 +434,13 @@
 			<var name="entryTitle" value="${entryTitle} 7" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_TITLE" value1="${entryTitle} 1" />
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_TITLE" value1="${entryTitle} 2" />
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_TITLE" value1="${entryTitle} 3" />
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_TITLE" value1="${entryTitle} 4" />
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_TITLE" value1="${entryTitle} 5" />
+		<execute function="AssertTextNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="${entryTitle} 1" />
+		<execute function="AssertTextNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="${entryTitle} 2" />
+		<execute function="AssertTextNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="${entryTitle} 3" />
+		<execute function="AssertTextNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="${entryTitle} 4" />
+		<execute function="AssertTextNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="${entryTitle} 5" />
 
-		<execute function="AssertClick" locator1="PGAnnouncementsManageentries#PAGINATION_PREVIOUS" value1="Previous" />
+		<execute function="AssertClick" locator1="Pagination#PREVIOUS_LINK" value1="Previous" />
 
 		<execute macro="AnnouncementsEntry#viewViaManageEntriesPG">
 			<var name="announcementType" value="${announcementType}" />
@@ -472,7 +472,7 @@
 			<var name="entryTitle" value="${entryTitle} 5" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_TITLE" value1="${entryTitle} 6" />
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_TITLE" value1="${entryTitle} 7" />
+		<execute function="AssertTextNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="${entryTitle} 6" />
+		<execute function="AssertTextNotPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="${entryTitle} 7" />
 	</command>
 </definition>

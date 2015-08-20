@@ -7,27 +7,27 @@
 	</command>
 
 	<command name="gotoDockbar">
-		<execute function="Click" locator1="PGNotificationsdockbar#DOCKBAR" />
+		<execute function="Click" locator1="Notificationsdockbar#DOCKBAR" />
 	</command>
 
 	<command name="markAllAsRead">
-		<execute function="AssertClick" locator1="PGNotificationsdockbar#NOTIFICATIONS_MARK_ALL_AS_READ" value1="Mark as Read" />
+		<execute function="AssertClick" locator1="Notificationsdockbar#NOTIFICATIONS_MARK_ALL_AS_READ" value1="Mark as Read" />
 	</command>
 
 	<command name="navigateToContent">
 		<var name="key_contentBody" value="${contentBody}" />
 
-		<execute function="Click#partialTextClickAtAndWait" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT" value1="${contentBody}" />
+		<execute function="Click#partialTextClickAtAndWait" locator1="Notificationsdockbar#NOTIFICATIONS_CONTENT" value1="${contentBody}" />
 	</command>
 
 	<command name="navigateToViewAllNotifications">
 		<if>
 			<isset var="notificationCount" />
 			<then>
-				<execute function="AssertClick" locator1="PGNotificationsdockbar#NOTIFICATIONS_VIEW_ALL_NOTIFICATIONS" value1="Notifications (${notificationCount})" />
+				<execute function="AssertClick" locator1="Notificationsdockbar#NOTIFICATIONS_VIEW_ALL_NOTIFICATIONS" value1="Notifications (${notificationCount})" />
 			</then>
 			<else>
-				<execute function="Click" locator1="PGNotificationsdockbar#NOTIFICATIONS_VIEW_ALL_NOTIFICATIONS" />
+				<execute function="Click" locator1="Notificationsdockbar#NOTIFICATIONS_VIEW_ALL_NOTIFICATIONS" />
 			</else>
 		</if>
 	</command>
@@ -44,42 +44,42 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="Click" locator1="PGNotificationsdockbar#DOCKBAR" />
+		<execute function="Click" locator1="Notificationsdockbar#DOCKBAR" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT_GENERIC" />
+			<condition function="IsElementPresent" locator1="Notificationsdockbar#NOTIFICATIONS_CONTENT_GENERIC" />
 			<then>
-				<execute function="AssertClick" locator1="PGNotificationsdockbar#NOTIFICATIONS_MARK_ALL_AS_READ" value1="Mark as Read" />
+				<execute function="AssertClick" locator1="Notificationsdockbar#NOTIFICATIONS_MARK_ALL_AS_READ" value1="Mark as Read" />
 			</then>
 		</if>
 	</command>
 
 	<command name="viewCount">
-		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#COUNT" value1="${notificationCount}" />
+		<execute function="AssertTextEquals" locator1="Notificationsdockbar#COUNT" value1="${notificationCount}" />
 	</command>
 
 	<command name="viewCountAlert">
-		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#COUNT_ALERT" value1="${notificationCount}" />
+		<execute function="AssertTextEquals" locator1="Notificationsdockbar#COUNT_ALERT" value1="${notificationCount}" />
 	</command>
 
 	<command name="viewDefaultContent">
-		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#NOTIFICATIONS_MESSAGE" value1="You do not have any notifications." />
+		<execute function="AssertTextEquals" locator1="Notificationsdockbar#NOTIFICATIONS_MESSAGE" value1="You do not have any notifications." />
 	</command>
 
 	<command name="viewNewComment">
 		<var method="StringUtil#lowerCase('${assetType}')" name="assetType" />
 		<var name="key_contentBody" value="${contentBody}" />
 
-		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT_TITLE" value1="${user} added a new ${assetType} to ${content}." />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT_BODY" value1="${contentBody}" />
+		<execute function="AssertTextEquals" locator1="Notificationsdockbar#NOTIFICATIONS_CONTENT_TITLE" value1="${user} added a new ${assetType} to ${content}." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Notificationsdockbar#NOTIFICATIONS_CONTENT_BODY" value1="${contentBody}" />
 	</command>
 
 	<command name="viewNewContent">
 		<var method="StringUtil#lowerCase('${assetType}')" name="assetType" />
 		<var name="key_contentBody" value="${contentBody}" />
 
-		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT_TITLE" value1="${user} added a new ${assetType}." />
-		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT_BODY" value1="${contentBody}" />
+		<execute function="AssertTextEquals" locator1="Notificationsdockbar#NOTIFICATIONS_CONTENT_TITLE" value1="${user} added a new ${assetType}." />
+		<execute function="AssertTextEquals" locator1="Notificationsdockbar#NOTIFICATIONS_CONTENT_BODY" value1="${contentBody}" />
 	</command>
 
 	<command name="viewNoRequest">
@@ -88,8 +88,8 @@
 	</command>
 
 	<command name="viewNotification">
-		<execute function="AssertClick" locator1="PGNotificationsdockbar#COUNT_ALERT" value1="${notificationCount}" />
-		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT_GENERIC" value1="${notificationContent}" />
+		<execute function="AssertClick" locator1="Notificationsdockbar#COUNT_ALERT" value1="${notificationCount}" />
+		<execute function="AssertTextEquals" locator1="Notificationsdockbar#NOTIFICATIONS_CONTENT_GENERIC" value1="${notificationContent}" />
 	</command>
 
 	<command name="viewRequest">
@@ -108,15 +108,15 @@
 		<var method="StringUtil#lowerCase('${assetType}')" name="assetType" />
 		<var name="key_contentBody" value="${contentBody}" />
 
-		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT_TITLE" value1="${user} updated a ${assetType} to ${content}." />
-		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT_BODY" value1="${contentBody}" />
+		<execute function="AssertTextEquals" locator1="Notificationsdockbar#NOTIFICATIONS_CONTENT_TITLE" value1="${user} updated a ${assetType} to ${content}." />
+		<execute function="AssertTextEquals" locator1="Notificationsdockbar#NOTIFICATIONS_CONTENT_BODY" value1="${contentBody}" />
 	</command>
 
 	<command name="viewUpdatedContent">
 		<var method="StringUtil#lowerCase('${assetType}')" name="assetType" />
 		<var name="key_contentBody" value="${contentBody}" />
 
-		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT_TITLE" value1="${user} updated a ${assetType}." />
-		<execute function="AssertTextEquals" locator1="PGNotificationsdockbar#NOTIFICATIONS_CONTENT_BODY" value1="${contentBody}" />
+		<execute function="AssertTextEquals" locator1="Notificationsdockbar#NOTIFICATIONS_CONTENT_TITLE" value1="${user} updated a ${assetType}." />
+		<execute function="AssertTextEquals" locator1="Notificationsdockbar#NOTIFICATIONS_CONTENT_BODY" value1="${contentBody}" />
 	</command>
 </definition>

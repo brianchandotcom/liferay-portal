@@ -2,7 +2,7 @@
 	<command name="addPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="AssertClick" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="PGDocumentsandmediaDocument#COMMENTS_BE_THE_FIRST" />
@@ -11,7 +11,7 @@
 			</then>
 		</if>
 
-		<execute function="Type" locator1="PGDocumentsandmediaDocument#COMMENTS_COMMENT_FIELD" value1="${commentBody}" />
+		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${commentBody}" />
 		<execute function="Pause" locator1="3000" />
 
 		<if>
@@ -20,7 +20,7 @@
 				<execute function="AssertClick" locator1="PGDocumentsandmediaDocument#COMMENTS_SUBMIT_BUTTON" value1="Submit" />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="PGDocumentsandmediaDocument#COMMENTS_REPLY_BUTTON" value1="Reply" />
+				<execute function="AssertClick" locator1="Comments#REPLY" value1="Reply" />
 			</else>
 		</if>
 
@@ -31,10 +31,10 @@
 	<command name="viewPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="AssertClick" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
 		<var name="key_commentBody" value="${commentBody}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmediaDocument#COMMENTS_BODY" value1="${commentBody}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
 	</command>
 </definition>

@@ -103,7 +103,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="Click#textClickAtClickDockbar" locator1="Dockbar#MY_SITES" value1="My Sites" />
+		<execute function="Click#textClickAtClickDockbar" locator1="DockbarTEMP#MY_SITES" value1="My Sites" />
 
 		<for list="${allSiteNameLists}" param="allSiteNameListsCount" >
 			<execute macro="Dockbar#viewSitesViaMySitesDropDown">
@@ -119,7 +119,7 @@
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPSitepages#SITE_PAGES_LINK" value1="Site Pages" />
+		<execute function="AssertClick" locator1="SitePages#SITE_PAGES_LINK" value1="Site Pages" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Web Content Display" />

@@ -2,8 +2,8 @@
 	<command name="addFriendlyURLLocalizedPG">
 		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
 
-		<execute function="Click" locator1="DockbarEditpanel#DETAILS_FRIENDLY_URL_LOCALIZED" />
-		<execute function="Type" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" value1="${localizedFriendlyURL}" />
+		<execute function="Click" locator1="SitePagesEditPage#FRIENDLY_URL_LOCALIZED" />
+		<execute function="Type" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="${localizedFriendlyURL}" />
 	</command>
 
 	<command name="addLocalizedNamePG">
@@ -12,21 +12,21 @@
 		<if>
 			<equals arg1="${newPage}" arg2="true" />
 			<then>
-				<execute function="Click" locator1="DockbarAddpanelpage#LOCALIZED_FLAG_ICON" />
-				<execute function="Type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${pageName}" />
+				<execute function="Click" locator1="Icon#LOCALIZED_FLAG" />
+				<execute function="Type" locator1="TextInput#NAME" value1="${pageName}" />
 			</then>
 			<elseif>
 				<equals arg1="${newPage}" arg2="false" />
 				<then>
-					<execute function="Click" locator1="DockbarEditpanel#DETAILS_LOCALIZED_FLAG_ICON" />
-					<execute function="Type" locator1="DockbarEditpanel#DETAILS_NAME_FIELD" value1="${pageName}" />
+					<execute function="Click" locator1="SitePagesEditPage#LOCALIZED_FLAG_ICON" />
+					<execute function="Type" locator1="TextInput#NAME" value1="${pageName}" />
 				</then>
 			</elseif>
 		</if>
 	</command>
 
 	<command name="addPageTitle">
-		<execute function="Type#mouseOverFocusType" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${pageName}" />
+		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="${pageName}" />
 	</command>
 
 	<command name="addPageToSiteTemplates">
@@ -46,13 +46,13 @@
 	<command name="addPageTypePanelPG">
 		<var name="key_componentName" value="${componentName}" />
 
-		<execute function="Click" locator1="DockbarAddpanelpage#TYPE_PANEL_COMPONENT_TREE_ARROW" />
+		<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW" />
 
 		<for list="${portletNameList}" param="portletName" >
 			<var name="key_componentOrPortletName" value="${portletName}" />
 
-			<execute function="Click" locator1="DockbarAddpanelpage#TYPE_PANEL_CHECKBOX" value1="${portletName}" />
-			<execute function="AssertChecked#waitForElementPresentAssertChecked" locator1="DockbarAddpanelpage#TYPE_PANEL_CHECKBOX_INPUT" />
+			<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX" value1="${portletName}" />
+			<execute function="AssertChecked#waitForElementPresentAssertChecked" locator1="SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
 		</for>
 	</command>
 
@@ -69,22 +69,22 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPSitepages#NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
+		<execute function="AssertClick" locator1="SitePages#NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
 
-		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_ADD_PAGE" value1="Add Page" />
+		<execute function="AssertClick" locator1="SitePages#TOOLBAR_ADD_PAGE" value1="Add Page" />
 
-		<execute function="Type#mouseOverFocusType" locator1="CPSitepagesAddpage#ADD_PAGE_NAME_FIELD" value1="${pageName}" />
+		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="${pageName}" />
 
 		<var name="key_pageType" value="${pageTemplateName}" />
 
 		<if>
 			<isset var="pageTemplateName" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPSitepagesAddpage#PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
+				<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
 
-				<execute function="Click" locator1="CPSitepagesAddpage#PAGE_TYPE_RADIO" />
-				<execute function="AssertTextEquals" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
-				<execute function="Check" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" />
+				<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_RADIO" />
+				<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
+				<execute function="Check" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" />
 			</then>
 		</if>
 
@@ -100,9 +100,9 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPSitepagesAddpage#ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
 
-		<execute function="AssertTextEquals" locator1="CPSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<if>
 			<isset var="nodePort" />
@@ -156,11 +156,11 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
 
 		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
-		<execute function="Type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${pageName}" />
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarAddpanelpage#ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${pageName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#ADD_PAGE" value1="Add Page" />
 
 		<var name="key_pageName" value="${pageName}" />
 
@@ -172,7 +172,7 @@
 	<command name="assertLocalizedPG">
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGSignin#PORTLET_CONTENT_LOCALIZED" value1="${localizedContent}" />
 
-		<execute function="AssertTextEquals" locator1="Dockbar#ADMIN" value1="${localizedAdmin}" />
+		<execute function="AssertTextEquals" locator1="DockbarTEMP#ADMIN" value1="${localizedAdmin}" />
 	</command>
 
 	<command name="assertNodePortPG">
@@ -182,20 +182,20 @@
 	</command>
 
 	<command name="changeLogoViaPageCP">
-		<execute function="AssertClick" locator1="CPSitepages#LOGO_NAVIGATION" value1="Logo" />
-		<execute function="AssertClick" locator1="CPSitepages#LOGO_CHANGE_BUTTON" value1="Change" />
-		<execute function="SelectFrame" locator1="CPSitepages#LOGO_UPLOAD_IMAGE_IFRAME" />
-		<execute function="UploadCommonFile" locator1="CPSitepages#LOGO_UPLOAD_BROWSE_BUTTON" value1="${logoFile}" />
+		<execute function="AssertClick" locator1="SitePages#LOGO_NAVIGATION" value1="Logo" />
+		<execute function="AssertClick" locator1="Button#CHANGE" value1="Change" />
+		<execute function="SelectFrame" locator1="SitePages#LOGO_UPLOAD_IMAGE_IFRAME" />
+		<execute function="UploadCommonFile" locator1="Button#BROWSE" value1="${logoFile}" />
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="AssertClick" locator1="CPSitepages#LOGO_UPLOAD_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="Pause" locator1="5000" />
 
 		<execute function="SelectFrameTop" />
-		<execute function="AssertClick" locator1="CPSitepages#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="changeSiteScope">
@@ -215,14 +215,14 @@
 	<command name="deleteFriendlyURLPG">
 		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
 
-		<execute function="Click#pauseClickAt" locator1="DockbarEditpanel#DETAILS_FRIENDLY_URL_LOCALIZED" />
-		<execute function="Type" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" value1=" " />
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarEditpanel#SAVE_BUTTON" value1="Save" />
+		<execute function="Click#pauseClickAt" locator1="SitePagesEditPage#FRIENDLY_URL_LOCALIZED" />
+		<execute function="Type" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1=" " />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="deleteLivePG">
-		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
-		<execute function="ClickNoError" locator1="Dockbar#EDIT_LIVE_DELETE" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" />
+		<execute function="ClickNoError" locator1="Icon#EDIT_LIVE_DELETE" />
 
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete the selected page?" />
 	</command>
@@ -237,23 +237,23 @@
 	</command>
 
 	<command name="editPageLayoutColumn">
-		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" />
 
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="DockbarEditpanel#DETAILS_NAME_FIELD" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="TextInput#NAME" />
 			<then>
-				<execute function="AssertClick" locator1="DockbarEditpanel#DETAILS_PANEL_TOGGLE" value1="Details" />
+				<execute function="AssertClick" locator1="DockbarEditPanel#DETAILS_PANEL_TOGGLE" value1="Details" />
 			</then>
 		</if>
 
 		<var name="key_columnName" value="${columnName}" />
 
-		<execute function="Click" locator1="DockbarEditpanel#DETAILS_LAYOUT_RADIO" />
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarEditpanel#SAVE_BUTTON" value1="Save" />
+		<execute function="Click" locator1="SitePagesEditPage#LAYOUT_RADIO" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="gotoAdmin">
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN_DROP_DOWN_BUTTON" value1="Admin" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN_DROP_DOWN_BUTTON" value1="Admin" />
 
 		<execute function="AssertClick" locator1="Dockbar#${portletCategoryKey}" value1="${portletCategoryName}" />
 
@@ -377,7 +377,7 @@
 
 		<var name="key_localizedPortletCategoryName" value="${localizedPortletCategoryName}" />
 
-		<execute function="Click" locator1="Dockbar#ADMIN_LOCALIZED" value1="${localizedAdmin}" />
+		<execute function="Click" locator1="DockbarTEMP#ADMIN_LOCALIZED" value1="${localizedAdmin}" />
 		<execute function="Click" locator1="Dockbar#${portletCategoryKey}" value1="${localizedPortletCategoryName}" />
 
 		<if>
@@ -577,8 +577,8 @@
 
 		<var name="key_localizedControlPanel" value="${localizedControlPanel}" />
 
-		<execute function="Click" locator1="Dockbar#ADMIN_LOCALIZED" value1="${localizedAdmin}" />
-		<execute function="AssertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL_LOCALIZED" value1="${localizedControlPanel}" />
+		<execute function="Click" locator1="DockbarTEMP#ADMIN_LOCALIZED" value1="${localizedAdmin}" />
+		<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_CONTROL_PANEL_LOCALIZED" value1="${localizedControlPanel}" />
 
 		<var name="key_portletName" value="${localizedPortletName}" />
 
@@ -586,7 +586,7 @@
 	</command>
 
 	<command name="gotoEdit">
-		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" />
 	</command>
 
 	<command name="gotoMyAccount">
@@ -635,8 +635,8 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="Click" locator1="Dockbar#USER_AVATAR_IMAGE" />
-		<execute function="AssertClick" locator1="Dockbar#USER_MY_DASHBOARD" value1="My Dashboard" />
+		<execute function="Click" locator1="DockbarTEMP#USER_AVATAR_IMAGE" />
+		<execute function="AssertClick" locator1="DockbarTEMP#USER_MY_DASHBOARD" value1="My Dashboard" />
 	</command>
 
 	<command name="gotoMyProfile">
@@ -653,8 +653,8 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="Click" locator1="Dockbar#USER_AVATAR_IMAGE" />
-		<execute function="AssertClick" locator1="Dockbar#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="DockbarTEMP#USER_AVATAR_IMAGE" />
+		<execute function="AssertClick" locator1="DockbarTEMP#USER_MY_PROFILE" value1="My Profile" />
 	</command>
 
 	<command name="gotoPagesCP">
@@ -752,11 +752,11 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="${adminLocalized}" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="${adminLocalized}" />
 
 		<var name="key_portletCategoryName" value="${portletCategoryName}" />
 
-		<execute function="AssertClick" locator1="Dockbar#ADMIN_SITE_ADMINISTRATION_CATEGORY" value1="${portletCategoryName}" />
+		<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_SITE_ADMINISTRATION_CATEGORY" value1="${portletCategoryName}" />
 
 		<var name="key_portletName" value="${portletName}" />
 
@@ -875,25 +875,25 @@
 	<command name="pageTypeTemplate">
 		<var name="key_pageType" value="${pageTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="CPSitepagesAddpage#PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
+		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_LABEL" value1="${pageTemplateName}" />
 
-		<execute function="Click" locator1="CPSitepagesAddpage#PAGE_TYPE_RADIO" />
+		<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_RADIO" />
 
-		<execute function="AssertTextEquals" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
+		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL"  value1="Automatically apply changes done to the page template." />
 
-		<execute function="Check" locator1="CPSitepagesAddpage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" />
+		<execute function="Check" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX" />
 	</command>
 
 	<command name="saveAddPage">
-		<execute function="AssertClick" locator1="CPSitepagesAddpage#ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
 
-		<execute function="AssertTextEquals" locator1="CPSitepages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="selectPageTypeRadioPG">
 		<var name="key_pageType" value="${pageType}" />
 
-		<execute function="Click" locator1="DockbarAddpanelpage#TYPE_RADIO" value1="${pageType}" />
+		<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_RADIO" value1="${pageType}" />
 
 		<if>
 			<equals arg1="${pageType}" arg2="Panel" />
@@ -920,14 +920,14 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPSitepages#NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
+		<execute function="AssertClick" locator1="SitePages#NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_2" />
+			<condition function="IsElementPresent" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" />
 			<then>
-				<execute function="Click" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_2" />
+				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" />
 
-				<execute function="ClickNoError" locator1="CPSitepages#TOOLBAR_DELETE" />
+				<execute function="ClickNoError" locator1="SitePages#TOOLBAR_DELETE" />
 
 				<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete the selected page?" />
 			</then>
@@ -1015,12 +1015,12 @@
 	</command>
 
 	<command name="viewFriendlyURLLanguageOptionsPG">
-		<execute function="Click#clickAt" locator1="Dockbar#EDIT" />
+		<execute function="Click#clickAt" locator1="Icon#EDIT" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="DockbarEditpanel#DETAILS_FRIENDLY_URL_TITLE" />
+			<condition function="IsElementPresent" locator1="SitePagesEditPage#FRIENDLY_URL_TITLE" />
 			<then>
-				<execute function="Click" locator1="DockbarEditpanel#DETAILS_PANEL_TOGGLE" />
+				<execute function="Click" locator1="DockbarEditPanel#DETAILS_PANEL_TOGGLE" />
 			</then>
 		</if>
 
@@ -1045,10 +1045,10 @@
 	</command>
 
 	<command name="viewPageFriendURLPG">
-		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" />
 
-		<execute function="AssertTextNotPresent" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" value1="${pageName}" />
-		<execute function="AssertTextEquals" locator1="DockbarEditpanel#DETAILS_FRIENDLYURL" value1="/2" />
+		<execute function="AssertTextNotPresent" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="${pageName}" />
+		<execute function="AssertTextEquals" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="/2" />
 	</command>
 
 	<command name="viewPageLayoutColumn">
@@ -1063,7 +1063,7 @@
 			</then>
 		</if>
 
-		<execute function="Click#clickAt" locator1="Dockbar#EDIT" />
+		<execute function="Click#clickAt" locator1="Icon#EDIT" />
 
 		<var name="key_defaultSiteLanguageKey" value="${defaultSiteLanguageKey}" />
 
@@ -1087,17 +1087,17 @@
 	<command name="viewPanelPortletListPG">
 		<var name="key_componentName" value="${componentName}" />
 
-		<execute function="AssertTextEquals" locator1="PGPanel#PANEL_TITLE" value1="${componentName}" />
+		<execute function="AssertTextEquals" locator1="Panel#PANEL_TITLE" value1="${componentName}" />
 
 		<var name="key_pageName" value="${pageName}" />
 
-		<execute function="AssertTextEquals" locator1="PGPanel#PANEL_PAGE_TITLE" value1="${pageName}" />
-		<execute function="AssertTextEquals" locator1="PGPanel#INFO_MESSAGE" value1="Please select a tool from the left menu." />
+		<execute function="AssertTextEquals" locator1="Panel#PANEL_PAGE_TITLE" value1="${pageName}" />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please select a tool from the left menu." />
 
 		<for list="${portletNameList}" param="portletName">
 			<var name="key_portletName" value="${portletName}" />
 
-			<execute function="AssertTextEquals" locator1="PGPanel#MENU_ITEM" value1="${portletName}" />
+			<execute function="AssertTextEquals" locator1="Panel#MENU_ITEM" value1="${portletName}" />
 		</for>
 	</command>
 
@@ -1150,8 +1150,8 @@
 
 		<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_SELECTOR" />
 
-		<execute function="AssertTextEquals" locator1="Dockbar#ADMIN" value1="${adminTranslation}" />
-		<execute function="AssertTextEquals" locator1="Dockbar#MY_SITES" value1="${mySitesTranslation}" />
+		<execute function="AssertTextEquals" locator1="DockbarTEMP#ADMIN" value1="${adminTranslation}" />
+		<execute function="AssertTextEquals" locator1="DockbarTEMP#MY_SITES" value1="${mySitesTranslation}" />
 	</command>
 
 	<command name="viewURLLocale">
@@ -1178,18 +1178,17 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="Click" locator1="Dockbar#USER_AVATAR_IMAGE" />
-		<execute function="AssertTextNotPresent" locator1="Dockbar#USER_MY_PROFILE" value1="My Profile" />
-		<execute function="AssertTextNotPresent" locator1="Dockbar#USER_MY_DASHBOARD" value1="My Dashboard" />
+		<execute function="Click" locator1="DockbarTEMP#USER_AVATAR_IMAGE" />
+		<execute function="AssertTextNotPresent" locator1="DockbarTEMP#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="AssertTextNotPresent" locator1="DockbarTEMP#USER_MY_DASHBOARD" value1="My Dashboard" />
 	</command>
-
 	<command name="viewWithWorkflowPG">
 		<execute function="Pause" locator1="1073" />
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="PGStaging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
-		<execute function="AssertTextEquals" locator1="PGStaging#STAGING_MENU_STATUS" value1="${workflowStatus}" />
-		<execute function="AssertClick" locator1="PGStaging#LIVE_BUTTON" value1="Live" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Staging#STAGING_DROP_DOWN_BUTTON" value1="Staging" />
+		<execute function="AssertTextEquals" locator1="MESSAGE#STATUS" value1="${workflowStatus}" />
+		<execute function="AssertClick" locator1="Staging#LIVE_BUTTON" value1="Live" />
 
 		<var name="key_pageName" value="${pageName}" />
 

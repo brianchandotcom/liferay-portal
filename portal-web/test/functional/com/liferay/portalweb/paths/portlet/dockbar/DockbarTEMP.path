@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_INFO_MESSAGE_ICON</td>
+	<td>//a[contains(@id,'infoButton')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

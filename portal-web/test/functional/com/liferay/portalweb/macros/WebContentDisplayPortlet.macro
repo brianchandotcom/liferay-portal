@@ -1,23 +1,23 @@
 <definition>
 	<command name="changeTemplate">
-		<execute function="Click" locator1="PGWebcontentdisplay#EDIT_WEB_CONTENT" />
+		<execute function="Click" locator1="WCD#EDIT_WEB_CONTENT" />
 
-		<execute function="SelectFrame" locator1="PGWebcontentdisplayEditwebcontent#WEB_CONTENT_EDIT_IFRAME" />
-		<execute function="AssertTextEquals" locator1="PGWebcontentdisplayEditwebcontent#STRUCTURE_NAME" value1="${structureName}" />
-		<execute function="AssertClick" locator1="PGWebcontentdisplayEditwebcontent#SELECT_TEMPLATE" value1="Select" />
+		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_STRUCTURE" value1="${structureName}" />
+		<execute function="AssertClick" locator1="WCEditWebContent#SELECT_TEMPLATE" value1="Select" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="PGWebcontentdisplayEdittemplate#TEMPLATES_LIST_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 
 		<var name="key_templateName" value="${templateName}" />
 
-		<execute function="AssertClickNoError" locator1="PGWebcontentdisplayEdittemplate#CHOOSE_BUTTON" value1="Choose" />
+		<execute function="AssertClickNoError" locator1="DDMSelectTemplate#TEMPLATE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 		<execute function="Confirm" value1="Selecting a new template deletes all unsaved content. Do you want to proceed?" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="PGWebcontentdisplayEditwebcontent#WEB_CONTENT_EDIT_IFRAME" />
-		<execute function="AssertTextEquals" locator1="PGWebcontentdisplayEditwebcontent#TEMPLATE_NAME" value1="${templateName}" />
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="PGWebcontentdisplayEditwebcontent#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_TEMPLATE" value1="${templateName}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#PUBLISH" value1="Publish" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -25,9 +25,9 @@
 	<command name="configurePermissionsPG">
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#NAVIGATION_PERMISSIONS" value1="Permissions" />
+		<execute function="AssertClick" locator1="NavPill#PERMISSIONS" value1="Permissions" />
 	</command>
 
 	<command name="configureScopePG">
@@ -36,20 +36,20 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#NAVIGATION_SCOPE" value1="Scope" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute function="AssertClick" locator1="NavPill#SCOPE" value1="Scope" />
 
 		<var name="key_scopeSelection" value="${scopeSelection}" />
 
-		<execute function="Click#pauseClickAt" locator1="PGWebcontentdisplayConfigurationScope#SCOPE_MENULIST" />
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGWebcontentdisplayConfigurationScope#SCOPE_MENULIST_SELECTION" value1="${scopeSelection}" />
+		<execute function="Click#pauseClickAt" locator1="WCDConfigurationScope#SCOPE_MENULIST" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="WCDConfigurationScope#SCOPE_MENULIST_SELECTION" value1="${scopeSelection}" />
 
-		<execute function="AssertTextEquals" locator1="PGWebcontentdisplayConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="AssertTextEquals" locator1="PGWebcontentdisplayConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertTextEquals" locator1="WCDConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
 	</command>
 
 	<command name="configureSetupPG">
-		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<if>
 			<isset var="userToolNameList" />
@@ -110,30 +110,30 @@
 		<if>
 			<equals arg1="${editTemplateButton}" arg2="true" />
 			<then>
-				<execute function="Click" locator1="PGWebcontentdisplay#EDIT_TEMPLATE" />
+				<execute function="Click" locator1="WCD#EDIT_TEMPLATE" />
 			</then>
 			<else>
-				<execute function="Click" locator1="PGWebcontentdisplay#EDIT_WEB_CONTENT" />
+				<execute function="Click" locator1="WCD#EDIT_WEB_CONTENT" />
 
-				<execute function="SelectFrame" locator1="PGWebcontentdisplayEditwebcontent#WEB_CONTENT_EDIT_IFRAME" />
-				<execute function="AssertTextEquals" locator1="PGWebcontentdisplayEditwebcontent#STRUCTURE_NAME" value1="${structureName}" />
-				<execute function="ClickNoError" locator1="PGWebcontentdisplayEditwebcontent#EDIT_TEMPLATE" />
+				<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+				<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_STRUCTURE" value1="${structureName}" />
+				<execute function="ClickNoError" locator1="WCEditWebContent#EDIT_TEMPLATE" />
 				<execute function="Confirm" value1="Editing the current template deletes all unsaved content." />
 			</else>
 		</if>
 
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="PGWebcontentdisplayEdittemplate#TEMPLATES_IFRAME" />
-		<execute function="Type" locator1="PGWebcontentdisplayEdittemplate#NAME_FIELD" value1="Template Edit" />
+		<execute function="SelectFrame" locator1="IFrame#DDL" />
+		<execute function="Type" locator1="TextInput#NAME" value1="Template Edit" />
 
 		<if>
 			<isset var="templateScript" />
 			<then>
-				<execute function="Type#typeAceEditor" locator1="PGWebcontentdisplayEdittemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
+				<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="PGWebcontentdisplayEdittemplate#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<if>
 			<equals arg1="${editTemplateButton}" arg2="true" />
@@ -142,12 +142,12 @@
 			</then>
 			<else>
 				<execute function="Pause" locator1="2000" />
-				<execute function="SikuliClick" locator1="PGWebcontentdisplayEdittemplate#CLOSE_BUTTON_PNG" />
+				<execute function="SikuliClick" locator1="Button#CLOSE_IFRAME" />
 
 				<execute function="SelectFrame" value1="relative=top" />
-				<execute function="SelectFrame" locator1="PGWebcontentdisplayEditwebcontent#WEB_CONTENT_EDIT_IFRAME" />
-				<execute function="AssertTextEquals" locator1="PGWebcontentdisplayEditwebcontent#TEMPLATE_NAME" value1="${templateName}" />
-				<execute function="AssertClick#pauseAssertTextClickAt" locator1="PGWebcontentdisplayEditwebcontent#PUBLISH_BUTTON" value1="Publish" />
+				<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+				<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_TEMPLATE" value1="${templateName}" />
+				<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#PUBLISH" value1="Publish" />
 
 				<execute function="SelectFrame" value1="relative=top" />
 			</else>
@@ -156,20 +156,20 @@
 		<if>
 			<isset var="templateScript" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGWebcontentdisplay#WEB_CONTENT_CONTENT" value1="${templateScript}" />
+				<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="${templateScript}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGWebcontentdisplay#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+				<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 			</else>
 		</if>
 	</command>
 
 	<command name="saveConfiguration">
-		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="PGWebcontentdisplayConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -180,40 +180,40 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<if>
 			<isset var="webContentSearchValue" />
 			<then>
 				<execute function="AssertClick" locator1="WCDConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select" />
 				<execute function="SelectFrame" value1="relative=top" />
-				<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_IFRAME" />
-				<execute function="Type" locator1="PGWebcontentdisplayConfiguration#SEARCH_FIELD" value1="${webContentSearchValue}" />
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${webContentSearchValue}" />
 			</then>
 			<else>
 				<execute function="AssertClick" locator1="WCDConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select" />
 				<execute function="SelectFrame" value1="relative=top" />
-				<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_IFRAME" />
-				<execute function="Type" locator1="PGWebcontentdisplayConfiguration#SEARCH_FIELD" value1="${webContentTitle}" />
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${webContentTitle}" />
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="AssertTextEquals" locator1="PGWebcontentdisplayConfiguration#WEB_CONTENT_TABLE_TITLE" value1="${webContentTitle}" />
+		<execute function="AssertTextEquals" locator1="WCDConfiguration#WEB_CONTENT_TABLE_TITLE" value1="${webContentTitle}" />
 
 		<if>
 			<equals arg1="${addSearchedContent}" arg2="true" />
 			<then>
-				<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#WEB_CONTENT_CHOOSE_BUTTON" value1="Choose" />
+				<execute function="AssertClick" locator1="Button#WEB_CONTENT_CHOOSE" value1="Choose" />
 				<execute function="SelectFrame" value1="relative=top" />
-				<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-				<execute function="AssertTextEquals" locator1="PGWebcontentdisplayConfiguration#INFO_MESSAGE_ARTICLE" value1="${webContentTitle} (Modified)" />
-				<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#SAVE_BUTTON" value1="Save" />
-				<execute function="AssertTextEquals" locator1="PGWebcontentdisplayConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+				<execute function="AssertTextEquals" locator1="Message#INFO_ARTICLE" value1="${webContentTitle} (Modified)" />
+				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 			</then>
 		</if>
 
@@ -226,17 +226,17 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 		<execute function="AssertClick" locator1="WCDConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select" />
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Type" locator1="PGWebcontentdisplayConfiguration#SEARCH_FIELD" value1="${webContentTitle}" />
-		<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${webContentTitle}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="AssertElementNotPresent" locator1="PGWebcontentdisplayConfiguration#WEB_CONTENT_TABLE_TITLE" value1="${webContentTitle}" />
+		<execute function="AssertElementNotPresent" locator1="WCDConfiguration#WEB_CONTENT_TABLE_TITLE" value1="${webContentTitle}" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -247,21 +247,21 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="AssertClick" locator1="WCDConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#SELECT_WEB_CONTENT_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#WEB_CONTENT_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="AssertClick" locator1="Button#WEB_CONTENT_CHOOSE" value1="Choose" />
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="AssertTextEquals" locator1="PGWebcontentdisplayConfiguration#INFO_MESSAGE_ARTICLE" value1="${webContentTitle} (Modified)" />
-		<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGWebcontentdisplayConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute function="AssertTextEquals" locator1="Message#INFO_ARTICLE" value1="${webContentTitle} (Modified)" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -272,19 +272,19 @@
 	</command>
 
 	<command name="viewAllSettingsEnabledPG">
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGWebcontentdisplay#PRINT_WEB_CONTENT" value1="Print" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGWebcontentdisplay#SUBCRIBE_TO_COMMENTS" value1="Subscribe to Comments" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Icon#PRINT" value1="Print" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Comments#SUBCRIBE_TO_COMMENTS" value1="Subscribe to Comments" />
 
 		<var name="key_assetTitle" value="${relatedAssetTitle}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGWebcontentdisplay#RELATED_ASSETS" value1="${relatedAssetTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="WCD#RELATED_ASSETS" value1="${relatedAssetTitle}" />
 
 		<execute function="Type#typeAlloyEditor" locator1="PGWebcontentdisplay#COMMENT_EDITOR" value1="Hello!" />
 
-		<execute function="AssertClick" locator1="PGWebcontentdisplay#COMMENT_REPLY_BUTTON" value1="Reply" />
+		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 
-		<execute function="AssertElementPresent" locator1="PGWebcontentdisplay#COMMENT_THUMBS_UP" />
-		<execute function="AssertElementPresent" locator1="PGWebcontentdisplay#COMMENT_THUMBS_DOWN" />
+		<execute function="AssertElementPresent" locator1="Comments#THUMBS_UP" />
+		<execute function="AssertElementPresent" locator1="Comments#THUMBS_DOWN" />
 	</command>
 
 	<command name="viewConfigureScopePG">
@@ -305,31 +305,31 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="PGWebcontentdisplayConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="AssertClick" locator1="PGWebcontentdisplayConfiguration#NAVIGATION_SCOPE" value1="Scope" />
-		<execute function="AssertTextEquals" locator1="PGWebcontentdisplayConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute function="AssertClick" locator1="NavPill#SCOPE" value1="Scope" />
+		<execute function="AssertTextEquals" locator1="WCDConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
 	</command>
 
 	<command name="viewContentPageBreak">
-		<execute function="AssertClick" locator1="PGWebcontentdisplay#PAGINATION_PAGE_2" value1="2" />
-		<execute function="AssertTextEquals" locator1="PGWebcontentdisplay#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
-		<execute function="AssertClick" locator1="PGWebcontentdisplay#PAGINATION_PREVIOUS" value1="Previous" />
+		<execute function="AssertClick" locator1="Pagination#PAGE_2" value1="2" />
+		<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+		<execute function="AssertClick" locator1="Pagination#PREVIOUS_LINK" value1="Previous" />
 	</command>
 
 	<command name="viewDeletedArticlePGViaWCD">
-		<execute function="AssertTextEquals" locator1="PGWebcontentdisplay#ERROR_MESSAGE" value1="The selected web content no longer exists." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="The selected web content no longer exists." />
 	</command>
 
 	<command name="viewEnabledFileTypesPGViaWCD">
 		<for list="${fileTypes}" param="fileType">
 			<var name="key_fileType" value="${fileType}" />
 
-			<execute function="AssertTextEquals#assertPartialText" locator1="PGWebcontentdisplay#DOCUMENT_CONVERSION_TYPE" value1="${fileType}" />
-			<execute function="AssertElementPresent" locator1="PGWebcontentdisplay#DOCUMENT_CONVERSION_TYPE_ICON" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="WCD#DOCUMENT_CONVERSION_TYPE" value1="${fileType}" />
+			<execute function="AssertElementPresent" locator1="WCD#DOCUMENT_CONVERSION_TYPE_ICON" />
 		</for>
 	</command>
 
 	<command name="viewNoPermissionPG">
-		<execute function="AssertTextEquals" locator1="PGWebcontentdisplay#ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the roles required to access this portlet." />
 	</command>
 </definition>

@@ -1,57 +1,57 @@
 <definition>
 	<command name="configureScopePG">
 		<if>
-			<condition function="IsElementPresent#isVisible" locator1="PGWikidisplay#PORTLET_CONFIGURATION_MESSAGE" />
+			<condition function="IsElementPresent#isVisible" locator1="Message#INFO_1" />
 			<then>
-				<execute function="AssertClick" locator1="PGWikidisplay#PORTLET_CONFIGURATION_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
+				<execute function="AssertClick" locator1="Message#INFO_1" value1="Please configure this portlet to make it visible to all users." />
 			</then>
 			<elseif>
-				<condition function="IsElementNotPresent" locator1="PGWikidisplay#PORTLET_CONFIGURATION_MESSAGE" />
+				<condition function="IsElementNotPresent" locator1="Message#INFO_1" />
 				<then>
 					<execute function="Click" locator1="PGWikidisplay#OPTIONS_ICON"  />
-					<execute function="AssertClick" locator1="PGWikidisplay#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+					<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute function="SelectFrame" locator1="PGWikidisplayConfiguration#WIKI_DISPLAY_CONFIGURATION_IFRAME" />
-		<execute function="AssertClick" locator1="PGWikidisplayConfiguration#NAVIGATION_TAB_SCOPE" value1="Scope" />
-		<execute function="Click" locator1="PGWikidisplayConfigurationScope#SCOPE_SELECT" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute function="AssertClick" locator1="NavPill#SCOPE" value1="Scope" />
+		<execute function="Click" locator1="WikiConfiguration#SCOPE_SELECT" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertClick" locator1="PGWikidisplayConfigurationScope#SCOPE_MENULIST_SITE" value1="${siteName}" />
+		<execute function="AssertClick" locator1="WikiConfiguration#SCOPE_MENULIST_SITE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="PGWikidisplayConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="AssertSelectedLabel" locator1="PGWikidisplayConfigurationScope#SCOPE_SELECT" value1="${siteName}" />
+		<execute function="AssertSelectedLabel" locator1="WikiConfiguration#SCOPE_SELECT" value1="${siteName}" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureSetupPG">
 		<if>
-			<condition function="IsElementPresent#isVisible" locator1="PGWikidisplay#PORTLET_CONFIGURATION_MESSAGE" />
+			<condition function="IsElementPresent#isVisible" locator1="Message#INFO_1" />
 			<then>
-				<execute function="AssertClick" locator1="PGWikidisplay#PORTLET_CONFIGURATION_MESSAGE" value1="Please configure this portlet to make it visible to all users." />
+				<execute function="AssertClick" locator1="Message#INFO_1" value1="Please configure this portlet to make it visible to all users." />
 			</then>
 			<elseif>
-				<condition function="IsElementNotPresent" locator1="PGWikidisplay#PORTLET_CONFIGURATION_MESSAGE" />
+				<condition function="IsElementNotPresent" locator1="Message#INFO_1" />
 				<then>
 					<execute function="Click" locator1="PGWikidisplay#OPTIONS_ICON"  />
-					<execute function="AssertClick" locator1="PGWikidisplay#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+					<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute function="SelectFrame" locator1="PGWikidisplayConfiguration#WIKI_DISPLAY_CONFIGURATION_IFRAME" />
-		<execute function="Select" locator1="PGWikidisplayConfiguration#WIKI_NODE_SELECT" value1="${wikiNodeName}" />
-		<execute function="AssertClick" locator1="PGWikidisplayConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGWikidisplayConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="AssertSelectedLabel" locator1="PGWikidisplayConfiguration#WIKI_NODE_SELECT" value1="${wikiNodeName}" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute function="Select" locator1="WikiConfiguration#COMMUNICATION_SELECT_NODE_ID" value1="${wikiNodeName}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertSelectedLabel" locator1="WikiConfiguration#COMMUNICATION_SELECT_NODE_ID" value1="${wikiNodeName}" />
 
-		<execute function="Select" locator1="PGWikidisplayConfiguration#WIKI_PAGE_SELECT" value1="${wikiPageName}" />
-		<execute function="AssertClick" locator1="PGWikidisplayConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertSelectedLabel" locator1="PGWikidisplayConfiguration#WIKI_PAGE_SELECT" value1="${wikiPageName}" />
+		<execute function="Select" locator1="WikiConfiguration#COMMUNICATION_SELECT_TITLE" value1="${wikiPageName}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertSelectedLabel" locator1="WikiConfiguration#COMMUNICATION_SELECT_TITLE" value1="${wikiPageName}" />
 
-		<execute function="AssertTextEquals" locator1="PGWikidisplayConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 </definition>

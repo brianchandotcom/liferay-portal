@@ -1,8 +1,8 @@
 <definition>
 	<command name="addExportTemplateCP">
-		<execute function="Click" locator1="CPSitepagesExport#EXPORT_TEMPLATES_NEW_BUTTON" />
-		<execute function="Type" locator1="CPSitepagesExport#EXPORT_TEMPLATES_NAME_FIELD" value1="${exportTemplateName}" />
-		<execute function="Type" locator1="CPSitepagesExport#EXPORT_TEMPLATES_DESCRIPTION_FIELD" value1="${exportTemplateDescription}" />
+		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATES_NEW_BUTTON" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${exportTemplateName}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${exportTemplateDescription}" />
 	</command>
 
 	<command name="configureExportSiteCP">
@@ -22,62 +22,62 @@
 		<if>
 			<equals arg1="${exportPermissions}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="CPSitepagesExport#PERMISSIONS_CHECKBOX" />
+				<execute function="Check" locator1="Checkbox#PERMISSIONS" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${deleteMissingPages}" arg2="true" />
 			<then>
-				<execute function="AssertClick" locator1="BasePortletExport#PAGES_CHANGE_LINK" value1="Change" />
-				<execute function="Check" locator1="BasePortletExport#PAGES_DELETE_MISSING_PAGES_CHECKBOX" />
-				<execute function="AssertClick" locator1="BasePortletExport#PAGES_OK_BUTTON" value1="OK" />
+				<execute function="AssertClick" locator1="ExportImport#PAGES_CHANGE_LINK" value1="Change" />
+				<execute function="Check" locator1="PageConfiguration#PAGES_DELETE_MISSING_PAGES_CHECKBOX" />
+				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${uncheckLogo}" arg2="true" />
 			<then>
-				<execute function="AssertClick" locator1="BasePortletExport#PAGES_CHANGE_LINK" value1="Change" />
-				<execute function="Uncheck" locator1="BasePortletExport#PAGES_LOGO_CHECKBOX" />
-				<execute function="AssertClick" locator1="BasePortletExport#PAGES_OK_BUTTON" value1="OK" />
+				<execute function="AssertClick" locator1="ExportImport#PAGES_CHANGE_LINK" value1="Change" />
+				<execute function="Uncheck" locator1="PageConfiguration#PAGES_LOGO_CHECKBOX" />
+				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="checkPageName" />
 			<then>
-				<execute function="AssertClick" locator1="BasePortletExport#PAGES_CHANGE_LINK" value1="Change" />
+				<execute function="AssertClick" locator1="ExportImport#PAGES_CHANGE_LINK" value1="Change" />
 
 				<for list="${checkPageName}" param="pageName">
 					<var name="key_pageName" value="${pageName}" />
 
-					<execute function="Click" locator1="BasePortletExport#PAGES_SPECIFIC_PAGE_NAME" />
+					<execute function="Click" locator1="PageConfiguration#PAGES_SPECIFIC_PAGE_NAME" />
 				</for>
 
-				<execute function="AssertClick" locator1="BasePortletExport#PAGES_OK_BUTTON" value1="OK" />
+				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${contentDeletion}" arg2="true" />
 			<then>
-				<execute function="Click" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_RADIO" />
+				<execute function="Click" locator1="Radio#CONTENT_CHOOSE_CONTENT" />
 				<execute function="Click" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_EXTRA_CHANGE_LINK" />
 				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_EXTRA_CHANGE_LINK_DELETIONS_CHECKBOX" />
-				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_OK_BUTTON" value1="OK" />
+				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="checkApplicationNameList" />
 			<then>
-				<execute function="Click" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+				<execute function="Click" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
 
 				<for list="${checkApplicationNameList}" param="contentName">
 					<var name="key_applicationName" value="${applicationName}" />
 
-					<execute function="Click" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+					<execute function="Click" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
 				</for>
 			</then>
 		</if>
@@ -85,12 +85,12 @@
 		<if>
 			<isset var="uncheckApplicationNameList" />
 			<then>
-				<execute function="Click" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+				<execute function="Click" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
 
 				<for list="${uncheckApplicationNameList}" param="applicationName">
 					<var name="key_applicationName" value="${contentName}" />
 
-					<execute function="Uncheck" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
+					<execute function="Uncheck" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
 				</for>
 			</then>
 		</if>
@@ -98,35 +98,35 @@
 		<if>
 			<isset var="uncheckSubApplicationList" />
 			<then>
-				<execute function="Click" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+				<execute function="Click" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
 
 				<var name="key_applicationName" value="${mainApplication}" />
 
-				<execute function="Check" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
+				<execute function="Check" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
 
 				<var name="key_applicationName" value="${mainApplication}" />
 
-				<execute function="AssertClick" locator1="BasePortletExport#APPLICATION_CONFIGURATION_APPLICATION_CHANGE_LINK" value1="Change" />
+				<execute function="AssertClick" locator1="PageConfiguration#APPLICATION_CONFIGURATION_APPLICATION_CHANGE_LINK" value1="Change" />
 
 				<for list="${uncheckSubApplicationList}" param="uncheckSubApplication">
 					<var name="key_subApplication" value="${uncheckSubApplication}" />
 
-					<execute function="Uncheck" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATION_SUBAPPLICATION_CHECKBOX" />
+					<execute function="Uncheck" locator1="PageConfiguration#APPLICATION_CONFIGURATION_CHOOSE_APPLICATION_SUBAPPLICATION_CHECKBOX" />
 				</for>
 
-				<execute function="Click" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATION_SUBAPPLICATION_OK_BUTTON" />
+				<execute function="Click" locator1="PageConfiguration#APPLICATION_CONFIGURATION_CHOOSE_APPLICATION_SUBAPPLICATION_OK_BUTTON" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="checkApplicationNameList" />
 			<then>
-				<execute function="Click" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+				<execute function="Click" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
 
 				<for list="${checkApplicationNameList}" param="contentName">
 					<var name="key_applicationName" value="${applicationName}" />
 
-					<execute function="Click" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+					<execute function="Click" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
 				</for>
 			</then>
 		</if>
@@ -134,12 +134,12 @@
 		<if>
 			<isset var="uncheckApplicationNameList" />
 			<then>
-				<execute function="Click" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
+				<execute function="Click" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO" />
 
 				<for list="${uncheckApplicationNameList}" param="applicationName">
 					<var name="key_applicationName" value="${contentName}" />
 
-					<execute function="Uncheck" locator1="BasePortletExport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
+					<execute function="Uncheck" locator1="ExportImport#APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX" />
 				</for>
 			</then>
 		</if>
@@ -147,12 +147,12 @@
 		<if>
 			<isset var="checkContentNameList" />
 			<then>
-				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_RADIO" />
+				<execute function="Check" locator1="Radio#CONTENT_CHOOSE_CONTENT" />
 
 				<for list="${checkContentNameList}" param="contentName">
 					<var name="key_contentName" value="${contentName}" />
 
-					<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+					<execute function="Check" locator1="PageConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				</for>
 			</then>
 		</if>
@@ -160,12 +160,12 @@
 		<if>
 			<isset var="uncheckContentNameList" />
 			<then>
-				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_RADIO" />
+				<execute function="Check" locator1="Radio#CONTENT_CHOOSE_CONTENT" />
 
 				<for list="${uncheckContentNameList}" param="contentName">
 					<var name="key_contentName" value="${contentName}" />
 
-					<execute function="Uncheck" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+					<execute function="Uncheck" locator1="PageConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				</for>
 			</then>
 		</if>
@@ -173,49 +173,49 @@
 		<if>
 			<isset var="uncheckSubContent" />
 			<then>
-				<execute function="Click" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_RADIO" />
+				<execute function="Click" locator1="Radio#CONTENT_CHOOSE_CONTENT" />
 
 				<var name="key_contentName" value="${contentName}" />
 
-				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+				<execute function="Check" locator1="PageConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK" value1="Change" />
 
 				<var name="key_subContent" value="${uncheckSubContent}" />
 
-				<execute function="Uncheck" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX" />
-				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_OK_BUTTON" value1="OK" />
+				<execute function="Uncheck" locator1="ExportImport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX" />
+				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="uncheckSubSubContent" />
 			<then>
-				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_RADIO" />
+				<execute function="Check" locator1="Radio#CONTENT_CHOOSE_CONTENT" />
 
 				<var name="key_contentName" value="${contentName}" />
 
-				<execute function="Check" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+				<execute function="Check" locator1="PageConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK" value1="Change" />
 
 				<var name="key_subContent" value="${subContent}" />
 				<var name="key_subSubContent" value="${uncheckSubSubContent}" />
 
 				<execute function="Uncheck" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_SUB_SUBCONTENT_CHECKBOX" />
-				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_OK_BUTTON" value1="OK" />
+				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="contentDateRange" />
 			<then>
-				<execute function="Click" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_RADIO" />
-				<execute function="AssertClick" locator1="BasePortletExport#CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK" value1="Change" />
+				<execute function="Click" locator1="Radio#CONTENT_CHOOSE_CONTENT" />
+				<execute function="AssertClick" locator1="ExportImport#CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK" value1="Change" />
 
 				<var name="key_contentDateRange" value="${contentDateRange}" />
 
-				<execute function="Click" locator1="BasePortletExport#DATE_RANGE_POPUP_RANGE_RADIO" />
-				<execute function="AssertClick" locator1="BasePortletExport#DATE_RANGE_POPUP_OK_BUTTON" value1="OK" />
-				<execute function="AssertTextEquals" locator1="BasePortletExport#CHOOSE_CONTENT_DATE_RANGE_STATUS" value1="${contentDateRange}" />
+				<execute function="Click" locator1="ExportImport#DATE_RANGE_POPUP_RANGE_RADIO" />
+				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+				<execute function="AssertTextEquals" locator1="ExportImport#CHOOSE_CONTENT_DATE_RANGE_STATUS" value1="${contentDateRange}" />
 			</then>
 		</if>
 	</command>
@@ -227,32 +227,32 @@
 	<command name="editExportTemplateCP">
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 
-		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
-		<execute function="Type" locator1="CPSitepagesExport#EXPORT_TEMPLATES_NAME_FIELD" value1="${exportTemplateNameEdit}" />
-		<execute function="Type" locator1="CPSitepagesExport#EXPORT_TEMPLATES_DESCRIPTION_FIELD" value1="${exportTemplateDescriptionEdit}" />
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${exportTemplateNameEdit}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${exportTemplateDescriptionEdit}" />
 	</command>
 
 	<command name="exportCmd">
 		<if>
 			<isset var="larFileName" />
 			<then>
-				<execute function="Type" locator1="BasePortletExport#EXPORT_FILE_NAME" value1="${larFileName}" />
+				<execute function="Type" locator1="ExportImport#EXPORT_IMPORT_IFRAME" value1="${larFileName}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${exportPermissions}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="BasePortletExport#PERMISSIONS_CHECKBOX" />
+				<execute function="Check" locator1="Checkbox#PERMISSIONS" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="BasePortletExport#EXPORT_BUTTON" value1="Export" />
+		<execute function="AssertClick" locator1="Button#EXPORT" value1="Export" />
 
 		<var name="key_larFileName" value="${larFileName}" />
 
-		<execute function="AssertTextEquals" locator1="BasePortletExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="BasePortletExport#CURRENT_AND_PREVIOUS_DOWNLOAD" value1="${larFileName}" />
+		<execute function="AssertTextEquals" locator1="ExportImport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="ExportImport#CURRENT_AND_PREVIOUS_DOWNLOAD" value1="${larFileName}" />
 		<execute function="DownloadTempFile" locator1="${larFileName}" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -269,15 +269,15 @@
 	<command name="exportExportTemplateCP">
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 
-		<execute function="Click" locator1="CPSitepagesExport#EXPORT_TEMPLATES_TABLE_EXPORT_ARROW_BUTTON" />
-		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_TEMPLATES_EXPORT_BUTTON" value1="Export" />
+		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_EXPORT_ARROW_BUTTON" />
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
 
 		<var method="StringUtil#replace('${exportTemplateName}', ' ', '_')" name="exportTemplateName" />
 		<var name="key_larFileName" value="${exportTemplateName}" />
 		<echo message="${exportTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" value1="${exportTemplateName}" />
+		<execute function="AssertTextEquals" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" value1="${exportTemplateName}" />
 	</command>
 
 	<command name="exportPortlet">
@@ -293,9 +293,9 @@
 	</command>
 
 	<command name="exportSiteCmd">
-		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
 
-		<execute function="AssertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="AssertTextEquals" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
 
@@ -305,7 +305,7 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
 	</command>
 
@@ -352,7 +352,7 @@
 			<var name="siteScopeName" value="${siteScopeName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_EXPORT" value1="Export" />
+		<execute function="AssertClick" locator1="SitePages#TOOLBAR_EXPORT" value1="Export" />
 	</command>
 
 	<command name="gotoExportTemplateCP">
@@ -361,7 +361,7 @@
 		<execute function="SelectFrameTop" value1="relative=top" />
 		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
 
-		<execute function="Click" locator1="CPSitepagesExport#EXPORT_TEMPLATE_BUTTON" />
+		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATE_BUTTON" />
 	</command>
 
 	<command name="gotoImportSiteCmd">
@@ -370,7 +370,7 @@
 			<var name="portletName" value="Export/Import" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_IMPORT" value1="Import" />
+		<execute function="AssertClick" locator1="SitePages#TOOLBAR_IMPORT" value1="Import" />
 
 		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
 	</command>
@@ -406,7 +406,7 @@
 		<if>
 			<equals arg1="${importPermissions}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="CPSitepagesImport#PERMISSIONS_CHECKBOX" />
+				<execute function="Check" locator1="Checkbox#PERMISSIONS" />
 			</then>
 		</if>
 
@@ -433,13 +433,13 @@
 			</then>
 		</if>
 
-		<execute function="AssertClickNoError" locator1="CPSitepagesImport#CONTINUE_BUTTON" value1="Continue" />
+		<execute function="AssertClickNoError" locator1="SitePagesImport#CONTINUE_BUTTON" value1="Continue" />
 		<execute function="Pause" locator1="5000" />
-		<execute function="AssertClickNoError" locator1="CPSitepagesImport#CONTINUE_BUTTON" value1="Continue" />
+		<execute function="AssertClickNoError" locator1="SitePagesImport#CONTINUE_BUTTON" value1="Continue" />
 		<execute function="Pause" locator1="5000" />
-		<execute function="AssertClickNoError" locator1="CPSitepagesImport#IMPORT_BUTTON" value1="Import" />
+		<execute function="AssertClickNoError" locator1="SitePagesImport#IMPORT_BUTTON" value1="Import" />
 		<execute function="Pause" locator1="5000" />
-		<execute function="AssertTextEquals" locator1="CPSitepagesImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
+		<execute function="AssertTextEquals" locator1="SitePagesImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -472,26 +472,26 @@
 	</command>
 
 	<command name="moveToTheRecycleBinExportTemplate">
-		<execute function="Click" locator1="CPSitepagesExport#EXPORT_TEMPLATE_BUTTON" />
+		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATE_BUTTON" />
 
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 
-		<execute function="Click" locator1="CPSitepagesExport#EXPORT_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_BUTTON" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#EXPORT_MESSAGE" value1="The Export Import Template ${exportTemplateName} was moved to the Recycle Bin." />
+		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_BUTTON" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The Export Import Template ${exportTemplateName} was moved to the Recycle Bin." />
 	</command>
 
 	<command name="saveExportTemplateCP">
-		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_TEMPLATES_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="CPSitepagesExport#EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
-		<execute function="AssertTextEquals" locator1="CPSitepagesExport#EXPORT_TEMPLATES_TABLE_DESCRIPTION" value1="${exportTemplateDescription}" />
+		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
+		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_DESCRIPTION" value1="${exportTemplateDescription}" />
 	</command>
 
 	<command name="selectImportFileCmd">
-		<execute function="AssertClick" locator1="BasePortletImport#NAVIGATION_IMPORT" value1="Import" />
-		<execute function="AssertClick" locator1="BasePortletImport#SELECT_FILE_BUTTON" value1="Select File" />
+		<execute function="AssertClick" locator1="ExportImport#NAVIGATION_IMPORT" value1="Import" />
+		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
 
 		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
 
@@ -510,38 +510,38 @@
 		<if>
 			<equals arg1="${importPermissions}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="BasePortletExport#PERMISSIONS_CHECKBOX" />
+				<execute function="Check" locator1="Checkbox#PERMISSIONS" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${cannotImport}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPSitepagesImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
+				<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
 			</then>
 			<elseif>
 				<isset var="importValidationMissingItem" />
 				<then>
-					<execute function="AssertTextEquals" locator1="BasePortletImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
-					<execute function="AssertTextEquals" locator1="BasePortletImport#VALIDATION_ERROR_MESSAGE" value1="An unexpected error occurred while uploading your file." />
+					<execute function="AssertTextEquals" locator1="ExportImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
+					<execute function="AssertTextEquals" locator1="ExportImport#VALIDATION_ERROR_MESSAGE" value1="An unexpected error occurred while uploading your file." />
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertClickNoError" locator1="BasePortletImport#CONTINUE_BUTTON" value1="Continue" />
+				<execute function="AssertClickNoError" locator1="Button#CONTINUE" value1="Continue" />
 				<execute function="Pause" locator1="5000" />
-				<execute function="AssertClickNoError" locator1="BasePortletImport#CONTINUE_BUTTON" value1="Continue" />
+				<execute function="AssertClickNoError" locator1="Button#CONTINUE" value1="Continue" />
 				<execute function="Pause" locator1="5000" />
-				<execute function="AssertClickNoError" locator1="BasePortletImport#IMPORT_BUTTON" value1="Import" />
+				<execute function="AssertClickNoError" locator1="Button#IMPORT" value1="Import" />
 				<execute function="Pause" locator1="5000" />
-				<execute function="AssertTextEquals" locator1="BasePortletImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
+				<execute function="AssertTextEquals" locator1="ExportImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
 				<execute function="SelectFrame" value1="relative=top" />
 			</else>
 		</if>
 	</command>
 
 	<command name="selectImportFileSiteCmd">
-		<execute function="AssertClick" locator1="CPSitepagesImport#NEW_IMPORT_PROCESS_NAVIGATION" value1="New Import Process" />
-		<execute function="AssertClick" locator1="CPSitepagesImport#SELECT_FILE_BUTTON" value1="Select File" />
+		<execute function="AssertClick" locator1="SitePagesImport#NEW_IMPORT_PROCESS_NAVIGATION" value1="New Import Process" />
+		<execute function="AssertClick" locator1="SitePagesImport#SELECT_FILE_BUTTON" value1="Select File" />
 
 		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
 		<execute function="SikuliUploadTempFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${larFileName}" />
@@ -550,26 +550,26 @@
 		<if>
 			<isset var="importValidationMissingItem" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPSitepagesImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
-				<execute function="AssertTextEquals" locator1="CPSitepagesImport#VALIDATION_ERROR_MESSAGE" value1="There are missing references that could not be found in the current site. Please import the following elements first:" />
-				<execute function="AssertTextEquals" locator1="CPSitepagesImport#VALIDATION_ERROR_MESSAGE" value1="There are missing references that could not be found in the current site. Please import  the following elements first:" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesImport#VALIDATION_ERROR_LIST_ITEM" value1="${importValidationMissingItem}" />
+				<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
+				<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE" value1="There are missing references that could not be found in the current site. Please import the following elements first:" />
+				<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE" value1="There are missing references that could not be found in the current site. Please import  the following elements first:" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesImport#VALIDATION_ERROR_LIST_ITEM" value1="${importValidationMissingItem}" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="importCampaignValidationError" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPSitepagesImport#VALIDATION_ERROR_MESSAGE" value1="The following data will not be imported:" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesImport#VALIDATION_ERROR_LIST_ITEM" value1="Campaign Tracking Action" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesImport#VALIDATION_ERROR_LIST_ITEM" value1="The original Referenced Asset does not exist in the current environment." />
+				<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE" value1="The following data will not be imported:" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesImport#VALIDATION_ERROR_LIST_ITEM" value1="Campaign Tracking Action" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesImport#VALIDATION_ERROR_LIST_ITEM" value1="The original Referenced Asset does not exist in the current environment." />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="importFail" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="BasePortletImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Failed" />
+				<execute function="AssertTextEquals" locator1="ExportImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Failed" />
 				<execute function="SelectFrame" value1="relative=top" />
 			</then>
 		</if>
@@ -762,7 +762,7 @@
 	<command name="viewExportTemplateCP">
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="CPSitepagesExport#EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
-		<execute function="AssertTextEquals" locator1="CPSitepagesExport#EXPORT_TEMPLATES_TABLE_DESCRIPTION" value1="${exportTemplateDescription}" />
+		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
+		<execute function="AssertTextEquals" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_DESCRIPTION" value1="${exportTemplateDescription}" />
 	</command>
 </definition>

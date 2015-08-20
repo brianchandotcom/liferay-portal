@@ -1,9 +1,9 @@
 <definition>
 	<command name="showDetails">
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="CPWebcontentStructuresAddstructure#DESCRIPTION_FIELD" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="TextArea#DESCRIPTION" />
 			<then>
-				<execute function="Click" locator1="CPWebcontentStructuresAddstructure#DETAILS" />
+				<execute function="Click" locator1="DDMEditStructure#DETAILS" />
 			</then>
 		</if>
 	</command>

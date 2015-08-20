@@ -10,18 +10,18 @@
 	</command>
 
 	<command name="configureXSLContentPortlet">
-		<execute function="SelectFrame" locator1="XSLContentConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Type" locator1="XSLContentConfiguration#SETUP_XML_URL_FIELD" value1="@portal_url@/${xmlURL}" />
-		<execute function="Type" locator1="XSLContentConfiguration#SETUP_XSL_URL_FIELD" value1="@portal_url@/${xslURL}" />
+		<execute function="Type" locator1="TextInput#SETUP_XML_URL" value1="@portal_url@/${xmlURL}" />
+		<execute function="Type" locator1="TextInput#SETUP_XSL_URL" value1="@portal_url@/${xslURL}" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="viewConfigurationXSLContent">
-		<execute function="SelectFrame" locator1="XSLContentConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="AssertTextEquals" locator1="XSLContentConfiguration#SETUP_XML_URL_FIELD" value1="@portlet_context_url@/example.xml" />
-		<execute function="AssertTextEquals" locator1="XSLContentConfiguration#SETUP_XSL_URL_FIELD" value1="@portlet_context_url@/example.xsl" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute function="AssertTextEquals" locator1="TextInput#SETUP_XML_URL" value1="@portlet_context_url@/example.xml" />
+		<execute function="AssertTextEquals" locator1="TextInput#SETUP_XSL_URL" value1="@portlet_context_url@/example.xsl" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>

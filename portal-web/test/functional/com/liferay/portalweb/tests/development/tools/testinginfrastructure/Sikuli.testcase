@@ -2,36 +2,36 @@
 	<property name="testray.main.component.name" value="Tools" />
 
 	<command name="Smoke" priority="4">
-		<execute function="SikuliAssertElementPresent" locator1="PGLogin#SIGN_IN_BUTTON_PNG" />
-		<execute function="SikuliAssertElementNotPresent" locator1="PGLogin#AVERAGE_RATING_STAR_ICON_PNG" />
-		<execute function="SikuliType" locator1="PGLogin#EMAIL_ADDRESS_FIELD_PNG" value1="test@liferay.com" />
-		<execute function="SikuliType" locator1="PGLogin#PASSWORD_FIELD_PNG" value1="test" />
-		<execute function="Check" locator1="PGLogin#REMEMBER_ME_CHECKBOX" />
-		<execute function="SikuliClick" locator1="PGLogin#SIGN_IN_BUTTON_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="Button#SIGN_IN_PNG" />
+		<execute function="SikuliAssertElementNotPresent" locator1="Ratings#AVERAGE_RATING_STAR_ICON_PNG" />
+		<execute function="SikuliType" locator1="TextInput#EMAIL_ADDRESS_PNG" value1="test@liferay.com" />
+		<execute function="SikuliType" locator1="TextInput#PASSWORD_PNG" value1="test" />
+		<execute function="Check" locator1="Checkbox#REMEMBER_ME" />
+		<execute function="SikuliClick" locator1="Button#SIGN_IN_PNG" />
 
-		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
+		<execute function="AssertElementPresent" locator1="DockbarTEMP#USER_AVATAR_IMAGE" />
 
 		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="Button#I_AGREE" value1="I Agree" />
 			<then>
-				<execute function="AssertClick" locator1="PGLoginTermsofservice#I_AGREE_BUTTON" value1="I Agree" />
+				<execute function="AssertClick" locator1="Button#I_AGREE" value1="I Agree" />
 			</then>
 		</if>
 
 		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGLoginNewpassword#PASSWORD_FIELD" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInpu#PASSWORD" />
 			<then>
-				<execute function="Type" locator1="PGLoginNewpassword#PASSWORD_FIELD" value1="test" />
-				<execute function="Type" locator1="PGLoginNewpassword#ENTER_AGAIN_FIELD" value1="test" />
-				<execute function="AssertClick" locator1="PGLoginNewpassword#SAVE_BUTTON" value1="Save" />
+				<execute function="Type" locator1="TextInpu#PASSWORD" value1="test" />
+				<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test" />
+				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 			</then>
 		</if>
 
 		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGLoginPasswordreminder#ANSWER_FIELD" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#ANSWER" />
 			<then>
-				<execute function="Type" locator1="PGLoginPasswordreminder#ANSWER_FIELD" value1="test" />
-				<execute function="AssertClick" locator1="PGLoginPasswordreminder#SAVE_BUTTON" value1="Save" />
+				<execute function="Type" locator1="TextInput#ANSWER" value1="test" />
+				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 			</then>
 		</if>
 

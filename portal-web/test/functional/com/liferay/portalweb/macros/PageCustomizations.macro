@@ -2,21 +2,21 @@
 	<command name="enableSectionCustomizableCP">
 		<var name="key_columnId" value="${columnId}" />
 
-		<execute function="AssertClick" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_2" value1="${sitePageName}" />
+		<execute function="AssertClick" locator1="SitePages#PAGE_TREE_PAGE_LINK_2" value1="${sitePageName}" />
 
-		<execute function="AssertClick" locator1="CPSitepagesPublicpage#NAVIGATION_CUSTOMIZATION_SETTINGS" value1="Customization Settings" />
+		<execute function="AssertClick" locator1="NavListItem#CUSTOMIZATION_SETTINGS" value1="Customization Settings" />
 
-		<execute function="Check" locator1="CPSitepagesPublicpageCustomizationSettings#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX" value1="Customizable" />
-		<execute function="AssertClick" locator1="CPSitepagesPublicpageCustomizationSettings#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPSitepagesPublicpageCustomizationSettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertChecked" locator1="CPSitepagesPublicpageCustomizationSettings#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX" value1="Customizable" />
+		<execute function="Check" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN" value1="Customizable" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertChecked" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN" value1="Customizable" />
 	</command>
 
 	<command name="enableSectionCustomizablePG">
 		<var name="key_columnId" value="${columnId}" />
 
-		<execute function="Check" locator1="DockbarEditpanel#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX" value1="Customizable" />
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarEditpanel#SAVE_BUTTON" value1="Save" />
+		<execute function="Check" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX" value1="Customizable" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Home#PAGE_CUSTOMIZATION_MESSAGE_INFO" value1="You can customize this page." />
 		<execute function="AssertTextEquals" locator1="Home#PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
@@ -25,15 +25,15 @@
 
 	<command name="gotoCustomizationSettingsPG">
 		<execute function="Click" locator1="DockbarEditpanel#EDIT" />
-		<execute function="AssertTextEquals" locator1="DockbarEditpanel#CUSTOMIZATION_SETTINGS_PANEL_TOGGLE" value1="Customization Settings" />
+		<execute function="AssertTextEquals" locator1="DockbarEditPanel#CUSTOMIZATION_SETTINGS_PANEL_TOGGLE" value1="Customization Settings" />
 
 		<if>
-			<condition function="IsElementNotPresent" locator1="DockbarEditpanel#CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS" />
+			<condition function="IsElementNotPresent" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS" />
 			<then>
-				<execute function="AssertClick" locator1="DockbarEditpanel#CUSTOMIZATION_SETTINGS_PANEL_TOGGLE" value1="Customization Settings" />
+				<execute function="AssertClick" locator1="DockbarEditPanel#CUSTOMIZATION_SETTINGS_PANEL_TOGGLE" value1="Customization Settings" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="DockbarEditpanel#CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS" value1="Show Customizable Sections" />
+		<execute function="AssertClick" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS" value1="Show Customizable Sections" />
 	</command>
 </definition>

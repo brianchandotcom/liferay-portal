@@ -8,46 +8,46 @@
 
 		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
 
-		<execute function="Select" locator1="PGRelatedassetsConfiguration#FILTER_SELECT" value1="Categories" />
-		<execute function="AssertClick" locator1="PGRelatedassetsConfiguration#FILTER_SELECT_CATEGORIES_SELECT_BUTTON" value1="Select" />
+		<execute function="Select" locator1="RelatedassetsConfiguration#FILTER_SELECT" value1="Categories" />
+		<execute function="AssertClick" locator1="RelatedassetsConfiguration#FILTER_SELECT_CATEGORIES_SELECT_BUTTON" value1="Select" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 
-		<execute function="Click" locator1="PGRelatedassetsConfiguration#CATEGORIES_WINDOW_CATEGORY_CHECKBOX" />
-		<execute function="Click" locator1="PGRelatedassetsConfiguration#CATEGORIES_WINDOW_CLOSE_BUTTON" />
-		<execute function="AssertTextEquals" locator1="PGRelatedassetsConfiguration#CATEGORY" value1="${categoryName}" />
-		<execute function="AssertClick" locator1="PGRelatedassetsConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGRelatedassetsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="Click" locator1="RelatedassetsConfiguration#CATEGORIES_WINDOW_CATEGORY_CHECKBOX" />
+		<execute function="Click" locator1="Button#CLOSE_IFRAME" />
+		<execute function="AssertTextEquals" locator1="RelatedassetsConfiguration#CATEGORY" value1="${categoryName}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="gotoBookmarksSelectionPG">
-		<execute function="AssertClick" locator1="PGBookmarks#FOLDER_MENU_ADD_BOOKMARK" value1="Add Bookmark" />
+		<execute function="AssertClick" locator1="NavListItem#ADD_BOOKMARK" value1="Add Bookmark" />
 
 		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGBookmarksAddBookmark#RELATED_ASSETS_PANEL_COLLAPSED" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="AssetRelatedAssets#HEADER_COLLAPSED" />
 			<then>
-				<execute function="Click" locator1="PGBookmarksAddBookmark#RELATED_ASSETS_PANEL_COLLAPSED" />
-				<execute function="AssertElementPresent" locator1="PGBookmarksAddBookmark#RELATED_ASSETS_PANEL_EXPANDED" />
+				<execute function="Click" locator1="AssetRelatedAssets#HEADER_COLLAPSED" />
+				<execute function="AssertElementPresent" locator1="AssetRelatedAssets#HEADER_EXPANDED" />
 			</then>
 		</if>
 
 		<var name="key_assetType" value="${assetType}" />
 
-		<execute function="AssertClick" locator1="PGBookmarksAddBookmark#RELATED_ASSETS_SELECT" value1="Select" />
-		<execute function="AssertClick" locator1="PGBookmarksAddBookmark#RELATED_ASSETS_MENULIST_SELECTION" value1="${assetType}" />
+		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT" value1="Select" />
+		<execute function="AssertClick" locator1="AssetRelatedAssets#RELATED_ASSETS_SELECT_MENULIST_ASSET" value1="${assetType}" />
 	</command>
 
 	<command name="gotoWebContentSelectionCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<execute function="AssertClick" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
 
 		<var name="key_assetType" value="${assetType}" />
 
-		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#MENU_RELATED_ASSETS" value1="Related Assets" />
-		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#RELATED_ASSETS_SELECT" value1="Select" />
-		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#RELATED_ASSETS_MENULIST_SELECTION" value1="${assetType}" />
+		<execute function="AssertClick" locator1="WCEditWebContent#MENU_RELATED_ASSETS" value1="Related Assets" />
+		<execute function="AssertClick" locator1="WCEditWebContent#RELATED_ASSETS_SELECT" value1="Select" />
+		<execute function="AssertClick" locator1="WCEditWebContent#RELATED_ASSETS_SELECT" value1="${assetType}" />
 	</command>
 
 	<command name="searchAdvancedRelatedAssetsCP">
@@ -144,7 +144,7 @@
 		<for list="${assetTitleList}" param="assetTitle">
 			<var name="key_assetTitle" value="${assetTitle}" />
 
-			<execute function="AssertElementNotPresent" locator1="PGRelatedassets#ASSET_TITLE" />
+			<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_TITLE" />
 		</for>
 	</command>
 
@@ -153,9 +153,9 @@
 	</command>
 
 	<command name="viewPG">
-		<execute function="AssertElementPresent" locator1="PGRelatedassets#ASSET_TITLE_IMAGE_1" />
-		<execute function="AssertTextEquals" locator1="PGRelatedassets#ASSET_TITLE_1" value1="${assetTitle}" />
-		<execute function="AssertElementPresent" locator1="PGRelatedassets#ASSET_EDIT_1" />
+		<execute function="AssertElementPresent" locator1="Relatedassets#ASSET_TITLE_IMAGE_1" />
+		<execute function="AssertTextEquals" locator1="Relatedassets#ASSET_TITLE_1" value1="${assetTitle}" />
+		<execute function="AssertElementPresent" locator1="Relatedassets#ASSET_EDIT_1" />
 	</command>
 
 	<command name="viewViaSelectCP">

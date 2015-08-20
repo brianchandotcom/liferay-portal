@@ -1,44 +1,44 @@
 <definition>
 	<command name="addReportDefinition">
-		<execute function="AssertClick" locator1="CPReportsadmin#DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
+		<execute function="AssertClick" locator1="ReportsAdmin#DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
 
-		<execute function="Type" locator1="CPReportsadminAddreportdefinition#DEFINITION_NAME_FIELD" value1="${reportsDefinitionName}" />
-		<execute function="Type" locator1="CPReportsadminAddreportdefinition#DEFINITION_DESCRIPTION_FIELD" value1="${reportsDefinitionDescription}" />
-		<execute function="Select" locator1="CPReportsadminAddreportdefinition#DATA_SOURCE_NAME_SELECT" value1="${dataSource}" />
-		<execute function="UploadCommonFile" locator1="CPReportsadminAddreportdefinition#TEMPLATE_FILE_UPLOAD" value1="${templateFile}" />
-		<execute function="AssertClick" locator1="CPReportsadminAddreportdefinition#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${reportsDefinitionName}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${reportsDefinitionDescription}" />
+		<execute function="Select" locator1="ReportsAdminEditReportDefinition#DATA_SOURCE_NAME_SELECT" value1="${dataSource}" />
+		<execute function="UploadCommonFile" locator1="ReportsAdminEditReportDefinition#TEMPLATE_FILE_UPLOAD" value1="${templateFile}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPReportsadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addReportEntry">
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute function="Click" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT" value1="Add Report" />
+		<execute function="Click" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT" value1="Add Report" />
 
-		<execute function="Select" locator1="CPReportsadminAddreportentry#REPORT_FORMAT_SELECT" value1="${reportFormat}" />
+		<execute function="Select" locator1="ReportsAdminEditReportEntry#REPORT_FORMAT_SELECT" value1="${reportFormat}" />
 
 		<if>
 			<isset var="reportName" />
 			<then>
-				<execute function="Type" locator1="CPReportsadminAddreportentry#REPORT_NAME_FIELD" value1="${reportName}" />
+				<execute function="Type" locator1="ReportsAdminEditReportEntry#REPORT_NAME_FIELD" value1="${reportName}" />
 			</then>
 		</if>
 
-		<execute function="Type" locator1="CPReportsadminAddreportentry#EMAIL_NOTIFICATIONS_FIELD" value1="${emailNotificationsAddress}" />
-		<execute function="Type" locator1="CPReportsadminAddreportentry#EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
-		<execute function="AssertClick" locator1="CPReportsadminAddreportentry#GENERATE_BUTTON" value1="Generate" />
+		<execute function="Type" locator1="ReportsAdminEditReportEntry#EMAIL_NOTIFICATIONS_FIELD" value1="${emailNotificationsAddress}" />
+		<execute function="Type" locator1="ReportsAdminEditReportEntry#EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
+		<execute function="AssertClick" locator1="ReportsAdminEditReportEntry#GENERATE_BUTTON" value1="Generate" />
 
-		<execute function="AssertTextEquals" locator1="CPReportsadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="Pause" locator1="5000" />
 	</command>
 
 	<command name="addScheduleEntry">
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute function="Click" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_MENULIST_ADD_SCHEDULE" value1="Add Schedule" />
+		<execute function="Click" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_MENULIST_ADD_SCHEDULE" value1="Add Schedule" />
 
 		<var method="selenium#getValue('//span[@class=\'lfr-input-time \']/input')" name="time" />
 
@@ -74,92 +74,92 @@
 			</else>
 		</if>
 
-		<execute function="Type" locator1="CPReportsadminAddscheduleentry#START_DATE_TIME_FIELD" value1="${hours}:${minutesIncremented2} ${ampm}" />
+		<execute function="Type" locator1="ReportsAdminEditScheduleEntry#START_DATE_TIME_FIELD" value1="${hours}:${minutesIncremented2} ${ampm}" />
 
-		<execute function="Select" locator1="CPReportsadminAddscheduleentry#REPORT_FORMAT_SELECT" value1="${reportFormat}" />
-		<execute function="Type" locator1="CPReportsadminAddscheduleentry#EMAIL_NOTIFICATIONS_FIELD" value1="${emailNotificationsAddress}" />
-		<execute function="Type" locator1="CPReportsadminAddscheduleentry#EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
-		<execute function="AssertClick" locator1="CPReportsadminAddscheduleentry#SCHEDULE_BUTTON" value1="Schedule" />
+		<execute function="Select" locator1="ReportsAdminEditScheduleEntry#REPORT_FORMAT_SELECT" value1="${reportFormat}" />
+		<execute function="Type" locator1="ReportsAdminEditScheduleEntry#EMAIL_NOTIFICATIONS_FIELD" value1="${emailNotificationsAddress}" />
+		<execute function="Type" locator1="ReportsAdminEditScheduleEntry#EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
+		<execute function="AssertClick" locator1="ReportsAdminEditScheduleEntry#SCHEDULE_BUTTON" value1="Schedule" />
 
-		<execute function="AssertTextEquals" locator1="CPReportsadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="Pause" locator1="5000" />
 	</command>
 
 	<command name="addSource">
-		<execute function="AssertClick" locator1="CPReportsadmin#SOURCES_ADD_SOURCE_BUTTON" value1="Add Source" />
+		<execute function="AssertClick" locator1="ReportsAdmin#SOURCES_ADD_SOURCE_BUTTON" value1="Add Source" />
 
-		<execute function="Type" locator1="CPReportsadminAddsource#DATA_SOURCE_NAME_FIELD" value1="${reportsDataSourceName}" />
-		<execute function="Type" locator1="CPReportsadminAddsource#JDBC_DRIVER_CLASS_NAME_FIELD" value1="${reportsDataSourceClass}" />
-		<execute function="Type" locator1="CPReportsadminAddsource#JDBC_URL_FIELD" value1="${reportsDataSourceURL}" />
-		<execute function="Type" locator1="CPReportsadminAddsource#JDBC_USER_NAME_FIELD" value1="${reportsDataSourceUser}" />
+		<execute function="Type" locator1="ReportsAdminEditSource#DATA_SOURCE_NAME_FIELD" value1="${reportsDataSourceName}" />
+		<execute function="Type" locator1="ReportsAdminEditSource#JDBC_DRIVER_CLASS_NAME_FIELD" value1="${reportsDataSourceClass}" />
+		<execute function="Type" locator1="ReportsAdminEditSource#JDBC_URL_FIELD" value1="${reportsDataSourceURL}" />
+		<execute function="Type" locator1="ReportsAdminEditSource#JDBC_USER_NAME_FIELD" value1="${reportsDataSourceUser}" />
 
 		<if>
 			<isset var="reportsDataSourcePassword" />
 			<then>
-				<execute function="Type" locator1="CPReportsadminAddsource#JDBC_PASSWORD_FIELD" value1="${reportsDataSourcePassword}" />
+				<execute function="Type" locator1="ReportsAdminEditSource#JDBC_PASSWORD_FIELD" value1="${reportsDataSourcePassword}" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPReportsadminAddsource#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPReportsadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="configureDeliveryEmail">
-		<execute function="AssertClick" locator1="CPReportsadminConfiguration#NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
-		<execute function="Type" locator1="CPReportsadminConfiguration#DELIVERY_EMAIL_SUBJECT_FIELD" value1="${deliverySubject}" />
-		<execute function="Type" locator1="CPReportsadminConfiguration#DELIVERY_EMAIL_BODY_FIELD" value1="${deliveryBody}" />
-		<execute function="AssertClick" locator1="CPReportsadminConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPReportsadminConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
+		<execute function="Type" locator1="ReportsAdminConfiguration#DELIVERY_EMAIL_SUBJECT_FIELD" value1="${deliverySubject}" />
+		<execute function="Type" locator1="ReportsAdminConfiguration#DELIVERY_EMAIL_BODY_FIELD" value1="${deliveryBody}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureEmailFrom">
-		<execute function="AssertClick" locator1="CPReportsadminConfiguration#NAVIGATION_EMAIL_FROM" value1="Email From" />
-		<execute function="Type" locator1="CPReportsadminConfiguration#EMAIL_FROM_NAME_FIELD" value1="${emailFromName}" />
-		<execute function="Type" locator1="CPReportsadminConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="${emailFromAddress}" />
-		<execute function="AssertClick" locator1="CPReportsadminConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPReportsadminConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_EMAIL_FROM" value1="Email From" />
+		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_NAME_FIELD" value1="${emailFromName}" />
+		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="${emailFromAddress}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureNotificationsEmail">
-		<execute function="AssertClick" locator1="CPReportsadminConfiguration#NAVIGATION_NOTIFICATIONS_EMAIL" value1="Notifications Email" />
-		<execute function="Type" locator1="CPReportsadminConfiguration#NOTIFICATIONS_EMAIL_SUBJECT_FIELD" value1="${notificationSubject}" />
-		<execute function="Type" locator1="CPReportsadminConfiguration#NOTIFICATIONS_EMAIL_BODY_FIELD" value1="${notificationBody}" />
-		<execute function="AssertClick" locator1="CPReportsadminConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPReportsadminConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_NOTIFICATIONS_EMAIL" value1="Notifications Email" />
+		<execute function="Type" locator1="ReportsAdminConfiguration#NOTIFICATIONS_EMAIL_SUBJECT_FIELD" value1="${notificationSubject}" />
+		<execute function="Type" locator1="ReportsAdminConfiguration#NOTIFICATIONS_EMAIL_BODY_FIELD" value1="${notificationBody}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="deleteReportEntryFile">
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
-		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
-		<execute function="Click" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_ACTIONS" />
-		<execute function="AssertClickNoError" locator1="CPReportsadminViewreportentry#ENTRY_FILE_MENULIST_DELETE" value1="Delete" />
+		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
+		<execute function="Click" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_ACTIONS" />
+		<execute function="AssertClickNoError" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertElementNotPresent" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_FILE" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertElementNotPresent" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE" />
 	</command>
 
 	<command name="deliverReportEntryFile">
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
-		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
-		<execute function="Click" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPReportsadminViewreportentry#ENTRY_FILE_MENULIST_DELIVER_REPORT" value1="Deliver Report" />
+		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
+		<execute function="Click" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_MENULIST_DELIVER_REPORT" value1="Deliver Report" />
 
-		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentryDeliverreport#REPORT_NAME" value1="Report Name ${reportsFileName}" />
-		<execute function="Type" locator1="CPReportsadminViewreportentryDeliverreport#EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
-		<execute function="AssertClick" locator1="CPReportsadminViewreportentryDeliverreport#DELIVER_BUTTON" value1="Deliver" />
+		<execute function="AssertTextEquals" locator1="ReportsAdminDeliverReport#REPORT_NAME" value1="Report Name ${reportsFileName}" />
+		<execute function="Type" locator1="ReportsAdminDeliverReport#EMAIL_RECIPIENT_FIELD" value1="${emailRecipientAddress}" />
+		<execute function="AssertClick" locator1="ReportsAdminDeliverReport#DELIVER_BUTTON" value1="Deliver" />
 
-		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="downloadReportEntryFile">
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
-		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
-		<execute function="Click" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPReportsadminViewreportentry#ENTRY_FILE_MENULIST_DOWNLOAD" value1="Download" />
+		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
+		<execute function="Click" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_MENULIST_DOWNLOAD" value1="Download" />
 		<execute function="Pause" locator1="2000" />
 
 		<take-screenshot />
@@ -170,10 +170,10 @@
 				<if>
 					<equals arg1="${reportsFileName}" arg2="reports_admin_template_source_sample_list_type.pdf" />
 					<then>
-						<execute function="SikuliAssertElementPresent" locator1="CPReportsadmin#REPORT_PDF_LIST_TYPE_PNG" />
+						<execute function="SikuliAssertElementPresent" locator1="ReportsAdmin#REPORT_PDF_LIST_TYPE_PNG" />
 					</then>
 					<else>
-						<execute function="SikuliAssertElementPresent" locator1="CPReportsadmin#REPORT_PDF_CLASS_NAME_PNG" />
+						<execute function="SikuliAssertElementPresent" locator1="ReportsAdmin#REPORT_PDF_CLASS_NAME_PNG" />
 					</else>
 				</if>
 			</then>
@@ -181,37 +181,37 @@
 	</command>
 
 	<command name="gotoConfiguration">
-		<execute function="AssertClick" locator1="CPReportsadmin#OPTIONS_WRENCH_ICON" value1="Options" />
-		<execute function="AssertClick" locator1="CPReportsadmin#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="Icon#COG" value1="Options" />
+		<execute function="AssertClick" locator1="ReportsAdmin#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute function="SelectFrame" locator1="CPReportsadminConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="ReportsAdminConfiguration#CONFIGURATION_IFRAME" />
 	</command>
 
 	<command name="gotoDefinitions">
-		<execute function="AssertClick" locator1="CPReportsadmin#NAVIGATION_DEFINITIONS" value1="Definitions" />
+		<execute function="AssertClick" locator1="ReportsAdmin#NAVIGATION_DEFINITIONS" value1="Definitions" />
 	</command>
 
 	<command name="gotoReports">
-		<execute function="AssertClick" locator1="CPReportsadmin#NAVIGATION_REPORTS" value1="Reports" />
+		<execute function="AssertClick" locator1="ReportsAdmin#NAVIGATION_REPORTS" value1="Reports" />
 	</command>
 
 	<command name="gotoSources">
-		<execute function="AssertClick" locator1="CPReportsadmin#NAVIGATION_SOURCES" value1="Sources" />
+		<execute function="AssertClick" locator1="ReportsAdmin#NAVIGATION_SOURCES" value1="Sources" />
 	</command>
 
 	<command name="tearDownConfiguration">
 		<execute macro="ReportsAdmin#gotoConfiguration" />
 
-		<execute function="AssertClick" locator1="CPReportsadminConfiguration#NAVIGATION_EMAIL_FROM" value1="Email From" />
-		<execute function="Type" locator1="CPReportsadminConfiguration#EMAIL_FROM_NAME_FIELD" value1="Joe Bloggs" />
-		<execute function="Type" locator1="CPReportsadminConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="test@liferay.com" />
-		<execute function="AssertClick" locator1="CPReportsadminConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPReportsadminConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="AssertClick" locator1="CPReportsadminConfiguration#NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
+		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_EMAIL_FROM" value1="Email From" />
+		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_NAME_FIELD" value1="Joe Bloggs" />
+		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="test@liferay.com" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
 
 		<var name="deliverySubject"><![CDATA[New Report: [$REPORT_NAME$]]]></var>
 
-		<execute function="Type" locator1="CPReportsadminConfiguration#DELIVERY_EMAIL_SUBJECT_FIELD" value1="${deliverySubject}" />
+		<execute function="Type" locator1="ReportsAdminConfiguration#DELIVERY_EMAIL_SUBJECT_FIELD" value1="${deliverySubject}" />
 
 		<var name="deliveryBody"><![CDATA[
 Dear [$TO_NAME$],<br /><br />
@@ -222,14 +222,14 @@ Sincerely,<br />
 [$FROM_NAME$]<br />
 [$FROM_ADDRESS$]		<br />]]>		</var>
 
-		<execute function="Type" locator1="CPReportsadminConfiguration#DELIVERY_EMAIL_BODY_FIELD" value1="${deliveryBody}" />
-		<execute function="AssertClick" locator1="CPReportsadminConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPReportsadminConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="AssertClick" locator1="CPReportsadminConfiguration#NAVIGATION_NOTIFICATIONS_EMAIL" value1="Notifications Email" />
+		<execute function="Type" locator1="ReportsAdminConfiguration#DELIVERY_EMAIL_BODY_FIELD" value1="${deliveryBody}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_NOTIFICATIONS_EMAIL" value1="Notifications Email" />
 
 		<var name="notificationSubject"><![CDATA[New Report: [$REPORT_NAME$]]]></var>
 
-		<execute function="Type" locator1="CPReportsadminConfiguration#NOTIFICATIONS_EMAIL_SUBJECT_FIELD" value1="${notificationSubject}" />
+		<execute function="Type" locator1="ReportsAdminConfiguration#NOTIFICATIONS_EMAIL_SUBJECT_FIELD" value1="${notificationSubject}" />
 
 		<var name="notificationBody"><![CDATA[
 Dear [$TO_NAME$],<br /><br />
@@ -240,9 +240,9 @@ Sincerely,<br />
 [$FROM_NAME$]<br />
 [$FROM_ADDRESS$]		<br />]]>		</var>
 
-		<execute function="Type" locator1="CPReportsadminConfiguration#NOTIFICATIONS_EMAIL_BODY_FIELD" value1="${notificationBody}" />
-		<execute function="AssertClick" locator1="CPReportsadminConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPReportsadminConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="Type" locator1="ReportsAdminConfiguration#NOTIFICATIONS_EMAIL_BODY_FIELD" value1="${notificationBody}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="tearDownDefinitions">
@@ -253,16 +253,16 @@ Sincerely,<br />
 		<execute macro="ReportsAdmin#gotoDefinitions" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS_1" />
+			<condition function="IsElementPresent" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS_1" />
 			<then>
-				<execute function="Click" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS_1" />
-				<execute function="AssertClickNoError" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_MENULIST_DELETE" value1="Delete" />
+				<execute function="Click" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS_1" />
+				<execute function="AssertClickNoError" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_MENULIST_DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals" locator1="CPReportsadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 		</while>
 
-		<execute function="AssertTextEquals" locator1="CPReportsadmin#INFO_MESSAGE" value1="There are no definitions." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no definitions." />
 	</command>
 
 	<command name="tearDownReports">
@@ -271,16 +271,16 @@ Sincerely,<br />
 		</execute>
 
 		<while>
-			<condition function="IsElementPresent" locator1="CPReportsadmin#REPORTS_ENTRY_TABLE_ACTIONS_1" />
+			<condition function="IsElementPresent" locator1="ReportsAdmin#REPORTS_ENTRY_TABLE_ACTIONS_1" />
 			<then>
-				<execute function="Click" locator1="CPReportsadmin#REPORTS_ENTRY_TABLE_ACTIONS_1" />
-				<execute function="AssertClickNoError" locator1="CPReportsadmin#REPORTS_ENTRY_MENULIST_DELETE" value1="Delete" />
+				<execute function="Click" locator1="ReportsAdmin#REPORTS_ENTRY_TABLE_ACTIONS_1" />
+				<execute function="AssertClickNoError" locator1="ReportsAdmin#REPORTS_ENTRY_MENULIST_DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals" locator1="CPReportsadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 		</while>
 
-		<execute function="AssertTextEquals" locator1="CPReportsadmin#INFO_MESSAGE" value1="There are no entries." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no entries." />
 	</command>
 
 	<command name="tearDownSources">
@@ -291,66 +291,66 @@ Sincerely,<br />
 		<execute macro="ReportsAdmin#gotoSources" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="CPReportsadmin#SOURCES_SOURCE_TABLE_ACTIONS_1" />
+			<condition function="IsElementPresent" locator1="ReportsAdmin#SOURCES_SOURCE_TABLE_ACTIONS_1" />
 			<then>
-				<execute function="Click" locator1="CPReportsadmin#SOURCES_SOURCE_TABLE_ACTIONS_1" />
-				<execute function="AssertClickNoError" locator1="CPReportsadmin#SOURCES_SOURCE_MENULIST_DELETE" value1="Delete" />
+				<execute function="Click" locator1="ReportsAdmin#SOURCES_SOURCE_TABLE_ACTIONS_1" />
+				<execute function="AssertClickNoError" locator1="ReportsAdmin#SOURCES_SOURCE_MENULIST_DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals" locator1="CPReportsadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 		</while>
 
-		<execute function="AssertTextEquals" locator1="CPReportsadmin#INFO_MESSAGE" value1="There are no sources." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no sources." />
 	</command>
 
 	<command name="viewNoReportEntryFile">
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
-		<execute function="AssertElementNotPresent" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_FILE" />
+		<execute function="AssertElementNotPresent" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE" />
 	</command>
 
 	<command name="viewReportEntry">
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute function="AssertClick" locator1="CPReportsadmin#REPORTS_ENTRY_TABLE_DEFINITION_NAME" value1="${reportsDefinitionName}" />
+		<execute function="AssertClick" locator1="ReportsAdmin#REPORTS_ENTRY_TABLE_DEFINITION_NAME" value1="${reportsDefinitionName}" />
 	</command>
 
 	<command name="viewReportEntryFields">
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#DEFINITION_NAME_FIELD" value1="Definition Name ${reportsDefinitionName}" />
+		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#DEFINITION_NAME_FIELD" value1="Definition Name ${reportsDefinitionName}" />
 
 		<var name="key_reportsDefinitionDescription" value="${reportsDefinitionDescription}" />
 
-		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#DESCRIPTION_FIELD" value1="Description ${reportsDefinitionDescription}" />
+		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#DESCRIPTION_FIELD" value1="Description ${reportsDefinitionDescription}" />
 
 		<var name="key_dataSource" value="${dataSource}" />
 
-		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#DATA_SOURCE_NAME_FIELD" value1="Data Source Name ${dataSource}" />
+		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#DATA_SOURCE_NAME_FIELD" value1="Data Source Name ${dataSource}" />
 
 		<if>
 			<isset var="reportParameters" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#REPORT_PARAMETERS_FIELD" value1="Report Parameters [${reportParameterse}]" />
+				<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#REPORT_PARAMETERS_FIELD" value1="Report Parameters [${reportParameterse}]" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#REPORT_PARAMETERS_DEFAULT_FIELD" value1="Report Parameters" />
+				<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#REPORT_PARAMETERS_DEFAULT_FIELD" value1="Report Parameters" />
 			</else>
 		</if>
 
 		<var name="key_userName" value="${userName}" />
 
-		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#REQUESTED_BY_FIELD" value1="Requested By ${userName}" />
+		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#REQUESTED_BY_FIELD" value1="Requested By ${userName}" />
 
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
 		<if>
 			<equals arg1="${scheduled}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_SCHEDULED_FILE" value1="${reportsFileName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_SCHEDULED_FILE" value1="${reportsFileName}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
+				<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
 			</else>
 		</if>
 	</command>

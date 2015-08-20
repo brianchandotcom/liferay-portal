@@ -117,10 +117,10 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="AssertClick" locator1="Dockbar#MY_SITES" value1="My Sites" />
-		<execute function="AssertClick" locator1="Dockbar#MY_SITES_SITE_NAME" value1="${siteName}" />
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
-		<execute function="AssertClick" locator1="Dockbar#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick" locator1="DockbarTEMP#MY_SITES" value1="My Sites" />
+		<execute function="AssertClick" locator1="DockbarTEMP#MY_SITES_SITE_NAME" value1="${siteName}" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
+		<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<execute function="AssertAlertNotPresent" />
 		<execute function="AssertTextEquals" locator1="Home#CONTROL_PANEL_MANAGE_BUTTON" value1="Manage ${siteName}" />
@@ -320,9 +320,9 @@
 
 		<var name="key_wikiPageTitle" value="Wiki Page Title" />
 
-		<execute function="AssertClick" locator1="CPWikiAllpages#WIKI_PAGE_TABLE_PAGE" value1="Wiki Page Title" />
+		<execute function="AssertClick" locator1="Wiki#ALL_PAGES_TABLE_PAGE_NAME" value1="Wiki Page Title" />
 
-		<execute function="AssertClick" locator1="CPWikiWikipage#WIKI_PAGE_ACTIONS_DETAILS" value1="Details" />
+		<execute function="AssertClick" locator1="Wiki#LINK_DETAILS" value1="Details" />
 
 		<execute function="AssertAlertNotPresent" />
 	</command>

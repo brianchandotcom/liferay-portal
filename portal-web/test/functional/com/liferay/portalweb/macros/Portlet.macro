@@ -107,8 +107,8 @@
 		</if>
 
 		<execute function="AssertClick#assertTextClickAtAddApplication" locator1="DockbarAddpanelapplications#APPLICATIONS_TAB" value1="Applications" />
-		<execute function="Type#sendKeysApplicationSearch" locator1="DockbarAddpanelapplications#SEARCH_FIELD" value1="${portletName}" />
-		<execute function="AssertClick#pauseMakeVisibleAssertTextEqualsClickAt" locator1="DockbarAddpanelapplications#ADD_PORTLET_LINK" value1="Add" />
+		<execute function="Type#sendKeysApplicationSearch" locator1="Search#APPLICATION_SEARCH_FIELD" value1="${portletName}" />
+		<execute function="AssertClick#pauseMakeVisibleAssertTextEqualsClickAt" locator1="DockbarAddPanel#ADD_PORTLET_LINK" value1="Add" />
 
 		<execute function="Pause" locator1="5000" />
 
@@ -171,8 +171,8 @@
 		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_COMMENTS_CHECKBOX" />
 		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_COMMENT_RATINGS_CHECKBOX" />
 		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX" />
-		<execute function="AssertClick" locator1="PGADTConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGADTConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
@@ -313,10 +313,10 @@
 			</elseif>
 		</if>
 
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
 
 		<execute function="AssertClick" locator1="DockbarAddpanelapplications#NAVIGATION_APPLICATIONS" value1="Applications" />
-		<execute function="Type#sendKeysApplicationSearch" locator1="DockbarAddpanelapplications#SEARCH_FIELD" value1="${portletName}" />
+		<execute function="Type#sendKeysApplicationSearch" locator1="Search#APPLICATION_SEARCH_FIELD" value1="${portletName}" />
 
 		<var name="portletLocator" value="//span[@data-title=&quot;${portletName}&quot; and contains(@class,'add-content-item')]" />
 

@@ -4,8 +4,8 @@
 	<command name="addActionCP">
 		<var name="key_userAction" value="${userAction}" />
 
-		<execute function="AssertClick" locator1="CPSocialactivity#POSSIBLE_USER_ACTIONS_BUTTON" value1="${userAction}" />
-		<execute function="AssertClick" locator1="CPSocialactivity#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="SocialActivity#POSSIBLE_USER_ACTIONS_BUTTON" value1="${userAction}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="configureActionCP">
@@ -14,14 +14,14 @@
 		<if>
 			<isset var="participationIncrement" />
 			<then>
-				<execute function="Select" locator1="CPSocialactivity#PARTICIPATION_INCREMENT_SELECT" value1="${participationIncrement}" />
+				<execute function="Select" locator1="SocialActivity#PARTICIPATION_INCREMENT_SELECT" value1="${participationIncrement}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="contributionIncrement" />
 			<then>
-				<execute function="Select" locator1="CPSocialactivity#CONTRIBUTION_INCREMENT_SELECT" value1="${contributionIncrement}" />
+				<execute function="Select" locator1="SocialActivity#CONTRIBUTION_INCREMENT_SELECT" value1="${contributionIncrement}" />
 			</then>
 		</if>
 
@@ -33,60 +33,60 @@
 				<isset var="participationLimitPeriod" />
 			</or>
 			<then>
-				<execute function="AssertClick" locator1="CPSocialactivity#LIMIT_LINK" value1="Limit" />
+				<execute function="AssertClick" locator1="SocialActivity#LIMIT_LINK" value1="Limit" />
 
 				<if>
 					<isset var="contributionLimitValue" />
 					<then>
-						<execute function="Select" locator1="CPSocialactivity#CONTRIBUTION_LIMIT_VALUE_SELECT" value1="${contributionLimitValue}" />
+						<execute function="Select" locator1="SocialActivity#CONTRIBUTION_LIMIT_VALUE_SELECT" value1="${contributionLimitValue}" />
 					</then>
 				</if>
 
 				<if>
 					<isset var="contributionLimitPeriod" />
 					<then>
-						<execute function="Select" locator1="CPSocialactivity#CONTRIBUTION_LIMIT_PERIOD_SELECT" value1="${contributionLimitPeriod}" />
+						<execute function="Select" locator1="SocialActivity#CONTRIBUTION_LIMIT_PERIOD_SELECT" value1="${contributionLimitPeriod}" />
 					</then>
 				</if>
 
 				<if>
 					<isset var="participationLimitValue" />
 					<then>
-						<execute function="Select" locator1="CPSocialactivity#PARTICIPATION_LIMIT_VALUE_SELECT" value1="${participationLimitValue}" />
+						<execute function="Select" locator1="SocialActivity#PARTICIPATION_LIMIT_VALUE_SELECT" value1="${participationLimitValue}" />
 					</then>
 				</if>
 
 				<if>
 					<isset var="participationLimitPeriod" />
 					<then>
-						<execute function="Select" locator1="CPSocialactivity#PARTICIPATION_LIMIT_PERIOD_SELECT" value1="${participationLimitPeriod}" />
+						<execute function="Select" locator1="SocialActivity#PARTICIPATION_LIMIT_PERIOD_SELECT" value1="${participationLimitPeriod}" />
 					</then>
 				</if>
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPSocialactivity#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="enableCP">
-		<execute function="Check" locator1="CPSocialactivity#BLOGS_ENTRY_CHECKBOX" />
-		<execute function="AssertClick" locator1="CPSocialactivity#SAVE_BUTTON" value1="Save" />
+		<execute function="Check" locator1="Checkbox#BLOGS_ENTRY" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="removeActionCP">
 		<var name="key_userAction" value="${userAction}" />
 
-		<execute function="Click" locator1="CPSocialactivity#CLOSE_ICON" />
-		<execute function="AssertTextEquals" locator1="CPSocialactivity#POSSIBLE_USER_ACTIONS_BUTTON" value1="${userAction}" />
-		<execute function="AssertClick" locator1="CPSocialactivity#SAVE_BUTTON" value1="Save" />
+		<execute function="Click" locator1="SocialActivity#CLOSE_ICON" />
+		<execute function="AssertTextEquals" locator1="SocialActivity#POSSIBLE_USER_ACTIONS_BUTTON" value1="${userAction}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="viewPGViaUserStatistics">
 		<var name="key_userName" value="${userName}" />
 
-		<execute function="AssertTextEquals" locator1="PGUserstatistics#RANKING_TABLE_USER_NAME" value1="${userName}" />
-		<execute function="AssertTextEquals" locator1="PGUserstatistics#RANKING_TABLE_RANK" value1="${userRank}" />
-		<execute function="AssertTextEquals" locator1="PGUserstatistics#RANKING_TABLE_CONTRIBUTION_SCORE" value1="${contributionScore}" />
-		<execute function="AssertTextEquals" locator1="PGUserstatistics#RANKING_TABLE_PARTICIPATION_SCORE" value1="${participationScore}" />
+		<execute function="AssertTextEquals" locator1="UserStatistics#RANKING_TABLE_USER_NAME" value1="${userName}" />
+		<execute function="AssertTextEquals" locator1="UserStatistics#RANKING_TABLE_USER_NAME" value1="${userRank}" />
+		<execute function="AssertTextEquals" locator1="UserStatistics#RANKING_TABLE_USER_NAME" value1="${contributionScore}" />
+		<execute function="AssertTextEquals" locator1="UserStatistics#RANKING_TABLE_USER_NAME" value1="${participationScore}" />
 	</command>
 </definition>

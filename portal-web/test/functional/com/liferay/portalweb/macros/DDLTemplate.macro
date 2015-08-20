@@ -11,145 +11,145 @@
 	</command>
 
 	<command name="addDisplayTemplateCP">
-		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="DDL#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
-		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
+		<execute function="SelectFrame" locator1="DDMSelectStructure#STRUCTURES_IFRAME_1" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="DDMSelectStructure#STRUCTURE_TABLE_ACTIONS_1" />
+		<execute function="AssertClick" locator1="DDMSelectStructure#STRUCTURE_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TOOLBAR_ADD_DISPLAY_TEMPLATE" value1="Add Display Template" />
+		<execute function="AssertClick" locator1="DDMEditTemplate#TOOLBAR_ADD_DISPLAY_TEMPLATE" value1="Add Display Template" />
 
-		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#NAME_FIELD" value1="${ddlDisplayTemplateName}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${ddlDisplayTemplateName}" />
 
 		<execute macro="DDLTemplate#_showDetails" />
 
-		<execute function="Select" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#DETAILS_LANGUAGE_SELECT" value1="${ddlDisplayTemplateLanguage}" />
+		<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="${ddlDisplayTemplateLanguage}" />
 
 		<if>
 			<isset var="ddlDisplayTemplateTextFieldScript" />
 			<then>
-				<execute function="AssertClick#assertTextClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#DATA_LIST_RECORD_FIELDS_TEXT" value1="${ddlDisplayTemplateTextFieldScript}" />
+				<execute function="AssertClick#assertTextClick" locator1="DDMEditTemplate#DATA_LIST_RECORD_FIELDS_TEXT" value1="${ddlDisplayTemplateTextFieldScript}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="ddlDisplayTemplateScript" />
 			<then>
-				<execute function="Type#typeAceEditor" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#SCRIPT_CONTENT_FIELD" value1="${ddlDisplayTemplateScript}" />
+				<execute function="Type#typeAceEditor" locator1="DDMEditTemplate#SCRIPT_CONTENT_FIELD" value1="${ddlDisplayTemplateScript}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="ddlDisplayTemplateScriptFile" />
 			<then>
-				<execute function="UploadCommonFile" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#SCRIPT_FILE_FIELD" value1="${ddlDisplayTemplateScriptFile}" />
+				<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${ddlDisplayTemplateScriptFile}" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAdddisplay#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addFormTemplateCP">
-		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="DDL#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
-		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
+		<execute function="SelectFrame" locator1="DDMSelectStructure#STRUCTURES_IFRAME_1" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="DDMSelectStructure#STRUCTURE_TABLE_ACTIONS_1" />
+		<execute function="AssertClick" locator1="DDMSelectStructure#STRUCTURE_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TOOLBAR_ADD_FORM_TEMPLATE" value1="Add Form Template" />
-		<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#NAME_FIELD" value1="${ddlFormTemplateName}" />
+		<execute function="AssertClick" locator1="DDMEditTemplate#TOOLBAR_ADD_FORM_TEMPLATE" value1="Add Form Template" />
+		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${ddlFormTemplateName}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addFormTemplateViaDDLDisplayPG">
-		<execute function="Click" locator1="PGDynamicdatalists#TOOLBAR_ADD_FORM_TEMPLATE" />
+		<execute function="Click" locator1="DDL#TOOLBAR_ADD_FORM_TEMPLATE" />
 
 		<execute function="Type#clickAtSendKeys" locator1="PGDynamicdatalistsAddformtemplate#NAME_FIELD" value1="${ddlFormTemplateName}" />
 	</command>
 
 	<command name="copyCP">
-		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="DDL#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
-		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
+		<execute function="SelectFrame" locator1="DDMSelectStructure#STRUCTURES_IFRAME_1" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="DDMSelectStructure#STRUCTURE_TABLE_ACTIONS_1" />
+		<execute function="AssertClick" locator1="DDMSelectStructure#STRUCTURE_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 
 		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
 
-		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_MENULIST_COPY" value1="Copy" />
+		<execute function="Click" locator1="DDMEditTemplate#TEMPLATE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="DDMEditTemplate#TEMPLATE_MENULIST_COPY" value1="Copy" />
 
-		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesCopy#NAME_FIELD" value1="${dataDefinitionTemplateCopyName}" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesCopy#COPY_BUTTON" value1="Copy" />
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesCopy#SUCCESS_MESSAGE" value1="Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog." />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesCopy#CLOSE_BUTTON" value1="Close" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${dataDefinitionTemplateCopyName}" />
+		<execute function="AssertClick" locator1="Button#COPY" value1="Copy" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog." />
+		<execute function="AssertClick" locator1="Button#CLOSE" value1="Close" />
 
 		<var name="key_ddlTemplateName" value="${dataDefinitionTemplateCopyName}" />
 
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_NAME" value1="${dataDefinitionTemplateCopyName}" />
+		<execute function="AssertTextEquals" locator1="DDMEditTemplate#TEMPLATE_TABLE_NAME" value1="${dataDefinitionTemplateCopyName}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="deleteTemplateCP">
-		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="DDL#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
-		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
+		<execute function="SelectFrame" locator1="DDMSelectStructure#STRUCTURES_IFRAME_1" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="DDMSelectStructure#STRUCTURE_TABLE_ACTIONS_1" />
+		<execute function="AssertClick" locator1="DDMSelectStructure#STRUCTURE_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 
-		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TOOLBAR_SEARCH_FIELD" value1="${ddlTemplateName}" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute function="Check" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_ALL_CHECKBOX" />
-		<execute function="AssertClickNoError" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#DELETE_BUTTON" value1="Delete" />
+		<execute function="Type" locator1="DDMEditTemplate#TOOLBAR_SEARCH_FIELD" value1="${ddlTemplateName}" />
+		<execute function="AssertClick" locator1="DDMEditTemplate#TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute function="Check" locator1="DDMEditTemplate#TEMPLATE_TABLE_ALL_CHECKBOX" />
+		<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="DDL#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
-		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
+		<execute function="SelectFrame" locator1="DDMSelectStructure#STRUCTURES_IFRAME_1" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="DDMSelectStructure#STRUCTURE_TABLE_ACTIONS_1" />
+		<execute function="AssertClick" locator1="DDMSelectStructure#STRUCTURE_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 
-		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TOOLBAR_SEARCH_FIELD" value1="${ddlDisplayTemplateName}" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#INFO_MESSAGE" value1="There are no templates." />
+		<execute function="Type" locator1="DDMEditTemplate#TOOLBAR_SEARCH_FIELD" value1="${ddlDisplayTemplateName}" />
+		<execute function="AssertClick" locator1="DDMEditTemplate#TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no templates." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editDisplayTemplateCP">
-		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="DDL#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
-		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
+		<execute function="SelectFrame" locator1="DDMSelectStructure#STRUCTURES_IFRAME_1" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="DDMSelectStructure#STRUCTURE_TABLE_ACTIONS_1" />
+		<execute function="AssertClick" locator1="DDMSelectStructure#STRUCTURE_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 
 		<var name="key_ddlTemplateName" value="${ddlDisplayTemplateName}" />
 
-		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_MENULIST_EDIT" value1="Edit" />
+		<execute function="Click" locator1="DDMEditTemplate#TEMPLATE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="DDMEditTemplate#TEMPLATE_MENULIST_EDIT" value1="Edit" />
 
 		<execute function="Pause" locator1="1000" />
 		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#NAME_FIELD" value1="${ddlDisplayTemplateNameEdit}" />
@@ -160,24 +160,24 @@
 		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#DATA_LIST_RECORD_FIELDS_TEXT" value1="${ddlDisplayTemplateTextFieldScriptEdit}" />
 		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#SAVE_BUTTON" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editFormTemplateCP">
-		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="DDL#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
-		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS_1" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
+		<execute function="SelectFrame" locator1="DDMSelectStructure#STRUCTURES_IFRAME_1" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="DDMSelectStructure#STRUCTURE_TABLE_ACTIONS_1" />
+		<execute function="AssertClick" locator1="DDMSelectStructure#STRUCTURE_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 
-		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TOOLBAR_SEARCH_FIELD" value1="${ddlFormTemplateName}" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_ACTIONS_1" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_MENULIST_EDIT" value1="Edit" />
+		<execute function="Type" locator1="DDMEditTemplate#TOOLBAR_SEARCH_FIELD" value1="${ddlFormTemplateName}" />
+		<execute function="AssertClick" locator1="DDMEditTemplate#TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="DDMEditTemplate#TEMPLATE_TABLE_ACTIONS_1" />
+		<execute function="AssertClick" locator1="DDMEditTemplate#TEMPLATE_MENULIST_EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#NAME_FIELD" value1="${ddlFormTemplateNameEdit}" />
 
@@ -185,55 +185,55 @@
 	</command>
 
 	<command name="editFormTemplateModeCP">
-		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
+		<execute function="SelectFrame" locator1="DDMSelectStructure#STRUCTURES_IFRAME_1" />
 
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#DETAILS_MODE_SELECT" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="DDMEditStructure#DETAILS_MODE_SELECT" />
 			<then>
-				<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#DETAILS" value1="Details" />
+				<execute function="AssertClick" locator1="DDMEditStructure#DETAILS" value1="Details" />
 			</then>
 		</if>
 
 		<execute function="Pause" locator1="3000" />
-		<execute function="Select" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#DETAILS_MODE_SELECT" value1="${ddlFormTemplateMode}" />
+		<execute function="Select" locator1="DDMEditStructure#DETAILS_MODE_SELECT" value1="${ddlFormTemplateMode}" />
 		<execute function="Pause" locator1="3000" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editFormTemplatePG">
-		<execute function="Click" locator1="PGDynamicdatalists#TOOLBAR_EDIT_FORM_TEMPLATE" />
+		<execute function="Click" locator1="DDL#TOOLBAR_EDIT_FORM_TEMPLATE" />
 
 		<execute function="Type#clickAtSendKeys" locator1="PGDynamicdatalistsAddformtemplate#NAME_FIELD" value1="${ddlFormTemplateNameEdit}" />
 	</command>
 
 	<command name="gotoManageTemplatesCmd">
-		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="DDL#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
+		<execute function="SelectFrame" locator1="DDMSelectStructure#STRUCTURES_IFRAME_1" />
 
 		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
-		<execute function="Click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
+		<execute function="Click" locator1="DDMSelectStructure#STRUCTURE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="DDMSelectStructure#STRUCTURE_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 	</command>
 
 	<command name="saveAndContinueFormTemplateCP">
-		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#DATA_DEFINITIONS_IFRAME" />
+		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
 
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#SAVE_AND_CONTINUE_BUTTON" value1="Save and Continue" />
+		<execute function="AssertClick" locator1="Button#SAVE_AND_CONTINUE" value1="Save and Continue" />
 
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="saveFormTemplateCP">
-		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#DATA_DEFINITIONS_IFRAME" />
+		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
 
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -243,11 +243,11 @@
 	</command>
 
 	<command name="selectDisplayTemplateViaDDLDisplayPG">
-		<execute function="SelectFrame" locator1="PGDynamicdatalistsConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="Select" locator1="PGDynamicdatalistsConfiguration#TEMPLATES_DISPLAY_TEMPLATE_SELECT" value1="${ddlDisplayTemplateName}" />
-		<execute function="AssertClick" locator1="PGDynamicdatalistsConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="AssertSelectedLabel" locator1="PGDynamicdatalistsConfiguration#TEMPLATES_DISPLAY_TEMPLATE_SELECT" value1="${ddlDisplayTemplateName}" />
+		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="Select" locator1="DDLConfiguration#TEMPLATES_DISPLAY_TEMPLATE_SELECT" value1="${ddlDisplayTemplateName}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertSelectedLabel" locator1="DDLConfiguration#TEMPLATES_DISPLAY_TEMPLATE_SELECT" value1="${ddlDisplayTemplateName}" />
 
 		<execute function="SelectFrameTop" />
 	</command>
@@ -257,9 +257,9 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="AssertClick" locator1="DDL#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute function="SelectFrame" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITIONS_IFRAME" />
+		<execute function="SelectFrame" locator1="DDMSelectStructure#STRUCTURES_IFRAME_1" />
 
 		<if>
 			<not>
@@ -273,17 +273,17 @@
 		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS" />
+			<condition function="IsElementPresent" locator1="DDMSelectStructure#STRUCTURE_TABLE_ACTIONS" />
 			<then>
-				<execute function="Click" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_TABLE_ACTIONS" />
-				<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitions#DATA_DEFINITION_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
+				<execute function="Click" locator1="DDMSelectStructure#STRUCTURE_TABLE_ACTIONS" />
+				<execute function="AssertClick" locator1="DDMSelectStructure#STRUCTURE_MENULIST_MANAGE_TEMPLATES" value1="Manage Templates" />
 				<if>
-					<condition function="IsElementPresent" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_ACTIONS_1" />
+					<condition function="IsElementPresent" locator1="DDMEditTemplate#TEMPLATE_TABLE_ACTIONS_1" />
 					<then>
-						<execute function="Check" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_ALL_CHECKBOX" />
-						<execute function="ClickNoError" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#DELETE_BUTTON" />
+						<execute function="Check" locator1="DDMEditTemplate#TEMPLATE_TABLE_ALL_CHECKBOX" />
+						<execute function="ClickNoError" locator1="Button#DELETE" />
 						<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-						<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+						<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 					</then>
 				</if>
 			</then>
@@ -295,7 +295,7 @@
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#INFO_MESSAGE" value1="There are no templates." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no templates." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -307,9 +307,9 @@
 
 		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
 
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_NAME" value1="${ddlTemplateName}" />
+		<execute function="AssertClick" locator1="DDMEditTemplate#TEMPLATE_TABLE_NAME" value1="${ddlTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#HEADER_TITLE" value1="${ddlTemplateName} (${ddlDataDefinitionName})" />
+		<execute function="AssertTextEquals" locator1="DDMEditTemplate#HEADER_TITLE" value1="${ddlTemplateName} (${ddlDataDefinitionName})" />
 		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#NAME_FIELD" value1="${ddlTemplateName}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -322,9 +322,9 @@
 
 		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
 
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_NAME" value1="${ddlTemplateName}" />
+		<execute function="AssertClick" locator1="DDMEditTemplate#TEMPLATE_TABLE_NAME" value1="${ddlTemplateName}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#HEADER_TITLE" value1="${ddlTemplateName} (${ddlDataDefinitionName})" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="DDMEditStructure#HEADER_TITLE" value1="${ddlTemplateName} (${ddlDataDefinitionName})" />
 		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#NAME_FIELD" value1="${ddlTemplateName}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -337,8 +337,8 @@
 
 		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
 
-		<execute function="AssertTextPresent" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_NAME" value1="${ddlTemplateName}" />
-		<execute function="AssertElementNotPresent" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_DUPLICATE_TEMPLATE_NAME" />
+		<execute function="AssertTextPresent" locator1="DDMEditTemplate#TEMPLATE_TABLE_NAME" value1="${ddlTemplateName}" />
+		<execute function="AssertElementNotPresent" locator1="DDMEditTemplate#TEMPLATE_TABLE_DUPLICATE_TEMPLATE_NAME" />
 	</command>
 
 	<command name="viewNoTemplateCP">
@@ -348,7 +348,7 @@
 
 		<var name="key_ddlTemplateName" value="${ddlTemplateName}" />
 
-		<execute function="AssertElementNotPresent" locator1="CPDynamicdatalistsDatadefinitionsManagetemplates#TEMPLATE_TABLE_NAME" />
+		<execute function="AssertElementNotPresent" locator1="DDMEditTemplate#TEMPLATE_TABLE_NAME" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

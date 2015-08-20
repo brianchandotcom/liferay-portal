@@ -6,7 +6,7 @@
 				<for list="${checkUserSegmentMatchedList}" param="userSegmentMatched">
 					<var name="key_userSegmentMatched" value="${userSegmentMatched}" />
 
-					<execute function="Check" locator1="PGContentTargetingSimulator#USER_SEGMENTS_MATCHED_CHECKBOX" />
+					<execute function="Check" locator1="ContentTargetingSimulator#USER_SEGMENTS_MATCHED_CHECKBOX" />
 				</for>
 			</then>
 		</if>
@@ -17,7 +17,7 @@
 				<for list="${uncheckUserSegmentMatchedList}" param="userSegmentMatched">
 					<var name="key_userSegmentMatched" value="${userSegmentMatched}" />
 
-					<execute function="Uncheck" locator1="PGContentTargetingSimulator#USER_SEGMENTS_MATCHED_CHECKBOX" />
+					<execute function="Uncheck" locator1="ContentTargetingSimulator#USER_SEGMENTS_MATCHED_CHECKBOX" />
 				</for>
 			</then>
 		</if>
@@ -30,7 +30,7 @@
 				<for list="${checkUserSegmentOtherList}" param="userSegmentOther">
 					<var name="key_userSegmentOther" value="${userSegmentOther}" />
 
-					<execute function="Check" locator1="PGContentTargetingSimulator#USER_SEGMENTS_OTHER_CHECKBOX" />
+					<execute function="Check" locator1="ContentTargetingSimulator#USER_SEGMENTS_OTHER_CHECKBOX" />
 				</for>
 			</then>
 		</if>
@@ -41,62 +41,62 @@
 				<for list="${uncheckUserSegmentOtherList}" param="userSegmentOther">
 					<var name="key_userSegmentOther" value="${userSegmentOther}" />
 
-					<execute function="Uncheck" locator1="PGContentTargetingSimulator#USER_SEGMENTS_OTHER_CHECKBOX" />
+					<execute function="Uncheck" locator1="ContentTargetingSimulator#USER_SEGMENTS_OTHER_CHECKBOX" />
 				</for>
 			</then>
 		</if>
 	</command>
 
 	<command name="gotoPG">
-		<execute function="Click" locator1="PGContentTargetingSimulator#DOCKBAR_SIMULATOR_BUTTON" />
+		<execute function="Click" locator1="ContentTargetingSimulator#DOCKBAR_SIMULATOR_BUTTON" />
 	</command >
 
 	<command name="simulateUserSegmentPG">
 		<if>
 			<equals arg1="${simulationbutton}" arg2="Simulate" />
 			<then>
-				<execute function="AssertClick" locator1="PGContentTargetingSimulator#SIMULATE_BUTTON" value1="Simulate" />
+				<execute function="AssertClick" locator1="ContentTargetingSimulator#SIMULATE_BUTTON" value1="Simulate" />
 			</then>
 			<elseif>
 				<equals arg1="${simulationbutton}" arg2="Stop Simulation" />
 				<then>
-					<execute function="AssertClick" locator1="PGContentTargetingSimulator#STOP_SIMULATION_BUTTON" value1="Stop Simulation" />
+					<execute function="AssertClick" locator1="ContentTargetingSimulator#STOP_SIMULATION_BUTTON" value1="Stop Simulation" />
 				</then>
 			</elseif>
 		</if>
 	</command>
 
 	<command name="viewCampaignsViaSimulatorPG">
-		<execute function="AssertClick" locator1="PGContentTargetingSimulator#SIMULATOR_CAMPAIGNS_NAVIGATION" value1="Campaigns" />
+		<execute function="AssertClick" locator1="ContentTargetingSimulator#SIMULATOR_CAMPAIGNS_NAVIGATION" value1="Campaigns" />
 
 		<for list="${viewCampaignMatched}" param="campaignMatched">
 			<var name="key_campaignMatched" value="${campaignMatched}" />
 
-			<execute function="AssertTextEquals" locator1="PGContentTargetingSimulator#CAMPAIGNS_MATCHED_LABEL" value1="${campaignMatched}" />
+			<execute function="AssertTextEquals" locator1="ContentTargetingSimulator#CAMPAIGNS_MATCHED_LABEL" value1="${campaignMatched}" />
 		</for>
 
 		<for list="${viewCampaignOther}" param="campaignOther">
 			<var name="key_campaignOther" value="${campaignOther}" />
 
-			<execute function="AssertTextEquals" locator1="PGContentTargetingSimulator#CAMPAIGNS_OTHER_LABEL" value1="${campaignOther}" />
+			<execute function="AssertTextEquals" locator1="ContentTargetingSimulator#CAMPAIGNS_OTHER_LABEL" value1="${campaignOther}" />
 		</for>
 	</command>
 
 	<command name="viewUserSegmentsViaSimulatorPG">
-		<execute function="AssertClick" locator1="PGContentTargetingSimulator#SIMULATOR_USER_SEGMENTS_NAVIGATION" value1="User Segments" />
+		<execute function="AssertClick" locator1="ContentTargetingSimulator#SIMULATOR_USER_SEGMENTS_NAVIGATION" value1="User Segments" />
 
 		<for list="${viewUserSegmentMatched}" param="userSegmentMatched">
 			<var name="key_userSegmentMatched" value="${userSegmentMatched}" />
 
-			<execute function="AssertTextEquals" locator1="PGContentTargetingSimulator#USER_SEGMENTS_MATCHED_LABEL" value1="${userSegmentMatched}" />
-			<execute function="AssertChecked" locator1="PGContentTargetingSimulator#USER_SEGMENTS_MATCHED_CHECKBOX" />
+			<execute function="AssertTextEquals" locator1="ContentTargetingSimulator#USER_SEGMENTS_MATCHED_LABEL" value1="${userSegmentMatched}" />
+			<execute function="AssertChecked" locator1="ContentTargetingSimulator#USER_SEGMENTS_MATCHED_CHECKBOX" />
 		</for>
 
 		<for list="${viewUserSegmentOther}" param="userSegmentOther">
 			<var name="key_userSegmentOther" value="${userSegmentOther}" />
 
-			<execute function="AssertTextEquals" locator1="PGContentTargetingSimulator#USER_SEGMENTS_OTHER_LABEL" value1="${userSegmentOther}" />
-			<execute function="AssertNotChecked" locator1="PGContentTargetingSimulator#USER_SEGMENTS_OTHER_CHECKBOX" />
+			<execute function="AssertTextEquals" locator1="ContentTargetingSimulator#USER_SEGMENTS_OTHER_LABEL" value1="${userSegmentOther}" />
+			<execute function="AssertNotChecked" locator1="ContentTargetingSimulator#USER_SEGMENTS_OTHER_CHECKBOX" />
 		</for>
 	</command>
 </definition>

@@ -1,63 +1,63 @@
 <definition>
 	<command name="configureCampaignRule">
-		<execute function="SelectFrame" locator1="PGCampaigncontentdisplay#CAMPAIGN_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="CampaignContentDisplay#CAMPAIGN_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 
 		<var name="key_rowNumber" value="${rowNumber}" />
 
-		<execute function="Select" locator1="PGCampaigncontentdisplay#RULE_PANEL_CAMPAIGN_SELECT" value1="${campaignName}" />
-		<execute function="Click" locator1="PGCampaigncontentdisplay#RULE_PANEL_SELECT_CONTENT" />
+		<execute function="Select" locator1="CampaignContentDisplay#RULE_PANEL_CAMPAIGN_SELECT" value1="${campaignName}" />
+		<execute function="Click" locator1="CampaignContentDisplay#RULE_PANEL_SELECT_CONTENT" />
 
 		<var name="key_contentType" value="${contentType}" />
 
-		<execute function="Click" locator1="PGCampaigncontentdisplay#RULE_PANEL_DISPLAY_CONTENT_DROPDOWN_MENULIST" />
+		<execute function="Click" locator1="CampaignContentDisplay#RULE_PANEL_DISPLAY_CONTENT_DROPDOWN_MENULIST" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="PGCampaigncontentdisplay#SELECT_CONTENT_IFRAME" />
+		<execute function="SelectFrame" locator1="CampaignContentDisplay#SELECT_CONTENT_IFRAME" />
 
 		<var name="key_contentTitle" value="${contentTitle}" />
 
-		<execute function="ClickNoError" locator1="PGCampaigncontentdisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" />
+		<execute function="ClickNoError" locator1="CampaignContentDisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="PGCampaigncontentdisplay#CAMPAIGN_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="CampaignContentDisplay#CAMPAIGN_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 
-		<execute function="ClickNoError" locator1="PGCampaigncontentdisplay#RULE_PANEL_ADD_ROW_BUTTON" />
+		<execute function="ClickNoError" locator1="CampaignContentDisplay#RULE_PANEL_ADD_ROW_BUTTON" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureOtherwiseRule">
-		<execute function="SelectFrame" locator1="PGCampaigncontentdisplay#CAMPAIGN_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="CampaignContentDisplay#CAMPAIGN_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 
-		<execute function="ClickNoError" locator1="PGCampaigncontentdisplay#OTHERWISE_PANEL" />
-		<execute function="Click" locator1="PGCampaigncontentdisplay#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
-		<execute function="Click" locator1="PGCampaigncontentdisplay#OTHERWISE_PANEL_SELECT_CONTENT_BUTTON" />
+		<execute function="ClickNoError" locator1="CampaignContentDisplay#OTHERWISE_PANEL" />
+		<execute function="Click" locator1="CampaignContentDisplay#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
+		<execute function="Click" locator1="CampaignContentDisplay#OTHERWISE_PANEL_SELECT_CONTENT_BUTTON" />
 
 		<var name="key_contentType" value="${contentType}" />
 
-		<execute function="Click" locator1="PGCampaigncontentdisplay#OTHERWISE_PANEL_CONTENT_DROPDOWN_MENULIST" />
+		<execute function="Click" locator1="CampaignContentDisplay#OTHERWISE_PANEL_CONTENT_DROPDOWN_MENULIST" />
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="PGCampaigncontentdisplay#SELECT_CONTENT_IFRAME" />
+		<execute function="SelectFrame" locator1="CampaignContentDisplay#SELECT_CONTENT_IFRAME" />
 
 		<var name="key_contentTitle" value="${contentTitle}" />
 
-		<execute function="ClickNoError" locator1="PGCampaigncontentdisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" />
+		<execute function="ClickNoError" locator1="CampaignContentDisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="savePG">
-		<execute function="SelectFrame" locator1="PGCampaigncontentdisplay#CAMPAIGN_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
-		<execute function="ClickNoError" locator1="PGCampaigncontentdisplay#SAVE_BUTTON" />
+		<execute function="SelectFrame" locator1="CampaignContentDisplay#CAMPAIGN_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute function="ClickNoError" locator1="Button#SAVE" />
 
 		<execute function="Pause" locator1="3000" />
 
-		<execute function="AssertTextEquals" locator1="PGCampaigncontentdisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewNoContentPG">
-		<execute function="AssertTextEquals" locator1="PGCampaigncontentdisplay#INFO_MESSAGE" value1="There are no matching rules" />
+		<execute function="AssertTextEquals" locator1="CampaignContentDisplay#INFO_MESSAGE" value1="There are no matching rules" />
 	</command>
 
 	<command name="viewPG">
@@ -66,38 +66,38 @@
 			<then>
 				<var name="key_viewCampaignSelected" value="${viewCampaignSelected}" />
 
-				<execute function="AssertElementPresent" locator1="PGCampaigncontentdisplay#PREVIEW_CAMPAIGN_SELECTED" />
+				<execute function="AssertElementPresent" locator1="CampaignContentDisplay#PREVIEW_CAMPAIGN_SELECTED" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="entryContentText" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGCampaigncontentdisplay#ENTRY_CONTENT" value1="${entryContentText}" />
+				<execute function="AssertTextEquals" locator1="CampaignContentDisplay#ENTRY_CONTENT" value1="${entryContentText}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="preview1Text" />
 			<then>
-				<execute function="MouseOver" locator1="PGCampaigncontentdisplay#PREVIEW_1" />
-				<execute function="AssertTextEquals" locator1="PGCampaigncontentdisplay#PREVIEW_1" value1="${preview1Text}" />
+				<execute function="MouseOver" locator1="CampaignContentDisplay#PREVIEW_1" />
+				<execute function="AssertTextEquals" locator1="CampaignContentDisplay#PREVIEW_1" value1="${preview1Text}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="preview2Text" />
 			<then>
-				<execute function="MouseOver" locator1="PGCampaigncontentdisplay#PREVIEW_2" />
-				<execute function="AssertTextEquals" locator1="PGCampaigncontentdisplay#PREVIEW_2" value1="${preview2Text}" />
+				<execute function="MouseOver" locator1="CampaignContentDisplay#PREVIEW_2" />
+				<execute function="AssertTextEquals" locator1="CampaignContentDisplay#PREVIEW_2" value1="${preview2Text}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="preview3Text" />
 			<then>
-				<execute function="MouseOver" locator1="PGCampaigncontentdisplay#PREVIEW_3" />
-				<execute function="AssertTextEquals" locator1="PGCampaigncontentdisplay#PREVIEW_3" value1="${preview3Text}" />
+				<execute function="MouseOver" locator1="CampaignContentDisplay#PREVIEW_3" />
+				<execute function="AssertTextEquals" locator1="CampaignContentDisplay#PREVIEW_3" value1="${preview3Text}" />
 			</then>
 		</if>
 
@@ -105,7 +105,7 @@
 			<isset var="viewDontDisplay" />
 			<then>
 				<execute function="MouseOver" locator1="PGCampaigncontentdisplay#${viewDontDisplay}" />
-				<execute function="AssertTextEquals" locator1="PGCampaigncontentdisplay#INFO_MESSAGE" value1="There are no matching rules" />
+				<execute function="AssertTextEquals" locator1="CampaignContentDisplay#INFO_MESSAGE" value1="There are no matching rules" />
 			</then>
 		</if>
 	</command>

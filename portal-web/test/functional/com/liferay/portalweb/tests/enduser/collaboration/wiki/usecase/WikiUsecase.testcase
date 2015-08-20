@@ -350,7 +350,7 @@
 			<var name="wikiPageContentEdit"><![CDATA[<script>alert("xss")</script>]]></var>
 		</execute>
 
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
 		<execute function="AssertAlertNotPresent" />
 	</command>
 
@@ -363,7 +363,7 @@
 			<var name="portletName" value="Breadcrumb" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGWiki#NAVIGATION_RECENT_CHANGES" value1="Recent Changes" />
+		<execute function="AssertClick" locator1="Wiki#NAVIGATION_RECENT_CHANGES" value1="Recent Changes" />
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListVisible" value="Wiki Test Page" />
@@ -375,7 +375,7 @@
 			<var name="pathLocator" value="PAGE" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGWiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute function="AssertClick" locator1="Wiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListVisible" value="Wiki Test Page" />
@@ -387,7 +387,7 @@
 			<var name="pathLocator" value="CURRENT_LOCATION" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGWiki#NAVIGATION_DRAFT_PAGES" value1="Draft Pages" />
+		<execute function="AssertClick" locator1="Wiki#NAVIGATION_DRAFT_PAGES" value1="Draft Pages" />
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListVisible" value="Wiki Test Page" />

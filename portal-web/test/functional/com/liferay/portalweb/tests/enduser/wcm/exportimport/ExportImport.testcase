@@ -133,10 +133,10 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
 
-		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
 
 		<execute macro="Page#gotoCP">
@@ -193,7 +193,7 @@
 			<var name="exportTemplateName" value="Export Template Name Edit" />
 		</execute>
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText('//div[@id=\'_200_exportProcesses\']//table//tr/td[5]/span/a/span')" name="valueName" />
 
@@ -203,7 +203,7 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
 
 		<execute macro="LAR#importSiteCP">
@@ -341,9 +341,9 @@
 
 		<execute macro="LAR#configureExportSiteCP" />
 
-		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
 
@@ -353,7 +353,7 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
 
 		<execute macro="Page#gotoCP">
@@ -389,9 +389,9 @@
 
 		<execute macro="LAR#configureExportSiteCP" />
 
-		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
 
@@ -401,7 +401,7 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
 
 		<execute macro="LAR#importSiteCP">
@@ -463,9 +463,9 @@
 
 		<execute macro="LAR#configureExportSiteCP" />
 
-		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
 
@@ -475,7 +475,7 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
 
 		<execute macro="Page#gotoCP">
@@ -627,11 +627,11 @@
 
 		<execute macro="LAR#configureExportSiteCP" />
 
-		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
 
 		<var name="key_larFileName" value="${larFileName}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
 
@@ -641,7 +641,7 @@
 
 		<echo message="lar file name ${larFileName}" />
 
-		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -700,9 +700,9 @@
 			<var name="uncheckSubContent" value="Referenced Content" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
 
@@ -712,7 +712,7 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
 
 		<execute macro="Page#gotoCP">
@@ -766,7 +766,7 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
 
 		<execute macro="Page#gotoCP">
@@ -814,9 +814,9 @@
 
 		<var name="key_consumerPortletName" value="WSRP Unit Converter" />
 
-		<execute function="AssertTextEquals" locator1="CPWSRPManageportlets#PORTLET_TABLE_NAME" value1="WSRP Unit Converter" />
-		<execute function="AssertTextEquals" locator1="CPWSRPManageportlets#PORTLET_TABLE_REMOTE_PORTLET" value1="Unit Converter" />
-		<execute function="AssertElementPresent" locator1="CPWSRPManageportlets#PORTLET_TABLE_DELETE" value1="Delete" />
+		<execute function="AssertTextEquals" locator1="WSRPAdminManagePortlets#PORTLET_TABLE_NAME" value1="WSRP Unit Converter" />
+		<execute function="AssertTextEquals" locator1="WSRPAdminManagePortlets#PORTLET_TABLE_REMOTE_PORTLET" value1="Unit Converter" />
+		<execute function="AssertElementPresent" locator1="WSRPAdminManagePortlets#PORTLET_TABLE_DELETE" value1="Delete" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="WSRP Page" />
@@ -840,11 +840,11 @@
 
 		<execute macro="LAR#configureExportSiteCP" />
 
-		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
 
 		<var name="key_larFileName" value="${larFileName}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
 
@@ -854,7 +854,7 @@
 
 		<echo message="lar file name ${larFileName}" />
 
-		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 

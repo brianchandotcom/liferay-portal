@@ -319,7 +319,7 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute function="AssertTextNotEquals" locator1="CPKnowledgebaseadminArticle#CONTENT" value1="${kbArticleContentSource}" />
+		<execute function="AssertTextNotEquals" locator1="KnowledgeBaseArticle#CONTENT" value1="${kbArticleContentSource}" />
 	</command>
 
 	<command name="AddKBFolder" priority="4">

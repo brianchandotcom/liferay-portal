@@ -3,54 +3,54 @@
 		<if>
 			<equals arg1="${language}" arg2="Arabic (Saudi Arabia)" />
 			<then>
-				<execute function="Click" locator1="PGLanguage#LANGUAGE_MENU_ARABIC" />
+				<execute function="Click" locator1="Language#LANGUAGE_MENU_ARABIC" />
 			</then>
 			<elseif>
 				<equals arg1="${language}" arg2="Chinese (China)" />
 				<then>
-					<execute function="Click" locator1="PGLanguage#LANGUAGE_MENU_CHINESE" />
+					<execute function="Click" locator1="Language#LANGUAGE_MENU_CHINESE" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="English (United States)" />
 				<then>
-					<execute function="Click" locator1="PGLanguage#LANGUAGE_MENU_ENGLISH" />
+					<execute function="Click" locator1="Language#LANGUAGE_MENU_ENGLISH" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="French (France)" />
 				<then>
-					<execute function="Click" locator1="PGLanguage#LANGUAGE_MENU_FRENCH" />
+					<execute function="Click" locator1="Language#LANGUAGE_MENU_FRENCH" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="German (Germany)" />
 				<then>
-					<execute function="Click" locator1="PGLanguage#LANGUAGE_MENU_GERMAN" />
+					<execute function="Click" locator1="Language#LANGUAGE_MENU_GERMAN" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Hungarian (Hungary)" />
 				<then>
-					<execute function="Click" locator1="PGLanguage#LANGUAGE_MENU_HUNGARIAN" />
+					<execute function="Click" locator1="Language#LANGUAGE_MENU_HUNGARIAN" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Japanese (Japan)" />
 				<then>
-					<execute function="Click" locator1="PGLanguage#LANGUAGE_MENU_JAPANESE" />
+					<execute function="Click" locator1="Language#LANGUAGE_MENU_JAPANESE" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Portuguese (Brazil)" />
 				<then>
-					<execute function="Click" locator1="PGLanguage#LANGUAGE_MENU_PORTUGUESE" />
+					<execute function="Click" locator1="Language#LANGUAGE_MENU_PORTUGUESE" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${language}" arg2="Spanish (Spain)" />
 				<then>
-					<execute function="Click" locator1="PGLanguage#LANGUAGE_MENU_SPANISH" />
+					<execute function="Click" locator1="Language#LANGUAGE_MENU_SPANISH" />
 				</then>
 			</elseif>
 			<else>
@@ -60,6 +60,6 @@
 	</command>
 
 	<command name="tearDownLanguagePG">
-		<execute function="Click" locator1="PGLanguage#LANGUAGE_MENU_ENGLISH" />
+		<execute function="Click" locator1="Language#LANGUAGE_MENU_ENGLISH" />
 	</command>
 </definition>

@@ -1,12 +1,12 @@
 <definition>
 	<command name="checkReplyToMessageForGuestPG">
-		<execute function="AssertClick" locator1="PGMessageboards#PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute function="AssertClick" locator1="MessageBoards#PERMISSIONS_BUTTON" value1="Permissions" />
 
-		<execute function="SelectFrame" locator1="PGMessageboardsPermissionsConfiguration#PERMISSIONS_IFRAME" />
-		<execute function="Check" locator1="PGMessageboardsPermissionsConfiguration#GUEST_REPLY_TO_MESSAGE_CHECKBOX" />
-		<execute function="AssertClick" locator1="PGMessageboardsPermissionsConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsPermissionsConfiguration#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="SelectFrame" locator1="AssetPermissions#IFRAME" />
+		<execute function="Check" locator1="AssetPermissions#GUEST_REPLY_TO_MESSAGE_CHECKBOX" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="AssertClick" locator1="PGMessageboardsPermissionsConfiguration#CLOSE_BUTTON" value1="×" />
+		<execute function="AssertClick" locator1="Button#CLOSE_IFRAME" value1="×" />
 	</command>
 </definition>

@@ -12,26 +12,26 @@
 			</then>
 		</if>
 
-		<execute function="Select" locator1="PGADTConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${adtType} Test ADT" />
-		<execute function="AssertClick" locator1="PGADTConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGADTConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="Select" locator1="ApplicationDisplayTemplatesConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${adtType} Test ADT" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="SelectFrameTop" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" value1="relative=top" />
 	</command>
 
 	<command name="addCP">
 		<var name="key_adtType" value="${adtType}" />
 
-		<execute function="AssertTextEquals" locator1="CPApplicationdisplaytemplates#INFO_MESSAGE" value1="There are no templates." />
-		<execute function="AssertClick" locator1="CPApplicationdisplaytemplates#ADD" value1="Add" />
-		<execute function="AssertClick" locator1="CPApplicationdisplaytemplates#ADD_MENULIST" value1="${adtType} Template" />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no templates." />
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+		<execute function="AssertClick" locator1="Button#ADD_MENULIST" value1="${adtType} Template" />
 
-		<execute function="AssertTextEquals" locator1="CPApplicationdisplaytemplatesAdd#HEADER" value1="New ${adtType} Template" />
-		<execute function="Type" locator1="CPApplicationdisplaytemplatesAdd#NAME_FIELD" value1="${adtType} Test ADT" />
-		<execute function="UploadCommonFile" locator1="CPApplicationdisplaytemplatesAdd#SCRIPT_FIELD" value1="${adtFile}" />
-		<execute function="AssertClick" locator1="CPApplicationdisplaytemplatesAdd#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="DDMEditTemplate#HEADER_TITLE" value1="New ${adtType} Template" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${adtType} Test ADT" />
+		<execute function="UploadCommonFile" locator1="DDMEditTemplate#SCRIPT_FILE_FIELD" value1="${adtFile}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPApplicationdisplaytemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="CPApplicationdisplaytemplates#ADT_TABLE_NAME_1" value1="${adtType} Test ADT" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="ApplicationDisplayTemplates#ADT_TABLE_NAME_1" value1="${adtType} Test ADT" />
 	</command>
 
 	<command name="addManualViaRSS">
@@ -46,25 +46,25 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="PGADTConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
+		<execute function="AssertClick" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
 
 		<var name="key_adtType" value="RSS" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 
-		<execute function="SelectFrame" locator1="PGApplicationdisplaytemplates#ADT_IFRAME" />
+		<execute function="SelectFrame" locator1="ApplicationDisplayTemplates#ADT_IFRAME" />
 
-		<execute function="AssertClick#assertTextClick" locator1="PGApplicationdisplaytemplates#ADD" value1="Add" />
+		<execute function="AssertClick#assertTextClick" locator1="Button#ADD" value1="Add" />
 
-		<execute function="AssertClick" locator1="PGApplicationdisplaytemplates#ADD_MENULIST_ADT_TEMPLATE" value1="RSS Template" />
+		<execute function="AssertClick" locator1="Button#ADD_MENULIST_ADT_TEMPLATE" value1="RSS Template" />
 
-		<execute function="Type#mouseOverFocusType" locator1="PGApplicationdisplaytemplatesAdd#NAME_FIELD" value1="RSS Test ADT" />
+		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="RSS Test ADT" />
 
 		<execute function="Click" locator1="PGApplicationdisplaytemplatesAdd#RSS_FEEDS" />
 
-		<execute function="AssertClick" locator1="PGApplicationdisplaytemplatesAdd#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="PGApplicationdisplaytemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addPG">
@@ -82,24 +82,24 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="PGADTConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
+		<execute function="AssertClick" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
 
 		<var name="key_adtType" value="${adtType}" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
-		<execute function="SelectFrame" locator1="PGApplicationdisplaytemplates#ADT_IFRAME" />
-		<execute function="AssertClick#assertTextClick" locator1="PGApplicationdisplaytemplates#ADD" value1="Add" />
+		<execute function="SelectFrame" locator1="ApplicationDisplayTemplates#ADT_IFRAME" />
+		<execute function="AssertClick#assertTextClick" locator1="Button#ADD" value1="Add" />
 
 		<var name="key_adtType" value="${adtType}" />
 
-		<execute function="AssertClick" locator1="PGApplicationdisplaytemplates#ADD_MENULIST_ADT_TEMPLATE" value1="${adtType} Template" />
+		<execute function="AssertClick" locator1="Button#ADD_MENULIST_ADT_TEMPLATE" value1="${adtType} Template" />
 
-		<execute function="Type" locator1="PGApplicationdisplaytemplatesAdd#NAME_FIELD" value1="${adtType} Test ADT" />
-		<execute function="UploadCommonFile" locator1="PGApplicationdisplaytemplatesAdd#SCRIPT_FIELD" value1="${adtFile}" />
-		<execute function="AssertClick" locator1="PGApplicationdisplaytemplatesAdd#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${adtType} Test ADT" />
+		<execute function="UploadCommonFile" locator1="ApplicationDisplayTemplatesEdit#SCRIPT_FIELD" value1="${adtFile}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="PGApplicationdisplaytemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="PGApplicationdisplaytemplates#ADT_TABLE_NAME_1" value1="${adtType} Test ADT" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="ApplicationDisplayTemplates#ADT_TABLE_NAME_1" value1="${adtType} Test ADT" />
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
@@ -119,9 +119,9 @@
 					</then>
 				</if>
 
-				<execute function="Select" locator1="PGADTConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${defaultADT}" />
-				<execute function="AssertClick" locator1="PGADTConfiguration#SAVE_BUTTON" value1="Save" />
-				<execute function="AssertTextEquals" locator1="PGADTConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+				<execute function="Select" locator1="ApplicationDisplayTemplatesConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${defaultADT}" />
+				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 				<execute function="SelectFrameTop" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" value1="relative=top" />
 			</then>
 		</if>
@@ -139,22 +139,22 @@
 			</then>
 		</if>
 
-		<execute function="Click" locator1="PGADTConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" />
+		<execute function="Click" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
-		<execute function="SelectFrame" locator1="PGApplicationdisplaytemplates#ADT_IFRAME" />
+		<execute function="SelectFrame" locator1="ApplicationDisplayTemplates#ADT_IFRAME" />
 
 		<if>
-			<condition function="IsElementPresent#isVisible" locator1="PGApplicationdisplaytemplates#ADT_TABLE_ALL_CHECKBOX" />
+			<condition function="IsElementPresent#isVisible" locator1="ApplicationDisplayTemplates#ADT_TABLE_ALL_CHECKBOX" />
 			<then>
-				<execute function="Click" locator1="PGApplicationdisplaytemplates#ADT_TABLE_ALL_CHECKBOX" />
-				<execute function="AssertClickNoError" locator1="PGApplicationdisplaytemplates#DELETE_BUTTON" value1="Delete" />
+				<execute function="Click" locator1="ApplicationDisplayTemplates#ADT_TABLE_ALL_CHECKBOX" />
+				<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals" locator1="PGApplicationdisplaytemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGApplicationdisplaytemplates#INFO_MESSAGE" value1="There are no templates." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no templates." />
 	</command>
 
 	<command name="viewADTviaPortletPG">
@@ -173,8 +173,8 @@
 					</then>
 				</if>
 
-				<execute function="Select" locator1="PGADTConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${adtType} Test ADT" />
-				<execute function="AssertSelectedLabel" locator1="PGADTConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${adtType} Test ADT" />
+				<execute function="Select" locator1="ApplicationDisplayTemplatesConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${adtType} Test ADT" />
+				<execute function="AssertSelectedLabel" locator1="ApplicationDisplayTemplatesConfiguration#DISPLAY_TEMPLATE_SELECT" value1="${adtType} Test ADT" />
 				<execute function="SelectFrameTop" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" value1="relative=top" />
 			</then>
 		</if>

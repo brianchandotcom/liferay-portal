@@ -488,7 +488,7 @@
 	</command>
 
 	<command name="IsTextPresent" priority="4">
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
 
 		<var method="selenium#isTextPresent('Site Administrator')" name="string" />
 

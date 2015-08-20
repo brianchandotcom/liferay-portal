@@ -814,7 +814,7 @@
 			<var name="deleteUser" value="Test Test" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPRecyclebin#LIVE_TOOLBAR" value1="Live" />
+		<execute function="AssertClick" locator1="RecycleBin#LIVE_TOOLBAR" value1="Live" />
 
 		<execute macro="RecycleBin#viewCP">
 			<var name="assetName" value="WC Title" />

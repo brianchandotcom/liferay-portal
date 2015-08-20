@@ -2,18 +2,18 @@
 	<command name="populateFieldCheckBox">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute function="AssertTextEquals" locator1="PGWebform#FORM_FIELDS_CHECKBOX_FIELD_HEADER" value1="${wfFieldName}" />
-		<execute function="AssertElementPresent" locator1="PGWebform#FORM_FIELDS_CHECKBOX_FIELD" />
+		<execute function="AssertTextEquals" locator1="WebForm#FORM_FIELDS_CHECKBOX_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute function="AssertElementPresent" locator1="WebForm#FORM_FIELDS_CHECKBOX_FIELD" />
 
 		<if>
 			<equals arg1="${wfFieldValue}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="PGWebform#FORM_FIELDS_CHECKBOX_FIELD" />
+				<execute function="Check" locator1="WebForm#FORM_FIELDS_CHECKBOX_FIELD" />
 			</then>
 			<elseif>
 				<equals arg1="${wfFieldValue}" arg2="false" />
 				<then>
-					<execute function="Uncheck" locator1="PGWebform#FORM_FIELDS_CHECKBOX_FIELD" />
+					<execute function="Uncheck" locator1="WebForm#FORM_FIELDS_CHECKBOX_FIELD" />
 				</then>
 			</elseif>
 		</if>
@@ -22,87 +22,87 @@
 	<command name="populateFieldOptions">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute function="AssertTextEquals" locator1="PGWebform#FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
-		<execute function="Select" locator1="PGWebform#FORM_FIELDS_OPTIONS_FIELD" value1="${wfFieldValue}" />
+		<execute function="AssertTextEquals" locator1="WebForm#FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute function="Select" locator1="WebForm#FORM_FIELDS_OPTIONS_FIELD" value1="${wfFieldValue}" />
 	</command>
 
 	<command name="populateFieldRadio">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute function="AssertTextEquals" locator1="PGWebform#FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute function="AssertTextEquals" locator1="WebForm#FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
 
 		<var name="key_wfRadioFieldOption" value="${wfFieldValue}" />
 
-		<execute function="Click" locator1="PGWebform#FORM_FIELDS_RADIO_FIELD_OPTION" />
+		<execute function="Click" locator1="WebForm#FORM_FIELDS_RADIO_FIELD_OPTION" />
 	</command>
 
 	<command name="populateFieldText">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute function="AssertTextEquals" locator1="PGWebform#FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
-		<execute function="Type" locator1="PGWebform#FORM_FIELDS_TEXT_FIELD" value1="${wfFieldValue}" />
+		<execute function="AssertTextEquals" locator1="WebForm#FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute function="Type" locator1="WebForm#FORM_FIELDS_TEXT_FIELD" value1="${wfFieldValue}" />
 	</command>
 
 	<command name="populateFieldTextBox">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute function="AssertTextEquals" locator1="PGWebform#FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
-		<execute function="Type" locator1="PGWebform#FORM_FIELDS_TEXT_BOX_FIELD" value1="${wfFieldValue}" />
+		<execute function="AssertTextEquals" locator1="WebForm#FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute function="Type" locator1="WebForm#FORM_FIELDS_TEXT_BOX_FIELD" value1="${wfFieldValue}" />
 	</command>
 
 	<command name="sendBlankPG">
-		<execute function="AssertClick" locator1="PGWebform#SEND_BUTTON" value1="Send" />
-		<execute function="AssertElementNotPresent" locator1="PGWebform#SUCCESS_MESSAGE" />
-		<execute function="AssertTextEquals" locator1="PGWebform#FORM_FIELDS_FIELD_MANDATORY_MESSAGE" value1="This field is mandatory." />
+		<execute function="AssertClick" locator1="Button#SEND" value1="Send" />
+		<execute function="AssertElementNotPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals" locator1="WebForm#FORM_FIELDS_FIELD_MANDATORY_MESSAGE" value1="This field is mandatory." />
 	</command>
 
 	<command name="sendPG">
-		<execute function="AssertClick" locator1="PGWebform#SEND_BUTTON" value1="Send" />
-		<execute function="AssertTextEquals" locator1="PGWebform#SUCCESS_MESSAGE" value1="The form information was sent successfully." />
+		<execute function="AssertClick" locator1="Button#SEND" value1="Send" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="The form information was sent successfully." />
 	</command>
 
 	<command name="viewFormFieldCheckBox">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute function="AssertTextEquals" locator1="PGWebform#FORM_FIELDS_CHECKBOX_FIELD_HEADER" value1="${wfFieldName}" />
-		<execute function="AssertElementPresent" locator1="PGWebform#FORM_FIELDS_CHECKBOX_FIELD" />
+		<execute function="AssertTextEquals" locator1="WebForm#FORM_FIELDS_CHECKBOX_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute function="AssertElementPresent" locator1="WebForm#FORM_FIELDS_CHECKBOX_FIELD" />
 	</command>
 
 	<command name="viewFormFieldOptions">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute function="AssertTextEquals" locator1="PGWebform#FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
-		<execute function="AssertElementPresent" locator1="PGWebform#FORM_FIELDS_OPTIONS_FIELD" />
+		<execute function="AssertTextEquals" locator1="WebForm#FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute function="AssertElementPresent" locator1="WebForm#FORM_FIELDS_OPTIONS_FIELD" />
 	</command>
 
 	<command name="viewFormFieldRadio">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute function="AssertTextEquals" locator1="PGWebform#FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute function="AssertTextEquals" locator1="WebForm#FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
 
 		<for list="${optionsList}" param="wfRadioFieldOption">
 			<var name="key_wfRadioFieldOption" value="${wfRadioFieldOption}" />
 
-			<execute function="AssertTextEquals" locator1="PGWebform#FORM_FIELDS_RADIO_FIELD_OPTION_LABEL" value1="${wfRadioFieldOption}" />
+			<execute function="AssertTextEquals" locator1="WebForm#FORM_FIELDS_RADIO_FIELD_OPTION_LABEL" value1="${wfRadioFieldOption}" />
 		</for>
 	</command>
 
 	<command name="viewFormFieldText">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute function="AssertTextEquals" locator1="PGWebform#FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
-		<execute function="AssertElementPresent" locator1="PGWebform#FORM_FIELDS_TEXT_FIELD" />
+		<execute function="AssertTextEquals" locator1="WebForm#FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute function="AssertElementPresent" locator1="WebForm#FORM_FIELDS_TEXT_FIELD" />
 	</command>
 
 	<command name="viewFormFieldTextBox">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute function="AssertTextEquals" locator1="PGWebform#FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
-		<execute function="AssertElementPresent" locator1="PGWebform#FORM_FIELDS_TEXT_BOX_FIELD" />
+		<execute function="AssertTextEquals" locator1="WebForm#FORM_FIELDS_FIELD_HEADER" value1="${wfFieldName}" />
+		<execute function="AssertElementPresent" locator1="WebForm#FORM_FIELDS_TEXT_BOX_FIELD" />
 	</command>
 
 	<command name="viewPG">
-		<execute function="AssertTextEquals" locator1="PGWebform#FORM_INFORMATION_TITLE" value1="${wfInformationTitle}" />
-		<execute function="AssertTextEquals" locator1="PGWebform#FORM_INFORMATION_DESCRIPTION" value1="${wfInformationDescription}" />
+		<execute function="AssertTextEquals" locator1="WebForm#FORM_INFORMATION_TITLE" value1="${wfInformationTitle}" />
+		<execute function="AssertTextEquals" locator1="WebForm#FORM_INFORMATION_DESCRIPTION" value1="${wfInformationDescription}" />
 	</command>
 </definition>

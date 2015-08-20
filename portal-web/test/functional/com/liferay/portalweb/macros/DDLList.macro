@@ -1,79 +1,79 @@
 <definition>
 	<command name="addCP">
-		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_ADD" value1="Add" />
+		<execute function="AssertClick" locator1="DDL#TOOLBAR_ADD" value1="Add" />
 
-		<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsAddlist#NAME_FIELD" value1="${ddlListName}" />
+		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${ddlListName}" />
 
 		<if>
 			<isset var="ddlListDescription" />
 			<then>
-				<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsAddlist#DESCRIPTION_FIELD" value1="${ddlListDescription}" />
+				<execute function="Type#clickAtSendKeys" locator1="TextArea#DESCRIPTION" value1="${ddlListDescription}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="workflowDefinition" />
 			<then>
-				<execute function="Select" locator1="CPDynamicdatalistsAddlist#WORKFLOW_SELECT" value1="${workflowDefinition}" />
+				<execute function="Select" locator1="DDLEditList#WORKFLOW_SELECT" value1="${workflowDefinition}" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPDynamicdatalistsAddlist#DATA_DEFINITION_SELECT_LINK" value1="Select" />
+		<execute function="AssertClick" locator1="DDLEditList#DATA_DEFINITION_SELECT" value1="Select" />
 	</command>
 
 	<command name="addViaDDLDisplayPG">
-		<execute function="Click" locator1="PGDynamicdatalists#TOOLBAR_ADD_LIST" value1="Add List" />
+		<execute function="Click" locator1="DDL#TOOLBAR_ADD_LIST" value1="Add List" />
 
 		<execute function="SelectFrame" locator1="PGDynamicdatalistsAddlist#IFRAME" />
 
-		<execute function="Type" locator1="PGDynamicdatalistsAddlist#NAME_FIELD" value1="${ddlListName}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${ddlListName}" />
 
 		<if>
 			<isset var="ddlListDescription" />
 			<then>
-				<execute function="Type" locator1="PGDynamicdatalistsAddlist#DESCRIPTION_FIELD" value1="${ddlListDescription}" />
+				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${ddlListDescription}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="workflowDefinition" />
 			<then>
-				<execute function="Select" locator1="PGDynamicdatalistsAddlist#WORKFLOW_SELECT" value1="${workflowDefinition}" />
+				<execute function="Select" locator1="DDLEditList#WORKFLOW_SELECT" value1="${workflowDefinition}" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="PGDynamicdatalistsAddlist#DATA_DEFINITION_SELECT_LINK" value1="Select" />
+		<execute function="AssertClick" locator1="DDLEditList#DATA_DEFINITION_SELECT" value1="Select" />
 
 		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="attemptDeleteRecordViaDDLDisplayPG">
-		<execute function="Click" locator1="PGDynamicdatalists#RECORD_TABLE_ACTIONS_1" />
-		<execute function="AssertClickNoError" locator1="PGDynamicdatalists#RECORD_MENULIST_DELETE" value1="Delete" />
+		<execute function="Click" locator1="DDL#RECORD_TABLE_ACTIONS_1" />
+		<execute function="AssertClickNoError" locator1="DDL#MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsConfiguration#FAILURE_MESSAGE" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
 	</command>
 
 	<command name="deleteCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalists#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="CPDynamicdatalists#LIST_TABLE_ACTIONS_1" />
-		<execute function="AssertClickNoError" locator1="CPDynamicdatalists#LIST_MENULIST_DELETE" value1="Delete" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute function="AssertClick" locator1="DDL#LIST_TABLE_ACTIONS_1" />
+		<execute function="AssertClickNoError" locator1="DDL#MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalists#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextNotPresent" value1="${ddlListName}" />
 	</command>
 
 	<command name="deleteViaDDLDisplayPG">
-		<execute function="Click" locator1="PGDynamicdatalists#TOOLBAR_SELECT_LIST" value1="Select List" />
+		<execute function="Click" locator1="DDL#TOOLBAR_SELECT_LIST" value1="Select List" />
 
-		<execute function="SelectFrame" locator1="PGDynamicdatalistsConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
-		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsConfiguration#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="PGDynamicdatalistsConfiguration#LIST_TABLE_ACTIONS_1" />
-		<execute function="AssertClickNoError" locator1="PGDynamicdatalistsConfiguration#LIST_MENULIST_DELETE" value1="Delete" />
+		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTONSearch" value1="Search" />
+		<execute function="AssertTextEquals" locator1="DDLConfiguration#LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute function="AssertClick" locator1="DDLConfiguration#LIST_TABLE_ACTIONS_1" />
+		<execute function="AssertClickNoError" locator1="DDLConfiguration#LIST_MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextNotPresent" value1="${ddlListNameEdit}" />
 
@@ -81,54 +81,54 @@
 	</command>
 
 	<command name="editCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalists#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="CPDynamicdatalists#LIST_TABLE_ACTIONS_1" />
-		<execute function="AssertClick" locator1="CPDynamicdatalists#LIST_MENULIST_EDIT" value1="Edit" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute function="AssertClick" locator1="DDL#LIST_TABLE_ACTIONS_1" />
+		<execute function="AssertClick" locator1="DDL#MENULIST_EDIT" value1="Edit" />
 
-		<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsEditlist#NAME_FIELD" value1="${ddlListNameEdit}" />
+		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${ddlListNameEdit}" />
 
 		<if>
 			<isset var="ddlListDescription" />
 			<then>
-				<execute function="Type#clickAtSendKeys" locator1="CPDynamicdatalistsEditlist#DESCRIPTION_FIELD" value1="${ddlListDescriptionEdit}" />
+				<execute function="Type#clickAtSendKeys" locator1="TextArea#DESCRIPTION" value1="${ddlListDescriptionEdit}" />
 			</then>
 		</if>
 
-		<execute function="Click" locator1="CPDynamicdatalistsEditlist#SAVE_BUTTON" />
+		<execute function="Click" locator1="Button#SAVE" />
 
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalists#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editViaDDLDisplayPG">
-		<execute function="Click" locator1="PGDynamicdatalists#TOOLBAR_SELECT_LIST" value1="Select List" />
+		<execute function="Click" locator1="DDL#TOOLBAR_SELECT_LIST" value1="Select List" />
 
-		<execute function="SelectFrame" locator1="PGDynamicdatalistsConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
-		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsConfiguration#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="PGDynamicdatalistsConfiguration#LIST_TABLE_ACTIONS_1" />
-		<execute function="AssertClick" locator1="PGDynamicdatalistsConfiguration#LIST_MENULIST_EDIT" value1="Edit" />
+		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTONSearch" value1="Search" />
+		<execute function="AssertTextEquals" locator1="DDLConfiguration#LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute function="AssertClick" locator1="DDLConfiguration#LIST_TABLE_ACTIONS_1" />
+		<execute function="AssertClick" locator1="DDLConfiguration#LIST_MENULIST_EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="PGDynamicdatalistsConfigurationEditlist#NAME_FIELD" value1="${ddlListNameEdit}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${ddlListNameEdit}" />
 
 		<if>
 			<isset var="ddlListDescription" />
 			<then>
-				<execute function="Type" locator1="PGDynamicdatalistsConfigurationEditlist#DESCRIPTION_FIELD" value1="${ddlListDescriptionEdit}" />
+				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${ddlListDescriptionEdit}" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="PGDynamicdatalistsConfigurationEditlist#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsConfiguration#INFO_MESSAGE" value1="Displaying List: ${ddlListNameEdit}" />
-		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsConfiguration#LIST_TABLE_NAME_1" value1="${ddlListNameEdit}" />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Displaying List: ${ddlListNameEdit}" />
+		<execute function="AssertTextEquals" locator1="DDLConfiguration#LIST_TABLE_NAME_1" value1="${ddlListNameEdit}" />
 
 		<if>
 			<isset var="ddlListDescription" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGDynamicdatalistsConfiguration#LIST_TABLE_DESCRIPTION_1" value1="${ddlListDescriptionEdit}" />
+				<execute function="AssertTextEquals" locator1="DDLConfiguration#LIST_TABLE_DESCRIPTION_1" value1="${ddlListDescriptionEdit}" />
 			</then>
 		</if>
 
@@ -136,13 +136,13 @@
 	</command>
 
 	<command name="saveCmd">
-		<execute function="AssertClick" locator1="CPDynamicdatalistsAddlist#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="saveCP">
 		<execute macro="DDLList#saveCmd" />
 
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalists#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="saveViaDDLDisplayPG">
@@ -150,15 +150,15 @@
 	</command>
 
 	<command name="selectViaDDLDisplayPG">
-		<execute function="Click" locator1="PGDynamicdatalists#TOOLBAR_SELECT_LIST" value1="Select List" />
+		<execute function="Click" locator1="DDL#TOOLBAR_SELECT_LIST" value1="Select List" />
 
-		<execute function="SelectFrame" locator1="PGDynamicdatalistsConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
-		<execute function="AssertClick" locator1="PGDynamicdatalistsConfiguration#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsConfiguration#INFO_MESSAGE" value1="Displaying List: ${ddlListName} (Modified)" />
-		<execute function="AssertClick" locator1="PGDynamicdatalistsConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTONSearch" value1="Search" />
+		<execute function="AssertClick" locator1="DDLConfiguration#LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Displaying List: ${ddlListName} (Modified)" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 
 		<execute function="SelectFrameTop" />
 	</command>
@@ -169,42 +169,42 @@
 		</execute>
 
 		<while>
-			<condition function="IsElementPresent" locator1="CPDynamicdatalists#LIST_TABLE_ACTIONS_1" />
+			<condition function="IsElementPresent" locator1="DDL#LIST_TABLE_ACTIONS_1" />
 			<then>
-				<execute function="Click" locator1="CPDynamicdatalists#LIST_TABLE_ACTIONS_1" />
-				<execute function="AssertClickNoError" locator1="CPDynamicdatalists#LIST_MENULIST_DELETE" value1="Delete" />
+				<execute function="Click" locator1="DDL#LIST_TABLE_ACTIONS_1" />
+				<execute function="AssertClickNoError" locator1="DDL#MENULIST_DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals" locator1="CPDynamicdatalists#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 		</while>
 	</command>
 
 	<command name="viewCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalists#LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
 		<if>
 			<isset var="ddlListDescription" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPDynamicdatalists#LIST_TABLE_DESCRIPTION_1" value1="${ddlListDescription}" />
+				<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_DESCRIPTION_1" value1="${ddlListDescription}" />
 			</then>
 		</if>
 
-		<execute function="Click" locator1="CPDynamicdatalists#LIST_TABLE_NAME_1" value1="${ddlListName}" />
+		<execute function="Click" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsList#HEADER_TITLE" value1="${ddlListName}" />
-		<execute function="AssertElementPresent" locator1="CPDynamicdatalistsList#ADD_RECORD_BUTTON" />
+		<execute function="AssertTextEquals" locator1="DDL#HEADER_TITLE" value1="${ddlListName}" />
+		<execute function="AssertElementPresent" locator1="DDL#TOOLBAR_ADD" />
 	</command>
 
 	<command name="viewDeleteRecordOptionViaDDLDisplayPG">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${ddlListRecordName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
-		<execute function="Click" locator1="PGDynamicdatalists#RECORD_TABLE_ACTIONS_1" />
-		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#RECORD_MENULIST_DELETE" value1="Delete" />
+		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${ddlListRecordName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="DDL#RECORD_TABLE_ACTIONS_1" />
+		<execute function="AssertTextEquals" locator1="DDL#MENULIST_DELETE" value1="Delete" />
 	</command>
 
 	<command name="viewViaDDLDisplayPG">
-		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#HEADER_TITLE" value1="${ddlListName}" />
+		<execute function="AssertTextEquals" locator1="DDL#HEADER_TITLE" value1="${ddlListName}" />
 	</command>
 </definition>

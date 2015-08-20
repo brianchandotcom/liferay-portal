@@ -16,13 +16,13 @@
 
 		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
 
-		<execute function="AssertElementNotPresent" locator1="PGLogin#SIGN_IN_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="Button#SIGN_IN" />
 
 		<execute function="Pause" locator1="60000" />
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="Warning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
 		<execute function="Refresh" />
 
-		<execute function="AssertElementPresent" locator1="PGLogin#SIGN_IN_BUTTON" value1="Sign In" />
+		<execute function="AssertElementPresent" locator1="Button#SIGN_IN" value1="Sign In" />
 
 		<execute macro="User#loginPG">
 			<var name="rememberMeChecked" value="true" />
@@ -34,7 +34,7 @@
 		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
 		<execute function="Refresh" />
 
-		<execute function="AssertTextEquals" locator1="Dockbar#USER_NAME" value1="Test Test" />
+		<execute function="AssertTextEquals" locator1="DockbarTEMP#USER_NAME" value1="Test Test" />
 
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG" />
@@ -43,12 +43,12 @@
 
 		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
 
-		<execute function="AssertElementNotPresent" locator1="PGLogin#SIGN_IN_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="Button#SIGN_IN" />
 
 		<execute function="Pause" locator1="60000" />
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="Warning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
 		<execute function="Refresh" />
 
-		<execute function="AssertElementPresent" locator1="PGLogin#SIGN_IN_BUTTON" value1="Sign In" />
+		<execute function="AssertElementPresent" locator1="Button#SIGN_IN" value1="Sign In" />
 	</command>
 </definition>

@@ -2,21 +2,21 @@
 	<command name="tearDownCP">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
-		<execute function="AssertClick" locator1="Dockbar#ADMIN_SITE_ADMINISTRATION_PAGES" value1="Pages" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
+		<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_SITE_ADMINISTRATION_PAGES" value1="Pages" />
 
-		<execute function="AssertClick" locator1="CPSitepages#NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />
+		<execute function="AssertClick" locator1="SitePages#NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_8" />
+			<condition function="IsElementPresent" locator1="SitePages#PAGE_TREE_PAGE_LINK_8" />
 			<then>
-				<execute function="Click" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_8" />
-				<execute function="AssertClickNoError" locator1="CPSitepages#TOOLBAR_DELETE" value1="Delete" />
+				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_8" />
+				<execute function="AssertClickNoError" locator1="SitePages#TOOLBAR_DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
 			</then>
 		</if>
 
-		<execute function="AssertElementNotPresent" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_8" />
+		<execute function="AssertElementNotPresent" locator1="SitePages#PAGE_TREE_PAGE_LINK_8" />
 	</command>
 
 	<command name="tearDownPG">
@@ -32,8 +32,8 @@
 		<if>
 			<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-				<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+				<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 			</then>
 		</if>
 
@@ -59,19 +59,19 @@
 
 		<var name="key_siteTemplateName" value="Social Office User Home" />
 
-		<execute function="Click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="Social Office User Home" />
-		<execute function="Click" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_MANAGE" />
+		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="Social Office User Home" />
+		<execute function="Click" locator1="MenuItem#MANAGE" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_7" />
+			<condition function="IsElementPresent" locator1="SitePages#PAGE_TREE_PAGE_LINK_7" />
 			<then>
-				<execute function="Click" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_7" />
-				<execute function="ClickNoError" locator1="CPSitepages#TOOLBAR_DELETE" />
+				<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_LINK_7" />
+				<execute function="ClickNoError" locator1="SitePages#TOOLBAR_DELETE" />
 				<execute function="Confirm" value1="Are you sure you want to delete the selected page?" />
 			</then>
 		</if>
 
-		<execute function="AssertElementNotPresent" locator1="CPSitepages#PAGE_TREE_PAGE_LINK_8" />
+		<execute function="AssertElementNotPresent" locator1="SitePages#PAGE_TREE_PAGE_LINK_8" />
 	</command>
 
 	<command name="viewLinkContactscenter">
@@ -154,16 +154,16 @@
 	</command>
 
 	<command name="viewLinkMydocuments">
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#FILTER_HOME" value1="Home" />
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#FILTER_RECENT" value1="Recent" />
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#FILTER_MINE" value1="Mine" />
-		<execute function="AssertElementPresent" locator1="PGDocumentsandmedia#TOOLBAR_SELECT_ALL_CHECKBOX" />
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#TOOLBAR_SORT_BY" value1="Sort By" />
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#TOOLBAR_MANAGE" value1="Manage" />
-		<execute function="AssertElementPresent" locator1="PGDocumentsandmedia#TOOLBAR_DISPLAY_STYLE" />
-		<execute function="AssertElementPresent" locator1="PGDocumentsandmedia#BASIC_SEARCH_FIELD" />
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="NavListItem#HOME" value1="Home" />
+		<execute function="AssertTextEquals" locator1="NavListItem#RECENT" value1="Recent" />
+		<execute function="AssertTextEquals" locator1="NavListItem#MINE" value1="Mine" />
+		<execute function="AssertElementPresent" locator1="Checkbox#SELECT_ALL" />
+		<execute function="AssertTextEquals" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="AssertTextEquals" locator1="Toolbar#SORT_BY" value1="Sort By" />
+		<execute function="AssertTextEquals" locator1="Toolbar#MANAGE" value1="Manage" />
+		<execute function="AssertElementPresent" locator1="Toolbar#DISPLAY_STYLE_BUTTON" />
+		<execute function="AssertElementPresent" locator1="NavBar#BASIC_SEARCH_FIELD" />
+		<execute function="AssertTextEquals" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<var name="siteName" value="Liferay" />
 

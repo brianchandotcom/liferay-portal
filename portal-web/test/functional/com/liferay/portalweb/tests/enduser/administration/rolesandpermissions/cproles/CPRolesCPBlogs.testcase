@@ -143,7 +143,7 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="AssertElementNotPresent" locator1="Dockbar#ADMIN" />
+		<execute function="AssertElementNotPresent" locator1="DockbarTEMP#ADMIN" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
@@ -175,7 +175,7 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="AssertElementNotPresent" locator1="Dockbar#ADMIN" />
+		<execute function="AssertElementNotPresent" locator1="DockbarTEMP#ADMIN" />
 	</command>
 
 	<command name="ViewBlogsPortletSiteRole" priority="4">
@@ -213,7 +213,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Dockbar#ADMIN" />
+		<execute function="AssertElementNotPresent" locator1="DockbarTEMP#ADMIN" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
@@ -252,6 +252,6 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Dockbar#ADMIN" />
+		<execute function="AssertElementNotPresent" locator1="DockbarTEMP#ADMIN" />
 	</command>
 </definition>

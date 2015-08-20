@@ -1,35 +1,35 @@
 <definition>
 	<command name="configureShowAllPG">
-		<execute function="AssertElementPresent" locator1="PGMediagallery#OPTIONS" />
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="PGMediagallery#OPTIONS" value1="Options" />
-		<execute function="AssertClick" locator1="PGMediagallery#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertElementPresent" locator1="Icon#COG" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Icon#COG" value1="Options" />
+		<execute function="AssertClick" locator1="Icon#COG_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute function="SelectFrame" locator1="PGMediagalleryConfiguration#MG_CONFIGURATION_IFRAME" />
-		<execute function="Check" locator1="PGMediagalleryConfiguration#DISPLAY_SETTINGS_SHOW_ACTIONS_CHECKBOX" />
-		<execute function="Check" locator1="PGMediagalleryConfiguration#DISPLAY_SETTINGS_SHOW_FOLDER_MENU_CHECKBOX" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+		<execute function="Check" locator1="Checkbox#SHOW_ACTIONS_CHECKBOX" />
+		<execute function="Check" locator1="Checkbox#SHOW_FOLDER_MENU_CHECKBOX" />
 		<execute function="Check" locator1="PGMediagalleryConfiguration#DISPLAY_SETTINGS_SHOW_NAVIGATION_LINKS_CHECKBOX" />
-		<execute function="Check" locator1="PGMediagalleryConfiguration#DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
-		<execute function="AssertClick" locator1="PGMediagalleryConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGMediagalleryConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="Check" locator1="Checkbox#SHOW_SEARCH_CHECKBOX" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="viewCustomADTCarouselPG">
-		<execute function="AssertElementPresent" locator1="PGMediagallery#ADT_CAROUSEL_ITEM" />
-		<execute function="AssertElementPresent" locator1="PGMediagallery#ADT_CAROUSEL_PLAY_PAUSE" />
-		<execute function="AssertElementPresent" locator1="PGMediagallery#ADT_CAROUSEL_PREVIOUS_ARROW" />
-		<execute function="AssertElementPresent" locator1="PGMediagallery#ADT_CAROUSEL_NEXT_ARROW" />
-		<execute function="AssertElementPresent" locator1="PGMediagallery#ADT_CAROUSEL_MENU_INDEX" />
+		<execute function="AssertElementPresent" locator1="MediaGallery#ADT_CAROUSEL_ITEM" />
+		<execute function="AssertElementPresent" locator1="MediaGallery#ADT_CAROUSEL_PLAY_PAUSE" />
+		<execute function="AssertElementPresent" locator1="MediaGallery#ADT_CAROUSEL_PREVIOUS_ARROW" />
+		<execute function="AssertElementPresent" locator1="MediaGallery#ADT_CAROUSEL_NEXT_ARROW" />
+		<execute function="AssertElementPresent" locator1="MediaGallery#ADT_CAROUSEL_MENU_INDEX" />
 	</command>
 
 	<command name="viewShowAllPG">
-		<execute function="AssertElementPresent" locator1="PGMediagallery#SEARCH_FIELD" />
-		<execute function="AssertElementPresent" locator1="PGMediagallery#SEARCH_BUTTON" />
-		<execute function="AssertElementPresent" locator1="PGMediagallery#FOLDER_MENU_PERMISSIONS" />
-		<execute function="AssertElementPresent" locator1="PGMediagallery#FOLDER_MENU_ADD_FOLDER" />
-		<execute function="AssertElementPresent" locator1="PGMediagallery#FOLDER_MENU_ADD_REPOSITORY" />
+		<execute function="AssertElementPresent" locator1="NavBar#BASIC_SEARCH_FIELD" />
+		<execute function="AssertElementPresent" locator1="NavBar#BASIC_SEARCH_BUTTON" />
+		<execute function="AssertElementPresent" locator1="MenuItem#PERMISSIONS" />
+		<execute function="AssertElementPresent" locator1="MenuItem#ADD_FOLDER" />
+		<execute function="AssertElementPresent" locator1="MenuItem#ADD_REPOSITORY" />
 		<execute function="AssertElementPresent" locator1="PGMediagallery#FOLDER_MENU_MULTIPLE_MEDIA" />
 		<execute function="AssertElementPresent" locator1="PGMediagallery#FOLDER_MENU_ADD_MEDIA" />
 		<execute function="AssertElementPresent" locator1="PGMediagallery#FOLDER_MENU_ADD_SHORTCUT" />
-		<execute function="AssertElementPresent" locator1="PGMediagallery#FOLDER_MENU_ACCESS_FROM_DESKTOP" />
+		<execute function="AssertElementPresent" locator1="MenuItem#ACCESS_FROM_DESKTOP" />
 	</command>
 </definition>

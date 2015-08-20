@@ -1,9 +1,9 @@
 <definition>
 	<command name="addCP">
-		<execute function="SelectFrame" locator1="PGWebProxyConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="Type" locator1="PGWebProxyConfiguration#INITIAL_URL_FIELD" value1="${initialURL}" />
-		<execute function="AssertClick" locator1="PGWebProxyConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGWebProxyConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrame" locator1="Iframe#CONFIGURATION" />
+		<execute function="Type" locator1="TextInput#INITIAL_URL" value1="${initialURL}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 </definition>

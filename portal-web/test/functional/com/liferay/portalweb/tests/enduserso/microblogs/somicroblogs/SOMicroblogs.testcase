@@ -3623,8 +3623,8 @@
 			<var name="microblogsEntryContent" value="${microblogsEntryContent}" />
 		</execute>
 
-		<execute function="Click" locator1="Dockbar#USER_NAME" />
-		<execute function="Click" locator1="Dockbar#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="DockbarTEMP#USER_NAME" />
+		<execute function="Click" locator1="DockbarTEMP#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute function="Click" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 

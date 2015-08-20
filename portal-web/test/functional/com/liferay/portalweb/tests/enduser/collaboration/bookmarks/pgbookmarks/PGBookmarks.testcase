@@ -355,7 +355,7 @@
 
 		<var name="key_folderName" value="${folderName2}" />
 
-		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="PGBookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName2}" />
+		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName2}" />
 
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 

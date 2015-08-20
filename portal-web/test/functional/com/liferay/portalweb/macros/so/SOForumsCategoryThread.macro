@@ -2,7 +2,7 @@
 	<command name="viewDetailsPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<var locator="Dockbar#USER_NAME" name="currentUser" />
+		<var locator="DockbarTEMP#USER_NAME" name="currentUser" />
 
 		<if>
 			<equals arg1="${currentUser}" arg2="${adminName}" />
@@ -17,8 +17,8 @@
 				<if>
 					<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 					<then>
-						<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-						<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+						<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+						<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 					</then>
 				</if>
 
@@ -37,82 +37,82 @@
 				<if>
 					<isset var="questionVotes" />
 					<then>
-						<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_VOTES" value1="${questionVotes}" />
+						<execute function="AssertTextEquals" locator1="MessageBoards#QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_VOTES" value1="${questionVotes}" />
 					</then>
 					<else>
-						<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_VOTES" value1="0" />
+						<execute function="AssertTextEquals" locator1="MessageBoards#QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_VOTES" value1="0" />
 					</else>
 				</if>
 
 				<if>
 					<isset var="questionAnswers" />
 					<then>
-						<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_ANSWERS" value1="${questionAnswers}" />
+						<execute function="AssertTextEquals" locator1="MessageBoards#QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_ANSWERS" value1="${questionAnswers}" />
 					</then>
 					<else>
-						<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_ANSWERS" value1="0" />
+						<execute function="AssertTextEquals" locator1="MessageBoards#QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_ANSWERS" value1="0" />
 					</else>
 				</if>
 
-				<execute function="AssertElementPresent" locator1="PGMessageboardsCategory#QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_VIEWS" />
-				<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#QUESTION_CATEGORY_THREAD_TABLE_QUESTION" value1="${threadSubject}" />
-				<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#QUESTION_CATEGORY_THREAD_TABLE_LAST_POST" value1="${userName}" />
-				<execute function="AssertClick" locator1="PGMessageboardsCategory#QUESTION_CATEGORY_THREAD_TABLE_QUESTION" value1="${threadSubject}" />
+				<execute function="AssertElementPresent" locator1="MessageBoards#QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_VIEWS" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#QUESTION_CATEGORY_THREAD_TABLE_QUESTION" value1="${threadSubject}" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#QUESTION_CATEGORY_THREAD_TABLE_LAST_POST" value1="${userName}" />
+				<execute function="AssertClick" locator1="MessageBoards#QUESTION_CATEGORY_THREAD_TABLE_QUESTION" value1="${threadSubject}" />
 			</then>
 			<else>
 				<if>
 					<equals arg1="${threadPriority}" arg2="Sticky" />
 					<then>
-						<execute function="AssertElementPresent" locator1="PGMessageboards#THREAD_TABLE_THREAD_STICKY_IMAGE" />
+						<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_TABLE_THREAD_STICKY_IMAGE" />
 					</then>
 					<elseif>
 						<equals arg1="${threadPriority}" arg2="Urgent" />
 						<then>
-							<execute function="AssertElementPresent" locator1="PGMessageboards#THREAD_TABLE_THREAD_URGENT_IMAGE" />
+							<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_TABLE_THREAD_URGENT_IMAGE" />
 						</then>
 					</elseif>
 				</if>
 
-				<execute function="AssertTextEquals" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
-				<execute function="AssertTextEquals" locator1="PGMessageboards#THREAD_TABLE_STARTED_BY" value1="${userName}" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_STARTED_BY" value1="${userName}" />
 
 				<if>
 					<isset var="categoryPostCount" />
 					<then>
-						<execute function="AssertTextEquals" locator1="PGMessageboards#THREAD_TABLE_POSTS" value1="${categoryPostCount}" />
+						<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_POSTS" value1="${categoryPostCount}" />
 					</then>
 					<else>
-						<execute function="AssertTextEquals" locator1="PGMessageboards#THREAD_TABLE_POSTS" value1="1" />
+						<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_POSTS" value1="1" />
 					</else>
 				</if>
 
 				<if>
 					<equals arg1="${anonymous}" arg2="true" />
 					<then>
-						<execute function="AssertTextEquals#assertPartialText" locator1="PGMessageboards#THREAD_TABLE_LAST_POST" value1="" />
+						<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_TABLE_LAST_POST" value1="" />
 					</then>
 					<else>
-						<execute function="AssertTextEquals#assertPartialText" locator1="PGMessageboards#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
+						<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
 					</else>
 				</if>
 
 				<if>
 					<equals arg1="${currentUser}" arg2="${adminName}" />
 					<then>
-						<execute function="AssertElementPresent" locator1="PGMessageboards#THREAD_TABLE_ACTIONS" />
+						<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_TABLE_ACTIONS" />
 					</then>
 					<elseif>
 						<equals arg1="${siteMember}" arg2="true" />
 						<then>
-							<execute function="AssertElementPresent" locator1="PGMessageboards#THREAD_TABLE_ACTIONS" />
+							<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_TABLE_ACTIONS" />
 						</then>
 					</elseif>
 					<else>
-						<execute function="AssertElementPresent" locator1="PGMessageboards#THREAD_TABLE_RSS" />
+						<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_TABLE_RSS" />
 					</else>
 				</if>
 
-				<execute function="AssertClick" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+				<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 			</else>
 		</if>
 
@@ -141,53 +141,53 @@
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSubject}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#TITLE_HEADER" value1="${threadSubject}" />
 
 		<if>
 			<equals arg1="${subCategoryEnabled}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#THREAD_CONTROLS_BACK" value1="${subCategoryName}" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_CONTROLS_BACK" value1="${subCategoryName}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#THREAD_CONTROLS_BACK" value1="${categoryName}" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_CONTROLS_BACK" value1="${categoryName}" />
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#THREAD_CONTROLS_NAVIGATION" value1="Threads [ Previous | Next ]" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_CONTROLS_NAVIGATION" value1="Threads [ Previous | Next ]" />
 
 		<if>
 			<equals arg1="${anonymous}" arg2="true" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" />
+				<execute function="AssertElementNotPresent" locator1="MessageBoardsThread#MESSAGE_USERNAME_1" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
 
 		<if>
 			<isset var="mbThreadAttachment" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadBody} Attachments: ${mbThreadAttachment}(${mbThreadAttachmentFileSize})" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_BODY_1" value1="${threadBody} Attachments: ${mbThreadAttachment}(${mbThreadAttachmentFileSize})" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
 			</else>
 		</if>
 
 		<if>
 			<isset var="messageRating1" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_RATING_1" value1="${messageRating1} (1 Vote)" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_RATING_1" value1="${messageRating1} (1 Vote)" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_RATING_1" value1="0 (0 Votes)" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_RATING_1" value1="0 (0 Votes)" />
 			</else>
 		</if>
 
-		<execute function="AssertElementNotPresent" locator1="PGMessageboardsThread#MESSAGE_WORKFLOW_STATUS_1" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoardsThread#MESSAGE_WORKFLOW_STATUS_1" />
 
 		<if>
 			<equals arg1="${threadAddTag}" arg2="true" />
@@ -200,9 +200,9 @@
 	<command name="viewMyPostsPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute function="AssertClick" locator1="PGMessageboards#NAVIGATION_MY_POSTS" value1="My Posts" />
+		<execute function="AssertClick" locator1="MessageBoards#NAVIGATION_MY_POSTS" value1="My Posts" />
 
-		<var locator="Dockbar#USER_NAME" name="currentUser" />
+		<var locator="DockbarTEMP#USER_NAME" name="currentUser" />
 
 		<if>
 			<equals arg1="${currentUser}" arg2="${adminName}" />
@@ -217,8 +217,8 @@
 				<if>
 					<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 					<then>
-						<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-						<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+						<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+						<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 					</then>
 				</if>
 
@@ -234,41 +234,41 @@
 		<if>
 			<equals arg1="${threadPriority}" arg2="Sticky" />
 			<then>
-				<execute function="AssertElementPresent" locator1="PGMessageboardsMyposts#THREAD_TABLE_THREAD_STICKY_IMAGE" />
+				<execute function="AssertElementPresent" locator1="MessageBoardsMyPosts#THREAD_TABLE_THREAD_STICKY_IMAGE" />
 			</then>
 			<elseif>
 				<equals arg1="${threadPriority}" arg2="Urgent" />
 				<then>
-					<execute function="AssertElementPresent" locator1="PGMessageboardsMyposts#THREAD_TABLE_THREAD_URGENT_IMAGE" />
+					<execute function="AssertElementPresent" locator1="MessageBoardsMyPosts#THREAD_TABLE_THREAD_URGENT_IMAGE" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_STARTED_BY" value1="${userName}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsMyPosts#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsMyPosts#THREAD_TABLE_STARTED_BY" value1="${userName}" />
 
 		<if>
 			<isset var="postCount" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_POSTS" value1="${postCount}" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsMyPosts#THREAD_TABLE_POSTS" value1="${postCount}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_POSTS" value1="1" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsMyPosts#THREAD_TABLE_POSTS" value1="1" />
 			</else>
 		</if>
 
 		<if>
 			<equals arg1="${anonymous}" arg2="true" />
 			<then>
-				<execute function="AssertTextNotEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
+				<execute function="AssertTextNotEquals" locator1="MessageBoardsMyPosts#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="PGMessageboardsMyposts#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsMyPosts#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
 			</else>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="PGMessageboardsMyposts#THREAD_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="PGMessageboardsMyposts#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="AssertElementPresent" locator1="MessageBoardsMyPosts#THREAD_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="MessageBoardsMyPosts#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
 		<if>
 			<equals arg1="${currentUser}" arg2="${adminName}" />
@@ -283,38 +283,38 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_3" value1="${categoryName}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_4" value1="${threadSubject}" />
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSubject}" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#THREAD_CONTROLS_BACK" value1="${categoryName}" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#THREAD_CONTROLS_NAVIGATION" value1="Threads [ Previous | Next ]" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#TITLE_HEADER" value1="${threadSubject}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_CONTROLS_BACK" value1="${categoryName}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_CONTROLS_NAVIGATION" value1="Threads [ Previous | Next ]" />
 
 		<if>
 			<equals arg1="${anonymous}" arg2="true" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" />
+				<execute function="AssertElementNotPresent" locator1="MessageBoardsThread#MESSAGE_USERNAME_1" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
 
 		<if>
 			<isset var="mbThreadAttachment" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadBody} Attachments: ${mbThreadAttachment}(${mbThreadAttachmentFileSize})" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_BODY_1" value1="${threadBody} Attachments: ${mbThreadAttachment}(${mbThreadAttachmentFileSize})" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_RATING_1" value1="0 (0 Votes)" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboardsThread#MESSAGE_WORKFLOW_STATUS_1" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_RATING_1" value1="0 (0 Votes)" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoardsThread#MESSAGE_WORKFLOW_STATUS_1" />
 	</command>
 
 	<command name="viewPG">
-		<var locator="Dockbar#USER_NAME" name="currentUser" />
+		<var locator="DockbarTEMP#USER_NAME" name="currentUser" />
 
 		<if>
 			<equals arg1="${currentUser}" arg2="${adminName}" />
@@ -329,8 +329,8 @@
 				<if>
 					<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 					<then>
-						<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-						<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+						<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+						<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 					</then>
 				</if>
 
@@ -344,39 +344,39 @@
 
 		<var name="key_categoryName" value="${categoryName}" />
 
-		<execute function="AssertTextEquals" locator1="PGMessageboards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
 
 		<if>
 			<isset var="categoryCount" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGMessageboards#CATEGORY_TABLE_CATEGORIES" value1="${categoryCount}" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_CATEGORIES" value1="${categoryCount}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboards#CATEGORY_TABLE_CATEGORIES" value1="0" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_CATEGORIES" value1="0" />
 			</else>
 		</if>
 
 		<if>
 			<isset var="threadCount" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGMessageboards#CATEGORY_TABLE_THREADS" value1="${threadCount}" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_THREADS" value1="${threadCount}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboards#CATEGORY_TABLE_THREADS" value1="1" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_THREADS" value1="1" />
 			</else>
 		</if>
 
 		<if>
 			<isset var="postCount" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGMessageboards#CATEGORY_TABLE_POSTS" value1="${postCount}" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_POSTS" value1="${postCount}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboards#CATEGORY_TABLE_POSTS" value1="1" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_POSTS" value1="1" />
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="PGMessageboards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
 
 		<execute macro="SOForumsCategoryThread#viewDetailsPG" />
 	</command>
@@ -384,9 +384,9 @@
 	<command name="viewRecentPostsPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute function="AssertClick" locator1="PGMessageboards#NAVIGATION_RECENT_POSTS" value1="Recent Posts" />
+		<execute function="AssertClick" locator1="MessageBoards#NAVIGATION_RECENT_POSTS" value1="Recent Posts" />
 
-		<var locator="Dockbar#USER_NAME" name="currentUser" />
+		<var locator="DockbarTEMP#USER_NAME" name="currentUser" />
 
 		<if>
 			<equals arg1="${currentUser}" arg2="${adminName}" />
@@ -401,8 +401,8 @@
 				<if>
 					<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 					<then>
-						<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-						<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+						<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+						<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 					</then>
 				</if>
 
@@ -418,41 +418,41 @@
 		<if>
 			<equals arg1="${threadPriority}" arg2="Sticky" />
 			<then>
-				<execute function="AssertElementPresent" locator1="PGMessageboardsMyposts#THREAD_TABLE_THREAD_STICKY_IMAGE" />
+				<execute function="AssertElementPresent" locator1="MessageBoardsMyPosts#THREAD_TABLE_THREAD_STICKY_IMAGE" />
 			</then>
 			<elseif>
 				<equals arg1="${threadPriority}" arg2="Urgent" />
 				<then>
-					<execute function="AssertElementPresent" locator1="PGMessageboardsMyposts#THREAD_TABLE_THREAD_URGENT_IMAGE" />
+					<execute function="AssertElementPresent" locator1="MessageBoardsMyPosts#THREAD_TABLE_THREAD_URGENT_IMAGE" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_STARTED_BY" value1="${userName}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsMyPosts#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsMyPosts#THREAD_TABLE_STARTED_BY" value1="${userName}" />
 
 		<if>
 			<isset var="postCount" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_POSTS" value1="${postCount}" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsMyPosts#THREAD_TABLE_POSTS" value1="${postCount}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_POSTS" value1="1" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsMyPosts#THREAD_TABLE_POSTS" value1="1" />
 			</else>
 		</if>
 
 		<if>
 			<equals arg1="${anonymous}" arg2="true" />
 			<then>
-				<execute function="AssertTextNotEquals" locator1="PGMessageboardsMyposts#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
+				<execute function="AssertTextNotEquals" locator1="MessageBoardsMyPosts#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="PGMessageboardsMyposts#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsMyPosts#THREAD_TABLE_LAST_POST" value1="By: ${userName}" />
 			</else>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="PGMessageboardsMyposts#THREAD_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="PGMessageboardsMyposts#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="AssertElementPresent" locator1="MessageBoardsMyPosts#THREAD_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="MessageBoardsMyPosts#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
 		<if>
 			<equals arg1="${currentUser}" arg2="${adminName}" />
@@ -467,8 +467,8 @@
 				<if>
 					<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 					<then>
-						<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-						<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+						<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+						<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 					</then>
 				</if>
 
@@ -482,34 +482,34 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_3" value1="${categoryName}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SOForums#BREADCRUMB_4" value1="${threadSubject}" />
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSubject}" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#THREAD_CONTROLS_BACK" value1="${categoryName}" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#THREAD_CONTROLS_NAVIGATION" value1="Threads [ Previous | Next ]" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#TITLE_HEADER" value1="${threadSubject}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_CONTROLS_BACK" value1="${categoryName}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_CONTROLS_NAVIGATION" value1="Threads [ Previous | Next ]" />
 
 		<if>
 			<equals arg1="${anonymous}" arg2="true" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" />
+				<execute function="AssertElementNotPresent" locator1="MessageBoardsThread#MESSAGE_USERNAME_1" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_USERNAME_1" value1="${userName}" />
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
 
 		<if>
 			<isset var="mbThreadAttachment" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadBody} Attachments: ${mbThreadAttachment}(${mbThreadAttachmentFileSize})" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_BODY_1" value1="${threadBody} Attachments: ${mbThreadAttachment}(${mbThreadAttachmentFileSize})" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_RATING_1" value1="0 (0 Votes)" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboardsThread#MESSAGE_WORKFLOW_STATUS_1" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_RATING_1" value1="0 (0 Votes)" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoardsThread#MESSAGE_WORKFLOW_STATUS_1" />
 	</command>
 
 	<command name="viewReplyPG">
@@ -550,7 +550,7 @@
 		<if>
 			<isset var="replyNumber" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#THREAD_TABLE_SUBJECT_1" value1="${threadSubject}" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_TABLE_SUBJECT_1" value1="${threadSubject}" />
 				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#THREAD_TABLE_SUBJECT_${replyNumber}" value1="RE: ${threadSubject}" />
 				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_${replyNumber}" value1="RE: ${threadSubject}" />
 
@@ -569,36 +569,36 @@
 				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_RATING_${replyNumber}" value1="0 (0 Votes)" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#THREAD_TABLE_SUBJECT_1" value1="${threadSubject}" />
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#THREAD_TABLE_SUBJECT_2" value1="RE: ${threadSubject}" />
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_2" value1="RE: ${threadSubject}" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_TABLE_SUBJECT_1" value1="${threadSubject}" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_TABLE_SUBJECT_2" value1="RE: ${threadSubject}" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_SUBJECT_2" value1="RE: ${threadSubject}" />
 
 				<if>
 					<equals arg1="${replyContainsQuote}" arg2="true" />
 					<then>
-						<execute function="AssertTextPresent" locator1="PGMessageboardsThread#MESSAGE_BODY_2" value1="${threadReplyBody}" />
-						<execute function="AssertTextPresent" locator1="PGMessageboardsThread#MESSAGE_BODY_2_BLOCK_QUOTE" value1="${threadBodyQuote}" />
+						<execute function="AssertTextPresent" locator1="MessageBoardsThread#MESSAGE_BODY_2" value1="${threadReplyBody}" />
+						<execute function="AssertTextPresent" locator1="MessageBoardsThread#MESSAGE_BODY_2_BLOCK_QUOTE" value1="${threadBodyQuote}" />
 					</then>
 					<else>
-						<execute function="AssertTextEquals#assertPartialText" locator1="PGMessageboardsThread#MESSAGE_BODY_2" value1="${threadReplyBody}" />
+						<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_BODY_2" value1="${threadReplyBody}" />
 					</else>
 				</if>
 
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_2" value1="${userName}" />
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_RATING_2" value1="0 (0 Votes)" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_USERNAME_2" value1="${userName}" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_RATING_2" value1="0 (0 Votes)" />
 			</else>
 		</if>
 
 		<if>
 			<equals arg1="${markAsAnswer}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_ANSWER_1" value1="Answer" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_ANSWER_1" value1="Answer" />
 			</then>
 		</if>
 	</command>
 
 	<command name="viewSubcategoryPG">
-		<var locator="Dockbar#USER_NAME" name="currentUser" />
+		<var locator="DockbarTEMP#USER_NAME" name="currentUser" />
 
 		<if>
 			<equals arg1="${currentUser}" arg2="${adminName}" />
@@ -613,8 +613,8 @@
 				<if>
 					<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 					<then>
-						<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-						<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+						<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+						<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 					</then>
 				</if>
 
@@ -628,39 +628,39 @@
 
 		<var name="key_subCategoryName" value="${subCategoryName}" />
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#SUBCATEGORY_TABLE_CATEGORY" value1="${subCategoryName}" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#SUBCATEGORY_TABLE_CATEGORY" value1="${subCategoryName}" />
 
 		<if>
 			<isset var="categoryCount" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#SUBCATEGORY_TABLE_CATEGORIES" value1="${categoryCount}" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#SUBCATEGORY_TABLE_CATEGORIES" value1="${categoryCount}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#SUBCATEGORY_TABLE_CATEGORIES" value1="0" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#SUBCATEGORY_TABLE_CATEGORIES" value1="0" />
 			</else>
 		</if>
 
 		<if>
 			<isset var="threadCount" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#SUBCATEGORY_TABLE_THREADS" value1="${threadCount}" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#SUBCATEGORY_TABLE_THREADS" value1="${threadCount}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#SUBCATEGORY_TABLE_THREADS" value1="1" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#SUBCATEGORY_TABLE_THREADS" value1="1" />
 			</else>
 		</if>
 
 		<if>
 			<isset var="postCount" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#SUBCATEGORY_TABLE_POSTS" value1="${postCount}" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#SUBCATEGORY_TABLE_POSTS" value1="${postCount}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#SUBCATEGORY_TABLE_POSTS" value1="1" />
+				<execute function="AssertTextEquals" locator1="MessageBoards#SUBCATEGORY_TABLE_POSTS" value1="1" />
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="PGMessageboardsCategory#SUBCATEGORY_TABLE_CATEGORY" value1="${subCategoryName}" />
+		<execute function="AssertClick" locator1="MessageBoards#SUBCATEGORY_TABLE_CATEGORY" value1="${subCategoryName}" />
 
 		<execute macro="SOForumsCategoryThread#viewDetailsPG" />
 	</command>

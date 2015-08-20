@@ -1,36 +1,36 @@
 <definition>
 	<command name="addPG">
-		<execute function="Type" locator1="PGPagecomments#COMMENT_FIELD" value1="${commentBody}" />
-		<execute function="AssertClick" locator1="PGPagecomments#REPLY_BUTTON" value1="Reply" />
+		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${commentBody}" />
+		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 
 		<var name="key_commentBody" value="${commentBody}" />
 
 		<execute function="AssertTextEquals" locator1="PGPagecomments#SUCCESS_MESSAGE" value1="Your request processed successfully." />
-		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_BODY" value1="${commentBody}" />
+		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
 	</command>
 
 	<command name="addWithWorkflowPG">
-		<execute function="Type" locator1="PGPagecomments#COMMENT_FIELD" value1="${commentBody}" />
-		<execute function="AssertClick" locator1="PGPagecomments#REPLY_BUTTON" value1="Reply" />
+		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${commentBody}" />
+		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 
 		<var name="key_commentBody" value="${commentBody}" />
 
 		<execute function="AssertTextEquals" locator1="PGPagecomments#SUCCESS_MESSAGE" value1="Your request processed successfully." />
 
-		<execute function="AssertElementPresent" locator1="PGPagecomments#COMMENT_WORKFLOW_STATUS" />
+		<execute function="AssertElementPresent" locator1="Comments#WORKFLOW_STATUS" />
 
 		<if>
-			<condition function="IsTextEqual" locator1="PGPagecomments#COMMENT_WORKFLOW_STATUS" value1="Pending (Review)" />
+			<condition function="IsTextEqual" locator1="Comments#WORKFLOW_STATUS" value1="Pending (Review)" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_WORKFLOW_STATUS" value1="Pending (Review)" />
+				<execute function="AssertTextEquals" locator1="Comments#WORKFLOW_STATUS" value1="Pending (Review)" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_WORKFLOW_STATUS" value1="Pending (Created)" />
+				<execute function="AssertTextEquals" locator1="Comments#WORKFLOW_STATUS" value1="Pending (Created)" />
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_BODY" value1="${commentBody}" />
+		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
 	</command>
 
@@ -44,9 +44,9 @@
 		</execute>
 
 		<while>
-			<condition function="IsElementPresent" locator1="PGPagecomments#COMMENT_DELETE_GENERIC" />
+			<condition function="IsElementPresent" locator1="Comments#DELETE_LINK_GENERIC" />
 			<then>
-				<execute function="ClickNoError" locator1="PGPagecomments#COMMENT_DELETE_GENERIC" />
+				<execute function="ClickNoError" locator1="Comments#DELETE_LINK_GENERIC" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="PGPagecomments#SUCCESS_MESSAGE" value1="Your request processed successfully." />
 			</then>
@@ -56,16 +56,16 @@
 	<command name="viewPG">
 		<var name="key_commentBody" value="${commentBody}" />
 
-		<execute function="AssertElementNotPresent" locator1="PGPagecomments#COMMENT_WORKFLOW_STATUS" />
-		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_BODY" value1="${commentBody}" />
+		<execute function="AssertElementNotPresent" locator1="Comments#WORKFLOW_STATUS" />
+		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
 	</command>
 
 	<command name="viewWithWorkflowPG">
 		<var name="key_commentBody" value="${commentBody}" />
 
-		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_WORKFLOW_STATUS" value1="${commentStatus}" />
-		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_BODY" value1="${commentBody}" />
+		<execute function="AssertTextEquals" locator1="Comments#WORKFLOW_STATUS" value1="${commentStatus}" />
+		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
 	</command>
 </definition>

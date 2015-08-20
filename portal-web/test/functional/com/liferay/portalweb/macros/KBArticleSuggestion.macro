@@ -1,141 +1,141 @@
 <definition>
 	<command name="addPG">
-		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ARTICLE_DO_YOU_HAVE_ANY_SUGGESTIONS_LINK" value1="Do you have any suggestions?" />
-		<execute function="Type" locator1="PGKnowledgebasedisplay#SUGGESTION_CONTENT_FIELD" value1="${kbSuggestionBody}" />
-		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#SUGGESTION_SUBMIT_BUTTON" value1="Submit" />
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUCCESS_MESSAGE" value1="Suggestion saved successfully." />
+		<execute function="AssertClick" locator1="KnowledgeBaseArticle#LINK_DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
+		<execute function="Type" locator1="KnowledgeBaseSuggestions#CONTENT_FIELD" value1="${kbSuggestionBody}" />
+		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Suggestion saved successfully." />
 	</command>
 
 	<command name="cancelSuggestionPG">
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasearticle#ARTICLE_TITLE" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasearticle#ARTICLE_CONTENT" value1="${kbArticleContent}" />
 
-		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#ARTICLE_DO_YOU_HAVE_ANY_SUGGESTIONS_LINK" value1="Do you have any suggestions?" />
-		<execute function="Type" locator1="PGKnowledgebasedisplay#SUGGESTION_CONTENT_FIELD" value1="${kbSuggestionBody}" />
-		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#SUGGESTION_CANCEL_BUTTON" value1="Cancel" />
-		<execute function="AssertNotVisible" locator1="PGKnowledgebasedisplay#SUGGESTION_CONTENT_FIELD" />
-		<execute function="AssertNotVisible" locator1="PGKnowledgebasedisplay#SUGGESTION_CONTENT_FIELD" />
+		<execute function="AssertClick" locator1="KnowledgeBaseArticle#LINK_DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
+		<execute function="Type" locator1="KnowledgeBaseSuggestions#CONTENT_FIELD" value1="${kbSuggestionBody}" />
+		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
+		<execute function="AssertNotVisible" locator1="KnowledgeBaseSuggestions#CONTENT_FIELD" />
+		<execute function="AssertNotVisible" locator1="KnowledgeBaseSuggestions#CONTENT_FIELD" />
 
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
-		<execute function="AssertElementNotPresent" locator1="PGKnowledgebasedisplay#SUGGESTION_CONTENT" value1="${kbSuggestionBody}" />
+		<execute function="AssertElementNotPresent" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
 	</command>
 
 	<command name="deleteCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
-		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#SUGGESTION_CONTENT" value1="${kbSuggestionBody}" />
-		<execute function="AssertClickNoError" locator1="CPKnowledgebaseadmin#SUGGESTION_DELETE_BUTTON" value1="Delete" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
+		<execute function="AssertClickNoError" locator1="KnowledgeBaseSuggestions#DELETE_BUTTON" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Suggestion deleted successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Suggestion deleted successfully." />
 	</command>
 
 	<command name="gotoArticleCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="Click" locator1="PGKnowledgebasedisplay#SUGGESTION_TITLE" value1="${kbSuggestionBody}" />
+		<execute function="Click" locator1="KnowledgeBaseSuggestions#TITLE" value1="${kbSuggestionBody}" />
 	</command>
 
 	<command name="gotoSuggestionStatusInProgress">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#SUGGESTION_NAVIGATION_IN_PROGRESS" value1="In Progress (${suggestionCount})" />
+		<execute function="AssertClick" locator1="KnowledgeBaseSuggestionsNAVIGATION_IN_PROGRESS" value1="In Progress (${suggestionCount})" />
 	</command>
 
 	<command name="gotoSuggestionStatusNew">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGKnowledgebasedisplay#SUGGESTION_NAVIGATION_NEW" value1="New (${suggestionCount})" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseSuggestions#NAVIGATION_NEW" value1="New (${suggestionCount})" />
 	</command>
 
 	<command name="gotoSuggestionStatusResolved">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#SUGGESTION_NAVIGATION_RESOLVED" value1="Resolved (${suggestionCount})" />
+		<execute function="AssertClick" locator1="KnowledgeBaseSuggestionsNAVIGATION_RESOLVED" value1="Resolved (${suggestionCount})" />
 	</command>
 
 	<command name="moveToInProgressStatus">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
-		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#SUGGESTION_MOVE_TO_IN_PROGRESS_BUTTON" value1="Move to in Progress" />
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUCCESS_MESSAGE" value1="Suggestion status updated successfully." />
+		<execute function="AssertClick" locator1="KnowledgeBaseSuggestions#MOVE_TO_IN_PROGRESS_BUTTON" value1="Move to in Progress" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Suggestion status updated successfully." />
 	</command>
 
 	<command name="moveToNewStatus">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
-		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#SUGGESTION_MOVE_TO_NEW_BUTTON" value1="Move to New" />
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUCCESS_MESSAGE" value1="Suggestion status updated successfully." />
+		<execute function="AssertClick" locator1="KnowledgeBaseSuggestions#MOVE_TO_NEW_BUTTON" value1="Move to New" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Suggestion status updated successfully." />
 	</command>
 
 	<command name="moveToResolvedStatus">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
-		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#SUGGESTION_RESOLVE_BUTTON" value1="Resolve" />
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUCCESS_MESSAGE" value1="Suggestion status updated successfully." />
+		<execute function="AssertClick" locator1="KnowledgeBaseSuggestions#RESOLVE_BUTTON" value1="Resolve" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Suggestion status updated successfully." />
 	</command>
 
 	<command name="viewCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#SUGGESTION_USER_NAME" value1="${userName}" />
-		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#SUGGESTION_TITLE" value1="${kbSuggestionBody}" />
-		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#SUGGESTION_CONTENT" value1="${kbSuggestionBody}" />
-		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#SUGGESTION_STATUS" value1="Status: ${status}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#USER_NAME" value1="${userName}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#TITLE" value1="${kbSuggestionBody}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#STATUS" value1="Status: ${status}" />
 	</command>
 
 	<command name="viewDefaultInProgress">
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#INFO_MESSAGE" value1="No in progress suggestion was found." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No in progress suggestion was found." />
 	</command>
 
 	<command name="viewDefaultNew">
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#INFO_MESSAGE" value1="No new suggestion was found." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No new suggestion was found." />
 	</command>
 
 	<command name="viewDefaultResolved">
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#INFO_MESSAGE" value1="No completed suggestion was found." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No completed suggestion was found." />
 	</command>
 
 	<command name="viewNoDuplicatePG">
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_THERE_ARE_SUGGESTIONS_LINK" value1="${kbThereAreSuggestionsLink}" />
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUGGESTION_USER_NAME" value1="${userName}" />
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUGGESTION_CONTENT" value1="${kbSuggestionBody}" />
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUGGESTION_STATUS" value1="Status: ${status}" />
-		<execute function="AssertElementNotPresent" locator1="PGKnowledgebasedisplay#SUGGESTION_CONTENT_DUPLICATE" value1="${kbSuggestionBody}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="${kbThereAreSuggestionsLink}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#USER_NAME" value1="${userName}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#STATUS" value1="Status: ${status}" />
+		<execute function="AssertElementNotPresent" locator1="KnowledgeBaseSuggestions#CONTENT_DUPLICATE" value1="${kbSuggestionBody}" />
 	</command>
 
 	<command name="viewNoSuggestionsPG">
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_DO_YOU_HAVE_ANY_SUGGESTIONS_LINK" value1="Do you have any suggestions?" />
-		<execute function="AssertElementNotPresent" locator1="PGKnowledgebasedisplay#ARTICLE_THERE_ARE_SUGGESTIONS_LINK" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#LINK_DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
+		<execute function="AssertElementNotPresent" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" />
 	</command>
 
 	<command name="viewPG">
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUGGESTION_USER_NAME" value1="${userName}" />
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUGGESTION_CONTENT" value1="${kbSuggestionBody}" />
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#SUGGESTION_STATUS" value1="Status: ${status}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#USER_NAME" value1="${userName}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#STATUS" value1="Status: ${status}" />
 	</command>
 
 	<command name="viewSubmittedSuggestionCountNoPermissionPG">
 		<var name="kbSuggestionCount" value="${kbSuggestionCount}" />
 
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_DO_YOU_HAVE_ANY_SUGGESTIONS_LINK" value1="Do you have any suggestions?" />
-		<execute function="AssertElementNotPresent" locator1="PGKnowledgebasedisplay#SUGGESTION_NAVIGATION_BAR" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#LINK_DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
+		<execute function="AssertElementNotPresent" locator1="KnowledgeBaseSuggestions#NAVIGATION_BAR" />
 
 		<if>
 			<equals arg1="${kbSuggestionCount}" arg2="1" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="PGKnowledgebasedisplay#ARTICLE_THERE_ARE_SUGGESTIONS_LINK" value1="You sent one suggestion for this article." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="You sent one suggestion for this article." />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="PGKnowledgebasedisplay#ARTICLE_THERE_ARE_SUGGESTIONS_LINK" value1="You sent ${kbSuggestionCount} suggestions for this article." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="You sent ${kbSuggestionCount} suggestions for this article." />
 			</else>
 		</if>
 	</command>
@@ -143,15 +143,15 @@
 	<command name="viewSuggestionCountPG">
 		<var name="kbSuggestionCount" value="${kbSuggestionCount}" />
 
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_DO_YOU_HAVE_ANY_SUGGESTIONS_LINK" value1="Do you have any suggestions?" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#LINK_DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
 
 		<if>
 			<equals arg1="${kbSuggestionCount}" arg2="1" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="PGKnowledgebasedisplay#ARTICLE_THERE_ARE_SUGGESTIONS_LINK" value1="There is one suggestion." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="There is one suggestion." />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="PGKnowledgebasedisplay#ARTICLE_THERE_ARE_SUGGESTIONS_LINK" value1="There are ${kbSuggestionCount} suggestions." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="There are ${kbSuggestionCount} suggestions." />
 			</else>
 		</if>
 	</command>

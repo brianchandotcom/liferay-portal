@@ -6,69 +6,69 @@
 	</command>
 
 	<command name="configureContentSharingAcrossSitesCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_CONTENT_SHARING" value1="Content Sharing" />
+		<execute function="AssertClick" locator1="NavListItem#CONTENT_SHARING" value1="Content Sharing" />
 
 		<if>
 			<equals arg1="${enableAcrossSite}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="CPPortalsettingsContentsharing#CONTENT_SHARING_CHECKBOX" />
-				<execute function="AssertClick" locator1="CPPortalsettingsContentsharing#SAVE_BUTTON" value1="Save" />
-				<execute function="AssertTextEquals" locator1="CPPortalsettingsContentsharing#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-				<execute function="AssertChecked" locator1="CPPortalsettingsContentsharing#CONTENT_SHARING_CHECKBOX" />
+				<execute function="Check" locator1="PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX" />
+				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="AssertChecked" locator1="PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${enableAcrossSite}" arg2="false" />
 				<then>
-					<execute function="Uncheck#clickAt" locator1="CPPortalsettingsContentsharing#CONTENT_SHARING_CHECKBOX" />
-					<execute function="AssertClick" locator1="CPPortalsettingsContentsharing#SAVE_BUTTON" value1="Save" />
-					<execute function="AssertTextEquals" locator1="CPPortalsettingsContentsharing#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-					<execute function="AssertNotChecked" locator1="CPPortalsettingsContentsharing#CONTENT_SHARING_CHECKBOX" />
+					<execute function="Uncheck#clickAt" locator1="PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX" />
+					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+					<execute function="AssertNotChecked" locator1="PortalSettingsContentSharing#CONTENT_SHARING_CHECKBOX" />
 				</then>
 			</elseif>
 		</if>
 	</command>
 
 	<command name="configureContentSharingSubSitesCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_CONTENT_SHARING" value1="Content Sharing" />
+		<execute function="AssertClick" locator1="NavListItem#CONTENT_SHARING" value1="Content Sharing" />
 
 		<if>
 			<equals arg1="${subSites}" arg2="enabledByDefault" />
 			<then>
-				<execute function="Select" locator1="CPPortalsettingsContentsharing#CONTENT_SHARING_SELECTOR" value1="Enabled by Default" />
-				<execute function="AssertClick" locator1="CPPortalsettingsContentsharing#SAVE_BUTTON" value1="Save" />
-				<execute function="AssertTextEquals" locator1="CPPortalsettingsContentsharing#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-				<execute function="AssertSelectedLabel" locator1="CPPortalsettingsContentsharing#CONTENT_SHARING_SELECTOR" value1="Enabled by Default" />
+				<execute function="Select" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Enabled by Default" />
+				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="AssertSelectedLabel" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Enabled by Default" />
 			</then>
 			<elseif>
 				<equals arg1="${subSites}" arg2="disabledByDefault" />
 				<then>
-					<execute function="Select" locator1="CPPortalsettingsContentsharing#CONTENT_SHARING_SELECTOR" value1="Disabled by Default" />
-					<execute function="AssertClick" locator1="CPPortalsettingsContentsharing#SAVE_BUTTON" value1="Save" />
-					<execute function="AssertTextEquals" locator1="CPPortalsettingsContentsharing#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-					<execute function="AssertSelectedLabel" locator1="CPPortalsettingsContentsharing#CONTENT_SHARING_SELECTOR" value1="Disabled by Default" />
+					<execute function="Select" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Disabled by Default" />
+					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+					<execute function="AssertSelectedLabel" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Disabled by Default" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${subSites}" arg2="disabled" />
 				<then>
-					<execute function="Select" locator1="CPPortalsettingsContentsharing#CONTENT_SHARING_SELECTOR" value1="Disabled" />
-					<execute function="AssertClick" locator1="CPPortalsettingsContentsharing#SAVE_BUTTON" value1="Save" />
-					<execute function="AssertTextEquals" locator1="CPPortalsettingsContentsharing#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-					<execute function="AssertSelectedLabel" locator1="CPPortalsettingsContentsharing#CONTENT_SHARING_SELECTOR" value1="Disabled" />
+					<execute function="Select" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Disabled" />
+					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+					<execute function="AssertSelectedLabel" locator1="PortalSettingsContentSharing#CONTENT_SHARING_SELECTOR" value1="Disabled" />
 				</then>
 			</elseif>
 		</if>
 	</command>
 
 	<command name="configureCurrentLanguagesCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
+		<execute function="AssertClick" locator1="NavListItem#DISPLAY_SETTINGS" value1="Display Settings" />
 
 		<if>
 			<isset var="defaultPortalLanguage" />
 			<then>
 				<var name="defaultPortalLanguage" value="${defaultPortalLanguage}" />
 
-				<execute function="Select" locator1="CPSitesettingsDisplaysettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultPortalLanguage}" />
+				<execute function="Select" locator1="SiteSettingsDisplaysettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultPortalLanguage}" />
 			</then>
 		</if>
 
@@ -76,19 +76,19 @@
 			<isset var="currentPortalLanguages" />
 			<then>
 				<while>
-					<condition function="IsElementPresent" locator1="CPPortalsettingsDisplaysettings#AVAILABLE_LANGUAGES_CURRENT_PRESENT" />
+					<condition function="IsElementPresent" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" />
 					<then>
-						<execute function="Click" locator1="CPPortalsettingsDisplaysettings#AVAILABLE_LANGUAGES_CURRENT_PRESENT" />
-						<execute function="Click" locator1="CPPortalsettingsDisplaysettings#MOVE_CURRENT_TO_AVAILABLE_BUTTON" />
+						<execute function="Click" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" />
+						<execute function="Click" locator1="Button#MOVE_CURRENT_TO_AVAILABLE" />
 					</then>
 				</while>
 
 				<for list="${currentPortalLanguages}" param="currentPortalLanguage">
 					<var name="currentPortalLanguage" value="${currentPortalLanguage}" />
 
-					<execute function="Select" locator1="CPPortalsettingsDisplaysettings#AVAILABLE_LANGUAGES_AVAILABLE_SELECT" value1="${currentPortalLanguage}" />
-					<execute function="Click" locator1="CPPortalsettingsDisplaysettings#MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
-					<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsDisplaysettings#AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentPortalLanguage}" />
+					<execute function="Select" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${currentPortalLanguage}" />
+					<execute function="Click" locator1="Button#MOVE_AVAILABLE_TO_CURRENT" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${currentPortalLanguage}" />
 				</for>
 			</then>
 		</if>
@@ -98,7 +98,7 @@
 	</command>
 
 	<command name="configureTimeZone">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
+		<execute function="AssertClick" locator1="NavListItem#DISPLAY_SETTINGS" value1="Display Settings" />
 
 		<execute function="Select" locator1="CPSitesettingsDisplaysettings#TIME_ZONE_SELECT" value1="${timeZone}" />
 
@@ -106,62 +106,62 @@
 	</command>
 
 	<command name="disableLDAPCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#NAVIGATION_LDAP" value1="LDAP" />
-		<execute function="Uncheck" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="NavTab#LDAP" value1="LDAP" />
+		<execute function="Uncheck" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#NAVIGATION_LDAP" value1="LDAP" />
-		<execute function="AssertNotChecked" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
+		<execute function="AssertClick" locator1="NavTab#LDAP" value1="LDAP" />
+		<execute function="AssertNotChecked" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
 	</command>
 
 	<command name="disableRecycleBinCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_RECYCLE_BIN" value1="Recycle Bin" />
+		<execute function="AssertClick" locator1="NavListItem#RECYCLE_BIN" value1="Recycle Bin" />
 
-		<execute function="ClickNoError" locator1="CPPortalsettingsRecyclebin#ENABLE_REYCLE_BIN_CHECKBOX" />
+		<execute function="ClickNoError" locator1="PortalSettingsRecycleBin#ENABLE_REYCLE_BIN_CHECKBOX" />
 
 		<execute function="Confirm" value1="Disabling the Recycle Bin prevents the restoring of content that has been moved to the Recycle Bin." />
 
-		<execute function="AssertClick" locator1="CPPortalsettings#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editConfigurationAuthenticationCAS">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#NAVIGATION_CAS" value1="CAS" />
-		<execute function="Check" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX" />
-		<execute function="Type" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD" value1="${casLoginURL}" />
-		<execute function="Type" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD" value1="${casLogoutURL}" />
-		<execute function="Type" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_FIELD" value1="${casServerURL}" />
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON" value1="Test CAS Configuration" />
+		<execute function="AssertClick" locator1="NavTab#CAS" value1="CAS" />
+		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD" value1="${casLoginURL}" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD" value1="${casLogoutURL}" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_FIELD" value1="${casServerURL}" />
+		<execute function="AssertClick" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON" value1="Test CAS Configuration" />
 
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthenticationTestcasconfiguration#LOGIN_URL_SUCCESS_MESSAGE" value1="Pass" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthenticationTestcasconfiguration#LOGOUT_URL_SUCCESS_MESSAGE" value1="Pass" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthenticationTestcasconfiguration#SERVER_URL_SUCCESS_MESSAGE" value1="Pass" />
-		<execute function="Click" locator1="CPPortalsettingsAuthenticationTestcasconfiguration#CLOSE_ICON_BUTTON" />
+		<execute function="AssertTextEquals" locator1="Message#LOGIN_URL_SUCCESS" value1="Pass" />
+		<execute function="AssertTextEquals" locator1="Message#LOGOUT_URL_SUCCESS" value1="Pass" />
+		<execute function="AssertTextEquals" locator1="Message#SERVER_URL_SUCCESS" value1="Pass" />
+		<execute function="Click" locator1="Icon#CLOSE" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editConfigurationAuthenticationGeneral">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
 
 		<if>
 			<equals arg1="${enableRequireStrangers}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX" />
+				<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX" />
 			</then>
 			<else>
-				<execute function="Select" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT" value1="${authenticationMethod}" />
+				<execute function="Select" locator1="PortalSettingsAuthentication#AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT" value1="${authenticationMethod}" />
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editConfigurationAuthenticationGoogle">
@@ -173,137 +173,137 @@
 	</command>
 
 	<command name="editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_USERS" value1="Users" />
+		<execute function="AssertClick" locator1="NavListItem#USERS" value1="Users" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER" value1="Organization Sites" />
-		<execute function="Type" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="${orgName}" />
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="${orgName}" />
+		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER" value1="Organization Sites" />
+		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="${orgName}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="${orgName}" />
 	</command>
 
 	<command name="editConfigurationUsersDefaultUserAssociationsRolesCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_USERS" value1="Users" />
+		<execute function="AssertClick" locator1="NavListItem#USERS" value1="Users" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER" value1="Roles" />
-		<execute function="Type" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
-		<execute function="Type#clickAtSendKeys" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
+		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER" value1="Roles" />
+		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+		<execute function="Type#clickAtSendKeys" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
 	</command>
 
 	<command name="editConfigurationUsersDefaultUserAssociationsSitesCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_USERS" value1="Users" />
+		<execute function="AssertClick" locator1="NavListItem#USERS" value1="Users" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_HEADER" value1="Sites" />
-		<execute function="Type" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="${siteName}" />
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="${siteName}" />
+		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_HEADER" value1="Sites" />
+		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="${siteName}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="${siteName}" />
 	</command>
 
 	<command name="editConfigurationUsersDefaultUserAssociationsUserGroupsCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_USERS" value1="Users" />
+		<execute function="AssertClick" locator1="NavListItem#USERS" value1="Users" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER" value1="User Groups" />
-		<execute function="Type" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
+		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER" value1="User Groups" />
+		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
 	</command>
 
 	<command name="editConfigurationUsersEmailNotificationsCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_EMAIL_NOTIFICATIONS" value1="Email Notifications" />
+		<execute function="AssertClick" locator1="NavListItem#EMAIL_NOTIFICATIONS" value1="Email Notifications" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsEmailNotifications#NAVIGATION_ACCOUNT_CREATED_NOTIFICATION" value1="Account Created Notification" />
-		<execute function="Type#typeCKEditor" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD" value1="[$USER_PASSWORD$]" />
-		<execute function="AssertClick" locator1="CPPortalsettingsEmailNotifications#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsEmailNotifications#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="NavTab#ACCOUNT_CREATED_NOTIFICATION" value1="Account Created Notification" />
+		<execute function="Type#typeCKEditor" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD" value1="[$USER_PASSWORD$]" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editConfigurationUsersEmailVerificationNotificationsCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_EMAIL_NOTIFICATIONS" value1="Email Notifications" />
+		<execute function="AssertClick" locator1="NavListItem#EMAIL_NOTIFICATIONS" value1="Email Notifications" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsEmailNotifications#NAVIGATION_EMAIL_VERIFICATiON_NOTIFICATION" value1="Email Verification Notification" />
+		<execute function="AssertClick" locator1="NavTab#EMAIL_VERIFICATION_NOTIFICATION" value1="Email Verification Notification" />
 
 		<if>
 			<equals arg1="${emailVerificationURL}" arg2="true" />
 			<then>
-				<execute function="Type#typeCKEditor" locator1="CPPortalsettingsEmailNotifications#NAVIGATION_EMAIL_VERIFICATiON_NOTIFICATION_BODY" value1="[$EMAIL_VERIFICATION_URL$]" />
+				<execute function="Type#typeCKEditor" locator1="NavTab#EMAIL_VERIFICATION_NOTIFICATION_BODY" value1="[$EMAIL_VERIFICATION_URL$]" />
 			</then>
 			<else>
-				<execute function="Type#typeCKEditor" locator1="CPPortalsettingsEmailNotifications#NAVIGATION_EMAIL_VERIFICATiON_NOTIFICATION_BODY" value1="[$EMAIL_VERIFICATION_CODE$]" />
+				<execute function="Type#typeCKEditor" locator1="NavTab#EMAIL_VERIFICATION_NOTIFICATION_BODY" value1="[$EMAIL_VERIFICATION_CODE$]" />
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="CPPortalsettingsEmailNotifications#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsEmailNotifications#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editDefaultLandingPageCP">
-		<execute function="Type" locator1="CPPortalsettings#NAVIGATION_DEFAULT_LANDING_PAGE_FIELD" value1="${defaultLandingPage}" />
-		<execute function="AssertClick" locator1="CPPortalsettings#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="Type" locator1="PortalSettings#DEFAULT_LANDING_PAGE_FIELD" value1="${defaultLandingPage}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editVirtualHostCP">
-		<execute function="Type" locator1="CPPortalsettings#MAIN_CONFIGURATION_VIRTUAL_HOST_FIELD" value1="${virtualHostName}" />
-		<execute function="AssertClick" locator1="CPPortalsettings#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="CPPortalsettings#MAIN_CONFIGURATION_VIRTUAL_HOST_FIELD" value1="${virtualHostName}" />
+		<execute function="Type" locator1="PortalSettings#VIRTUAL_HOST_FIELD" value1="${virtualHostName}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="PortalSettings#VIRTUAL_HOST_FIELD" value1="${virtualHostName}" />
 	</command>
 
 	<command name="enableLDAPCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#NAVIGATION_LDAP" value1="LDAP" />
-		<execute function="Check" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="NavTab#LDAP" value1="LDAP" />
+		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#NAVIGATION_LDAP" value1="LDAP" />
-		<execute function="AssertChecked" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
+		<execute function="AssertClick" locator1="NavTab#LDAP" value1="LDAP" />
+		<execute function="AssertChecked" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
 	</command>
 
 	<command name="enableRecycleBinCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_RECYCLE_BIN" value1="Recycle Bin" />
+		<execute function="AssertClick" locator1="NavListItem#RECYCLE_BIN" value1="Recycle Bin" />
 
-		<execute function="Check" locator1="CPPortalsettingsRecyclebin#ENABLE_REYCLE_BIN_CHECKBOX" />
+		<execute function="Check" locator1="PortalSettingsRecycleBin#ENABLE_REYCLE_BIN_CHECKBOX" />
 
-		<execute function="AssertClick" locator1="CPPortalsettings#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="enterReservedEmailAddressCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_USERS" value1="Users" />
+		<execute function="AssertClick" locator1="NavListItem#USERS" value1="Users" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_TAB" value1="Reserved Credentials" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER" value1="Email Addresses" />
-		<execute function="Type" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="${userEmailAddress}" />
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_TAB" value1="Reserved Credentials" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="${userEmailAddress}" />
+		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER" value1="Email Addresses" />
+		<execute function="Type" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="${userEmailAddress}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="${userEmailAddress}" />
 	</command>
 
 	<command name="enterReservedScreenNameCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_USERS" value1="Users" />
+		<execute function="AssertClick" locator1="NavListItem#USERS" value1="Users" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_TAB" value1="Reserved Credentials" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER" value1="Screen Names" />
-		<execute function="Type" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_TAB" value1="Reserved Credentials" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="${userScreenName}" />
+		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER" value1="Screen Names" />
+		<execute function="Type" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="${userScreenName}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="${userScreenName}" />
 	</command>
 
 	<command name="tearDownAuthenticationCP">
@@ -311,21 +311,21 @@
 			<var name="portletName" value="Portal Settings" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
 
-		<execute function="Select" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT" value1="By Email Address" />
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="Select" locator1="PortalSettingsAuthentication#AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT" value1="By Email Address" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#NAVIGATION_CAS" value1="CAS" />
-		<execute function="Uncheck" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX" />
-		<execute function="Type" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD" value1="https://localhost:8443/cas-web/login" />
-		<execute function="Type" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD" value1="https://localhost:8443/cas-web/logout" />
-		<execute function="Type" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_FIELD" value1="https://localhost:8443/cas-web" />
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="NavTab#CAS" value1="CAS" />
+		<execute function="Uncheck" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD" value1="https://localhost:8443/cas-web/login" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD" value1="https://localhost:8443/cas-web/logout" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_FIELD" value1="https://localhost:8443/cas-web" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownCP">
@@ -333,18 +333,18 @@
 			<var name="portletName" value="Portal Settings" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_USERS" value1="Users" />
+		<execute function="AssertClick" locator1="NavListItem#USERS" value1="Users" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
-		<execute function="Type" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="" />
-		<execute function="Type" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="Power User\nUser" />
-		<execute function="Type" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="" />
-		<execute function="Type" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="" />
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_TAB" value1="Reserved Credentials" />
-		<execute function="Type" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="" />
-		<execute function="Type" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="" />
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="" />
+		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="Power User\nUser" />
+		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="" />
+		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="" />
+		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
+		<execute function="Type" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="" />
+		<execute function="Type" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="PortalSettings#configureContentSharingAcrossSitesCP">
 			<var name="enableAcrossSite" value="true" />
@@ -352,217 +352,217 @@
 	</command>
 
 	<command name="viewAuthenticationCASCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#NAVIGATION_CAS" value1="CAS" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_IMPORT_FROM_LDAP_CHECKBOX" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_HEADER" value1="Login URL" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD" value1="https://localhost:8443/cas-web/login" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_HEADER" value1="Logout URL" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD" value1="https://localhost:8443/cas-web/logout" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_SERVER_NAME_HEADER" value1="Server Name" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_SERVER_NAME_FIELD" value1="localhost:8080" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_HEADER" value1="Server URL" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_FIELD" value1="https://localhost:8443/cas-web" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_SERVICE_URL_HEADER" value1="Service URL" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_SERVICE_URL_FIELD" value1="" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_HEADER" value1="No Such User Redirect URL" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_FIELD" value1="http://localhost:8080" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON" value1="Test CAS Configuration" />
+		<execute function="AssertClick" locator1="NavTab#CAS" value1="CAS" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_IMPORT_FROM_LDAP_CHECKBOX" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_HEADER" value1="Login URL" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD" value1="https://localhost:8443/cas-web/login" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_HEADER" value1="Logout URL" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD" value1="https://localhost:8443/cas-web/logout" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_NAME_HEADER" value1="Server Name" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_NAME_FIELD" value1="localhost:8080" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_HEADER" value1="Server URL" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_FIELD" value1="https://localhost:8443/cas-web" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVICE_URL_HEADER" value1="Service URL" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVICE_URL_FIELD" value1="" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_HEADER" value1="No Such User Redirect URL" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_NO_SUCH_USER_REDIRECT_URL_FIELD" value1="http://localhost:8080" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON" value1="Test CAS Configuration" />
 	</command>
 
 	<command name="viewAuthenticationGeneralCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#NAVIGATION_GENERAL" value1="General" />
-		<execute function="AssertSelectedLabel" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT" value1="By Email Address" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_USERS_TO_AUTOMATICALLY_LOGIN_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_USERS_TO_REQUEST_FORGOTTEN_PASSWORDS_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_GENERAL__ALLOW_USERS_TO_REQUEST_PASSWORD_RESET_LINKS_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_STRANGERS_TO_CREATE_ACCOUNTS_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_STRANGERS_TO_CREATE_ACCOUNTS_WITH_A_COMPANY_EMAIL_ADDRESS_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX" />
+		<execute function="AssertClick" locator1="NavTab#GENERAL" value1="General" />
+		<execute function="AssertSelectedLabel" locator1="PortalSettingsAuthentication#AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT" value1="By Email Address" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_USERS_TO_AUTOMATICALLY_LOGIN_CHECKBOX" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_USERS_TO_REQUEST_FORGOTTEN_PASSWORDS_CHECKBOX" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_USERS_TO_REQUEST_PASSWORD_RESET_LINKS_CHECKBOX" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_STRANGERS_TO_CREATE_ACCOUNTS_CHECKBOX" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_STRANGERS_TO_CREATE_ACCOUNTS_WITH_A_COMPANY_EMAIL_ADDRESS_CHECKBOX" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX" />
 	</command>
 
 	<command name="viewAuthenticationLDAPCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#NAVIGATION_LDAP" value1="LDAP" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_LDAP_REQUIRED_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_LDAP_IMPORT_ENABLED_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_LDAP_EXPORT_ENABLED_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_LDAP_USE_LDAP_PASSWORD_POLICY_CHECKBOX" />
+		<execute function="AssertClick" locator1="NavTab#LDAP" value1="LDAP" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_REQUIRED_CHECKBOX" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_IMPORT_ENABLED_CHECKBOX" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_EXPORT_ENABLED_CHECKBOX" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_USE_LDAP_PASSWORD_POLICY_CHECKBOX" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_LDAP_ADD_BUTTON" value1="Add" />
-		<execute function="Click" locator1="CPPortalsettingsAuthentication#LDAP_SERVER_DEFAULT_VALUES_MICROSOFT_ACTIVE_DIRECTORY_SERVER_RADIO" />
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#LDAP_SERVER_RESET_VALUES_BUTTON" value1="Reset Values" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsAuthentication#LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_HEADER" value1="Base Provider URL" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_FIELD" value1="ldap://localhost:389" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsAuthentication#LDAP_SERVER_CONNECTION_BASE_DN_HEADER" value1="Base DN" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#LDAP_SERVER_CONNECTION_BASE_DN_FIELD" value1="dc=example,dc=com" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#LDAP_SERVER_CONNECTION__PRINCIPAL_HEADER" value1="Principal" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#LDAP_SERVER_CONNECTION_PRINCIPAL_FIELD" value1="admin" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#LDAP_SERVER_CONNECTION_CREDENTIALS_HEADER" value1="Credentials" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#LDAP_SERVER_CONNECTION_CREDENTIALS_FIELD" value1="secret" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#LDAP_SERVER_TEST_LDAP_CONNECTION_BUTTON" value1="Test LDAP Connection" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#LDAP_SERVER_TEST_LDAP_USERS_BUTTON" value1="Test LDAP Users" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#LDAP_SERVER_TEST_LDAP_GROUPS_BUTTON" value1="Test LDAP Groups" />
+		<execute function="AssertClick" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ADD_BUTTON" value1="Add" />
+		<execute function="Click" locator1="PortalSettingsAuthentication#LDAP_SERVER_DEFAULT_VALUES_MICROSOFT_ACTIVE_DIRECTORY_SERVER_RADIO" />
+		<execute function="AssertClick" locator1="PortalSettingsAuthentication#LDAP_SERVER_RESET_VALUES_BUTTON" value1="Reset Values" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_HEADER" value1="Base Provider URL" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_FIELD" value1="ldap://localhost:389" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_BASE_DN_HEADER" value1="Base DN" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_BASE_DN_FIELD" value1="dc=example,dc=com" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_PRINCIPAL_HEADER" value1="Principal" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_PRINCIPAL_FIELD" value1="admin" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_CREDENTIALS_HEADER" value1="Credentials" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_CREDENTIALS_FIELD" value1="secret" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_CONNECTION_BUTTON" value1="Test LDAP Connection" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_USERS_BUTTON" value1="Test LDAP Users" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_GROUPS_BUTTON" value1="Test LDAP Groups" />
 	</command>
 
 	<command name="viewAuthenticationNTLMCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#NAVIGATION_NTLM" value1="NTLM" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_NTLM_ENABLED_CHECKBOX" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_HEADER" value1="Domain Controller" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_FIELD" value1="127.0.0.1" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_HEADER" value1="Domain Controller Name" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_FIELD" value1="EXAMPLE" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_HEADER" value1="Domain" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_FIELD" value1="EXAMPLE" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_ACCOUNT_HEADER" value1="Service Account" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_ACCOUNT_FIELD" value1="LIFERAY$@EXAMPLE.COM" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_PASSWORD_HEADER" value1="Service Password" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_PASSWORD_FIELD" value1="test" />
+		<execute function="AssertClick" locator1="NavTab#NTLM" value1="NTLM" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_ENABLED_CHECKBOX" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_HEADER" value1="Domain Controller" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_FIELD" value1="127.0.0.1" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_HEADER" value1="Domain Controller Name" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_NAME_FIELD" value1="EXAMPLE" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_HEADER" value1="Domain" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_FIELD" value1="EXAMPLE" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_ACCOUNT_HEADER" value1="Service Account" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_ACCOUNT_FIELD" value1="LIFERAY$@EXAMPLE.COM" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_PASSWORD_HEADER" value1="Service Password" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_SERVICE_PASSWORD_FIELD" value1="test" />
 	</command>
 
 	<command name="viewAuthenticationOpenIDCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#NAVIGATION_OPEN_ID" value1="OpenID" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX" />
+		<execute function="AssertClick" locator1="NavTab#OPEN_ID" value1="OpenID" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX" />
 	</command>
 
 	<command name="viewAuthenticationOpenSSOCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#NAVIGATION_OPEN_SSO" value1="Open SSO" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_IMPORT_FROM_LDAP_CHECKBOX" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGIN_URL_HEADER" value1="Login URL" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGIN_URL_FIELD" value1="http://openssohost.example.com:8080/opensso/UI/Login?goto=http://portalhost.example.com:8080/c/portal/login" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGOUT_URL_HEADER" value1="Logout URL" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGOUT_URL_FIELD" value1="http://openssohost.example.com:8080/opensso/UI/Logout?goto=http://portalhost.example.com:8080/web/guest/home" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_SERVICE_URL_HEADER" value1="Service URL" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_SERVICE_URL_FIELD" value1="http://openssohost.example.com:8080/opensso" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_HEADER" value1="Screen Name Attribute" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_FIELD" value1="uid" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_HEADER" value1="Email Address Attribute" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_FIELD" value1="mail" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_HEADER" value1="First Name Attribute" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_FIELD" value1="givenname" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_HEADER" value1="Last Name Attribute" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_FIELD" value1="sn" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON" value1="Test OpenSSO Configuration" />
+		<execute function="AssertClick" locator1="NavTab#OPEN_SSO" value1="Open SSO" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_IMPORT_FROM_LDAP_CHECKBOX" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGIN_URL_HEADER" value1="Login URL" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGIN_URL_FIELD" value1="http://openssohost.example.com:8080/opensso/UI/Login?goto=http://portalhost.example.com:8080/c/portal/login" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGOUT_URL_HEADER" value1="Logout URL" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGOUT_URL_FIELD" value1="http://openssohost.example.com:8080/opensso/UI/Logout?goto=http://portalhost.example.com:8080/web/guest/home" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_SERVICE_URL_HEADER" value1="Service URL" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_SERVICE_URL_FIELD" value1="http://openssohost.example.com:8080/opensso" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_HEADER" value1="Screen Name Attribute" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_FIELD" value1="uid" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_HEADER" value1="Email Address Attribute" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_FIELD" value1="mail" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_HEADER" value1="First Name Attribute" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_FIELD" value1="givenname" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_HEADER" value1="Last Name Attribute" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_FIELD" value1="sn" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_TEST_OPEN_SSO_CONFIGURATION_BUTTON" value1="Test OpenSSO Configuration" />
 	</command>
 
 	<command name="viewAuthenticationSiteMinderCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#NAVIGATION_SITE_MINDER" value1="SiteMinder" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_SITE_MINDER_ENABLED_CHECKBOX" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_SITE_MINDER_IMPORT_FROM_LDAP_CHECKBOX" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_SITE_MINDER_USER_HEADER_HEADER" value1="User Header" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#AUTHENTICATION_SITE_MINDER_USER_HEADER_FIELD" value1="SM_USER" />
+		<execute function="AssertClick" locator1="NavTab#SITE_MINDER" value1="SiteMinder" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_SITE_MINDER_ENABLED_CHECKBOX" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_SITE_MINDER_IMPORT_FROM_LDAP_CHECKBOX" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_SITE_MINDER_USER_HEADER_HEADER" value1="User Header" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_SITE_MINDER_USER_HEADER_FIELD" value1="SM_USER" />
 	</command>
 
 	<command name="viewConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_USERS" value1="Users" />
+		<execute function="AssertClick" locator1="NavListItem#USERS" value1="Users" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="${orgName}" />
+		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="${orgName}" />
 	</command>
 
 	<command name="viewConfigurationUsersDefaultUserAssociationsRolesCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_USERS" value1="Users" />
+		<execute function="AssertClick" locator1="NavListItem#USERS" value1="Users" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
-		<execute function="Type#clickAtSendKeys" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
+		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+		<execute function="Type#clickAtSendKeys" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
 	</command>
 
 	<command name="viewConfigurationUsersDefaultUserAssociationsSitesCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_USERS" value1="Users" />
+		<execute function="AssertClick" locator1="NavListItem#USERS" value1="Users" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="${siteName}" />
+		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="${siteName}" />
 	</command>
 
 	<command name="viewConfigurationUsersDefaultUserAssociationsUserGroupsCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_USERS" value1="Users" />
+		<execute function="AssertClick" locator1="NavListItem#USERS" value1="Users" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
+		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
 	</command>
 
 	<command name="viewCurrentDefaultPortalLanguageCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="${displaySettings}" />
+		<execute function="AssertClick" locator1="NavListItem#DISPLAY_SETTINGS" value1="${displaySettings}" />
 
-		<execute function="AssertSelectedLabel" locator1="CPPortalsettingsDisplaysettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultPortalLanguage}" />
+		<execute function="AssertSelectedLabel" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultPortalLanguage}" />
 	</command>
 
 	<command name="viewDefaultLanguageCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
+		<execute function="AssertClick" locator1="NavListItem#DISPLAY_SETTINGS" value1="Display Settings" />
 
-		<execute function="AssertSelectedLabel" locator1="CPPortalsettingsDisplaysettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultPortalLanguage}" />
+		<execute function="AssertSelectedLabel" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultPortalLanguage}" />
 	</command>
 
 	<command name="viewDefaultUserAssociationsCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_USERS" value1="Users" />
+		<execute function="AssertClick" locator1="NavListItem#USERS" value1="Users" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsUsers#APPLY_TO_EXISTING_USERS_CHECKBOX" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_HEADER" value1="Sites" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER" value1="Organization Sites" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER" value1="Roles" />
-		<execute function="Type#clickAtSendKeys" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="Power User\nUser" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER" value1="User Groups" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="" />
+		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsUsers#APPLY_TO_EXISTING_USERS_CHECKBOX" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_HEADER" value1="Sites" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER" value1="Organization Sites" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER" value1="Roles" />
+		<execute function="Type#clickAtSendKeys" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="Power User\nUser" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER" value1="User Groups" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="" />
 	</command>
 
 	<command name="viewEmailNotificationsAccountCreatedNotificationCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_EMAIL_NOTIFICATIONS" value1="Email Notifications" />
+		<execute function="AssertClick" locator1="NavListItem#EMAIL_NOTIFICATIONS" value1="Email Notifications" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsEmailNotifications#NAVIGATION_ACCOUNT_CREATED_NOTIFICATION" value1="Account Created Notification" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_ENABLED_CHECKBOX" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_SUBJECT_HEADER" value1="Subject" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_SUBJECT_FIELD" value1="[$PORTAL_URL$]: Your New Account" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_HEADER" value1="Body with Password" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_FIELD" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_HEADER" value1="Body without Password" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_FIELD" />
+		<execute function="AssertClick" locator1="NavTab#ACCOUNT_CREATED_NOTIFICATION" value1="Account Created Notification" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_ENABLED_CHECKBOX" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_SUBJECT_HEADER" value1="Subject" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_SUBJECT_FIELD" value1="[$PORTAL_URL$]: Your New Account" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_HEADER" value1="Body with Password" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD_FIELD" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_HEADER" value1="Body without Password" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITHOUT_PASSWORD_FIELD" />
 	</command>
 
 	<command name="viewEmailNotificationsPasswordChangedNotificationCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_EMAIL_NOTIFICATIONS" value1="Email Notifications" />
+		<execute function="AssertClick" locator1="NavListItem#EMAIL_NOTIFICATIONS" value1="Email Notifications" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsEmailNotifications#NAVIGATION_PASSWORD_CHANGED_NOTIFICATION" value1="Password Changed Notification" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_HEADER" value1="Subject" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_FIELD" value1="[$PORTAL_URL$]: Your New Password" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_HEADER" value1="Body" />
-		<execute function="AssertElementPresent" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_FIELD" />
+		<execute function="AssertClick" locator1="NavTab#PASSWORD_CHANGED_NOTIFICATION" value1="Password Changed Notification" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_HEADER" value1="Subject" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_FIELD" value1="[$PORTAL_URL$]: Your New Password" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_HEADER" value1="Body" />
+		<execute function="AssertElementPresent" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_FIELD" />
 	</command>
 
 	<command name="viewEmailNotificationsSenderCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_EMAIL_NOTIFICATIONS" value1="Email Notifications" />
+		<execute function="AssertClick" locator1="NavListItem#EMAIL_NOTIFICATIONS" value1="Email Notifications" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsEmailNotifications#NAVIGATION_SENDER" value1="Sender" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_NAME_HEADER" value1="Name" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_NAME_FIELD" value1="Joe Bloggs" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_ADDRESS_HEADER" value1="Address" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_ADDRESS_FIELD" value1="test@liferay.com" />
+		<execute function="AssertClick" locator1="NavTab#SENDER" value1="Sender" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_NAME_HEADER" value1="Name" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_NAME_FIELD" value1="Joe Bloggs" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_ADDRESS_HEADER" value1="Address" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_ADDRESS_FIELD" value1="test@liferay.com" />
 	</command>
 
 	<command name="viewReservedCredentialsScreenNamesCP">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_USERS" value1="Users" />
+		<execute function="AssertClick" locator1="NavListItem#USERS" value1="Users" />
 
-		<execute function="AssertClick" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_TAB" value1="Reserved Credentials" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER" value1="Screen Names" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER" value1="Email Addresses" />
-		<execute function="AssertTextEquals" locator1="CPPortalsettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="" />
+		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER" value1="Screen Names" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER" value1="Email Addresses" />
+		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="" />
 	</command>
 </definition>

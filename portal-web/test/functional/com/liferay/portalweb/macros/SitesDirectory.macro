@@ -12,23 +12,23 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="PGSitesdirectoryConfiguration#SITES_DIRECTORY_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<if>
 			<isset var="directorySites" />
 			<then>
-				<execute function="Select" locator1="PGSitesdirectoryConfiguration#SETUP_SITES_SELECT" value1="${directorySites}" />
+				<execute function="Select" locator1="Select#SITES" value1="${directorySites}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="directoryDisplayStyle" />
 			<then>
-				<execute function="Select" locator1="PGSitesdirectoryConfiguration#SETUP_DISPLAY_STYLE_SELECT" value1="${directoryDisplayStyle}" />
+				<execute function="Select" locator1="Select#DISPLAY_STYLE" value1="${directoryDisplayStyle}" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="PGSitesdirectoryConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="SelectFrameTop" />
 	</command>
 
@@ -38,40 +38,40 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="PGSitesdirectoryConfiguration#SITES_DIRECTORY_IFRAME" />
-		<execute function="AssertTextEquals" locator1="PGSitesdirectoryConfiguration#SETUP_SITES_SELECT" value1="Top Level Parent Level Siblings Children" />
-		<execute function="AssertTextEquals" locator1="PGSitesdirectoryConfiguration#SETUP_DISPLAY_STYLE_SELECT" value1="Icon Descriptive List List Hierarchy" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+		<execute function="AssertTextEquals" locator1="Select#SITES" value1="Top Level Parent Level Siblings Children" />
+		<execute function="AssertTextEquals" locator1="Select#DISPLAY_STYLE" value1="Icon Descriptive List List Hierarchy" />
 		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="viewDescriptivePG">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertTextEquals" locator1="PGSitesdirectory#DESCRIPTIVE_SITE_ENTRY" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="SitesDirectory#DESCRIPTIVE_SITE_ENTRY" value1="${siteName}" />
 	</command>
 
 	<command name="viewListHierarchyPG">
 		<var name="key_siteName" value="${availableSiteName}" />
 
-		<execute function="AssertTextEquals" locator1="PGSitesdirectory#LIST_HIERARCHY_PARENT_SITE_AVAILABLE" value1="${availableSiteName}" />
+		<execute function="AssertTextEquals" locator1="SitesDirectory#LIST_HIERARCHY_PARENT_SITE_AVAILABLE" value1="${availableSiteName}" />
 
 		<var name="key_siteName" value="${currentSiteName}" />
 
-		<execute function="AssertTextEquals" locator1="PGSitesdirectory#LIST_HIERARCHY_PARENT_SITE_CURRENT" value1="${currentSiteName}" />
+		<execute function="AssertTextEquals" locator1="SitesDirectory#LIST_HIERARCHY_PARENT_SITE_CURRENT" value1="${currentSiteName}" />
 
 		<var name="key_childSiteName" value="${childSiteName1}" />
 		<var name="key_siteName" value="${currentSiteName}" />
 
-		<execute function="AssertTextEquals" locator1="PGSitesdirectory#LIST_HIERARCHY_CHILD_SITE" value1="${childSiteName1}" />
+		<execute function="AssertTextEquals" locator1="SitesDirectory#LIST_HIERARCHY_CHILD_SITE" value1="${childSiteName1}" />
 
 		<var name="key_childSiteName" value="${childSiteName2}" />
 		<var name="key_siteName" value="${currentSiteName}" />
 
-		<execute function="AssertTextEquals" locator1="PGSitesdirectory#LIST_HIERARCHY_CHILD_SITE" value1="${childSiteName2}" />
+		<execute function="AssertTextEquals" locator1="SitesDirectory#LIST_HIERARCHY_CHILD_SITE" value1="${childSiteName2}" />
 
 		<var name="key_childSiteName" value="${childSiteName3}" />
 		<var name="key_siteName" value="${currentSiteName}" />
 
-		<execute function="AssertTextEquals" locator1="PGSitesdirectory#LIST_HIERARCHY_CHILD_SITE" value1="${childSiteName3}" />
+		<execute function="AssertTextEquals" locator1="SitesDirectory#LIST_HIERARCHY_CHILD_SITE" value1="${childSiteName3}" />
 	</command>
 </definition>

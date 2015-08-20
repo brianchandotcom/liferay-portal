@@ -229,8 +229,8 @@
 			<var name="dmDocumentTitle" value="Document_1.doc" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_INFO_VERSION" value1="Version PWC" />
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="Draft" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_VERSION" value1="Version PWC" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="Draft" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -277,9 +277,9 @@
 
 		<var name="key_dmDocumentTitle" value="Document1" />
 
-		<execute function="AssertClick" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_TITLE" value1="Document1" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="Document1" />
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_INFO_VERSION" value1="Version PWC" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_VERSION" value1="Version PWC" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -289,8 +289,8 @@
 			<var name="dmDocumentTitle" value="Document1" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_INFO_VERSION" value1="Version 1.1" />
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="Approved" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_VERSION" value1="Version 1.1" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="Approved" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -306,20 +306,20 @@
 
 		<var name="key_dmDocumentTitle" value="Document1" />
 
-		<execute function="AssertClick" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_TITLE" value1="Document1" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="Document1" />
 
-		<execute function="AssertClick#assertTextClick" locator1="PGDocumentsandmediaDocument#TOOLBAR_EDIT_BUTTON" value1="Edit" />
+		<execute function="AssertClick#assertTextClick" locator1="Button#EDIT" value1="Edit" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="PGDocumentsandmediaEditdocument#CATEGORIZATION_TAGS_REMOVE_ICON_GENERIC" />
+			<condition function="IsElementPresent" locator1="AssetCategorization#TAGS_REMOVE_ICON_GENERIC" />
 			<then>
-				<execute function="Click" locator1="PGDocumentsandmediaEditdocument#CATEGORIZATION_TAGS_REMOVE_ICON_GENERIC" />
+				<execute function="Click" locator1="AssetCategorization#TAGS_REMOVE_ICON_GENERIC" />
 			</then>
 		</while>
 
-		<execute function="AssertClick" locator1="PGDocumentsandmediaEditdocument#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_INFO_VERSION" value1="Version PWC" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_VERSION" value1="Version PWC" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -329,8 +329,8 @@
 			<var name="dmDocumentTitle" value="Document1" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_INFO_VERSION" value1="Version 1.1" />
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="Approved" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_VERSION" value1="Version 1.1" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="Approved" />
 	</command>
 
 	<command name="Comments" priority="4">
@@ -406,11 +406,11 @@
 
 		<var name="key_dmFolderName" value="Folder1" />
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#ENTRY_ICON_FOLDER_TITLE" value1="Folder1" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="Folder1" />
 
 		<var name="key_assetName" value="Zero Document File" />
 
-		<execute function="AssertClick" locator1="PGActivities#ACTIVITY_TITLE_ASSET_NAME" value1="Zero Document File" />
+		<execute function="AssertClick" locator1="Activities#ACTIVITY_TITLE_ASSET_NAME" value1="Zero Document File" />
 
 		<execute macro="DMDocument#viewDocumentTitleCmdPG">
 			<var name="dmDocumentTitle" value="Zero Document File" />
@@ -531,7 +531,7 @@
 				<not>
 					<equals arg1="${videoGenerationTimeCounter}" arg2="${videoGenerationTimeMaxWaitTime}" />
 				</not>
-				<condition function="IsElementPresent" locator1="PGDocumentsandmediaDocument#INFO_MESSAGE" />
+				<condition function="IsElementPresent" locator1="Message#INFO" />
 			</and>
 			<then>
 				<var method="MathUtil#sum('${videoGenerationTimeCounter}', '1')" name="videoGenerationTimeCounter" />
@@ -678,12 +678,12 @@
 		<for list="${dmDocumentCounterList}" param="entryCount" >
 			<var name="key_dmDocumentTitle" value="Document_${entryCount}.doc" />
 
-			<execute function="Check" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_CHECKBOX" />
+			<execute function="Check" locator1="DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX" />
 		</for>
 
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="PGDocumentsandmedia#TOOLBAR_ACTIONS" value1="Actions" />
-		<execute function="AssertClick" locator1="PGDocumentsandmedia#ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
 
 		<execute macro="DMDocument#viewDefaultCP" />
 	</command>
@@ -1109,17 +1109,17 @@
 
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="AssertClick" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute function="AssertClick#assertTextClick" locator1="PGDocumentsandmediaDocument#TOOLBAR_EDIT_BUTTON" value1="Edit" />
+		<execute function="AssertClick#assertTextClick" locator1="Button#EDIT" value1="Edit" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmediaEditdocument#CATEGORIZATION_VOCABULARY_TAG" value1="${categoryName}" />
+		<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}" />
 
 		<for list="${tagNameList}" param="tagName">
 			<var name="key_categoryTag" value="${tagName}" />
-			<execute function="AssertTextEquals" locator1="PGDocumentsandmediaEditdocument#CATEGORIZATION_TAG" value1="${tagName}" />
+			<execute function="AssertTextEquals" locator1="AssetCategorization#TAG" value1="${tagName}" />
 		</for>
 
 		<execute macro="Page#gotoPG">
@@ -1164,9 +1164,9 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute function="Type" locator1="PGDocumentsandmediaAdddocument#TITLE_FIELD" value1="DM Document 2 Title" />
-		<execute function="AssertClick" locator1="PGDocumentsandmediaAdddocument#PUBLISH_BUTTON" value1="Publish" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmedia#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="Type" locator1="DocumentsAndMediaEditDocument#TITLE_FIELD" value1="DM Document 2 Title" />
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute function="Pause" locator1="1000" />
 		<execute function="AssertTextNotPresent" value1="Documents and Media is temporarily unavailable." />
@@ -1213,13 +1213,13 @@
 			<var name="dmDocumentTitle" value="DM Document1 Title" />
 		</execute>
 
-		<execute function="AssertNotChecked" locator1="CPDocumentsandmedia#TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
+		<execute function="AssertNotChecked" locator1="DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX" />
 
 		<execute macro="DMDocument#uncheckDocumentCheckboxCP">
 			<var name="dmDocumentTitle" value="DM Document1 Title" />
 		</execute>
 
-		<execute function="AssertNotChecked" locator1="CPDocumentsandmedia#TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
+		<execute function="AssertNotChecked" locator1="DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX" />
 
 		<execute macro="DMDocument#checkDocumentCheckboxCP">
 			<var name="dmDocumentTitle" value="DM Document1 Title" />
@@ -1229,6 +1229,6 @@
 			<var name="dmDocumentTitle" value="DM Document2 Title" />
 		</execute>
 
-		<execute function="AssertChecked" locator1="CPDocumentsandmedia#TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
+		<execute function="AssertChecked" locator1="DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX" />
 	</command>
 </definition>

@@ -4,31 +4,31 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#ADD_FIELD_SET_BUTTON" value1="Add Field Set" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#ADD_FIELD_SET_BUTTON" value1="Add Field Set" />
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocessAddfieldset#HEADER_TITLE" value1="New Field Set" />
-		<execute function="Type" locator1="CPKaleoformsadminNewprocessAddfieldset#NAME_FIELD" value1="${kfFieldSetName}" />
+		<execute function="AssertTextEquals" locator1="DDMEditStructure#HEADER_TITLE" value1="New Field Set" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${kfFieldSetName}" />
 	</command>
 
 	<command name="addForm">
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocessSelectform#ADD_FORM_BUTTON" value1="Add Form" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#ADD_FORM_BUTTON" value1="Add Form" />
 
-		<execute function="SelectFrame" locator1="CPKaleoformsadminNewprocessSelectformNewform#FORM_IFRAME" />
-		<execute function="Type" locator1="CPKaleoformsadminNewprocessSelectformNewform#NAME_FIELD" value1="${kfFormName}" />
+		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${kfFormName}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addProcess">
-		<execute function="AssertClick" locator1="CPKaleoformsadmin#TOOLBAR_ADD" value1="Add" />
+		<execute function="AssertClick" locator1="KaleoFormsAdmin#TOOLBAR_ADD" value1="Add" />
 	</command>
 
 	<command name="addProcessDetails">
 		<execute macro="KaleoFormsAdmin#viewDetailsStepCmd" />
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#NEXT_BUTTON_INACTIVE" value1="Next" />
-		<execute function="Type" locator1="CPKaleoformsadminNewprocess#DETAILS_NAME_FIELD" value1="${kfProcessName}" />
-		<execute function="Type" locator1="CPKaleoformsadminNewprocess#DETAILS_DESCRIPTION_FIELD" value1="${kfProcessDescription}" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#NEXT_BUTTON_INACTIVE" value1="Next" />
+		<execute function="Type" locator1="KaleoFormsAdminEditProcess#DETAILS_NAME_FIELD" value1="${kfProcessName}" />
+		<execute function="Type" locator1="KaleoFormsAdminEditProcess#DETAILS_DESCRIPTION_FIELD" value1="${kfProcessDescription}" />
 	</command>
 
 	<command name="addWorkflow">
@@ -36,9 +36,9 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#ADD_WORKFLOW_BUTTON" value1="Add Workflow" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#ADD_WORKFLOW_BUTTON" value1="Add Workflow" />
 
-		<execute function="Type" locator1="Kaleodesigner#TITLE_FIELD" value1="${workflowDefinitionTitle}" />
+		<execute function="Type" locator1="TextInput#TITLE" value1="${workflowDefinitionTitle}" />
 	</command>
 
 	<command name="assignForm">
@@ -49,17 +49,17 @@
 		<if>
 			<equals arg1="${kfPendingForm}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPKaleoformsadminEditprocess#INFO_MESSAGE" value1="Updating the field set or workflow will cause loss of data." />
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="Updating the field set or workflow will cause loss of data." />
 			</then>
 		</if>
 
 		<var name="key_workflowTask" value="${workflowTask}" />
 
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#FORMS_TABLE_ASSIGN_FORM_BUTTON" value1="Assign Form" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#FORMS_TABLE_ASSIGN_FORM_BUTTON" value1="Assign Form" />
 	</command>
 
 	<command name="cancelProcessRecordDetailsView">
-		<execute function="AssertClick" locator1="CPKaleoformsadminViewprocessrecordsRecorddetails#CANCEL_BUTTON" value1="Cancel" />
+		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
 	</command>
 
 	<command name="chooseFieldSet">
@@ -72,22 +72,22 @@
 		<if>
 			<equals arg1="${kfPendingForm}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPKaleoformsadminEditprocess#INFO_MESSAGE" value1="Updating the field set or workflow will cause loss of data." />
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="Updating the field set or workflow will cause loss of data." />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#FIELD_SET_TABLE_NAME" value1="${kfFieldSetName}" />
-		<execute function="Click" locator1="CPKaleoformsadminNewprocess#FIELD_SET_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#FIELD_SET_MENULIST_CHOOSE" value1="Choose" />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#SELECTED_FIELD_SET" value1="${kfFieldSetName}" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#FIELD_SET_TABLE_NAME" value1="${kfFieldSetName}" />
+		<execute function="Click" locator1="KaleoFormsAdminEditProcess#FIELD_SET_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#FIELD_SET_MENULIST_CHOOSE" value1="Choose" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_FIELD_SET" value1="${kfFieldSetName}" />
 	</command>
 
 	<command name="chooseForm">
 		<var name="key_kfFormName" value="${kfFormName}" />
 
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocessSelectform#FORM_TABLE_NAME" value1="${kfFormName}" />
-		<execute function="Click" locator1="CPKaleoformsadminNewprocessSelectform#FORM_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocessSelectform#FORM_MENULIST_CHOOSE" value1="Choose" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME" value1="${kfFormName}" />
+		<execute function="Click" locator1="KaleoFormsAdminEditProcessForm#FORM_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_MENULIST_CHOOSE" value1="Choose" />
 	</command>
 
 	<command name="chooseWorkflow">
@@ -98,7 +98,7 @@
 		<if>
 			<equals arg1="${kfPendingForm}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPKaleoformsadminEditprocess#INFO_MESSAGE" value1="Updating the field set or workflow will cause loss of data." />
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="Updating the field set or workflow will cause loss of data." />
 			</then>
 		</if>
 
@@ -107,17 +107,17 @@
 			<then>
 				<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitleEdit}" />
 
-				<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#WORKFLOW_TABLE_TITLE" value1="${workflowDefinitionTitleEdit}" />
+				<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#WORKFLOW_TABLE_TITLE" value1="${workflowDefinitionTitleEdit}" />
 			</then>
 			<else>
 				<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-				<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#WORKFLOW_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
+				<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#WORKFLOW_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
 			</else>
 		</if>
 
-		<execute function="Click" locator1="CPKaleoformsadminNewprocess#WORKFLOW_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#WORKFLOW_MENULIST_CHOOSE" value1="Choose" />
+		<execute function="Click" locator1="KaleoFormsAdminEditProcess#WORKFLOW_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_MENULIST_CHOOSE" value1="Choose" />
 
 		<execute macro="KaleoFormsAdmin#viewSelectedWorkflow">
 			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
@@ -128,21 +128,21 @@
 	<command name="deactivateWorkflow">
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#WORKFLOW_TABLE_ACTIONS" value1="Actions" />
-		<execute function="AssertClickNoError" locator1="CPKaleoformsadminNewprocess#WORKFLOW_MENULIST_DEACTIVATE" value1="Deactivate" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClickNoError" locator1="KaleoFormsAdminEditProcess#WORKFLOW_MENULIST_DEACTIVATE" value1="Deactivate" />
 		<execute function="Confirm" value1="Are you sure you want to deactivate this?" />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deleteForm">
-		<execute function="AssertElementPresent" locator1="CPKaleoformsadminNewprocessSelectform#BACK_BUTTON" />
+		<execute function="AssertElementPresent" locator1="Icon#BACK" />
 
 		<var name="key_kfFormName" value="${kfFormName}" />
 
-		<execute function="AssertClickNoError" locator1="CPKaleoformsadminNewprocessSelectform#FORM_TABLE_ACTIONS" value1="Actions" />
-		<execute function="AssertClickNoError" locator1="CPKaleoformsadminNewprocessSelectform#FORM_MENULIST_DELETE" value1="Delete" />
+		<execute function="AssertClickNoError" locator1="KaleoFormsAdminEditProcessForm#FORM_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClickNoError" locator1="KaleoFormsAdminEditProcessForm#FORM_MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertElementNotPresent" locator1="CPKaleoformsadminNewprocessSelectform#BACK_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="Icon#BACK" />
 	</command>
 
 	<command name="deleteProcess">
@@ -151,24 +151,24 @@
 			<then>
 				<var name="key_kfProcessName" value="${kfProcessName}" />
 
-				<execute function="AssertClick" locator1="CPKaleoformsadmin#PROCESS_TABLE_ACTIONS" value1="Actions" />
+				<execute function="AssertClick" locator1="KaleoFormsAdmin#PROCESS_TABLE_ACTIONS" value1="Actions" />
 			</then>
 			<else>
-				<execute function="Click" locator1="CPKaleoformsadmin#PROCESS_TABLE_ACTIONS_1" />
+				<execute function="Click" locator1="KaleoFormsAdmin#PROCESS_TABLE_ACTIONS_1" />
 			</else>
 		</if>
 
-		<execute function="AssertClickNoError" locator1="CPKaleoformsadmin#PROCESS_MENULIST_DELETE" value1="Delete" />
+		<execute function="AssertClickNoError" locator1="KaleoFormsAdmin#PROCESS_MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<if>
-			<condition function="IsElementNotPresent" locator1="CPKaleoformsadmin#PROCESS_TABLE_ACTIONS_1" />
+			<condition function="IsElementNotPresent" locator1="KaleoFormsAdmin#PROCESS_TABLE_ACTIONS_1" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPKaleoformsadmin#INFO_MESSAGE" value1="No processes were found." />
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No processes were found." />
 			</then>
 			<else>
-				<execute function="AssertTextNotPresent" locator1="CPKaleoformsadmin#PROCESS_TABLE_NAME" value1="${kfProcessName}" />
-				<execute function="AssertElementNotPresent" locator1="CPKaleoformsadmin#PROCESS_TABLE_ACTIONS" />
+				<execute function="AssertTextNotPresent" locator1="KaleoFormsAdmin#PROCESS_TABLE_NAME" value1="${kfProcessName}" />
+				<execute function="AssertElementNotPresent" locator1="KaleoFormsAdmin#PROCESS_TABLE_ACTIONS" />
 			</else>
 		</if>
 	</command>
@@ -176,10 +176,10 @@
 	<command name="deleteProcessRecord">
 		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute function="Click" locator1="CPKaleoformsadminViewprocessrecords#RECORD_TABLE_ACTIONS" />
-		<execute function="AssertClickNoError" locator1="CPKaleoformsadminViewprocessrecords#RECORD_TABLE_MENULIST_DELETE" value1="Delete" />
+		<execute function="Click" locator1="KaleoFormsAdminViewProcessRecords#RECORD_TABLE_ACTIONS" />
+		<execute function="AssertClickNoError" locator1="KaleoFormsAdminViewProcessRecords#RECORD_TABLE_MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminViewprocessrecords#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordTableRecordNotPresent">
 			<var name="kfProcessFieldData" value="${kfProcessFieldData}" />
@@ -189,10 +189,10 @@
 	<command name="deleteWorkflowDraft">
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-		<execute function="Click" locator1="CPKaleoformsadminNewprocess#WORKFLOW_UNPUBLISHED_TABLE_ACTIONS" />
-		<execute function="AssertClickNoError" locator1="CPKaleoformsadminNewprocess#WORKFLOW_UNPUBLISHED_MENULIST_DELETE" value1="Delete" />
+		<execute function="Click" locator1="KaleoFormsAdminEditProcess#WORKFLOW_UNPUBLISHED_TABLE_ACTIONS" />
+		<execute function="AssertClickNoError" locator1="KaleoFormsAdminEditProcess#WORKFLOW_UNPUBLISHED_MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editFieldSet">
@@ -202,37 +202,37 @@
 
 		<var name="key_kfFieldSetName" value="${kfFieldSetName}" />
 
-		<execute function="Click" locator1="CPKaleoformsadminNewprocess#FIELD_SET_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#FIELD_SET_MENULIST_EDIT" value1="Edit" />
+		<execute function="Click" locator1="KaleoFormsAdminEditProcess#FIELD_SET_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#FIELD_SET_MENULIST_EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="CPKaleoformsadminNewprocessEditfieldset#NAME_FIELD" value1="${kfFieldSetNameEdit}" />
 	</command>
 
 	<command name="editFieldSetPagination">
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#FIELD_SET_PAGINATION_SELECTOR_BUTTON" value1="20 Items per Page" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#FIELD_SET_PAGINATION_SELECTOR_BUTTON" value1="20 Items per Page" />
 
 		<var name="key_paginationNumber" value="${paginationNumber}" />
 
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#FIELD_SET_PAGINATION_MENULIST_NUMBER" value1="${paginationNumber}" />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#FIELD_SET_PAGINATION_SELECTOR_BUTTON" value1="${paginationNumber} Items per Page" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#FIELD_SET_PAGINATION_MENULIST_NUMBER" value1="${paginationNumber}" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#FIELD_SET_PAGINATION_SELECTOR_BUTTON" value1="${paginationNumber} Items per Page" />
 	</command>
 
 	<command name="editForm">
 		<var name="key_kfFormName" value="${kfFormName}" />
 
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocessSelectform#FORM_TABLE_NAME" value1="${kfFormName}" />
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocessSelectform#FORM_TABLE_ACTIONS" value1="Actions" />
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocessSelectform#FORM_MENULIST_EDIT" value1="Edit" />
-		<execute function="SelectFrame" locator1="CPKaleoformsadminNewprocessSelectformNewform#FORM_IFRAME" />
-		<execute function="Type" locator1="CPKaleoformsadminNewprocessSelectformNewform#NAME_FIELD" value1="${kfFormNameEdit}" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME" value1="${kfFormName}" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_MENULIST_EDIT" value1="Edit" />
+		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${kfFormNameEdit}" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editProcess">
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
-		<execute function="Click" locator1="CPKaleoformsadmin#PROCESS_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPKaleoformsadmin#PROCESS_MENULIST_EDIT" value1="Edit" />
+		<execute function="Click" locator1="KaleoFormsAdmin#PROCESS_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="KaleoFormsAdmin#PROCESS_MENULIST_EDIT" value1="Edit" />
 	</command>
 
 	<command name="editProcessDetails">
@@ -255,7 +255,7 @@
 		<if>
 			<equals arg1="${kfPendingForm}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPKaleoformsadminEditprocess#INFO_MESSAGE" value1="Updating the field set or workflow will cause loss of data." />
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="Updating the field set or workflow will cause loss of data." />
 			</then>
 		</if>
 	</command>
@@ -267,40 +267,40 @@
 
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-		<execute function="Click" locator1="CPKaleoformsadminNewprocess#WORKFLOW_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#WORKFLOW_MENULIST_EDIT" value1="Edit" />
+		<execute function="Click" locator1="KaleoFormsAdminEditProcess#WORKFLOW_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_MENULIST_EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="Kaleodesigner#TITLE_FIELD" value1="${workflowDefinitionTitleEdit}" />
+		<execute function="Type" locator1="TextInput#TITLE" value1="${workflowDefinitionTitleEdit}" />
 	</command>
 
 	<command name="editWorkflowDraft">
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#WORKFLOW_UNPUBLISHED_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
-		<execute function="Click" locator1="CPKaleoformsadminNewprocess#WORKFLOW_UNPUBLISHED_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#WORKFLOW_UNPUBLISHED_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#WORKFLOW_UNPUBLISHED_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
+		<execute function="Click" locator1="KaleoFormsAdminEditProcess#WORKFLOW_UNPUBLISHED_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_UNPUBLISHED_MENULIST_EDIT" value1="Edit" />
 	</command>
 
 	<command name="exportRecords">
-		<execute function="AssertClick" locator1="CPKaleoformsadminViewprocessrecords#EXPORT" value1="Export" />
-		<execute function="Select" locator1="CPKaleoformsadminViewprocessrecords#EXPORT_DIALOG_BOX_FILE_EXTENSION_SELECT" value1="${fileExtension}" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminViewProcessRecords#EXPORT" value1="Export" />
+		<execute function="Select" locator1="KaleoFormsAdminViewProcessRecords#EXPORT_DIALOG_BOX_FILE_EXTENSION_SELECT" value1="${fileExtension}" />
 
 		<if>
 			<equals arg1="${approvedOnly}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="CPKaleoformsadminViewprocessrecords#EXPORT_DIALOG_BOX_APPROVED_SUBMISSIONS_CHECKBOX" />
+				<execute function="Check" locator1="KaleoFormsAdminViewProcessRecords#EXPORT_DIALOG_BOX_APPROVED_SUBMISSIONS_CHECKBOX" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPKaleoformsadminViewprocessrecords#EXPORT_DIALOG_BOX_OK_BUTTON" value1="OK" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminViewProcessRecords#EXPORT_DIALOG_BOX_OK_BUTTON" value1="OK" />
 
 		<execute function="DownloadTempFile" />
 	</command>
 
 	<command name="next">
-		<execute function="AssertElementNotPresent" locator1="CPKaleoformsadminNewprocess#NEXT_BUTTON_INACTIVE" />
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#NEXT_BUTTON" value1="Next" />
-		<execute function="AssertTextNotPresent" locator1="CPKaleoformsadminNewprocess#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertElementNotPresent" locator1="KaleoFormsAdminEditProcess#NEXT_BUTTON_INACTIVE" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#NEXT_BUTTON" value1="Next" />
+		<execute function="AssertTextNotPresent" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="populateFieldBoolean">
@@ -309,12 +309,12 @@
 		<if>
 			<equals arg1="${kfProcessFieldData}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="CPKaleoformsadminViewprocessrecordsSubmitnew#NEW_PROCESS_FIELDS_BOOLEAN" />
+				<execute function="Check" locator1="DDLEditRecord#BOOLEAN_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${kfProcessFieldData}" arg2="false" />
 				<then>
-					<execute function="Uncheck" locator1="CPKaleoformsadminViewprocessrecordsSubmitnew#NEW_PROCESS_FIELDS_BOOLEAN" />
+					<execute function="Uncheck" locator1="DDLEditRecord#BOOLEAN_CHECKBOX" />
 				</then>
 			</elseif>
 		</if>
@@ -323,74 +323,74 @@
 	<command name="populateFieldDate">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="Type" locator1="CPKaleoformsadminViewprocessrecordsSubmitnew#NEW_PROCESS_FIELDS_DATE_FIELD" value1="${kfProcessFieldData}" />
-		<execute function="Click" locator1="CPKaleoformsadminViewprocessrecordsSubmitnew#NEW_PROCESS_FIELDS_DATE_FIELD" />
+		<execute function="Type" locator1="DDLEditRecord#DATE_FIELD" value1="${kfProcessFieldData}" />
+		<execute function="Click" locator1="DDLEditRecord#DATE_FIELD" />
 	</command>
 
 	<command name="populateFieldDocumentsAndMedia">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="AssertClick" locator1="CPKaleoformsadminViewprocessrecordsSubmitnew#NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_SELECT" value1="Select" />
+		<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON" value1="Select" />
 
-		<execute function="SelectFrame" locator1="CPDynamicdatalistsListAddrecordSelect#SELECT_DOCUMENT_IFRAME" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsListAddrecordSelect#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsListAddrecordSelect#ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+		<execute function="SelectFrame" locator1="DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME" />
+		<execute function="AssertClick" locator1="DocumentsAndMediaSelectDocument#TOOLBAR_ADD" value1="Add" />
+		<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
 
-		<execute function="UploadCommonFile" locator1="CPDynamicdatalistsListAddrecordSelectAdddocument#FILE_FIELD" value1="${document}" />
-		<execute function="Type" locator1="CPDynamicdatalistsListAddrecordSelectAdddocument#TITLE_FIELD" value1="${kfProcessFieldData}" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsListAddrecordSelectAdddocument#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="UploadCommonFile" locator1="DocumentsAndMediaEditDocument#FILE_FIELD" value1="${document}" />
+		<execute function="Type" locator1="TextInput#TITLE" value1="${kfProcessFieldData}" />
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
 		<var name="key_documentTitle" value="${kfProcessFieldData}" />
 
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsListAddrecordSelect#DOCUMENTS_TABLE_DOCUMENT" value1="${kfProcessFieldData}" />
-		<execute function="Click" locator1="CPDynamicdatalistsListAddrecordSelect#DOCUMENTS_TABLE_CHOOSE" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaSelectDocument#DOCUMENTS_TABLE_DOCUMENT" value1="${kfProcessFieldData}" />
+		<execute function="Click" locator1="DocumentsAndMediaSelectDocument#DOCUMENTS_TABLE_CHOOSE" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminViewprocessrecordsSubmitnew#NEW_PROCESS_FIELDS_DOCUMENTS_AND_MEDIA_FIELD" value1="${kfProcessFieldData}" />
+		<execute function="AssertTextEquals" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="populateFieldHTML">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="Type" locator1="CPKaleoformsadminViewprocessrecordsSubmitnew#NEW_PROCESS_FIELDS_HTML_FIELD_EDITOR" value1="${kfProcessFieldData}" />
+		<execute function="Type" locator1="DDLEditRecord#HTML_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="populateFieldLinkToPage">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="Select" locator1="CPKaleoformsadminViewprocessrecordsSubmitnew#NEW_PROCESS_LINK_TO_PAGE_SELECT" value1="regexp:–\s+${kfProcessFieldData}" />
+		<execute function="Select" locator1="DDLEditRecord#LINK_TO_PAGE_SELECT" value1="regexp:–\s+${kfProcessFieldData}" />
 	</command>
 
 	<command name="populateFieldRadio">
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute function="Click" locator1="CPKaleoformsadminViewprocessrecordsSubmitnew#NEW_PROCESS_RADIO_OPTION_RADIO" />
+		<execute function="Click" locator1="DDLEditRecord#RADIO_OPTION_RADIO" />
 	</command>
 
 	<command name="populateFieldSelect">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="Select" locator1="CPKaleoformsadminViewprocessrecordsSubmitnew#NEW_PROCESS_FIELDS_SELECT_FIELD" value1="${kfProcessFieldData}" />
+		<execute function="Select" locator1="DDLEditRecord#SELECT_SELECT" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="populateFieldText">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="Type" locator1="CPKaleoformsadminViewprocessrecordsSubmitnew#NEW_PROCESS_FIELDS_TEXT_FIELD" value1="${kfProcessFieldData}" />
+		<execute function="Type" locator1="DDLEditRecord#TEXT_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="populateFieldTextBox">
 		<var method="StringUtil#replace('${fieldName}', ' ', '_')" name="fieldName" />
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="Type" locator1="CPKaleoformsadminViewprocessrecordsSubmitnew#NEW_PROCESS_FIELDS_TEXT_BOX_FIELD" value1="${kfProcessFieldData}" />
+		<execute function="Type" locator1="DDLEditRecord#TEXT_BOX_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="publishWorkflow">
-		<execute function="AssertClick" locator1="Kaleodesigner#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="KaleoFormsAdmin#viewSelectedWorkflow">
 			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
@@ -399,33 +399,33 @@
 	</command>
 
 	<command name="saveAndContinueForm">
-		<execute function="SelectFrame" locator1="CPKaleoformsadminNewprocessSelectformNewform#FORM_IFRAME" />
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocessSelectformNewform#SAVE_AND_CONTINUE_BUTTON" value1="Save and Continue" />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocessSelectformNewform#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
+		<execute function="AssertClick" locator1="Button#SAVE_AND_CONTINUE" value1="Save and Continue" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="saveAsDraftWorkflow">
-		<execute function="AssertClick" locator1="Kaleodesigner#SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="saveFieldSet">
 		<execute macro="KaleoFormsAdmin#saveFieldSetAfterEdit" />
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#SELECTED_FIELD_SET" value1="${kfFieldSetName}" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_FIELD_SET" value1="${kfFieldSetName}" />
 	</command>
 
 	<command name="saveFieldSetAfterEdit">
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocessAddfieldset#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="saveForm">
-		<execute function="SelectFrame" locator1="CPKaleoformsadminNewprocessSelectformNewform#FORM_IFRAME" />
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocessSelectformNewform#SAVE_BUTTON" value1="Save" />
+		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -434,19 +434,19 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="CPKaleoformsadminNewprocess#SAVE_BUTTON_INACTIVE" />
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertElementNotPresent" locator1="Button#SAVE_INACTIVE" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="saveProcessRecord">
-		<execute function="AssertClick" locator1="CPKaleoformsadminViewprocessrecordsSubmitnew#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="PGKaleoforms#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="searchProcessRecords">
-		<execute function="Type" locator1="CPKaleoformsadminViewprocessrecords#SEARCH_FIELD" value1="${kfProcessSearchData}" />
-		<execute function="AssertClick" locator1="CPKaleoformsadminViewprocessrecords#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${kfProcessSearchData}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 	</command>
 
 	<command name="submitNewProcess">
@@ -454,9 +454,9 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPKaleoformsadminViewprocessrecords#SUBMIT_NEW" value1="Submit New ${kfProcessName}" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminViewProcessRecords#SUBMIT_NEW" value1="Submit New ${kfProcessName}" />
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminViewprocessrecordsSubmitnew#NEW_PROCESS_NAME" value1="New ${kfProcessName}" />
+		<execute function="AssertTextEquals" locator1="DDLEditRecord#HEADER_TITLE" value1="New ${kfProcessName}" />
 	</command>
 
 	<command name="tearDownProcess">
@@ -465,79 +465,79 @@
 		</execute>
 
 		<while>
-			<condition function="IsElementPresent" locator1="CPKaleoformsadmin#PROCESS_TABLE_ACTIONS_1" />
+			<condition function="IsElementPresent" locator1="KaleoFormsAdmin#PROCESS_TABLE_ACTIONS_1" />
 			<then>
 				<execute macro="KaleoFormsAdmin#deleteProcess" />
 			</then>
 		</while>
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadmin#INFO_MESSAGE" value1="No processes were found." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No processes were found." />
 	</command>
 
 	<command name="viewDetailsStepCmd">
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#FORM_NAVIGATOR_1" value1="1" />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#FORM_NAVIGATOR_DETAILS" value1="Details" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#FORM_NAVIGATOR_1" value1="1" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#FORM_NAVIGATOR_DETAILS" value1="Details" />
 	</command>
 
 	<command name="viewFieldsStepCmd">
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#PROCESS_NAME" value1="${kfProcessName}" />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#FORM_NAVIGATOR_2" value1="2" />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#FORM_NAVIGATOR_FIELD_SET" value1="Fields" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#PROCESS_NAME" value1="${kfProcessName}" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#FORM_NAVIGATOR_2" value1="2" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#FORM_NAVIGATOR_FIELD_SET" value1="Fields" />
 	</command>
 
 	<command name="viewFormsNotPresent">
 		<var name="key_workflowTask" value="${workflowTask}" />
 
-		<execute function="AssertElementNotPresent" locator1="CPKaleoformsadminNewprocess#FORMS_TABLE_TASK" />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#INFO_MESSAGE" value1="There are no results." />
+		<execute function="AssertElementNotPresent" locator1="KaleoFormsAdminEditProcess#FORMS_TABLE_TASK" />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no results." />
 	</command>
 
 	<command name="viewFormsStepCmd">
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#PROCESS_NAME" value1="${kfProcessName}" />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#FORM_NAVIGATOR_4" value1="4" />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#FORM_NAVIGATOR_FORMS" value1="Forms" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#PROCESS_NAME" value1="${kfProcessName}" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#FORM_NAVIGATOR_4" value1="4" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#FORM_NAVIGATOR_FORMS" value1="Forms" />
 	</command>
 
 	<command name="viewHeaderTitle">
 		<if>
 			<isset var="kfFieldsDefinitionName" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocessAddfieldset#HEADER_TITLE" value1="${kfFieldsDefinitionName}" />
+				<execute function="AssertTextEquals" locator1="DDMEditStructure#HEADER_TITLE" value1="${kfFieldsDefinitionName}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocessAddfieldset#HEADER_TITLE" value1="New Field Set" />
+				<execute function="AssertTextEquals" locator1="DDMEditStructure#HEADER_TITLE" value1="New Field Set" />
 			</else>
 		</if>
 	</command>
 
 	<command name="viewInvalidDefinitionMessage">
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocessAddfieldset#ERROR_MESSAGE_1" value1="Your request failed to complete." />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocessAddfieldset#ERROR_MESSAGE_2" value1="Please enter a valid XML schema definition." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid XML schema definition." />
 	</command>
 
 	<command name="viewNextFieldSetPage">
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#FIELD_SET_PAGINATION_NEXT_BUTTON" value1="Next" />
+		<execute function="AssertClick" locator1="Pagination#NEXT_LINK" value1="Next" />
 	</command>
 
 	<command name="viewNoPublishedWorkflowDefinitions">
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#INFO_MESSAGE" value1="There are no published definitions." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no published definitions." />
 	</command>
 
 	<command name="viewNoUnpublishedWorkflowDefinitions">
 		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitions" />
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#INFO_MESSAGE" value1="There are no unpublished definitions." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no unpublished definitions." />
 	</command>
 
 	<command name="viewPreviousFieldSetPage">
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#FIELD_SET_PAGINATION_PREVIOUS_BUTTON" value1="Previous" />
+		<execute function="AssertClick" locator1="Pagination#PREVIOUS_LINK" value1="Previous" />
 	</command>
 
 	<command name="viewProcess">
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadmin#PROCESS_TABLE_NAME" value1="${kfProcessName}" />
-		<execute function="AssertElementPresent" locator1="CPKaleoformsadmin#PROCESS_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdmin#PROCESS_TABLE_NAME" value1="${kfProcessName}" />
+		<execute function="AssertElementPresent" locator1="KaleoFormsAdmin#PROCESS_TABLE_ACTIONS" />
 	</command>
 
 	<command name="viewProcessDetails">
@@ -570,9 +570,9 @@
 
 		<var name="key_workflowTask" value="${workflowTask}" />
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#FORMS_TABLE_FORM" value1="${kfFormName}" />
-		<execute function="AssertElementNotPresent" locator1="CPKaleoformsadminNewprocess#SAVE_BUTTON_INACTIVE" />
-		<execute function="AssertElementPresent" locator1="CPKaleoformsadminNewprocess#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#FORMS_TABLE_FORM" value1="${kfFormName}" />
+		<execute function="AssertElementNotPresent" locator1="Button#SAVE_INACTIVE" />
+		<execute function="AssertElementPresent" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="viewProcessFormsDeleted">
@@ -580,7 +580,7 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="CPKaleoformsadminNewprocess#SAVE_BUTTON_INACTIVE" />
+		<execute function="AssertElementPresent" locator1="Button#SAVE_INACTIVE" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfPendingForm" value="${kfPendingForm}" />
@@ -588,54 +588,54 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocessSelectform#INFO_MESSAGE" value1="There are no results." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no results." />
 	</command>
 
 	<command name="viewProcessNoRecords">
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminViewprocessrecords#INFO_MESSAGE" value1="No records were found." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No records were found." />
 	</command>
 
 	<command name="viewProcessRecord">
 		<var name="key_kfProcessName" value="${kfProcessName}" />
 
-		<execute function="AssertClick" locator1="CPKaleoformsadmin#PROCESS_TABLE_ACTIONS" value1="Actions" />
-		<execute function="AssertClick" locator1="CPKaleoformsadmin#PROCESS_MENULIST_VIEW" value1="View" />
+		<execute function="AssertClick" locator1="KaleoFormsAdmin#PROCESS_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="KaleoFormsAdmin#PROCESS_MENULIST_VIEW" value1="View" />
 	</command>
 
 	<command name="viewProcessRecordDetails">
 		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute function="Click" locator1="CPKaleoformsadminViewprocessrecords#RECORD_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPKaleoformsadminViewprocessrecords#RECORD_TABLE_MENULIST_VIEW" value1="View" />
+		<execute function="Click" locator1="KaleoFormsAdminViewProcessRecords#RECORD_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminViewProcessRecords#RECORD_TABLE_MENULIST_VIEW" value1="View" />
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminViewprocessrecordsRecorddetails#CURRENT_RECORD_STATUS" value1="${kfStatus}" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminViewProcessRecordsDetails#CURRENT_RECORD_STATUS" value1="${kfStatus}" />
 	</command>
 
 	<command name="viewProcessRecordDetailsField">
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPKaleoformsadminViewprocessrecordsRecorddetails#CURRENT_RECORD_FIELD" value1="${kfProcessFieldData}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="KaleoFormsAdminViewProcessRecordsDetails#CURRENT_RECORD_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="viewProcessRecordTable">
 		<var name="key_kfAuthor" value="${kfAuthor}" />
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminViewprocessrecords#RECORD_TABLE_AUTHOR" value1="${kfAuthor}" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminViewProcessRecords#RECORD_TABLE_AUTHOR" value1="${kfAuthor}" />
 
 		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminViewprocessrecords#RECORD_TABLE_RECORD" value1="${kfProcessFieldData}" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminViewProcessRecords#RECORD_TABLE_RECORD" value1="${kfProcessFieldData}" />
 
 		<var name="key_kfStatus" value="${kfStatus}" />
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminViewprocessrecords#RECORD_TABLE_STATUS" value1="${kfStatus}" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminViewProcessRecords#RECORD_TABLE_STATUS" value1="${kfStatus}" />
 	</command>
 
 	<command name="viewProcessRecordTableRecordNotPresent">
 		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute function="AssertElementNotPresent" locator1="CPKaleoformsadminViewprocessrecords#RECORD_TABLE_RECORD" />
+		<execute function="AssertElementNotPresent" locator1="KaleoFormsAdminViewProcessRecords#RECORD_TABLE_RECORD" />
 	</command>
 
 	<command name="viewProcessWorkflow">
@@ -643,23 +643,23 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitle} (Version 1)" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitle} (Version 1)" />
 
 		<execute macro="KaleoFormsAdmin#next" />
 	</command>
 
 	<command name="viewPublishedWorkflowDefinitions">
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#WORKFLOW_NAVIGATION_PUBLISHED_TAB" value1="Published" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_NAVIGATION_PUBLISHED_TAB" value1="Published" />
 	</command>
 
 	<command name="viewSelectedWorkflow">
 		<if>
 			<isset var="workflowDefinitionTitleEdit" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitleEdit} (Version 2)" />
+				<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitleEdit} (Version 2)" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitle} (Version 1)" />
+				<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitle} (Version 1)" />
 			</else>
 		</if>
 	</command>
@@ -667,18 +667,18 @@
 	<command name="viewTaskNotPresent">
 		<var name="key_workflowTask" value="${workflowTask}" />
 
-		<execute function="AssertTextNotPresent" locator1="CPKaleoformsadminNewprocess#FORMS_TABLE_TASK" value1="${workflowTask}" />
-		<execute function="AssertElementNotPresent" locator1="CPKaleoformsadminNewprocess#FORMS_TABLE_FORM" />
-		<execute function="AssertElementNotPresent" locator1="CPKaleoformsadminNewprocess#FORMS_TABLE_ASSIGN_FORM_BUTTON" />
+		<execute function="AssertTextNotPresent" locator1="KaleoFormsAdminEditProcess#FORMS_TABLE_TASK" value1="${workflowTask}" />
+		<execute function="AssertElementNotPresent" locator1="KaleoFormsAdminEditProcess#FORMS_TABLE_FORM" />
+		<execute function="AssertElementNotPresent" locator1="KaleoFormsAdminEditProcess#FORMS_TABLE_ASSIGN_FORM_BUTTON" />
 	</command>
 
 	<command name="viewUnpublishedWorkflowDefinitions">
-		<execute function="AssertClick" locator1="CPKaleoformsadminNewprocess#WORKFLOW_NAVIGATION_UNPUBLISHED_TAB" value1="Unpublished" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_NAVIGATION_UNPUBLISHED_TAB" value1="Unpublished" />
 	</command>
 
 	<command name="viewWorkflowStepCmd">
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#PROCESS_NAME" value1="${kfProcessName}" />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#FORM_NAVIGATOR_3" value1="3" />
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminNewprocess#FORM_NAVIGATOR_WORKFLOW" value1="Workflow" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#PROCESS_NAME" value1="${kfProcessName}" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#FORM_NAVIGATOR_3" value1="3" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#FORM_NAVIGATOR_WORKFLOW" value1="Workflow" />
 	</command>
 </definition>

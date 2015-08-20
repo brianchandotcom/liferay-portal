@@ -183,7 +183,7 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplay#ARTICLE_THERE_ARE_SUGGESTIONS_LINK" value1="There are 3 suggestions. (3 Pending)" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="There are 3 suggestions. (3 Pending)" />
 
 		<for list="${kbSuggestionCounterList}" param="suggestionCount" >
 			<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
@@ -248,8 +248,8 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="PGKnowledgebasedisplaySelectParentArticle#SELECT_PARENT_IFRAME" />
-		<execute function="AssertElementPresent" locator1="PGKnowledgebasedisplaySelectParentArticle#BREADCRUMB_HOME" />
+		<execute function="SelectFrame" locator1="KBSelectParentIFrame#IFRAME" />
+		<execute function="AssertElementPresent" locator1="KBSelectParentIFrame#BREADCRUMB_HOME" />
 		<execute function="AssertElementNotPresent" locator1="//div[contains(@class,'breadcrumb')]//a[contains(.,'Home')]/following-sibling::ul[contains(@class,'breadcrumb')]" />
 	</command>
 
@@ -745,7 +745,7 @@
 			<var name="previous" value="false" />
 		</execute>
 
-		<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_NEXT" />
+		<execute function="Click" locator1="KnowledgeBaseArticle#NEXT" />
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
 			<var name="kbArticleContent" value="Knowledge Base Article Content 2" />
@@ -757,7 +757,7 @@
 			<var name="previous" value="true" />
 		</execute>
 
-		<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_NEXT" />
+		<execute function="Click" locator1="KnowledgeBaseArticle#NEXT" />
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
 			<var name="kbArticleContent" value="Knowledge Base Article Content 3" />
@@ -769,7 +769,7 @@
 			<var name="previous" value="true" />
 		</execute>
 
-		<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_PREVIOUS" />
+		<execute function="Click" locator1="KnowledgeBaseArticle#PREVIOUS" />
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
 			<var name="kbArticleContent" value="Knowledge Base Article Content 2" />
@@ -781,7 +781,7 @@
 			<var name="previous" value="true" />
 		</execute>
 
-		<execute function="Click" locator1="PGKnowledgebasedisplay#ARTICLE_PREVIOUS" />
+		<execute function="Click" locator1="KnowledgeBaseArticle#PREVIOUS" />
 
 		<execute macro="KBArticle#viewViaKBDisplayPG">
 			<var name="kbArticleContent" value="Knowledge Base Article Content 1" />

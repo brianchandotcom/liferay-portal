@@ -130,8 +130,8 @@
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="Click" locator1="CPUsersandorganizationsViewusers#USER_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPUsersandorganizationsViewusers#USER_MENULIST_MANAGE_PAGES" value1="Manage Pages" />
+		<execute function="Click" locator1="UsersAndOrganizations#USER_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="MenuItem#MANAGE_PAGES" value1="Manage Pages" />
 
 		<execute function="AssertClick" locator1="CPUsersandorganizationsManagepages#NAVIGATION_MY_DASHBOARD" value1="My Dashboard" />
 		<execute function="Click" locator1="CPUsersandorganizationsManagepages#PAGE_TREE_ROOT_ARROW" />
@@ -358,17 +358,17 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
 
 		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_USERS" value1="Users" />
 		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_USERS_SITE_MEMBERSHIPS" value1="Site Memberships" />
 
 		<var name="key_userScreenName" value="usersn3" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitememberships#USER_TABLE_NAME" value1="userfn3 userln3" />
-		<execute function="AssertTextEquals" locator1="CPSitememberships#USER_TABLE_SCREEN_NAME" value1="usersn3" />
-		<execute function="Click" locator1="CPSitememberships#USER_TABLE_ACTIONS" />
-		<execute function="AssertTextEquals" locator1="CPSitememberships#USER_MENULIST_ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#USER_TABLE_NAME" value1="userfn3 userln3" />
+		<execute function="AssertTextEquals" locator1="SiteMemberships#USER_TABLE_SCREEN_NAME" value1="usersn3" />
+		<execute function="Click" locator1="SiteMemberships#USER_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="MenuItem#ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
 
 		<execute macro="User#logoutUserPG" />
 
@@ -397,7 +397,7 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPSites#SITE_TABLE_NAME_UNVIEWABLE" value1="${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME_UNVIEWABLE" value1="${siteName}" />
 
 		<execute macro="User#logoutUserPG" />
 
@@ -447,7 +447,7 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
 
 		<execute macro="User#logoutUserPG" />
 
@@ -743,8 +743,8 @@
 
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="AssertTextEquals" locator1="CPUsergroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
-		<execute function="AssertElementNotPresent" locator1="CPUsergroups#USER_GROUP_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute function="AssertElementNotPresent" locator1="UserGroups#USER_GROUP_TABLE_ACTIONS" />
 
 		<execute macro="User#logoutUserPG" />
 

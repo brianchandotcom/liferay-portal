@@ -2,42 +2,42 @@
 	<command name="addCP">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute function="AssertClick" locator1="CPSiteteams#ADD_TEAM_BUTTON" value1="Add Team" />
+		<execute function="AssertClick" locator1="SiteTeams#ADD_TEAM_BUTTON" value1="Add Team" />
 		<execute function="Pause" locator1="3000" />
 
-		<execute function="Type" locator1="CPSiteteamsAddteam#NAME_FIELD" value1="${teamName}" />
-		<execute function="Type" locator1="CPSiteteamsAddteam#DESCRIPTION_FIELD" value1="${teamDescription}" />
-		<execute function="AssertClick" locator1="CPSiteteamsAddteam#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${teamName}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${teamDescription}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPSiteteams#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="assignMembersCP">
 		<var name="key_teamName" value="${teamName}" />
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="Type" locator1="CPSiteteams#SEARCH_FIELD" value1="${teamName}" />
-		<execute function="AssertClick" locator1="CPSiteteams#SEARCH_BUTTON" value1="Search" />
-		<execute function="AssertTextEquals" locator1="CPSiteteams#TEAM_TABLE_NAME" value1="${teamName}" />
-		<execute function="Click" locator1="CPSiteteams#TEAM_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPSiteteams#TEAM_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${teamName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
+		<execute function="Click" locator1="SiteTeams#TEAM_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
-		<execute function="AssertClick" locator1="CPSiteteamsAssignmembers#AVAILABLE" value1="Available" />
-		<execute function="Type" locator1="CPSiteteamsAssignmembers#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="CPSiteteamsAssignmembers#SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertClick" locator1="SiteTeamsMembers#AVAILABLE" value1="Available" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<if>
 			<equals arg1="${userNameIsNotFound}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPSiteteamsAssignmembers#INFO_MESSAGE" value1="No users were found." />
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="CPSiteteamsAssignmembers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-				<execute function="Check" locator1="CPSiteteamsAssignmembers#USER_TABLE_CHECKBOX" />
-				<execute function="AssertClick" locator1="CPSiteteamsAssignmembers#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
+				<execute function="AssertTextEquals" locator1="SiteTeamsMembers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+				<execute function="Check" locator1="SiteTeamsMembers#USER_TABLE_CHECKBOX" />
+				<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
 
-				<execute function="AssertTextEquals" locator1="CPSiteteamsAssignmembers#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-				<execute function="AssertChecked" locator1="CPSiteteamsAssignmembers#USER_TABLE_CHECKBOX" />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="AssertChecked" locator1="SiteTeamsMembers#USER_TABLE_CHECKBOX" />
 			</else>
 		</if>
 	</command>
@@ -45,36 +45,36 @@
 	<command name="assignUserGroups">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute function="Type" locator1="CPSiteteams#SEARCH_FIELD" value1="${teamName}" />
-		<execute function="AssertClick" locator1="CPSiteteams#SEARCH_BUTTON" value1="Search" />
-		<execute function="AssertTextEquals" locator1="CPSiteteams#TEAM_TABLE_NAME" value1="${teamName}" />
-		<execute function="Click" locator1="CPSiteteams#TEAM_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPSiteteams#TEAM_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${teamName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
+		<execute function="Click" locator1="SiteTeams#TEAM_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
-		<execute function="AssertClick" locator1="CPSiteteamsAssignmembers#USER_GROUPS" value1="User Groups" />
-		<execute function="AssertClick" locator1="CPSiteteamsAssignmembers#AVAILABLE" value1="Available" />
+		<execute function="AssertClick" locator1="SiteTeamsMembers#USER_GROUPS" value1="User Groups" />
+		<execute function="AssertClick" locator1="SiteTeamsMembers#AVAILABLE" value1="Available" />
 
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<if>
 			<equals arg1="${userGroupsNameIsNotAvailable}" arg2="true" />
 			<then>
-				<execute function="AssertTextNotPresent" locator1="CPSiteteamsAssignmembers#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
+				<execute function="AssertTextNotPresent" locator1="SiteTeamsMembers#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="CPSiteteamsAssignmembers#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
-				<execute function="Check" locator1="CPSiteteamsAssignmembers#USER_GROUPS_TABLE_CHECKBOX" />
-				<execute function="AssertClick" locator1="CPSiteteamsAssignmembers#UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
+				<execute function="AssertTextEquals" locator1="SiteTeamsMembers#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
+				<execute function="Check" locator1="SiteTeamsMembers#USER_GROUPS_TABLE_CHECKBOX" />
+				<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
 
-				<execute function="AssertTextEquals" locator1="CPSiteteamsAssignmembers#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-				<execute function="AssertChecked" locator1="CPSiteteamsAssignmembers#USER_GROUPS_TABLE_CHECKBOX" />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="AssertChecked" locator1="SiteTeamsMembers#USER_GROUPS_TABLE_CHECKBOX" />
 			</else>
 		</if>
 	</command>
 
 	<command name="definePermissionPG">
 		<execute function="Check" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
-		<execute function="AssertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertChecked" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
 	</command>
@@ -82,31 +82,31 @@
 	<command name="deleteCP">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute function="AssertTextEquals" locator1="CPSiteteams#TEAM_TABLE_NAME" value1="${teamName}" />
-		<execute function="Click" locator1="CPSiteteams#TEAM_TABLE_ACTIONS" />
-		<execute function="AssertClickNoError" locator1="CPSiteteams#TEAM_MENULIST_DELETE" value1="Delete" />
+		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
+		<execute function="Click" locator1="SiteTeams#TEAM_TABLE_ACTIONS" />
+		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-		<execute function="AssertTextEquals" locator1="CPSiteteams#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editCP">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute function="AssertTextEquals" locator1="CPSiteteams#TEAM_TABLE_NAME" value1="${teamName}" />
-		<execute function="Click" locator1="CPSiteteams#TEAM_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPSiteteams#TEAM_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
+		<execute function="Click" locator1="SiteTeams#TEAM_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="CPSiteteamsEditteam#NAME_FIELD" value1="${teamNameEdit}" />
-		<execute function="Type" locator1="CPSiteteamsEditteam#DESCRIPTION_FIELD" value1="${teamDescriptionEdit}" />
-		<execute function="AssertClick" locator1="CPSiteteamsEditteam#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${teamNameEdit}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${teamDescriptionEdit}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPSiteteams#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="removePermissionPG">
 		<execute function="Uncheck" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
-		<execute function="AssertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Permissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertNotChecked" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
 	</command>
@@ -115,13 +115,13 @@
 		<var name="key_teamName" value="${teamName}" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="CPSiteteams#TEAM_TABLE_ACTIONS_GENERIC" />
+			<condition function="IsElementPresent" locator1="SiteTeams#TEAM_TABLE_ACTIONS_GENERIC" />
 			<then>
-				<execute function="Click" locator1="CPSiteteams#TEAM_TABLE_ACTIONS_GENERIC" />
-				<execute function="AssertClickNoError" locator1="CPSiteteams#TEAM_MENULIST_DELETE" value1="Delete" />
+				<execute function="Click" locator1="SiteTeams#TEAM_TABLE_ACTIONS_GENERIC" />
+				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-				<execute function="AssertTextEquals" locator1="CPSiteteams#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 		</while>
 	</command>
@@ -129,25 +129,25 @@
 	<command name="viewCP">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute function="AssertTextEquals" locator1="CPSiteteams#TEAM_TABLE_NAME" value1="${teamName}" />
-		<execute function="AssertTextEquals" locator1="CPSiteteams#TEAM_TABLE_DESCRIPTION" value1="${teamDescription}" />
-		<execute function="AssertElementPresent" locator1="CPSiteteams#TEAM_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
+		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_DESCRIPTION" value1="${teamDescription}" />
+		<execute function="AssertElementPresent" locator1="SiteTeams#TEAM_TABLE_ACTIONS" />
 	</command>
 
 	<command name="viewDefaultCP">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute function="AssertTextEquals" locator1="CPSiteteams#INFO_MESSAGE" value1="No teams were found." />
-		<execute function="AssertTextNotPresent" locator1="CPSiteteams#TEAM_TABLE_NAME" value1="${teamName}" />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No teams were found." />
+		<execute function="AssertTextNotPresent" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 	</command>
 
 	<command name="viewMemberCP">
 		<var name="key_teamName" value="${teamName}" />
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitememberships#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
-		<execute function="AssertTextEquals" locator1="CPSitememberships#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute function="AssertTextEquals" locator1="CPSitememberships#USER_TABLE_SITE_ROLES_AND_TEAMS" value1="${teamName}" />
-		<execute function="AssertVisible" locator1="CPSitememberships#USER_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
+		<execute function="AssertTextEquals" locator1="SiteMemberships#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute function="AssertTextEquals" locator1="SiteMemberships#USER_TABLE_SITE_ROLES_AND_TEAMS" value1="${teamName}" />
+		<execute function="AssertVisible" locator1="SiteMemberships#USER_TABLE_ACTIONS" />
 	</command>
 </definition>

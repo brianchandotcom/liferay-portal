@@ -1,67 +1,67 @@
 <definition>
 	<command name="addCP">
-		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ADD_BUTTON" value1="Add" />
-		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ADD_MENULIST_FOLDER" value1="Folder" />
+		<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ADD" value1="Add" />
+		<execute function="AssertClick" locator1="MenuItem#ADD_FOLDER" value1="Folder" />
 
-		<execute function="Type" locator1="CPKnowledgebaseadminAddfolder#TITLE_FIELD" value1="${kbFolderName}" />
-		<execute function="Type" locator1="CPKnowledgebaseadminAddfolder#DESCRIPTION_FIELD" value1="${kbFolderDescription}" />
-		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddfolder#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="TextInput#TITLE" value1="${kbFolderName}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${kbFolderDescription}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<if>
 			<isset var="kbAddDuplicate" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_1" value1="Your request failed to complete." />
-				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#ERROR_MESSAGE_2" value1="Please enter a unique folder name." />
+				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a unique folder name." />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</else>
 		</if>
 	</command>
 
 	<command name="deleteCP">
-		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#FOLDER_TABLE_ACTIONS_BUTTON" value1="Actions" />
-		<execute function="AssertClickNoError" locator1="CPKnowledgebaseadmin#FOLDER_MENULIST_DELETE" value1="Delete" />
+		<execute function="AssertClick" locator1="KnowledgeBase#FOLDER_TABLE_FOLDER_ACTIONS" value1="Actions" />
+		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editCP">
-		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#FOLDER_TABLE_ACTIONS_BUTTON" value1="Actions" />
-		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#FOLDER_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="KnowledgeBase#FOLDER_TABLE_FOLDER_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="CPKnowledgebaseadminAddfolder#TITLE_FIELD" value1="${kbFolderEditedName}" />
-		<execute function="Type" locator1="CPKnowledgebaseadminAddfolder#DESCRIPTION_FIELD" value1="${kbFolderDescription}" />
-		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddfolder#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="TextInput#TITLE" value1="${kbFolderEditedName}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${kbFolderDescription}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="gotoCP">
 		<var name="key_kbFolderName" value="${kbFolderName}" />
 
-		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#FOLDER_TABLE_FOLDER" value1="${kbFolderName}" />
-		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#FOLDER_BREADCRUMB" value1="${kbFolderName}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#FOLDER_TABLE_FOLDER_NAME" value1="${kbFolderName}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBase#BREADCRUMBS_FOLDER" value1="${kbFolderName}" />
 	</command>
 
 	<command name="gotoViaKBDisplayPG">
 		<var name="key_kbFolderName" value="${kbFolderName}" />
 
-		<execute function="Select" locator1="PGKnowledgebasedisplay#FOLDER_SELECT_DROPDOWN"  value1="${kbFolderName}" />
-		<execute function="AssertClick" locator1="PGKnowledgebasedisplay#FOLDER_SELECT_OPTION" value1="${kbFolderName}" />
+		<execute function="Select" locator1="KnowledgeBase#FOLDER_SELECT_DROPDOWN"  value1="${kbFolderName}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#FOLDER_SELECT_OPTION" value1="${kbFolderName}" />
 	</command>
 
 	<command name="selectParentCP">
 		<var name="key_kbArticleTitle" value="${kbFolderName}" />
 
-		<execute function="SelectFrame" locator1="CPKnowledgebaseadminSelectParent#SELECT_PARENT_IFRAME" />
-		<execute function="Click" locator1="CPKnowledgebaseadminSelectParent#CHOOSE_BUTTON" value1="Choose" />
+		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#IFRAME" />
+		<execute function="Click" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminMoveArticle#NEW_PARENT_TITLE_FIELD" value1="${kbFolderName}" />
-		<execute function="Click" locator1="CPKnowledgebaseadminMoveArticle#MOVE_BUTTON" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_NEW_PARENT_TITLE_FIELD" value1="${kbFolderName}" />
+		<execute function="Click" locator1="Button#MOVE" />
 
-		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownCP">
@@ -70,13 +70,13 @@
 		</execute>
 
 		<while>
-			<condition function="IsElementPresent" locator1="CPKnowledgebaseadmin#FOLDER_TABLE_HEADER" />
+			<condition function="IsElementPresent" locator1="KnowledgeBase#FOLDER_TABLE_HEADER" />
 
 			<then>
-				<execute function="Click" locator1="CPKnowledgebaseadmin#FOLDER_TABLE_ACTIONS_BUTTON_GENERIC" />
-				<execute function="AssertClickNoError" locator1="CPKnowledgebaseadmin#FOLDER_MENULIST_DELETE" value1="Delete" />
+				<execute function="Click" locator1="KnowledgeBase#FOLDER_TABLE_FOLDER_ACTIONS_GENERIC" />
+				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 		</while>
 	</command>
@@ -84,6 +84,6 @@
 	<command name="viewFolderTableCP">
 		<var name="key_kbFolderName" value="${kbFolderName}" />
 
-		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadmin#FOLDER_TABLE_FOLDER" value1="${kbFolderName}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBase#FOLDER_TABLE_FOLDER_NAME" value1="${kbFolderName}" />
 	</command>
 </definition>

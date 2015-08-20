@@ -43,7 +43,7 @@
 
 		<take-screenshot />
 
-		<execute function="SikuliAssertElementPresent" locator1="PGIFrame#SCREENSHOTS_LIFERAY_PRODUCTS_LOGO_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="IFramePortlet#SCREENSHOTS_LIFERAY_PRODUCTS_LOGO_PNG" />
 	</command>
 
 	<command known-issues="LRQA-15769" name="SalesDemo" priority="4">

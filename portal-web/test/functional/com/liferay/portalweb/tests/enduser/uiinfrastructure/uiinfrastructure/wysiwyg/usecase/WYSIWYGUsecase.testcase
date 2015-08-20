@@ -37,19 +37,19 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGWiki#ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
+		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
 
-		<execute function="AssertClick" locator1="PGWikiWikipageDetails#NAVIGATION_CONTENT" value1="Content" />
+		<execute function="AssertClick" locator1="Wiki#PAGE_TABS_CONTENT" value1="Content" />
 
 		<execute macro="DMDocument#linkImage">
 			<var name="documentName" value="Document_1.jpg" />
 		</execute>
 
-		<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" locator1="PGWikiEditpage#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" locator1="Button#PUBLISH" value1="Publish" />
 
 		<var name="key_htmlTags" value="p/img[contains(@src,'Document_1.jpg')]" />
 
-		<execute function="AssertElementPresent" locator1="PGWikiWikipage#WIKI_PAGE_HTML_BODY" />
+		<execute function="AssertElementPresent" locator1="Wiki#HTML_BODY" />
 	</command>
 
 	<command name="AddWikiFrontPageWithImageViaURL" priority="4">
@@ -65,17 +65,17 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGWiki#ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
+		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
 
 		<execute function="Click#pauseClickAt" locator1="CKEditor#CONTENT_IMAGE_LINK" />
 		<execute function="Type" locator1="CKEditor#CONTENT_IMAGE_LINK_URL_FIELD" value1="https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg" />
 		<execute function="AssertClick" locator1="CKEditor#CONTENT_IMAGE_LINK_OK_BUTTON" value1="OK" />
 
-		<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" locator1="PGWikiEditpage#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" locator1="Button#PUBLISH" value1="Publish" />
 
 		<var name="key_htmlTags" value="p/img[contains(@src,'Document_1.jpg')]" />
 
-		<execute function="AssertElementPresent" locator1="PGWikiWikipage#WIKI_PAGE_HTML_BODY" />
+		<execute function="AssertElementPresent" locator1="Wiki#HTML_BODY" />
 	</command>
 
 	<command name="ViewCKEditorsInheritanceNo" priority="4">
@@ -109,7 +109,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="Click" locator1="PGMessageboards#POST_NEW_THREAD_BUTTON" />
+		<execute function="Click" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" />
 
 		<var name="key_portletName" value="${portlet1Name}" />
 
@@ -135,7 +135,7 @@
 
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="AssertClick" locator1="PGWiki#ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
+		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
 
 		<execute function="AssertTextEquals" locator1="CKEditor#TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
 		<execute function="AssertTextEquals" locator1="CKEditor#TOOLBAR_SIZE_BUTTON_PORTLET" value1="Size" />

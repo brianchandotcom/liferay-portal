@@ -11,26 +11,26 @@
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="AssertTextEquals" locator1="CPSitememberships#MEMBERSHIP_TYPE" value1="Membership Type: Restricted" />
-		<execute function="AssertTextEquals" locator1="CPSitememberships#REQUEST_MESSAGE" value1="There are 1 membership requests pending." />
-		<execute function="AssertClick" locator1="CPSitememberships#TOOLBAR_VIEW_MEMBERSHIP_REQUESTS" value1="View Membership Requests" />
+		<execute function="AssertTextEquals" locator1="SiteMemberships#MEMBERSHIP_TYPE" value1="Membership Type: Restricted" />
+		<execute function="AssertTextEquals" locator1="SiteMemberships#REQUEST_MESSAGE" value1="There are 1 membership requests pending." />
+		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_VIEW_MEMBERSHIP_REQUESTS" value1="View Membership Requests" />
 
-		<execute function="AssertTextEquals" locator1="CPSitemembershipsViewmembershiprequestsPending#REQUESTS_TABLE_USER_NAME" value1="${userName} (${userEmailAddress})" />
-		<execute function="AssertTextEquals" locator1="CPSitemembershipsViewmembershiprequestsPending#REQUESTS_TABLE_USER_COMMENTS" value1="${userName} wishes to join ${siteName}." />
-		<execute function="AssertClick" locator1="CPSitemembershipsViewmembershiprequestsPending#REQUESTS_TABLE_REPLY" value1="Reply" />
+		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_NAME" value1="${userName} (${userEmailAddress})" />
+		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_COMMENTS" value1="${userName} wishes to join ${siteName}." />
+		<execute function="AssertClick" locator1="SiteMembershipsViewMembershipRequests#REPLY" value1="Reply" />
 
-		<execute function="Select" locator1="CPSitemembershipsViewmembershiprequestsPendingReply#STATUS" value1="Approve" />
-		<execute function="Type" locator1="CPSitemembershipsViewmembershiprequestsPendingReply#REPLY_COMMENTS" value1="${siteName} Membership Approved" />
-		<execute function="AssertClick" locator1="CPSitemembershipsViewmembershiprequestsPendingReply#SAVE_BUTTON" value1="Save" />
+		<execute function="Select" locator1="SiteMembershipsViewMembershipRequests#STATUS" value1="Approve" />
+		<execute function="Type" locator1="SiteMembershipsViewMembershipRequests#REPLY_COMMENTS_AREA" value1="${siteName} Membership Approved" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPSitemembershipsViewmembershiprequestsPending#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="CPSitemembershipsViewmembershiprequestsPending#SUCCESS_MESSAGE_2" value1="Your reply will be sent to the user by email." />
-		<execute function="AssertClick" locator1="CPSitemembershipsViewmembershiprequestsPending#VIEW_MEMBERSHIP_NAVIGATION_APPROVED" value1="Approved" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS_2" value1="Your reply will be sent to the user by email." />
+		<execute function="AssertClick" locator1="SiteMembershipsViewMembershipRequests#VIEW_MEMBERSHIP_NAVIGATION_APPROVED" value1="Approved" />
 
-		<execute function="AssertTextEquals" locator1="CPSitemembershipsViewmembershiprequestsApproved#APPROVED_TABLE_USER_NAME" value1="${userName} (${userEmailAddress})" />
-		<execute function="AssertTextEquals" locator1="CPSitemembershipsViewmembershiprequestsApproved#APPROVED_TABLE_USER_COMMENTS" value1="${userName} wishes to join ${siteName}." />
-		<execute function="AssertTextEquals" locator1="CPSitemembershipsViewmembershiprequestsApproved#APPROVED_TABLE_REPLIER_NAME" value1="Test Test" />
-		<execute function="AssertTextEquals" locator1="CPSitemembershipsViewmembershiprequestsApproved#APPROVED_TABLE_REPLY_COMMENTS" value1="${siteName} Membership Approved" />
+		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_NAME" value1="${userName} (${userEmailAddress})" />
+		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_COMMENTS" value1="${userName} wishes to join ${siteName}." />
+		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#REPLIER_NAME" value1="Test Test" />
+		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#REPLY_COMMENTS" value1="${siteName} Membership Approved" />
 	</command>
 
 	<command name="confirmMemberInvite">
@@ -145,29 +145,29 @@
 
 		<execute function="AssertClick" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_SITE_INVITE_CREATE_ACCOUNT_LINK" value1="Create Account" />
 
-		<execute function="SelectWindow" locator1="PGLoginCreateAccount#CREATE_ACCOUNT_POP_UP_WINDOW" />
-		<execute function="Type" locator1="PGLoginCreateAccount#FIRST_NAME_FIELD" value1="${userFirstName}" />
-		<execute function="Type" locator1="PGLoginCreateAccount#MIDDLE_NAME_FIELD" value1="${userMiddleName}" />
-		<execute function="Type" locator1="PGLoginCreateAccount#LAST_NAME_FIELD" value1="${userLastName}" />
-		<execute function="Type" locator1="PGLoginCreateAccount#SCREEN_NAME_FIELD" value1="${userScreenName}" />
-		<execute function="Type" locator1="PGLoginCreateAccount#EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute function="AssertClick" locator1="PGLoginCreateAccount#SAVE_BUTTON" value1="Save" />
+		<execute function="SelectWindow" locator1="SignInCreateAccount#CREATE_ACCOUNT_POP_UP_WINDOW" />
+		<execute function="Type" locator1="TextInput#FIRST_NAME" value1="${userFirstName}" />
+		<execute function="Type" locator1="TextInput#MIDDLE_NAME" value1="${userMiddleName}" />
+		<execute function="Type" locator1="TextInput#LAST_NAME" value1="${userLastName}" />
+		<execute function="Type" locator1="TextInput#SCREEN_NAME" value1="${userScreenName}" />
+		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<if>
 			<equals arg1="${singleApproverWorkflow}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGLoginCreateAccount#SUCCESS_MESSAGE" value1="Thank you for creating an account. You will be notified via email at ${userEmailAddress} when your account has been approved." />
-				<execute function="Close#closeWindow" locator1="PGLoginCreateAccount#CREATE_ACCOUNT_POP_UP_WINDOW" />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Thank you for creating an account. You will be notified via email at ${userEmailAddress} when your account has been approved." />
+				<execute function="Close#closeWindow" locator1="SignInCreateAccount#CREATE_ACCOUNT_POP_UP_WINDOW" />
 			</then>
 			<else>
-				<execute function="Type" locator1="PGLoginNewpassword#PASSWORD_FIELD" value1="test" />
-				<execute function="Type" locator1="PGLoginNewpassword#ENTER_AGAIN_FIELD" value1="test" />
-				<execute function="AssertClick" locator1="PGLoginNewpassword#SAVE_BUTTON" value1="Save" />
+				<execute function="Type" locator1="TextInpu#PASSWORD" value1="test" />
+				<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test" />
+				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-				<execute function="Type" locator1="PGLoginPasswordreminder#ANSWER_FIELD" value1="test" />
-				<execute function="AssertClick" locator1="PGLoginPasswordreminder#SAVE_BUTTON" value1="Save" />
+				<execute function="Type" locator1="TextInput#ANSWER" value1="test" />
+				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-				<execute function="Close#closeWindow" locator1="PGLoginCreateAccount#CREATE_ACCOUNT_POP_UP_WINDOW" />
+				<execute function="Close#closeWindow" locator1="SignInCreateAccount#CREATE_ACCOUNT_POP_UP_WINDOW" />
 			</else>
 		</if>
 	</command>
@@ -184,26 +184,26 @@
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="AssertTextEquals" locator1="CPSitememberships#MEMBERSHIP_TYPE" value1="Membership Type: Restricted" />
-		<execute function="AssertTextEquals" locator1="CPSitememberships#REQUEST_MESSAGE" value1="There are 1 membership requests pending." />
-		<execute function="AssertClick" locator1="CPSitememberships#TOOLBAR_VIEW_MEMBERSHIP_REQUESTS" value1="View Membership Requests" />
+		<execute function="AssertTextEquals" locator1="SiteMemberships#MEMBERSHIP_TYPE" value1="Membership Type: Restricted" />
+		<execute function="AssertTextEquals" locator1="SiteMemberships#REQUEST_MESSAGE" value1="There are 1 membership requests pending." />
+		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_VIEW_MEMBERSHIP_REQUESTS" value1="View Membership Requests" />
 
-		<execute function="AssertTextEquals" locator1="CPSitemembershipsViewmembershiprequestsPending#REQUESTS_TABLE_USER_NAME" value1="${userName} (${userEmailAddress})" />
-		<execute function="AssertTextEquals" locator1="CPSitemembershipsViewmembershiprequestsPending#REQUESTS_TABLE_USER_COMMENTS" value1="${userName} wishes to join ${siteName}." />
-		<execute function="AssertClick" locator1="CPSitemembershipsViewmembershiprequestsPending#REQUESTS_TABLE_REPLY" value1="Reply" />
+		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_NAME" value1="${userName} (${userEmailAddress})" />
+		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_COMMENTS" value1="${userName} wishes to join ${siteName}." />
+		<execute function="AssertClick" locator1="SiteMembershipsViewMembershipRequests#REPLY" value1="Reply" />
 
-		<execute function="Select" locator1="CPSitemembershipsViewmembershiprequestsPendingReply#STATUS" value1="Deny" />
-		<execute function="Type" locator1="CPSitemembershipsViewmembershiprequestsPendingReply#REPLY_COMMENTS" value1="${siteName} Membership Denied" />
-		<execute function="AssertClick" locator1="CPSitemembershipsViewmembershiprequestsPendingReply#SAVE_BUTTON" value1="Save" />
+		<execute function="Select" locator1="SiteMembershipsViewMembershipRequests#STATUS" value1="Deny" />
+		<execute function="Type" locator1="SiteMembershipsViewMembershipRequests#REPLY_COMMENTS_AREA" value1="${siteName} Membership Denied" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPSitemembershipsViewmembershiprequestsPending#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="CPSitemembershipsViewmembershiprequestsPending#SUCCESS_MESSAGE_2" value1="Your reply will be sent to the user by email." />
-		<execute function="AssertClick" locator1="CPSitemembershipsViewmembershiprequestsPending#VIEW_MEMBERSHIP_NAVIGATION_DENIED" value1="Denied" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS_2" value1="Your reply will be sent to the user by email." />
+		<execute function="AssertClick" locator1="SiteMembershipsViewMembershipRequests#VIEW_MEMBERSHIP_NAVIGATION_DENIED" value1="Denied" />
 
-		<execute function="AssertTextEquals" locator1="CPSitemembershipsViewmembershiprequestsDenied#DENIED_TABLE_USER_NAME" value1="${userName} (${userEmailAddress})" />
-		<execute function="AssertTextEquals" locator1="CPSitemembershipsViewmembershiprequestsDenied#DENIED_TABLE_USER_COMMENTS" value1="${userName} wishes to join ${siteName}." />
-		<execute function="AssertTextEquals" locator1="CPSitemembershipsViewmembershiprequestsDenied#DENIED_TABLE_REPLIER_NAME" value1="Test Test" />
-		<execute function="AssertTextEquals" locator1="CPSitemembershipsViewmembershiprequestsDenied#DENIED_TABLE_REPLY_COMMENTS" value1="${siteName} Membership Denied" />
+		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_NAME" value1="${userName} (${userEmailAddress})" />
+		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#USER_COMMENTS" value1="${userName} wishes to join ${siteName}." />
+		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#REPLIER_NAME" value1="Test Test" />
+		<execute function="AssertTextEquals" locator1="SiteMembershipsViewMembershipRequests#REPLY_COMMENTS" value1="${siteName} Membership Denied" />
 	</command>
 
 	<command name="ignoreMemberInvite">
@@ -267,8 +267,8 @@
 				<if>
 					<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 					<then>
-						<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-						<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+						<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+						<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 					</then>
 				</if>
 
@@ -303,16 +303,16 @@
 					<var name="virtualHostsURL" value="${virtualHostsURL}" />
 				</execute>
 
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
-				<execute function="AssertClick" locator1="Dockbar#ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
+				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
+				<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
 
 				<var name="key_userScreenName" value="${userScreenName}" />
 
-				<execute function="Type" locator1="CPSitememberships#USER_SEARCH_FIELD" value1="${userScreenName}" />
-				<execute function="AssertClick" locator1="CPSitememberships#USER_SEARCH_BUTTON" value1="Search" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="CPSitememberships#USER_TABLE_NAME" value1="${userName}" />
-				<execute function="AssertTextEquals" locator1="CPSitememberships#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-				<execute function="AssertTextEquals" locator1="CPSitememberships#USER_TABLE_SITE_ROLES_AND_TEAMS" value1="${siteRoleInvite}" />
+				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+				<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#USER_TABLE_NAME" value1="${userName}" />
+				<execute function="AssertTextEquals" locator1="SiteMemberships#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+				<execute function="AssertTextEquals" locator1="SiteMemberships#USER_TABLE_SITE_ROLES_AND_TEAMS" value1="${siteRoleInvite}" />
 			</then>
 			<else>
 				<execute function="Click" locator1="SOSite#NAVIGATION_MEMBERS" value1="Members" />

@@ -432,9 +432,9 @@
 
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute function="AssertElementNotPresent" locator1="CPSiteteams#TEAM_TABLE_NAME" value1="${teamName}" />
-		<execute function="AssertElementNotPresent" locator1="CPSiteteams#TEAM_TABLE_DESCRIPTION" value1="${teamDescription}" />
-		<execute function="AssertElementNotPresent" locator1="CPSiteteams#TEAM_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertElementNotPresent" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
+		<execute function="AssertElementNotPresent" locator1="SiteTeams#TEAM_TABLE_DESCRIPTION" value1="${teamDescription}" />
+		<execute function="AssertElementNotPresent" locator1="SiteTeams#TEAM_TABLE_ACTIONS" value1="Actions" />
 		<execute function="AssertTextNotPresent" value1="${teamName}" />
 		<execute function="AssertTextNotPresent" value1="${teamDescription}" />
 
@@ -716,9 +716,9 @@
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPSitememberships#USER_TABLE_NAME" value1="${userName}" />
-		<execute function="AssertTextEquals" locator1="CPSitememberships#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-		<execute function="AssertTextEquals" locator1="CPSitememberships#USER_TABLE_SITE_ROLES_AND_TEAMS" value1="${siteRoleName}" />
-		<execute function="AssertTextEquals" locator1="CPSitememberships#USER_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SiteMemberships#USER_TABLE_NAME" value1="${userName}" />
+		<execute function="AssertTextEquals" locator1="SiteMemberships#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute function="AssertTextEquals" locator1="SiteMemberships#USER_TABLE_SITE_ROLES_AND_TEAMS" value1="${siteRoleName}" />
+		<execute function="AssertTextEquals" locator1="SiteMemberships#USER_TABLE_ACTIONS" value1="Actions" />
 	</command>
 </definition>

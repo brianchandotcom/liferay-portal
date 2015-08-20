@@ -1,25 +1,25 @@
 <definition>
 	<command name="addPG">
-		<execute function="Click" locator1="PGAnnouncements#NAVIGATION_MANAGE_ENTRIES" />
+		<execute function="Click" locator1="Announcements#NAVIGATION_MANAGE_ENTRIES" />
 
 		<execute function="Select#selectAndWait" locator1="AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute function="AssertClick" locator1="PGAnnouncementsManageentries#ADD_ENTRY_BUTTON" value1="Add Entry" />
+		<execute function="AssertClick" locator1="Button#ADD_ENTRY" value1="Add Entry" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${entryTitle}" />
 		<execute function="Type" locator1="TextInput#URL" value1="${entryURL}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGAnnouncementsAddentry#CONTENT_FIELD" value1="${entryContent}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#IFRAME" value1="${entryContent}" />
 
 		<if>
 			<isset var="priority" />
 			<then>
-				<execute function="Select" locator1="PGAnnouncementsAddentry#PRIORITY_SELECT" value1="${priority}" />
+				<execute function="Select" locator1="Announcements#PRIORITY_SELECT" value1="${priority}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="expirationDate" />
 			<then>
-				<execute function="Type" locator1="PGAnnouncementsAddentry#EXPIRATION_DATE_DATE_INPUT" value1="${expirationDate}" />
+				<execute function="Type" locator1="TextInput#EXPIRATION_DATE" value1="${expirationDate}" />
 			</then>
 		</if>
 
@@ -29,10 +29,10 @@
 	<command name="deletePG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="PGAnnouncements#ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="PGAnnouncements#ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
+		<execute function="AssertTextEquals" locator1="Announcements#ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="Announcements#ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
 
-		<execute function="AssertClickNoError" locator1="PGAnnouncements#ENTRY_DELETE" value1="Delete" />
+		<execute function="AssertClickNoError" locator1="Announcements#ENTRY_DELETE" value1="Delete" />
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
@@ -43,14 +43,14 @@
 	<command name="editPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="PGAnnouncements#ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="PGAnnouncements#ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
+		<execute function="AssertTextEquals" locator1="Announcements#ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="Announcements#ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
 
-		<execute function="Click" locator1="PGAnnouncements#ENTRY_EDIT" />
+		<execute function="Click" locator1="Announcements#ENTRY_EDIT" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${entryTitleEdit}" />
 		<execute function="Type" locator1="TextInput#URL" value1="${entryURLEdit}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGAnnouncementsAddentry#CONTENT_FIELD" value1="${entryContentEdit}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#IFRAME" value1="${entryContentEdit}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
@@ -58,19 +58,19 @@
 	<command name="hidePG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertClick" locator1="PGAnnouncements#ENTRY_HIDE" value1="Hide" />
+		<execute function="AssertClick" locator1="Announcements#ENTRY_HIDE" value1="Hide" />
 	</command>
 
 	<command name="markAsReadPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertClick" locator1="PGAnnouncements#ENTRY_MARK_AS_READ" value1="Mark as Read" />
+		<execute function="AssertClick" locator1="Announcements#ENTRY_MARK_AS_READ" value1="Mark as Read" />
 	</command>
 
 	<command name="showPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertClick" locator1="PGAnnouncements#ENTRY_SHOW" value1="Show" />
+		<execute function="AssertClick" locator1="Announcements#ENTRY_SHOW" value1="Show" />
 	</command>
 
 	<command name="tearDownPG">
@@ -82,16 +82,16 @@
 			<var name="soPage" value="${soPage}" />
 		</execute>
 
-		<execute function="Click" locator1="PGAnnouncements#NAVIGATION_MANAGE_ENTRIES" />
+		<execute function="Click" locator1="Announcements#NAVIGATION_MANAGE_ENTRIES" />
 
 		<execute function="Select#selectAndWait" locator1="AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT" value1="General" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_ACTIONS_GENERIC" />
+			<condition function="IsElementPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_ACTIONS_GENERIC" />
 			<then>
-				<execute function="Click" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_ACTIONS_GENERIC" />
+				<execute function="Click" locator1="AnnouncementsManageEntries#ENTRY_TABLE_ACTIONS_GENERIC" />
 
-				<execute function="AssertClickNoError" locator1="PGAnnouncementsManageentries#ACTIONS_MENULIST_DELETE" value1="Delete" />
+				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
@@ -106,11 +106,14 @@
 	<command name="viewEditPG">
 		<var name="key_entryTitle" value="${entryTitleEdit}" />
 
-		<execute function="AssertTextEquals" locator1="PGAnnouncements#ENTRY_TITLE" value1="${entryTitleEdit}" />
-		<execute function="AssertTextEquals" locator1="PGAnnouncements#ENTRY_SCOPE" value1="${distributionScope}" />
-		<execute function="AssertTextEquals" locator1="PGAnnouncements#ENTRY_CONTENT" value1="${distributionScope} ${entryContentEdit}" />
+	<command name="viewEditPG">
+		<var name="key_entryTitle" value="${entryTitleEdit}" />
 
-		<execute function="Click" locator1="PGAnnouncements#NAVIGATION_MANAGE_ENTRIES" />
+		<execute function="AssertTextEquals" locator1="Announcements#ENTRY_TITLE" value1="${entryTitleEdit}" />
+		<execute function="AssertTextEquals" locator1="Announcements#ENTRY_SCOPE" value1="${distributionScope}" />
+		<execute function="AssertTextEquals" locator1="Announcements#ENTRY_CONTENT" value1="${distributionScope} ${entryContentEdit}" />
+
+		<execute function="Click" locator1="Announcements#NAVIGATION_MANAGE_ENTRIES" />
 
 		<execute function="Select#selectAndWait" locator1="AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 
@@ -121,25 +124,25 @@
 	<command name="viewHiddenPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="PGAnnouncements#ENTRY_SHOW" value1="Show" />
-		<execute function="AssertElementNotPresent#assertNotVisible" locator1="PGAnnouncements#ENTRY_CONTENT" />
-		<execute function="AssertElementNotPresent#assertNotVisible" locator1="PGAnnouncements#ENTRY_SCOPE" />
+		<execute function="AssertTextEquals" locator1="Announcements#ENTRY_SHOW" value1="Show" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="Announcements#ENTRY_CONTENT" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="Announcements#ENTRY_SCOPE" />
 	</command>
 
 	<command name="viewNoPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextNotPresent" locator1="PGAnnouncements#ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextNotPresent" locator1="Announcements#ENTRY_TITLE" value1="${entryTitle}" />
 	</command>
 
 	<command name="viewPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="PGAnnouncements#ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="PGAnnouncements#ENTRY_SCOPE" value1="${distributionScope}" />
-		<execute function="AssertTextEquals" locator1="PGAnnouncements#ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
+		<execute function="AssertTextEquals" locator1="Announcements#ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="Announcements#ENTRY_SCOPE" value1="${distributionScope}" />
+		<execute function="AssertTextEquals" locator1="Announcements#ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
 
-		<execute function="Click" locator1="PGAnnouncements#NAVIGATION_MANAGE_ENTRIES" />
+		<execute function="Click" locator1="Announcements#NAVIGATION_MANAGE_ENTRIES" />
 
 		<execute function="Select#selectAndWait" locator1="AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 
@@ -150,9 +153,9 @@
 	<command name="viewViaEntriesPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="PGAnnouncements#ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="PGAnnouncements#ENTRY_SCOPE" value1="${distributionScope}" />
-		<execute function="AssertTextEquals" locator1="PGAnnouncements#ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
+		<execute function="AssertTextEquals" locator1="Announcements#ENTRY_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="Announcements#ENTRY_SCOPE" value1="${distributionScope}" />
+		<execute function="AssertTextEquals" locator1="Announcements#ENTRY_CONTENT" value1="${distributionScope} ${entryContent}" />
 	</command>
 
 	<command name="viewViaManageEntriesPG">
@@ -162,10 +165,10 @@
 
 		<execute function="AssertTextEquals" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TYPE" value1="${announcementType}" />
-		<execute function="AssertElementPresent" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_MODIFIED_DATE" />
-		<execute function="AssertElementPresent" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_DISPLAY_DATE" />
-		<execute function="AssertElementPresent" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_EXPIRATION_DATE" />
-		<execute function="AssertElementPresent" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_MODIFIED_DATE" />
-		<execute function="AssertElementPresent" locator1="PGAnnouncementsManageentries#ENTRY_TABLE_ACTIONS" />
+		<execute function="AssertElementPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_MODIFIED_DATE" />
+		<execute function="AssertElementPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_DISPLAY_DATE" />
+		<execute function="AssertElementPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_EXPIRATION_DATE" />
+		<execute function="AssertElementPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_MODIFIED_DATE" />
+		<execute function="AssertElementPresent" locator1="AnnouncementsManageEntries#ENTRY_TABLE_ACTIONS" />
 	</command>
 </definition>

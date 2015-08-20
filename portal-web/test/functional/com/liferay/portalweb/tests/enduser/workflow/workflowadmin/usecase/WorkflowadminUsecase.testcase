@@ -379,12 +379,12 @@
 
 		<var name="key_workflowAssetTitle" value="${wikiPageTitle}" />
 
-		<execute function="AssertTextEquals" locator1="CPMysubmissions#PENDING_TABLE_DEFINITION" value1="Single Approver" />
-		<execute function="AssertTextEquals" locator1="CPMysubmissions#PENDING_TABLE_ASSET_TITLE" value1="${wikiPageTitle}" />
-		<execute function="AssertTextEquals" locator1="CPMysubmissions#PENDING_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
-		<execute function="AssertTextEquals" locator1="CPMysubmissions#PENDING_TABLE_STATUS" value1="Review" />
-		<execute function="AssertElementPresent" locator1="CPMysubmissions#PENDING_TABLE_LAST_ACTIVITY_DATE" />
-		<execute function="AssertElementPresent" locator1="CPMysubmissions#PENDING_TABLE_END_DATE" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_DEFINITION" value1="Single Approver" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TITLE" value1="${wikiPageTitle}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_STATUS" value1="Review" />
+		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#PENDING_TABLE_LAST_ACTIVITY_DATE" />
+		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#PENDING_TABLE_END_DATE" />
 
 		<execute macro="User#logoutPG" />
 

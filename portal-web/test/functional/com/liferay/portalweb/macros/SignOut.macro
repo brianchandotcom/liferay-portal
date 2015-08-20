@@ -1,14 +1,15 @@
 <definition>
 	<command name="_signOut">
 		<if>
-			<condition function="IsElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
+			<condition function="IsElementPresent" locator1="DockbarTEMP#USER_AVATAR_IMAGE" />
 			<then>
-				<execute function="Click" locator1="Dockbar#USER_AVATAR_IMAGE" />
+				<execute function="Click" locator1="DockbarTEMP#USER_NAME" />
 
-				<execute function="Click" locator1="Dockbar#USER_SIGN_OUT" />
+				<execute function="Click" locator1="DockbarTEMP#USER_SIGN_OUT" />
 			</then>
 		</if>
 	</command>
+
 
 	<command name="signOut">
 		<execute macro="Navigator#openURL" />

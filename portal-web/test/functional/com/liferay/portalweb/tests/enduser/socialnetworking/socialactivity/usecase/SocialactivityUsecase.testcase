@@ -45,7 +45,7 @@
 
 		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
 
-		<execute function="AssertTextEquals" locator1="CPPolls#POLLS_TABLE_TITLE" value1="${pollsQuestionTitle}" />
+		<execute function="AssertTextEquals" locator1="Polls#POLLS_TABLE_TITLE" value1="${pollsQuestionTitle}" />
 
 		<execute macro="Page#openURL" />
 
@@ -399,7 +399,7 @@
 			<var name="portletName" value="Account Settings" />
 		</execute>
 
-		<execute function="AssertSelectedLabel" locator1="Myaccount#LANGUAGE_SELECT" value1="English (United States)" />
+		<execute function="AssertSelectedLabel" locator1="MyAccount#LANGUAGE_SELECT" value1="English (United States)" />
 	</command>
 
 	<command name="VotePollsQuestionWithGuestPermissions" priority="4">
@@ -424,7 +424,7 @@
 
 		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
 
-		<execute function="AssertTextEquals" locator1="CPPolls#POLLS_TABLE_TITLE" value1="${pollsQuestionTitle}" />
+		<execute function="AssertTextEquals" locator1="Polls#POLLS_TABLE_TITLE" value1="${pollsQuestionTitle}" />
 
 		<execute macro="Page#openURL" />
 
@@ -458,9 +458,9 @@
 
 		<execute function="AssertClick" locator1="PGPollsdisplay#INFO_MESSAGE_LINK" value1="Please sign in to vote." />
 
-		<execute function="Type" locator1="PGLogin#EMAIL_ADDRESS_FIELD" value1="test@liferay.com" />
-		<execute function="Type" locator1="PGLogin#PASSWORD_FIELD" value1="test" />
-		<execute function="Click" locator1="PGLogin#SIGN_IN_BUTTON" value1="Sign In" />
+		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="test@liferay.com" />
+		<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
+		<execute function="Click" locator1="Button#SIGN_IN" value1="Sign In" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Polls" />

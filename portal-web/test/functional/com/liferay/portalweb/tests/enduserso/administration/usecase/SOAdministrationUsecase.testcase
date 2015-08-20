@@ -65,8 +65,8 @@
 
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
-		<execute function="AssertClick" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
-		<execute function="Click" locator1="CPPagetemplatesEdit#OPEN_PAGE_TEMPLATE" />
+		<execute function="AssertClick" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute function="Click" locator1="PageTemplates#OPEN_PAGE_TEMPLATE" />
 
 		<var name="key_pageTitle" value="${pageTemplateName} - Liferay" />
 
@@ -89,8 +89,8 @@
 
 		<var name="key_pageTemplateName" value="${pageTemplateName} Edit" />
 
-		<execute function="AssertClick" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName} Edit" />
-		<execute function="Click" locator1="CPPagetemplatesEdit#OPEN_PAGE_TEMPLATE" />
+		<execute function="AssertClick" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName} Edit" />
+		<execute function="Click" locator1="PageTemplates#OPEN_PAGE_TEMPLATE" />
 
 		<var name="key_pageTitle" value="${pageTemplateName} Edit - Liferay" />
 
@@ -98,17 +98,17 @@
 
 		<execute function="AssertVisible" locator1="SOUserBar#USER_BAR" />
 
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" />
 
-		<execute function="AssertElementPresent" locator1="DockbarAddpanelcontent#NAVIGATION_CONTENT" />
+		<execute function="AssertElementPresent" locator1="NavPill#CONTENT" />
 
-		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" />
 
-		<execute function="AssertElementPresent" locator1="DockbarEditpanel#DETAILS_PANEL_TOGGLE" />
+		<execute function="AssertElementPresent" locator1="DockbarEditPanel#DETAILS_PANEL_TOGGLE" />
 
-		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#PREVIEW" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#PREVIEW" />
 
-		<execute function="AssertElementPresent" locator1="DockbarPreviewpanel#PREVIEW_AUTOSIZE" />
+		<execute function="AssertElementPresent" locator1="DockbarPreviewPanel#PREVIEW_AUTOSIZE" />
 
 		<var name="key_pageTitle" value="${pageTemplateName} Edit - Liferay" />
 
@@ -402,7 +402,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_HOME" value1="Home" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="Home" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
@@ -425,7 +425,7 @@
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
@@ -698,8 +698,8 @@
 			<var name="portletName" value="Portal Settings" />
 		</execute>
 
-		<execute function="Type" locator1="CPPortalsettings#NAVIGATION_HOME_URL_FIELD" value1="/user" />
-		<execute function="AssertClick" locator1="CPPortalsettings#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="PortalSettings#HOME_URL_FIELD" value1="/user" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="Open" locator1="http://localhost:8080/" />
 		<execute function="AssertLocation" value1="http://localhost:8080/user/test/so/dashboard" />
@@ -856,7 +856,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_HOME" value1="Home" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="Home" />
 
 		<execute macro="DMFolder#gotoPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
@@ -882,7 +882,7 @@
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
@@ -1303,10 +1303,10 @@
 	<command name="ViewCaptchaCheckWithSORole" priority="4">
 		<execute macro="User#logoutPG" />
 
-		<execute function="AssertClick" locator1="PGLogin#CREATE_ACCOUNT_LINK" value1="Create Account" />
+		<execute function="AssertClick" locator1="Link#CREATE_ACCOUNT" value1="Create Account" />
 
-		<execute function="AssertElementPresent" locator1="PGLoginCreateAccount#CAPTCHA_IMAGE" />
-		<execute function="AssertElementPresent" locator1="PGLoginCreateAccount#CAPTCHA_REFRESH" />
-		<execute function="AssertElementPresent" locator1="PGLoginCreateAccount#TEXT_VERIFICATION_FIELD" />
+		<execute function="AssertElementPresent" locator1="SignInCreateAccount#CAPTCHA_IMAGE" />
+		<execute function="AssertElementPresent" locator1="SignInCreateAccount#CAPTCHA_REFRESH" />
+		<execute function="AssertElementPresent" locator1="TextInput#TEXT_VERIFICATION" />
 	</command>
 </definition>

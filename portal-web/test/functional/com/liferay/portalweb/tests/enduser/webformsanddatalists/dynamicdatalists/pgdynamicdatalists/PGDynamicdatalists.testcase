@@ -567,6 +567,118 @@
 		</execute>
 	</command>
 
+	<command name="SearchDynamicDataListsRecords" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Number" />
+			<var name="fieldFieldLabel" value="Number" />
+			<var name="fieldName" value="Number" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP">
+			<var name="ddlListDescription" value="DDL List Description" />
+			<var name="ddlListName" value="DDL List Name" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+		</execute>
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+			<var name="ddlListName" value="DDL List Name" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldNumber">
+			<var name="ddlRecordFieldData" value="123" />
+			<var name="fieldName" value="Number" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="Record Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLRecord#publishCP" />
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="Dynamic Data Lists Display Page" />
+		</execute>
+
+		<execute macro="DDLList#selectViaDDLDisplayPG">
+			<var name="ddlListName" value="DDL List Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="Dynamic Data Lists Display Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Record Text" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetTitle" value="New Data Definition Name for List: DDL List Name" />
+			<var name="searchAssetType" value="Dynamic Data Lists Record" />
+		</execute>
+
+		<execute macro="Search#gotoUserSearchResultPG">
+			<var name="searchAssetTitle" value="New Data Definition Name for List: DDL List Name" />
+		</execute>
+
+		<execute macro="DDLRecord#viewFirstRecordViaDDLDisplayTemplate">
+			<var name="ddlListName" value="DDL List Name" />
+			<var name="ddlRecordFieldData" value="Record Text" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="Dynamic Data Lists Display Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="123" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetTitle" value="New Data Definition Name for List: DDL List Name" />
+			<var name="searchAssetType" value="Dynamic Data Lists Record" />
+		</execute>
+
+		<execute macro="Search#gotoUserSearchResultPG">
+			<var name="searchAssetTitle" value="New Data Definition Name for List: DDL List Name" />
+		</execute>
+
+		<execute macro="DDLRecord#viewSecondRecordViaDDLDisplayTemplate">
+			<var name="ddlListName" value="DDL List Name" />
+			<var name="ddlRecordFieldData" value="123" />
+			<var name="field" value="Number" />
+			<var name="fieldFieldLabel" value="Number" />
+		</execute>
+	</command>
+
 	<command name="SelectList" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition Name" />
 		<var name="ddlListName" value="List Name" />

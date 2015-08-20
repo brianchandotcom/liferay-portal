@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>SITE_TEMPLATE_NAME</td>
-	<td>//h1[contains(.,'${key_siteTemplateName}')]/div/a</td>
+	<td>//div[contains(@id,'site_administration')]//a[contains(.,'${key_siteTemplateName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -21,22 +21,22 @@
 <!--CONFIGURATION-->
 <tr>
 	<td>CONFIGURATION</td>
-	<td>//div[@data-persist-id='panel-manage-site_administration.configuration']</td>
+	<td>//div/a[contains(@href,'site_administration_configuration')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_SITE_TEMPLATE_SETTINGS</td>
-	<td>//li[contains(.,'Site Template Settings')]/span/a/span</td>
+	<td>//li[contains(.,'Site Template Settings')]/a[contains(@id,'SiteTemplateSettingsPortlet')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_APPLICATION_DISPLAY_TEMPLATES</td>
-	<td>//li[contains(.,'Application Display Templates')]/span/a/span</td>
+	<td>//li[contains(.,'Application Display Template')]/a[contains(@id,'PortletDisplayTemplatePortlet')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_MOBILE_DEVICE_FAMILIES</td>
-	<td>//li[contains(.,'Mobile Device Families')]/span/a/span</td>
+	<td>//li[contains(.,'Mobile Device Families')]/a[contains(@id,'mobile_device_rules')]</td>
 	<td></td>
 </tr>
 </tbody>

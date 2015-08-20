@@ -53,14 +53,26 @@
 @include respond-to(desktop) {
 	.lfr-has-add-content {
 		padding-right: $addContentPanelWidth;
+
+		.control-menu {
+			right: $addContentPanelWidth;
+		}
 	}
 
 	.lfr-has-device-preview {
 		padding-right: $devicePreviewPanelWidth;
+
+		.control-menu {
+			right: $devicePreviewPanelWidth;
+		}
 	}
 
 	.lfr-has-edit-layout {
 		padding-right: $editLayoutPanelWidth;
+
+		.control-menu {
+			right: $editLayoutPanelWidth;
+		}
 	}
 }
 
@@ -70,6 +82,10 @@
 
 		.lfr-product-menu-panel {
 			width: 0;
+		}
+
+		.control-menu {
+			left: 0;
 		}
 	}
 

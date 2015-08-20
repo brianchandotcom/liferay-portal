@@ -65,6 +65,14 @@
 }
 
 .lfr-has-add-content, .lfr-has-device-preview, .lfr-has-edit-layout {
+	&.open {
+		padding-left: 0;
+
+		.lfr-product-menu-panel {
+			width: 0;
+		}
+	}
+
 	@include prefixer(overflow-scrolling, touch, 'webkit');
 
 	@include respond-to(desktop) {

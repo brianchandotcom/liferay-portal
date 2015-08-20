@@ -53,12 +53,12 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 					ddmFormField, ddmFormFieldRenderingContext));
 		}
 
-		clearFormFieldsCounter(ddmFormFieldRenderingContext);
+		clearDDMFieldsCounter(ddmFormFieldRenderingContext);
 
 		return sb.toString();
 	}
 
-	protected void clearFormFieldsCounter(
+	protected void clearDDMFieldsCounter(
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		String portletNamespace =

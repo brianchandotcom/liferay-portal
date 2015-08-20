@@ -826,16 +826,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			catch (NoSuchLayoutSetException nslse) {
 			}
 
-			// Group roles
-
-			userGroupRoleLocalService.deleteUserGroupRolesByGroupId(
-				group.getGroupId());
-
-			// User group roles
-
-			userGroupGroupRoleLocalService.deleteUserGroupGroupRolesByGroupId(
-				group.getGroupId());
-
 			// Membership requests
 
 			membershipRequestLocalService.deleteMembershipRequests(
@@ -980,9 +970,30 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 				group.setSite(false);
 
+				// Group roles
+
+				userGroupRoleLocalService.deleteUserGroupRoles(
+					group.getGroupId(), RoleConstants.TYPE_SITE);
+
+				// User group roles
+
+				userGroupGroupRoleLocalService.deleteUserGroupGroupRoles(
+					group.getGroupId(), RoleConstants.TYPE_SITE);
+
 				groupPersistence.update(group);
 			}
 			else {
+
+				// Group roles
+
+				userGroupRoleLocalService.deleteUserGroupRolesByGroupId(
+					group.getGroupId());
+
+				// User group roles
+
+				userGroupGroupRoleLocalService.
+					deleteUserGroupGroupRolesByGroupId(group.getGroupId());
+
 				groupPersistence.remove(group);
 			}
 

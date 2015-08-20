@@ -1,12 +1,32 @@
 .lfr-admin-panel {
-	background-color: #FFF;
+	background-color: #1F282E;
 	bottom: 0;
+	color: #FFF;
 	overflow: auto;
 	padding: 0 15px;
 	position: fixed;
 	right: 0;
 	top: 0;
 	z-index: 990;
+
+	h1 {
+		font-size: 19px;
+	}
+
+	a:not(.btn), .form-control {
+		color: #869CAD;
+	}
+
+	button.close {
+		color: #FFF;
+		opacity: 1;
+		padding: 2px 8px;
+
+		&:hover {
+			background: transparent;
+			border-width: 0;
+		}
+	}
 
 	.add-content-menu .content-link {
 		border-color: #488F06;

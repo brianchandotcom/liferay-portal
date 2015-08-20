@@ -20,25 +20,25 @@ package com.liferay.portal.workflow.kaleo.definition;
 public class ScriptRecipient extends Recipient {
 
 	public ScriptRecipient(
-		String script, String scriptLanguage, String scriptContexts) {
+		String script, String scriptLanguage, String scriptRequiredContexts) {
 
 		super(RecipientType.SCRIPT);
 
 		_script = script;
 		_scriptLanguage = ScriptLanguage.parse(scriptLanguage);
-		_scriptContexts = scriptContexts;
+		_scriptRequiredContexts = scriptRequiredContexts;
 	}
 
 	public String getScript() {
 		return _script;
 	}
 
-	public String getScriptContexts() {
-		return _scriptContexts;
-	}
-
 	public ScriptLanguage getScriptLanguage() {
 		return _scriptLanguage;
+	}
+
+	public String getScriptRequiredContexts() {
+		return _scriptRequiredContexts;
 	}
 
 	public void setScript(String script) {
@@ -50,7 +50,7 @@ public class ScriptRecipient extends Recipient {
 	}
 
 	private String _script;
-	private final String _scriptContexts;
 	private ScriptLanguage _scriptLanguage;
+	private final String _scriptRequiredContexts;
 
 }

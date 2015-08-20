@@ -41,6 +41,10 @@ public abstract class BaseNavBarTag extends com.liferay.taglib.util.IncludeTag {
 		return _id;
 	}
 
+	public java.lang.String getView() {
+		return _view;
+	}
+
 	public void setCssClass(java.lang.String cssClass) {
 		_cssClass = cssClass;
 
@@ -53,12 +57,19 @@ public abstract class BaseNavBarTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("id", id);
 	}
 
+	public void setView(java.lang.String view) {
+		_view = view;
+
+		setScopedAttribute("view", view);
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_cssClass = null;
 		_id = null;
+		_view = null;
 	}
 
 	@Override
@@ -70,6 +81,7 @@ public abstract class BaseNavBarTag extends com.liferay.taglib.util.IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "id", _id);
+		setNamespacedAttribute(request, "view", _view);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:nav-bar:";
@@ -79,5 +91,6 @@ public abstract class BaseNavBarTag extends com.liferay.taglib.util.IncludeTag {
 
 	private java.lang.String _cssClass = null;
 	private java.lang.String _id = null;
+	private java.lang.String _view = null;
 
 }

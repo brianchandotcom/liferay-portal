@@ -6,7 +6,6 @@ Include-Resource:\
 	classes,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
-	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/CSSBuilderUtil.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/util/AggregateUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayInputStream.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayOutputStream.class,\

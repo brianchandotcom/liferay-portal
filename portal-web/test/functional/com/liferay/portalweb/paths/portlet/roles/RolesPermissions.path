@@ -538,12 +538,12 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_SITE_SCOPE</td>
-	<td>//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span[contains(.,'${key_siteNameScope}')]/span</td>
+	<td>//span[contains(@id,'groupHTMLcom.liferay.portlet.blogsADD_ENTRY')]/span[contains(.,'${key_siteNameScope}')]/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_SITE_SCOPE_REMOVE</td>
-	<td>//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span[contains(.,'${key_siteNameScope}')]/a</td>
+	<td>//span[contains(@id,'groupHTMLcom.liferay.portlet.blogsADD_ENTRY')]/span[contains(.,'${key_siteNameScope}')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -901,12 +901,12 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_CHANGE_LINK</td>
-	<td>//a[@id='_128_comliferaybookmarksmodelBookmarksEntryVIEW']/span[contains(.,'Change')]</td>
+	<td>//a[contains(@id,'comliferaybookmarksmodelBookmarksEntryVIEW')]/span[contains(.,'Change')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_SITE_SCOPE</td>
-	<td>//span[@id='_128_groupHTMLcom.liferay.bookmarks.model.BookmarksEntryVIEW']/span[contains(.,'${key_siteNameScope}')]/span</td>
+	<td>//span[contains(@id,'groupHTMLcom.liferay.bookmarks.model.BookmarksEntryVIEW')]/span[contains(.,'${key_siteNameScope}')]/span</td>
 	<td></td>
 </tr>
 <tr>

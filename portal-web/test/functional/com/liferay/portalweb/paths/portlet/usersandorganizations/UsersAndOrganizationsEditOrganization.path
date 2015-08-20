@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>BACK</td>
-	<td>//a[@id='_125_TabsBack']</td>
+	<td>//a[contains(@id,'TabsBack')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -35,57 +35,57 @@
 </tr>
 <tr>
 	<td>DETAILS_TAB</td>
-	<td>//a[@id='_125_detailsLink']</td>
+	<td>//a[contains(@id,'detailsLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_SITE_TAB</td>
-	<td>//a[@id='_125_organizationSiteLink']</td>
+	<td>//a[contains(@id,'organizationSiteLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORIZATION_TAB</td>
-	<td>//a[@id='_125_categorizationLink']</td>
+	<td>//a[contains(@id,'categorizationLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADDRESSES_TAB</td>
-	<td>//a[@id='_125_addressesLink']</td>
+	<td>//a[contains(@id,'addressesLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PHONE_NUMBERS_TAB</td>
-	<td>//a[@id='_125_phoneNumbersLink']</td>
+	<td>//a[contains(@id,'phoneNumbersLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADDITIONAL_EMAIL_ADDRESSES_TAB</td>
-	<td>//a[@id='_125_additionalEmailAddressesLink']</td>
+	<td>//a[contains(@id,'additionalEmailAddressesLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WEBSITES_TAB</td>
-	<td>//a[@id='_125_websitesLink']</td>
+	<td>//a[contains(@id,'websitesLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SERVICES_TAB</td>
-	<td>//a[@id='_125_servicesLink']</td>
+	<td>//a[contains(@id,'servicesLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COMMENTS_TAB</td>
-	<td>//a[@id='_125_commentsLink']</td>
+	<td>//a[contains(@id,'commentsLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REMINDER_QUERIES_TAB</td>
-	<td>//a[@id='_125_reminderQueriesLink']</td>
+	<td>//a[contains(@id,'reminderQueriesLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CUSTOM_FIELDS_TAB</td>
-	<td>//a[@id='_125_customFieldsLink']</td>
+	<td>//a[contains(@id,'customFieldsLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,7 +96,7 @@
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_NAME_FIELD</td>
-	<td>//input[@id='_125_name']</td>
+	<td>//input[contains(@id,'name')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -106,17 +106,17 @@
 </tr>
 <tr>
 	<td>DETAILS_TYPE_SELECT</td>
-	<td>//select[@id='_125_type']</td>
+	<td>//select[contains(@id,'type')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_COUNTRY_SELECT</td>
-	<td>//select[@id='_125_countryId']</td>
+	<td>//select[contains(@id,'countryId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_REGION_SELECT</td>
-	<td>//select[@id='_125_regionId']</td>
+	<td>//select[contains(@id,'regionId')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -127,17 +127,17 @@
 <!--PARENT_ORGANIZATION-->
 <tr>
 	<td>PARENT_ORGANIZATION_TABLE_NAME</td>
-	<td>//div[@id='_125_parentOrganizationSearchContainer']//tr/td[1]/a</td>
+	<td>//div[contains(@id,'parentOrganizationSearchContainer')]//tr/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PARENT_ORGANIZATION_TABLE_TYPE</td>
-	<td>//div[@id='_125_parentOrganizationSearchContainer']//tr/td[2]/a</td>
+	<td>//div[contains(@id,'parentOrganizationSearchContainer')]//tr/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PARENT_ORGANIZATION_TABLE_REMOVE</td>
-	<td>//div[@id='_125_parentOrganizationSearchContainer']//tr/td[3]/a</td>
+	<td>//div[contains(@id,'parentOrganizationSearchContainer')]//tr/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -153,27 +153,27 @@
 <!--ORGANIZATION_SITE-->
 <tr>
 	<td>ORGANIZATION_SITE_CREATE_SITE_CHECKBOX</td>
-	<td>//input[@id='_125_site']</td>
+	<td>//input[contains(@id,'site')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_SITE_PUBLIC_PAGES_SELECT</td>
-	<td>//select[@id='_125_publicLayoutSetPrototypeId']</td>
+	<td>//select[contains(@id,'publicLayoutSetPrototypeId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_SITE_PRIVATE_PAGES_SELECT</td>
-	<td>//select[@id='_125_privateLayoutSetPrototypeId']</td>
+	<td>//select[contains(@id,'privateLayoutSetPrototypeId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_PROPAGATION_PUBLIC_PAGE_CHECKBOX</td>
-	<td>//input[@id='_125_publicLayoutSetPrototypeLinkEnabled']</td>
+	<td>//input[contains(@id,'publicLayoutSetPrototypeLinkEnabled')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_PROPAGATION_PRIVATE_PAGE_CHECKBOX</td>
-	<td>//input[@id='_125_privateLayoutSetPrototypeLinkEnabled']</td>
+	<td>//input[contains(@id,'privateLayoutSetPrototypeLinkEnabled')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -215,52 +215,52 @@
 <!--ADDRESSES-->
 <tr>
 	<td>ADDRESSES_STREET_FIELD_1</td>
-	<td>//input[@id='_125_addressStreet1_0']</td>
+	<td>//input[contains(@id,'addressStreet1_0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADDRESSES_STREET_FIELD_2</td>
-	<td>//input[@id='_125_addressStreet2_0']</td>
+	<td>//input[contains(@id,'addressStreet2_0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADDRESSES_STREET_FIELD_3</td>
-	<td>//input[@id='_125_addressStreet3_0']</td>
+	<td>//input[contains(@id,'addressStreet3_0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADDRESSES_POSTAL_CODE_FIELD</td>
-	<td>//input[@id='_125_addressZip0']</td>
+	<td>//input[contains(@id,'addressZip0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADDRESSES_CITY_FIELD</td>
-	<td>//input[@id='_125_addressCity0']</td>
+	<td>//input[contains(@id,'addressCity0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADDRESSES_TYPE_SELECT</td>
-	<td>//select[@id='_125_addressTypeId0']</td>
+	<td>//select[contains(@id,'addressTypeId0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADDRESSES_COUNTRY_SELECT</td>
-	<td>//select[@id='_125_addressCountryId0']</td>
+	<td>//select[contains(@id,'addressCountryId0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADDRESSES_PRIMARY_RADIO</td>
-	<td>//input[@id='_125_addressPrimary0']</td>
+	<td>//input[contains(@id,'addressPrimary0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADDRESSES_MAILING_CHECKBOX</td>
-	<td>//input[@id='_125_addressMailing0']</td>
+	<td>//input[contains(@id,'addressMailing0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADDRESSES_REGION_SELECT</td>
-	<td>//select[@id='_125_addressRegionId0']</td>
+	<td>//select[contains(@id,'addressRegionId0')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -271,22 +271,22 @@
 <!--PHONE_NUMBERS-->
 <tr>
 	<td>PHONE_NUMBERS_NUMBER_FIELD</td>
-	<td>//input[@id='_125_phoneNumber0']</td>
+	<td>//input[contains(@id,'phoneNumber0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PHONE_NUMBERS_EXTENSION_FIELD</td>
-	<td>//input[@id='_125_phoneExtension0']</td>
+	<td>//input[contains(@id,'phoneExtension0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PHONE_NUMBERS_TYPE_SELECT</td>
-	<td>//select[@id='_125_phoneTypeId0']</td>
+	<td>//select[contains(@id,'phoneTypeId0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PHONE_NUMBERS_PRIMARY_RADIO</td>
-	<td>//input[@id='_125_phonePrimary0']</td>
+	<td>//input[contains(@id,'phonePrimary0')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -297,17 +297,17 @@
 <!--ADDITIONAL_EMAIL_ADDRESSES-->
 <tr>
 	<td>ADDITIONAL_EMAIL_ADDRESSES_EMAIL_ADDRESS_FIELD</td>
-	<td>//input[@id='_125_emailAddressAddress0']</td>
+	<td>//input[contains(@id,'emailAddressAddress0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADDITIONAL_EMAIL_ADDRESSES_TYPE_SELECT</td>
-	<td>//select[@id='_125_emailAddressTypeId0']</td>
+	<td>//select[contains(@id,'emailAddressTypeId0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADDITIONAL_EMAIL_ADDRESSES_PRIMARY_RADIO</td>
-	<td>//input[@id='_125_emailAddressPrimary0']</td>
+	<td>//input[contains(@id,'emailAddressPrimary0')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -318,17 +318,17 @@
 <!--WEBSITES-->
 <tr>
 	<td>WEBSITES_URL_FIELD</td>
-	<td>//input[@id='_125_websiteUrl0']</td>
+	<td>//input[contains(@id,'websiteUrl0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WEBSITES_TYPE_SELECT</td>
-	<td>//select[@id='_125_websiteTypeId0']</td>
+	<td>//select[contains(@id,'websiteTypeId0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WEBSITES_PRIMARY_RADIO</td>
-	<td>//input[@id='_125_websitePrimary0']</td>
+	<td>//input[contains(@id,'websitePrimary0')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -339,17 +339,17 @@
 <!--SERVICES-->
 <tr>
 	<td>SERVICES_TYPE_SELECT</td>
-	<td>//select[@id='_125_orgLaborTypeId0']</td>
+	<td>//select[contains(@id,'orgLaborTypeId0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SERVICES_MONDAY_OPEN_SELECT</td>
-	<td>//select[@id='_125_monOpen0']</td>
+	<td>//select[contains(@id,'monOpen0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SERVICES_MONDAY_CLOSE_SELECT</td>
-	<td>//select[@id='_125_monClose0']</td>
+	<td>//select[contains(@id,'monClose0')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -360,17 +360,17 @@
 <!--MISCELLANEOUS-->
 <tr>
 	<td>MISCELLANEOUS_COMMENTS</td>
-	<td>//a[@id='_125_commentsLink']</td>
+	<td>//a[contains(@id,'commentsLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MISCELLANEOUS_REMINDER_QUERIES</td>
-	<td>//a[@id='_125_reminderQueriesLink']</td>
+	<td>//a[contains(@id,'reminderQueriesLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MISCELLANEOUS_CUSTOM_FIELDS</td>
-	<td>//a[@id='_125_customFieldsLink']</td>
+	<td>//a[contains(@id,'customFieldsLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -381,7 +381,7 @@
 <!--COMMENTS-->
 <tr>
 	<td>COMMENTS_FIELD</td>
-	<td>//textarea[@id='_125_comments']</td>
+	<td>//textarea[contains(@id,'comments')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -392,17 +392,17 @@
 <!--REMINDER_QUERIES-->
 <tr>
 	<td>REMINDER_QUERIES_DEFAULT_LANGUAGE_FIELD</td>
-	<td>//textarea[@id='_125_reminderQueries']</td>
+	<td>//textarea[contains(@id,'reminderQueries')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REMINDER_QUERIES_LOCALIZED_LANGUAGE_SELECT</td>
-	<td>//select[@id='_125_reminderQueryLanguageId']</td>
+	<td>//select[contains(@id,'reminderQueryLanguageId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REMINDER_QUERIES_TEXT_FIELD</td>
-	<td>//textarea[@id='_125_reminderQueries_temp']</td>
+	<td>//textarea[contains(@id,'reminderQueries_temp')]</td>
 	<td></td>
 </tr>
 </tbody>

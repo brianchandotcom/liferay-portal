@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>MEMBERSHIP_TYPE</td>
-	<td>//select[@name='_134_type']</td>
+	<td>//select[contains(@name,'type')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -68,7 +68,7 @@
 <!--PARENT_SITE_TABLE-->
 <tr>
 	<td>PARENT_SITE_TABLE_NAME</td>
-	<td>//div[@id='_134_parentGroupSearchContainerSearchContainer']/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td/a</td>
+	<td>//div[contains(@id,'parentGroupSearchContainerSearchContainer')]/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td/a</td>
 	<td></td>
 </tr>
 <tr>

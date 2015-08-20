@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
-	<td>//form[@id='_182_emptyForm']</td>
+	<td>//form[contains(@id,'emptyForm')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMPTY_RECYCLE_BIN</td>
-	<td>//a[@id='_182_empty']</td>
+	<td>//a[contains(@id,'empty')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,27 +51,27 @@
 <!--RECYCLE_BIN_TABLE-->
 <tr>
 	<td>RECYCLE_BIN_TABLE_NAME</td>
-	<td>//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr[contains(.,'${key_assetName}')]/td[1]/span/a</td>
+	<td>//div[contains(@id,'trashEntriesSearchContainerSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[1]/span/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECYCLE_BIN_TABLE_TYPE</td>
-	<td>//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr[contains(.,'${key_assetName}')]/td[2]</td>
+	<td>//div[contains(@id,'trashEntriesSearchContainerSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECYCLE_BIN_TABLE_REMOVED_DATE</td>
-	<td>//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr[contains(.,'${key_assetName}')]/td[3]</td>
+	<td>//div[contains(@id,'trashEntriesSearchContainerSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECYCLE_BIN_TABLE_REMOVED_BY</td>
-	<td>//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr[contains(.,'${key_assetName}')]/td[4]</td>
+	<td>//div[contains(@id,'trashEntriesSearchContainerSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECYCLE_BIN_TABLE_ACTIONS</td>
-	<td>//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr[contains(.,'${key_assetName}')]/td[5]/div/a</td>
+	<td>//div[contains(@id,'trashEntriesSearchContainerSearchContainer')]//tr[contains(.,'${key_assetName}')]/td[5]/div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -97,17 +97,17 @@
 </tr>
 <tr>
 	<td>RECYCLE_BIN_WARNING_OVERWRITE_RADIO</td>
-	<td>//input[@id='_182_override']</td>
+	<td>//input[contains(@id,'override')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECYCLE_BIN_WARNING_KEEP_AND_RENAME_RADIO</td>
-	<td>//input[@id='_182_rename']</td>
+	<td>//input[contains(@id,'rename')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECYCLE_BIN_WARNING_KEEP_AND_RENAME_FIELD</td>
-	<td>//input[@id='_182_newName']</td>
+	<td>//input[contains(@id,'newName')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -118,17 +118,17 @@
 <!--RECYCLE_BIN_FOLDER-->
 <tr>
 	<td>RECYCLE_BIN_FOLDER_DOCUMENT_NAME</td>
-	<td>//div[@id='_182_trashRenderersSearchContainer']//tr[contains(.,'${key_assetName}')]/td/span/a/span</td>
+	<td>//div[contains(@id,'trashRenderersSearchContainer')]//tr[contains(.,'${key_assetName}')]/td/span/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECYCLE_BIN_FOLDER_ACTIONS</td>
-	<td>//div[@id='_182_trashRenderersSearchContainer']//tr[contains(.,'${key_assetName}')]/td/div/a</td>
+	<td>//div[contains(@id,'trashRenderersSearchContainer')]//tr[contains(.,'${key_assetName}')]/td/div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECYCLE_BIN_FOLDER_WARNING_IFRAME</td>
-	<td>//iframe[@id='_182_selectContainer_iframe_']</td>
+	<td>//iframe[contains(@id,'selectContainer_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>

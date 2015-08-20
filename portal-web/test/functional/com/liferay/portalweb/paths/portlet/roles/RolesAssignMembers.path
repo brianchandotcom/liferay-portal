@@ -11,7 +11,7 @@
 <!--ORGANIZATION_TABLE-->
 <tr>
 	<td>ORGANIZATION_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'organizationsSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[1]/input[@name='_128_rowIds']</td>
+	<td>//div[contains(@id,'organizationsSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[1]/input[contains(@name,'rowIds')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -32,7 +32,7 @@
 <!--SITE_TABLE-->
 <tr>
 	<td>SITE_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[1]/input[@name='_128_rowIds']</td>
+	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[1]/input[contains(@name,'rowIds')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -53,7 +53,7 @@
 <!--USER_GROUP_TABLE-->
 <tr>
 	<td>USER_GROUP_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'userGroupsSearchContainerSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[1]/input[@name='_128_rowIds']</td>
+	<td>//div[contains(@id,'userGroupsSearchContainerSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[1]/input[contains(@name,'rowIds')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -74,12 +74,12 @@
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_ALL_CHECKBOX</td>
-	<td>//input[@name='_128_allRowIds']</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'usersSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[1]/input[@name='_128_rowIds']</td>
+	<td>//div[contains(@id,'usersSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[1]/input[contains(@name,'rowIds')]</td>
 	<td></td>
 </tr>
 <tr>

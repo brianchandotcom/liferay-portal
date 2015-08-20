@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//input[@name='_125_keywords']</td>
+	<td>//input[contains(@name,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,72 +66,72 @@
 <!--ADVANCED_SEARCH-->
 <tr>
 	<td>ADVANCED_SEARCH_MATCH_SELECT</td>
-	<td>//select[@id='_125_andOperator']</td>
+	<td>//select[contains(@id,'andOperator')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_NAME_FIELD</td>
-	<td>//input[@id='_125_name']</td>
+	<td>//input[contains(@id,'name')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_STREET_FIELD</td>
-	<td>//input[@id='_125_street']</td>
+	<td>//input[contains(@id,'street')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_CITY_FIELD</td>
-	<td>//input[@id='_125_city']</td>
+	<td>//input[contains(@id,'city')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_TYPE_SELECT</td>
-	<td>//select[@id='_125_type']</td>
+	<td>//select[contains(@id,'type')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_COUNTRY_SELECT</td>
-	<td>//select[@id='_125_countryId']</td>
+	<td>//select[contains(@id,'countryId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_REGION_SELECT</td>
-	<td>//select[@id='_125_regionId']</td>
+	<td>//select[contains(@id,'regionId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_POSTAL_CODE_FIELD</td>
-	<td>//input[@id='_125_zip']</td>
+	<td>//input[contains(@id,'zip')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_FIRST_NAME_FIELD</td>
-	<td>//input[@id='_125_firstName']</td>
+	<td>//input[contains(@id,'firstName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_MIDDLE_NAME_FIELD</td>
-	<td>//input[@id='_125_middleName']</td>
+	<td>//input[contains(@id,'middleName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_LAST_NAME_FIELD</td>
-	<td>//input[@id='_125_lastName']</td>
+	<td>//input[contains(@id,'lastName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_SCREEN_NAME_FIELD</td>
-	<td>//input[@id='_125_screenName']</td>
+	<td>//input[contains(@id,'screenName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD</td>
-	<td>//input[@id='_125_emailAddress']</td>
+	<td>//input[contains(@id,'emailAddress')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_STATUS_SELECT</td>
-	<td>//select[@id='_125_status']</td>
+	<td>//select[contains(@id,'status')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -142,7 +142,7 @@
 <!--ORGANIZATION_TABLE-->
 <tr>
 	<td>ORGANIZATION_TABLE_ALL_CHECKBOX</td>
-	<td>//input[@name='_125_allRowIds']</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -198,7 +198,7 @@
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_ALL_CHECKBOX</td>
-	<td>//input[@name='_125_allRowIds']</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>

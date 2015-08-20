@@ -245,7 +245,6 @@ AUI.add(
 						var instance = this;
 
 						var constants = instance.get('constants');
-						var entry = instance.get('entry');
 
 						var content = window[instance.ns('contentEditor')].getHTML();
 						var coverImageCaption = window[instance.ns('coverImageCaptionEditor')].getHTML();

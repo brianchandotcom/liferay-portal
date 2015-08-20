@@ -25,7 +25,6 @@ import java.util.logging.LogRecord;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import org.mockito.Mock;
@@ -35,7 +34,6 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author André de Oliveira
  */
-@Ignore("This test will ignored due to instability until André fixes it.")
 public class ReplicasClusterListenerTest {
 
 	@Before

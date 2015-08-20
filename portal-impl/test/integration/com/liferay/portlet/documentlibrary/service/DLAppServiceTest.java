@@ -49,6 +49,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.ExpectedLog;
 import com.liferay.portal.test.rule.ExpectedLogs;
 import com.liferay.portal.test.rule.ExpectedType;
@@ -1214,7 +1215,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 					new PrefsPropsTemporarySwapper(
 						PropsKeys.DL_FILE_MAX_SIZE, 1L)) {
 
-				byte[] bytes = RandomTestUtil.randomBytes();
+				byte[] bytes = RandomTestUtil.randomBytes(
+					TikaSafeRandomizerBumper.INSTANCE);
 
 				DLAppServiceUtil.updateFileEntry(
 					fileEntry.getFileEntryId(), fileName,
@@ -1562,7 +1564,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		return DLAppServiceUtil.updateFileEntry(
 			fileEntryId, fileName, ContentTypes.TEXT_PLAIN, fileName,
 			StringPool.BLANK, StringPool.BLANK, majorVersion,
-			RandomTestUtil.randomBytes(), serviceContext);
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			serviceContext);
 	}
 
 	private static final String _FILE_NAME = "Title.txt";

@@ -145,7 +145,7 @@ public class KaleoNotificationRecipientLocalServiceImpl
 				scriptLanguage.getValue());
 
 			kaleoNotificationRecipient.setRecipientScriptContexts(
-				scriptRecipient.getScriptContexts());
+				scriptRecipient.getScriptRequiredContexts());
 		}
 		else if (recipientType.equals(RecipientType.USER)) {
 			UserRecipient userRecipient = (UserRecipient)recipient;

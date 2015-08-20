@@ -57,10 +57,18 @@ poshiRunner {
 		poshiProperty "test.console.log.file.name", project.properties["testConsoleLogFileName"]
 	}
 
+	if (project.hasProperty("testConsoleShutDownFileName")) {
+		poshiProperty "test.console.shut.down.file.name", project.properties["testConsoleShutDownFileName"]
+	}
+
 	poshiProperty "test.dependencies.dir.name", "com/liferay/portalweb/dependencies"
 
 	if (project.hasProperty("testSkipTearDown")) {
 		poshiProperty "test.skip.tear.down", project.properties["testSkipTearDown"]
+	}
+
+	if (project.hasProperty("testPoshiWarningsFileName")) {
+		poshiProperty "test.poshi.warnings.file.name", project.properties["testPoshiWarningsFileName"]
 	}
 
 	version = "1.0.12"

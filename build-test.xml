@@ -6088,6 +6088,7 @@ if (ppstate.equals("normal")) {
 			<arg value="-PtestBaseDirName=${project.dir}/portal-web/test/functional" />
 			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
 			<arg value="-PtestConsoleLogFileName=${test.console.log.file.name}" />
+			<arg value="-PtestPoshiWarningsFileName=${project.dir}/poshi-warnings.xml" />
 			<arg value="-PtestSkipTearDown=${test.skip.tear.down}" />
 		</gradle-execute>
 	</target>

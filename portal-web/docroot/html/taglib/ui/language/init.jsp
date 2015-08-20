@@ -24,6 +24,11 @@ String formName = (String)request.getAttribute("liferay-ui:language:formName");
 String formAction = (String)request.getAttribute("liferay-ui:language:formAction");
 String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:language:displayStyle"));
 long displayStyleGroupId = GetterUtil.getLong(request.getAttribute("liferay-ui:language:displayStyleGroupId"), scopeGroupId);
+
+if (displayStyleGroupId == 0) {
+	displayStyleGroupId = scopeGroupId;
+}
+
 List<LanguageEntry> languageEntries = (List<LanguageEntry>)request.getAttribute("liferay-ui:language:languageEntries");
 String name = (String)request.getAttribute("liferay-ui:language:name");
 %>

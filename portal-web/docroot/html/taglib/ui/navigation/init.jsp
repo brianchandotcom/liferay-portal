@@ -23,6 +23,11 @@ page import="com.liferay.portlet.dynamicdatamapping.DDMTemplate" %>
 String bulletStyle = StringUtil.toLowerCase(((String)request.getAttribute("liferay-ui:navigation:bulletStyle")));
 String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:navigation:displayStyle"));
 long displayStyleGroupId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:navigation:displayStyleGroupId"));
+
+if (displayStyleGroupId == 0) {
+	displayStyleGroupId = scopeGroupId;
+}
+
 String headerType = (String)request.getAttribute("liferay-ui:navigation:headerType");
 String includedLayouts = (String)request.getAttribute("liferay-ui:navigation:includedLayouts");
 List<NavItem> navItems = (List)request.getAttribute("liferay-ui:navigation:navItems");

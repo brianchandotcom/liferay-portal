@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
@@ -39,7 +40,8 @@ public class DLTestUtil {
 	public static DLFileEntry addDLFileEntry(long dlFolderId) throws Exception {
 		DLFolder dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(dlFolderId);
 
-		byte[] bytes = RandomTestUtil.randomBytes();
+		byte[] bytes = RandomTestUtil.randomBytes(
+			TikaSafeRandomizerBumper.TEXT_PLAIN_INSTANCE);
 
 		InputStream is = new ByteArrayInputStream(bytes);
 

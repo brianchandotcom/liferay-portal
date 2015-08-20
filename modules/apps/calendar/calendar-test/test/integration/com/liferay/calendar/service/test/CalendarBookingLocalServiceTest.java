@@ -29,6 +29,7 @@ import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -37,18 +38,15 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -69,12 +67,6 @@ public class CalendarBookingLocalServiceTest {
 		_user = UserTestUtil.addUser();
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		UserLocalServiceUtil.deleteUser(_user);
-	}
-
-	@Ignore
 	@Test
 	public void testAddCalendarBookingWorkflowActionPublish()
 		throws PortalException {
@@ -108,7 +100,6 @@ public class CalendarBookingLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED, calendarBooking.getStatus());
 	}
 
-	@Ignore
 	@Test
 	public void testAddCalendarBookingWorkflowActionSaveDraft()
 		throws PortalException {
@@ -476,7 +467,6 @@ public class CalendarBookingLocalServiceTest {
 			serviceContext);
 	}
 
-	@Ignore
 	@Test
 	public void testUpdateCalendarBookingWorkflowActionPublish()
 		throws PortalException {
@@ -521,7 +511,6 @@ public class CalendarBookingLocalServiceTest {
 			WorkflowConstants.STATUS_APPROVED, calendarBooking.getStatus());
 	}
 
-	@Ignore
 	@Test
 	public void testUpdateCalendarBookingWorkflowActionSaveDraft()
 		throws PortalException {
@@ -632,6 +621,7 @@ public class CalendarBookingLocalServiceTest {
 		return childCalendarBooking;
 	}
 
+	@DeleteAfterTestRun
 	private User _user;
 
 }

@@ -76,10 +76,6 @@ public class WebDriverHelper {
 			WebDriver webDriver, String ignoreJavaScriptError)
 		throws Exception {
 
-		if (!PropsValues.TEST_ASSERT_JAVASCRIPT_ERRORS) {
-			return;
-		}
-
 		String location = getLocation(webDriver);
 
 		if (!location.contains("localhost")) {

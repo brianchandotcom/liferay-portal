@@ -2168,6 +2168,31 @@ is now extracted to its own module, the old name no longer resembles its usage.
 
 ---------------------------------------
 
+### Removed support for filterFindBy generation or InlinePermissionUtil usage for tables which primary key type is not long
+- **Date:** 2015-Jul-21
+- **JIRA Ticket:** LPS-54590
+
+#### What changed?
+
+Removed ServiceBuilder and inline permission filter support other than long
+primary key types.
+
+#### Who is affected?
+
+This is affecting the code that is using integer, float, double, boolean, short
+type primary keys at service.xml with inline permissions.
+
+#### How should I update my code?
+
+Change primary key to be long
+
+#### Why was this change made?
+
+Inline permission was using join between two different data types and that
+caused significant performance degradation with filterFindBy queries.
+
+---------------------------------------
+
 ### Removed Vaadin 6 from Liferay Core
 - **Date:** 2015-Jul-31
 - **JIRA Ticket:** LPS-57525
@@ -2227,30 +2252,5 @@ of the navigation tag to set the ADT that defines the style of the navigation.
 
 ADTs allow you to change an application's look and feel without changing its JSP
 code.
-
----------------------------------------
-
-### Removed support for filterFindBy generation or InlinePermissionUtil usage for tables which primary key type is not long
-- **Date:** 2015-Jul-21
-- **JIRA Ticket:** LPS-54590
-
-#### What changed?
-
-Removed ServiceBuilder and inline permission filter support other than long
-primary key types.
-
-#### Who is affected?
-
-This is affecting the code that is using integer, float, double, boolean, short
-type primary keys at service.xml with inline permissions.
-
-#### How should I update my code?
-
-Change primary key to be long
-
-#### Why was this change made?
-
-Inline permission was using join between two different data types and that
-caused significant performance degradation with filterFindBy queries.
 
 ---------------------------------------

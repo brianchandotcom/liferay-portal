@@ -31,7 +31,18 @@ AssetRenderer<JournalArticle> assetRenderer = journalContentDisplayContext.getAs
 			<div class="card-col-7 card-col-gutters">
 				<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= article.getStatus() %>" />
 
-				<h4><%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(locale)) %></h4>
+				<h4>
+					<%= HtmlUtil.escapeAttribute(assetRenderer.getTitle(locale)) %>
+
+					<c:if test="<%= article.getGroupId() != themeDisplay.getScopeGroupId() %>">
+
+						<%
+						Group articleGroup = GroupLocalServiceUtil.getGroup(article.getGroupId());
+						%>
+
+						(<%= articleGroup.getDescriptiveName(locale) %>)
+					</c:if>
+				</h4>
 
 				<p><%= assetRenderer.getSummary() %></p>
 

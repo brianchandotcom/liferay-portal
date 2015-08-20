@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 JournalArticle article = null;
@@ -28,19 +30,17 @@ else {
 	article = (JournalArticle)request.getAttribute("view_entries.jsp-article");
 }
 
-String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
-
 String articleImageURL = article.getArticleImageURL(themeDisplay);
+
+String userPortraitURL = null;
 
 User userDisplay = UserLocalServiceUtil.fetchUserById(article.getUserId());
 
-String userImage = null;
-
 if (userDisplay != null) {
-	userImage = userDisplay.getPortraitURL(themeDisplay);
+	userPortraitURL = userDisplay.getPortraitURL(themeDisplay);
 }
 else {
-	userImage = UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null);
+	userPortraitURL = UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null);
 }
 %>
 
@@ -68,7 +68,7 @@ else {
 	imageUrl="<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>"
 	showCheckbox="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) || JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>"
 	smallImageCSSClass="user-icon user-icon-lg"
-	smallImageUrl="<%= userImage %>"
+	smallImageUrl="<%= userPortraitURL %>"
 	title="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
 	url="<%= rowURL.toString() %>"
 />

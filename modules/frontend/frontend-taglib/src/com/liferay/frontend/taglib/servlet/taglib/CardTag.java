@@ -174,12 +174,6 @@ public class CardTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		RowChecker rowChecker = (RowChecker)request.getAttribute(
-			WebKeys.SEARCH_CONTAINER_RESULT_ROW_CHECKER);
-
-		ResultRow row = (ResultRow)request.getAttribute(
-			WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
 		request.setAttribute("liferay-frontend:card:actionJsp", _actionJsp);
 		request.setAttribute(
 			"liferay-frontend:card:actionJspServletContext",
@@ -187,10 +181,15 @@ public class CardTag extends IncludeTag {
 
 		boolean checkboxChecked = false;
 
-		if ((_checkboxChecked == null) && (rowChecker != null) &&
-			(row != null)) {
+		ResultRow resultRow = (ResultRow)request.getAttribute(
+			WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+		RowChecker rowChecker = (RowChecker)request.getAttribute(
+			WebKeys.SEARCH_CONTAINER_RESULT_ROW_CHECKER);
 
-			checkboxChecked = rowChecker.isChecked(row.getObject());
+		if ((_checkboxChecked == null) && (resultRow != null) &&
+			(rowChecker != null)) {
+
+			checkboxChecked = rowChecker.isChecked(resultRow.getObject());
 		}
 		else {
 			checkboxChecked = _checkboxChecked.booleanValue();
@@ -211,10 +210,10 @@ public class CardTag extends IncludeTag {
 
 		boolean checkboxDisabled = false;
 
-		if ((_checkboxDisabled == null) && (rowChecker != null) &&
-			(row != null)) {
+		if ((_checkboxDisabled == null) && (resultRow != null) &&
+			(rowChecker != null)) {
 
-			checkboxDisabled = rowChecker.isDisabled(row.getObject());
+			checkboxDisabled = rowChecker.isDisabled(resultRow.getObject());
 		}
 		else {
 			checkboxDisabled = _checkboxChecked.booleanValue();
@@ -226,10 +225,10 @@ public class CardTag extends IncludeTag {
 
 		String checkboxId = _checkboxId;
 
-		if (Validator.isNull(checkboxId) && (rowChecker != null) &&
-			(row != null)) {
+		if (Validator.isNull(checkboxId) && (resultRow != null) &&
+			(rowChecker != null)) {
 
-			checkboxId = rowChecker.getRowIds() + row.getPrimaryKey();
+			checkboxId = rowChecker.getRowIds() + resultRow.getPrimaryKey();
 		}
 
 		request.setAttribute("liferay-frontend:card:checkboxId", checkboxId);
@@ -245,12 +244,13 @@ public class CardTag extends IncludeTag {
 
 		String checkboxValue = _checkboxValue;
 
-		if (Validator.isNull(checkboxValue) && (row != null)) {
-			checkboxValue = row.getPrimaryKey();
+		if (Validator.isNull(checkboxValue) && (resultRow != null)) {
+			checkboxValue = resultRow.getPrimaryKey();
 		}
 
 		request.setAttribute(
 			"liferay-frontend:card:checkboxValue", checkboxValue);
+
 		request.setAttribute("liferay-frontend:card:cssClass", _cssClass);
 		request.setAttribute("liferay-frontend:card:data", _data);
 		request.setAttribute("liferay-frontend:card:footer", _footer);

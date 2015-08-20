@@ -205,6 +205,9 @@
 
 	<command name="resetPageChanges">
 		<execute function="Refresh" />
+
+		<execute function="Click" locator1="Dockbar#PAGE_INFO_MESSAGE_ICON" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page has been changed since the last update from the site template." />
 		<execute function="AssertTextEquals" locator1="Dockbar#RESET_CHANGES_BUTTON" value1="Reset Changes" />
 

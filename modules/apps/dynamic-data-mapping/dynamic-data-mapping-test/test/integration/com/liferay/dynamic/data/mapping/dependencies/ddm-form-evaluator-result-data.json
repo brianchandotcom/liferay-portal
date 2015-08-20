@@ -1,0 +1,54 @@
+{
+	"fields":[
+		{
+			"instanceId": "gfkm",
+			"name": "Text",
+			"nestedFields": [
+				{
+					"instanceId": "lroa",
+					"name": "Integer",
+					"nestedFields": [],
+					"valid": true,
+					"validationMessage": "",
+					"visible": false
+				}
+			],
+			"valid": false,
+			"validationMessage": "This field is never valid",
+			"visible": true
+		},
+		{
+			"instanceId": "xucq",
+			"name": "Text",
+			"nestedFields": [
+				{
+					"instanceId": "uvwn",
+					"name": "Integer",
+					"nestedFields": [],
+					"valid": false,
+					"validationMessage": "Integer must be equals to zero",
+					"visible": false
+				},
+				{
+					"instanceId": "lsky",
+					"name": "Integer",
+					"nestedFields": [],
+					"valid": false,
+					"validationMessage": "Integer must be equals to zero",
+					"visible": false
+				}
+			],
+			"valid": false,
+			"validationMessage": "This field is never valid",
+			"visible": true
+		},
+		{
+			"instanceId": "mnst",
+			"name": "Boolean",
+			"nestedFields": [],
+			"validationMessage": "",
+			"valid": true,
+			"visible": false
+		}
+	]
+}

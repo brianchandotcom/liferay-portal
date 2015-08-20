@@ -149,6 +149,22 @@ public class DDMFormFactoryHelper {
 		return "text";
 	}
 
+	public String getDDMFormFieldValidationExpression() {
+		if (Validator.isNotNull(_ddmFormField.validationExpression())) {
+			return _ddmFormField.validationExpression();
+		}
+
+		return StringPool.TRUE;
+	}
+
+	public String getDDMFormFieldValidationMessage() {
+		if (Validator.isNotNull(_ddmFormField.validationMessage())) {
+			return _ddmFormField.validationMessage();
+		}
+
+		return StringPool.BLANK;
+	}
+
 	public String getDDMFormFieldVisibilityExpression() {
 		if (Validator.isNotNull(_ddmFormField.visibilityExpression())) {
 			return _ddmFormField.visibilityExpression();

@@ -1,0 +1,52 @@
+{
+	"availableLanguageIds": ["en_US"],
+	"defaultLanguageId": "en_US",
+	"fieldValues": [
+		{
+			"instanceId": "gfkm",
+			"name": "Text",
+			"nestedFieldValues": [
+				{
+					"instanceId": "lroa",
+					"name": "Integer",
+					"value": {
+						"en_US": "0"
+					}
+				}
+			],
+			"value": {
+				"en_US": "Zero"
+			}
+		},
+		{
+			"instanceId": "xucq",
+			"name": "Text",
+			"nestedFieldValues": [
+				{
+					"instanceId": "uvwn",
+					"name": "Integer",
+					"value": {
+						"en_US": "1"
+					}
+				},
+				{
+					"instanceId": "lsky",
+					"name": "Integer",
+					"value": {
+						"en_US": "2"
+					}
+				}
+			],
+			"value": {
+				"en_US": "OneTwo"
+			}
+		},
+		{
+			"instanceId": "mnst",
+			"name": "Boolean",
+			"value": {
+				"en_US": "true"
+			}
+		}
+	]
+}

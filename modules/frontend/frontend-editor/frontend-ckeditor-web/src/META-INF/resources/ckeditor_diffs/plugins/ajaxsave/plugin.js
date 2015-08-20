@@ -20,7 +20,7 @@
 						'AjaxSave',
 						{
 							command: pluginName,
-							icon: themeDisplay.getPathEditors() + '/ckeditor/plugins/ajaxsave/assets/save.png',
+							icon: Liferay.AUI.getPathCKEditor() + '/ckeditor/plugins/ajaxsave/assets/save.png',
 							label: editor.lang.save.toolbar
 						}
 					);

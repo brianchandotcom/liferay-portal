@@ -21,7 +21,7 @@
 		<icon>/html/icons/shopping.png</icon>
 		<struts-path>shopping_admin</struts-path>
 		<parent-struts-path>shopping</parent-struts-path>
-		<configuration-action-class>com.liferay.shopping.web.portlet.action.ConfigurationActionImpl</configuration-action-class>
+		<configuration-action-class>com.liferay.shopping.web.portlet.action.ShoppingConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.shopping.lar.ShoppingPortletDataHandler</portlet-data-handler-class>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>

@@ -25,16 +25,16 @@ poshiRunner {
 
 	poshiProperty "ignore.errors.file.name", "test-ignorable-error-lines.xml"
 
+	if (project.hasProperty("portalProjectDir")) {
+		poshiProperty "project.dir", project.properties["portalProjectDir"]
+	}
+
 	if (project.hasProperty("poshiTestName")) {
 		poshiProperty "test.name", project.properties["poshiTestName"]
 	}
 
 	if (project.hasProperty("productNames")) {
 		poshiProperty "product.names", project.properties["productNames"]
-	}
-
-	if (project.hasProperty("projectDir")) {
-		poshiProperty "project.dir", project.properties["projectDir"]
 	}
 
 	if (project.hasProperty("saveScreenshot")) {

@@ -6081,8 +6081,8 @@ if (ppstate.equals("normal")) {
 		<gradle-execute failonerror="false" task="runPoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />
 			<arg value="-Plocal=${test.poshi.runner.local.release}" />
+			<arg value="-PportalProjectDir=${project.dir}" />
 			<arg value="-PposhiTestName=${poshi.test.name}" />
-			<arg value="-PprojectDir=${project.dir}" />
 			<arg value="-PsaveScreenshot=${test.save.screenshot}" />
 			<arg value="-PseleniumLoggerEnabled=${test.selenium.logger.enabled}" />
 			<arg value="-PtestBaseDirName=${project.dir}/portal-web/test/functional" />

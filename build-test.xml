@@ -846,6 +846,22 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-testray-testcase-warnings">
+		<sequential>
+			<var name="testray.testcase.warnings" unset="true" />
+
+			<if>
+				<available file="poshi-warnings.xml" />
+				<then>
+					<loadfile property="testray.testcase.warnings" srcfile="poshi-warnings.xml" />
+				</then>
+				<else>
+					<var name="testray.testcase.warnings" value="" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-additional-bundles">
 		<sequential>
 			<get-testcase-property property.name="app.server.bundles.size" />
@@ -2679,6 +2695,7 @@ go]]></replacevalue>
 		<get-testray-testcase-name />
 		<get-testray-testcase-priority />
 		<get-testray-testcase-product-edition />
+		<get-testray-testcase-warnings />
 
 		<if>
 			<and>
@@ -2759,6 +2776,9 @@ go]]></replacevalue>
 					<property name="testray.testcase.name" value="${testray.testcase.name}" />
 					<property name="testray.testcase.priority" value="${testray.testcase.priority}" />
 					<property name="testray.testcase.product.edition" value="${testray.testcase.product.edition}" />
+					<property name="testray.testcase.warnings">
+						${testray.testcase.warnings}
+					</property>
 				</properties>
 			]]>
 		</property>

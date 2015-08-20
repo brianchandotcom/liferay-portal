@@ -205,6 +205,7 @@
 	<classpathentry kind="lib" path="lib/portal/jhighlight.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jhlabs-filters.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jmatio.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jna.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jodconverter.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jodd.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jrcs-diff.jar"/>

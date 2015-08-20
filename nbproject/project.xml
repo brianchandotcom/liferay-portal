@@ -431,6 +431,7 @@
 				<classpath mode="compile">lib/portal/jhighlight.jar</classpath>
 				<classpath mode="compile">lib/portal/jhlabs-filters.jar</classpath>
 				<classpath mode="compile">lib/portal/jmatio.jar</classpath>
+				<classpath mode="compile">lib/portal/jna.jar</classpath>
 				<classpath mode="compile">lib/portal/jodconverter.jar</classpath>
 				<classpath mode="compile">lib/portal/jodd.jar</classpath>
 				<classpath mode="compile">lib/portal/jrcs-diff.jar</classpath>

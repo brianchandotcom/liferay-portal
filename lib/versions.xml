@@ -2307,6 +2307,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/portal/jna.jar</file-name>
+				<version>4.1.0</version>
+				<project-name>Java Native Access</project-name>
+				<project-url>https://github.com/twall/jna</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/portal/jodconverter.jar</file-name>
 				<version>2.2.2</version>
 				<project-name>JODConverter</project-name>

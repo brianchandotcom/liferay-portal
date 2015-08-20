@@ -35,8 +35,13 @@ public class PanelCategoryTag extends BasePanelTag {
 	}
 
 	@Override
-	protected String getPage() {
-		return "/panel_category/page.jsp";
+	protected String getStartPage() {
+		return "/panel_category/start.jsp";
+	}
+
+	@Override
+	protected String getEndPage() {
+		return "/panel_category/end.jsp";
 	}
 
 	@Override

@@ -62,7 +62,7 @@
 	<tag>
 		<name>panel-category</name>
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelCategoryTag</tag-class>
-		<body-content>empty</body-content>
+		<body-content>JSP</body-content>
 		<attribute>
 			<name>panelCategory</name>
 			<required>true</required>

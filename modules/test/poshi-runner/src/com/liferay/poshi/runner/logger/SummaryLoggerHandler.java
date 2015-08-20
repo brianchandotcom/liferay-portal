@@ -19,6 +19,7 @@ import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,9 +36,6 @@ public final class SummaryLoggerHandler {
 
 			_failStepLoggerElement(_majorStepLoggerElement);
 
-			_majorStepLoggerElement.addChildLoggerElement(
-				_minorStepsLoggerElement);
-
 			_stopMajorStep();
 		}
 
@@ -51,16 +49,75 @@ public final class SummaryLoggerHandler {
 	}
 
 	public static LoggerElement getSummaryLogLoggerElement() {
-		return _summaryLogLoggerElement;
+		LoggerElement summaryLogLoggerElement = _summaryLogLoggerElement.copy();
+
+		LoggerElement stepsLoggerElement =
+			summaryLogLoggerElement.loggerElement("div");
+
+		LoggerElement majorStepsLoggerElement =
+			stepsLoggerElement.loggerElement("ul");
+
+		List<LoggerElement> majorStepLoggerElements =
+			majorStepsLoggerElement.loggerElements("li");
+
+		for (int i = 0; i < majorStepLoggerElements.size(); i++) {
+			LoggerElement majorStepLoggerElement = majorStepLoggerElements.get(
+				i);
+
+			if (i < (majorStepLoggerElements.size() - 1)) {
+				majorStepLoggerElement.removeChildLoggerElements("ul");
+			}
+			else if (_containsMinorStepWarning) {
+				_warnStepLoggerElement(majorStepLoggerElement);
+			}
+			else {
+				_failStepLoggerElement(majorStepLoggerElement);
+			}
+		}
+
+		return summaryLogLoggerElement;
 	}
 
 	public static String getSummaryLogText() {
-		return _summaryLogLoggerElement.toString();
+		LoggerElement summaryLogLoggerElement = _summaryLogLoggerElement.copy();
+
+		LoggerElement stepsLoggerElement =
+			summaryLogLoggerElement.loggerElement("div");
+
+		LoggerElement majorStepsLoggerElement =
+			stepsLoggerElement.loggerElement("ul");
+
+		List<LoggerElement> majorStepLoggerElements =
+			majorStepsLoggerElement.loggerElements("li");
+
+		for (int i = 0; i < majorStepLoggerElements.size(); i++) {
+			LoggerElement majorStepLoggerElement = majorStepLoggerElements.get(
+				i);
+
+			String className = majorStepLoggerElement.getClassName();
+
+			if (className.contains("summary-failure") ||
+				className.contains("summary-warning")) {
+
+				continue;
+			}
+
+			majorStepLoggerElement.removeChildLoggerElements("ul");
+		}
+
+		return summaryLogLoggerElement.toString();
 	}
 
 	public static void passSummary(Element element) {
 		if (_isCurrentMajorStep(element)) {
-			_passStepLoggerElement(_majorStepLoggerElement);
+			if (_containsMinorStepWarning) {
+				_warnStepLoggerElement(_majorStepLoggerElement);
+
+				_containsMinorStepWarning = false;
+			}
+			else {
+				_passStepLoggerElement(_majorStepLoggerElement);
+			}
 
 			_stopMajorStep();
 		}
@@ -88,6 +145,9 @@ public final class SummaryLoggerHandler {
 				_majorStepLoggerElement);
 
 			_minorStepsLoggerElement = _getMinorStepsLoggerElement();
+
+			_majorStepLoggerElement.addChildLoggerElement(
+				_minorStepsLoggerElement);
 		}
 
 		if (_isMinorStep(element)) {
@@ -100,11 +160,37 @@ public final class SummaryLoggerHandler {
 		}
 	}
 
+	public static void warnSummary(Element element, String message) {
+		if (_isCurrentMajorStep(element)) {
+			_causeBodyLoggerElement.setText(message);
+
+			_warnStepLoggerElement(_majorStepLoggerElement);
+
+			_stopMajorStep();
+		}
+
+		if (_isCurrentMinorStep(element)) {
+			_causeBodyLoggerElement.setText(message);
+
+			_warnStepLoggerElement(_minorStepLoggerElement);
+
+			_containsMinorStepWarning = true;
+
+			_stopMinorStep();
+		}
+	}
+
 	private static void _failStepLoggerElement(
 		LoggerElement stepLoggerElement) {
 
+		stepLoggerElement.addClassName("summary-failure");
+
 		LoggerElement lineContainerLoggerElement =
 			stepLoggerElement.loggerElement("div");
+
+		if (lineContainerLoggerElement == null) {
+			return;
+		}
 
 		lineContainerLoggerElement.addChildLoggerElement(
 			_getStatusLoggerElement("FAILED"));
@@ -115,6 +201,7 @@ public final class SummaryLoggerHandler {
 		LoggerElement loggerElement = new LoggerElement();
 
 		loggerElement.setClassName("cause-body");
+		loggerElement.setName("pre");
 
 		return loggerElement;
 	}
@@ -433,7 +520,25 @@ public final class SummaryLoggerHandler {
 		_minorStepLoggerElement = null;
 	}
 
+	private static void _warnStepLoggerElement(
+		LoggerElement stepLoggerElement) {
+
+		stepLoggerElement.addClassName("summary-warning");
+
+		LoggerElement lineContainerLoggerElement =
+			stepLoggerElement.loggerElement("div");
+
+		if (lineContainerLoggerElement == null) {
+			return;
+		}
+
+		lineContainerLoggerElement.addChildLoggerElement(
+			_getStatusLoggerElement("WARNING"));
+		lineContainerLoggerElement.setName("strong");
+	}
+
 	private static LoggerElement _causeBodyLoggerElement;
+	private static boolean _containsMinorStepWarning = false;
 	private static Element _majorStepElement;
 	private static LoggerElement _majorStepLoggerElement;
 	private static LoggerElement _majorStepsLoggerElement;

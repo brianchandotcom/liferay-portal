@@ -110,6 +110,10 @@ public final class CommandLoggerHandler {
 		_xmlLogLoggerElement.removeClassName("running");
 	}
 
+	public static void warnCommand(Element element) throws Exception {
+		failCommand(element);
+	}
+
 	private static void _failLineGroupLoggerElement(
 			LoggerElement lineGroupLoggerElement)
 		throws Exception {

@@ -335,9 +335,17 @@ public class NavItem implements Serializable {
 	}
 
 	public boolean isSelected() throws Exception {
-		return _layout.isSelected(
-			_themeDisplay.isTilesSelectable(), _themeDisplay.getLayout(),
-			_themeDisplay.getLayout().getAncestorPlid());
+		long plid = _layout.getPlid();
+
+		Layout themeDisplayLayout = _themeDisplay.getLayout();
+
+		if ((plid == themeDisplayLayout.getPlid()) ||
+			(plid == themeDisplayLayout.getAncestorPlid())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private List<NavItem> _browsableChildren;

@@ -1,12 +1,32 @@
 .lfr-admin-panel {
-	background-color: #FFF;
+	background-color: #1F282E;
 	bottom: 0;
+	color: #FFF;
 	overflow: auto;
 	padding: 0 15px;
 	position: fixed;
 	right: 0;
 	top: 0;
 	z-index: 990;
+
+	h1 {
+		font-size: 19px;
+	}
+
+	a:not(.btn), .form-control {
+		color: #869CAD;
+	}
+
+	button.close {
+		color: #FFF;
+		opacity: 1;
+		padding: 2px 8px;
+
+		&:hover {
+			background: transparent;
+			border-width: 0;
+		}
+	}
 
 	.add-content-menu .content-link {
 		border-color: #488F06;
@@ -53,18 +73,42 @@
 @include respond-to(desktop) {
 	.lfr-has-add-content {
 		padding-right: $addContentPanelWidth;
+
+		.control-menu {
+			right: $addContentPanelWidth;
+		}
 	}
 
 	.lfr-has-device-preview {
 		padding-right: $devicePreviewPanelWidth;
+
+		.control-menu {
+			right: $devicePreviewPanelWidth;
+		}
 	}
 
 	.lfr-has-edit-layout {
 		padding-right: $editLayoutPanelWidth;
+
+		.control-menu {
+			right: $editLayoutPanelWidth;
+		}
 	}
 }
 
 .lfr-has-add-content, .lfr-has-device-preview, .lfr-has-edit-layout {
+	&.open {
+		padding-left: 0;
+
+		.lfr-product-menu-panel {
+			width: 0;
+		}
+
+		.control-menu {
+			left: 0;
+		}
+	}
+
 	@include prefixer(overflow-scrolling, touch, 'webkit');
 
 	@include respond-to(desktop) {

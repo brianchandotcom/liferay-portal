@@ -15,6 +15,7 @@
 package com.liferay.portal.test.randomizerbumpers;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,15 +42,16 @@ public class TikaSafeRandomizerBumperTest {
 	public void testAcceptText() {
 		String randomString = getRegularRandomString();
 
+		TikaSafeRandomizerBumper tikaSafeRandomizerBumper =
+			new TikaSafeRandomizerBumper(ContentTypes.TEXT_PLAIN);
+
 		Assert.assertTrue(
-			TikaSafeRandomizerBumper.TEXT_PLAIN_INSTANCE.accept(
-				randomString.getBytes()));
+			tikaSafeRandomizerBumper.accept(randomString.getBytes()));
 
 		randomString = _EXE_MAGIC_HEADER.concat(RandomTestUtil.randomString(6));
 
 		Assert.assertFalse(
-			TikaSafeRandomizerBumper.TEXT_PLAIN_INSTANCE.accept(
-				randomString.getBytes()));
+			tikaSafeRandomizerBumper.accept(randomString.getBytes()));
 	}
 
 	protected static String getRegularRandomString() {

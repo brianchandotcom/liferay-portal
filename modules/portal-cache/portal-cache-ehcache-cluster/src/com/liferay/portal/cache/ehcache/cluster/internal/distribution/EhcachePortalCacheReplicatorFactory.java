@@ -17,6 +17,7 @@ package com.liferay.portal.cache.ehcache.cluster.internal.distribution;
 import com.liferay.portal.cache.ehcache.EhcacheConstants;
 import com.liferay.portal.kernel.cache.PortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCacheReplicatorFactory;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -61,12 +62,10 @@ public class EhcachePortalCacheReplicatorFactory
 						cacheEventListener);
 		}
 		catch (Exception e) {
-			_log.error(
+			throw new SystemException(
 				"Unable to instantiate cache event listener factory " +
 					className,
 				e);
-
-			return null;
 		}
 	}
 

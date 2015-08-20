@@ -17,6 +17,7 @@ package com.liferay.portal.cache.ehcache.cluster.internal.bootstrap;
 import com.liferay.portal.cache.ehcache.EhcacheConstants;
 import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoader;
 import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoaderFactory;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
@@ -54,12 +55,10 @@ public class EhcachePortalCacheBootstrapLoaderFactory
 					properties));
 		}
 		catch (Exception e) {
-			_log.error(
+			throw new SystemException(
 				"Unable to instantiate bootstrap cache loader factory " +
 					className,
 				e);
-
-			return null;
 		}
 	}
 

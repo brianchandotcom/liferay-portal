@@ -1,4 +1,5 @@
 Bundle-Name: Liferay Portal Cache Ehcache Cluster
 Bundle-SymbolicName: com.liferay.portal.cache.ehcache.cluster
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.cache.ehcache.cluster
 Include-Resource: classes

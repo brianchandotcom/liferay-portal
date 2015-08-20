@@ -89,6 +89,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMAIL_ADDRESS_PNG</td>
+	<td>portal/fields/email_address_field.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTENSION</td>
+	<td>//div[label[contains(.,'Extension')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTER_AGAIN</td>
 	<td>//div[label[contains(.,'Enter Again')]]/input</td>
 	<td></td>
@@ -184,12 +194,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MAIL_DOMAIN_FIELD</td>
+	<td>MAIL_DOMAIN</td>
 	<td>//input[contains(@id,'mx') and contains(@class,'input-text')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MAX_USERS_FIELD</td>
+	<td>MAX_USERS</td>
 	<td>//input[contains(@id,'maxUsers') and contains(@class,'input-text')]</td>
 	<td></td>
 </tr>
@@ -276,6 +286,11 @@
 <tr>
 	<td>PASSWORD</td>
 	<td>//div[label[contains(.,'Password')]]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD_PNG</td>
+	<td>portal/fields/password_field.png</td>
 	<td></td>
 </tr>
 <tr>
@@ -379,6 +394,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOTAL_PAID</td>
+	<td>//div[label[contains(.,'Total Paid')]]//input[@type='input']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TWITTER</td>
 	<td>//div[label[contains(.,'Twitter')]]//input[@type='text']</td>
 	<td></td>
@@ -394,7 +414,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>URL_FIELD_REQUIRED</td>
+	<td>URL_REQUIRED</td>
 	<td>//div[contains(@class,'error')]</td>
 	<td></td>
 </tr>
@@ -420,6 +440,11 @@
 </tr>
 <tr>
 	<td>YIM</td>
+	<td>//div[label[contains(.,'YIM')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YM</td>
 	<td>//div[label[contains(.,'YIM')]]//input[@type='text']</td>
 	<td></td>
 </tr>

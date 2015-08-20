@@ -380,6 +380,109 @@
 	<td></td>
 	<td></td>
 </tr>
+!--SCHEDULER_VIEW_DAY-->
+<tr>
+	<td>SCHEDULER_VIEW_DAY</td>
+	<td>//div[contains(@class,'scheduler-view scheduler-view-day') and not(contains(@class,'scheduler-view-week'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_DAY_CURRENT_DAY</td>
+	<td>//div[contains(@class,'scheduler-view scheduler-view-day') and not(contains(@class,'scheduler-view-week'))]//td[contains(@class,'scheduler-today')]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_DAY_FIRST_HOUR</td>
+	<td>//div[contains(@class,'scheduler-view-day-content') and not(contains(@class,'scheduler-view-week-content'))]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]/div[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_DAY_LAST_HOUR</td>
+	<td>//div[contains(@class,'scheduler-view-day-content') and not(contains(@class,'scheduler-view-week-content'))]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]/div[24]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_DAY_SHOW_MORE_LOCALIZED</td>
+	<td>//div[contains(@class,'scheduler-view-day-content') and not(contains(@class,'scheduler-view-week-content'))]//a[@class='scheduler-view-table-more' and contains(.,'${key_messageLocalized}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCHEDULER_VIEW_WEEK-->
+<tr>
+	<td>SCHEDULER_VIEW_WEEK</td>
+	<td>//div[contains(@class,'scheduler-view scheduler-view-day scheduler-view-week')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_WEEK_WEEK_START_DAY</td>
+	<td>xpath=(//tr[contains(@class,'scheduler-view-day-header')]//th[@class='scheduler-view-day-header-day']/a/span)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_WEEK_CURRENT_DAY</td>
+	<td>//td[contains(@class,'scheduler-today')]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_WEEK_FIRST_HOUR</td>
+	<td>//div[contains(@class,'scheduler-view-day-content') and contains(@class,'scheduler-view-week-content')]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]/div[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_WEEK_LAST_HOUR</td>
+	<td>//div[contains(@class,'scheduler-view-day-content') and contains(@class,'scheduler-view-week-content')]//tr[@class='scheduler-view-coldata']/td[contains(@class,'scheduler-view-day-table-coltime')]/div[24]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_WEEK_SHOW_MORE_LOCALIZED</td>
+	<td>//div[contains(@class,'scheduler-view-week-content')]//a[@class='scheduler-view-table-more' and contains(.,'${key_messageLocalized}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCHEDULER_VIEW_MONTH-->
+<tr>
+	<td>SCHEDULER_VIEW_MONTH</td>
+	<td>//div[contains(@class,'scheduler-view scheduler-view-table scheduler-view-month scheduler-month-view')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_MONTH_WEEK_START_DAY</td>
+	<td>xpath=(//div[contains(@class,'scheduler-view-month-content')]//tr[@class='scheduler-view-table-header-col']//th[@class='scheduler-view-table-header-day']/div)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_MONTH_DATE</td>
+	<td>//div[@class='scheduler-base-view-date']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_MONTH_WEEK_NUMBER</td>
+	<td>//div[@class='scheduler-view-table-row-container']/div[@class='scheduler-view-table-row'][${key_weekNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_MONTH_CURRENT_DAY</td>
+	<td>//td[contains(@class,'scheduler-view-table-colgrid-today')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_MONTH_SHOW_MORE_LOCALIZED</td>
+	<td>//div[contains(@class,'scheduler-view-month-content')]//a[@class='scheduler-view-table-more' and contains(.,'${key_messageLocalized}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SCHEDULER_EVENT-->
 <tr>
 	<td>SCHEDULER_EVENT_ALL_DAY_FIELD_PNG</td>
@@ -447,6 +550,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULER_EVENT_SPECIFIC_HEIGHT</td>
+	<td>//div[contains(@class,'calendar-portlet-event') and contains(@style,'height: ${key_pixelHeight}px;')]/div[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCHEDULER_EVENT_SPECIFIC_REPEAT</td>
 	<td>//div[contains(@class,'scheduler-event-repeated calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')]</td>
 	<td></td>
@@ -464,6 +572,11 @@
 <tr>
 	<td>SCHEDULER_EVENT_REGULAR_TITLE</td>
 	<td>//div[contains(@class,'calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_EVENT_REGULAR_TITLE_VIA_MONTH</td>
+	<td>//td[@class='scheduler-view-table-data-col']//div[contains(@class,'calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
 	<td></td>
 </tr>
 <tr>

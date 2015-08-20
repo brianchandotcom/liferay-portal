@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_CATEGORY</td>
+	<td>//a[contains(.,'Add Category')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_CHILD_ARTICLE</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Child Article')]</td>
 	<td></td>
@@ -59,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_REPOSITORY</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Repository')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_SUBCATEGORY</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Subcategory')]</td>
 	<td></td>
@@ -71,6 +81,11 @@
 <tr>
 	<td>ADD_USER</td>
 	<td>//a[@role='menuitem' and contains(.,'Add User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_TEMPLATE</td>
+	<td>//a[@role='menuitem' and contains(.,'${key_adtType} Template')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -116,6 +131,11 @@
 <tr>
 	<td>BLOGS_ENTRY</td>
 	<td>//a[@role='menuitem' and contains(.,'Blogs Entry')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_ENTRY</td>
+	<td>//a[@role='menuitem' and contains(.,'Bookmarks Entry')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -409,6 +429,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISH_TO_LIVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Publish to Live')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_TO_REMOTE_LIVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Publish to Remote Live')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REGULAR_ROLE</td>
 	<td>//a[@role='menuitem' and contains(.,'Regular Role')]</td>
 	<td></td>
@@ -421,6 +451,11 @@
 <tr>
 	<td>REMOVE_MEMBERSHIP</td>
 	<td>//a[@role='menuitem' and contains(.,'Remove Membership')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORTS</td>
+	<td>//a[@role='menuitem' and @title='Reports']</td>
 	<td></td>
 </tr>
 <tr>
@@ -591,6 +626,16 @@
 <tr>
 	<td>VIEW_REMOVED_ATTACHMENTS</td>
 	<td>//a[@role='menuitem' and contains(.,'View Removed Attachments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_LANGUAGE</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'${key_webContentTranslationLanguage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WITHDRAW_SUBMISSION</td>
+	<td>//a[@role='menuitem' and contains(.,'Withdraw Submission')]</td>
 	<td></td>
 </tr>
 </tbody>

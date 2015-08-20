@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENDER</td>
+	<td>//div[label[contains(.,'Gender')]]/select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER</td>
 	<td>//div[label[contains(.,'Header')]]/select</td>
 	<td></td>

@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_COMMUNITY_SITE</td>
+	<td>//button[contains(.,'Add Community Site')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_CONSUMER</td>
 	<td>//a[contains(.,'Add Consumer')]</td>
 	<td></td>
@@ -84,7 +89,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BACK_BUTTON</td>
+	<td>BASIC_PREVIEW</td>
+	<td>//a[contains(.,'Basic Preview')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK</td>
 	<td>//a[@title='Back']</td>
 	<td></td>
 </tr>
@@ -164,6 +174,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIRM</td>
+	<td>//button[contains(.,'Confirms')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTINUE</td>
 	<td>//button[contains(.,'Continue')]</td>
 	<td></td>
@@ -209,6 +224,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPIRE</td>
+	<td>//button[contains(.,'Expire')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT</td>
+	<td>//button[contains(.,'Export')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_FILTER_APPLY</td>
 	<td>//tr[contains(.,'${key_fieldName}')]//button[contains(.,'Apply')]</td>
 	<td></td>
@@ -231,6 +256,16 @@
 <tr>
 	<td>I_DISAGREE_BUTTON</td>
 	<td>//button[contains(.,'I Disagree')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IGNORE</td>
+	<td>//button[contains(.,'Ignore')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMPORT</td>
+	<td>//button[contains(.,'Import')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -269,7 +304,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MOVE_TO_RECYCLE_BIN</td>
+	<td>MOVE_TO_THE_RECYCLE_BIN</td>
 	<td>//button[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
@@ -324,6 +359,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISH_TO_LIVE</td>
+	<td>//button[contains(.,'Publish to Live')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOVE</td>
 	<td>//button[contains(.,'Remove')]</td>
 	<td></td>
@@ -364,7 +404,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE_AND_CHECKIN_BUTTON</td>
+	<td>SAVE_AND_CHECKIN</td>
 	<td>//button[contains(.,'Save and Checkin')]</td>
 	<td></td>
 </tr>
@@ -376,6 +416,16 @@
 <tr>
 	<td>SAVE_AS_DRAFT</td>
 	<td>//button[contains(.,'Save as Draft')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_INACTIVE</td>
+	<td>//button[contains(.,'Save Inactive')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_LOCALIZED</td>
+	<td>//button[contains(.,'${key_saveButton}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -396,6 +446,11 @@
 <tr>
 	<td>SELECT_FILE</td>
 	<td>//button[contains(.,'Select File')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FILES</td>
+	<td>//button[contains(.,'Select Files')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -461,6 +516,11 @@
 <tr>
 	<td>UPDATE_ASSOCIATIONS</td>
 	<td>//button[contains(.,'Update Associations')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERIFY</td>
+	<td>//button[contains(.,'Verify')]</td>
 	<td></td>
 </tr>
 <tr>

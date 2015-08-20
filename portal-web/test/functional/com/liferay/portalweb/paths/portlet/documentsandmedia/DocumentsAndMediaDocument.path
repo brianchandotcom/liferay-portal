@@ -146,6 +146,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_INFO_AUTOMATICALLY_EXTRACTED_METADATA</td>
+	<td>//div[@id='documentLibraryAssetMetadataPanel']/div/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -162,6 +167,36 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_DETAILS_UPLOADER</td>
+	<td>//div[@class='asset-details-content']/div[contains(@class,'icon-user') and contains(@class,'lfr-asset-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_DATE</td>
+	<td>//div[@class='asset-details-content']//div[contains(@class,'lfr-asset-icon') and contains(@class,'icon-calendar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_WORKFLOW</td>
+	<td>//div[@class='asset-details-content']//span[contains(@class,'workflow-status')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_WORKFLOW_PNG</td>
+	<td>portal/icons/document_detail_workflow.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_DOWNLOAD</td>
+	<td>//div[@class='asset-details-content']//span[@class='download-document']/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENT_DETAILS_URL</td>
+	<td>//div[@class='asset-details-content']//span[@class='webdav-url']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -170,6 +205,82 @@
 <tr>
 	<td>DOCUMENT_EXTRACTED_METADATA_FIELD</td>
 	<td>//div[@id='documentLibraryAssetMetadataPanelContent']/div/div/div/label[contains(.,'${key_metadataLabel}')]/../../div[contains(.,'${key_metadataData}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--METADATA_PANEL-->
+<tr>
+	<td>METADATA_PANEL_BOOLEAN</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_booleanValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_DATE</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_dateValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_DECIMAL</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_decimalValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_DOCUMENTS_AND_MEDIA</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Documents and Media') and contains(.,'${key_dmDocument}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_DOCUMENTS_AND_MEDIA_FILE</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Documents and Media')]/a[contains(.,'${key_dmDocument}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_HTML</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_htmlContent}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_INTERGER</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_integerValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_LINK_TO_PAGE</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Link to Page') and contains(.,'${key_pageName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_LINK_TO_PAGE</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Link to Page')]/a[contains(.,'${key_pageName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_NUMBER</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_numberValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_RADIO</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_radioOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_SELECT</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_selectOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_TEXT</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'${key_textContent}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METADATA_PANEL_TEXT_BOX</td>
+	<td>//div[@class='lfr-ddm-container']/div[contains(.,'Text Box') and contains(.,'${key_textBoxContent}')]</td>
 	<td></td>
 </tr>
 <tr>

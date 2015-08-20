@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_LINK_GENERIC</td>
+	<td>//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_COMMENT_FIELD</td>
 	<td>//div[contains(@name,'editReplyBody')]</td>
 	<td></td>

@@ -105,7 +105,7 @@ public class PortletKeys {
 		"com_liferay_plugins_admin_web_portlet_PluginsAdminPortlet";
 
 	public static final String PORTAL = "90";
-	
+
 	public static final String PORTAL_SETTINGS =
 		"com_liferay_portal_settings_web_portlet_PortalSettingsPortlet";
 

@@ -19,6 +19,7 @@ import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,7 +49,33 @@ public final class SummaryLoggerHandler {
 	}
 
 	public static LoggerElement getSummaryLogLoggerElement() {
-		return _summaryLogLoggerElement;
+		LoggerElement summaryLogLoggerElement = _summaryLogLoggerElement.copy();
+
+		LoggerElement stepsLoggerElement =
+			summaryLogLoggerElement.loggerElement("div");
+
+		LoggerElement majorStepsLoggerElement =
+			stepsLoggerElement.loggerElement("ul");
+
+		List<LoggerElement> majorStepLoggerElements =
+			majorStepsLoggerElement.loggerElements("li");
+
+		for (int i = 0; i < majorStepLoggerElements.size(); i++) {
+			LoggerElement majorStepLoggerElement = majorStepLoggerElements.get(
+				i);
+
+			if (i < (majorStepLoggerElements.size() - 1)) {
+				majorStepLoggerElement.removeChildLoggerElements("ul");
+			}
+			else if (_containsMinorStepWarning) {
+				_warnStepLoggerElement(majorStepLoggerElement);
+			}
+			else {
+				_failStepLoggerElement(majorStepLoggerElement);
+			}
+		}
+
+		return summaryLogLoggerElement;
 	}
 
 	public static String getSummaryLogText() {
@@ -134,6 +161,10 @@ public final class SummaryLoggerHandler {
 
 		LoggerElement lineContainerLoggerElement =
 			stepLoggerElement.loggerElement("div");
+
+		if (lineContainerLoggerElement == null) {
+			return;
+		}
 
 		lineContainerLoggerElement.addChildLoggerElement(
 			_getStatusLoggerElement("FAILED"));
@@ -470,6 +501,10 @@ public final class SummaryLoggerHandler {
 
 		LoggerElement lineContainerLoggerElement =
 			stepLoggerElement.loggerElement("div");
+
+		if (lineContainerLoggerElement == null) {
+			return;
+		}
 
 		lineContainerLoggerElement.addChildLoggerElement(
 			_getStatusLoggerElement("WARNING"));

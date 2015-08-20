@@ -1384,7 +1384,9 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static void typeScreen(String value) {
-		throw new UnsupportedOperationException();
+		Keyboard keyboard = new DesktopKeyboard();
+
+		keyboard.type(value);
 	}
 
 	public static void waitForConfirmation(

@@ -1723,8 +1723,6 @@ public class LiferaySeleniumHelper {
 	public static void writePoshiWarnings() throws Exception {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("<property name=\"testray.testcase.warnings\">\n");
-
 		if (!_javaScriptExceptions.isEmpty()) {
 			for (int i = 0; i < _javaScriptExceptions.size(); i++) {
 				Exception exception = _javaScriptExceptions.get(i);
@@ -1744,8 +1742,6 @@ public class LiferaySeleniumHelper {
 				sb.append(")]]></value>\n");
 			}
 		}
-
-		sb.append("</property>");
 
 		String projectDirName = PoshiRunnerGetterUtil.getProjectDirName();
 

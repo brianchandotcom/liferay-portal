@@ -695,7 +695,7 @@
 
 		<execute function="Type" locator1="CPBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
 		<execute function="Pause" locator1="1000" />
-		<execute function="AssertClick" locator1="CPBlogsAdd#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -715,7 +715,7 @@
 
 		<execute function="Type" locator1="PGBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="Type" locator1="PGBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
-		<execute function="AssertClick" locator1="PGBlogsAdd#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -736,7 +736,7 @@
 		<execute function="SelectFrame" locator1="PGAssetpublisherAddnewblogsentry#BLOGS_ENTRY_IFRAME" />
 		<execute function="Type" locator1="PGAssetpublisherAddnewblogsentry#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="Type" locator1="PGAssetpublisherAddnewblogsentry#CONTENT_FIELD" value1="${entryContent}" />
-		<execute function="AssertClick" locator1="PGAssetpublisherAddnewblogsentry#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 		<execute function="Pause" locator1="5000" />
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -1651,6 +1651,15 @@
 
 	<command name="viewEntryAuthorPG">
 		<execute function="AssertTextEquals" locator1="BlogsEntry#ENTRY_AUTHOR" value1="${entryAuthorFullName}" />
+	</command>
+
+	<command name="viewEntryTable">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertElementPresent" locator1="Blogs#ENTRY_TABLE_CHECKBOX" />
+		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute function="AssertElementPresent" locator1="Blogs#ENTRY_TABLE_CREATE_DATE" />
+		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_STATUS" value1="Approved" />
 	</command>
 
 	<command name="viewEntryViaAPPG">

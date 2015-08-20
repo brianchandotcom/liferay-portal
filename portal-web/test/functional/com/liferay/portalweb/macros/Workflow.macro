@@ -432,7 +432,7 @@
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 
-		<var name="defaultWorkflow" value="Default: No Workflow" />
+		<var name="defaultWorkflow" value="No Workflow" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="CPSiteWorkflowconfiguration#RESOURCE_TABLE_KNOWLEDGE_BASE_ARTICLE_SELECT" />
@@ -527,7 +527,6 @@
 
 		<execute function="AssertClick" locator1="CPMyworkflowtasks#ASSIGNED_TO_MY_ROLES_MENULIST_UPDATE_DUE_DATE" value1="Update Due Date" />
 
-		<execute function="Type#clickAtSendKeys" locator1="CPMyworkflowtasks#DIALOG_BOX_DUE_DATE" value1="${workflowDueDate}" />
 		<execute function="Type#clickAtSendKeys" locator1="CPMyworkflowtasks#DIALOG_BOX_DUE_DATE" value1="${workflowDueDate}" />
 		<execute function="Type#clickAtSendKeys" locator1="CPMyworkflowtasks#DIALOG_BOX_DUE_DATE_TIME" value1="${workflowDueDateTime}" />
 

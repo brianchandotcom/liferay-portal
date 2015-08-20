@@ -250,7 +250,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="assetTitle" value="Web Content Title" />
 			<var name="assetType" value="Basic Web Content" />
 			<var name="entryAddRelatedAsset" value="true" />

@@ -114,6 +114,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANGE_NODE</td>
+	<td>//button[contains(.,'Change Node')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKIN</td>
 	<td>//button[contains(.,'Checkin')]</td>
 	<td></td>

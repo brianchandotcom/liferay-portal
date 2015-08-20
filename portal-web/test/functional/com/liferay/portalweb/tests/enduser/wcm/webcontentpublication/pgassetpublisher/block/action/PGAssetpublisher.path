@@ -467,12 +467,12 @@
 </tr>
 <tr>
 	<td>DISPLAY_ICON_TWITTER</td>
-	<td>//span[@class='social-bookmark']//span[contains(.,'Twitter')]</td>
+	<td>//a[contains(@class,'social-bookmark')]//span[contains(.,'Twitter')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_ICON_GOOGLE_PLUS</td>
-	<td>//span[@class='social-bookmark']//span[contains(.,'Google+')]</td>
+	<td>//a[contains(@class,'social-bookmark')]//span[contains(.,'Google+')]</td>
 	<td></td>
 </tr>
 <tr>

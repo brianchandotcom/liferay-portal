@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DESCRIPTION</td>
+	<td>//textarea[contains(@id,'description')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_DATE</td>
 	<td>//input[contains(@id,'displayDate')]</td>
 	<td></td>

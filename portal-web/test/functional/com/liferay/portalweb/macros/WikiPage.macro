@@ -306,7 +306,7 @@
 
 		<execute function="Type" locator1="PGWikiAddpage#TITLE_FIELD" value1="${wikiPageTitle}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${wikiPageContent}" />
-		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="PGWikiAddpage#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
 		<execute function="AssertTextEquals" locator1="PGWikiAllpages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -316,7 +316,7 @@
 
 		<execute function="Type" locator1="PGWikidisplayAddpage#TITLE_FIELD" value1="${wikiPageTitle}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${wikiPageContent}" />
-		<execute function="AssertClick" locator1="PGWikidisplayAddpage#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
 		<execute function="AssertTextEquals" locator1="PGWikidisplayAllpages#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -1008,6 +1008,14 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="renamePage">
+		<execute function="Type" locator1="TextInput#NEW_TITLE" value1="${newPageTitle}" />
+
+		<execute function="AssertClick" locator1="Button#RENAME" value1="Rename" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request has been completed successfully." />
+	</command>
+
 	<command name="renameWikiPagePG">
 		<execute function="AssertClick" locator1="PGWikiWikipage#WIKI_PAGE_ACTIONS_DETAILS" value1="Details" />
 
@@ -1097,8 +1105,14 @@
 		<execute function="AssertClick" locator1="PGWiki#SEARCH_BUTTON" value1="Search" />
 	</command>
 
+	<command name="selectNewNode">
+		<execute function="Select" locator1="Select#NEW_NODE" value1="${wikiNodeName}" />
+
+		<execute function="AssertClick" locator1="Button#CHANGE_NODE" value1="Change Node" />
+	</command>
+
 	<command name="submitForPublication">
-		<execute function="AssertClick" locator1="PGWikiAddpage#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
 		<execute function="AssertTextEquals" locator1="PGWiki#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>

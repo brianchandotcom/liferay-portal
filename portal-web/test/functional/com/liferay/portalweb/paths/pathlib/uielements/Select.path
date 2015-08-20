@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEW_NODE</td>
+	<td>//div[label[contains(.,'New Node')]]/select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLETS_AVAILABLE</td>
 	<td>//div[label[contains(.,'Portlets Available')]]/select</td>
 	<td></td>

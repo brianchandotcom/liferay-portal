@@ -103,7 +103,15 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewCP">
+		<execute macro="BlogsEntry#viewEntryTable">
+			<var name="entryTitle" value="Blogs Entry Title - Liferay" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="Blogs Entry Title - Liferay" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content - Liferay" />
 			<var name="entryTitle" value="Blogs Entry Title - Liferay" />
 		</execute>
@@ -164,7 +172,15 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewCP">
+		<execute macro="BlogsEntry#viewEntryTable">
+			<var name="entryTitle" value="Blogs Entry Title - Site Name" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="Blogs Entry Title - Site Name" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content - Site Name" />
 			<var name="entryTitle" value="Blogs Entry Title - Site Name" />
 		</execute>
@@ -511,7 +527,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryWorkflowViaNotifications" priority="4">
+	<command known-issues="LPS-57228" name="ViewBlogsEntryWorkflowViaNotifications" priority="4">
 		<property name="portlet.plugins.includes" value="notifications-portlet" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -610,6 +626,8 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
 		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
@@ -686,6 +704,8 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent"><![CDATA[&lt;script&gt;alert("web content article")&lt;/script&gt;]]></var>

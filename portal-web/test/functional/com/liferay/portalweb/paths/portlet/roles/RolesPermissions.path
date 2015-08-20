@@ -336,27 +336,27 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_FOLDER_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.journalADD_FOLDER']</td>
+	<td>//input[@value='com.liferay.journalADD_FOLDER']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_STRUCTURE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.journalADD_STRUCTURE']</td>
+	<td>//input[@value='com.liferay.journalADD_STRUCTURE']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_TEMPLATE_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.journalADD_TEMPLATE']</td>
+	<td>//input[@value='com.liferay.journalADD_TEMPLATE']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_WEB_CONTENT_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.journalADD_ARTICLE']</td>
+	<td>//input[@value='com.liferay.journalADD_ARTICLE']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_VIEW_CHECKBOX</td>
-	<td>//input[@value='com.liferay.portlet.journalVIEW']</td>
+	<td>//input[@value='com.liferay.journalVIEW']</td>
 	<td></td>
 </tr>
 <tr>
@@ -517,7 +517,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
-	<td>//input[@value='161ACCESS_IN_CONTROL_PANEL']</td>
+	<td>//input[contains(@value,'ACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>

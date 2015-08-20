@@ -465,7 +465,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
 		<execute function="AssertTextEquals" locator1="CPWebcontent#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -616,7 +616,7 @@
 	<command name="addWithWorkflowCP">
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="Type#typeCKEditor" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
-		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
 		<execute function="AssertTextEquals" locator1="CPWebcontent#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -628,7 +628,7 @@
 		<execute function="SelectFrame" locator1="PGAssetpublisherAddnewwebcontent#WEB_CONTENT_IFRAME" />
 		<execute function="Type#typeWaitForCKEditor" locator1="PGAssetpublisherAddnewwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGAssetpublisherAddnewwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
-		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="PGAssetpublisherAddnewwebcontent#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 		<execute function="Pause" locator1="5000" />
 
 		<execute function="SelectFrame" />
@@ -653,7 +653,7 @@
 		<execute function="SelectFrame" locator1="PGWebcontentdisplayAddwebcontent#WEB_CONTENT_IFRAME" />
 		<execute function="Type" locator1="PGWebcontentdisplayAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGWebcontentdisplayAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
-		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="PGWebcontentdisplayAddwebcontent#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="AssertTextEquals" locator1="PGWebcontentdisplay#ALERT_MESSAGE" value1="${webContentTitle} is not approved." />

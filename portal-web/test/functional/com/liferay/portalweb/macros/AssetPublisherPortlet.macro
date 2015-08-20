@@ -576,6 +576,7 @@
 	<command name="viewConfigureAPDisplayTemplateFullContentBookmarksPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
+		<execute function="AssertClick" locator1="Button#SHARE" value1="Share" />
 		<execute function="AssertElementNotPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_READ_MORE" />
 		<execute function="AssertElementPresent" locator1="PGAssetpublisher#DISPLAY_ICON_TWITTER" />
 		<execute function="AssertElementPresent" locator1="PGAssetpublisher#DISPLAY_ICON_GOOGLE_PLUS" />

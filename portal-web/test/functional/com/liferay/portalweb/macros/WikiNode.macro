@@ -12,6 +12,10 @@
 		<execute function="AssertTextEquals" locator1="CPWiki#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="addDescription">
+		<execute function="Type" locator1="TextInput#DESCRIPTION" value1="${wikiNodeDescription}" />
+	</command>
+
 	<command name="addMainCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
@@ -25,6 +29,10 @@
 				</execute>
 			</then>
 		</if>
+	</command>
+
+	<command name="addName">
+		<execute function="Type" locator1="TextInput#NAME" value1="${wikiNodeName}" />
 	</command>
 
 	<command name="deleteCP">
@@ -60,6 +68,12 @@
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
 		<execute function="AssertClick" locator1="CPWiki#WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
+	</command>
+
+	<command name="publish">
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownCP">

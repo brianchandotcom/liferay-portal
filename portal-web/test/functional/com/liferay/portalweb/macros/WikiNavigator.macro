@@ -3,6 +3,14 @@
 		<execute function="AssertClick" locator1="Wiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
 	</command>
 
+	<command name="gotoChangeNode">
+		<execute function="AssertClick" locator1="Wiki#PAGE_TABS_CHANGE_NODE" value1="Change Node" />
+	</command>
+
+	<command name="gotoChangeParent">
+		<execute function="AssertClick" locator1="Wiki#PAGE_TABS_CHANGE_PARENT" value1="Change Parent" />
+	</command>
+
 	<command name="gotoDraftPages">
 		<execute function="AssertClick" locator1="Wiki#NAVIGATION_DRAFT_PAGES" value1="Draft Pages" />
 	</command>
@@ -17,5 +25,9 @@
 
 	<command name="gotoRecentChanges">
 		<execute function="AssertClick" locator1="Wiki#NAVIGATION_RECENT_CHANGES" value1="Recent Changes" />
+	</command>
+
+	<command name="gotoRename">
+		<execute function="AssertClick" locator1="Wiki#PAGE_TABS_RENAME" value1="Rename" />
 	</command>
 </definition>

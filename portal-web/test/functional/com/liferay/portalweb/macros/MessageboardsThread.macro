@@ -215,7 +215,7 @@
 
 		<execute function="Type" locator1="CPMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubject}" />
 		<execute function="Type#typeCKEditor" locator1="CPMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
-		<execute function="Click" locator1="CPMessageboardsPostthread#SUBMIT_FOR_PUBLICATION_BUTTON" />
+		<execute function="Click" locator1="Button#SUBMIT_FOR_PUBLICATION" />
 
 		<execute function="AssertTextEquals" locator1="CPMessageboardsThread#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
@@ -225,7 +225,7 @@
 
 		<execute function="Type" locator1="PGMessageboardsPostthread#SUBJECT_FIELD" value1="${threadSubject}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="${threadBody}" />
-		<execute function="Click" locator1="PGMessageboardsPostthread#SUBMIT_FOR_PUBLICATION_BUTTON" />
+		<execute function="Click" locator1="Button#SUBMIT_FOR_PUBLICATION" />
 
 		<execute function="AssertTextEquals#assertText" locator1="PGMessageboards#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>

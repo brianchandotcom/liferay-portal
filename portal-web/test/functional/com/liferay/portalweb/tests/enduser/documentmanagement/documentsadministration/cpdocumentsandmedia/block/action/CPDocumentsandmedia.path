@@ -30,17 +30,17 @@
 </tr>
 <tr>
 	<td>TOOLBAR_ACTIONS</td>
-	<td>//li[@id='_199_actionsButtonContainer']/a</td>
+	<td>//li[contains(@id,'actionsButtonContainer')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_SORT_BY</td>
-	<td>//li[@id='_199_sortButtonContainer']/a</td>
+	<td>//li[contains(@id,'sortButtonContainer')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_MANAGE</td>
-	<td>//ul[@id='_199_toolbarContainer']/li/a/span[contains(.,'Manage')]</td>
+	<td>//ul[contains(@id,'toolbarContainer')]/li/a/span[contains(.,'Manage')]</td>
 	<td></td>
 </tr>
 <tr>

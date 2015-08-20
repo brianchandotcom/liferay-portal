@@ -15,6 +15,10 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.search.ResultRow;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Map;
@@ -43,8 +47,16 @@ public class CardTag extends IncludeTag {
 		_actionJspServletContext = actionJspServletContext;
 	}
 
+	public void setCheckboxChecked(boolean checkboxChecked) {
+		_checkboxChecked = checkboxChecked;
+	}
+
 	public void setCheckboxCSSClass(String checkboxCSSClass) {
 		_checkboxCSSClass = checkboxCSSClass;
+	}
+
+	public void setCheckboxDisabled(boolean checkboxDisabled) {
+		_checkboxDisabled = checkboxDisabled;
 	}
 
 	public void setCheckboxId(String checkboxId) {
@@ -122,7 +134,9 @@ public class CardTag extends IncludeTag {
 	protected void cleanUp() {
 		_actionJsp = null;
 		_actionJspServletContext = null;
+		_checkboxChecked = null;
 		_checkboxCSSClass = null;
+		_checkboxDisabled = null;
 		_checkboxId = null;
 		_checkboxName = null;
 		_checkboxValue = null;
@@ -160,17 +174,83 @@ public class CardTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		RowChecker rowChecker = (RowChecker)request.getAttribute(
+			WebKeys.SEARCH_CONTAINER_RESULT_ROW_CHECKER);
+
+		ResultRow row = (ResultRow)request.getAttribute(
+			WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
 		request.setAttribute("liferay-frontend:card:actionJsp", _actionJsp);
 		request.setAttribute(
 			"liferay-frontend:card:actionJspServletContext",
 			getActionJspServletContext());
+
+		boolean checkboxChecked = false;
+
+		if ((_checkboxChecked == null) && (rowChecker != null) &&
+			(row != null)) {
+
+			checkboxChecked = rowChecker.isChecked(row.getObject());
+		}
+		else {
+			checkboxChecked = _checkboxChecked.booleanValue();
+		}
+
 		request.setAttribute(
-			"liferay-frontend:card:checkboxCSSClass", _checkboxCSSClass);
-		request.setAttribute("liferay-frontend:card:checkboxId", _checkboxId);
+			"liferay-frontend:card:checkboxChecked",
+			String.valueOf(checkboxChecked));
+
+		String checkboxCssClass = _checkboxCSSClass;
+
+		if (Validator.isNull(checkboxCssClass) && (rowChecker != null)) {
+			checkboxCssClass = rowChecker.getCssClass();
+		}
+
 		request.setAttribute(
-			"liferay-frontend:card:checkboxName", _checkboxName);
+			"liferay-frontend:card:checkboxCSSClass", checkboxCssClass);
+
+		boolean checkboxDisabled = false;
+
+		if ((_checkboxDisabled == null) && (rowChecker != null) &&
+			(row != null)) {
+
+			checkboxDisabled = rowChecker.isDisabled(row.getObject());
+		}
+		else {
+			checkboxDisabled = _checkboxChecked.booleanValue();
+		}
+
 		request.setAttribute(
-			"liferay-frontend:card:checkboxValue", _checkboxValue);
+			"liferay-frontend:card:checkboxDisabled",
+			String.valueOf(checkboxDisabled));
+
+		String checkboxId = _checkboxId;
+
+		if (Validator.isNull(checkboxId) && (rowChecker != null) &&
+			(row != null)) {
+
+			checkboxId = rowChecker.getRowIds() + row.getPrimaryKey();
+		}
+
+		request.setAttribute("liferay-frontend:card:checkboxId", checkboxId);
+
+		String checkboxName = _checkboxName;
+
+		if (Validator.isNull(checkboxName) && (rowChecker != null)) {
+			checkboxName = rowChecker.getRowIds();
+		}
+
+		request.setAttribute(
+			"liferay-frontend:card:checkboxName", checkboxName);
+
+		String checkboxValue = _checkboxValue;
+
+		if (Validator.isNull(checkboxValue) && (row != null)) {
+			checkboxValue = row.getPrimaryKey();
+		}
+
+		request.setAttribute(
+			"liferay-frontend:card:checkboxValue", checkboxValue);
 		request.setAttribute("liferay-frontend:card:cssClass", _cssClass);
 		request.setAttribute("liferay-frontend:card:data", _data);
 		request.setAttribute("liferay-frontend:card:footer", _footer);
@@ -191,7 +271,9 @@ public class CardTag extends IncludeTag {
 
 	private String _actionJsp;
 	private ServletContext _actionJspServletContext;
+	private Boolean _checkboxChecked;
 	private String _checkboxCSSClass;
+	private Boolean _checkboxDisabled;
 	private String _checkboxId;
 	private String _checkboxName;
 	private String _checkboxValue;

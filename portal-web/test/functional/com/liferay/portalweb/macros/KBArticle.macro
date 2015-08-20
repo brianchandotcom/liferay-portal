@@ -1242,7 +1242,7 @@
 
 		<execute function="MouseOver" locator1="KnowledgeBase#ARTICLE_TABLE_CREATE_DATE" />
 
-		<var locator="KnowledgeBase#ARTICLE_TABLE_ARTICLE_CREATE_DATE_POPUP" name="publishDate" />
+		<var locator="KnowledgeBase#ARTICLE_TABLE_CREATE_DATE_POPUP" name="publishDate" />
 
 		<var name="key_publishDate" value="${publishDate}" />
 		<var name="separator" value=" " />

@@ -115,6 +115,11 @@
 	<td>xpath=(//a[contains(@id,'ddmStructuresSearchContainer')])[1]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DDM_STRUCTURE_TABLE_ACTIONS_GENERIC</td>
+	<td>//a[contains(@id,'ddmStructuresSearchContainer')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

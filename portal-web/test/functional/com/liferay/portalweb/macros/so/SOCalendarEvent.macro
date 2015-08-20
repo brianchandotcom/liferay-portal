@@ -24,12 +24,12 @@
 		<execute function="AssertSelectedLabel" locator1="CalendarEditEvent#REPEAT_REPEAT_EVERY_DROPDOWN" value1="1" />
 		<execute function="Click" locator1="CalendarEditEvent#REPEAT_ENDS_AFTER_RADIO" />
 		<execute function="Type" locator1="CalendarEditEvent#REPEAT_ENDS_AFTER_FIELD" value1="${numberOfRepeats}" />
-		<execute function="Click" locator1="CalendarEditEvent#REPEAT_SUMMARY_2" />
-		<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_SUMMARY_2" value1="Daily, ${numberOfRepeats} Times" />
+		<execute function="Click" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" />
+		<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="Daily, ${numberOfRepeats} Times" />
 		<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DONE_BUTTON" value1="Done" />
 
 		<execute function="Check" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
-		<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_SUMMARY_1" value1="Daily, ${numberOfRepeats} Times" />
+		<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_SUMMARY" value1="Daily, ${numberOfRepeats} Times" />
 
 		<execute macro="CalendarEvent#selectCalendar" />
 

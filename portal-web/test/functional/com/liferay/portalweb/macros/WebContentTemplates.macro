@@ -220,7 +220,7 @@
 		<execute function="AssertClick" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_BUTTON" value1="Search" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ACTIONS_GENERIC" />
+			<condition function="IsElementPresent" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ALL_CHECKBOX" />
 			<then>
 				<execute function="Check" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ALL_CHECKBOX" />
 				<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
@@ -233,7 +233,7 @@
 		<execute function="AssertClick" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_BUTTON" value1="Search" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ACTIONS_GENERIC" />
+			<condition function="IsElementPresent" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ALL_CHECKBOX" />
 			<then>
 				<execute function="Check" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ALL_CHECKBOX" />
 				<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />

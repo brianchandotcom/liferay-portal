@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.application.list.taglib.constants;
+package com.liferay.application.list.constants;
 
 /**
  * @author Adolfo Pérez

@@ -27,14 +27,16 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.application.list.PanelAppRegistry" %><%@
 page import="com.liferay.application.list.PanelCategory" %><%@
 page import="com.liferay.application.list.PanelCategoryRegistry" %><%@
-page import="com.liferay.application.list.taglib.constants.ApplicationListWebKeys" %><%@
+page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
 page import="com.liferay.application.list.taglib.display.context.logic.PanelAppContentHelper" %><%@
 page import="com.liferay.application.list.taglib.display.context.logic.PanelCategoryHelper" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.model.Portlet" %><%@
 page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
-page import="com.liferay.portal.util.PortalUtil" %>
+page import="com.liferay.portal.util.PortalUtil" %><%@
+page import="com.liferay.taglib.servlet.PipingServletResponse" %>
+
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@

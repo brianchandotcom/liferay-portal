@@ -79,7 +79,33 @@ public final class SummaryLoggerHandler {
 	}
 
 	public static String getSummaryLogText() {
-		return _summaryLogLoggerElement.toString();
+		LoggerElement summaryLogLoggerElement = _summaryLogLoggerElement.copy();
+
+		LoggerElement stepsLoggerElement =
+			summaryLogLoggerElement.loggerElement("div");
+
+		LoggerElement majorStepsLoggerElement =
+			stepsLoggerElement.loggerElement("ul");
+
+		List<LoggerElement> majorStepLoggerElements =
+			majorStepsLoggerElement.loggerElements("li");
+
+		for (int i = 0; i < majorStepLoggerElements.size(); i++) {
+			LoggerElement majorStepLoggerElement = majorStepLoggerElements.get(
+				i);
+
+			String className = majorStepLoggerElement.getClassName();
+
+			if (className.contains("summary-failure") ||
+				className.contains("summary-warning")) {
+
+				continue;
+			}
+
+			majorStepLoggerElement.removeChildLoggerElements("ul");
+		}
+
+		return summaryLogLoggerElement.toString();
 	}
 
 	public static void passSummary(Element element) {

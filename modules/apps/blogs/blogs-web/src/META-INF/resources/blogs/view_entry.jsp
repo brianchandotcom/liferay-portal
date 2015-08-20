@@ -207,6 +207,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 		/>
 	</c:if>
 </div>
+
 <%
 PortalUtil.setPageSubtitle(entry.getTitle(), request);
 PortalUtil.setPageDescription(entry.getDescription(), request);

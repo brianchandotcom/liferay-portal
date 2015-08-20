@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -88,7 +89,8 @@ public class DLFileEntryLocalServiceTest {
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				folder.getFolderId(), RandomTestUtil.randomString(),
-				ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
+				ContentTypes.TEXT_PLAIN,
+				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 				serviceContext);
 
 			LocalRepository localRepository =
@@ -104,7 +106,8 @@ public class DLFileEntryLocalServiceTest {
 			DLAppLocalServiceUtil.addFileEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				folder.getFolderId(), RandomTestUtil.randomString(),
-				ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
+				ContentTypes.TEXT_PLAIN,
+				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 				serviceContext);
 		}
 
@@ -121,7 +124,8 @@ public class DLFileEntryLocalServiceTest {
 	public void testGetMisversionedFileEntries() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
-		byte[] bytes = RandomTestUtil.randomBytes();
+		byte[] bytes = RandomTestUtil.randomBytes(
+			TikaSafeRandomizerBumper.INSTANCE);
 
 		InputStream is = new ByteArrayInputStream(bytes);
 
@@ -172,7 +176,8 @@ public class DLFileEntryLocalServiceTest {
 	public void testGetNoAssetEntries() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
-		byte[] bytes = RandomTestUtil.randomBytes();
+		byte[] bytes = RandomTestUtil.randomBytes(
+			TikaSafeRandomizerBumper.INSTANCE);
 
 		InputStream is = new ByteArrayInputStream(bytes);
 
@@ -217,7 +222,8 @@ public class DLFileEntryLocalServiceTest {
 	public void testGetOrphanedFileEntries() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
-		byte[] bytes = RandomTestUtil.randomBytes();
+		byte[] bytes = RandomTestUtil.randomBytes(
+			TikaSafeRandomizerBumper.INSTANCE);
 
 		InputStream is = new ByteArrayInputStream(bytes);
 

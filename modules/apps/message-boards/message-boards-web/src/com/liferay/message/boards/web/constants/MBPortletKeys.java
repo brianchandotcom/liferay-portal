@@ -20,9 +20,9 @@ package com.liferay.message.boards.web.constants;
 public class MBPortletKeys {
 
 	public static final String MESSAGE_BOARDS =
-		"com_liferay_message_boards_web_portlet_MessageBoardsPortlet";
+		"com_liferay_message_boards_web_portlet_MBPortlet";
 
 	public static final String MESSAGE_BOARDS_ADMIN =
-		"com_liferay_message_boards_web_portlet_MessageBoardsAdminPortlet";
+		"com_liferay_message_boards_web_portlet_MBAdminPortlet";
 
 }

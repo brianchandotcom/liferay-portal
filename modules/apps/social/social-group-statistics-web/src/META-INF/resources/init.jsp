@@ -50,8 +50,8 @@ page import="com.liferay.portlet.social.service.SocialActivityCounterLocalServic
 page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %><%@
 page import="com.liferay.portlet.social.util.SocialCounterPeriodUtil" %><%@
 page import="com.liferay.portlet.social.util.comparator.SocialActivityCounterNameComparator" %><%@
-page import="com.liferay.social.group.statistics.web.configuration.GroupStatisticsPortletInstanceConfiguration" %><%@
-page import="com.liferay.social.group.statistics.web.constants.GroupStatisticsPortletKeys" %>
+page import="com.liferay.social.group.statistics.web.configuration.SocialGroupStatisticsPortletInstanceConfiguration" %><%@
+page import="com.liferay.social.group.statistics.web.constants.SocialGroupStatisticsPortletKeys" %>
 
 <%@ page import="java.text.DecimalFormat" %><%@
 page import="java.text.Format" %>
@@ -76,7 +76,7 @@ String currentURL = currentURLObj.toString();
 
 SettingsFactory settingsFactory = SettingsFactoryUtil.getSettingsFactory();
 
-GroupStatisticsPortletInstanceConfiguration groupStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(GroupStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
+SocialGroupStatisticsPortletInstanceConfiguration groupStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(SocialGroupStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
 %>
 
 <%@ include file="/init-ext.jsp" %>

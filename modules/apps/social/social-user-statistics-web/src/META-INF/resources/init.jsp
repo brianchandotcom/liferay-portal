@@ -45,7 +45,7 @@ page import="com.liferay.portlet.social.model.impl.SocialActivityCounterImpl" %>
 page import="com.liferay.portlet.social.service.SocialActivityCounterLocalServiceUtil" %><%@
 page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %><%@
 page import="com.liferay.portlet.social.util.comparator.SocialActivityCounterNameComparator" %><%@
-page import="com.liferay.social.user.statistics.web.configuration.UserStatisticsPortletInstanceConfiguration" %><%@
+page import="com.liferay.social.user.statistics.web.configuration.SocialUserStatisticsPortletInstanceConfiguration" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.ArrayList" %><%@
@@ -62,7 +62,7 @@ page import="java.util.Map" %>
 <%
 SettingsFactory settingsFactory = SettingsFactoryUtil.getSettingsFactory();
 
-UserStatisticsPortletInstanceConfiguration userStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(UserStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
+SocialUserStatisticsPortletInstanceConfiguration userStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(SocialUserStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
 %>
 
 <%@ include file="/init-ext.jsp" %>

@@ -14,7 +14,7 @@
 
 package com.liferay.site.navigation.language.web.upgrade.v1_0_0;
 
-import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
+import com.liferay.site.navigation.language.web.constants.SiteNavigationLanguagePortletKeys;
 
 /**
  * @author Eudaldo Alonso
@@ -25,7 +25,9 @@ public class UpgradePortletId
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"82", LanguagePortletKeys.LANGUAGE}
+			new String[] {"82",
+				SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE
+			}
 		};
 	}
 

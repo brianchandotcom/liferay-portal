@@ -14,7 +14,7 @@
 
 package com.liferay.site.navigation.breadcrumb.web.upgrade.v1_0_0;
 
-import com.liferay.site.navigation.breadcrumb.web.constants.BreadcrumbPortletKeys;
+import com.liferay.site.navigation.breadcrumb.web.constants.SiteNavigationBreadcrumbPortletKeys;
 
 /**
  * @author Julio Camarero
@@ -25,7 +25,9 @@ public class UpgradePortletId
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"73", BreadcrumbPortletKeys.BREADCRUMB}
+			new String[] {"73",
+				SiteNavigationBreadcrumbPortletKeys.SITE_NAVIGATION_BREADCRUMB
+			}
 		};
 	}
 

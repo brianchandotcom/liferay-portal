@@ -17,7 +17,9 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="AnnouncementsEntry#tearDownPG" />
+		<execute macro="AnnouncementsEntry#tearDownPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>

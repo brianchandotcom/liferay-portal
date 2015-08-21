@@ -158,6 +158,15 @@
 					Liferay.Util.showCapsLock(event, '<portlet:namespace />passwordCapsLockSpan');
 				}
 			);
+
+			AUI.$('#<portlet:namespace/>fm').on(
+				'submit',
+				function(event) {
+					var redirect = AUI.$('#<portlet:namespace/>redirect');
+
+					redirect.val(redirect.val() + window.location.hash);
+				}
+			);
 		</aui:script>
 	</c:otherwise>
 </c:choose>

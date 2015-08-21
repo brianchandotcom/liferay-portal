@@ -386,6 +386,10 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static void assertNoPoshiWarnings() throws Exception {
+		if (!PropsValues.TEST_ASSERT_WARNING_EXCEPTIONS) {
+			return;
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		if (!_javaScriptExceptions.isEmpty()) {

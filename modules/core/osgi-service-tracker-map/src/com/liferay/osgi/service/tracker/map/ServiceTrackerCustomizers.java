@@ -12,65 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.kernel.registry;
-
-import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTrackerCustomizer;
+package com.liferay.osgi.service.tracker.map;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
+
 /**
- * @author Roberto Díaz
+ * @author Carlos Sierra Andrés
  */
-public class ServiceTrackerCustomizerFactory {
-
-	public static <S> ServiceTrackerCustomizer<S, S> fromPredicateFilter(
-		final PredicateFilter<S> predicateFilter) {
-
-		return new ServiceTrackerCustomizer<S, S>() {
-
-			@Override
-			public S addingService(ServiceReference<S> serviceReference) {
-				Registry registry = RegistryUtil.getRegistry();
-
-				S service = registry.getService(serviceReference);
-
-				try {
-					if (predicateFilter.filter(service)) {
-						return service;
-					}
-				}
-				catch (Exception e) {
-				}
-
-				registry.ungetService(serviceReference);
-
-				return null;
-			}
-
-			@Override
-			public void removedService(
-				ServiceReference<S> serviceReference, S service) {
-			}
-
-			@Override
-			public void modifiedService(
-				ServiceReference<S> serviceReference, S service) {
-
-				Registry registry = RegistryUtil.getRegistry();
-
-				registry.ungetService(serviceReference);
-			}
-		};
-	}
+public class ServiceTrackerCustomizers {
 
 	public static <S> ServiceTrackerCustomizer<S, ServiceWithProperties<S>>
-		serviceWithProperties() {
+		serviceWithProperties(final BundleContext bundleContext) {
 
 		return new ServiceTrackerCustomizer<S, ServiceWithProperties<S>>() {
 
@@ -78,9 +36,7 @@ public class ServiceTrackerCustomizerFactory {
 			public ServiceWithProperties<S> addingService(
 				final ServiceReference<S> reference) {
 
-				Registry registry = RegistryUtil.getRegistry();
-
-				final S service = registry.getService(reference);
+				final S service = bundleContext.getService(reference);
 
 				if (service == null) {
 					return null;
@@ -105,7 +61,7 @@ public class ServiceTrackerCustomizerFactory {
 				}
 
 				catch (Throwable t) {
-					registry.ungetService(reference);
+					bundleContext.ungetService(reference);
 
 					throw t;
 				}
@@ -122,9 +78,7 @@ public class ServiceTrackerCustomizerFactory {
 				ServiceReference<S> reference,
 				ServiceWithProperties<S> service) {
 
-				Registry registry = RegistryUtil.getRegistry();
-
-				registry.ungetService(reference);
+				bundleContext.ungetService(reference);
 			}
 		};
 	}

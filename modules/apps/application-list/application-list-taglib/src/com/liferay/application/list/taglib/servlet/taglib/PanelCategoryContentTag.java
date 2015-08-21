@@ -54,6 +54,10 @@ public class PanelCategoryContentTag extends BasePanelTag {
 		_panelCategory = panelCategory;
 	}
 
+	public void setShowOpen(boolean showOpen) {
+		_showOpen = showOpen;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -71,11 +75,15 @@ public class PanelCategoryContentTag extends BasePanelTag {
 		request.setAttribute(
 			"liferay-application-list:panel-category-content:panelCategory",
 			_panelCategory);
+		request.setAttribute(
+			"liferay-application-list:panel-category-content:showOpen",
+			_showOpen);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PanelCategoryContentTag.class);
 
 	private PanelCategory _panelCategory;
+	private boolean _showOpen = false;
 
 }

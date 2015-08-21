@@ -42,12 +42,17 @@ public class PanelCategoryTag extends BasePanelTag {
 		_showHeader = showHeader;
 	}
 
+	public void setShowOpen(boolean showOpen) {
+		_showOpen = showOpen;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_panelCategory = null;
 		_showHeader = false;
+		_showOpen = false;
 	}
 
 	@Override
@@ -62,7 +67,7 @@ public class PanelCategoryTag extends BasePanelTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		boolean active = false;
+		boolean active = _showOpen;
 
 		PanelAppRegistry panelAppRegistry =
 			(PanelAppRegistry)request.getAttribute(
@@ -79,7 +84,7 @@ public class PanelCategoryTag extends BasePanelTag {
 			_panelCategory, themeDisplay.getPermissionChecker(),
 			themeDisplay.getScopeGroup());
 
-		if (!panelApps.isEmpty()) {
+		if (!_showOpen && !panelApps.isEmpty()) {
 			PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
 				panelAppRegistry, panelCategoryRegistry);
 
@@ -107,9 +112,13 @@ public class PanelCategoryTag extends BasePanelTag {
 
 		request.setAttribute(
 			"liferay-application-list:panel-category:showHeader", _showHeader);
+
+		request.setAttribute(
+			"liferay-application-list:panel-category:showOpen", _showOpen);
 	}
 
 	private PanelCategory _panelCategory;
 	private boolean _showHeader = false;
+	private boolean _showOpen = false;
 
 }

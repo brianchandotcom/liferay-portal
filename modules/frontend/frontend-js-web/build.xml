@@ -5,7 +5,7 @@
 	<property name="alloy.bootstrap.version" value="3.2.0-2" />
 	<property name="alloy.version" value="3.0.1" />
 	<property name="jquery.plugins.form.version" value="3.51" />
-	<property name="lexicon.version" value="0.1.11" />
+	<property name="lexicon.version" value="0.1.12" />
 	<property name="third.party.dir" value="../../../portal-web/third-party" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />

@@ -7,7 +7,7 @@
 	<property name="alloy-font-awesome.version" value="2.0" />
 	<property name="css.dir" value="../frontend-css-web/src/META-INF/resources" />
 	<property name="frontend.js.web.dir" value="../frontend-js-web" />
-	<property name="lexicon.version" value="0.1.11" />
+	<property name="lexicon.version" value="0.1.12" />
 	<property name="themes.dir" value="src/META-INF/resources" />
 	<property name="third.party.dir" value="../../../portal-web/third-party" />
 

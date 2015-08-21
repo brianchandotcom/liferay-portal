@@ -162,6 +162,8 @@
 				social-office-user-information,\
 				social-office-wcm
 
+			ignore.errors.file.name=${lp.portal.project.dir}/portal-web/test-ignorable-error-lines.xml
+
 			product.names=\
 				extra-apps,\
 				liferay-connected-services,\
@@ -213,7 +215,11 @@
 
 			test.console.log.file.name=${liferay.home}/logs/liferay.${current.date}.xml
 
+			test.console.shut.down.file.name=${lp.portal.project.dir}/console-shut-down
+
 			test.name=${test.name}
+
+			test.poshi.warnings.file.name=${lp.portal.project.dir}/poshi-warnings.xml
 
 			test.run.locally=true
 		</echo>

@@ -160,11 +160,17 @@ public class PropsValues {
 	public static final String TEST_CONSOLE_LOG_FILE_NAME = PropsUtil.get(
 		"test.console.log.file.name");
 
+	public static final String TEST_CONSOLE_SHUT_DOWN_FILE_NAME = PropsUtil.get(
+		"test.console.shut.down.file.name");
+
 	public static final boolean TEST_DATABASE_MINIMAL = GetterUtil.getBoolean(
 		PropsUtil.get("test.database.minimal"));
 
 	public static final String TEST_DEPENDENCIES_DIR_NAME = PropsUtil.get(
 		"test.dependencies.dir.name");
+
+	public static final String TEST_POSHI_WARNINGS_FILE_NAME = PropsUtil.get(
+		"test.poshi.warnings.file.name");
 
 	public static final boolean TEST_RUN_LOCALLY = GetterUtil.getBoolean(
 		PropsUtil.get("test.run.locally"));

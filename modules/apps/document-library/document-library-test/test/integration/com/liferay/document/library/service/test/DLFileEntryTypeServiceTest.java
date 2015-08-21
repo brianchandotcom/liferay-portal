@@ -50,6 +50,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -265,8 +266,8 @@ public class DLFileEntryTypeServiceTest {
 			String name = RandomTestUtil.randomString();
 			String description = RandomTestUtil.randomString();
 			DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-				DLFileEntry.class.getName(), new Locale[] {LocaleUtil.SPAIN},
-				LocaleUtil.SPAIN);
+				DLFileEntryMetadata.class.getName(),
+				new Locale[] {LocaleUtil.SPAIN}, LocaleUtil.SPAIN);
 
 			DLFileEntryType dlFileEntryType =
 				DLFileEntryTypeLocalServiceUtil.addFileEntryType(
@@ -300,8 +301,8 @@ public class DLFileEntryTypeServiceTest {
 			String name = RandomTestUtil.randomString();
 			String description = RandomTestUtil.randomString();
 			DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-				DLFileEntry.class.getName(), new Locale[] {LocaleUtil.SPAIN},
-				LocaleUtil.SPAIN);
+				DLFileEntryMetadata.class.getName(),
+				new Locale[] {LocaleUtil.SPAIN}, LocaleUtil.SPAIN);
 
 			DLFileEntryType dlFileEntryType =
 				DLFileEntryTypeLocalServiceUtil.addFileEntryType(

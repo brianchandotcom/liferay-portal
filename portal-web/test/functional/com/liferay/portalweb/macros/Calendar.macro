@@ -21,7 +21,7 @@
 		<if>
 			<equals arg1="${menuListOption}" arg2="RSS" />
 			<then>
-				<execute function="SelectWindow#selectPopUp" />
+				<execute function="SelectWindow#selectPopUp" locator1="null" />
 			</then>
 		</if>
 	</command>

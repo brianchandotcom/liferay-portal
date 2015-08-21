@@ -39,7 +39,7 @@ public interface FreeMarkerEngineConfiguration {
 	)
 	public String[] restrictedClasses();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(required = false)
 	public String[] restrictedPackages();
 
 	@Meta.AD(deflt = "serviceLocator", required = false)

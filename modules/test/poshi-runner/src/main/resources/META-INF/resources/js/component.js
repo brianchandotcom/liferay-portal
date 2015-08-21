@@ -158,18 +158,18 @@ YUI.add(
 					handleCurrentCommandSelect: function(event) {
 						var instance = this;
 
-						var xmlLog = instance.get(STR_XML_LOG);
-
 						var currentTargetAncestor = event.currentTarget.ancestor();
 
-						if (!currentTargetAncestor.hasClass('current-scope')) {
-							event.halt(true);
-						}
-
 						if (currentTargetAncestor) {
+							if (!currentTargetAncestor.hasClass('current-scope')) {
+								event.halt(true);
+							}
+
 							instance._parseCommandLog(currentTargetAncestor);
 
 							var functionLinkId = currentTargetAncestor.getData(ATTR_DATA_FUNCTION_LINK_ID);
+
+							var xmlLog = instance.get(STR_XML_LOG);
 
 							var linkedFunction = xmlLog.one('.line-group[data-functionLinkId="' + functionLinkId + '"]');
 
@@ -184,13 +184,15 @@ YUI.add(
 
 						var currentTargetAncestor = event.currentTarget.ancestor();
 
-						if (!currentTargetAncestor.hasClass('current-scope')) {
-							event.halt(true);
+						if (currentTargetAncestor) {
+							if (!currentTargetAncestor.hasClass('current-scope')) {
+								event.halt(true);
+							}
+
+							instance._displayNode(currentTargetAncestor);
+
+							instance._selectCurrentScope(currentTargetAncestor);
 						}
-
-						instance._displayNode(currentTargetAncestor);
-
-						instance._selectCurrentScope(currentTargetAncestor);
 					},
 
 					handleErrorBtns: function(event) {
@@ -281,23 +283,21 @@ YUI.add(
 							if (!inSidebar) {
 								currentTarget = currentTarget.one('.btn-collapse');
 							}
+						}
 
-							if (!currentTarget) {
-								return;
+						if (currentTarget) {
+							var lookUpScope = instance.get(STR_XML_LOG);
+
+							if (inSidebar) {
+								lookUpScope = instance.get(STR_SIDEBAR);
 							}
+
+							var linkId = currentTarget.getData(ATTR_DATA_BUTTON_LINK_ID);
+
+							var collapsibleNode = lookUpScope.one('.child-container[data-btnLinkId="' + linkId + '"]');
+
+							instance._toggleContainer(collapsibleNode, inSidebar);
 						}
-
-						var lookUpScope = instance.get(STR_XML_LOG);
-
-						if (inSidebar) {
-							lookUpScope = instance.get(STR_SIDEBAR);
-						}
-
-						var linkId = currentTarget.getData(ATTR_DATA_BUTTON_LINK_ID);
-
-						var collapsibleNode = lookUpScope.one('.child-container[data-btnLinkId="' + linkId + '"]');
-
-						instance._toggleContainer(collapsibleNode, inSidebar);
 					},
 
 					handleToggleCommandLogBtn: function(event) {
@@ -326,13 +326,7 @@ YUI.add(
 						sidebar.delegate(
 							'click',
 							A.rbind('handleToggleCollapseBtn', instance, true),
-							'.linkable.current-scope .line-container'
-						);
-
-						sidebar.delegate(
-							'click',
-							A.rbind('handleToggleCollapseBtn', instance, true),
-							'.expand-toggle'
+							'.expand-toggle, .linkable.current-scope .line-container'
 						);
 
 						var logBtn = sidebar.all('.btn-command-log');
@@ -381,13 +375,7 @@ YUI.add(
 						xmlLog.delegate(
 							'click',
 							A.rbind('handleToggleCollapseBtn', instance, false),
-							'.btn-collapse, .btn-var'
-						);
-
-						xmlLog.delegate(
-							'click',
-							A.rbind('handleToggleCollapseBtn', instance, false),
-							'.current-scope > .line-container'
+							'.btn-collapse, .btn-var, .current-scope > .line-container'
 						);
 
 						xmlLog.delegate(

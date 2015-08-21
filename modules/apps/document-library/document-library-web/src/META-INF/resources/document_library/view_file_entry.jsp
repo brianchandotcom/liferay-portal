@@ -239,10 +239,12 @@ final DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDispla
 
 					<%
 					PortalIncludeUtil.include(pageContext, new PortalIncludeUtil.HTMLRenderer() {
+
 						@Override
 						public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 							dlViewFileVersionDisplayContext.renderPreview(request, response);
 						}
+
 					});
 					%>
 

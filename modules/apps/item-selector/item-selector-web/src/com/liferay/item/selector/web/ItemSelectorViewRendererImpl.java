@@ -61,6 +61,7 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 		PortalIncludeUtil.include(
 			pageContext,
 			new PortalIncludeUtil.HTMLRenderer() {
+
 				@Override
 				public void renderHTML(
 						HttpServletRequest request,
@@ -70,8 +71,9 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 					_itemSelectorView.renderHTML(
 						request, response, _itemSelectorCriterion, _portletURL,
 						_itemSelectedEventName);
+				}
 
-				}});
+			});
 	}
 
 	private final String _itemSelectedEventName;

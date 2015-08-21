@@ -663,7 +663,7 @@
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute function="Check" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_CHECKBOX" />
-		<execute function="Click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
+		<execute function="Click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ICON" />
 		<execute function="AssertClick" locator1="CPWebcontent#ENTRY_MENULIST_COPY" value1="Copy" />
 
 		<execute function="AssertClick" locator1="CPWebcontentCopy#COPY_BUTTON" value1="Copy" />
@@ -902,8 +902,8 @@
 
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="Click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
-		<execute function="AssertClick" locator1="CPWebcontent#ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="Click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ICON" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPWebcontent#ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontent#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Web Content Article ${webContentTitle} was moved to the Recycle Bin. Undo" />
 	</command>
 
@@ -924,7 +924,7 @@
 	<command name="paginateRelatedAssets">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="Click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
+		<execute function="Click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ICON" />
 		<execute function="AssertClick" locator1="CPWebcontent#ENTRY_MENULIST_EDIT" value1="Edit" />
 
 		<execute function="AssertClick" locator1="CPWebcontentEditwebcontent#MENU_RELATED_ASSETS" value1="Related Assets" />
@@ -1003,7 +1003,7 @@
 		<execute function="AssertTextNotPresent" locator1="CPWebcontent#SEARCH_RESULTS_TITLE" value1="${webContentTitle}" />
 		<execute function="AssertTextNotPresent" locator1="CPWebcontent#SEARCH_RESULTS_BODY" value1="${webContentContent}" />
 		<execute function="AssertClick" locator1="CPWebcontent#SEARCH_RESULTS_FILTER_REMOVE_BUTTON" value1="Remove" />
-		<execute function="AssertTextEquals" locator1="CPWebcontent#SEARCH_RESULTS_TITLE" value1="${webContentTitle}" />
+		<execute function="AssertTextPresent" value1="${webContentTitle}" />
 	</command>
 
 	<command name="searchPGViaWCS">

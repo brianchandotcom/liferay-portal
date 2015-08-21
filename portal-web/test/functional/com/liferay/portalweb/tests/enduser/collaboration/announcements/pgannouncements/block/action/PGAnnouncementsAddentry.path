@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>TITLE_FIELD</td>
-	<td>//input[contains(@id,'84') and contains(@id,'title')]</td>
+	<td>//input[contains(@id,'AnnouncementsPortlet_title')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>URL_FIELD</td>
-	<td>//input[contains(@id,'84') and contains(@id,'url')]</td>
+	<td>//input[contains(@id,'AnnouncementsPortlet_url')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>PRIORITY_SELECT</td>
-	<td>//select[contains(@id,'84') and contains(@id,'priority')]</td>
+	<td>//select[contains(@id,'AnnouncementsPortlet_priority')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,17 +41,17 @@
 <!--DISPLAY_DATE-->
 <tr>
 	<td>DISPLAY_DATE_DATE_INPUT</td>
-	<td>//input[contains(@id,'84') and contains(@id,'displayDate')]</td>
+	<td>//input[contains(@id,'AnnouncementsPortlet_displayDate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_DATE_TIME_INPUT</td>
-	<td>//input[contains(@id,'84') and contains(@id,'displayDateTime')]</td>
+	<td>//input[contains(@id,'AnnouncementsPortlet_displayDateTime')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX</td>
-	<td>//input[contains(@id,'84') and contains(@id,'fmdisplayDate')]</td>
+	<td>//input[contains(@id,'AnnouncementsPortlet_fmdisplayDate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,12 +62,12 @@
 <!--EXPIRATION_DATE-->
 <tr>
 	<td>EXPIRATION_DATE_DATE_INPUT</td>
-	<td>//input[contains(@id,'84') and contains(@id,'expirationDate')]</td>
+	<td>//input[contains(@id,'AnnouncementsPortlet_expirationDate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EXPIRATION_DATE_TIME_INPUT</td>
-	<td>//input[contains(@id,'84') and contains(@id,'expirationDateTime')]</td>
+	<td>//input[contains(@id,'AnnouncementsPortlet_expirationDateTime')]</td>
 	<td></td>
 </tr>
 </tbody>

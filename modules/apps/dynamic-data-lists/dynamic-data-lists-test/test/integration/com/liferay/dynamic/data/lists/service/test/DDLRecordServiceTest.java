@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -77,7 +78,8 @@ public class DDLRecordServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_ddmStructureTestHelper = new DDMStructureTestHelper(_group);
+		_ddmStructureTestHelper = new DDMStructureTestHelper(
+			PortalUtil.getClassNameId(DDLRecordSet.class), _group);
 		_recordSetTestHelper = new DDLRecordSetTestHelper(_group);
 	}
 

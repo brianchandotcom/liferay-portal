@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.Set;
 
@@ -72,7 +73,8 @@ public class DDLRecordSetImplTest {
 		ddmForm = DDMFormTestUtil.createDDMForm("Text2", "Text3");
 
 		DDMTemplate template = DDMTemplateTestUtil.addTemplate(
-			_group.getGroupId(), ddmStructure.getStructureId(), "json",
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(DDLRecordSet.class), "json",
 			DDMFormJSONSerializerUtil.serialize(ddmForm), LocaleUtil.US);
 
 		Set<String> fieldNames = ddmStructure.getFieldNames();

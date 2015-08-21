@@ -138,6 +138,7 @@ public class JournalFolderServiceTest {
 
 		DDMTemplate ddmTemplate2 = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure2.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
 			LocaleUtil.getDefault());
 
 		try {
@@ -248,6 +249,7 @@ public class JournalFolderServiceTest {
 
 		DDMTemplate ddmTemplate1 = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure1.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
 			LocaleUtil.getDefault());
 
 		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
@@ -309,6 +311,7 @@ public class JournalFolderServiceTest {
 
 		DDMTemplate ddmTemplate1 = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure1.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
 			LocaleUtil.getDefault());
 
 		String xml = DDMStructureTestUtil.getSampleStructuredContent(
@@ -380,6 +383,7 @@ public class JournalFolderServiceTest {
 
 		DDMTemplate ddmTemplate1 = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure1.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
 			LocaleUtil.getDefault());
 
 		JournalTestUtil.addArticleWithXMLContent(
@@ -448,6 +452,7 @@ public class JournalFolderServiceTest {
 
 		DDMTemplate ddmTemplate1 = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure1.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
 			LocaleUtil.getDefault());
 
 		JournalTestUtil.addArticleWithXMLContent(
@@ -531,6 +536,7 @@ public class JournalFolderServiceTest {
 
 		DDMTemplate ddmTemplate1 = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure1.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
 			LocaleUtil.getDefault());
 
 		JournalTestUtil.addArticleWithXMLContent(

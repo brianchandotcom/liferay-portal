@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
+import com.liferay.portal.cache.ehcache.EhcacheConstants;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
-import com.liferay.portal.kernel.cache.cluster.ClusterLinkCallbackFactory;
-import com.liferay.portal.kernel.cache.configuration.CallbackConfiguration;
+import com.liferay.portal.kernel.cache.PortalCacheReplicator;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -90,8 +90,8 @@ public class EhcacheConfigurationHelperUtil {
 				getCacheManagerPeerListenerFactoryConfigurations(),
 			clusterAware, clusterEnabled, clusterLinkReplicationEnabled, props);
 
-		Set<CallbackConfiguration> cacheManagerListenerConfigurations =
-			_getCacheManagerListenerConfigurations(ehcacheConfiguration, props);
+		Set<Properties> cacheManagerListenerProperties =
+			_getCacheManagerListenerProperties(ehcacheConfiguration, props);
 
 		PortalCacheConfiguration defaultPortalCacheConfiguration =
 			_parseCacheConfiguration(
@@ -116,15 +116,15 @@ public class EhcacheConfigurationHelperUtil {
 
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration =
 			new PortalCacheManagerConfiguration(
-				cacheManagerListenerConfigurations,
-				defaultPortalCacheConfiguration, portalCacheConfigurations);
+				cacheManagerListenerProperties, defaultPortalCacheConfiguration,
+				portalCacheConfigurations);
 
 		return new ObjectValuePair<>(
 			ehcacheConfiguration, portalCacheManagerConfiguration);
 	}
 
-	private static Set<CallbackConfiguration>
-		_getCacheManagerListenerConfigurations(
+	private static Set<Properties>
+		_getCacheManagerListenerProperties(
 			Configuration ehcacheConfiguration, Props props) {
 
 		FactoryConfiguration<?> factoryConfiguration =
@@ -146,9 +146,7 @@ public class EhcacheConfigurationHelperUtil {
 
 		factoryConfiguration.setClass(null);
 
-		return Collections.singleton(
-			new CallbackConfiguration(
-				EhcacheCallbackFactory.INSTANCE, properties));
+		return Collections.singleton(properties);
 	}
 
 	private static String _getPropertiesString(
@@ -268,8 +266,8 @@ public class EhcacheConfigurationHelperUtil {
 				PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME;
 		}
 
-		Map<CallbackConfiguration, PortalCacheListenerScope>
-			portalCacheListenerConfigurations = new HashMap<>();
+		Set<ObjectValuePair<Properties, PortalCacheListenerScope>>
+			portalCacheListenerConfigurations = new HashSet<>();
 
 		List<CacheEventListenerFactoryConfiguration>
 			cacheEventListenerConfigurations =
@@ -297,24 +295,18 @@ public class EhcacheConfigurationHelperUtil {
 						PropsKeys.EHCACHE_CACHE_EVENT_LISTENER_FACTORY))) {
 
 				if (clusterAware && clusterEnabled) {
-					if (clusterLinkReplicationEnabled) {
-						portalCacheListenerConfigurations.put(
-							new CallbackConfiguration(
-								ClusterLinkCallbackFactory.INSTANCE,
-								properties),
-							portalCacheListenerScope);
-					}
-					else {
+					if (!clusterLinkReplicationEnabled) {
 						properties.put(
 							EhcacheConstants.
 								CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME,
 							factoryClassName);
-
-						portalCacheListenerConfigurations.put(
-							new CallbackConfiguration(
-								EhcacheCallbackFactory.INSTANCE, properties),
-							portalCacheListenerScope);
 					}
+
+					properties.put(PortalCacheReplicator.REPLICATOR, true);
+
+					portalCacheListenerConfigurations.add(
+						new ObjectValuePair<>(
+							properties, portalCacheListenerScope));
 				}
 			}
 			else if (!usingDefault) {
@@ -322,16 +314,15 @@ public class EhcacheConfigurationHelperUtil {
 					EhcacheConstants.CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME,
 					factoryClassName);
 
-				portalCacheListenerConfigurations.put(
-					new CallbackConfiguration(
-						EhcacheCallbackFactory.INSTANCE, properties),
-					portalCacheListenerScope);
+					portalCacheListenerConfigurations.add(
+						new ObjectValuePair<>(
+							properties, portalCacheListenerScope));
 			}
 		}
 
 		cacheEventListenerConfigurations.clear();
 
-		CallbackConfiguration portalCacheBootstrapLoaderConfiguration = null;
+		Properties portalCacheBootstrapLoaderProperties = null;
 
 		BootstrapCacheLoaderFactoryConfiguration
 			bootstrapCacheLoaderFactoryConfiguration =
@@ -339,28 +330,19 @@ public class EhcacheConfigurationHelperUtil {
 					getBootstrapCacheLoaderFactoryConfiguration();
 
 		if (bootstrapCacheLoaderFactoryConfiguration != null) {
-			Properties properties = _parseProperties(
+			portalCacheBootstrapLoaderProperties = _parseProperties(
 				bootstrapCacheLoaderFactoryConfiguration.getProperties(),
 				bootstrapCacheLoaderFactoryConfiguration.
 					getPropertySeparator(), props);
 
 			if (clusterAware && clusterEnabled) {
-				if (clusterLinkReplicationEnabled) {
-					portalCacheBootstrapLoaderConfiguration =
-						new CallbackConfiguration(
-							ClusterLinkCallbackFactory.INSTANCE, properties);
-				}
-				else {
-					properties.put(
+				if (!clusterLinkReplicationEnabled) {
+					portalCacheBootstrapLoaderProperties.put(
 						EhcacheConstants.
 							BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME,
 						_parseFactoryClassName(
 							bootstrapCacheLoaderFactoryConfiguration.
 								getFullyQualifiedClassPath(), props));
-
-					portalCacheBootstrapLoaderConfiguration =
-						new CallbackConfiguration(
-							EhcacheCallbackFactory.INSTANCE, properties);
 				}
 			}
 
@@ -372,7 +354,7 @@ public class EhcacheConfigurationHelperUtil {
 
 		return new EhcachePortalCacheConfiguration(
 			portalCacheName, portalCacheListenerConfigurations,
-			portalCacheBootstrapLoaderConfiguration, requireSerialization);
+			portalCacheBootstrapLoaderProperties, requireSerialization);
 	}
 
 	private static String _parseFactoryClassName(

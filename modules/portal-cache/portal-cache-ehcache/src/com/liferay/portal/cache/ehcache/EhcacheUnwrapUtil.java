@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache.internal;
+package com.liferay.portal.cache.ehcache;
 
+import com.liferay.portal.cache.ehcache.internal.EhcachePortalCache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheWrapper;
 
@@ -38,7 +39,7 @@ public class EhcacheUnwrapUtil {
 			EhcachePortalCache<?, ?> ehcachePortalCache =
 				(EhcachePortalCache<?, ?>)currentPortalCache;
 
-			return ehcachePortalCache.ehcache;
+			return ehcachePortalCache.getEhcache();
 		}
 
 		throw new IllegalArgumentException(

@@ -12,17 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.cache.test;
+package com.liferay.portal.kernel.cache;
 
-import com.liferay.portal.kernel.cache.PortalCacheReplicator;
-
-import java.io.Serializable;
+import java.util.Properties;
 
 /**
  * @author Tina Tian
  */
-public class TestPortalCacheReplicator
-	<K extends Serializable, V extends Serializable>
-		extends TestPortalCacheListener<K, V>
-		implements PortalCacheReplicator<K, V> {
+public interface PortalCacheBootstrapLoaderFactory {
+
+	public PortalCacheBootstrapLoader create(Properties properties);
+
 }

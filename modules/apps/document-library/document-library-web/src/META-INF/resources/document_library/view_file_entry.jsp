@@ -85,7 +85,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryC
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
-DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileVersion);
+final DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileVersion);
 %>
 
 <portlet:actionURL name="/document_library/edit_file_entry" var="editFileEntry" />
@@ -238,7 +238,12 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 				<c:if test="<%= PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED %>">
 
 					<%
-					dlViewFileVersionDisplayContext.renderPreview(request, response);
+					PortalIncludeUtil.include(pageContext, new PortalIncludeUtil.HTMLRenderer() {
+						@Override
+						public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+							dlViewFileVersionDisplayContext.renderPreview(request, response);
+						}
+					});
 					%>
 
 				</c:if>

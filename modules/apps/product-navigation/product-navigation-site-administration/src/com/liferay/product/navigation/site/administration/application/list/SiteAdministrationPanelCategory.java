@@ -51,7 +51,7 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
 	public String getJspPath() {
-		return "/META-INF/resources/sites/site_administration.jsp";
+		return "/sites/site_administration.jsp";
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getConfigurationJspPath() {
-		return "/META-INF/resources/facets/configuration/modified.jsp";
+		return "/facets/configuration/modified.jsp";
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getDisplayJspPath() {
-		return "/META-INF/resources/facets/view/modified.jsp";
+		return "/facets/view/modified.jsp";
 	}
 
 	public String getFacetClassName() {

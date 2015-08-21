@@ -18,7 +18,9 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -75,33 +77,45 @@ public class WabServletContextHelper extends ServletContextHelper {
 	public boolean handleSecurity(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		String pathInfo = null;
+		String targetPath = null;
 
-		if (request.getAttribute(
-				RequestDispatcher.INCLUDE_REQUEST_URI) != null) {
+		if (request.getDispatcherType() == DispatcherType.INCLUDE) {
+			targetPath = (String)request.getAttribute(
+				RequestDispatcher.INCLUDE_SERVLET_PATH);
 
-			pathInfo = (String)request.getAttribute(
+			String pathInfo = (String)request.getAttribute(
 				RequestDispatcher.INCLUDE_PATH_INFO);
+
+			if (pathInfo != null) {
+				targetPath = targetPath + pathInfo;
+			}
 		}
 		else {
-			pathInfo = request.getPathInfo();
+			targetPath = request.getPathInfo();
 		}
 
-		if (pathInfo == null) {
+		if (targetPath == null) {
 			return true;
 		}
 
-		if (pathInfo.startsWith("/")) {
-			pathInfo = pathInfo.substring(1);
+		if (targetPath.indexOf('/') != 0) {
+			targetPath = '/' + targetPath;
 		}
 
-		if (pathInfo.startsWith("META-INF/") ||
-			pathInfo.startsWith("OSGI-INF/") ||
-			pathInfo.startsWith("OSGI-OPT/") ||
-			pathInfo.startsWith("WEB-INF/")) {
+		if (targetPath.startsWith("/META-INF/") ||
+			targetPath.startsWith("/OSGI-INF/") ||
+			targetPath.startsWith("/OSGI-OPT/") ||
+			targetPath.startsWith("/WEB-INF/")) {
 
 			try {
-				response.sendError(HttpServletResponse.SC_FORBIDDEN, pathInfo);
+				ServletContext servletContext = request.getServletContext();
+
+				servletContext.log(
+					"[WAB ERROR] Attempt to load illegal path " + targetPath +
+						" in " + toString());
+
+				response.sendError(
+					HttpServletResponse.SC_FORBIDDEN, targetPath);
 			}
 			catch (IOException ioe) {
 				response.setStatus(HttpServletResponse.SC_FORBIDDEN);

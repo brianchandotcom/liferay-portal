@@ -37,7 +37,7 @@ public class FolderSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getConfigurationJspPath() {
-		return "/META-INF/resources/facets/configuration/folders.jsp";
+		return "/facets/configuration/folders.jsp";
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class FolderSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getDisplayJspPath() {
-		return "/META-INF/resources/facets/view/folders.jsp";
+		return "/facets/view/folders.jsp";
 	}
 
 	@Override

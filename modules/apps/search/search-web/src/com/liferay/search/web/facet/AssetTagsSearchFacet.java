@@ -37,7 +37,7 @@ public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getConfigurationJspPath() {
-		return "/META-INF/resources/facets/configuration/asset_tags.jsp";
+		return "/facets/configuration/asset_tags.jsp";
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getDisplayJspPath() {
-		return "/META-INF/resources/facets/view/asset_tags.jsp";
+		return "/facets/view/asset_tags.jsp";
 	}
 
 	public String getFacetClassName() {

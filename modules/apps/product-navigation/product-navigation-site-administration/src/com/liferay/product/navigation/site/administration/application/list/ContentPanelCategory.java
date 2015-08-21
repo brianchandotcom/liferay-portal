@@ -46,7 +46,7 @@ public class ContentPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
 	public String getJspPath() {
-		return "/META-INF/resources/content/content.jsp";
+		return "/content/content.jsp";
 	}
 
 	@Override

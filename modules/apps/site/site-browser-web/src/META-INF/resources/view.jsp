@@ -68,6 +68,7 @@ portletURL.setParameter("types", types);
 portletURL.setParameter("filter", filter);
 portletURL.setParameter("includeCompany", String.valueOf(includeCompany));
 portletURL.setParameter("includeUserPersonalSite", String.valueOf(includeUserPersonalSite));
+portletURL.setParameter("manualMembership", String.valueOf(manualMembership));
 portletURL.setParameter("eventName", eventName);
 portletURL.setParameter("target", target);
 %>

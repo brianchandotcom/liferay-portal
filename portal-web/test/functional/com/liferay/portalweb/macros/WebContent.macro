@@ -1003,7 +1003,7 @@
 		<execute function="AssertTextNotPresent" locator1="CPWebcontent#SEARCH_RESULTS_TITLE" value1="${webContentTitle}" />
 		<execute function="AssertTextNotPresent" locator1="CPWebcontent#SEARCH_RESULTS_BODY" value1="${webContentContent}" />
 		<execute function="AssertClick" locator1="CPWebcontent#SEARCH_RESULTS_FILTER_REMOVE_BUTTON" value1="Remove" />
-		<execute function="AssertTextPresent" locator1="CPWebcontent#SEARCH_RESULTS_TITLE" value1="${webContentTitle}" />
+		<execute function="AssertTextPresent" value1="${webContentTitle}" />
 	</command>
 
 	<command name="searchPGViaWCS">

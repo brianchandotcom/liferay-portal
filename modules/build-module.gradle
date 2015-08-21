@@ -1,4 +1,6 @@
 import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.OSDetector
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 buildscript {
 	repositories {
@@ -25,6 +27,7 @@ File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 File moduleFrameworkBaseDir = new File(liferay.liferayHome, "osgi")
 File nodejsDir = new File(buildDir, "nodejs")
 
+task downloadNode
 task setupNpmCache(type: NpmTask)
 
 group = "com.liferay"
@@ -119,6 +122,63 @@ dependencies {
 	xmlFormatter group: "com.liferay", name: "com.liferay.xml.formatter", version: "default"
 }
 
+downloadNode {
+	doLast {
+		String nodejsUrl = project.properties["nodejs.url"]
+
+		if (!nodejsUrl) {
+			String osName = "linux"
+
+			if (OSDetector.apple) {
+				osName = "osx"
+			}
+			else if (OSDetector.windows) {
+				osName = "windows"
+			}
+
+			nodejsUrl = project.properties["nodejs.url[${osName}${OSDetector.bitmode}]"]
+		}
+
+		if (!nodejsUrl) {
+			throw new GradleException("Unable to automatically detect the current operating system and architecture. Please manually set the property \"nodejs.url\" in gradle.properties to the location of NodeJS.")
+		}
+
+		nodejsUrl = nodejsUrl.replace('${nodejs.version}', project.properties["nodejs.version"])
+
+		File nodejsFile = FileUtil.get(project, nodejsUrl)
+
+		copy {
+			if (nodejsUrl.endsWith(".tar.gz")) {
+				eachFile new StripPathSegmentsAction(1)
+				from tarTree(nodejsFile)
+				includeEmptyDirs = false
+			}
+			else {
+				from nodejsFile
+			}
+
+			into nodejsDir
+		}
+
+		if (OSDetector.windows) {
+			String nodejsNpmUrl = project.properties["nodejs.npm.url"]
+
+			nodejsNpmUrl = nodejsNpmUrl.replace('${nodejs.npm.version}', project.properties["nodejs.npm.version"])
+
+			copy {
+				from zipTree(FileUtil.get(project, nodejsNpmUrl))
+				into nodejsDir
+			}
+		}
+	}
+
+	onlyIf {
+		!nodejsDir.exists()
+	}
+
+	outputs.dir nodejsDir
+}
+
 eclipse {
 	classpath {
 		file {
@@ -160,11 +220,12 @@ jspC {
 }
 
 node {
-	download = true
 	nodeModulesDir = nodejsDir
-	npmVersion = project.properties["nodejs.npm.version"]
-	version = project.properties["nodejs.version"]
 	workDir = nodejsDir
+}
+
+nodeSetup {
+	dependsOn downloadNode
 }
 
 npmSetup {
@@ -173,6 +234,7 @@ npmSetup {
 
 setupNpmCache {
 	args = ["config", "set", "cache", new File(nodejsDir, ".cache"), "--global"]
+	workingDir = node.nodeModulesDir
 }
 
 repositories {

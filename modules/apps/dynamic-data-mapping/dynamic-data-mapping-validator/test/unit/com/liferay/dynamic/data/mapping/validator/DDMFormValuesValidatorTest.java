@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.validator;
 
-import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldNameException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException;
@@ -24,8 +23,10 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesValidatorUtil;
-import com.liferay.dynamic.data.mapping.util.impl.DDMFormValuesValidatorImpl;
+import com.liferay.dynamic.data.mapping.validator.internal.DDMFormValuesValidatorImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -38,7 +39,7 @@ import org.junit.Test;
 /**
  * @author Marcellus Tavares
  */
-public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
+public class DDMFormValuesValidatorTest {
 
 	@Before
 	public void setUp() {
@@ -47,40 +48,45 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 
 	@Test(expected = StorageFieldNameException.class)
 	public void testValidationWithInvalidFieldName() throws Exception {
-		DDMForm ddmForm = createDDMForm("firstName");
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("firstName");
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
 		ddmFormValues.addDDMFormFieldValue(
-			createDDMFormFieldValue("lastName", null));
+			DDMFormValuesTestUtil.createDDMFormFieldValue("lastName", null));
 
 		DDMFormValuesValidatorUtil.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldNameException.class)
 	public void testValidationWithInvalidNestedFieldName() throws Exception {
-		DDMForm ddmForm = createDDMForm();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		DDMFormField ddmFormField = createTextDDMFormField("name");
+		DDMFormField ddmFormField =
+			DDMFormTestUtil.createLocalizableTextDDMFormField("name");
 
-		addNestedTextDDMFormFields(ddmFormField, "contact");
+		DDMFormTestUtil.addNestedTextDDMFormFields(ddmFormField, "contact");
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
 		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
 
 		localizedValue.addString(LocaleUtil.US, StringUtil.randomString());
 
-		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
-			"name", localizedValue);
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"name", localizedValue);
 
 		List<DDMFormFieldValue> nestedDDMFormFieldValues =
 			ddmFormFieldValue.getNestedDDMFormFieldValues();
 
 		nestedDDMFormFieldValues.add(
-			createDDMFormFieldValue("invalid", localizedValue));
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"invalid", localizedValue));
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
@@ -89,16 +95,19 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 
 	@Test(expected = StorageFieldValueException.class)
 	public void testValidationWithLocalizableField() throws Exception {
-		DDMForm ddmForm = createDDMForm();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		DDMFormField ddmFormField = createTextDDMFormField("name");
+		DDMFormField ddmFormField =
+			DDMFormTestUtil.createLocalizableTextDDMFormField("name");
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
 		ddmFormValues.addDDMFormFieldValue(
-			createDDMFormFieldValue("name", new UnlocalizedValue("Joe")));
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"name", new UnlocalizedValue("Joe")));
 
 		DDMFormValuesValidatorUtil.validate(ddmFormValues);
 	}
@@ -107,7 +116,7 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 	public void testValidationWithMissingNestedRequiredField()
 		throws Exception {
 
-		DDMForm ddmForm = createDDMForm();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = new DDMFormField("name", "text");
 
@@ -115,14 +124,16 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 			ddmFormField.getNestedDDMFormFields();
 
 		nestedDDMFormFields.add(
-			createTextDDMFormField("contact", "", false, false, true));
+			DDMFormTestUtil.createTextDDMFormField(
+				"contact", "", false, false, true));
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
-		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
-			"name", null);
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue("name", null);
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
@@ -133,7 +144,7 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 	public void testValidationWithMissingNestedRequiredFieldValue()
 		throws Exception {
 
-		DDMForm ddmForm = createDDMForm();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = new DDMFormField("name", "text");
 
@@ -141,19 +152,22 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 			ddmFormField.getNestedDDMFormFields();
 
 		nestedDDMFormFields.add(
-			createTextDDMFormField("contact", "", false, false, true));
+			DDMFormTestUtil.createTextDDMFormField(
+				"contact", "", false, false, true));
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
-		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
-			"name", null);
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue("name", null);
 
 		List<DDMFormFieldValue> nestedDDMFormFieldValues =
 			ddmFormFieldValue.getNestedDDMFormFieldValues();
 
-		nestedDDMFormFieldValues.add(createDDMFormFieldValue("contact", null));
+		nestedDDMFormFieldValues.add(
+			DDMFormValuesTestUtil.createDDMFormFieldValue("contact", null));
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
@@ -162,33 +176,37 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 
 	@Test(expected = StorageFieldRequiredException.class)
 	public void testValidationWithMissingRequiredField() throws Exception {
-		DDMForm ddmForm = createDDMForm();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		DDMFormField ddmFormField = createTextDDMFormField("name");
+		DDMFormField ddmFormField =
+			DDMFormTestUtil.createLocalizableTextDDMFormField("name");
 
 		ddmFormField.setRequired(true);
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
 		DDMFormValuesValidatorUtil.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldValueException.class)
 	public void testValidationWithMissingRequiredFieldValue() throws Exception {
-		DDMForm ddmForm = createDDMForm();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		DDMFormField ddmFormField = createTextDDMFormField("name");
+		DDMFormField ddmFormField =
+			DDMFormTestUtil.createLocalizableTextDDMFormField("name");
 
 		ddmFormField.setRequired(true);
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
 		ddmFormValues.addDDMFormFieldValue(
-			createDDMFormFieldValue("name", null));
+			DDMFormValuesTestUtil.createDDMFormFieldValue("name", null));
 
 		DDMFormValuesValidatorUtil.validate(ddmFormValues);
 	}
@@ -197,22 +215,25 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 	public void testValidationWithNonRequiredFieldAndEmptyDefaultLocaleValue()
 		throws Exception {
 
-		DDMForm ddmForm = createDDMForm(
-			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			DDMFormTestUtil.createAvailableLocales(LocaleUtil.US),
+			LocaleUtil.US);
 
-		DDMFormField ddmFormField = createTextDDMFormField(
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
 			"name", "Name", true, false, false);
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
 		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
 
 		localizedValue.addString(LocaleUtil.US, StringPool.BLANK);
 
-		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
-			"name", localizedValue);
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"name", localizedValue);
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
@@ -221,15 +242,17 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 
 	@Test
 	public void testValidationWithNonRequiredFieldValue() throws Exception {
-		DDMForm ddmForm = createDDMForm(
-			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			DDMFormTestUtil.createAvailableLocales(LocaleUtil.US),
+			LocaleUtil.US);
 
-		DDMFormField ddmFormField = createTextDDMFormField(
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
 			"name", "Name", true, false, false);
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
 		DDMFormValuesValidatorUtil.validate(ddmFormValues);
 	}
@@ -245,22 +268,25 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 	public void testValidationWithRequiredFieldAndEmptyDefaultLocaleValue()
 		throws Exception {
 
-		DDMForm ddmForm = createDDMForm(
-			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			DDMFormTestUtil.createAvailableLocales(LocaleUtil.US),
+			LocaleUtil.US);
 
-		DDMFormField ddmFormField = createTextDDMFormField(
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
 			"name", "Name", true, false, true);
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
 		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
 
 		localizedValue.addString(LocaleUtil.US, StringPool.BLANK);
 
-		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
-			"name", localizedValue);
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"name", localizedValue);
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
@@ -271,17 +297,20 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 	public void testValidationWithRequiredFieldAndEmptyTranslatedValue()
 		throws Exception {
 
-		DDMForm ddmForm = createDDMForm(
-			createAvailableLocales(LocaleUtil.US, LocaleUtil.BRAZIL),
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			DDMFormTestUtil.createAvailableLocales(
+				LocaleUtil.US, LocaleUtil.BRAZIL),
 			LocaleUtil.US);
 
-		DDMFormField ddmFormField = createTextDDMFormField(
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
 			"name", "Name", true, false, true);
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(
-			ddmForm, createAvailableLocales(LocaleUtil.US, LocaleUtil.BRAZIL),
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm,
+			DDMFormTestUtil.createAvailableLocales(
+				LocaleUtil.US, LocaleUtil.BRAZIL),
 			LocaleUtil.US);
 
 		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
@@ -289,8 +318,9 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 		localizedValue.addString(LocaleUtil.US, StringUtil.randomString());
 		localizedValue.addString(LocaleUtil.BRAZIL, StringPool.BLANK);
 
-		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
-			"name", localizedValue);
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"name", localizedValue);
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
@@ -299,20 +329,23 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 
 	@Test(expected = StorageFieldValueException.class)
 	public void testValidationWithRequiredFieldAndNullValue() throws Exception {
-		DDMForm ddmForm = createDDMForm(
-			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			DDMFormTestUtil.createAvailableLocales(LocaleUtil.US),
+			LocaleUtil.US);
 
-		DDMFormField ddmFormField = createTextDDMFormField(
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
 			"name", "Name", true, false, true);
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
 		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
 
-		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
-			"name", localizedValue);
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"name", localizedValue);
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
@@ -323,32 +356,35 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 	public void testValidationWithRequiredFieldAndWithNoValue()
 		throws Exception {
 
-		DDMForm ddmForm = createDDMForm(
-			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			DDMFormTestUtil.createAvailableLocales(LocaleUtil.US),
+			LocaleUtil.US);
 
-		DDMFormField ddmFormField = createTextDDMFormField(
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
 			"name", "Name", true, false, true);
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
 		DDMFormValuesValidatorUtil.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldValueException.class)
 	public void testValidationWithSeparatorField() throws Exception {
-		DDMForm ddmForm = createDDMForm();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		DDMFormField ddmFormField = createSeparatorDDMFormField(
+		DDMFormField ddmFormField = DDMFormTestUtil.createSeparatorDDMFormField(
 			"separator", false);
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
 		ddmFormValues.addDDMFormFieldValue(
-			createDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"separator", new UnlocalizedValue("separator value")));
 
 		DDMFormValuesValidatorUtil.validate(ddmFormValues);
@@ -356,45 +392,50 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 
 	@Test(expected = StorageFieldValueException.class)
 	public void testValidationWithUnlocalizableField() throws Exception {
-		DDMForm ddmForm = createDDMForm();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		DDMFormField ddmFormField = createTextDDMFormField(
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
 			"name", "", false, false, false);
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
 		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
 
 		localizedValue.addString(LocaleUtil.US, "Joe");
 
 		ddmFormValues.addDDMFormFieldValue(
-			createDDMFormFieldValue("name", localizedValue));
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"name", localizedValue));
 
 		DDMFormValuesValidatorUtil.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldValueException.class)
 	public void testValidationWithValueSetForTransientField() throws Exception {
-		DDMForm ddmForm = createDDMForm();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = new DDMFormField("fieldset", "fieldset");
 
-		addNestedTextDDMFormFields(ddmFormField, "name");
+		DDMFormTestUtil.addNestedTextDDMFormFields(ddmFormField, "name");
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
-		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
-			"fieldset", new UnlocalizedValue("Value"));
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"fieldset", new UnlocalizedValue("Value"));
 
 		List<DDMFormFieldValue> nestedDDMFormFieldValues =
 			ddmFormFieldValue.getNestedDDMFormFieldValues();
 
 		nestedDDMFormFieldValues.add(
-			createDDMFormFieldValue("name", new UnlocalizedValue("Joe")));
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"name", new UnlocalizedValue("Joe")));
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
@@ -403,13 +444,15 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 
 	@Test(expected = StorageFieldValueException.class)
 	public void testValidationWithWrongAvailableLocales() throws Exception {
-		DDMForm ddmForm = createDDMForm();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		DDMFormField ddmFormField = createTextDDMFormField("name");
+		DDMFormField ddmFormField =
+			DDMFormTestUtil.createLocalizableTextDDMFormField("name");
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
 		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
 
@@ -417,27 +460,31 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 		localizedValue.addString(LocaleUtil.US, "Joe");
 
 		ddmFormValues.addDDMFormFieldValue(
-			createDDMFormFieldValue("name", localizedValue));
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"name", localizedValue));
 
 		DDMFormValuesValidatorUtil.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldValueException.class)
 	public void testValidationWithWrongDefaultLocale() throws Exception {
-		DDMForm ddmForm = createDDMForm();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		DDMFormField ddmFormField = createTextDDMFormField("name");
+		DDMFormField ddmFormField =
+			DDMFormTestUtil.createLocalizableTextDDMFormField("name");
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
 		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.BRAZIL);
 
 		localizedValue.addString(LocaleUtil.US, "Joe");
 
 		ddmFormValues.addDDMFormFieldValue(
-			createDDMFormFieldValue("name", localizedValue));
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"name", localizedValue));
 
 		DDMFormValuesValidatorUtil.validate(ddmFormValues);
 	}
@@ -446,7 +493,7 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 	public void testValidationWithWrongValuesForNonRepeatableField()
 		throws Exception {
 
-		DDMForm ddmForm = createDDMForm();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = new DDMFormField("name", "text");
 
@@ -454,23 +501,26 @@ public class DDMFormValuesValidatorTest extends BaseDDMTestCase {
 			ddmFormField.getNestedDDMFormFields();
 
 		nestedDDMFormFields.add(
-			createTextDDMFormField("contact", "", false, false, true));
+			DDMFormTestUtil.createTextDDMFormField(
+				"contact", "", false, false, true));
 
-		addDDMFormFields(ddmForm, ddmFormField);
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
 
-		DDMFormValues ddmFormValues = createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
-		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
-			"name", new UnlocalizedValue("name value"));
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"name", new UnlocalizedValue("name value"));
 
 		List<DDMFormFieldValue> nestedDDMFormFieldValues =
 			ddmFormFieldValue.getNestedDDMFormFieldValues();
 
 		nestedDDMFormFieldValues.add(
-			createDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"contact", new UnlocalizedValue("contact value 1")));
 		nestedDDMFormFieldValues.add(
-			createDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"contact", new UnlocalizedValue("contact value 2")));
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);

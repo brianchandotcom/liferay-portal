@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<liferay-portlet-app>
+	<portlet>
+		<portlet-name>1</portlet-name>
+	</portlet>
+</liferay-portlet-app>

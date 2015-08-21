@@ -23,34 +23,34 @@ Group siteGroup = (Group)request.getAttribute("my_sites.jsp-siteGroup");
 String siteName = GetterUtil.getString(request.getAttribute("my_sites.jsp-siteGroup"), siteGroup.getDescriptiveName(locale));
 boolean showPrivateLabel = (Boolean)request.getAttribute("my_sites.jsp-showPrivateLabel");
 boolean showStagingLabel = (Boolean)request.getAttribute("my_sites.jsp-showStagingLabel");
+
+String groupFriendlyURL = siteGroup.getFriendlyURL();
 %>
 
-<li class="<%= selectedSite ? "active" : StringPool.BLANK %>">
-
-	<%
-	String groupFriendlyURL = siteGroup.getFriendlyURL();
-	%>
-
-	<a href="<%= selectedSite ? "javascript:;" : HtmlUtil.escape(siteGroup.getDisplayURL(themeDisplay, privateLayout)) %>" id="<portlet:namespace /><%= groupFriendlyURL.substring(1) %><%= privateLayout ? "Private" : "Public" %>SiteLink" role="menuitem">
-		<%= HtmlUtil.escape(siteName) %>
-
-		<c:if test="<%= showStagingLabel %>">
-			<small class="pull-right"><liferay-ui:message key="staging" /></small>
-		</c:if>
-
-		<c:if test="<%= showPrivateLabel %>">
-			<small class="pull-right"><liferay-ui:message key='<%= privateLayout ? "private" : "public" %>' /></small>
-		</c:if>
-	</a>
-
-	<c:if test="<%= selectedSite %>">
-		<aui:script sandbox="<%= true %>">
-			$('#<portlet:namespace /><%= groupFriendlyURL.substring(1) %><%= privateLayout ? "Private" : "Public" %>SiteLink').on(
-				'click',
-				function(event) {
-					$('#<portlet:namespace /><%= PanelCategoryKeys.SITE_ADMINISTRATION %>TabLink').tab('show');
-				}
-			);
-		</aui:script>
+<liferay-util:buffer var="siteHtml">
+	<c:if test="<%= showStagingLabel %>">
+		<small class="pull-right"><liferay-ui:message key="staging" /></small>
 	</c:if>
-</li>
+
+	<c:if test="<%= showPrivateLabel %>">
+		<small class="pull-right"><liferay-ui:message key='<%= privateLayout ? "private" : "public" %>' /></small>
+	</c:if>
+</liferay-util:buffer>
+
+<liferay-application-list:panel-app
+	active="<%= selectedSite %>"
+	id='<%= groupFriendlyURL.substring(1) + (privateLayout ? "Private" : "Public") + "SiteLink" %>'
+	label="<%= HtmlUtil.escape(siteName) + siteHtml %>"
+	url='<%= selectedSite ? "javascript:;" : siteGroup.getDisplayURL(themeDisplay, privateLayout) %>'
+/>
+
+<c:if test="<%= selectedSite %>">
+	<aui:script sandbox="<%= true %>">
+		$('#<portlet:namespace /><%= groupFriendlyURL.substring(1) %><%= privateLayout ? "Private" : "Public" %>SiteLink').on(
+			'click',
+			function(event) {
+				$('#<portlet:namespace /><%= PanelCategoryKeys.SITE_ADMINISTRATION %>TabLink').tab('show');
+			}
+		);
+	</aui:script>
+</c:if>

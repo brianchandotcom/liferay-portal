@@ -89,8 +89,8 @@ public class MBDisplayContextProvider {
 	}
 
 	private BundleContext _bundleContext;
-	private final Map<ServiceReference<MBDisplayContextFactory>,
-		MBDisplayContextFactory> _mbDisplayContextFactories =
-			new ConcurrentHashMap<>();
+	private final Map
+		<ServiceReference<MBDisplayContextFactory>, MBDisplayContextFactory>
+			_mbDisplayContextFactories = new ConcurrentHashMap<>();
 
 }

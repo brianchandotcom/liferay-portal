@@ -76,16 +76,19 @@ numberFormat.setMinimumIntegerDigits(2);
 
 		String curTimeZoneId = curTimeZone.getID();
 
-		String extraDisplayText;
+		String extraDisplayText = StringPool.BLANK;
 
 		if (curTimeZoneId.contains("Phoenix")) {
-			extraDisplayText = " (Phoenix)";
-		}
-		else if (curTimeZoneId.contains("Denver")) {
-			extraDisplayText = " (Denver)";
-		}
-		else {
-			extraDisplayText = StringPool.BLANK;
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(LanguageUtil.get(request, "phoenix"));
+			sb.append(StringPool.FORWARD_SLASH);
+			sb.append(LanguageUtil.get(request, "sonora"));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			extraDisplayText = sb.toString();
 		}
 	%>
 

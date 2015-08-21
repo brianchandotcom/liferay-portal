@@ -1,6 +1,137 @@
 @import "bourbon";
 @import "mixins";
 
+.control-menu {
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	z-index: 500;
+}
+
+.control-menu-level-1,
+.control-menu-level-2 {
+	padding-bottom: 5px;
+	padding-top: 5px;
+	position: relative;
+}
+
+.control-menu-level-1 {
+	background-color: rgba(31, 40, 46, 0.95);
+
+	.control-menu-nav {
+		@include media-query(null, 279px) {
+			@include flex-wrap(wrap);
+		}
+
+		> li {
+			@include media-query(null, 279px) {
+				margin-bottom: 2px;
+				margin-left: 2px;
+			}
+
+			&:first-child {
+				@include flex(1);
+
+				margin-left: 0;
+
+				@include media-query(null, 279px) {
+					@include flex(0 1 auto);
+				}
+			}
+
+			&:nth-last-child(2) {
+				@include flex(1);
+
+				@include media-query(null, 279px) {
+					@include flex(0 1 auto);
+				}
+			}
+		}
+	}
+}
+
+.control-menu-level-2 {
+	background-color: rgba(31, 40, 46, 0.85);
+	border-bottom: 1px solid rgb(31, 40, 46);
+
+	.control-menu-nav {
+		@include justify-content(space-between);
+		@include flex-wrap(wrap);
+
+		> li {
+			margin-bottom: 5px;
+			text-align: center;
+
+			@include sm() {
+				margin-bottom: 0;
+			}
+		}
+	}
+}
+
+.control-menu-nav {
+	@include display(flex);
+
+	list-style: none;
+	margin-bottom: 0;
+	padding-left: 0;
+
+	> li {
+		@include align-self(center);
+
+		display: block;
+		float: left;
+		margin-left: 16px;
+	}
+
+	> .active .control-menu-icon {
+		&,
+		&:focus,
+		&:hover {
+			color: #FFF;
+		}
+	}
+}
+
+.control-menu-icon {
+	color: #FFF;
+	display: inline-block;
+
+	&:focus,
+	&:hover {
+		color: #FFF;
+		text-decoration: none;
+	}
+
+	&.icon-monospaced,
+	.icon-monospaced {
+		font-size: 18px;
+	}
+}
+
+.control-menu-icon-label {
+	display: block;
+}
+
+.control-menu-level-2 .control-menu-nav {
+	> .active {
+		.control-menu-icon .icon-monospaced {
+			background-color: #3A4D5A;
+			border-radius: 4px;
+			color: #88C37C;
+		}
+
+		.control-menu-icon-label {
+			color: #FFF;
+		}
+	}
+
+	.control-menu-icon {
+		color: #869CAD;
+	}
+}
+
 @include sm() {
 	body.open {
 		.control-menu {

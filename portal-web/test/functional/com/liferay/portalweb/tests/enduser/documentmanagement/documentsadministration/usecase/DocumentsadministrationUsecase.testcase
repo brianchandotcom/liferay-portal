@@ -928,7 +928,16 @@
 			<var name="dmSubFolderName" value="DM SubFolder Name" />
 		</execute>
 
-		<execute macro="DMFolder#gotoPG">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+			<var name="siteScopeName" value="Global" />
+		</execute>
+
+		<execute macro="DMFolder#gotoCP">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMFolder#gotoCP">
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
 

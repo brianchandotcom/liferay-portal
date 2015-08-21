@@ -46,7 +46,7 @@ public class WabServletContextHelper extends ServletContextHelper {
 
 		Class<?> clazz = getClass();
 
-		_string = clazz.getSimpleName() + '[' + bundle.getBundleId() + ']';
+		_string = clazz.getSimpleName() + '[' + bundle + ']';
 	}
 
 	@Override

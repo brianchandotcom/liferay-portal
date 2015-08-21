@@ -41,6 +41,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeListener;
@@ -176,7 +177,7 @@ public class JspServlet extends HttpServlet {
 		defaults.put("development", "false");
 		defaults.put("httpMethods", "GET,POST,HEAD");
 		defaults.put("keepgenerated", "false");
-		defaults.put("logVerbosityLevel", "DEBUG");
+		defaults.put("logVerbosityLevel", "NONE");
 
 		Enumeration<String> names = servletConfig.getInitParameterNames();
 		Set<String> nameSet = new HashSet<>(Collections.list(names));
@@ -241,6 +242,34 @@ public class JspServlet extends HttpServlet {
 
 		try {
 			currentThread.setContextClassLoader(_jspBundleClassloader);
+
+			if (_DEBUG.equals(
+					_jspServlet.getInitParameter("logVerbosityLevel"))) {
+
+				String jspUri = (String)request.getAttribute(
+					RequestDispatcher.INCLUDE_SERVLET_PATH);
+
+				if (jspUri != null) {
+					String pathInfo = (String)request.getAttribute(
+						RequestDispatcher.INCLUDE_PATH_INFO);
+
+					if (pathInfo != null) {
+						jspUri += pathInfo;
+					}
+				}
+				else {
+					jspUri = request.getServletPath();
+
+					String pathInfo = request.getPathInfo();
+
+					if (pathInfo != null) {
+						jspUri += pathInfo;
+					}
+				}
+
+				_jspServletContext.log(
+					"[JSP DEBUG] " + _bundle + " invoking " + jspUri);
+			}
 
 			_jspServlet.service(request, response);
 		}
@@ -409,6 +438,8 @@ public class JspServlet extends HttpServlet {
 			}
 		}
 	}
+
+	private static final String _DEBUG = "DEBUG";
 
 	private static final Class<?>[] _INTERFACES = {ServletContext.class};
 

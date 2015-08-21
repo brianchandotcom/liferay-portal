@@ -134,6 +134,13 @@ buildLfrAMDLoader {
 
 downloadLfrAMDLoader {
 	args = ["install", "lfr-amd-loader@${lfrAMDLoaderVersion}"]
+
+	onlyIf {
+		File dir = new File(node.nodeModulesDir, "node_modules/lfr-amd-loader")
+
+		!dir.exists()
+	}
+
 	workingDir = node.nodeModulesDir
 }
 

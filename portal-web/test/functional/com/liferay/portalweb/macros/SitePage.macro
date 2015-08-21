@@ -386,6 +386,8 @@
 	</command>
 
 	<command name="pageLockCheckPG">
+		<execute function="Click" locator1="Dockbar#PAGE_INFO_MESSAGE_ICON" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page is linked to a site template which does not allow modifications to it." />
 	</command>
 
@@ -402,10 +404,13 @@
 	</command>
 
 	<command name="pageTemplateLockCheckPG">
+		<execute function="Click" locator1="Dockbar#PAGE_INFO_MESSAGE_ICON" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
 	</command>
 
 	<command name="pageTemplateNotLockedCheckPG">
+		<execute function="AssertElementNotPresent" locator1="Dockbar#PAGE_INFO_MESSAGE_ICON" />
 		<execute function="AssertElementNotPresent" locator1="Dockbar#PAGE_INFO_MESSAGE" />
 	</command>
 

@@ -266,8 +266,8 @@ public class EhcacheConfigurationHelperUtil {
 				PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME;
 		}
 
-		Map<Properties, PortalCacheListenerScope>
-			portalCacheListenerConfigurations = new HashMap<>();
+		Set<ObjectValuePair<Properties, PortalCacheListenerScope>>
+			portalCacheListenerConfigurations = new HashSet<>();
 
 		List<CacheEventListenerFactoryConfiguration>
 			cacheEventListenerConfigurations =
@@ -304,8 +304,9 @@ public class EhcacheConfigurationHelperUtil {
 
 					properties.put(PortalCacheReplicator.REPLICATOR, true);
 
-					portalCacheListenerConfigurations.put(
-						properties, portalCacheListenerScope);
+					portalCacheListenerConfigurations.add(
+						new ObjectValuePair<>(
+							properties, portalCacheListenerScope));
 				}
 			}
 			else if (!usingDefault) {
@@ -313,8 +314,9 @@ public class EhcacheConfigurationHelperUtil {
 					EhcacheConstants.CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME,
 					factoryClassName);
 
-				portalCacheListenerConfigurations.put(
-					properties, portalCacheListenerScope);
+					portalCacheListenerConfigurations.add(
+						new ObjectValuePair<>(
+							properties, portalCacheListenerScope));
 			}
 		}
 

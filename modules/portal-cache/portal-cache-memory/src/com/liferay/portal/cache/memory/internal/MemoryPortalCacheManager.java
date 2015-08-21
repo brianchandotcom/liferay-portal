@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.cache.PortalCacheReplicator;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 
@@ -29,9 +30,9 @@ import java.io.Serializable;
 
 import java.net.URL;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -122,7 +123,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	protected PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration() {
 
-		Map<Properties, PortalCacheListenerScope>
+		Set<ObjectValuePair<Properties, PortalCacheListenerScope>>
 			cacheListenerConfigurations = null;
 		Properties bootstrapLoaderConfiguration = null;
 
@@ -133,10 +134,11 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 
 			properties.put(PortalCacheReplicator.REPLICATOR, true);
 
-			cacheListenerConfigurations = new HashMap<>();
+			cacheListenerConfigurations = new HashSet<>();
 
-			cacheListenerConfigurations.put(
-				properties, PortalCacheListenerScope.ALL);
+			cacheListenerConfigurations.add(
+				new ObjectValuePair<>(
+					properties, PortalCacheListenerScope.ALL));
 
 			bootstrapLoaderConfiguration = new Properties();
 		}

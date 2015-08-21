@@ -19,13 +19,13 @@ import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfigura
 import com.liferay.portal.kernel.cache.transactional.TransactionalPortalCache;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -325,18 +325,16 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 			return;
 		}
 
-		Map<Properties, PortalCacheListenerScope>
-			cacheListenerConfigurations =
-				portalCacheConfiguration.getPortalCacheListenerConfigurations();
-
-		for (Map.Entry<Properties, PortalCacheListenerScope> entry :
-				cacheListenerConfigurations.entrySet()) {
+		for (ObjectValuePair<Properties, PortalCacheListenerScope>
+				objectValuePair :
+					portalCacheConfiguration.
+						getPortalCacheListenerConfigurations()) {
 
 			PortalCacheListener<K, V> portalCacheListener =
-				portalCacheListenerFactory.create(entry.getKey());
+				portalCacheListenerFactory.create(objectValuePair.getKey());
 
 			portalCache.registerPortalCacheListener(
-				portalCacheListener, entry.getValue());
+				portalCacheListener, objectValuePair.getValue());
 		}
 	}
 

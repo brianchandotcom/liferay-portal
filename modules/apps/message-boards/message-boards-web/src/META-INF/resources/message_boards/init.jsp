@@ -25,7 +25,11 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.message.boards.web.constants.MBPortletKeys" %><%@
+<%@ page import="com.liferay.message.boards.display.context.MBHomeDisplayContext" %><%@
+page import="com.liferay.message.boards.web.constants.MBPortletKeys" %><%@
+page import="com.liferay.message.boards.web.display.context.MBDisplayContextProvider" %><%@
+page import="com.liferay.message.boards.web.display.context.util.MBRequestHelper" %><%@
+page import="com.liferay.message.boards.web.util.MBWebComponentProvider" %><%@
 page import="com.liferay.portal.NoSuchUserException" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
@@ -177,6 +181,14 @@ page import="javax.portlet.WindowState" %>
 <liferay-theme:defineObjects />
 
 <%
+MBRequestHelper mbRequestHelper = new MBRequestHelper(request);
+
+MBWebComponentProvider mbWebComponentProvider = MBWebComponentProvider.getMBWebComponentProvider();
+
+MBDisplayContextProvider mbDisplayContextProvider = mbWebComponentProvider.getMBDisplayContextProvider();
+
+MBHomeDisplayContext mbHomeDisplayContext = mbDisplayContextProvider.getMBHomeDisplayContext(request, response);
+
 WindowState windowState = liferayPortletRequest.getWindowState();
 
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);

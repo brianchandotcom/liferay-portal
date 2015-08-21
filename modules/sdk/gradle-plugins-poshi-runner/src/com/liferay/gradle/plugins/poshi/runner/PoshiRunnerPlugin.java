@@ -46,6 +46,9 @@ import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
  */
 public class PoshiRunnerPlugin implements Plugin<Project> {
 
+	public static final String EVALUATE_POSHI_CONSOLE_TASK_NAME =
+		"evaluatePoshiConsole";
+
 	public static final String EXPAND_POSHI_RUNNER_TASK_NAME =
 		"expandPoshiRunner";
 
@@ -71,6 +74,9 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		addConfigurationPoshiRunner(project, poshiRunnerExtension);
 		addConfigurationSikuli(project, poshiRunnerExtension);
 
+		final JavaExec evaluatePoshiConsoleTask = addTaskEvaluatePoshiConsole(
+			project);
+
 		addTaskExpandPoshiRunner(project);
 
 		final Test runPoshiTask = addTaskRunPoshi(project);
@@ -83,6 +89,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
+					configureTaskEvaluatePoshiConsole(
+						evaluatePoshiConsoleTask, poshiRunnerExtension);
 					configureTaskRunPoshi(runPoshiTask, poshiRunnerExtension);
 					configureTaskValidatePoshi(
 						validatePoshiTask, poshiRunnerExtension);
@@ -177,6 +185,19 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			project, SIKULI_CONFIGURATION_NAME, "org.bytedeco.javacpp-presets",
 			"opencv", poshiRunnerExtension.getOpenCVVersion(), classifier,
 			true);
+	}
+
+	protected JavaExec addTaskEvaluatePoshiConsole(Project project) {
+		JavaExec javaExec = GradleUtil.addTask(
+			project, EVALUATE_POSHI_CONSOLE_TASK_NAME, JavaExec.class);
+
+		javaExec.setClasspath(getPoshiRunnerClasspath(project));
+		javaExec.setDescription("Evaluate the console output errors.");
+		javaExec.setGroup("verification");
+		javaExec.setMain(
+			"com.liferay.poshi.runner.PoshiRunnerConsoleEvaluator");
+
+		return javaExec;
 	}
 
 	protected Copy addTaskExpandPoshiRunner(final Project project) {
@@ -278,6 +299,13 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		javaExec.setMain("com.liferay.poshi.runner.PoshiRunnerContext");
 
 		return javaExec;
+	}
+
+	protected void configureTaskEvaluatePoshiConsole(
+		JavaExec javaExec, PoshiRunnerExtension poshiRunnerExtension) {
+
+		populateSystemProperties(
+			javaExec.getSystemProperties(), poshiRunnerExtension);
 	}
 
 	protected void configureTaskRunPoshi(

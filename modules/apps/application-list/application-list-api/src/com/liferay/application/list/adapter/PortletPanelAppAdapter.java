@@ -87,11 +87,6 @@ public class PortletPanelAppAdapter implements PanelApp {
 	}
 
 	@Override
-	public String getParentCategoryKey() {
-		return null;
-	}
-
-	@Override
 	public String getPortletId() {
 		return _portletId;
 	}

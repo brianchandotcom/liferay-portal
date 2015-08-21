@@ -38,11 +38,6 @@ public class MobileDeviceFamiliesPanelApp
 	extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.SITE_ADMINISTRATION_CONFIGURATION;
-	}
-
-	@Override
 	public String getPortletId() {
 		return MDRPortletKeys.MOBILE_DEVICE_RULES;
 	}

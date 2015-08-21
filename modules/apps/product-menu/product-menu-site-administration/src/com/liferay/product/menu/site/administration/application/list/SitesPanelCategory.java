@@ -68,11 +68,6 @@ public class SitesPanelCategory extends BaseJSPPanelCategory {
 	}
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.ROOT;
-	}
-
-	@Override
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {

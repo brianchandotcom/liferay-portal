@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 public class ExportImportPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING_TOOLS;
-	}
-
-	@Override
 	public String getPortletId() {
 		return ExportImportPortletKeys.EXPORT_IMPORT;
 	}

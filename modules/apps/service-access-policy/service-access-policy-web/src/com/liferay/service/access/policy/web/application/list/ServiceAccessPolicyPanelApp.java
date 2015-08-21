@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 public class ServiceAccessPolicyPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.CONTROL_PANEL_CONFIGURATION;
-	}
-
-	@Override
 	public String getPortletId() {
 		return SAPPortletKeys.SAP;
 	}

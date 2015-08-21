@@ -23,140 +23,129 @@ List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Company.class.getN
 %>
 
 <c:if test="<%= !mySiteGroups.isEmpty() %>">
+	<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showHeader="<%= true %>">
+		<ul aria-labelledby="<%= panelCategory.getKey() %>" class="nav nav-equal-height" role="menu">
 
-	<%
-	String panelPageCategoryId = "panel-manage-" + StringUtil.replace(panelCategory.getKey(), StringPool.PERIOD, StringPool.UNDERLINE);
-	%>
+		<%
+		for (Group mySiteGroup : mySiteGroups) {
+			boolean showPublicSite = mySiteGroup.isShowSite(permissionChecker, false) && (mySiteGroup.getPublicLayoutsPageCount() > 0);
+			boolean showPrivateSite = mySiteGroup.isShowSite(permissionChecker, true) && (mySiteGroup.getPrivateLayoutsPageCount() > 0);
 
-	<a aria-expanded="false" class="collapse-icon collapsed list-group-heading" data-toggle="collapse" href="#<%= panelPageCategoryId %>">
-		<liferay-ui:message key="my-sites" />
-	</a>
+			Group siteGroup = mySiteGroup;
 
-	<div class="collapse" id="<%= panelPageCategoryId %>">
-		<div class="list-group-item">
-			<ul aria-labelledby="<%= panelCategory.getKey() %>" class="nav nav-equal-height" role="menu">
+			boolean selectedSite = false;
 
-			<%
-			for (Group mySiteGroup : mySiteGroups) {
-				boolean showPublicSite = mySiteGroup.isShowSite(permissionChecker, false) && (mySiteGroup.getPublicLayoutsPageCount() > 0);
-				boolean showPrivateSite = mySiteGroup.isShowSite(permissionChecker, true) && (mySiteGroup.getPrivateLayoutsPageCount() > 0);
+			if (layout != null) {
+				if (layout.getGroupId() == mySiteGroup.getGroupId()) {
+					selectedSite = true;
+				}
+				else if (mySiteGroup.hasStagingGroup()) {
+					Group stagingGroup = mySiteGroup.getStagingGroup();
 
-				Group siteGroup = mySiteGroup;
-
-				boolean selectedSite = false;
-
-				if (layout != null) {
-					if (layout.getGroupId() == mySiteGroup.getGroupId()) {
+					if (layout.getGroupId() == stagingGroup.getGroupId()) {
 						selectedSite = true;
 					}
-					else if (mySiteGroup.hasStagingGroup()) {
+				}
+			}
+		%>
+
+			<c:choose>
+				<c:when test="<%= showPublicSite || showPrivateSite %>">
+
+					<%
+					long stagingGroupId = 0;
+
+					boolean showPublicSiteStaging = false;
+					boolean showPrivateSiteStaging = false;
+
+					if (mySiteGroup.hasStagingGroup()) {
 						Group stagingGroup = mySiteGroup.getStagingGroup();
 
-						if (layout.getGroupId() == stagingGroup.getGroupId()) {
-							selectedSite = true;
+						stagingGroupId = stagingGroup.getGroupId();
+
+						if (GroupPermissionUtil.contains(permissionChecker, mySiteGroup, ActionKeys.VIEW_STAGING)) {
+							if ((mySiteGroup.getPublicLayoutsPageCount() == 0) && (stagingGroup.getPublicLayoutsPageCount() > 0)) {
+								showPublicSiteStaging = true;
+							}
+
+							if ((mySiteGroup.getPrivateLayoutsPageCount() == 0) && (stagingGroup.getPrivateLayoutsPageCount() > 0)) {
+								showPrivateSiteStaging = true;
+							}
 						}
 					}
-				}
-			%>
+					%>
 
-				<c:choose>
-					<c:when test="<%= showPublicSite || showPrivateSite %>">
+					<c:if test="<%= showPublicSite && ((mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging) %>">
 
 						<%
-						long stagingGroupId = 0;
-
-						boolean showPublicSiteStaging = false;
-						boolean showPrivateSiteStaging = false;
-
-						if (mySiteGroup.hasStagingGroup()) {
-							Group stagingGroup = mySiteGroup.getStagingGroup();
-
-							stagingGroupId = stagingGroup.getGroupId();
-
-							if (GroupPermissionUtil.contains(permissionChecker, mySiteGroup, ActionKeys.VIEW_STAGING)) {
-								if ((mySiteGroup.getPublicLayoutsPageCount() == 0) && (stagingGroup.getPublicLayoutsPageCount() > 0)) {
-									showPublicSiteStaging = true;
-								}
-
-								if ((mySiteGroup.getPrivateLayoutsPageCount() == 0) && (stagingGroup.getPrivateLayoutsPageCount() > 0)) {
-									showPrivateSiteStaging = true;
-								}
-							}
+						if (showPublicSiteStaging) {
+							siteGroup = GroupLocalServiceUtil.fetchGroup(stagingGroupId);
 						}
-						%>
-
-						<c:if test="<%= showPublicSite && ((mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging) %>">
-
-							<%
-							if (showPublicSiteStaging) {
-								siteGroup = GroupLocalServiceUtil.fetchGroup(stagingGroupId);
-							}
-
-							request.setAttribute("my_sites.jsp-privateLayout", false);
-							request.setAttribute("my_sites.jsp-selectedSite", selectedSite);
-							request.setAttribute("my_sites.jsp-siteGroup", mySiteGroup);
-
-							if (mySiteGroup.isUser()) {
-								request.setAttribute("my_sites.jsp-siteName", LanguageUtil.get(request, "my-profile"));
-							}
-
-							request.setAttribute("my_sites.jsp-showPrivateLabel", (mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging);
-							request.setAttribute("my_sites.jsp-showStagingLabel", showPublicSiteStaging);
-							%>
-
-							<liferay-util:include page="/my_sites/site_link.jsp" servletContext="<%= application %>" />
-						</c:if>
-
-						<c:if test="<%= showPrivateSite && ((mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) %>">
-
-							<%
-							siteGroup = mySiteGroup;
-
-							if (showPrivateSiteStaging) {
-								siteGroup = GroupLocalServiceUtil.fetchGroup(stagingGroupId);
-							}
-
-							request.setAttribute("my_sites.jsp-privateLayout", true);
-							request.setAttribute("my_sites.jsp-selectedSite", selectedSite && !showPublicSite);
-							request.setAttribute("my_sites.jsp-siteGroup", mySiteGroup);
-
-							if (mySiteGroup.isUser()) {
-								request.setAttribute("my_sites.jsp-siteName", LanguageUtil.get(request, "my-dashboard"));
-							}
-
-							request.setAttribute("my_sites.jsp-showPrivateLabel", (mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging);
-							request.setAttribute("my_sites.jsp-showStagingLabel", showPrivateSiteStaging);
-							%>
-
-							<liferay-util:include page="/my_sites/site_link.jsp" servletContext="<%= application %>" />
-						</c:if>
-					</c:when>
-					<c:when test="<%= GroupPermissionUtil.contains(permissionChecker, mySiteGroup, ActionKeys.VIEW_SITE_ADMINISTRATION) %>">
-
-						<%
-						siteGroup = StagingUtil.getStagingGroup(mySiteGroup.getGroupId());
 
 						request.setAttribute("my_sites.jsp-privateLayout", false);
 						request.setAttribute("my_sites.jsp-selectedSite", selectedSite);
-						request.setAttribute("my_sites.jsp-siteGroup", siteGroup);
+						request.setAttribute("my_sites.jsp-siteGroup", mySiteGroup);
 
-						if (siteGroup.isUser()) {
-							request.setAttribute("my_sites.jsp-siteName", LanguageUtil.get(request, "my-site"));
+						if (mySiteGroup.isUser()) {
+							request.setAttribute("my_sites.jsp-siteName", LanguageUtil.get(request, "my-profile"));
 						}
 
-						request.setAttribute("my_sites.jsp-showPrivateLabel", false);
-						request.setAttribute("my_sites.jsp-showStagingLabel", false);
+						request.setAttribute("my_sites.jsp-showPrivateLabel", (mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging);
+						request.setAttribute("my_sites.jsp-showStagingLabel", showPublicSiteStaging);
 						%>
 
 						<liferay-util:include page="/my_sites/site_link.jsp" servletContext="<%= application %>" />
-					</c:when>
-				</c:choose>
+					</c:if>
 
-			<%
-			}
-			%>
+					<c:if test="<%= showPrivateSite && ((mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) %>">
+
+						<%
+						siteGroup = mySiteGroup;
+
+						if (showPrivateSiteStaging) {
+							siteGroup = GroupLocalServiceUtil.fetchGroup(stagingGroupId);
+						}
+
+						request.setAttribute("my_sites.jsp-privateLayout", true);
+						request.setAttribute("my_sites.jsp-selectedSite", selectedSite && !showPublicSite);
+						request.setAttribute("my_sites.jsp-siteGroup", mySiteGroup);
+
+						if (mySiteGroup.isUser()) {
+							request.setAttribute("my_sites.jsp-siteName", LanguageUtil.get(request, "my-dashboard"));
+						}
+
+						request.setAttribute("my_sites.jsp-showPrivateLabel", (mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging);
+						request.setAttribute("my_sites.jsp-showStagingLabel", showPrivateSiteStaging);
+						%>
+
+						<liferay-util:include page="/my_sites/site_link.jsp" servletContext="<%= application %>" />
+					</c:if>
+				</c:when>
+				<c:when test="<%= GroupPermissionUtil.contains(permissionChecker, mySiteGroup, ActionKeys.VIEW_SITE_ADMINISTRATION) %>">
+
+					<%
+					siteGroup = StagingUtil.getStagingGroup(mySiteGroup.getGroupId());
+
+					request.setAttribute("my_sites.jsp-privateLayout", false);
+					request.setAttribute("my_sites.jsp-selectedSite", selectedSite);
+					request.setAttribute("my_sites.jsp-siteGroup", siteGroup);
+
+					if (siteGroup.isUser()) {
+						request.setAttribute("my_sites.jsp-siteName", LanguageUtil.get(request, "my-site"));
+					}
+
+					request.setAttribute("my_sites.jsp-showPrivateLabel", false);
+					request.setAttribute("my_sites.jsp-showStagingLabel", false);
+					%>
+
+					<liferay-util:include page="/my_sites/site_link.jsp" servletContext="<%= application %>" />
+				</c:when>
+			</c:choose>
+
+		<%
+		}
+		%>
 
 		</ul>
-		</div>
-	</div>
+	</liferay-application-list:panel-category>
 </c:if>

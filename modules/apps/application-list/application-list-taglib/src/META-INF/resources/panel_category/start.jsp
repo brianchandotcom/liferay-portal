@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,19 +12,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.application.list.taglib.constants;
+<%@ include file="/panel_category/init.jsp" %>
 
-/**
- * @author Adolfo Pérez
- */
-public class ApplicationListWebKeys {
+<c:if test="<%= showHeader || !panelApps.isEmpty() %>">
+	<a aria-expanded="false" class="collapse-icon <%= active ? StringPool.BLANK : "collapsed" %> list-group-heading" data-toggle="collapse" href="#<%= id %>">
+		<%= panelCategory.getLabel(themeDisplay.getLocale()) %>
+	</a>
 
-	public static final String PANEL_APP_REGISTRY = "PANEL_APP_REGISTRY";
-
-	public static final String PANEL_CATEGORY = "PANEL_CATEGORY";
-
-	public static final String PANEL_CATEGORY_REGISTRY =
-		"PANEL_CATEGORY_REGISTRY";
-
-}
+	<div class="collapse <%= active ? "in" : StringPool.BLANK %>" id="<%= id %>">
+			<div class="list-group-item">
+</c:if>

@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,26 +12,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.application.list;
+<%@ include file="/panel_category/init.jsp" %>
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.security.permission.PermissionChecker;
+<c:if test="<%= showHeader || !panelApps.isEmpty() %>">
+			<ul aria-labelledby="<%= id %>" class="nav nav-equal-height" role="menu">
 
-import java.util.Locale;
+				<%
+				for (PanelApp panelApp : panelApps) {
+				%>
 
-/**
- * @author Adolfo Pérez
- */
-public interface PanelEntry {
+					<liferay-application-list:panel-app panelApp="<%= panelApp %>" />
 
-	public String getKey();
+				<%
+				}
+				%>
 
-	public String getLabel(Locale locale);
-
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
-		throws PortalException;
-
-}
+			</ul>
+		</div>
+	</div>
+</c:if>

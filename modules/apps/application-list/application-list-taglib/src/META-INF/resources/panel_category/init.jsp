@@ -15,3 +15,11 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+boolean active = GetterUtil.getBoolean(request.getAttribute("liferay-application-list:panel-category:active"));
+String id = (String)request.getAttribute("liferay-application-list:panel-category:id");
+List<PanelApp> panelApps = (List<PanelApp>)request.getAttribute("liferay-application-list:panel-category:panelApps");
+PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-application-list:panel-category:panelCategory");
+boolean showHeader = GetterUtil.getBoolean(request.getAttribute("liferay-application-list:panel-category:showHeader"));
+%>

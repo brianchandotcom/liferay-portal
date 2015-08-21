@@ -51,11 +51,6 @@ public class RootPanelCategory implements PanelCategory {
 	}
 
 	@Override
-	public String getParentCategoryKey() {
-		return StringPool.BLANK;
-	}
-
-	@Override
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {

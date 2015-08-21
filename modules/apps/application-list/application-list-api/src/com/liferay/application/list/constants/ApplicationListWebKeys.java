@@ -12,25 +12,18 @@
  * details.
  */
 
-package com.liferay.application.list;
-
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.security.permission.PermissionChecker;
-
-import java.util.Locale;
+package com.liferay.application.list.constants;
 
 /**
  * @author Adolfo Pérez
  */
-public interface PanelEntry {
+public class ApplicationListWebKeys {
 
-	public String getKey();
+	public static final String PANEL_APP_REGISTRY = "PANEL_APP_REGISTRY";
 
-	public String getLabel(Locale locale);
+	public static final String PANEL_CATEGORY = "PANEL_CATEGORY";
 
-	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
-		throws PortalException;
+	public static final String PANEL_CATEGORY_REGISTRY =
+		"PANEL_CATEGORY_REGISTRY";
 
 }

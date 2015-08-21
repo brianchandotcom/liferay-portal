@@ -38,11 +38,6 @@ public class WorkflowConfigurationPanelApp
 	extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.CONTROL_PANEL_CONFIGURATION;
-	}
-
-	@Override
 	public String getPortletId() {
 		return
 			WorkflowDefinitionLinkPortletKeys.

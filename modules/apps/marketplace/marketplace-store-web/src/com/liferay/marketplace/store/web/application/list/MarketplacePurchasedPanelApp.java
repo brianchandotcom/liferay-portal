@@ -42,11 +42,6 @@ public class MarketplacePurchasedPanelApp
 	extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.CONTROL_PANEL_APPS;
-	}
-
-	@Override
 	public String getPortletId() {
 		return MarketplaceStorePortletKeys.MARKETPLACE_PURCHASED;
 	}

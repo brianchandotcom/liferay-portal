@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 public class SiteTemplatesPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.SITES_ADMINISTRATION_SITES;
-	}
-
-	@Override
 	public String getPortletId() {
 		return LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE;
 	}

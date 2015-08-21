@@ -38,11 +38,6 @@ public class StagingConfigurationPanelApp
 	extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING_TOOLS;
-	}
-
-	@Override
 	public String getPortletId() {
 		return StagingConfigurationPortletKeys.STAGING_CONFIGURATION;
 	}

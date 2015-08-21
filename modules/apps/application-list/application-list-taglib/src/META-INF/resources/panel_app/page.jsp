@@ -17,37 +17,25 @@
 <%@ include file="/panel_app/init.jsp" %>
 
 <%
-PanelApp panelApp = (PanelApp)request.getAttribute("liferay-application-list:panel-app:panelApp");
-
-PortletURL portletURL = panelApp.getPortletURL(request);
+boolean active = GetterUtil.getBoolean(request.getAttribute("liferay-application-list:panel-app:active"));
+String url = (String)request.getAttribute("liferay-application-list:panel-app:url");
+String id = (String)request.getAttribute("liferay-application-list:panel-app:id");
+String label = (String)request.getAttribute("liferay-application-list:panel-app:label");
+Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-application-list:panel-app:data");
 %>
 
-<c:if test="<%= portletURL != null %>">
-
-	<%
-	String ppid = themeDisplay.getPpid();
-	%>
-
+<c:if test="<%= Validator.isNotNull(url) %>">
 	<li
-		aria-selected="<%= ppid.equals(panelApp.getPortletId()) ? "true" : StringPool.BLANK %>"
-		class="<%= ppid.equals(panelApp.getPortletId()) ? "active" : StringPool.BLANK %>"
+		aria-selected="<%= active ? "true" : StringPool.BLANK %>"
+		class="<%= active ? "active" : StringPool.BLANK %>"
 		role="presentation"
 	>
-
-		<%
-		Map<String, Object> data = new HashMap<String, Object>();
-
-		data.put("navigation", true);
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(themeDisplay.getCompanyId(), panelApp.getPortletId());
-		%>
-
 		<aui:a
 			ariaRole="menuitem"
 			data="<%= data %>"
-			href="<%= portletURL.toString() %>"
-			id='<%= "portlet_" + panelApp.getPortletId() %>'
-			label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
+			href="<%= url %>"
+			id="<%= id %>"
+			label="<%= label %>"
 		/>
 	</li>
 </c:if>

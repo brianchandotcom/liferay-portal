@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 public class DDLFormAdminPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT;
-	}
-
-	@Override
 	public String getPortletId() {
 		return DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN;
 	}

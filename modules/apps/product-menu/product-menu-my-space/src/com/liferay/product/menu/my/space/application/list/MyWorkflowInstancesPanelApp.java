@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 public class MyWorkflowInstancesPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.MY_SPACE_PRODUCTIVITY_CENTER;
-	}
-
-	@Override
 	public String getPortletId() {
 		return PortletKeys.MY_WORKFLOW_INSTANCE;
 	}

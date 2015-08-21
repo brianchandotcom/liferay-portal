@@ -16,7 +16,7 @@ package com.liferay.product.menu.web.portlet;
 
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
-import com.liferay.application.list.taglib.constants.ApplicationListWebKeys;
+import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.product.menu.web.constants.ProductMenuPortletKeys;
 

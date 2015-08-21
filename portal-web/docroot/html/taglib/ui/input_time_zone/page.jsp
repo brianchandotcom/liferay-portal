@@ -73,9 +73,23 @@ numberFormat.setMinimumIntegerDigits(2);
 
 			offset = sb.toString();
 		}
+
+		String curTimeZoneId = curTimeZone.getID();
+
+		String extraDisplayText;
+
+		if (curTimeZoneId.contains("Phoenix")) {
+			extraDisplayText = " (Phoenix)";
+		}
+		else if (curTimeZoneId.contains("Denver")) {
+			extraDisplayText = " (Denver)";
+		}
+		else {
+			extraDisplayText = StringPool.BLANK;
+		}
 	%>
 
-		<option <%= value.equals(curTimeZone.getID()) ? "selected" : "" %> value="<%= curTimeZone.getID() %>">(UTC<%= offset %>) <%= curTimeZone.getDisplayName(inDaylightTime, displayStyle, locale) %></option>
+		<option <%= value.equals(curTimeZone.getID()) ? "selected" : "" %> value="<%= curTimeZoneId %>">(UTC<%= offset %>) <%= curTimeZone.getDisplayName(inDaylightTime, displayStyle, locale) %><%= extraDisplayText %></option>
 
 	<%
 	}

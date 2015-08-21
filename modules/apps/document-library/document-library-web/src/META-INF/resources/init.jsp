@@ -221,7 +221,10 @@ page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.taglib.search.SearchEntry" %>
+page import="com.liferay.taglib.search.SearchEntry" %><%@
+page import="com.liferay.taglib.util.PortalIncludeUtil" %>
+
+<%@ page import="java.io.IOException" %>
 
 <%@ page import="java.text.DecimalFormatSymbols" %><%@
 page import="java.text.Format" %>

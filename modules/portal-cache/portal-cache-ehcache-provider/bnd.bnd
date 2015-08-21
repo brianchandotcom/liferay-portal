@@ -1,9 +1,9 @@
 Bundle-Name: Liferay Portal Cache Ehcache Provider
 Bundle-SymbolicName: com.liferay.portal.cache.ehcache.provider
 Bundle-Version: 1.0.0
-DynamicImport-Package: \
-	com.liferay.portal.cache.io,\
-	com.liferay.portal.cache.ehcache.cluster
+DynamicImport-Package:\
+	com.liferay.portal.cache.ehcache.cluster,\
+	com.liferay.portal.cache.io
 Export-Package:\
 	net.sf.ehcache,\
 	net.sf.ehcache.bootstrap,\

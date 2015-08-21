@@ -67,6 +67,8 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 		<if>
 			<os family="unix" />
 			<then>
+				<chmod file="${solr.dir}/bin/solr" perm="a+x" />
+
 				<exec executable="/bin/bash" os="${os.unix}">
 					<arg value="-c" />
 					<arg value="${solr.dir}/bin/solr -V" />

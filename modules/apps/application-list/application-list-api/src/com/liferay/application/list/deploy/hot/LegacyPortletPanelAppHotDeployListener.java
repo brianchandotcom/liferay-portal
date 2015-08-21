@@ -55,6 +55,10 @@ import org.osgi.service.component.annotations.Component;
 public class LegacyPortletPanelAppHotDeployListener
 	extends BaseHotDeployListener {
 
+	public int getServiceCount() {
+		return _serviceRegistrations.size();
+	}
+
 	@Override
 	public void invokeDeploy(HotDeployEvent hotDeployEvent)
 		throws HotDeployException {

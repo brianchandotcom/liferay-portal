@@ -16,4 +16,5 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.util.TimeZoneComparator" %>
+<%@ page import="com.liferay.ibm.icu.text.TimeZoneFormat" %><%@
+page import="com.liferay.portal.kernel.util.TimeZoneComparator" %>

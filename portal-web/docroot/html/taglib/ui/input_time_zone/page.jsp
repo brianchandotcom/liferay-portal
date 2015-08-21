@@ -49,7 +49,9 @@ numberFormat.setMinimumIntegerDigits(2);
 	for (TimeZone curTimeZone : timeZones) {
 		String offset = StringPool.BLANK;
 
-		boolean inDaylightTime = curTimeZone.inDaylightTime(new Date());
+		Date date = new Date();
+
+		boolean inDaylightTime = curTimeZone.inDaylightTime(date);
 
 		int totalOffset = curTimeZone.getOffset(currentTime);
 
@@ -71,9 +73,30 @@ numberFormat.setMinimumIntegerDigits(2);
 
 			offset = sb.toString();
 		}
+
+		String curTimeZoneId = curTimeZone.getID();
+
+		String extraDisplayText = StringPool.BLANK;
+
+		if (curTimeZoneId.contains("Phoenix")) {
+			com.liferay.ibm.icu.util.TimeZone tz = com.liferay.ibm.icu.util.TimeZone.getTimeZone(curTimeZoneId);
+
+			TimeZoneFormat tzFormatter = new com.liferay.ibm.icu.text.SimpleDateFormat().getTimeZoneFormat();
+
+			String genericLocation = tzFormatter.format(TimeZoneFormat.Style.GENERIC_LOCATION, tz, date.getTime());
+
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(genericLocation);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			extraDisplayText = sb.toString();
+		}
 	%>
 
-		<option <%= value.equals(curTimeZone.getID()) ? "selected" : "" %> value="<%= curTimeZone.getID() %>">(UTC<%= offset %>) <%= curTimeZone.getDisplayName(inDaylightTime, displayStyle, locale) %></option>
+		<option <%= value.equals(curTimeZone.getID()) ? "selected" : "" %> value="<%= curTimeZoneId %>">(UTC<%= offset %>) <%= curTimeZone.getDisplayName(inDaylightTime, displayStyle, locale) %><%= extraDisplayText %></option>
 
 	<%
 	}

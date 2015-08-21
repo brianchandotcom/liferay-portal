@@ -34,14 +34,12 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
@@ -59,6 +57,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.DLFileVersionVersionComparator;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
 
@@ -342,20 +341,15 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 						return;
 					}
 
-					String newTitle = dlFileEntry.getTitle();
+					String title = dlFileEntry.getTitle();
 
-					for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
-						newTitle = newTitle.replace(
-							blacklistChar, StringPool.UNDERLINE);
-					}
+					if (!DLValidatorUtil.isValidName(title)) {
 
-					newTitle = renameDlCharLastBlacklist(newTitle);
-
-					newTitle = renameDlNameBlacklist(newTitle);
-
-					if (!dlFileEntry.getTitle().equals(newTitle)) {
 						try {
-							dlFileEntry = renameTitle(dlFileEntry, newTitle);
+
+							dlFileEntry = renameTitle(
+											dlFileEntry,
+											DLValidatorUtil.fixName(title));
 						}
 						catch (Exception e) {
 							if (_log.isWarnEnabled()) {
@@ -521,58 +515,6 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		}
 
 		return mimeType;
-	}
-
-	protected String renameDlCharLastBlacklist(String title) {
-		String previousTitle = null;
-
-		while (!title.equals(previousTitle)) {
-			previousTitle = title;
-
-			for (String blacklistLastChar :
-					PropsValues.DL_CHAR_LAST_BLACKLIST) {
-
-				if (blacklistLastChar.startsWith(
-						UnicodeFormatter.UNICODE_PREFIX)) {
-
-					blacklistLastChar = UnicodeFormatter.parseString(
-						blacklistLastChar);
-				}
-
-				if (title.endsWith(blacklistLastChar)) {
-					title = StringUtil.replaceLast(
-						title, blacklistLastChar, StringPool.BLANK);
-				}
-			}
-		}
-
-		return title;
-	}
-
-	protected String renameDlNameBlacklist(String title) {
-		String nameWithoutExtension = title;
-
-		String extension = StringPool.BLANK;
-
-		if (title.contains(StringPool.PERIOD)) {
-			int index = title.lastIndexOf(StringPool.PERIOD);
-
-			nameWithoutExtension = title.substring(0, index);
-
-			extension = title.substring(index);
-		}
-
-		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
-			if (StringUtil.equalsIgnoreCase(
-					nameWithoutExtension, blacklistName)) {
-
-				title = nameWithoutExtension + StringPool.UNDERLINE + extension;
-
-				break;
-			}
-		}
-
-		return title;
 	}
 
 	protected void renameDuplicateTitle(DLFileEntry dlFileEntry)

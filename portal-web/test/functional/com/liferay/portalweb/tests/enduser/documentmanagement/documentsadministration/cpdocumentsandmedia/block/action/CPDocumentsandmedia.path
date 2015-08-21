@@ -378,7 +378,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_CONTAINER_DOCUMENT_CHECKBOX</td>
-	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmDocumentTitle}')]/div/input[contains(@name,'_199_rowIdsFileEntry')]</td>
+	<td>//div[contains(@id,'entriesContainer')]//div[contains(.,'${key_dmDocumentTitle}')]/div/input[contains(@name,'rowIdsFileEntry')]</td>
 	<td></td>
 </tr>
 <tr>

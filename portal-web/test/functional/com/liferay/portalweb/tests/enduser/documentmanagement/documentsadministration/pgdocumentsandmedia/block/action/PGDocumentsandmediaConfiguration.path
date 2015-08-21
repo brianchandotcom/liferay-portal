@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>CONFIGURATION_IFRAME</td>
-	<td>//iframe[@id='_20_configurationIframeDialog_iframe_']</td>
+	<td>//iframe[contains(@id,'configurationIframe')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_ROOT_FOLDER_FIELD</td>
-	<td>//input[@id='_86_rootFolderName']</td>
+	<td>//input[contains(@id,'rootFolderName')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -127,7 +127,7 @@
 <!--ROOT_FOLDER_SELECT_FOLDER-->
 <tr>
 	<td>ROOT_FOLDER_SELECT_FOLDER_IFRAME</td>
-	<td>//iframe[@id='_20_selectFolder_iframe_']</td>
+	<td>//iframe[contains(@id,'selectFolder')]</td>
 	<td></td>
 </tr>
 <tr>

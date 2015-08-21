@@ -38,6 +38,8 @@ import com.liferay.taglib.util.VelocityTaglibImpl;
 
 import freemarker.cache.TemplateCache;
 
+import freemarker.core.TemplateClassResolver;
+
 import freemarker.debug.impl.DebuggerService;
 
 import freemarker.ext.beans.BeansWrapper;
@@ -240,8 +242,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		_configuration.setDefaultEncoding(StringPool.UTF8);
 		_configuration.setLocalizedLookup(
 			_freemarkerEngineConfiguration.localizedLookup());
-		_configuration.setNewBuiltinClassResolver(
-			new LiferayTemplateClassResolver());
+		_configuration.setNewBuiltinClassResolver(_templateClassResolver);
 		_configuration.setObjectWrapper(new LiferayObjectWrapper());
 
 		try {
@@ -260,6 +261,13 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		if (isEnableDebuggerService()) {
 			DebuggerService.getBreakpoints("*");
 		}
+	}
+
+	@Reference
+	public void setTemplateClassResolver(
+		TemplateClassResolver templateClassResolver) {
+
+		_templateClassResolver = templateClassResolver;
 	}
 
 	@Override
@@ -350,6 +358,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	private Configuration _configuration;
 	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
+	private volatile TemplateClassResolver _templateClassResolver;
 	private final Map<String, TemplateModel> _templateModels =
 		new ConcurrentHashMap<>();
 

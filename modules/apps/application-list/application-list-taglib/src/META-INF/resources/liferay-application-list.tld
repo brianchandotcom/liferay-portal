@@ -44,17 +44,37 @@
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelAppTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<name>panelApp</name>
-			<required>true</required>
+			<name>active</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>panelCategory</name>
-			<required>true</required>
+			<name>data</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>label</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>panelApp</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>servletContext</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -70,6 +90,11 @@
 		</attribute>
 		<attribute>
 			<name>servletContext</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showHeader</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

@@ -15,7 +15,13 @@
 package com.liferay.application.list.taglib.servlet.taglib;
 
 import com.liferay.application.list.PanelCategory;
+import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.RootPanelCategory;
+import com.liferay.application.list.constants.ApplicationListWebKeys;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,6 +54,22 @@ public class PanelTag extends BasePanelTag {
 
 		request.setAttribute(
 			"liferay-application-list:panel:panelCategory", _panelCategory);
+
+		PanelCategoryRegistry panelCategoryRegistry =
+			(PanelCategoryRegistry)request.getAttribute(
+				ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<PanelCategory> childPanelCategories =
+			panelCategoryRegistry.getChildPanelCategories(
+				_panelCategory, themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroup());
+
+		request.setAttribute(
+			"liferay-application-list:panel:childPanelCategories",
+			childPanelCategories);
 	}
 
 	private PanelCategory _panelCategory;

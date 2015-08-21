@@ -14,7 +14,18 @@
 
 package com.liferay.application.list.taglib.servlet.taglib;
 
+import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
+import com.liferay.application.list.PanelCategoryRegistry;
+import com.liferay.application.list.constants.ApplicationListWebKeys;
+import com.liferay.application.list.taglib.display.context.logic.PanelCategoryHelper;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,16 +38,16 @@ public class PanelCategoryTag extends BasePanelTag {
 		_panelCategory = panelCategory;
 	}
 
+	public void setShowHeader(boolean showHeader) {
+		_showHeader = showHeader;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_panelCategory = null;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return "/panel_category/start.jsp";
+		_showHeader = false;
 	}
 
 	@Override
@@ -45,12 +56,60 @@ public class PanelCategoryTag extends BasePanelTag {
 	}
 
 	@Override
+	protected String getStartPage() {
+		return "/panel_category/start.jsp";
+	}
+
+	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		boolean active = false;
+
+		PanelAppRegistry panelAppRegistry =
+			(PanelAppRegistry)request.getAttribute(
+				ApplicationListWebKeys.PANEL_APP_REGISTRY);
+
+		PanelCategoryRegistry panelCategoryRegistry =
+			(PanelCategoryRegistry)request.getAttribute(
+				ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<PanelApp> panelApps = panelAppRegistry.getPanelApps(
+			_panelCategory, themeDisplay.getPermissionChecker(),
+			themeDisplay.getScopeGroup());
+
+		if (!panelApps.isEmpty()) {
+			PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
+				panelAppRegistry, panelCategoryRegistry);
+
+			active = panelCategoryHelper.containsPortlet(
+				themeDisplay.getPpid(), _panelCategory);
+		}
+
+		request.setAttribute(
+			"liferay-application-list:panel-category:active", active);
+
+		String id =
+			"panel-manage-" +
+				StringUtil.replace(
+					_panelCategory.getKey(), StringPool.PERIOD,
+					StringPool.UNDERLINE);
+
+		request.setAttribute("liferay-application-list:panel-category:id", id);
+
+		request.setAttribute(
+			"liferay-application-list:panel-category:panelApps", panelApps);
+
 		request.setAttribute(
 			"liferay-application-list:panel-category:panelCategory",
 			_panelCategory);
+
+		request.setAttribute(
+			"liferay-application-list:panel-category:showHeader", _showHeader);
 	}
 
 	private PanelCategory _panelCategory;
+	private boolean _showHeader = false;
 
 }

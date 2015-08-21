@@ -16,11 +16,11 @@
 
 <%@ include file="/panel_category/init.jsp" %>
 
-<c:if test="<%= !panelApps.isEmpty() %>">
-	<a aria-expanded="false" class="collapse-icon <%= containsActivePortlet ? StringPool.BLANK : "collapsed" %> list-group-heading" data-toggle="collapse" href="#<%= panelPageCategoryId %>">
+<c:if test="<%= showHeader || !panelApps.isEmpty() %>">
+	<a aria-expanded="false" class="collapse-icon <%= active ? StringPool.BLANK : "collapsed" %> list-group-heading" data-toggle="collapse" href="#<%= id %>">
 		<%= panelCategory.getLabel(themeDisplay.getLocale()) %>
 	</a>
 
-	<div class="collapse <%= containsActivePortlet ? "in" : StringPool.BLANK %>" id="<%= panelPageCategoryId %>">
+	<div class="collapse <%= active ? "in" : StringPool.BLANK %>" id="<%= id %>">
 			<div class="list-group-item">
 </c:if>

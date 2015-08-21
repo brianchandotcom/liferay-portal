@@ -16,17 +16,14 @@
 
 <%@ include file="/panel_category/init.jsp" %>
 
-<c:if test="<%= !panelApps.isEmpty() %>">
-			<ul aria-labelledby="<%= panelPageCategoryId %>" class="nav nav-equal-height" role="menu">
+<c:if test="<%= showHeader || !panelApps.isEmpty() %>">
+			<ul aria-labelledby="<%= id %>" class="nav nav-equal-height" role="menu">
 
 				<%
 				for (PanelApp panelApp : panelApps) {
 				%>
 
-					<liferay-application-list:panel-app
-						panelApp="<%= panelApp %>"
-						panelCategory="<%= panelCategory %>"
-					/>
+					<liferay-application-list:panel-app panelApp="<%= panelApp %>" />
 
 				<%
 				}

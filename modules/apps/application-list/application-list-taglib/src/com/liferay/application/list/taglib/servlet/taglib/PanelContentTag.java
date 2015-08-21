@@ -15,13 +15,40 @@
 package com.liferay.application.list.taglib.servlet.taglib;
 
 import com.liferay.application.list.PanelCategory;
+import com.liferay.application.list.constants.ApplicationListWebKeys;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.taglib.servlet.PipingServletResponse;
+
+import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Eudaldo Alonso
  */
 public class PanelContentTag extends BasePanelTag {
+
+	@Override
+	public int doEndTag() throws JspException {
+		request.setAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY, _panelCategory);
+
+		try {
+			boolean include = _panelCategory.include(
+				request, new PipingServletResponse(pageContext));
+
+			if (include) {
+				return EVAL_PAGE;
+			}
+		}
+		catch (IOException ioe) {
+			_log.error(ioe);
+		}
+
+		return super.doEndTag();
+	}
 
 	public void setPanelCategory(PanelCategory panelCategory) {
 		_panelCategory = panelCategory;
@@ -47,6 +74,9 @@ public class PanelContentTag extends BasePanelTag {
 	}
 
 	private static final String _PAGE = "/panel_content/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PanelContentTag.class);
 
 	private PanelCategory _panelCategory;
 

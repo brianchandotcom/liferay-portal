@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_site_navigation_breadcrumb_web_portlet_BreadcrumbPortlet</portlet-name>
+		<portlet-name>com_liferay_site_navigation_breadcrumb_web_portlet_SocialBreadcrumbPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>

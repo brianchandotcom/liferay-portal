@@ -28,8 +28,8 @@ page import="com.liferay.portal.model.Layout" %><%@
 page import="com.liferay.portal.model.LayoutSet" %><%@
 page import="com.liferay.portal.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.LayoutDescription" %><%@
-page import="com.liferay.site.navigation.site.map.web.configuration.SiteMapPortletInstanceConfiguration" %><%@
-page import="com.liferay.site.navigation.site.map.web.display.context.SiteMapDisplayContext" %>
+page import="com.liferay.site.navigation.site.map.web.configuration.SiteNavigationSiteMapPortletInstanceConfiguration" %><%@
+page import="com.liferay.site.navigation.site.map.web.display.context.SiteNavigationSiteMapDisplayContext" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
@@ -40,9 +40,9 @@ page import="java.util.Map" %>
 <liferay-theme:defineObjects />
 
 <%
-SiteMapDisplayContext siteMapDisplayContext = new SiteMapDisplayContext(request);
+SiteNavigationSiteMapDisplayContext siteMapDisplayContext = new SiteNavigationSiteMapDisplayContext(request);
 
-SiteMapPortletInstanceConfiguration siteMapPortletInstanceConfiguration = siteMapDisplayContext.getSiteMapPortletInstanceConfiguration();
+SiteNavigationSiteMapPortletInstanceConfiguration siteMapPortletInstanceConfiguration = siteMapDisplayContext.getSiteNavigationSiteMapPortletInstanceConfiguration();
 %>
 
 <%@ include file="/init-ext.jsp" %>

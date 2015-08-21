@@ -25,13 +25,13 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.site.navigation.breadcrumb.web.context.BreadcrumbDisplayContext" %>
+page import="com.liferay.site.navigation.breadcrumb.web.context.SiteNavigationBreadcrumbDisplayContext" %>
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects/>
 
 <%
-BreadcrumbDisplayContext breadcrumbDisplayContext = new BreadcrumbDisplayContext(request);
+SiteNavigationBreadcrumbDisplayContext breadcrumbDisplayContext = new SiteNavigationBreadcrumbDisplayContext(request);
 %>
 
 <%@ include file="/init-ext.jsp" %>

@@ -14,7 +14,7 @@
 
 package com.liferay.social.user.statistics.web.upgrade.v1_0_0;
 
-import com.liferay.social.user.statistics.web.constants.UserStatisticsPortletKeys;
+import com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPortletKeys;
 
 /**
  * @author Iván Zaera
@@ -25,7 +25,9 @@ public class UpgradePortletId
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"180", UserStatisticsPortletKeys.USER_STATISTICS}
+			new String[] {"180",
+				SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS
+			}
 		};
 	}
 

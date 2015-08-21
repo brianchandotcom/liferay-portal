@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-groupStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(GroupStatisticsPortletInstanceConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource())));
+groupStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(SocialGroupStatisticsPortletInstanceConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource())));
 
 String displayActivityCounterName = "";
 String chartType = "";

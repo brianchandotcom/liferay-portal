@@ -285,13 +285,6 @@ public class LiferaySeleniumHelper {
 				sb.append("LIFERAY_ERROR: ");
 				sb.append(messageText);
 
-				Element throwableElement = eventElement.element("throwable");
-
-				if (throwableElement != null) {
-					sb.append("\n");
-					sb.append(throwableElement.getText());
-				}
-
 				System.out.println(sb.toString());
 
 				exceptions.add(new PoshiRunnerWarningException(sb.toString()));

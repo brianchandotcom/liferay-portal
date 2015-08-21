@@ -170,7 +170,8 @@ public abstract class TestOrderHelper {
 		throws Exception {
 
 		return DDMTemplateTestUtil.addTemplate(
-			_serviceContext.getScopeGroupId(), ddmStructure.getStructureId());
+			_serviceContext.getScopeGroupId(), ddmStructure.getStructureId(),
+			getClassNameId());
 	}
 
 	protected void addSearchableAssetEntries(
@@ -240,6 +241,8 @@ public abstract class TestOrderHelper {
 			getAssetRendererFactoryByClassName(
 				getSearchableAssetEntryClassName());
 	}
+
+	protected abstract long getClassNameId();
 
 	protected abstract String getSearchableAssetEntryClassName();
 

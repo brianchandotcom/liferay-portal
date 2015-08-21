@@ -54,6 +54,7 @@ import com.liferay.portal.service.ClassNameServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
@@ -106,8 +107,11 @@ public class JournalArticleServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		JournalArticleLocalServiceUtil.deleteArticle(
-			_group.getGroupId(), _article.getArticleId(), new ServiceContext());
+		if (_article != null) {
+			JournalArticleLocalServiceUtil.deleteArticle(
+					_group.getGroupId(), _article.getArticleId(),
+					new ServiceContext());
+		}
 
 		PortalRunMode.setTestMode(_testMode);
 	}
@@ -149,7 +153,8 @@ public class JournalArticleServiceTest {
 			JournalArticle.class.getName());
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			ddmStructure.getStructureId());
+			ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
 
 		String content = "<?xml version=\"1.0\"?><root></root>";
 
@@ -188,7 +193,8 @@ public class JournalArticleServiceTest {
 			_group.getGroupId(), JournalArticle.class.getName());
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			_group.getGroupId(), ddmStructure.getStructureId());
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
 
 		JournalTestUtil.addArticleWithXMLContent(
 			_group.getGroupId(), "<title>Test Article</title>",
@@ -655,7 +661,8 @@ public class JournalArticleServiceTest {
 			_group.getGroupId(), JournalArticle.class.getName(), ddmForm);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			_group.getGroupId(), ddmStructure.getStructureId());
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
 
 		String xmlContent = readText(journalArticleContent);
 

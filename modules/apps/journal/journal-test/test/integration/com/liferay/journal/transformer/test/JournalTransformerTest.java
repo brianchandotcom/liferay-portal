@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,8 +88,9 @@ public class JournalTransformerTest {
 		String xsl = "$name.getData()";
 
 		_ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			_ddmStructure.getStructureId(), TemplateConstants.LANG_TYPE_VM,
-			xsl);
+			_ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM, xsl);
 
 		String xml = DDMStructureTestUtil.getSampleStructuredContent(
 			"Joe Bloggs");
@@ -251,11 +253,12 @@ public class JournalTransformerTest {
 		Map<String, String> tokens = getTokens();
 
 		_ddmStructure = DDMStructureTestUtil.addStructure(
-			TestPropsValues.getGroupId(), "name");
+			TestPropsValues.getGroupId(), JournalArticle.class.getName());
 
 		_ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			_ddmStructure.getStructureId(), TemplateConstants.LANG_TYPE_VM,
-			"$name.getData()");
+			_ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM, "$name.getData()");
 
 		String xml = DDMStructureTestUtil.getSampleStructuredContent(
 			"name", "Joe Bloggs");

@@ -53,6 +53,7 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -529,6 +530,13 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		}
 
 		@Override
+		protected DDMTemplate addDDMTemplate(DDMStructure ddmStructure)
+			throws Exception {
+
+			return null;
+		}
+
+		@Override
 		protected BaseModel<?> addSearchableAssetEntry(
 				String fieldValue, BaseModel<?> parentBaseModel,
 				DDMStructure ddmStructure, DDMTemplate ddmTemplate,
@@ -546,6 +554,11 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			throws Exception {
 
 			return addBaseModel(fieldValues, ddmStructure, serviceContext);
+		}
+
+		@Override
+		protected long getClassNameId() {
+			return PortalUtil.getClassNameId(DLFileEntryMetadata.class);
 		}
 
 		@Override

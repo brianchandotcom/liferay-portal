@@ -39,7 +39,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -59,12 +59,12 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
+	@BeforeClass
+	public static void setUpClass() {
+		_CLASS_NAME_ID = PortalUtil.getClassNameId(AssetEntry.class);
 
-		_classNameId = PortalUtil.getClassNameId(AssetEntry.class);
+		_RESOURCE_CLASS_NAME_ID = PortalUtil.getClassNameId(
+			DDL_RECORD_SET_CLASS_NAME);
 	}
 
 	@Test
@@ -74,12 +74,12 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 		try {
 			addTemplate(
-				_classNameId, 0, templateKey, "Test Template 1",
+				_CLASS_NAME_ID, 0, templateKey, "Test Template 1",
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 				DDMTemplateConstants.TEMPLATE_MODE_CREATE, language,
 				getTestTemplateScript(language));
 			addTemplate(
-				_classNameId, 0, templateKey, "Test Template 2",
+				_CLASS_NAME_ID, 0, templateKey, "Test Template 2",
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 				DDMTemplateConstants.TEMPLATE_MODE_CREATE, language,
 				getTestTemplateScript(language));
@@ -96,7 +96,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 		try {
 			addTemplate(
-				_classNameId, 0, null, StringPool.BLANK,
+				_CLASS_NAME_ID, 0, null, StringPool.BLANK,
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 				DDMTemplateConstants.TEMPLATE_MODE_CREATE, language,
 				getTestTemplateScript(language));
@@ -111,7 +111,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	public void testAddTemplateWithoutScript() throws Exception {
 		try {
 			addTemplate(
-				_classNameId, 0, null, "Test Template",
+				_CLASS_NAME_ID, 0, null, "Test Template",
 				DDMTemplateConstants.TEMPLATE_TYPE_FORM,
 				DDMTemplateConstants.TEMPLATE_MODE_CREATE,
 				TemplateConstants.LANG_TYPE_VM, StringPool.BLANK);
@@ -125,15 +125,16 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testCopyTemplates() throws Exception {
 		int initialCount = DDMTemplateLocalServiceUtil.getTemplatesCount(
-			group.getGroupId(), _classNameId, 0);
+			group.getGroupId(), _CLASS_NAME_ID, 0);
 
 		DDMTemplate template = addDisplayTemplate(
-			_classNameId, 0, "Test Template");
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Test Template",
+			"Test Template");
 
 		copyTemplate(template);
 
 		int count = DDMTemplateLocalServiceUtil.getTemplatesCount(
-			group.getGroupId(), _classNameId, 0);
+			group.getGroupId(), _CLASS_NAME_ID, 0);
 
 		Assert.assertEquals(initialCount + 2, count);
 	}
@@ -141,7 +142,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testDeleteTemplate() throws Exception {
 		DDMTemplate template = addDisplayTemplate(
-			_classNameId, 0, "Test Template");
+			_CLASS_NAME_ID, 0, "Test Template");
 
 		DDMTemplateLocalServiceUtil.deleteTemplate(template.getTemplateId());
 
@@ -153,18 +154,20 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testFetchTemplate() throws Exception {
 		DDMTemplate template = addDisplayTemplate(
-			_classNameId, 0, "Test Template");
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Test Template",
+			"Test Template");
 
 		Assert.assertNotNull(
 			DDMTemplateLocalServiceUtil.fetchTemplate(
-				template.getGroupId(), _classNameId,
+				template.getGroupId(), _CLASS_NAME_ID,
 				template.getTemplateKey()));
 	}
 
 	@Test
 	public void testGetTemplates() throws Exception {
 		DDMTemplate template = addDisplayTemplate(
-			_classNameId, 0, "Test Template");
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Test Template",
+			"Test Template");
 
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(
 			template.getGroupId(), template.getClassNameId());
@@ -174,19 +177,17 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testSearchByDescription() throws Exception {
-		long resourceClassNameId = RandomTestUtil.randomLong();
-
 		addDisplayTemplate(
-			_classNameId, 0, resourceClassNameId, "Event", "Event");
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Event", "Event");
 		addDisplayTemplate(
-			_classNameId, 0, resourceClassNameId, "Contact", "Contact");
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Contact", "Contact");
 		addDisplayTemplate(
-			_classNameId, 0, resourceClassNameId, "Meeting", "Meeting");
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Meeting", "Meeting");
 
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			null, null, resourceClassNameId, null, "Meeting", null, null, null,
-			true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			null, null, _RESOURCE_CLASS_NAME_ID, null, "Meeting", null, null,
+			null, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(1, templates.size());
 
@@ -198,13 +199,18 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testSearchByKeywords() throws Exception {
-		addDisplayTemplate(_classNameId, 0, "Event Template");
-		addDisplayTemplate(_classNameId, 0, "Contact Template");
+		addDisplayTemplate(
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Event Template",
+			"Event Template");
+		addDisplayTemplate(
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Contact Template",
+			"Contact Template");
 
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			null, null, 0, "Event", null, null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new TemplateIdComparator(true));
+			null, null, _RESOURCE_CLASS_NAME_ID, "Event", null, null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new TemplateIdComparator(true));
 
 		Assert.assertEquals(1, templates.size());
 		Assert.assertEquals(
@@ -212,8 +218,9 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 		templates = DDMTemplateLocalServiceUtil.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			null, null, 0, "Template", null, null, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, new TemplateIdComparator(true));
+			null, null, _RESOURCE_CLASS_NAME_ID, "Template", null, null,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new TemplateIdComparator(true));
 
 		Assert.assertEquals(
 			"Event Template", getTemplateName(templates.get(0)));
@@ -223,14 +230,17 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testSearchByName() throws Exception {
-		addDisplayTemplate(_classNameId, 0, "Event");
-		addDisplayTemplate(_classNameId, 0, "Contact");
-		addDisplayTemplate(_classNameId, 0, "Meeting");
+		addDisplayTemplate(
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Event", "Event");
+		addDisplayTemplate(
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Contact", "Contact");
+		addDisplayTemplate(
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Meeting", "Meeting");
 
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			null, null, 0, "Event", null, null, null, null, true,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			null, null, _RESOURCE_CLASS_NAME_ID, "Event", null, null, null,
+			null, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(1, templates.size());
 		Assert.assertEquals("Event", getTemplateName(templates.get(0)));
@@ -238,14 +248,12 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testSearchByNameAndDescription() throws Exception {
-		long resourceClassNameId = RandomTestUtil.randomLong();
-
 		addDisplayTemplate(
-			_classNameId, 0, resourceClassNameId, "Event", "Event");
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Event", "Event");
 		addDisplayTemplate(
-			_classNameId, 0, resourceClassNameId, "Contact", "Contact");
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Contact", "Contact");
 		addDisplayTemplate(
-			_classNameId, 0, resourceClassNameId, "Meeting", "Meeting");
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Meeting", "Meeting");
 
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
@@ -257,18 +265,16 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testSearchByNameOrDescription() throws Exception {
-		long resourceClassNameId = RandomTestUtil.randomLong();
-
 		addDisplayTemplate(
-			_classNameId, 0, resourceClassNameId, "Event", "Event");
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Event", "Event");
 		addDisplayTemplate(
-			_classNameId, 0, resourceClassNameId, "Contact", "Contact");
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Contact", "Contact");
 		addDisplayTemplate(
-			_classNameId, 0, resourceClassNameId, "Meeting", "Meeting");
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Meeting", "Meeting");
 
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			null, null, resourceClassNameId, "Event", "Meeting", null, null,
+			null, null, _RESOURCE_CLASS_NAME_ID, "Event", "Meeting", null, null,
 			null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new TemplateIdComparator(true));
 
@@ -279,14 +285,17 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testSearchCount() throws Exception {
 		int initialCount = DDMTemplateLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
-			0, "Test Template", null, null, null, null, false);
+			TestPropsValues.getCompanyId(), group.getGroupId(), _CLASS_NAME_ID,
+			0, 0, "Test Template", null, null, null, null, false);
 
-		addDisplayTemplate(_classNameId, 0, "Test Template");
+		addDisplayTemplate(
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Test Template",
+			"Test Template");
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
-			0, "Test Template", null, null, null, null, false);
+			TestPropsValues.getCompanyId(), group.getGroupId(), _CLASS_NAME_ID,
+			0, _RESOURCE_CLASS_NAME_ID, "Test Template", null, null, null, null,
+			false);
 
 		Assert.assertEquals(initialCount + 1, count);
 	}
@@ -296,28 +305,31 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		long classNameId1 = RandomTestUtil.randomLong();
 		long classPK1 = RandomTestUtil.randomLong();
 
-		addDisplayTemplate(classNameId1, classPK1, StringUtil.randomString());
 		addDisplayTemplate(
-			classNameId1, RandomTestUtil.randomLong(),
-			StringUtil.randomString());
+			classNameId1, classPK1, _RESOURCE_CLASS_NAME_ID,
+			StringUtil.randomString(), StringUtil.randomString());
+
+		addDisplayTemplate(
+			classNameId1, RandomTestUtil.randomLong(), _RESOURCE_CLASS_NAME_ID,
+			StringUtil.randomString(), StringUtil.randomString());
 
 		long classNameId2 = RandomTestUtil.randomLong();
 
 		addDisplayTemplate(
-			classNameId2, RandomTestUtil.randomLong(),
-			StringUtil.randomString());
+			classNameId2, RandomTestUtil.randomLong(), _RESOURCE_CLASS_NAME_ID,
+			StringUtil.randomString(), StringUtil.randomString());
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			new long[] {classNameId1}, new long[] {classPK1}, 0, null, null,
-			null);
+			new long[] {classNameId1}, new long[] {classPK1},
+			_RESOURCE_CLASS_NAME_ID, null, null, null);
 
 		Assert.assertEquals(1, count);
 
 		count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			new long[] {classNameId2}, new long[] {classPK1}, 0, null, null,
-			null);
+			new long[] {classNameId2}, new long[] {classPK1},
+			_RESOURCE_CLASS_NAME_ID, null, null, null);
 
 		Assert.assertEquals(0, count);
 	}
@@ -326,24 +338,39 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	public void testSearchCountByClassNameIds() throws Exception {
 		long classNameId1 = RandomTestUtil.randomLong();
 
-		addDisplayTemplate(classNameId1, 0, StringUtil.randomString());
-		addDisplayTemplate(classNameId1, 0, StringUtil.randomString());
-		addDisplayTemplate(classNameId1, 0, StringUtil.randomString());
+		addDisplayTemplate(
+			classNameId1, 0, _RESOURCE_CLASS_NAME_ID, StringUtil.randomString(),
+			StringUtil.randomString());
+
+		addDisplayTemplate(
+			classNameId1, 0, _RESOURCE_CLASS_NAME_ID, StringUtil.randomString(),
+			StringUtil.randomString());
+
+		addDisplayTemplate(
+			classNameId1, 0, _RESOURCE_CLASS_NAME_ID, StringUtil.randomString(),
+			StringUtil.randomString());
 
 		long classNameId2 = RandomTestUtil.randomLong();
 
-		addDisplayTemplate(classNameId2, 0, StringUtil.randomString());
-		addDisplayTemplate(classNameId2, 0, StringUtil.randomString());
+		addDisplayTemplate(
+			classNameId2, 0, _RESOURCE_CLASS_NAME_ID, StringUtil.randomString(),
+			StringUtil.randomString());
+
+		addDisplayTemplate(
+			classNameId2, 0, _RESOURCE_CLASS_NAME_ID, StringUtil.randomString(),
+			StringUtil.randomString());
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			new long[] {classNameId1}, null, 0, null, null, null);
+			new long[] {classNameId1}, null,
+			_RESOURCE_CLASS_NAME_ID, null, null, null);
 
 		Assert.assertEquals(3, count);
 
 		count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			new long[] {classNameId1, classNameId2}, null, 0, null, null, null);
+			new long[] {classNameId1, classNameId2}, null,
+			_RESOURCE_CLASS_NAME_ID, null, null, null);
 
 		Assert.assertEquals(5, count);
 	}
@@ -352,20 +379,26 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	public void testSearchCountByClassPKs() throws Exception {
 		long classPK1 = RandomTestUtil.randomLong();
 
-		addDisplayTemplate(_classNameId, classPK1, StringUtil.randomString());
+		addDisplayTemplate(
+			_CLASS_NAME_ID, classPK1, _RESOURCE_CLASS_NAME_ID,
+			StringUtil.randomString(), StringUtil.randomString());
 
 		long classPK2 = RandomTestUtil.randomLong();
 
-		addDisplayTemplate(_classNameId, classPK2, StringUtil.randomString());
+		addDisplayTemplate(
+			_CLASS_NAME_ID, classPK2, _RESOURCE_CLASS_NAME_ID,
+			StringUtil.randomString(), StringUtil.randomString());
 
 		long classPK3 = RandomTestUtil.randomLong();
 
-		addDisplayTemplate(_classNameId, classPK3, StringUtil.randomString());
+		addDisplayTemplate(
+			_CLASS_NAME_ID, classPK3, _RESOURCE_CLASS_NAME_ID,
+			StringUtil.randomString(), StringUtil.randomString());
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			null, new long[] {classPK1, classPK2, classPK3}, 0, null, null,
-			null);
+			null, new long[] {classPK1, classPK2, classPK3},
+			_RESOURCE_CLASS_NAME_ID, null, null, null);
 
 		Assert.assertEquals(3, count);
 	}
@@ -373,14 +406,16 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testSearchCountByKeywords() throws Exception {
 		int initialCount = DDMTemplateLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
-			0, null, null, null);
+			TestPropsValues.getCompanyId(), group.getGroupId(), _CLASS_NAME_ID,
+			0, 0, null, null, null);
 
-		addDisplayTemplate(_classNameId, 0, "Test Template");
+		addDisplayTemplate(
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID, "Test Template",
+			"Test Template");
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
-			0, "Test", null, null);
+			TestPropsValues.getCompanyId(), group.getGroupId(), _CLASS_NAME_ID,
+			0, _RESOURCE_CLASS_NAME_ID, "Test", null, null);
 
 		Assert.assertEquals(initialCount + 1, count);
 	}
@@ -408,7 +443,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			null, null, 0, null, null, null, null,
+			null, null, _RESOURCE_CLASS_NAME_ID, null, null, null, null,
 			TemplateConstants.LANG_TYPE_VM, true);
 
 		Assert.assertEquals(2, count);
@@ -416,30 +451,19 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testSearchCountByResourceClassNameId() throws Exception {
-		long resourceClassNameId1 = RandomTestUtil.randomLong();
-
 		addDisplayTemplate(
-			_classNameId, 0, resourceClassNameId1, StringUtil.randomString(),
-			StringUtil.randomString());
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID,
+			StringUtil.randomString(), StringUtil.randomString());
 		addDisplayTemplate(
-			_classNameId, 0, resourceClassNameId1, StringUtil.randomString(),
-			StringUtil.randomString());
-
-		long resourceClassNameId2 = RandomTestUtil.randomLong();
-
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID,
+			StringUtil.randomString(), StringUtil.randomString());
 		addDisplayTemplate(
-			_classNameId, 0, resourceClassNameId2, StringUtil.randomString(),
-			StringUtil.randomString());
-		addDisplayTemplate(
-			_classNameId, 0, resourceClassNameId2, StringUtil.randomString(),
-			StringUtil.randomString());
-		addDisplayTemplate(
-			_classNameId, 0, resourceClassNameId2, StringUtil.randomString(),
-			StringUtil.randomString());
+			_CLASS_NAME_ID, 0, _RESOURCE_CLASS_NAME_ID,
+			StringUtil.randomString(), StringUtil.randomString());
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			null, null, resourceClassNameId2, null, null, null);
+			null, null, _RESOURCE_CLASS_NAME_ID, null, null, null);
 
 		Assert.assertEquals(3, count);
 	}
@@ -467,6 +491,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private long _classNameId;
+	private static long _CLASS_NAME_ID;
+
+	private static long _RESOURCE_CLASS_NAME_ID;
 
 }

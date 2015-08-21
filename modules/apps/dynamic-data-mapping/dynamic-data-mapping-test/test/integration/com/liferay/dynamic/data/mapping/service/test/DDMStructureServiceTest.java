@@ -66,7 +66,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_CLASS_NAME_ID = PortalUtil.getClassNameId(StringUtil.randomString());
+		_CLASS_NAME_ID = PortalUtil.getClassNameId(DDL_RECORD_SET_CLASS_NAME);
 	}
 
 	@Test

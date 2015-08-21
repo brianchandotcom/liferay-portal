@@ -33,6 +33,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.search.test.BaseAssetSearchTestCase;
 
 import java.util.Date;
@@ -122,8 +123,8 @@ public class JournalArticleAssetSearchTest extends BaseAssetSearchTestCase {
 
 		if (ddmTemplate == null) {
 			ddmTemplate = DDMTemplateTestUtil.addTemplate(
-				serviceContext.getScopeGroupId(),
-				ddmStructure.getStructureId());
+				serviceContext.getScopeGroupId(), ddmStructure.getStructureId(),
+				PortalUtil.getClassNameId(JournalArticle.class));
 		}
 
 		String content = DDMStructureTestUtil.getSampleStructuredContent();

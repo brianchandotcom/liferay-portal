@@ -38,7 +38,6 @@ rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 <liferay-frontend:card
 	actionJsp="/folder_action.jsp"
 	actionJspServletContext="<%= application %>"
-	cssClass="entry-display-style"
 	horizontal="<%= true %>"
 	imageCSSClass="icon-monospaced"
 	imageUrl="icon-folder-close-alt"

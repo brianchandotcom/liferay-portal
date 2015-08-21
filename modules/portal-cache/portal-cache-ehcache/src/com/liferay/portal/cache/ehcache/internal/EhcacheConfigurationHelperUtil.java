@@ -90,8 +90,8 @@ public class EhcacheConfigurationHelperUtil {
 				getCacheManagerPeerListenerFactoryConfigurations(),
 			clusterAware, clusterEnabled, clusterLinkReplicationEnabled, props);
 
-		Set<Properties> cacheManagerListenerConfigurations =
-			_getCacheManagerListenerConfigurations(ehcacheConfiguration, props);
+		Set<Properties> cacheManagerListenerProperties =
+			_getCacheManagerListenerProperties(ehcacheConfiguration, props);
 
 		PortalCacheConfiguration defaultPortalCacheConfiguration =
 			_parseCacheConfiguration(
@@ -116,15 +116,15 @@ public class EhcacheConfigurationHelperUtil {
 
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration =
 			new PortalCacheManagerConfiguration(
-				cacheManagerListenerConfigurations,
-				defaultPortalCacheConfiguration, portalCacheConfigurations);
+				cacheManagerListenerProperties, defaultPortalCacheConfiguration,
+				portalCacheConfigurations);
 
 		return new ObjectValuePair<>(
 			ehcacheConfiguration, portalCacheManagerConfiguration);
 	}
 
 	private static Set<Properties>
-		_getCacheManagerListenerConfigurations(
+		_getCacheManagerListenerProperties(
 			Configuration ehcacheConfiguration, Props props) {
 
 		FactoryConfiguration<?> factoryConfiguration =
@@ -322,7 +322,7 @@ public class EhcacheConfigurationHelperUtil {
 
 		cacheEventListenerConfigurations.clear();
 
-		Properties portalCacheBootstrapLoaderConfiguration = null;
+		Properties portalCacheBootstrapLoaderProperties = null;
 
 		BootstrapCacheLoaderFactoryConfiguration
 			bootstrapCacheLoaderFactoryConfiguration =
@@ -330,14 +330,14 @@ public class EhcacheConfigurationHelperUtil {
 					getBootstrapCacheLoaderFactoryConfiguration();
 
 		if (bootstrapCacheLoaderFactoryConfiguration != null) {
-			portalCacheBootstrapLoaderConfiguration = _parseProperties(
+			portalCacheBootstrapLoaderProperties = _parseProperties(
 				bootstrapCacheLoaderFactoryConfiguration.getProperties(),
 				bootstrapCacheLoaderFactoryConfiguration.
 					getPropertySeparator(), props);
 
 			if (clusterAware && clusterEnabled) {
 				if (!clusterLinkReplicationEnabled) {
-					portalCacheBootstrapLoaderConfiguration.put(
+					portalCacheBootstrapLoaderProperties.put(
 						EhcacheConstants.
 							BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME,
 						_parseFactoryClassName(
@@ -354,7 +354,7 @@ public class EhcacheConfigurationHelperUtil {
 
 		return new EhcachePortalCacheConfiguration(
 			portalCacheName, portalCacheListenerConfigurations,
-			portalCacheBootstrapLoaderConfiguration, requireSerialization);
+			portalCacheBootstrapLoaderProperties, requireSerialization);
 	}
 
 	private static String _parseFactoryClassName(

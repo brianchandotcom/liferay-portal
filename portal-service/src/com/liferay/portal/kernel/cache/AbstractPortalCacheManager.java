@@ -103,14 +103,14 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		else if (isPortalCacheBootstrapLoaderEnabled() &&
 				 (portalCacheConfiguration != null)) {
 
-			Properties portalCacheBootstrapLoaderConfiguration =
+			Properties portalCacheBootstrapLoaderProperties =
 				portalCacheConfiguration.
-					getPortalCacheBootstrapLoaderConfiguration();
+					getPortalCacheBootstrapLoaderProperties();
 
-			if (portalCacheBootstrapLoaderConfiguration != null) {
+			if (portalCacheBootstrapLoaderProperties != null) {
 				PortalCacheBootstrapLoader portalCacheBootstrapLoader =
 					portalCacheBootstrapLoaderFactory.create(
-						portalCacheBootstrapLoaderConfiguration);
+						portalCacheBootstrapLoaderProperties);
 
 				if (portalCacheBootstrapLoader != null) {
 					portalCacheBootstrapLoader.loadPortalCache(
@@ -252,13 +252,13 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 			_portalCacheManagerConfiguration.
 				getDefaultPortalCacheConfiguration();
 
-		for (Properties portalCacheManagerListenerConfiguration :
+		for (Properties portalCacheManagerListenerProperties :
 				_portalCacheManagerConfiguration.
-					getPortalCacheManagerListenerConfigurations()) {
+					getPortalCacheManagerListenerProperties()) {
 
 			PortalCacheManagerListener portalCacheManagerListener =
 				portalCacheManagerListenerFactory.create(
-					this, portalCacheManagerListenerConfiguration);
+					this, portalCacheManagerListenerProperties);
 
 			if (portalCacheManagerListener != null) {
 				registerPortalCacheManagerListener(portalCacheManagerListener);

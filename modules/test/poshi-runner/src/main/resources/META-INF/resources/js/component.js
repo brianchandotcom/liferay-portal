@@ -692,13 +692,13 @@ YUI.add(
 								else if (scopeType === 'function') {
 									var parameterCount = scopeNames.size() - 1;
 
-									for (var i = 1; i <= parameterCount; i++) {
+									for (var j = 1; j <= parameterCount; j++) {
 										buffer.push(
 											A.Lang.sub(
 												TPL_PARAMETER,
 												{
 													cssClass: 'parameter-name',
-													parameter: scopeTypes.item(i).html()
+													parameter: scopeTypes.item(j).html()
 												}
 											)
 										);
@@ -708,7 +708,7 @@ YUI.add(
 												TPL_PARAMETER,
 												{
 													cssClass: 'parameter-value',
-													parameter: scopeNames.item(i).html()
+													parameter: scopeNames.item(j).html()
 												}
 											)
 										);

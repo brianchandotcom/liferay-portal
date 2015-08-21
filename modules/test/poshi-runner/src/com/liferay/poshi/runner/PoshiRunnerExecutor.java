@@ -309,7 +309,7 @@ public class PoshiRunnerExecutor {
 			if (locator != null) {
 				Matcher matcher = _locatorKeyPattern.matcher(locator);
 
-				if (matcher.find()) {
+				if (matcher.find() && !locator.contains("/")) {
 					String pathClassName =
 						PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 							locator);

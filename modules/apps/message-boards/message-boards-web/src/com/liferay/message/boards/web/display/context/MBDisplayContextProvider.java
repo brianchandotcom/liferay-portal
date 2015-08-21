@@ -19,7 +19,7 @@ import com.liferay.message.boards.display.context.MBHomeDisplayContext;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -90,6 +90,7 @@ public class MBDisplayContextProvider {
 
 	private BundleContext _bundleContext;
 	private final Map<ServiceReference<MBDisplayContextFactory>,
-		MBDisplayContextFactory> _mbDisplayContextFactories = new TreeMap<>();
+		MBDisplayContextFactory> _mbDisplayContextFactories =
+			new ConcurrentHashMap<>();
 
 }

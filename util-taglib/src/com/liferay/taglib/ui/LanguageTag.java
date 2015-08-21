@@ -106,6 +106,17 @@ public class LanguageTag extends IncludeTag {
 		return null;
 	}
 
+	protected long getDisplayStyleGroupId() {
+		if (_ddmTemplateGroupId > 0) {
+			return _ddmTemplateGroupId;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getScopeGroupId();
+	}
+
 	protected String getFormAction() {
 		String formAction = _formAction;
 
@@ -233,7 +244,8 @@ public class LanguageTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:language:displayStyle", getDisplayStyle());
 		request.setAttribute(
-			"liferay-ui:language:displayStyleGroupId", _ddmTemplateGroupId);
+			"liferay-ui:language:displayStyleGroupId",
+			getDisplayStyleGroupId());
 		request.setAttribute("liferay-ui:language:formAction", getFormAction());
 		request.setAttribute("liferay-ui:language:formName", _formName);
 		request.setAttribute(

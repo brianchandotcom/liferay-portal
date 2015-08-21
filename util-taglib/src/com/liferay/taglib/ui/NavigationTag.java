@@ -95,6 +95,17 @@ public class NavigationTag extends IncludeTag {
 		return null;
 	}
 
+	protected long getDisplayStyleGroupId() {
+		if (_ddmTemplateGroupId > 0) {
+			return _ddmTemplateGroupId;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getScopeGroupId();
+	}
+
 	protected List<NavItem> getNavItems(HttpServletRequest request)
 		throws PortalException {
 
@@ -128,7 +139,7 @@ public class NavigationTag extends IncludeTag {
 			"liferay-ui:navigation:displayStyle", getDisplayStyle());
 		request.setAttribute(
 			"liferay-ui:navigation:displayStyleGroupId",
-			String.valueOf(_ddmTemplateGroupId));
+			String.valueOf(getDisplayStyleGroupId()));
 		request.setAttribute("liferay-ui:navigation:headerType", _headerType);
 		request.setAttribute(
 			"liferay-ui:navigation:includedLayouts", _includedLayouts);

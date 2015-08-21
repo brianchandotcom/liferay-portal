@@ -85,7 +85,7 @@
 
 		<execute function="Uncheck" locator1="PGAnnouncementsAddentry#DISPLAY_DATE_DISPLAY_IMMEDIATELY_CHECKBOX" />
 
-		<var attribute="value" locator="//input[@id='_84_displayDateHour']" name="displayDateHour" />
+		<var attribute="value" locator="//input[contains(@id,'displayDateHour')]" name="displayDateHour" />
 		<var name="displayDateHourLength" value="${displayDateHour?length()}" />
 
 		<if>
@@ -95,11 +95,11 @@
 			</then>
 		</if>
 
-		<var attribute="value" locator="//input[@id='_84_displayDateAmPm']" name="displayDateAMPM" />
+		<var attribute="value" locator="//input[contains(@id,'displayDateAmPm')]" name="displayDateAMPM" />
 		<var method="StringUtil#replace('${displayDateAMPM}', '0', 'AM')" name="displayDateAMPM" />
 		<var method="StringUtil#replace('${displayDateAMPM}', '1', 'PM')" name="displayDateAMPM" />
 
-		<var attribute="value" locator="//input[@id='_84_displayDateMinute']" name="displayDateMinute" />
+		<var attribute="value" locator="//input[contains(@id,'displayDateMinute')]" name="displayDateMinute" />
 		<var method="MathUtil#sum('${displayDateMinute}', '2')" name="displayDateMinuteFuture" />
 		<var name="displayDateMinuteFutureLength" value="${displayDateMinuteFuture?length()}" />
 

@@ -21,6 +21,13 @@ buildBabelCore {
 
 downloadBabelCore {
 	args = ["install", "babel-core@${babelCoreVersion}"]
+
+	onlyIf {
+		File dir = new File(node.nodeModulesDir, "node_modules/babel-core")
+
+		!dir.exists()
+	}
+
 	workingDir = node.nodeModulesDir
 }
 

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -96,11 +95,7 @@ public class EntriesChecker extends RowChecker {
 
 		boolean showInput = false;
 
-		String name = null;
-
 		if (article != null) {
-			name = JournalArticle.class.getSimpleName();
-
 			try {
 				if (JournalArticlePermission.contains(
 						_permissionChecker, article, ActionKeys.DELETE) ||
@@ -116,8 +111,6 @@ public class EntriesChecker extends RowChecker {
 			}
 		}
 		else if (folder != null) {
-			name = JournalFolder.class.getSimpleName();
-
 			try {
 				if (JournalFolderPermission.contains(
 						_permissionChecker, folder, ActionKeys.DELETE)) {
@@ -133,26 +126,7 @@ public class EntriesChecker extends RowChecker {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(9);
-
-		sb.append("['");
-		sb.append(_liferayPortletResponse.getNamespace());
-		sb.append(RowChecker.ROW_IDS);
-		sb.append(JournalFolder.class.getSimpleName());
-		sb.append("', '");
-		sb.append(_liferayPortletResponse.getNamespace());
-		sb.append(RowChecker.ROW_IDS);
-		sb.append(JournalArticle.class.getSimpleName());
-		sb.append("']");
-
-		String checkBoxRowIds = sb.toString();
-
-		return getRowCheckBox(
-			request, checked, disabled,
-			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
-				name + "",
-			primaryKey, checkBoxRowIds, "'#" + getAllRowIds() + "'",
-			StringPool.BLANK);
+		return super.getRowCheckBox(request, checked, disabled, primaryKey);
 	}
 
 	private final LiferayPortletResponse _liferayPortletResponse;

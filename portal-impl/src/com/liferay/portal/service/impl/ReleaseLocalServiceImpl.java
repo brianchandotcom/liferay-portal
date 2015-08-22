@@ -132,6 +132,21 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 	@Override
 	public int getBuildNumberOrCreate() throws PortalException {
 
+		// Gracefully add version column
+
+		DB db = DBFactoryUtil.getDB();
+
+		try {
+			db.runSQL("alter table Release_ add version VARCHAR(75) null");
+
+			populateVersion();
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e.getMessage());
+			}
+		}
+
 		// Get release build number
 
 		Connection con = null;
@@ -154,7 +169,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 					_log.debug("Build number " + buildNumber);
 				}
 
-				DB db = DBFactoryUtil.getDB();
+				// Gracefully add state_ column
 
 				try {
 					db.runSQL("alter table Release_ add state_ INTEGER");
@@ -278,6 +293,13 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		updateRelease(
 			servletContextName, upgradeProcesses, buildNumber,
 			previousBuildNumber, indexOnUpgrade);
+	}
+
+	protected void populateVersion() {
+
+		// This method is called if and only if the version column did not
+		// previously exist and was safely added to the database
+
 	}
 
 	protected void testSupportsStringCaseSensitiveQuery() {

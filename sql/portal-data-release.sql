@@ -1,1 +1,1 @@
-insert into Release_ (releaseId, createDate, modifiedDate, servletContextName, buildNumber, verified) values (1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'portal', 7000, FALSE);
+insert into Release_ (releaseId, createDate, modifiedDate, servletContextName, version, buildNumber, verified) values (1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'portal', '7.0.0', 7000, FALSE);

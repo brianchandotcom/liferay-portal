@@ -737,6 +737,7 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="servletContextName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="buildNumber" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="buildDate" type="org.hibernate.type.TimestampType" />
 		<property name="verified" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />

@@ -1788,6 +1788,7 @@
 		<!-- Other fields -->
 
 		<column name="servletContextName" type="String" />
+		<column name="version" type="String" />
 		<column name="buildNumber" type="int" />
 		<column name="buildDate" type="Date" />
 		<column name="verified" type="boolean" />

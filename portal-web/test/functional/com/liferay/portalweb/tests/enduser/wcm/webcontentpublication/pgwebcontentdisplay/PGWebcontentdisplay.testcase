@@ -644,7 +644,7 @@
 		<execute macro="WebContent#publish" />
 
 		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title 1" />
+			<var name="webContentTitle" value="Web Content Title 1" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -661,7 +661,7 @@
 		<execute macro="WebContent#publish" />
 
 		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title 2" />
+			<var name="webContentTitle" value="Web Content Title 2" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

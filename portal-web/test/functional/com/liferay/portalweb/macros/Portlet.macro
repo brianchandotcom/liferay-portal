@@ -114,6 +114,7 @@
 
 		<if>
 			<or>
+				<equals arg1="${portletName}" arg2="Asset Publisher" />
 				<equals arg1="${portletName}" arg2="Documents and Media" />
 				<equals arg1="${portletName}" arg2="Knowledge Base Display" />
 				<equals arg1="${portletName}" arg2="Media Gallery" />

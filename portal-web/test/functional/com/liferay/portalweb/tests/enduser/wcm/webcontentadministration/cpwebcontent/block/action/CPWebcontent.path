@@ -361,12 +361,12 @@
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_TITLE</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[@class=' list-group-item-content']//a</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[contains(@class,'list-group-item-content')]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_TITLE_COPY</td>
-	<td>xpath=(//li[contains(@data-title,'${key_webContentTitle}')]//div[@class=' list-group-item-content']//a)[3]</td>
+	<td>xpath=(//li[contains(@data-title,'${key_webContentTitle}')]//div[contains(@class,'list-group-item-content')]//a)[3]</td>
 	<td></td>
 </tr>
 <tr>

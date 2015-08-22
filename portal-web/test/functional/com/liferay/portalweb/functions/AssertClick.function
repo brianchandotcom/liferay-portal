@@ -70,7 +70,7 @@
 	</command>
 
 	<command name="assertTextClickAtAddApplication">
-		<execute argument1="//script[contains(@src,'/liferay/dockbar_add_application.js')] | //script[contains(@src,'/liferay/dockbar_add_page.js')] | //script[contains(@src,'js/control_menu.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/liferay/dockbar_add_application.js')] | //script[contains(@src,'/liferay/dockbar_add_page.js')] | //script[contains(@src,'liferay/toggler_interaction.js')]" selenium="waitForElementPresent" />
 
 		<execute argument1="1000" selenium="pause" />
 

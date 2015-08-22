@@ -45,6 +45,8 @@
 	</tear-down>
 
 	<command name="AddAndEditAssetsViaVirtualHostOrganizations" priority="4">
+		<property name="custom.properties" value="virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com" />
+
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

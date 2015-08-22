@@ -1360,6 +1360,8 @@
 			<var name="webContentTitle" value="WebContent Title 1" />
 		</execute>
 
+		<execute function="Pause" locator1="65000" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
@@ -1369,6 +1371,8 @@
 			<var name="webContentContent" value="WebContent Content 2" />
 			<var name="webContentTitle" value="WebContent Title 2" />
 		</execute>
+
+		<execute function="Pause" locator1="65000" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />

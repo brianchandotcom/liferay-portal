@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -325,18 +324,27 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 			return;
 		}
 
-		Map<Properties, PortalCacheListenerScope>
+		Set<Properties>
 			cacheListenerConfigurations =
 				portalCacheConfiguration.getPortalCacheListenerConfigurations();
 
-		for (Map.Entry<Properties, PortalCacheListenerScope> entry :
-				cacheListenerConfigurations.entrySet()) {
+		for (Properties properties :
+				portalCacheConfiguration.
+					getPortalCacheListenerConfigurations()) {
+
+			PortalCacheListenerScope portalCacheListenerScope =
+				(PortalCacheListenerScope)properties.remove(
+					PortalCacheConfiguration.PORTAL_CACHE_LISTENER_SCOPE);
+
+			if (portalCacheListenerScope == null) {
+				portalCacheListenerScope = PortalCacheListenerScope.ALL;
+			}
 
 			PortalCacheListener<K, V> portalCacheListener =
-				portalCacheListenerFactory.create(entry.getKey());
+				portalCacheListenerFactory.create(properties);
 
 			portalCache.registerPortalCacheListener(
-				portalCacheListener, entry.getValue());
+				portalCacheListener, portalCacheListenerScope);
 		}
 	}
 

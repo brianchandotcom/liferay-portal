@@ -14,12 +14,10 @@
 
 package com.liferay.portal.kernel.cache.configuration;
 
-import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
-
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author Tina Tian
@@ -29,10 +27,12 @@ public class PortalCacheConfiguration {
 	public static final String DEFAULT_PORTAL_CACHE_NAME =
 		"DEFAULT_PORTAL_CACHE_NAME";
 
+	public static final String PORTAL_CACHE_LISTENER_SCOPE =
+		"PORTAL_CACHE_LISTENER_SCOPE";
+
 	public PortalCacheConfiguration(
 		String portalCacheName,
-		Map<Properties, PortalCacheListenerScope>
-			portalCacheListenerConfigurations,
+		Set<Properties> portalCacheListenerConfigurations,
 		Properties portalCacheBootstrapLoaderConfiguration) {
 
 		if (portalCacheName == null) {
@@ -42,10 +42,10 @@ public class PortalCacheConfiguration {
 		_portalCacheName = portalCacheName;
 
 		if (portalCacheListenerConfigurations == null) {
-			_portalCacheListenerConfigurations = Collections.emptyMap();
+			_portalCacheListenerConfigurations = Collections.emptySet();
 		}
 		else {
-			_portalCacheListenerConfigurations = new HashMap<>(
+			_portalCacheListenerConfigurations = new HashSet<>(
 				portalCacheListenerConfigurations);
 		}
 
@@ -53,16 +53,12 @@ public class PortalCacheConfiguration {
 			portalCacheBootstrapLoaderConfiguration;
 	}
 
-	public Properties
-		getPortalCacheBootstrapLoaderConfiguration() {
-
+	public Properties getPortalCacheBootstrapLoaderConfiguration() {
 		return _portalCacheBootstrapLoaderConfiguration;
 	}
 
-	public Map<Properties, PortalCacheListenerScope>
-		getPortalCacheListenerConfigurations() {
-
-		return Collections.unmodifiableMap(_portalCacheListenerConfigurations);
+	public Set<Properties> getPortalCacheListenerConfigurations() {
+		return Collections.unmodifiableSet(_portalCacheListenerConfigurations);
 	}
 
 	public String getPortalCacheName() {
@@ -78,8 +74,7 @@ public class PortalCacheConfiguration {
 	}
 
 	private final Properties _portalCacheBootstrapLoaderConfiguration;
-	private final Map<Properties, PortalCacheListenerScope>
-		_portalCacheListenerConfigurations;
+	private final Set<Properties> _portalCacheListenerConfigurations;
 	private final String _portalCacheName;
 
 }

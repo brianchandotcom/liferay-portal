@@ -29,9 +29,9 @@ import java.io.Serializable;
 
 import java.net.URL;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -122,8 +122,7 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	protected PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration() {
 
-		Map<Properties, PortalCacheListenerScope>
-			cacheListenerConfigurations = null;
+		Set<Properties> cacheListenerConfigurations = null;
 		Properties bootstrapLoaderConfiguration = null;
 
 		if (isClusterAware() &&
@@ -132,11 +131,11 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 			Properties properties = new Properties();
 
 			properties.put(PortalCacheReplicator.REPLICATOR, true);
+			properties.put(
+				PortalCacheConfiguration.PORTAL_CACHE_LISTENER_SCOPE,
+				PortalCacheListenerScope.ALL);
 
-			cacheListenerConfigurations = new HashMap<>();
-
-			cacheListenerConfigurations.put(
-				properties, PortalCacheListenerScope.ALL);
+			cacheListenerConfigurations = Collections.singleton(properties);
 
 			bootstrapLoaderConfiguration = new Properties();
 		}

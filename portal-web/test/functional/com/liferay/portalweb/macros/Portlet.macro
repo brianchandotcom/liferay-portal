@@ -360,6 +360,14 @@
 		</if>
 	</command>
 
+	<command name="viewPillTitle" summary="Assert that the ${portletName} portlet title has the text '${portletName}'">
+		<var name="key_portletName" value="${portletName}" />
+
+		<var method="StringUtil#upperCase('${portletName}')" name="portletNameUppercase" />
+
+		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="${portletNameUppercase}" />
+	</command>
+
 	<command name="viewSpecificPG">
 		<var name="key_portletTitleName" value="${portletName}" />
 

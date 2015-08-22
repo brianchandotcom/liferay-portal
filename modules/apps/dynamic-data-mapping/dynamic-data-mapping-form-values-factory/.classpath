@@ -31,6 +31,7 @@
 	<classpathentry kind="lib" path="lib/com.liferay.dynamic.data.mapping.api.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.dynamic.data.mapping.form.renderer.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.dynamic.data.mapping.service.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.mobile.device.rules.api.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.osgi.service.tracker.map.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.portal.expression.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.portal.spring.extender.jar" />

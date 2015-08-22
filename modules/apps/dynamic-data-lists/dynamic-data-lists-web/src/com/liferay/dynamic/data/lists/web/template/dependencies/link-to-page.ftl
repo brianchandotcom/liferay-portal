@@ -1,5 +1,7 @@
-<#include "init-display.ftl">
+<#include "init.ftl">
 
-<a href="${getVariableReferenceCode(displayFieldValue)}">
+<#assign href = "ddlDisplayTemplateHelper.getLayoutFriendlyURL(" + fieldValueVariable + ", " + themeDisplayVariable + ")">
+
+<a href="${getVariableReferenceCode(href)}">
 	${label}
 </a>

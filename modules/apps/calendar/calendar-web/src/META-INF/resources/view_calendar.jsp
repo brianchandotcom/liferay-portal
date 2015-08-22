@@ -480,7 +480,9 @@ protected void updateCalendarsJSONArray(HttpServletRequest request, JSONArray ca
 
 		long calendarId = jsonObject.getLong("calendarId");
 
-		jsonObject.put("color", GetterUtil.getString(SessionClicks.get(request, "calendar-portlet-calendar-" + calendarId + "-color", jsonObject.getString("color"))));
+		Bundle bundle = FrameworkUtil.getBundle(CalendarResourceDisplayTerms.class);
+
+		jsonObject.put("color", GetterUtil.getString(SessionClicks.get(request, bundle.getSymbolicName() + "_calendar" + calendarId + "Color", jsonObject.getString("color"))));
 		jsonObject.put("visible", GetterUtil.getBoolean(SessionClicks.get(request, "calendar-portlet-calendar-" + calendarId + "-visible", "true")));
 	}
 }

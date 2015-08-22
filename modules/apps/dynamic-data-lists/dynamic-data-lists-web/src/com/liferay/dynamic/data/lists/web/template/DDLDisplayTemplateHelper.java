@@ -15,12 +15,25 @@
 package com.liferay.dynamic.data.lists.web.template;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -30,34 +43,93 @@ import java.util.Locale;
  */
 public class DDLDisplayTemplateHelper {
 
-	public static List<DDLRecord> getRecords(long recordSetId)
+	public static String getDocumentLibraryPreviewURL(
+			DDMFormFieldValue recordFieldValue, Locale locale)
 		throws PortalException {
 
-		return DDLRecordSetLocalServiceUtil.getDDLRecordSet(
-			recordSetId).getRecords();
-	}
+		Value value = recordFieldValue.getValue();
 
-	public static String render(DDLRecord ddlRecord, String name, Locale locale)
-		throws PortalException {
+		String valueString = value.getString(locale);
 
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			ddlRecord.getDDMFormFieldValues(name);
-
-		if ((ddmFormFieldValues == null) || ddmFormFieldValues.isEmpty()) {
+		if (Validator.isNull(valueString)) {
 			return StringPool.BLANK;
 		}
 
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(valueString);
+
+		String uuid = jsonObject.getString("uuid");
+		long groupId = jsonObject.getLong("groupId");
+
+		FileEntry fileEntry =
+			DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(uuid, groupId);
+
+		return DLUtil.getPreviewURL(
+			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
+			false, true);
+	}
+
+	public static String getHTMLContent(
+		DDMFormFieldValue recordFieldValue, Locale locale) {
+
+		Value value = recordFieldValue.getValue();
+
+		String valueString = value.getString(locale);
+
+		if (Validator.isNull(valueString)) {
+			return StringPool.BLANK;
+		}
+
+		return HtmlUtil.escapeJS(valueString);
+	}
+
+	public static String getLayoutFriendlyURL(
+			DDMFormFieldValue recordFieldValue, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		Value value = recordFieldValue.getValue();
+
+		String valueString = value.getString(themeDisplay.getLocale());
+
+		if (Validator.isNull(valueString)) {
+			return StringPool.BLANK;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(valueString);
+
+		long groupId = jsonObject.getLong("groupId");
+		boolean privateLayout = jsonObject.getBoolean("privateLayout");
+		long layoutId = jsonObject.getLong("layoutId");
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(
+			groupId, privateLayout, layoutId);
+
+		return PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
+	}
+
+	public static List<DDLRecord> getRecords(long recordSetId)
+		throws PortalException {
+
+		return DDLRecordLocalServiceUtil.getRecords(recordSetId);
+	}
+
+	public static List<DDLRecord> getRecords(
+			long recordSetId, int status, int start, int end,
+			OrderByComparator<DDLRecord> orderByComparator)
+		throws PortalException {
+
+		return DDLRecordLocalServiceUtil.getRecords(
+			recordSetId, status, start, end, orderByComparator);
+	}
+
+	public static String renderRecordFieldValue(
+			DDMFormFieldValue recordFieldValue, Locale locale)
+		throws PortalException {
+
 		DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
 			DDMFormFieldValueRendererRegistryUtil.getDDMFormFieldValueRenderer(
-				ddmFormFieldValues.get(0).getType());
+				recordFieldValue.getType());
 
-		if (ddmFormFieldValues.size() > 1) {
-			return ddmFormFieldValueRenderer.render(ddmFormFieldValues, locale);
-		}
-		else {
-			return ddmFormFieldValueRenderer.render(
-				ddmFormFieldValues.get(0), locale);
-		}
+		return ddmFormFieldValueRenderer.render(recordFieldValue, locale);
 	}
 
 }

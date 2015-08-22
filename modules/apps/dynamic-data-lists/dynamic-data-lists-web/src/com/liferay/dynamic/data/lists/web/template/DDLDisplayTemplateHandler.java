@@ -65,7 +65,8 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 	public Map<String, Object> getCustomContextObjects() {
 		Map<String, Object> contextObjects = new HashMap<>(1);
 
-		contextObjects.put("ddlHelper", new DDLDisplayTemplateHelper());
+		contextObjects.put(
+			"ddlDisplayTemplateHelper", new DDLDisplayTemplateHelper());
 
 		return contextObjects;
 	}
@@ -141,8 +142,8 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 			new TemplateVariableGroup("data-list-util");
 
 		ddlUtilTemplateVariableGroup.addVariable(
-			"data-list-helper", DDLDisplayTemplateHelper.class, "ddlHelper",
-			null);
+			"data-list-display-template-helper", DDLDisplayTemplateHelper.class,
+			"ddlDisplayTemplateHelper", null);
 
 		return ddlUtilTemplateVariableGroup;
 	}

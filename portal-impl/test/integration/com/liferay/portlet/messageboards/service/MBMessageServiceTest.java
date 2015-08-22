@@ -150,11 +150,6 @@ public class MBMessageServiceTest {
 		}
 
 		@Override
-		public boolean isSuccess() {
-			return true;
-		}
-
-		@Override
 		protected void doRun() throws Exception {
 			String body = "This is a test message.";
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs =

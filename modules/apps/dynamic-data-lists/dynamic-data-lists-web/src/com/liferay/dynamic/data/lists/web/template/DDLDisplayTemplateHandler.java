@@ -182,9 +182,10 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 	}
 
 	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
-		new DDLTemplateVariableCodeHandler(
+		new DDMTemplateVariableCodeHandler(
 			DDLDisplayTemplateHandler.class.getClassLoader(),
-			"com/liferay/dynamic/data/lists/web/template/dependencies/"
-		);
+			"com/liferay/dynamic/data/lists/web/template/dependencies/",
+			SetUtil.fromArray(
+				new String[] {"document-library", "html", "link-to-page"}));
 
 }

@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Writer;
 
+import java.util.Set;
+
 /**
  * @author Marcellus Tavares
  */
@@ -35,10 +37,12 @@ public class DDMTemplateVariableCodeHandler
 	implements TemplateVariableCodeHandler {
 
 	public DDMTemplateVariableCodeHandler(
-		ClassLoader classLoader, String templatePath) {
+		ClassLoader classLoader, String templatePath,
+		Set<String> templateNames) {
 
 		_classLoader = classLoader;
 		_templatePath = templatePath;
+		_templateNames = templateNames;
 	}
 
 	@Override
@@ -47,10 +51,10 @@ public class DDMTemplateVariableCodeHandler
 			String language)
 		throws Exception {
 
-		String resourceName = getResourceName(
+		String templateId = getTemplateId(
 			templateVariableDefinition.getDataType());
 
-		Template template = getTemplate(resourceName);
+		Template template = getTemplate(templateId);
 
 		String content = getTemplateContent(
 			template, templateVariableDefinition, language);
@@ -63,23 +67,9 @@ public class DDMTemplateVariableCodeHandler
 		return new String[] {content};
 	}
 
-	protected String getResourceName(String dataType) {
-		if (isCommonResource(dataType)) {
-			dataType = "common";
-		}
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(getTemplatePath());
-		sb.append(dataType);
-		sb.append(".ftl");
-
-		return sb.toString();
-	}
-
-	protected Template getTemplate(String resource) throws Exception {
+	protected Template getTemplate(String templateId) throws Exception {
 		TemplateResource templateResource = new ClassLoaderTemplateResource(
-			_classLoader, resource);
+			_classLoader, templateId);
 
 		return TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_FTL, templateResource, false);
@@ -98,6 +88,20 @@ public class DDMTemplateVariableCodeHandler
 		template.processTemplate(writer);
 
 		return StringUtil.trim(writer.toString());
+	}
+
+	protected String getTemplateId(String dataType) {
+		if (!_templateNames.contains(dataType)) {
+			dataType = "common";
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(getTemplatePath());
+		sb.append(dataType);
+		sb.append(".ftl");
+
+		return sb.toString();
 	}
 
 	protected String getTemplatePath() {
@@ -121,17 +125,6 @@ public class DDMTemplateVariableCodeHandler
 			template, templateVariableDefinition, language);
 	}
 
-	protected boolean isCommonResource(String dataType) {
-		if (dataType.equals("boolean") || dataType.equals("date") ||
-			dataType.equals("document-library") || dataType.equals("image") ||
-			dataType.equals("link-to-page")) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	protected void prepareTemplate(
 		Template template,
 		TemplateVariableDefinition templateVariableDefinition,
@@ -146,6 +139,7 @@ public class DDMTemplateVariableCodeHandler
 	}
 
 	private final ClassLoader _classLoader;
+	private final Set<String> _templateNames;
 	private final String _templatePath;
 
 }

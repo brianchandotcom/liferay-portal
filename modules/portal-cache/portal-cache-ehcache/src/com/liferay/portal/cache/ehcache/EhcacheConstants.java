@@ -12,17 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.cache.test;
-
-import com.liferay.portal.kernel.cache.PortalCacheReplicator;
-
-import java.io.Serializable;
+package com.liferay.portal.cache.ehcache;
 
 /**
  * @author Tina Tian
  */
-public class TestPortalCacheReplicator
-	<K extends Serializable, V extends Serializable>
-		extends TestPortalCacheListener<K, V>
-		implements PortalCacheReplicator<K, V> {
+public interface EhcacheConstants {
+
+	public static final String BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME =
+		"BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME";
+
+	public static final String CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME =
+		"CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME";
+
+	public static final String CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME =
+		"CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME";
+
 }

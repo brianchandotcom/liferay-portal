@@ -12,20 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache.internal;
+package com.liferay.portal.kernel.cache;
+
+import java.io.Serializable;
+
+import java.util.Properties;
 
 /**
  * @author Tina Tian
  */
-public interface EhcacheConstants {
+public interface PortalCacheListenerFactory {
 
-	public static final String BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME =
-		"BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME";
-
-	public static final String CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME =
-		"CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME";
-
-	public static final String CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME =
-		"CACHE_MANAGER_LISTENER_FACTORY_CLASS_NAME";
+	public <K extends Serializable, V> PortalCacheListener<K, V> create(
+		Properties properties);
 
 }

@@ -14,7 +14,9 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
+import com.liferay.portal.kernel.cache.PortalCacheListenerFactory;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheManagerListenerFactory;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
 import com.liferay.portal.kernel.cache.configurator.PortalCacheConfiguratorSettings;
@@ -88,6 +90,22 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 		PortalCacheConfiguratorSettings portalCacheConfiguratorSettings) {
 
 		reconfigure(portalCacheConfiguratorSettings);
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortalCacheListenerFactory(
+		PortalCacheListenerFactory portalCacheListenerFactory) {
+
+		this.portalCacheListenerFactory = portalCacheListenerFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortalCacheManagerListenerFactory(
+		PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
+			portalCacheManagerListenerFactory) {
+
+		this.portalCacheManagerListenerFactory =
+			portalCacheManagerListenerFactory;
 	}
 
 	@Reference(unbind = "-")

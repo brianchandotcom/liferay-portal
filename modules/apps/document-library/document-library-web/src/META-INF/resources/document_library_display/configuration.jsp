@@ -113,6 +113,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				{
 					dialog: {
 						constrain: true,
+						destroyOnHide: true,
 						modal: true,
 						width: 600
 					},

@@ -31,9 +31,8 @@ public class PortalCacheConfiguration {
 		"PORTAL_CACHE_LISTENER_SCOPE";
 
 	public PortalCacheConfiguration(
-		String portalCacheName,
-		Set<Properties> portalCacheListenerConfigurations,
-		Properties portalCacheBootstrapLoaderConfiguration) {
+		String portalCacheName, Set<Properties> portalCacheListenerProperties,
+		Properties portalCacheBootstrapLoaderProperties) {
 
 		if (portalCacheName == null) {
 			throw new NullPointerException("Portal cache name is null");
@@ -41,24 +40,24 @@ public class PortalCacheConfiguration {
 
 		_portalCacheName = portalCacheName;
 
-		if (portalCacheListenerConfigurations == null) {
-			_portalCacheListenerConfigurations = Collections.emptySet();
+		if (portalCacheListenerProperties == null) {
+			_portalCacheListenerProperties = Collections.emptySet();
 		}
 		else {
-			_portalCacheListenerConfigurations = new HashSet<>(
-				portalCacheListenerConfigurations);
+			_portalCacheListenerProperties = new HashSet<>(
+				portalCacheListenerProperties);
 		}
 
-		_portalCacheBootstrapLoaderConfiguration =
-			portalCacheBootstrapLoaderConfiguration;
+		_portalCacheBootstrapLoaderProperties =
+			portalCacheBootstrapLoaderProperties;
 	}
 
-	public Properties getPortalCacheBootstrapLoaderConfiguration() {
-		return _portalCacheBootstrapLoaderConfiguration;
+	public Properties getPortalCacheBootstrapLoaderProperties() {
+		return _portalCacheBootstrapLoaderProperties;
 	}
 
-	public Set<Properties> getPortalCacheListenerConfigurations() {
-		return Collections.unmodifiableSet(_portalCacheListenerConfigurations);
+	public Set<Properties> getPortalCacheListenerProperties() {
+		return Collections.unmodifiableSet(_portalCacheListenerProperties);
 	}
 
 	public String getPortalCacheName() {
@@ -69,12 +68,12 @@ public class PortalCacheConfiguration {
 		String portalCacheName) {
 
 		return new PortalCacheConfiguration(
-			portalCacheName, _portalCacheListenerConfigurations,
-			_portalCacheBootstrapLoaderConfiguration);
+			portalCacheName, _portalCacheListenerProperties,
+			_portalCacheBootstrapLoaderProperties);
 	}
 
-	private final Properties _portalCacheBootstrapLoaderConfiguration;
-	private final Set<Properties> _portalCacheListenerConfigurations;
+	private final Properties _portalCacheBootstrapLoaderProperties;
+	private final Set<Properties> _portalCacheListenerProperties;
 	private final String _portalCacheName;
 
 }

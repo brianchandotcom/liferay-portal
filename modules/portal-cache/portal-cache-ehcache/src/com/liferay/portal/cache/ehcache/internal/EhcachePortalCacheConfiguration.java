@@ -25,13 +25,13 @@ import java.util.Set;
 public class EhcachePortalCacheConfiguration extends PortalCacheConfiguration {
 
 	public EhcachePortalCacheConfiguration(
-		String portalCacheName,
-		Set<Properties> portalCacheListenerConfigurations,
-		Properties bootstrapLoaderConfiguration, boolean requireSerialization) {
+		String portalCacheName, Set<Properties> portalCacheListenerProperties,
+		Properties portalCacheBootstrapLoaderProperties,
+		boolean requireSerialization) {
 
 		super(
-			portalCacheName, portalCacheListenerConfigurations,
-			bootstrapLoaderConfiguration);
+			portalCacheName, portalCacheListenerProperties,
+			portalCacheBootstrapLoaderProperties);
 
 		_requireSerialization = requireSerialization;
 	}
@@ -45,9 +45,8 @@ public class EhcachePortalCacheConfiguration extends PortalCacheConfiguration {
 		String portalCacheName) {
 
 		return new EhcachePortalCacheConfiguration(
-			portalCacheName, getPortalCacheListenerConfigurations(),
-			getPortalCacheBootstrapLoaderConfiguration(),
-			_requireSerialization);
+			portalCacheName, getPortalCacheListenerProperties(),
+			getPortalCacheBootstrapLoaderProperties(), _requireSerialization);
 	}
 
 	private final boolean _requireSerialization;

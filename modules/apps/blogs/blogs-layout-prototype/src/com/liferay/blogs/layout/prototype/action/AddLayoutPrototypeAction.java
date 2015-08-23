@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.layout.prototype.action;
 
+import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
 import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -83,7 +84,17 @@ public class AddLayoutPrototypeAction {
 			layout, BlogsPortletKeys.BLOGS, "column-1");
 
 		DefaultLayoutPrototypesUtil.addPortletId(
+			layout, AssetTagsNavigationPortletKeys.ASSET_TAGS_CLOUD,
+			"column-2");
+
+		DefaultLayoutPrototypesUtil.addPortletId(
 			layout, RecentBloggersPortletKeys.RECENT_BLOGGERS, "column-2");
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + AssetTagsNavigationPortletKeys.ASSET_TAGS_CLOUD + ")"
+	)
+	protected void setAssetTagsCloudPortlet(Portlet portlet) {
 	}
 
 	@Reference(target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")")

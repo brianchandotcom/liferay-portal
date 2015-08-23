@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="blogs-recent-bloggers-web,blogs-web" />
+	<property name="import.shared" value="blogs-recent-bloggers-web,blogs-web,../asset/asset-tags-navigation-web" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

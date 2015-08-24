@@ -1,6 +1,14 @@
 @import "bourbon";
 @import "mixins";
 
+body.open {
+	.control-menu {
+		@include sm() {
+			left: 320px;
+		}
+	}
+}
+
 .control-menu {
 	bottom: 0;
 	left: 0;
@@ -17,8 +25,6 @@
 }
 
 .control-menu-level-1 {
-	background-color: rgba(31, 40, 46, 0.95);
-
 	.control-menu-nav {
 		@include media-query(null, 279px) {
 			@include flex-wrap(wrap);
@@ -52,8 +58,7 @@
 }
 
 .control-menu-level-2 {
-	background-color: rgba(31, 40, 46, 0.85);
-	border-bottom: 1px solid rgb(31, 40, 46);
+	border-bottom: 1px solid #EEE;
 
 	.control-menu-nav {
 		@include justify-content(space-between);
@@ -84,64 +89,14 @@
 		float: left;
 		margin-left: 16px;
 	}
-
-	> .active .control-menu-icon {
-		&,
-		&:focus,
-		&:hover {
-			color: #FFF;
-		}
-	}
 }
 
 .control-menu-icon {
-	color: #FFF;
 	display: inline-block;
-
-	&:focus,
-	&:hover {
-		color: #FFF;
-		text-decoration: none;
-	}
-
-	&.icon-monospaced,
-	.icon-monospaced {
-		font-size: 18px;
-	}
 }
 
 .control-menu-icon-label {
 	display: block;
-}
-
-.control-menu-level-2 .control-menu-nav {
-	> .active {
-		.control-menu-icon .icon-monospaced {
-			background-color: #3A4D5A;
-			border-radius: 4px;
-			color: #88C37C;
-		}
-
-		.control-menu-icon-label {
-			color: #FFF;
-		}
-	}
-
-	.control-menu-icon {
-		color: #869CAD;
-	}
-}
-
-@include sm() {
-	body.open {
-		.control-menu {
-			left: 320px;
-		}
-	}
-
-	.sidenav-transition .control-menu {
-		@include transition(all 0.5s ease);
-	}
 }
 
 .portlet-control-menu ul > li {

@@ -1241,7 +1241,7 @@ AUI.add(
 							);
 						}
 						else {
-							Liferay.Store('calendar-portlet-calendar-' + calendarId + '-color', color);
+							Liferay.Store('com.liferay.calendar.web_calendar' + calendarId + 'Color', color);
 						}
 					},
 

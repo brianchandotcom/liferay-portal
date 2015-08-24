@@ -3863,7 +3863,11 @@ go]]></replacevalue>
 		<if>
 			<isset property="jenkins.testray.results.dir" />
 			<then>
-				<copy file="${jenkins.results.xml.suite.file}" todir="${jenkins.testray.results.dir}" />
+				<for list="${jenkins.testray.results.dir}" param="jenkins.testray.results.path">
+					<sequential>
+						<copy file="${jenkins.results.xml.suite.file}" todir="@{jenkins.testray.results.path}" />
+					</sequential>
+				</for>
 			</then>
 		</if>
 	</target>
@@ -5983,61 +5987,65 @@ if (ppstate.equals("normal")) {
 		<if>
 			<isset property="jenkins.testray.results.dir" />
 			<then>
-				<antelope:stringutil property="job.name" string="${env.JOB_NAME}">
-					<antelope:replace regex="," replacement="_" />
-				</antelope:stringutil>
+				<for list="${jenkins.testray.results.dir}" param="jenkins.testray.results.path">
+					<sequential>
+						<antelope:stringutil property="job.name" string="${env.JOB_NAME}">
+							<antelope:replace regex="," replacement="_" />
+						</antelope:stringutil>
 
-				<property name="testray.logs.dir" value="${jenkins.testray.results.dir}/logs/${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
+						<property name="testray.logs.dir" value="${jenkins.testray.results.path}/logs/${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
 
-				<var name="result.file" value="portal-web/test-results/functional/report.html" />
-				<var name="screenshot.dir" value="portal-web/test-results/functional/screenshots" />
+						<var name="result.file" value="portal-web/test-results/functional/report.html" />
+						<var name="screenshot.dir" value="portal-web/test-results/functional/screenshots" />
 
-				<if>
-					<and>
-						<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
-						<isset property="test.class" />
-					</and>
-					<then>
-						<get-poshi-class-name />
-						<get-poshi-method-name />
+						<if>
+							<and>
+								<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
+								<isset property="test.class" />
+							</and>
+							<then>
+								<get-poshi-class-name />
+								<get-poshi-method-name />
 
-						<property name="poshi.runner.results.dir" value="${poshi.class.name}_${poshi.method.name}" />
+								<property name="poshi.runner.results.dir" value="${poshi.class.name}_${poshi.method.name}" />
 
-						<var name="result.file" value="portal-web/test-results/${poshi.runner.results.dir}/index.html" />
-						<var name="screenshot.dir" value="portal-web/test-results/${poshi.runner.results.dir}/screenshots" />
-					</then>
-				</if>
+								<var name="result.file" value="portal-web/test-results/${poshi.runner.results.dir}/index.html" />
+								<var name="screenshot.dir" value="portal-web/test-results/${poshi.runner.results.dir}/screenshots" />
+							</then>
+						</if>
 
-				<mkdir dir="${testray.logs.dir}" />
+						<mkdir dir="${testray.logs.dir}" />
 
-				<copy
-					failonerror="false"
-					file="${result.file}"
-					tofile="${testray.logs.dir}/report.html"
-				/>
+						<copy
+							failonerror="false"
+							file="${result.file}"
+							tofile="${testray.logs.dir}/report.html"
+						/>
 
-				<copy failonerror="false" todir="${testray.logs.dir}/screenshots">
-					<fileset
-						dir="${screenshot.dir}"
-					/>
-				</copy>
+						<copy failonerror="false" todir="${testray.logs.dir}/screenshots">
+							<fileset
+								dir="${screenshot.dir}"
+							/>
+						</copy>
 
-				<propertyregex
-					input="${env.BUILD_URL}"
-					property="jenkins.build.url"
-					regexp="https:\/\/([^\.]+)\.[^\/]+"
-					replace="http://\1"
-				/>
+						<propertyregex
+							input="${env.BUILD_URL}"
+							property="jenkins.build.url"
+							regexp="https:\/\/([^\.]+)\.[^\/]+"
+							replace="http://\1"
+						/>
 
-				<propertyregex
-					input="${jenkins.build.url}"
-					override="true"
-					property="jenkins.build.url"
-					regexp="http:\/\/([^\/]+)\/(\d+)"
-					replace="http://\1-\2/\2"
-				/>
+						<propertyregex
+							input="${jenkins.build.url}"
+							override="true"
+							property="jenkins.build.url"
+							regexp="http:\/\/([^\/]+)\/(\d+)"
+							replace="http://\1-\2/\2"
+						/>
 
-				<get dest="${testray.logs.dir}/console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
+						<get dest="${testray.logs.dir}/console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
+					</sequential>
+				</for>
 			</then>
 		</if>
 	</target>

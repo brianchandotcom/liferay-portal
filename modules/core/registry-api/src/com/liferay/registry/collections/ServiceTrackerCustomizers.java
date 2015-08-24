@@ -28,13 +28,13 @@ import java.util.Map;
  */
 public class ServiceTrackerCustomizers {
 
-	public static <S> ServiceTrackerCustomizer<S, ServiceWithProperties<S>>
-		serviceWithProperties() {
+	public static <S> ServiceTrackerCustomizer<S, ServiceWrapper<S>>
+		serviceWrapper() {
 
-		return new ServiceTrackerCustomizer<S, ServiceWithProperties<S>>() {
+		return new ServiceTrackerCustomizer<S, ServiceWrapper<S>>() {
 
 			@Override
-			public ServiceWithProperties<S> addingService(
+			public ServiceWrapper<S> addingService(
 				final ServiceReference<S> reference) {
 
 				Registry registry = RegistryUtil.getRegistry();
@@ -50,7 +50,7 @@ public class ServiceTrackerCustomizers {
 						Collections.unmodifiableMap(
 							createPropertyMap(reference));
 
-					return new ServiceWithProperties<S>() {
+					return new ServiceWrapper<S>() {
 						@Override
 						public Map<String, Object> getProperties() {
 							return properties;
@@ -73,13 +73,13 @@ public class ServiceTrackerCustomizers {
 			@Override
 			public void modifiedService(
 				ServiceReference<S> reference,
-				ServiceWithProperties<S> service) {
+				ServiceWrapper<S> serviceWrapper) {
 			}
 
 			@Override
 			public void removedService(
 				ServiceReference<S> reference,
-				ServiceWithProperties<S> service) {
+				ServiceWrapper<S> serviceWrapper) {
 
 				Registry registry = RegistryUtil.getRegistry();
 
@@ -88,7 +88,7 @@ public class ServiceTrackerCustomizers {
 		};
 	}
 
-	public interface ServiceWithProperties<S> {
+	public interface ServiceWrapper<S> {
 		public Map<String, Object> getProperties();
 
 		public S getService();

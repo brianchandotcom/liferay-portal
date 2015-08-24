@@ -27,13 +27,13 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class ServiceTrackerCustomizerFactory {
 
-	public static <S> ServiceTrackerCustomizer<S, ServiceWithProperties<S>>
-		serviceWithProperties(final BundleContext bundleContext) {
+	public static <S> ServiceTrackerCustomizer<S, ServiceWrapper<S>>
+		serviceWrapper(final BundleContext bundleContext) {
 
-		return new ServiceTrackerCustomizer<S, ServiceWithProperties<S>>() {
+		return new ServiceTrackerCustomizer<S, ServiceWrapper<S>>() {
 
 			@Override
-			public ServiceWithProperties<S> addingService(
+			public ServiceWrapper<S> addingService(
 				final ServiceReference<S> reference) {
 
 				final S service = bundleContext.getService(reference);
@@ -47,7 +47,7 @@ public class ServiceTrackerCustomizerFactory {
 						Collections.unmodifiableMap(
 							createPropertyMap(reference));
 
-					return new ServiceWithProperties<S>() {
+					return new ServiceWrapper<S>() {
 						@Override
 						public Map<String, Object> getProperties() {
 							return properties;
@@ -70,20 +70,20 @@ public class ServiceTrackerCustomizerFactory {
 			@Override
 			public void modifiedService(
 				ServiceReference<S> reference,
-				ServiceWithProperties<S> service) {
+				ServiceWrapper<S> serviceWrapper) {
 			}
 
 			@Override
 			public void removedService(
 				ServiceReference<S> reference,
-				ServiceWithProperties<S> service) {
+				ServiceWrapper<S> serviceWrapper) {
 
 				bundleContext.ungetService(reference);
 			}
 		};
 	}
 
-	public interface ServiceWithProperties<S> {
+	public interface ServiceWrapper<S> {
 		public Map<String, Object> getProperties();
 
 		public S getService();

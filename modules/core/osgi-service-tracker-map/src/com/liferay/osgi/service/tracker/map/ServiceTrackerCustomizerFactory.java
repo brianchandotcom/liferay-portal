@@ -25,7 +25,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ServiceTrackerCustomizers {
+public class ServiceTrackerCustomizerFactory {
 
 	public static <S> ServiceTrackerCustomizer<S, ServiceWithProperties<S>>
 		serviceWithProperties(final BundleContext bundleContext) {

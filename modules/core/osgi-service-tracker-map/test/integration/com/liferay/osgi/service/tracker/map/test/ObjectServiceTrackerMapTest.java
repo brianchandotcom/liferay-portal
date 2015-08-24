@@ -16,8 +16,8 @@ package com.liferay.osgi.service.tracker.map.test;
 
 import com.liferay.osgi.service.tracker.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.map.ServiceReferenceMapper;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizers;
-import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizers.ServiceWithProperties;
+import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory;
+import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory.ServiceWithProperties;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.map.internal.BundleContextWrapper;
@@ -598,7 +598,7 @@ public class ObjectServiceTrackerMapTest {
 		ServiceTrackerMap<String, ServiceWithProperties<TrackedOne>>
 			serviceTrackerMap = ServiceTrackerMapFactory.singleValueMap(
 				_bundleContext, TrackedOne.class, "target",
-				ServiceTrackerCustomizers.<TrackedOne>serviceWithProperties(
+				ServiceTrackerCustomizerFactory.<TrackedOne>serviceWithProperties(
 					_bundleContext));
 
 		serviceTrackerMap.open();

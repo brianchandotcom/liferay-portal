@@ -149,7 +149,7 @@ public class MBMessageServiceTest {
 	private class AddMessageThread extends DoAsUserThread {
 
 		public AddMessageThread(long userId, String subject) {
-			super(userId);
+			super(userId, 5);
 
 			_subject = subject;
 		}

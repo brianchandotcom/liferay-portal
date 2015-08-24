@@ -9,19 +9,24 @@ $control-menu-icon-font-size: 1.125em !default; // 18px
 $control-menu-level-1-bg: rgba(31, 40, 46, 0.95) !default;
 $control-menu-level-1-border: rgb(31, 40, 46) !default;
 $control-menu-level-1-nav-item-color: #FFF !default;
+
 $control-menu-level-1-nav-item-hover-color: $control-menu-level-1-nav-item-color !default;
+
 $control-menu-level-1-nav-item-active-color: $control-menu-level-1-nav-item-hover-color !default;
 
 $control-menu-level-2-bg: rgba(31, 40, 46, 0.85) !default;
 $control-menu-level-2-border: rgb(31, 40, 46) !default;
 
 $control-menu-level-2-nav-item-color: #869CAD !default;
+
 $control-menu-level-2-nav-item-hover-color: $control-menu-level-2-nav-item-color !default;
-$control-menu-level-2-nav-item-active-color: #88C37C !default;
+
 $control-menu-level-2-nav-item-active-bg: #3A4D5A !default;
 $control-menu-level-2-nav-item-active-border-radius: 4px !default;
+$control-menu-level-2-nav-item-active-color: #88C37C !default;
 $control-menu-level-2-nav-item-active-label-color: #FFF !default;
 
 $control-menu-level-2-label-color: $control-menu-level-2-nav-item-color !default;
+
 $control-menu-level-2-checkbox-default-label-color: #FFF !default;
 $control-menu-level-2-form-control-color: #FFF !default;

@@ -61,8 +61,8 @@ body.open {
 	border-bottom: 1px solid #EEE;
 
 	.control-menu-nav {
-		@include justify-content(space-between);
 		@include flex-wrap(wrap);
+		@include justify-content(space-between);
 
 		> li {
 			margin-bottom: 5px;

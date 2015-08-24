@@ -82,7 +82,7 @@ AUI.add(
 						if (event.namespace.indexOf(instance.get('namespace')) === 0) {
 							var index = event.selectedIndex;
 
-							Liferay.Store('liferay_addpanel_tab', event.names[index]);
+							Liferay.Store('com.liferay.control.menu.web_addPanelTab', event.names[index]);
 						}
 					},
 

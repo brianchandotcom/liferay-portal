@@ -55,7 +55,7 @@
 						tabs1Names = ArrayUtil.append(tabs1Names, "page");
 					}
 
-					String selectedTab = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_tab", "content"));
+					String selectedTab = GetterUtil.getString(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelTab", "content"));
 
 					if (stateMaximized) {
 						selectedTab = "page";

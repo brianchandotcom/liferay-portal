@@ -12,6 +12,7 @@
 	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLPermission" />
 	<bean id="com.liferay.portlet.documentlibrary.store.DLStore" class="com.liferay.portlet.documentlibrary.store.DLStoreImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer" class="com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer" />
+	<bean id="com.liferay.portlet.documentlibrary.util.DLFileEntryMetadataIndexer" class="com.liferay.portlet.documentlibrary.util.DLFileEntryMetadataIndexer" />
 	<bean id="com.liferay.portlet.documentlibrary.util.DLFileEntryLockListener" class="com.liferay.portlet.documentlibrary.util.DLFileEntryLockListener" />
 	<bean id="com.liferay.portlet.documentlibrary.util.DLFolderIndexer" class="com.liferay.portlet.documentlibrary.util.DLFolderIndexer" />
 	<bean id="com.liferay.portlet.documentlibrary.util.DLOpenSearchImpl" class="com.liferay.portlet.documentlibrary.util.DLOpenSearchImpl" />

@@ -367,7 +367,7 @@
 	<model-resource organization="true" portal="true">
 		<model-name>com.liferay.portal.model.PasswordPolicy</model-name>
 		<portlet-ref>
-			<portlet-name>129</portlet-name>
+			<portlet-name>com_liferay_password_policies_admin_web_portlet_PasswordPoliciesAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>1</weight>
 		<permissions>

@@ -154,6 +154,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer-field-types', 'liferay-ddm-form-renderer-util']
+		requires: ['liferay-ddm-form-renderer-types', 'liferay-ddm-form-renderer-util']
 	}
 );

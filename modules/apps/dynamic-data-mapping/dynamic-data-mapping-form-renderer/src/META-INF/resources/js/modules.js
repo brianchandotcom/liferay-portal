@@ -122,7 +122,7 @@
 							requires: [
 								'aui-component',
 								'aui-tabview',
-								'liferay-ddm-form-renderer-field-types',
+								'liferay-ddm-form-renderer-types',
 								'liferay-ddm-form-renderer-util',
 								'liferay-ddm-form-renderer-validation'
 							]
@@ -130,7 +130,7 @@
 						'liferay-ddm-form-renderer-definition': {
 							path: 'form_definition_support.js',
 							requires: [
-								'liferay-ddm-form-renderer-field-types',
+								'liferay-ddm-form-renderer-types',
 								'liferay-ddm-form-renderer-util'
 							]
 						},
@@ -140,7 +140,7 @@
 								'aui-datatype',
 								'aui-node',
 								'liferay-ddm-form-renderer',
-								'liferay-ddm-form-renderer-field-types',
+								'liferay-ddm-form-renderer-types',
 								'liferay-ddm-form-renderer-util'
 							]
 						},
@@ -152,11 +152,11 @@
 							path: 'field_repetition_support.js',
 							requires: [
 								'aui-datatype',
-								'liferay-ddm-form-renderer-field-types',
+								'liferay-ddm-form-renderer-types',
 								'liferay-ddm-form-renderer-util'
 							]
 						},
-						'liferay-ddm-form-renderer-field-types': {
+						'liferay-ddm-form-renderer-types': {
 							path: 'field_types.js',
 							requires: [
 								'array-extras',
@@ -173,14 +173,14 @@
 						'liferay-ddm-form-renderer-nested-fields': {
 							path: 'nested_fields_support.js',
 							requires: [
-								'liferay-ddm-form-renderer-field-types',
+								'liferay-ddm-form-renderer-types',
 								'liferay-ddm-form-renderer-util'
 							]
 						},
 						'liferay-ddm-form-renderer-util': {
 							path: 'util.js',
 							requires: [
-								'liferay-ddm-form-renderer-field-types',
+								'liferay-ddm-form-renderer-types',
 								'queue'
 							]
 						},

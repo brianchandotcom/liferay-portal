@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-ddm-form-renderer-field-types',
+	'liferay-ddm-form-renderer-types',
 	function(A) {
 		var AArray = A.Array;
 

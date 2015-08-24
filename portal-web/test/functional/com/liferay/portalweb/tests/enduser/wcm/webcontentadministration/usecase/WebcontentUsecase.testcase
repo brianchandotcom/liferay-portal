@@ -321,7 +321,7 @@
 
 		<execute function="AssertTextNotPresent" locator1="BasePortlet#SPECIFIC_TITLE" value1="Web Content Display" />
 
-		<execute function="AssertTextNotPresent" locator1="PGWebcontentdisplay#WEB_CONTENT_CONTENT" value1="WC WebContent Content" />
+		<execute function="AssertTextNotPresent" locator1="WCD#WEB_CONTENT_CONTENT" value1="WC WebContent Content" />
 	</command>
 
 	<command known-issues="LPS-56572" name="AddWebContentViaWCDWithGlobalStructureAndLocalTemplate" priority="4">

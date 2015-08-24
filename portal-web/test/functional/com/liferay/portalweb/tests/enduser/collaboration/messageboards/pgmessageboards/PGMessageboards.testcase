@@ -1104,22 +1104,22 @@
 
 		<var name="key_threadSubject" value="MB Thread Message Subject" />
 
-		<execute function="AssertTextEquals" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="MB Thread Message Subject" />
-		<execute function="AssertTextEquals" locator1="PGMessageboards#THREAD_TABLE_STARTED_BY" value1="Test Test" />
-		<execute function="AssertTextEquals" locator1="PGMessageboards#THREAD_TABLE_POSTS" value1="2" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGMessageboards#THREAD_TABLE_LAST_POST" value1="userfn userln" />
-		<execute function="Click" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="MB Thread Message Subject" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="MB Thread Message Subject" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_STARTED_BY" value1="Test Test" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_POSTS" value1="2" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#THREAD_TABLE_LAST_POST" value1="userfn userln" />
+		<execute function="Click" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="MB Thread Message Subject" />
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#THREAD_TABLE_SUBJECT_1" value1="MB Thread Message Subject" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#THREAD_TABLE_SUBJECT_2" value1="RE: MB Thread Message Subject" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="MB Thread Message Subject" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="MB Thread Message Body" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" value1="Test Test" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_RATING_1" value1="0 (0 Votes)" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_2" value1="RE: MB Thread Message Subject" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGMessageboardsThread#MESSAGE_BODY_2" value1="MB Thread Message Subject Reply" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_2" value1="userfn userln" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_RATING_2" value1="0 (0 Votes)" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_TABLE_SUBJECT_1" value1="MB Thread Message Subject" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_TABLE_SUBJECT_2" value1="RE: MB Thread Message Subject" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_SUBJECT_1" value1="MB Thread Message Subject" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_BODY_1" value1="MB Thread Message Body" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_USERNAME_1" value1="Test Test" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_RATING_1" value1="0 (0 Votes)" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_SUBJECT_2" value1="RE: MB Thread Message Subject" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#MESSAGE_BODY_2" value1="MB Thread Message Subject Reply" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_USERNAME_2" value1="userfn userln" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_RATING_2" value1="0 (0 Votes)" />
 
 		<execute macro="Gmail#tearDown">
 			<var name="userEmailAddress" property-value="email.address.2" />

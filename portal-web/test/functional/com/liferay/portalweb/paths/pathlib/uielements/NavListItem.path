@@ -199,6 +199,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROJECTS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Projects')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RECENT</td>
 	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li[contains(.,'Recent')]/a/span</td>
 	<td></td>
@@ -236,6 +241,11 @@
 <tr>
 	<td>SOCIAL_NETWORK</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Social Network')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGING</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Staging')]</td>
 	<td></td>
 </tr>
 <tr>

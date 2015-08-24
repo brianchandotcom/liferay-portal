@@ -164,7 +164,7 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
 
 		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_USERS" value1="Users" />
 		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_USERS_SITE_TEAMS" value1="Site Teams" />
@@ -266,7 +266,7 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPSites#SITE_TABLE_NAME" value1="${siteName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
 
 		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_USERS" value1="Users" />
 		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_USERS_SITE_TEAMS" value1="Site Teams" />
@@ -691,7 +691,7 @@
 
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
-		<execute function="AssertClick" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 
 		<execute macro="DMDocument#viewPGViaSearch">
 			<var name="dmDocumentDescription" value="This is a test document." />
@@ -712,7 +712,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />
 
 		<execute macro="Search#searchNoPG">
 			<var name="searchAssetTitle" value="Test Document" />
@@ -749,7 +749,7 @@
 
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
-		<execute function="AssertClick" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 
 		<execute macro="DMDocument#viewPGViaSearch">
 			<var name="dmDocumentDescription" value="This is a test document." />
@@ -1102,8 +1102,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinitionName}" />
-		<execute function="AssertElementNotPresent" locator1="PGDynamicdatalists#RECORD_TABLE_ACTIONS_1" />
+		<execute function="AssertTextEquals" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
+		<execute function="AssertElementNotPresent" locator1="DDL#RECORD_TABLE_ACTIONS_1" />
 
 		<execute macro="User#logoutPG" />
 
@@ -1116,8 +1116,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="PGDynamicdatalists#ADD_RECORD_BUTTON" value1="Add ${ddlDataDefinitionName}" />
-		<execute function="AssertElementPresent" locator1="PGDynamicdatalists#RECORD_TABLE_ACTIONS_1" />
+		<execute function="AssertElementNotPresent" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
+		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_ACTIONS_1" />
 
 		<execute macro="User#logoutPG" />
 
@@ -1285,7 +1285,7 @@
 
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
-		<execute function="AssertClick" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 
 		<execute macro="DMDocument#viewPGViaSearch">
 			<var name="dmDocumentDescription" value="This is a test document." />
@@ -1304,7 +1304,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />
 
 		<execute macro="Search#searchNoPG">
 			<var name="searchAssetTitle" value="Test Document" />
@@ -1339,7 +1339,7 @@
 
 		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
-		<execute function="AssertClick" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+		<execute function="AssertClick" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 
 		<execute macro="DMDocument#viewPGViaSearch">
 			<var name="dmDocumentDescription" value="This is a test document." />
@@ -1882,8 +1882,8 @@
 
 		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="${portlet2Name}" />
 
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#ADD_CATEGORY_BUTTON" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#PERMISSIONS_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#ADD_CATEGORY_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#PERMISSIONS_BUTTON" />
 
 		<execute macro="BlogsEntry#addPGViaAP">
 			<var name="entryContent" value="This is a movie blog by usersn2" />
@@ -1899,9 +1899,9 @@
 
 		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="${portlet1Name}" />
 
-		<execute function="AssertTextEquals" locator1="PGMessageboards#ADD_CATEGORY_BUTTON" value1="Add Category" />
-		<execute function="AssertTextEquals" locator1="PGMessageboards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
-		<execute function="AssertTextEquals" locator1="PGMessageboards#PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#ADD_CATEGORY_BUTTON" value1="Add Category" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#PERMISSIONS_BUTTON" value1="Permissions" />
 
 		<execute macro="User#logoutPG" />
 
@@ -1924,7 +1924,7 @@
 
 		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="${portlet2Name}" />
 
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#ADD_CATEGORY_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#ADD_CATEGORY_BUTTON" />
 
 		<execute macro="WebContent#addPGViaAP">
 			<var name="webContentContent" value="This article is by usersn3, a member of user group 3 but not site name 1" />
@@ -2226,7 +2226,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="CPSiteteams#INFO_MESSAGE" value1="No teams were found." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No teams were found." />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="USA Ice Hockey Team Blog" />
@@ -2483,8 +2483,8 @@
 
 		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Welcome" />
 
-		<execute function="AssertTextEquals#assertText" locator1="PGHelloworld#PORTLET_TITLE" value1="Hello World" />
-		<execute function="AssertElementPresent" locator1="PGHelloworld#PORTLET_CONTENT" value1="Welcome to Liferay Portal" />
+		<execute function="AssertTextEquals#assertText" locator1="HelloWorld#PORTLET_TITLE" value1="Hello World" />
+		<execute function="AssertElementPresent" locator1="HelloWorld#PORTLET_CONTENT" value1="Welcome to Liferay Portal" />
 
 		<execute macro="User#logoutPG" />
 
@@ -2631,11 +2631,11 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<execute function="AssertClick" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="CPWebcontentAddwebcontent#MENU_PERMISSIONS" value1="Permissions" />
-		<execute function="AssertSelectedLabel" locator1="CPWebcontentAddwebcontent#PERMISSIONS_VIEWABLE_BY_SELECT" value1="Site Members" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="WCEditWebContent#MENU_PERMISSIONS" value1="Permissions" />
+		<execute function="AssertSelectedLabel" locator1="WCEditWebContent#PERMISSIONS_VIEWABLE_BY_SELECT" value1="Site Members" />
 
 		<execute macro="User#logoutPG" />
 

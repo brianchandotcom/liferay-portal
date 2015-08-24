@@ -52,7 +52,7 @@
 <!--FOLDERS_TABLE-->
 <tr>
 	<td>FOLDERS_TABLE_FOLDER_NAME</td>
-	<td>//div[contains(@id,'bookmarksweb_bookmarksFoldersSearchContainer')]//tr[contains(.,'test')]/td[1]/a/strong</td>
+	<td>//div[contains(@id,'bookmarksweb_bookmarksFoldersSearchContainer')]//tr[contains(.,'${key_folderName}')]/td[1]/a/strong</td>
 	<td></td>
 </tr>
 <tr>

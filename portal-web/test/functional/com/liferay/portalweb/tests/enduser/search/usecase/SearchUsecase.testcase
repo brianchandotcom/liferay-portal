@@ -114,7 +114,7 @@
 			<var name="searchAssetType" value="Blogs Entry" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGSearchResults#USER_FACET_ANY_USER" value1="Any User" />
+		<execute function="AssertClick" locator1="SearchResults#USER_FACET_ANY_USER" value1="Any User" />
 
 		<execute macro="Search#viewUserFacetPG">
 			<var name="facetFrequency" value="1" />
@@ -144,7 +144,7 @@
 			<var name="searchTerm" value="Entry" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="PGSearchResults#USER_FACET_ANY_USER" value1="Any User" />
+		<execute function="AssertTextNotPresent" locator1="SearchResults#USER_FACET_ANY_USER" value1="Any User" />
 
 		<execute macro="User#logoutPG" />
 
@@ -370,13 +370,13 @@
 		<for list="Blogs Entry1 Title,WC WebContent2 Title,Wiki Page2 Title,DM Document Title" param="searchAssetTitle">
 			<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
-			<execute function="AssertTextEquals" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+			<execute function="AssertTextEquals" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 		</for>
 
 		<for list="Blogs Entry2 Title,WC WebContent1 Title,Wiki Page1 Title" param="searchAssetTitle">
 			<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
-			<execute function="AssertTextNotPresent" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+			<execute function="AssertTextNotPresent" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 		</for>
 
 		<execute macro="Search#viewAssetTypeFacetPG">
@@ -396,13 +396,13 @@
 		<for list="Blogs Entry1 Title,WC WebContent2 Title,Wiki Page2 Title,DM Document Title" param="searchAssetTitle">
 			<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
-			<execute function="AssertTextEquals" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+			<execute function="AssertTextEquals" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 		</for>
 
 		<for list="Blogs Entry2 Title,WC WebContent1 Title,Wiki Page1 Title" param="searchAssetTitle">
 			<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
 
-			<execute function="AssertTextNotPresent" locator1="PGSearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
+			<execute function="AssertTextNotPresent" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" value1="${searchAssetTitle}" />
 		</for>
 	</command>
 

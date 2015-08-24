@@ -44,13 +44,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LANDING_PAGE_FIELD</td>
-	<td>//input[contains(@id,'settings--default.landing.page.path--')]</td>
+	<td>DEFAULT_LANDING_PAGE_FIELD</td>
+	<td>//input[contains(@name,'settings--default.landing.page.path--')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LOGOUT_PAGE_FIELD</td>
-	<td>//input[contains(@id,'settings--default.logout.page.path--')]</td>
+	<td>//input[contains(@name,'settings--default.logout.page.path--')]</td>
 	<td></td>
 </tr>
 <tr>

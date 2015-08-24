@@ -137,6 +137,28 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--FIELD_SET_PAGINATION-->
+<tr>
+	<td>FIELD_SET_PAGINATION_SELECTOR_BUTTON</td>
+	<td>//div[@class='lfr-pagination-delta-selector']/div/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_SET_PAGINATION_PREVIOUS_BUTTON</td>
+	<td>//ul[contains(@class,'pagination-buttons')]/li/a[contains(.,'Previous')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_SET_PAGINATION_NEXT_BUTTON</td>
+	<td>//ul[contains(@class,'pagination-buttons')]/li/a[contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+
 <!--FIELD_SET_MENULIST-->
 <tr>
 	<td>FIELD_SET_MENULIST_EDIT</td>

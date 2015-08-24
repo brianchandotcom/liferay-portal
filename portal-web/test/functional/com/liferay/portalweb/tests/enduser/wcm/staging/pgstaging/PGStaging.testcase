@@ -192,7 +192,7 @@
 
 		<var name="siteID" value="siteID" />
 
-		<execute function="Copy" locator1="CPSitesEdit#SITE_ID" value1="siteID" />
+		<execute function="Copy" locator1="SitesEditSite#SITE_ID" value1="siteID" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
@@ -989,8 +989,8 @@
 
 		<var name="key_dmDocumentTitle" value="DM Document Title" />
 
-		<execute function="AssertElementPresent" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_THUMBNAIL" />
-		<execute function="AssertTextEquals" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_TITLE" value1="DM Document Title" />
+		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_THUMBNAIL" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="DM Document Title" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
@@ -1026,7 +1026,7 @@
 
 		<var name="key_dmDocumentTitle" value="DM Document Title" />
 
-		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_THUMBNAIL" />
+		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_THUMBNAIL" />
 	</command>
 
 	<command known-issues="LRQA-16325" name="LayoutScope" priority="4">

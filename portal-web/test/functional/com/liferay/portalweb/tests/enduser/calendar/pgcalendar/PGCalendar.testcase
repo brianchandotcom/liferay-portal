@@ -28,7 +28,7 @@
 		</execute>
 
 		<if>
-			<condition function="IsElementPresent" locator1="PGCalendar#SCHEDULER_EVENT_GENERIC" />
+			<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_GENERIC" />
 			<then>
 				<execute macro="CalendarEvent#tearDown" />
 			</then>

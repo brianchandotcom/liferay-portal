@@ -20,17 +20,17 @@
 </tr>
 <tr>
 	<td>BASIC_SEARCH_FIELD</td>
-	<td>//input[contains(@id,'keywords')]</td>
+	<td>//div[contains(@class,'navbar-default')]//input[contains(@id,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BASIC_SEARCH_BUTTON</td>
-	<td>//button[contains(.,'Search')]</td>
+	<td>//div[contains(@class,'navbar-default')]//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BASIC_SEARCH_ADVANCED</td>
-	<td>//button[contains(@id,'Advanced')]</td>
+	<td>//div[contains(@class,'navbar-default')]//button[contains(@id,'Advanced')]</td>
 	<td></td>
 </tr>
 <tr>

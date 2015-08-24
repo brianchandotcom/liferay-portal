@@ -37,15 +37,15 @@
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGMessageboards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="AssertClick" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
-		<execute function="Type" locator1="PGMessageboardsPostthread#SUBJECT_FIELD" value1="Message Boards Subject" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="PGMessageboardsPostthread#BODY_FIELD" value1="Message Boards Body" />
-		<execute function="Copy" locator1="PGMessageboardsPostthread#SUBJECT_FIELD" />
-		<execute function="Paste#ckEditorPaste" locator1="PGMessageboardsPostthread#BODY_FIELD" />
-		<execute function="AssertClick" locator1="PGMessageboardsPostthread#PUBLISH_BUTTON" value1="Publish" />
+		<execute function="Type" locator1="TextInput#SUBJECT" value1="Message Boards Subject" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="Message Boards Body" />
+		<execute function="Copy" locator1="TextInput#SUBJECT" />
+		<execute function="Paste#ckEditorPaste" locator1="CKEditor#BODY_FIELD" />
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals#assertText" locator1="PGMessageboards#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Message Boards Page" />
@@ -1298,20 +1298,20 @@
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute function="AssertTextEquals" locator1="PGMessageboards#SUBSCRIBE_LINK" value1="Subscribe" />
-		<execute function="Click" locator1="PGMessageboards#CATEGORY_TABLE_ACTIONS" />
-		<execute function="AssertTextEquals" locator1="PGMessageboards#CATEGORY_MENULIST_SUBSCRIBE" value1="Subscribe" />
-		<execute function="AssertClick" locator1="PGMessageboards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#SUBSCRIBE_LINK" value1="Subscribe" />
+		<execute function="Click" locator1="MessageBoards#CATEGORY_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="MenuItem#SUBSCRIBE" value1="Subscribe" />
+		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
 		<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#SUBSCRIBE_LINK" value1="Subscribe" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="Click" locator1="PGMessageboards#THREAD_TABLE_ACTIONS" />
-		<execute function="AssertTextEquals" locator1="PGMessageboards#THREAD_MENULIST_UNSUBSCRIBE" value1="Unsubscribe" />
-		<execute function="AssertClick" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#THREAD_ACTIONS_UNSUBSCRIBE" value1="Unsubscribe" />
+		<execute function="Click" locator1="MessageBoards#THREAD_TABLE_ACTIONS" />
+		<execute function="AssertTextEquals" locator1="MenuItem#UNSUBSCRIBE" value1="Unsubscribe" />
+		<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_ACTIONS_UNSUBSCRIBE" value1="Unsubscribe" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1333,20 +1333,20 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#SUBSCRIBE_LINK" />
-		<execute function="Click" locator1="PGMessageboards#CATEGORY_TABLE_ACTIONS" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#CATEGORY_MENULIST_SUBSCRIBE" />
-		<execute function="AssertClick" locator1="PGMessageboards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#SUBSCRIBE_LINK" />
+		<execute function="Click" locator1="MessageBoards#CATEGORY_TABLE_ACTIONS" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#SUBSCRIBE" />
+		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
 		<execute function="AssertElementNotPresent" locator1="PGMessageboardsCategory#SUBSCRIBE_LINK" value1="Subscribe" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="Click" locator1="PGMessageboards#THREAD_TABLE_ACTIONS" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#THREAD_MENULIST_UNSUBSCRIBE" />
-		<execute function="AssertClick" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboardsThread#THREAD_ACTIONS_UNSUBSCRIBE" value1="Unsubscribe" />
+		<execute function="Click" locator1="MessageBoards#THREAD_TABLE_ACTIONS" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#UNSUBSCRIBE" />
+		<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoardsThread#THREAD_ACTIONS_UNSUBSCRIBE" value1="Unsubscribe" />
 	</command>
 
 	<command name="ViewQuestionOnSplitThread" priority="3">

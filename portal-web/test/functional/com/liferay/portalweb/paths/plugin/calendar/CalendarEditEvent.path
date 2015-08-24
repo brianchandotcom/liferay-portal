@@ -153,6 +153,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_CALENDAR_SELECT_OPTION</td>
+	<td>//select[contains(@id,'calendarId')]/option[contains(.,'${key_calendarName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

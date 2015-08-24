@@ -7,10 +7,10 @@
 			</then>
 		</if>
 
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
 
 		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
-		<execute function="Type" locator1="DockbarAddpanelpage#NAME_FIELD" value1="${pageName}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${pageName}" />
 
 		<if>
 			<isset var="pageType" />
@@ -22,7 +22,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DockbarAddpanelpage#ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#ADD_PAGE" value1="Add Page" />
 		<execute function="Pause" locator1="1000" />
 
 		<var name="key_pageName" value="${pageName}" />
@@ -286,8 +286,8 @@
 		<if>
 			<condition function="IsElementNotPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-				<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+				<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 			</then>
 		</if>
 	</command>
@@ -478,8 +478,8 @@
 		<if>
 			<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-				<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+				<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 			</then>
 		</if>
 	</command>

@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>CUSTOM_FIELDS_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${customFieldName}')]/td[5]//a[@title='Actions']/span</td>
+	<td>//tr[contains(.,'${customFieldName}')]/td[5]//div/a</td>
 	<td></td>
 </tr>
 <tr>

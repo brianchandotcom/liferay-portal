@@ -33,22 +33,22 @@
 
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute function="Click" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPReportsadmin#DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT" value1="Add Report" />
+		<execute function="Click" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_MENULIST_ADD_REPORT" value1="Add Report" />
 
-		<execute function="Select" locator1="CPReportsadminAddreportentry#REPORT_FORMAT_SELECT" value1="csv" />
-		<execute function="Type" locator1="CPReportsadminAddreportentry#EMAIL_NOTIFICATIONS_FIELD" value1="InvalidEmail" />
-		<execute function="AssertClick" locator1="CPReportsadminAddreportentry#GENERATE_BUTTON" value1="Generate" />
+		<execute function="Select" locator1="ReportsAdminEditReportEntry#REPORT_FORMAT_SELECT" value1="csv" />
+		<execute function="Type" locator1="ReportsAdminEditReportEntry#EMAIL_NOTIFICATIONS_FIELD" value1="InvalidEmail" />
+		<execute function="AssertClick" locator1="ReportsAdminEditReportEntry#GENERATE_BUTTON" value1="Generate" />
 
-		<execute function="AssertTextEquals" locator1="CPReportsadmin#ERROR_MESSAGE_1" value1="Your request failed to complete." />
-		<execute function="AssertTextEquals" locator1="CPReportsadmin#ERROR_MESSAGE_2" value1="Please enter a valid email address." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid email address." />
 
-		<execute function="Type" locator1="CPReportsadminAddreportentry#EMAIL_NOTIFICATIONS_FIELD" value1="liferay.qa1@gmail.com" />
-		<execute function="Type" locator1="CPReportsadminAddreportentry#EMAIL_RECIPIENT_FIELD" value1="InvalidEmail" />
-		<execute function="AssertClick" locator1="CPReportsadminAddreportentry#GENERATE_BUTTON" value1="Generate" />
+		<execute function="Type" locator1="ReportsAdminEditReportEntry#EMAIL_NOTIFICATIONS_FIELD" value1="liferay.qa1@gmail.com" />
+		<execute function="Type" locator1="ReportsAdminEditReportEntry#EMAIL_RECIPIENT_FIELD" value1="InvalidEmail" />
+		<execute function="AssertClick" locator1="ReportsAdminEditReportEntry#GENERATE_BUTTON" value1="Generate" />
 
-		<execute function="AssertTextEquals" locator1="CPReportsadmin#ERROR_MESSAGE_1" value1="Your request failed to complete." />
-		<execute function="AssertTextEquals" locator1="CPReportsadmin#ERROR_MESSAGE_2" value1="Please enter a valid email address." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Your request failed to complete." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid email address." />
 	</command>
 
 	<command name="AddSchedule" priority="4">
@@ -80,7 +80,7 @@
 			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="CPReportsadminViewreportentry#INFO_MESSAGE" value1="Processing report. This may take several minutes." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Processing report. This may take several minutes." />
 		<execute function="Pause" locator1="180000" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -702,8 +702,8 @@
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
 
-		<execute function="AssertClick" locator1="CPReportsadmin#DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
+		<execute function="AssertClick" locator1="ReportsAdmin#DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
 
-		<execute function="SikuliAssertElementPresent" locator1="CPReportsadminAddreportdefinition#REPORT_DEFINITION_PARAMETERS_FIELDS_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_FIELDS_PNG" />
 	</command>
 </definition>

@@ -3,10 +3,10 @@
 		<execute function="AssertClick" locator1="PGOpensocialgadget#OPTIONS_ICON" value1="Options" />
 		<execute function="AssertClick" locator1="PGOpensocialgadget#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute function="SelectFrame" locator1="PGOpensocialgadgetConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="Type" locator1="PGOpensocialgadgetConfiguration#URL_FIELD" value1="${opensocialGadgetURL}" />
-		<execute function="AssertClick" locator1="PGOpensocialgadgetConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGOpensocialgadgetConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+		<execute function="Type" locator1="TextInput#URL" value1="${opensocialGadgetURL}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 </definition>

@@ -28,11 +28,11 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute function="Click" locator1="PGWebcontentdisplay#EDIT_WEB_CONTENT" />
+		<execute function="Click" locator1="WCD#EDIT_WEB_CONTENT" />
 
 		<execute function="SelectFrame" locator1="PGWebcontentdisplayEditwebcontent#WEB_CONTENT_IFRAME" />
 
-		<var locator="PGWebcontentdisplayEditwebcontent#ARTICLE_ID" name="articleID" />
+		<var locator="WCEditWebContent#ARTICLE_ID" name="articleID" />
 
 		<execute macro="User#logoutPG" />
 
@@ -47,7 +47,7 @@
 		<execute macro="Api#gotoPAuthURL" />
 
 		<execute function="Pause" locator1="1000" />
-		<execute function="AssertElementNotPresent" locator1="Jsonwebservices#SECURITY_TEST_PAGE_POPULATED" />
+		<execute function="AssertElementNotPresent" locator1="JSONWS#SECURITY_TEST_PAGE_POPULATED" />
 	</command>
 
 	<command known-issues="LPS-49848" name="ValidateCannotStealAdminAccount" priority="4">
@@ -55,9 +55,9 @@
 
 		<execute macro="Api#gotoPAuthURL" />
 
-		<execute function="AssertTextEquals" locator1="Jsonwebservices#SECURITY_TEST_PAGE_BODY" value1="{&quot;message&quot;:&quot;com.liferay.portal.security.auth.PrincipalException&quot;,&quot;exception&quot;:&quot;com.liferay.portal.security.auth.PrincipalException&quot;}" />
+		<execute function="AssertTextEquals" locator1="JSONWS#SECURITY_TEST_PAGE_BODY" value1="{&quot;message&quot;:&quot;com.liferay.portal.security.auth.PrincipalException&quot;,&quot;exception&quot;:&quot;com.liferay.portal.security.auth.PrincipalException&quot;}" />
 
-		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="Jsonwebservices#SECURITY_TEST_PAGE_BODY" value1="companyId" />
+		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="JSONWS#SECURITY_TEST_PAGE_BODY" value1="companyId" />
 	</command>
 
 	<command name="ValidateForwardURLPG" priority="4">
@@ -70,8 +70,8 @@
 
 		<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Welcome" />
 
-		<execute function="AssertTextEquals#assertText" locator1="PGHelloworld#PORTLET_TITLE" value1="Hello World" />
-		<execute function="AssertElementPresent" locator1="PGHelloworld#PORTLET_CONTENT" value1="Welcome to Liferay Portal" />
+		<execute function="AssertTextEquals#assertText" locator1="HelloWorld#PORTLET_TITLE" value1="Hello World" />
+		<execute function="AssertElementPresent" locator1="HelloWorld#PORTLET_CONTENT" value1="Welcome to Liferay Portal" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test" />
@@ -107,7 +107,7 @@
 			<var name="pageName" value="External Webapps Test Page" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="PGOpensocialgadget#PORTLET_TITLE" value1="To-Do List" />
+		<execute function="AssertTextEquals" locator1="Portlet#H1_HEADER" value1="To-Do List" />
 	</command>
 
 	<command known-issues="LPS-47697" name="ViewUpdateUserViaJSONWS" priority="4">
@@ -137,8 +137,8 @@
 			<var name="userScreenName" value="test1" />
 		</execute>
 
-		<execute function="AssertValue" locator1="CPUsersandorganizationsUser#DETAILS_USER_ID_FIELD" value1="${userId}" />
-		<execute function="AssertSelectedLabel" locator1="CPUsersandorganizationsUser#DETAILS_GENDER_SELECT" value1="Male" />
-		<execute function="AssertValue" locator1="CPUsersandorganizationsUser#DETAILS_BIRTHDAY_FIELD" value1="${userBirthdayMonth}/${userBirthdayDay}/${userBirthdayYear}" />
+		<execute function="AssertValue" locator1="UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD" value1="${userId}" />
+		<execute function="AssertSelectedLabel" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT" value1="Male" />
+		<execute function="AssertValue" locator1="UsersAndOrganizationsEditUser#DETAILS_BIRTHDAY_FIELD" value1="${userBirthdayMonth}/${userBirthdayDay}/${userBirthdayYear}" />
 	</command>
 </definition>

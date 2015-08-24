@@ -357,7 +357,7 @@
 </tr>
 <tr>
 	<td>PUBLISH_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_UNDO_BUTTON</td>
-	<td>//a[@id='_182_undo']</td>
+	<td>//a[contains(@id,'undo')]</td>
 	<td></td>
 </tr>
 <tr>

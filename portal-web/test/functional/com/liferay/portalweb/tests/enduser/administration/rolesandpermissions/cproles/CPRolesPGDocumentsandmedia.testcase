@@ -51,7 +51,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmedia#TOOLBAR_ADD" value1="Add" />
+		<execute function="AssertElementNotPresent" locator1="Toolbar#ADD" value1="Add" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
@@ -82,7 +82,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmedia#TOOLBAR_ADD" value1="Add" />
+		<execute function="AssertElementNotPresent" locator1="Toolbar#ADD" value1="Add" />
 	</command>
 
 	<command name="AddDMDocumentSiteMemberRoleInline" priority="4">
@@ -157,8 +157,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="PGDocumentsandmedia#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmedia#ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -247,8 +247,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="PGDocumentsandmedia#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmedia#ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
@@ -283,8 +283,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="PGDocumentsandmedia#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmedia#ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
 	</command>
 
 	<command name="DeleteDMFolderRegRoleInline" priority="4">
@@ -325,8 +325,8 @@
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute function="Click" locator1="PGDocumentsandmedia#ENTRY_ICON_FOLDER_ACTIONS" />
-		<execute function="AssertElementNotPresent#assertNotVisible" locator1="PGDocumentsandmedia#FOLDER_MENULIST_DELETE" value1="Delete" />
+		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="MenuItem#DELETE" value1="Delete" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -392,8 +392,8 @@
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute function="Click" locator1="PGDocumentsandmedia#ENTRY_ICON_FOLDER_ACTIONS" />
-		<execute function="AssertElementNotPresent#assertNotVisible" locator1="PGDocumentsandmedia#FOLDER_MENULIST_DELETE" value1="Delete" />
+		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="MenuItem#DELETE" value1="Delete" />
 	</command>
 
 	<command name="ViewDMFolderGuestInline" priority="4">
@@ -433,9 +433,9 @@
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute function="AssertClick" locator1="PGDocumentsandmedia#ENTRY_ICON_FOLDER_TITLE" value1="${dmFolderName}" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmFolderName}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmediaFolder#BREADCRUMB_FOLDER" value1="${dmFolderName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
@@ -487,8 +487,8 @@
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute function="AssertClick" locator1="PGDocumentsandmedia#ENTRY_ICON_FOLDER_TITLE" value1="${dmFolderName}" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmFolderName}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmediaFolder#BREADCRUMB_FOLDER" value1="${dmFolderName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
 	</command>
 </definition>

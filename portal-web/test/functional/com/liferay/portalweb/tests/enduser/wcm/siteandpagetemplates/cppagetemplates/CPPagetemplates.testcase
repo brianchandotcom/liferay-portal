@@ -164,9 +164,9 @@
 
 		<var name="key_pageTemplateName" value="Page Template Name" />
 
-		<execute function="AssertClick" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="Page Template Name" />
+		<execute function="AssertClick" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="Page Template Name" />
 
-		<execute function="AssertClick" locator1="CPPagetemplatesEdit#OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
+		<execute function="AssertClick" locator1="PageTemplates#OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
 
 		<execute function="SelectWindow" locator1="title=Page Template Name - Liferay" />
 
@@ -186,9 +186,9 @@
 
 		<var name="key_pageTemplateName" value="Page Template Name" />
 
-		<execute function="AssertClick" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="Page Template Name Edit" />
+		<execute function="AssertClick" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="Page Template Name Edit" />
 
-		<execute function="AssertClick" locator1="CPPagetemplatesEdit#OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
+		<execute function="AssertClick" locator1="PageTemplates#OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
 
 		<execute function="SelectWindow" locator1="title=Page Template Name Edit - Liferay" />
 

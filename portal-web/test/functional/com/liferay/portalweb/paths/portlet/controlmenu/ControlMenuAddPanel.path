@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>DockbarAddPanel</title>
+<title>ControlMenuAddPanel</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">DockbarAddPanel</td></tr>
+<tr><td rowspan="1" colspan="3">ControlMenuAddPanel</td></tr>
 </thead>
 <tbody>
 <tr>

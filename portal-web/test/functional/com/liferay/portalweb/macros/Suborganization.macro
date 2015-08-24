@@ -1,23 +1,23 @@
 <definition>
 	<command name="addCP">
-		<execute function="Type" locator1="CPUsersandorganizations#SEARCH_FIELD" value1="${orgName}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizations#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="UsersAndOrganizations#SEARCH_FIELD" value1="${orgName}" />
+		<execute function="AssertClick" locator1="UsersAndOrganizations#SEARCH_BUTTON" value1="Search" />
 
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-		<execute function="Click" locator1="CPUsersandorganizations#ORGANIZATION_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPUsersandorganizations#ORGANIZATION_MENULIST_ADD_REGULAR_ORGANIZATION" value1="Add Regular Organization" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute function="Click" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="MenuItem#ADD_REGULAR_ORGANIZATION" value1="Add Regular Organization" />
 
-		<execute function="Type" locator1="CPUsersandorganizationsAddorganization#DETAILS_NAME_FIELD" value1="${suborgName}" />
-		<execute function="Select" locator1="CPUsersandorganizationsAddorganization#DETAILS_TYPE_SELECT" value1="${suborgType}" />
-		<execute function="AssertClick" locator1="CPUsersandorganizationsAddorganization#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#DETAILS_NAME_FIELD" value1="${suborgName}" />
+		<execute function="Select" locator1="UsersAndOrganizationsEditOrganization#DETAILS_TYPE_SELECT" value1="${suborgType}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<var name="key_orgType" value="${orgType}" />
 
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#DETAILS_NAME_FIELD" value1="${suborgName}" />
-		<execute function="AssertTextEquals#assertValue" locator1="CPUsersandorganizationsOrganizationEdit#DETAILS_TYPE" value1="${orgType}" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#DETAILS_NAME_FIELD" value1="${suborgName}" />
+		<execute function="AssertTextEquals#assertValue" locator1="UsersAndOrganizationsEditOrganization#DETAILS_TYPE" value1="${orgType}" />
 	</command>
 
 	<command name="tearDownCP">
@@ -33,7 +33,7 @@
 			<var name="searchToken" value="${suborgSearchName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#PARENT_ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsOrganizationEdit#PARENT_ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
 	</command>
 </definition>

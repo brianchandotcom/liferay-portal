@@ -1813,7 +1813,7 @@
 
 		<var name="siteID" value="siteID" />
 
-		<execute function="Copy" locator1="CPSitesEdit#SITE_ID" value1="siteID" />
+		<execute function="Copy" locator1="SitesEditSite#SITE_ID" value1="siteID" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -2045,15 +2045,15 @@
 
 		<var name="key_userScreenName" value="${userScreenName1}" />
 
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizations#USER_TABLE_FIRST_NAME" value1="${userFirstName1}" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizations#USER_TABLE_LAST_NAME" value1="${userLastName1}" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName1}" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_FIRST_NAME" value1="${userFirstName1}" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_LAST_NAME" value1="${userLastName1}" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName1}" />
 
 		<var name="key_userScreenName" value="${userScreenName2}" />
 
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizations#USER_TABLE_FIRST_NAME" value1="${userFirstName2}" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizations#USER_TABLE_LAST_NAME" value1="${userLastName2}" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName2}" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_FIRST_NAME" value1="${userFirstName2}" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_LAST_NAME" value1="${userLastName2}" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName2}" />
 
 		<execute macro="User#basicSearchCP">
 			<var name="userBasicSearch" value="Quotes" />
@@ -2065,9 +2065,9 @@
 
 		<var name="key_userScreenName" value="${userScreenName2}" />
 
-		<execute function="AssertTextNotPresent" locator1="CPUsersandorganizations#USER_TABLE_FIRST_NAME" value1="${userFirstName2}" />
-		<execute function="AssertTextNotPresent" locator1="CPUsersandorganizations#USER_TABLE_LAST_NAME" value1="${userLastName2}" />
-		<execute function="AssertTextNotPresent" locator1="CPUsersandorganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName2}" />
+		<execute function="AssertTextNotPresent" locator1="UsersAndOrganizations#USER_TABLE_FIRST_NAME" value1="${userFirstName2}" />
+		<execute function="AssertTextNotPresent" locator1="UsersAndOrganizations#USER_TABLE_LAST_NAME" value1="${userLastName2}" />
+		<execute function="AssertTextNotPresent" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName2}" />
 	</command>
 
 	<command name="SearchUsersInOrganization" priority="4">
@@ -2137,7 +2137,7 @@
 			<var name="orgType" value="${orgType}" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="CPUsersandorganizationsAddorganization#BACK" />
+		<execute function="AssertElementPresent" locator1="UsersAndOrganizationsEditOrganization#BACK" />
 
 		<take-screenshot />
 	</command>
@@ -2208,11 +2208,11 @@
 
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute function="AssertTextEquals" locator1="PGSitesdirectory#SITE_ENTRY" value1="Liferay" />
-		<execute function="AssertTextEquals" locator1="PGSitesdirectory#ORG_SITE_ENTRY" value1="${orgName1}" />
-		<execute function="AssertTextNotPresent" locator1="PGSitesdirectory#ORG_SITE_ENTRY" value1="${orgName2}" />
+		<execute function="AssertTextEquals" locator1="SitesDirectory#SITE_ENTRY" value1="Liferay" />
+		<execute function="AssertTextEquals" locator1="SitesDirectory#ORG_SITE_ENTRY" value1="${orgName1}" />
+		<execute function="AssertTextNotPresent" locator1="SitesDirectory#ORG_SITE_ENTRY" value1="${orgName2}" />
 
-		<execute function="AssertClick" locator1="PGSitesdirectory#ORG_SITE_ENTRY" value1="${orgName1}" />
+		<execute function="AssertClick" locator1="SitesDirectory#ORG_SITE_ENTRY" value1="${orgName1}" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Breadcrumb" />
@@ -2224,10 +2224,10 @@
 
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute function="AssertClick" locator1="PGSitesdirectory#ORG_SITE_ENTRY" value1="${orgName1}" />
+		<execute function="AssertClick" locator1="SitesDirectory#ORG_SITE_ENTRY" value1="${orgName1}" />
 
-		<execute function="AssertTextEquals" locator1="PGBreadcrumb#BREADCRUMB_ENTRY" value1="Organization Name 1Test Page" />
-		<execute function="AssertTextNotPresent" locator1="PGBreadcrumb#BREADCRUMB_ENTRY" value1="Liferay/Organization Name 1/Test Page/" />
+		<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="Organization Name 1Test Page" />
+		<execute function="AssertTextNotPresent" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="Liferay/Organization Name 1/Test Page/" />
 
 		<execute macro="Page#tearDownPG" />
 	</command>

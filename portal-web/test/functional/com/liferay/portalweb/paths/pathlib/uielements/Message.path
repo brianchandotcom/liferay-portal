@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_3_LINK</td>
+	<td>xpath=(//div[contains(@class,'alert') and (contains(@class,'alert-warning'))]/a)</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_ENTER_VALID_CONTENT</td>
 	<td>//div[contains(@class,'alert-danger') and contains(.,'Please enter valid content')]</td>
 	<td></td>
@@ -61,6 +66,11 @@
 <tr>
 	<td>INFO</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_LINK</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -101,6 +111,16 @@
 <tr>
 	<td>INFO_PAGE_DOES_NOT_EXIST</td>
 	<td>//div[@class='alert alert-info' and contains(.,'This page does not exist yet. Use the form below to create it')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_EXPLANATION_POST</td>
+	<td>//div[contains(@id,'explanationPost')]/div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_RESPONSE</td>
+	<td>//div[contains(@class,'message-response') and contains(@class,'alert')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -149,6 +169,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_LOCALIZED</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_1</td>
 	<td>xpath=(//div[contains(@class,'alert') and contains(@class,'alert-success')])[2]</td>
 	<td></td>
@@ -159,8 +184,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_CONTENT</td>
+	<td>//div[@class='portlet-body']/div[contains(.,'${key_assetType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_RECYCLE_BIN</td>
 	<td>//form[contains(@id,'undoForm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_RESTORE_LOCATION</td>
+	<td>//div[@class='portlet-body']/div/em[2]/a[contains(.,'${key_assetRestoreLocation}')] </td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_BLOCKED</td>
+	<td>//div[contains(@class,'alert-block')]</td>
 	<td></td>
 </tr>
 <tr>

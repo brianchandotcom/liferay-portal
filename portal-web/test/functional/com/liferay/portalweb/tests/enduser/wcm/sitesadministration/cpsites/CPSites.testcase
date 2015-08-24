@@ -811,7 +811,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="PGSitesdirectory#INFO_MESSAGE" value1="No sites were found." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No sites were found." />
 
 		<execute macro="Site#viewSiteHierarchyInBreadcrumbPG">
 			<var name="breadcrumbListVisible" value="Site Name,Child Site1Name,Child ChildSite1Name,Site Page" />

@@ -1,13 +1,13 @@
 <definition>
 	<command name="addCP">
 		<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="NavBar#ADD" value1="Add" />
-		<execute function="AssertClick" locator1="CPDocumentsandmedia#ADD_MENULIST_REPOSITORY" value1="Repository" />
+		<execute function="AssertClick" locator1="MenuItem#REPOSITORY" value1="Repository" />
 
-		<execute function="Type" locator1="CPDocumentsandmediaAddrepository#NAME_FIELD" value1="${dmRepositoryName}" />
-		<execute function="Select" locator1="CPDocumentsandmediaAddrepository#REPOSITORY_TYPE_SELECT" value1="${dmRepositoryType}" />
-		<execute function="Type" locator1="CPDocumentsandmediaAddrepository#SITE_URL_FIELD" value1="${dmRepositorySiteURL}" />
-		<execute function="Type" locator1="CPDocumentsandmediaAddrepository#LIBRARY_NAME_FIELD" value1="${dmRepositoryLibraryName}" />
-		<execute function="AssertClick" locator1="CPDocumentsandmediaAddrepository#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="DocumentsAndMediaEditRepository#NAME_FIELD" value1="${dmRepositoryName}" />
+		<execute function="Select" locator1="DocumentsAndMediaEditRepository#REPOSITORY_TYPE_SELECT" value1="${dmRepositoryType}" />
+		<execute function="Type" locator1="DocumentsAndMediaEditRepository#SITE_URL_FIELD" value1="${dmRepositorySiteURL}" />
+		<execute function="Type" locator1="DocumentsAndMediaEditRepository#LIBRARY_NAME_FIELD" value1="${dmRepositoryLibraryName}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
@@ -15,7 +15,7 @@
 	<command name="gotoCP">
 		<var name="key_dmRepositoryName" value="${dmRepositoryName}" />
 
-		<execute function="AssertClick" locator1="CPDocumentsandmedia#FILTER_REPOSITORY" value1="${dmRepositoryName}" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#FILTER_REPOSITORY" value1="${dmRepositoryName}" />
 	</command>
 
 	<command name="tearDownCP">
@@ -24,25 +24,25 @@
 		</execute>
 
 		<while>
-			<condition function="IsElementPresent" locator1="CPDocumentsandmedia#FILTER_REPOSITORY_GENERIC" />
+			<condition function="IsElementPresent" locator1="DocumentsAndMedia#FILTER_REPOSITORY_GENERIC" />
 			<then>
-				<execute function="Click" locator1="CPDocumentsandmedia#FILTER_REPOSITORY_GENERIC" />
+				<execute function="Click" locator1="DocumentsAndMedia#FILTER_REPOSITORY_GENERIC" />
 				<execute function="Pause" locator1="1000" />
 
 				<if>
-					<condition function="IsElementPresent" locator1="CPDocumentsandmedia#DOCUMENT_CONTAINER_DOCUMENT_GENERIC" />
+					<condition function="IsElementPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_GENERIC" />
 					<then>
-						<execute function="Check" locator1="CPDocumentsandmedia#TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
+						<execute function="Check" locator1="DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX" />
 						<execute function="Pause" locator1="1000" />
-						<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="CPDocumentsandmedia#TOOLBAR_ACTIONS" value1="Actions" />
-						<execute function="AssertClickNoError" locator1="CPDocumentsandmedia#ACTIONS_MENULIST_DELETE" value1="Delete" />
+						<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="DocumentsAndMedia#TOOLBAR_ACTIONS" value1="Actions" />
+						<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 						<execute function="Confirm" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
 						<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 					</then>
 				</if>
 
-				<execute function="Click" locator1="CPDocumentsandmedia#FILTER_REPOSITORY_ACTIONS_GENERIC" />
-				<execute function="AssertClickNoError" locator1="CPDocumentsandmedia#FILTER_MENULIST_DELETE" value1="Delete" />
+				<execute function="Click" locator1="DocumentsAndMedia#FILTER_REPOSITORY_ACTIONS_GENERIC" />
+				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
@@ -52,6 +52,6 @@
 	<command name="viewCP">
 		<var name="key_dmFolderName" value="${dmRepositoryName}" />
 
-		<execute function="AssertTextEquals" locator1="CPDocumentsandmedia#BREADCRUMB_LAST" value1="${dmRepositoryName}" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_LAST" value1="${dmRepositoryName}" />
 	</command>
 </definition>

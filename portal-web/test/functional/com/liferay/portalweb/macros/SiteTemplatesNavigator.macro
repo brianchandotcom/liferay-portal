@@ -2,9 +2,9 @@
 	<command name="gotoManageSiteTemplates">
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
-		<execute function="Click" locator1="CPSitetemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
+		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
 
-		<execute function="Click" locator1="CPSitetemplates#SITE_TEMPLATE_MENULIST_MANAGE" />
+		<execute function="Click" locator1="MenuItem#MANAGE" />
 	</command>
 
 	<command name="gotoSiteTemplatesPage">

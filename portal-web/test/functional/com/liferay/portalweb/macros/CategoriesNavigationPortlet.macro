@@ -1,25 +1,25 @@
 <definition>
 	<command name="viewCustomADTMultiColumnPG">
-		<execute function="AssertElementPresent" locator1="PGCategoriesnavigation#ADT_MULTI_COLUMN_1" />
-		<execute function="AssertElementPresent" locator1="PGCategoriesnavigation#ADT_MULTI_COLUMN_2" />
-		<execute function="AssertElementPresent" locator1="PGCategoriesnavigation#ADT_MULTI_COLUMN_3" />
+		<execute function="AssertElementPresent" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_1" />
+		<execute function="AssertElementPresent" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_2" />
+		<execute function="AssertElementPresent" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_3" />
 
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute function="AssertTextEquals" locator1="PGCategoriesnavigation#ADT_MULTI_COLUMN_VOCABULARY_NAME" value1="${vocabularyName}" />
+		<execute function="AssertTextEquals" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_VOCABULARY_NAME" value1="${vocabularyName}" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 
-		<execute function="AssertTextEquals" locator1="PGCategoriesnavigation#ADT_MULTI_COLUMN_CATEGORY_NAME" value1="${categoryName}" />
+		<execute function="AssertTextEquals" locator1="CategoriesNavigation#ADT_MULTI_COLUMN_CATEGORY_NAME" value1="${categoryName}" />
 	</command>
 
 	<command name="viewDefaultPG">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute function="AssertTextEquals" locator1="PGCategoriesnavigation#VOCABULARY_NAME" value1="${vocabularyName}" />
+		<execute function="AssertTextEquals" locator1="CategoriesNavigation#VOCABULARY_NAME" value1="${vocabularyName}" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 
-		<execute function="AssertTextEquals" locator1="PGCategoriesnavigation#CATEGORY_NAME" value1="${categoryName}" />
+		<execute function="AssertTextEquals" locator1="CategoriesNavigation#CATEGORY_NAME" value1="${categoryName}" />
 	</command>
 </definition>

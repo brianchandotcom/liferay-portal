@@ -220,8 +220,8 @@
 			<var name="siteScopeName" value="Site A" />
 		</execute>
 
-		<execute function="Select" locator1="CPSitesettings#APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
-		<execute function="AssertClick" locator1="CPSitesettings#SAVE_BUTTON" value1="Save" />
+		<execute function="Select" locator1="SitesEditSite#APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -284,8 +284,8 @@
 			<var name="siteScopeName" value="Site B" />
 		</execute>
 
-		<execute function="Select" locator1="CPSitesettings#APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
-		<execute function="AssertClick" locator1="CPSitesettings#SAVE_BUTTON" value1="Save" />
+		<execute function="Select" locator1="SitesEditSite#APPLICATION_ADAPTER_SELECT" value1="Sample Application Adapter Hook" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page B" />
@@ -302,8 +302,8 @@
 			<var name="siteScopeName" value="Site B" />
 		</execute>
 
-		<execute function="Select" locator1="CPSitesettings#APPLICATION_ADAPTER_SELECT" value1="None" />
-		<execute function="AssertClick" locator1="CPSitesettings#SAVE_BUTTON" value1="Save" />
+		<execute function="Select" locator1="SitesEditSite#APPLICATION_ADAPTER_SELECT" value1="None" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page B" />
@@ -1126,9 +1126,9 @@
 			<var name="siteScopeName" value="World Cup - Russia 2018" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
 
-		<execute function="AssertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="AssertTextEquals" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
 
@@ -1138,7 +1138,7 @@
 
 		<echo message="import file name ${larFileName}" />
 
-		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
 
 		<execute macro="Page#gotoCP">

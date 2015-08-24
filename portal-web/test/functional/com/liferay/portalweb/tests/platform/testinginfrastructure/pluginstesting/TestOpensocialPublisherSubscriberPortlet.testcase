@@ -27,12 +27,12 @@
 			<var name="portletName" value="Subscriber Portlet" />
 		</execute>
 
-		<execute function="Click" locator1="PGTestSubscriberPortlet#SUBSCRIBER_PORTLET_SUBSCRIBE_BUTTON" />
-		<execute function="Click" locator1="PGTestPublisherPortlet#PUBLISHER_PORTLET_PUBLISH_BUTTON" />
+		<execute function="Click" locator1="TestSubscriber#SUBSCRIBER_PORTLET_SUBSCRIBE_BUTTON" />
+		<execute function="Click" locator1="TestPublisher#PUBLISHER_PORTLET_PUBLISH_BUTTON" />
 
 	<!--<var name="randomNumber" path="PGTestPublisherPortlet" locator="PUBLISHER_PORTLET_MESSAGE" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGTestPublisherPortlet#PUBLISHER_PORTLET_MESSAGE" value1="${randomNumber}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGTestSubscriberPortlet#SUBSCRIBER_PORTLET_MESSAGE" value1="${randomNumber}"/>-->
+		<execute function="AssertTextEquals#assertPartialText" locator1="TestPublisher#PUBLISHER_PORTLET_MESSAGE" value1="${randomNumber}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1=" TestSubscriber#SUBSCRIBER_PORTLET_MESSAGE" value1="${randomNumber}"/>-->
 	</command>
 </definition>

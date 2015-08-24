@@ -185,7 +185,7 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
-		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="PGAssetpublisher#DISPLAY_ICON_EDIT" value1="Edit" />
+		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="Icon#EDIT" value1="Edit" />
 
 		<execute function="AssertElementNotPresent" locator1="PGSignin#PORTLET_TITLE" value1="Sign" />
 
@@ -265,17 +265,17 @@
 
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
-		<execute function="Click" locator1="PGAssetpublisherConfiguration#ASSET_SELECTION_MANUAL" />
+		<execute function="Click" locator1="APConfiguration#ASSET_SELECTION_MANUAL" />
 
-		<execute function="AssertClick" locator1="PGAssetpublisherConfigurationManual#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT" value1="Select" />
+		<execute function="AssertClick" locator1="APConfigurationManual#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_SELECT" value1="Select" />
 
 		<var name="key_assetEntryType" value="Global Document Type Name" />
 
-		<execute function="AssertTextEquals" locator1="PGAssetpublisherConfigurationManual#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="Global Document Type Name" />
+		<execute function="AssertTextEquals" locator1="APConfigurationManual#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="Global Document Type Name" />
 
 		<var name="key_assetEntryType" value="Local Document Type Name" />
 
-		<execute function="AssertTextEquals" locator1="PGAssetpublisherConfigurationManual#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="Local Document Type Name" />
+		<execute function="AssertTextEquals" locator1="APConfigurationManual#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_MENULIST_ITEM" value1="Local Document Type Name" />
 	</command>
 
 	<command name="AssetPublisherCategoriesLocalization" priority="3">
@@ -1564,7 +1564,7 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="PGAssetpublisher#ADD_NEW_DROPDOWN" value1="Add New" />
+		<execute function="AssertTextEquals" locator1="AP#ADD_NEW_DROPDOWN" value1="Add New" />
 
 		<execute macro="AssetPublisherPortlet#viewDynamicAssetSelectionConfigurationPG">
 			<var name="portletName" value="Asset Publisher" />
@@ -1771,9 +1771,9 @@
 			<var name="assetTitle" value="Blogs Entry2 Title" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="PGRelatedassets#ASSET_TITLE_IMAGE_2" />
-		<execute function="AssertElementNotPresent" locator1="PGRelatedassets#ASSET_TITLE_2" />
-		<execute function="AssertElementNotPresent" locator1="PGRelatedassets#ASSET_EDIT_2" />
+		<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_TITLE_IMAGE_2" />
+		<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_TITLE_2" />
+		<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_EDIT_2" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs Page" />
@@ -1794,9 +1794,9 @@
 			<var name="assetTitle" value="Blogs Entry1 Title" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="PGRelatedassets#ASSET_TITLE_IMAGE_2" />
-		<execute function="AssertElementNotPresent" locator1="PGRelatedassets#ASSET_TITLE_2" />
-		<execute function="AssertElementNotPresent" locator1="PGRelatedassets#ASSET_EDIT_2" />
+		<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_TITLE_IMAGE_2" />
+		<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_TITLE_2" />
+		<execute function="AssertElementNotPresent" locator1="Relatedassets#ASSET_EDIT_2" />
 	</command>
 
 	<command name="ViewDeletedWCDArticleAsAdminAndGuestCP" priority="4">

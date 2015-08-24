@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>BACK</td>
-	<td>//a[@id='_125_TabsBack']</td>
+	<td>//a[contains(@id,'TabsBack')]</td>
 	<td></td>
 </tr>
 <tr>

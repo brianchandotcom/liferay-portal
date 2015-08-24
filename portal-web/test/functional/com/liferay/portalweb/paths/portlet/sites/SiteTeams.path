@@ -11,17 +11,17 @@
 <!--TEAM_TABLE-->
 <tr>
 	<td>TEAM_TABLE_NAME</td>
-	<td>//div[@id='_191_teamsSearchContainer']//tr[contains(.,'${key_teamName}')]/td[1]/a</td>
+	<td>//div[contains(@id,'teamsSearchContainer')]//tr[contains(.,'${key_teamName}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEAM_TABLE_DESCRIPTION</td>
-	<td>//div[@id='_191_teamsSearchContainer']//tr[contains(.,'${key_teamName}')]/td[2]/a</td>
+	<td>//div[contains(@id,'teamsSearchContainer')]//tr[contains(.,'${key_teamName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEAM_TABLE_ACTIONS</td>
-	<td>//div[@id='_191_teamsSearchContainer']//tr[contains(.,'${key_teamName}')]/td[3]/div/a</td>
+	<td>//div[contains(@id,'teamsSearchContainer')]//tr[contains(.,'${key_teamName}')]/td[3]/div/a</td>
 	<td></td>
 </tr>
 <tr>

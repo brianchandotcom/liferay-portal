@@ -1,74 +1,74 @@
 <definition>
 	<command name="addCP">
-		<execute function="AssertClick" locator1="CPPagetemplates#ADD" value1="Add" />
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 
-		<execute function="Type" locator1="CPPagetemplatesAdd#NAME_FIELD" value1="${pageTemplateName}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${pageTemplateName}" />
 
 		<if>
 			<equals arg1="${pageTemplateActive}" arg2="No" />
 			<then>
-				<execute function="Uncheck" locator1="CPPagetemplatesAdd#ACTIVE_CHECKBOX" />
+				<execute function="Uncheck" locator1="Checkbox#ACTIVE" />
 			</then>
 			<else>
-				<execute function="Check" locator1="CPPagetemplatesAdd#ACTIVE_CHECKBOX" />
+				<execute function="Check" locator1="Checkbox#ACTIVE" />
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="CPPagetemplatesAdd#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateActive}" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateActive}" />
 	</command>
 
 	<command name="deleteCP">
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
-		<execute function="Click" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
-		<execute function="AssertClickNoError" locator1="CPPagetemplates#PAGE_TEMPLATE_MENULIST_DELETE" value1="Delete" />
+		<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
+		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="editCP">
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
-		<execute function="Click" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPPagetemplates#PAGE_TEMPLATE_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="CPPagetemplatesEdit#NAME_FIELD" value1="${pageTemplateName} Edit" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${pageTemplateName} Edit" />
 
 		<if>
 			<equals arg1="${pageTemplateActive}" arg2="No" />
 			<then>
-				<execute function="Uncheck" locator1="CPPagetemplatesAdd#ACTIVE_CHECKBOX" />
+				<execute function="Uncheck" locator1="Checkbox#ACTIVE" />
 			</then>
 			<else>
-				<execute function="Check" locator1="CPPagetemplatesAdd#ACTIVE_CHECKBOX" />
+				<execute function="Check" locator1="Checkbox#ACTIVE" />
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="CPPagetemplatesEdit#OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
-		<execute function="AssertClick" locator1="CPPagetemplatesEdit#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName} Edit" />
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateActive}" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName} Edit" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIVE" value1="${pageTemplateActive}" />
 	</command>
 
 	<command name="gotoPageTemplateViaEdit">
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
 
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
-		<execute function="Click" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="CPPagetemplates#PAGE_TEMPLATE_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="AssertClick" locator1="CPPagetemplatesEdit#OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
+		<execute function="AssertClick" locator1="PageTemplates#OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
 	</command>
 
 	<command name="tearDownCP">
@@ -77,12 +77,12 @@
 		</execute>
 
 		<while>
-			<condition function="IsElementPresent" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_ACTIONS_4" />
+			<condition function="IsElementPresent" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS_4" />
 			<then>
-				<execute function="Click" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_ACTIONS_4" />
-				<execute function="AssertClick" locator1="CPPagetemplates#PAGE_TEMPLATE_MENULIST_DELETE" value1="Delete" />
+				<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS_4" />
+				<execute function="AssertClick" locator1="MenuItem#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute function="AssertTextEquals" locator1="CPPagetemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 		</while>
 	</command>
@@ -90,23 +90,23 @@
 	<command name="viewCP">
 		<var name="key_pageTemplateName" value="Page Template Name" />
 
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
 	</command>
 
 	<command name="viewDefaultCP">
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME_1" value1="Blog" />
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME_2" value1="Content Display Page" />
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME_3" value1="Wiki" />
-		<execute function="AssertElementNotPresent" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME_4" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME_1" value1="Blog" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME_2" value1="Content Display Page" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME_3" value1="Wiki" />
+		<execute function="AssertElementNotPresent" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME_4" />
 	</command>
 
 	<command name="viewDefaultLocalizedCP">
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME_1" value1="${blogTranslation}" />
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME_2" value1="${contentDisplayPageTranslation}" />
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_NAME_3" value1="${wikiTranslation}" />
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_DESCRITPION_1" value1="${blogDescriptionTranslation}" />
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_DESCRIPTION_2" value1="${contentDisplayPageDescriptionTranslation}" />
-		<execute function="AssertTextEquals" locator1="CPPagetemplates#PAGE_TEMPLATE_TABLE_DESCRIPTION_3" value1="${wikiDescripionTranslation}" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME_1" value1="${blogTranslation}" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME_2" value1="${contentDisplayPageTranslation}" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME_3" value1="${wikiTranslation}" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_DESCRITPION_1" value1="${blogDescriptionTranslation}" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_DESCRIPTION_2" value1="${contentDisplayPageDescriptionTranslation}" />
+		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_DESCRIPTION_3" value1="${wikiDescripionTranslation}" />
 	</command>
 
 	<command name="viewDefaultPortletPG">

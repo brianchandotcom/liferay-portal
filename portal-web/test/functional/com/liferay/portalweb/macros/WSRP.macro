@@ -1,53 +1,53 @@
 <definition>
 	<command name="addConsumerCP">
-		<execute function="AssertClick" locator1="CPWSRP#PRODUCERS_NAVIGATION" value1="Producers" />
+		<execute function="AssertClick" locator1="NavTab#PRODUCERS" value1="Producers" />
 
 		<var name="key_producerName" value="${producerName}" />
 
-		<execute function="Copy" locator1="CPWSRPProducers#PRODUCER_TABLE_URL" />
-		<execute function="AssertClick" locator1="CPWSRPProducers#CONSUMERS_NAVIGATION" value1="Consumers" />
+		<execute function="Copy" locator1="WSRPAdmin#PRODUCER_TABLE_URL" />
+		<execute function="AssertClick" locator1="NavTab#CONSUMERS" value1="Consumers" />
 
-		<execute function="AssertClick" locator1="CPWSRP#ADD_CONSUMER_BUTTON" value1="Add Consumer" />
+		<execute function="AssertClick" locator1="Button#ADD_CONSUMER" value1="Add Consumer" />
 
-		<execute function="Type" locator1="CPWSRPAddconsumer#NAME_FIELD" value1="${consumerName}" />
-		<execute function="Paste" locator1="CPWSRPAddconsumer#URL_FIELD" />
-		<execute function="AssertClick" locator1="CPWSRPAddconsumer#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${consumerName}" />
+		<execute function="Paste" locator1="TextInput#URL" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPWSRP#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addConsumerPortletCP">
 		<var name="key_consumerName" value="${consumerName}" />
 
-		<execute function="Click" locator1="CPWSRP#CONSUMER_TABLE_ACTIONS_BUTTON" />
-		<execute function="AssertClick" locator1="CPWSRP#CONSUMER_MENULIST_MANAGE_PORTLETS" value1="Manage Portlets" />
+		<execute function="Click" locator1="WSRPAdmin#CONSUMER_TABLE_ACTIONS_BUTTON" />
+		<execute function="AssertClick" locator1="MenuItem#MANAGE_PORTLETS" value1="Manage Portlets" />
 
-		<execute function="AssertClick" locator1="CPWSRPManageportlets#ADD_PORTLET_BUTTON" value1="Add Portlet" />
+		<execute function="AssertClick" locator1="Button#ADD_PORTLET" value1="Add Portlet" />
 
-		<execute function="Type" locator1="CPWSRPManageportletsAddportlet#NAME_FIELD" value1="${consumerPortletName}" />
-		<execute function="Select" locator1="CPWSRPManageportletsAddportlet#REMOTE_PORTLET_SELECT" value1="${consumerPortletType}" />
-		<execute function="AssertClick" locator1="CPWSRPManageportletsAddportlet#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${consumerPortletName}" />
+		<execute function="Select" locator1="Select#REMOTE_PORTLET" value1="${consumerPortletType}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPWSRPManageportlets#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addProducerCP">
-		<execute function="AssertClick" locator1="CPWSRP#PRODUCERS_NAVIGATION" value1="Producers" />
+		<execute function="AssertClick" locator1="NavTab#PRODUCERS" value1="Producers" />
 
-		<execute function="AssertClick" locator1="CPWSRPProducers#ADD_PRODUCER_BUTTON" value1="Add Producer" />
+		<execute function="AssertClick" locator1="Button#ADD_PRODUCER" value1="Add Producer" />
 
-		<execute function="Type" locator1="CPWSRPProducersAddproducer#PRODUCER_NAME_FIELD" value1="${producerName}" />
-		<execute function="Select" locator1="CPWSRPProducersAddproducer#VERSION_SELECT" value1="2.0" />
-		<execute function="Select" locator1="CPWSRPProducersAddproducer#PORTLETS_AVAILABLE_SELECT" value1="${portletsAvailableSelect}" />
-		<execute function="Click" locator1="CPWSRPProducersAddproducer#MOVE_LEFT_BUTTON" />
-		<execute function="AssertClick" locator1="CPWSRPProducersAddproducer#SAVE_BUTTON" value1="Save" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${producerName}" />
+		<execute function="Select" locator1="Select#VERSION" value1="2.0" />
+		<execute function="Select" locator1="Select#PORTLETS_AVAILABLE" value1="${portletsAvailableSelect}" />
+		<execute function="Click" locator1="Button#MOVE_AVAILABLE_TO_CURRENT" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPWSRPProducers#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<var name="key_producerName" value="${producerName}" />
 
-		<execute function="AssertTextEquals" locator1="CPWSRPProducers#PRODUCER_TABLE_PRODUCER" value1="${producerName}" />
-		<execute function="AssertElementPresent" locator1="CPWSRPProducers#PRODUCER_TABLE_URL" />
+		<execute function="AssertTextEquals" locator1="WSRPAdmin#PRODUCER_TABLE_PRODUCER" value1="${producerName}" />
+		<execute function="AssertElementPresent" locator1="WSRPAdmin#PRODUCER_TABLE_URL" />
 	</command>
 
 	<command name="tearDownCP">
@@ -55,30 +55,30 @@
 			<var name="portletName" value="WSRP" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPWSRP#PRODUCERS_NAVIGATION" value1="Producers" />
+		<execute function="AssertClick" locator1="NavTab#PRODUCERS" value1="Producers" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="CPWSRPProducers#PRODUCER_TABLE_ACTIONS_BUTTON_GENERIC" />
+			<condition function="IsElementPresent" locator1="WSRPAdmin#PRODUCER_TABLE_ACTIONS_BUTTON_GENERIC" />
 			<then>
-				<execute function="Click" locator1="CPWSRPProducers#PRODUCER_TABLE_ACTIONS_BUTTON_GENERIC" />
-				<execute function="AssertClickNoError" locator1="CPWSRPProducers#PRODUCER_MENULIST_DELETE" value1="Delete" />
+				<execute function="Click" locator1="WSRPAdmin#PRODUCER_TABLE_ACTIONS_BUTTON_GENERIC" />
+				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</while>
 
-		<execute function="AssertTextEquals" locator1="CPWSRPProducers#INFO_MESSAGE" value1="There are no producers." />
-		<execute function="AssertClick" locator1="CPWSRPProducers#CONSUMERS_NAVIGATION" value1="Consumers" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="There are no producers." />
+		<execute function="AssertClick" locator1="NavTab#CONSUMERS" value1="Consumers" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="CPWSRP#CONSUMER_TABLE_ACTIONS_BUTTON_GENERIC" />
+			<condition function="IsElementPresent" locator1="WSRPAdmin#CONSUMER_TABLE_ACTIONS_BUTTON_GENERIC" />
 			<then>
-				<execute function="Click" locator1="CPWSRP#CONSUMER_TABLE_ACTIONS_BUTTON_GENERIC" />
-				<execute function="AssertClickNoError" locator1="CPWSRP#CONSUMER_MENULIST_DELETE" value1="Delete" />
+				<execute function="Click" locator1="WSRPAdmin#CONSUMER_TABLE_ACTIONS_BUTTON_GENERIC" />
+				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</while>
 
-		<execute function="AssertTextEquals" locator1="CPWSRP#INFO_MESSAGE" value1="There are no consumers." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no consumers." />
 	</command>
 
 	<command name="wsrpUnitConverterConvertPG">

@@ -1,13 +1,13 @@
 <definition>
 	<command name="convertPG">
-		<execute function="AssertTextEquals" locator1="Currencyconverter#INFO_MESSAGE" value1="Please select a currency." />
-		<execute function="Type" locator1="Currencyconverter#CURRENCY_CONVERTER_NUMBER_FIELD" value1="${currencyValue}" />
-		<execute function="Select" locator1="Currencyconverter#CURRENCY_CONVERTER_FROM_SELECT" value1="${currencyFrom}" />
-		<execute function="Select" locator1="Currencyconverter#CURRENCY_CONVERTER_TO_SELECT" value1="${currencyTo}" />
-		<execute function="AssertClick" locator1="Currencyconverter#CONVERT_BUTTON" value1="Convert" />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please select a currency." />
+		<execute function="Type" locator1="CurrencyConverter#NUMBER_FIELD" value1="${currencyValue}" />
+		<execute function="Select" locator1="CurrencyConverter#FROM_SELECT" value1="${currencyFrom}" />
+		<execute function="Select" locator1="CurrencyConverter#TO_SELECT" value1="${currencyTo}" />
+		<execute function="AssertClick" locator1="Button#CONVERT" value1="Convert" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Currencyconverter#CURRENCY_DATA_TABLE_FROM" value1="${currencyDataFrom}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Currencyconverter#CURRENCY_DATA_TABLE_TO" value1="${currencyDataTo}" />
-		<execute function="AssertElementPresent" locator1="Currencyconverter#CURRENCY_DATA_GRAPH" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CurrencyConverter#DATA_TABLE_FROM" value1="${currencyDataFrom}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="CurrencyConverter#DATA_TABLE_TO" value1="${currencyDataTo}" />
+		<execute function="AssertElementPresent" locator1="CurrencyConverter#DATA_GRAPH" />
 	</command>
 </definition>

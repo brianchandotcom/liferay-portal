@@ -9,7 +9,7 @@
 </thead>
 <tbody>
 <tr>
-	<td>NAVIGATION_EMAIL_VERIFICATiON_NOTIFICATION_BODY</td>
+	<td>NAVIGATION_EMAIL_VERIFICATION_NOTIFICATION_BODY</td>
 	<td>//div[@id='cke_3_contents']/iframe</td>
 	<td></td>
 </tr>

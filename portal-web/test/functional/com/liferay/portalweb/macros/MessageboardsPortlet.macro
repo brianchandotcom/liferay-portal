@@ -5,12 +5,12 @@
 		<if>
 			<equals arg1="${anonymousPostingEnabled}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="CPMessageboardsConfiguration#GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+				<execute function="Check" locator1="MessageBoardsAdminConfiguration#GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${anonymousPostingEnabled}" arg2="false" />
 				<then>
-					<execute function="Uncheck" locator1="CPMessageboardsConfiguration#GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+					<execute function="Uncheck" locator1="MessageBoardsAdminConfiguration#GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
 				</then>
 			</elseif>
 		</if>
@@ -32,7 +32,7 @@
 		<if>
 			<equals arg1="${threadAsQuestionByDefaultEnabled}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="CPMessageboardsConfiguration#GENERAL_THREAD_AS_QUESTION_BY_DEFAULT_CHECKBOX" />
+				<execute function="Check" locator1="MessageBoardsAdminConfiguration#GENERAL_THREAD_AS_QUESTION_BY_DEFAULT_CHECKBOX" />
 			</then>
 		</if>
 
@@ -47,19 +47,19 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="PGMessageboardsConfiguration#MESSAGE_BOARDS_IFRAME" />
+		<execute function="SelectFrame" locator1="MessageBoardsConfiguration#IFRAME" />
 
 		<if>
 			<equals arg1="${messageFormatBBCodeEnabled}" arg2="true" />
 			<then>
 				<var name="key_messageFormat" value="${messageFormat}" />
 
-				<execute function="Select" locator1="PGMessageboardsConfiguration#MESSAGE_FORMAT_DROPDOWN_OPTION" value1="${key_messageFormat}" />
+				<execute function="Select" locator1="MessageBoardsAdminConfiguration#GENERAL_MESSAGE_FORMAT_DROPDOWN_OPTION" value1="${key_messageFormat}" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="PGMessageboardsConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="configureMessageAddedEmailCP">
@@ -76,10 +76,10 @@
 		<if>
 			<equals arg1="${messageAddedEmailEnabled}" arg2="false" />
 			<then>
-				<execute function="Uncheck" locator1="CPMessageboardsConfigurationSetupMessageAddedEmail#MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
+				<execute function="Uncheck" locator1="MessageBoardsAdminConfiguration#MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
 			</then>
 			<else>
-				<execute function="AssertChecked" locator1="CPMessageboardsConfigurationSetupMessageAddedEmail#MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
+				<execute function="AssertChecked" locator1="MessageBoardsAdminConfiguration#MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
 			</else>
 		</if>
 
@@ -101,14 +101,14 @@
 		<if>
 			<isset var="emailFromName" />
 			<then>
-				<execute function="Type" locator1="CPMessageboardsConfigurationSetupEmailFrom#EMAIL_FROM_NAME" value1="${emailFromName}" />
+				<execute function="Type" locator1="MessageBoardsAdminConfiguration#EMAIL_FROM_NAME" value1="${emailFromName}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="emailFromAddress" />
 			<then>
-				<execute function="Type" locator1="CPMessageboardsConfigurationSetupEmailFrom#EMAIL_FROM_ADDRESS" value1="${emailFromAddress}" />
+				<execute function="Type" locator1="MessageBoardsAdminConfiguration#EMAIL_FROM_ADDRESS" value1="${emailFromAddress}" />
 			</then>
 		</if>
 
@@ -130,10 +130,10 @@
 		<if>
 			<equals arg1="${messageUpdatedEmailEnabled}" arg2="false" />
 			<then>
-				<execute function="Uncheck" locator1="CPMessageboardsConfigurationSetupMessageUpdatedEmail#MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
+				<execute function="Uncheck" locator1="MessageBoardsAdminConfiguration#MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
 			</then>
 			<else>
-				<execute function="AssertChecked" locator1="CPMessageboardsConfigurationSetupMessageUpdatedEmail#MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
+				<execute function="AssertChecked" locator1="MessageBoardsAdminConfiguration#MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
 			</else>
 		</if>
 
@@ -147,16 +147,16 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="PGMessageboardsConfiguration#MESSAGE_BOARDS_IFRAME" />
+		<execute function="SelectFrame" locator1="MessageBoardsConfiguration#IFRAME" />
 		<execute function="AssertClick" locator1="PGMessageboardsConfiguration#SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL" value1="Message Updated Email" />
 
 		<if>
 			<equals arg1="${messageUpdatedEmailEnabled}" arg2="false" />
 			<then>
-				<execute function="Uncheck" locator1="PGMessageboardsConfigurationSetupMessageUpdatedEmail#MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
+				<execute function="Uncheck" locator1="MessageBoardsAdminConfiguration#MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
 			</then>
 			<else>
-				<execute function="AssertChecked" locator1="PGMessageboardsConfigurationSetupMessageUpdatedEmail#MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
+				<execute function="AssertChecked" locator1="MessageBoardsAdminConfiguration#MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
 			</else>
 		</if>
 
@@ -170,13 +170,13 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="PGMessageboardsConfiguration#MESSAGE_BOARDS_IFRAME" />
-		<execute function="AssertClick" locator1="PGMessageboardsConfiguration#NAVIGATION_SCOPE" value1="Scope" />
+		<execute function="SelectFrame" locator1="MessageBoardsConfiguration#IFRAME" />
+		<execute function="AssertClick" locator1="MessageBoardsConfiguration#NAVIGATION_SCOPE" value1="Scope" />
 
 		<var name="key_scopeName" value="${scopeName}" />
 
-		<execute function="Click" locator1="PGMessageboardsConfigurationScope#SCOPE_DROPDOWN" />
-		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="PGMessageboardsConfigurationScope#SCOPE_MENULIST" value1="${scopeName}" />
+		<execute function="Click" locator1="MessageBoardsConfiguration#SCOPE_DROPDOWN" />
+		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="MessageBoardsConfiguration#SCOPE_MENULIST" value1="${scopeName}" />
 		<execute function="AssertTextEquals" locator1="PGMessageboardsConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
@@ -185,17 +185,17 @@
 	</command>
 
 	<command name="gotoRecentPostsPG">
-		<execute function="AssertClick" locator1="PGMessageboards#NAVIGATION_RECENT_POSTS" value1="Recent Posts" />
+		<execute function="AssertClick" locator1="MessageBoards#NAVIGATION_RECENT_POSTS" value1="Recent Posts" />
 	</command>
 
 	<command name="searchPG">
-		<execute function="Type" locator1="PGMessageboards#NAVIGATION_SEARCH_FIELD" value1="${searchTerm}" />
-		<execute function="AssertClick" locator1="PGMessageboards#NAVIGATION_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${searchTerm}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 	</command>
 
 	<command name="subscribePG">
-		<execute function="AssertClick" locator1="PGMessageboards#SUBSCRIBE_LINK" value1="Subscribe" />
-		<execute function="AssertTextEquals#assertText" locator1="PGMessageboards#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="MessageBoards#SUBSCRIBE_LINK" value1="Subscribe" />
+		<execute function="AssertTextEquals#assertText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownConfigurationEmailCP">
@@ -209,12 +209,12 @@
 		<execute function="SelectFrame" locator1="CPMessageboardsConfiguration#MESSAGE_BOARDS_IFRAME" />
 		<execute function="AssertClick" locator1="CPMessageboardsConfiguration#SETUP_NAVIGATION_MESSAGE_ADDED_EMAIL" value1="Message Added Email" />
 
-		<execute function="Check" locator1="CPMessageboardsConfigurationSetupMessageAddedEmail#MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
+		<execute function="Check" locator1="MessageBoardsAdminConfiguration#MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX" />
 		<execute function="AssertClick" locator1="CPMessageboardsConfigurationSetupMessageAddedEmail#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="CPMessageboardsConfigurationSetupMessageAddedEmail#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute function="AssertClick" locator1="CPMessageboardsConfigurationSetupMessageAddedEmail#SETUP_NAVIGATION_MESSAGE_UPDATED_EMAIL" value1="Message Updated Email" />
 
-		<execute function="Check" locator1="CPMessageboardsConfigurationSetupMessageUpdatedEmail#MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
+		<execute function="Check" locator1="MessageBoardsAdminConfiguration#MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX" />
 		<execute function="AssertClick" locator1="CPMessageboardsConfigurationSetupMessageUpdatedEmail#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="CPMessageboardsConfigurationSetupMessageUpdatedEmail#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
@@ -228,19 +228,19 @@
 		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="CPMessageboardsConfiguration#MESSAGE_BOARDS_IFRAME" />
-		<execute function="Check" locator1="CPMessageboardsConfiguration#GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+		<execute function="Check" locator1="MessageBoardsAdminConfiguration#GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
 		<execute function="AssertClick" locator1="CPMessageboardsConfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="CPMessageboardsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 	</command>
 
 	<command name="unbanUserPG">
-		<execute function="AssertClick" locator1="PGMessageboards#NAVIGATION_BANNED_USERS" value1="Banned Users" />
+		<execute function="AssertClick" locator1="MessageBoards#NAVIGATION_BANNED_USERS" value1="Banned Users" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="AssertClick" locator1="PGMessageboardsBannedusers#BANNED_USERS_TABLE_UNBAN_THIS_USER" value1="Unban This User" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsBannedusers#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboardsBannedusers#BANNED_USERS_TABLE_BANNED_USER" />
+		<execute function="AssertClick" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_UNBAN_THIS_USER" value1="Unban This User" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute function="AssertElementNotPresent" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_BANNED_USER" />
 		<execute function="AssertTextNotPresent" value1="${userScreenName}" />
 	</command>
 
@@ -250,46 +250,46 @@
 		<if>
 			<equals arg1="${anonymousPostingEnabled}" arg2="true" />
 			<then>
-				<execute function="AssertChecked" locator1="CPMessageboardsConfiguration#GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+				<execute function="AssertChecked" locator1="MessageBoardsAdminConfiguration#GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${anonymousPostingEnabled}" arg2="false" />
 				<then>
-					<execute function="AssertNotChecked" locator1="CPMessageboardsConfiguration#GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
+					<execute function="AssertNotChecked" locator1="MessageBoardsAdminConfiguration#GENERAL_ALLOW_ANONYMOUS_POSTING_CHECKBOX" />
 				</then>
 			</elseif>
 		</if>
 	</command>
 
 	<command name="viewBannedUserPG">
-		<execute function="AssertClick" locator1="PGMessageboards#NAVIGATION_BANNED_USERS" value1="Banned Users" />
+		<execute function="AssertClick" locator1="MessageBoards#NAVIGATION_BANNED_USERS" value1="Banned Users" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsBannedusers#BANNED_USERS_TABLE_BANNED_USER" value1="${userScreenName}" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsBannedusers#BANNED_USERS_TABLE_BANNED_BY" value1="Test Test" />
-		<execute function="AssertVisible" locator1="PGMessageboardsBannedusers#BANNED_USERS_TABLE_BAN_DATE"  />
-		<execute function="AssertVisible" locator1="PGMessageboardsBannedusers#BANNED_USERS_TABLE_UNBAN_DATE"  />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsBannedusers#BANNED_USERS_TABLE_UNBAN_THIS_USER" value1="Unban This User" />
-		<execute function="AssertClick" locator1="PGMessageboardsBannedusers#BANNED_USERS_TABLE_BANNED_USER" value1="${userScreenName}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_BANNED_USER" value1="${userScreenName}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_BANNED_BY" value1="Test Test" />
+		<execute function="AssertVisible" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_BAN_DATE"  />
+		<execute function="AssertVisible" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_UNBAN_DATE"  />
+		<execute function="AssertTextEquals" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_UNBAN_THIS_USER" value1="Unban This User" />
+		<execute function="AssertClick" locator1="MessageBoardsBannedUsers#BANNED_USERS_TABLE_BANNED_USER" value1="${userScreenName}" />
 
 		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${userScreenName}" />
 	</command>
 
 	<command name="viewBanPG">
-		<execute function="AssertTextEquals" locator1="PGMessageboards#ERROR_MESSAGE" value1="You have been banned by the moderator." />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#ADD_CATEGORY_BUTTON" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#POST_NEW_THREAD_BUTTON" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#RSS_LINK" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#SUBSCRIBE_LINK" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#NAVIGATION_MESSAGE_BOARDS_HOME" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#NAVIGATION_RECENT_POSTS" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#NAVIGATION_MY_POSTS" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#NAVIGATION_MY_SUBSCRIPTIONS" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#NAVIGATION_STATISTICS" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#NAVIGATION_BANNED_USERS" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#NAVIGATION_SEARCH_FIELD" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#NAVIGATION_SEARCH_BUTTON" />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You have been banned by the moderator." />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#ADD_CATEGORY_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#RSS_LINK" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#SUBSCRIBE_LINK" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#NAVIGATION_MESSAGE_BOARDS_HOME" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#NAVIGATION_RECENT_POSTS" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#NAVIGATION_MY_POSTS" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#NAVIGATION_MY_SUBSCRIPTIONS" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#NAVIGATION_STATISTICS" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#NAVIGATION_BANNED_USERS" />
+		<execute function="AssertElementNotPresent" locator1="NavBar#BASIC_SEARCH_FIELD" />
+		<execute function="AssertElementNotPresent" locator1="NavBar#BASIC_SEARCH_BUTTON" />
 	</command>
 
 	<command name="viewDefaultEmailFromCP">
@@ -303,20 +303,20 @@
 		<execute function="SelectFrame" locator1="CPMessageboardsConfiguration#MESSAGE_BOARDS_IFRAME" />
 		<execute function="AssertClick" locator1="CPMessageboardsConfiguration#SETUP_NAVIGATION_EMAIL_FROM" value1="Email From" />
 
-		<execute function="AssertTextEquals" locator1="CPMessageboardsConfigurationSetupEmailFrom#EMAIL_FROM_NAME" value1="[$MESSAGE_USER_NAME$]" />
-		<execute function="AssertTextEquals" locator1="CPMessageboardsConfigurationSetupEmailFrom#EMAIL_FROM_ADDRESS" value1="test@liferay.com" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsAdminConfiguration#EMAIL_FROM_NAME" value1="[$MESSAGE_USER_NAME$]" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsAdminConfiguration#EMAIL_FROM_ADDRESS" value1="test@liferay.com" />
 	</command>
 
 	<command name="viewNoPermissionCP">
-		<execute function="AssertTextEquals" locator1="CPMessageboards#PORTLET_TITLE" value1="Message Boards" />
-		<execute function="AssertElementPresent" locator1="CPMessageboards#NAVBAR_CONTAINER" />
-		<execute function="AssertTextEquals#assertText" locator1="CPMessageboards#INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
+		<execute function="AssertTextEquals" locator1="MessageBoardsAdmin#PORTLET_TITLE" value1="Message Boards" />
+		<execute function="AssertElementPresent" locator1="MessageBoardsAdmin#NAVBAR_CONTAINER" />
+		<execute function="AssertTextEquals#assertText" locator1="Message#INFO" value1="There are no threads in this category." />
 	</command>
 
 	<command name="viewNoSearchResultSubjectPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute function="AssertElementNotPresent" locator1="PGMessageboardsSearch#SEARCH_RESULTS_ENTRY_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoardsSearch#SEARCH_RESULTS_ENTRY_TITLE" />
 	</command>
 
 	<command name="viewRecentPostsConfigurationCP">
@@ -326,23 +326,23 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="CPMessageboardsConfiguration#MESSAGE_BOARDS_IFRAME" />
-		<execute function="AssertTextEquals" locator1="CPMessageboardsConfiguration#GENERAL_SHOW_RECENT_POSTS_FROM_LAST_DROPDOWN" value1="${recentPostsRange}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsAdminConfiguration#GENERAL_SHOW_RECENT_POSTS_FROM_LAST_DROPDOWN" value1="${recentPostsRange}" />
 	</command>
 
 	<command name="viewSearchResultPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsSearch#SEARCH_RESULTS_ENTRY_TITLE" value1="${threadSubject}" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsSearch#SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${threadBody}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsSearch#SEARCH_RESULTS_ENTRY_TITLE" value1="${threadSubject}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsSearch#SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${threadBody}" />
 
 		<if>
 			<isset var="mbThreadAttachment" />
 			<then>
 				<var name="key_userName" value="${userName}" />
 
-				<execute function="AssertVisible" locator1="PGMessageboardsSearch#SEARCH_RESULTS_ATTACHMENT_IMAGE" />
-				<execute function="AssertTextEquals" locator1="PGMessageboardsSearch#SEARCH_RESULTS_ATTACHMENT_HEADER" value1="Attachment added by ${userName}." />
-				<execute function="AssertTextEquals#assertPartialText" locator1="PGMessageboardsSearch#SEARCH_RESULTS_ATTACHMENT_BODY" value1="${searchTerm}" />
+				<execute function="AssertVisible" locator1="MessageBoardsSearch#SEARCH_RESULTS_ATTACHMENT_IMAGE" />
+				<execute function="AssertTextEquals" locator1="MessageBoardsSearch#SEARCH_RESULTS_ATTACHMENT_HEADER" value1="Attachment added by ${userName}." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsSearch#SEARCH_RESULTS_ATTACHMENT_BODY" value1="${searchTerm}" />
 			</then>
 		</if>
 	</command>

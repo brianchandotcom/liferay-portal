@@ -97,7 +97,7 @@
 		<var name="key_resourceAction" value="${resourceAction2}" />
 		<var name="key_resourceName" value="${resourceName2}" />
 
-		<execute function="AssertTextEquals" locator1="CPAuditreports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction2}" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction2}" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -128,7 +128,7 @@
 		<var name="key_resourceAction" value="${resourceAction3}" />
 		<var name="key_resourceName" value="${resourceName2}" />
 
-		<execute function="AssertTextEquals" locator1="CPAuditreports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction3}" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction3}" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
@@ -166,32 +166,32 @@
 		<var name="key_resourceAction" value="${resourceAction4}" />
 		<var name="key_resourceName" value="${resourceName1}" />
 
-		<execute function="AssertTextEquals" locator1="CPAuditreports#REPORTS_TABLE_RESOURCE_NAME" value1="${resourceName1}" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_NAME" value1="${resourceName1}" />
 
 		<var name="key_resourceAction" value="${resourceAction4}" />
 		<var name="key_resourceName" value="${resourceName1}" />
 
-		<execute function="AssertTextEquals" locator1="CPAuditreports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction4}" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction4}" />
 
 		<var name="key_resourceAction" value="${resourceAction5}" />
 		<var name="key_resourceName" value="${resourceName2}" />
 
-		<execute function="AssertTextEquals" locator1="CPAuditreports#REPORTS_TABLE_RESOURCE_NAME" value1="${resourceName2}" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_NAME" value1="${resourceName2}" />
 
 		<var name="key_resourceAction" value="${resourceAction5}" />
 		<var name="key_resourceName" value="${resourceName2}" />
 
-		<execute function="AssertTextEquals" locator1="CPAuditreports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction5}" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction5}" />
 
 		<var name="key_resourceAction" value="${resourceAction4}" />
 		<var name="key_resourceName" value="${resourceName3}" />
 
-		<execute function="AssertTextEquals" locator1="CPAuditreports#REPORTS_TABLE_RESOURCE_NAME" value1="${resourceName3}" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_NAME" value1="${resourceName3}" />
 
 		<var name="key_resourceAction" value="${resourceAction4}" />
 		<var name="key_resourceName" value="${resourceName3}" />
 
-		<execute function="AssertTextEquals" locator1="CPAuditreports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction4}" />
+		<execute function="AssertTextEquals" locator1="AuditReports#REPORTS_TABLE_RESOURCE_ACTION" value1="${resourceAction4}" />
 
 		<execute function="AssertTextEquals" locator1="xpath=(//tr[contains(.,'${resourceAction5}') and contains(.,'${resourceName2}')]/td[4])[2]" value1="${resourceName2}" />
 		<execute function="AssertTextEquals" locator1="xpath=(//tr[contains(.,'${resourceAction5}') and contains(.,'${resourceName2}')]/td[5])[2]" value1="${resourceAction5}" />

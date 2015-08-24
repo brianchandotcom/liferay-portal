@@ -522,7 +522,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Portlet#viewSpecificPG">
+		<execute macro="Portlet#viewPillTitle">
 			<var name="portletName" value="Blogs" />
 		</execute>
 

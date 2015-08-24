@@ -65,19 +65,6 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 
 				<liferay-util:include page="/sort_button.jsp" servletContext="<%= application %>" />
-
-				<c:if test="<%= !user.isDefaultUser() %>">
-					<aui:nav-item dropdown="<%= true %>" label="manage">
-
-						<%
-						String taglibURL = "javascript:" + renderResponse.getNamespace() + "openFeedsView()";
-						%>
-
-						<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-							<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-rss" label="feeds" />
-						</c:if>
-					</aui:nav-item>
-				</c:if>
 			</c:if>
 		</aui:nav>
 
@@ -88,18 +75,6 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 </aui:form>
 
 <aui:script>
-	<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-		function <portlet:namespace />openFeedsView() {
-			Liferay.Util.openWindow(
-				{
-					id: '<portlet:namespace />openFeedsView',
-					title: '<%= UnicodeLanguageUtil.get(request, "feeds") %>',
-					uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/view_feeds.jsp" /></liferay-portlet:renderURL>'
-				}
-			);
-		}
-	</c:if>
-
 	function <portlet:namespace />deleteEntries() {
 		if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm(' <%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 			Liferay.fire(

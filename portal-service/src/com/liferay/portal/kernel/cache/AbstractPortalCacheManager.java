@@ -102,14 +102,14 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		else if (isPortalCacheBootstrapLoaderEnabled() &&
 				 (portalCacheConfiguration != null)) {
 
-			Properties portalCacheBootstrapLoaderConfiguration =
+			Properties portalCacheBootstrapLoaderProperties =
 				portalCacheConfiguration.
-					getPortalCacheBootstrapLoaderConfiguration();
+					getPortalCacheBootstrapLoaderProperties();
 
-			if (portalCacheBootstrapLoaderConfiguration != null) {
+			if (portalCacheBootstrapLoaderProperties != null) {
 				PortalCacheBootstrapLoader portalCacheBootstrapLoader =
 					portalCacheBootstrapLoaderFactory.create(
-						portalCacheBootstrapLoaderConfiguration);
+						portalCacheBootstrapLoaderProperties);
 
 				if (portalCacheBootstrapLoader != null) {
 					portalCacheBootstrapLoader.loadPortalCache(
@@ -251,13 +251,12 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 			_portalCacheManagerConfiguration.
 				getDefaultPortalCacheConfiguration();
 
-		for (Properties portalCacheManagerListenerConfiguration :
+		for (Properties properties :
 				_portalCacheManagerConfiguration.
-					getPortalCacheManagerListenerConfigurations()) {
+					getPortalCacheManagerListenerPropertiesSet()) {
 
 			PortalCacheManagerListener portalCacheManagerListener =
-				portalCacheManagerListenerFactory.create(
-					this, portalCacheManagerListenerConfiguration);
+				portalCacheManagerListenerFactory.create(this, properties);
 
 			if (portalCacheManagerListener != null) {
 				registerPortalCacheManagerListener(portalCacheManagerListener);
@@ -324,13 +323,9 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 			return;
 		}
 
-		Set<Properties>
-			cacheListenerConfigurations =
-				portalCacheConfiguration.getPortalCacheListenerConfigurations();
-
 		for (Properties properties :
 				portalCacheConfiguration.
-					getPortalCacheListenerConfigurations()) {
+					getPortalCacheListenerPropertiesSet()) {
 
 			PortalCacheListenerScope portalCacheListenerScope =
 				(PortalCacheListenerScope)properties.remove(

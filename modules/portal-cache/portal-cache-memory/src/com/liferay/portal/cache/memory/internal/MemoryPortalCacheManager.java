@@ -122,8 +122,8 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	protected PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration() {
 
-		Set<Properties> cacheListenerConfigurations = null;
-		Properties bootstrapLoaderConfiguration = null;
+		Set<Properties> portalCacheListenerPropertiesSet = null;
+		Properties portalCacheBootstrapLoaderProperties = null;
 
 		if (isClusterAware() &&
 			GetterUtil.getBoolean(props.get(PropsKeys.CLUSTER_LINK_ENABLED))) {
@@ -135,16 +135,18 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 				PortalCacheConfiguration.PORTAL_CACHE_LISTENER_SCOPE,
 				PortalCacheListenerScope.ALL);
 
-			cacheListenerConfigurations = Collections.singleton(properties);
+			portalCacheListenerPropertiesSet = Collections.singleton(
+				properties);
 
-			bootstrapLoaderConfiguration = new Properties();
+			portalCacheBootstrapLoaderProperties = new Properties();
 		}
 
 		return new PortalCacheManagerConfiguration(
 			null,
 			new PortalCacheConfiguration(
 				PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME,
-				cacheListenerConfigurations, bootstrapLoaderConfiguration),
+				portalCacheListenerPropertiesSet,
+				portalCacheBootstrapLoaderProperties),
 			null);
 	}
 

@@ -27,16 +27,16 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PortalCacheManagerConfiguration {
 
 	public PortalCacheManagerConfiguration(
-		Set<Properties> portalCacheManagerListenerConfigurations,
+		Set<Properties> portalCacheManagerListenerPropertiesSet,
 		PortalCacheConfiguration defaultPortalCacheConfiguration,
 		Set<PortalCacheConfiguration> portalCacheConfigurations) {
 
-		if (portalCacheManagerListenerConfigurations == null) {
-			_portalCacheManagerListenerConfigurations = Collections.emptySet();
+		if (portalCacheManagerListenerPropertiesSet == null) {
+			_portalCacheManagerListenerPropertiesSet = Collections.emptySet();
 		}
 		else {
-			_portalCacheManagerListenerConfigurations = new HashSet<>(
-				portalCacheManagerListenerConfigurations);
+			_portalCacheManagerListenerPropertiesSet = new HashSet<>(
+				portalCacheManagerListenerPropertiesSet);
 		}
 
 		_defaultPortalCacheConfiguration = defaultPortalCacheConfiguration;
@@ -64,9 +64,9 @@ public class PortalCacheManagerConfiguration {
 		return _portalCacheConfigurations.get(portalCacheName);
 	}
 
-	public Set<Properties> getPortalCacheManagerListenerConfigurations() {
+	public Set<Properties> getPortalCacheManagerListenerPropertiesSet() {
 		return Collections.unmodifiableSet(
-			_portalCacheManagerListenerConfigurations);
+			_portalCacheManagerListenerPropertiesSet);
 	}
 
 	public Set<String> getPortalCacheNames() {
@@ -84,6 +84,6 @@ public class PortalCacheManagerConfiguration {
 	private final PortalCacheConfiguration _defaultPortalCacheConfiguration;
 	private final Map<String, PortalCacheConfiguration>
 		_portalCacheConfigurations;
-	private final Set<Properties> _portalCacheManagerListenerConfigurations;
+	private final Set<Properties> _portalCacheManagerListenerPropertiesSet;
 
 }

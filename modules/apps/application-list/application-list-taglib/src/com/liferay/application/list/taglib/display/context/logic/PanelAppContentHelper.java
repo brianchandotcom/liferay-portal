@@ -15,7 +15,6 @@
 package com.liferay.application.list.taglib.display.context.logic;
 
 import com.liferay.portal.kernel.template.StringTemplateResource;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -26,7 +25,7 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.PortletRequestImpl;
+import com.liferay.portal.util.PortalUtil;
 
 import java.io.Writer;
 
@@ -74,15 +73,8 @@ public class PanelAppContentHelper {
 		if (Validator.isNotNull(velocityTemplateId) &&
 			Validator.isNotNull(content)) {
 
-			HttpServletRequest request = _request;
-
-			PortletRequestImpl portletRequestImpl =
-				(PortletRequestImpl)_request.getAttribute(
-					JavaConstants.JAVAX_PORTLET_REQUEST);
-
-			if (portletRequestImpl != null) {
-				request = portletRequestImpl.getOriginalHttpServletRequest();
-			}
+			HttpServletRequest request = PortalUtil.getOriginalServletRequest(
+				_request);
 
 			StringBundler sb = RuntimePageUtil.getProcessedTemplate(
 				request, _response, getPortletId(),

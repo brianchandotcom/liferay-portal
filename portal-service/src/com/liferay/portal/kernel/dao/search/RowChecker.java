@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.taglib.aui.AUIUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -184,7 +183,7 @@ public class RowChecker {
 		sb.append("\" title=\"");
 		sb.append(LanguageUtil.get(getLocale(request), "select-all"));
 		sb.append("\" type=\"checkbox\" ");
-		sb.append(AUIUtil.buildData(_data));
+		sb.append(HtmlUtil.buildData(_data));
 		sb.append("onClick=\"Liferay.Util.checkAll(");
 		sb.append("AUI().one(this).ancestor('");
 		sb.append(".table'), ");

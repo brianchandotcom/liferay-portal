@@ -13,12 +13,10 @@
 	<property name="default.test.results.suite.dir" value="${default.test.results.dir}/test-suite" />
 	<property name="default.test.results.suite.file.name" value="TESTS-${test.batch.name}_${axis.variable}_suite.xml" />
 
-	<macrodef name="build-testray-result">
+	<macrodef name="add-testray-results">
 		<attribute name="test.results.file" />
 
 		<sequential>
-			<echo>Build testray result: @{test.results.file}.</echo>
-
 			<if>
 				<isset property="testray.logs.report" />
 				<then>
@@ -95,62 +93,6 @@
 
 			<replaceregexp
 				file="@{test.results.file}"
-				flags="g"
-				match="\^"
-				replace=""
-			/>
-
-			<replaceregexp
-				file="@{test.results.file}"
-				flags="gm"
-				match="&gt;([^&gt;^&lt;]*)&lt;"
-				replace="&gt;${line.separator}&lt;"
-			/>
-
-			<replaceregexp
-				file="@{test.results.file}"
-				flags="gm"
-				match="^\s*&lt;/?environment[^&gt;]*&gt;[\s]"
-				replace=""
-			/>
-
-			<replaceregexp
-				file="@{test.results.file}"
-				flags="gm"
-				match="^\s*&lt;/?propert[^&gt;]*&gt;[\s]"
-				replace=""
-			/>
-
-			<replaceregexp
-				file="@{test.results.file}"
-				flags="gm"
-				match="^\s*&lt;/?attachments[^&gt;]*&gt;[\s]"
-				replace=""
-			/>
-
-			<replaceregexp
-				file="@{test.results.file}"
-				flags="gm"
-				match="^\s*&lt;/?file[^&gt;]*&gt;[\s]"
-				replace=""
-			/>
-
-			<replaceregexp
-				file="@{test.results.file}"
-				flags="gm"
-				match="&lt;testcase[^&lt;]*?&lt;skipped[\s\S]*?testcase&gt;"
-				replace=""
-			/>
-
-			<replaceregexp
-				file="@{test.results.file}"
-				flags="g"
-				match="(\s*&lt;testcase[^/\n]*)/&gt;"
-				replace="\1&gt;${line.separator}&lt;/testcase&gt;"
-			/>
-
-			<replaceregexp
-				file="@{test.results.file}"
 				match="&lt;testcase[^&gt;]*&gt;"
 				replace="${test.suite.properties}\0"
 			/>
@@ -211,6 +153,20 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="build-testray-result">
+		<attribute name="test.results.file" />
+
+		<sequential>
+			<echo>Build testray result: @{test.results.file}.</echo>
+
+			<format-testray-results test.results.file="@{test.results.file}" />
+
+			<clean-testray-results test.results.file="@{test.results.file}" />
+
+			<add-testray-results test.results.file="@{test.results.file}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="build-testray-results">
 		<attribute default="${default.test.results.dir}" name="test.results.dir" />
 		<attribute default="**/TEST-*.xml" name="test.results.fileset" />
@@ -240,6 +196,54 @@
 					<copy file="javac.output.txt" tofile="${env.TOP_LEVEL_SHARED_DIR}/javac.output.txt" />
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="clean-testray-results">
+		<attribute name="test.results.file" />
+
+		<sequential>
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="gm"
+				match="^\s*&lt;/?attachments[^&gt;]*&gt;[\s]"
+				replace=""
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="gm"
+				match="^\s*&lt;/?environment[^&gt;]*&gt;[\s]"
+				replace=""
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="gm"
+				match="^\s*&lt;/?file[^&gt;]*&gt;[\s]"
+				replace=""
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="gm"
+				match="^\s*&lt;/?propert[^&gt;]*&gt;[\s]"
+				replace=""
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="gm"
+				match="&lt;testcase[^&lt;]*?&lt;skipped[\s\S]*?testcase&gt;"
+				replace=""
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="g"
+				match="(\s*&lt;testcase[^/\n]*)/&gt;"
+				replace="\1&gt;${line.separator}&lt;/testcase&gt;"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -353,6 +357,26 @@
 					</exec>
 				</action>
 			</database-test-action>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="format-testray-results">
+		<attribute name="test.results.file" />
+
+		<sequential>
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="g"
+				match="\^"
+				replace=""
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="gm"
+				match="&gt;([^&gt;^&lt;]*)&lt;"
+				replace="&gt;${line.separator}&lt;"
+			/>
 		</sequential>
 	</macrodef>
 

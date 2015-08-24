@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.search;
 
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
@@ -30,6 +31,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,6 +66,26 @@ public class EntriesChecker extends RowChecker {
 	@Override
 	public String getAllRowsCheckBox(HttpServletRequest request) {
 		return null;
+	}
+
+	@Override
+	public Map<String, Object> getData(Object obj) {
+		Map<String, Object> data = new HashMap<>();
+
+		if (obj instanceof JournalFolder) {
+			data.put(
+				"entryType",
+				PortalUtil.getPortletNamespace(
+					JournalPortletKeys.JOURNAL) + "folderIds");
+		}
+		else {
+			data.put(
+				"entryType",
+				PortalUtil.getPortletNamespace(
+					JournalPortletKeys.JOURNAL) + "articleIds");
+		}
+
+		return data;
 	}
 
 	@Override

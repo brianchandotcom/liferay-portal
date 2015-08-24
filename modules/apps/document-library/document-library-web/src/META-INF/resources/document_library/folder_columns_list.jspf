@@ -14,32 +14,6 @@
  */
 --%>
 
-<%
-row.setPrimaryKey(String.valueOf(curFolder.getPrimaryKey()));
-
-row.setClassName("app-view-entry-taglib entry-display-style selectable");
-
-Map<String, Object> data = new HashMap<String, Object>();
-
-boolean draggable = false;
-
-if (DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE)) {
-	draggable = true;
-
-	if (Validator.isNull(dlSearchContainer.getRowChecker())) {
-		dlSearchContainer.setRowChecker(entriesChecker);
-	}
-}
-
-data.put("draggable", draggable);
-
-data.put("folder", true);
-data.put("folder-id", curFolder.getFolderId());
-data.put("title", curFolder.getName());
-
-row.setData(data);
-%>
-
 <c:if test='<%= ArrayUtil.contains(entryColumns, "name") %>'>
 	<liferay-ui:search-container-column-text
 		name="title"

@@ -17,27 +17,34 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-Folder folder = (Folder)request.getAttribute("view_entries.jsp-folder");
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-String folderImage = (String)request.getAttribute("view_entries.jsp-folderImage");
+Folder folder = null;
 
-PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempRowURL");
+if (row != null) {
+	folder = (Folder)row.getObject();
+}
+else {
+	folder = (Folder)request.getAttribute("view_entries.jsp-folder");
+}
+
+PortletURL rowURL = liferayPortletResponse.createRenderURL();
+
+rowURL.setParameter("mvcRenderCommandName", "/document_library/view");
+rowURL.setParameter("redirect", currentURL);
+rowURL.setParameter("groupId", String.valueOf(folder.getGroupId()));
+rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 %>
 
 <liferay-ui:app-view-entry
-	actionJsp="/document_library/folder_action.jsp"
-	actionJspServletContext="<%= application %>"
 	author="<%= folder.getUserName() %>"
 	createDate="<%= folder.getCreateDate() %>"
 	description="<%= folder.getDescription() %>"
 	displayStyle="descriptive"
 	folder="<%= true %>"
 	modifiedDate="<%= folder.getModifiedDate() %>"
-	rowCheckerId="<%= String.valueOf(folder.getFolderId()) %>"
-	rowCheckerName="<%= Folder.class.getSimpleName() %>"
 	showCheckbox="<%= DLFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE) %>"
-	thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
-	thumbnailStyle="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>"
 	title="<%= folder.getName() %>"
-	url="<%= tempRowURL.toString() %>"
+	url="<%= rowURL != null ? rowURL.toString() : null %>"
+	view="lexicon"
 />

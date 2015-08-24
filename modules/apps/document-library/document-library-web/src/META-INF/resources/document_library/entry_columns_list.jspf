@@ -20,33 +20,6 @@ FileVersion latestFileVersion = fileEntry.getFileVersion();
 if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 	latestFileVersion = fileEntry.getLatestFileVersion();
 }
-
-if (fileShortcut == null) {
-	row.setPrimaryKey(String.valueOf(fileEntry.getFileEntryId()));
-}
-else {
-	row.setPrimaryKey(String.valueOf(fileShortcut.getFileShortcutId()));
-}
-
-row.setClassName("app-view-entry-taglib entry-display-style selectable");
-
-Map<String, Object> data = new HashMap<String, Object>();
-
-boolean draggable = false;
-
-if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
-	draggable = true;
-
-	if (Validator.isNull(dlSearchContainer.getRowChecker())) {
-		dlSearchContainer.setRowChecker(entriesChecker);
-	}
-}
-
-data.put("draggable", draggable);
-
-data.put("title", fileEntry.getTitle());
-
-row.setData(data);
 %>
 
 <c:if test='<%= ArrayUtil.contains(entryColumns, "name") %>'>

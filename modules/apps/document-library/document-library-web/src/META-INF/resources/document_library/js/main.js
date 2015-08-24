@@ -60,6 +60,7 @@ AUI.add(
 						selectConfig.namespace = namespace;
 						selectConfig.portletContainerId = portletContainerId;
 						selectConfig.selector = 'entry-selector';
+						selectConfig.toggleSelector = 'click-selector';
 
 						instance._appViewSelect = new Liferay.AppViewSelect(selectConfig);
 

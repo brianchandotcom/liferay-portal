@@ -277,7 +277,7 @@ dlSearchContainer.setResults(results);
 
 <div class="document-container" id="<portlet:namespace />entriesContainer">
 	<c:choose>
-		<c:when test='<%= !displayStyle.equals("list") %>'>
+		<c:when test='<%= displayStyle.equals("icon") %>'>
 
 			<%
 			for (Object result : results) {
@@ -303,14 +303,7 @@ dlSearchContainer.setResults(results);
 								request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
 								%>
 
-								<c:choose>
-									<c:when test='<%= displayStyle.equals("icon") %>'>
-										<liferay-util:include page="/document_library/view_file_entry_icon.jsp" servletContext="<%= application %>" />
-									</c:when>
-									<c:otherwise>
-										<liferay-util:include page="/document_library/view_file_entry_descriptive.jsp" servletContext="<%= application %>" />
-									</c:otherwise>
-								</c:choose>
+								<liferay-util:include page="/document_library/view_file_entry_icon.jsp" servletContext="<%= application %>" />
 							</c:when>
 							<c:otherwise>
 								<div style="float: left; margin: 100px 10px 0px;">
@@ -344,15 +337,7 @@ dlSearchContainer.setResults(results);
 						request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
 						%>
 
-						<c:choose>
-							<c:when test='<%= displayStyle.equals("icon") %>'>
-								<liferay-util:include page="/document_library/view_folder_icon.jsp" servletContext="<%= application %>" />
-							</c:when>
-
-							<c:otherwise>
-								<liferay-util:include page="/document_library/view_folder_descriptive.jsp" servletContext="<%= application %>" />
-							</c:otherwise>
-						</c:choose>
+						<liferay-util:include page="/document_library/view_folder_icon.jsp" servletContext="<%= application %>" />
 					</c:when>
 				</c:choose>
 
@@ -379,6 +364,7 @@ dlSearchContainer.setResults(results);
 
 				<liferay-ui:search-container-row
 					className="Object"
+					cssClass="app-view-entry-taglib entry-display-style selectable"
 					modelVar="result"
 				>
 
@@ -386,16 +372,76 @@ dlSearchContainer.setResults(results);
 
 					<c:choose>
 						<c:when test="<%= fileEntry != null %>">
-							<%@ include file="/document_library/entry_columns_list.jspf" %>
+
+							<%
+							boolean draggable = false;
+
+							if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+								draggable = true;
+
+								if (Validator.isNull(dlSearchContainer.getRowChecker())) {
+									dlSearchContainer.setRowChecker(entriesChecker);
+								}
+							}
+
+							Map<String, Object> rowData = new HashMap<String, Object>();
+
+							rowData.put("draggable", draggable);
+							rowData.put("title", fileEntry.getTitle());
+
+							row.setData(rowData);
+							row.setPrimaryKey(String.valueOf(fileEntry.getPrimaryKey()));
+							%>
+
+							<c:choose>
+								<c:when test='<%= displayStyle.equals("descriptive") %>'>
+									<%@ include file="/document_library/entry_columns_descriptive.jspf" %>
+								</c:when>
+								<c:otherwise>
+									<%@ include file="/document_library/entry_columns_list.jspf" %>
+								</c:otherwise>
+							</c:choose>
+
 						</c:when>
 						<c:otherwise>
-							<%@ include file="/document_library/folder_columns_list.jspf" %>
+
+							<%
+							boolean draggable = false;
+
+							if (DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE)) {
+								draggable = true;
+
+								if (Validator.isNull(dlSearchContainer.getRowChecker())) {
+									dlSearchContainer.setRowChecker(entriesChecker);
+								}
+							}
+
+							Map<String, Object> rowData = new HashMap<String, Object>();
+
+							rowData.put("draggable", draggable);
+							rowData.put("folder", true);
+							rowData.put("folder-id", curFolder.getFolderId());
+							rowData.put("title", curFolder.getName());
+
+							row.setData(rowData);
+							row.setPrimaryKey(String.valueOf(curFolder.getPrimaryKey()));
+							%>
+
+							<c:choose>
+								<c:when test='<%= displayStyle.equals("descriptive") %>'>
+									<%@ include file="/document_library/folder_columns_descriptive.jspf" %>
+								</c:when>
+								<c:otherwise>
+									<%@ include file="/document_library/folder_columns_list.jspf" %>
+								</c:otherwise>
+							</c:choose>
+
 						</c:otherwise>
 					</c:choose>
 
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= dlSearchContainer %>" />
+				<liferay-ui:search-iterator displayStyle='<%= displayStyle.equals("descriptive") ? displayStyle : null %>' paginate="<%= false %>" searchContainer="<%= dlSearchContainer %>" view="lexicon" />
 			</liferay-ui:search-container>
 		</c:otherwise>
 	</c:choose>

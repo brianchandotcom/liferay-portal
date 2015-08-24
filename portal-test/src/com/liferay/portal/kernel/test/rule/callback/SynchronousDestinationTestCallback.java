@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.rule.callback.SynchronousDestinationTestCallback.SyncHandler;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
@@ -35,10 +36,13 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.dependency.ServiceDependencyManager;
 
+import java.lang.reflect.Method;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.junit.Test;
 import org.junit.runner.Description;
 
 /**
@@ -55,6 +59,34 @@ public class SynchronousDestinationTestCallback
 		Description description, SyncHandler syncHandler, Object target) {
 
 		syncHandler.restorePreviousSync();
+	}
+
+	@Override
+	public SyncHandler doBeforeClass(Description description) throws Throwable {
+		Class<?> testClass = description.getTestClass();
+
+		if (testClass.getAnnotation(Sync.class) == null) {
+			boolean hasSyncedMethod = false;
+
+			for (Method method : testClass.getMethods()) {
+				if ((method.getAnnotation(Test.class) != null) &&
+					(method.getAnnotation(Sync.class) != null)) {
+
+					hasSyncedMethod = true;
+
+					break;
+				}
+			}
+
+			if (!hasSyncedMethod) {
+				throw new AssertionError(
+					testClass + " uses " +
+						SynchronousDestinationTestRule.class +
+							" without any usage of " + Sync.class);
+			}
+		}
+
+		return super.doBeforeClass(description);
 	}
 
 	@Override

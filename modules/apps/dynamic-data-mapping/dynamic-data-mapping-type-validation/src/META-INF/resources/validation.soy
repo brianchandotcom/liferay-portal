@@ -1,0 +1,43 @@
+{namespace ddm}
+
+/**
+ * Prints the DDM form validation field.
+ *
+ * @param label
+ * @param name
+ * @param required
+ * @param value
+ * @param visible
+ */
+{template .validation}
+	<link href="/o/ddm-type-validation/validation.css" rel="stylesheet"></link>
+
+	<div class="form-group{$visible ? '' : ' hide'} lfr-ddm-form-field-validation" data-fieldname="{$name}">
+		<span class="control-label">
+			{$label}
+
+			{if $required}
+				<b>&nbsp;*</b>
+			{/if}
+		</span>
+
+		<div class="row">
+			<div class="col-md-6">
+				<select class="form-control types-select"></select>
+			</div>
+			<div class="col-md-6">
+				<select class="form-control validations-select"></select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<input class="field form-control parameter-input" placeholder="Contains this text" type="text" />
+			</div>
+			<div class="col-md-6">
+				<input class="field form-control message-input" placeholder="Validation message here" type="text" />
+			</div>
+		</div>
+
+		<input name="{$name}" type="hidden" value="{$value}" />
+	</div>
+{/template}

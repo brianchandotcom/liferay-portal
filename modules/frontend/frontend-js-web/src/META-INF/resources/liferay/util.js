@@ -1182,7 +1182,7 @@
 						dialog.set(
 							'visible',
 							false,
-							event.target.hasClass('lfr-hide-dialog') ? SRC_HIDE_LINK : null
+							event.currentTarget.hasClass('lfr-hide-dialog') ? SRC_HIDE_LINK : null
 						);
 
 						detachEventHandles();

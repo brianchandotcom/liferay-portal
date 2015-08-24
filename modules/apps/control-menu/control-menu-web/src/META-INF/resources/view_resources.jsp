@@ -26,7 +26,7 @@ boolean viewPreview = ParamUtil.getBoolean(request, "viewPreview");
 		<div id="<portlet:namespace />entries">
 
 			<%
-			String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_displaystyle", "descriptive"));
+			String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelDisplayStyle", "descriptive"));
 			String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleDefault);
 			String keywords = ParamUtil.getString(request, "keywords");
 

@@ -63,7 +63,7 @@ AUI.add(
 
 						instance._displayStyle = displayStyle;
 
-						Liferay.Store('liferay_addpanel_displaystyle', displayStyle);
+						Liferay.Store('com.liferay.control.menu.web_addPanelDisplayStyle', displayStyle);
 
 						instance._refreshContentList(event);
 					},

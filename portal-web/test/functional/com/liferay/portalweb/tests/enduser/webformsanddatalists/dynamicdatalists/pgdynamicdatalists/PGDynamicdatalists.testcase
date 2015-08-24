@@ -623,7 +623,7 @@
 		<execute macro="DDLRecord#publishCP" />
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="Dynamic Data Lists Display Page" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLList#selectViaDDLDisplayPG">
@@ -631,7 +631,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="Dynamic Data Lists Display Page" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -655,7 +655,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="Dynamic Data Lists Display Page" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -770,7 +770,7 @@
 		<execute macro="DDLRecord#publishCP" />
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="Dynamic Data Lists Display Page" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLList#selectViaDDLDisplayPG">
@@ -778,7 +778,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="Dynamic Data Lists Display Page" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -806,7 +806,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="Dynamic Data Lists Display Page" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLTemplate#viewWithNoPermissions" />

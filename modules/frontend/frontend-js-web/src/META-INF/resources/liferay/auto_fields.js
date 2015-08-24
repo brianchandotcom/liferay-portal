@@ -571,6 +571,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-data-set-deprecated', 'aui-io-request', 'aui-parse-content', 'base', 'liferay-portlet-base', 'liferay-undo-manager', 'sortable']
+		requires: ['aui-base', 'aui-data-set-deprecated', 'aui-io-request', 'aui-parse-content', 'base', 'liferay-form', 'liferay-portlet-base', 'liferay-undo-manager', 'sortable']
 	}
 );

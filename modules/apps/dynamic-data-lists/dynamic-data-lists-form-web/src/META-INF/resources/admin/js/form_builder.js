@@ -27,7 +27,7 @@ AUI.add(
 						valueFn: '_valueLayouts'
 					},
 
-					pages: {
+					pagesJSON: {
 						validator: Array.isArray,
 						value: []
 					},
@@ -179,7 +179,7 @@ AUI.add(
 
 						var deserializer = instance.get('deserializer');
 
-						var pages = instance._getPages();
+						var pages = instance.get('pages');
 
 						pages.set('descriptions', deserializer.get('descriptions'));
 						pages.set('titles', deserializer.get('titles'));
@@ -202,7 +202,7 @@ AUI.add(
 
 						var deserializer = instance.get('deserializer');
 
-						deserializer.set('pages', instance.get('pages'));
+						deserializer.set('pages', instance.get('pagesJSON'));
 
 						return deserializer.deserialize();
 					},

@@ -34,7 +34,7 @@
 		<dependency name="com.liferay.gradle.plugins.wsdl.builder" org="com.liferay" rev="1.0.1" />
 		<dependency name="com.liferay.gradle.plugins.xml.formatter" org="com.liferay" rev="1.0.1" />
 		<dependency name="com.liferay.gradle.plugins.xsd.builder" org="com.liferay" rev="1.0.0" />
-		<dependency name="com.liferay.gradle.util" org="com.liferay" rev="1.0.17" />
+		<dependency name="com.liferay.gradle.util" org="com.liferay" rev="1.0.18" />
 		<dependency name="gradle-bundle-plugin" org="org.dm.gradle" rev="0.6.2" />
 		<dependency name="gradle-extra-configurations-plugin" org="com.netflix.nebula" rev="2.2.2" />
 		<dependency name="slf4j-api" org="org.slf4j" rev="1.7.10" />

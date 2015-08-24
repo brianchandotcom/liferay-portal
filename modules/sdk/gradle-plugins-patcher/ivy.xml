@@ -17,7 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="com.liferay.gradle.util" org="com.liferay" rev="1.0.17" />
+		<dependency name="com.liferay.gradle.util" org="com.liferay" rev="1.0.18" />
 		<dependency conf="provided->default" name="ant" org="org.apache.ant" rev="1.9.4" />
 		<dependency conf="provided->default" name="groovy-all" org="org.codehaus.groovy" rev="2.3.10" />
 		<dependency conf="provided->default" name="org.gradle.gradle-base-services" org="com.liferay" rev="2.5" />

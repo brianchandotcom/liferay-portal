@@ -3,7 +3,7 @@
 
 <display>
 	<category name="category.collaboration">
-		<portlet id="1" />
-		<portlet id="2" />
+		<portlet id="com_liferay_microblogs_web_microblogs_portlet_MicroblogsPortlet" />
+		<portlet id="com_liferay_microblogs_web_microblogs_portlet_MicroblogsStatusUpdatePortlet" />
 	</category>
 </display>

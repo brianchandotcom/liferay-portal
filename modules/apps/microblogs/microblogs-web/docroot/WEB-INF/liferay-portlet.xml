@@ -3,7 +3,7 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>1</portlet-name>
+		<portlet-name>com_liferay_microblogs_web_microblogs_portlet_MicroblogsPortlet</portlet-name>
 		<icon>/html/microblogs/icon.png</icon>
 		<social-activity-interpreter-class>com.liferay.microblogs.web.microblogs.social.MicroblogsActivityInterpreter</social-activity-interpreter-class>
 		<user-notification-definitions>com/liferay/microblogs/web/microblogs/notifications/microblogs-user-notification-definitions.xml</user-notification-definitions>
@@ -15,7 +15,7 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
-		<portlet-name>2</portlet-name>
+		<portlet-name>com_liferay_microblogs_web_microblogs_portlet_MicroblogsStatusUpdatePortlet</portlet-name>
 		<icon>/html/microblogs/icon.png</icon>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<header-portlet-css>/html/microblogs/css/main.css</header-portlet-css>

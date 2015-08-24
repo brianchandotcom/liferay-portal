@@ -14,38 +14,34 @@
 
 package com.liferay.registry.internal.test;
 
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerCustomizers;
 import com.liferay.registry.collections.ServiceTrackerCustomizers.ServiceWithProperties;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.jboss.arquillian.junit.Arquillian;
+
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Carlos Sierra Andrés
  */
+@RunWith(Arquillian.class)
 public class ServiceTrackerCustomizersTest {
-
-	@ClassRule
-	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
-		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testServiceWithPropertiesCustomizer() {
 		ServiceTrackerMap<String, ServiceWithProperties<TrackedOne>>
 			serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
 				TrackedOne.class, "target",
-				ServiceTrackerCustomizerFactory.
-					<TrackedOne>serviceWithProperties());
+				ServiceTrackerCustomizers.<TrackedOne>serviceWithProperties());
 
 		serviceTrackerMap.open();
 

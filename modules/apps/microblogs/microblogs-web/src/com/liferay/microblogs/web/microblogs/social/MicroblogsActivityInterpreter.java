@@ -14,6 +14,7 @@
 
 package com.liferay.microblogs.web.microblogs.social;
 
+import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
 import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
@@ -26,10 +27,18 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.SocialActivityInterpreter;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jonathan Lee
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS},
+	service = SocialActivityInterpreter.class
+)
 public class MicroblogsActivityInterpreter
 	extends BaseSocialActivityInterpreter {
 

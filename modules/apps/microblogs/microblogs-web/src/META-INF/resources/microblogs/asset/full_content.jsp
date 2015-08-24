@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 MicroblogsEntry microblogsEntry = (MicroblogsEntry)request.getAttribute(WebKeys.MICROBLOGS_ENTRY);

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -117,7 +117,7 @@ if (comment) {
 
 <aui:form action="<%= updateMicroblogsEntryURL %>" cssClass="<%= formCssClass %>" name="<%= formName %>">
 	<portlet:renderURL var="commentsURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-		<portlet:param name="mvcPath" value="/html/microblogs/view_comments.jsp" />
+		<portlet:param name="mvcPath" value="/microblogs/view_comments.jsp" />
 		<portlet:param name="parentMicroblogsEntryId" value="<%= String.valueOf(microblogsEntryId) %>" />
 	</portlet:renderURL>
 

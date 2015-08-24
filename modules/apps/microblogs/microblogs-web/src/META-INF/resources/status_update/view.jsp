@@ -14,14 +14,14 @@
  */
 --%>
 
-<%@ include file="/html/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 Group group = themeDisplay.getScopeGroup();
 %>
 
 <c:if test="<%= MicroblogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) && (group.isUser() && !layout.isPublicLayout()) %>">
-	<liferay-util:include page="/html/microblogs/edit_microblogs_entry.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/microblogs/edit_microblogs_entry.jsp" servletContext="<%= application %>" />
 </c:if>
 
 <c:if test="<%= showStatus %>">
@@ -47,13 +47,13 @@ Group group = themeDisplay.getScopeGroup();
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/html/status_update/view.jsp");
+		portletURL.setParameter("mvcPath", "/status_update/view.jsp");
 		portletURL.setWindowState(WindowState.NORMAL);
 
 		request.setAttribute(WebKeys.MICROBLOGS_ENTRIES_URL, portletURL);
 		%>
 
-		<liferay-util:include page="/html/microblogs/view_microblogs_entries.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/microblogs/view_microblogs_entries.jsp" servletContext="<%= application %>" />
 	</div>
 </c:if>
 
@@ -62,7 +62,7 @@ Group group = themeDisplay.getScopeGroup();
 		function() {
 			Liferay.Microblogs.init(
 				{
-					microblogsEntriesURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/html/status_update/view.jsp" /></portlet:renderURL>'
+					microblogsEntriesURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/status_update/view.jsp" /></portlet:renderURL>'
 				}
 			);
 		}

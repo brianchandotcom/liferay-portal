@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 List<MicroblogsEntry> microblogsEntries = (List<MicroblogsEntry>)request.getAttribute(WebKeys.MICROBLOGS_ENTRIES);
@@ -106,7 +106,7 @@ if (microblogsEntries != null) {
 
 							<span class="action comment">
 								<portlet:renderURL var="commentsURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-									<portlet:param name="mvcPath" value="/html/microblogs/view_comments.jsp" />
+									<portlet:param name="mvcPath" value="/microblogs/view_comments.jsp" />
 									<portlet:param name="parentMicroblogsEntryId" value="<%= String.valueOf(microblogsEntry.getMicroblogsEntryId()) %>" />
 								</portlet:renderURL>
 
@@ -116,7 +116,7 @@ if (microblogsEntries != null) {
 
 						<c:if test="<%= themeDisplay.getUserId() != microblogsEntry.getUserId() && MicroblogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) && (microblogsEntry.getSocialRelationType() == MicroblogsEntryConstants.TYPE_EVERYONE) && (microblogsEntry.getType() != MicroblogsEntryConstants.TYPE_REPLY) %>">
 							<portlet:renderURL var="repostMicroblogsEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-								<portlet:param name="mvcPath" value="/html/microblogs/edit_microblogs_entry.jsp" />
+								<portlet:param name="mvcPath" value="/microblogs/edit_microblogs_entry.jsp" />
 								<portlet:param name="microblogsEntryId" value="<%= String.valueOf(microblogsEntry.getMicroblogsEntryId()) %>" />
 								<portlet:param name="repost" value="<%= Boolean.TRUE.toString() %>" />
 							</portlet:renderURL>
@@ -133,7 +133,7 @@ if (microblogsEntries != null) {
 						<c:if test="<%= (microblogsEntry.getType() != MicroblogsEntryConstants.TYPE_REPOST) && (microblogsEntry.getType() != MicroblogsEntryConstants.TYPE_REPLY) && (MicroblogsEntryPermission.contains(permissionChecker, microblogsEntry.getMicroblogsEntryId(), ActionKeys.UPDATE)) %>">
 							<span class="action edit">
 								<portlet:renderURL var="updateMicroblogsEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-									<portlet:param name="mvcPath" value="/html/microblogs/edit_microblogs_entry.jsp" />
+									<portlet:param name="mvcPath" value="/microblogs/edit_microblogs_entry.jsp" />
 									<portlet:param name="redirect" value="<%= microblogsEntriesURL.toString() %>" />
 									<portlet:param name="microblogsEntryId" value="<%= String.valueOf(microblogsEntry.getMicroblogsEntryId()) %>" />
 									<portlet:param name="edit" value="<%= Boolean.TRUE.toString() %>" />

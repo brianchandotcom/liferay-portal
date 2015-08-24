@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "timeline");
@@ -48,13 +48,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setWindowState(WindowState.NORMAL);
 
-portletURL.setParameter("mvcPath", "/html/microblogs/view.jsp");
+portletURL.setParameter("mvcPath", "/microblogs/view.jsp");
 portletURL.setParameter("tabs1", tabs1);
 %>
 
 <div class="microblogs-container">
 	<c:if test="<%= MicroblogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) && !userPublicPage %>">
-		<liferay-util:include page="/html/microblogs/edit_microblogs_entry.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/microblogs/edit_microblogs_entry.jsp" servletContext="<%= application %>" />
 	</c:if>
 
 	<liferay-ui:tabs
@@ -152,7 +152,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 	microblogsEntriesURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
-	microblogsEntriesURL.setParameter("mvcPath", "/html/microblogs/view.jsp");
+	microblogsEntriesURL.setParameter("mvcPath", "/microblogs/view.jsp");
 	microblogsEntriesURL.setParameter("tabs1", tabs1);
 	microblogsEntriesURL.setParameter("cur", String.valueOf(cur));
 
@@ -160,7 +160,7 @@ portletURL.setParameter("tabs1", tabs1);
 	request.setAttribute(WebKeys.MICROBLOGS_ENTRIES_URL, microblogsEntriesURL);
 	%>
 
-	<liferay-util:include page="/html/microblogs/view_microblogs_entries.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/microblogs/view_microblogs_entries.jsp" servletContext="<%= application %>" />
 
 	<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="article" />
 </div>
@@ -171,7 +171,7 @@ portletURL.setParameter("tabs1", tabs1);
 			Liferay.Microblogs.init(
 				{
 					baseActionURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.ACTION_PHASE) %>',
-					microblogsEntriesURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/html/microblogs/view.jsp" /><portlet:param name="tabs1" value="timeline" /></portlet:renderURL>'
+					microblogsEntriesURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/microblogs/view.jsp" /><portlet:param name="tabs1" value="timeline" /></portlet:renderURL>'
 				}
 			);
 
@@ -182,7 +182,7 @@ portletURL.setParameter("tabs1", tabs1);
 	var microblogsContainer = A.one('#p_p_id<portlet:namespace /> .microblogs-container');
 
 	var showComments = function(microblogsEntryId) {
-		var uri = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/html/microblogs/view_comments.jsp" /></portlet:renderURL>';
+		var uri = '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/microblogs/view_comments.jsp" /></portlet:renderURL>';
 
 		uri = Liferay.Util.addParams('<portlet:namespace />parentMicroblogsEntryId=' + microblogsEntryId, uri) || uri;
 

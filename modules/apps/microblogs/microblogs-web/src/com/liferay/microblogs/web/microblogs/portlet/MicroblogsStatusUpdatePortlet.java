@@ -14,8 +14,36 @@
 
 package com.liferay.microblogs.web.microblogs.portlet;
 
+import com.liferay.microblogs.constants.MicroblogsPortletKeys;
+
+import javax.portlet.Portlet;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.css-class-wrapper=microblogs-portlet",
+		"com.liferay.portlet.display-category=category.collaboration",
+		"com.liferay.portlet.footer-portlet-javascript=/microblogs/js/main.js",
+		"com.liferay.portlet.header-portlet-css=/microblogs/css/main.css",
+		"com.liferay.portlet.icon=/microblogs/icon.png",
+		"javax.portlet.display-name=Microblogs Status Update",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.config-jsp=/status_update/configuration.jsp",
+		"javax.portlet.init-param.view-template=/status_update/view.jsp",
+		"javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS_STATUS_UPDATE,
+		"javax.portlet.portlet-info.keyworkds=Microblogs Status Update",
+		"javax.portlet.portlet-info.short-title=Microblogs Status Update",
+		"javax.portlet.portlet-info.title=Microblogs Status Update",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class MicroblogsStatusUpdatePortlet extends BaseMicroblogsPortlet {
 }

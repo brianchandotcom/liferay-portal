@@ -14,8 +14,36 @@
 
 package com.liferay.microblogs.web.microblogs.portlet;
 
+import com.liferay.microblogs.constants.MicroblogsPortletKeys;
+
+import javax.portlet.Portlet;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.css-class-wrapper=microblogs-portlet",
+		"com.liferay.portlet.display-category=category.collaboration",
+		"com.liferay.portlet.footer-portlet-javascript=/microblogs/js/main.js",
+		"com.liferay.portlet.header-portlet-css=/microblogs/css/main.css",
+		"com.liferay.portlet.icon=/microblogs/icon.png",
+		"javax.portlet.display-name=Microblogs",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.view-template=/microblogs/view.jsp",
+		"javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS,
+		"javax.portlet.portlet-info.keyworkds=Microblogs",
+		"javax.portlet.portlet-info.short-title=Microblogs",
+		"javax.portlet.portlet-info.title=Microblogs",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class MicroblogsPortlet extends BaseMicroblogsPortlet {
 }

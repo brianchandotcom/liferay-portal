@@ -64,7 +64,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	public LocalizedValue tip();
 
 	@DDMFormField(
-		label = "%validation-expression", type = "validation",
+		label = "%validation", type = "validation",
 		visibilityExpression = "true"
 	)
 	public String validationExpression();
@@ -72,8 +72,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	@DDMFormField(label = "%validation-message", visibilityExpression = "true")
 	public String validationMessage();
 
-	@DDMFormField(
-		label = "%visibility-expression", visibilityExpression = "true"
-	)
+	@DDMFormField(label = "%visibility", visibilityExpression = "true")
 	public String visibilityExpression();
+
 }

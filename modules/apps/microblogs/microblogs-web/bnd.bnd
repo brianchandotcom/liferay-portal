@@ -37,6 +37,3 @@ Include-Resource: \
 	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/portlet/PortletProps.class
 Web-ContextPath: /microblogs-web
-
--donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
--wab: docroot

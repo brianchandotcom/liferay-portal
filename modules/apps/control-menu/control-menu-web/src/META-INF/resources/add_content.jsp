@@ -21,7 +21,7 @@ int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "liferay_add
 
 int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
 
-String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_displaystyle", "descriptive"));
+String displayStyleDefault = GetterUtil.getString(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelDisplayStyle", "descriptive"));
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", displayStyleDefault);
 %>

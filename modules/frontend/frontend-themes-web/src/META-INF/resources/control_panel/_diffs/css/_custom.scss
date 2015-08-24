@@ -1,8 +1,7 @@
 @import "bourbon";
 @import "mixins";
 
-@import url(../../classic/css/custom_common.css);
-@import url(custom_responsive.css);
+@import "custom_responsive";
 
 $dockbarGradientEnd: #1273C7;
 $dockbarGradientStart: #118ADE;

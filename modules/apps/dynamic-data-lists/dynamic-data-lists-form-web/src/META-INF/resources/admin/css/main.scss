@@ -76,6 +76,11 @@
 			margin: 0 auto;
 			width: auto;
 
+			.tab-pane {
+				min-height: auto;
+				padding-bottom: 0;
+			}
+
 			.form-builder-pages-header {
 				margin-bottom: 0;
 				width: auto;
@@ -134,11 +139,7 @@
 
 	.modal-body {
 		max-height: 500px;
-		overflow: hidden;
-
-		&:hover {
-			overflow-y: auto;
-		}
+		overflow-y: auto;
 	}
 
 	.lfr-ddm-form-field-container .lfr-form-row {

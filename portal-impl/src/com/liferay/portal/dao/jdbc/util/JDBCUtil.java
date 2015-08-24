@@ -37,13 +37,16 @@ public class JDBCUtil {
 
 		connection.setAutoCommit(false);
 
-		PGConnection pgConnection = connection.unwrap(org.postgresql.PGConnection.class);
+		PGConnection pgConnection = connection.unwrap(
+			org.postgresql.PGConnection.class);
 
-		LargeObjectManager largeObjectManager = pgConnection.getLargeObjectAPI();
+		LargeObjectManager largeObjectManager =
+			pgConnection.getLargeObjectAPI();
 
 		long oid = resultSet.getLong(name);
 
-		LargeObject largeObject = largeObjectManager.open(oid, LargeObjectManager.READ);
+		LargeObject largeObject = largeObjectManager.open(
+			oid, LargeObjectManager.READ);
 
 		byte buffer[] = new byte[largeObject.size()];
 
@@ -80,14 +83,17 @@ public class JDBCUtil {
 
 		connection.setAutoCommit(false);
 
-		PGConnection pgConnection = connection.unwrap(org.postgresql.PGConnection.class);
+		PGConnection pgConnection = connection.unwrap(
+			org.postgresql.PGConnection.class);
 
-		LargeObjectManager largeObjectManager = pgConnection.getLargeObjectAPI();
+		LargeObjectManager largeObjectManager =
+			pgConnection.getLargeObjectAPI();
 
 		long oid = largeObjectManager.createLO(
 			LargeObjectManager.READ | LargeObjectManager.WRITE);
 
-		LargeObject largeObject = largeObjectManager.open(oid, LargeObjectManager.WRITE);
+		LargeObject largeObject = largeObjectManager.open(
+			oid, LargeObjectManager.WRITE);
 
 		largeObject.write(value);
 

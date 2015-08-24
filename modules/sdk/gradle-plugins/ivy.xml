@@ -21,8 +21,8 @@
 		<dependency name="com.liferay.gradle.plugins.css.builder" org="com.liferay" rev="1.0.6" />
 		<dependency name="com.liferay.gradle.plugins.jasper.jspc" org="com.liferay" rev="1.0.1" />
 		<dependency name="com.liferay.gradle.plugins.javadoc.formatter" org="com.liferay" rev="1.0.2" />
-		<dependency name="com.liferay.gradle.plugins.js.module.config.generator" org="com.liferay" rev="1.0.3" />
-		<dependency name="com.liferay.gradle.plugins.js.transpiler" org="com.liferay" rev="1.0.5" />
+		<dependency name="com.liferay.gradle.plugins.js.module.config.generator" org="com.liferay" rev="1.0.4" />
+		<dependency name="com.liferay.gradle.plugins.js.transpiler" org="com.liferay" rev="1.0.6" />
 		<dependency name="com.liferay.gradle.plugins.lang.builder" org="com.liferay" rev="1.0.0" />
 		<dependency name="com.liferay.gradle.plugins.patcher" org="com.liferay" rev="1.0.4" />
 		<dependency name="com.liferay.gradle.plugins.service.builder" org="com.liferay" rev="1.0.5" />

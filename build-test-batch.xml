@@ -8,10 +8,10 @@
 	</condition>
 
 	<property name="default.test.results.axis.dir" value="${default.test.results.dir}/test-suite" />
-	<property name="default.test.results.axis.file.name" value="TESTS-${test.batch.name}_${axis.variable}.xml" />
+	<property name="default.test.results.axis.file.name" value="TESTS-${test.batch.name}_${axis.variable}_axis.xml" />
 	<property name="default.test.results.dir" value="${project.dir}/test-results" />
 	<property name="default.test.results.suite.dir" value="${default.test.results.dir}/test-suite" />
-	<property name="default.test.results.suite.file.name" value="TESTS-${test.batch.name}_${axis.variable}_results.xml" />
+	<property name="default.test.results.suite.file.name" value="TESTS-${test.batch.name}_${axis.variable}_suite.xml" />
 
 	<macrodef name="build-testray-result">
 		<attribute name="test.results.file" />
@@ -243,7 +243,7 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="copy-test-results">
+	<macrodef name="copy-testray-results">
 		<attribute name="test.results.dest.dir" default="${default.test.results.dir}" />
 		<attribute name="test.results.fileset" default="**/TEST-*.xml" />
 
@@ -575,11 +575,11 @@
 		<attribute name="test.results.suite.file.name" default="${default.test.results.suite.file.name}" />
 
 		<sequential>
-			<copy-test-results />
-
 			<set-testray-required-properties />
 
 			<generate-testray-axis-result job.failure.message="@{job.failure.message}" />
+
+			<copy-testray-results />
 
 			<if>
 				<resourcecount when="greater" count="0">
@@ -589,17 +589,6 @@
 					<build-testray-results />
 
 					<merge-testray-results />
-				</then>
-			</if>
-
-			<if>
-				<isset property="env.WORKSPACE" />
-				<then>
-					<mkdir dir="${env.WORKSPACE}/test-results" />
-
-					<copy todir="${env.WORKSPACE}/test-results/test-suite" verbose="true">
-						<fileset dir="${test.results.suite.dir}" erroronmissingdir="false" includes="TESTS-*.xml" />
-					</copy>
 				</then>
 			</if>
 		</sequential>
@@ -634,11 +623,11 @@
 				<finally>
 					<property name="job.failure.message" value="" />
 
-					<prepare-testray-results job.failure.message="${job.failure.message}" />
-
 					<if>
 						<isset property="testray.results.dir" />
 						<then>
+							<prepare-testray-results job.failure.message="${job.failure.message}" />
+
 							<send-testray-results testray.results.dir="${testray.results.dir}" />
 						</then>
 					</if>

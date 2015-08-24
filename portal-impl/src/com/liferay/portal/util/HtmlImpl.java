@@ -59,6 +59,16 @@ public class HtmlImpl implements Html {
 
 	public static final int ESCAPE_MODE_URL = 5;
 
+	/**
+	 * Generates a String with the data-* attributes generated from the keys
+	 * and values of a map. e.g. if the map contains this:
+	 * {key1=value1;key2=value2} then the returned String will be
+	 * "data-key1=value1 data-key2=value2"
+	 *
+	 * @param  data the map of values to convert to data-* attributes
+	 * @return a String with the data attributes, or <code>null</code> if the
+	 * map is <code>null</code>
+	 */
 	@Override
 	public String buildData(Map<String, Object> data) {
 		if ((data == null) || data.isEmpty()) {

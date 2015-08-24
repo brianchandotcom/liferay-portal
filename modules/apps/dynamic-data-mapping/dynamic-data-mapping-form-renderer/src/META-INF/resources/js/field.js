@@ -79,14 +79,17 @@ AUI.add(
 
 					value: {
 						valueFn: '_getDefaultValue'
-					},
-
-					visibilityExpression: {
-						value: 'true'
 					}
 				},
 
-				AUGMENTS: [Renderer.FieldEventsSupport, Renderer.FieldRepetitionSupport, Renderer.FieldValidationSupport, Renderer.NestedFieldsSupport],
+				AUGMENTS: [
+					Renderer.FieldEventsSupport,
+					Renderer.FieldFeedbackSupport,
+					Renderer.FieldRepetitionSupport,
+					Renderer.FieldValidationSupport,
+					Renderer.FieldVisibilitySupport,
+					Renderer.NestedFieldsSupport
+				],
 
 				EXTENDS: A.Base,
 
@@ -237,7 +240,7 @@ AUI.add(
 								label: instance.getLabel(),
 								name: instance.getQualifiedName(),
 								value: value || '',
-								visible: A.DataType.Boolean.parse(context.visibilityExpression)
+								visible: instance.get('visible')
 							}
 						);
 					},
@@ -423,6 +426,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-datatype', 'aui-node', 'liferay-ddm-form-renderer', 'liferay-ddm-form-renderer-field-events', 'liferay-ddm-form-renderer-field-repetition', 'liferay-ddm-form-renderer-types', 'liferay-ddm-form-renderer-field-validation', 'liferay-ddm-form-renderer-nested-fields', 'liferay-ddm-form-renderer-util']
+		requires: ['aui-datatype', 'aui-node', 'liferay-ddm-form-renderer', 'liferay-ddm-form-renderer-field-events', 'liferay-ddm-form-renderer-field-feedback', 'liferay-ddm-form-renderer-field-repetition', 'liferay-ddm-form-renderer-field-validation', 'liferay-ddm-form-renderer-field-visibility', 'liferay-ddm-form-renderer-nested-fields', 'liferay-ddm-form-renderer-types', 'liferay-ddm-form-renderer-util']
 	}
 );

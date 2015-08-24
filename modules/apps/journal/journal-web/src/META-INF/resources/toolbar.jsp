@@ -70,13 +70,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 					<aui:nav-item dropdown="<%= true %>" label="manage">
 
 						<%
-						String taglibURL = "javascript:" + renderResponse.getNamespace() + "openStructuresView()";
-						%>
-
-						<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-th-large" label="structures" />
-
-						<%
-						taglibURL = "javascript:" + renderResponse.getNamespace() + "openTemplatesView()";
+						String taglibURL = "javascript:" + renderResponse.getNamespace() + "openTemplatesView()";
 						%>
 
 						<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-list-alt" label="templates" />
@@ -125,30 +119,6 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				}
 			);
 		}
-	}
-
-	function <portlet:namespace />openStructuresView() {
-		Liferay.Util.openDDMPortlet(
-			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
-				dialog: {
-					destroyOnHide: true,
-					on: {
-						visibleChange: function(event) {
-							if (!event.newVal) {
-								Liferay.Portlet.refresh('#p_p_id_' + '<%= portletDisplay.getId() %>' + '_');
-							}
-						}
-					}
-				},
-				groupId: <%= scopeGroupId %>,
-				refererPortletName: '<%= JournalPortletKeys.JOURNAL %>',
-				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
-				showAncestorScopes: true,
-				showManageTemplates: true,
-				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
-			}
-		);
 	}
 
 	function <portlet:namespace />openTemplatesView() {

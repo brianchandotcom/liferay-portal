@@ -141,7 +141,8 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 		TemplateVariableGroup templateVariableGroup = new TemplateVariableGroup(
 			"navigation-util");
 
-		templateVariableGroup.addVariable("navigation-item", NavItem.class, "navItem");
+		templateVariableGroup.addVariable(
+			"navigation-item", NavItem.class, "navItem");
 
 		return templateVariableGroup;
 	}

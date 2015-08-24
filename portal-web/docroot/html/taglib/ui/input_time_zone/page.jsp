@@ -79,16 +79,7 @@ numberFormat.setMinimumIntegerDigits(2);
 		String extraDisplayText = StringPool.BLANK;
 
 		if (curTimeZoneId.contains("Phoenix")) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(LanguageUtil.get(request, "phoenix"));
-			sb.append(StringPool.FORWARD_SLASH);
-			sb.append(LanguageUtil.get(request, "sonora"));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			extraDisplayText = sb.toString();
+			extraDisplayText = LanguageUtil.format(request, "x-over-x", new Object[] {LanguageUtil.get(request, "phoenix"), LanguageUtil.get(request, "sonora")});
 		}
 	%>
 

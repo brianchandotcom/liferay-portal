@@ -77,18 +77,16 @@ public class EhcacheConfigurationHelperUtil {
 
 		boolean clusterEnabled = GetterUtil.getBoolean(
 			props.get(PropsKeys.CLUSTER_LINK_ENABLED));
-		boolean clusterLinkReplicationEnabled = GetterUtil.getBoolean(
-			props.get(PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED));
 
 		_handlePeerFactoryConfigurations(
 			ehcacheConfiguration.
 				getCacheManagerPeerProviderFactoryConfiguration(),
-			clusterAware, clusterEnabled, clusterLinkReplicationEnabled, props);
+			clusterAware, clusterEnabled, props);
 
 		_handlePeerFactoryConfigurations(
 			ehcacheConfiguration.
 				getCacheManagerPeerListenerFactoryConfigurations(),
-			clusterAware, clusterEnabled, clusterLinkReplicationEnabled, props);
+			clusterAware, clusterEnabled, props);
 
 		Set<Properties> cacheManagerListenerPropertiesSet =
 			_getCacheManagerListenerPropertiesSet(ehcacheConfiguration, props);
@@ -96,8 +94,7 @@ public class EhcacheConfigurationHelperUtil {
 		PortalCacheConfiguration defaultPortalCacheConfiguration =
 			_parseCacheConfiguration(
 				ehcacheConfiguration.getDefaultCacheConfiguration(),
-				clusterAware, usingDefault, clusterEnabled,
-				clusterLinkReplicationEnabled, props);
+				clusterAware, usingDefault, clusterEnabled, props);
 
 		Set<PortalCacheConfiguration> portalCacheConfigurations =
 			new HashSet<>();
@@ -111,7 +108,7 @@ public class EhcacheConfigurationHelperUtil {
 			portalCacheConfigurations.add(
 				_parseCacheConfiguration(
 					entry.getValue(), clusterAware, usingDefault,
-					clusterEnabled, clusterLinkReplicationEnabled, props));
+					clusterEnabled, props));
 		}
 
 		PortalCacheManagerConfiguration portalCacheManagerConfiguration =
@@ -175,14 +172,13 @@ public class EhcacheConfigurationHelperUtil {
 	@SuppressWarnings("rawtypes")
 	private static void _handlePeerFactoryConfigurations(
 		List<FactoryConfiguration> factoryConfigurations, boolean clusterAware,
-		boolean clusterEnabled, boolean clusterLinkReplicationEnabled,
-		Props props) {
+		boolean clusterEnabled, Props props) {
 
 		if (factoryConfigurations.isEmpty()) {
 			return;
 		}
 
-		if (!clusterAware || !clusterEnabled || clusterLinkReplicationEnabled) {
+		if (!clusterAware || !clusterEnabled) {
 			factoryConfigurations.clear();
 
 			return;
@@ -209,9 +205,6 @@ public class EhcacheConfigurationHelperUtil {
 			}
 
 			properties.put(PropsKeys.CLUSTER_LINK_ENABLED, clusterEnabled);
-			properties.put(
-				PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED,
-				clusterLinkReplicationEnabled);
 
 			factoryConfiguration.setProperties(
 				_getPropertiesString(
@@ -252,8 +245,7 @@ public class EhcacheConfigurationHelperUtil {
 
 	private static PortalCacheConfiguration _parseCacheConfiguration(
 		CacheConfiguration cacheConfiguration, boolean clusterAware,
-		boolean usingDefault, boolean clusterEnabled,
-		boolean clusterLinkReplicationEnabled, Props props) {
+		boolean usingDefault, boolean clusterEnabled, Props props) {
 
 		if (cacheConfiguration == null) {
 			return null;
@@ -294,13 +286,10 @@ public class EhcacheConfigurationHelperUtil {
 						PropsKeys.EHCACHE_CACHE_EVENT_LISTENER_FACTORY))) {
 
 				if (clusterAware && clusterEnabled) {
-					if (!clusterLinkReplicationEnabled) {
-						properties.put(
-							EhcacheConstants.
-								CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME,
-							factoryClassName);
-					}
-
+					properties.put(
+						EhcacheConstants.
+							CACHE_EVENT_LISTENER_FACTORY_CLASS_NAME,
+						factoryClassName);
 					properties.put(
 						PortalCacheConfiguration.PORTAL_CACHE_LISTENER_SCOPE,
 						portalCacheListenerScope);
@@ -337,14 +326,12 @@ public class EhcacheConfigurationHelperUtil {
 					getPropertySeparator(), props);
 
 			if (clusterAware && clusterEnabled) {
-				if (!clusterLinkReplicationEnabled) {
-					portalCacheBootstrapLoaderProperties.put(
-						EhcacheConstants.
-							BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME,
-						_parseFactoryClassName(
-							bootstrapCacheLoaderFactoryConfiguration.
-								getFullyQualifiedClassPath(), props));
-				}
+				portalCacheBootstrapLoaderProperties.put(
+					EhcacheConstants.
+						BOOTSTRAP_CACHE_LOADER_FACTORY_CLASS_NAME,
+					_parseFactoryClassName(
+						bootstrapCacheLoaderFactoryConfiguration.
+							getFullyQualifiedClassPath(), props));
 			}
 
 			cacheConfiguration.addBootstrapCacheLoaderFactory(null);

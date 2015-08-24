@@ -6,10 +6,10 @@ AUI.add(
 
 		var Util = Renderer.Util;
 
-		var DefinitionSupport = function() {
+		var FormDefinitionSupport = function() {
 		};
 
-		DefinitionSupport.ATTRS = {
+		FormDefinitionSupport.ATTRS = {
 			definition: {
 				value: {}
 			},
@@ -23,12 +23,14 @@ AUI.add(
 			}
 		};
 
-		DefinitionSupport.prototype = {
+		FormDefinitionSupport.prototype = {
 			initializer: function() {
 				var instance = this;
 
-				instance.after('definitionChange', instance._afterDefinitionChange);
-				instance.after('valuesChange', instance._afterValuesChange);
+				instance._eventHandlers.push(
+					instance.after('definitionChange', instance._afterDefinitionChange),
+					instance.after('valuesChange', instance._afterValuesChange)
+				);
 			},
 
 			_afterDefinitionChange: function(event) {
@@ -114,7 +116,7 @@ AUI.add(
 			}
 		};
 
-		Liferay.namespace('DDM.Renderer').DefinitionSupport = DefinitionSupport;
+		Liferay.namespace('DDM.Renderer').FormDefinitionSupport = FormDefinitionSupport;
 	},
 	'',
 	{

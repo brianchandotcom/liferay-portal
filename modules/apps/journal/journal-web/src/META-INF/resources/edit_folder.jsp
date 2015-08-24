@@ -173,7 +173,7 @@ if (workflowEnabled) {
 			}
 			%>
 
-			<aui:field-wrapper helpMessage='<%= rootFolder ? "" : "structure-restrictions-help" %>' label='<%= rootFolder ? "" : (workflowEnabled ? "structure-restrictions-and-workflow" : "structure-restrictions") %>'>
+			<aui:fieldset helpMessage='<%= rootFolder ? "" : "structure-restrictions-help" %>' label='<%= rootFolder ? "" : (workflowEnabled ? "structure-restrictions-and-workflow" : "structure-restrictions") %>'>
 				<c:if test="<%= !rootFolder %>">
 
 					<%
@@ -300,7 +300,7 @@ if (workflowEnabled) {
 						</aui:select>
 					</div>
 				</c:if>
-			</aui:field-wrapper>
+			</aui:fieldset>
 		</c:if>
 
 		<c:if test="<%= !rootFolder && (folder == null) %>">

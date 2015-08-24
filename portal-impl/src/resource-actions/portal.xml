@@ -330,7 +330,7 @@
 	<model-resource organization="true" portal="true">
 		<model-name>com.liferay.portal.model.Organization</model-name>
 		<portlet-ref>
-			<portlet-name>125</portlet-name>
+			<portlet-name>com_liferay_users_admin_web_portlet_UsersAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -421,7 +421,7 @@
 	<model-resource organization="true" portal="true">
 		<model-name>com.liferay.portal.model.User</model-name>
 		<portlet-ref>
-			<portlet-name>125</portlet-name>
+			<portlet-name>com_liferay_users_admin_web_portlet_UsersAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>1</weight>
 		<permissions>

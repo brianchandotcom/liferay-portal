@@ -76,8 +76,6 @@ public class PoshiRunnerVariablesUtil {
 		while (matcher.find() && _commandMap.containsKey(matcher.group(1))) {
 			String varValue = getValueFromCommandMap(matcher.group(1));
 
-			varValue = Matcher.quoteReplacement(varValue);
-
 			token = StringUtil.replace(token, matcher.group(), varValue);
 		}
 
@@ -89,8 +87,6 @@ public class PoshiRunnerVariablesUtil {
 
 		while (matcher.find() && _executeMap.containsKey(matcher.group(1))) {
 			String varValue = getValueFromExecuteMap(matcher.group(1));
-
-			varValue = Matcher.quoteReplacement(varValue);
 
 			token = StringUtil.replace(token, matcher.group(), varValue);
 		}

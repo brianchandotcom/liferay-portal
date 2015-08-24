@@ -480,9 +480,9 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="AssertClick" locator1="DockbarTEMP#MY_SITES" value1="My Sites" />
-		<execute function="AssertTextNotPresent" locator1="DockbarTEMP#MY_SITES_SITE_NAME" value1="Organization Name 1" />
-		<execute function="AssertTextNotPresent" locator1="DockbarTEMP#MY_SITES_SITE_NAME" value1="Organization Name 2" />
+		<execute function="AssertClick" locator1="ControlMenu#MY_SITES" value1="My Sites" />
+		<execute function="AssertTextNotPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Organization Name 1" />
+		<execute function="AssertTextNotPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Organization Name 2" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -495,13 +495,13 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute function="AssertClick" locator1="DockbarTEMP#MY_SITES" value1="My Sites" />
-		<execute function="AssertTextNotPresent" locator1="DockbarTEMP#MY_SITES_SITE_NAME" value1="Organization Name 1" />
-		<execute function="AssertTextPresent" locator1="DockbarTEMP#MY_SITES_SITE_NAME" value1="Organization Name 2" />
+		<execute function="AssertClick" locator1="ControlMenu#MY_SITES" value1="My Sites" />
+		<execute function="AssertTextNotPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Organization Name 1" />
+		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Organization Name 2" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertClick" locator1="DockbarTEMP#MY_SITES_PUBLIC_SITE" value1="${siteName}" />
+		<execute function="AssertClick" locator1="ControlMenu#MY_SITES_PUBLIC_SITE" value1="${siteName}" />
 
 		<execute function="Click" locator1="Home#PAGE_NAVIGATION_BAR" />
 		<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE_1" value1="Home" />
@@ -768,16 +768,16 @@
 			<var name="siteName" value="Site Name I" />
 		</execute>
 
-		<execute function="AssertClick" locator1="DockbarTEMP#MY_SITES" value1="My Sites" />
-		<execute function="AssertTextPresent" locator1="DockbarTEMP#MY_SITES_SITE_NAME" value1="Site Name A" />
-		<execute function="AssertTextPresent" locator1="DockbarTEMP#MY_SITES_SITE_NAME" value1="Site Name B" />
-		<execute function="AssertTextPresent" locator1="DockbarTEMP#MY_SITES_SITE_NAME" value1="Site Name C" />
-		<execute function="AssertTextPresent" locator1="DockbarTEMP#MY_SITES_SITE_NAME" value1="Site Name D" />
-		<execute function="AssertTextPresent" locator1="DockbarTEMP#MY_SITES_SITE_NAME" value1="Site Name E" />
-		<execute function="AssertTextPresent" locator1="DockbarTEMP#MY_SITES_SITE_NAME" value1="Site Name F" />
-		<execute function="AssertTextPresent" locator1="DockbarTEMP#MY_SITES_SITE_NAME" value1="Site Name G" />
-		<execute function="AssertTextPresent" locator1="DockbarTEMP#MY_SITES_SITE_NAME" value1="Site Name H" />
-		<execute function="AssertTextPresent" locator1="DockbarTEMP#MY_SITES_SITE_NAME" value1="Site Name I" />
+		<execute function="AssertClick" locator1="ControlMenu#MY_SITES" value1="My Sites" />
+		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name A" />
+		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name B" />
+		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name C" />
+		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name D" />
+		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name E" />
+		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name F" />
+		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name G" />
+		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name H" />
+		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name I" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
@@ -799,8 +799,8 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute function="AssertClick" locator1="DockbarTEMP#MY_SITES" value1="My Sites" />
-		<execute function="AssertTextPresent" locator1="DockbarTEMP#MY_SITES_SITE_NAME" value1="Site Name I" />
+		<execute function="AssertClick" locator1="ControlMenu#MY_SITES" value1="My Sites" />
+		<execute function="AssertTextPresent" locator1="ControlMenu#MY_SITES_SITE_NAME" value1="Site Name I" />
 	</command>
 
 	<command name="OrganizationSiteDefaultUserAssociations" priority="3">

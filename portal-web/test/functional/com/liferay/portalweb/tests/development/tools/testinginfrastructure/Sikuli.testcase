@@ -9,7 +9,7 @@
 		<execute function="Check" locator1="Checkbox#REMEMBER_ME" />
 		<execute function="SikuliClick" locator1="Button#SIGN_IN_PNG" />
 
-		<execute function="AssertElementPresent" locator1="DockbarTEMP#USER_AVATAR_IMAGE" />
+		<execute function="AssertElementPresent" locator1="ControlMenu#USER_AVATAR_IMAGE" />
 
 		<if>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="Button#I_AGREE" value1="I Agree" />

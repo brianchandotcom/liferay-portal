@@ -524,8 +524,8 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
-		<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_SITE_ADMINISTRATION_CONTENT" value1="Content" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="ControlMenu#ADMIN" value1="Admin" />
+		<execute function="AssertClick" locator1="ControlMenu#ADMIN_SITE_ADMINISTRATION_CONTENT" value1="Content" />
 
 		<execute macro="KaleoFormsAdmin#addProcess" />
 

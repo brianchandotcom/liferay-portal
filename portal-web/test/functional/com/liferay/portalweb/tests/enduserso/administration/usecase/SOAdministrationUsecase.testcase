@@ -104,11 +104,11 @@
 
 		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" />
 
-		<execute function="AssertElementPresent" locator1="DockbarEditPanel#DETAILS_PANEL_TOGGLE" />
+		<execute function="AssertElementPresent" locator1="ControlMenuEditPanel#DETAILS_PANEL_TOGGLE" />
 
 		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#PREVIEW" />
 
-		<execute function="AssertElementPresent" locator1="DockbarPreviewPanel#PREVIEW_AUTOSIZE" />
+		<execute function="AssertElementPresent" locator1="ControlMenuPreviewPanel#PREVIEW_AUTOSIZE" />
 
 		<var name="key_pageTitle" value="${pageTemplateName} Edit - Liferay" />
 

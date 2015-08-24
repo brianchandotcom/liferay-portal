@@ -108,7 +108,7 @@
 
 		<execute function="AssertClick#assertTextClickAtAddApplication" locator1="DockbarAddpanelapplications#APPLICATIONS_TAB" value1="Applications" />
 		<execute function="Type#sendKeysApplicationSearch" locator1="NavBar#APPLICATION_SEARCH_FIELD" value1="${portletName}" />
-		<execute function="AssertClick#pauseMakeVisibleAssertTextEqualsClickAt" locator1="DockbarAddPanel#ADD_PORTLET_LINK" value1="Add" />
+		<execute function="AssertClick#pauseMakeVisibleAssertTextEqualsClickAt" locator1="ControlMenuAddPanel#ADD_PORTLET_LINK" value1="Add" />
 
 		<execute function="Pause" locator1="5000" />
 

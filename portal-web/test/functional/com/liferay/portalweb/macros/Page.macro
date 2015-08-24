@@ -172,7 +172,7 @@
 	<command name="assertLocalizedPG">
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGSignin#PORTLET_CONTENT_LOCALIZED" value1="${localizedContent}" />
 
-		<execute function="AssertTextEquals" locator1="DockbarTEMP#ADMIN" value1="${localizedAdmin}" />
+		<execute function="AssertTextEquals" locator1="ControlMenu#ADMIN" value1="${localizedAdmin}" />
 	</command>
 
 	<command name="assertNodePortPG">
@@ -222,7 +222,7 @@
 
 	<command name="deleteLivePG">
 		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" />
-		<execute function="ClickNoError" locator1="DockbarTEMP#EDIT_LIVE_DELETE" />
+		<execute function="ClickNoError" locator1="ControlMenu#EDIT_LIVE_DELETE" />
 
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete the selected page?" />
 	</command>
@@ -242,7 +242,7 @@
 		<if>
 			<condition function="IsElementNotPresent#isNotVisible" locator1="TextInput#NAME" />
 			<then>
-				<execute function="AssertClick" locator1="DockbarEditPanel#DETAILS_PANEL_TOGGLE" value1="Details" />
+				<execute function="AssertClick" locator1="ControlMenuEditPanel#DETAILS_PANEL_TOGGLE" value1="Details" />
 			</then>
 		</if>
 
@@ -253,7 +253,7 @@
 	</command>
 
 	<command name="gotoAdmin">
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="ControlMenu#ADMIN" value1="Admin" />
 
 		<execute function="AssertClick" locator1="Dockbar#${portletCategoryKey}" value1="${portletCategoryName}" />
 
@@ -377,7 +377,7 @@
 
 		<var name="key_localizedPortletCategoryName" value="${localizedPortletCategoryName}" />
 
-		<execute function="Click" locator1="DockbarTEMP#ADMIN_LOCALIZED" value1="${localizedAdmin}" />
+		<execute function="Click" locator1="ControlMenu#ADMIN_LOCALIZED" value1="${localizedAdmin}" />
 		<execute function="Click" locator1="Dockbar#${portletCategoryKey}" value1="${localizedPortletCategoryName}" />
 
 		<if>
@@ -577,8 +577,8 @@
 
 		<var name="key_localizedControlPanel" value="${localizedControlPanel}" />
 
-		<execute function="Click" locator1="DockbarTEMP#ADMIN_LOCALIZED" value1="${localizedAdmin}" />
-		<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_CONTROL_PANEL_LOCALIZED" value1="${localizedControlPanel}" />
+		<execute function="Click" locator1="ControlMenu#ADMIN_LOCALIZED" value1="${localizedAdmin}" />
+		<execute function="AssertClick" locator1="ControlMenu#ADMIN_CONTROL_PANEL_LOCALIZED" value1="${localizedControlPanel}" />
 
 		<var name="key_portletName" value="${localizedPortletName}" />
 
@@ -635,8 +635,8 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="Click" locator1="DockbarTEMP#USER_AVATAR_IMAGE" />
-		<execute function="AssertClick" locator1="DockbarTEMP#USER_MY_DASHBOARD" value1="My Dashboard" />
+		<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
+		<execute function="AssertClick" locator1="ControlMenu#USER_MY_DASHBOARD" value1="My Dashboard" />
 	</command>
 
 	<command name="gotoMyProfile">
@@ -653,8 +653,8 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="Click" locator1="DockbarTEMP#USER_AVATAR_IMAGE" />
-		<execute function="AssertClick" locator1="DockbarTEMP#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
+		<execute function="AssertClick" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
 	</command>
 
 	<command name="gotoPagesCP">
@@ -752,11 +752,11 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="${adminLocalized}" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="ControlMenu#ADMIN" value1="${adminLocalized}" />
 
 		<var name="key_portletCategoryName" value="${portletCategoryName}" />
 
-		<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_SITE_ADMINISTRATION_CATEGORY" value1="${portletCategoryName}" />
+		<execute function="AssertClick" locator1="ControlMenu#ADMIN_SITE_ADMINISTRATION_CATEGORY" value1="${portletCategoryName}" />
 
 		<var name="key_portletName" value="${portletName}" />
 
@@ -1020,7 +1020,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="SitePagesEditPage#FRIENDLY_URL_TITLE" />
 			<then>
-				<execute function="Click" locator1="DockbarEditPanel#DETAILS_PANEL_TOGGLE" />
+				<execute function="Click" locator1="ControlMenuEditPanel#DETAILS_PANEL_TOGGLE" />
 			</then>
 		</if>
 
@@ -1150,8 +1150,8 @@
 
 		<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_SELECTOR" />
 
-		<execute function="AssertTextEquals" locator1="DockbarTEMP#ADMIN" value1="${adminTranslation}" />
-		<execute function="AssertTextEquals" locator1="DockbarTEMP#MY_SITES" value1="${mySitesTranslation}" />
+		<execute function="AssertTextEquals" locator1="ControlMenu#ADMIN" value1="${adminTranslation}" />
+		<execute function="AssertTextEquals" locator1="ControlMenu#MY_SITES" value1="${mySitesTranslation}" />
 	</command>
 
 	<command name="viewURLLocale">
@@ -1178,9 +1178,9 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="Click" locator1="DockbarTEMP#USER_AVATAR_IMAGE" />
-		<execute function="AssertTextNotPresent" locator1="DockbarTEMP#USER_MY_PROFILE" value1="My Profile" />
-		<execute function="AssertTextNotPresent" locator1="DockbarTEMP#USER_MY_DASHBOARD" value1="My Dashboard" />
+		<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
+		<execute function="AssertTextNotPresent" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="AssertTextNotPresent" locator1="ControlMenu#USER_MY_DASHBOARD" value1="My Dashboard" />
 	</command>
 
 	<command name="viewWithWorkflowPG">

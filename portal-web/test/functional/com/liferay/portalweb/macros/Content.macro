@@ -6,8 +6,8 @@
 
 		<var name="key_assetType" value="${assetType}" />
 
-		<execute function="AssertClick" locator1="DockbarAddPanel#ADD_NEW_DROPDOWN" value1="Add New" />
-		<execute function="AssertClick" locator1="DockbarAddPanel#ADD_NEW_MENULIST" value1="${assetType}" />
+		<execute function="AssertClick" locator1="ControlMenuAddPanel#ADD_NEW_DROPDOWN" value1="Add New" />
+		<execute function="AssertClick" locator1="ControlMenuAddPanel#ADD_NEW_MENULIST" value1="${assetType}" />
 	</command>
 
 	<command name="addPG">
@@ -18,9 +18,9 @@
 		<execute function="AssertClick#assertTextClickAtAddApplication" locator1="NavPill#CONTENT" value1="Content" />
 		<execute function="Type" locator1="NavBar#CONTENT_SEARCH_FIELD" value1="${assetTitle}" />
 
-		<execute function="AssertTextEquals" locator1="DockbarAddPanel#CONTENT_TITLE" value1="${assetTitle}" />
-		<execute function="MouseOver" locator1="DockbarAddPanel#CONTENT_TITLE" />
-		<execute function="AssertTextEquals" locator1="DockbarAddPanel#POPOVER_CONTENT_TITLE" value1="${assetTitle}" />
+		<execute function="AssertTextEquals" locator1="ControlMenuAddPanel#CONTENT_TITLE" value1="${assetTitle}" />
+		<execute function="MouseOver" locator1="ControlMenuAddPanel#CONTENT_TITLE" />
+		<execute function="AssertTextEquals" locator1="ControlMenuAddPanel#POPOVER_CONTENT_TITLE" value1="${assetTitle}" />
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 	</command>
 </definition>

@@ -1395,12 +1395,12 @@
 		<if>
 			<isset var="loginViaDockbar" />
 			<then>
-				<execute function="AssertClick" locator1="DockbarTEMP#USER_SIGN_IN" value1="Sign In" />
+				<execute function="AssertClick" locator1="ControlMenu#USER_SIGN_IN" value1="Sign In" />
 			</then>
 		</if>
 
 		<if>
-			<condition function="IsElementPresent" locator1="DockbarTEMP#USER_AVATAR_IMAGE" />
+			<condition function="IsElementPresent" locator1="ControlMenu#USER_AVATAR_IMAGE" />
 			<then>
 				<execute macro="User#logoutPG" />
 				<execute macro="User#loginPG">
@@ -1450,8 +1450,8 @@
 
 		<execute function="SelectWindow" locator1="title=Welcome - Liferay" />
 
-		<execute function="AssertElementPresent" locator1="DockbarTEMP#IMPERSONATE_USER_ICON" />
-		<execute function="AssertClick" locator1="DockbarTEMP#IMPERSONATE_USER_ICON" />
+		<execute function="AssertElementPresent" locator1="ControlMenu#IMPERSONATE_USER_ICON" />
+		<execute function="AssertClick" locator1="ControlMenu#IMPERSONATE_USER_ICON" />
 		<execute function="AssertElementPresent" locator1="Message#INFO" />
 	</command>
 
@@ -1478,7 +1478,7 @@
 		<if>
 			<isset var="loginViaDockbar" />
 			<then>
-				<execute function="AssertClick" locator1="DockbarTEMP#USER_SIGN_IN" value1="Sign In" />
+				<execute function="AssertClick" locator1="ControlMenu#USER_SIGN_IN" value1="Sign In" />
 			</then>
 		</if>
 
@@ -1600,7 +1600,7 @@
 		</execute>
 
 		<if>
-			<condition function="IsTextNotEqual" locator1="DockbarTEMP#USER_NAME" value1="${userLoginFullName}" />
+			<condition function="IsTextNotEqual" locator1="ControlMenu#USER_NAME" value1="${userLoginFullName}" />
 			<then>
 				<execute macro="User#logoutPG" />
 				<execute macro="User#loginPG">
@@ -1636,10 +1636,10 @@
 		</if>
 
 		<if>
-			<condition function="IsElementPresent" locator1="DockbarTEMP#USER_AVATAR_IMAGE" />
+			<condition function="IsElementPresent" locator1="ControlMenu#USER_AVATAR_IMAGE" />
 			<then>
-				<execute function="Click" locator1="DockbarTEMP#USER_AVATAR_IMAGE" />
-				<execute function="Click" locator1="DockbarTEMP#USER_SIGN_OUT" />
+				<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
+				<execute function="Click" locator1="ControlMenu#USER_SIGN_OUT" />
 			</then>
 		</if>
 	</command>
@@ -1659,10 +1659,10 @@
 		</execute>
 
 		<if>
-			<condition function="IsElementPresent" locator1="DockbarTEMP#USER_AVATAR_IMAGE" />
+			<condition function="IsElementPresent" locator1="ControlMenu#USER_AVATAR_IMAGE" />
 			<then>
-				<execute function="Click" locator1="DockbarTEMP#USER_AVATAR_IMAGE" />
-				<execute function="Click" locator1="DockbarTEMP#USER_SIGN_OUT" />
+				<execute function="Click" locator1="ControlMenu#USER_AVATAR_IMAGE" />
+				<execute function="Click" locator1="ControlMenu#USER_SIGN_OUT" />
 			</then>
 		</if>
 	</command>
@@ -1674,7 +1674,7 @@
 	</command>
 
 	<command name="signInPG">
-		<execute function="AssertClick" locator1="DockbarTEMP#USER_SIGN_IN" value1="Sign In" />
+		<execute function="AssertClick" locator1="ControlMenu#USER_SIGN_IN" value1="Sign In" />
 
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="TextInput#PASSWORD" value1="${emailPassword}" />
@@ -1836,7 +1836,7 @@
 		<execute function="AssertElementNotPresent" locator1="Checkbox#REMEMBER_ME" />
 		<execute function="AssertElementNotPresent" locator1="Button#SIGN_IN" />
 
-		<execute function="AssertTextEquals" locator1="DockbarTEMP#USER_NAME" value1="${userFirstName} ${userLastName}" />
+		<execute function="AssertTextEquals" locator1="ControlMenu#USER_NAME" value1="${userFirstName} ${userLastName}" />
 	</command>
 
 	<command name="viewLoginPG">

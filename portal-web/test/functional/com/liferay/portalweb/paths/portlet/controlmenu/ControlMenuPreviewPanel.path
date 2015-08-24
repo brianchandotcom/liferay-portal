@@ -1,18 +1,13 @@
 <html>
 <head>
-<title>DockbarPreviewPanel</title>
+<title>ControlMenuPreviewPanel</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">DockbarPreviewPanel</td></tr>
+<tr><td rowspan="1" colspan="3">ControlMenuPreviewPanel</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>Dockbar</td>
-	<td></td>
-</tr>
 <tr>
 	<td></td>
 	<td></td>

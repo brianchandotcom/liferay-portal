@@ -36,7 +36,7 @@
 
 				<take-screenshot />
 
-				<execute function="Click" locator1="DockbarPreviewPanel#PREVIEW_SMARTPHONE" />
+				<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_SMARTPHONE" />
 				<execute function="AssertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 400px;') and contains(@style,'width: 640px;')]" />
 
 				<take-screenshot />
@@ -44,12 +44,12 @@
 			<elseif>
 				<equals arg1="${deviceType}" arg2="tablet" />
 				<then>
-					<execute function="Click" locator1="DockbarPreviewPanel#PREVIEW_TABLET" />
+					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_TABLET" />
 					<execute function="AssertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 900px;') and contains(@style,'width: 760px;')]" />
 
 					<take-screenshot />
 
-					<execute function="Click" locator1="DockbarPreviewPanel#PREVIEW_TABLET" />
+					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_TABLET" />
 					<execute function="AssertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 760px;') and contains(@style,'width: 900px;')]" />
 
 					<take-screenshot />
@@ -58,7 +58,7 @@
 			<elseif>
 				<equals arg1="${deviceType}" arg2="desktop" />
 				<then>
-					<execute function="Click" locator1="DockbarPreviewPanel#PREVIEW_DESKTOP" />
+					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_DESKTOP" />
 					<execute function="AssertVisible" locator1="//iframe[@id='devicePreviewIframe' and contains(@style,'height: 1050px;') and contains(@style,'width: 1300px;')]" />
 
 					<take-screenshot />
@@ -67,14 +67,14 @@
 			<elseif>
 				<equals arg1="${deviceType}" arg2="custom" />
 				<then>
-					<execute function="Click" locator1="DockbarPreviewPanel#PREVIEW_CUSTOM" />
+					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_CUSTOM" />
 
 					<take-screenshot />
 
 					<if>
 						<isset var="height" />
 						<then>
-							<execute function="Type" locator1="DockbarPreviewPanel#PREVIEW_CUSTOM_HEIGHT_FIELD" value1="${height}" />
+							<execute function="Type" locator1="ControlMenuPreviewPanel#PREVIEW_CUSTOM_HEIGHT_FIELD" value1="${height}" />
 						</then>
 						<else>
 							<var name="height" value="400" />
@@ -84,7 +84,7 @@
 					<if>
 						<isset var="width" />
 						<then>
-							<execute function="Type" locator1="DockbarPreviewPanel#PREVIEW_CUSTOM_WIDTH_FIELD" value1="${width}" />
+							<execute function="Type" locator1="ControlMenuPreviewPanel#PREVIEW_CUSTOM_WIDTH_FIELD" value1="${width}" />
 						</then>
 						<else>
 							<var name="width" value="400" />
@@ -98,7 +98,7 @@
 			</elseif>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="DockbarPreviewPanel#PREVIEW_MESSAGE" value1="Preview may not be accurate." />
+		<execute function="AssertTextEquals" locator1="ControlMenuPreviewPanel#PREVIEW_MESSAGE" value1="Preview may not be accurate." />
 		<execute function="SelectFrame" locator1="//iframe[@id='devicePreviewIframe']" />
 	</command>
 

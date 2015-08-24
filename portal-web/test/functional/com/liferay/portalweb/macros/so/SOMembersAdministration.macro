@@ -303,8 +303,8 @@
 					<var name="virtualHostsURL" value="${virtualHostsURL}" />
 				</execute>
 
-				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
-				<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
+				<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="ControlMenu#ADMIN" value1="Admin" />
+				<execute function="AssertClick" locator1="ControlMenu#ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
 
 				<var name="key_userScreenName" value="${userScreenName}" />
 

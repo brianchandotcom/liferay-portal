@@ -347,8 +347,8 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
-		<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="ControlMenu#ADMIN" value1="Admin" />
+		<execute function="AssertClick" locator1="ControlMenu#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<var name="key_siteName" value="${siteName}" />
 
@@ -363,8 +363,8 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
-		<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="ControlMenu#ADMIN" value1="Admin" />
+		<execute function="AssertClick" locator1="ControlMenu#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<var name="key_siteName" value="${childSiteName1}" />
 
@@ -386,8 +386,8 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
-		<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="ControlMenu#ADMIN" value1="Admin" />
+		<execute function="AssertClick" locator1="ControlMenu#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<var name="key_siteName" value="${childSiteName1}" />
 
@@ -409,8 +409,8 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
-		<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="ControlMenu#ADMIN" value1="Admin" />
+		<execute function="AssertClick" locator1="ControlMenu#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<var name="key_siteName" value="${childSiteName1}" />
 
@@ -478,8 +478,8 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
-		<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="ControlMenu#ADMIN" value1="Admin" />
+		<execute function="AssertClick" locator1="ControlMenu#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No sites were found." />
 
@@ -501,8 +501,8 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
-		<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="ControlMenu#ADMIN" value1="Admin" />
+		<execute function="AssertClick" locator1="ControlMenu#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<var name="key_siteName" value="Liferay" />
 
@@ -532,8 +532,8 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
-		<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="ControlMenu#ADMIN" value1="Admin" />
+		<execute function="AssertClick" locator1="ControlMenu#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No sites were found." />
 	</command>

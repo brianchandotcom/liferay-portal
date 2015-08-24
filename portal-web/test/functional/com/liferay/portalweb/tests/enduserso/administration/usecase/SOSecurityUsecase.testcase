@@ -950,8 +950,8 @@
 			<var name="userLoginFullName" value="${userName}" />
 		</execute>
 
-		<execute function="Click" locator1="DockbarTEMP#USER_NAME" />
-		<execute function="Click" locator1="DockbarTEMP#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="ControlMenu#USER_NAME" />
+		<execute function="Click" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute function="AssertAlertNotPresent" />
 

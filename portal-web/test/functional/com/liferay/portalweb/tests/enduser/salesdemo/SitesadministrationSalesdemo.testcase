@@ -103,7 +103,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="Click#textClickAtClickDockbar" locator1="DockbarTEMP#MY_SITES" value1="My Sites" />
+		<execute function="Click#textClickAtClickDockbar" locator1="ControlMenu#MY_SITES" value1="My Sites" />
 
 		<for list="${allSiteNameLists}" param="allSiteNameListsCount" >
 			<execute macro="Dockbar#viewSitesViaMySitesDropDown">

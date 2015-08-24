@@ -766,7 +766,7 @@
 
 		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Upcoming Events" />
 
-		<execute function="AssertClick" locator1="DockbarTEMP#USER_SIGN_IN" value1="Sign In" />
+		<execute function="AssertClick" locator1="ControlMenu#USER_SIGN_IN" value1="Sign In" />
 
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="test@liferay.com" />
 		<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />

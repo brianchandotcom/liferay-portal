@@ -635,7 +635,7 @@
 			<var name="siteName" value="Liferay" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="DockbarTEMP#ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
+		<execute function="AssertElementNotPresent" locator1="ControlMenu#ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
 	</command>
 
 	<command name="WebContentAdministrationSiteMembershipsPagination" priority="3">

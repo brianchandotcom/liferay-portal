@@ -50,13 +50,13 @@
 	<command name="viewMySitesDropDownSiteName">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="Click#textClickAtClickDockbar" locator1="DockbarTEMP#MY_SITES" value1="My Sites" />
-		<execute function="AssertTextEquals" locator1="DockbarTEMP#MY_SITES_SITE_NAME_2" value1="${siteName}" />
+		<execute function="Click#textClickAtClickDockbar" locator1="ControlMenu#MY_SITES" value1="My Sites" />
+		<execute function="AssertTextEquals" locator1="ControlMenu#MY_SITES_SITE_NAME_2" value1="${siteName}" />
 	</command>
 
 	<command name="viewSitesViaMySitesDropDown">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertTextEquals" locator1="DockbarTEMP#MY_SITES_PUBLIC_SITE" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="ControlMenu#MY_SITES_PUBLIC_SITE" value1="${siteName}" />
 	</command>
 </definition>

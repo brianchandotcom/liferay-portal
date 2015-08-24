@@ -38,8 +38,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="DockbarTEMP#ADMIN" value1="Admin" />
-		<execute function="AssertClick" locator1="DockbarTEMP#ADMIN_CONTROL_PANEL" value1="Control Panel" />
+		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="ControlMenu#ADMIN" value1="Admin" />
+		<execute function="AssertClick" locator1="ControlMenu#ADMIN_CONTROL_PANEL" value1="Control Panel" />
 		<execute function="Click" locator1="//a[@title='Back']" />
 
 		<execute function="AssertTextEquals" locator1="SOSite#SITE_NAME" value1="${siteName}" />

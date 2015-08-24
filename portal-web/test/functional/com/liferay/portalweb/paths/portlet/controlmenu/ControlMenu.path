@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>DockbarTEMP</title>
+<title>ControlMenu</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">DockbarTEMP</td></tr>
+<tr><td rowspan="1" colspan="3">ControlMenu</td></tr>
 </thead>
 <tbody>
 <tr>

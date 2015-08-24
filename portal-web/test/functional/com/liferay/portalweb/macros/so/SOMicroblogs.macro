@@ -359,8 +359,8 @@
 		<var name="key_microblogsEntryCommentContent" value="${microblogsEntryCommentContent}" />
 		<var name="key_microblogsEntryContent" value="${microblogsEntryContent}" />
 
-		<execute function="Click" locator1="DockbarTEMP#USER_NAME" />
-		<execute function="Click" locator1="DockbarTEMP#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="ControlMenu#USER_NAME" />
+		<execute function="Click" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute function="Click" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 
@@ -380,8 +380,8 @@
 	</command>
 
 	<command name="deleteMicroblogsEntryViaProfile">
-		<execute function="Click" locator1="DockbarTEMP#USER_NAME" />
-		<execute function="Click" locator1="DockbarTEMP#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="ControlMenu#USER_NAME" />
+		<execute function="Click" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute function="Click" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 
@@ -461,8 +461,8 @@
 	</command>
 
 	<command name="editMicroblogsEntryViaProfile">
-		<execute function="Click" locator1="DockbarTEMP#USER_NAME" />
-		<execute function="Click" locator1="DockbarTEMP#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="ControlMenu#USER_NAME" />
+		<execute function="Click" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute function="Click" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 
@@ -882,8 +882,8 @@
 	<command name="viewMicroblogsEntryMentionViaProfile">
 		<var name="microblogsEntryContent" value="${microblogsEntryContent} ${mentionUserName}" />
 
-		<execute function="Click" locator1="DockbarTEMP#USER_NAME" />
-		<execute function="Click" locator1="DockbarTEMP#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="ControlMenu#USER_NAME" />
+		<execute function="Click" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute function="Click" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 
@@ -903,8 +903,8 @@
 		<execute function="AssertTextEquals" locator1="SOProfile#USER_EMAIL" value1="${mentionUserEmailAddress}" />
 		<execute function="Click" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 
-		<execute function="Click" locator1="DockbarTEMP#USER_NAME" />
-		<execute function="Click" locator1="DockbarTEMP#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="ControlMenu#USER_NAME" />
+		<execute function="Click" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute function="Click" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 
@@ -994,8 +994,8 @@
 	<command name="viewMicroblogsEntryOwnMentionViaProfile">
 		<var name="microblogsEntryContent" value="${microblogsEntryContent} ${mentionUserName}" />
 
-		<execute function="Click" locator1="DockbarTEMP#USER_NAME" />
-		<execute function="Click" locator1="DockbarTEMP#USER_MY_PROFILE" value1="My Profile" />
+		<execute function="Click" locator1="ControlMenu#USER_NAME" />
+		<execute function="Click" locator1="ControlMenu#USER_MY_PROFILE" value1="My Profile" />
 
 		<execute function="Click" locator1="SOProfile#NAVIGATION_MICROBLOGS" value1="Microblogs" />
 

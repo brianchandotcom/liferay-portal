@@ -15,6 +15,7 @@
 		<var name="key_rowNumber" value="${rowNumber}" />
 
 		<execute function="Type" locator1="FormFields#OPTIONS_OPTION_LABEL_FIELD" value1="${optionLabel}" />
+
 		<execute function="Type" locator1="FormFields#OPTIONS_OPTION_VALUE_FIELD" value1="${optionValue}" />
 	</command>
 

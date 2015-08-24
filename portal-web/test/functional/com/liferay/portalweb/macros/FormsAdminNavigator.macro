@@ -1,6 +1,7 @@
 <definition>
 	<command name="gotoAdd">
 		<execute function="AssertClick" locator1="FormsAdmin#TOOLBAR_ADD" value1="Add" />
+
 		<execute function="AssertClick" locator1="FormsAdmin#ADD_MENULIST_NEW_FORM" value1="New Form" />
 	</command>
 </definition>

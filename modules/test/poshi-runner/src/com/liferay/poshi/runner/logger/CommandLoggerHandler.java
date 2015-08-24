@@ -129,10 +129,12 @@ public final class CommandLoggerHandler {
 		List<LoggerElement> runLineLoggerElements =
 			childContainerLoggerElement.loggerElements("li");
 
-		LoggerElement runLineLoggerElement = runLineLoggerElements.get(
-			runLineLoggerElements.size() - 1);
+		if (!runLineLoggerElements.isEmpty()) {
+			LoggerElement runLineLoggerElement = runLineLoggerElements.get(
+				runLineLoggerElements.size() - 1);
 
-		runLineLoggerElement.addClassName("error-line");
+			runLineLoggerElement.addClassName("error-line");
+		}
 	}
 
 	private static LoggerElement _getButtonLoggerElement(int btnLinkId) {

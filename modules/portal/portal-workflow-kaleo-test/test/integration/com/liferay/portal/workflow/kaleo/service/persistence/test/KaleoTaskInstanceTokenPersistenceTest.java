@@ -26,18 +26,12 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException;
@@ -113,35 +107,6 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 		KaleoTaskInstanceToken existingKaleoTaskInstanceToken = _persistence.fetchByPrimaryKey(newKaleoTaskInstanceToken.getPrimaryKey());
 
 		Assert.assertNull(existingKaleoTaskInstanceToken);
-	}
-
-	@Test
-	public void testSearchByUserRolesWithoutAnyRole() throws Exception {
-
-		User user = null;
-
-		try {
-			user = UserTestUtil.addUser();
-
-			RoleLocalServiceUtil.clearUserRoles(user.getUserId());
-	
-			ServiceContext serviceContext = new ServiceContext();
-			serviceContext.setCompanyId(TestPropsValues.getCompanyId());
-			serviceContext.setUserId(user.getUserId());
-
-			int count = KaleoTaskInstanceTokenLocalServiceUtil.searchCount(
-							RandomTestUtil.randomString(),
-							RandomTestUtil.randomStrings(10), false, true,
-							serviceContext);
-
-			Assert.assertEquals(count, 0);
-		}
-		catch(Exception e) {
-			Assert.fail(e.getMessage());
-		}
-		finally {
-			UserLocalServiceUtil.deleteUser(user);
-		}
 	}
 
 	@Test

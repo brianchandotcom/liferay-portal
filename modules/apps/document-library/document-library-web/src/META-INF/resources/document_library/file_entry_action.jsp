@@ -74,10 +74,10 @@ else {
 DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = null;
 
 if (fileShortcut == null) {
-	dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileEntry.getFileVersion());
+	dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileEntry.getFileVersion());
 }
 else {
-	dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileShortcut);
+	dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileShortcut);
 }
 
 DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);

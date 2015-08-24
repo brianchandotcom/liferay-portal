@@ -4,5 +4,5 @@ Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
-        @../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class
+	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class
 Web-ContextPath: /portlet-settings-web

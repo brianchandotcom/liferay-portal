@@ -88,7 +88,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 		<li class="list-group-item <%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "active" : StringPool.BLANK %> <%= Validator.isNotNull(row.getState()) ? "list-group-item-" + row.getState() : StringPool.BLANK %>"  <%= AUIUtil.buildData(data) %>>
 			<c:if test="<%= rowChecker != null %>">
 				<div class="hidden-sm hidden-x list-group-item-field">
-					<aui:input checked="<%= rowIsChecked %>" cssClass="<%= rowChecker.getCssClass() %>" disabled="<%= rowChecker.isDisabled(row.getObject()) %>" id="<%= rowChecker.getRowIds() + row.getPrimaryKey() %>" label="" name="<%= rowChecker.getRowIds() %>" title="select" type="checkbox" useNamespace="<%= false %>" value="<%= row.getPrimaryKey() %>" wrapperCssClass="checkbox-default" />
+					<aui:input checked="<%= rowIsChecked %>" cssClass="<%= rowChecker.getCssClass() %>" data="<%= rowChecker.getData(row.getObject()) %>" disabled="<%= rowChecker.isDisabled(row.getObject()) %>" id="<%= rowChecker.getRowIds() + row.getPrimaryKey() %>" label="" name="<%= rowChecker.getRowIds() %>" title="select" type="checkbox" useNamespace="<%= false %>" value="<%= row.getPrimaryKey() %>" wrapperCssClass="checkbox-default" />
 				</div>
 			</c:if>
 

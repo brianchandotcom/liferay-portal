@@ -3,16 +3,23 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var TPL_FEEDBACK = '<span class="form-control-feedback" aria-hidden="true"><span class="icon-{icon}"></span></span>';
+		var Renderer = Liferay.DDM.Renderer;
 
-		var TPL_VALIDATION_MESSAGE = '<div class="validation-message">{message}</div>';
+		var Util = Renderer.Util;
 
 		var FieldValidationSupport = function() {
 		};
 
 		FieldValidationSupport.ATTRS = {
-			validationMessages: {
-				value: []
+			evaluator: {
+				valueFn: '_valueEvaluator'
+			},
+
+			strings: {
+				value: {
+					defaultValidationMessage: Liferay.Language.get('unkown-error'),
+					requestErrorMessage: Liferay.Language.get('there-was-an-error-when-trying-to-validate-your-form')
+				}
 			},
 
 			validationExpression: {
@@ -24,39 +31,13 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
+				var evaluator = instance.get('evaluator');
+
 				instance._eventHandlers.push(
-					instance.after('validationMessagesChange', instance._afterValidationMessagesChange),
-					instance.after(instance._renderValidationMessages, instance, 'render')
+					evaluator.after('evaluationEnded', A.bind('_afterEvaluationEnded', instance)),
+					evaluator.after('evaluationStarted', A.bind('_afterEvaluationStarted', instance)),
+					instance.after('blur', instance._afterBlur)
 				);
-
-				instance._renderValidationMessages();
-			},
-
-			addValidationMessage: function(message) {
-				var instance = this;
-
-				var validationMessages = instance.get('validationMessages');
-
-				validationMessages.push(message);
-
-				instance.set('validationMessages', validationMessages);
-			},
-
-			clearValidationMessages: function() {
-				var instance = this;
-
-				instance.set('validationMessages', []);
-			},
-
-			clearValidationStatus: function() {
-				var instance = this;
-
-				var container = instance.get('container');
-
-				container.removeClass('has-error');
-				container.removeClass('has-success');
-
-				instance.hideFeedback();
 			},
 
 			hasErrors: function() {
@@ -73,101 +54,96 @@ AUI.add(
 				return !!validationExpression && validationExpression !== 'true';
 			},
 
-			hideFeedback: function() {
+			processValidation: function(result) {
 				var instance = this;
 
-				var container = instance.get('container');
+				var instanceId = instance.get('instanceId');
 
-				container.removeClass('has-feedback');
+				var validation = Util.getFieldByKey(result, instanceId, 'instanceId');
 
-				container.all('.form-control-feedback').remove();
-			},
+				if (validation) {
+					var messages = validation.messages;
 
-			showErrorFeedback: function() {
-				var instance = this;
+					if (!messages && !validation.valid) {
+						var strings = instance.get('strings');
 
-				instance._showFeedback('remove');
-			},
+						messages = [strings.defaultValidationMessage];
+					}
 
-			showLoadingFeedback: function() {
-				var instance = this;
-
-				instance._showFeedback('spinner');
-			},
-
-			showSuccessFeedback: function() {
-				var instance = this;
-
-				instance._showFeedback('ok');
-			},
-
-			showValidationStatus: function() {
-				var instance = this;
-
-				var container = instance.get('container');
-
-				var hasErrors = instance.hasErrors();
-
-				container.toggleClass('has-error', hasErrors);
-				container.toggleClass('has-success', !hasErrors);
-
-				if (hasErrors) {
-					instance.showErrorFeedback();
-				}
-				else {
-					instance.showSuccessFeedback();
+					if (messages && messages.length) {
+						instance.set('validationMessages', messages);
+					}
+					else {
+						instance.clearValidationMessages();
+					}
 				}
 			},
 
-			_afterValidationMessagesChange: function() {
+			validate: function(callback) {
 				var instance = this;
 
-				instance._renderValidationMessages();
-			},
+				if (instance.hasValidation()) {
+					var evaluator = instance.get('evaluator');
 
-			_appendValidationMessage: function(message) {
-				var instance = this;
+					evaluator.evaluate(
+						function(result) {
+							if (callback) {
+								var hasErrors = instance.hasErrors();
 
-				instance.getInputNode().insert(
-					Lang.sub(
-						TPL_VALIDATION_MESSAGE,
-						{
-							message: message
+								if (!result || !Lang.isObject(result)) {
+									hasErrors = true;
+								}
+
+								callback.call(instance, hasErrors, result);
+							}
 						}
-					),
-					'after'
-				);
+					);
+				}
+				else if (callback) {
+					callback.call(instance, false);
+				}
 			},
 
-			_renderValidationMessages: function() {
+			_afterBlur: function() {
 				var instance = this;
 
-				var container = instance.get('container');
-
-				container.all('.validation-message').remove();
-
-				var messages = instance.get('validationMessages');
-
-				messages.forEach(A.bind('_appendValidationMessage', instance));
+				instance.validate();
 			},
 
-			_showFeedback: function(icon) {
+			_afterEvaluationEnded: function(event) {
 				var instance = this;
+
+				var result = event.result;
 
 				instance.hideFeedback();
 
-				var container = instance.get('container');
+				if (result && Lang.isObject(result)) {
+					instance.processValidation(result);
 
-				container.addClass('has-feedback');
+					instance.showValidationStatus();
+				}
+				else {
+					var root = instance.getRoot();
 
-				instance.getInputNode().insert(
-					Lang.sub(
-						TPL_FEEDBACK,
-						{
-							icon: icon
-						}
-					),
-					'after'
+					var strings = instance.get('strings');
+
+					root.showAlert(strings.requestErrorMessage);
+				}
+			},
+
+			_afterEvaluationStarted: function() {
+				var instance = this;
+
+				instance.showLoadingFeedback();
+			},
+
+			_valueEvaluator: function() {
+				var instance = this;
+
+				return new Renderer.ExpressionsEvaluator(
+					{
+						form: instance.getRoot()
+					}
 				);
 			}
 		};
@@ -176,6 +152,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['liferay-ddm-form-renderer-expressions-evaluator']
 	}
 );

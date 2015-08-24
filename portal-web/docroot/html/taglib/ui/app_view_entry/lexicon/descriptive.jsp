@@ -136,7 +136,7 @@
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(latestApprovedVersion) && (status > WorkflowConstants.STATUS_APPROVED) %>">
-		<h6 class="text-defautl">
+		<h6 class="text-default">
 			<strong><liferay-ui:message key="latest-aproved-version" />:</strong> <%= HtmlUtil.escape(latestApprovedVersion) %>
 			<strong><liferay-ui:message key="latest-aproved-version-author" />:</strong> <%= HtmlUtil.escape(latestApprovedVersionAuthor) %>
 		</h6>
@@ -144,4 +144,8 @@
 
 	<c:if test="<%= !folder && (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">
 		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
+
+		<c:if test="<%= locked %>">
+			<small class="text-default"><liferay-ui:message escapeAttribute="<%= true %>" key="locked" /></small>
+		</c:if>
 	</c:if>

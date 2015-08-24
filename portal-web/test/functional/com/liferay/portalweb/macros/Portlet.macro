@@ -360,7 +360,7 @@
 		</if>
 	</command>
 
-	<command name="viewPillTitle" summary="Assert that the ${portletName} portlet title has the text '${portletName}'">
+	<command name="viewPillTitle" summary="Assert that the ${portletName} portlet title has the text '${portletName}' in ALL CAPS">
 		<var name="key_portletName" value="${portletName}" />
 
 		<var method="StringUtil#upperCase('${portletName}')" name="portletNameUppercase" />

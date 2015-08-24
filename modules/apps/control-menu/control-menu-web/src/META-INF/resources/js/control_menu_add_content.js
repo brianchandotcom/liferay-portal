@@ -71,7 +71,7 @@ AUI.add(
 					_onChangeNumItems: function(event) {
 						var instance = this;
 
-						Liferay.Store('liferay_addpanel_numitems', instance._numItems.val());
+						Liferay.Store('com.liferay.control.menu.web_addPanelNumItems', instance._numItems.val());
 
 						instance._refreshContentList(event);
 					},

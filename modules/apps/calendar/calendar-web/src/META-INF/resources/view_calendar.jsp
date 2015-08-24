@@ -68,7 +68,7 @@ JSONArray groupCalendarsJSONArray = CalendarUtil.toCalendarsJSONArray(themeDispl
 JSONArray userCalendarsJSONArray = CalendarUtil.toCalendarsJSONArray(themeDisplay, userCalendars);
 JSONArray otherCalendarsJSONArray = CalendarUtil.toCalendarsJSONArray(themeDisplay, otherCalendars);
 
-boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, "calendar-portlet-column-options-visible", "true"));
+boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.calendar.web_columnOptionsVisible", "true"));
 %>
 
 <aui:container cssClass="calendar-portlet-column-parent">
@@ -349,7 +349,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			var columnOptions = A.one('#<portlet:namespace />columnOptions');
 			var columnTogglerIcon = A.one('#<portlet:namespace />columnTogglerIcon');
 
-			Liferay.Store('calendar-portlet-column-options-visible', columnOptions.hasClass('hide'));
+			Liferay.Store('com.liferay.calendar.web_columnOptionsVisible', columnOptions.hasClass('hide'));
 
 			columnGrid.toggleClass('col-md-9').toggleClass('col-md-12');
 

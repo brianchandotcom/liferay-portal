@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_microblogs_web_microblogs_portlet_MicroblogsPortlet</portlet-name>
+		<portlet-name>com_liferay_microblogs_web_portlet_MicroblogsPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>VIEW</action-key>
@@ -20,8 +20,8 @@
 	<model-resource>
 		<model-name>com.liferay.microblogs</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_microblogs_web_microblogs_portlet_MicroblogsPortlet</portlet-name>
-			<portlet-name>com_liferay_microblogs_web_microblogs_portlet_MicroblogsStatusUpdatePortlet</portlet-name>
+			<portlet-name>com_liferay_microblogs_web_portlet_MicroblogsPortlet</portlet-name>
+			<portlet-name>com_liferay_microblogs_web_portlet_MicroblogsStatusUpdatePortlet</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -39,8 +39,8 @@
 	<model-resource>
 		<model-name>com.liferay.microblogs.model.MicroblogsEntry</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_microblogs_web_microblogs_portlet_MicroblogsPortlet</portlet-name>
-			<portlet-name>com_liferay_microblogs_web_microblogs_portlet_MicroblogsStatusUpdatePortlet</portlet-name>
+			<portlet-name>com_liferay_microblogs_web_portlet_MicroblogsPortlet</portlet-name>
+			<portlet-name>com_liferay_microblogs_web_portlet_MicroblogsStatusUpdatePortlet</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>

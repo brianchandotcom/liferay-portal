@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.microblogs.web.microblogs.upgrade;
+package com.liferay.microblogs.web.upgrade;
 
-import com.liferay.microblogs.web.microblogs.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.microblogs.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;

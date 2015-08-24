@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -69,7 +70,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	public String getEditTemplateBackURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classNameId,
-			long classPK, String portletResource)
+			long classPK, long resourceClassNameId, String portletResource)
 		throws Exception {
 
 		String redirect = ParamUtil.getString(
@@ -78,7 +79,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		if (Validator.isNull(redirect) || Validator.isNull(portletResource)) {
 			return getViewTemplatesURL(
 				liferayPortletRequest, liferayPortletResponse, classNameId,
-				classPK);
+				classPK, resourceClassNameId);
 		}
 
 		return redirect;
@@ -301,7 +302,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	protected String getViewTemplatesURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classNameId,
-			long classPK)
+			long classPK, long resourceClassNameId)
 		throws Exception {
 
 		String portletId = PortletProviderUtil.getPortletId(
@@ -313,6 +314,8 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		portletURL.setParameter("mvcPath", "/view_template.jsp");
 		portletURL.setParameter("classNameId", String.valueOf(classNameId));
 		portletURL.setParameter("classPK", String.valueOf(classPK));
+		portletURL.setParameter(
+			"resourceClassNameId", String.valueOf(resourceClassNameId));
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();

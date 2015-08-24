@@ -295,57 +295,6 @@ public class PoshiRunnerExecutor {
 				classCommandName);
 		}
 
-		int locatorCount = PoshiRunnerContext.getFunctionLocatorCount(
-			className);
-
-		for (int i = 0; i < locatorCount; i++) {
-			String locator = executeElement.attributeValue("locator" + (i + 1));
-
-			if (locator == null) {
-				locator = PoshiRunnerVariablesUtil.getValueFromCommandMap(
-					"locator" + (i + 1));
-			}
-
-			if (locator != null) {
-				Matcher matcher = _locatorKeyPattern.matcher(locator);
-
-				if (matcher.find() && !locator.contains("/")) {
-					String pathClassName =
-						PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-							locator);
-
-					String locatorKey =
-						PoshiRunnerVariablesUtil.replaceCommandVars(
-							PoshiRunnerGetterUtil.
-								getCommandNameFromClassCommandName(locator));
-
-					PoshiRunnerVariablesUtil.putIntoExecuteMap(
-						"locator-key" + (i + 1), locatorKey);
-
-					locator = PoshiRunnerContext.getPathLocator(
-						pathClassName + "#" + locatorKey);
-
-					locator = PoshiRunnerVariablesUtil.replaceExecuteVars(
-						locator);
-				}
-
-				PoshiRunnerVariablesUtil.putIntoExecuteMap(
-					"locator" + (i + 1), locator);
-			}
-
-			String value = executeElement.attributeValue("value" + (i + 1));
-
-			if (value == null) {
-				value = PoshiRunnerVariablesUtil.getValueFromCommandMap(
-					"value" + (i + 1));
-			}
-
-			if (value != null) {
-				PoshiRunnerVariablesUtil.putIntoExecuteMap(
-					"value" + (i + 1), value);
-			}
-		}
-
 		SummaryLoggerHandler.startSummary(executeElement);
 
 		CommandLoggerHandler.startCommand(executeElement);
@@ -356,6 +305,59 @@ public class PoshiRunnerExecutor {
 			classCommandName);
 
 		try {
+			int locatorCount = PoshiRunnerContext.getFunctionLocatorCount(
+				className);
+
+			for (int i = 0; i < locatorCount; i++) {
+				String locator = executeElement.attributeValue(
+					"locator" + (i + 1));
+
+				if (locator == null) {
+					locator = PoshiRunnerVariablesUtil.getValueFromCommandMap(
+						"locator" + (i + 1));
+				}
+
+				if (locator != null) {
+					Matcher matcher = _locatorKeyPattern.matcher(locator);
+
+					if (matcher.find() && !locator.contains("/")) {
+						String pathClassName =
+							PoshiRunnerGetterUtil.
+								getClassNameFromClassCommandName(locator);
+
+						String locatorKey =
+							PoshiRunnerVariablesUtil.replaceCommandVars(
+								PoshiRunnerGetterUtil.
+									getCommandNameFromClassCommandName(
+										locator));
+
+						PoshiRunnerVariablesUtil.putIntoExecuteMap(
+							"locator-key" + (i + 1), locatorKey);
+
+						locator = PoshiRunnerContext.getPathLocator(
+							pathClassName + "#" + locatorKey);
+
+						locator = PoshiRunnerVariablesUtil.replaceExecuteVars(
+							locator);
+					}
+
+					PoshiRunnerVariablesUtil.putIntoExecuteMap(
+						"locator" + (i + 1), locator);
+				}
+
+				String value = executeElement.attributeValue("value" + (i + 1));
+
+				if (value == null) {
+					value = PoshiRunnerVariablesUtil.getValueFromCommandMap(
+						"value" + (i + 1));
+				}
+
+				if (value != null) {
+					PoshiRunnerVariablesUtil.putIntoExecuteMap(
+						"value" + (i + 1), value);
+				}
+			}
+
 			runFunctionCommandElement(classCommandName, commandElement);
 		}
 		catch (Throwable t) {

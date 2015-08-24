@@ -14,6 +14,7 @@
 
 package com.liferay.microblogs.web.microblogs.asset;
 
+import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
 import com.liferay.microblogs.service.permission.MicroblogsEntryPermission;
@@ -21,15 +22,22 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Matthew Kong
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS},
+	service = AssetRendererFactory.class
+)
 public class MicroblogsEntryAssetRendererFactory
 	extends BaseAssetRendererFactory<MicroblogsEntry> {
 

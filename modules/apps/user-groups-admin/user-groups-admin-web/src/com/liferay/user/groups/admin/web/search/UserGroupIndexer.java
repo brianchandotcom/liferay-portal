@@ -161,12 +161,10 @@ public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<UserGroup>() {
 
 				@Override
-				public void performAction(Object object) {
-					UserGroup userGroup = (UserGroup)object;
-
+				public void performAction(UserGroup userGroup) {
 					try {
 						Document document = getDocument(userGroup);
 

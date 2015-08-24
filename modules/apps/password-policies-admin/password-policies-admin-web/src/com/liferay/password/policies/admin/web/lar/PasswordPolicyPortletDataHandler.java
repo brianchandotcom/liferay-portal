@@ -148,17 +148,15 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<PasswordPolicy>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(PasswordPolicy passwordPolicy)
 					throws PortalException {
 
 					if (!export) {
 						return;
 					}
-
-					PasswordPolicy passwordPolicy = (PasswordPolicy)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(
 						portletDataContext, passwordPolicy);

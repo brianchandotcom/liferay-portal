@@ -280,13 +280,11 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 
 			});
 		exportActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<DDMStructure>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(DDMStructure ddmStructure)
 					throws PortalException {
-
-					DDMStructure ddmStructure = (DDMStructure)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(
 						portletDataContext, ddmStructure);

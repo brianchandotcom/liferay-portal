@@ -229,11 +229,10 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<AssetCategory>() {
 
 				@Override
-				public void performAction(Object object) {
-					AssetCategory category = (AssetCategory)object;
+				public void performAction(AssetCategory category) {
 
 					try {
 						Document document = getDocument(category);

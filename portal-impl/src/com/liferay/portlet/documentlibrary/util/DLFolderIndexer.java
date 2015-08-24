@@ -190,12 +190,10 @@ public class DLFolderIndexer
 			});
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<DLFolder>() {
 
 				@Override
-				public void performAction(Object object) {
-					DLFolder dlFolder = (DLFolder)object;
-
+				public void performAction(DLFolder dlFolder) {
 					try {
 						Document document = getDocument(dlFolder);
 

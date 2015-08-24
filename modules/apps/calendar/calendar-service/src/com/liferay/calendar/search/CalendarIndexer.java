@@ -160,12 +160,10 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<Calendar>() {
 
 			@Override
-			public void performAction(Object object) {
-				Calendar calendar = (Calendar)object;
-
+			public void performAction(Calendar calendar) {
 				try {
 					Document document = getDocument(calendar);
 

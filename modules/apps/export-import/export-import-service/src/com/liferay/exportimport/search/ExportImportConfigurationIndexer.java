@@ -297,12 +297,12 @@ public class ExportImportConfigurationIndexer
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.
+				PerformActionMethod<ExportImportConfiguration>() {
 
 				@Override
-				public void performAction(Object object) {
-					ExportImportConfiguration exportImportConfiguration =
-						(ExportImportConfiguration)object;
+				public void performAction(
+					ExportImportConfiguration exportImportConfiguration) {
 
 					try {
 						Document document = getDocument(

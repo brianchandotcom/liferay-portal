@@ -219,13 +219,11 @@ public abstract class BaseOrganizationMembershipPolicy
 			OrganizationLocalServiceUtil.getActionableDynamicQuery();
 
 		organizationActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<Organization>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(Organization organization)
 					throws PortalException {
-
-					Organization organization = (Organization)object;
 
 					verifyPolicy(organization);
 
@@ -236,14 +234,13 @@ public abstract class BaseOrganizationMembershipPolicy
 					userGroupRoleActionableDynamicQuery.setGroupId(
 						organization.getGroupId());
 					userGroupRoleActionableDynamicQuery.setPerformActionMethod(
-						new ActionableDynamicQuery.PerformActionMethod() {
+						new ActionableDynamicQuery.
+							PerformActionMethod<UserGroupRole>() {
 
 							@Override
-							public void performAction(Object object)
+							public void performAction(
+									UserGroupRole userGroupRole)
 								throws PortalException {
-
-								UserGroupRole userGroupRole =
-									(UserGroupRole)object;
 
 								verifyPolicy(userGroupRole.getRole());
 							}

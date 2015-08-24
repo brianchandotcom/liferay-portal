@@ -170,12 +170,10 @@ public class JournalFolderIndexer
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<JournalFolder>() {
 
 				@Override
-				public void performAction(Object object) {
-					JournalFolder folder = (JournalFolder)object;
-
+				public void performAction(JournalFolder folder) {
 					try {
 						Document document = getDocument(folder);
 

@@ -174,12 +174,10 @@ public class BookmarksFolderIndexer extends BaseIndexer<BookmarksFolder> {
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<BookmarksFolder>() {
 
 				@Override
-				public void performAction(Object object) {
-					BookmarksFolder folder = (BookmarksFolder)object;
-
+				public void performAction(BookmarksFolder folder) {
 					try {
 						Document document = getDocument(folder);
 

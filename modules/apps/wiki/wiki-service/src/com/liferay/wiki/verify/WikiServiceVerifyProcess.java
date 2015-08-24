@@ -70,12 +70,10 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 			_wikiPageResourceLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<WikiPageResource>() {
 
 				@Override
-				public void performAction(Object object) {
-					WikiPageResource pageResource = (WikiPageResource)object;
-
+				public void performAction(WikiPageResource pageResource) {
 					verifyCreateDate(pageResource);
 				}
 

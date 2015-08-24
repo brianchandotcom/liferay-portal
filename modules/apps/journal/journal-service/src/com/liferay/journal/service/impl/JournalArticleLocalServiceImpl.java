@@ -4855,13 +4855,11 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle.class.getName());
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<JournalArticle>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(JournalArticle article)
 					throws PortalException {
-
-					JournalArticle article = (JournalArticle)object;
 
 					article.setTreePath(treePath);
 

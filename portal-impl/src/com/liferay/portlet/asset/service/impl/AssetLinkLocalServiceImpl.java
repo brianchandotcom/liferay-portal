@@ -309,15 +309,14 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		exportActionableDynamicQuery.setCompanyId(
 			portletDataContext.getCompanyId());
 		exportActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<AssetLink>() {
 
 				@Override
-				public void performAction(Object object)
+				public void performAction(AssetLink assetLink)
 					throws PortalException {
 
 					StagedAssetLink stagedAssetLink = ModelAdapterUtil.adapt(
-						(AssetLink)object, AssetLink.class,
-						StagedAssetLink.class);
+						assetLink, AssetLink.class, StagedAssetLink.class);
 
 					StagedModelDataHandlerUtil.exportStagedModel(
 						portletDataContext, stagedAssetLink);

@@ -392,12 +392,10 @@ public class UserIndexer extends BaseIndexer<User> {
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<User>() {
 
 				@Override
-				public void performAction(Object object) {
-					User user = (User)object;
-
+				public void performAction(User user) {
 					if (!user.isDefaultUser()) {
 						try {
 							Document document = getDocument(user);

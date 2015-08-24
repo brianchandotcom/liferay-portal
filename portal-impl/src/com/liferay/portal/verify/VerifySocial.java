@@ -65,12 +65,11 @@ public class VerifySocial extends VerifyProcess {
 
 			});
 		socialRequestActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
+			new ActionableDynamicQuery.PerformActionMethod<SocialRequest>() {
 
 				@Override
-				public void performAction(Object object) {
-					SocialRequestLocalServiceUtil.deleteRequest(
-						(SocialRequest)object);
+				public void performAction(SocialRequest socialRequest) {
+					SocialRequestLocalServiceUtil.deleteRequest(socialRequest);
 				}
 
 			});

@@ -17,10 +17,6 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
-				if (!instance._eventHandlers) {
-					instance._eventHandlers = [];
-				}
-
 				instance._eventHandlers.push(
 					instance.after('containerChange', instance._afterContainerChange),
 					instance.after('fieldsChange', instance._afterFieldsChange)

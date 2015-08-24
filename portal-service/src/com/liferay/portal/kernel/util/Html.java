@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.util.Map;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Clarence Shen
@@ -21,6 +23,8 @@ package com.liferay.portal.kernel.util;
  * @author Samuel Kong
  */
 public interface Html {
+
+	public String buildData(Map<String, Object> data);
 
 	public String escape(String text);
 

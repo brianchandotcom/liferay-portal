@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletResponse;
 
@@ -84,6 +85,10 @@ public class RowChecker {
 
 	public String getCssClass() {
 		return _cssClass;
+	}
+
+	public Map<String, Object> getData(Object obj) {
+		return _data;
 	}
 
 	public String getFormName() {
@@ -148,6 +153,10 @@ public class RowChecker {
 		_cssClass = cssClass;
 	}
 
+	public void setData(Map<String, Object> data) {
+		_data = data;
+	}
+
 	public void setFormName(String formName) {
 		_formName = getNamespacedValue(formName);
 	}
@@ -167,13 +176,14 @@ public class RowChecker {
 			return StringPool.BLANK;
 		}
 
-		StringBuilder sb = new StringBuilder(11);
+		StringBuilder sb = new StringBuilder(12);
 
 		sb.append("<input name=\"");
 		sb.append(name);
 		sb.append("\" title=\"");
 		sb.append(LanguageUtil.get(getLocale(request), "select-all"));
 		sb.append("\" type=\"checkbox\" ");
+		sb.append(HtmlUtil.buildData(_data));
 		sb.append("onClick=\"Liferay.Util.checkAll(");
 		sb.append("AUI().one(this).ancestor('");
 		sb.append(".table'), ");
@@ -268,6 +278,7 @@ public class RowChecker {
 	private String _allRowIds;
 	private int _colspan = COLSPAN;
 	private String _cssClass = CSS_CLASS;
+	private Map<String, Object> _data;
 	private String _formName;
 	private final PortletResponse _portletResponse;
 	private String _rowIds;

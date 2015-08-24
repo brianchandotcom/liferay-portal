@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.microblogs.web.microblogs.notifications;
+package com.liferay.microblogs.web.notifications;
 
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
@@ -30,15 +30,14 @@ import org.osgi.service.component.annotations.Component;
 	property = {"javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS},
 	service = UserNotificationDefinition.class
 )
-public class MicroblogsReplyToRepliedUserNotificationDefinition
+public class MicroblogsTagUserNotificationDefinition
 	extends UserNotificationDefinition {
 
-	public MicroblogsReplyToRepliedUserNotificationDefinition() {
+	public MicroblogsTagUserNotificationDefinition() {
 		super(
 			MicroblogsPortletKeys.MICROBLOGS, 0,
-			MicroblogsEntryConstants.NOTIFICATION_TYPE_REPLY_TO_REPLIED,
-			"receive-a-notification-when-someone-comments-on-a-microblog-you-" +
-				"commented-on");
+			MicroblogsEntryConstants.NOTIFICATION_TYPE_TAG,
+			"receive-a-notification-when-someone-tags-you-in-a-microblog");
 
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(

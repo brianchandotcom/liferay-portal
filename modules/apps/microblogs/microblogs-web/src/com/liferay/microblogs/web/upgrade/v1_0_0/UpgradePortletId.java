@@ -12,22 +12,27 @@
  * details.
  */
 
-package com.liferay.microblogs.web.microblogs.portlet.action;
+package com.liferay.microblogs.web.upgrade.v1_0_0;
 
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
-import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Adolfo Pérez
  */
-@Component(
-	immediate = true,
-	property = {"javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS_STATUS_UPDATE},
-	service = ConfigurationAction.class
-)
-public class MicroblogsStatusUpdateConfigurationAction
-	extends DefaultConfigurationAction {
+public class UpgradePortletId
+	extends com.liferay.portal.upgrade.util.UpgradePortletId {
+
+	@Override
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {
+				"1_WAR_microblogsportlet", MicroblogsPortletKeys.MICROBLOGS
+			},
+			new String[] {
+				"2_WAR_microblogsportlet",
+				MicroblogsPortletKeys.MICROBLOGS_STATUS_UPDATE
+			}
+		};
+	}
+
 }

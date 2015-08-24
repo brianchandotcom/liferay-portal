@@ -12,31 +12,35 @@
  * details.
  */
 
-package com.liferay.portlet.configuration.icon.print;
+package com.liferay.portal.kernel.portlet.configuration;
 
-import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIconFactory;
-import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconFactory;
+import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.osgi.service.component.annotations.Component;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = PortletConfigurationIconFactory.class)
-public class PrintPortletConfigurationIconFactory
-	extends BasePortletConfigurationIconFactory {
+public class BasePortletConfigurationIconFactory
+	implements PortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(HttpServletRequest request) {
-		return new PrintPortletConfigurationIcon(request);
+		return null;
 	}
 
 	@Override
 	public double getWeight() {
-		return 8.0;
+		return 0;
+	}
+
+	@Override
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		return false;
 	}
 
 }

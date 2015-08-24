@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "liferay_addpanel_numitems", "10"));
+int deltaDefault = GetterUtil.getInteger(SessionClicks.get(request, "com.liferay.control.menu.web_addPanelNumItems", "10"));
 
 int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
 

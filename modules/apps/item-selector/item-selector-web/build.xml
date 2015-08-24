@@ -2,10 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-    <property name="import.shared" value="item-selector-api" />
-	<property name="osgi.ide.dependencies" value="commons-beanutils.jar" />
-
-	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+	<import file="../../../build-module.xml" />
 </project>

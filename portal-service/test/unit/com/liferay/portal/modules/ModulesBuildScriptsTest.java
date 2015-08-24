@@ -47,6 +47,12 @@ public class ModulesBuildScriptsTest {
 						Assert.fail("Missing " + buildXmlPath);
 					}
 
+					Path ivyXmlPath = dirPath.resolve("ivy.xml");
+
+					if (Files.exists(ivyXmlPath)) {
+						Assert.fail("Forbidden " + ivyXmlPath);
+					}
+
 					if (Files.exists(dirPath.resolve("bnd.bnd"))) {
 						Path buildGradlePath = dirPath.resolve("build.gradle");
 

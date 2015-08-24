@@ -2,39 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="dynamic-data-mapping-api" />
-
-	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
-
-	<target name="build-ddm-form-values-query-parser">
-		<delete>
-			<fileset
-				dir="src/com/liferay/dynamic/data/mapping/form/values/query/internal/parser"
-				excludes="*.ignore"
-				includes="*.*"
-			/>
-		</delete>
-
-		<java
-			classname="org.antlr.v4.Tool"
-			classpathref="plugin.classpath"
-			dir="src/com/liferay/dynamic/data/mapping/form/values/query/internal/grammar"
-			fork="true"
-			maxmemory="1024m"
-			newenvironment="true"
-		>
-			<arg value="-o" />
-			<arg value="../parser" />
-			<arg value="DDMFormValuesQuery.g" />
-		</java>
-
-		<fixcrlf
-			includes="*.java"
-			javafiles="yes"
-			srcdir="src/com/liferay/dynamic/data/mapping/form/values/query/internal/parser"
-			tab="add"
-		/>
-	</target>
+	<import file="../../../build-module.xml" />
 </project>

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.cache.configuration;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -26,16 +27,16 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PortalCacheManagerConfiguration {
 
 	public PortalCacheManagerConfiguration(
-		Set<CallbackConfiguration> portalCacheManagerListenerConfigurations,
+		Set<Properties> portalCacheManagerListenerPropertiesSet,
 		PortalCacheConfiguration defaultPortalCacheConfiguration,
 		Set<PortalCacheConfiguration> portalCacheConfigurations) {
 
-		if (portalCacheManagerListenerConfigurations == null) {
-			_portalCacheManagerListenerConfigurations = Collections.emptySet();
+		if (portalCacheManagerListenerPropertiesSet == null) {
+			_portalCacheManagerListenerPropertiesSet = Collections.emptySet();
 		}
 		else {
-			_portalCacheManagerListenerConfigurations = new HashSet<>(
-				portalCacheManagerListenerConfigurations);
+			_portalCacheManagerListenerPropertiesSet = new HashSet<>(
+				portalCacheManagerListenerPropertiesSet);
 		}
 
 		_defaultPortalCacheConfiguration = defaultPortalCacheConfiguration;
@@ -63,11 +64,9 @@ public class PortalCacheManagerConfiguration {
 		return _portalCacheConfigurations.get(portalCacheName);
 	}
 
-	public Set<CallbackConfiguration>
-		getPortalCacheManagerListenerConfigurations() {
-
+	public Set<Properties> getPortalCacheManagerListenerPropertiesSet() {
 		return Collections.unmodifiableSet(
-			_portalCacheManagerListenerConfigurations);
+			_portalCacheManagerListenerPropertiesSet);
 	}
 
 	public Set<String> getPortalCacheNames() {
@@ -85,7 +84,6 @@ public class PortalCacheManagerConfiguration {
 	private final PortalCacheConfiguration _defaultPortalCacheConfiguration;
 	private final Map<String, PortalCacheConfiguration>
 		_portalCacheConfigurations;
-	private final Set<CallbackConfiguration>
-		_portalCacheManagerListenerConfigurations;
+	private final Set<Properties> _portalCacheManagerListenerPropertiesSet;
 
 }

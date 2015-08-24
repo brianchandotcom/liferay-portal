@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache.internal;
+package com.liferay.portal.cache.ehcache.cluster;
 
 import com.liferay.portal.kernel.cache.AggregatedPortalCacheListener;
 

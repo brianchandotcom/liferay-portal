@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.cache.cluster;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
-import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheReplicator;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -30,7 +29,7 @@ import java.util.Properties;
  */
 public class ClusterLinkPortalCacheReplicator
 	<K extends Serializable, V extends Serializable>
-		implements PortalCacheListener<K, V>, PortalCacheReplicator {
+		implements PortalCacheReplicator<K, V> {
 
 	public ClusterLinkPortalCacheReplicator(Properties properties) {
 		_replicatePuts = GetterUtil.getBoolean(

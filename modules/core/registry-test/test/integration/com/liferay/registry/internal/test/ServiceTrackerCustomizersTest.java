@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.registry;
+package com.liferay.registry.internal.test;
 
-import com.liferay.portal.kernel.registry.ServiceTrackerCustomizerFactory.ServiceWithProperties;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerCustomizers.ServiceWithProperties;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Hashtable;
@@ -32,7 +32,7 @@ import org.junit.Test;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ServiceTrackerCustomizerFactoryTest {
+public class ServiceTrackerCustomizersTest {
 
 	@ClassRule
 	@Rule

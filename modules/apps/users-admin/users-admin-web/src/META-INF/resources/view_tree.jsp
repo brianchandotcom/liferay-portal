@@ -214,11 +214,7 @@ if (organization != null) {
 					<%
 					boolean showOrganizations = false;
 
-					if (organization == null) {
-						showOrganizations = true;
-					}
-
-					if (organizationsCount > 0) {
+					if ((organization == null) || (organizationsCount > 0)) {
 						showOrganizations = true;
 					}
 

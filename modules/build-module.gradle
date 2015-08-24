@@ -25,11 +25,6 @@ apply plugin: "findbugs"
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")
 File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 File moduleFrameworkBaseDir = new File(liferay.liferayHome, "osgi")
-File nodejsDir = new File(buildDir, "nodejs")
-String nodejsVersion = project.properties["nodejs.version"]
-
-task nodeSetup(overwrite: true)
-task setupNpmCache(type: NpmTask)
 
 group = "com.liferay"
 distsDirName = FileUtil.relativize(rootProject.file("../tools/sdk/dist2"), buildDir)
@@ -163,83 +158,6 @@ jspC {
 	jspCVersion = project.properties["com.liferay.jasper.jspc.version"]
 }
 
-node {
-	download = true
-	nodeModulesDir = nodejsDir
-	version = nodejsVersion
-	workDir = nodejsDir
-}
-
-nodeSetup {
-	doLast {
-		String nodejsUrl = project.properties["nodejs.url"]
-
-		if (!nodejsUrl) {
-			String osName = "linux"
-
-			if (OSDetector.apple) {
-				osName = "osx"
-			}
-			else if (OSDetector.windows) {
-				osName = "windows"
-			}
-
-			nodejsUrl = project.properties["nodejs.url[${osName}${OSDetector.bitmode}]"]
-		}
-
-		if (!nodejsUrl) {
-			throw new GradleException("Unable to automatically detect the current operating system and architecture. Please manually set the property \"nodejs.url\" in gradle.properties to the location of NodeJS.")
-		}
-
-		nodejsUrl = nodejsUrl.replace('${nodejs.version}', nodejsVersion)
-
-		File nodejsFile = FileUtil.get(project, nodejsUrl)
-
-		if (OSDetector.windows) {
-			String osArch = OSDetector.bitmode
-
-			if (osArch == "32") {
-				osArch = "86"
-			}
-
-			copy {
-				from nodejsFile
-				into new File(nodejsDir, "node-v${nodejsVersion}-windows-x${osArch}/bin")
-			}
-
-			String nodejsNpmUrl = project.properties["nodejs.npm.url"]
-
-			nodejsNpmUrl = nodejsNpmUrl.replace('${nodejs.npm.version}', project.properties["nodejs.npm.version"])
-
-			copy {
-				from zipTree(FileUtil.get(project, nodejsNpmUrl))
-				into nodejsDir
-			}
-		}
-		else {
-			copy {
-				from tarTree(nodejsFile)
-				into nodejsDir
-			}
-		}
-	}
-
-	onlyIf {
-		!nodejsDir.exists()
-	}
-
-	outputs.dir nodejsDir
-}
-
-npmSetup {
-	finalizedBy setupNpmCache
-}
-
-setupNpmCache {
-	args = ["config", "set", "cache", new File(nodejsDir, ".cache"), "--global"]
-	workingDir = node.nodeModulesDir
-}
-
 repositories {
 	if (!Boolean.getBoolean("maven.local.ignore")) {
 		mavenLocal()
@@ -304,12 +222,6 @@ tasks.withType(FindBugs) {
 tasks.withType(JavaCompile) {
 	options.encoding = "UTF-8"
 	options.warnings = false
-}
-
-tasks.withType(NpmTask) {
-	if (it != npmSetup) {
-		dependsOn npmSetup
-	}
 }
 
 String testClassGroupIndex = System.getProperty("test.class.group.index")

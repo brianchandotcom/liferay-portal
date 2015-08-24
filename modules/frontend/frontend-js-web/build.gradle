@@ -1,3 +1,4 @@
+import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
@@ -27,7 +28,7 @@ task buildAlloyBootstrap(type: Copy)
 task buildJQueryPluginsForm
 task buildLexicon(type: Copy)
 task buildLfrAMDLoader(type: Copy)
-task downloadLfrAMDLoader(type: NpmTask)
+task downloadLfrAMDLoader(type: DownloadNodeModuleTask)
 
 buildAlloy {
 	File alloyDestinationDir = new File(jsDestinationDir, "aui")
@@ -128,20 +129,8 @@ buildLexicon {
 
 buildLfrAMDLoader {
 	dependsOn downloadLfrAMDLoader
-	from new File(node.nodeModulesDir, "node_modules/lfr-amd-loader/dist/loader.js")
+	from new File(node.nodeDir, "node_modules/lfr-amd-loader/dist/loader.js")
 	into "tmp/META-INF/resources/loader"
-}
-
-downloadLfrAMDLoader {
-	args = ["install", "lfr-amd-loader@${lfrAMDLoaderVersion}"]
-
-	onlyIf {
-		File dir = new File(node.nodeModulesDir, "node_modules/lfr-amd-loader")
-
-		!dir.exists()
-	}
-
-	workingDir = node.nodeModulesDir
 }
 
 classes {
@@ -150,4 +139,9 @@ classes {
 	dependsOn buildJQueryPluginsForm
 	dependsOn buildLexicon
 	dependsOn buildLfrAMDLoader
+}
+
+downloadLfrAMDLoader {
+	moduleName = "lfr-amd-loader"
+	moduleVersion = lfrAMDLoaderVersion
 }

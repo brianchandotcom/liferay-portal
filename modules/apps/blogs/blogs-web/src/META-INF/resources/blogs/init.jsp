@@ -35,6 +35,8 @@ BlogsPortletInstanceSettingsHelper blogsPortletInstanceSettingsHelper = new Blog
 com.liferay.blogs.settings.BlogsGroupServiceSettings rssBlogsGroupServiceSettings = settingsFactory.getSettings(com.liferay.blogs.settings.BlogsGroupServiceSettings.class, new GroupServiceSettingsLocator(themeDisplay.getSiteGroupId(), BlogsConstants.SERVICE_NAME));
 
 int pageAbstractLength = PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH;
+
+boolean showEditEntryPermissions = true;
 %>
 
 <%@ include file="/blogs/init-ext.jsp" %>

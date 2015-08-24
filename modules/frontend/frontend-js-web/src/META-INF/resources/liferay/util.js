@@ -1178,45 +1178,18 @@
 
 				iframeBody.delegate(
 					EVENT_CLICK,
-					function() {
-						dialog.set('visible', false, SRC_HIDE_LINK);
+					function(event) {
+						dialog.set(
+							'visible',
+							false,
+							event.currentTarget.hasClass('lfr-hide-dialog') ? SRC_HIDE_LINK : null
+						);
 
 						detachEventHandles();
 					},
-					'.lfr-hide-dialog'
+					'.btn-cancel,.lfr-hide-dialog'
 				)
 			];
-
-			var cancelButton = iframeBody.one('.btn-cancel');
-
-			if (cancelButton) {
-				cancelButton.after(
-					EVENT_CLICK,
-					function() {
-						detachEventHandles();
-
-						dialog.hide();
-					}
-				);
-			}
-
-			var rolesSearchContainer = iframeBody.one('#rolesSearchContainerSearchContainer');
-
-			if (rolesSearchContainer) {
-				eventHandles.push(
-					rolesSearchContainer.delegate(
-						EVENT_CLICK,
-						function(event) {
-							event.preventDefault();
-
-							detachEventHandles();
-
-							submitForm(document.hrefFm, event.currentTarget.attr('href'));
-						},
-						'a'
-					)
-				);
-			}
 		},
 		['aui-base']
 	);

@@ -21,7 +21,9 @@
 /*/*/*/*/*/genesis
 /*/*/*/*/*/portal/aui_deprecated.css
 /*/*/*/*/*/portal/bootstrap.css
+/*/*/*/*/.classpath
 /*/*/*/*/.js-cache
+/*/*/*/*/.project
 /*/*/*/*/bin
 /*/*/*/*/classes
 /*/*/*/*/docroot/WEB-INF/classes
@@ -33,7 +35,9 @@
 /*/*/*/*/test-coverage
 /*/*/*/*/test-results
 /*/*/*/*/tmp
+/*/*/*/.classpath
 /*/*/*/.js-cache
+/*/*/*/.project
 /*/*/*/bin
 /*/*/*/build
 /*/*/*/classes
@@ -46,7 +50,9 @@
 /*/*/*/test-coverage
 /*/*/*/test-results
 /*/*/*/tmp
+/*/*/.classpath
 /*/*/.js-cache
+/*/*/.project
 /*/*/bin
 /*/*/build
 /*/*/classes

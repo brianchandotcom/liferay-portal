@@ -49,8 +49,6 @@ public class EntriesChecker extends RowChecker {
 
 		super(liferayPortletResponse);
 
-		_liferayPortletResponse = liferayPortletResponse;
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -75,14 +73,14 @@ public class EntriesChecker extends RowChecker {
 		if (obj instanceof JournalFolder) {
 			data.put(
 				"entryType",
-				PortalUtil.getPortletNamespace(
-					JournalPortletKeys.JOURNAL) + "folderIds");
+				PortalUtil.getPortletNamespace(JournalPortletKeys.JOURNAL) +
+					"folderIds");
 		}
 		else {
 			data.put(
 				"entryType",
-				PortalUtil.getPortletNamespace(
-					JournalPortletKeys.JOURNAL) + "articleIds");
+				PortalUtil.getPortletNamespace(JournalPortletKeys.JOURNAL) +
+					"articleIds");
 		}
 
 		return data;
@@ -154,7 +152,6 @@ public class EntriesChecker extends RowChecker {
 		return super.getRowCheckBox(request, checked, disabled, primaryKey);
 	}
 
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PermissionChecker _permissionChecker;
 
 }

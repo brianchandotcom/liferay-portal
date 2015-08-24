@@ -638,7 +638,7 @@ for (long otherCalendarId : otherCalendarIds) {
 			borderStyle: 'dashed',
 			borderWidth: '2px',
 			color: '#F8F8F8',
-			content: '&nbsp;',
+			content: '',
 			editingEvent: true,
 			endDate: Liferay.CalendarUtil.toLocalTime(new Date(<%= endTime %>)),
 			on: {

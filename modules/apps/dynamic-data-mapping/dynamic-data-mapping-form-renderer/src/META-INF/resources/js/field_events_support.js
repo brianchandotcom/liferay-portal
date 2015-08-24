@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-ddm-form-renderer-field-events',
 	function(A) {
-		var Renderer = Liferay.DDM.Renderer;
-
 		var FieldEventsSupport = function() {
 		};
 

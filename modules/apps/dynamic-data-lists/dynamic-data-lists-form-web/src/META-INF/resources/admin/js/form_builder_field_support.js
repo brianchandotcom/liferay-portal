@@ -71,8 +71,6 @@ AUI.add(
 
 				settings.type = instance.get('type');
 
-				settings.visibilityExpression = 'true';
-
 				return settings;
 			},
 
@@ -90,28 +88,20 @@ AUI.add(
 				instance.settingsLoader.hide();
 			},
 
-			renderSettingsPanel: function(bodyNode) {
+			renderSettingsPanel: function() {
 				var instance = this;
 
-				var settingsModal = instance.getSettingsModal();
-
-				var footerNode = settingsModal._modal.getStdModNode(A.WidgetStdMod.FOOTER);
+				var footerNode = instance._getModalStdModeNode(A.WidgetStdMod.FOOTER);
 
 				var cancelButton = footerNode.one('.' + CSS_FIELD_SETTINGS_CANCEL);
 
 				cancelButton.insert(instance.settingsLoader, 'after');
 
-				var settingsForm = instance.get('settingsForm');
-
-				var settingsFormNode = A.Node.create(TPL_SETTINGS_FORM);
-
-				settingsForm.set('container', settingsFormNode);
-
-				settingsFormNode.appendTo(bodyNode);
-
-				settingsFormNode.on('submit', A.bind('_save', settingsModal));
+				instance._renderFormNode();
 
 				instance._updateSettingsFormValues();
+
+				var settingsForm = instance.get('settingsForm');
 
 				settingsForm.clearValidationMessages();
 				settingsForm.clearValidationStatus();
@@ -141,54 +131,66 @@ AUI.add(
 			validateSettings: function(callback) {
 				var instance = this;
 
-				var builder = instance.get('builder');
-
 				var settingsForm = instance.get('settingsForm');
-
-				var settingsModal = instance.getSettingsModal();
 
 				instance.showSettingsLoader();
 
 				settingsForm.clearValidationMessages();
 				settingsForm.clearValidationStatus();
 
-				settingsForm.validate(
-					function(hasErrors) {
-						var nameSettingsField = settingsForm.getField('name');
-
-						var field = builder.getField(nameSettingsField.getValue());
-
-						if (!!field && field !== instance) {
-							nameSettingsField.addValidationMessage('Field name already in use.');
-							nameSettingsField.showValidationStatus();
-
-							nameSettingsField.focus();
-
-							hasErrors = true;
-						}
-
-						if (!hasErrors) {
-							instance.saveSettings();
-
-							settingsModal.fire(
-								'save',
-								{
-									field: instance
-								}
-							);
-
-							settingsModal.hide();
-						}
-
-						instance.hideSettingsLoader();
-
-						if (callback) {
-							callback.call(instance, hasErrors);
-						}
-					}
-				);
+				settingsForm.validate(A.bind('_afterValidateSettingsForm', instance, callback));
 
 				return false;
+			},
+
+			_afterValidateSettingsForm: function(callback, hasErrors) {
+				var instance = this;
+
+				var builder = instance.get('builder');
+
+				var settingsForm = instance.get('settingsForm');
+
+				var nameSettingsField = settingsForm.getField('name');
+
+				var field = builder.getField(nameSettingsField.getValue());
+
+				if (!!field && field !== instance) {
+					nameSettingsField.addValidationMessage('Field name already in use.');
+					nameSettingsField.showValidationStatus();
+
+					nameSettingsField.focus();
+
+					hasErrors = true;
+				}
+
+				if (!hasErrors) {
+					var settingsModal = instance.getSettingsModal();
+
+					instance.saveSettings();
+
+					settingsModal.fire(
+						'save',
+						{
+							field: instance
+						}
+					);
+
+					settingsModal.hide();
+				}
+
+				instance.hideSettingsLoader();
+
+				if (callback) {
+					callback.call(instance, hasErrors);
+				}
+			},
+
+			_getModalStdModeNode: function(mode) {
+				var instance = this;
+
+				var settingsModal = instance.getSettingsModal();
+
+				return settingsModal._modal.getStdModNode(mode);
 			},
 
 			_renderFormBuilderField: function() {
@@ -209,8 +211,39 @@ AUI.add(
 				if (instance.get('repeatable')) {
 					var toolbar = container.one('.' + CSS_FIELD_REPEATABLE_TOOLBAR);
 
-					toolbar.hide();
+					if (toolbar) {
+						toolbar.hide();
+					}
 				}
+			},
+
+			_renderFormNode: function() {
+				var instance = this;
+
+				var settingsFormNode = A.Node.create(TPL_SETTINGS_FORM);
+
+				var settingsForm = instance.get('settingsForm');
+
+				settingsForm.set('container', settingsFormNode);
+
+				var bodyNode = instance._getModalStdModeNode(A.WidgetStdMod.BODY);
+
+				settingsFormNode.appendTo(bodyNode);
+
+				var formName = A.guid();
+
+				settingsFormNode.attr('id', formName);
+				settingsFormNode.attr('name', formName);
+
+				Liferay.Form.register(
+					{
+						id: formName
+					}
+				);
+
+				var settingsModal = instance.getSettingsModal();
+
+				settingsFormNode.on('submit', A.bind('_save', settingsModal));
 			},
 
 			_updateSettingsFormValues: function() {

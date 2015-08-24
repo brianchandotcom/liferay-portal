@@ -136,7 +136,7 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 
 	<c:if test="<%= showHeader %>">
 		<liferay-ui:header
-			backURL="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, portletResource) %>"
+			backURL="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource) %>"
 			localizeTitle="<%= false %>"
 			showBackURL="<%= showBackURL %>"
 			title="<%= title %>"

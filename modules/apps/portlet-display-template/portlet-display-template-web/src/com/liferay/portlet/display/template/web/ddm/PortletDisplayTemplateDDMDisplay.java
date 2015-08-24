@@ -58,7 +58,7 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 	public String getEditTemplateBackURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classNameId,
-			long classPK, String portletResource)
+			long classPK, long resourceClassNameId, String portletResource)
 		throws Exception {
 
 		String redirect = ParamUtil.getString(
@@ -67,7 +67,7 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 		if (Validator.isNull(redirect)) {
 			return getViewTemplatesURL(
 				liferayPortletRequest, liferayPortletResponse, classNameId,
-				classPK);
+				classPK, resourceClassNameId);
 		}
 
 		return redirect;

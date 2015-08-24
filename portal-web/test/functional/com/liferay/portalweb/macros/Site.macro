@@ -103,7 +103,7 @@
 		<if>
 			<isset var="parentSiteName" />
 			<then>
-				<execute function="AssertClick" locator1="SitesEditSite#PARENT_SITE_SELECT" value1="Select" />
+				<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
 				<var name="key_parentSiteName" value="${parentSiteName}" />
 
@@ -159,8 +159,8 @@
 		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_MEMBERS" value1="Add Members" />
 		<execute function="AssertClick" locator1="MenuItem#USER" value1="User" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userScreenName}" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 		<if>
 			<isset var="userMiddleName" />

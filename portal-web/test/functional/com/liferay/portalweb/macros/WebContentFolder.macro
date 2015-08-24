@@ -24,7 +24,7 @@
 		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
 		<execute function="AssertTextEquals" locator1="WC#FILTER_SELECTED" value1="${folderName}" />
 		<execute function="Click" locator1="Toolbar#ADD" />
-		<execute function="Click" locator1="MenuItem#ADD_SUBFOLDER" value1="Subfolder" />
+		<execute function="Click" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subfolderName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subfolderDescription}" />

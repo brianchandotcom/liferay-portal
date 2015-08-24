@@ -49,8 +49,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DATA_DEFINITION</td>
+	<td>//div[label[contains(.,'Data Definition')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DESCRIPTION</td>
-	<td>//textarea[contains(@id,'description')]</td>
+	<td>//input[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -186,6 +191,11 @@
 <tr>
 	<td>GOOGLE_CLIENT_SECRET</td>
 	<td>//input[contains(@id,'google-client-secret')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KEYWORDS</td>
+	<td>//input[@title='keywords']</td>
 	<td></td>
 </tr>
 <tr>

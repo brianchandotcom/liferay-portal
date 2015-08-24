@@ -147,7 +147,7 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[count(//th[contains(.,'Name')]/preceding-sibling::th) + 1]/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Name')]/preceding-sibling::th) + 1]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -157,27 +157,27 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_PARENT_ORGANIZATION</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[count(//th[contains(.,'Parent Organization')]/preceding-sibling::th) + 1]/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Parent Organization')]/preceding-sibling::th) + 1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_TYPE</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[count(//th[contains(.,'Type')]/preceding-sibling::th) + 1]/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Type')]/preceding-sibling::th) + 1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_CITY</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[count(//th[contains(.,'City')]/preceding-sibling::th) + 1]/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'City')]/preceding-sibling::th) + 1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_REGION</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[count(//th[contains(.,'Region')]/preceding-sibling::th) + 1]/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Region')]/preceding-sibling::th) + 1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_COUNTRY</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[count(//th[contains(.,'Country')]/preceding-sibling::th) + 1]/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Country')]/preceding-sibling::th) + 1]/a</td>
 	<td></td>
 </tr>
 <tr>

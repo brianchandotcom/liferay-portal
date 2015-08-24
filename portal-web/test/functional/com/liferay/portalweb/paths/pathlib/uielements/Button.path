@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>ADD_CUSTOM_FIELD</td>
-	<td>//button[contains(.,'Add Custom Field')]</td>
+	<td>//a[contains(.,'Add Custom Field')]|//button[contains(.,'Add Custom Field')]</td>
 	<td></td>
 </tr>
 <tr>

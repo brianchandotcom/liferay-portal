@@ -7,7 +7,7 @@
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${entryTitle}" />
 		<execute function="Type" locator1="TextInput#URL" value1="${entryURL}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#IFRAME" value1="${entryContent}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${entryContent}" />
 
 		<if>
 			<isset var="priority" />
@@ -50,7 +50,7 @@
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${entryTitleEdit}" />
 		<execute function="Type" locator1="TextInput#URL" value1="${entryURLEdit}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#IFRAME" value1="${entryContentEdit}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${entryContentEdit}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>

@@ -31,7 +31,7 @@
 		<if>
 			<isset var="structureDescription" />
 			<then>
-				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${structureDescription}" />
+				<execute function="Type" locator1="TextInput#DESCRIPTION" value1="${structureDescription}" />
 			</then>
 		</if>
 
@@ -124,7 +124,7 @@
 		<if>
 			<isset var="structureDescription" />
 			<then>
-				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${structureDescription}" />
+				<execute function="Type" locator1="TextInput#DESCRIPTION" value1="${structureDescription}" />
 			</then>
 		</if>
 

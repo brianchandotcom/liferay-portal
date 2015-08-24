@@ -236,7 +236,7 @@
 		<if>
 			<isset var="larFileName" />
 			<then>
-				<execute function="Type" locator1="ExportImport#EXPORT_IMPORT_IFRAME" value1="${larFileName}" />
+				<execute function="Type" locator1="ExportImport#EXPORT_FILE_NAME" value1="${larFileName}" />
 			</then>
 		</if>
 

@@ -124,12 +124,12 @@
 <!--ENTRY_DESCRIPTIVE-->
 <tr>
 	<td>ENTRY_DESCRIPTIVE_THUMBNAIL</td>
-	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-thumbnail']/img</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[contains(@class,'list-group-item-field')]/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_THUMBNAIL_GENERIC</td>
-	<td>//div[@class='entry-thumbnail']/img</td>
+	<td>//div[contains(@class,'list-group-item-field')]/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,52 +139,57 @@
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_CHECKBOX</td>
-	<td>//div[@data-title='${key_webContentTitle}']//input[@name='_15_rowIdsJournalArticle']</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_TITLE</td>
-	<td>//div[@data-title='${key_webContentTitle}']//span[@class='entry-title']/span</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[@class=' list-group-item-content']//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_TITLE_COPY</td>
-	<td>xpath=(//div[@data-title='${key_webContentTitle}']//span[@class='entry-title']/span)[3]</td>
+	<td>xpath=(//li[contains(@data-title,'${key_webContentTitle}')]//div[@class=' list-group-item-content']//a)[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_VERSION</td>
-	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-metadata']/small/dl/dt[contains(.,'Version:')]/following-sibling::dd</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//h6[contains(.,'Version')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_LAST_UPDATED</td>
-	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-metadata']/small/dl/dd[contains(.,'ago by ${key_userFirstLast}')]</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//h6[contains(.,'Last updated')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_CREATED</td>
-	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-metadata']/small/dl/dt[contains(.,'Created: ')]/following-sibling::dd</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//h6[contains(.,'Created')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_DISPLAY_DATE</td>
-	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-metadata']/small/dl/dt[contains(.,'Display Date:')]/following-sibling::dd</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//h6[contains(.,'Display Date')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_CATEGORY</td>
-	<td>//div[@data-title='${key_webContentTitle}']//span[contains(@class,'asset-category') and contains(.,'${key_categoryName}')]</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'asset-category') and contains(.,'${key_categoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_CATEGORY_COPY</td>
-	<td>xpath=(//div[@data-title='${key_webContentTitle}']//span[contains(@class,'asset-category') and contains(.,'${key_categoryName}')])[2]</td>
+	<td>xpath=(/li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'asset-category') and contains(.,'${key_categoryName}')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_DESCRIPTIVE_TAG</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'asset-tags') and contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_WORKFLOW_STATUS</td>
-	<td>//div[@data-title='${key_webContentTitle}']//span[@class='workflow-status']/strong</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[@class='status']</td>
 	<td></td>
 </tr>
 <tr>

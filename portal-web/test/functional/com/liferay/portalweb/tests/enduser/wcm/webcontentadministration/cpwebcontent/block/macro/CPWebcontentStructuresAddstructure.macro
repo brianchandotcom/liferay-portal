@@ -1,7 +1,7 @@
 <definition>
 	<command name="showDetails">
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="TextArea#DESCRIPTION" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="TextInput#DESCRIPTION" />
 			<then>
 				<execute function="Click" locator1="DDMEditStructure#DETAILS" />
 			</then>

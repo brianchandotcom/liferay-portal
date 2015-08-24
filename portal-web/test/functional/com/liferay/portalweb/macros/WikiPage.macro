@@ -154,7 +154,7 @@
 	</command>
 
 	<command name="addFrontPageCP">
-		<execute function="AssertClick" locator1="Message#INFO_1" value1="This page is empty. Edit it to add some text." />
+		<execute function="AssertClick" locator1="Message#INFO_LINK" value1="This page is empty. Edit it to add some text." />
 
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${wikiFrontPageContent}" />
 		<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" locator1="Button#PUBLISH" value1="Publish" />
@@ -688,7 +688,7 @@
 	<command name="editFrontPagePG">
 		<execute function="AssertClick" locator1="Wiki#LINK_EDIT" value1="Edit" />
 
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#IFRAME" value1="${wikiPageContentEdit}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${wikiPageContentEdit}" />
 		<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" locator1="Button#PUBLISH" value1="Publish" />
 
 		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContentEdit}" />
@@ -944,7 +944,7 @@
 
 		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN" />
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_RECYCLE_BIN" value1="The ${assetType} ${wikiPageTitle} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="The ${assetType} ${wikiPageTitle} was moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="moveWikiPagePG">
@@ -1204,7 +1204,7 @@
 	</command>
 
 	<command name="viewChildPagePG">
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER_2" value1="${wikiChildPageTitle}" />
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${wikiChildPageTitle}" />
 		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiChildPageContent}" />
 	</command>
 
@@ -1429,7 +1429,7 @@
 	</command>
 
 	<command name="viewPG">
-		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER_2" value1="${wikiPageTitle}" />
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${wikiPageTitle}" />
 
 		<if>
 			<equals arg1="${wikiPageContentGeneric}" arg2="true" />

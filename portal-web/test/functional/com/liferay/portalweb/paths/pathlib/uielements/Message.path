@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_LINK</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_1</td>
 	<td>xpath=(//div[@class='alert alert-info'])[1]</td>
 	<td></td>

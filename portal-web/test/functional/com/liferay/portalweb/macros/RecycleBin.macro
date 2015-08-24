@@ -139,10 +139,10 @@
 		<if>
 			<isset var="customMaxAgeMsg" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS_RECYCLE_BIN" value1="${customMaxAgeMsg}" />
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="${customMaxAgeMsg}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS_RECYCLE_BIN" value1="Entries that have been in the Recycle Bin for more than 1 month are automatically deleted. Empty the Recycle Bin" />
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="Entries that have been in the Recycle Bin for more than 1 month are automatically deleted. Empty the Recycle Bin" />
 			</else>
 		</if>
 

@@ -74,11 +74,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_SUBFOLDER</td>
-	<td>//a[@role='menuitem' and contains(.,'Add Subfolder')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_USER</td>
 	<td>//a[@role='menuitem' and contains(.,'Add User')]</td>
 	<td></td>
@@ -566,6 +561,16 @@
 <tr>
 	<td>SUBSCRIBE</td>
 	<td>//a[@role='menuitem' and contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBFOLDER</td>
+	<td>//a[@role='menuitem' and contains(.,'Subfolder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBFOLDER_2</td>
+	<td>xpath=(//a[@role='menuitem' and contains(.,'Subfolder')])[2]</td>
 	<td></td>
 </tr>
 <tr>

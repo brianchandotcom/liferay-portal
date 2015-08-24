@@ -59,6 +59,16 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 	#end
 #end
 
+#macro (product_menu_sidebar $state)
+	#if ($is_setup_complete && $is_signed_in)
+		<div class="$state lfr-product-menu-panel sidenav-fixed sidenav-menu-slider" id="sidenavSliderId">
+			<div class="product-menu sidebar sidebar-inverse sidenav-menu">
+				#product_menu()
+			</div>
+		</div>
+	#end
+#end
+
 #macro (quick_access $content_id)
 	#set ($quick_access_tag = $theme.getQuickAccessTag())
 

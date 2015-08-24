@@ -12,17 +12,13 @@
 	${theme.include(top_head_include)}
 </head>
 
-<body class="${liferay_product_menu_state} ${css_class}">
+<body class="${css_class}">
 
 <@liferay.quick_access content_id="#main-content" />
 
 ${theme.include(body_top_include)}
 
-<div class="${liferay_product_menu_state} lfr-product-menu-panel sidenav-fixed sidenav-menu-slider" id="sidenavSliderId">
-	<div class="product-menu sidebar sidebar-inverse sidenav-menu">
-		<@liferay.product_menu />
-	</div>
-</div>
+<@liferay.product_menu_sidebar(liferay_product_menu_state) />
 
 <div class="container-fluid" id="wrapper">
 	<header id="banner" role="banner">

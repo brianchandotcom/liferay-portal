@@ -12,7 +12,7 @@
 	$theme.include($top_head_include)
 </head>
 
-<body class="$liferay_product_menu_state $css_class">
+<body class="$css_class">
 
 #quick_access("#main-content")
 
@@ -22,11 +22,7 @@ $theme.include($body_top_include)
 
 #set ($show_dockbar = ($control_panel_category != "my") || !$getterUtil.getBoolean($propsUtil.get("dockbar.administrative.links.show.in.pop.up")))
 
-<div class="$liferay_product_menu_state lfr-product-menu-panel sidenav-fixed sidenav-menu-slider" id="sidenavSliderId">
-	<div class="product-menu sidebar sidebar-inverse sidenav-menu">
-		#product_menu()
-	</div>
-</div>
+#product_menu_sidebar($liferay_product_menu_state)
 
 <div id="wrapper">
 	<div id="content-wrapper">

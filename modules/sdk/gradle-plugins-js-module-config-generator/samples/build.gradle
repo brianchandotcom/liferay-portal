@@ -8,24 +8,13 @@ buildscript {
 	}
 
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.js.module.config.generator", version: "+"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.js.module.config.generator", version: "latest.release"
 	}
 }
 
 apply plugin: "java"
 
 apply plugin: "com.liferay.js.module.config.generator"
-
-File nodejsDir = buildDir
-
-nodejsDir.mkdirs()
-
-node {
-	download = true
-	nodeModulesDir = nodejsDir
-	npmVersion = "1.4.9"
-	version = "0.12.6"
-}
 
 configJSModules {
 	include "**/*.js"

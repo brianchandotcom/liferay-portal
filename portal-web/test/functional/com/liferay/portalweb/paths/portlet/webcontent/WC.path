@@ -97,13 +97,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_ICON_MENULIST_ARROW</td>
-	<td>//div[@data-title='${key_webContentTitle}']//span[contains(@class,'entry-action') and contains(@class,'overlay')]/div/a/i[@class='caret']</td>
+	<td>ENTRY_ICON_MENULIST_ICON</td>
+	<td>//div[@data-title='${key_webContentTitle}']//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_ICON_CHECKBOX</td>
-	<td>//div[@data-title='${key_webContentTitle}']//input[@name='_15_rowIdsJournalArticle']</td>
+	<td>//div[@data-title='${key_webContentTitle}']//input[contains(@name,'rowIdsJournal')]</td>
 	<td></td>
 </tr>
 <tr>

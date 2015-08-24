@@ -142,7 +142,7 @@
 	</command>
 
 	<command name="configureAPSelectMoreThanOnePG">
-		<execute function="AssertClick" locator1="Icon#COG" value1="Options" />
+		<execute function="Click" locator1="Icon#COG" />
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -438,7 +438,7 @@
 	<command name="configureSiteScopeRemoveSitePG">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertClick" locator1="Icon#COG" value1="Options" />
+		<execute function="Click" locator1="Icon#COG" />
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -927,7 +927,7 @@
 	</command>
 
 	<command name="viewRestoredSetupPG">
-		<execute function="AssertClick" locator1="Icon#COG" value1="Options" />
+		<execute function="Click" locator1="Icon#COG" />
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

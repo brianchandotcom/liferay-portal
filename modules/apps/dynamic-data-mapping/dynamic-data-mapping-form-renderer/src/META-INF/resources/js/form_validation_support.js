@@ -5,21 +5,18 @@ AUI.add(
 
 		var Renderer = Liferay.DDM.Renderer;
 
-		var Util = Renderer.Util;
-
 		var FormValidationSupport = function() {
 		};
 
 		FormValidationSupport.ATTRS = {
-			strings: {
-				value: {
-					defaultValidationMessage: Liferay.Language.get('unkonwn-error'),
-					requestErrorMessage: Liferay.Language.get('there-was-an-error-when-trying-to-validate-your-form')
-				}
+			evaluator: {
+				valueFn: '_valueEvaluator'
 			},
 
-			validationURL: {
-				value: '/o/ddm-eval'
+			strings: {
+				value: {
+					requestErrorMessage: Liferay.Language.get('there-was-an-error-when-trying-to-validate-your-form')
+				}
 			}
 		};
 
@@ -27,32 +24,31 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
-				instance.after('*:blur', instance._afterFieldBlur);
+				var evaluator = instance.get('evaluator');
 
-				instance._bindFormEvents();
-			},
-
-			clearValidationMessages: function() {
-				var instance = this;
-
-				instance.eachField(
-					function(field) {
-						field.clearValidationMessages();
-					}
+				instance._eventHandlers.push(
+					evaluator.after('evaluationEnded', A.bind('_afterEvaluationEnded', instance)),
+					evaluator.after('evaluationStarted', A.bind('_afterEvaluationStarted', instance))
 				);
 			},
 
-			clearValidationStatus: function() {
+			hasErrors: function() {
 				var instance = this;
+
+				var hasErrors = false;
 
 				instance.eachField(
 					function(field) {
-						field.clearValidationStatus();
+						hasErrors = field.hasErrors();
+
+						return hasErrors;
 					}
 				);
+
+				return hasErrors;
 			},
 
-			hasValidation: function(response) {
+			hasValidation: function() {
 				var instance = this;
 
 				var hasValidation = false;
@@ -68,215 +64,15 @@ AUI.add(
 				return hasValidation;
 			},
 
-			hideFeedback: function() {
-				var instance = this;
-
-				instance.eachField(
-					function(field) {
-						field.hideFeedback();
-					}
-				);
-			},
-
-			showErrorAlert: function() {
-				var instance = this;
-
-				var container = instance.get('container');
-
-				if (container.inDoc()) {
-					var strings = instance.get('strings');
-
-					var alert = new A.Alert(
-						{
-							animated: true,
-							bodyContent: strings.requestErrorMessage,
-							closeable: true,
-							cssClass: 'alert-danger',
-							destroyOnHide: true,
-							duration: 1
-						}
-					).render();
-
-					container.insert(alert.get('boundingBox'), 'before');
-				}
-			},
-
-			showLoadingFeedback: function() {
-				var instance = this;
-
-				instance.eachField(
-					function(field) {
-						if (field.hasValidation()) {
-							field.showLoadingFeedback();
-						}
-					}
-				);
-			},
-
-			showValidationStatus: function() {
-				var instance = this;
-
-				instance.eachField(
-					function(field) {
-						if (field.hasValidation()) {
-							field.showValidationStatus();
-						}
-					}
-				);
-			},
-
-			validate: function(callback) {
-				var instance = this;
-
-				if (instance.hasValidation()) {
-					instance.showLoadingFeedback();
-
-					instance._validate(
-						function(response) {
-							var hasErrors = true;
-
-							instance.hideFeedback();
-
-							if (response && Lang.isObject(response)) {
-								instance._handleFormValidation(response);
-
-								hasErrors = instance._hasErrors(response);
-
-								instance.showValidationStatus();
-							}
-							else {
-								instance.showErrorAlert();
-							}
-
-							if (callback) {
-								callback.call(instance, hasErrors, response);
-							}
-						}
-					);
-				}
-				else if (callback) {
-					callback.call(instance, false);
-				}
-			},
-
-			validateField: function(field, callback) {
-				var instance = this;
-
-				if (field.hasValidation()) {
-					field.showLoadingFeedback();
-
-					instance._validate(
-						function(response) {
-							var hasErrors = true;
-
-							field.hideFeedback();
-
-							if (response && Lang.isObject(response)) {
-								instance._handleFieldValidation(field, response);
-
-								hasErrors = field.hasErrors();
-
-								field.showValidationStatus();
-							}
-							else {
-								instance.showErrorAlert();
-							}
-
-							if (callback) {
-								callback.call(instance, hasErrors, response);
-							}
-						}
-					);
-				}
-				else if (callback) {
-					callback.call(instance, false);
-				}
-			},
-
-			_afterFieldBlur: function(event) {
-				var instance = this;
-
-				instance.validateField(event.field);
-			},
-
-			_bindFormEvents: function() {
-				var instance = this;
-
-				var domForm = instance._getDOMForm();
-
-				if (domForm) {
-					domForm.on('submit', A.bind('_onDOMSubmitForm', instance));
-
-					Liferay.on('submitForm', instance._onLiferaySubmitForm, instance);
-				}
-			},
-
-			_getDOMForm: function() {
-				var instance = this;
-
-				var container = instance.get('container');
-
-				return container.ancestor('form', true);
-			},
-
-			_handleFieldValidation: function(field, response) {
-				var instance = this;
-
-				var instanceId = field.get('instanceId');
-
-				var validation = Util.getFieldByKey(response, instanceId, 'instanceId');
-
-				if (validation) {
-					var messages = validation.messages;
-
-					if (!messages && !validation.valid) {
-						var strings = instance.get('strings');
-
-						messages = [strings.defaultValidationMessage];
-					}
-
-					if (messages && messages.length) {
-						field.set('validationMessages', messages);
-					}
-					else {
-						field.clearValidationMessages();
-					}
-				}
-			},
-
-			_handleFormValidation: function(response) {
-				var instance = this;
-
-				var fieldToFocus;
-
-				instance.eachField(
-					function(field) {
-						instance._handleFieldValidation(field, response);
-
-						if (field.hasErrors() && !fieldToFocus) {
-							fieldToFocus = field;
-						}
-					}
-				);
-
-				if (fieldToFocus) {
-					fieldToFocus.focus();
-				}
-			},
-
-			_hasErrors: function(response) {
+			pageHasErrors: function(pageNode) {
 				var instance = this;
 
 				var hasErrors = false;
 
 				instance.eachField(
 					function(field) {
-						var instanceId = field.get('instanceId');
-
-						var validation = Util.getFieldByKey(response, instanceId, 'instanceId');
-
-						if (validation && validation.valid === false) {
-							hasErrors = true;
+						if (pageNode.contains(field.get('container'))) {
+							hasErrors = field.hasErrors();
 						}
 
 						return hasErrors;
@@ -286,52 +82,135 @@ AUI.add(
 				return hasErrors;
 			},
 
-			_onDOMSubmitForm: function(event) {
+			processPageValidation: function(pageNode, result) {
 				var instance = this;
 
-				event.preventDefault();
+				var fieldToFocus;
 
-				instance.validate(
-					function(hasErrors) {
-						if (!hasErrors) {
-							var domForm = instance._getDOMForm();
+				instance.eachField(
+					function(field) {
+						if (pageNode.contains(field.get('container'))) {
+							field.processValidation(result);
+							field.showValidationStatus();
 
-							domForm.submit();
+							if (field.hasErrors()) {
+								fieldToFocus = field;
+							}
+
+							return !!fieldToFocus;
 						}
 					}
 				);
-			},
 
-			_onLiferaySubmitForm: function(event) {
-				var instance = this;
-
-				if (event.form === instance._getDOMForm()) {
-					event.preventDefault();
+				if (fieldToFocus) {
+					fieldToFocus.focus();
 				}
 			},
 
-			_validate: function(callback) {
+			processValidation: function(result) {
 				var instance = this;
 
-				A.io.request(
-					instance.get('validationURL'),
-					{
-						data: {
-							serializedDDMForm: JSON.stringify(instance.get('definition')),
-							serializedDDMFormValues: JSON.stringify(instance.toJSON())
-						},
-						dataType: 'JSON',
-						method: 'POST',
-						on: {
-							failure: function() {
-								callback.call(instance, null);
-							},
-							success: function() {
-								var response = this.get('responseData');
+				var fieldToFocus;
 
-								callback.call(instance, response);
+				instance.eachField(
+					function(field) {
+						field.processValidation(result);
+
+						if (field.hasErrors()) {
+							fieldToFocus = field;
+						}
+
+						return !!fieldToFocus;
+					}
+				);
+
+				if (fieldToFocus) {
+					fieldToFocus.focus();
+				}
+			},
+
+			validate: function(callback) {
+				var instance = this;
+
+				if (instance.hasValidation()) {
+					var evaluator = instance.get('evaluator');
+
+					evaluator.evaluate(
+						function(result) {
+							var hasErrors = true;
+
+							if (result && Lang.isObject(result)) {
+								instance.processValidation(result);
+
+								instance.showValidationStatus();
+
+								hasErrors = instance.hasErrors();
+							}
+
+							if (callback) {
+								callback.call(instance, hasErrors, result);
 							}
 						}
+					);
+				}
+				else if (callback) {
+					callback.call(instance, false);
+				}
+			},
+
+			validatePage: function(pageNode, callback) {
+				var instance = this;
+
+				if (instance.hasValidation()) {
+					var evaluator = instance.get('evaluator');
+
+					evaluator.evaluate(
+						function(result) {
+							var hasErrors = true;
+
+							if (result && Lang.isObject(result)) {
+								instance.processPageValidation(pageNode, result);
+
+								hasErrors = instance.pageHasErrors(pageNode);
+							}
+
+							if (callback) {
+								callback.call(instance, hasErrors, result);
+							}
+						}
+					);
+				}
+				else if (callback) {
+					callback.call(instance, false);
+				}
+			},
+
+			_afterEvaluationEnded: function(event) {
+				var instance = this;
+
+				var result = event.result;
+
+				instance.hideFeedback();
+
+				if (!result || !Lang.isObject(result)) {
+					var strings = instance.get('strings');
+
+					instance.showAlert(strings.requestErrorMessage);
+				}
+			},
+
+			_afterEvaluationStarted: function() {
+				var instance = this;
+
+				instance.showLoadingFeedback();
+			},
+
+			_valueEvaluator: function() {
+				var instance = this;
+
+				return new Renderer.ExpressionsEvaluator(
+					{
+						form: instance
 					}
 				);
 			}
@@ -341,6 +220,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-alert', 'aui-request']
+		requires: ['liferay-ddm-form-renderer-expressions-evaluator']
 	}
 );

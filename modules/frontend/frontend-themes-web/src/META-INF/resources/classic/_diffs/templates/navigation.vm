@@ -4,61 +4,9 @@
 			#search()
 		</div>
 
-		<ul aria-label="#language ("site-pages")" class="nav navbar-nav navbar-right navbar-site" role="menubar">
-			<h1 class="hide-accessible">#language ("navigation")</h1>
-
-			#foreach ($nav_item in $nav_items)
-				#if ($nav_item.isBrowsable() || $nav_item.hasBrowsableChildren())
-					#set ($nav_item_attr_selected="")
-					#set ($nav_item_attr_has_popup="")
-					#set ($nav_item_caret="")
-					#set ($nav_item_css_class="lfr-nav-item")
-					#set ($nav_item_href_link="")
-					#set ($nav_item_link_css_class="")
-
-					#if ($nav_item.hasBrowsableChildren())
-						#set ($nav_item_attr_has_popup="aria-haspopup='true'")
-						#set ($nav_item_caret='<span class="lfr-nav-child-toggle"><i class="icon-caret-down"></i></span>')
-						#set ($nav_item_css_class="$nav_item_css_class dropdown")
-						#set ($nav_item_link_css_class="dropdown-toggle")
-					#end
-
-					#if ($nav_item.isBrowsable())
-						#set ($nav_item_href_link="href='$nav_item.getURL()'")
-					#end
-
-					#if ($nav_item.isSelected())
-						#set ($nav_item_attr_selected="aria-selected='true'")
-						#set ($nav_item_css_class="$nav_item_css_class selected active")
-					#end
-
-					<li class="$nav_item_css_class" id="layout_$nav_item.getLayoutId()" $nav_item_attr_selected role="presentation">
-						<a aria-labelledby="layout_$nav_item.getLayoutId()" $nav_item_attr_has_popup class="$nav_item_link_css_class" $nav_item_href_link $nav_item.getTarget() role="menuitem">
-							<span>$nav_item.icon() $nav_item.getName() $nav_item_caret</span>
-						</a>
-
-						#if ($nav_item.hasBrowsableChildren())
-							<ul aria-expanded="false" class="child-menu dropdown-menu" role="menu">
-								#foreach ($nav_child in $nav_item.getBrowsableChildren())
-									#set ($nav_child_attr_selected="")
-									#set ($nav_child_css_class="lfr-nav-item")
-									#set ($nav_child_href_link="")
-
-									#if ($nav_child.isSelected())
-										#set ($nav_child_attr_selected="aria-selected='true'")
-										#set ($nav_child_css_class="active selected")
-									#end
-
-									<li class="$nav_child_css_class" id="layout_$nav_child.getLayoutId()" $nav_child_attr_selected role="presentation">
-										<a aria-labelledby="layout_$nav_child.getLayoutId()" href="$nav_child.getURL()" $nav_child.getTarget() role="menuitem">$nav_child.getName()</a>
-									</li>
-								#end
-							</ul>
-						#end
-					</li>
-				#end
-			#end
-		</ul>
+		<div class="navbar-right">
+			#navigation_menu()
+		</div>
 	</nav>
 
 	<nav class="user-personal-bar">
@@ -68,8 +16,3 @@
 	<nav>
 
 </div>
-
-<script>
-	Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
-	Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';
-</script>

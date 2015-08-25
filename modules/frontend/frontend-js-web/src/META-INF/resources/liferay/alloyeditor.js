@@ -217,6 +217,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['alloy-editor', 'liferay-portlet-base']
+		requires: ['alloy-editor', 'aui-component', 'liferay-portlet-base']
 	}
 );

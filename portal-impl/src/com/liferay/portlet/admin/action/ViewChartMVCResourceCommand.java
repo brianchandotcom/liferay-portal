@@ -31,6 +31,7 @@ import java.awt.Font;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -59,7 +60,8 @@ public class ViewChartMVCResourceCommand implements MVCResourceCommand {
 
 	@Override
 	public boolean serveResource(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortletException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -102,8 +104,8 @@ public class ViewChartMVCResourceCommand implements MVCResourceCommand {
 				resourceResponse.getPortletOutputStream();
 			ChartUtilities.writeChartAsPNG(outputStream, jFreeChart, 280, 180);
 		}
-		catch (IOException e) {
-			return false;
+		catch (IOException ioe) {
+			throw new PortletException(ioe);
 		}
 
 		return true;

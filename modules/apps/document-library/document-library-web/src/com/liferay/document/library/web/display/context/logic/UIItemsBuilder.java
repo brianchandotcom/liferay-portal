@@ -199,11 +199,24 @@ public class UIItemsBuilder {
 
 			deleteMenuItem.setKey(DLUIItemKeys.DELETE);
 
-			PortletURL portletURL = _getActionURL(
-				"/document_library/edit_file_entry", Constants.DELETE);
+			String mvcActionCommandName = "/document_library/edit_file_entry";
 
-			portletURL.setParameter(
-				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+			if (_fileShortcut != null) {
+				mvcActionCommandName = "/document_library/edit_file_shortcut";
+			}
+
+			PortletURL portletURL = _getActionURL(
+				mvcActionCommandName, Constants.DELETE);
+
+			if (_fileShortcut == null) {
+				portletURL.setParameter(
+					"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+			}
+			else {
+				portletURL.setParameter(
+					"fileShortcutId",
+					String.valueOf(_fileShortcut.getFileShortcutId()));
+			}
 
 			deleteMenuItem.setURL(portletURL.toString());
 
@@ -215,11 +228,24 @@ public class UIItemsBuilder {
 			deleteMenuItem.setKey(DLUIItemKeys.DELETE);
 			deleteMenuItem.setTrash(true);
 
-			PortletURL portletURL = _getActionURL(
-				"/document_library/edit_file_entry", Constants.MOVE_TO_TRASH);
+			String mvcActionCommandName = "/document_library/edit_file_entry";
 
-			portletURL.setParameter(
-				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+			if (_fileShortcut != null) {
+				mvcActionCommandName = "/document_library/edit_file_shortcut";
+			}
+
+			PortletURL portletURL = _getActionURL(
+				mvcActionCommandName, Constants.MOVE_TO_TRASH);
+
+			if (_fileShortcut == null) {
+				portletURL.setParameter(
+					"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+			}
+			else {
+				portletURL.setParameter(
+					"fileShortcutId",
+					String.valueOf(_fileShortcut.getFileShortcutId()));
+			}
 
 			deleteMenuItem.setURL(portletURL.toString());
 

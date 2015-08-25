@@ -147,18 +147,17 @@ public class MBMessageServiceTest {
 				doAsUserThread.join();
 			}
 
-			List<LoggingEvent> loggingEvents =
-				captureAppender1.getLoggingEvents();
+			for (LoggingEvent loggingEvent :
+					captureAppender1.getLoggingEvents()) {
 
-			for (LoggingEvent loggingEvent : loggingEvents) {
 				Assert.assertEquals(
 					"Application exception overridden by commit exception",
 					loggingEvent.getMessage());
 			}
 
-			loggingEvents = captureAppender2.getLoggingEvents();
+			for (LoggingEvent loggingEvent :
+					captureAppender2.getLoggingEvents()) {
 
-			for (LoggingEvent loggingEvent : loggingEvents) {
 				String message = loggingEvent.getRenderedMessage();
 
 				Assert.assertTrue(
@@ -168,9 +167,9 @@ public class MBMessageServiceTest {
 					);
 			}
 
-			loggingEvents = captureAppender3.getLoggingEvents();
+			for (LoggingEvent loggingEvent :
+					captureAppender3.getLoggingEvents()) {
 
-			for (LoggingEvent loggingEvent : loggingEvents) {
 				String message = loggingEvent.getRenderedMessage();
 
 				Assert.assertTrue(
@@ -181,9 +180,9 @@ public class MBMessageServiceTest {
 									"GenericJDBCException: Could not execute"));
 			}
 
-			loggingEvents = captureAppender4.getLoggingEvents();
+			for (LoggingEvent loggingEvent :
+					captureAppender4.getLoggingEvents()) {
 
-			for (LoggingEvent loggingEvent : loggingEvents) {
 				String message = loggingEvent.getRenderedMessage();
 
 				Assert.assertTrue(message.contains("Your server command"));

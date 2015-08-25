@@ -9,7 +9,7 @@
 #set ($root_css_class = $languageUtil.get($locale, "lang.dir"))
 #set ($css_class = $htmlUtil.escape($theme_display.getColorScheme().getCssClass()) + " yui3-skin-sam")
 
-#set ($liferay_product_menu_state = $sessionClicks.get($request, "liferay_product_menu_state", "closed"))
+#set ($liferay_product_menu_state = $sessionClicks.get($request, "com.liferay.control.menu.web_productMenuState", "closed"))
 
 #set ($css_class = $css_class + " " + $liferay_product_menu_state)
 

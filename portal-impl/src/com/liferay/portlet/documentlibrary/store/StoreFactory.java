@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
@@ -30,6 +34,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  * @author Manuel de la Peña
+ * @author Edward C. Han
  */
 public class StoreFactory {
 
@@ -107,7 +112,12 @@ public class StoreFactory {
 
 	public Store getStore() {
 		if (_store == null) {
-			setStore(PropsValues.DL_STORE_IMPL);
+			if (Validator.isNull(_storeType)) {
+				setStore(PropsValues.DL_STORE_IMPL);
+			}
+			else {
+				setStore(_storeType);
+			}
 		}
 
 		if (_store == null) {
@@ -139,6 +149,7 @@ public class StoreFactory {
 	public void setStore(String key) {
 		if (key == null) {
 			_store = null;
+			_storeType = null;
 
 			return;
 		}
@@ -148,6 +159,7 @@ public class StoreFactory {
 		}
 
 		_store = getStore(key);
+		_storeType = key;
 	}
 
 	private StoreFactory() {
@@ -156,6 +168,8 @@ public class StoreFactory {
 		_storeWrapperServiceTrackerMap.open();
 	}
 
+	private static final String _KEY_NAME = "store.type";
+
 	private static final Log _log = LogFactoryUtil.getLog(StoreFactory.class);
 
 	private static StoreFactory _storeFactory;
@@ -163,10 +177,52 @@ public class StoreFactory {
 
 	private volatile Store _store = null;
 	private final ServiceTrackerMap<String, Store> _storeServiceTrackerMap =
-		ServiceTrackerCollections.singleValueMap(Store.class, "store.type");
+		ServiceTrackerCollections.singleValueMap(
+			Store.class, _KEY_NAME, new StoreServiceTrackerCustomizer());
+	private String _storeType = null;
 	private final ServiceTrackerMap<String, StoreWrapper>
 		_storeWrapperServiceTrackerMap =
 			ServiceTrackerCollections.singleValueMap(
-				StoreWrapper.class, "store.type");
+				StoreWrapper.class, _KEY_NAME);
+
+	private class StoreServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<Store, Store> {
+
+		@Override
+		public Store addingService(ServiceReference<Store> serviceReference) {
+			invalidate(serviceReference);
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			return registry.getService(serviceReference);
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<Store> serviceReference, Store service) {
+
+			invalidate(serviceReference);
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<Store> serviceReference, Store service) {
+
+			invalidate(serviceReference);
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+		}
+
+		protected void invalidate(ServiceReference<Store> serviceReference) {
+			String key = (String)serviceReference.getProperty(_KEY_NAME);
+
+			if (Validator.isNotNull(_storeType) && _storeType.equals(key)) {
+				_store = null;
+			}
+		}
+
+	}
 
 }

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.display-category=category.collaboration",
 		"com.liferay.portlet.footer-portlet-javascript=/microblogs/js/main.js",
 		"com.liferay.portlet.header-portlet-css=/microblogs/css/main.css",
-		"com.liferay.portlet.icon=/microblogs/icon.png",
+		"com.liferay.portlet.icon=/microblogs/icons/icon.png",
 		"javax.portlet.display-name=Microblogs",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.view-template=/microblogs/view.jsp",

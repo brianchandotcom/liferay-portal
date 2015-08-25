@@ -246,7 +246,7 @@ AUI.add(
 						var instance = this;
 
 						if (persist) {
-							Liferay.Store('control-panel-sidebar-minimized', newVal);
+							Liferay.Store('com.liferay.frontend.js.web_controlPanelSidebarMinimized"', newVal);
 						}
 
 						if (body.hasClass(CSS_PANELS_MINIMIZED)) {

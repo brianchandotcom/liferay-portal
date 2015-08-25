@@ -28,7 +28,7 @@ if (layout != null) {
 boolean hasLayoutCustomizePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE);
 boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE);
 
-String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "liferay_toggle_controls", "visible"));
+String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "com.liferay.frontend.js.web_toggleControls", "visible"));
 
 boolean userSetupComplete = false;
 
@@ -46,7 +46,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 				<ul class="control-menu-nav" data-namespace="<portlet:namespace />" id="<portlet:namespace />controlMenu">
 
 					<%
-					String productMenuState = SessionClicks.get(request, "liferay_product_menu_state", "closed");
+					String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.web_productMenuState", "closed");
 					%>
 
 					<li class="<%= Validator.equals(productMenuState, "open") ? "active" : StringPool.BLANK %>">

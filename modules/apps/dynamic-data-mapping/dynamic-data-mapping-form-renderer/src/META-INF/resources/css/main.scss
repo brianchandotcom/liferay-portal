@@ -1,42 +1,56 @@
-.lfr-ddm-form-field-container {
-	position: relative;
+.lfr-ddm-form-container {
+	.lfr-ddm-form-field-container {
+		position: relative;
 
-	.icon-spinner {
-		-webkit-animation: spin 1000ms infinite linear;
-		animation: spin 1000ms infinite linear;
+		.icon-spinner {
+			-webkit-animation: spin 1000ms infinite linear;
+			animation: spin 1000ms infinite linear;
+		}
+
+		@-webkit-keyframes spin {
+			0% {
+				-webkit-transform: rotate(0deg);
+				transform: rotate(0deg);
+			}
+			100% {
+				-webkit-transform: rotate(359deg);
+				transform: rotate(359deg);
+			}
+		}
+
+		@keyframes spin {
+			0% {
+				-webkit-transform: rotate(0deg);
+				transform: rotate(0deg);
+			}
+			100% {
+				-webkit-transform: rotate(359deg);
+				transform: rotate(359deg);
+			}
+		}
+
+		.lfr-ddm-form-field-repeatable-add-button {
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+
+		.lfr-ddm-form-field-repeatable-delete-button {
+			position: absolute;
+			right: 15px;
+			top: 0;
+		}
 	}
 
-	@-webkit-keyframes spin {
-		0% {
-			-webkit-transform: rotate(0deg);
-			transform: rotate(0deg);
-		}
-		100% {
-			-webkit-transform: rotate(359deg);
-			transform: rotate(359deg);
+	.lfr-ddm-form-page {
+		display: none;
+
+		&.active {
+			display: block;
 		}
 	}
 
-	@keyframes spin {
-		0% {
-			-webkit-transform: rotate(0deg);
-			transform: rotate(0deg);
-		}
-		100% {
-			-webkit-transform: rotate(359deg);
-			transform: rotate(359deg);
-		}
-	}
-
-	.lfr-ddm-form-field-repeatable-add-button {
-		position: absolute;
-		right: 0;
-		top: 0;
-	}
-
-	.lfr-ddm-form-field-repeatable-delete-button {
-		position: absolute;
-		right: 15px;
-		top: 0;
+	.row {
+		min-height: auto !important;
 	}
 }

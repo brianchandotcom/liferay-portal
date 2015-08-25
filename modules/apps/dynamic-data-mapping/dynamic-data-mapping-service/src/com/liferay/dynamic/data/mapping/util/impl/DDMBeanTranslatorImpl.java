@@ -73,11 +73,13 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 			ddmFormField.getName(), ddmFormField.getType());
 
 		translatedDDMFormField.setDataType(ddmFormField.getDataType());
-		translatedDDMFormField.setFieldNamespace(ddmFormField.getFieldNamespace());
+		translatedDDMFormField.setFieldNamespace(
+			ddmFormField.getFieldNamespace());
 		translatedDDMFormField.setIndexType(ddmFormField.getIndexType());
 		translatedDDMFormField.setDDMFormFieldOptions(
 			translate(ddmFormField.getDDMFormFieldOptions()));
-		translatedDDMFormField.setLabel(translateLocalizedValue(ddmFormField.getLabel()));
+		translatedDDMFormField.setLabel(
+			translateLocalizedValue(ddmFormField.getLabel()));
 		translatedDDMFormField.setLocalizable(ddmFormField.isLocalizable());
 		translatedDDMFormField.setMultiple(ddmFormField.isMultiple());
 		translatedDDMFormField.setPredefinedValue(
@@ -86,8 +88,10 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		translatedDDMFormField.setRepeatable(ddmFormField.isRepeatable());
 		translatedDDMFormField.setRequired(ddmFormField.isRequired());
 		translatedDDMFormField.setShowLabel(ddmFormField.isShowLabel());
-		translatedDDMFormField.setStyle(translateLocalizedValue(ddmFormField.getStyle()));
-		translatedDDMFormField.setTip(translateLocalizedValue(ddmFormField.getTip()));
+		translatedDDMFormField.setStyle(
+			translateLocalizedValue(ddmFormField.getStyle()));
+		translatedDDMFormField.setTip(
+			translateLocalizedValue(ddmFormField.getTip()));
 
 		for (com.liferay.portlet.dynamicdatamapping.DDMFormField
 			nestedDDMFormField : ddmFormField.getNestedDDMFormFields()) {
@@ -164,11 +168,13 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 				ddmFormField.getName(), ddmFormField.getType());
 
 		translatedDDMFormField.setDataType(ddmFormField.getDataType());
-		translatedDDMFormField.setFieldNamespace(ddmFormField.getFieldNamespace());
+		translatedDDMFormField.setFieldNamespace(
+			ddmFormField.getFieldNamespace());
 		translatedDDMFormField.setIndexType(ddmFormField.getIndexType());
 		translatedDDMFormField.setDDMFormFieldOptions(
 			translate(ddmFormField.getDDMFormFieldOptions()));
-		translatedDDMFormField.setLabel(translateLocalizedValue(ddmFormField.getLabel()));
+		translatedDDMFormField.setLabel(
+			translateLocalizedValue(ddmFormField.getLabel()));
 		translatedDDMFormField.setLocalizable(ddmFormField.isLocalizable());
 		translatedDDMFormField.setMultiple(ddmFormField.isMultiple());
 		translatedDDMFormField.setPredefinedValue(
@@ -177,8 +183,10 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		translatedDDMFormField.setRepeatable(ddmFormField.isRepeatable());
 		translatedDDMFormField.setRequired(ddmFormField.isRequired());
 		translatedDDMFormField.setShowLabel(ddmFormField.isShowLabel());
-		translatedDDMFormField.setStyle(translateLocalizedValue(ddmFormField.getStyle()));
-		translatedDDMFormField.setTip(translateLocalizedValue(ddmFormField.getTip()));
+		translatedDDMFormField.setStyle(
+			translateLocalizedValue(ddmFormField.getStyle()));
+		translatedDDMFormField.setTip(
+			translateLocalizedValue(ddmFormField.getTip()));
 
 		for (DDMFormField nestedDDMFormField :
 				ddmFormField.getNestedDDMFormFields()) {
@@ -207,7 +215,8 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 
 		translatedDDMFormValues.setAvailableLocales(
 			ddmFormValues.getAvailableLocales());
-		translatedDDMFormValues.setDefaultLocale(ddmFormValues.getDefaultLocale());
+		translatedDDMFormValues.setDefaultLocale(
+			ddmFormValues.getDefaultLocale());
 
 		for (DDMFormFieldValue ddmFormFieldValue :
 				ddmFormValues.getDDMFormFieldValues()) {
@@ -220,7 +229,11 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 	}
 
 	protected DDMFormFieldOptions translate(
-		com.liferay.portlet.dynamicdatamapping.DDMFormFieldOptions ddmFormFieldOptions) {
+		com.
+			liferay.
+				portlet.
+					dynamicdatamapping.
+						DDMFormFieldOptions ddmFormFieldOptions) {
 
 		if (ddmFormFieldOptions == null) {
 			return null;
@@ -327,9 +340,11 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue translatedDDMFormFieldValue =
 			new com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue();
 
-		translatedDDMFormFieldValue.setInstanceId(ddmFormFieldValue.getInstanceId());
+		translatedDDMFormFieldValue.setInstanceId(
+			ddmFormFieldValue.getInstanceId());
 		translatedDDMFormFieldValue.setName(ddmFormFieldValue.getName());
-		translatedDDMFormFieldValue.setValue(translate(ddmFormFieldValue.getValue()));
+		translatedDDMFormFieldValue.setValue(
+			translate(ddmFormFieldValue.getValue()));
 
 		for (DDMFormFieldValue nestedFormFieldValue :
 				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
@@ -341,7 +356,9 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		return translatedDDMFormFieldValue;
 	}
 
-	protected com.liferay.portlet.dynamicdatamapping.Value translate(Value value) {
+	protected com.liferay.portlet.dynamicdatamapping.Value translate(
+		Value value) {
+
 		if (value == null) {
 			return null;
 		}
@@ -374,7 +391,9 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		return translatedLocalizedValue;
 	}
 
-	protected com.liferay.portlet.dynamicdatamapping.LocalizedValue translateLocalizedValue(Value value) {
+	protected com.liferay.portlet.dynamicdatamapping.LocalizedValue translateLocalizedValue(
+		Value value) {
+
 		if (value == null) {
 			return null;
 		}
@@ -403,7 +422,9 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		return new UnlocalizedValue(value.getString(value.getDefaultLocale()));
 	}
 
-	protected com.liferay.portlet.dynamicdatamapping.UnlocalizedValue translateUnlocalizedValue(Value value) {
+	protected com.liferay.portlet.dynamicdatamapping.UnlocalizedValue translateUnlocalizedValue(
+		Value value) {
+
 		if (value == null) {
 			return null;
 		}

@@ -46,12 +46,6 @@ public class DDMFormLayoutJSONSerializerImpl
 		return jsonObject.toString();
 	}
 
-	private void addPaginationMode(
-		JSONObject jsonObject, String paginationMode) {
-
-		jsonObject.put("paginationMode", paginationMode);
-	}
-
 	protected void addColumns(
 		JSONObject jsonObject, List<DDMFormLayoutColumn> ddmFormLayoutColumns) {
 
@@ -175,6 +169,12 @@ public class DDMFormLayoutJSONSerializerImpl
 		addColumns(jsonObject, ddmFormLayoutRow.getDDMFormLayoutColumns());
 
 		return jsonObject;
+	}
+
+	private void addPaginationMode(
+		JSONObject jsonObject, String paginationMode) {
+
+		jsonObject.put("paginationMode", paginationMode);
 	}
 
 }

@@ -146,14 +146,14 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 	sidenavSlider.on(
 		'closed.lexicon.sidenav',
 		function(event) {
-			Liferay.Store('liferay_product_menu_state', 'closed');
+			Liferay.Store('com.liferay.control.menu.web_productMenuState', 'closed');
 		}
 	);
 
 	sidenavSlider.on(
 		'open.lexicon.sidenav',
 		function(event) {
-			Liferay.Store('liferay_product_menu_state', 'open');
+			Liferay.Store('com.liferay.control.menu.web_productMenuState', 'open');
 		}
 	);
 </aui:script>

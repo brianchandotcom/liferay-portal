@@ -38,7 +38,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				boolean viewSingleEntry = mvcRenderCommandName.equals("/blogs/view_entry") && (assetCategoryId == 0) && Validator.isNull(assetTagName);
 				%>
 
-				<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
+				<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 					<c:choose>
 						<c:when test="<%= !viewSingleEntry %>">
 							<liferay-ui:icon-menu cssClass="entry-options inline" direction="right" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" scroll="<%= false %>" showWhenSingleIcon="<%= true %>" triggerCssClass="text-muted" view="lexicon">
@@ -55,6 +55,26 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 										label="<%= true %>"
 										message="edit"
 										url="<%= editEntryURL %>"
+									/>
+								</c:if>
+
+								<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) %>">
+									<liferay-security:permissionsURL
+										modelResource="<%= BlogsEntry.class.getName() %>"
+										modelResourceDescription="<%= entry.getTitle() %>"
+										resourceGroupId="<%= String.valueOf(entry.getGroupId()) %>"
+										resourcePrimKey="<%= String.valueOf(entry.getEntryId()) %>"
+										var="permissionsEntryURL"
+										windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+									/>
+
+									<liferay-ui:icon
+										iconCssClass="icon-lock"
+										label="<%= true %>"
+										message="permissions"
+										method="get"
+										url="<%= permissionsEntryURL %>"
+										useDialog="<%= true %>"
 									/>
 								</c:if>
 

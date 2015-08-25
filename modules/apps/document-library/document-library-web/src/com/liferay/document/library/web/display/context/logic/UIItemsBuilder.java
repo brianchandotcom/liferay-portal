@@ -194,63 +194,41 @@ public class UIItemsBuilder {
 	public void addDeleteMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (isDeleteActionAvailable()) {
-			DeleteMenuItem deleteMenuItem = new DeleteMenuItem();
+		String cmd = _getDeleteCommand();
 
-			deleteMenuItem.setKey(DLUIItemKeys.DELETE);
-
-			String mvcActionCommandName = "/document_library/edit_file_entry";
-
-			if (_fileShortcut != null) {
-				mvcActionCommandName = "/document_library/edit_file_shortcut";
-			}
-
-			PortletURL portletURL = _getActionURL(
-				mvcActionCommandName, Constants.DELETE);
-
-			if (_fileShortcut == null) {
-				portletURL.setParameter(
-					"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
-			}
-			else {
-				portletURL.setParameter(
-					"fileShortcutId",
-					String.valueOf(_fileShortcut.getFileShortcutId()));
-			}
-
-			deleteMenuItem.setURL(portletURL.toString());
-
-			menuItems.add(deleteMenuItem);
+		if (cmd == null) {
+			return;
 		}
-		else if (isMoveToTheRecycleBinActionAvailable()) {
-			DeleteMenuItem deleteMenuItem = new DeleteMenuItem();
 
-			deleteMenuItem.setKey(DLUIItemKeys.DELETE);
+		DeleteMenuItem deleteMenuItem = new DeleteMenuItem();
+
+		deleteMenuItem.setKey(DLUIItemKeys.DELETE);
+
+		if (Constants.MOVE_TO_TRASH.equals(cmd)) {
 			deleteMenuItem.setTrash(true);
-
-			String mvcActionCommandName = "/document_library/edit_file_entry";
-
-			if (_fileShortcut != null) {
-				mvcActionCommandName = "/document_library/edit_file_shortcut";
-			}
-
-			PortletURL portletURL = _getActionURL(
-				mvcActionCommandName, Constants.MOVE_TO_TRASH);
-
-			if (_fileShortcut == null) {
-				portletURL.setParameter(
-					"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
-			}
-			else {
-				portletURL.setParameter(
-					"fileShortcutId",
-					String.valueOf(_fileShortcut.getFileShortcutId()));
-			}
-
-			deleteMenuItem.setURL(portletURL.toString());
-
-			menuItems.add(deleteMenuItem);
 		}
+
+		String mvcActionCommandName = "/document_library/edit_file_entry";
+
+		if (_fileShortcut != null) {
+			mvcActionCommandName = "/document_library/edit_file_shortcut";
+		}
+
+		PortletURL portletURL = _getActionURL(mvcActionCommandName, cmd);
+
+		if (_fileShortcut == null) {
+			portletURL.setParameter(
+				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+		}
+		else {
+			portletURL.setParameter(
+				"fileShortcutId",
+				String.valueOf(_fileShortcut.getFileShortcutId()));
+		}
+
+		deleteMenuItem.setURL(portletURL.toString());
+
+		menuItems.add(deleteMenuItem);
 	}
 
 	public void addDeleteToolbarItem(List<ToolbarItem> toolbarItems)
@@ -578,6 +556,18 @@ public class UIItemsBuilder {
 			new URLMenuItem(), menuItems, "icon-search",
 			DLUIItemKeys.VIEW_ORIGINAL_FILE, "view-original-file",
 			portletURL.toString());
+	}
+
+	protected String _getDeleteCommand() throws PortalException {
+		if (isDeleteActionAvailable()) {
+			return Constants.DELETE;
+		}
+
+		if (isMoveToTheRecycleBinActionAvailable()) {
+			return Constants.MOVE_TO_TRASH;
+		}
+
+		return null;
 	}
 
 	protected String getNamespace() {

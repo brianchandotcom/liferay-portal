@@ -88,7 +88,6 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
-import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.admin.util.CleanUpPermissionsUtil;
 import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 import com.liferay.util.log4j.Log4JUtil;
@@ -447,8 +446,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		String language = ParamUtil.getString(actionRequest, "language");
 		String script = ParamUtil.getString(actionRequest, "script");
 
-		PortletConfig portletConfig = PortletConfigFactoryUtil.get(
-			PortletKeys.ADMIN_SERVER);
+		PortletConfig portletConfig = getPortletConfig(actionRequest);
 
 		PortletContext portletContext = portletConfig.getPortletContext();
 

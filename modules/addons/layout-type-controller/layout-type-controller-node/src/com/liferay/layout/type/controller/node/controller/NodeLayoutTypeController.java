@@ -14,8 +14,6 @@
 
 package com.liferay.layout.type.controller.node.controller;
 
-import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.layout.type.controller.node.constants.NodeLayoutTypeControllerConstants;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.model.LayoutTypeController;
@@ -85,15 +83,6 @@ public class NodeLayoutTypeController
 	@Override
 	protected String getViewPage() {
 		return _VIEW_PAGE;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelCategoryRegistry(
-		PanelCategoryRegistry panelCategoryRegistry) {
 	}
 
 	@Reference(

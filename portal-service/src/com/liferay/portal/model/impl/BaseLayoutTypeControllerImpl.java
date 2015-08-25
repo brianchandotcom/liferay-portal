@@ -38,6 +38,11 @@ public abstract class BaseLayoutTypeControllerImpl
 	implements LayoutTypeController {
 
 	@Override
+	public String getBaseLayoutType() {
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public String[] getConfigurationActionDelete() {
 		return StringPool.EMPTY_ARRAY;
 	}

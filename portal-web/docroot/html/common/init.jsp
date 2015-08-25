@@ -31,9 +31,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<%@ page import="com.liferay.counter.service.CounterLocalServiceUtil" %><%@
-page import="com.liferay.portal.GroupFriendlyURLException" %><%@
-page import="com.liferay.portal.LocaleException" %><%@
+<%@ page import="com.liferay.portal.GroupFriendlyURLException" %><%@
 page import="com.liferay.portal.NoSuchOrganizationException" %><%@
 page import="com.liferay.portal.NoSuchUserException" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
@@ -88,7 +86,6 @@ page import="com.liferay.portal.kernel.servlet.PortalWebResourcesUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.ServletContextPool" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
-page import="com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.MenuItem" %><%@
@@ -110,7 +107,6 @@ page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.IntegerWrapper" %><%@
 page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
-page import="com.liferay.portal.kernel.util.KeyValuePairComparator" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocalizationUtil" %><%@
@@ -118,7 +114,6 @@ page import="com.liferay.portal.kernel.util.MapUtil" %><%@
 page import="com.liferay.portal.kernel.util.MathUtil" %><%@
 page import="com.liferay.portal.kernel.util.OrderByComparator" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropertiesUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
 page import="com.liferay.portal.kernel.util.RSSUtil" %><%@
@@ -211,7 +206,6 @@ page import="com.liferay.portlet.exportimport.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.portlet.messageboards.util.MBUtil" %><%@
 page import="com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil" %><%@
 page import="com.liferay.portlet.ratings.RatingsType" %><%@
-page import="com.liferay.portlet.ratings.transformer.RatingsDataTransformerUtil" %><%@
 page import="com.liferay.portlet.sites.util.Sites" %><%@
 page import="com.liferay.portlet.sites.util.SitesUtil" %><%@
 page import="com.liferay.portlet.trash.model.TrashEntry" %><%@

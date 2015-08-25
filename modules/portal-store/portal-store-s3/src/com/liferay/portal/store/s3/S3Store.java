@@ -371,7 +371,7 @@ public class S3Store extends BaseStore {
 		int tempDirCleanUpFrequency =
 			_s3StoreConfiguration.tempDirCleanUpFrequency();
 
-		_s3FileCache = new S3FileCache(
+		_s3FileCache = new S3FileCacheImpl(
 			_s3KeyTransformer, tempDirCleanUpExpunge, tempDirCleanUpFrequency);
 
 		try {

@@ -334,14 +334,16 @@ public class DefaultWikiListPagesDisplayContext
 	protected void addSubscriptionMenuItem(
 		List<MenuItem> menuItems, WikiPage wikiPage) {
 
-		WikiGroupServiceOverriddenConfiguration wikiGroupServiceConfiguration =
-			_wikiRequestHelper.getWikiGroupServiceSettings();
+		WikiGroupServiceOverriddenConfiguration
+			wikiGroupServiceOverriddenConfiguration =
+				_wikiRequestHelper.getWikiGroupServiceOverriddenConfiguration();
 
 		if (!WikiPagePermissionChecker.contains(
 				_wikiRequestHelper.getPermissionChecker(), wikiPage,
 				ActionKeys.SUBSCRIBE) ||
-			(!wikiGroupServiceConfiguration.emailPageAddedEnabled() &&
-			 !wikiGroupServiceConfiguration.emailPageUpdatedEnabled())) {
+			(!wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() &&
+			 !wikiGroupServiceOverriddenConfiguration.
+				emailPageUpdatedEnabled())) {
 
 			return;
 		}

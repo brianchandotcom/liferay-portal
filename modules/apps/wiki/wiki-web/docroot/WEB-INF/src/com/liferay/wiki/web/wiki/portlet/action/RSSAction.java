@@ -104,10 +104,11 @@ public class RSSAction extends BaseRSSStrutsAction {
 
 		WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);
 
-		WikiGroupServiceOverriddenConfiguration wikiGroupServiceConfiguration =
-			wikiRequestHelper.getWikiGroupServiceSettings();
+		WikiGroupServiceOverriddenConfiguration
+			wikiGroupServiceOverriddenConfiguration =
+				wikiRequestHelper.getWikiGroupServiceOverriddenConfiguration();
 
-		return wikiGroupServiceConfiguration.enableRss();
+		return wikiGroupServiceOverriddenConfiguration.enableRss();
 	}
 
 }

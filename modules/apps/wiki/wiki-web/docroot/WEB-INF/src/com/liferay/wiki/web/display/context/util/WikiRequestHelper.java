@@ -49,7 +49,7 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 	}
 
 	public WikiGroupServiceOverriddenConfiguration
-		getWikiGroupServiceSettings() {
+		getWikiGroupServiceOverriddenConfiguration() {
 
 		try {
 			if (_wikiGroupServiceOverriddenConfiguration == null) {

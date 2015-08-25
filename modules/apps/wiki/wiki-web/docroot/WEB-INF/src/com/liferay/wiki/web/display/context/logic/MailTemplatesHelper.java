@@ -32,7 +32,7 @@ public class MailTemplatesHelper {
 		_wikiRequestHelper = wikiRequestHelper;
 
 		_wikiGroupServiceOverriddenConfiguration =
-			wikiRequestHelper.getWikiGroupServiceSettings();
+			wikiRequestHelper.getWikiGroupServiceOverriddenConfiguration();
 	}
 
 	public Map<String, String> getEmailFromDefinitionTerms() {

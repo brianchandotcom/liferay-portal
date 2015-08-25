@@ -67,7 +67,7 @@ page import="com.liferay.wiki.web.util.WikiWebComponentProvider" %>
 WikiRequestHelper wikiRequestHelper = new WikiRequestHelper(request);
 
 WikiPortletInstanceOverriddenConfiguration wikiPortletInstanceConfiguration = wikiRequestHelper.getWikiPortletInstanceConfiguration();
-WikiGroupServiceOverriddenConfiguration wikiGroupServiceOverriddenConfiguration = wikiRequestHelper.getWikiGroupServiceSettings();
+WikiGroupServiceOverriddenConfiguration wikiGroupServiceOverriddenConfiguration = wikiRequestHelper.getWikiGroupServiceOverriddenConfiguration();
 
 WikiPortletInstanceSettingsHelper wikiPortletInstanceSettingsHelper = new WikiPortletInstanceSettingsHelper(wikiRequestHelper);
 

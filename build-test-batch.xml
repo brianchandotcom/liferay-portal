@@ -789,7 +789,7 @@
 			<echo>Sending testray results to @{testray.results.dir}.</echo>
 
 			<copy failonerror="false" todir="@{testray.results.dir}">
-				<fileset dir="@{test.results.suite.dir}" erroronmissing="false" includes="TESTS-*.xml" />
+				<fileset dir="@{test.results.suite.dir}" erroronmissingdir="false" includes="TESTS-*.xml" />
 			</copy>
 		</sequential>
 	</macrodef>

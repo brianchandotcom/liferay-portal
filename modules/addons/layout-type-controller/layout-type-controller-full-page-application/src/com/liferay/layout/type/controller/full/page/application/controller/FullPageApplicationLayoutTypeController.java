@@ -16,6 +16,7 @@ package com.liferay.layout.type.controller.full.page.application.controller;
 
 import com.liferay.layout.type.controller.full.page.application.constants.FullPageApplicationLayoutTypeControllerConstants;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.taglib.servlet.PipingServletResponse;
@@ -37,6 +38,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FullPageApplicationLayoutTypeController
 	extends BaseLayoutTypeControllerImpl {
+
+	@Override
+	public String getBaseLayoutType() {
+		return LayoutConstants.TYPE_PORTLET;
+	}
 
 	@Override
 	public String getURL() {

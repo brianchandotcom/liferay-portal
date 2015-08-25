@@ -24,6 +24,8 @@ import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.JSONUtil;
 
+import java.nio.file.Paths;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -53,20 +55,20 @@ public class GetUserSitesGroupsHandler extends BaseJSONHandler {
 			SyncSite localSyncSite = SyncSiteService.fetchSyncSite(
 				remoteSyncSite.getGroupId(), getSyncAccountId());
 
+			SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
+				getSyncAccountId());
+
+			String remoteSyncSiteName = remoteSyncSite.getName();
+
+			if (!FileUtil.isValidFileName(remoteSyncSiteName)) {
+				remoteSyncSiteName = String.valueOf(
+					remoteSyncSite.getGroupId());
+			}
+
 			if (localSyncSite == null) {
-				SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
-					getSyncAccountId());
-
-				String name = remoteSyncSite.getName();
-
-				if (!FileUtil.isValidFileName(name)) {
-					name = String.valueOf(remoteSyncSite.getGroupId());
-				}
-
 				remoteSyncSite.setFilePathName(
 					FileUtil.getFilePathName(
-						syncAccount.getFilePathName(), name));
-
+						syncAccount.getFilePathName(), remoteSyncSiteName));
 				remoteSyncSite.setRemoteSyncTime(-1);
 				remoteSyncSite.setSyncAccountId(getSyncAccountId());
 
@@ -75,6 +77,8 @@ public class GetUserSitesGroupsHandler extends BaseJSONHandler {
 				remoteSyncSiteIds.add(remoteSyncSite.getSyncSiteId());
 			}
 			else {
+				String localSyncSiteName = localSyncSite.getName();
+
 				localSyncSite.setDescription(remoteSyncSite.getDescription());
 				localSyncSite.setFriendlyURL(remoteSyncSite.getFriendlyURL());
 				localSyncSite.setName(remoteSyncSite.getName());
@@ -83,6 +87,16 @@ public class GetUserSitesGroupsHandler extends BaseJSONHandler {
 				localSyncSite.setSite(remoteSyncSite.getSite());
 
 				SyncSiteService.update(localSyncSite);
+
+				if (!localSyncSiteName.equals(remoteSyncSite.getName())) {
+					SyncSiteService.setFilePathName(
+						localSyncSite.getSyncSiteId(), remoteSyncSiteName);
+
+					FileUtil.moveFile(
+						Paths.get(localSyncSite.getFilePathName()),
+						FileUtil.getFilePath(
+							syncAccount.getFilePathName(), remoteSyncSiteName));
+				}
 
 				remoteSyncSiteIds.add(localSyncSite.getSyncSiteId());
 			}

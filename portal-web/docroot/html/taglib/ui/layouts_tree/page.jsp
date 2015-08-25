@@ -57,7 +57,7 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 			{
 				cfg: {
 					checkedNodes: <%= checkedNodes %>,
-					rootNodeExpanded: <%= GetterUtil.getBoolean(SessionClicks.get(request, treeId + "RootNode", null), true) %>
+					rootNodeExpanded: <%= GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.frontend.js.web_" + treeId + "rootNode", null), true) %>
 				},
 				fn: A.Plugin.LayoutsTreeState
 			}

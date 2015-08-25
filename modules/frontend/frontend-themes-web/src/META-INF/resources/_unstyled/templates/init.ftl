@@ -13,7 +13,7 @@
 
 <#assign css_class = css_class + " " + liferay_product_menu_state />
 
-<#assign liferay_toggle_controls = sessionClicks.get(request, "liferay_toggle_controls", "visible") />
+<#assign liferay_toggle_controls = sessionClicks.get(request, "com.liferay.frontend.js.web_toggleControls", "visible") />
 
 <#if layout??>
 	<#assign page_group = layout.getGroup() />

@@ -13,7 +13,7 @@
 
 #set ($css_class = $css_class + " " + $liferay_product_menu_state)
 
-#set ($liferay_toggle_controls = $sessionClicks.get($request, "liferay_toggle_controls", "visible"))
+#set ($liferay_toggle_controls = $sessionClicks.get($request, "com.liferay.frontend.js.web_toggleControls", "visible"))
 
 #if ($layout)
 	#set ($page_group = $layout.getGroup())

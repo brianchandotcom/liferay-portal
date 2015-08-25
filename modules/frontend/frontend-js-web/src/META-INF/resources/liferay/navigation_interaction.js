@@ -324,6 +324,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['node-focusmanager', 'plugin']
+		requires: ['event-mouseenter', 'node-focusmanager', 'plugin']
 	}
 );

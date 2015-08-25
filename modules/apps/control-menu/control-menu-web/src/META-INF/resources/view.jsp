@@ -46,7 +46,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 				<ul class="control-menu-nav" data-namespace="<portlet:namespace />" id="<portlet:namespace />controlMenu">
 
 					<%
-					String productMenuState = SessionClicks.get(request, "liferay_product_menu_state", "closed");
+					String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.web_productMenuState", "closed");
 					%>
 
 					<li class="<%= Validator.equals(productMenuState, "open") ? "active" : StringPool.BLANK %>">

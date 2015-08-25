@@ -97,8 +97,8 @@ public class SSOImpl implements SSO {
 
 			return casCompanyServiceSettings;
 		}
-		catch (ConfigurationException mce) {
-			_log.error("Unable to get CAS configuration", mce);
+		catch (ConfigurationException ce) {
+			_log.error("Unable to get CAS configuration", ce);
 		}
 
 		return null;

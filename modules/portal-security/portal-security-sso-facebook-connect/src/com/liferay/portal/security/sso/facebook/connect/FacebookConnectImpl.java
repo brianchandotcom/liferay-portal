@@ -237,8 +237,8 @@ public class FacebookConnectImpl implements FacebookConnect {
 
 			return facebookConnectCompanyServiceSettings;
 		}
-		catch (ConfigurationException mce) {
-			_log.error("Unable to get Facebook Connect configuration", mce);
+		catch (ConfigurationException ce) {
+			_log.error("Unable to get Facebook Connect configuration", ce);
 		}
 
 		return null;

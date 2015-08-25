@@ -56,8 +56,8 @@ public class SSOImpl implements SSO {
 
 			return ntlmConfiguration.enabled();
 		}
-		catch (ConfigurationException mce) {
-			_log.error("Unable to get NTLM configuration", mce);
+		catch (ConfigurationException ce) {
+			_log.error("Unable to get NTLM configuration", ce);
 		}
 
 		return false;

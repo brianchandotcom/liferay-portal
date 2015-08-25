@@ -68,9 +68,9 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 					CompanyThreadLocal.getCompanyId(),
 					SAPConstants.SERVICE_NAME));
 		}
-		catch (ConfigurationException mce) {
+		catch (ConfigurationException ce) {
 			throw new SecurityException(
-				"Unable to get service access policy configuration", mce);
+				"Unable to get service access policy configuration", ce);
 		}
 
 		if (sapConfiguration.requireDefaultSAPEntry() ||

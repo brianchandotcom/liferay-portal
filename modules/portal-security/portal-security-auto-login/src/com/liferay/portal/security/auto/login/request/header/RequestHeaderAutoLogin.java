@@ -177,9 +177,9 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 
 			return requestHeaderAutoLoginConfiguration;
 		}
-		catch (ConfigurationException mce) {
+		catch (ConfigurationException ce) {
 			_log.error(
-				"Unable to get request header auto login configuration", mce);
+				"Unable to get request header auto login configuration", ce);
 		}
 
 		return null;

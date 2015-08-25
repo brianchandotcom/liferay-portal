@@ -160,10 +160,10 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 
 			return requestParameterAutoLoginConfiguration;
 		}
-		catch (ConfigurationException mce) {
+		catch (ConfigurationException ce) {
 			_log.error(
 				"Unable to get request parameter auto login configuration",
-				mce);
+				ce);
 		}
 
 		return null;

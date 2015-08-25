@@ -46,8 +46,8 @@ public class OpenIdImpl implements OpenId {
 
 			return openIdConfiguration.enabled();
 		}
-		catch (ConfigurationException mce) {
-			_log.error("Unable to get OpenId configuration", mce);
+		catch (ConfigurationException ce) {
+			_log.error("Unable to get OpenId configuration", ce);
 		}
 
 		return false;

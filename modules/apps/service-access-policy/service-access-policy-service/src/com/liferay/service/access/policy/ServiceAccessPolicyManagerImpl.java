@@ -95,9 +95,9 @@ public class ServiceAccessPolicyManagerImpl
 				new CompanyServiceSettingsLocator(
 					companyId, SAPConstants.SERVICE_NAME));
 		}
-		catch (ConfigurationException mce) {
+		catch (ConfigurationException ce) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get SAP configuration", mce);
+				_log.warn("Unable to get SAP configuration", ce);
 			}
 
 			return null;

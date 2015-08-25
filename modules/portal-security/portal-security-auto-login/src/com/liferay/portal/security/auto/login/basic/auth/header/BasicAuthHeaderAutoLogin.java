@@ -149,8 +149,8 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 
 			return basicAuthHeaderAutoLoginConfiguration;
 		}
-		catch (ConfigurationException mce) {
-			_log.error("Unable to get basic auth header configuration", mce);
+		catch (ConfigurationException ce) {
+			_log.error("Unable to get basic auth header configuration", ce);
 		}
 
 		return null;

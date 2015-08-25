@@ -68,6 +68,8 @@ import java.util.Set;
  */
 public class ServiceTestUtil {
 
+	public static final int RETRY_COUNT = 10;
+
 	public static final int THREAD_COUNT = 10;
 
 	/**

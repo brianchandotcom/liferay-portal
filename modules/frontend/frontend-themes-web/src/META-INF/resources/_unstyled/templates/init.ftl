@@ -31,16 +31,10 @@
 	</#if>
 </#if>
 
-<#assign liferay_dockbar_pinned = getterUtil.getBoolean(sessionClicks.get(request, "liferay_dockbar_pinned", ""), false) />
-
 <#if liferay_toggle_controls = "visible">
 	<#assign css_class = css_class + " controls-visible" />
 <#else>
 	<#assign css_class = css_class + " controls-hidden" />
-</#if>
-
-<#if liferay_dockbar_pinned>
-	<#assign css_class = css_class + " lfr-dockbar-pinned" />
 </#if>
 
 <#if layoutTypePortlet.hasStateMax()>

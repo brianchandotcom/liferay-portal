@@ -59,6 +59,9 @@ public interface ReleaseLocalService extends BaseLocalService,
 	public com.liferay.portal.model.Release addRelease(
 		java.lang.String servletContextName, int buildNumber);
 
+	public com.liferay.portal.model.Release addRelease(
+		java.lang.String servletContextName, java.lang.String version);
+
 	/**
 	* Creates a new release with the primary key. Does not add the release to the database.
 	*
@@ -252,4 +255,8 @@ public interface ReleaseLocalService extends BaseLocalService,
 		java.util.List<com.liferay.portal.kernel.upgrade.UpgradeProcess> upgradeProcesses,
 		java.util.Properties unfilteredPortalProperties)
 		throws java.lang.Exception;
+
+	public void updateRelease(java.lang.String servletContextName,
+		java.lang.String version, java.lang.String previousVersion)
+		throws PortalException;
 }

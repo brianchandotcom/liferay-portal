@@ -174,9 +174,9 @@ public class S3Store extends BaseStore {
 			companyId, repositoryId, fileName, versionLabel);
 
 		try {
-			File tempFile = _s3LocalStore.getTempFile(s3Object, fileName);
+			File tempFile = _s3FileCache.getTempFile(s3Object, fileName);
 
-			_s3LocalStore.cleanUpTempFiles();
+			_s3FileCache.cleanUpTempFiles();
 
 			return tempFile;
 		}
@@ -371,7 +371,7 @@ public class S3Store extends BaseStore {
 		int tempDirCleanUpFrequency =
 			_s3StoreConfiguration.tempDirCleanUpFrequency();
 
-		_s3LocalStore = new S3LocalStore(
+		_s3FileCache = new S3FileCache(
 			_s3KeyTransformer, tempDirCleanUpExpunge, tempDirCleanUpFrequency);
 
 		try {
@@ -680,8 +680,8 @@ public class S3Store extends BaseStore {
 	private AmazonS3 _amazonS3;
 	private AWSCredentialsProvider _awsCredentialsProvider;
 	private String _bucketName;
+	private S3FileCache _s3FileCache;
 	private S3KeyTransformer _s3KeyTransformer;
-	private S3LocalStore _s3LocalStore;
 	private StorageClass _storageClass;
 
 }

@@ -9,7 +9,7 @@
 <#assign root_css_class = languageUtil.get(locale, "lang.dir") />
 <#assign css_class = htmlUtil.escape(theme_display.getColorScheme().getCssClass()) + " yui3-skin-sam" />
 
-<#assign liferay_product_menu_state = sessionClicks.get(request, "liferay_product_menu_state", "closed") />
+<#assign liferay_product_menu_state = sessionClicks.get(request, "com.liferay.control.menu.web_productMenuState", "closed") />
 
 <#assign css_class = css_class + " " + liferay_product_menu_state />
 

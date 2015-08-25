@@ -119,6 +119,11 @@ public abstract class BaseLayoutTypeControllerImpl
 	}
 
 	@Override
+	public boolean isFullPageDisplayable() {
+		return false;
+	}
+
+	@Override
 	public boolean matches(
 		HttpServletRequest request, String friendlyURL, Layout layout) {
 

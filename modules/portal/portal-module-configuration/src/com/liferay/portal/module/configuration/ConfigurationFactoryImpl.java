@@ -40,14 +40,14 @@ public class ConfigurationFactoryImpl implements ConfigurationFactory {
 		throws ConfigurationException {
 
 		try {
+			Class<?> configurationOverrideClass = getOverrideClass(clazz);
+
+			Object configurationOverrideInstance = null;
+
 			Settings settings = SettingsFactoryUtil.getSettings(
 				settingsLocator);
 
-			Class<?> configurationOverrideClass = getOverrideClass(clazz);
-
 			TypedSettings typedSettings = new TypedSettings(settings);
-
-			Object configurationOverrideInstance = null;
 
 			if (configurationOverrideClass != null) {
 				Constructor<?> constructor =

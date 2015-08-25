@@ -16,4 +16,19 @@
 
 <%@ include file="/layout/view/init.jsp" %>
 
-<liferay-ui:layout-common />
+<%
+String ppid = ParamUtil.getString(request, "p_p_id");
+
+UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
+
+if (Validator.isNull(ppid)) {
+	ppid = typeSettingsProperties.getProperty("fullPageApplicationPortlet");
+}
+
+String velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "max";
+String velocityTemplateContent = LayoutTemplateLocalServiceUtil.getContent("max", true, theme.getThemeId());
+
+if (Validator.isNotNull(velocityTemplateContent)) {
+	RuntimePageUtil.processTemplate(request, response, ppid, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
+}
+%>

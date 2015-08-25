@@ -36,9 +36,9 @@ import java.util.Date;
 /**
  * @author Edward C. Han
  */
-public class S3LocalStore {
+public class S3FileCache {
 
-	public S3LocalStore(
+	public S3FileCache(
 		S3KeyTransformer s3KeyTransformer, int tempDirCleanUpExpunge,
 		int tempDirCleanUpFrequency) {
 

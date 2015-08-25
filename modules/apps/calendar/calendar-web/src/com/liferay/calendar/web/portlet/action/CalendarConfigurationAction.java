@@ -103,7 +103,8 @@ public class CalendarConfigurationAction extends DefaultConfigurationAction {
 			PortalUtil.getHttpServletRequest(actionRequest);
 
 		SessionClicks.put(
-			httpServletRequest, "com.liferay.calendar.web_defaultView", defaultView);
+			httpServletRequest, "com.liferay.calendar.web_defaultView",
+			defaultView);
 
 		portletPreferences.store();
 	}

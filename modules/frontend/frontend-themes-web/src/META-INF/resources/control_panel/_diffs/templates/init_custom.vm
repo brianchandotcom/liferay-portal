@@ -1,6 +1,6 @@
 #set ($control_panel_category = $htmlUtil.escape($theme_display.getControlPanelCategory()))
 
-#set ($panelsMinimized = $getterUtil.getBoolean($sessionClicks.get($request, "com.liferay.frontend.js.web_controlPanelSidebarMinimized"", "false")))
+#set ($panelsMinimized = $getterUtil.getBoolean($sessionClicks.get($request, "com.liferay.frontend.js.web_controlPanelSidebarMinimized", "false")))
 
 #if ($panelsMinimized == true)
 	#set ($css_class = "${css_class} panels-minimized")

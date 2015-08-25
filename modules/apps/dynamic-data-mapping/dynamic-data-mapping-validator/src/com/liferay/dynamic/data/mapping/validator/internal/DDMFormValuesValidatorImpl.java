@@ -32,9 +32,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Marcellus Tavares
  */
+@Component(immediate = true, service = DDMFormValuesValidator.class)
 public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 	@Override

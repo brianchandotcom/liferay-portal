@@ -17,7 +17,7 @@ package com.liferay.layout.type.controller.node.controller;
 import com.liferay.layout.type.controller.node.constants.NodeLayoutTypeControllerConstants;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.model.LayoutTypeController;
-import com.liferay.portal.model.impl.BasePanelLayoutTypeControllerImpl;
+import com.liferay.portal.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import javax.servlet.ServletContext;
@@ -35,8 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"layout.type=" + NodeLayoutTypeControllerConstants.LAYOUT_TYPE_NODE},
 	service = LayoutTypeController.class
 )
-public class NodeLayoutTypeController
-	extends BasePanelLayoutTypeControllerImpl {
+public class NodeLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	public String getURL() {

@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Eudaldo Alonso
  */
-public abstract class BasePanelLayoutTypeControllerImpl
+public abstract class BaseLayoutTypeControllerImpl
 	implements LayoutTypeController {
 
 	@Override

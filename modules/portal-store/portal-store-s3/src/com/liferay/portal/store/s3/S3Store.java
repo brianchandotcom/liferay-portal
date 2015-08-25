@@ -70,6 +70,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -103,6 +104,7 @@ public class S3Store extends BaseStore {
 
 		try {
 			ObjectMetadata objectMetadata = constructMetadata(fileName);
+
 			String objectKey = _s3KeyTransformer.getFileVersionKey(
 				companyId, repositoryId, fileName, VERSION_DEFAULT);
 
@@ -238,6 +240,7 @@ public class S3Store extends BaseStore {
 		throws PortalException {
 
 		String version = getHeadVersionLabel(companyId, repositoryId, fileName);
+
 		String key = _s3KeyTransformer.getFileVersionKey(
 			companyId, repositoryId, fileName, version);
 
@@ -334,6 +337,7 @@ public class S3Store extends BaseStore {
 
 		try {
 			ObjectMetadata objectMetadata = constructMetadata(fileName);
+
 			String objectKey = _s3KeyTransformer.getFileVersionKey(
 				companyId, repositoryId, fileName, versionLabel);
 
@@ -360,8 +364,6 @@ public class S3Store extends BaseStore {
 		_awsCredentialsProvider = getAWSCredentialsProvider();
 
 		_amazonS3 = getAmazonS3(_awsCredentialsProvider);
-
-		_s3KeyTransformer = new S3KeyTransformerImpl();
 
 		int tempDirCleanUpExpunge =
 			_s3StoreConfiguration.tempDirCleanUpExpunge();
@@ -658,6 +660,11 @@ public class S3Store extends BaseStore {
 
 			_amazonS3.deleteObject(deleteOldObjectRequest);
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setS3KeyTransformer(S3KeyTransformer s3KeyTransformer) {
+		_s3KeyTransformer = s3KeyTransformer;
 	}
 
 	private static final String _AWS_FILE_NOT_FOUND_ERROR_CODE = "NoSuchKey";

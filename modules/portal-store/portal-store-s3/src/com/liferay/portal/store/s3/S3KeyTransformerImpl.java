@@ -18,9 +18,12 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Edward C. Han
  */
+@Component(immediate = true, service = S3KeyTransformer.class)
 public class S3KeyTransformerImpl implements S3KeyTransformer {
 
 	@Override
@@ -100,6 +103,7 @@ public class S3KeyTransformerImpl implements S3KeyTransformer {
 	@Override
 	public String moveKey(String key, String oldPrefix, String newPrefix) {
 		String name = key.substring(oldPrefix.length());
+
 		return newPrefix.concat(name);
 	}
 

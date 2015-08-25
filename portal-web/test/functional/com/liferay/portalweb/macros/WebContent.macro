@@ -1028,6 +1028,12 @@
 		<execute macro="WebContent#publish" />
 	</command>
 
+	<command name="submitForPublication">
+		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />

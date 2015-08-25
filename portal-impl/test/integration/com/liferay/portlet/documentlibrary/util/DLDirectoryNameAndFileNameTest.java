@@ -36,7 +36,6 @@ import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -88,7 +87,7 @@ public class DLDirectoryNameAndFileNameTest {
 			StringUtil.randomString(10) + StringPool.BACK_SLASH +
 				StringUtil.randomString(10);
 
-		Assert.assertFalse(name, DLStoreUtil.isValidName(name));
+		Assert.assertFalse(name, DLValidatorUtil.isValidName(name));
 	}
 
 	@Test
@@ -96,19 +95,19 @@ public class DLDirectoryNameAndFileNameTest {
 		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
 			String name = blacklistName;
 
-			Assert.assertFalse(name, DLStoreUtil.isValidName(name));
+			Assert.assertFalse(name, DLValidatorUtil.isValidName(name));
 
 			name = blacklistName + ".txt";
 
-			Assert.assertFalse(name, DLStoreUtil.isValidName(name));
+			Assert.assertFalse(name, DLValidatorUtil.isValidName(name));
 
 			name = blacklistName + StringUtil.randomString(10);
 
-			Assert.assertTrue(name, DLStoreUtil.isValidName(name));
+			Assert.assertTrue(name, DLValidatorUtil.isValidName(name));
 
 			name = blacklistName + StringUtil.randomString(10) + " .txt";
 
-			Assert.assertTrue(name, DLStoreUtil.isValidName(name));
+			Assert.assertTrue(name, DLValidatorUtil.isValidName(name));
 		}
 	}
 
@@ -117,25 +116,25 @@ public class DLDirectoryNameAndFileNameTest {
 		for (String blacklistLastChar : _DL_CHAR_LAST_BLACKLIST) {
 			String name = StringUtil.randomString(20) + blacklistLastChar;
 
-			Assert.assertFalse(name, DLStoreUtil.isValidName(name));
+			Assert.assertFalse(name, DLValidatorUtil.isValidName(name));
 		}
 	}
 
 	@Test
 	public void testIsValidNameEmptyString() {
-		Assert.assertFalse(DLStoreUtil.isValidName(StringPool.BLANK));
+		Assert.assertFalse(DLValidatorUtil.isValidName(StringPool.BLANK));
 	}
 
 	@Test
 	public void testIsValidNameHiddenOSX() throws Exception {
 		String name = "._" + StringUtil.randomString(20) + ".tmp";
 
-		Assert.assertTrue(name, DLStoreUtil.isValidName(name));
+		Assert.assertTrue(name, DLValidatorUtil.isValidName(name));
 	}
 
 	@Test
 	public void testIsValidNameNull() {
-		Assert.assertFalse(DLStoreUtil.isValidName(null));
+		Assert.assertFalse(DLValidatorUtil.isValidName(null));
 	}
 
 	@Test
@@ -143,7 +142,7 @@ public class DLDirectoryNameAndFileNameTest {
 		for (int i = 0; i < 100; i++) {
 			String name = StringUtil.randomString(20);
 
-			Assert.assertTrue(name, DLStoreUtil.isValidName(name));
+			Assert.assertTrue(name, DLValidatorUtil.isValidName(name));
 		}
 
 		for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
@@ -154,12 +153,12 @@ public class DLDirectoryNameAndFileNameTest {
 			sb.append(StringUtil.randomString(10));
 
 			Assert.assertFalse(
-				sb.toString(), DLStoreUtil.isValidName(sb.toString()));
+				sb.toString(), DLValidatorUtil.isValidName(sb.toString()));
 
 			sb.append(".txt");
 
 			Assert.assertFalse(
-				sb.toString(), DLStoreUtil.isValidName(sb.toString()));
+				sb.toString(), DLValidatorUtil.isValidName(sb.toString()));
 		}
 	}
 

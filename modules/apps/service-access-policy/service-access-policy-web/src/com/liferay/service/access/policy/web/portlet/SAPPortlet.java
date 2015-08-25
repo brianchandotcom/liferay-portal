@@ -159,7 +159,7 @@ public class SAPPortlet extends MVCPortlet {
 		writer.write(jsonArray.toString());
 	}
 
-	public void updateSACPEntry(
+	public void updateSAPEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -237,6 +237,6 @@ public class SAPPortlet extends MVCPortlet {
 	}
 
 	private JSONWebServiceActionsManager _jsonWebServiceActionsManager;
-	private SACPEntryService _sacpEntryService;
+	private SAPEntryService _sapEntryService;
 
 }

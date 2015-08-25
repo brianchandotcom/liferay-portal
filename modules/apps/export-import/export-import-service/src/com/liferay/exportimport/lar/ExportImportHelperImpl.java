@@ -788,8 +788,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #replaceExportContentReferences(PortletDataContext,
-	 *             StagedModel, String, boolean)}
+	 *             com.liferay.exportimport.api.ExportImportContentProcessor#replaceExportContentReferences(
+	 *             PortletDataContext, StagedModel, String, boolean, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -802,6 +802,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return content;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.exportimport.api.ExportImportContentProcessor#replaceExportContentReferences(
+	 *             PortletDataContext, StagedModel, String, boolean, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public String replaceExportContentReferences(
 			PortletDataContext portletDataContext,
@@ -812,6 +818,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return content;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.exportimport.api.ExportImportContentProcessor#replaceExportContentReferences(
+	 *             PortletDataContext, StagedModel, String, boolean, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public String replaceExportContentReferences(
 			PortletDataContext portletDataContext,
@@ -823,9 +835,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #replaceExportDLReferences(PortletDataContext, StagedModel,
-	 *             String, boolean)}
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -838,6 +848,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return content;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String replaceExportDLReferences(
 			PortletDataContext portletDataContext,
@@ -848,6 +862,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return content;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String replaceExportLayoutReferences(
 			PortletDataContext portletDataContext, String content)
@@ -857,8 +875,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #replaceExportLayoutReferences(PortletDataContext, String)}
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -871,9 +888,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #replaceExportLinksToLayouts(PortletDataContext, StagedModel,
-	 *             String)}
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -886,6 +901,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return content;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String replaceExportLinksToLayouts(
 			PortletDataContext portletDataContext,
@@ -897,8 +916,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #replaceImportContentReferences(PortletDataContext,
-	 *             StagedModel, String)}
+	 *             com.liferay.exportimport.api.ExportImportContentProcessor#replaceImportContentReferences(
+	 *             PortletDataContext, StagedModel, String)}
 	 */
 	@Deprecated
 	@Override
@@ -910,6 +929,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return content;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.exportimport.api.ExportImportContentProcessor#replaceImportContentReferences(
+	 *             PortletDataContext, StagedModel, String)}
+	 */
+	@Deprecated
 	@Override
 	public String replaceImportContentReferences(
 			PortletDataContext portletDataContext,
@@ -920,9 +945,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #replaceImportDLReferences(PortletDataContext, StagedModel,
-	 *             String)}
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -934,6 +957,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return content;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String replaceImportDLReferences(
 			PortletDataContext portletDataContext,
@@ -943,6 +970,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return content;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String replaceImportLayoutReferences(
 			PortletDataContext portletDataContext, String content)
@@ -952,8 +983,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #replaceImportLayoutReferences(PortletDataContext, String)}
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -965,6 +995,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return content;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String replaceImportLinksToLayouts(
 			PortletDataContext portletDataContext, String content)
@@ -974,8 +1008,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #replaceImportLinksToLayouts(PortletDataContext, String)}
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override

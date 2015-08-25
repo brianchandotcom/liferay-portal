@@ -15,7 +15,7 @@
 package com.liferay.microblogs.web.notifications;
 
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
-import com.liferay.microblogs.model.MicroblogsEntryConstants;
+import com.liferay.microblogs.notifications.MicroblogsUserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
@@ -31,12 +31,11 @@ import org.osgi.service.component.annotations.Component;
 	service = UserNotificationDefinition.class
 )
 public class MicroblogsReplyToRepliedUserNotificationDefinition
-	extends UserNotificationDefinition {
+	extends MicroblogsUserNotificationDefinition {
 
 	public MicroblogsReplyToRepliedUserNotificationDefinition() {
 		super(
-			MicroblogsPortletKeys.MICROBLOGS, 0,
-			MicroblogsEntryConstants.NOTIFICATION_TYPE_REPLY_TO_REPLIED,
+			NOTIFICATION_TYPE_REPLY_TO_REPLIED,
 			"receive-a-notification-when-someone-comments-on-a-microblog-you-" +
 				"commented-on");
 

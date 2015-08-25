@@ -15,7 +15,7 @@
 package com.liferay.microblogs.upgrade.v1_0_1;
 
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
-import com.liferay.microblogs.model.MicroblogsEntryConstants;
+import com.liferay.microblogs.notifications.MicroblogsUserNotificationDefinition;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -92,7 +92,8 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 
 				payloadJSONObject.put(
 					"notificationType",
-					MicroblogsEntryConstants.NOTIFICATION_TYPE_REPLY);
+					MicroblogsUserNotificationDefinition
+						.NOTIFICATION_TYPE_REPLY);
 
 				updateNotification(userNotificationEventId, payloadJSONObject);
 			}

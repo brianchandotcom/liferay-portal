@@ -16,7 +16,7 @@ package com.liferay.microblogs.web.notifications;
 
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntry;
-import com.liferay.microblogs.model.MicroblogsEntryConstants;
+import com.liferay.microblogs.notifications.MicroblogsUserNotificationDefinition;
 import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
@@ -64,13 +64,14 @@ public class MicroblogsUserNotificationHandler
 		int notificationType = jsonObject.getInt("notificationType");
 
 		if (notificationType ==
-				MicroblogsEntryConstants.NOTIFICATION_TYPE_REPLY) {
+				MicroblogsUserNotificationDefinition.
+					NOTIFICATION_TYPE_REPLY) {
 
 			title = serviceContext.translate(
 				"x-commented-on-your-post", userFullName);
 		}
 		else if (notificationType ==
-					MicroblogsEntryConstants.
+					MicroblogsUserNotificationDefinition.
 						NOTIFICATION_TYPE_REPLY_TO_REPLIED) {
 
 			long parentMicroblogsEntryUserId =
@@ -86,14 +87,15 @@ public class MicroblogsUserNotificationHandler
 			}
 		}
 		else if (notificationType ==
-					MicroblogsEntryConstants.
+					MicroblogsUserNotificationDefinition.
 						NOTIFICATION_TYPE_REPLY_TO_TAGGED) {
 
 			title = serviceContext.translate(
 				"x-commented-on-a-post-you-are-tagged-in", userFullName);
 		}
 		else if (notificationType ==
-					MicroblogsEntryConstants.NOTIFICATION_TYPE_TAG) {
+					MicroblogsUserNotificationDefinition.
+						NOTIFICATION_TYPE_TAG) {
 
 			title = serviceContext.translate(
 				"x-tagged-you-in-a-post", userFullName);

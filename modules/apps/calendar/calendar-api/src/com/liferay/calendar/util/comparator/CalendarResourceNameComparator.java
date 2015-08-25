@@ -25,12 +25,12 @@ public class CalendarResourceNameComparator
 	extends OrderByComparator<CalendarResource> {
 
 	public static final String ORDER_BY_ASC =
-		"CalendarResource.name, CalendarResource.code_ ASC";
+		"CalendarResource.name, CalendarResource.code ASC";
 
 	public static final String ORDER_BY_DESC =
-		"CalendarResource.name, CalendarResource.code_ DESC";
+		"CalendarResource.name, CalendarResource.code DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"name", "code_"};
+	public static final String[] ORDER_BY_FIELDS = {"name", "code"};
 
 	public CalendarResourceNameComparator() {
 		this(false);

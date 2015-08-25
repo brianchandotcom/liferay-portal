@@ -108,12 +108,12 @@ public class S3Store extends BaseStore {
 			String objectKey = _s3KeyTransformer.getFileVersionKey(
 				companyId, repositoryId, fileName, VERSION_DEFAULT);
 
-			PutObjectRequest request = new PutObjectRequest(
+			PutObjectRequest putObjectRequest = new PutObjectRequest(
 				_bucketName, objectKey, is, objectMetadata);
 
-			request.withStorageClass(_storageClass);
+			putObjectRequest.withStorageClass(_storageClass);
 
-			_amazonS3.putObject(request);
+			_amazonS3.putObject(putObjectRequest);
 		}
 		catch (AmazonClientException ae) {
 			throw convertAWSException(ae);
@@ -154,10 +154,10 @@ public class S3Store extends BaseStore {
 			companyId, repositoryId, fileName, versionLabel);
 
 		try {
-			DeleteObjectRequest request = new DeleteObjectRequest(
+			DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(
 				_bucketName, key);
 
-			_amazonS3.deleteObject(request);
+			_amazonS3.deleteObject(deleteObjectRequest);
 		}
 		catch (AmazonClientException ae) {
 			throw convertAWSException(ae);
@@ -217,15 +217,15 @@ public class S3Store extends BaseStore {
 				companyId, repositoryId, dirName);
 		}
 
-		List<S3ObjectSummary> objectSummaries = listObjectsWithPrefix(prefix);
+		List<S3ObjectSummary> s3ObjectSummaries = listObjectsWithPrefix(prefix);
 
-		String[] fileNames = new String[objectSummaries.size()];
+		String[] fileNames = new String[s3ObjectSummaries.size()];
 
-		Iterator<S3ObjectSummary> objectSummaryIterator =
-			objectSummaries.iterator();
+		Iterator<S3ObjectSummary> s3ObjectSummaryIterator =
+			s3ObjectSummaries.iterator();
 
 		for (int i = 0; i < fileNames.length; i++) {
-			S3ObjectSummary s3ObjectSummary = objectSummaryIterator.next();
+			S3ObjectSummary s3ObjectSummary = s3ObjectSummaryIterator.next();
 
 			String objectKey = s3ObjectSummary.getKey();
 
@@ -239,15 +239,17 @@ public class S3Store extends BaseStore {
 	public long getFileSize(long companyId, long repositoryId, String fileName)
 		throws PortalException {
 
-		String version = getHeadVersionLabel(companyId, repositoryId, fileName);
+		String headVersion = getHeadVersionLabel(
+			companyId, repositoryId, fileName);
 
-		String key = _s3KeyTransformer.getFileVersionKey(
-			companyId, repositoryId, fileName, version);
+		String fileVersionKey = _s3KeyTransformer.getFileVersionKey(
+			companyId, repositoryId, fileName, headVersion);
 
-		GetObjectMetadataRequest request = new GetObjectMetadataRequest(
-			_bucketName, key);
+		GetObjectMetadataRequest getObjectMetadataRequest =
+			new GetObjectMetadataRequest(_bucketName, fileVersionKey);
 
-		ObjectMetadata objectMetadata = _amazonS3.getObjectMetadata(request);
+		ObjectMetadata objectMetadata = _amazonS3.getObjectMetadata(
+			getObjectMetadataRequest);
 
 		if (objectMetadata == null) {
 			throw new NoSuchFileException(companyId, repositoryId, fileName);
@@ -341,10 +343,10 @@ public class S3Store extends BaseStore {
 			String objectKey = _s3KeyTransformer.getFileVersionKey(
 				companyId, repositoryId, fileName, versionLabel);
 
-			PutObjectRequest request = new PutObjectRequest(
+			PutObjectRequest putObjectRequest = new PutObjectRequest(
 				_bucketName, objectKey, is, objectMetadata);
 
-			_amazonS3.putObject(request);
+			_amazonS3.putObject(putObjectRequest);
 		}
 		catch (AmazonClientException ae) {
 			throw convertAWSException(ae);
@@ -420,17 +422,22 @@ public class S3Store extends BaseStore {
 
 	protected void deleteObjectsWithPrefix(String prefix) {
 		try {
-			List<S3ObjectSummary> objects = listObjectsWithPrefix(prefix);
-			String[] objectKeysArray = new String[_MAX_AWS_MULTI_DELETE_SIZE];
-			Iterator<S3ObjectSummary> iterator = objects.iterator();
+			List<S3ObjectSummary> s3ObjectSummaries = listObjectsWithPrefix(
+				prefix);
 
-			while (iterator.hasNext()) {
+			String[] objectKeysArray = new String[_MAX_AWS_MULTI_DELETE_SIZE];
+
+			Iterator<S3ObjectSummary> s3ObjectSummaryIterator =
+				s3ObjectSummaries.iterator();
+
+			while (s3ObjectSummaryIterator.hasNext()) {
 				DeleteObjectsRequest deleteObjectsRequest =
 					new DeleteObjectsRequest(_bucketName);
 
 				for (int i = 0; i < objectKeysArray.length; i++) {
-					if (iterator.hasNext()) {
-						objectKeysArray[i] = iterator.next().getKey();
+					if (s3ObjectSummaryIterator.hasNext()) {
+						objectKeysArray[i] =
+							s3ObjectSummaryIterator.next().getKey();
 					}
 					else {
 						objectKeysArray = Arrays.copyOfRange(
@@ -538,9 +545,10 @@ public class S3Store extends BaseStore {
 			companyId, repositoryId, fileName, versionLabel);
 
 		try {
-			GetObjectRequest request = new GetObjectRequest(_bucketName, key);
+			GetObjectRequest getObjectRequest = new GetObjectRequest(
+				_bucketName, key);
 
-			S3Object s3Object = _amazonS3.getObject(request);
+			S3Object s3Object = _amazonS3.getObject(getObjectRequest);
 
 			if (s3Object == null) {
 				throw new NoSuchFileException(
@@ -568,12 +576,12 @@ public class S3Store extends BaseStore {
 	 */
 	protected boolean isFileNotFound(AmazonClientException clientException) {
 		if (clientException instanceof AmazonServiceException) {
-			AmazonServiceException serviceException =
+			AmazonServiceException amazonServiceException =
 				(AmazonServiceException)clientException;
 
-			if ((serviceException.getStatusCode() ==
+			if ((amazonServiceException.getStatusCode() ==
 					_AWS_FILE_NOT_FOUND_STATUS_CODE) &&
-				serviceException.getErrorCode().equals(
+				amazonServiceException.getErrorCode().equals(
 					_AWS_FILE_NOT_FOUND_ERROR_CODE)) {
 
 				return true;
@@ -584,24 +592,27 @@ public class S3Store extends BaseStore {
 	}
 
 	protected List<S3ObjectSummary> listObjectsWithPrefix(String prefix) {
-		ListObjectsRequest request = new ListObjectsRequest();
-		request.withBucketName(_bucketName);
-		request.withPrefix(prefix);
+		ListObjectsRequest listObjectsRequest = new ListObjectsRequest();
+
+		listObjectsRequest.withBucketName(_bucketName);
+		listObjectsRequest.withPrefix(prefix);
 
 		try {
-			ObjectListing objectListing = _amazonS3.listObjects(request);
-			List<S3ObjectSummary> summaries = new ArrayList<>(
+			ObjectListing objectListing = _amazonS3.listObjects(
+				listObjectsRequest);
+
+			List<S3ObjectSummary> s3ObjectSummaries = new ArrayList<>(
 				objectListing.getMaxKeys());
 
 			do {
-				List<S3ObjectSummary> batchSummary =
+				List<S3ObjectSummary> batchS3ObjectSummaries =
 					objectListing.getObjectSummaries();
 
-				summaries.addAll(batchSummary);
+				s3ObjectSummaries.addAll(batchS3ObjectSummaries);
 			}
 			while (objectListing.isTruncated());
 
-			return summaries;
+			return s3ObjectSummaries;
 		}
 		catch (AmazonClientException ae) {
 			throw convertAWSException(ae);
@@ -629,11 +640,11 @@ public class S3Store extends BaseStore {
 					oldPrefix + " to " + newPrefix);
 		}
 
-		List<S3ObjectSummary> oldObjectSummaries = listObjectsWithPrefix(
+		List<S3ObjectSummary> oldS3ObjectSummaries = listObjectsWithPrefix(
 			oldPrefix);
 
-		for (S3ObjectSummary objectSummary : oldObjectSummaries) {
-			String oldKey = objectSummary.getKey();
+		for (S3ObjectSummary s3ObjectSummary : oldS3ObjectSummaries) {
+			String oldKey = s3ObjectSummary.getKey();
 			String newKey = _s3KeyTransformer.moveKey(
 				oldKey, oldPrefix, newPrefix);
 
@@ -643,13 +654,13 @@ public class S3Store extends BaseStore {
 			_amazonS3.copyObject(copyObjectRequest);
 		}
 
-		for (S3ObjectSummary objectSummary : oldObjectSummaries) {
+		for (S3ObjectSummary objectSummary : oldS3ObjectSummaries) {
 			String oldKey = objectSummary.getKey();
 
-			DeleteObjectRequest deleteOldObjectRequest =
-				new DeleteObjectRequest(_bucketName, oldKey);
+			DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(
+				_bucketName, oldKey);
 
-			_amazonS3.deleteObject(deleteOldObjectRequest);
+			_amazonS3.deleteObject(deleteObjectRequest);
 		}
 	}
 

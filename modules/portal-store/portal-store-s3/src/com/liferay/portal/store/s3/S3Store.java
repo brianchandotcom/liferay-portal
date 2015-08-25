@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -364,11 +363,11 @@ public class S3Store extends BaseStore {
 
 		_s3KeyTransformer = new S3KeyTransformer();
 
-		int tempDirCleanUpExpunge = GetterUtil.getInteger(
-			_s3StoreConfiguration.tempDirCleanUpExpunge());
+		int tempDirCleanUpExpunge =
+			_s3StoreConfiguration.tempDirCleanUpExpunge();
 
-		int tempDirCleanUpFrequency = GetterUtil.getInteger(
-			_s3StoreConfiguration.tempDirCleanUpFrequency());
+		int tempDirCleanUpFrequency =
+			_s3StoreConfiguration.tempDirCleanUpFrequency();
 
 		_s3LocalStore = new S3LocalStore(
 			_s3KeyTransformer, tempDirCleanUpExpunge, tempDirCleanUpFrequency);
@@ -492,8 +491,7 @@ public class S3Store extends BaseStore {
 	protected ClientConfiguration getClientConfiguration() {
 		ClientConfiguration clientConfiguration = new ClientConfiguration();
 
-		int maxConnections = GetterUtil.getInteger(
-			_s3StoreConfiguration.httpClientMaxConnections());
+		int maxConnections = _s3StoreConfiguration.httpClientMaxConnections();
 
 		clientConfiguration.setMaxConnections(maxConnections);
 

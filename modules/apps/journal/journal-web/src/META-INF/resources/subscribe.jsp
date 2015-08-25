@@ -71,16 +71,14 @@ if (Validator.isNotNull(ddmStructureKey)) {
 						</portlet:actionURL>
 
 						<liferay-ui:icon
-							iconCssClass="icon-remove-sign"
-							label="<%= true %>"
+							iconCssClass="icon-star"
 							message="unsubscribe"
 							url="<%= unsubscribeURL %>"
 						/>
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:icon
-							iconCssClass="icon-remove-sign"
-							label="<%= true %>"
+							iconCssClass="icon-star"
 							message="subscribed-to-a-parent-folder"
 						/>
 					</c:otherwise>
@@ -101,8 +99,7 @@ if (Validator.isNotNull(ddmStructureKey)) {
 				</portlet:actionURL>
 
 				<liferay-ui:icon
-					iconCssClass="icon-ok-sign"
-					label="<%= true %>"
+					iconCssClass="icon-star-empty"
 					message="subscribe"
 					url="<%= subscribeURL %>"
 				/>

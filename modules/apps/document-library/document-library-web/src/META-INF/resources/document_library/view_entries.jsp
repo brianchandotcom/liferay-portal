@@ -374,6 +374,13 @@ dlSearchContainer.setResults(results);
 						<c:when test="<%= fileEntry != null %>">
 
 							<%
+							if (fileShortcut == null) {
+								row.setPrimaryKey(String.valueOf(fileEntry.getFileEntryId()));
+							}
+							else {
+								row.setPrimaryKey(String.valueOf(fileShortcut.getFileShortcutId()));
+							}
+
 							boolean draggable = false;
 
 							if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
@@ -390,7 +397,6 @@ dlSearchContainer.setResults(results);
 							rowData.put("title", fileEntry.getTitle());
 
 							row.setData(rowData);
-							row.setPrimaryKey(String.valueOf(fileEntry.getPrimaryKey()));
 							%>
 
 							<c:choose>

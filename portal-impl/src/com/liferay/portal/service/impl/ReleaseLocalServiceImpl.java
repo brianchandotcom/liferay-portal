@@ -82,6 +82,40 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		return release;
 	}
 
+	public Release addRelease(String servletContextName, String version) {
+		Release release = null;
+
+		if (servletContextName.equals(
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME)) {
+
+			release = releasePersistence.create(ReleaseConstants.DEFAULT_ID);
+		}
+
+		else {
+			long releaseId = counterLocalService.increment();
+
+			release = releasePersistence.create(releaseId);
+		}
+
+		Date now = new Date();
+
+		release.setCreateDate(now);
+		release.setModifiedDate(now);
+		release.setServletContextName(servletContextName);
+		release.setBuildNumber(0);
+		release.setVersion(version);
+
+		if (servletContextName.equals(
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME)) {
+
+			release.setTestString(ReleaseConstants.TEST_STRING);
+		}
+
+		releasePersistence.update(release);
+
+		return release;
+	}
+
 	@Override
 	public void createTablesAndPopulate() {
 		try {
@@ -293,6 +327,34 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		updateRelease(
 			servletContextName, upgradeProcesses, buildNumber,
 			previousBuildNumber, indexOnUpgrade);
+	}
+
+	@Override
+	public void updateRelease(
+			String servletContextName, String version, String previousVersion)
+		throws PortalException {
+
+		Release release = releaseLocalService.fetchRelease(servletContextName);
+
+		if (release == null) {
+			if ("0.0.0".equals(previousVersion)) {
+				release = releaseLocalService.addRelease(
+					servletContextName, previousVersion);
+			}
+			else {
+				throw new IllegalStateException(
+					"Refusing to upgrade from a non existent release");
+			}
+		}
+
+		if (!release.getVersion().equals(previousVersion)) {
+			throw new IllegalStateException(
+				"Refusing to upgrade because previousVersion does not match!");
+		}
+
+		release.setVersion(version);
+
+		releasePersistence.update(release);
 	}
 
 	protected void populateVersion() {

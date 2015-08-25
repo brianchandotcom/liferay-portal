@@ -65,6 +65,8 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 			PropsUtil.get(PropsKeys.LAYOUT_EDIT_PAGE, filter));
 		_firstPageable = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.LAYOUT_FIRST_PAGEABLE, filter));
+		_fullPageDisplayable = GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.FULL_PAGE_DISPLAYABLE, filter));
 		_parentable = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.LAYOUT_PARENTABLE, filter), true);
 		_sitemapable = GetterUtil.getBoolean(
@@ -189,6 +191,11 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 	}
 
 	@Override
+	public boolean isFullPageDisplayable() {
+		return _fullPageDisplayable;
+	}
+
+	@Override
 	public boolean isParentable() {
 		return _parentable;
 	}
@@ -228,6 +235,7 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 	private final String[] _configurationActionUpdate;
 	private final String _editPage;
 	private final boolean _firstPageable;
+	private final boolean _fullPageDisplayable;
 	private final boolean _parentable;
 	private final boolean _sitemapable;
 	private final String _type;

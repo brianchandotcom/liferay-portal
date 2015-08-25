@@ -60,6 +60,11 @@ public class FullPageApplicationLayoutTypeController
 	}
 
 	@Override
+	public boolean isFullPageDisplayable() {
+		return true;
+	}
+
+	@Override
 	public boolean isParentable() {
 		return true;
 	}

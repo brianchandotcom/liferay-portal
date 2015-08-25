@@ -96,12 +96,13 @@ public class UIItemsBuilder {
 			return;
 		}
 
+		PortletURL portletURL = _getActionURL(
+			"/document_library/edit_file_entry", Constants.CANCEL_CHECKOUT);
+
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, "icon-remove",
 			DLUIItemKeys.CANCEL_CHECKOUT, "cancel-checkout[document]",
-			_getActionURL(
-				"/document_library/edit_file_entry",
-				Constants.CANCEL_CHECKOUT));
+			portletURL.toString());
 	}
 
 	public void addCancelCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
@@ -127,11 +128,12 @@ public class UIItemsBuilder {
 			return;
 		}
 
+		PortletURL portletURL = _getActionURL(
+			"/document_library/edit_file_entry", Constants.CHECKIN);
+
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, "icon-lock", DLUIItemKeys.CHECKIN,
-			"checkin",
-			_getActionURL(
-				"/document_library/edit_file_entry", Constants.CHECKIN));
+			"checkin", portletURL.toString());
 	}
 
 	public void addCheckinToolbarItem(List<ToolbarItem> toolbarItems)
@@ -156,11 +158,12 @@ public class UIItemsBuilder {
 			return;
 		}
 
+		PortletURL portletURL = _getActionURL(
+			"/document_library/edit_file_entry", Constants.CHECKOUT);
+
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, "icon-unlock", DLUIItemKeys.CHECKOUT,
-			"checkout[document]",
-			_getActionURL(
-				"/document_library/edit_file_entry", Constants.CHECKOUT));
+			"checkout[document]", portletURL.toString());
 	}
 
 	public void addCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
@@ -186,9 +189,11 @@ public class UIItemsBuilder {
 			DeleteMenuItem deleteMenuItem = new DeleteMenuItem();
 
 			deleteMenuItem.setKey(DLUIItemKeys.DELETE);
-			deleteMenuItem.setURL(
-				_getActionURL(
-					"/document_library/edit_file_entry", Constants.DELETE));
+
+			PortletURL portletURL = _getActionURL(
+				"/document_library/edit_file_entry", Constants.DELETE);
+
+			deleteMenuItem.setURL(portletURL.toString());
 
 			menuItems.add(deleteMenuItem);
 		}
@@ -197,10 +202,11 @@ public class UIItemsBuilder {
 
 			deleteMenuItem.setKey(DLUIItemKeys.DELETE);
 			deleteMenuItem.setTrash(true);
-			deleteMenuItem.setURL(
-				_getActionURL(
-					"/document_library/edit_file_entry",
-					Constants.MOVE_TO_TRASH));
+
+			PortletURL portletURL = _getActionURL(
+				"/document_library/edit_file_entry", Constants.MOVE_TO_TRASH);
+
+			deleteMenuItem.setURL(portletURL.toString());
 
 			menuItems.add(deleteMenuItem);
 		}
@@ -663,7 +669,7 @@ public class UIItemsBuilder {
 		return urlUIItem;
 	}
 
-	private String _getActionURL(String mvcActionCommandName, String cmd) {
+	private PortletURL _getActionURL(String mvcActionCommandName, String cmd) {
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
 
@@ -675,7 +681,7 @@ public class UIItemsBuilder {
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
-		return portletURL.toString();
+		return portletURL;
 	}
 
 	private String _getCurrentURL() {

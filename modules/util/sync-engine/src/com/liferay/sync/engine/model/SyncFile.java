@@ -54,6 +54,8 @@ public class SyncFile extends StateAwareModel {
 
 	public static final String TYPE_FOLDER = "folder";
 
+	public static final String TYPE_PWC = "privateWorkingCopy";
+
 	public static final String TYPE_SYSTEM = "system";
 
 	public static final int UI_EVENT_ADDED_LOCAL = 1;
@@ -248,7 +250,15 @@ public class SyncFile extends StateAwareModel {
 	}
 
 	public boolean isFolder() {
-		return !isFile();
+		if (!isFile() && !isPWC()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isPWC() {
+		return type.equals(TYPE_PWC);
 	}
 
 	public boolean isSystem() {

@@ -176,7 +176,8 @@ DDLRecordSet recordSet = ddlDisplayContext.getRecordSet();
 			<c:if test="<%= ddlDisplayContext.isShowAddRecordSetIcon() %>">
 				<liferay-portlet:renderURL portletName="<%= DDLPortletKeys.DYNAMIC_DATA_LISTS %>" var="addRecordSetURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcPath" value="/edit_record_set.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
+					<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
 				</liferay-portlet:renderURL>
 
 				<%

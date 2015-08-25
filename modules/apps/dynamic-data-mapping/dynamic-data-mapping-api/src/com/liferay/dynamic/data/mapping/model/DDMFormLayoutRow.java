@@ -14,13 +14,15 @@
 
 package com.liferay.dynamic.data.mapping.model;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Marcellus Tavares
  */
-public class DDMFormLayoutRow {
+public class DDMFormLayoutRow implements Serializable {
 
 	public DDMFormLayoutRow() {
 	}

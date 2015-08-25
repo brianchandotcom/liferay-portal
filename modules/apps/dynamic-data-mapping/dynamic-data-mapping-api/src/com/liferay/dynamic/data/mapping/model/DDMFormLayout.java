@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.model;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -21,7 +23,7 @@ import java.util.Locale;
 /**
  * @author Marcellus Tavares
  */
-public class DDMFormLayout {
+public class DDMFormLayout implements Serializable {
 
 	public DDMFormLayout() {
 	}

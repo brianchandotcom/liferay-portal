@@ -16,13 +16,15 @@ package com.liferay.dynamic.data.mapping.model;
 
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Marcellus Tavares
  */
-public class DDMFormLayoutColumn {
+public class DDMFormLayoutColumn implements Serializable {
 
 	public static final int FULL = 12;
 

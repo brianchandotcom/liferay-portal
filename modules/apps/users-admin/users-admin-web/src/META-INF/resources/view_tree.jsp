@@ -215,7 +215,7 @@ if (organization != null) {
 					boolean showOrganizations = false;
 					boolean showUsers = true;
 
-					if ((organization == null) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.IMPERSONATE)) {
+					if ((organization == null) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.IMPERSONATE) && Validator.isNull(keywords)) {
 						showOrganizations = true;
 						showUsers = false;
 					}

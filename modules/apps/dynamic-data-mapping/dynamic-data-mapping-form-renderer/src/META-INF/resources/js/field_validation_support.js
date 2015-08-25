@@ -17,7 +17,7 @@ AUI.add(
 
 			strings: {
 				value: {
-					defaultValidationMessage: Liferay.Language.get('unkown-error'),
+					defaultValidationMessage: Liferay.Language.get('unknown-error'),
 					requestErrorMessage: Liferay.Language.get('there-was-an-error-when-trying-to-validate-your-form')
 				}
 			},

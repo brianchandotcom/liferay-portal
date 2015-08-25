@@ -66,10 +66,10 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				IGViewFileVersionDisplayContext igViewFileVersionDisplayContext = null;
 
 				if (fileShortcut == null) {
-					igViewFileVersionDisplayContext = IGDisplayContextProviderUtil.getIGFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
+					igViewFileVersionDisplayContext = igDisplayContextProvider.getIGViewFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
 				}
 				else {
-					igViewFileVersionDisplayContext = IGDisplayContextProviderUtil.getIGFileVersionActionsDisplayContext(request, response, fileShortcut);
+					igViewFileVersionDisplayContext = igDisplayContextProvider.getIGViewFileVersionActionsDisplayContext(request, response, fileShortcut);
 				}
 				%>
 

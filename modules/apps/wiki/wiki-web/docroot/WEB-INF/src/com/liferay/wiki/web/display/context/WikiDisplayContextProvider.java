@@ -23,7 +23,7 @@ import com.liferay.wiki.model.WikiPage;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -158,6 +158,6 @@ public class WikiDisplayContextProvider {
 	private BundleContext _bundleContext;
 	private final Map<ServiceReference<WikiDisplayContextFactory>,
 		WikiDisplayContextFactory> _wikiDisplayContextFactories =
-			new TreeMap<>();
+			new ConcurrentSkipListMap<>();
 
 }

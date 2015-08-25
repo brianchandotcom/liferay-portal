@@ -19,7 +19,7 @@
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/monitoring/view");
+portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
 %>
 
 <c:choose>
@@ -62,7 +62,7 @@ portletURL.setParameter("struts_action", "/monitoring/view");
 				%>
 
 				<portlet:renderURL var="rowURL">
-					<portlet:param name="struts_action" value="/monitoring/edit_session" />
+					<portlet:param name="mvcRenderCommandName" value="/monitoring/edit_session" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="sessionId" value="<%= userTracker.getSessionId() %>" />
 				</portlet:renderURL>

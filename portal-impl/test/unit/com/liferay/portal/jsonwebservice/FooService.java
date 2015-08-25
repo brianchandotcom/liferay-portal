@@ -30,6 +30,9 @@ import java.util.Map;
  */
 public class FooService {
 
+	public static void addFile(String fileName) {
+	}
+
 	public static BarData bar() {
 		return new BarData();
 	}

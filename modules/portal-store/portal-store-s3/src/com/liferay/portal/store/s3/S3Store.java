@@ -361,7 +361,7 @@ public class S3Store extends BaseStore {
 
 		_amazonS3 = getAmazonS3(_awsCredentialsProvider);
 
-		_s3KeyTransformer = new S3KeyTransformer();
+		_s3KeyTransformer = new S3KeyTransformerImpl();
 
 		int tempDirCleanUpExpunge =
 			_s3StoreConfiguration.tempDirCleanUpExpunge();

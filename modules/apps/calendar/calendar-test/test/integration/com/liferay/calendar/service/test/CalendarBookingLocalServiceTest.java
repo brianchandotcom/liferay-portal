@@ -68,72 +68,6 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testAddCalendarBookingWorkflowActionPublish()
-		throws PortalException {
-
-		ServiceContext serviceContext = createServiceContext();
-
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
-		long startTime = DateUtil.newTime();
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.addCalendarBooking(
-				_user.getUserId(), calendar.getCalendarId(), new long[0],
-				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), startTime,
-				startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
-				serviceContext);
-
-		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
-			calendarBooking.getCalendarBookingId());
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, calendarBooking.getStatus());
-	}
-
-	@Test
-	public void testAddCalendarBookingWorkflowActionSaveDraft()
-		throws PortalException {
-
-		ServiceContext serviceContext = createServiceContext();
-
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
-		long startTime = DateUtil.newTime();
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.addCalendarBooking(
-				_user.getUserId(), calendar.getCalendarId(), new long[0],
-				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), startTime,
-				startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
-				serviceContext);
-
-		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
-			calendarBooking.getCalendarBookingId());
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT, calendarBooking.getStatus());
-	}
-
-	@Test
 	public void testDeleteLastCalendarBookingInstanceDeletesCalendarBooking()
 		throws PortalException {
 
@@ -184,17 +118,17 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testInviteToDraftEventResultsInMasterPendingChild()
+	public void testInviteToDraftCalendarBookingResultsInMasterPendingChild()
 		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(_user.getCompanyId());
+		ServiceContext serviceContext = createServiceContext();
 
 		CalendarResource calendarResource =
 			CalendarResourceUtil.getUserCalendarResource(
 				_user.getUserId(), serviceContext);
+
 		Calendar calendar = calendarResource.getDefaultCalendar();
+
 		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
 			_user.getUserId(), _user.getGroupId(),
 			calendarResource.getCalendarResourceId(),
@@ -226,17 +160,17 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testInviteToPublishedEventResultsInPendingChild()
+	public void testInviteToPublishedCalendarBookingResultsInPendingChild()
 		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(_user.getCompanyId());
+		ServiceContext serviceContext = createServiceContext();
 
 		CalendarResource calendarResource =
 			CalendarResourceUtil.getUserCalendarResource(
 				_user.getUserId(), serviceContext);
+
 		Calendar calendar = calendarResource.getDefaultCalendar();
+
 		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
 			_user.getUserId(), _user.getGroupId(),
 			calendarResource.getCalendarResourceId(),
@@ -267,17 +201,17 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testMovedToTrashEventResultsInMovedToTrashChildren()
+	public void testMoveToTrashCalendarBookingShouldMoveItsChildrenToTrash()
 		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(_user.getCompanyId());
+		ServiceContext serviceContext = createServiceContext();
 
 		CalendarResource calendarResource =
 			CalendarResourceUtil.getUserCalendarResource(
 				_user.getUserId(), serviceContext);
+
 		Calendar calendar = calendarResource.getDefaultCalendar();
+
 		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
 			_user.getUserId(), _user.getGroupId(),
 			calendarResource.getCalendarResourceId(),
@@ -315,17 +249,90 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testPublishDraftEventResultsInPendingChild()
-		throws PortalException {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(_user.getCompanyId());
+	public void testPublishCalendarBooking() throws PortalException {
+		ServiceContext serviceContext = createServiceContext();
 
 		CalendarResource calendarResource =
 			CalendarResourceUtil.getUserCalendarResource(
 				_user.getUserId(), serviceContext);
+
 		Calendar calendar = calendarResource.getDefaultCalendar();
+
+		long startTime = DateUtil.newTime();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.addCalendarBooking(
+				_user.getUserId(), calendar.getCalendarId(), new long[0],
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startTime,
+				startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
+				serviceContext);
+
+		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
+			calendarBooking.getCalendarBookingId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, calendarBooking.getStatus());
+	}
+
+	@Test
+	public void testPublishDraftCalendarBooking() throws PortalException {
+		ServiceContext serviceContext = createServiceContext();
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getUserCalendarResource(
+				_user.getUserId(), serviceContext);
+
+		Calendar calendar = calendarResource.getDefaultCalendar();
+
+		long startTime = DateUtil.newTime();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.addCalendarBooking(
+				_user.getUserId(), calendar.getCalendarId(), new long[0],
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startTime,
+				startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
+				serviceContext);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
+			_user.getUserId(), calendarBooking.getCalendarBookingId(),
+			calendar.getCalendarId(), new long[0],
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(), startTime,
+			startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
+			serviceContext);
+
+		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
+			calendarBooking.getCalendarBookingId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, calendarBooking.getStatus());
+	}
+
+	@Test
+	public void testPublishDraftCalendarBookingShouldResultInPendingChild()
+		throws PortalException {
+
+		ServiceContext serviceContext = createServiceContext();
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getUserCalendarResource(
+				_user.getUserId(), serviceContext);
+
+		Calendar calendar = calendarResource.getDefaultCalendar();
+
 		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
 			_user.getUserId(), _user.getGroupId(),
 			calendarResource.getCalendarResourceId(),
@@ -377,14 +384,14 @@ public class CalendarBookingLocalServiceTest {
 	public void testRestoredFromTrashEventResultsInRestoredFromTrashChildren()
 		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(_user.getCompanyId());
+		ServiceContext serviceContext = createServiceContext();
 
 		CalendarResource calendarResource =
 			CalendarResourceUtil.getUserCalendarResource(
 				_user.getUserId(), serviceContext);
+
 		Calendar calendar = calendarResource.getDefaultCalendar();
+
 		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
 			_user.getUserId(), _user.getGroupId(),
 			calendarResource.getCalendarResourceId(),
@@ -429,6 +436,121 @@ public class CalendarBookingLocalServiceTest {
 			WorkflowConstants.STATUS_PENDING, childCalendarBooking.getStatus());
 	}
 
+	@Test
+	public void testSaveAsDraftCalendarBooking() throws PortalException {
+		ServiceContext serviceContext = createServiceContext();
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getUserCalendarResource(
+				_user.getUserId(), serviceContext);
+
+		Calendar calendar = calendarResource.getDefaultCalendar();
+
+		long startTime = DateUtil.newTime();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.addCalendarBooking(
+				_user.getUserId(), calendar.getCalendarId(), new long[0],
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startTime,
+				startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
+				serviceContext);
+
+		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
+			calendarBooking.getCalendarBookingId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, calendarBooking.getStatus());
+	}
+
+	@Test
+	public void testSaveAsDraftDraftCalendarBooking() throws PortalException {
+		ServiceContext serviceContext = createServiceContext();
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getUserCalendarResource(
+				_user.getUserId(), serviceContext);
+
+		Calendar calendar = calendarResource.getDefaultCalendar();
+
+		long startTime = DateUtil.newTime();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.addCalendarBooking(
+				_user.getUserId(), calendar.getCalendarId(), new long[0],
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startTime,
+				startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
+				serviceContext);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
+			_user.getUserId(), calendarBooking.getCalendarBookingId(),
+			calendar.getCalendarId(), new long[0],
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(), startTime,
+			startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
+			serviceContext);
+
+		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
+			calendarBooking.getCalendarBookingId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, calendarBooking.getStatus());
+	}
+
+	@Test
+	public void testSaveAsDraftPublishedCalendarBooking()
+		throws PortalException {
+
+		ServiceContext serviceContext = createServiceContext();
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getUserCalendarResource(
+				_user.getUserId(), serviceContext);
+
+		Calendar calendar = calendarResource.getDefaultCalendar();
+
+		long startDate = DateUtil.newTime();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.addCalendarBooking(
+				_user.getUserId(), calendar.getCalendarId(), new long[0],
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startDate, startDate + 36000000,
+				false, null, 0, null, 0, null, serviceContext);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
+			_user.getUserId(), calendarBooking.getCalendarBookingId(),
+			calendar.getCalendarId(), new long[0],
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(), startDate, startDate + 36000000,
+			false, null, 0, null, 0, null, serviceContext);
+
+		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
+			calendarBooking.getCalendarBookingId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, calendarBooking.getStatus());
+	}
+
 	@Test(expected = CalendarBookingRecurrenceException.class)
 	public void testStartDateBeforeUntilDateThrowsRecurrenceException()
 		throws PortalException {
@@ -466,137 +588,6 @@ public class CalendarBookingLocalServiceTest {
 			serviceContext);
 	}
 
-	@Test
-	public void testUpdateCalendarBookingWorkflowActionPublish()
-		throws PortalException {
-
-		ServiceContext serviceContext = createServiceContext();
-
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
-		long startTime = DateUtil.newTime();
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.addCalendarBooking(
-				_user.getUserId(), calendar.getCalendarId(), new long[0],
-				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), startTime,
-				startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
-				serviceContext);
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
-			_user.getUserId(), calendarBooking.getCalendarBookingId(),
-			calendar.getCalendarId(), new long[0],
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString(), startTime,
-			startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
-			serviceContext);
-
-		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
-			calendarBooking.getCalendarBookingId());
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, calendarBooking.getStatus());
-	}
-
-	@Test
-	public void testUpdateCalendarBookingWorkflowActionSaveDraft()
-		throws PortalException {
-
-		ServiceContext serviceContext = createServiceContext();
-
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
-		long startTime = DateUtil.newTime();
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.addCalendarBooking(
-				_user.getUserId(), calendar.getCalendarId(), new long[0],
-				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), startTime,
-				startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
-				serviceContext);
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
-			_user.getUserId(), calendarBooking.getCalendarBookingId(),
-			calendar.getCalendarId(), new long[0],
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString(), startTime,
-			startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
-			serviceContext);
-
-		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
-			calendarBooking.getCalendarBookingId());
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT, calendarBooking.getStatus());
-	}
-
-	@Test
-	public void testUpdateCalendarBookingWorkflowActionSaveDraftAfterPublish()
-		throws PortalException {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(_user.getCompanyId());
-
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
-		long startDate = DateUtil.newTime();
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.addCalendarBooking(
-				_user.getUserId(), calendar.getCalendarId(), new long[0],
-				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), startDate, startDate + 36000000,
-				false, null, 0, null, 0, null, serviceContext);
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
-			_user.getUserId(), calendarBooking.getCalendarBookingId(),
-			calendar.getCalendarId(), new long[0],
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString(), startDate, startDate + 36000000,
-			false, null, 0, null, 0, null, serviceContext);
-
-		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
-			calendarBooking.getCalendarBookingId());
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_DRAFT, calendarBooking.getStatus());
-	}
-
 	protected ServiceContext createServiceContext() {
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -610,6 +601,7 @@ public class CalendarBookingLocalServiceTest {
 
 		List<CalendarBooking> childCalendarBookings =
 			calendarBooking.getChildCalendarBookings();
+
 		CalendarBooking childCalendarBooking = childCalendarBookings.get(0);
 
 		if (childCalendarBooking.isMasterBooking()) {

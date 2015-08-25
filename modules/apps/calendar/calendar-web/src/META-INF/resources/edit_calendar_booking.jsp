@@ -94,9 +94,6 @@ boolean recurring = false;
 Calendar calendar = CalendarServiceUtil.fetchCalendar(calendarId);
 
 if (calendarBooking != null) {
-	calendar = calendarBooking.getCalendar();
-	CalendarResource calendarResource = calendar.getCalendarResource();
-
 	acceptedCalendarsJSONArray = CalendarUtil.toCalendarBookingsJSONArray(themeDisplay, CalendarBookingServiceUtil.getChildCalendarBookings(calendarBooking.getParentCalendarBookingId(), CalendarBookingWorkflowConstants.STATUS_APPROVED));
 	declinedCalendarsJSONArray = CalendarUtil.toCalendarBookingsJSONArray(themeDisplay, CalendarBookingServiceUtil.getChildCalendarBookings(calendarBooking.getParentCalendarBookingId(), CalendarBookingWorkflowConstants.STATUS_DENIED));
 	maybeCalendarsJSONArray = CalendarUtil.toCalendarBookingsJSONArray(themeDisplay, CalendarBookingServiceUtil.getChildCalendarBookings(calendarBooking.getParentCalendarBookingId(), CalendarBookingWorkflowConstants.STATUS_MAYBE));
@@ -126,11 +123,18 @@ if (calendarBooking != null) {
 	}
 
 	recurrence = calendarBooking.getRecurrenceObj();
+
 	approved = calendarBooking.isApproved();
+
+	calendar = calendarBooking.getCalendar();
+
+	CalendarResource calendarResource = calendar.getCalendarResource();
+
 	hasWorkflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), calendarResource.getGroupId(), CalendarBooking.class.getName());
 }
 else if (calendar != null) {
 	JSONObject calendarJSONObject = CalendarUtil.toCalendarJSONObject(themeDisplay, calendar);
+
 	CalendarResource calendarResource = calendar.getCalendarResource();
 
 	if (calendar.getUserId() == themeDisplay.getUserId()) {

@@ -31,16 +31,10 @@
 	#end
 #end
 
-#set ($liferay_dockbar_pinned = $getterUtil.getBoolean($sessionClicks.get($request, "liferay_dockbar_pinned", ""), false))
-
 #if ($liferay_toggle_controls == "visible")
 	#set ($css_class = $css_class + " controls-visible")
 #else
 	#set ($css_class = $css_class + " controls-hidden")
-#end
-
-#if ($liferay_dockbar_pinned)
-	#set ($css_class = $css_class + " lfr-dockbar-pinned")
 #end
 
 #if ($layoutTypePortlet.hasStateMax())

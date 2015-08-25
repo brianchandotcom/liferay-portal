@@ -112,7 +112,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 		<execute function="Type#typeWaitForCKEditor" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#IFRAME" value1="${webContentContent}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD_LOCALIZED" value1="${webContentContent}" />
 
 		<if>
 			<equals arg1="${saveAsDraft}" arg2="true" />

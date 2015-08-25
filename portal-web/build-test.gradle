@@ -19,6 +19,16 @@ buildscript {
 apply plugin: "com.liferay.poshi.runner"
 
 poshiRunner {
+	File poshiRunnerExtProperties = new File("portal-web/poshi-runner-ext.properties")
+
+	if (poshiRunnerExtProperties.exists()) {
+		project.ext.testProperties = new Properties()
+
+		testProperties.load(new FileInputStream("portal-web/poshi-runner-ext.properties"))
+
+		setPoshiProperties testProperties
+	}
+
 	if (project.hasProperty("componentNames")) {
 		poshiProperty "component.names", project.properties["componentNames"]
 	}

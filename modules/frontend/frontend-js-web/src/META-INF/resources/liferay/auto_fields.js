@@ -1,11 +1,8 @@
 AUI.add(
 	'liferay-auto-fields',
 	function(A) {
-		var AArray = A.Array;
 		var AObject = A.Object;
 		var Lang = A.Lang;
-
-		var CSS_AUTOROW_CONTROLS = 'lfr-autorow-controls';
 
 		var CSS_ICON_LOADING = 'loading-animation';
 

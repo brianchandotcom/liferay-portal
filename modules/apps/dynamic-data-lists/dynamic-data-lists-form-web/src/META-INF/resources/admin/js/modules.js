@@ -85,7 +85,7 @@
 								'liferay-ddm-form-renderer-pagination',
 								'liferay-ddm-form-renderer-tabs',
 								'liferay-ddm-form-renderer-util',
-								'liferay-ddm-form-renderer-validation',
+								'liferay-ddm-form-renderer-validation'
 							]
 						},
 						'liferay-ddm-form-renderer-definition': {
@@ -314,7 +314,7 @@
 						}
 					},
 					root: '/o/ddm-type-validation/'
-				},
+				}
 			}
 		}
 	);

@@ -4,13 +4,11 @@ AUI.add(
 		var AArray = A.Array;
 		var Lang = A.Lang;
 
-		var CSS_WIZARD_ITEMS = '.';
-
 		var TPL_WIZARD_ITEM = '<li class="{state}">' +
 			'<div class="progress-bar-title">{title}</div>' +
 			'<div class="divider"></div>' +
 			'<div class="progress-bar-step">{number}</div>' +
-		'</li>';
+			'</li>';
 
 		var Wizard = A.Component.create(
 			{
@@ -92,8 +90,8 @@ AUI.add(
 										Lang.sub(
 											TPL_WIZARD_ITEM,
 											{
-												state: item.state,
 												number: index + 1,
+												state: item.state,
 												title: item.title
 											}
 										)

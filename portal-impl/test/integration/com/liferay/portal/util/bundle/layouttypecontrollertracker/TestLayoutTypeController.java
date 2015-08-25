@@ -81,6 +81,11 @@ public class TestLayoutTypeController implements LayoutTypeController {
 	}
 
 	@Override
+	public boolean isFullPageDisplayable() {
+		return false;
+	}
+
+	@Override
 	public boolean isParentable() {
 		return false;
 	}

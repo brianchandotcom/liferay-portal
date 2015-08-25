@@ -46,6 +46,8 @@ public interface LayoutTypeController extends Serializable {
 
 	public boolean isFirstPageable();
 
+	public boolean isFullPageDisplayable();
+
 	public boolean isParentable();
 
 	public boolean isSitemapable();

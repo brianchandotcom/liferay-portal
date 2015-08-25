@@ -13,3 +13,28 @@
  * details.
  */
 --%>
+<%@ include file="/layout/edit/init.jsp" %>
+
+<%
+String selectedPortletId = StringPool.BLANK;
+
+if (selLayout != null) {
+	selectedPortletId = GetterUtil.getString(selLayout.getTypeSettingsProperty("fullPageApplicationPortlet"));
+}
+%>
+
+<aui:select label="full_page_application" name="TypeSettingsProperties--fullPageApplicationPortlet--" showEmptyOption="<%= true %>">
+
+	<%
+	List<Portlet> fullPageApplicationPortletList = (List<Portlet>)request.getAttribute(FullPageApplicationLayoutTypeControllerWebKeys.FULL_PAGE_APPLICATION_PORTLET_LIST);
+
+	for (Portlet portlet : fullPageApplicationPortletList) {
+	%>
+
+		<aui:option label="<%= portlet.getDisplayName() %>" selected="<%= (Validator.equals(selectedPortletId, portlet.getPortletId())) %>" value="<%= portlet.getPortletId() %>" />
+
+	<%
+	}
+	%>
+
+</aui:select>

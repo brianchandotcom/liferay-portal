@@ -36,10 +36,14 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
 import com.liferay.dynamic.data.mapping.util.impl.DDMFormTemplateSynchonizer;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.DDMStructureIndexer;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -61,6 +65,8 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1588,6 +1594,19 @@ public class DDMStructureLocalServiceImpl
 		return ddmFormFieldsNames;
 	}
 
+	protected DDMFormValidator getDDMFormValidator() {
+		try {
+			Registry registry = RegistryUtil.getRegistry();
+
+			return registry.getService(DDMFormValidator.class);
+		}
+		catch (NullPointerException npe) {
+			_log.error(npe.getMessage(), npe);
+
+			throw npe;
+		}
+	}
+
 	protected String getNextVersion(String version, boolean majorVersion) {
 		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
 
@@ -1656,6 +1675,17 @@ public class DDMStructureLocalServiceImpl
 			});
 	}
 
+	protected void validate(DDMForm ddmForm) throws PortalException {
+		try {
+			DDMFormValidator ddmFormValidator = getDDMFormValidator();
+
+			ddmFormValidator.validate(ddmForm);
+		}
+		catch (DDMFormValidationException ddmfve) {
+			throw ddmfve;
+		}
+	}
+
 	protected void validate(DDMForm parentDDMForm, DDMForm ddmForm)
 		throws PortalException {
 
@@ -1699,12 +1729,17 @@ public class DDMStructureLocalServiceImpl
 		try {
 			validate(nameMap, ddmForm.getDefaultLocale());
 
+			validate(ddmForm);
+
 			if (parentDDMForm != null) {
 				validate(parentDDMForm, ddmForm);
 			}
 		}
 		catch (LocaleException le) {
 			throw le;
+		}
+		catch (DDMFormValidationException ddmfve) {
+			throw ddmfve;
 		}
 		catch (StructureDuplicateElementException sdee) {
 			throw sdee;
@@ -1745,5 +1780,8 @@ public class DDMStructureLocalServiceImpl
 			throw le;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMStructureLocalServiceImpl.class);
 
 }

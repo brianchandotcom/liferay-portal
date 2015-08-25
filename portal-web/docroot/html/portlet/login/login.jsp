@@ -151,13 +151,13 @@
 
 		<liferay-util:include page="/html/portlet/login/navigation.jsp" />
 
-		<aui:script>
-			var form = AUI.$('#<portlet:namespace/>fm');
+		<aui:script sandbox="<%= true %>">
+			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.on(
 				'submit',
 				function(event) {
-					var redirect = AUI.$('#<portlet:namespace/>redirect');
+					var redirect = form.fm('redirect');
 
 					if (redirect) {
 						var redirectVal = redirect.val();
@@ -169,7 +169,7 @@
 				}
 			);
 
-			AUI.$('#<portlet:namespace />password').on(
+			form.fm('password').on(
 				'keypress',
 				function(event) {
 					Liferay.Util.showCapsLock(event, '<portlet:namespace />passwordCapsLockSpan');

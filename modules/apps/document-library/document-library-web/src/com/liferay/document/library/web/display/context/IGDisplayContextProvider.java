@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portlet.documentlibrary.display.context.DLDisplayContextFactory;
 import com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextFactory;
 import com.liferay.portlet.imagegallerydisplay.display.context.IGViewFileVersionDisplayContext;
 

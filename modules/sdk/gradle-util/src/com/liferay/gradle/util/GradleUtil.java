@@ -393,6 +393,8 @@ public class GradleUtil {
 	}
 
 	public static Integer toInteger(Object object) {
+		object = toObject(object);
+
 		if (object instanceof Integer) {
 			return (Integer)object;
 		}
@@ -410,7 +412,29 @@ public class GradleUtil {
 		return null;
 	}
 
+	public static Object toObject(Object object) {
+		if (object instanceof Callable<?>) {
+			Callable<?> callable = (Callable<?>)object;
+
+			try {
+				object = callable.call();
+			}
+			catch (Exception e) {
+				throw new GradleException(e.getMessage(), e);
+			}
+		}
+		else if (object instanceof Closure<?>) {
+			Closure<?> closure = (Closure<?>)object;
+
+			object = closure.call();
+		}
+
+		return object;
+	}
+
 	public static String toString(Object object) {
+		object = toObject(object);
+
 		if (object == null) {
 			return null;
 		}
@@ -422,7 +446,7 @@ public class GradleUtil {
 		List<String> list = new ArrayList<>();
 
 		for (Object object : iterable) {
-			list.add(object.toString());
+			list.add(toString(object));
 		}
 
 		return list;

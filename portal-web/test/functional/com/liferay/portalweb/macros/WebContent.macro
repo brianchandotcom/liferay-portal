@@ -613,14 +613,6 @@
 		<execute macro="WebContent#publish" />
 	</command>
 
-	<command name="addWithWorkflowCP">
-		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-		<execute function="Type#typeCKEditor" locator1="CKEditor#IFRAME" value1="${webContentContent}" />
-		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
-
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-	</command>
-
 	<command name="addWithWorkflowPGViaAP">
 		<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN" value1="Add New" />
 		<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />

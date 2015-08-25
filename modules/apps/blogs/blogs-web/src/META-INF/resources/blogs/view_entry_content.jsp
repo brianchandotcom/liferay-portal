@@ -58,6 +58,26 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 									/>
 								</c:if>
 
+								<c:if test="<%= showEditEntryPermissions && BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) %>">
+									<liferay-security:permissionsURL
+										modelResource="<%= BlogsEntry.class.getName() %>"
+										modelResourceDescription="<%= entry.getTitle() %>"
+										resourceGroupId="<%= String.valueOf(entry.getGroupId()) %>"
+										resourcePrimKey="<%= String.valueOf(entry.getEntryId()) %>"
+										var="permissionsEntryURL"
+										windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+									/>
+
+									<liferay-ui:icon
+										iconCssClass="icon-lock"
+										label="<%= true %>"
+										message="permissions"
+										method="get"
+										url="<%= permissionsEntryURL %>"
+										useDialog="<%= true %>"
+									/>
+								</c:if>
+
 								<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
 									<portlet:renderURL var="viewURL">
 										<portlet:param name="mvcRenderCommandName" value="/blogs/view" />

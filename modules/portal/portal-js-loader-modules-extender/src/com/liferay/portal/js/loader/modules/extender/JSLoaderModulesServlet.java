@@ -187,15 +187,25 @@ public class JSLoaderModulesServlet extends HttpServlet implements Servlet {
 
 		Collection<URL> jsConfigURLs = _jsBundleConfigTracker.getJsConfigURLs();
 
-		for (URL jsConfigURL : jsConfigURLs) {
-			try (InputStream inputStream = jsConfigURL.openStream()) {
-				StreamUtil.transfer(inputStream, outputStream, false);
+		if (jsConfigURLs.size() > 0) {
+			printWriter.println("(function() {");
 
-				outputStream.println();
+			for (URL jsConfigURL : jsConfigURLs) {
+				try (InputStream inputStream = jsConfigURL.openStream()) {
+					outputStream.println("try {");
+
+					StreamUtil.transfer(inputStream, outputStream, false);
+
+					outputStream.println("} catch (error) {");
+					outputStream.println("console.error(error);");
+					outputStream.println("}");
+				}
+				catch (Exception e) {
+					_logger.log(Logger.LOG_ERROR, "Could not open resource", e);
+				}
 			}
-			catch (Exception e) {
-				_logger.log(Logger.LOG_ERROR, "Could not open resource", e);
-			}
+
+			printWriter.println("}());");
 		}
 
 		printWriter.close();

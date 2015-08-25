@@ -104,22 +104,6 @@
 		<put name="content" value="/portal/verify_email_address.jsp" />
 	</definition>
 
-	<!-- Admin -->
-
-	<definition name="portlet.admin" extends="portlet" />
-
-	<definition name="portlet.admin.edit_document_library_extra_settings" extends="portlet.admin">
-		<put name="portlet_content" value="/portlet/admin/edit_document_library_extra_settings.jsp" />
-	</definition>
-
-	<definition name="portlet.admin.error" extends="portlet.admin">
-		<put name="portlet_content" value="/portlet/admin/error.jsp" />
-	</definition>
-
-	<definition name="portlet.admin.view" extends="portlet.admin">
-		<put name="portlet_content" value="/portlet/admin/view.jsp" />
-	</definition>
-
 	<!-- Background Task-->
 
 	<definition name="portlet.background_task" extends="portlet" />

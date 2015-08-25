@@ -25,13 +25,13 @@
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/admin/view");
+		portletURL.setParameter("mvcRenderCommandName", "/admin/view");
 		portletURL.setParameter("tabs1", tabs1);
 		portletURL.setParameter("tabs2", tabs2);
 		%>
 
 		<portlet:renderURL var="redirectURL">
-			<portlet:param name="struts_action" value="/admin/view" />
+			<portlet:param name="mvcRenderCommandName" value="/admin/view" />
 			<portlet:param name="tabs1" value="<%= tabs1 %>" />
 			<portlet:param name="tabs2" value="<%= tabs2 %>" />
 			<portlet:param name="cur" value="<%= String.valueOf(cur) %>" />
@@ -60,7 +60,7 @@
 							{
 								form: document.<portlet:namespace />fm,
 								namespace: '<portlet:namespace />',
-								url: '<portlet:actionURL><portlet:param name="struts_action" value="/admin/edit_server" /></portlet:actionURL>'
+								url: '<portlet:actionURL><portlet:param name="mvcRenderCommandName" value="/admin/edit_server" /></portlet:actionURL>'
 							}
 						);
 					</aui:script>
@@ -69,16 +69,14 @@
 		</aui:form>
 
 		<portlet:renderURL var="redirectURL">
-			<portlet:param name="struts_action" value="/admin/view" />
+			<portlet:param name="mvcRenderCommandName" value="/admin/view" />
 			<portlet:param name="tabs1" value="<%= tabs1 %>" />
 			<portlet:param name="tabs2" value="<%= tabs2 %>" />
 			<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= String.valueOf(cur) %>" />
 			<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= String.valueOf(delta) %>" />
 		</portlet:renderURL>
 
-		<portlet:actionURL var="editServerURL">
-			<portlet:param name="struts_action" value="/admin/edit_server" />
-		</portlet:actionURL>
+		<portlet:actionURL name="/admin/edit_server" var="editServerURL" />
 
 		<aui:script>
 			AUI.$('#<portlet:namespace />fm').on(

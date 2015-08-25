@@ -12,15 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.convert.action;
+package com.liferay.portlet.admin.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -29,24 +32,25 @@ import com.liferay.portlet.expando.util.ExpandoPresetUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Alexander Chow
+ * @author Philip Jones
  */
-public class EditDocumentLibraryExtraSettingsAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.ADMIN,
+		"javax.portlet.name=" + PortletKeys.ADMIN_SERVER,
+		"mvc.command.name=/admin_server/edit_document_library_extra_settings"
+	},
+	service = MVCActionCommand.class
+)
+public class EditDocumentLibraryExtraSettingsMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	public void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -55,20 +59,8 @@ public class EditDocumentLibraryExtraSettingsAction extends PortletAction {
 			convert(actionRequest, actionResponse);
 		}
 
-		sendRedirect(actionRequest, actionResponse);
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		return actionMapping.findForward(
-			getForward(
-				renderRequest,
-				"portlet.admin.edit_document_library_extra_settings"));
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
 	protected int addCustomField(long companyId, String name, String preset)

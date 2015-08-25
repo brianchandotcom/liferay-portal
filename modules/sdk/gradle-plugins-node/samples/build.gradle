@@ -1,0 +1,35 @@
+import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask
+import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask
+
+buildscript {
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "latest.release"
+	}
+}
+
+apply plugin: "com.liferay.node"
+
+version = "1.0.0"
+
+task downloadBabel(type: DownloadNodeModuleTask)
+task publishNodeModule(type: PublishNodeModuleTask)
+
+downloadBabel {
+	moduleName = "babel"
+	moduleVersion = "5.8.21"
+}
+
+publishNodeModule {
+	npmEmailAddress = project.properties["npm.email"]
+	npmPassword = project.properties["npm.password"]
+	npmUserName = project.properties["npm.user"]
+	workingDir = "src/main/resources"
+}

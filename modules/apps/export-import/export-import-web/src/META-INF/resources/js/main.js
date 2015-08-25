@@ -828,7 +828,7 @@ AUI.add(
 
 											Liferay.Store(
 												{
-													'background-task-ids': persistId
+													'com.liferay.exportimport.web_backgroundTaskIds': persistId
 												}
 											);
 										}

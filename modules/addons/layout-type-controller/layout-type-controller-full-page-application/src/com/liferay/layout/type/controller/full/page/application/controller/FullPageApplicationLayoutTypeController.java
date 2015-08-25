@@ -15,14 +15,22 @@
 package com.liferay.layout.type.controller.full.page.application.controller;
 
 import com.liferay.layout.type.controller.full.page.application.constants.FullPageApplicationLayoutTypeControllerConstants;
+import com.liferay.layout.type.controller.full.page.application.constants.FullPageApplicationLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypeController;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.impl.BaseLayoutTypeControllerImpl;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
+
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
@@ -77,6 +85,31 @@ public class FullPageApplicationLayoutTypeController
 	@Override
 	public boolean isURLFriendliable() {
 		return true;
+	}
+
+	@Override
+	protected void addAttributes(HttpServletRequest request) {
+		super.addAttributes(request);
+
+		List<Portlet> portletList = PortletLocalServiceUtil.getPortlets();
+
+		if (!portletList.isEmpty()) {
+			List<Portlet> fullPageDisplayablePortletList = ListUtil.filter(
+				portletList,
+				new PredicateFilter<Portlet>() {
+
+					@Override
+					public boolean filter(Portlet portlet) {
+						return portlet.isFullPageDisplayable();
+					}
+
+				});
+
+			request.setAttribute(
+				FullPageApplicationLayoutTypeControllerWebKeys.
+					FULL_PAGE_APPLICATION_PORTLET_LIST,
+				fullPageDisplayablePortletList);
+		}
 	}
 
 	@Override

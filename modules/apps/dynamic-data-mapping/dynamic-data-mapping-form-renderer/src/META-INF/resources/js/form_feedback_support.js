@@ -1,7 +1,7 @@
 AUI.add(
 	'liferay-ddm-form-renderer-feedback',
 	function(A) {
-		var TPL_BUTTON_SPINNER = '<span>&nbsp;<span class="icon-spinner"></span></span>';
+		var TPL_BUTTON_SPINNER = '<span><span class="icon-spinner"></span></span>';
 
 		var FormFeedbackSupport = function() {
 		};
